@@ -51,8 +51,11 @@ public class HelperTableManagerImpl implements HelperTableManager {
 
         logger.debug("Se solicitan los registros de la tabla " + helperTable);
 
+
         List<HelperTableRecord> allRecords = helperTableDAO.getAllRecords(helperTable);
+        logger.debug("Elemenos en orden original: " + allRecords);
         Collections.sort(allRecords);
+        logger.debug("Elemenos en orden final: " + allRecords);
         logger.debug("Se recuperan " + allRecords.size() + " registros de la tabla " + helperTable);
 
         return allRecords;
