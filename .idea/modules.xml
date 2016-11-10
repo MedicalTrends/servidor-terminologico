@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Semantikos.iml" filepath="$PROJECT_DIR$/Semantikos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SemantikosBrowser/SemantikosBrowser.iml" filepath="$PROJECT_DIR$/SemantikosBrowser/SemantikosBrowser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SemantikosCentralEAR/SemantikosCentralEAR.iml" filepath="$PROJECT_DIR$/SemantikosCentralEAR/SemantikosCentralEAR.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SemantikosKernelEJB/SemantikosKernelEJB.iml" filepath="$PROJECT_DIR$/SemantikosKernelEJB/SemantikosKernelEJB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SemantikosWS/SemantikosWS.iml" filepath="$PROJECT_DIR$/SemantikosWS/SemantikosWS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SemantikosWSEJB/SemantikosWSEJB.iml" filepath="$PROJECT_DIR$/SemantikosWSEJB/SemantikosWSEJB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SemantikosWeb/SemantikosWeb.iml" filepath="$PROJECT_DIR$/SemantikosWeb/SemantikosWeb.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SemantikosWeb:war">
+    <output-path>$PROJECT_DIR$/SemantikosWeb/target</output-path>
+    <root id="archive" name="SemantikosWeb.war">
+      <element id="artifact" artifact-name="SemantikosWeb:war exploded" />
+    </root>
+  </artifact>
+</component>

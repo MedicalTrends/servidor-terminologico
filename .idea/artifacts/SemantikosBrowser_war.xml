@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SemantikosBrowser:war">
+    <output-path>$PROJECT_DIR$/SemantikosBrowser/target</output-path>
+    <root id="archive" name="SemantikosBrowser.war">
+      <element id="artifact" artifact-name="SemantikosBrowser:war exploded" />
+    </root>
+  </artifact>
+</component>
