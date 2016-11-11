@@ -56,6 +56,8 @@ public interface ConceptDAO {
      */
     public List<ConceptSMTK> getConceptBy(Long[] categories, boolean modeled, int pageSize, int pageNumber);
 
+    public List<ConceptSMTK> getModeledConceptBy(Long categoryId, int pageSize, int pageNumber);
+
     /*Método temporal para trabajar con el navegador de conceptos*/
     @Deprecated
     public List<ConceptSMTK> getConceptBy(Category category, int pageSize, int pageNumber);
@@ -67,6 +69,8 @@ public interface ConceptDAO {
     public int countConceptBy(String[] Pattern, Long[] category, boolean isModeled);
 
     public int countConceptBy(String Pattern, Long[] category, boolean isModeled);
+
+    public int countModeledConceptBy(Long categoryId);
 
     /**
      * Este método es responsable de recuperar todos los objetos que están asociados a un Tag.
@@ -106,6 +110,10 @@ public interface ConceptDAO {
     public void update(ConceptSMTK conceptSMTK);
 
     public List<ConceptSMTK> getConceptBy(RefSet refSet);
+
+    public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize);
+
+    public Integer countModeledConceptsBy(RefSet refSet);
 
     public List<ConceptSMTK> getConceptDraft();
 

@@ -73,4 +73,30 @@ public interface RefSetManager {
      * @return Una lista de RefSets.
      */
     public List<RefSet> getAllRefSets();
+
+    /**
+     * @param pattern Patron de nombre del REFSET buscado
+     * @return Lista de REFSETs con nombre LIKE el patron ingresado (se espera lista con un solo elemento)
+     */
+    public List<RefSet> findRefsetsByName(String pattern);
+
+    /**
+     * Busca por un REFSET con el nombre dado y lo retorna
+     * @param pattern nombre del refset
+     * @return REFSET con el nombre buscado o null si no lo encuentra
+     */
+    public RefSet getRefsetByName(String pattern);
+
+    /**
+     * Carga los RefSets a los que pertenece el concepto en el atributo refsets del concepto
+     * @param conceptSMTK
+     */
+    public void loadConceptRefSets(ConceptSMTK conceptSMTK);
+
+    /**
+     * Busca los RefSets a los que pertenece el concepto
+     * @param conceptSMTK
+     * @return
+     */
+    public List<RefSet> findByConcept(ConceptSMTK conceptSMTK);
 }

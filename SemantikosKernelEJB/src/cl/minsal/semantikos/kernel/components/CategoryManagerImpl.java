@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.CategoryDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
+import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.User;
@@ -91,6 +92,11 @@ public class CategoryManagerImpl implements CategoryManager {
     @Override
     public Category getCategoryById(int id) throws ParseException {
         return categoryDAO.getCategoryById(id);
+    }
+
+    @Override
+    public Category getCategoryByName(String name) {
+        return this.categoryDAO.getCategoryByName(StringUtils.toSQLLikePattern(name));
     }
 
     @Override

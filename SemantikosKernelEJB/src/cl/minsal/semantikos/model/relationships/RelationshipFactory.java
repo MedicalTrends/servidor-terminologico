@@ -17,6 +17,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
 
@@ -165,9 +166,14 @@ public class RelationshipFactory {
             /**
              * Se setea el id desde el fields para ser utilizado por el custom converter
              */
-            HelperTableRecord helperTableRecord = (HelperTableRecord) target;
-            helperTableRecord.setId(new Long(helperTableRecord.getFields().get("id")));
-            target = helperTableRecord;
+            if ( target != null ) {
+                HelperTableRecord helperTableRecord = (HelperTableRecord) target;
+                Map<String, String> fields = helperTableRecord.getFields();
+                if ( fields != null && fields.get("id") != null ) {
+                    helperTableRecord.setId(new Long(fields.get("id")));
+                }
+                target = helperTableRecord;
+            }
         }
 
         /* El target puede ser un concepto SMTK */

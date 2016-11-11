@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="8cf46745-3908-4c98-8b48-927ec8afad00" activeEnvironment="Default" name="RefSetServiceService" resourceRoot="" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="f30f6044-7e4b-422f-aaa2-70437ead5e8d" wsaVersion="NONE" name="RefSetServiceServiceSoapBinding" type="wsdl" bindingName="{http://service.ws.semantikos.minsal.cl/}RefSetServiceServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="C:/jboss-eap-6.4/standalone/data/wsdl/SemantikosCentralEAR-1.0.0.ear/SemantikosWS-1.0.0.war/RefSetServiceService.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/jboss-eap-6.4/standalone/data/wsdl/SemantikosCentralEAR-1.0.0.ear/SemantikosWS-1.0.0.war/RefSetServiceService.wsdl"><con:part><con:url>file:/C:/jboss-eap-6.4/standalone/data/wsdl/SemantikosCentralEAR-1.0.0.ear/SemantikosWS-1.0.0.war/RefSetServiceService.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="RefSetServiceService" targetNamespace="http://service.ws.semantikos.minsal.cl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ws.semantikos.minsal.cl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://service.ws.semantikos.minsal.cl/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="atributo" type="tns:attributeResponse"/>
+      <xs:element name="categoria" type="tns:categoryResponse"/>
+      <xs:element name="columnaTablaAuxiliar" type="tns:helperTableColumnResponse"/>
+      <xs:element name="concepto" type="tns:conceptResponse"/>
+      <xs:element name="definicionObjetivo" type="tns:targetDefinitionResponse"/>
+      <xs:element name="definicionRelacion" type="tns:relationshipDefinitionResponse"/>
+      <xs:element name="definicionRelacionAtributo" type="tns:relationshipAttributeDefinitionResponse"/>
+      <xs:element name="definicionTipoBasico" type="tns:basicTypeDefinitionResponse"/>
+      <xs:element name="descripcion" type="tns:descriptionResponse"/>
+      <xs:element name="descripcionesDeRefSet" type="tns:descripcionesDeRefSet"/>
+      <xs:element name="descripcionesDeRefSetResponse" type="tns:descripcionesDeRefSetResponse"/>
+      <xs:element name="institucion" type="tns:institutionResponse"/>
+      <xs:element name="intervalo" type="tns:intervalResponse"/>
+      <xs:element name="listaRefSet" type="tns:listaRefSet"/>
+      <xs:element name="listaRefSetResponse" type="tns:listaRefSetResponse"/>
+      <xs:element name="multiplicidad" type="tns:multiplicityResponse"/>
+      <xs:element name="objetivo" type="tns:targetResponse"/>
+      <xs:element name="refSet" type="tns:refSetResponse"/>
+      <xs:element name="relacion" type="tns:relationshipResponse"/>
+      <xs:element name="relacionAtributo" type="tns:relationshipAttributeResponse"/>
+      <xs:element name="tablaAuxiliar" type="tns:helperTableResponse"/>
+      <xs:element name="tagSMTK" type="tns:tagSMTKResponse"/>
+      <xs:element name="tipoObjetivo" type="tns:targetTypeResponse"/>
+      <xs:element name="tipoTipoBasico" type="tns:basicTypeTypeResponse"/>
+      <xs:element name="usuario" type="tns:userResponse"/>
+      <xs:complexType name="listaRefSet">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="listaRefSetResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:refSet"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="refSetResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="validoHasta" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="creadoEn" type="xs:dateTime"/>
+          <xs:element minOccurs="0" ref="tns:institucion"/>
+          <xs:element minOccurs="0" name="conceptos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="institutionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="administradores">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:usuario"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="userResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombreUsuario" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="apellido" type="xs:string"/>
+          <xs:element minOccurs="0" name="segundoApellido" type="xs:string"/>
+          <xs:element minOccurs="0" name="email" type="xs:string"/>
+          <xs:element minOccurs="0" name="rut" type="xs:string"/>
+          <xs:element minOccurs="0" name="ultimoLogin" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="ultimoCambioPassword" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="conceptResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string"/>
+          <xs:element minOccurs="0" name="aSerRevisado" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="aSerConsultado" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="modelado" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="completamenteDefinido" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="publicado" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="validoHasta" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="observacion" type="xs:string"/>
+          <xs:element minOccurs="0" ref="tns:tagSMTK"/>
+          <xs:element minOccurs="0" ref="tns:categoria"/>
+          <xs:element minOccurs="0" name="descripciones">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:descripcion"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="atributos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:atributo"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="relaciones">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:relacion"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="tagSMTKResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="categoryResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombreAbreviado" type="xs:string"/>
+          <xs:element minOccurs="0" name="restringida" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="vigente" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="descriptionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string"/>
+          <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+          <xs:element minOccurs="0" name="termino" type="xs:string"/>
+          <xs:element minOccurs="0" name="valida" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esSensibleMayusculas" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="nombreAutgenerado" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="publicado" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="modelado" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="validaHasta" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="creado" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="usos" type="xs:long"/>
+          <xs:element minOccurs="0" name="usuarioCreador" type="tns:userResponse"/>
+          <xs:element minOccurs="0" ref="tns:concepto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="attributeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+          <xs:element minOccurs="0" name="valor" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="relationshipResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="definicion" type="tns:relationshipDefinitionResponse"/>
+          <xs:element minOccurs="0" ref="tns:objetivo"/>
+          <xs:element minOccurs="0" ref="tns:concepto"/>
+          <xs:element minOccurs="0" name="atributos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="atributo" type="tns:relationshipAttributeResponse"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="relationshipDefinitionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+          <xs:element minOccurs="0" name="description" type="xs:string"/>
+          <xs:element minOccurs="0" ref="tns:multiplicidad"/>
+          <xs:element minOccurs="0" ref="tns:definicionObjetivo"/>
+          <xs:element minOccurs="0" name="definicionRelacionExcluida" type="tns:relationshipDefinitionResponse"/>
+          <xs:element minOccurs="0" name="definicionesAtributoRelacion">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="definicionAtributoRelacion" type="tns:relationshipAttributeDefinitionResponse"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="multiplicityResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="limiteInferior" type="xs:int"/>
+          <xs:element minOccurs="0" name="limiteSuperior" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="targetDefinitionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="esTipoBasico" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esTipoSMTK" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esTablaAuxiliar" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esTipoSnomedCT" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esTipoCrossMap" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="relationshipAttributeDefinitionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+          <xs:element minOccurs="0" ref="tns:multiplicidad"/>
+          <xs:element minOccurs="0" ref="tns:definicionObjetivo"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="targetResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:tipoObjetivo"/>
+          <xs:element minOccurs="0" name="activo" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="idModulo" type="xs:long"/>
+          <xs:element minOccurs="0" name="estadoDefinicionId" type="xs:long"/>
+          <xs:element minOccurs="0" name="valido" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="tiempoEfectivo" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="valor" type="xs:string"/>
+          <xs:element minOccurs="0" name="conceptoSMTK" type="tns:conceptResponse"/>
+          <xs:element minOccurs="0" ref="tns:relacion"/>
+          <xs:element minOccurs="0" ref="tns:tablaAuxiliar"/>
+          <xs:element name="fields">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element minOccurs="0" name="key" type="xs:string"/>
+                      <xs:element minOccurs="0" name="value" type="xs:string"/>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="targetTypeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
+          <xs:element minOccurs="0" name="definicionesObjetivo">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:definicionObjetivo"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="definicionesTipoBasico">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:definicionTipoBasico"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="basicTypeDefinitionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
+          <xs:element minOccurs="0" ref="tns:intervalo"/>
+          <xs:element minOccurs="0" name="tipo" type="tns:basicTypeTypeResponse"/>
+          <xs:element minOccurs="0" name="dominios">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="dominio" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="intervalResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="limiteInferior" type="xs:string"/>
+          <xs:element minOccurs="0" name="limiteSuperior" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="basicTypeTypeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombreTipo" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="helperTableResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombreTabla" type="xs:string"/>
+          <xs:element minOccurs="0" name="columnaTablaAuxiliar">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="columna" type="tns:helperTableColumnResponse"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="helperTableColumnResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombreColumna" type="xs:string"/>
+          <xs:element minOccurs="0" name="esLlavePrimaria" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esBuscable" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esMostrable" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="relationshipAttributeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:objetivo"/>
+          <xs:element minOccurs="0" name="definicionAtributoRelacion" type="tns:relationshipAttributeDefinitionResponse"/>
+          <xs:element minOccurs="0" ref="tns:relacion"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="descripcionesDeRefSet">
+        <xs:sequence>
+          <xs:element name="nombreRefSet" type="xs:string"/>
+          <xs:element name="numeroPagina" type="xs:int"/>
+          <xs:element name="tamanoPagina" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="descripcionesDeRefSetResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="refSet" type="tns:conceptResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="listaRefSetResponse">
+    <wsdl:part element="tns:listaRefSetResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="descripcionesDeRefSet">
+    <wsdl:part element="tns:descripcionesDeRefSet" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="descripcionesDeRefSetResponse">
+    <wsdl:part element="tns:descripcionesDeRefSetResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listaRefSet">
+    <wsdl:part element="tns:listaRefSet" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="RefSetService">
+    <wsdl:operation name="listaRefSet">
+      <wsdl:input message="tns:listaRefSet" name="listaRefSet"></wsdl:input>
+      <wsdl:output message="tns:listaRefSetResponse" name="listaRefSetResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="descripcionesDeRefSet">
+      <wsdl:input message="tns:descripcionesDeRefSet" name="descripcionesDeRefSet"></wsdl:input>
+      <wsdl:output message="tns:descripcionesDeRefSetResponse" name="descripcionesDeRefSetResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RefSetServiceServiceSoapBinding" type="tns:RefSetService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="listaRefSet">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listaRefSet">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listaRefSetResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="descripcionesDeRefSet">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="descripcionesDeRefSet">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="descripcionesDeRefSetResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RefSetServiceService">
+    <wsdl:port binding="tns:RefSetServiceServiceSoapBinding" name="RefSetServicePort">
+      <soap:address location="http://localhost:8080/ws/RefSetService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/ws/RefSetService</con:endpoint></con:endpoints><con:operation id="7aa273fa-55ee-470a-b1b1-24bdf73214f6" isOneWay="false" action="" name="listaRefSet" bindingOperationName="listaRefSet" type="Request-Response" outputName="listaRefSetResponse" inputName="listaRefSet" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="aae2b6b6-600f-4c71-8681-2f073b83d9bf" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/RefSetService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:listaRefSet/>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/RefSetService/listaRefSet"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="51c8efe1-3f31-4c32-806f-2b4094222afb" isOneWay="false" action="" name="conceptosPorRefSet" bindingOperationName="descripcionesDeRefSet" type="Request-Response" outputName="descripcionesDeRefSetResponse" inputName="descripcionesDeRefSet" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="690f52e4-1f17-4112-be01-32b8dbd0ed4f" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/RefSetService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorRefSet>\r
+         <nombreRefSet>nuevo refset con conceptos</nombreRefSet>\r
+         <numeroPagina>0</numeroPagina>\r
+         <tamanoPagina>20</tamanoPagina>\r
+      </ser:conceptosPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/RefSetService/descripcionesDeRefSet"/><con:wsrmConfig version="1.2"/></con:call><con:call id="fdb5e27e-3920-4fba-b3e9-e77d15e92f92" name="Request 2"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/RefSetService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorRefSet>\r
+         <nombreRefSet>nuevo refset</nombreRefSet>\r
+         <numeroPagina>0</numeroPagina>\r
+         <tamanoPagina>20</tamanoPagina>\r
+      </ser:conceptosPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/RefSetService/descripcionesDeRefSet"/><con:wsrmConfig version="1.2"/></con:call><con:call id="db00ef6e-8ead-4e3c-b2b8-f8e34e0aaa09" name="Request 3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/RefSetService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorRefSet>\r
+         <nombreRefSet>nuevo refset con conceptos 4</nombreRefSet>\r
+         <numeroPagina>0</numeroPagina>\r
+         <tamanoPagina>20</tamanoPagina>\r
+      </ser:conceptosPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/RefSetService/descripcionesDeRefSet"/><con:wsrmConfig version="1.2"/></con:call><con:call id="cda8c01a-79e2-4698-9cce-3161494212bc" name="Request 4"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/RefSetService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorRefSet>\r
+         <nombreRefSet>nuevo refset con conceptos 2</nombreRefSet>\r
+         <numeroPagina>0</numeroPagina>\r
+         <tamanoPagina>20</tamanoPagina>\r
+      </ser:conceptosPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/RefSetService/descripcionesDeRefSet"/><con:wsrmConfig version="1.2"/></con:call><con:call id="d4ed1e2b-72d8-468d-8520-0a5cbbb26ae3" name="Request 5"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/RefSetService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorRefSet>\r
+         <nombreRefSet>OmegaZero</nombreRefSet>\r
+         <numeroPagina>0</numeroPagina>\r
+         <tamanoPagina>20</tamanoPagina>\r
+      </ser:conceptosPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/RefSetService/descripcionesDeRefSet"/><con:wsrmConfig version="1.2"/></con:call><con:call id="dc9496ba-31cb-49fd-8675-0a2c8e2675e3" name="Request 6"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/RefSetService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorRefSet>\r
+         <nombreRefSet>HotMEOWTH</nombreRefSet>\r
+         <numeroPagina>0</numeroPagina>\r
+         <tamanoPagina>20</tamanoPagina>\r
+      </ser:conceptosPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/RefSetService/descripcionesDeRefSet"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="9dbcce31-fae5-46da-bcda-ae05f2121e4a" name="RefSetService TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="3971d404-fbcc-4198-9727-a3112f7b0e64" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="listaRefSet TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="56e7249c-a8dd-4ff7-a1b1-8b23958367b3" name="listaRefSet - Request 1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>RefSetServiceServiceSoapBinding</con:interface><con:operation>listaRefSet</con:operation><con:request name="listaRefSet - Request 1" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7f05ebeb-acca-4284-b612-868442bca77d"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/RefSetService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:listaRefSet/>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="f8afd50b-e729-4ba4-83b4-3f3ede6eb8d6" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/RefSetService/listaRefSet"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="92aa05d6-8af4-4af2-830b-e076012fc2aa" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="conceptosPorRefSet TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="bacd168d-e366-40b2-9e60-b6117e21c8db" name="conceptosPorRefSet - Request 1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>RefSetServiceServiceSoapBinding</con:interface><con:operation>conceptosPorRefSet</con:operation><con:request name="conceptosPorRefSet - Request 1" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="6f71130d-86ec-46c5-a753-e3f4fbbb942b"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/RefSetService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorRefSet>\r
+         <nombreRefSet>nuevo refset con conceptos</nombreRefSet>\r
+         <numeroPagina>0</numeroPagina>\r
+         <tamanoPagina>20</tamanoPagina>\r
+      </ser:conceptosPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="dcdc47c9-58d2-4316-93a9-0e0eba74c0c1" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/RefSetService/descripcionesDeRefSet"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="3e48ce3b-e0d6-4839-b9d4-ab9d9e508952" name="conceptosPorRefSet - Request 2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>RefSetServiceServiceSoapBinding</con:interface><con:operation>conceptosPorRefSet</con:operation><con:request name="conceptosPorRefSet - Request 2" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="faa857ee-4190-41a1-8d7c-bdb322b46384"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/RefSetService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorRefSet>\r
+         <nombreRefSet>nuevo refset</nombreRefSet>\r
+         <numeroPagina>0</numeroPagina>\r
+         <tamanoPagina>20</tamanoPagina>\r
+      </ser:conceptosPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a4290098-b907-487a-8d63-0d17d466ad92" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/RefSetService/descripcionesDeRefSet"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="25ec605b-0255-4647-b607-1e3adbb9c98a" name="conceptosPorRefSet - Request 3"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>RefSetServiceServiceSoapBinding</con:interface><con:operation>conceptosPorRefSet</con:operation><con:request name="conceptosPorRefSet - Request 3" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="fc6dfad5-9149-4704-87e9-e748365df3f7"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/RefSetService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorRefSet>\r
+         <nombreRefSet>nuevo refset con conceptos 4</nombreRefSet>\r
+         <numeroPagina>0</numeroPagina>\r
+         <tamanoPagina>20</tamanoPagina>\r
+      </ser:conceptosPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="ec69b554-767d-4433-9e68-2c484b9c0bcb" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/RefSetService/descripcionesDeRefSet"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="d17c23c2-7b3f-4f0b-b16b-e4ac37271a02" name="conceptosPorRefSet - Request 4"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>RefSetServiceServiceSoapBinding</con:interface><con:operation>conceptosPorRefSet</con:operation><con:request name="conceptosPorRefSet - Request 4" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="147e14ee-4689-43a6-9b37-cb42542dcf56"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/RefSetService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorRefSet>\r
+         <nombreRefSet>nuevo refset con conceptos 2</nombreRefSet>\r
+         <numeroPagina>0</numeroPagina>\r
+         <tamanoPagina>20</tamanoPagina>\r
+      </ser:conceptosPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="8aecbb7b-bf0f-41f4-bd4b-61c283908371" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/RefSetService/descripcionesDeRefSet"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="41dcc54b-aee5-490e-9617-7a11c63339a6" name="conceptosPorRefSet - Request 5"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>RefSetServiceServiceSoapBinding</con:interface><con:operation>conceptosPorRefSet</con:operation><con:request name="conceptosPorRefSet - Request 5" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="0607061a-54c2-49b1-87f1-2d2953f01129"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/RefSetService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorRefSet>\r
+         <nombreRefSet>OmegaZero</nombreRefSet>\r
+         <numeroPagina>0</numeroPagina>\r
+         <tamanoPagina>20</tamanoPagina>\r
+      </ser:conceptosPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="9f0baff8-9e4c-483b-8cfa-7a8b2147b137" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/RefSetService/descripcionesDeRefSet"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="d720030d-3c3f-483f-8c34-7618f94e2f19" name="conceptosPorRefSet - Request 6"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>RefSetServiceServiceSoapBinding</con:interface><con:operation>conceptosPorRefSet</con:operation><con:request name="conceptosPorRefSet - Request 6" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c7013fa6-0fcb-4bc6-9fb2-248faa92e91e"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/RefSetService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorRefSet>\r
+         <nombreRefSet>HotMEOWTH</nombreRefSet>\r
+         <numeroPagina>0</numeroPagina>\r
+         <tamanoPagina>20</tamanoPagina>\r
+      </ser:conceptosPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="b20a827d-c406-4f88-9e7b-dbef94861895" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/RefSetService/descripcionesDeRefSet"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

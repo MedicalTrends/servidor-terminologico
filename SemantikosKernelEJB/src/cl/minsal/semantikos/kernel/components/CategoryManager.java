@@ -37,6 +37,13 @@ public interface CategoryManager {
     public Category getCategoryById(int idCategory) throws ParseException;
 
     /**
+     * Entrega la Categoría que tiene un nombre LIKE @{name} o NULL si no existe
+     * @param name
+     * @return
+     */
+    public Category getCategoryByName(String name);
+
+    /**
      * Este método responsable de recuperar toda la meta-data que consituye la definición de una categoría, en
      * particular todos los atributos que define.
      *

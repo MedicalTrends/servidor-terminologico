@@ -90,6 +90,11 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    public List<ConceptSMTK> findModeledConceptBy(Category category, int pageSize, int pageNumber) {
+        return this.conceptDAO.getModeledConceptBy(category.getId(), pageSize, pageNumber);
+    }
+
+    @Override
     public List<ConceptSMTK> findConceptBy(String patternOrConceptID, Long[] categories, int pageNumber, int pageSize) {
 
 
@@ -191,6 +196,20 @@ public class ConceptManagerImpl implements ConceptManager {
         }
         return conceptDAO.countConceptBy((String[]) null, categories, isModeled);
 
+    }
+    @Override
+    public int countModeledConceptBy(Category category) {
+        return this.conceptDAO.countModeledConceptBy(category.getId());
+    }
+
+    @Override
+    public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize) {
+        return this.conceptDAO.findModeledConceptsBy(refSet, page, pageSize);
+    }
+
+    @Override
+    public Integer countModeledConceptsBy(RefSet refSet) {
+        return this.conceptDAO.countModeledConceptsBy(refSet);
     }
 
     @Override

@@ -607,6 +607,58 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
+    public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize) {
+        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
+        ConnectionBD connect = new ConnectionBD();
+        CallableStatement call;
+
+        try (Connection connection = connect.getConnection();) {
+            call = connection.prepareCall("{call semantikos.find_concepts_by_refset_paginated(?,?,?,?)}");
+            call.setLong(1, refSet.getId());
+            call.setInt(2, page);
+            call.setInt(3, pageSize);
+            call.setBoolean(4, Boolean.TRUE);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            concepts = new ArrayList<>();
+            while (rs.next()) {
+                concepts.add(createConceptSMTKFromResultSet(rs));
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return concepts;
+    }
+
+    @Override
+    public Integer countModeledConceptsBy(RefSet refSet) {
+        ConnectionBD connect = new ConnectionBD();
+        CallableStatement call;
+        int count = 0;
+
+        try (Connection connection = connect.getConnection();) {
+            call = connection.prepareCall("{call semantikos.count_concepts_by_refset(?,?)}");
+            call.setLong(1, refSet.getId());
+            call.setBoolean(2, Boolean.TRUE);
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                count = Integer.parseInt(rs.getString("count"));
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+
+    @Override
     public List<ConceptSMTK> getConceptDraft() {
 
 

@@ -16,6 +16,8 @@ public interface DescriptionDAO {
 
     public Description getDescriptionBy(long id);
 
+    public Description getDescriptionBy(String businessId);
+
     /**
      * Este método es responsable de recuperar todas las descripciones de un concepto.
      *

@@ -51,6 +51,22 @@
             <type>ejb</type>
         </dependency>
 
+
+        <dependency>
+            <groupId>cl.minsal.semantikos</groupId>
+            <artifactId>SemantikosWSEJB</artifactId>
+            <version>1.0.0</version>
+            <type>ejb</type>
+        </dependency>
+
+
+        <dependency>
+            <groupId>cl.minsal.semantikos</groupId>
+            <artifactId>SemantikosWS</artifactId>
+            <version>1.0.0</version>
+            <type>war</type>
+        </dependency>
+
         <!-- Clases para validaciones básicas tipo @NotNull -->
         <dependency>
             <groupId>javax.validation</groupId>

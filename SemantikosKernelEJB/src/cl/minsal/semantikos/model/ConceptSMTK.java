@@ -79,6 +79,9 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     /** El Tag Semántikos que tiene asociado el concepto */
     private TagSMTK tagSMTK;
 
+    /** RefSets a los que pertenece el concepto */
+    private List<RefSet> refsets;
+
     /**
      * La categoría es la mínima información que se le puede dar a un concepto.
      */
@@ -221,6 +224,16 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
             }
         }
 
+        return snomedRelationships;
+    }
+
+    public List<Relationship> getRelationshipsBasicType() {
+        List<Relationship> snomedRelationships = new ArrayList<>();
+        for (Relationship relationship : relationships) {
+            if (relationship.getRelationshipDefinition().getTargetDefinition().isBasicType()) {
+                snomedRelationships.add(relationship);
+            }
+        }
         return snomedRelationships;
     }
 
@@ -633,6 +646,14 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
     public void setTagSMTK(TagSMTK tagSMTK) {
         this.tagSMTK = tagSMTK;
+    }
+
+    public List<RefSet> getRefsets() {
+        return refsets;
+    }
+
+    public void setRefsets(List<RefSet> refsets) {
+        this.refsets = refsets;
     }
 
     @Override

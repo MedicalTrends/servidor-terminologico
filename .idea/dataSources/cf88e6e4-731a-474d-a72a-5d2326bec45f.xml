@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="PostgreSQL - semantikos@localhost">
+  <database-model serializer="dbm" rdbms="POSTGRES" format-version="2.6">
+    <database id="1" name="semantikos">
+      <object-id>20080</object-id>
+      <visible>1</visible>
+    </database>
+    <database id="2" name="postgres">
+      <object-id>12373</object-id>
+    </database>
+    <schema id="3" parent="1" name="public">
+      <object-id>2200</object-id>
+      <visible>1</visible>
+      <introspection-state-number>2603</introspection-state-number>
+      <introspection-timestamp>2016-11-11.04:23:03.549</introspection-timestamp>
+    </schema>
+    <schema id="4" parent="1" name="pg_catalog">
+      <object-id>11</object-id>
+    </schema>
+    <schema id="5" parent="1" name="pg_toast">
+      <object-id>99</object-id>
+    </schema>
+    <schema id="6" parent="1" name="pg_temp_1">
+      <object-id>11816</object-id>
+    </schema>
+    <schema id="7" parent="1" name="pg_toast_temp_1">
+      <object-id>11817</object-id>
+    </schema>
+    <schema id="8" parent="1" name="information_schema">
+      <object-id>12081</object-id>
+    </schema>
+    <schema id="9" parent="1" name="semantikos">
+      <object-id>20081</object-id>
+    </schema>
+    <sequence id="10" parent="3" name="smtk_seq_auxiliary">
+      <object-id>20260</object-id>
+      <state-number>2599</state-number>
+    </sequence>
+    <sequence id="11" parent="3" name="smtk_seq_description_not_valid">
+      <object-id>20262</object-id>
+      <state-number>2600</state-number>
+      <max-value>2147483648</max-value>
+    </sequence>
+    <sequence id="12" parent="3" name="smtk_seq_refset_concept">
+      <object-id>20264</object-id>
+      <state-number>2601</state-number>
+      <max-value>2147483648</max-value>
+    </sequence>
+    <sequence id="13" parent="3" name="smtk_seq_refsets">
+      <object-id>20266</object-id>
+      <state-number>2602</state-number>
+      <max-value>2147483648</max-value>
+    </sequence>
+    <sequence id="14" parent="3" name="smtk_seq_tag">
+      <object-id>20268</object-id>
+      <state-number>2603</state-number>
+      <max-value>2147483648</max-value>
+      <next-value>5</next-value>
+    </sequence>
+    <routine id="15" parent="3" name="foo">
+      <object-id>20089</object-id>
+      <state-number>2426</state-number>
+      <routine-kind>FUNCTION</routine-kind>
+    </routine>
+    <routine id="16" parent="3" name="foo">
+      <object-id>20090</object-id>
+      <state-number>2427</state-number>
+      <routine-kind>FUNCTION</routine-kind>
+      <returns-set>1</returns-set>
+    </routine>
+    <routine id="17" parent="3" name="get_all_records_from_helper_table">
+      <object-id>20091</object-id>
+      <state-number>2428</state-number>
+      <routine-kind>FUNCTION</routine-kind>
+    </routine>
+    <routine id="18" parent="3" name="load_master_tables">
+      <object-id>20092</object-id>
+      <state-number>2429</state-number>
+      <routine-kind>FUNCTION</routine-kind>
+    </routine>
+    <routine id="19" parent="3" name="scan_rows">
+      <object-id>20093</object-id>
+      <state-number>2430</state-number>
+      <routine-kind>FUNCTION</routine-kind>
+    </routine>
+    <routine id="20" parent="3" name="some_f">
+      <object-id>20094</object-id>
+      <state-number>2431</state-number>
+      <routine-kind>FUNCTION</routine-kind>
+    </routine>
+    <routine id="21" parent="3" name="unaccent_init">
+      <object-id>20085</object-id>
+      <state-number>2424</state-number>
+      <routine-kind>FUNCTION</routine-kind>
+    </routine>
+    <routine id="22" parent="3" name="unaccent_lexize">
+      <object-id>20086</object-id>
+      <state-number>2424</state-number>
+      <routine-kind>FUNCTION</routine-kind>
+    </routine>
+    <routine id="23" parent="3" name="unaccent">
+      <object-id>20083</object-id>
+      <state-number>2424</state-number>
+      <routine-kind>FUNCTION</routine-kind>
+    </routine>
+    <routine id="24" parent="3" name="unaccent">
+      <object-id>20084</object-id>
+      <state-number>2424</state-number>
+      <routine-kind>FUNCTION</routine-kind>
+    </routine>
+    <argument id="25" parent="15" name="tablename">
+      <direction>IN</direction>
+      <data-type>text|0</data-type>
+    </argument>
+    <argument id="26" parent="15">
+      <direction>RETURN</direction>
+      <data-type>json|0</data-type>
+    </argument>
+    <argument id="27" parent="16" name="schemaname">
+      <direction>IN</direction>
+      <data-type>text|0</data-type>
+    </argument>
+    <argument id="28" parent="16" name="tablename">
+      <direction>IN</direction>
+      <data-type>text|0</data-type>
+    </argument>
+    <argument id="29" parent="16">
+      <direction>RETURN</direction>
+      <data-type>setof text|0</data-type>
+    </argument>
+    <argument id="30" parent="17" name="tablename">
+      <direction>IN</direction>
+      <data-type>text|0</data-type>
+    </argument>
+    <argument id="31" parent="17">
+      <direction>RETURN</direction>
+      <data-type>json|0</data-type>
+    </argument>
+    <argument id="32" parent="18">
+      <direction>RETURN</direction>
+      <data-type>void|0</data-type>
+    </argument>
+    <argument id="33" parent="19" name="arrayint">
+      <direction>IN</direction>
+      <data-type>integer[]|0</data-type>
+    </argument>
+    <argument id="34" parent="19">
+      <direction>RETURN</direction>
+      <data-type>void|0</data-type>
+    </argument>
+    <argument id="35" parent="20" name="param">
+      <direction>IN</direction>
+      <data-type>varchar|0</data-type>
+    </argument>
+    <argument id="36" parent="20">
+      <direction>RETURN</direction>
+      <data-type>integer|0</data-type>
+    </argument>
+    <argument id="37" parent="21">
+      <direction>IN</direction>
+      <data-type>internal|0</data-type>
+    </argument>
+    <argument id="38" parent="21">
+      <direction>RETURN</direction>
+      <data-type>internal|0</data-type>
+    </argument>
+    <argument id="39" parent="22">
+      <direction>IN</direction>
+      <data-type>internal|0</data-type>
+    </argument>
+    <argument id="40" parent="22">
+      <direction>IN</direction>
+      <data-type>internal|0</data-type>
+    </argument>
+    <argument id="41" parent="22">
+      <direction>IN</direction>
+      <data-type>internal|0</data-type>
+    </argument>
+    <argument id="42" parent="22">
+      <direction>IN</direction>
+      <data-type>internal|0</data-type>
+    </argument>
+    <argument id="43" parent="22">
+      <direction>RETURN</direction>
+      <data-type>internal|0</data-type>
+    </argument>
+    <argument id="44" parent="23">
+      <direction>IN</direction>
+      <data-type>regdictionary|0</data-type>
+    </argument>
+    <argument id="45" parent="23">
+      <direction>IN</direction>
+      <data-type>text|0</data-type>
+    </argument>
+    <argument id="46" parent="23">
+      <direction>RETURN</direction>
+      <data-type>text|0</data-type>
+    </argument>
+    <argument id="47" parent="24">
+      <direction>IN</direction>
+      <data-type>text|0</data-type>
+    </argument>
+    <argument id="48" parent="24">
+      <direction>RETURN</direction>
+      <data-type>text|0</data-type>
+    </argument>
+  </database-model>
+</dataSource>

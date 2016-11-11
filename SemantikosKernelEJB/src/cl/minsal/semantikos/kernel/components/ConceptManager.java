@@ -121,6 +121,14 @@ public interface ConceptManager {
     @Deprecated
     public List<ConceptSMTK> findConceptBy(Category category, int pageNumber, int pageSize);
 
+    public List<ConceptSMTK> findModeledConceptBy(Category category, int pageSize, int pageNumber);
+
+    public int countModeledConceptBy(Category category);
+
+    public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize);
+
+    public Integer countModeledConceptsBy(RefSet refSet);
+
     /**
      * Método encargado de realizar la búsqueda de conceptos por patron, en caso de no encontrar un "Perfect Match" por
      * la cadena de texto entregada,

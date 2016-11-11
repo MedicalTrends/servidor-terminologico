@@ -64,6 +64,23 @@ public class CategoryDAOImpl implements CategoryDAO {
         return categoryByIdFromDB;
     }
 
+
+    @Override
+    public Category getCategoryByName(String name) {
+        for ( Category category : categoryMap.values() ) {
+            if ( name.equalsIgnoreCase(category.getName()) ) {
+                return category;
+            }
+        }
+
+        Category category = getCategoryByNameFromDB(name);
+        categoryMap.put(category.getId(), category);
+        List<RelationshipDefinition> categoryMetaData = getCategoryMetaData(category.getId());
+        category.setRelationshipDefinitions(categoryMetaData);
+
+        return category;
+    }
+
     /**
      * Este método es responsable de recuperar de la BDD.
      *
@@ -92,6 +109,33 @@ public class CategoryDAOImpl implements CategoryDAO {
         } catch (SQLException e) {
             String errorMsg = "error en getCategoryById = " + idCategory;
             logger.error(errorMsg, idCategory, e);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return category;
+    }
+
+    private Category getCategoryByNameFromDB(String name) {
+        Category category;
+        ConnectionBD connect = new ConnectionBD();
+        String GET_CATEGORY_BY_NAME = "{call semantikos.get_category_by_name(?)}";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(GET_CATEGORY_BY_NAME)) {
+
+            call.setString(1, name);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+                category = createCategoryFromResultSet(rs);
+            } else {
+                throw new EJBException("Error en la llamada");
+            }
+            rs.close();
+        } catch (SQLException e) {
+            String errorMsg = "error en getCategoryByName = " + name;
+            logger.error(errorMsg, name, e);
             throw new EJBException(errorMsg, e);
         }
 
