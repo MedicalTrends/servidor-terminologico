@@ -99,6 +99,11 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
+    public List<ConceptSMTK> getModeledConceptBy(Long categoryId, int pageSize, int pageNumber) {
+        return this.getConceptBy(new Long[]{categoryId}, true, pageSize, pageNumber);
+    }
+
+    @Override
     public List<ConceptSMTK> getConceptBy(Long[] categories, boolean modeled, int pageSize, int pageNumber) {
 
         List<ConceptSMTK> concepts = new ArrayList<>();
@@ -351,6 +356,11 @@ public class ConceptDAOImpl implements ConceptDAO {
             e.printStackTrace();
         }
         return count;
+    }
+
+    @Override
+    public int countModeledConceptBy(Long categoryId) {
+        return this.countConceptBy((String[]) null, new Long[]{categoryId}, true);
     }
 
     @Override

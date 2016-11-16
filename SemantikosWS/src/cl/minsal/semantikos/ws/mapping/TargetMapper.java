@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.CrossMap;
+import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.Target;
@@ -37,8 +37,8 @@ public class TargetMapper {
                 ConceptSMTK conceptSMTK = (ConceptSMTK) target;
                 res.setConcept(ConceptMapper.map(conceptSMTK));
             }
-            if (target instanceof CrossMap) {
-                CrossMap crossMap = (CrossMap) target;
+            if (target instanceof Crossmap) {
+                Crossmap crossMap = (Crossmap) target;
                 res.setRelationship(RelationshipMapper.map(crossMap));
             }
             if (target instanceof HelperTableRecord) {
