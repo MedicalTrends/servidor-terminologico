@@ -2,7 +2,6 @@ package cl.minsal.semantikos.ws.service;
 
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.RefSetManager;
-import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;

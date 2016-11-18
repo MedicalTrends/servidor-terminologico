@@ -6,7 +6,6 @@ import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
-import cl.minsal.semantikos.ws.response.RelationshipResponse;
 import cl.minsal.semantikos.ws.response.TargetResponse;
 
 /**

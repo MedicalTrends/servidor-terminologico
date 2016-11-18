@@ -2,7 +2,6 @@ package cl.minsal.semantikos.ws.response;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**

@@ -3,9 +3,6 @@ package cl.minsal.semantikos.ws.mapping;
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.ws.response.DescriptionResponse;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Development on 2016-10-13.
  *

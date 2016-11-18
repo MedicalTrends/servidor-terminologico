@@ -1,6 +1,5 @@
 package cl.minsal.semantikos.ws.mapping;
 
-import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.RefSet;
