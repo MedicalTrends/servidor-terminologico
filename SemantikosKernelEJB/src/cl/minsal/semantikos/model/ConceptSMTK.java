@@ -82,6 +82,10 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     /** RefSets a los que pertenece el concepto */
     private List<RefSet> refsets;
 
+    public ConceptSMTK() {
+        super(PersistentEntity.NON_PERSISTED_ID);
+    }
+
     /**
      * La categoría es la mínima información que se le puede dar a un concepto.
      */
@@ -326,6 +330,10 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public void setRelationships(List<Relationship> relationships) {
         this.relationships = relationships;
         this.relationshipsLoaded = true;
+    }
+
+    public boolean isRelationshipsLoaded() {
+        return relationshipsLoaded;
     }
 
     public String getConceptID() {

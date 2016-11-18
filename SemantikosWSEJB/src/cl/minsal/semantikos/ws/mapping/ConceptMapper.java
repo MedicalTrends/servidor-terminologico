@@ -20,12 +20,12 @@ public class ConceptMapper {
         if ( conceptSMTK != null ) {
             ConceptResponse res = new ConceptResponse();
             res.setPublished(conceptSMTK.isPublished());
-            res.setModeled(conceptSMTK.isModeled());
+//            res.setModeled(conceptSMTK.isModeled());
             res.setConceptId(conceptSMTK.getConceptID());
             res.setFullyDefined(conceptSMTK.isFullyDefined());
             res.setObservation(conceptSMTK.getObservation());
-            res.setToBeConsulted(conceptSMTK.isToBeConsulted());
-            res.setToBeReviewed(conceptSMTK.isToBeReviewed());
+//            res.setToBeConsulted(conceptSMTK.isToBeConsulted());
+//            res.setToBeReviewed(conceptSMTK.isToBeReviewed());
             res.setValidUntil(MappingUtil.toDate(conceptSMTK.getValidUntil()));
             return res;
         } else {
@@ -33,69 +33,91 @@ public class ConceptMapper {
         }
     }
 
-    public static ConceptResponse appendDescriptions(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
-        if ( conceptResponse != null
-                && conceptSMTK != null
-                && conceptSMTK.getDescriptions() != null ) {
+    public static List<DescriptionResponse> getDescriptions(ConceptSMTK conceptSMTK) {
+        if ( conceptSMTK != null && conceptSMTK.getDescriptions() != null ) {
             List<DescriptionResponse> descriptions = new ArrayList<>(conceptSMTK.getDescriptions().size());
             for ( Description description : conceptSMTK.getDescriptions() ) {
                 descriptions.add(DescriptionMapper.map(description));
             }
             Collections.sort(descriptions);
-            conceptResponse.setDescriptions(descriptions);
+            return descriptions;
+        }
+        return null;
+    }
+
+    public static ConceptResponse appendDescriptions(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
+        if ( conceptResponse != null ) {
+            conceptResponse.setDescriptions(getDescriptions(conceptSMTK));
         }
         return conceptResponse;
     }
 
-    public static ConceptResponse appendAttributes(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
-        if ( conceptResponse != null
-                && conceptSMTK != null  ) {
+    public static List<AttributeResponse> getAttributes(ConceptSMTK conceptSMTK) {
+        if ( conceptSMTK != null ) {
             List<Relationship> attributes = conceptSMTK.getRelationshipsBasicType();
             if ( attributes != null ) {
                 List<AttributeResponse> attributeResponses = new ArrayList<>(attributes.size());
                 for ( Relationship relationship : attributes ) {
                     attributeResponses.add(AttributeMapper.map(relationship));
                 }
-                conceptResponse.setAttributes(attributeResponses);
+                return attributeResponses;
             }
+        }
+        return null;
+    }
+
+    public static ConceptResponse appendAttributes(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
+        if ( conceptResponse != null ) {
+            conceptResponse.setAttributes(getAttributes(conceptSMTK));
         }
         return conceptResponse;
     }
 
-    public static ConceptResponse appendRelationships(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
-        if ( conceptResponse != null
-                && conceptSMTK != null  ) {
+    public static List<RelationshipResponse> getRelationships(ConceptSMTK conceptSMTK) {
+        if ( conceptSMTK != null  ) {
             List<Relationship> relationships = conceptSMTK.getRelationshipsNonBasicType();
             if ( relationships != null ) {
                 List<RelationshipResponse> relationshipResponses = new ArrayList<>(relationships.size());
                 for ( Relationship relationship : relationships ) {
                     relationshipResponses.add(RelationshipMapper.map(relationship));
                 }
-                conceptResponse.setRelationships(relationshipResponses);
+                return relationshipResponses;
             }
+        }
+        return null;
+    }
+
+    public static ConceptResponse appendRelationships(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
+        if ( conceptResponse != null ) {
+            conceptResponse.setRelationships(getRelationships(conceptSMTK));
         }
         return conceptResponse;
     }
 
     public static ConceptResponse appendCategory(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
-        if ( conceptResponse != null
-                && conceptSMTK != null ) {
+        if ( conceptResponse != null && conceptSMTK != null ) {
             conceptResponse.setCategory(CategoryMapper.map(conceptSMTK.getCategory()));
         }
         return conceptResponse;
     }
 
-    public static ConceptResponse appendRefSets(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
-        if ( conceptResponse != null
-                && conceptSMTK != null ) {
+    public static List<RefSetResponse> getRefSets(ConceptSMTK conceptSMTK) {
+        if ( conceptSMTK != null ) {
             List<RefSet> refSets = conceptSMTK.getRefsets();
             if ( refSets != null ) {
                 List<RefSetResponse> res = new ArrayList<>(refSets.size());
                 for ( RefSet refSet : refSets ) {
                     res.add(RefSetMapper.map(refSet));
                 }
-                conceptResponse.setRefsets(res);
+                return res;
             }
+        }
+        return null;
+    }
+
+    public static ConceptResponse appendRefSets(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
+        if ( conceptResponse != null ) {
+            conceptResponse.setRefsets(getRefSets(conceptSMTK));
         }
         return conceptResponse;
     }

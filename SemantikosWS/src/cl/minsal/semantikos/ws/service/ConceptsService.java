@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.RefSet;
+import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.CategoryMapper;
@@ -39,6 +40,8 @@ public class ConceptsService {
     private ConceptManager conceptManager;
     @EJB
     private RefSetManager refSetManager;
+    @EJB
+    private ConceptController conceptController;
 
     // REQ-WS-028
     @WebMethod(operationName = "conceptoPorIdDescripcion")
@@ -48,31 +51,7 @@ public class ConceptsService {
             @WebParam(name = "idDescripcion")
             String descriptionId
     ) throws NotFoundFault {
-        // TODO Relaciones
-        Description description = null;
-        try {
-            description = this.descriptionDAO.getDescriptionBy(descriptionId);
-        } catch (Exception ignored) {}
-
-        if ( description == null ) {
-            throw new NotFoundFault("Descripcion no encontrada");
-        }
-
-        ConceptSMTK conceptSMTK = description.getConceptSMTK();
-
-        if ( conceptSMTK == null ) {
-            throw new NotFoundFault("Concepto no encontrado");
-        }
-
-        conceptManager.loadRelationships(conceptSMTK);
-        refSetManager.loadConceptRefSets(conceptSMTK);
-        ConceptResponse res = ConceptMapper.map(conceptSMTK);
-        ConceptMapper.appendDescriptions(res, conceptSMTK);
-        ConceptMapper.appendAttributes(res, conceptSMTK);
-        ConceptMapper.appendRelationships(res, conceptSMTK);
-        ConceptMapper.appendCategory(res, conceptSMTK);
-        ConceptMapper.appendRefSets(res, conceptSMTK);
-        return res;
+        return conceptController.getByDescriptionId(descriptionId);
     }
 
     // REQ-WS-002
