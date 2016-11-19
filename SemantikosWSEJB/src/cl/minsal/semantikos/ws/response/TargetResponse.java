@@ -1,9 +1,6 @@
 package cl.minsal.semantikos.ws.response;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
@@ -14,6 +11,7 @@ import java.util.Map;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "objetivo")
+@XmlType(name = "Objetivo")
 public class TargetResponse implements Serializable {
 
     @XmlElement(name="tipoObjetivo")

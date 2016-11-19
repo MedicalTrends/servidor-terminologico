@@ -11,6 +11,7 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "refSet")
+@XmlType(name = "RefSet")
 public class RefSetResponse implements Serializable {
 
     @XmlElement(name="nombre")

@@ -18,7 +18,6 @@ public class UpdateService {
 
     // REQ-WS-003
     @WebMethod(operationName = "codificacionDeNuevoTermino")
-    @WebResult(name = "codificacionDeNuevoTermino")
     public NewTermResponse codificacionDeNuevoTermino(
             @XmlElement(required = true)
             @WebParam(name = "establecimiento")
@@ -57,7 +56,6 @@ public class UpdateService {
 
     // REQ-WS-030
     @WebMethod(operationName = "incrementarContadorDescripcionConsumida")
-    @WebResult(name = "incrementarContadorDescripcionConsumida")
     public DescriptionResponse incrementarContadorDescripcionConsumida(
             @XmlElement(required = true)
             @WebParam(name = "idDescripcion")

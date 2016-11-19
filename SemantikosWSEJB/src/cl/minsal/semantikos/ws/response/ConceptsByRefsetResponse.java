@@ -10,6 +10,7 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "conceptosPorRefSet")
+@XmlType(name = "ConceptosPorRefSet")
 public class ConceptsByRefsetResponse implements Serializable {
 
     @XmlElement(name="refSet")

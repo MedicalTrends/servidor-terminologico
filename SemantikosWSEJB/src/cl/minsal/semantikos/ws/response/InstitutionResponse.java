@@ -10,6 +10,7 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "institucion")
+@XmlType(name = "Establecimiento")
 public class InstitutionResponse implements Serializable {
 
     @XmlElement(name="nombre")

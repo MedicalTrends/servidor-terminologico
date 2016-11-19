@@ -10,6 +10,7 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "tablaAuxiliar")
+@XmlType(name = "TablaAuxiliar")
 public class HelperTableResponse implements Serializable {
 
     @XmlElement(name="nombre")

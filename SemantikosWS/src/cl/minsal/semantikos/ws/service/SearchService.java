@@ -31,7 +31,6 @@ public class SearchService {
 
     // REQ-WS-001
     @WebMethod(operationName = "buscarTermino")
-    @WebResult(name = "buscarTermino")
     public TermSearchResponse buscarTermino(
             @XmlElement(required = true)
             @WebParam(name = "termino")
@@ -59,7 +58,6 @@ public class SearchService {
 
     // REQ-WS-002
     @WebMethod(operationName = "conceptosPorCategoria")
-    @WebResult(name = "conceptosPorCategoria")
     public ConceptsByCategoryResponse conceptosPorCategoria(
             @XmlElement(required = true)
             @WebParam(name = "nombreCategoria")
@@ -75,14 +73,12 @@ public class SearchService {
     }
 
     @WebMethod(operationName = "listaCategorias")
-    @WebResult(name = "categoria")
     public List<CategoryResponse> listaCategorias() throws NotFoundFault {
         return this.categoryController.categoryList();
     }
 
     // REQ-WS-004
     @WebMethod(operationName = "buscarTruncatePerfect")
-    @WebResult(name = "buscarTruncatePerfect")
     public TermSearchResponse buscarTruncatePerfect(
             @XmlElement(required = true)
             @WebParam(name = "termino")
@@ -110,7 +106,6 @@ public class SearchService {
 
     // REQ-WS-005
     @WebMethod(operationName = "obtenerTerminosPedibles")
-    @WebResult(name = "obtenerTerminosPedibles")
     public TermSearchResponse obtenerTerminosPedibles(
             @XmlElement(required = false)
             @WebParam(name = "nombreCategoria")
@@ -139,7 +134,6 @@ public class SearchService {
     // REQ-WS-007
     // REQ-WS-009
     @WebMethod(operationName = "refSetsPorIdDescripcion")
-    @WebResult(name = "refSetsPorIdDescripcion")
     public RefSetsByDescriptionIdResponse refSetsPorIdDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "idDescripcion")
@@ -154,7 +148,6 @@ public class SearchService {
 
     // REQ-WS-008
     @WebMethod(operationName = "listaRefSet")
-    @WebResult(name = "refSet")
     public List<RefSetResponse> listaRefSet(
             @XmlElement(required = false, defaultValue = "true")
             @WebParam(name = "incluyeEstablecimientos")
@@ -165,7 +158,6 @@ public class SearchService {
 
     // REQ-WS-022
     @WebMethod(operationName = "descripcionesPreferidasPorRefSet")
-    @WebResult(name = "descripcionesPreferidasPorRefSet")
     public ConceptsByRefsetResponse descripcionesPreferidasPorRefSet(
             @XmlElement(required = true)
             @WebParam(name = "nombreRefSet")
@@ -182,7 +174,6 @@ public class SearchService {
 
     // REQ-WS-023
     @WebMethod(operationName = "conceptosPorRefSet")
-    @WebResult(name = "conceptosPorRefSet")
     public ConceptsByRefsetResponse conceptosPorRefSet(
             @XmlElement(required = true)
             @WebParam(name = "nombreRefSet")
@@ -199,7 +190,6 @@ public class SearchService {
 
     // REQ-WS-028
     @WebMethod(operationName = "conceptoPorIdDescripcion")
-    @WebResult(name = "concepto")
     public ConceptResponse conceptoPorIdDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "idDescripcion")

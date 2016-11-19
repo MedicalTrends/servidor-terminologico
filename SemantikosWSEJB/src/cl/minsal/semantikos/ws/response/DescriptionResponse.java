@@ -1,9 +1,6 @@
 package cl.minsal.semantikos.ws.response;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,6 +10,7 @@ import java.util.Date;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "descripcion")
+@XmlType(name = "Descripcion")
 public class DescriptionResponse implements Serializable, Comparable<DescriptionResponse> {
 
     @XmlElement(name="id")

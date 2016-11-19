@@ -10,6 +10,7 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "buscarTermino")
+@XmlType(name = "BuscarTermino")
 public class TermSearchResponse implements Serializable {
 
     @XmlElement(name="paginacion")

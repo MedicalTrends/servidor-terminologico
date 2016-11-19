@@ -10,6 +10,7 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "relacion")
+@XmlType(name = "Relacion")
 public class RelationshipResponse implements Serializable {
 
     @XmlElement(name = "definicion")

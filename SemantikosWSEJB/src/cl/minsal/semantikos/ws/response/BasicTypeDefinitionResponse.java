@@ -10,6 +10,7 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "definicionTipoBasico")
+@XmlType(name = "DefinicionTipoBasico")
 public class BasicTypeDefinitionResponse implements Serializable {
 
     @XmlElement(name="nombre")

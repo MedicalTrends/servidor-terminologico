@@ -10,6 +10,7 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "refSetsPorIdDescripcion")
+@XmlType(name = "RefSetsPorIdDescripcion")
 public class RefSetsByDescriptionIdResponse implements Serializable {
 
     @XmlElementWrapper(name="refSets")

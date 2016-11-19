@@ -14,6 +14,7 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "concepto")
+@XmlType(name = "Concepto")
 public class ConceptResponse implements Serializable {
 
     @XmlElement(name="id")
