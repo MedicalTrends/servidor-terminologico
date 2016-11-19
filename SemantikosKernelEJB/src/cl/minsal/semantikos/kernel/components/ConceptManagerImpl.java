@@ -71,6 +71,15 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    public ConceptSMTK getConceptByDescriptionID(String descriptionId) {
+        Description description = this.descriptionDAO.getDescriptionBy(descriptionId);
+        if ( description != null ) {
+            return description.getConceptSMTK();
+        }
+        return null;
+    }
+
+    @Override
     public ConceptSMTK getConceptByID(long id) {
 
         /* Se recupera el concepto base (sus atributos) sin sus relaciones ni descripciones */

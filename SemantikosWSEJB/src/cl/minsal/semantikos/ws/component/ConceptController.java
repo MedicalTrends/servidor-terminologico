@@ -3,15 +3,18 @@ package cl.minsal.semantikos.ws.component;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.RefSetManager;
-import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
+import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.ConceptMapper;
-import cl.minsal.semantikos.ws.response.ConceptResponse;
+import cl.minsal.semantikos.ws.mapping.RefSetMapper;
+import cl.minsal.semantikos.ws.response.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Development on 2016-11-17.
@@ -21,37 +24,128 @@ import javax.ejb.Stateless;
 public class ConceptController {
 
     @EJB
-    private CategoryManager categoryManager;
-    @EJB
-    private DescriptionDAO descriptionDAO;
-    @EJB
     private ConceptManager conceptManager;
     @EJB
     private RefSetManager refSetManager;
+    @EJB
+    private CategoryManager categoryManager;
+    @EJB
+    private PaginationController paginationController;
+    @EJB
+    private CategoryController categoryController;
+    @EJB
+    private RefSetController refSetController;
 
-    public ConceptResponse getByDescriptionId(String descriptionId) throws NotFoundFault {
-        // TODO Relaciones y atributos
-        Description description = null;
-        try {
-            description = this.descriptionDAO.getDescriptionBy(descriptionId);
-        } catch (Exception ignored) { }
-
-        if ( description == null ) {
-            throw new NotFoundFault("Descripcion no encontrada");
-        }
-
-        ConceptSMTK conceptSMTK = description.getConceptSMTK();
-        if ( conceptSMTK == null ) {
-            throw new NotFoundFault("Concepto no encontrado");
-        }
-
-        ConceptResponse res = ConceptMapper.map(conceptSMTK);
+    public ConceptResponse conceptByDescriptionId(String descriptionId)
+        throws NotFoundFault {
+        ConceptSMTK conceptSMTK = this.conceptManager.getConceptByDescriptionID(descriptionId);
+        ConceptResponse res = this.getResponse(conceptSMTK);
         this.loadDescriptions(res, conceptSMTK);
         this.loadAttributes(res, conceptSMTK);
         this.loadRelationships(res, conceptSMTK);
         this.loadCategory(res, conceptSMTK);
         this.loadRefSets(res, conceptSMTK);
         return res;
+    }
+
+    public ConceptsByCategoryResponse conceptsByCategory(
+            String categoryName,
+            Integer pageNumber,
+            Integer pageSize
+    ) throws NotFoundFault {
+        ConceptsByCategoryResponse res = new ConceptsByCategoryResponse();
+
+        Category category = this.categoryManager.getCategoryByName(categoryName);
+        CategoryResponse categoryResponse = this.categoryController.getResponse(category);
+        res.setCategoryResponse(categoryResponse);
+
+        Integer total = this.conceptManager.countModeledConceptBy(category);
+        PaginationResponse paginationResponse = this.paginationController.getResponse(pageSize, pageNumber, total);
+        res.setPaginationResponse(paginationResponse);
+
+        List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptBy(category, pageSize, pageNumber);
+        List<ConceptResponse> conceptResponses = new ArrayList<>();
+        if ( concepts != null ) {
+            for (ConceptSMTK source : concepts) {
+                ConceptResponse conceptResponse = this.getResponse(source);
+                this.loadDescriptions(conceptResponse, source);
+                this.loadAttributes(conceptResponse, source);
+                this.loadRelationships(conceptResponse, source);
+                this.loadRefSets(conceptResponse, source);
+                conceptResponses.add(conceptResponse);
+            }
+        }
+        res.setConceptResponses(conceptResponses);
+
+        // TODO relationships and attributes
+        return res;
+    }
+
+    public ConceptsByRefsetResponse conceptsByRefset(
+            String refSetName,
+            Integer pageNumber,
+            Integer pageSize
+    ) throws NotFoundFault {
+        // TODO
+        ConceptsByRefsetResponse res = new ConceptsByRefsetResponse();
+
+        RefSet refSet = this.refSetManager.getRefsetByName(refSetName);
+        res.setRefSet(this.refSetController.getResponse(refSet));
+
+        Integer total = this.conceptManager.countModeledConceptsBy(refSet);
+        PaginationResponse paginationResponse = this.paginationController.getResponse(pageSize, pageNumber, total);
+        res.setPagination(paginationResponse);
+
+        List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptsBy(refSet, pageNumber, pageSize);
+        List<ConceptResponse> conceptResponses = new ArrayList<>();
+        if ( concepts != null ) {
+            for (ConceptSMTK source : concepts) {
+                ConceptResponse conceptResponse = this.getResponse(source);
+                this.loadDescriptions(conceptResponse, source);
+                this.loadAttributes(conceptResponse, source);
+                this.loadCategory(conceptResponse, source);
+                conceptResponses.add(conceptResponse);
+            }
+        }
+        res.setConcepts(conceptResponses);
+
+        return res;
+    }
+
+    public ConceptsByRefsetResponse conceptsByRefsetWithPreferedDescriptions(
+            String refSetName,
+            Integer pageNumber,
+            Integer pageSize
+    ) throws NotFoundFault {
+        // TODO
+        ConceptsByRefsetResponse res = new ConceptsByRefsetResponse();
+
+        RefSet refSet = this.refSetManager.getRefsetByName(refSetName);
+        res.setRefSet(this.refSetController.getResponse(refSet));
+
+        Integer total = this.conceptManager.countModeledConceptsBy(refSet);
+        PaginationResponse paginationResponse = this.paginationController.getResponse(pageSize, pageNumber, total);
+        res.setPagination(paginationResponse);
+
+        List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptsBy(refSet, pageNumber, pageSize);
+        List<ConceptResponse> conceptResponses = new ArrayList<>();
+        if ( concepts != null ) {
+            for (ConceptSMTK source : concepts) {
+                ConceptResponse conceptResponse = this.getResponse(source);
+                this.loadDescriptions(conceptResponse, source);
+                conceptResponses.add(conceptResponse);
+            }
+        }
+        res.setConcepts(conceptResponses);
+
+        return res;
+    }
+
+    public ConceptResponse getResponse(ConceptSMTK conceptSMTK) throws NotFoundFault {
+        if ( conceptSMTK == null ) {
+            throw new NotFoundFault("Concepto no encontrado");
+        }
+        return ConceptMapper.map(conceptSMTK);
     }
 
     public ConceptResponse loadDescriptions(ConceptResponse conceptResponse, ConceptSMTK source) {

@@ -1,17 +1,12 @@
 package cl.minsal.semantikos.ws.service;
 
-import cl.minsal.semantikos.kernel.components.CategoryManager;
-import cl.minsal.semantikos.kernel.components.ConceptManager;
-import cl.minsal.semantikos.kernel.components.RefSetManager;
-import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
-import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.RefSet;
+import cl.minsal.semantikos.ws.component.CategoryController;
 import cl.minsal.semantikos.ws.component.ConceptController;
+import cl.minsal.semantikos.ws.component.RefSetController;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
-import cl.minsal.semantikos.ws.mapping.CategoryMapper;
 import cl.minsal.semantikos.ws.mapping.ConceptMapper;
 import cl.minsal.semantikos.ws.mapping.RefSetMapper;
 import cl.minsal.semantikos.ws.response.*;
@@ -33,15 +28,11 @@ import java.util.List;
 public class ConceptsService {
 
     @EJB
-    private CategoryManager categoryManager;
-    @EJB
-    private DescriptionDAO descriptionDAO;
-    @EJB
-    private ConceptManager conceptManager;
-    @EJB
-    private RefSetManager refSetManager;
-    @EJB
     private ConceptController conceptController;
+    @EJB
+    private CategoryController categoryController;
+    @EJB
+    private RefSetController refSetController;
 
     // REQ-WS-028
     @WebMethod(operationName = "conceptoPorIdDescripcion")
@@ -51,7 +42,7 @@ public class ConceptsService {
             @WebParam(name = "idDescripcion")
             String descriptionId
     ) throws NotFoundFault {
-        return conceptController.getByDescriptionId(descriptionId);
+        return this.conceptController.conceptByDescriptionId(descriptionId);
     }
 
     // REQ-WS-002
@@ -68,60 +59,13 @@ public class ConceptsService {
             @WebParam(name = "tamanoPagina")
                     Integer pageSize
     ) throws NotFoundFault {
-        Category category = null;
-        try {
-            category = this.categoryManager.getCategoryByName(categoryName);
-        } catch (Exception ignored) {}
-
-        if (category == null) {
-            throw new NotFoundFault("No se encuentra la categoria");
-        }
-
-        Integer total = this.conceptManager.countModeledConceptBy(category);
-        List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptBy(category, pageSize, pageNumber);
-        ConceptsByCategoryResponse res = new ConceptsByCategoryResponse();
-        res.setCategoryResponse(CategoryMapper.map(category));
-
-        List<ConceptResponse> conceptResponses = new ArrayList<>();
-        for ( ConceptSMTK conceptSMTK : concepts ) {
-            conceptManager.loadRelationships(conceptSMTK);
-            refSetManager.loadConceptRefSets(conceptSMTK);
-            ConceptResponse concept = ConceptMapper.map(conceptSMTK);
-            ConceptMapper.appendDescriptions(concept, conceptSMTK);
-            ConceptMapper.appendAttributes(concept, conceptSMTK);
-            ConceptMapper.appendRelationships(concept, conceptSMTK);
-            ConceptMapper.appendRefSets(concept, conceptSMTK);
-            conceptResponses.add(concept);
-        }
-        res.setConceptResponses(conceptResponses);
-
-        PaginationResponse paginationResponse = new PaginationResponse();
-
-        paginationResponse.setTotalCount(total);
-        paginationResponse.setCurrentPage(pageNumber);
-        paginationResponse.setPageSize(pageSize);
-        if ( !conceptResponses.isEmpty() ) {
-            paginationResponse.setShowingFrom(pageNumber * pageSize);
-            paginationResponse.setShowingTo(paginationResponse.getShowingFrom() + conceptResponses.size() - 1);
-        }
-
-        res.setPaginationResponse(paginationResponse);
-
-        // TODO relationships and attributes
-        return res;
+        return this.conceptController.conceptsByCategory(categoryName, pageNumber, pageSize);
     }
 
     @WebMethod(operationName = "listaCategorias")
     @WebResult(name = "categoria")
-    public List<CategoryResponse> listaCategorias() {
-        List<CategoryResponse> res = new ArrayList<>();
-        List<Category> categories = this.categoryManager.getCategories();
-        if ( categories != null ) {
-            for ( Category category : categories ) {
-                res.add(CategoryMapper.map(category));
-            }
-        }
-        return res;
+    public List<CategoryResponse> listaCategorias() throws NotFoundFault {
+        return this.categoryController.categoryList();
     }
 
     // REQ-WS-001
@@ -850,12 +794,8 @@ public class ConceptsService {
             @XmlElement(required = false, defaultValue = "true")
             @WebParam(name = "incluyeEstablecimientos")
                     Boolean includeInstitutions
-    ) {
-        List<RefSetResponse> res = new ArrayList<>();
-        List<RefSet> refSets = this.refSetManager.getAllRefSets();
-        mapResults(res, refSets);
-        // TODO include institutions
-        return res;
+    ) throws NotFoundFault {
+        return this.refSetController.refSetList(includeInstitutions);
     }
 
     // REQ-WS-022
@@ -872,42 +812,7 @@ public class ConceptsService {
             @WebParam(name = "tamanoPagina")
                     Integer pageSize
     ) throws NotFoundFault {
-        // TODO
-        ConceptsByRefsetResponse res = new ConceptsByRefsetResponse();
-
-        RefSet refSet = this.refSetManager.getRefsetByName(refSetName);
-        if ( refSet == null ) {
-            throw new NotFoundFault("No se encuentra RefSet con ese nombre: " + refSetName);
-        }
-        res.setRefSet(RefSetMapper.map(refSet));
-
-        List<ConceptResponse> conceptResponses = new ArrayList<>();
-        List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptsBy(refSet, pageNumber, pageSize);
-        if ( concepts != null ) {
-            conceptResponses = new ArrayList<>(concepts.size());
-            for (ConceptSMTK conceptSMTK : concepts) {
-                conceptManager.loadRelationships(conceptSMTK);
-                ConceptResponse concept = ConceptMapper.map(conceptSMTK);
-                ConceptMapper.appendDescriptions(concept, conceptSMTK);
-                ConceptMapper.appendAttributes(concept, conceptSMTK);
-                ConceptMapper.appendCategory(concept, conceptSMTK);
-                conceptResponses.add(concept);
-            }
-        }
-        res.setConcepts(conceptResponses);
-
-        Integer count = this.conceptManager.countModeledConceptsBy(refSet);
-        PaginationResponse paginationResponse = new PaginationResponse();
-        paginationResponse.setTotalCount(count);
-        paginationResponse.setCurrentPage(pageNumber);
-        paginationResponse.setPageSize(pageSize);
-        if ( conceptResponses != null && !conceptResponses.isEmpty() ) {
-            paginationResponse.setShowingFrom(pageNumber * pageSize);
-            paginationResponse.setShowingTo(paginationResponse.getShowingFrom() + conceptResponses.size() - 1);
-        }
-        res.setPagination(paginationResponse);
-
-        return res;
+        return this.conceptController.conceptsByRefsetWithPreferedDescriptions(refSetName, pageNumber, pageSize);
     }
 
     // REQ-WS-023
@@ -924,42 +829,7 @@ public class ConceptsService {
             @WebParam(name = "tamanoPagina")
                     Integer pageSize
     ) throws NotFoundFault {
-        // TODO
-        ConceptsByRefsetResponse res = new ConceptsByRefsetResponse();
-
-        RefSet refSet = this.refSetManager.getRefsetByName(refSetName);
-        if ( refSet == null ) {
-            throw new NotFoundFault("No se encuentra RefSet con ese nombre: " + refSetName);
-        }
-        res.setRefSet(RefSetMapper.map(refSet));
-
-        List<ConceptResponse> conceptResponses = new ArrayList<>();
-        List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptsBy(refSet, pageNumber, pageSize);
-        if ( concepts != null ) {
-            conceptResponses = new ArrayList<>(concepts.size());
-            for (ConceptSMTK conceptSMTK : concepts) {
-                conceptManager.loadRelationships(conceptSMTK);
-                ConceptResponse concept = ConceptMapper.map(conceptSMTK);
-                ConceptMapper.appendDescriptions(concept, conceptSMTK);
-                ConceptMapper.appendAttributes(concept, conceptSMTK);
-                ConceptMapper.appendCategory(concept, conceptSMTK);
-                conceptResponses.add(concept);
-            }
-        }
-        res.setConcepts(conceptResponses);
-
-        Integer count = this.conceptManager.countModeledConceptsBy(refSet);
-        PaginationResponse paginationResponse = new PaginationResponse();
-        paginationResponse.setTotalCount(count);
-        paginationResponse.setCurrentPage(pageNumber);
-        paginationResponse.setPageSize(pageSize);
-        if ( conceptResponses != null && !conceptResponses.isEmpty() ) {
-            paginationResponse.setShowingFrom(pageNumber * pageSize);
-            paginationResponse.setShowingTo(paginationResponse.getShowingFrom() + conceptResponses.size() - 1);
-        }
-        res.setPagination(paginationResponse);
-
-        return res;
+        return this.conceptController.conceptsByRefset(refSetName, pageNumber, pageSize);
     }
 
     // REQ-WS-007
@@ -998,14 +868,6 @@ public class ConceptsService {
         }
         // TODO
         return null;
-    }
-
-    private void mapResults(List<RefSetResponse> res, List<RefSet> refSets) {
-        if ( refSets != null ) {
-            for ( RefSet refSet : refSets ) {
-                res.add(RefSetMapper.map(refSet));
-            }
-        }
     }
 
 }

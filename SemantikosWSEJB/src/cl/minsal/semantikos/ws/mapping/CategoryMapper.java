@@ -15,7 +15,7 @@ public class CategoryMapper {
 
             res.setName(category.getName());
             res.setNameAbbreviated(category.getNameAbbreviated());
-            res.setRestriction(category.isRestriction());
+//            res.setRestriction(category.isRestriction());
             res.setValid(category.isValid());
 
             return res;

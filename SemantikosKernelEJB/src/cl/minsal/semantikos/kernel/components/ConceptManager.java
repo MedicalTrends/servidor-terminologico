@@ -103,6 +103,13 @@ public interface ConceptManager {
     public ConceptSMTK getConceptByID(long id);
 
     /**
+     *
+     * @param descriptionId
+     * @return
+     */
+    public ConceptSMTK getConceptByDescriptionID(String descriptionId);
+
+    /**
      * Este método es responsable de buscar conceptos cuyo CONCEPT_ID o en descripciones de términos de conceptos, y
      * entregar los resultados de manera paginada.
      *
