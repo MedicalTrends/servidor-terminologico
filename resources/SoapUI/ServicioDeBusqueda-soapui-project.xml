@@ -1,0 +1,908 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="a1c667ab-786a-453b-9253-a89989bea6ff" activeEnvironment="Default" name="ServicioDeBusqueda" resourceRoot="" soapui-version="5.2.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="0f246328-cd05-4fe9-90bd-aac702d5e73e" wsaVersion="NONE" name="ServicioDeBusquedaSoapBinding" type="wsdl" bindingName="{http://service.ws.semantikos.minsal.cl/}ServicioDeBusquedaSoapBinding" soapVersion="1_1" anonymous="optional" definition="file:/C:/jboss-eap-6.4/standalone/data/wsdl/SemantikosCentralEAR-1.0.0.ear/SemantikosWS-1.0.0.war/ServicioDeBusqueda.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:\C:\jboss-eap-6.4\standalone\data\wsdl\SemantikosCentralEAR-1.0.0.ear\SemantikosWS-1.0.0.war\ServicioDeBusqueda.wsdl"><con:part><con:url>file:\C:\jboss-eap-6.4\standalone\data\wsdl\SemantikosCentralEAR-1.0.0.ear\SemantikosWS-1.0.0.war\ServicioDeBusqueda.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="ServicioDeBusqueda" targetNamespace="http://service.ws.semantikos.minsal.cl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ws.semantikos.minsal.cl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.ws.semantikos.minsal.cl/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="atributo" type="tns:attributeResponse"/>
+      <xs:element name="buscarTermino" nillable="true" type="xs:anyType"/>
+      <xs:element name="buscarTerminoResponse" type="tns:buscarTerminoResponse"/>
+      <xs:element name="buscarTruncatePerfect" type="tns:buscarTruncatePerfect"/>
+      <xs:element name="buscarTruncatePerfectResponse" type="tns:buscarTruncatePerfectResponse"/>
+      <xs:element name="categoria" type="tns:categoryResponse"/>
+      <xs:element name="columnaTablaAuxiliar" type="tns:helperTableColumnResponse"/>
+      <xs:element name="concepto" type="tns:conceptResponse"/>
+      <xs:element name="conceptoPorIdDescripcion" type="tns:conceptoPorIdDescripcion"/>
+      <xs:element name="conceptoPorIdDescripcionResponse" type="tns:conceptoPorIdDescripcionResponse"/>
+      <xs:element name="conceptosPorCategoria" nillable="true" type="xs:anyType"/>
+      <xs:element name="conceptosPorCategoriaResponse" type="tns:conceptosPorCategoriaResponse"/>
+      <xs:element name="conceptosPorRefSet" nillable="true" type="xs:anyType"/>
+      <xs:element name="conceptosPorRefSetResponse" type="tns:conceptosPorRefSetResponse"/>
+      <xs:element name="definicionObjetivo" type="tns:targetDefinitionResponse"/>
+      <xs:element name="definicionRelacion" type="tns:relationshipDefinitionResponse"/>
+      <xs:element name="definicionRelacionAtributo" type="tns:relationshipAttributeDefinitionResponse"/>
+      <xs:element name="definicionTipoBasico" type="tns:basicTypeDefinitionResponse"/>
+      <xs:element name="descripcion" type="tns:descriptionResponse"/>
+      <xs:element name="descripcionesPreferidasPorRefSet" type="tns:descripcionesPreferidasPorRefSet"/>
+      <xs:element name="descripcionesPreferidasPorRefSetResponse" type="tns:descripcionesPreferidasPorRefSetResponse"/>
+      <xs:element name="intervalo" type="tns:intervalResponse"/>
+      <xs:element name="listaCategorias" type="tns:listaCategorias"/>
+      <xs:element name="listaCategoriasResponse" type="tns:listaCategoriasResponse"/>
+      <xs:element name="listaRefSet" type="tns:listaRefSet"/>
+      <xs:element name="listaRefSetResponse" type="tns:listaRefSetResponse"/>
+      <xs:element name="multiplicidad" type="tns:multiplicityResponse"/>
+      <xs:element name="objetivo" type="tns:targetResponse"/>
+      <xs:element name="obtenerTerminosPedibles" type="tns:obtenerTerminosPedibles"/>
+      <xs:element name="obtenerTerminosPediblesResponse" type="tns:obtenerTerminosPediblesResponse"/>
+      <xs:element name="paginacion" type="tns:paginationResponse"/>
+      <xs:element name="refSet" type="tns:refSetResponse"/>
+      <xs:element name="refSetsPorIdDescripcion" nillable="true" type="xs:anyType"/>
+      <xs:element name="refSetsPorIdDescripcionResponse" type="tns:refSetsPorIdDescripcionResponse"/>
+      <xs:element name="relacion" type="tns:relationshipResponse"/>
+      <xs:element name="relacionAtributo" type="tns:relationshipAttributeResponse"/>
+      <xs:element name="tablaAuxiliar" type="tns:helperTableResponse"/>
+      <xs:element name="tagSMTK" type="tns:tagSMTKResponse"/>
+      <xs:element name="tipoObjetivo" type="tns:targetTypeResponse"/>
+      <xs:element name="tipoTipoBasico" type="tns:basicTypeTypeResponse"/>
+      <xs:element name="usuario" type="tns:userResponse"/>
+      <xs:complexType name="conceptoPorIdDescripcion">
+        <xs:sequence>
+          <xs:element name="idDescripcion" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="conceptoPorIdDescripcionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:concepto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="conceptResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string"/>
+          <xs:element minOccurs="0" name="aSerRevisado" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="aSerConsultado" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="modelado" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="completamenteDefinido" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="publicado" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="validoHasta" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="observacion" type="xs:string"/>
+          <xs:element minOccurs="0" ref="tns:tagSMTK"/>
+          <xs:element minOccurs="0" ref="tns:categoria"/>
+          <xs:element minOccurs="0" name="refSets">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:refSet"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="descripciones">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:descripcion"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="atributos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:atributo"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="relaciones">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:relacion"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="tagSMTKResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="categoryResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombreAbreviado" type="xs:string"/>
+          <xs:element minOccurs="0" name="restringida" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="vigente" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="refSetResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="validoHasta" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="creadoEn" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="institucion" type="xs:string"/>
+          <xs:element minOccurs="0" name="conceptos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="descriptionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string"/>
+          <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+          <xs:element minOccurs="0" name="termino" type="xs:string"/>
+          <xs:element minOccurs="0" name="valida" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esSensibleAMayusculas" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="nombreAutgenerado" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="publicado" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="modelado" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="validaHasta" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="creado" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="usos" type="xs:long"/>
+          <xs:element minOccurs="0" name="usuarioCreador" type="tns:userResponse"/>
+          <xs:element minOccurs="0" ref="tns:concepto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="userResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombreUsuario" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="apellido" type="xs:string"/>
+          <xs:element minOccurs="0" name="segundoApellido" type="xs:string"/>
+          <xs:element minOccurs="0" name="email" type="xs:string"/>
+          <xs:element minOccurs="0" name="rut" type="xs:string"/>
+          <xs:element minOccurs="0" name="ultimoLogin" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="ultimoCambioPassword" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="attributeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+          <xs:element minOccurs="0" name="valor" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="relationshipResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="definicion" type="tns:relationshipDefinitionResponse"/>
+          <xs:element minOccurs="0" ref="tns:objetivo"/>
+          <xs:element minOccurs="0" ref="tns:concepto"/>
+          <xs:element minOccurs="0" name="atributos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="atributo" type="tns:relationshipAttributeResponse"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="relationshipDefinitionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+          <xs:element minOccurs="0" name="description" type="xs:string"/>
+          <xs:element minOccurs="0" ref="tns:multiplicidad"/>
+          <xs:element minOccurs="0" ref="tns:definicionObjetivo"/>
+          <xs:element minOccurs="0" name="definicionRelacionExcluida" type="tns:relationshipDefinitionResponse"/>
+          <xs:element minOccurs="0" name="definicionesAtributoRelacion">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="definicionAtributoRelacion" type="tns:relationshipAttributeDefinitionResponse"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="multiplicityResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="limiteInferior" type="xs:int"/>
+          <xs:element minOccurs="0" name="limiteSuperior" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="targetDefinitionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="esTipoBasico" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esTipoSMTK" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esTablaAuxiliar" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esTipoSnomedCT" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esTipoCrossMap" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="relationshipAttributeDefinitionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+          <xs:element minOccurs="0" ref="tns:multiplicidad"/>
+          <xs:element minOccurs="0" ref="tns:definicionObjetivo"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="targetResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:tipoObjetivo"/>
+          <xs:element minOccurs="0" name="activo" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="idModulo" type="xs:long"/>
+          <xs:element minOccurs="0" name="estadoDefinicionId" type="xs:long"/>
+          <xs:element minOccurs="0" name="valido" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="tiempoEfectivo" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="valor" type="xs:string"/>
+          <xs:element minOccurs="0" name="conceptoSMTK" type="tns:conceptResponse"/>
+          <xs:element minOccurs="0" ref="tns:relacion"/>
+          <xs:element minOccurs="0" ref="tns:tablaAuxiliar"/>
+          <xs:element name="fields">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element minOccurs="0" name="key" type="xs:string"/>
+                      <xs:element minOccurs="0" name="value" type="xs:string"/>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="targetTypeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
+          <xs:element minOccurs="0" name="definicionesObjetivo">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:definicionObjetivo"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="definicionesTipoBasico">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:definicionTipoBasico"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="basicTypeDefinitionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
+          <xs:element minOccurs="0" ref="tns:intervalo"/>
+          <xs:element minOccurs="0" name="tipo" type="tns:basicTypeTypeResponse"/>
+          <xs:element minOccurs="0" name="dominios">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="dominio" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="intervalResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="limiteInferior" type="xs:string"/>
+          <xs:element minOccurs="0" name="limiteSuperior" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="basicTypeTypeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombreTipo" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="helperTableResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombreTabla" type="xs:string"/>
+          <xs:element minOccurs="0" name="columnaTablaAuxiliar">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="columna" type="tns:helperTableColumnResponse"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="helperTableColumnResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombreColumna" type="xs:string"/>
+          <xs:element minOccurs="0" name="esLlavePrimaria" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esBuscable" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esMostrable" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="relationshipAttributeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:objetivo"/>
+          <xs:element minOccurs="0" name="definicionAtributoRelacion" type="tns:relationshipAttributeDefinitionResponse"/>
+          <xs:element minOccurs="0" ref="tns:relacion"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="refSetsPorIdDescripcion">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="idDescripcion" type="xs:string"/>
+          <xs:element default="true" minOccurs="0" name="incluyeEstablecimientos" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="refSetsPorIdDescripcionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:refSetsPorIdDescripcion"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="refSetsByDescriptionIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="refSets">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:refSet"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="conceptos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="listaRefSet">
+        <xs:sequence>
+          <xs:element default="true" minOccurs="0" name="incluyeEstablecimientos" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="listaRefSetResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:refSet"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="listaCategorias">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="listaCategoriasResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:categoria"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="conceptosPorRefSet">
+        <xs:sequence>
+          <xs:element name="nombreRefSet" type="xs:string"/>
+          <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
+          <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="conceptosPorRefSetResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:conceptosPorRefSet"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="conceptsByRefsetResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:refSet"/>
+          <xs:element minOccurs="0" ref="tns:paginacion"/>
+          <xs:element minOccurs="0" name="conceptos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="paginationResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="totalRegistros" type="xs:int"/>
+          <xs:element minOccurs="0" name="paginaActual" type="xs:int"/>
+          <xs:element minOccurs="0" name="registrosPorPagina" type="xs:int"/>
+          <xs:element minOccurs="0" name="mostrandoDesde" type="xs:int"/>
+          <xs:element minOccurs="0" name="mostrandoHasta" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="buscarTruncatePerfect">
+        <xs:sequence>
+          <xs:element name="termino" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreCategoria" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreRefSet" type="xs:string"/>
+          <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
+          <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="buscarTruncatePerfectResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="buscarTruncatePerfect" type="tns:termSearchResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="termSearchResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:paginacion"/>
+          <xs:element minOccurs="0" name="conceptos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="conceptosPorCategoria">
+        <xs:sequence>
+          <xs:element name="nombreCategoria" type="xs:string"/>
+          <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
+          <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="conceptosPorCategoriaResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:conceptosPorCategoria"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="conceptsByCategoryResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:categoria"/>
+          <xs:element minOccurs="0" ref="tns:paginacion"/>
+          <xs:element minOccurs="0" name="conceptos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="descripcionesPreferidasPorRefSet">
+        <xs:sequence>
+          <xs:element name="nombreRefSet" type="xs:string"/>
+          <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
+          <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="descripcionesPreferidasPorRefSetResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="descripcionesPreferidasPorRefSet" type="tns:conceptsByRefsetResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerTerminosPedibles">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreCategoria" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreRefSet" type="xs:string"/>
+          <xs:element name="pedible" type="xs:string"/>
+          <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
+          <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerTerminosPediblesResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="obtenerTerminosPedibles" type="tns:termSearchResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="buscarTermino">
+        <xs:sequence>
+          <xs:element name="termino" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreCategoria" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreRefSet" type="xs:string"/>
+          <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
+          <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="buscarTerminoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:buscarTermino"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="NotFoundFault" type="tns:NotFoundFault"/>
+      <xs:complexType name="NotFoundFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="IllegalInputFault" type="tns:IllegalInputFault"/>
+      <xs:complexType name="IllegalInputFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="conceptosPorRefSetResponse">
+    <wsdl:part element="tns:conceptosPorRefSetResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarTermino">
+    <wsdl:part element="tns:buscarTermino" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="obtenerTerminosPediblesResponse">
+    <wsdl:part element="tns:obtenerTerminosPediblesResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listaCategorias">
+    <wsdl:part element="tns:listaCategorias" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listaRefSet">
+    <wsdl:part element="tns:listaRefSet" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarTruncatePerfect">
+    <wsdl:part element="tns:buscarTruncatePerfect" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="obtenerTerminosPedibles">
+    <wsdl:part element="tns:obtenerTerminosPedibles" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="conceptoPorIdDescripcion">
+    <wsdl:part element="tns:conceptoPorIdDescripcion" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarTruncatePerfectResponse">
+    <wsdl:part element="tns:buscarTruncatePerfectResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="refSetsPorIdDescripcionResponse">
+    <wsdl:part element="tns:refSetsPorIdDescripcionResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listaRefSetResponse">
+    <wsdl:part element="tns:listaRefSetResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="conceptosPorCategoria">
+    <wsdl:part element="tns:conceptosPorCategoria" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listaCategoriasResponse">
+    <wsdl:part element="tns:listaCategoriasResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="conceptosPorCategoriaResponse">
+    <wsdl:part element="tns:conceptosPorCategoriaResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarTerminoResponse">
+    <wsdl:part element="tns:buscarTerminoResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="conceptoPorIdDescripcionResponse">
+    <wsdl:part element="tns:conceptoPorIdDescripcionResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="refSetsPorIdDescripcion">
+    <wsdl:part element="tns:refSetsPorIdDescripcion" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="descripcionesPreferidasPorRefSetResponse">
+    <wsdl:part element="tns:descripcionesPreferidasPorRefSetResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IllegalInputFault">
+    <wsdl:part element="tns:IllegalInputFault" name="IllegalInputFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NotFoundFault">
+    <wsdl:part element="tns:NotFoundFault" name="NotFoundFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="descripcionesPreferidasPorRefSet">
+    <wsdl:part element="tns:descripcionesPreferidasPorRefSet" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="conceptosPorRefSet">
+    <wsdl:part element="tns:conceptosPorRefSet" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SearchService">
+    <wsdl:operation name="conceptoPorIdDescripcion">
+      <wsdl:input message="tns:conceptoPorIdDescripcion" name="conceptoPorIdDescripcion"></wsdl:input>
+      <wsdl:output message="tns:conceptoPorIdDescripcionResponse" name="conceptoPorIdDescripcionResponse"></wsdl:output>
+      <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="refSetsPorIdDescripcion">
+      <wsdl:input message="tns:refSetsPorIdDescripcion" name="refSetsPorIdDescripcion"></wsdl:input>
+      <wsdl:output message="tns:refSetsPorIdDescripcionResponse" name="refSetsPorIdDescripcionResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listaRefSet">
+      <wsdl:input message="tns:listaRefSet" name="listaRefSet"></wsdl:input>
+      <wsdl:output message="tns:listaRefSetResponse" name="listaRefSetResponse"></wsdl:output>
+      <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listaCategorias">
+      <wsdl:input message="tns:listaCategorias" name="listaCategorias"></wsdl:input>
+      <wsdl:output message="tns:listaCategoriasResponse" name="listaCategoriasResponse"></wsdl:output>
+      <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="conceptosPorRefSet">
+      <wsdl:input message="tns:conceptosPorRefSet" name="conceptosPorRefSet"></wsdl:input>
+      <wsdl:output message="tns:conceptosPorRefSetResponse" name="conceptosPorRefSetResponse"></wsdl:output>
+      <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="buscarTruncatePerfect">
+      <wsdl:input message="tns:buscarTruncatePerfect" name="buscarTruncatePerfect"></wsdl:input>
+      <wsdl:output message="tns:buscarTruncatePerfectResponse" name="buscarTruncatePerfectResponse"></wsdl:output>
+      <wsdl:fault message="tns:IllegalInputFault" name="IllegalInputFault"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="conceptosPorCategoria">
+      <wsdl:input message="tns:conceptosPorCategoria" name="conceptosPorCategoria"></wsdl:input>
+      <wsdl:output message="tns:conceptosPorCategoriaResponse" name="conceptosPorCategoriaResponse"></wsdl:output>
+      <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="descripcionesPreferidasPorRefSet">
+      <wsdl:input message="tns:descripcionesPreferidasPorRefSet" name="descripcionesPreferidasPorRefSet"></wsdl:input>
+      <wsdl:output message="tns:descripcionesPreferidasPorRefSetResponse" name="descripcionesPreferidasPorRefSetResponse"></wsdl:output>
+      <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerTerminosPedibles">
+      <wsdl:input message="tns:obtenerTerminosPedibles" name="obtenerTerminosPedibles"></wsdl:input>
+      <wsdl:output message="tns:obtenerTerminosPediblesResponse" name="obtenerTerminosPediblesResponse"></wsdl:output>
+      <wsdl:fault message="tns:IllegalInputFault" name="IllegalInputFault"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="buscarTermino">
+      <wsdl:input message="tns:buscarTermino" name="buscarTermino"></wsdl:input>
+      <wsdl:output message="tns:buscarTerminoResponse" name="buscarTerminoResponse"></wsdl:output>
+      <wsdl:fault message="tns:IllegalInputFault" name="IllegalInputFault"></wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServicioDeBusquedaSoapBinding" type="tns:SearchService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="conceptoPorIdDescripcion">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="conceptoPorIdDescripcion">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="conceptoPorIdDescripcionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault name="NotFoundFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listaCategorias">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listaCategorias">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listaCategoriasResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault name="NotFoundFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listaRefSet">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listaRefSet">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listaRefSetResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault name="NotFoundFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="refSetsPorIdDescripcion">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="refSetsPorIdDescripcion">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="refSetsPorIdDescripcionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="buscarTruncatePerfect">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="buscarTruncatePerfect">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="buscarTruncatePerfectResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault name="IllegalInputFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="conceptosPorRefSet">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="conceptosPorRefSet">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="conceptosPorRefSetResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault name="NotFoundFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="conceptosPorCategoria">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="conceptosPorCategoria">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="conceptosPorCategoriaResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault name="NotFoundFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="descripcionesPreferidasPorRefSet">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="descripcionesPreferidasPorRefSet">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="descripcionesPreferidasPorRefSetResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault name="NotFoundFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerTerminosPedibles">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="obtenerTerminosPedibles">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="obtenerTerminosPediblesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault name="IllegalInputFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="buscarTermino">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="buscarTermino">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="buscarTerminoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault name="IllegalInputFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServicioDeBusqueda">
+    <wsdl:port binding="tns:ServicioDeBusquedaSoapBinding" name="SearchServicePort">
+      <soap:address location="http://localhost:8080/ws/ServicioDeBusqueda"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint></con:endpoints><con:operation id="d2f249b1-8223-42e6-960f-bdeef04df8cd" isOneWay="false" action="" name="buscarTermino" bindingOperationName="buscarTermino" type="Request-Response" outputName="buscarTerminoResponse" inputName="buscarTermino" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d06ee8c7-6c9d-4ce6-b73b-1f2db3cc06ae" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>?</ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/></con:call></con:operation><con:operation id="5f5f1daf-dc3f-45a1-8568-e93144de3839" isOneWay="false" action="" name="buscarTruncatePerfect" bindingOperationName="buscarTruncatePerfect" type="Request-Response" outputName="buscarTruncatePerfectResponse" inputName="buscarTruncatePerfect" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="3d2da33e-b392-4bc2-97da-1881eee64fdd" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTruncatePerfect>\r
+         <termino>?</termino>\r
+         <!--Zero or more repetitions:-->\r
+         <nombreCategoria>?</nombreCategoria>\r
+         <!--Zero or more repetitions:-->\r
+         <nombreRefSet>?</nombreRefSet>\r
+         <!--Optional:-->\r
+         <numeroPagina>0</numeroPagina>\r
+         <!--Optional:-->\r
+         <tamanoPagina>10</tamanoPagina>\r
+      </ser:buscarTruncatePerfect>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTruncatePerfect"/></con:call></con:operation><con:operation id="10da49ab-2ec8-4384-956d-e8b9b967eb33" isOneWay="false" action="" name="conceptoPorIdDescripcion" bindingOperationName="conceptoPorIdDescripcion" type="Request-Response" outputName="conceptoPorIdDescripcionResponse" inputName="conceptoPorIdDescripcion" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="da5c805a-e7d0-4d20-8f65-08dbd67578af" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptoPorIdDescripcion>\r
+         <idDescripcion>?</idDescripcion>\r
+      </ser:conceptoPorIdDescripcion>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/conceptoPorIdDescripcion"/></con:call></con:operation><con:operation id="1ec6b78f-2e5a-4848-8c6c-ea981bf6628b" isOneWay="false" action="" name="conceptosPorCategoria" bindingOperationName="conceptosPorCategoria" type="Request-Response" outputName="conceptosPorCategoriaResponse" inputName="conceptosPorCategoria" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="a21a3707-201b-4b7b-b705-608cc1d00168" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorCategoria>?</ser:conceptosPorCategoria>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/conceptosPorCategoria"/></con:call></con:operation><con:operation id="7d2c5446-e978-446f-aa81-cc84abc2940f" isOneWay="false" action="" name="conceptosPorRefSet" bindingOperationName="conceptosPorRefSet" type="Request-Response" outputName="conceptosPorRefSetResponse" inputName="conceptosPorRefSet" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="cbbacadf-b750-4c13-b418-211024047b93" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorRefSet>?</ser:conceptosPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/conceptosPorRefSet"/></con:call></con:operation><con:operation id="af9e6f59-9d30-4256-a3df-75e3099b9f20" isOneWay="false" action="" name="descripcionesPreferidasPorRefSet" bindingOperationName="descripcionesPreferidasPorRefSet" type="Request-Response" outputName="descripcionesPreferidasPorRefSetResponse" inputName="descripcionesPreferidasPorRefSet" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="0813af86-c06e-4962-acdb-b2a84aceb4a6" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:descripcionesPreferidasPorRefSet>\r
+         <nombreRefSet>?</nombreRefSet>\r
+         <!--Optional:-->\r
+         <numeroPagina>0</numeroPagina>\r
+         <!--Optional:-->\r
+         <tamanoPagina>10</tamanoPagina>\r
+      </ser:descripcionesPreferidasPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/descripcionesPreferidasPorRefSet"/></con:call></con:operation><con:operation id="1ca819cb-da80-4546-8021-34f61f954b08" isOneWay="false" action="" name="listaCategorias" bindingOperationName="listaCategorias" type="Request-Response" outputName="listaCategoriasResponse" inputName="listaCategorias" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="5abf7145-7d45-47f2-96c2-5d793843bb3e" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:listaCategorias/>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/listaCategorias"/></con:call></con:operation><con:operation id="d6cc18a7-7613-4cda-bafb-58639a3a2c91" isOneWay="false" action="" name="listaRefSet" bindingOperationName="listaRefSet" type="Request-Response" outputName="listaRefSetResponse" inputName="listaRefSet" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="6a84ecac-237d-4842-91b3-cff925a45329" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:listaRefSet>\r
+         <!--Optional:-->\r
+         <incluyeEstablecimientos>true</incluyeEstablecimientos>\r
+      </ser:listaRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/listaRefSet"/></con:call></con:operation><con:operation id="fd1436a1-5df6-4334-9a0b-e14d0922659d" isOneWay="false" action="" name="obtenerTerminosPedibles" bindingOperationName="obtenerTerminosPedibles" type="Request-Response" outputName="obtenerTerminosPediblesResponse" inputName="obtenerTerminosPedibles" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="76259b7c-c6fd-4515-a61d-458643bee365" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerTerminosPedibles>\r
+         <!--Zero or more repetitions:-->\r
+         <nombreCategoria>?</nombreCategoria>\r
+         <!--Zero or more repetitions:-->\r
+         <nombreRefSet>?</nombreRefSet>\r
+         <pedible>?</pedible>\r
+         <!--Optional:-->\r
+         <numeroPagina>0</numeroPagina>\r
+         <!--Optional:-->\r
+         <tamanoPagina>10</tamanoPagina>\r
+      </ser:obtenerTerminosPedibles>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/obtenerTerminosPedibles"/></con:call></con:operation><con:operation id="698493fe-1f1c-4ec6-b3c8-e8481e791b9c" isOneWay="false" action="" name="refSetsPorIdDescripcion" bindingOperationName="refSetsPorIdDescripcion" type="Request-Response" outputName="refSetsPorIdDescripcionResponse" inputName="refSetsPorIdDescripcion" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="6415d77c-dc10-4a38-b1b0-e61cbe9b279b" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:refSetsPorIdDescripcion>?</ser:refSetsPorIdDescripcion>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/refSetsPorIdDescripcion"/></con:call></con:operation></con:interface><con:testSuite id="ac3a7169-e5e5-4644-9dc3-828e3d4337f7" name="ServicioDeBusquedaSoapBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="d59a50ba-7b1a-4420-a63f-b874c4107bb8" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="buscarTermino TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="29fd361b-34f4-4b8f-aeaf-51435de728f6" name="buscarTermino"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino" id="e30d8b8e-b44d-4e9c-8b48-6d80d21bd27b"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>?</ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="0a18aa50-3479-482c-acb5-5a7568f314b4" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="buscarTruncatePerfect TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="0146a8e8-1def-4e86-8ecd-8ab101fae253" name="buscarTruncatePerfect"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTruncatePerfect</con:operation><con:request name="buscarTruncatePerfect" id="7f222acf-d6de-4111-9a0d-cb0bda54867f"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTruncatePerfect>\r
+         <termino>?</termino>\r
+         <!--Zero or more repetitions:-->\r
+         <nombreCategoria>?</nombreCategoria>\r
+         <!--Zero or more repetitions:-->\r
+         <nombreRefSet>?</nombreRefSet>\r
+         <!--Optional:-->\r
+         <numeroPagina>0</numeroPagina>\r
+         <!--Optional:-->\r
+         <tamanoPagina>10</tamanoPagina>\r
+      </ser:buscarTruncatePerfect>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTruncatePerfect"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="ea019df9-0ba9-44ed-828c-070202889269" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="conceptoPorIdDescripcion TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="b211cfc8-30f9-43e5-ba43-888d4550e335" name="conceptoPorIdDescripcion"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>conceptoPorIdDescripcion</con:operation><con:request name="conceptoPorIdDescripcion" id="69763a68-80af-425e-98f7-1b13f7f05882"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptoPorIdDescripcion>\r
+         <idDescripcion>?</idDescripcion>\r
+      </ser:conceptoPorIdDescripcion>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/SearchService/conceptoPorIdDescripcion"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="03a24ff4-0395-408b-856f-890b3061f48d" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="conceptosPorCategoria TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="aeb47a35-bd2c-4f88-a298-3d4c776373c8" name="conceptosPorCategoria"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>conceptosPorCategoria</con:operation><con:request name="conceptosPorCategoria" id="6293ed5c-49c0-4891-840b-3865f7cee444"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorCategoria>?</ser:conceptosPorCategoria>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/SearchService/conceptosPorCategoria"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="048baf93-1e44-4bce-bb63-9dae6e6c4193" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="conceptosPorRefSet TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="7f80858e-5003-4f1f-9882-63c20a3a0ee4" name="conceptosPorRefSet"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>conceptosPorRefSet</con:operation><con:request name="conceptosPorRefSet" id="0b38291b-c8ce-4183-9085-20b217e26e9e"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorRefSet>?</ser:conceptosPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/SearchService/conceptosPorRefSet"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="bf4251a4-8d3c-45f5-ab1f-81b404bf3a6e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="descripcionesPreferidasPorRefSet TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="ac7e53c5-c3ab-412a-b6ad-5bc6bbb57724" name="descripcionesPreferidasPorRefSet"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>descripcionesPreferidasPorRefSet</con:operation><con:request name="descripcionesPreferidasPorRefSet" id="1d61d6b6-be36-483c-aca8-e09bf79d6e7e"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:descripcionesPreferidasPorRefSet>\r
+         <nombreRefSet>?</nombreRefSet>\r
+         <!--Optional:-->\r
+         <numeroPagina>0</numeroPagina>\r
+         <!--Optional:-->\r
+         <tamanoPagina>10</tamanoPagina>\r
+      </ser:descripcionesPreferidasPorRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/SearchService/descripcionesPreferidasPorRefSet"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="f604d704-13e5-47ea-8031-2e0404e6f3bc" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="listaCategorias TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="bfabb6b8-7c42-4a15-9973-da0484ab9fb1" name="listaCategorias"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>listaCategorias</con:operation><con:request name="listaCategorias" id="69f74388-3610-4746-93a9-bb0e340e97a9"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:listaCategorias/>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/SearchService/listaCategorias"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="4ec70532-3a2e-4639-8e1c-2271c5d71b70" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="listaRefSet TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="ab601bbd-aecf-4d24-aab4-41ef34efdbae" name="listaRefSet"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>listaRefSet</con:operation><con:request name="listaRefSet" id="142de03c-4c6e-49a9-8fc1-6580f9be4c2a"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:listaRefSet>\r
+         <!--Optional:-->\r
+         <incluyeEstablecimientos>true</incluyeEstablecimientos>\r
+      </ser:listaRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/SearchService/listaRefSet"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="6ccd4f19-261a-464c-a89e-6d125af4d119" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerTerminosPedibles TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="54a5ad57-0eea-43ba-96d8-4bf475fafde1" name="obtenerTerminosPedibles"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>obtenerTerminosPedibles</con:operation><con:request name="obtenerTerminosPedibles" id="c0cee335-36c1-4522-beae-ae8235a7d40d"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerTerminosPedibles>\r
+         <!--Zero or more repetitions:-->\r
+         <nombreCategoria>?</nombreCategoria>\r
+         <!--Zero or more repetitions:-->\r
+         <nombreRefSet>?</nombreRefSet>\r
+         <pedible>?</pedible>\r
+         <!--Optional:-->\r
+         <numeroPagina>0</numeroPagina>\r
+         <!--Optional:-->\r
+         <tamanoPagina>10</tamanoPagina>\r
+      </ser:obtenerTerminosPedibles>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/SearchService/obtenerTerminosPedibles"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="fd3ecc7a-54d5-46ab-b39a-cd23968a5f86" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="refSetsPorIdDescripcion TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="7c8f0ec9-30fe-4042-94bf-7eaebb19923e" name="refSetsPorIdDescripcion"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>refSetsPorIdDescripcion</con:operation><con:request name="refSetsPorIdDescripcion" id="3b267985-a52f-4687-a55a-1a7d2443d79e"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:refSetsPorIdDescripcion>?</ser:refSetsPorIdDescripcion>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/SearchService/refSetsPorIdDescripcion"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

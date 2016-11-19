@@ -595,7 +595,7 @@
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:conceptoPorIdDescripcion>\r
-         <idDescripcion>978a667f-dae8-4565-9ac7-0cc52c7469b8</idDescripcion>\r
+         <idDescripcion>686c71ea-5</idDescripcion>\r
       </ser:conceptoPorIdDescripcion>\r
    </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="5df3df44-ac58-48cf-9b34-b66f4601c22a" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/ConceptsService/conceptoPorIdDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="864db767-2cb7-4d03-8c33-43fd5b90611e" name="conceptoPorIdDescripcion - Request 3"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ConceptsServiceServiceSoapBinding</con:interface><con:operation>conceptoPorIdDescripcion</con:operation><con:request name="conceptoPorIdDescripcion - Request 3" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="60a7e375-bd7e-4a08-b86c-a5ff1e922819"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ConceptsService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
