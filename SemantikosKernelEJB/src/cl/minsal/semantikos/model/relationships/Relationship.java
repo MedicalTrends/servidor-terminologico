@@ -1,15 +1,15 @@
 package cl.minsal.semantikos.model.relationships;
 
-import cl.minsal.semantikos.kernel.daos.DAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
-import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -31,9 +31,6 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
 
     // TODO: Normalizar esta clase
     private static final Logger logger = LoggerFactory.getLogger(Relationship.class);
-
-    /** Identificador único de la base de datos */
-    private long id;
 
     /** El concepto origen de esta relación */
     private ConceptSMTK sourceConcept;
@@ -62,10 +59,6 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
      */
     @Deprecated
     public Relationship(ConceptSMTK sourceConcept, RelationshipDefinition relationshipDefinition, List<RelationshipAttribute> relationshipAttributes) {
-
-        /* No está persistido originalmente */
-        this.id = NON_PERSISTED_ID;
-
         this.sourceConcept = sourceConcept;
         this.relationshipDefinition = relationshipDefinition;
         this.relationshipAttributes = relationshipAttributes;
@@ -79,11 +72,7 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
      * @param relationshipDefinition Definición de la relación.
      * @param relationshipAttributes Lista de Atributos
      */
-    public Relationship(ConceptSMTK sourceConcept, Target target, RelationshipDefinition relationshipDefinition, List<RelationshipAttribute> relationshipAttributes) {
-
-        /* No está persistido originalmente */
-        this.id = NON_PERSISTED_ID;
-
+    public Relationship(ConceptSMTK sourceConcept, Target target, RelationshipDefinition relationshipDefinition, List<RelationshipAttribute> relationshipAttributes, Timestamp validityUntil) {
         this.sourceConcept = sourceConcept;
         this.target = target;
         this.relationshipDefinition = relationshipDefinition;
@@ -101,14 +90,14 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
      */
     public Relationship(@NotNull long id, @NotNull ConceptSMTK sourceConcept, @NotNull Target target,
                         @NotNull RelationshipDefinition relationshipDefinition, Timestamp validityUntil, List<RelationshipAttribute> relationshipAttributes) {
-        this(sourceConcept, target, relationshipDefinition, relationshipAttributes);
+        this(sourceConcept, target, relationshipDefinition, relationshipAttributes, validityUntil);
 
         /* Basic ID validation */
         if (id < 0) {
             throw new IllegalArgumentException("El ID de una relación no puede ser negativo o cero.");
+        } else {
+            super.setId(id);
         }
-        this.id = id;
-        this.validityUntil = validityUntil;
     }
 
     public ConceptSMTK getSourceConcept() {
@@ -188,43 +177,6 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
         return target != null && this.isConsistent();
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Relationship that = (Relationship) o;
-
-        if (id != that.id) return false;
-        if (toBeUpdated != that.toBeUpdated) return false;
-        if (!relationshipDefinition.equals(that.relationshipDefinition)) return false;
-        if (!sourceConcept.equals(that.sourceConcept)) return false;
-        if (!target.equals(that.target)) return false;
-        if (validityUntil != null ? !validityUntil.equals(that.validityUntil) : that.validityUntil != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + sourceConcept.hashCode();
-        result = 31 * result + relationshipDefinition.hashCode();
-        result = 31 * result + target.hashCode();
-        result = 31 * result + (validityUntil != null ? validityUntil.hashCode() : 0);
-        result = 31 * result + (toBeUpdated ? 1 : 0);
-        return result;
-    }
-
     /**
      * Este método es responsable de retornar todas las relaciones de este concepto que son de un cierto tipo de
      * relación.
@@ -244,37 +196,20 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
     }
 
     /**
-     * Este método es responsable de determinar si esta instancia tiene un ID de bdd distinto de nulo, y por ende se
-     * entiende que se encuentra persistido.
-     *
-     * @return <code>true</code> si está persistida y <code>false</code>.
-     */
-    public boolean isPersisted() {
-        return this.id != DAO.NON_PERSISTED_ID;
-    }
-
-    /**
      * Este método es responsable de determinar si esta relación es de tipo definitoria o atributo
      *
      * @return <code>true</code> si es de atributo y <code>false</code>.
      */
     public boolean isAttribute() {
 
-        /* Todos estos casos hacen la relación de tipo atributo, y por ende NO definitoria */
-        TargetDefinition targetDefinition = this.getRelationshipDefinition().getTargetDefinition();
-        if (targetDefinition.isBasicType() || targetDefinition.isCrossMapType() || targetDefinition.isHelperTable()
-                || targetDefinition.isSMTKType() || !targetDefinition.isSnomedCTType()) {
-            return true;
-        }
-
         /* Si es de tipo Snomed, hay que ver el valor de su atributo */
-        List<RelationshipAttribute> relationshipAttributes = this.getRelationshipAttributes();
-        if (relationshipAttributes.isEmpty()){
-            logger.error("Se encontró una relación Snomed CT sin atributo!!!");
-            return true;
+        if (SnomedCTRelationship.isSnomedCTRelationship(this)) {
+            SnomedCTRelationship relationshipSCT = SnomedCTRelationship.createSnomedCT(this);
+            return relationshipSCT.isDefinitional();
         }
 
-        return this.toSnomedCT().isDefinitional();
+        /* En cualquier otro caso es un atributo */
+        return true;
     }
 
     /**
@@ -319,14 +254,94 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
         return this.getAttributesByAttributeDefinition(attributeDefinition).size() >= attributeDefinition.getMultiplicity().getLowerBoundary();
     }
 
-    public SnomedCTRelationship toSnomedCT(){
-        if(!this.getRelationshipDefinition().getTargetDefinition().isSnomedCTType())
-            return null;
-        return new SnomedCTRelationship(this.getSourceConcept(), (ConceptSCT)this.getTarget(), this.getRelationshipDefinition(), this.getRelationshipAttributes());
-    }
-
     @Override
     public String toString() {
         return relationshipDefinition.getName();
     }
+
+    public Crossmap toCrossMap() {
+
+        if (!this.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
+            throw new IllegalArgumentException("Esta relación no puede ser transformada a una Relación SnomedCT");
+        }
+
+        Crossmap crossmap = (Crossmap) this;
+        if (crossmap.is(CrossMapType.INDIRECT)){
+            return new IndirectCrossmap(getId(),  this.sourceConcept, (CrossmapSetMember) target, this.relationshipDefinition, this.validityUntil);
+        }
+
+
+         if (this.isPersistent() && crossmap.is(CrossMapType.DIRECT)){
+            return new DirectCrossmap(getId(), this.sourceConcept, (CrossmapSetMember) this.target, this.relationshipDefinition, this.validityUntil);
+        }
+
+        throw new EJBException("UN CASO NO CONTEMPLADO");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (o == this) return true;
+
+        if (o == null || !this.getClass().isAssignableFrom(o.getClass())) return false;
+
+        /* Ahora comparamos con otra relacion */
+        Relationship relationship = (Relationship) o;
+
+        /* Se comparan las relaciones excepto por su concepto destino */
+        if (!equalsButConceptSource(relationship)) return false;
+
+        /* Se compara el concepto origen */
+        return (this.getSourceConcept().getId() == relationship.getSourceConcept().getId());
+    }
+
+    /**
+     * Este método es responsabled e comparar dos relaciones, sin exigir que su concepto de origen sea igual.
+     *
+     * @param relationship La relación contra la cual se hace la comparación.
+     *
+     * @return <code>true</code> si son idénticas, a excepción de sus conceptos origen.
+     */
+    public boolean equalsButConceptSource(Relationship relationship) {
+
+        /* Si ambas están persistidas y no tienen el mismo ID, entonces son distintas */
+        if (this.isPersistent() && relationship.isPersistent() && this.getId() != relationship.getId()) return false;
+
+        /* Si alguna de ellas no está persistida, comparamos 1. tipo relacion, 2. sus atributos, y 3. el destino */
+
+        /* 1. Se compara el tipo de relación y sus atributos */
+        if (!this.getRelationshipDefinition().equals(relationship.getRelationshipDefinition())) return false;
+
+        /* 2. Si no tienen los mismos atributos */
+        for (RelationshipAttribute attribute : this.getRelationshipAttributes()) {
+            if (!relationship.getRelationshipAttributes().contains(attribute)) {
+                return false;
+            }
+        }
+
+        /* 3. Se compara el target */
+        return this.getTarget().equals(relationship.getTarget());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = sourceConcept != null ? sourceConcept.hashCode() : 0;
+        result = 31 * result + (relationshipDefinition != null ? relationshipDefinition.hashCode() : 0);
+        result = 31 * result + (target != null ? target.hashCode() : 0);
+        result = 31 * result + (validityUntil != null ? validityUntil.hashCode() : 0);
+        result = 31 * result + (toBeUpdated ? 1 : 0);
+        result = 31 * result + (relationshipAttributes != null ? relationshipAttributes.hashCode() : 0);
+        return result;
+    }
+
+    public RelationshipAttribute getAttribute(RelationshipAttributeDefinition definition) {
+        for (RelationshipAttribute attribute : getRelationshipAttributes()) {
+            if (definition.equals(attribute.getRelationAttributeDefinition()))
+                return attribute;
+        }
+
+        return null;
+    }
+
 }

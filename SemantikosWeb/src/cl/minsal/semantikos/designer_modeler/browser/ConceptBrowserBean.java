@@ -75,7 +75,6 @@ public class ConceptBrowserBean implements Serializable {
      */
     private LazyDataModel<ConceptSMTK> concepts;
 
-
     /**
      * Categoría sobre la cual se está navegando
      */
@@ -87,10 +86,13 @@ public class ConceptBrowserBean implements Serializable {
      */
     private int idCategory;
 
+
     // Placeholders para los targets de los filtros, dados como elementos seleccionables
     private BasicTypeValue basicTypeValue = new BasicTypeValue(null);
 
-    private HelperTableRecord helperTableRecord = new HelperTableRecord();
+    private HelperTableRecord helperTableRecord = null;
+
+    private ConceptSMTK conceptSMTK = null;
 
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
@@ -143,17 +145,13 @@ public class ConceptBrowserBean implements Serializable {
                     conceptQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
 
                 List<ConceptSMTK> conceptSMTKs = conceptQueryManager.executeQuery(conceptQuery);
-                this.setRowCount(30);
+                this.setRowCount(conceptQueryManager.countConceptQuery(conceptQuery));
 
                 return conceptSMTKs;
             }
 
         };
 
-    }
-
-    public int getIdCategory() {
-        return idCategory;
     }
 
     /**
@@ -170,8 +168,19 @@ public class ConceptBrowserBean implements Serializable {
         }
     }
 
-    public String stringifyList(List<Object> objects){
-        return Arrays.toString(objects.toArray());
+    public List<Tag> getRecordSearchInput(String patron) {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+
+        List<Tag> someTags = new ArrayList<Tag>();
+
+        for (Tag tag : getTags()) {
+            if(tag.getName().toLowerCase().contains(patron.trim().toLowerCase()))
+                someTags.add(tag);
+        }
+
+        return someTags;
     }
 
     public LazyDataModel<ConceptSMTK> getConcepts() {
@@ -202,7 +211,7 @@ public class ConceptBrowserBean implements Serializable {
         return conceptQuery;
     }
 
-    public void setConceptQuery(cl.minsal.semantikos.model.browser.ConceptQuery conceptQuery) {
+    public void setConceptQuery(ConceptQuery conceptQuery) {
         this.conceptQuery = conceptQuery;
     }
 
@@ -239,15 +248,33 @@ public class ConceptBrowserBean implements Serializable {
     }
 
     public HelperTableRecord getHelperTableRecord() {
-        if (helperTableRecord == null)
-            helperTableRecord = new HelperTableRecord();
-
         return helperTableRecord;
     }
 
     public void setHelperTableRecord(HelperTableRecord helperTableRecord) {
         this.helperTableRecord = helperTableRecord;
     }
+
+    public int getIdCategory() {
+        return idCategory;
+    }
+
+    public ConceptSMTK getConceptSMTK() {
+        return conceptSMTK;
+    }
+
+    public void setConceptSMTK(ConceptSMTK conceptSMTK) {
+        this.conceptSMTK = conceptSMTK;
+    }
+
+    public ConceptManager getConceptManager() {
+        return conceptManager;
+    }
+
+    public void setConceptManager(ConceptManager conceptManager) {
+        this.conceptManager = conceptManager;
+    }
+
 
     public AuthenticationBean getAuthenticationBean() {
         return authenticationBean;
@@ -262,6 +289,9 @@ public class ConceptBrowserBean implements Serializable {
      */
     public void setSimpleSelection(RelationshipDefinition relationshipDefinition, Target target) {
 
+        if(target == null)
+            return;
+
         // Se busca el filtro
         for (ConceptQueryFilter conceptQueryFilter : conceptQuery.getFilters()) {
             if (conceptQueryFilter.getDefinition().equals(relationshipDefinition)) {
@@ -274,8 +304,22 @@ public class ConceptBrowserBean implements Serializable {
         }
         // Se resetean los placeholder para los target de las relaciones
         basicTypeValue = new BasicTypeValue(null);
-
+        helperTableRecord = null;
+        conceptSMTK = null;
         //Ajax.update("@(.conceptBrowserTable)");
+    }
+
+    public void removeTarget(RelationshipDefinition relationshipDefinition, Target target){
+        if(target == null)
+            return;
+
+        // Se busca el filtro
+        for (ConceptQueryFilter conceptQueryFilter : conceptQuery.getFilters()) {
+            if (conceptQueryFilter.getDefinition().equals(relationshipDefinition)) {
+                conceptQueryFilter.getTargets().remove(target);
+                break;
+            }
+        }
     }
 
 
@@ -295,7 +339,26 @@ public class ConceptBrowserBean implements Serializable {
 
     }
 
+    public void createConcept() throws IOException {
+        // Si el concepto está persistido, invalidarlo
+        ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+        String query = "";
+        if(concepts.getRowCount()==0)
+            query=conceptQuery.getQuery();
+        eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + idCategory +"&idConcept=0&favoriteDescription=" + query);
+    }
 
+    public String stringifyTags(List<Tag> tags){
+        if(tags.isEmpty())
+            return "Etiquetas...";
+
+        String stringTags= "";
+
+        for (Tag tag : tags) {
+            stringTags= stringTags.concat(tag.getName()).concat(", ");
+        }
+        return  stringTags;
+    }
 
 }
 

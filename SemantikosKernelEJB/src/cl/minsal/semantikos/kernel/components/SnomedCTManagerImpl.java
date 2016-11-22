@@ -40,17 +40,27 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
 
     @Override
     public List<ConceptSCT> findConceptsByPattern(String pattern) {
-        return snomedctDAO.findConceptsBy(pattern);
+        return this.findConceptsByPattern(pattern, null);
+    }
+
+    @Override
+    public List<ConceptSCT> findConceptsByPattern(String pattern, Integer group) {
+        return snomedctDAO.findConceptsBy(pattern, group);
+    }
+
+    @Override
+    public List<ConceptSCT> findConceptsByConceptID(long conceptIdPattern) {
+        return this.findConceptsByConceptID(conceptIdPattern, null);
+    }
+
+    @Override
+    public List<ConceptSCT> findConceptsByConceptID(long conceptIdPattern, Integer group) {
+        return snomedctDAO.findConceptsByConceptID(conceptIdPattern, group);
     }
 
     @Override
     public Map<DescriptionSCT, ConceptSCT> findDescriptionsByPattern(String patternID) {
         return snomedctDAO.findDescriptionsByPattern(patternID);
-    }
-
-    @Override
-    public List<ConceptSCT> findConceptsByConceptID(long conceptIdPattern) {
-        return snomedctDAO.findConceptsByConceptID(conceptIdPattern);
     }
 
     @Override

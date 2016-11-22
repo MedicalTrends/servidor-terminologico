@@ -19,10 +19,21 @@ public interface ConceptQueryDAO {
 
     List<ConceptSMTK> executeQuery(ConceptQuery query);
 
+    long countConceptByQuery(ConceptQuery query);
+
     List<RelationshipDefinition> getSearchableAttributesByCategory(Category category);
 
     List<RelationshipDefinition> getShowableAttributesByCategory(Category category);
 
+    List<RelationshipDefinition> getSecondOrderShowableAttributesByCategory(Category category);
+
     boolean getCustomFilteringValue(Category category);
+
+    boolean getMultipleFilteringValue(Category category, RelationshipDefinition relationshipDefinition);
+
+    boolean getShowableRelatedConceptsValue(Category category);
+
+    boolean getShowableValue(Category category);
+
 
 }

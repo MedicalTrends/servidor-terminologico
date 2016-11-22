@@ -19,10 +19,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Collections.emptyList;
 
@@ -38,8 +35,6 @@ public class HelperTableBean implements Serializable {
 
     private HelperTableRecord recordPlaceHolder = new HelperTableRecord();
 
-    private Map<HelperTable, List<HelperTableRecord> > recordSearchLists = new HashMap<HelperTable, List<HelperTableRecord>>();
-
     @EJB
     private HelperTableManager helperTableManager;
 
@@ -47,14 +42,12 @@ public class HelperTableBean implements Serializable {
     public void init() {
     }
 
-    public List<HelperTableRecord> getRecordList(HelperTable helperTable){
-        if(!recordSearchLists.containsKey(helperTable))
-            recordSearchLists.put(helperTable, helperTableManager.getAllRecords(helperTable));
-
-        return recordSearchLists.get(helperTable);
-    }
-
     public List<HelperTableRecord> getRecordSearchInput(String patron) {
+
+        /* Si el patrón viene vacío o es menor a tres caracteres, no se hace nada */
+         if ( patron == null || patron.length() <= 1 ) {
+            return emptyList();
+        }
 
         FacesContext context = FacesContext.getCurrentInstance();
         RequestContext context2 = RequestContext.getCurrentInstance();
@@ -62,15 +55,12 @@ public class HelperTableBean implements Serializable {
         HelperTable helperTable = (HelperTable) UIComponent.getCurrentComponent(context).getAttributes().get("helperTable");
         RelationshipDefinition relationshipDefinition = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinition");
 
-        if(!recordSearchLists.containsKey(helperTable))
-            recordSearchLists.put(helperTable, helperTableManager.getAllRecords(helperTable));
+        List<HelperTableRecord> someRecords = new ArrayList<>();
 
-        List<HelperTableRecord> someRecords = new ArrayList<HelperTableRecord>();
-
-        for (HelperTableRecord record : recordSearchLists.get(helperTable)) {
-            if(record.getFields().get("description").toLowerCase().contains(patron.trim().toLowerCase()))
-                someRecords.add(record);
-        }
+        if(relationshipDefinition.isATC())
+            someRecords = helperTableManager.searchRecords(helperTable, Arrays.asList(new String[]{"codigo_atc","dsc_completa_atc"}), patron, true);
+        else
+            someRecords = helperTableManager.searchRecords(helperTable, Arrays.asList(new String[]{HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName()}), patron, true);
 
         if(relationshipDefinition.isISP() && someRecords.isEmpty()){
             context2.execute("PF('dialogISP').show();");
@@ -79,21 +69,6 @@ public class HelperTableBean implements Serializable {
         return someRecords;
     }
 
-    public HelperTableRecord getRecordById(HelperTable helperTable, Long id){
-
-        if(id==null)
-            return null;
-
-        if(!recordSearchLists.containsKey(helperTable))
-            recordSearchLists.put(helperTable, helperTableManager.getAllRecords(helperTable));
-
-        for (HelperTableRecord record : recordSearchLists.get(helperTable)) {
-            if(id.equals(new Long(record.getFields().get("id"))))
-                return record;
-        }
-
-        return null;
-    }
 
     public String getPattern() {
         return pattern;

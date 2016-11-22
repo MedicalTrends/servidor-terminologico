@@ -44,12 +44,12 @@ public interface SnomedCTManager {
      * Este método es responsable de buscar aquellos conceptos que posean al menos una descripción cuyo término
      * coincide con el patrón dado como parámetro.
      *
-     * @param patron El patrón de búsqueda.
+     * @param pattern El patrón de búsqueda.
+     * @param group  El grupo por el cual se filtran los resultados.
      *
-     * @return La lista de las descripciones que coincidieron con el patrón de búsqueda, junto al concepto al que
-     * pertenecen (dado que una descripción no conoce el concepto al que está asociada).
+     * @return La lista de conceptos que satisfacen el criterio de búsqueda.
      */
-    public Map<DescriptionSCT, ConceptSCT> findDescriptionsByPattern(String patron);
+    public List<ConceptSCT> findConceptsByPattern(String pattern, Integer group);
 
     /**
      * Este método es responsable de buscar aquellos conceptos que posean un CONCEPT_ID que coincida con el
@@ -60,6 +60,28 @@ public interface SnomedCTManager {
      * @return La lista de conceptos que satisfacen el criterio de búsqueda.
      */
     public List<ConceptSCT> findConceptsByConceptID(long conceptIdPattern);
+
+    /**
+     * Este método es responsable de buscar aquellos conceptos que posean un CONCEPT_ID que coincida con el
+     * <code>conceptIdPattern</code> dado como parámetro. El patron
+     *
+     * @param conceptIdPattern El concept ID por el cual se realiza la búsqueda.
+     * @param group  El grupo por el cual se filtran los resultados.
+     *
+     * @return La lista de conceptos que satisfacen el criterio de búsqueda.
+     */
+    public List<ConceptSCT> findConceptsByConceptID(long conceptIdPattern, Integer group);
+
+    /**
+     * Este método es responsable de buscar aquellos conceptos que posean al menos una descripción cuyo término
+     * coincide con el patrón dado como parámetro.
+     *
+     * @param patron El patrón de búsqueda.
+     *
+     * @return La lista de las descripciones que coincidieron con el patrón de búsqueda, junto al concepto al que
+     * pertenecen (dado que una descripción no conoce el concepto al que está asociada).
+     */
+    public Map<DescriptionSCT, ConceptSCT> findDescriptionsByPattern(String patron);
 
     /**
      * Este método es responsable de recuperar un concepto por su CONCEPT_ID.

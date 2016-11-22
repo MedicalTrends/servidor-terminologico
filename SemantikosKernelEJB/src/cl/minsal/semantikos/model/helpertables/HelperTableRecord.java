@@ -6,7 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+
+import static cl.minsal.semantikos.model.helpertables.HelperTable.SYSTEM_COLUMN_DESCRIPTION;
 
 
 /**
@@ -32,6 +36,8 @@ public class HelperTableRecord implements Target, Comparable<HelperTableRecord> 
      * Este constructor vacío se provee para JSON.
      */
     public HelperTableRecord() {
+        this.fields = new HashMap<>();
+        this.helperTable = new HelperTable("Dummy Helper Table", "Dummy Helper Table", "helper_table", new ArrayList<HelperTableColumn>());
     }
 
     /**
@@ -99,7 +105,7 @@ public class HelperTableRecord implements Target, Comparable<HelperTableRecord> 
 
         /* Si la columna no existe es lanzada la excepción */
         if (!this.fields.containsKey(columnName)) {
-            String messageError = "Se solicita columan que no existe: " + columnName;
+            String messageError = "Se solicita columna que no existe: " + columnName;
             logger.error(messageError);
             throw new IllegalArgumentException(messageError);
         }
@@ -124,10 +130,11 @@ public class HelperTableRecord implements Target, Comparable<HelperTableRecord> 
 
     @Override
     public String toString() {
-        if (this.getFields() == null)
-            return "null";
-        else
-            return getValueColumn("description");
+        if (this.getFields() == null) {
+            return helperTable.getName() + "[]";
+        } else {
+            return helperTable.getName() + "[" + this.getFields() + "]";
+        }
     }
 
     public HelperTableRecord copy() {
@@ -139,9 +146,20 @@ public class HelperTableRecord implements Target, Comparable<HelperTableRecord> 
 
     @Override
     public int compareTo(@NotNull HelperTableRecord helperTableRecord) {
-        if(this.getFields()==null)
-            return 0;
 
-        return (int)(this.getId() - helperTableRecord.getId());
+        String thisDescription = this.getValueColumn(SYSTEM_COLUMN_DESCRIPTION.getColumnName());
+        String theOtherDescription = helperTableRecord.getValueColumn(SYSTEM_COLUMN_DESCRIPTION.getColumnName());
+
+        return thisDescription.compareTo(theOtherDescription);
+    }
+
+    /**
+     * Este método es responsable de agregar un campo al registro.
+     *
+     * @param fieldName  Nombre del campo.
+     * @param fieldValue Valor del campo.
+     */
+    public void addField(String fieldName, String fieldValue) {
+        this.fields.put(fieldName, fieldValue);
     }
 }

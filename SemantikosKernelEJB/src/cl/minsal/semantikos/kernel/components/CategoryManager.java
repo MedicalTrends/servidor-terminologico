@@ -71,4 +71,6 @@ public interface CategoryManager {
      * @return La Categoría con su ID actualizado.
      */
     public Category createCategory(Category category, User user);
+
+    public List<Category> getRelatedCategories(Category category);
 }

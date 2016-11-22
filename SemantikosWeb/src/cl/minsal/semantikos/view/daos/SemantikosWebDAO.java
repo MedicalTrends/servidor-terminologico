@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.view.daos;
 
 import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.ConceptSMTKWeb;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.ejb.Local;
@@ -21,4 +22,6 @@ public interface SemantikosWebDAO {
      * @return El Identificador del Composite asociado a dicho RelationshipDefinition.
      */
     public ExtendedRelationshipDefinitionInfo getCompositeOf(Category category, RelationshipDefinition relationshipDefinition);
+
+    public ConceptSMTKWeb augmentConcept(Category category, ConceptSMTKWeb concept);
 }

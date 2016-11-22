@@ -31,7 +31,7 @@
                             <h:outputLabel value="Nombre Tag:" style="font-weight:bold"/>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
-                            <p:inputText value="#{tagBean.tagCreate.name}" label="Name" style="width: 90%;"/>
+                            <p:inputText value="#{tagBean.tagCreate.name}" label="Name" style="width: 90%;" autocomplete="off"/>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-1">
                             <h:outputText value="Color Fondo: "/>
@@ -114,7 +114,7 @@
                      emptyMessage="El concepto no tiene etiquetas" tableStyle="font-size: 12px;"
                      style="font-size: 12px;">
             <p:column headerText="Etiquetas">
-                <div style="text-align: center;">
+                <div style="text-align: left;">
                     <h:outputText value="#{tag.name}"
                                   style="text-align: center; background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; "/>
                 </div>
@@ -156,7 +156,7 @@
                         <h:outputText value="Nombre: "/>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-6">
-                        <p:inputText value="#{tagBean.tagEdit.name}"></p:inputText>
+                        <p:inputText value="#{tagBean.tagEdit.name}" autocomplete="off"></p:inputText>
                     </div>
                 </div>
                 <div class="ui-g">

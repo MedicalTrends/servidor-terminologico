@@ -31,8 +31,9 @@ public class HelperTableRecordConverter implements Converter{
             try {
 
                 ELContext elContext = fc.getELContext();
-                HelperTableBean bean = (HelperTableBean) FacesContext.getCurrentInstance().getApplication() .getELResolver().getValue(elContext, null, "helperTableBean");
-                return bean.getRecordById(helperTable, Long.parseLong(value));
+                HelperTableBean bean = (HelperTableBean) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext, null, "helperTableBean");
+                return bean.getHelperTableManager().getRecord(helperTable, Long.parseLong(value));
+                //return bean.getRecordById(helperTable, Long.parseLong(value));
 
             } catch(NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar un valor."));

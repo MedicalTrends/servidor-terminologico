@@ -19,6 +19,10 @@ public class RelationshipAttributeDefinition {
     /** Multiplicidad */
     private Multiplicity multiplicity;
 
+    private String ORDER_ATTRIBUTE = "orden";
+
+    private String RELATIONSHIP_TYPE_ATTRIBUTE = "tipo de relación";
+
     public RelationshipAttributeDefinition(long id, TargetDefinition target, String name, Multiplicity multiplicity) {
         this.id = id;
         this.target = target;
@@ -59,7 +63,11 @@ public class RelationshipAttributeDefinition {
     }
 
     public boolean isOrderAttribute(){
-        return this.getName().equalsIgnoreCase("orden");
+        return this.getName().equalsIgnoreCase(ORDER_ATTRIBUTE);
+    }
+
+    public boolean isRelationshipTypeAttribute(){
+        return this.getName().equalsIgnoreCase(RELATIONSHIP_TYPE_ATTRIBUTE);
     }
 
     public boolean equals(Object o) {

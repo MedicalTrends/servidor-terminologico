@@ -23,7 +23,6 @@ public class RelationshipDefinitionWeb extends RelationshipDefinition implements
 
     public RelationshipDefinitionWeb(long id, String name, String description, TargetDefinition targetDefinition, Multiplicity multiplicity, long compositeID, int order) {
         super(id, name, description, targetDefinition, multiplicity);
-
         this.compositeID = compositeID;
         this.order = order;
     }

@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.DirectCrossmap;
+import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
@@ -38,16 +38,6 @@ public interface CrossmapsManager {
     public Crossmap remove(Crossmap crossmap, User user);
 
     /**
-     * Este método es responsable de recuperar los crossmaps de un concepto y actualizarle su lista de crossmaps. Si el
-     * <code>conceptSMTK</code> no es persistente, se recuperan los crossmaps asociados a su <code>CONCEPT_ID</code>.
-     *
-     * @param conceptSMTK El concepto cuyos Crossmaps se desea recuperar.
-     *
-     * @return La lista de Crossmaps asociados al concepto <code>conceptSMTK</code>.
-     */
-    public List<Crossmap> getCrossmaps(ConceptSMTK conceptSMTK);
-
-    /**
      * Este método es responsable de recuperar todos los crossmapSets.
      *
      * @return La lista de crossmap sets.
@@ -62,7 +52,27 @@ public interface CrossmapsManager {
      *
      * @return La lista de Crossmaps asociados al concepto <code>conceptSMTK</code>.
      */
+    public List<Crossmap> getCrossmaps(ConceptSMTK conceptSMTK);
+
+    /**
+     * Este método es responsable de recuperar los crossmaps de un concepto y actualizarle su lista de crossmaps. Si el
+     * <code>conceptSMTK</code> no es persistente, se recuperan los crossmaps asociados a su <code>CONCEPT_ID</code>.
+     *
+     * @param conceptSMTK El concepto cuyos Crossmaps se desea recuperar.
+     *
+     * @return La lista de Crossmaps asociados al concepto <code>conceptSMTK</code>.
+     */
     public List<DirectCrossmap> getDirectCrossmaps(ConceptSMTK conceptSMTK);
+
+    /**
+     * Este método es responsable de recuperar un crossmapSetMember dado su
+     * <code>conceptSMTK</code> no es persistente, se recuperan los crossmaps asociados a su <code>CONCEPT_ID</code>.
+     *
+     * @param id El id del crossmapsetmember
+     *
+     * @return La lista de CrossmapSetMembers asociados al concepto <code>conceptSMTK</code>.
+     */
+    public CrossmapSetMember getCrossmapSetMemberById(long id);
 
     /**
      * Este método es responsable de recuperar los crossmaps indirectos de un concepto y actualizarle su lista de
@@ -94,5 +104,7 @@ public interface CrossmapsManager {
      * @return Una lista de registros
      */
     public List<CrossmapSetMember> findByPattern(CrossmapSet crossmapSet, String pattern);
+
+
 
 }

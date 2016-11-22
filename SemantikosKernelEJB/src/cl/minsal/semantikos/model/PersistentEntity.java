@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.kernel.daos.DAO;
+import cl.minsal.semantikos.model.crossmaps.CrossMapType;
 
 /**
  * @author Andrés Farías on 8/29/16.
@@ -40,5 +41,4 @@ public abstract class PersistentEntity implements IPersistentEntity {
     public PersistentEntity(long id) {
         this.id = id;
     }
-
 }

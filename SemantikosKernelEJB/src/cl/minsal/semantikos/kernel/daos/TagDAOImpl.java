@@ -37,8 +37,8 @@ public class TagDAOImpl implements TagDAO {
              CallableStatement call = connection.prepareCall("{call semantikos.create_tag(?,?,?,?)}")) {
 
             call.setString(1, tag.getName());
-            call.setString(2, tag.getColorBackground());
-            call.setString(3, tag.getColorLetter());
+            call.setString(2, tag.getColorLetter());
+            call.setString(3, tag.getColorBackground());
 
             long id = (tag.getParentTag()==null)?-1:tag.getParentTag().getId();
             if( id != NON_PERSISTED_ID) {

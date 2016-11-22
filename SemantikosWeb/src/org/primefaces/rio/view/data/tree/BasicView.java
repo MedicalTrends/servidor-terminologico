@@ -43,7 +43,7 @@ public class BasicView implements Serializable {
         node00.getChildren().add(new DefaultTreeNode("Node 0.0.0"));
         node00.getChildren().add(new DefaultTreeNode("Node 0.0.1"));
         node01.getChildren().add(new DefaultTreeNode("Node 0.1.0"));
-        node10.getChildren().add(new DefaultTreeNode("Node 1.0.0"));
+        node10.getChildren().add(new DefaultTreeNode("Node 2.0.0"));
         root.getChildren().add(new DefaultTreeNode("Node 2"));
 	}
 

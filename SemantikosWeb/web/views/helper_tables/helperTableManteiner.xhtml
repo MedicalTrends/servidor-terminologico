@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/template/template.xhtml">
+
+    <ui:define name="content">
+        <h2>Carga de Tablas por archivos CVS</h2>
+
+        <h:form >
+
+            <p:panel>
+
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+
+                        <p:selectOneMenu value="#{fileUploadBean.helperTable}" var="helperT"
+                                         converter="omnifaces.SelectItemsConverter">
+                            <p:ajax event="itemSelect" />
+                            <f:selectItem itemLabel="Seleccione una tabla auxiliar" itemDisabled="true"/>
+                            <f:selectItems value="#{fileUploadBean.helperTableList}" var="helperTable"
+                                           itemLabel="#{helperTable.description}" itemValue="#{helperTable}"/>
+                            <p:column>
+                                <h:outputText value="#{helperT.description}"/>
+                            </p:column>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+
+                        <p:selectOneMenu value="#{fileUploadBean.loadModeSelected}" var="loadMode"
+                                         converter="omnifaces.SelectItemsConverter">
+                            <p:ajax event="itemSelect" />
+                            <f:selectItem itemLabel="Seleccione un modo" itemDisabled="true"/>
+                            <f:selectItems value="#{fileUploadBean.loadModes}" var="l" itemLabel="#{l.name}"
+                                           itemValue="#{l}"/>
+                            <p:column>
+                                <h:outputText value="#{loadMode.name}"/>
+                            </p:column>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-5">
+
+                        <p:fileUpload id="fileUpload" fileUploadListener="#{fileUploadBean.upload}" mode="advanced"
+                                      dragDropSupport="false"  multiple="true" update="messages"
+                                      sizeLimit="100000000" fileLimit="3"
+                                      allowTypes="/(\.|\/)(gif|jpe?g|png|csv)$/"/>
+                        <p:growl id="messages" showDetail="true"/>
+                    </div>
+                </div>
+            </p:panel>
+
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

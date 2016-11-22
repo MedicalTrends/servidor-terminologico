@@ -4,13 +4,10 @@ import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.kernel.daos.TargetDAO;
+import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.User;
-import cl.minsal.semantikos.model.businessrules.ConceptCreationBR;
-import cl.minsal.semantikos.model.businessrules.RelationshipBindingBR;
-import cl.minsal.semantikos.model.businessrules.RelationshipEditionBR;
-import cl.minsal.semantikos.model.businessrules.RelationshipRemovalBR;
+import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -47,16 +44,19 @@ public class RelationshipManagerImpl implements RelationshipManager {
     @EJB
     private RelationshipAttributeDAO relationshipAttributeDAO;
 
+    @EJB
+    private RelationshipBindingBRInterface relationshipBindingBR;
+
     @Override
     public Relationship bindRelationshipToConcept(ConceptSMTK concept, Relationship relationship, User user) {
 
         /* Primero se validan las reglas de negocio asociadas a la eliminación de un concepto */
-        new RelationshipBindingBR().verifyPreConditions(concept, relationship, user);
+        relationshipBindingBR.verifyPreConditions(concept, relationship, user);
 
         /* Se hace la relación a nivel del modelo */
-        //if (!concept.getRelationships().contains(relationship)) {
-            //concept.addRelationship(relationship);
-        //}
+        if (!concept.getRelationships().contains(relationship)) {
+            concept.addRelationship(relationship);
+        }
 
         /* Se asegura la persistencia de la entidad */
         assurePersistence(concept, relationship, user);
@@ -76,7 +76,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
     @Override
     public Relationship createRelationship(Relationship relationship) {
         relationship = relationshipDAO.persist(relationship);
-        for(RelationshipAttribute relationshipAttribute: relationship.getRelationshipAttributes()){
+        for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
             relationshipAttribute.setRelationship(relationship);
             relationshipAttributeDAO.createRelationshipAttribute(relationshipAttribute);
         }
@@ -99,7 +99,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
             relationshipDAO.persist(relationship);
 
             /* Se persisten los atributos */
-            for(RelationshipAttribute relationshipAttribute: relationship.getRelationshipAttributes()){
+            for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
                 relationshipAttribute.setRelationship(relationship);
                 relationshipAttributeDAO.createRelationshipAttribute(relationshipAttribute);
             }
@@ -141,6 +141,19 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
+    public List<ConceptSMTK> getTargetConceptsByCategory(ConceptSMTK conceptSMTK, Category category) {
+
+        /* Se espera, por defecto, que el concepto no traiga sus relaciones cargadas, pero se verificará */
+        if (conceptSMTK.getRelationships().isEmpty()) {
+            List<Relationship> relationshipsBySourceConcept = this.getRelationshipsBySourceConcept(conceptSMTK);
+            conceptSMTK.setRelationships(relationshipsBySourceConcept);
+        }
+
+        /* Se retornan los conceptos que son el destino de relaciones SMTK */
+        return conceptSMTK.getRelatedSMTKConceptsBy(category);
+    }
+
+    @Override
     public void updateRelationship(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship originalRelationship, @NotNull Relationship editedRelationship, @NotNull User user) {
 
         /* Se aplican las reglas de negocio */
@@ -171,13 +184,13 @@ public class RelationshipManagerImpl implements RelationshipManager {
                 /**
                  * Si el atributo no esta persistido, persistirlo
                  */
-                if(attribute.getIdRelationshipAttribute() == null){
+                if (attribute.getIdRelationshipAttribute() == null) {
                     relationshipAttributeDAO.createRelationshipAttribute(attribute);
                 }
                 /**
                  * Si el atributo ya esta persistido, actualizarlo
                  */
-                else{
+                else {
                     relationshipAttributeDAO.update(attribute);
                     targetDAO.update(attribute);
                 }
@@ -187,7 +200,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
         }
 
         /* Si el concepto está modelado, se versiona y actualiza */
-        if(conceptSMTK.isModeled()){
+        if (conceptSMTK.isModeled()) {
 
             /* Primero se versiona el original */
             this.invalidate(originalRelationship);
@@ -196,7 +209,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
             /* Se actualiza el objeto de negocio */
             List<Relationship> relationships = conceptSMTK.getRelationships();
             relationships.remove(originalRelationship);
-            if(!relationships.contains(editedRelationship)){
+            if (!relationships.contains(editedRelationship)) {
                 relationships.add(editedRelationship);
             }
         }

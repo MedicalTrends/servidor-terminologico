@@ -18,30 +18,83 @@ public class CrossmapSetMember extends PersistentEntity implements Target {
     /** Terminología a la que pertenece */
     private CrossmapSet crossmapSet;
 
-    private String cod1;
+    private String code;
 
-    private String cod2;
+    private String gloss;
 
-    private String various1;
-    private String various2;
-    private String various3;
+    public CrossmapSetMember(long idCrossmapSetMember, CrossmapSet crossmapSet, String code, String gloss) {
+        this.idCrossmapSetMember = idCrossmapSetMember;
+        this.crossmapSet = crossmapSet;
+        this.code = code;
+        this.gloss = gloss;
+    }
 
-    private String glose;
+    public CrossmapSetMember(long id, long idCrossmapSetMember, CrossmapSet crossmapSet, String code, String gloss) {
+        super(id);
+        this.idCrossmapSetMember = idCrossmapSetMember;
+        this.crossmapSet = crossmapSet;
+        this.code = code;
+        this.gloss = gloss;
+    }
 
-    private Timestamp creationDate;
+    public long getIdCrossmapSetMember() {
+        return idCrossmapSetMember;
+    }
 
-    private User creator;
+    public void setIdCrossmapSetMember(long idCrossmapSetMember) {
+        this.idCrossmapSetMember = idCrossmapSetMember;
+    }
 
-    private Timestamp validityUntil;
+    public CrossmapSet getCrossmapSet() {
+        return crossmapSet;
+    }
+
+    public void setCrossmapSet(CrossmapSet crossmapSet) {
+        this.crossmapSet = crossmapSet;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getGloss() {
+        return gloss;
+    }
+
+    public void setGloss(String gloss) {
+        this.gloss = gloss;
+    }
 
     @Override
     public TargetType getTargetType() {
         return TargetType.CrossMap;
     }
 
+    // Métodos para soportar conversión automática
+    @Override
+    public boolean equals(Object other) {
+        return (other instanceof CrossmapSetMember) && (String.valueOf(idCrossmapSetMember) != null)
+                ? String.valueOf(idCrossmapSetMember).equals(String.valueOf(((CrossmapSetMember) other).idCrossmapSetMember))
+                : (other == this);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getClass().hashCode() + new Long(idCrossmapSetMember).hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return Long.toString(idCrossmapSetMember);
+    }
+
+
     @Override
     public Target copy() {
-        // TODO: Terminar esto.
-        return null;
+        return new CrossmapSetMember(this.getIdCrossmapSetMember(), this.getIdCrossmapSetMember(), this.getCrossmapSet(), this.getCode(), this.getGloss());
     }
 }

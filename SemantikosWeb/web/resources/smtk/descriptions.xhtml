@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <p:inputText id="otherTermino" value="#{cc.attrs.otherTermino}" style="width:90%"/>
+                    <p:inputText id="otherTermino" value="#{cc.attrs.otherTermino}" style="width:90%" autocomplete="off"/>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <p:selectOneRadio id="radio4" value="#{cc.attrs.otherSensibilidad}" layout="responsive"
@@ -395,7 +395,7 @@
                         <p:selectOneMenu value="#{conceptBean.observationNoValid}"
                                          converter="omnifaces.SelectItemsConverter"
                                          style="margin-right:10px; width: 60%" disabled="#{conceptBean.observationNoValid!=null}" >
-
+                            <f:selectItem itemLabel="Seleccione una observación" itemDisabled="true"/>
                             <f:selectItems value="#{conceptBean.observationNoValids}" var="observation"
                                            itemLabel="#{observation.description}" itemValue="#{observation}"  />
 

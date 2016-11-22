@@ -3,7 +3,6 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -31,7 +30,7 @@ public interface RelationshipManager {
 
     /**
      * Este metodo es responsable de persistir
-     * @param relationship
+     *
      * @return
      */
     public Relationship createRelationship(Relationship relationship);
@@ -73,6 +72,18 @@ public interface RelationshipManager {
      * @param conceptSCT El identificador único (BDD) del concepto CST.
      */
     public List<Relationship> findRelationsByTargetSCTConcept(ConceptSCT conceptSCT);
+
+    /**
+     * Este método es responsable de retornar la lista de todos los conceptos relacionados con el concepto
+     * <code>conceptSMTK</code> desde este objeto, y que pertenecen a la categoría <code>category</code> dada como
+     * parámetro.
+     *
+     * @param conceptSMTK El concepto origen.
+     * @param category    La categoría a la que pertenecen los conceptos destino.
+     *
+     * @return Una lista de todos los conceptos destino que pertenecen a la categoría <code>category</code>.
+     */
+    public List<ConceptSMTK> getTargetConceptsByCategory(ConceptSMTK conceptSMTK, Category category);
 
     /**
      * Este método es responsable de actualizar el valor de una relación, actualizando

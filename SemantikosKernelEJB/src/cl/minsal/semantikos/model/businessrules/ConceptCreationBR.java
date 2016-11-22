@@ -26,6 +26,8 @@ public class ConceptCreationBR implements BusinessRulesContainer {
     protected static final String CATEGORY_FARMACOS_MEDICAMENTO_CLINICO_CON_ENVASE_NAME = "Fármacos – Medicamento Clínico con Envase";
 
 
+
+
     public void apply(@NotNull ConceptSMTK conceptSMTK, User IUser) throws BusinessRuleException {
 
         /* Reglas que aplican para todas las categorías */

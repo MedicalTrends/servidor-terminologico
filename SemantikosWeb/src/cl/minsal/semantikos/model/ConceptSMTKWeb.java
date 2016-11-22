@@ -2,10 +2,7 @@ package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
-import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinitionWeb;
+import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.util.Pair;
 
 import java.util.ArrayList;
@@ -35,7 +32,7 @@ public class ConceptSMTKWeb extends ConceptSMTK {
 
         // Crear un nuevo concepto con su información básica
         super(conceptSMTK.getConceptID(), conceptSMTK.getCategory(), conceptSMTK.isToBeReviewed(), conceptSMTK.isToBeConsulted(), conceptSMTK.isModeled(),
-                conceptSMTK.isFullyDefined(), conceptSMTK.isPublished(), conceptSMTK.getObservation(), conceptSMTK.getTagSMTK());
+                conceptSMTK.isFullyDefined(), conceptSMTK.isInherited(), conceptSMTK.isPublished(), conceptSMTK.getObservation(), conceptSMTK.getTagSMTK());
 
         // Agregar descripciones y relaciones
         if(conceptSMTK.isPersistent()){
@@ -247,9 +244,13 @@ public class ConceptSMTKWeb extends ConceptSMTK {
     }
 
     public void initRelationship(RelationshipDefinitionWeb relationshipDefinitionWeb){
+        /*
         for (RelationshipWeb relationshipWeb : getValidRelationshipsWebByRelationDefinition(relationshipDefinitionWeb)) {
             relationshipWeb.setTarget(relationshipDefinitionWeb.getDefaultValue());
         }
+        */
+        Relationship r = new Relationship(this, relationshipDefinitionWeb.getDefaultValue(), relationshipDefinitionWeb, new ArrayList<RelationshipAttribute>(), null);
+        addRelationshipWeb(new RelationshipWeb(this, r.getId(), r, r.getRelationshipAttributes()));
     }
 
     public boolean isEditable() {
@@ -490,8 +491,12 @@ public class ConceptSMTKWeb extends ConceptSMTK {
                 if(basicTypeValue.getValue().equals(""))
                     return false;
             }
+            for (RelationshipAttributeDefinition relationshipAttributeDefinition: relationshipDefinition.getRelationshipAttributeDefinitions()) {
+                if(relationshipWeb.getAttributesByAttributeDefinition(relationshipAttributeDefinition).size()<relationshipAttributeDefinition.getMultiplicity().getLowerBoundary()) return false;
+            }
 
         }
+
         return this.getValidRelationshipsWebByRelationDefinition(relationshipDefinition).size()>=relationshipDefinition.getMultiplicity().getLowerBoundary();
     }
 

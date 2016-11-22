@@ -27,27 +27,34 @@
                          validator="#{validatorBean.validateRequiredInput}"
                          value="#{cc.attrs.description.representation}"
                          style="width:90%"
-                         disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}">
+                         disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
+                         autocomplete="off">
                 <p:ajax event="change" update="@this" process="@this" delay="100" />
             </p:inputText>
         </div>
-        <!-- Sensibilidad descripción -->
-        <div class="ui-g-12 ui-md-6 ui-lg-3">
-            <p:selectOneRadio id="caseSensitiveNew"
-                              layout="responsive"
-                              columns="2"
-                              value="#{cc.attrs.description.caseSensitive}"
-                              style="width:90%"
-                              disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}">
-                <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
-                <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
-            </p:selectOneRadio>
-        </div>
         <!-- DescriptionId -->
-        <div class="ui-g-12 ui-md-6 ui-lg-3">
-            <p:outputLabel value="DESCID " rendered="#{not cc.attrs.description.persistent}"/>
+        <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <p:inputText value="DESCID " rendered="#{not cc.attrs.description.persistent}" disabled="true" style="width: 70%" />
 
-            <p:outputLabel value="DESCID: #{cc.attrs.description.descriptionId}" rendered="#{cc.attrs.description.persistent}"/>
+            <p:inputText value="DESCID: #{cc.attrs.description.descriptionId}" rendered="#{cc.attrs.description.persistent}" disabled="true" style="width: 70%" />
+        </div>
+        <!-- Sensibilidad descripción -->
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <p:selectOneRadio id="customRadio" value="#{cc.attrs.description.caseSensitive}" layout="custom"
+                              disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}">
+                <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
+                <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
+            </p:selectOneRadio>
+
+            <p:panelGrid id="caseSensitiveNew" columns="4" columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3" layout="grid"
+                         styleClass="ui-panelgrid-blank fullyDefined"
+                         style="width: 100%">
+                <p:radioButton id="opt1" for="customRadio" itemIndex="0" />
+                <h:outputLabel for="opt1" value="Insensible" />
+
+                <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>
+                <h:outputLabel for="opt2" value="Sensible" />
+            </p:panelGrid>
         </div>
     </div>
 </composite:implementation>

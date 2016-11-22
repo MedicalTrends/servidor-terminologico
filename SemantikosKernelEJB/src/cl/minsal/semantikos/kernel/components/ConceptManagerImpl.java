@@ -6,6 +6,7 @@ import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.*;
+import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import org.slf4j.Logger;
@@ -54,7 +55,8 @@ public class ConceptManagerImpl implements ConceptManager {
     @EJB
     private RelationshipManager relationshipManager;
 
-
+    @EJB
+    private CrossmapsManager crossmapsManager;
 
 
     @Override
@@ -92,10 +94,10 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public List<ConceptSMTK> findConceptBy(Category category, int pageNumber, int pageSize) {
+    public List<ConceptSMTK> findConceptBy(Category category) {
 
-        //Búsqueda por categoría y patron o concept ID
-        return conceptDAO.getConceptBy(category, pageSize, pageNumber);
+        //Búsqueda por categoría
+        return conceptDAO.getConceptBy(category);
     }
 
     @Override
@@ -118,7 +120,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         //Búsqueda por categoría y patron o concept ID
         if ((categories.length != 0 && patternOrConceptID != null)) {
-            if (patternOrConceptID.length() >= 3) {
+            if (patternOrConceptID.length() >= 2) {
                 if (arrayPattern.length >= 2) {
                     return conceptDAO.getConceptBy(arrayPattern, categories, isModeled, pageSize, pageNumber);
                 } else {
@@ -129,7 +131,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         //Búsqueda por patron o concept ID
         if ((categories.length == 0 && patternOrConceptID != null)) {
-            if (patternOrConceptID.length() >= 3) {
+            if (patternOrConceptID.length() >= 2) {
                 if (arrayPattern.length >= 2) {
                     return conceptDAO.getConceptBy(arrayPattern, isModeled, pageSize, pageNumber);
                 } else {
@@ -144,7 +146,6 @@ public class ConceptManagerImpl implements ConceptManager {
             return conceptDAO.getConceptBy(categories, isModeled, pageSize, pageNumber);
         }
 
-
         //Búsqueda por largo (PageSize y PageNumber)
         return conceptDAO.getConceptsBy(isModeled, pageSize, pageNumber);
     }
@@ -152,10 +153,14 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public List<ConceptSMTK> findConceptBy(String pattern) {
 
+        /* Se realiza la búsqueda estándard */
         List<ConceptSMTK> conceptSMTKList = findConceptBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
         if (conceptSMTKList.size() != 0) {
             return conceptSMTKList;
-        } else {
+        }
+
+        /* Si la búsqueda estándard no dio resultados, se intenta con una búsqueda truncada */
+        else {
             pattern = truncatePattern(pattern);
             return findConceptBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
         }
@@ -165,12 +170,7 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public int countConceptBy(String pattern, Long[] categories) {
 
-
-        // TODO: arreglar esto (Estados)
-
         boolean isModeled = true;
-
-
         pattern = standardizationPattern(pattern);
         String[] arrayPattern = patternToArray(pattern);
 
@@ -178,7 +178,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         //Cuenta por categoría y patron o concept ID
         if ((categories.length != 0 && pattern != null)) {
-            if (pattern.length() >= 3) {
+            if (pattern.length() >= 2) {
                 if (arrayPattern.length >= 2) {
                     return conceptDAO.countConceptBy(arrayPattern, categories, isModeled);
                 } else {
@@ -190,7 +190,7 @@ public class ConceptManagerImpl implements ConceptManager {
         //Cuenta por patron o concept ID
 
         if (pattern != null) {
-            if (pattern.length() >= 3) {
+            if (pattern.length() >= 2) {
                 if (arrayPattern.length >= 2) {
                     return conceptDAO.countConceptBy(arrayPattern, new Long[0], isModeled);
                 } else {
@@ -251,6 +251,8 @@ public class ConceptManagerImpl implements ConceptManager {
         /* Y sus relaciones */
         for (Relationship relationship : conceptSMTK.getRelationships()) {
             relationshipManager.createRelationship(relationship);
+            /* Se realizan las acciones asociadas a la asociación */
+            new RelationshipBindingBR().postActions(relationship, conceptDAO);
         }
 
         /* Y sus tags */
@@ -260,7 +262,6 @@ public class ConceptManagerImpl implements ConceptManager {
                 tagManager.assignTag(conceptSMTK,tag);
             }
         }
-
 
         /* Se deja registro en la auditoría sólo para conceptos modelados */
         if (conceptSMTK.isModeled()) {
@@ -383,6 +384,9 @@ public class ConceptManagerImpl implements ConceptManager {
     public List<Relationship> loadRelationships(ConceptSMTK concept) {
         List<Relationship> relationships = relationshipDAO.getRelationshipsBySourceConcept(concept.getId());
         concept.setRelationships(relationships);
+        List<IndirectCrossmap> relationshipsCrossMapIndirect = crossmapsManager.getIndirectCrossmaps(concept);
+        relationships.addAll(relationshipsCrossMapIndirect);
+
         return relationships;
     }
 
@@ -396,6 +400,10 @@ public class ConceptManagerImpl implements ConceptManager {
         return conceptDAO.getNoValidConcept();
     }
 
+    @Override
+    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK) {
+        return conceptDAO.getRelatedConcepts(conceptSMTK);
+    }
 
     /**
      * Método encargado de convertir un string en una lista de string.
@@ -415,7 +423,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
             while (st.hasMoreTokens()) {
                 token = st.nextToken();
-                if (token.length() >= 3) {
+                if (token.length() >= 2) {
                     listPattern.add(token.trim());
                 }
                 if (count == 0 && listPattern.size() == 0) {

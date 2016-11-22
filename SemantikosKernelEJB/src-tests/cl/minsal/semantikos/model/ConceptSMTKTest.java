@@ -44,7 +44,7 @@ public class ConceptSMTKTest {
         ConceptSCT theTarget = new ConceptSCT(10, new Timestamp(System.currentTimeMillis()), true, 1, 1);
         RelationshipDefinition relationshipDefinition = new RelationshipDefinition("RelTest", "Nada", MultiplicityFactory.ONE_TO_MANY, new Category());
 
-        Relationship relationship1 = new Relationship(conceptSMTK, theTarget, relationshipDefinition,new ArrayList<RelationshipAttribute>());
+        Relationship relationship1 = new Relationship(conceptSMTK, theTarget, relationshipDefinition,new ArrayList<RelationshipAttribute>(), null);
         conceptSMTK.addRelationship(relationship1);
 
         assertTrue(conceptSMTK.contains(relationship1));
@@ -62,10 +62,10 @@ public class ConceptSMTKTest {
         ConceptSCT theTarget2 = new ConceptSCT(11, new Timestamp(System.currentTimeMillis()), true, 1, 1);
         RelationshipDefinition relationshipDefinition = new RelationshipDefinition("RelTest", "Nada", MultiplicityFactory.ONE_TO_MANY, new Category());
 
-        Relationship relationship1 = new Relationship(conceptSMTK, theTarget1, relationshipDefinition,new ArrayList<RelationshipAttribute>());
+        Relationship relationship1 = new Relationship(conceptSMTK, theTarget1, relationshipDefinition,new ArrayList<RelationshipAttribute>(), null);
         conceptSMTK.addRelationship(relationship1);
 
-        Relationship relationship2 = new Relationship(conceptSMTK, theTarget2, relationshipDefinition,new ArrayList<RelationshipAttribute>());
+        Relationship relationship2 = new Relationship(conceptSMTK, theTarget2, relationshipDefinition,new ArrayList<RelationshipAttribute>(), null);
         assertFalse(conceptSMTK.contains(relationship2));
     }
 
@@ -81,10 +81,10 @@ public class ConceptSMTKTest {
         RelationshipDefinition relationshipDefinition1 = new RelationshipDefinition("RelTest", "Nada", MultiplicityFactory.ONE_TO_MANY, new Category());
         RelationshipDefinition relationshipDefinition2 = new RelationshipDefinition("RelTest", "Nada", MultiplicityFactory.ONE_TO_MANY, new Category());
 
-        Relationship relationship1 = new Relationship(conceptSMTK, theTarget1, relationshipDefinition1,new ArrayList<RelationshipAttribute>());
+        Relationship relationship1 = new Relationship(conceptSMTK, theTarget1, relationshipDefinition1,new ArrayList<RelationshipAttribute>(), null);
         conceptSMTK.addRelationship(relationship1);
 
-        Relationship relationship2 = new Relationship(conceptSMTK, theTarget1, relationshipDefinition2,new ArrayList<RelationshipAttribute>());
+        Relationship relationship2 = new Relationship(conceptSMTK, theTarget1, relationshipDefinition2,new ArrayList<RelationshipAttribute>(), null);
         assertTrue(conceptSMTK.contains(relationship2));
     }
 }

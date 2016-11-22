@@ -42,7 +42,7 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
     public RelationshipAttribute createRelationshipAttribute(RelationshipAttribute relationshipAttribute) {
         long idRelationShipAttribute;
         long idTarget = targetDAO.persist(relationshipAttribute.getTarget(), relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition());
-        ;
+
         ConnectionBD connect = new ConnectionBD();
 
         String sql = "{call semantikos.create_relationship_attribute(?,?,?)}";

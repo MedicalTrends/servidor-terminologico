@@ -27,8 +27,8 @@
             <p:autoComplete id="helperTableTypeAttributeSimple" scrollHeight="200" style="width: 90%;"
                             inputStyle="width: 90%;"
                             completeMethod="#{helperTableBean.getRecordSearchInput}"
-                            dropdown="true"
                             forceSelection="true"
+                            disabled="#{not cc.attrs.concept.editable }"
                             var="record"
                             placeholder="#{cc.attrs.relationshipAttributeDefinition.name}..."
                             converter="helperTableRecordConverter"
@@ -51,7 +51,7 @@
                         process="@this" />
 
             </p:autoComplete>
-
+            <i class="fa fa-search fa-lg"  />
         </p:outputPanel>
 
         <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.relationship.relationshipAttributes }">
@@ -64,34 +64,12 @@
                     value="#{cc.attrs.relationship.relationshipAttributes}"
                     var="relationshipAttribute">
 
-                <p:autoComplete id="helperTableTypeAttributeSimple2" scrollHeight="200" style="width: 90%;"
-                                inputStyle="width: 90%;"
-                                completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                dropdown="true"
-                                forceSelection="true"
-                                var="record"
-                                placeholder="#{cc.attrs.relationshipAttributeDefinition.name}..."
-                                converter="helperTableRecordConverter"
-                                value="#{relationshipAttribute.target}"
-                                itemLabel="#{record.fields['description']}"
-                                itemValue="#{record}">
-                    <!-- Parámetros del buscador -->
-                    <f:attribute name="helperTable" value="#{cc.attrs.relationshipAttributeDefinition.targetDefinition}"  />
-                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                    <!-- Parámetros del validador -->
-                    <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
-                    <!---->
-                    <p:column>
-                        <h:outputText value="#{record.fields['description']}"/>
-                    </p:column>
-
-
-                    <p:ajax event="itemSelect"
-                            update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                            listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, relationshipAttribute.target)}"
-                            process="@this" />
-
-                </p:autoComplete>
+                <p:inputText disabled="true" id="helperTableRecord" value="#{relationshipAttribute.target.fields['description']}" style="width: 70%" />
+                <p:commandLink process="@this"
+                               update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                               action="#{conceptBean.removeRelationshipAttribute(cc.attrs.relationship,relationshipAttribute)}">
+                    <i class="fa fa-close fa-lg"  />
+                </p:commandLink>
 
             </p:repeat>
 
@@ -102,8 +80,8 @@
             <p:autoComplete id="helperTableTypeAttributeCollection" scrollHeight="200" style="width: 90%;"
                             inputStyle="width: 90%;"
                             completeMethod="#{helperTableBean.getRecordSearchInput}"
-                            dropdown="true"
                             forceSelection="true"
+                            disabled="#{not cc.attrs.concept.editable }"
                             var="record"
                             placeholder="#{cc.attrs.relationshipAttributeDefinition.name}..."
                             converter="helperTableRecordConverter"
@@ -127,7 +105,7 @@
 
 
             </p:autoComplete>
-
+            <i class="fa fa-search fa-lg"  />
         </p:outputPanel>
 
     </div>

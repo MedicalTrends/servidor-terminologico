@@ -154,6 +154,7 @@
 
                     <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
                 </p:autoComplete>
+                <i class="fa fa-search fa-lg"  />
             </div>
             <smtk:info relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
         </div>
@@ -201,7 +202,7 @@
 
         <div class="ui-g">
 
-            <p:panel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id} fragments" style="width:100%" rendered="#{cc.attrs.concept.editable}">
+            <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id} fragments" style="width:100%" rendered="#{cc.attrs.concept.editable}">
                 <p:growl id="growl" showDetail="true" showSummary="true"/>
 
             <div class="ui-g-12 ui-md-6 ui-lg-2">
@@ -235,6 +236,7 @@
 
                     <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
                 </p:autoComplete>
+                <i class="fa fa-search fa-lg"  />
             </div>
             <!-- Atributos de relación -->
             <p:repeat
@@ -247,11 +249,13 @@
                 <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                          relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                          targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                         concept="#{cc.attrs.concept}"
                                          rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()}"
                 />
                 <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                                relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                                targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                               concept="#{cc.attrs.concept}"
                                                rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
                 />
             </p:repeat>
@@ -265,7 +269,7 @@
             </div>
 
             <smtk:info relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
-            </p:panel>
+            </p:outputPanel>
         </div>
 
 
@@ -286,7 +290,7 @@
                         update="@(.conceptHeader),@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id})">
 
                 </p:ajax>
-                <f:attribute name="relationshipDefinitionRowEdit" value="#{cc.attrs.relationshipDefinition}"></f:attribute>
+                <f:attribute name="relationshipDefinitionRowEdit" value="#{cc.attrs.relationshipDefinition}" />
 
                 <p:column headerText="ID">
                     <h:outputText value="#{rel.target.id}"/>
@@ -330,15 +334,16 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
 
                     <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"  value="#{cc.attrs.relationshipDefinition.name}: " for="findConceptSMTK"/>
-                    <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" value="#{cc.attrs.relationshipDefinition.name}: (*)" for="findConceptSMTK"/>
+                    <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" value="#{cc.attrs.relationshipDefinition.name} *" for="findConceptSMTK"/>
 
                 </div>
 
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
+                                    placeholder="#{cc.attrs.relationshipDefinition.name}..."
                                     forceSelection="true"
-                                    id="findConceptSMTK" scrollHeight="200" size="5" style="width: 85%;"
-                                    inputStyle="width: 85%;"
+                                    id="findConceptSMTK" scrollHeight="200" size="5" style="width: 90%;"
+                                    inputStyle="width: 90%;"
                                     completeMethod="#{smtkBean.getConceptSearchInput}"
                                     converter="conceptConverter"
                                     var="concept"
@@ -365,6 +370,7 @@
 
                         <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
                     </p:autoComplete>
+                    <i class="fa fa-search fa-lg"  />
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
 
@@ -380,18 +386,17 @@
                                varStatus="var">
                         <div class="ui-g-12 ui-md-6 ui-lg-2">
                             <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"  value="#{cc.attrs.relationshipDefinition.name}: " for="itemSelected"/>
-                            <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" value="#{cc.attrs.relationshipDefinition.name}: (*)" for="itemSelected"/>
+                            <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" value="#{cc.attrs.relationshipDefinition.name} *" for="itemSelected"/>
                         </div>
 
-                        <div class="ui-g-12 ui-md-6 ui-lg-3">
-                            <p:inputText style="width: 70%;" disabled="true" id="itemSelected" value="#{relationship.target.descriptionFavorite.term}" />
-                            <p:commandButton icon="fa fa-trash" title="Eliminar"
-                                             action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}"
-                                             styleClass="ui-datepicker-trigger ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"
-                                             update="@(.concept)"
-                                             rendered="#{conceptBean.concept.hasRelationships(cc.attrs.relationshipDefinition)}"
-                                             process="@this">
-                            </p:commandButton>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <p:inputText style="width: 80%;" disabled="true" id="itemSelected" value="#{relationship.target.descriptionFavorite.term}" />
+                            <p:commandLink process="@this"
+                                           update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                           rendered="#{conceptBean.concept.hasRelationships(cc.attrs.relationshipDefinition)}"
+                                           action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                                <i class="fa fa-close fa-lg"  />
+                            </p:commandLink>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-1">
                             <h:outputText value="Concept ID"/>

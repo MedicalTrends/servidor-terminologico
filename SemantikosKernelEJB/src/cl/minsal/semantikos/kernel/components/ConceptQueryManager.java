@@ -15,9 +15,11 @@ import java.util.List;
 @Local
 public interface ConceptQueryManager {
 
-    public cl.minsal.semantikos.model.browser.ConceptQuery getDefaultQueryByCategory(Category category);
+    public ConceptQuery getDefaultQueryByCategory(Category category);
 
-    public List<ConceptSMTK> executeQuery(cl.minsal.semantikos.model.browser.ConceptQuery query);
+    public List<ConceptSMTK> executeQuery(ConceptQuery query);
+
+    public int countConceptQuery(ConceptQuery query);
 
     public List<RelationshipDefinition> getSearchableAttributesByCategory(Category category);
 

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface >
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.Category" />
+    <composite:attribute name="targets" type="java.util.List"/>
+    <composite:attribute name="multiple" type="java.lang.Boolean"/>
+</composite:interface>
+<composite:implementation>
+
+    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+        <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() and not cc.attrs.multiple }">
+
+            <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
+                            forceSelection="true"
+                            placeholder="#{cc.attrs.relationshipDefinition.name}..."
+                            id="findConceptSMTK" scrollHeight="200" size="5"
+                            style="width: 85%;"
+                            inputStyle="width: 90%;"
+                            completeMethod="#{smtkBean.getConceptSearchInput}"
+                            converter="conceptConverter"
+                            var="concept"
+                            value="#{conceptBrowserBean.conceptSMTK}"
+                            itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
+                            >
+
+                <!-- Parámetros del validador -->
+                <f:attribute name="concept" value="#{cc.attrs.concept}"  />
+                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
+                <!---->
+                <p:column>
+                    <h:outputText value="#{concept.descriptionFavorite.id}"/>
+                </p:column>
+
+                <p:column>
+                    <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                </p:column>
+
+                <p:ajax event="itemSelect"
+                        listener="#{conceptBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, conceptBrowserBean.conceptSMTK)}"
+                        update="@(.conceptFilters)"
+                        process="@this" />
+
+                <p:ajax event="itemSelect" update="@(.conceptBrowserTable)" />
+
+            </p:autoComplete>
+            <i class="fa fa-search fa-lg" />
+        </p:outputPanel>
+
+        <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() and not cc.attrs.multiple }">
+
+            <p:repeat  value="#{cc.attrs.targets}"
+                       offset="0"
+                       size="#{cc.attrs.targets.size()}"
+                       step="1"
+                       var="target"
+                       varStatus="var">
+
+                <p:inputText style="width: 75%;" disabled="true" id="itemSelected" value="#{target.descriptionFavorite.term}" />
+                <p:commandLink rendered="#{ not cc.attrs.targets.isEmpty() }"
+                               process="@this"
+                               update="@(.conceptFilters),@(.conceptBrowserTable)"
+                               action="#{conceptBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
+                    <i class="fa fa-close fa-lg"  />
+                </p:commandLink>
+
+
+            </p:repeat>
+
+        </p:outputPanel>
+
+    </div>
+
+
+</composite:implementation>
+</html>

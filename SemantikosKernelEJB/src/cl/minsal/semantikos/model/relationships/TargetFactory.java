@@ -2,7 +2,7 @@ package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.kernel.components.HelperTableManager;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
-import cl.minsal.semantikos.kernel.daos.ConceptSCTDAO;
+import cl.minsal.semantikos.kernel.daos.CrossmapsDAO;
 import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
 import cl.minsal.semantikos.kernel.daos.SnomedCTDAO;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
@@ -12,7 +12,6 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -43,6 +42,9 @@ public class TargetFactory {
     @EJB
     private ConceptDAO conceptDAO;
 
+    @EJB
+    private CrossmapsDAO crossmapsDAO;
+
     /**
      * Este método es responsable de reconstruir un Target a partir de una expresión JSON, yendo a buscar los otros
      * objetos necesarios.
@@ -64,12 +66,15 @@ public class TargetFactory {
 
         Target target;
         long idHelperTableRecord = targetDTO.getIdAuxiliary();
+        long idExtern = targetDTO.getIdExtern();
         long idConceptSct = targetDTO.getIdConceptSct();
         long idConceptStk = targetDTO.getIdConceptStk();
 
         /* Se evalúa caso a caso. Helper Tables: */
         if (idHelperTableRecord > 0) {
             target = helperTableManager.getRecord(idHelperTableRecord);
+        } else if (idExtern > 0) {
+            target = crossmapsDAO.getCrossmapSetMemberById(idExtern);
         } else if (idConceptSct > 0) {
             target = snomedCTDAO.getConceptByID(idConceptSct);
         } else if (idConceptStk > 0) {
@@ -135,7 +140,7 @@ public class TargetFactory {
         if (definition.isHelperTable()) {
             return new HelperTableRecord((HelperTable)definition,-1);
         } else {
-            throw new NotImplementedException();
+            throw new EJBException("No implementado!");
         }
 
 

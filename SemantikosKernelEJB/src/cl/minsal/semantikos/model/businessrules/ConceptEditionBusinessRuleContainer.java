@@ -17,6 +17,8 @@ public class ConceptEditionBusinessRuleContainer implements BusinessRulesContain
 
     private static final Logger logger = LoggerFactory.getLogger(ConceptEditionBusinessRuleContainer.class);
 
+
+
     public void preconditionsConceptEditionTag(ConceptSMTK conceptSMTK) {
         brTagSMTK002UpdateTag(conceptSMTK);
     }

@@ -29,15 +29,14 @@
                 <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:autoComplete id="findHTRecords1" scrollHeight="200" style="width: 90%;"
+                <p:autoComplete id="findHTRecords1" scrollHeight="200"
+                                style="width: 90%;"
                                 inputStyle="width: 90%;"
                                 completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                dropdown="true"
                                 forceSelection="true"
                                 var="record"
                                 placeholder="#{cc.attrs.relationshipDefinition.name}..."
                                 converter="helperTableRecordConverter"
-                                validator="#{validatorBean.validateRequiredRecordSelect}"
                                 value="#{conceptBean.selectedHelperTableRecord}"
                                 disabled="#{not cc.attrs.concept.editable}"
                                 itemLabel="#{record.fields['description']}"
@@ -48,8 +47,16 @@
                     <!-- Parámetros del validador -->
                     <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
                     <!---->
-                    <p:column>
+                    <p:column rendered="#{not cc.attrs.relationshipDefinition.ATC}">
                         <h:outputText value="#{record.fields['description']}"/>
+                    </p:column>
+
+                    <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}">
+                        <h:outputText value="#{record.fields['codigoAtc']}"/>
+                    </p:column>
+
+                    <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}" style="width: 500px">
+                        <h:outputText value="#{record.fields['dscCompletaAtc']}"/>
                     </p:column>
 
                     <p:ajax event="itemSelect"
@@ -58,6 +65,7 @@
                             process="@this"/>
 
                 </p:autoComplete>
+                <i class="fa fa-search fa-lg"  />
             </div>
         </div>
     </p:panel>
@@ -78,36 +86,13 @@
                     <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:autoComplete id="findHTRecords2" scrollHeight="200" style="width: 90%;"
-                                    inputStyle="width: 90%;"
-                                    completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                    dropdown="true"
-                                    forceSelection="true"
-                                    var="record"
-                                    placeholder="#{cc.attrs.relationshipDefinition.name}..."
-                                    converter="helperTableRecordConverter"
-                                    validator="#{validatorBean.validateRequiredRecordSelect}"
-                                    disabled="#{not cc.attrs.concept.editable}"
-                                    value="#{relationship.target}"
-                                    itemLabel="#{record.fields['description']}"
-                                    itemValue="#{record}">
-                        <!-- Parámetros del buscador -->
-                        <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
-                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                        <!-- Parámetros del validador -->
-                        <f:attribute name="helperTableRecord" value="#{relationship.target}"  />
-                        <!---->
-
-                        <p:column>
-                            <h:outputText value="#{record.fields['description']}"/>
-                        </p:column>
-
-                        <p:ajax event="itemSelect"
-                                listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, relationship.target)}"
-                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                                process="@this"/>
-
-                    </p:autoComplete>
+                    <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.fields['description']}" style="width: 80%" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
+                    <p:inputText disabled="true" id="findHTRecords2_" value="#{relationship.target.fields['dsc_completa_atc']}" style="width: 80%" rendered="#{cc.attrs.relationshipDefinition.ATC}" />
+                    <p:commandLink process="@this"
+                                   update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                   action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                        <i class="fa fa-close fa-lg"  />
+                    </p:commandLink>
                 </div>
             </div>
         </ui:repeat>
@@ -130,12 +115,10 @@
                                 inputStyle="width: 90%;"
                                 styleClass="findHTRecords1"
                                 completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                dropdown="true"
                                 forceSelection="true"
                                 var="record"
                                 placeholder="#{cc.attrs.relationshipDefinition.name}..."
                                 converter="helperTableRecordConverter"
-                                validator="#{validatorBean.validateRequiredRecordSelect}"
                                 disabled="#{not cc.attrs.concept.editable}"
                                 value="#{conceptBean.selectedHelperTableRecord}"
                                 itemLabel="#{record.fields['description']}"
@@ -156,6 +139,7 @@
                             process="@this"/>
 
                 </p:autoComplete>
+                <i class="fa fa-search fa-lg"  />
             </div>
             <!-- Atributos de relación -->
             <p:repeat
@@ -167,12 +151,14 @@
                     var="relationshipAttributeDefinition">
                 <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                          relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
+                                         concept="#{cc.attrs.concept}"
                                          targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
                                          rendered="#{relationshipAttributeDefinition.targetDefinition.basicType}"
                 />
                 <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                                relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                                targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                               concept="#{cc.attrs.concept}"
                                                rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
                 />
             </p:repeat>
@@ -195,34 +181,12 @@
                     <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:autoComplete id="findHTRecords4" scrollHeight="200" style="width: 90%;"
-                                    inputStyle="width: 90%;"
-                                    completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                    dropdown="true"
-                                    forceSelection="true"
-                                    var="record"
-                                    placeholder="#{cc.attrs.relationshipDefinition.name}..."
-                                    converter="helperTableRecordConverter"
-                                    value="#{relationship.target}"
-                                    disabled="#{not cc.attrs.concept.editable}"
-                                    itemLabel="#{record.fields['description']}"
-                                    itemValue="#{record}">
-                        <!-- Parámetros del buscador -->
-                        <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
-                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                        <!-- Parámetros del validador -->
-                        <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
-                        <!---->
-                        <p:column>
-                            <h:outputText value="#{record.fields['description']}"/>
-                        </p:column>
-
-                        <p:ajax event="itemSelect"
-                                listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, relationship.target)}"
-                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                                process="@this"/>
-
-                    </p:autoComplete>
+                    <p:inputText disabled="true" id="findHTRecords4" value="#{relationship.target.fields['description']}" style="width: 80%" />
+                    <p:commandLink process="@this"
+                                   update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                   action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                        <i class="fa fa-close fa-lg"  />
+                    </p:commandLink>
                 </div>
                 <!-- Atributos de relación -->
                 <p:repeat
@@ -236,12 +200,14 @@
                                              relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                              targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
                                              relationship="#{relationship}"
+                                             concept="#{cc.attrs.concept}"
                                              rendered="#{relationshipAttributeDefinition.targetDefinition.basicType}"
                     />
                     <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                                    relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                                    targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
                                                    relationship="#{relationship}"
+                                                   concept="#{cc.attrs.concept}"
                                                    rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
                     />
                 </p:repeat>
@@ -265,7 +231,6 @@
                                 styleClass="fragments"
                                 inputStyle="width: 90%;"
                                 completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                dropdown="#{not cc.attrs.relationshipDefinition.isISP()}"
                                 queryDelay="#{cc.attrs.relationshipDefinition.isISP()? 1000 : 0}"
                                 minQueryLength="#{cc.attrs.relationshipDefinition.isISP()? 3 : 0}"
                                 forceSelection="true"
@@ -294,6 +259,7 @@
                             process="@this"/>
 
                 </p:autoComplete>
+                <i class="fa fa-search fa-lg"  />
             </div>
 
             <smtk:info relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
@@ -344,7 +310,7 @@
 
         <div class="ui-g">
 
-            <p:panel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" rendered="#{cc.attrs.concept.editable}" style="width:100%">
+            <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" rendered="#{cc.attrs.concept.editable}" style="width:100%">
 
                 <p:growl id="growl" showDetail="true" showSummary="true"/>
 
@@ -354,7 +320,6 @@
                                     inputStyle="width: 90%;"
                                     completeMethod="#{helperTableBean.getRecordSearchInput}"
                                     var="record"
-                                    dropdown="#{not cc.attrs.relationshipDefinition.isISP()}"
                                     queryDelay="#{cc.attrs.relationshipDefinition.isISP()? 1000 : 0}"
                                     minQueryLength="#{cc.attrs.relationshipDefinition.isISP()? 3 : 0}"
                                     forceSelection="true"
@@ -380,7 +345,7 @@
                                 process="@this"/>
 
                     </p:autoComplete>
-
+                    <i class="fa fa-search fa-lg"  />
                 </div>
 
                 <!-- Atributos de relación -->
@@ -394,11 +359,13 @@
                     <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                              relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                              targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                             concept="#{cc.attrs.concept}"
                                              rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()}"
                     />
                     <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                                    relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                                    targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                                   concept="#{cc.attrs.concept}"
                                                    rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
                     />
                 </p:repeat>
@@ -414,7 +381,7 @@
 
                 <smtk:info relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
 
-            </p:panel>
+            </p:outputPanel>
         </div>
 
         <div class="ui-g">

@@ -2,6 +2,7 @@ package cl.minsal.semantikos.model.crossmaps;
 
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
 import java.sql.Timestamp;
 
@@ -9,10 +10,10 @@ import java.sql.Timestamp;
  * Esta clase implementa el concepto de terminología externa
  * @author Andrés Farías on 11/3/16.
  */
-public class CrossmapSet extends PersistentEntity{
+public class CrossmapSet extends PersistentEntity implements TargetDefinition {
 
     /** Identificador de negocio */
-    private long idCrossmapSet;
+    //private long idCrossmapSet;
 
     private String abbreviatedName;
 
@@ -21,12 +22,78 @@ public class CrossmapSet extends PersistentEntity{
     /** Año de la versión */
     private int version;
 
-    /** Fecha de creación */
-    private Timestamp creationDate;
+    public CrossmapSet(String abbreviatedName, String name, int version, boolean state) {
+        this.abbreviatedName = abbreviatedName;
+        this.name = name;
+        this.version = version;
+        this.state = state;
+    }
 
-    /** Usuario que creo la terminología */
-    private User creator;
+    public CrossmapSet(long id, String abbreviatedName, String name, int version, boolean state) {
+        super(id);
+        this.abbreviatedName = abbreviatedName;
+        this.name = name;
+        this.version = version;
+        this.state = state;
+    }
 
-    /** Fecha <em>hasta</em> de vigencia */
-    private Timestamp validityUntil;
+    public boolean isState() {
+        return state;
+
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
+    }
+
+    private boolean state;
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAbbreviatedName() {
+        return abbreviatedName;
+    }
+
+    public void setAbbreviatedName(String abbreviatedName) {
+        this.abbreviatedName = abbreviatedName;
+    }
+
+    @Override
+    public boolean isBasicType() {
+        return false;
+    }
+
+    @Override
+    public boolean isSMTKType() {
+        return false;
+    }
+
+    @Override
+    public boolean isHelperTable() {
+        return false;
+    }
+
+    @Override
+    public boolean isSnomedCTType() {
+        return false;
+    }
+
+    @Override
+    public boolean isCrossMapType() {
+        return true;
+    }
 }

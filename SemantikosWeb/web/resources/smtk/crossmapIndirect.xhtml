@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+</composite:interface>
+<composite:implementation>
+
+    <p:panel header="Crossmap Indirecto" collapsed="true" toggleable="true" styleClass="crossmapindirect">
+        <p:dataTable value="#{crossmapBean.indirectCrossmaps}" var="crossmapsIndirect">
+            <p:column headerText="Terminología">
+                <h:outputText value="#{crossmapsIndirect.target.crossmapSet.name}"/>
+            </p:column>
+            <p:column headerText="Cod. Crossmaps">
+                <h:outputText value="#{crossmapsIndirect.target.code}"/>
+            </p:column>
+            <p:column headerText="Descripcion">
+                <h:outputText value="#{crossmapsIndirect.target.gloss}"/>
+            </p:column>
+            <p:column headerText="MapRule">
+                <h:outputText value="#{crossmapsIndirect.mapRule}"/>
+            </p:column>
+            <p:column headerText="MapAdvice">
+                <h:outputText value="#{crossmapsIndirect.mapAdvice}"/>
+            </p:column>
+            <p:column headerText="Origen">
+                <h:outputText value=""/>
+            </p:column>
+            <p:column headerText="Fecha de ingreso">
+                <h:outputText value=""/>
+            </p:column>
+        </p:dataTable>
+    </p:panel>
+
+    <br/>
+    <br/>
+
+</composite:implementation>
+</html>

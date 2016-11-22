@@ -2,7 +2,6 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.Local;
 import javax.validation.constraints.NotNull;
@@ -126,7 +125,7 @@ public interface ConceptManager {
 
     /*Método temporal para trabajar con el navegador de conceptos*/
     @Deprecated
-    public List<ConceptSMTK> findConceptBy(Category category, int pageNumber, int pageSize);
+    public List<ConceptSMTK> findConceptBy(Category category);
 
     public List<ConceptSMTK> findModeledConceptBy(Category category, int pageSize, int pageNumber);
 
@@ -138,10 +137,8 @@ public interface ConceptManager {
 
     /**
      * Método encargado de realizar la búsqueda de conceptos por patron, en caso de no encontrar un "Perfect Match" por
-     * la cadena de texto entregada,
-     * realiza un truncate match, el que consiste en cortar cada palabra de la cadena de texto en las tres primeras
-     * letras para luego realizar la búsqueda
-     * nuevamente
+     * la cadena de texto entregada, realiza un truncate match, el que consiste en cortar cada palabra de la cadena de
+     * texto en las tres primeras letras para luego realizar la búsqueda nuevamente.
      *
      * @param pattern cadena de texto
      *
@@ -199,4 +196,6 @@ public interface ConceptManager {
      * @return La instancia (única) del concepto No Válido.
      */
     public ConceptSMTK getNoValidConcept();
+
+    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);
 }

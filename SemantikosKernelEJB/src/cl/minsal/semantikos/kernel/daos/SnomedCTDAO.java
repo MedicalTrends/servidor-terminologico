@@ -17,10 +17,11 @@ public interface SnomedCTDAO {
      * Este método es responsable de buscar Conceptos SnomedCT a partir de un patrón de texto.
      *
      * @param pattern El patrón por el cual se busca el Concept Snomed.
+     * @param group   El grupo utilizado como filtro.
      *
      * @return Una lista
      */
-    List<ConceptSCT> findConceptsBy(String pattern);
+    List<ConceptSCT> findConceptsBy(String pattern, Integer group);
 
     /**
      * Este método es responsable de recuperar un concepto por su CONCEPT_ID.
@@ -36,10 +37,11 @@ public interface SnomedCTDAO {
      * <code>conceptIdPattern</code> dado como parámetro. El patron
      *
      * @param conceptIdPattern El concept ID por el cual se realiza la búsqueda.
+     * @param group            El grupo usado como filtro.
      *
      * @return La lista de conceptos que satisfacen el criterio de búsqueda.
      */
-    List<ConceptSCT> findConceptsByConceptID(long conceptIdPattern);
+    List<ConceptSCT> findConceptsByConceptID(long conceptIdPattern, Integer group);
 
     /**
      * Este método es responsable de buscar aquellos conceptos que posean al menos una descripción cuyo término

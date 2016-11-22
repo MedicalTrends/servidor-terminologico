@@ -225,5 +225,32 @@ public class CategoryDAOImpl implements CategoryDAO {
 
         }
     }
+
+    @Override
+    public List<Category> getRelatedCategories(Category category) {
+        List<Category> categories = new ArrayList<>();
+
+        ConnectionBD connect = new ConnectionBD();
+
+        CallableStatement call;
+
+        try (Connection connection = connect.getConnection();) {
+
+            call = connection.prepareCall("{call semantikos.get_related_category(?)}");
+            call.setLong(1,category.getId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                categories.add(createCategoryFromResultSet(rs));
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return categories;
+    }
 }
 

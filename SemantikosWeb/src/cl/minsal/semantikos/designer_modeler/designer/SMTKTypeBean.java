@@ -89,7 +89,7 @@ public class SMTKTypeBean implements Serializable {
         final Long[] categoryArr = new Long[1];
 
         if (patron != null) {
-            if (patron.length() > 2) {
+            if (patron.length() >= 2) {
                 categoryArr[0] = cD.getId();
                 conceptSearchList = conceptManager.findConceptBy(patron, categoryArr, 0, 30);
                 return conceptSearchList;

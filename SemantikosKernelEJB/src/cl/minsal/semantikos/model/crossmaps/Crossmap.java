@@ -12,30 +12,15 @@ import java.util.ArrayList;
  *
  * @author Andrés Farías
  */
-public class Crossmap extends Relationship implements Target {
+public abstract class Crossmap extends Relationship {
 
-    public Crossmap(ConceptSMTK sourceConcept, Target target, RelationshipDefinition relationshipDefinition) {
-        super(sourceConcept, target, relationshipDefinition,new ArrayList<RelationshipAttribute>());
+    public Crossmap(ConceptSMTK sourceConcept, CrossmapSetMember target, RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
+        super(sourceConcept, target, relationshipDefinition,new ArrayList<RelationshipAttribute>(), validityUntil);
     }
 
-    public Crossmap(@NotNull long id, @NotNull ConceptSMTK sourceConcept, @NotNull Target target, @NotNull RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
+    public Crossmap(@NotNull long id, @NotNull ConceptSMTK sourceConcept, @NotNull CrossmapSetMember target, @NotNull RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
         super(id, sourceConcept, target, relationshipDefinition, validityUntil,new ArrayList<RelationshipAttribute>());
     }
 
-    @Override
-    public long getId() {
-        return 0;
-    }
-
-    @Override
-    public TargetType getTargetType() {
-        return TargetType.CrossMap;
-    }
-
-    @Override
-    public Target copy() {
-        return new Crossmap(this.getSourceConcept(), this.getTarget(), this.getRelationshipDefinition());
-    }
-
-
+    public abstract boolean is(CrossMapType indirect);
 }

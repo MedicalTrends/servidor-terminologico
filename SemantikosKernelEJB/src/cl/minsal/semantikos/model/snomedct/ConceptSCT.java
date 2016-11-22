@@ -10,6 +10,7 @@ import java.util.List;
 
 import static cl.minsal.semantikos.model.snomedct.DescriptionSCTType.FSN;
 import static cl.minsal.semantikos.model.snomedct.DescriptionSCTType.SYNONYM;
+import static java.util.Collections.emptyList;
 
 
 /**
@@ -20,6 +21,9 @@ import static cl.minsal.semantikos.model.snomedct.DescriptionSCTType.SYNONYM;
  * @created 17-ago-2016 12:52:05
  */
 public class ConceptSCT extends PersistentEntity implements Target {
+
+    public static final long COMPLETELY_DEFINED = 900000000000073002l;
+    public static final long PRIMITIVE = 900000000000074008l;
 
     /** Identificador único (oficial) de Snomed CT para este concepto. */
     private long idSnomedCT;
@@ -92,14 +96,6 @@ public class ConceptSCT extends PersistentEntity implements Target {
         this.moduleId = moduleId;
     }
 
-    public long getDefinitionStatusId() {
-        return definitionStatusId;
-    }
-
-    public void setDefinitionStatusId(long definitionStatusId) {
-        this.definitionStatusId = definitionStatusId;
-    }
-
     public long getIdSnomedCT() {
         return idSnomedCT;
     }
@@ -128,6 +124,7 @@ public class ConceptSCT extends PersistentEntity implements Target {
 
     /**
      * Este método es encargado de obtener la descripción favorita del concepto SCT
+     *
      * @return
      */
     public DescriptionSCT getDescriptionFavouriteSynonymous() {
@@ -142,6 +139,11 @@ public class ConceptSCT extends PersistentEntity implements Target {
     }
 
     private List<DescriptionSCT> getDescriptionSynonymous() {
+
+        if (descriptions == null) {
+            return emptyList();
+        }
+
         List<DescriptionSCT> synonyms = new ArrayList<>();
         for (DescriptionSCT description : descriptions) {
             if (description.getDescriptionType().equals(SYNONYM)) {
@@ -159,6 +161,10 @@ public class ConceptSCT extends PersistentEntity implements Target {
      * @return La descripción del concepto.
      */
     public DescriptionSCT getDescriptionFSN() {
+
+        if (descriptions == null) {
+            return null;
+        }
 
         for (DescriptionSCT description : descriptions) {
             if (description.getDescriptionType().equals(FSN)) {
@@ -183,11 +189,21 @@ public class ConceptSCT extends PersistentEntity implements Target {
         conceptSCT.setId(this.getId());
         conceptSCT.setIdSnomedCT(this.idSnomedCT);
         conceptSCT.setActive(this.isActive);
-        conceptSCT.setDefinitionStatusId(this.definitionStatusId);
+        conceptSCT.definitionStatusId = this.definitionStatusId;
         conceptSCT.setEffectiveTime(this.effectiveTime);
         conceptSCT.setModuleId(this.moduleId);
         conceptSCT.setDescriptions(this.getDescriptions());
         return conceptSCT;
+    }
+
+    public boolean isCompletelyDefined(){
+        return this.definitionStatusId == COMPLETELY_DEFINED;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        return this.getId() ==((ConceptSCT)o).getId();
     }
 
 }

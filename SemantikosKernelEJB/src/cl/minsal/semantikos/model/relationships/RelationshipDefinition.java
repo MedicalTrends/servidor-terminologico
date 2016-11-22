@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.model.Multiplicity;
+import cl.minsal.semantikos.model.helpertables.HelperTableFactory;
 
 import java.util.List;
 
@@ -179,6 +180,11 @@ public class RelationshipDefinition {
     }
 
     public boolean isISP(){
-        return this.getName().equalsIgnoreCase("ISP");
+        return this.getName().equalsIgnoreCase(HelperTableFactory.ISP);
     }
+
+    public boolean isATC(){
+        return this.getName().equalsIgnoreCase(HelperTableFactory.ATC);
+    }
+
 }

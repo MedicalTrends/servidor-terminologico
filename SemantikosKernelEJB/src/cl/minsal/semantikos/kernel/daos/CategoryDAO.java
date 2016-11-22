@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.ejb.Local;
@@ -51,4 +52,12 @@ public interface CategoryDAO {
      * @param category La categoría que se desea crear.
      */
     public void persist(Category category);
+
+
+    /**
+     * Este método es responsable de obtener las categorías que se relacionan con la categoría indicada como parametro
+     * @param category concepto que se relaciona con otros
+     * @return Lista de categorías relacionados
+     */
+    public List<Category> getRelatedCategories(Category category);
 }

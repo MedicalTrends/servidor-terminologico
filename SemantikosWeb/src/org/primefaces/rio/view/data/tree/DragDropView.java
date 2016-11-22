@@ -54,7 +54,7 @@ public class DragDropView implements Serializable {
 		TreeNode node001 = new DefaultTreeNode("Node 0.0.1", node00);
 		TreeNode node010 = new DefaultTreeNode("Node 0.1.0", node01);
 		
-		TreeNode node100 = new DefaultTreeNode("Node 1.0.0", node10);
+		TreeNode node100 = new DefaultTreeNode("Node 2.0.0", node10);
         
         root2 = new DefaultTreeNode("Root2", null);
 		TreeNode item0 = new DefaultTreeNode("Item 0", root2);

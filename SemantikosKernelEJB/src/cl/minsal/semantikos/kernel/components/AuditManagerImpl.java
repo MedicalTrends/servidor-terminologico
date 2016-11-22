@@ -104,7 +104,8 @@ public class AuditManagerImpl implements AuditManager {
     @Override
     public void recordAttributeChange(ConceptSMTK conceptSMTK, Relationship originalRelationship, User user) {
         /* Se validan las reglas de negocio para realizar el registro */
-        ConceptAuditAction auditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_ATTRIBUTE_CHANGE, now(), user, originalRelationship);
+        //ConceptAuditAction auditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_ATTRIBUTE_CHANGE, now(), user, originalRelationship);
+        ConceptAuditAction auditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_RELATIONSHIP_REMOVAL, now(), user, originalRelationship);
         new HistoryRecordBL().validate(auditAction);
 
         auditDAO.recordAuditAction(auditAction);

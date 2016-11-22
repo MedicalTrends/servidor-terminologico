@@ -1,9 +1,6 @@
 package cl.minsal.semantikos.model.relationships;
 
-import cl.minsal.semantikos.kernel.daos.BasicTypeDefinitionDAO;
-import cl.minsal.semantikos.kernel.daos.CategoryDAO;
-import cl.minsal.semantikos.kernel.daos.ConceptSCTDAO;
-import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
+import cl.minsal.semantikos.kernel.daos.*;
 import cl.minsal.semantikos.model.snomedct.SnomedCT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -40,9 +37,12 @@ public class TargetDefinitionFactory {
     @EJB
     private HelperTableDAO helperTableDAO;
 
+    @EJB
+    private CrossmapsDAO crossmapsDAO;
+
     public TargetDefinition createFromJSON(String jsonResult) {
 
-        logger.info("creando target definition de json: {}", jsonResult);
+        logger.debug("creando target definition de json: {}", jsonResult);
 
         /* Se parsea el JSON y se lleva a un DTO */
         ObjectMapper mapper = new ObjectMapper();
@@ -70,6 +70,9 @@ public class TargetDefinitionFactory {
             case HELPER_TABLE_TYPE_ID:
                 return helperTableDAO.getHelperTableByID(targetDefinitionDTO.idHelperTableName);
 
+            case CROSSMAP_TYPE_ID:
+                return crossmapsDAO.getCrossmapSetByID(targetDefinitionDTO.idExternTableName);
+
             default:
                 throw new EJBException("TIPO DE DEFINICION INCORRECTO. ID Target Type=" + targetDefinitionDTO.idTargetType);
         }
@@ -85,6 +88,7 @@ class TargetDefinitionDTO {
     protected String name;
     protected long idCategory;
     protected long idHelperTableName;
+    protected long idExternTableName;
     protected long idTargetType;
     protected long idBasicType;
     protected boolean sctType;
@@ -122,6 +126,14 @@ class TargetDefinitionDTO {
 
     public void setIdHelperTableName(long idHelperTableName) {
         this.idHelperTableName = idHelperTableName;
+    }
+
+    public long getIdExternTableName() {
+        return idExternTableName;
+    }
+
+    public void setIdExternTableName(long idExternTableName) {
+        this.idExternTableName = idExternTableName;
     }
 
     public long getIdTargetType() {

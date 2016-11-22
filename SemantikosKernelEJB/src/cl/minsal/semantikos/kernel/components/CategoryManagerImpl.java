@@ -109,4 +109,9 @@ public class CategoryManagerImpl implements CategoryManager {
 
         return categories;
     }
+
+    @Override
+    public List<Category> getRelatedCategories(Category category) {
+        return categoryDAO.getRelatedCategories(category);
+    }
 }

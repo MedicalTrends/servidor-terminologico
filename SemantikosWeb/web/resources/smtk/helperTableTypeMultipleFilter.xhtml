@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface >
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.helpertables.HelperTable" />
+    <composite:attribute name="targets" type="java.util.List"/>
+</composite:interface>
+<composite:implementation>
+
+    <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <p:autoComplete id="findHTRecords2" scrollHeight="200"
+                        completeMethod="#{helperTableBean.getRecordSearchInput}"
+                        forceSelection="true"
+                        var="record"
+                        placeholder="#{ empty cc.attrs.targets? cc.attrs.relationshipDefinition.name: ''}"
+                        converter="helperTableRecordConverter"
+                        value="#{cc.attrs.targets}"
+                        multiple="true"
+                        itemLabel="#{record.fields['description']}"
+                        itemValue="#{record}">
+            <!-- Parámetros del buscador -->
+            <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+            <!-- Parámetros del validador -->
+            <f:attribute name="helperTableRecord" value="#{conceptBrowserBean.helperTableRecord}"  />
+            <!---->
+            <p:column>
+                <h:outputText value="#{record.fields['description']}"/>
+            </p:column>
+
+            <p:ajax event="itemSelect" update="@(.conceptBrowserTable),@(.conceptFilters)" />
+            <p:ajax event="itemUnselect" update="@(.conceptBrowserTable),@(.conceptFilters)" />
+
+        </p:autoComplete>
+
+    </div>
+
+
+</composite:implementation>
+</html>

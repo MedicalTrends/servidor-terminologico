@@ -4,6 +4,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
+import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
@@ -21,12 +22,40 @@ public class SnomedCTRelationship extends Relationship {
     public static final String ES_UN_MAPEO_DE = "es un mapeo de";
     public static final String ES_UN = "es un";
 
-    public SnomedCTRelationship(ConceptSMTK sourceConcept, ConceptSCT conceptSCT, RelationshipDefinition relationshipDefinition, List<RelationshipAttribute> relationshipAttributes) {
-        super(sourceConcept, conceptSCT, relationshipDefinition, relationshipAttributes);
+    public SnomedCTRelationship(ConceptSMTK sourceConcept, ConceptSCT conceptSCT, RelationshipDefinition relationshipDefinition, List<RelationshipAttribute> relationshipAttributes, Timestamp validityUntil) {
+        super(sourceConcept, conceptSCT, relationshipDefinition, relationshipAttributes, validityUntil);
     }
 
-    public SnomedCTRelationship(@NotNull long id, @NotNull ConceptSMTK sourceConcept, @NotNull ConceptSCT conceptSCT, @NotNull RelationshipDefinition relationshipDefinition, Timestamp validityUntil, List<RelationshipAttribute> relationshipAttributes) {
+    public SnomedCTRelationship(@NotNull long id, @NotNull ConceptSMTK sourceConcept, @NotNull ConceptSCT conceptSCT, @NotNull RelationshipDefinition relationshipDefinition, List<RelationshipAttribute> relationshipAttributes, Timestamp validityUntil) {
         super(id, sourceConcept, conceptSCT, relationshipDefinition, validityUntil, relationshipAttributes);
+    }
+
+    /**
+     * Este método permite crear una relación de tipo SnomedCT a partir de una relación normal.
+     *
+     * @param relationship La relación a SnomedCT.
+     *
+     * @return Un objeto de tipo <code>SnomedCTRelationship</code> creado a partir de la relación.
+     */
+    public static SnomedCTRelationship createSnomedCT(Relationship relationship) {
+
+        /* Se valida que la relación SI sea SnomedCT */
+        if (!SnomedCTRelationship.isSnomedCTRelationship(relationship)) {
+            throw new IllegalArgumentException("No es posible crear una relación a SnomedCT a partir de esta relación: " + relationship);
+        }
+
+        /* Los campos para crear el nuevo objeto */
+        ConceptSMTK sourceConcept = relationship.getSourceConcept();
+        ConceptSCT conceptSCT = (ConceptSCT) relationship.getTarget();
+        RelationshipDefinition relationshipDefinition = relationship.getRelationshipDefinition();
+        List<RelationshipAttribute> relationshipAttributes = relationship.getRelationshipAttributes();
+        Timestamp validityUntil = relationship.getValidityUntil();
+
+        if (relationship.isPersistent()) {
+            long id = relationship.getId();
+            new SnomedCTRelationship(id, sourceConcept, conceptSCT, relationshipDefinition, relationshipAttributes, validityUntil);
+        }
+        return new SnomedCTRelationship(sourceConcept, conceptSCT, relationshipDefinition, relationshipAttributes, validityUntil);
     }
 
     /**
@@ -38,6 +67,18 @@ public class SnomedCTRelationship extends Relationship {
      * @return <code>true</code> si es definitoria, y <code>false</code> sino.
      */
     public boolean isDefinitional() {
+        return this.isES_UN() || this.isES_UN_MAPEO_DE();
+    }
+
+    public boolean isES_UN() {
+        return getSnomedCTRelationshipType().equalsIgnoreCase(ES_UN);
+    }
+
+    public boolean isES_UN_MAPEO_DE() {
+        return getSnomedCTRelationshipType().equalsIgnoreCase(ES_UN_MAPEO_DE);
+    }
+
+    public String getSnomedCTRelationshipType() {
 
         /* Se obtienen los atributos de la relación y se itera por ellos para buscar las del tipo que sirve*/
         List<RelationshipAttribute> relationshipAttributes = this.getRelationshipAttributes();
@@ -51,18 +92,27 @@ public class SnomedCTRelationship extends Relationship {
                 // TODO: Validar que el target es a la tabla correcta.
                 Map<String, String> fields = snomedType.getFields();
                 if (fields.containsKey(SYSTEM_COLUMN_DESCRIPTION.getColumnName())) {
-                    return fields.get(SYSTEM_COLUMN_DESCRIPTION.getColumnName()).equalsIgnoreCase(ES_UN)
-                            || fields.get(SYSTEM_COLUMN_DESCRIPTION.getColumnName()).equalsIgnoreCase(ES_UN_MAPEO_DE);
+                    return fields.get(SYSTEM_COLUMN_DESCRIPTION.getColumnName());
                 }
             }
         }
 
-        /* En cualquier otro caso de los considerados antes, no es definitoria */
-        return false;
+        throw new EJBException("Esta relación no posee un tipo de relación Snomed-CT");
     }
 
     @Override
     public ConceptSCT getTarget() {
         return (ConceptSCT) super.getTarget();
+    }
+
+    /**
+     * Este método es responsable de encapsular la consulta de si una relación es de tipo Snomed CT.
+     *
+     * @param relationship La relación en cuestión.
+     *
+     * @return <code>true</code> si es una relación SnomedCT y <code>false</code> sino.
+     */
+    public static boolean isSnomedCTRelationship(Relationship relationship) {
+        return relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType();
     }
 }

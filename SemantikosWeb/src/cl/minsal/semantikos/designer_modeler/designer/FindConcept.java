@@ -50,7 +50,7 @@ public class FindConcept implements Serializable{
     public List<ConceptSMTK> getConceptSearchInput(String pattern) {
 
         if (pattern != null) {
-            if (pattern.length() > 2) {
+            if (pattern.length() >= 2) {
                 findConcepts=conceptManager.findConceptBy(pattern);
                 return findConcepts;
             }
@@ -60,8 +60,8 @@ public class FindConcept implements Serializable{
     public List<ConceptSMTK> getConceptSearchInputAndCategories(String pattern) {
         RequestContext.getCurrentInstance().update("::conceptTranslate");
         if (pattern != null) {
-            if (pattern.trim().length() > 2) {
-                if(standardizationPattern(pattern).length()<2)return null;
+            if (pattern.trim().length() >= 2) {
+                if(standardizationPattern(pattern).length()<=1)return null;
                 findConcepts=conceptManager.findConceptBy(pattern,categoryArrayID,0,conceptManager.countConceptBy(pattern,categoryArrayID));
                 return findConcepts;
             }
@@ -71,8 +71,8 @@ public class FindConcept implements Serializable{
 
     public List<ConceptSMTK> findConceptAllCategories(String pattern) {
         if (pattern != null) {
-            if (pattern.trim().length() > 2) {
-                if(standardizationPattern(pattern).length()<2)return null;
+            if (pattern.trim().length() >= 2) {
+                if(standardizationPattern(pattern).length()<=1)return null;
                 findConcepts=conceptManager.findConceptBy(pattern,new Long[0],0,conceptManager.countConceptBy(pattern,new Long[0]));
                 return findConcepts;
             }

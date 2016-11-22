@@ -50,13 +50,37 @@
                                             </p:column>
 
                                             <p:column headerText="Etiqueta">
-                                                <h:outputText value="#{conceptBrowserBean.stringifyList(concept.tags)}"/>
+                                                <p:repeat
+                                                        offset="0"
+                                                        size="#{concept.tags.size()}"
+                                                        step="1"
+                                                        varStatus="var"
+                                                        value="#{concept.tags}"
+                                                        var="tag">
+
+                                                    <h:outputText rendered="#{var.index>0}" value=", " />
+                                                    <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter};"  />
+
+                                                </p:repeat>
                                             </p:column>
 
                                             <p:column headerText="Está en">
                                                 <h:outputText value="Borrador" rendered="#{not concept.modeled}"/>
                                                 <h:outputText value="Modelado" rendered="#{concept.modeled}"/>
                                             </p:column>
+
+                                            <p:columns value="#{conceptBrowserBean.conceptQuery.columns}"
+                                                       var="column"
+                                                       columnIndexVar="colIndex">
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{column.relationshipDefinition.name}" />
+                                                </f:facet>
+                                                <p:outputPanel>
+                                                    <smtk:basicTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.basicType}" />
+                                                    <smtk:helperTableTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.helperTable}" />
+                                                    <smtk:smtkTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.SMTKType}" />
+                                                </p:outputPanel>
+                                            </p:columns>
 
                                             <p:column headerText="Acciones" exportable="false" style="text-align: center">
                                                 <p:button outcome="conceptEdit" icon="fa fa-eye">

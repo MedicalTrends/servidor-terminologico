@@ -13,95 +13,63 @@
     <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
     <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.helpertables.HelperTable" />
     <composite:attribute name="targets" type="java.util.List"/>
-    <composite:attribute name="multiple" type="java.lang.Boolean"/>
 </composite:interface>
 <composite:implementation>
 
     <div class="ui-g-12 ui-md-6 ui-lg-2">
-        <p:selectCheckboxMenu id="helperTableTypeMultipleSelection"
-                              value="#{cc.attrs.targets}"
-                              converter="omnifaces.SelectItemsConverter"
-                              label="#{cc.attrs.relationshipDefinition.name}"
-                              filter="true"
-                              filterMatchMode="startsWith"
-                              style="margin-right:10px; width: 60%"
-                              rendered="#{ cc.attrs.multiple }">
-            <p:ajax event="change"
-                    update="@(.conceptFilters)"
-                    process="@this" />
 
-            <f:selectItems value="#{conceptBrowserBean.helperTableManager.getAllRecords(cc.attrs.targetDefinition)}"
-                           var="helperTableRecord"
-                           itemLabel="#{helperTableRecord.fields['description']}"
-                           itemValue="#{helperTableRecord.fields['id']}"/>
-        </p:selectCheckboxMenu>
+        <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() }">
 
-        <p:selectOneMenu id="helperTableTypeSimpleSelection"
-                         value="#{conceptBrowserBean.helperTableRecord.id}"
-                         var="selection"
-                         label="#{cc.attrs.relationshipDefinition.name}"
-                         autoWidth="false"
-                         style="margin-right:10px; width: 70%"
-                         rendered="#{cc.attrs.targets.isEmpty() and not cc.attrs.multiple }">
-
-            <p:ajax event="itemSelect"
-                    listener="#{conceptBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, conceptBrowserBean.helperTableRecord)}"
-                    update="@(.conceptFilters)"
-                    process="@this" />
-
-            <p:ajax event="itemSelect"
-                    listener="#{conceptBrowserBean.synch()}"
-                    update="@(.conceptBrowserTable)"
-                     />
-
-            <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}"
-                          itemValue="#{ null }"
-                          noSelectionOption="true"
-            />
-
-            <f:selectItems value="#{conceptBrowserBean.helperTableManager.getAllRecords(cc.attrs.targetDefinition)}"
-                           var="helperTableRecord"
-                           itemLabel="#{helperTableRecord.fields['description']}"
-                           itemValue="#{helperTableRecord.fields['id']}"/>
-        </p:selectOneMenu>
-
-        <p:repeat  value="#{cc.attrs.targets}"
-                   offset="0"
-                   size="#{cc.attrs.targets.size()}"
-                   step="1"
-                   var="target"
-                   varStatus="var">
-
-            <p:selectOneMenu id="helperTableTypeSimpleSelection2"
-                             value="#{target.id}"
-                             label="#{cc.attrs.relationshipDefinition.name}"
-                             var="selection"
-                             autoWidth="false"
-                             style="margin-right:10px; width: 70%"
-                             rendered="#{ not cc.attrs.targets.isEmpty() and not cc.attrs.multiple }">
+            <p:autoComplete id="findHTRecords1" scrollHeight="200"
+                            style="width: 85%;"
+                            inputStyle="width: 90%;"
+                            completeMethod="#{helperTableBean.getRecordSearchInput}"
+                            forceSelection="true"
+                            var="record"
+                            placeholder="#{cc.attrs.relationshipDefinition.name}..."
+                            converter="helperTableRecordConverter"
+                            value="#{conceptBrowserBean.helperTableRecord}"
+                            itemLabel="#{record.fields['description']}"
+                            itemValue="#{record}">
+                <!-- Parámetros del buscador -->
+                <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                <!-- Parámetros del validador -->
+                <f:attribute name="helperTableRecord" value="#{conceptBrowserBean.helperTableRecord}"  />
+                <!---->
+                <p:column>
+                    <h:outputText value="#{record.fields['description']}"/>
+                </p:column>
 
                 <p:ajax event="itemSelect"
                         listener="#{conceptBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, conceptBrowserBean.helperTableRecord)}"
                         update="@(.conceptFilters)"
                         process="@this" />
 
-                <p:ajax event="itemSelect"
-                        listener="#{conceptBrowserBean.synch()}"
-                        update="@(.conceptBrowserTable)"
-                         />
+                <p:ajax event="itemSelect" update="@(.conceptBrowserTable)" />
 
-                <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}"
-                              itemValue="#{ null }"
-                              noSelectionOption="true"
-                />
-                <f:selectItems value="#{conceptBrowserBean.helperTableManager.getAllRecords(cc.attrs.targetDefinition)}"
-                               var="helperTableRecord"
-                               itemLabel="#{helperTableRecord.fields['description']}"
-                               itemValue="#{helperTableRecord.fields['id']}"/>
-            </p:selectOneMenu>
+            </p:autoComplete>
+            <i class="fa fa-search fa-lg" />
+        </p:outputPanel>
 
+        <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() }">
 
-        </p:repeat>
+            <p:repeat  value="#{cc.attrs.targets}"
+                       offset="0"
+                       size="#{cc.attrs.targets.size()}"
+                       step="1"
+                       var="target"
+                       varStatus="var">
+
+                <p:inputText style="width: 75%;" disabled="true" id="itemSelected" value="#{target.fields['description']}" />
+                <p:commandLink
+                               process="@this"
+                               update="@(.conceptFilters),@(.conceptBrowserTable)"
+                               action="#{conceptBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
+                    <i class="fa fa-close fa-lg"  />
+                </p:commandLink>
+            </p:repeat>
+        </p:outputPanel>
     </div>
 
 

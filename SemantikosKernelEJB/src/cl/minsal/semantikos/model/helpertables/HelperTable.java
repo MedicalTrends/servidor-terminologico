@@ -44,7 +44,7 @@ public class HelperTable extends PersistentEntity implements TargetDefinition {
      * Este constructor permite crear un objeto <code>HelperTable</code> que no ha sido persistido en la base de datos
      * (sin ID).
      */
-    public HelperTable(String name, String description, String tablaName, @NotNull Collection<HelperTableColumn> columns) {
+    public HelperTable(@NotNull String name, String description, String tablaName, @NotNull Collection<HelperTableColumn> columns) {
         this(-1, name, description, tablaName, columns);
     }
 
@@ -57,7 +57,7 @@ public class HelperTable extends PersistentEntity implements TargetDefinition {
      * @param tablaName   Nombre de la Tabla en la Base de Datos.
      * @param columns     Columnas de la tabla auxiliar.
      */
-    public HelperTable(long id, String name, String description, String tablaName, @NotNull Collection<HelperTableColumn> columns) {
+    public HelperTable(long id, @NotNull String name, String description, String tablaName, @NotNull Collection<HelperTableColumn> columns) {
         super(id);
         this.name = name;
         this.description = description;
@@ -104,6 +104,26 @@ public class HelperTable extends PersistentEntity implements TargetDefinition {
      */
     public List<String> getAllColumnsNames() {
         return extractColumnsName(columns);
+    }
+
+    /**
+     * Este método es responsable de retornar la columna con el nombre dado como parámetro.
+     *
+     * @param columnName El nombre de la columna que se desea recuperar.
+     *
+     * @return La columna cuyo nombre coincide con <code>columnName</code>.
+     *
+     * @throws java.lang.IllegalArgumentException Cuando la tabla no tiene una columna de nombre <code>columnName</code>.
+     */
+    public HelperTableColumn getColumnByName(String columnName) {
+
+        for (HelperTableColumn column : columns) {
+            if (column.getColumnName().equalsIgnoreCase(columnName)) {
+                return column;
+            }
+        }
+
+        throw new IllegalArgumentException("La tabla auxiliar " + this + " no posee una columna de nombre " + columnName);
     }
 
     /**
@@ -177,5 +197,12 @@ public class HelperTable extends PersistentEntity implements TargetDefinition {
         systemColumns.add(SYSTEM_COLUMN_USER);
 
         return systemColumns;
+    }
+
+    @Override
+    public String toString() {
+        return "HelperTable{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

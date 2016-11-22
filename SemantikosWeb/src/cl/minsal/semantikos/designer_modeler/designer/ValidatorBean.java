@@ -1,11 +1,14 @@
 package cl.minsal.semantikos.designer_modeler.designer;
 
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
+import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -20,6 +23,9 @@ import java.util.List;
 @ManagedBean(name = "validatorBean")
 @ViewScoped
 public class ValidatorBean {
+
+    @EJB
+    private ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR;
 
     /**
      * Este metodo revisa que las relaciones cumplan el lower_boundary del
@@ -154,6 +160,29 @@ public class ValidatorBean {
 
         return count;
     }
+
+
+
+    public void validateGradeOfDefinition(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+
+        String msg;
+
+        ConceptSMTK concept = (ConceptSMTK) component.getAttributes().get("concept");
+
+        try {
+            conceptDefinitionalGradeBR.apply(concept);
+        } catch (EJBException e) {
+            if (concept.isModeled()) {
+                concept.setFullyDefined(false);
+            } else {
+                concept.setFullyDefined(false);
+            }
+            msg = "Un concepto no puede tener más de una descripción abreviada";
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg));
+        }
+
+    }
+
 
 
 }

@@ -4,9 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:composite="http://java.sun.com/jsf/composite"
-      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
       xmlns:p="http://primefaces.org/ui">
 
 <composite:interface>
@@ -35,31 +33,35 @@
                            itemValue="#{domain}"/>
         </p:selectCheckboxMenu>
 
-        <p:selectOneMenu id="basicTypeSimpleSelection"
-                         value="#{conceptBrowserBean.basicTypeValue.value}"
-                         label="#{cc.attrs.relationshipDefinition.name}"
-                         var="selection"
-                         converter="omnifaces.SelectItemsConverter"
-                         autoWidth="false"
-                         style="margin-right:10px; width: 60%"
-                         rendered="#{cc.attrs.targetDefinition.discreteDomain and cc.attrs.targets.isEmpty() and not cc.attrs.multiple }">
+        <p:autoComplete id="findHTRecords1" scrollHeight="200" style="width: 90%;"
+                        inputStyle="width: 90%;"
+                        completeMethod="#{basicTypeBean.getRecordSearchInput}"
+                        dropdown="true"
+                        forceSelection="true"
+                        var="basicTypeValue"
+                        placeholder="#{cc.attrs.relationshipDefinition.name}..."
+                        value="#{conceptBrowserBean.basicTypeValue.value}"
+                        rendered="#{cc.attrs.targets.isEmpty() and not cc.attrs.multiple }"
+                        itemLabel="#{basicTypeValue}"
+                        itemValue="#{basicTypeValue}">
+            <!-- Parámetros del buscador -->
+            <f:attribute name="basicTypeDefinition" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+            <!-- Parámetros del validador -->
+            <f:attribute name="basicTypeValue" value="#{conceptBrowserBean.basicTypeValue}"  />
+            <!---->
+            <p:column>
+                <h:outputText value="#{basicTypeValue}"/>
+            </p:column>
 
             <p:ajax event="itemSelect"
                     listener="#{conceptBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, conceptBrowserBean.basicTypeValue)}"
                     update="@(.conceptFilters)"
                     process="@this" />
 
+            <p:ajax event="itemSelect" update="@(.conceptBrowserTable)" />
 
-            <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}"
-                          itemValue="#{ null }"
-                          noSelectionOption="true"
-            />
-
-            <f:selectItems value="#{cc.attrs.targetDefinition.domain}"
-                           var="domain"
-                           itemLabel="#{domain}"
-                           itemValue="#{domain}"/>
-        </p:selectOneMenu>
+        </p:autoComplete>
 
         <p:repeat  value="#{cc.attrs.targets}"
                    offset="0"
@@ -68,28 +70,16 @@
                    var="target"
                    varStatus="var">
 
-            <p:selectOneMenu id="basicTypeSimpleSelection2"
-                             value="#{target.value}"
-                             label="#{cc.attrs.relationshipDefinition.name}"
-                             var="selection"
-                             converter="omnifaces.SelectItemsConverter"
-                             style="margin-right:10px; width: 70%"
-                             rendered="#{cc.attrs.targetDefinition.discreteDomain and not cc.attrs.targets.isEmpty() and not cc.attrs.multiple }">
+            <p:inputText disabled="true" id="itemSelected" value="#{target}" />
+            <p:commandLink rendered="#{ not cc.attrs.targets.isEmpty() }"
+                           process="@this"
+                           update="@(.conceptFilters),@(.conceptBrowserTable)"
+                           action="#{conceptBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
+                <i class="fa fa-close fa-lg"  />
+            </p:commandLink>
 
-                <p:ajax event="itemSelect"
-                        listener="#{conceptBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, target)}"
-                        update="@(.conceptFilters)"
-                        process="@this" />
 
-                <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}"
-                              itemValue="#{ null }"
-                              noSelectionOption="true"
-                />
-                <f:selectItems value="#{cc.attrs.targetDefinition.domain}"
-                               var="domain"
-                               itemLabel="#{domain}"
-                               itemValue="#{domain}"/>
-            </p:selectOneMenu>
+
         </p:repeat>
     </div>
 

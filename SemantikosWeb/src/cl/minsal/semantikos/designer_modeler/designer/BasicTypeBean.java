@@ -1,68 +1,57 @@
 package cl.minsal.semantikos.designer_modeler.designer;
 
+import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.helpertables.HelperTable;
+import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import org.primefaces.context.RequestContext;
+
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.FacesComponent;
+import javax.faces.component.UIComponent;
 import javax.faces.component.UINamingContainer;
+import javax.faces.context.FacesContext;
+import java.io.Serializable;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by root on 22-07-16.
  */
-@FacesComponent(value="basicTypeBean") // To be specified in componentType attribute.
-@SuppressWarnings({"rawtypes", "unchecked"}) // We don't care about the actual model item type anyway.
-public class BasicTypeBean<T extends Comparable> extends UINamingContainer {
+@ManagedBean(name = "basicTypeBean")
+@ViewScoped
+public class BasicTypeBean implements Serializable {
 
-    //BasicTypeDefinition basicTypeDefinition;
+    private String pattern;
 
-    //BasicTypeValue basicTypeValue = new BasicTypeValue();
-
-
-    T value = (T) "";
+    private BasicTypeValue basicTypeValuePlaceHolder = new BasicTypeValue(null);
 
     @PostConstruct
     protected void initialize() throws ParseException {
 
-
     }
 
-    /*
-    public BasicTypeValue getBasicTypeValue() {
+    public List<String> getRecordSearchInput(String patron) {
 
-        return basicTypeValue;
-    }
+        FacesContext context = FacesContext.getCurrentInstance();
 
-    public void setBasicTypeValue(BasicTypeValue basicTypeValue) {
-        System.out.println("setBasicTypeValue");
-        this.basicTypeValue = basicTypeValue;
-    }
-    */
+        BasicTypeDefinition basicTypeDefinition = (BasicTypeDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("basicTypeDefinition");
 
-    /*
-    public BasicTypeDefinition getBasicTypeDefinition() {
-        return basicTypeDefinition;
-    }
+        List<String> someRecords = new ArrayList<String>();
 
-    public void setBasicTypeDefinition(BasicTypeDefinition basicTypeDefinition) {
-        this.basicTypeDefinition = basicTypeDefinition;
-    }
-    */
+        for (Object basicTypeValue : basicTypeDefinition.getDomain()) {
+            if(basicTypeValue.toString().toLowerCase().contains(patron.trim().toLowerCase()))
+                someRecords.add(basicTypeValue.toString());
+        }
 
-    public String getValue() {
-        return value.toString();
+        return someRecords;
     }
-
-    public void setValue(T value) {
-        this.value = value;
-    }
-    /*
-    public List<T> getDomain() {
-        return domain;
-    }
-
-    public void setDomain(List<T> domain) {
-        this.domain = domain;
-    }
-    */
 
 
 }

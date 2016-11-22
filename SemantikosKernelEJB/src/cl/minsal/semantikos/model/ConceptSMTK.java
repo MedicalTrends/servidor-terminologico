@@ -1,11 +1,13 @@
 package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.model.audit.AuditableEntity;
-import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.businessrules.ConceptStateBusinessRulesContainer;
+import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBR;
+import cl.minsal.semantikos.model.crossmaps.CrossMapType;
+import cl.minsal.semantikos.model.crossmaps.Crossmap;
+import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
+import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.*;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
@@ -42,7 +44,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * Este campo establece si el concepto está completamente definido o si es primitivo. Por defecto, el concepto se
      * considera primitivo
      */
-    private boolean isFullyDefined;
+    private Boolean isFullyDefined;
 
     /** Determina si el concepto está publicado o no */
     private boolean isPublished;
@@ -79,6 +81,9 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     /** El Tag Semántikos que tiene asociado el concepto */
     private TagSMTK tagSMTK;
 
+    /** Variable que indica si el grado de definición se obtiene heredado * */
+    private boolean inherited;
+
     /** RefSets a los que pertenece el concepto */
     private List<RefSet> refsets;
 
@@ -99,7 +104,11 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         this.descriptions = new ArrayList<>();
 
         this.modeled = false;
-        this.isFullyDefined = false;
+
+        /* El valor de Completamente Definido es nulo, pero no ha sido heredado */
+        this.isFullyDefined = null;
+        this.inherited = false;
+
         this.isPublished = false;
         this.isToBeConsulted = false;
         this.isToBeReviewed = false;
@@ -132,12 +141,14 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * @param isToBeConsulted Si debe ser consultado.
      * @param modeled         Si se encuentra modelado.
      * @param isFullyDefined  Si es Completamente definido.
+     * @param inherited       Determina si el atributo isFullyDefined fue heredado (<code>true</code>) o no
+     *                        (<code>false</code>).
      * @param isPublished     Si se encuentra publicado
      * @param observation     La observación.
      * @param tagSMTK         El Tag Semántikos asociado al concepto.
      * @param descriptions    Sus descripciones.
      */
-    public ConceptSMTK(long id, String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, boolean isFullyDefined, boolean isPublished, String observation, TagSMTK tagSMTK, Description... descriptions) {
+    public ConceptSMTK(long id, String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, Boolean isFullyDefined, boolean inherited, boolean isPublished, String observation, TagSMTK tagSMTK, Description... descriptions) {
         this(category, modeled, descriptions);
 
         this.setId(id);
@@ -147,6 +158,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         this.isToBeReviewed = isToBeReviewed;
         this.isToBeConsulted = isToBeConsulted;
         this.isFullyDefined = isFullyDefined;
+        this.inherited = inherited;
         this.isPublished = isPublished;
         this.observation = observation;
         this.tagSMTK = tagSMTK;
@@ -164,11 +176,13 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * @param isToBeConsulted ¿Es para ser consultado?
      * @param modeled         El estado de este concepto
      * @param isFullyDefined  ¿Completamente definido?
+     * @param inherited       Determina si el atributo isFullyDefined fue heredado (<code>true</code>) o no
+     *                        (<code>false</code>).
      * @param isPublished     ¿Publicado?
      * @param descriptions    Las descripciones para este concepto
      */
-    public ConceptSMTK(String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, boolean isFullyDefined, boolean isPublished, String observation, TagSMTK tagSMTK, Description... descriptions) {
-        this(NON_PERSISTED_ID, conceptID, category, isToBeReviewed, isToBeConsulted, modeled, isFullyDefined, isPublished, observation, tagSMTK, descriptions);
+    public ConceptSMTK(String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, boolean isFullyDefined, boolean inherited, boolean isPublished, String observation, TagSMTK tagSMTK, Description... descriptions) {
+        this(NON_PERSISTED_ID, conceptID, category, isToBeReviewed, isToBeConsulted, modeled, isFullyDefined, inherited, isPublished, observation, tagSMTK, descriptions);
 
         /* Se indica que no se han cargado sus relaciones */
         this.relationshipsLoaded = true;
@@ -194,6 +208,31 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         return relationships;
+    }
+
+    /**
+     * Este método es responsable de retornar todos los conceptos SMTK de relaciones (a conceptos STMK) que pertenecen
+     * a
+     * la categoría indicada.
+     *
+     * @param category La categoría a la cual pertenecen los conceptos SMTK buscados.
+     *
+     * @return Una lista fresca de los conceptos solicitados.
+     */
+    public List<ConceptSMTK> getRelatedSMTKConceptsBy(Category category) {
+        List<ConceptSMTK> relatedConcepts = new ArrayList<>();
+
+        /* Se obtienen las relaciones a conceptos SMTK */
+        for (Relationship smtkRelationship : getRelationshipsTo(TargetType.SMTK)) {
+            ConceptSMTK conceptSMTK = (ConceptSMTK) smtkRelationship.getTarget();
+
+            /* Y se filtra por su categoría */
+            if (conceptSMTK.getCategory().equals(category)) {
+                relatedConcepts.add(conceptSMTK);
+            }
+        }
+
+        return relatedConcepts;
     }
 
     /**
@@ -223,8 +262,8 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
         List<SnomedCTRelationship> snomedRelationships = new ArrayList<>();
         for (Relationship relationship : relationships) {
-            if (relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType()) {
-                snomedRelationships.add(relationship.toSnomedCT());
+            if (SnomedCTRelationship.isSnomedCTRelationship(relationship)) {
+                snomedRelationships.add(SnomedCTRelationship.createSnomedCT(relationship));
             }
         }
 
@@ -249,6 +288,40 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
             }
         }
         return snomedRelationships;
+    }
+
+    /**
+     * Este método es responsable de retornar las relaciones de tipo SNOMED_CT.
+     *
+     * @return Una lista de relaciones a SnomedCT
+     */
+    public List<Crossmap> getRelationshipsCrossMap() {
+
+        List<Crossmap> crossmaps = new ArrayList<>();
+        for (Relationship relationship : relationships) {
+            if (relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
+                try{
+                    crossmaps.add((IndirectCrossmap)relationship);
+                }catch(ClassCastException e){
+                    crossmaps.add((DirectCrossmap)relationship);
+                }
+
+            }
+        }
+
+        return crossmaps;
+    }
+
+    public List<Crossmap> getRelationshipsIndirectCrossMap(){
+
+        List<Crossmap> indirectCrossmaps = new ArrayList<>();
+        for (Crossmap crossmap : getRelationshipsCrossMap()) {
+            if (crossmap.is(CrossMapType.INDIRECT)){
+                indirectCrossmaps.add(crossmap);
+            }
+        }
+
+        return indirectCrossmaps;
     }
 
     /**
@@ -368,7 +441,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         this.isToBeConsulted = toBeConsulted;
     }
 
-    public boolean isFullyDefined() {
+    public Boolean isFullyDefined() {
         return isFullyDefined;
     }
 
@@ -399,12 +472,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     /**
      * Este método es responsable de establecer si un concepto es completamente definido.
      */
-    public void setFullyDefined(boolean fullyDefined) {
-
-        /* Antes de asignarle la propiedad, ser verifica si cumple las reglas de negocio */
-        new ConceptStateBusinessRulesContainer().apply(this);
-
-        /* Como se han validado las reglas de negocio, se realiza la asignación */
+    public void setFullyDefined(Boolean fullyDefined) {
         this.isFullyDefined = fullyDefined;
     }
 
@@ -445,7 +513,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public void addDescription(Description description) {
 
         /** La descripción asume el estado modelado si el concepto está en modelado */
-        if (this.isModeled()){
+        if (this.isModeled()) {
             description.setModeled(true);
         }
 
@@ -485,7 +553,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         this.getTags().add(tag);
     }
 
-
     /**
      * Este método es responsable de remover una relación a un concepto.
      *
@@ -494,6 +561,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public void removeRelationship(Relationship relationship) {
         this.getRelationships().remove(relationship);
     }
+
 
     /**
      * <p>
@@ -516,7 +584,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         throw new BusinessRuleException("Concepto sin descripción preferida");
     }
 
-
     /**
      * <p>
      * Este método es responsable de determinar si este concepto tiene una <i>descripción preferida</i>. Basados en la
@@ -535,6 +602,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         /* En este punto, no se encontró una descripción preferida, y se arroja una excepción */
         return false;
     }
+
 
     /**
      * <p>
@@ -598,7 +666,9 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public List<Relationship> getRelationshipsTo(TargetType targetType) {
 
         List<Relationship> sctRelations = new ArrayList<>();
-        for (Relationship relationship : this.getRelationships()) {
+        for (Relationship relationship : relationships) {
+
+            /* Se filtra por el tipo de relación (hacia SMTK) */
             if (relationship.getTarget().getTargetType().equals(targetType)) {
                 sctRelations.add(relationship);
             }
@@ -616,7 +686,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      *
      * @return <code>true</code> si el concepto contiene estas relaciones y <code>false</code> sino.
      */
-    public boolean contains(List<Relationship> relationships) {
+    public boolean contains(Relationship[] relationships) {
 
         for (Relationship relationship : relationships) {
             if (!this.contains(relationship)) {
@@ -674,6 +744,14 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         this.refsets = refsets;
     }
 
+    public boolean isInherited() {
+        return inherited;
+    }
+
+    public void setInherited(boolean inherited) {
+        this.inherited = inherited;
+    }
+
     @Override
     public boolean equals(Object other) {
         return (other instanceof ConceptSMTK) && (String.valueOf(conceptID) != null)
@@ -694,5 +772,36 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         conceptSMTK.setDescriptions(this.getDescriptions());
         conceptSMTK.setRelationships(this.relationships);
         return conceptSMTK;
+    }
+
+    public boolean contains(String snomedRelationshipType) {
+        for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
+            if (snomedCTRelationship.getSnomedCTRelationshipType().equalsIgnoreCase(snomedRelationshipType)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean containsLike(SnomedCTRelationship[] relationships) {
+
+        for (SnomedCTRelationship relationship : relationships) {
+            if (!this.containsLike(relationship)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean containsLike(SnomedCTRelationship theSnomedRelationship) {
+        for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
+            if (theSnomedRelationship.equalsButConceptSource(snomedCTRelationship)){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

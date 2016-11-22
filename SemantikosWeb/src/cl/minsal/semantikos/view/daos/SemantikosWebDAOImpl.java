@@ -3,6 +3,9 @@ package cl.minsal.semantikos.view.daos;
 import cl.minsal.semantikos.kernel.daos.TargetDAO;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.ConceptSMTKWeb;
+import cl.minsal.semantikos.model.DescriptionWeb;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
 import org.slf4j.Logger;
@@ -62,4 +65,35 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
 
         return new ExtendedRelationshipDefinitionInfo(idComposite, order, defaultValue);
     }
+
+    @Override
+    public ConceptSMTKWeb augmentConcept(Category category, ConceptSMTKWeb concept) {
+
+        ConnectionBD connect = new ConnectionBD();
+        String sql = "{call semantikos.get_view_info_by_category(?)}";
+        boolean caseSensitive = false;
+
+        try (Connection connection = connect.getConnection();
+
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setLong(1, category.getId());
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+                caseSensitive = rs.getBoolean("default_case_sensitive");
+            }
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar descripciones de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        for (DescriptionWeb descriptionWeb : concept.getDescriptionsWeb()) {
+            descriptionWeb.setCaseSensitive(caseSensitive);
+        }
+
+        return concept;
+    }
+
 }
