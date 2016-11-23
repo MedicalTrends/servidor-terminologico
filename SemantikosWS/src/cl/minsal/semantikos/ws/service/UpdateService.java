@@ -13,8 +13,8 @@ import javax.xml.bind.annotation.XmlElement;
  * Created by Development on 2016-11-18.
  *
  */
-@WebService(serviceName = "ServicioDeActualizacion",
-        name = "ServicioDeActualizacion",
+@WebService(serviceName = "ServicioDeIngreso",
+        name = "ServicioDeIngreso",
         targetNamespace = "http://service.ws.semantikos.minsal.cl/")
 public class UpdateService {
 

@@ -18,8 +18,8 @@ import java.util.List;
  * Created by Development on 2016-11-18.
  *
  */
-@WebService(serviceName = "ServicioDeBusquedaDeRelacionados")
-public class RelatedSearchService {
+@WebService(serviceName = "ServicioDeRelacionados")
+public class RelatedService {
 
     // REQ-WS-006
     @WebMethod(operationName = "sugerenciasDeDescripciones")
