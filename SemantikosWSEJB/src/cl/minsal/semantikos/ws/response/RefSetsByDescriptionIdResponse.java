@@ -9,8 +9,8 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "refSetsPorIdDescripcion", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "RefSetsPorIdDescripcion", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "respuestaRefSetsPorIdDescripcion", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "RespuestaRefSetsPorIdDescripcion", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class RefSetsByDescriptionIdResponse implements Serializable {
 
     @XmlElementWrapper(name="refSets")

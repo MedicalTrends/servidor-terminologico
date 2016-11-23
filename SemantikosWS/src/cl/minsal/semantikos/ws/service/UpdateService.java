@@ -6,7 +6,6 @@ import cl.minsal.semantikos.ws.response.NewTermResponse;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlElement;
 
@@ -23,21 +22,21 @@ public class UpdateService {
     @WebMethod
     public NewTermResponse codificacionDeNuevoTermino(
             @XmlElement(required = true)
-            @WebParam(name = "codificacionDeNuevoTerminoRequest")
+            @WebParam(name = "peticionCodificacionDeNuevoTermino")
             NewTermRequest request
     ) {
         // TODO
         return null;
     }
 
-//    // REQ-WS-030
-//    @WebMethod(operationName = "incrementarContadorDescripcionConsumida")
-//    public DescriptionResponse incrementarContadorDescripcionConsumida(
-//            @XmlElement(required = true)
-//            @WebParam(name = "idDescripcion")
-//                    String descriptionId
-//    ) {
-//        return null;
-//    }
+    // REQ-WS-030
+    @WebMethod
+    public DescriptionResponse incrementarContadorDescripcionConsumida(
+            @XmlElement(required = true)
+            @WebParam(name = "idDescripcion")
+                    String descriptionId
+    ) {
+        return null;
+    }
 
 }

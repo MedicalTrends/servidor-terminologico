@@ -1,15 +1,16 @@
 package cl.minsal.semantikos.ws.request;
 
 import javax.xml.bind.annotation.*;
+import java.io.Serializable;
 
 /**
  * Created by Development on 2016-11-22.
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "codificacionDeNuevoTerminoRequest", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "CodificacionDeNuevoTerminoRequest", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class NewTermRequest {
+@XmlRootElement(name = "peticionCodificacionDeNuevoTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "PeticionCodificacionDeNuevoTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
+public class NewTermRequest implements Serializable {
 
     @XmlElement(required = true, name = "establecimiento")
     private String institutionName;
