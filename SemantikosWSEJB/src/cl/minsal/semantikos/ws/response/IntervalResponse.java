@@ -8,8 +8,8 @@ import java.io.Serializable;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "intervalo")
-@XmlType(name = "Intervalo")
+@XmlRootElement(name = "intervalo", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "Intervalo", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class IntervalResponse implements Serializable {
 
     @XmlElement(name="limiteInferior")

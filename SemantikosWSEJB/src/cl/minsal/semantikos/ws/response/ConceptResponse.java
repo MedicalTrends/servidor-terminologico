@@ -13,8 +13,8 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "concepto")
-@XmlType(name = "Concepto")
+@XmlRootElement(name = "concepto", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "Concepto", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class ConceptResponse implements Serializable {
 
     @XmlElement(name="id")

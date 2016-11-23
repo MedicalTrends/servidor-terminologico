@@ -8,8 +8,8 @@ import java.io.Serializable;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "paginacion")
-@XmlType(name = "Paginacion")
+@XmlRootElement(name = "paginacion", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "Paginacion", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class PaginationResponse implements Serializable {
 
     @XmlElement(name="totalRegistros")

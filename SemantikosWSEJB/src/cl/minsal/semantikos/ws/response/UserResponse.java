@@ -9,8 +9,8 @@ import java.util.Date;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "usuario")
-@XmlType(name = "Usuario")
+@XmlRootElement(name = "usuario", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "Usuario", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class UserResponse implements Serializable {
 
     @XmlElement(name="nombreUsuario")

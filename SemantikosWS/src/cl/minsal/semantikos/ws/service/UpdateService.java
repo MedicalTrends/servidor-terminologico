@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.ws.service;
 
+import cl.minsal.semantikos.ws.request.NewTermRequest;
 import cl.minsal.semantikos.ws.response.DescriptionResponse;
 import cl.minsal.semantikos.ws.response.NewTermResponse;
 
@@ -13,55 +14,30 @@ import javax.xml.bind.annotation.XmlElement;
  * Created by Development on 2016-11-18.
  *
  */
-@WebService(serviceName = "ServicioDeActualizacion")
+@WebService(serviceName = "ServicioDeActualizacion",
+        name = "ServicioDeActualizacion",
+        targetNamespace = "http://service.ws.semantikos.minsal.cl/")
 public class UpdateService {
 
     // REQ-WS-003
-    @WebMethod(operationName = "codificacionDeNuevoTermino")
+    @WebMethod
     public NewTermResponse codificacionDeNuevoTermino(
             @XmlElement(required = true)
-            @WebParam(name = "establecimiento")
-                    String institutionName,
-            @XmlElement(required = true)
-            @WebParam(name = "idConcepto")
-                    String conceptId,
-            @XmlElement(required = true)
-            @WebParam(name = "termino")
-                    String term,
-            @XmlElement(required = false, defaultValue = "Preferida")
-            @WebParam(name = "tipoDescripcion")
-                    String descriptionTypeName,
-            @XmlElement(required = false, defaultValue = "false")
-            @WebParam(name = "esSensibleAMayusculas")
-                    Boolean isCaseSensitive,
-            @XmlElement(required = false)
-            @WebParam(name = "email")
-                    String email,
-            @XmlElement(required = false)
-            @WebParam(name = "observacion")
-                    String observation,
-            @XmlElement(required = false)
-            @WebParam(name = "profesional")
-                    String professional,
-            @XmlElement(required = false)
-            @WebParam(name = "profesion")
-                    String profesion,
-            @XmlElement(required = false)
-            @WebParam(name = "especialidad")
-                    String specialty
+            @WebParam(name = "codificacionDeNuevoTerminoRequest")
+            NewTermRequest request
     ) {
         // TODO
         return null;
     }
 
-    // REQ-WS-030
-    @WebMethod(operationName = "incrementarContadorDescripcionConsumida")
-    public DescriptionResponse incrementarContadorDescripcionConsumida(
-            @XmlElement(required = true)
-            @WebParam(name = "idDescripcion")
-                    String descriptionId
-    ) {
-        return null;
-    }
+//    // REQ-WS-030
+//    @WebMethod(operationName = "incrementarContadorDescripcionConsumida")
+//    public DescriptionResponse incrementarContadorDescripcionConsumida(
+//            @XmlElement(required = true)
+//            @WebParam(name = "idDescripcion")
+//                    String descriptionId
+//    ) {
+//        return null;
+//    }
 
 }

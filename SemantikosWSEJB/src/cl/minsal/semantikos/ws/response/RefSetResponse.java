@@ -10,8 +10,8 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "refSet")
-@XmlType(name = "RefSet")
+@XmlRootElement(name = "refSet", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "RefSet", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class RefSetResponse implements Serializable {
 
     @XmlElement(name="nombre")

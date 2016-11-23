@@ -30,7 +30,7 @@ public class TargetMapper {
                 res.setEffectiveTime(MappingUtil.toDate(conceptSCT.getEffectiveTime()));
                 res.setActive(conceptSCT.isActive());
                 res.setModuleId(conceptSCT.getModuleId());
-                res.setDefinitionStatusId(conceptSCT.getDefinitionStatusId());
+//                res.setDefinitionStatusId(conceptSCT.getDefinitionStatusId());
             }
             if (target instanceof ConceptSMTK) {
                 ConceptSMTK conceptSMTK = (ConceptSMTK) target;

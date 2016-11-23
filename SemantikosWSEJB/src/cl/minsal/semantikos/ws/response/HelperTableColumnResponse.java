@@ -8,8 +8,8 @@ import java.io.Serializable;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "columnaTablaAuxiliar")
-@XmlType(name = "ColumnaTablaAuxiliar")
+@XmlRootElement(name = "columnaTablaAuxiliar", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "ColumnaTablaAuxiliar", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class HelperTableColumnResponse implements Serializable {
 
     @XmlElement(name="nombreColumna")

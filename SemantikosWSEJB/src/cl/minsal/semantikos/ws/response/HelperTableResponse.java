@@ -9,8 +9,8 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "tablaAuxiliar")
-@XmlType(name = "TablaAuxiliar")
+@XmlRootElement(name = "tablaAuxiliar", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "TablaAuxiliar", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class HelperTableResponse implements Serializable {
 
     @XmlElement(name="nombre")

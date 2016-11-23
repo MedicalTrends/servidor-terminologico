@@ -8,8 +8,8 @@ import java.io.Serializable;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "atributoRelacion")
-@XmlType(name = "AtributoRelacion")
+@XmlRootElement(name = "atributoRelacion", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "AtributoRelacion", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class RelationshipAttributeResponse implements Serializable {
 
     @XmlElement(name="objetivo")

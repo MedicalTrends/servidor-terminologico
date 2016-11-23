@@ -10,8 +10,8 @@ import java.util.Map;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "objetivo")
-@XmlType(name = "Objetivo")
+@XmlRootElement(name = "objetivo", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "Objetivo", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class TargetResponse implements Serializable {
 
     @XmlElement(name="tipoObjetivo")

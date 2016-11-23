@@ -9,8 +9,8 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "conceptosRelacionados")
-@XmlType(name = "ConceptosRelacionados")
+@XmlRootElement(name = "conceptosRelacionados", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "ConceptosRelacionados", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class RelatedConceptsResponse implements Serializable {
 
     @XmlElement(name="conceptoBuscado")

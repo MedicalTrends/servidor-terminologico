@@ -8,8 +8,8 @@ import java.io.Serializable;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "multiplicidad")
-@XmlType(name = "Multiplicidad")
+@XmlRootElement(name = "multiplicidad", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "Multiplicidad", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class MultiplicityResponse implements Serializable {
 
     @XmlElement(name="limiteInferior")

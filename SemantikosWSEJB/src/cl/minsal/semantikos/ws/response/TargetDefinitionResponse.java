@@ -8,8 +8,8 @@ import java.io.Serializable;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "definicionObjetivo")
-@XmlType(name = "DefinicionObjetivo")
+@XmlRootElement(name = "definicionObjetivo", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "DefinicionObjetivo", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class TargetDefinitionResponse implements Serializable {
 
     @XmlElement(name="esTipoBasico")
