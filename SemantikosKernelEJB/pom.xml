@@ -142,6 +142,13 @@
             <artifactId>commons-csv</artifactId>
             <version>1.3</version>
         </dependency>
+
+        <!-- para llamar y parsear a la pagina del ISP -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.10.1</version>
+        </dependency>
     </dependencies>
 
 

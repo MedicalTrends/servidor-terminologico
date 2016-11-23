@@ -229,9 +229,7 @@
                     <h:outputText value="#{rel.target.idSnomedCT}"/>
                 </p:column>
 
-                <p:column headerText="Descripción">
-                    <h:outputText value="#{rel.target.descriptionFSN.term}"/>
-                </p:column>
+
 
                 <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
                            var="attribute"
@@ -244,6 +242,10 @@
                         <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{rel}" rendered="#{attribute.targetDefinition.helperTable}" />
                     </p:outputPanel>
                 </p:columns>
+
+                <p:column headerText="Descripción">
+                    <h:outputText value="#{rel.target.descriptionFSN.term}"/>
+                </p:column>
 
                 <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
                     <p:commandButton icon="fa fa-trash" title="Eliminar"

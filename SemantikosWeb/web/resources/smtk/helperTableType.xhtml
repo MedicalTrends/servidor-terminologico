@@ -216,9 +216,8 @@
     </p:panel>
 
     <!-- Multiplicidad N sin atributos-->
-
     <p:panel id="helperTableTypeCollection"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.name != 'ISP'}">
 
         <h3>#{cc.attrs.relationshipDefinition.name}</h3>
 
@@ -276,7 +275,7 @@
                     <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
                                var="column"
                                columnIndexVar="colIndex"
-                               >
+                    >
                         <f:facet name="header">
                             <h:outputText value="#{column.columnName}" />
                         </f:facet>
@@ -298,6 +297,101 @@
             </div>
         </div>
     </p:panel>
+
+    <!-- ISP -->
+    <p:panel id="helperTableTypeCollectionISP"
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.name == 'ISP'}">
+
+        <h3>#{cc.attrs.relationshipDefinition.name}</h3>
+
+        <p:spacer />
+
+        <div class="ui-g">
+
+            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <p:outputLabel for="ispexistebooleanbutton">Existe ISP</p:outputLabel>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <p:selectBooleanButton  id="ispexistebooleanbutton" value="#{ispbean.existe}" offLabel="No" onLabel="Si" onIcon="ui-icon-check" offIcon="ui-icon-close" >
+                    <p:ajax immediate="true" listener="#{ispbean.updateExiste}" update="ispfetcherinputs" process="ispexistebooleanbutton"></p:ajax>
+                </p:selectBooleanButton>
+            </div>
+
+        </div>
+        <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherinputs">
+            <p:outputPanel  rendered="#{ispbean.existe}">
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <p:outputLabel for="ispregnum">RegNum</p:outputLabel>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <p:inputText id="ispregnum" value="#{ispbean.regnum}" />
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <p:outputLabel for="ispregano" >Regaño</p:outputLabel>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <p:inputText id="ispregano" value="#{ispbean.ano}" />
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <p:commandButton id="buttonispcargadatos" action="#{ispbean.fetchData}" update="ispfetcheddialogcontent" onsuccess="PF('ispfetcheddialog').show()" value="Cargar Data" process="@this, ispregnum, ispregano" />
+                </div>
+                <p:dialog id="ispfetcheddialog" widgetVar="ispfetcheddialog" header="Confirmar datos recuperados del Registro ISP" modal="true">
+                    <p>Se han recuperado los siguientes datos desde el ISP:</p>
+                    <p:panel id="ispfetcheddialogcontent" >
+
+                        <p:dataTable value="#{ispbean.mapKeys}" var="key" rendered="#{not empty ispbean.mapKeys}">
+                            <p:column width="200">#{key}</p:column>
+                            <p:column width="300">#{ispbean.fetchedData[key]}</p:column>
+                        </p:dataTable>
+
+
+                        <p:outputLabel endered="#{empty ispbean.mapKeys}" value="No se pudo recuperar datos del ISP" />
+                        <p:commandButton rendered="#{not empty ispbean.mapKeys}" value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Cancelar" type="button" onclick="PF('ispfetcheddialog').hide()" />
+
+                    </p:panel>
+
+                </p:dialog>
+
+            </p:outputPanel>
+        </p:outputPanel>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-lg-12">
+                <p:dataTable id="collectionValues123"
+                             styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
+                             var="relationship"
+                             value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                             style="width: 100%"
+                             reflow="true"
+                             rendered="#{ispbean.existe}" >
+                    <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
+                               var="column"
+                               columnIndexVar="colIndex"
+                    >
+                        <f:facet name="header">
+                            <h:outputText value="#{column.columnName}" />
+                        </f:facet>
+                        <h:outputText value="#{relationship.target.fields.get(column.columnName)}" />
+                    </p:columns>
+
+                    <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
+                        <p:commandButton
+                                icon="fa fa-trash"
+                                title="Eliminar"
+                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                style="float: right"
+                                process="@this"
+                                immediate="true"
+                                actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                                styleClass="relationships"
+                        />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </div>
+    </p:panel>
+
 
     <!-- Multiplicidad N con atributos-->
 

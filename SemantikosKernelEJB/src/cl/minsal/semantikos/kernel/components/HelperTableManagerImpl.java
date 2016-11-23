@@ -37,6 +37,11 @@ public class HelperTableManagerImpl implements HelperTableManager {
     private HelperTableDAO helperTableDAO;
 
     @Override
+    public HelperTableRecord insertRecord(HelperTable helperTable, HelperTableRecord record, User user) {
+        return helperTableDAO.insertRecord(helperTable,record,user);
+    }
+
+    @Override
     public Collection<HelperTable> getHelperTables() {
 
         /* Esto se resuelve con delegación sobre el Factory, mientras las tablas estén en duro */

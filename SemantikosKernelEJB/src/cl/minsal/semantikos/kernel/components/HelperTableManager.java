@@ -16,6 +16,16 @@ import java.util.List;
  */
 public interface HelperTableManager {
 
+
+    /**
+     * Este método es responsable de insertar un registro en la tabla auxiliar.
+     *
+     * @param helperTable La tabla auxiliar donde se cargará el registro.
+     * @param record      El registro que se desea insertar.
+     * @param user        El usuario que realiza la carga.
+     */
+    public HelperTableRecord insertRecord(HelperTable helperTable, HelperTableRecord record, User user);
+
     /**
      * Este método es responsable de proveer una lista de objetos que representan las Tablas Auxiliares.
      *

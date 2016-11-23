@@ -25,7 +25,7 @@ public interface HelperTableDAO {
      * @param record      El registro que se desea insertar.
      * @param user        El usuario que realiza la carga.
      */
-    public void insertRecord(HelperTable helperTable, HelperTableRecord record, User user);
+    public HelperTableRecord insertRecord(HelperTable helperTable, HelperTableRecord record, User user);
 
     /**
      * Este método es responsable de recuperar un registro desde una tabla auxiliar <code>helperTable</code>.
