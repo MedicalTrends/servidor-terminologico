@@ -25,8 +25,6 @@ public interface CategoryDAO {
      */
     public Category getCategoryById(long id);
 
-    public Category getCategoryByName(String name);
-
     /**
      * Este método es responsable de recuperar todas las categorías del sistema.
      *

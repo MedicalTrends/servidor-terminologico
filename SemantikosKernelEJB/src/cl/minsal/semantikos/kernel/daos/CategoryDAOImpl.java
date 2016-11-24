@@ -63,25 +63,6 @@ public class CategoryDAOImpl implements CategoryDAO {
         return categoryByIdFromDB;
     }
 
-
-    @Override
-    public Category getCategoryByName(String name) {
-        for ( Category category : categoryMap.values() ) {
-            if ( category.getName().equalsIgnoreCase(name) ) {
-                return category;
-            }
-        }
-
-        Category category = getCategoryByNameFromDB(name);
-        if ( category != null ) {
-            categoryMap.put(category.getId(), category);
-            List<RelationshipDefinition> categoryMetaData = getCategoryMetaData(category.getId());
-            category.setRelationshipDefinitions(categoryMetaData);
-        }
-
-        return category;
-    }
-
     /**
      * Este método es responsable de recuperar de la BDD.
      *

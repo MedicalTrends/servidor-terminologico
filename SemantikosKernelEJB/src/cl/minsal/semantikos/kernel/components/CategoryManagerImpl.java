@@ -97,7 +97,7 @@ public class CategoryManagerImpl implements CategoryManager {
 
     @Override
     public Category getCategoryByName(String name) {
-        return this.categoryDAO.getCategoryByName(StringUtils.toSQLLikePattern(name));
+        return this.categoryDAO.getCategoryByName(name);
     }
 
     @Override
