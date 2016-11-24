@@ -125,6 +125,16 @@ public interface DescriptionManager {
     public List<Description> searchDescriptionsByTerm(String term, List<Category> categories);
 
     /**
+     * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
+     * parámetro en cada una de las categorías y refsets indicadas.
+     * @param term
+     * @param categories
+     * @param refSets
+     * @return
+     */
+    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets);
+
+    /**
      * Este método es responsable de hacer que una descripción sea no válida en el sistema.
      *
      * @param noValidDescription La descripción no válida con su observación y conceptos sugeridos.

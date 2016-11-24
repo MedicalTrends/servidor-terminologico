@@ -39,6 +39,16 @@ public interface DescriptionDAO {
     List<Description> searchDescriptionsByTerm(String term, List<Category> categories);
 
     /**
+     * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
+     * parámetro en cada una de las categorías y refsets indicadas.
+     * @param term
+     * @param categories
+     * @param refSets
+     * @return
+     */
+    List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets);
+
+    /**
      * Este método es responsable de retornar un Factory.
      *
      * @return El factory adecuado... //TODO: WHAT?!

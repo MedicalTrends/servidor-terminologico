@@ -272,6 +272,11 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets) {
+        return descriptionDAO.searchDescriptionsByTerm(term, categories, refSets);
+    }
+
+    @Override
     public void invalidateDescription(ConceptSMTK conceptSMTK, NoValidDescription noValidDescription, User user) {
 
         /* Se aplican las reglas de negocio para el traslado */

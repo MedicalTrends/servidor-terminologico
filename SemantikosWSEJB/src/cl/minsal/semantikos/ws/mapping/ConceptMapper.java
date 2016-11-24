@@ -8,6 +8,7 @@ import cl.minsal.semantikos.ws.response.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,7 +27,13 @@ public class ConceptMapper {
             res.setObservation(conceptSMTK.getObservation());
 //            res.setToBeConsulted(conceptSMTK.isToBeConsulted());
 //            res.setToBeReviewed(conceptSMTK.isToBeReviewed());
-            res.setValidUntil(MappingUtil.toDate(conceptSMTK.getValidUntil()));
+            Date validUntil = MappingUtil.toDate(conceptSMTK.getValidUntil());
+            if ( validUntil != null ) {
+                res.setValidUntil(validUntil);
+                res.setValid(validUntil.after(new Date()));
+            } else {
+                res.setValid(Boolean.TRUE);
+            }
             return res;
         } else {
             return null;

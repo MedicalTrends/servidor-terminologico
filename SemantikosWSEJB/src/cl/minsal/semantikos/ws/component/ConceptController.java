@@ -2,9 +2,11 @@ package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
+import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.components.RefSetManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.ConceptMapper;
@@ -26,6 +28,8 @@ public class ConceptController {
     @EJB
     private ConceptManager conceptManager;
     @EJB
+    private DescriptionManager descriptionManager;
+    @EJB
     private RefSetManager refSetManager;
     @EJB
     private CategoryManager categoryManager;
@@ -35,6 +39,67 @@ public class ConceptController {
     private CategoryController categoryController;
     @EJB
     private RefSetController refSetController;
+
+    public TermSearchResponse searchTerm(
+            String term,
+            List<String> categoriesNames,
+            List<String> refSetsNames
+    ) throws NotFoundFault {
+        List<Category> categories = new ArrayList<>();
+        if ( categoriesNames != null ) {
+            for (String categoryName : categoriesNames) {
+                Category found = this.categoryManager.getCategoryByName(categoryName);
+                if (found == null) {
+                    throw new NotFoundFault("Categoria no encontrada: " + categoryName);
+                }
+                categories.add(found);
+            }
+        } else {
+            categories = this.categoryManager.getCategories();
+        }
+        System.out.println("Categories:");
+        System.out.println(categories);
+
+        List<RefSet> refSets = new ArrayList<>();
+        if ( refSetsNames != null ) {
+            for (String refSetName : refSetsNames) {
+                RefSet found = this.refSetManager.getRefsetByName(refSetName);
+                if (found == null) {
+                    throw new NotFoundFault("RefSet no encontrado: " + refSetName);
+                }
+            }
+        } else {
+            refSets = this.refSetManager.getAllRefSets();
+        }
+        System.out.println("RefSets:");
+        System.out.println(refSets);
+
+        TermSearchResponse response = new TermSearchResponse();
+
+        List<ConceptResponse> conceptResponses = new ArrayList<>();
+        List<Description> descriptions = this.descriptionManager.searchDescriptionsByTerm(term, categories, refSets);
+        if ( descriptions != null ) {
+            System.out.println(descriptions);
+            List<ConceptSMTK> conceptSMTKS = new ArrayList<>(descriptions.size());
+            for ( Description description : descriptions ) {
+                System.out.println(description);
+                if ( !conceptSMTKS.contains(description.getConceptSMTK()) ) {
+                    conceptSMTKS.add(description.getConceptSMTK());
+                }
+            }
+
+            for ( ConceptSMTK source : conceptSMTKS ) {
+                // TODO: Agregar sugeridos
+                ConceptResponse conceptResponse = this.getResponse(source);
+                this.loadDescriptions(conceptResponse, source);
+                this.loadCategory(conceptResponse, source);
+                conceptResponses.add(conceptResponse);
+            }
+        }
+        response.setConcepts(conceptResponses);
+
+        return response;
+    }
 
     public ConceptResponse conceptByDescriptionId(String descriptionId)
         throws NotFoundFault {

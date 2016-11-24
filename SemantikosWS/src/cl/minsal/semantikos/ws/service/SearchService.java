@@ -35,13 +35,15 @@ public class SearchService {
         @XmlElement(required = true)
         @WebParam(name = "peticionBuscarTermino")
                 SearchTermRequest request
-    ) throws IllegalInputFault {
+    ) throws IllegalInputFault, NotFoundFault {
         if ( (request.getCategoryNames() == null && request.getRefSetNames() == null)
-                || (request.getCategoryNames().isEmpty() && request.getRefSetNames().isEmpty())) {
+                || (request.getCategoryNames().isEmpty() && request.getRefSetNames().isEmpty()) ) {
             throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet");
         }
-        // TODO
-        return null;
+        if ( request.getTerm() == null || "".equals(request.getTerm()) ) {
+            throw new IllegalInputFault("Debe ingresar un Termino a buscar");
+        }
+        return this.conceptController.searchTerm(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
     }
 
     // REQ-WS-002

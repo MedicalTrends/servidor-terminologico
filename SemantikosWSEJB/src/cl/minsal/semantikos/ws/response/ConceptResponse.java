@@ -29,6 +29,8 @@ public class ConceptResponse implements Serializable {
     private Boolean isFullyDefined;
     @XmlElement(name="publicado")
     private Boolean isPublished;
+    @XmlElement(name="valido")
+    private Boolean isValid;
     @XmlElement(name="validoHasta")
     private Date validUntil;
     @XmlElement(name="observacion")
@@ -98,6 +100,14 @@ public class ConceptResponse implements Serializable {
         isPublished = published;
     }
 
+    public Boolean getValid() {
+        return isValid;
+    }
+
+    public void setValid(Boolean valid) {
+        isValid = valid;
+    }
+
     public Date getValidUntil() {
         return validUntil;
     }
@@ -160,5 +170,20 @@ public class ConceptResponse implements Serializable {
 
     public void setRelationships(List<RelationshipResponse> relationships) {
         this.relationships = relationships;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ConceptResponse)) return false;
+
+        ConceptResponse that = (ConceptResponse) o;
+
+        return getConceptId() != null ? getConceptId().equals(that.getConceptId()) : that.getConceptId() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getConceptId() != null ? getConceptId().hashCode() : 0;
     }
 }

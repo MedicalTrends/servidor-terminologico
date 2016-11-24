@@ -402,6 +402,44 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         return descriptions;
     }
 
+    @Override
+    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets) {
+        ConnectionBD connect = new ConnectionBD();
+        List<Description> descriptions = new ArrayList<>();
+
+        String sql = "{call semantikos.search_descriptions_by_term_and_categories_and_refsets(?,?,?)}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setString(1, term.toLowerCase());
+            Category[] entities = categories.toArray(new Category[categories.size()]);
+            RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
+            call.setArray(2, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
+            Long[] par = convertListPersistentToListID(refsetEntities);
+            System.out.println("par:");
+            for ( Long l : par ) {
+                System.out.print(l + ", ");
+            }
+            System.out.println();
+            call.setArray(3, connection.createArrayOf("bigint", par));
+            call.execute();
+
+            logger.debug("Búsqueda exacta descripciones con término =" + term);
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                Description description = createDescriptionFromResultSet(rs, null);
+                descriptions.add(description);
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar descripciones de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return descriptions;
+    }
+
     private Long[] convertListPersistentToListID(PersistentEntity[] entities) {
 
         List<Long> listIDs = new ArrayList<>();

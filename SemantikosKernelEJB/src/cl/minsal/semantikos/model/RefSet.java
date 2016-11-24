@@ -88,4 +88,13 @@ public class RefSet extends PersistentEntity implements AuditableEntity {
     public void setId(long id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("RefSet{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", id=").append(id);
+        sb.append('}');
+        return sb.toString();
+    }
 }
