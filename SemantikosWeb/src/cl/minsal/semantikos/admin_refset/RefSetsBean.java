@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.admin_refset;
 
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
+import cl.minsal.semantikos.designer_modeler.designer.ConceptBean;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.RefSetManager;
@@ -33,6 +34,8 @@ public class RefSetsBean {
 
     private List<RefSet> refSetList;
 
+    private List<RefSet> conceptRefSetList;
+
     private List<Category> categories;
 
     private Category categorySelected;
@@ -45,6 +48,8 @@ public class RefSetsBean {
 
     private RefSet refSetEdit;
 
+    private RefSet refSetSelect;
+
     @EJB
     private CategoryManager categoryManager;
 
@@ -56,6 +61,10 @@ public class RefSetsBean {
 
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
+
+    @ManagedProperty(value ="#{conceptBean}")
+    private ConceptBean conceptBean;
+
 
     @PostConstruct
     public void init() {
@@ -134,12 +143,18 @@ public class RefSetsBean {
         if (refSet.isPersistent()) {
             refSetManager.bindConceptToRefSet(conceptSMTK, refSet, authenticationBean.getLoggedUser());
         }
+        if(conceptRefSetList!=null){
+            conceptRefSetList=refSetManager.getRefsetsBy(conceptBean.getConcept());
+        }
     }
 
     public void removeConcept(RefSet refSet, ConceptSMTK conceptSMTK) {
         refSet.unbindConceptTo(conceptSMTK);
         if (refSet.isPersistent()) {
             refSetManager.unbindConceptToRefSet(conceptSMTK, refSet, authenticationBean.getLoggedUser());
+        }
+        if(conceptRefSetList!=null){
+            conceptRefSetList=refSetManager.getRefsetsBy(conceptBean.getConcept());
         }
     }
 
@@ -220,5 +235,30 @@ public class RefSetsBean {
 
     public void setAuthenticationBean(AuthenticationBean authenticationBean) {
         this.authenticationBean = authenticationBean;
+    }
+
+    public List<RefSet> getConceptRefSetList() {
+        conceptRefSetList= refSetManager.getRefsetsBy(conceptBean.getConcept());
+        return conceptRefSetList;
+    }
+
+    public void setConceptRefSetList(List<RefSet> conceptRefSetList) {
+        this.conceptRefSetList = conceptRefSetList;
+    }
+
+    public ConceptBean getConceptBean() {
+        return conceptBean;
+    }
+
+    public void setConceptBean(ConceptBean conceptBean) {
+        this.conceptBean = conceptBean;
+    }
+
+    public RefSet getRefSetSelect() {
+        return refSetSelect;
+    }
+
+    public void setRefSetSelect(RefSet refSetSelect) {
+        this.refSetSelect = refSetSelect;
     }
 }

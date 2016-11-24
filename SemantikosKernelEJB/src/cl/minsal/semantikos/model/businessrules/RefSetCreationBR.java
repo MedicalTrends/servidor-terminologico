@@ -25,7 +25,7 @@ public class RefSetCreationBR {
      */
     private void brRefSet005(Institution refSetInstitution, User user) {
         if (!user.getInstitutions().contains(refSetInstitution)) {
-            throw new BusinessRuleException("Un Administrador sólo puede crear RefSets asociados a los establecimientos a los que pertenece el usuario");
+            throw new BusinessRuleException("BR-RefSet-005", "Un Administrador sólo puede crear RefSets asociados a los establecimientos a los que pertenece el usuario");
         }
     }
 
@@ -36,7 +36,7 @@ public class RefSetCreationBR {
      */
     private void brRefSet001(User user) {
         if (!user.getProfiles().contains(ADMINISTRATOR_REFSETS_PROFILE)) {
-            throw new BusinessRuleException("El RefSet puede ser creado por un usuario con el perfil " + ADMINISTRATOR_REFSETS_PROFILE);
+            throw new BusinessRuleException("BR-RefSet-001", "El RefSet puede ser creado por un usuario con el perfil " + ADMINISTRATOR_REFSETS_PROFILE);
         }
     }
 }

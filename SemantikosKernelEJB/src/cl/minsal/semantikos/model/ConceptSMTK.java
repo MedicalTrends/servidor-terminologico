@@ -9,6 +9,7 @@ import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.*;
 
+import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -204,7 +205,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public List<Relationship> getRelationships() {
 
         if (!relationshipsLoaded) {
-            throw new BusinessRuleException("Las relaciones de este concepto no han sido cargadas aun.");
+            throw new EJBException("Las relaciones de este concepto no han sido cargadas aun.");
         }
 
         return relationships;
@@ -581,7 +582,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         /* En este punto, no se encontró una descripción preferida, y se arroja una excepción */
-        throw new BusinessRuleException("Concepto sin descripción preferida");
+        throw new BusinessRuleException("BR-UNK", "Concepto sin descripción preferida");
     }
 
     /**
@@ -623,7 +624,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         /* En este punto, no se encontró una descripción preferida, y se arroja una excepción */
-        throw new BusinessRuleException("Concepto sin descripción FSN");
+        throw new BusinessRuleException("BR-UNK", "Concepto sin descripción FSN");
     }
 
     @Override

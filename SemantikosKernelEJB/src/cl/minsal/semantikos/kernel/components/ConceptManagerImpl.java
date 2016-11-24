@@ -429,6 +429,11 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    public ConceptSMTK getPendingConcept() {
+        return conceptDAO.getPendingConcept();
+    }
+
+    @Override
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK) {
         return conceptDAO.getRelatedConcepts(conceptSMTK);
     }

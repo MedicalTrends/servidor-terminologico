@@ -54,12 +54,12 @@ public class DescriptionTranslationBR {
 
         /* Validación de tipo FSN */
         if (description.getDescriptionType().equals(FSN)) {
-            throw new BusinessRuleException("Las descripciones a trasladar no pueden ser de tipo FSN (Full Specified Name)”.");
+            throw new BusinessRuleException("BR-DES-002", "Las descripciones a trasladar no pueden ser de tipo FSN (Full Specified Name)”.");
         }
 
         /* Validación de tipo Preferida */
         if (description.getDescriptionType().equals(PREFERIDA)) {
-            throw new BusinessRuleException("Las descripciones a trasladar no pueden ser de tipo Preferida.");
+            throw new BusinessRuleException("BR-DES-011", "Las descripciones a trasladar no pueden ser de tipo Preferida.");
         }
     }
 
@@ -80,7 +80,7 @@ public class DescriptionTranslationBR {
             return;
         }
 
-        throw new BusinessRuleException("No se puede trasladar una descripción a un concepto Borrador");
+        throw new BusinessRuleException("BR-UNK", "No se puede trasladar una descripción a un concepto Borrador");
     }
 
     /**
@@ -103,7 +103,7 @@ public class DescriptionTranslationBR {
 
                 /* Si tiene una del tipo abreviada, la descripción a trasladar cambia de tipo a General */
                 if (aTargetDescription.getDescriptionType().equals(ABREVIADA)) {
-                    logger.info("Aplicando regla de negocio de Movimiento de traslados de descripciones Abreviadas");
+                    logger.info("BR-UNK", "Aplicando regla de negocio de Movimiento de traslados de descripciones Abreviadas");
                     description.setDescriptionType(GENERAL);
                 }
             }

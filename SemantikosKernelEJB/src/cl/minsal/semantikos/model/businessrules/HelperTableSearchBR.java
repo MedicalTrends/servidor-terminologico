@@ -34,7 +34,7 @@ public class HelperTableSearchBR {
      */
     protected void precondition03(String pattern) {
         if ((pattern == null) || pattern.length() < MINIMUM_PATTERN_LENGTH) {
-            throw new BusinessRuleException("HelperTable BR-PC03: El patrón de búsqueda sobre tablas auxiliares debe tener un largo mínimo de " + MINIMUM_PATTERN_LENGTH + " caracteres.");
+            throw new BusinessRuleException("BR-HT-PC03", "El patrón de búsqueda sobre tablas auxiliares debe tener un largo mínimo de " + MINIMUM_PATTERN_LENGTH + " caracteres.");
         }
     }
 }

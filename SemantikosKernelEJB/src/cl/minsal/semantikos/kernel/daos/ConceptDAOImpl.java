@@ -26,6 +26,13 @@ public class ConceptDAOImpl implements ConceptDAO {
     /** El logger de esta clase */
     private static final Logger logger = LoggerFactory.getLogger(ConceptDAOImpl.class);
 
+    private final static String PENDING_CONCEPT_FSN_DESCRIPTION = "Pendientes";
+
+    /** Determina si el concepto pendiente ha sido recuperado desde el repositorio */
+    private static boolean PENDING_CONCEPT_RETRIEVED = false;
+
+    private static ConceptSMTK PENDING_CONCEPT;
+
     @PersistenceContext(unitName = "SEMANTIKOS_PU")
     private EntityManager em;
 
@@ -827,8 +834,41 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public ConceptSMTK getNoValidConcept() {
         // TODO: Parametrizar esto
-        return getConceptByID(81239); // Desarrollo
-        //return getConceptByID(81281); // Testing
+        return getConceptByID(81239); // Desarrollo & Testing
+    }
+
+    @Override
+    public ConceptSMTK getPendingConcept() {
+
+        /* Se valida si ya fue recuperado */
+        if (PENDING_CONCEPT_RETRIEVED) {
+            return PENDING_CONCEPT;
+        }
+
+        /* De otro modo, se recupera desde la base de datos. Primero se busca su categoría por nombre */
+        Category specialConceptCategory;
+        try {
+            specialConceptCategory = categoryDAO.getCategoryByName("Concepto Especial");
+        } catch (IllegalArgumentException iae) {
+            String errorMsg = "No se encontró la categoría Especial!";
+            logger.error(errorMsg, iae);
+            throw new EJBException(errorMsg, iae);
+        }
+
+        /* Luego se recuperan los conceptos de la categoría y se busca por el que tenga el FSN adecuado */
+        List<ConceptSMTK> specialConcepts = this.getConceptBy(specialConceptCategory);
+        for (ConceptSMTK specialConcept : specialConcepts) {
+            if (specialConcept.getDescriptionFavorite().getTerm().equalsIgnoreCase(PENDING_CONCEPT_FSN_DESCRIPTION)) {
+                PENDING_CONCEPT = specialConcept;
+                PENDING_CONCEPT_RETRIEVED = true;
+                return specialConcept;
+            }
+        }
+
+        /* Saliendo del for significa que no se creo */
+        String errorMsg = "No se encontró el concepto especial!";
+        logger.error(errorMsg);
+        throw new EJBException(errorMsg);
     }
 
     @Override
@@ -843,7 +883,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         try (Connection connection = connect.getConnection();) {
 
             call = connection.prepareCall("{call semantikos.get_related_concept(?)}");
-            call.setLong(1,conceptSMTK.getId());
+            call.setLong(1, conceptSMTK.getId());
             call.execute();
 
             ResultSet rs = call.getResultSet();

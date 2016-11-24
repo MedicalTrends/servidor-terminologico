@@ -32,7 +32,7 @@ public class ConceptEditionBusinessRuleContainer implements BusinessRulesContain
     protected void br101ConceptIDEdition(ConceptSMTK conceptSMTK, User user) {
 
         /* Nunca se puede modificar, asi que siempre lanza la excepción */
-        throw new BusinessRuleException("No es posible modificar el CONCEPT_ID del concepto " + conceptSMTK.toString() + ", por el usuario " + user.toString());
+        throw new BusinessRuleException("BR-UNK", "No es posible modificar el CONCEPT_ID del concepto " + conceptSMTK.toString() + ", por el usuario " + user.toString());
     }
 
     /**
@@ -47,7 +47,7 @@ public class ConceptEditionBusinessRuleContainer implements BusinessRulesContain
             String conceptInfo = "Se intentó actualizar el concepto " + conceptSMTK.toString();
 
             logger.info(conceptInfo + "\n" + brDesc);
-            throw new BusinessRuleException(brDesc + "\n" + conceptInfo);
+            throw new BusinessRuleException("BR-UNK", brDesc + "\n" + conceptInfo);
         }
     }
 
@@ -69,7 +69,7 @@ public class ConceptEditionBusinessRuleContainer implements BusinessRulesContain
      */
     private void br101ConceptInvalidation(ConceptSMTK conceptSMTK) {
         if (conceptSMTK.isModeled()) {
-            throw new BusinessRuleException("No es posible invalidar un concepto que se encuentra Modelado.");
+            throw new BusinessRuleException("BR-UNK", "No es posible invalidar un concepto que se encuentra Modelado.");
         }
     }
 

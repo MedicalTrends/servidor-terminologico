@@ -1,11 +1,9 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.ejb.Local;
-import java.text.ParseException;
 import java.util.List;
 
 
@@ -56,8 +54,20 @@ public interface CategoryDAO {
 
     /**
      * Este método es responsable de obtener las categorías que se relacionan con la categoría indicada como parametro
+     *
      * @param category concepto que se relaciona con otros
+     *
      * @return Lista de categorías relacionados
      */
     public List<Category> getRelatedCategories(Category category);
+
+    /**
+     * Este método es responsable de recuperar una categoría con un nombre en particular. De no encontrarse la categoría
+     * se arroja una excepción de argumento.
+     *
+     * @param categoryName El nombre de la categoría.
+     *
+     * @return Un objeto fresco que representa la categoría.
+     */
+    public Category getCategoryByName(String categoryName);
 }

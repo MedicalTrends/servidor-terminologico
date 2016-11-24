@@ -33,7 +33,7 @@ public class DescriptionInvariantsBR {
         String tagSMTKParentisis = "(" + tagSMTK.getName().toLowerCase() + ")";
         String descTerm = descriptionFSN.getTerm().toLowerCase();
         if (!descTerm.endsWith(tagSMTKParentisis)) {
-            throw new BusinessRuleException("La descripción FSN debe terminar con el Tag Semántikos entre paréntesis.");
+            throw new BusinessRuleException("BR-DES-001", "La descripción FSN debe terminar con el Tag Semántikos entre paréntesis.");
         }
     }
 }

@@ -38,7 +38,7 @@ public class HistoryRecordBL {
     private void brAud002(RefSetAuditAction refSetAuditAction) {
         //TODO FIX isPersistent
         if (refSetAuditAction.getRefSet().getId()  == PersistentEntity.NON_PERSISTED_ID )
-            throw new BusinessRuleException("BR-AUD-002: No satisfecha: solo se pueden registrar acciones relativas a Refsets que se encuentran persistidos");
+            throw new BusinessRuleException("BR-AUD-002", "Solo se pueden registrar acciones relativas a Refsets que se encuentran persistidos");
     }
 
     /**
@@ -50,6 +50,6 @@ public class HistoryRecordBL {
      */
     private void brAud001(ConceptSMTK conceptSMTK) {
         if (!conceptSMTK.isModeled())
-            throw new BusinessRuleException("BR-AUD-001: No satisfecha: solo se pueden registrar acciones relativas a Conceptos que se encuentran Modelados");
+            throw new BusinessRuleException("BR-AUD-001", "No satisfecha: solo se pueden registrar acciones relativas a Conceptos que se encuentran Modelados");
     }
 }

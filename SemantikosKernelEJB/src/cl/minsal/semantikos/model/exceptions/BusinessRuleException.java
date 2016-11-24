@@ -8,15 +8,30 @@ import cl.minsal.semantikos.model.ConceptSMTK;
  */
 public class BusinessRuleException extends RuntimeException {
 
-    /* El concepto que ha violado la regla de negocio */
+    /** El código de la regla de negocio violada */
+    private String code;
+
+    /** El concepto en el que se ha violado la regla de negocio */
     private ConceptSMTK conceptSMTK;
 
-    public BusinessRuleException(String errorMessage) {
+    /**
+     * Un constructor básico para la regla de negocio.
+     *
+     * @param code         El código de la regla de negocio.
+     * @param errorMessage El mensaje de error de la regla de negocio.
+     */
+    public BusinessRuleException(String code, String errorMessage) {
         super(errorMessage);
+        this.code = code;
     }
 
-    public BusinessRuleException(ConceptSMTK conceptSMTK, String errorMessage) {
-        this(errorMessage);
+    /**
+     * @param code         El código de la regla de negocio.
+     * @param errorMessage El mensaje de error de la regla de negocio.
+     * @param conceptSMTK  El concepto que viola la regla de negocio.
+     */
+    public BusinessRuleException(String code, String errorMessage, ConceptSMTK conceptSMTK) {
+        this(code, errorMessage);
         this.conceptSMTK = conceptSMTK;
     }
 

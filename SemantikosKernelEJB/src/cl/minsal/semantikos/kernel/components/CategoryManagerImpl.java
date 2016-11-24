@@ -91,7 +91,7 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
-    public Category getCategoryById(int id) throws ParseException {
+    public Category getCategoryById(long id) {
         return categoryDAO.getCategoryById(id);
     }
 

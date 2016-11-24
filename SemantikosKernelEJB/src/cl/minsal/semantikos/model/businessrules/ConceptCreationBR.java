@@ -73,7 +73,7 @@ public class ConceptCreationBR implements BusinessRulesContainer {
 
         /* Se valida que no sea nulo y que sea de los oficiales */
         if (tagSMTK == null || !tagSMTK.isValid()) {
-            throw new BusinessRuleException("Todo concepto debe tener un Tag Semántikos (válido).");
+            throw new BusinessRuleException("BR-TagSMTK-001", "Todo concepto debe tener un Tag Semántikos (válido).");
         }
     }
 
@@ -87,9 +87,9 @@ public class ConceptCreationBR implements BusinessRulesContainer {
         for (Description description : conceptSMTK.getDescriptions()) {
             String term = description.getTerm();
             if (term == null) {
-                throw new BusinessRuleException("El término de una descripción no puede ser nulo.");
+                throw new BusinessRuleException("BR-TagSMTK-002", "El término de una descripción no puede ser nulo.");
             } else if (term.trim().equals("")) {
-                throw new BusinessRuleException("El término de una descripción no puede ser vacío.");
+                throw new BusinessRuleException("BR-TagSMTK-002", "El término de una descripción no puede ser vacío.");
             }
         }
     }
@@ -105,7 +105,7 @@ public class ConceptCreationBR implements BusinessRulesContainer {
         /* Categorías restringidas para usuarios con rol diseñador */
         if (user.getProfiles().contains(DESIGNER_PROFILE)) {
             if (conceptSMTK.getCategory().isRestriction()) {
-                throw new BusinessRuleException("El usuario " + user + " no tiene privilegios para editar la categoría " + conceptSMTK.getCategory());
+                throw new BusinessRuleException("BR-UNK", "El usuario " + user + " no tiene privilegios para editar la categoría " + conceptSMTK.getCategory());
             }
         }
     }
@@ -142,7 +142,7 @@ public class ConceptCreationBR implements BusinessRulesContainer {
 
         /* El usuario debe ser modelador o diseñador */
         if (!(isDesigner || isModeler)) {
-            throw new BusinessRuleException("Solo usuarios con rol de Diseñador o Modelador pueden crear conceptos de esta categoria.");
+            throw new BusinessRuleException("", "Solo usuarios con rol de Diseñador o Modelador pueden crear conceptos de esta categoria.");
         }
     }
 
@@ -165,7 +165,7 @@ public class ConceptCreationBR implements BusinessRulesContainer {
 
         /* El usuario debe ser modelador o diseñador */
         if (!(isDesigner || isModeler)) {
-            throw new BusinessRuleException("Solo usuarios con rol de Diseñador o Modelador pueden crear conceptos de esta categoria.");
+            throw new BusinessRuleException("BR-UNK", "Solo usuarios con rol de Diseñador o Modelador pueden crear conceptos de esta categoria.");
         }
     }
 

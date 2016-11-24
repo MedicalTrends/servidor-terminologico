@@ -161,11 +161,7 @@ public class ConceptBrowserBean implements Serializable {
      */
     public void setIdCategory(int idCategory) {
         this.idCategory = idCategory;
-        try {
-            this.category = categoryManager.getCategoryById(idCategory);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        this.category = categoryManager.getCategoryById(idCategory);
     }
 
     public List<Tag> getRecordSearchInput(String patron) {

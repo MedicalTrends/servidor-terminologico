@@ -129,6 +129,28 @@ public class RefSetDAOImpl implements RefSetDAO {
     }
 
     @Override
+    public List<RefSet> getRefsetsBy(ConceptSMTK conceptSMTK) {
+        List<RefSet> refSets= new ArrayList<>();
+
+        ConnectionBD connect = new ConnectionBD();
+        String ALL_REFSETS_BY_CONCEPT = "{call semantikos.get_refsets_by_concept(?)}";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(ALL_REFSETS_BY_CONCEPT)) {
+            call.setLong(1,conceptSMTK.getId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                refSets.add(createRefsetFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            logger.error("Error al al obtener los RefSets ", e);
+        }
+
+        return refSets;
+    }
+    @Override
     public List<RefSet> findRefsetsByName(String pattern) {
         List<RefSet> refSets = new ArrayList<>();
 

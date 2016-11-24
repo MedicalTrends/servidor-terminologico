@@ -32,8 +32,6 @@ public class CategoryConverter implements Converter{
 
             } catch(NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Categoria no valida"));
-            } catch (ParseException e) {
-                e.printStackTrace();
             }
         }
         return null;

@@ -63,7 +63,7 @@ public class ConceptDefinitionalGradeBR implements ConceptDefinitionalGradeBRInt
                 candidateConcept.setRelationships(relationshipsBySourceConcept);
 
                 if (haveSameSnomedCTRelationshipsButFromConceptSource(conceptSMTK.getRelationshipsSnomedCT(), candidateConcept.getRelationshipsSnomedCT())) {
-                    throw new BusinessRuleException("El concepto no es completamente definido.");
+                    throw new BusinessRuleException("BR-UNK", "El concepto no es completamente definido.");
                 }
             }
         }

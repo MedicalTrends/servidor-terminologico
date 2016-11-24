@@ -25,7 +25,7 @@ public class ConceptAuditBusinessRulesContainer implements BusinessRulesContaine
     private void brAud001isModeled(ConceptSMTK conceptSMTK) throws BusinessRuleException {
 
         if (!conceptSMTK.isModeled()) {
-            throw new BusinessRuleException(conceptSMTK, "El concepto no se encuentra en estado Modelado.");
+            throw new BusinessRuleException("BR-AUD-001", "El concepto no se encuentra en estado Modelado.", conceptSMTK);
         }
     }
 }

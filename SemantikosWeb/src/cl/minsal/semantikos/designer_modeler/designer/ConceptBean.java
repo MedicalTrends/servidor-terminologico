@@ -50,7 +50,7 @@ import java.util.*;
 @ViewScoped
 public class ConceptBean implements Serializable {
 
-    static final Logger logger = LoggerFactory.getLogger(ConceptBean.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConceptBean.class);
 
     @EJB
     ConceptManager conceptManager;
@@ -167,6 +167,29 @@ public class ConceptBean implements Serializable {
     //para tipo helpertable
     private int helperTableValuePlaceholder;
 
+    private long idTermPending;
+
+    private Description descriptionPending;
+
+    public long getIdTermPending() {
+        return idTermPending;
+    }
+
+    public void setIdTermPending(long idTermPending) {
+        this.idTermPending = idTermPending;
+        descriptionPending= descriptionManager.getDescriptionByID(idTermPending);
+        if(descriptionPending!=null){
+            concept.addDescriptionWeb(new DescriptionWeb(descriptionPending));
+        }
+    }
+
+    public Description getDescriptionPending() {
+        return descriptionPending;
+    }
+
+    public void setDescriptionPending(Description descriptionPending) {
+        this.descriptionPending = descriptionPending;
+    }
 
     @ManagedProperty(value = "#{conceptExport}")
     private ConceptExportMBean conceptBeanExport;
@@ -371,6 +394,7 @@ public class ConceptBean implements Serializable {
         TagSMTK tagSMTK = new TagSMTK(category.getTagSemantikos().getId(), category.getTagSemantikos().getName());
 
         ConceptSMTK conceptSMTK = new ConceptSMTK(conceptManager.generateConceptId(), category, false, false, false, false, false, false, observation, tagSMTK);
+
 
         // Se crea el concepto WEB a partir del concepto SMTK
         concept = initConcept(conceptSMTK, term);
@@ -833,14 +857,22 @@ public class ConceptBean implements Serializable {
             if (categoryManager.categoryContains(conceptSMTK.getCategory(), description.getTerm())) {
                 messageError("Ya existe la descripción " + description.getTerm() + " en la categoría " + category.getName());
                 contain = true;
+                return contain;
             }
         }
+
         return contain;
     }
 
     private void persistConcept(FacesContext context) {
         try {
             conceptManager.persist(concept, user);
+
+            if(descriptionPending!=null){
+                ConceptSMTK conceptSource=descriptionPending.getConceptSMTK();
+                descriptionPending.setConceptSMTK(concept);
+                descriptionManager.moveDescriptionToConcept(conceptSource,descriptionPending,user);
+            }
             context.addMessage(null, new FacesMessage("Successful", "Concepto guardado "));
             // Se resetea el concepto, como el concepto está persistido, se le pasa su id
             getConceptById(concept.getId());

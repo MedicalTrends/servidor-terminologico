@@ -25,7 +25,7 @@ public class ConceptDeletionBR {
     private void preCondition001(User user) {
         List<Profile> profiles = user.getProfiles();
         if (!profiles.contains(ProfileFactory.MODELER_PROFILE) && !profiles.contains(DESIGNER_PROFILE)) {
-            throw new BusinessRuleException("Un concepto sólo puede ser borrado por usuarios con el perfil Modelador o Diseñador");
+            throw new BusinessRuleException("BR-CON-006", "Un concepto sólo puede ser borrado por usuarios con el perfil Modelador o Diseñador");
         }
     }
 }

@@ -35,7 +35,7 @@ public class TagCreationBR {
         }
 
         if (rootTag.deepnessLevel() > 3) {
-            throw new BusinessRuleException("Un tag no puede tener biz-biz nietos");
+            throw new BusinessRuleException("BR-UNK", "Un tag no puede tener biz-biz nietos");
         }
     }
 }

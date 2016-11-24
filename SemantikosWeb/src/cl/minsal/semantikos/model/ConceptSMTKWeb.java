@@ -85,7 +85,7 @@ public class ConceptSMTKWeb extends ConceptSMTK {
             }
         }
         /* En este punto, no se encontró una descripción preferida, y se arroja una excepción */
-        throw new BusinessRuleException("Concepto sin descripción FSN");
+        throw new BusinessRuleException("BR-UNK", "Concepto sin descripción FSN");
     }
 
     /**
@@ -106,7 +106,7 @@ public class ConceptSMTKWeb extends ConceptSMTK {
         }
 
         /* En este punto, no se encontró una descripción preferida, y se arroja una excepción */
-        throw new BusinessRuleException("Concepto sin descripción preferida");
+        throw new BusinessRuleException("BR-UNK", "Concepto sin descripción preferida");
     }
 
     /**

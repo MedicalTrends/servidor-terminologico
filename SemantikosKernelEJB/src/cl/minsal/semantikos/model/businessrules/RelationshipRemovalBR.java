@@ -49,7 +49,7 @@ public class RelationshipRemovalBR {
         }
 
         /* Se se recorrieron todas las relaciones y ninguna satisfizo las condiciones es que no se debe borrar la relación */
-        throw new BusinessRuleException("BR-REL-001: Se puede borrar una relación de un concepto modelado, siempre y " +
+        throw new BusinessRuleException("BR-REL-001", "Se puede borrar una relación de un concepto modelado, siempre y " +
                 "cuando éste posea al menos una relación Snomed de tipo “ES UN” o “ES UN MAPEO DE”.");
 
     }

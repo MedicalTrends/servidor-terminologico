@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Singleton;
-import javax.ejb.Stateless;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -39,23 +38,23 @@ public class CategoryDAOImpl implements CategoryDAO {
     private TagSMTKDAO tagSMTKDAO;
 
     /** Un caché de categorías */
-    private Map<Long, Category> categoryMap;
+    private Map<Long, Category> categoryMapByID;
 
     public CategoryDAOImpl() {
-        this.categoryMap = new HashMap<>();
+        this.categoryMapByID = new HashMap<>();
     }
 
     @Override
     public Category getCategoryById(long idCategory) {
 
         /* Si está en el caché, se retorna */
-        if(categoryMap.containsKey(idCategory)){
-            return categoryMap.get(idCategory);
+        if(categoryMapByID.containsKey(idCategory)){
+            return categoryMapByID.get(idCategory);
         }
 
         /* Se almacena en el caché */
         Category categoryByIdFromDB = getCategoryByIdFromDB(idCategory);
-        categoryMap.put(idCategory, categoryByIdFromDB);
+        categoryMapByID.put(idCategory, categoryByIdFromDB);
 
         /* Y se carga su metadata */
         List<RelationshipDefinition> categoryMetaData = getCategoryMetaData(idCategory);
@@ -165,8 +164,8 @@ public class CategoryDAOImpl implements CategoryDAO {
                 List<RelationshipDefinition> categoryMetaData = getCategoryMetaData(id);
                 category.setRelationshipDefinitions(categoryMetaData);
 
-                if (!categoryMap.containsKey(id)){
-                    categoryMap.put(id, category);
+                if (!categoryMapByID.containsKey(id)){
+                    categoryMapByID.put(id, category);
                 }
             }
 
@@ -175,6 +174,23 @@ public class CategoryDAOImpl implements CategoryDAO {
         }
 
         return categories;
+    }
+
+    @Override
+    public Category getCategoryByName(String categoryName) {
+
+        /* Si no están cargadas las categorías, se cargan */
+        if (categoryMapByID.isEmpty()){
+            getAllCategories();
+        }
+
+        for (Category category : categoryMapByID.values()) {
+            if (category.getName().equalsIgnoreCase(categoryName)){
+                return category;
+            }
+        }
+
+        throw new IllegalArgumentException("No existe categoría de nombre " + categoryName);
     }
 
     private Category createCategoryFromResultSet(ResultSet resultSet) throws SQLException {
@@ -216,8 +232,8 @@ public class CategoryDAOImpl implements CategoryDAO {
             if (rs.next()) {
                 long catID = rs.getLong(1);
                 category.setId(catID);
-                if (!categoryMap.containsKey(catID)) {
-                    categoryMap.put(catID, category);
+                if (!categoryMapByID.containsKey(catID)) {
+                    categoryMapByID.put(catID, category);
                 }
             }
             rs.close();

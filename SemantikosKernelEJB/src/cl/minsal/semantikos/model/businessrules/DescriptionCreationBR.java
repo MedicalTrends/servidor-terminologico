@@ -59,7 +59,7 @@ public class DescriptionCreationBR {
         Category category = concept.getCategory();
 
         if (categoryManager.categoryContains(category, term)) {
-                throw new BusinessRuleException("Un término sólo puede existir una vez en una categoría.");
+                throw new BusinessRuleException("BR-UNK", "Un término sólo puede existir una vez en una categoría.");
         }
     }
 
@@ -86,7 +86,7 @@ public class DescriptionCreationBR {
                 return;
             }
 
-            throw new BusinessRuleException("BR-DES-010: Cuando se edita un concepto solo se le pueden agregar Descripciones de tipo: Abreviado, Sinónimo,\n" +
+            throw new BusinessRuleException("BR-DES-010", "Cuando se edita un concepto solo se le pueden agregar Descripciones de tipo: Abreviado, Sinónimo,\n" +
                     "     * Ambiguo, General o Mal Escrito.");
         }
     }
@@ -103,7 +103,7 @@ public class DescriptionCreationBR {
             if(description.getDescriptionType().equals(ABREVIADA) && description.isPersistent()){
                 /* Si se está editando y es una abreviada.... */
                 if (concept.isPersistent() && type.equals(ABREVIADA)) {
-                    throw new BusinessRuleException("Cuando se edita un concepto no es posible agregarle una descripción de tipo 'Abreviada'.");
+                    throw new BusinessRuleException("BR-DES-012", "Cuando se edita un concepto no es posible agregarle una descripción de tipo 'Abreviada'.");
                 }
             }
         }

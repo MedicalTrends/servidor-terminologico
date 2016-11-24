@@ -201,5 +201,13 @@ public interface ConceptManager {
      */
     public ConceptSMTK getNoValidConcept();
 
+    /**
+     * Este método es responsable de retornar la instancia del concepto pendiente.
+     *
+     * @return La instancia (única) del concepto pendiente.
+     */
+    public ConceptSMTK getPendingConcept();
+
+
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);
 }

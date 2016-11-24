@@ -39,7 +39,7 @@ public class ConceptInvariantsBR {
      */
     private void brConceptInvariant001(ConceptSMTK conceptSMTK) {
         if (conceptSMTK.getDescriptionFavorite() == null) {
-            throw new BusinessRuleException("Un concepto siempre debe tener una descripción preferida.");
+            throw new BusinessRuleException("BR-CON-001", "Un concepto siempre debe tener una descripción preferida.");
         }
     }
 
@@ -55,7 +55,7 @@ public class ConceptInvariantsBR {
      */
     private void brConceptInvariant002(ConceptSMTK conceptSMTK) {
         if (conceptSMTK.getDescriptionFSN() == null) {
-            throw new BusinessRuleException("Un concepto siempre debe tener una descripción FSN.");
+            throw new BusinessRuleException("BR-CON-001", "Un concepto siempre debe tener una descripción FSN.");
         }
     }
 }

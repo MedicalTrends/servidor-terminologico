@@ -18,7 +18,6 @@ import java.text.ParseException;
 @FacesConverter("CategoryConverterRefsetBean")
 public class CategoryConverterToRefsetBean implements Converter {
 
-
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
             if(s != null && s.trim().length() > 0) {
@@ -30,12 +29,9 @@ public class CategoryConverterToRefsetBean implements Converter {
 
                 } catch(NumberFormatException e) {
                     throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Categoria no valida"));
-                } catch (ParseException e) {
-                    e.printStackTrace();
                 }
             }
             return null;
-
         }
 
         @Override

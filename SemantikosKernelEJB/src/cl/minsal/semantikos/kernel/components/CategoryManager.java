@@ -34,7 +34,7 @@ public interface CategoryManager {
      *
      * @return La categoría buscada.
      */
-    public Category getCategoryById(int idCategory) throws ParseException;
+    public Category getCategoryById(long idCategory);
 
     /**
      * Entrega la Categoría que tiene un nombre LIKE @{name} o NULL si no existe

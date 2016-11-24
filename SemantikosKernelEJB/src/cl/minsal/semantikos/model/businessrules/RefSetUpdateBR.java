@@ -30,7 +30,7 @@ public class RefSetUpdateBR {
      */
     protected void brRefSet001(User user) {
         if (user.getProfiles().equals(ADMINISTRATOR_REFSETS_PROFILE)) {
-            throw new BusinessRuleException("Los RefSets puede ser actualizados sólo por usuario con el perfil " + ADMINISTRATOR_REFSETS_PROFILE);
+            throw new BusinessRuleException("BR-RefSet-001", "Los RefSets puede ser actualizados sólo por usuario con el perfil " + ADMINISTRATOR_REFSETS_PROFILE);
         }
     }
 
@@ -43,7 +43,7 @@ public class RefSetUpdateBR {
     protected void brRefSet002(RefSet refSet, User user) {
         for (Institution institution: user.getInstitutions() ) {
             if(institution.getId()==refSet.getInstitution().getId())return;
-        }throw new BusinessRuleException("Un usuario puede editar RefSets de instituciones a las que se encuentra asociado.");
+        }throw new BusinessRuleException("BR-RefSet-002", "Un usuario puede editar RefSets de instituciones a las que se encuentra asociado.");
 
     }
 }
