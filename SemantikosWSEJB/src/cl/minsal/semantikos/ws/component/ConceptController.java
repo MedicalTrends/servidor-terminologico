@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.RefSet;
+import cl.minsal.semantikos.ws.Util;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.ConceptMapper;
 import cl.minsal.semantikos.ws.mapping.RefSetMapper;
@@ -16,6 +17,7 @@ import cl.minsal.semantikos.ws.response.*;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -45,32 +47,8 @@ public class ConceptController {
             List<String> categoriesNames,
             List<String> refSetsNames
     ) throws NotFoundFault {
-        List<Category> categories = new ArrayList<>();
-        if ( categoriesNames != null ) {
-            for (String categoryName : categoriesNames) {
-                Category found = this.categoryManager.getCategoryByName(categoryName);
-                if (found == null) {
-                    throw new NotFoundFault("Categoria no encontrada: " + categoryName);
-                }
-                categories.add(found);
-            }
-        } else {
-            categories = this.categoryManager.getCategories();
-        }
-
-        List<RefSet> refSets = new ArrayList<>();
-        if ( refSetsNames != null ) {
-            for (String refSetName : refSetsNames) {
-                RefSet found = this.refSetManager.getRefsetByName(refSetName);
-                if (found == null) {
-                    throw new NotFoundFault("RefSet no encontrado: " + refSetName);
-                }
-            }
-        } else {
-            refSets = this.refSetManager.getAllRefSets();
-        }
-
-        TermSearchResponse response = new TermSearchResponse();
+        List<Category> categories = this.categoryController.findCategories(categoriesNames);
+        List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
 
         List<ConceptResponse> conceptResponses = new ArrayList<>();
         List<Description> descriptions = this.descriptionManager.searchDescriptionsByTerm(term, categories, refSets);
@@ -90,7 +68,46 @@ public class ConceptController {
                 conceptResponses.add(conceptResponse);
             }
         }
+
+        TermSearchResponse response = new TermSearchResponse();
         response.setConcepts(conceptResponses);
+
+        if ( conceptResponses.isEmpty() ) {
+            throw new NotFoundFault("Termino no encontrado");
+        }
+
+        return response;
+    }
+
+    public TermSearchResponse searchTruncatePerfect(
+            String term,
+            List<String> categoriesNames,
+            List<String> refSetsNames,
+            Integer pageNumber,
+            Integer pageSize
+    ) throws NotFoundFault {
+        List<Category> categories = this.categoryController.findCategories(categoriesNames);
+        List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
+
+        Long[] categoriesArray = Util.getIdArray(categories);
+        Long[] refSetsArray = Util.getIdArray(refSets);
+        System.out.println(Arrays.toString(refSetsArray));
+        List<ConceptSMTK> conceptSMTKS = this.conceptManager.findConceptTruncatePerfect(term, categoriesArray, refSetsArray, pageNumber, pageSize);
+        List<ConceptResponse> conceptResponses = new ArrayList<>();
+
+        if ( conceptSMTKS != null ) {
+            for ( ConceptSMTK source : conceptSMTKS ) {
+                ConceptResponse conceptResponse = this.getResponse(source);
+                this.loadDescriptions(conceptResponse, source);
+                this.loadCategory(conceptResponse, source);
+                conceptResponses.add(conceptResponse);
+            }
+        }
+
+        TermSearchResponse response = new TermSearchResponse();
+        response.setConcepts(conceptResponses);
+        Integer total = this.conceptManager.countConceptBy(term, categoriesArray, refSetsArray);
+        response.setPagination(this.paginationController.getResponse(pageNumber, pageSize, total));
 
         if ( conceptResponses.isEmpty() ) {
             throw new NotFoundFault("Termino no encontrado");

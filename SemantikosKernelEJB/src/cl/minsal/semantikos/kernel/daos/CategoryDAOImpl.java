@@ -68,7 +68,7 @@ public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public Category getCategoryByName(String name) {
         for ( Category category : categoryMap.values() ) {
-            if ( name.equalsIgnoreCase(category.getName()) ) {
+            if ( category.getName().equalsIgnoreCase(name) ) {
                 return category;
             }
         }

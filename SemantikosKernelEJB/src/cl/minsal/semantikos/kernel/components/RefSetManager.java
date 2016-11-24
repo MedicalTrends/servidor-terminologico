@@ -88,6 +88,13 @@ public interface RefSetManager {
     public RefSet getRefsetByName(String pattern);
 
     /**
+     * Entrega la lista de RefSets por la lista de nombres de refsets ingresados.
+     * @param refSetNames
+     * @return
+     */
+    public List<RefSet> findRefSetsByName(List<String> refSetNames);
+
+    /**
      * Carga los RefSets a los que pertenece el concepto en el atributo refsets del concepto
      * @param conceptSMTK
      */

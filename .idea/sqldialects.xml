@@ -4,5 +4,6 @@
     <file url="file://$PROJECT_DIR$/resources/bdd/operaciones usuarios.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/resources/bdd/snomed-ct/functions.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/resources/bdd/webservices/20161123_search_descriptions_by_term_and_categories_and_refset.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/resources/bdd/webservices/20161124_find_concept_by_pattern_and_categories_and_refsets.sql" dialect="PostgreSQL" />
   </component>
 </project>

@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.RefSet;
+import cl.minsal.semantikos.ws.Util;
 import cl.minsal.semantikos.ws.response.RefSetResponse;
 
 /**
@@ -13,8 +14,8 @@ public class RefSetMapper {
         if ( refSet != null ) {
             RefSetResponse res = new RefSetResponse();
             res.setName(refSet.getName());
-            res.setValidityUntil(MappingUtil.toDate(refSet.getValidityUntil()));
-            res.setCreationDate(MappingUtil.toDate(refSet.getCreationDate()));
+            res.setValidityUntil(Util.toDate(refSet.getValidityUntil()));
+            res.setCreationDate(Util.toDate(refSet.getCreationDate()));
             if ( refSet.getInstitution() != null ) {
                 res.setInstitution(refSet.getInstitution().getName());
             }

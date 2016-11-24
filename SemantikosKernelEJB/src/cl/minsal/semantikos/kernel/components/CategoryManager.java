@@ -73,4 +73,6 @@ public interface CategoryManager {
     public Category createCategory(Category category, User user);
 
     public List<Category> getRelatedCategories(Category category);
+
+    public List<Category> findCategories(List<String> categoriesNames);
 }

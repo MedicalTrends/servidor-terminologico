@@ -123,6 +123,8 @@ public interface ConceptManager {
      */
     public List<ConceptSMTK> findConceptBy(String patternOrConceptID, Long[] categories, int pageNumber, int pageSize);
 
+    public List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int pageNumber, int pageSize);
+
     /*Método temporal para trabajar con el navegador de conceptos*/
     @Deprecated
     public List<ConceptSMTK> findConceptBy(Category category);
@@ -134,6 +136,8 @@ public interface ConceptManager {
     public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize);
 
     public Integer countModeledConceptsBy(RefSet refSet);
+
+    public Integer countConceptBy(String pattern, Long[] category, Long[] refset);
 
     /**
      * Método encargado de realizar la búsqueda de conceptos por patron, en caso de no encontrar un "Perfect Match" por

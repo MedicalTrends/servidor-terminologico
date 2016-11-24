@@ -21,6 +21,21 @@ public class RefSetController {
     @EJB
     private RefSetManager refSetManager;
 
+    public List<RefSet> findRefsets(List<String> refSetsNames) throws NotFoundFault {
+        // TODO: Seguridad
+        List<RefSet> refSets;
+        if ( refSetsNames != null && !refSetsNames.isEmpty() ) {
+            try {
+                refSets = this.refSetManager.findRefSetsByName(refSetsNames);
+            } catch (Exception e) {
+                throw new NotFoundFault(e.getMessage());
+            }
+        } else {
+            refSets = this.refSetManager.getAllRefSets();
+        }
+        return refSets;
+    }
+
     public List<RefSetResponse> refSetList(Boolean includeAllInstitutions) throws NotFoundFault {
         List<RefSetResponse> res = new ArrayList<>();
         List<RefSet> refSets = this.refSetManager.getAllRefSets();

@@ -45,6 +45,20 @@ public interface ConceptDAO {
     public List<ConceptSMTK> getConceptBy(String[] pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber);
 
     /**
+     * Este método es responsable de recuperar los conceptos que coincidan con un cierto patrón (<code>pattern</code>)
+     * y que pertenezcan a una o más categorías y uno o mas refsets.
+     *
+     * @param pattern
+     * @param categories
+     * @param refsets
+     * @param modeled
+     * @param pageSize
+     * @param pageNumber
+     * @return
+     */
+    public List<ConceptSMTK> getConceptBy(String[] pattern, Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber);
+
+    /**
      * Este método es responsable de recuperar los conceptos que pertenecen a un conjunto de categorías.
      *
      * @param categories Las categorías desde donde se extraen los conceptos.
@@ -70,6 +84,8 @@ public interface ConceptDAO {
     public List<ConceptSMTK> getConceptBy(String PatternOrConceptId, Long[] Category, int pageNumber, int pageSize, boolean isModeled);
 
     public int countConceptBy(String[] Pattern, Long[] category, boolean isModeled);
+
+    public Integer countConceptBy(String[] Pattern, Long[] category, Long[] refset, boolean isModeled);
 
     public int countConceptBy(String Pattern, Long[] category, boolean isModeled);
 

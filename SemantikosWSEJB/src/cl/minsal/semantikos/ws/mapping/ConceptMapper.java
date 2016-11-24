@@ -4,6 +4,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.ws.Util;
 import cl.minsal.semantikos.ws.response.*;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class ConceptMapper {
             res.setObservation(conceptSMTK.getObservation());
 //            res.setToBeConsulted(conceptSMTK.isToBeConsulted());
 //            res.setToBeReviewed(conceptSMTK.isToBeReviewed());
-            Date validUntil = MappingUtil.toDate(conceptSMTK.getValidUntil());
+            Date validUntil = Util.toDate(conceptSMTK.getValidUntil());
             if ( validUntil != null ) {
                 res.setValidUntil(validUntil);
                 res.setValid(validUntil.after(new Date()));

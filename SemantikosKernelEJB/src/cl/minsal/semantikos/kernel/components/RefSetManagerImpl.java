@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -133,8 +134,23 @@ public class RefSetManagerImpl implements RefSetManager {
         if ( found != null && !found.isEmpty() ) {
             return found.get(0);
         }
-
         return null;
+    }
+
+    @Override
+    public List<RefSet> findRefSetsByName(List<String> refSetNames) {
+        List<RefSet> res = new ArrayList<>();
+        if ( refSetNames != null ) {
+            for ( String refSetName : refSetNames ) {
+                RefSet found = this.getRefsetByName(refSetName);
+                if ( found != null ) {
+                    res.add(found);
+                } else {
+                    throw new NoSuchElementException("RefSet no encontrado: " + refSetName);
+                }
+            }
+        }
+        return res;
     }
 
     @Override

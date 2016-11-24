@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -254,6 +255,40 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
+    public List<ConceptSMTK> getConceptBy(String[] pattern, Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber) {
+        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
+        ConnectionBD connect = new ConnectionBD();
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.find_concept_by_pattern_and_categories_and_refsets(?,?,?,?,?,?)}")) {
+
+            Array ArrayCategories = connection.createArrayOf("integer", categories);
+            System.out.println(Arrays.toString(refsets));
+            Array ArrayRefsets = connection.createArrayOf("integer", refsets);
+
+            call.setArray(1, ArrayCategories);
+            call.setArray(2, ArrayRefsets);
+            call.setArray(3, connection.createArrayOf("text", pattern));
+            call.setInt(4, pageNumber);
+            call.setInt(5, pageSize);
+            call.setBoolean(6, modeled);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                ConceptSMTK conceptSMTK = createConceptSMTKFromResultSet(rs);
+                concepts.add(conceptSMTK);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
+        return concepts;
+    }
+
+    @Override
     public List<ConceptSMTK> getConceptBy(String PatternOrConceptId, Long[] Category, int pageNumber, int pageSize, boolean isModeled) {
 
         List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
@@ -356,6 +391,39 @@ public class ConceptDAOImpl implements ConceptDAO {
             throw new EJBException(e);
         }
 
+
+        return count;
+    }
+
+    @Override
+    public Integer countConceptBy(String[] Pattern, Long[] category, Long[] refset, boolean isModeled) {
+        ConnectionBD connect = new ConnectionBD();
+        CallableStatement call;
+        int count = 0;
+
+        try (Connection connection = connect.getConnection();) {
+
+            Array ArrayPattern = connection.createArrayOf("text", Pattern);
+            call = connection.prepareCall("{call semantikos.count_concept_by_pattern_and_categories_and_refsets(?,?,?,?)}");
+            Array ArrayCategories = connection.createArrayOf("integer", category);
+            Array ArrayRefSets = connection.createArrayOf("integer", refset);
+
+            call.setArray(1, ArrayCategories);
+            call.setArray(2, ArrayRefSets);
+            call.setArray(3, ArrayPattern);
+            call.setBoolean(4, isModeled);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                count = Integer.parseInt(rs.getString("count"));
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
 
         return count;
     }
@@ -508,7 +576,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         boolean modeled;
         boolean completelyDefined;
         boolean published;
-        boolean heritable;
+        boolean heritable = false;
         String conceptId;
 
         id = Long.valueOf(resultSet.getString("id"));
@@ -519,7 +587,9 @@ public class ConceptDAOImpl implements ConceptDAO {
         modeled = resultSet.getBoolean("is_modeled");
         completelyDefined = resultSet.getBoolean("is_fully_defined");
         published = resultSet.getBoolean("is_published");
-        heritable = resultSet.getBoolean("is_inherited");
+        try {
+            heritable = resultSet.getBoolean("is_inherited");
+        } catch ( Exception ignored ) { }
         conceptId = resultSet.getString("conceptid");
         String observation = resultSet.getString("observation");
         long idTagSMTK = resultSet.getLong("id_tag_smtk");

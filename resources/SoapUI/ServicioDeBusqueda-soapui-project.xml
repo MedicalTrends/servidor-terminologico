@@ -995,20 +995,244 @@
          </peticionBuscarTermino>\r
       </ser:buscarTermino>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="58651308-657f-49ad-a462-b13f5af7cc58" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="6b0e2e01-8676-47d4-a283-7b26e7f1ab6c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="buscarTruncatePerfect TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="db306163-3e18-4032-9f3a-ef95d12607cb" name="buscarTruncatePerfect"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTruncatePerfect</con:operation><con:request name="buscarTruncatePerfect" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7e4d9c9c-d755-4288-b741-9abfca42b9c1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="58651308-657f-49ad-a462-b13f5af7cc58" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="77cd6cab-cb1c-49aa-a9f1-c295aad296ec" name="buscarTermino7"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino7" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
-      <ser:buscarTruncatePerfect>\r
+      <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>?</termino>\r
+            <termino>Sustancia B (sustancia)</termino>\r
             <!--Zero or more repetitions:-->\r
-            <nombreCategoria>?</nombreCategoria>\r
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>\r
             <!--Zero or more repetitions:-->\r
-            <nombreRefSet>?</nombreRefSet>\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="d68d5b94-60cf-4e37-bbbc-3f0a54eb8a77" name="buscarTermino8"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino8" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Sustancia B (sustancia)</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreRefSet>nuevo refset</nombreRefSet>\r
             <!--Optional:-->\r
             <numeroPagina>0</numeroPagina>\r
             <!--Optional:-->\r
             <tamanoPagina>10</tamanoPagina>\r
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="4238f148-068b-4e60-8c89-e74011378166" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="af387121-fe79-4ce9-a5b1-46ea311c01b3" name="buscarTermino9"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino9" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Sustancia B (sustancia)</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreRefSet>nuevo refset con conceptos</nombreRefSet>\r
+            <!--Optional:-->\r
+            <numeroPagina>0</numeroPagina>\r
+            <!--Optional:-->\r
+            <tamanoPagina>10</tamanoPagina>\r
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="6642cf7d-f427-4b5b-bc7c-9ffd4ed326a5" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="8260331b-3f89-4def-988a-e2408e0c97e5" name="buscarTermino10"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino10" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Sustancia B (sustancia)</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreCategoria>Fármacos - Sustancia</nombreCategoria>\r-->
+            <!--Zero or more repetitions:-->\r
+            <nombreRefSet>nuevo refset con conceptos</nombreRefSet>\r
+            <!--Optional:-->\r
+            <numeroPagina>0</numeroPagina>\r
+            <!--Optional:-->\r
+            <tamanoPagina>10</tamanoPagina>\r
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="6642cf7d-f427-4b5b-bc7c-9ffd4ed326a5" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="6b0e2e01-8676-47d4-a283-7b26e7f1ab6c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="buscarTruncatePerfect TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="db306163-3e18-4032-9f3a-ef95d12607cb" name="buscarTruncatePerfect"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTruncatePerfect</con:operation><con:request name="buscarTruncatePerfect" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7e4d9c9c-d755-4288-b741-9abfca42b9c1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTruncatePerfect>\r
+         <peticionBuscarTermino>\r
+         	  <termino>Sustancia B (sustancia)</termino>
+            <!--Zero or more repetitions:-->
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <!--Zero or more repetitions:-->
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>-->
+            <!--Optional:-->
+            <numeroPagina>0</numeroPagina>
+            <!--Optional:-->
+            <tamanoPagina>10</tamanoPagina>
+         </peticionBuscarTermino>\r
+      </ser:buscarTruncatePerfect>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="3be5a9b6-e13d-4101-a19f-ebc9897c6b41" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="a44ef9cd-364a-4c4f-937d-9152a1e6bf29" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTruncatePerfect"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="0408a36d-fce0-4703-9ae4-1c6f9406a62f" name="buscarTruncatePerfect2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTruncatePerfect</con:operation><con:request name="buscarTruncatePerfect2" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7e4d9c9c-d755-4288-b741-9abfca42b9c1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTruncatePerfect>\r
+         <peticionBuscarTermino>\r
+         	  <termino>Sustancia B (sustancia)</termino>
+            <!--Zero or more repetitions:-->
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <!--Zero or more repetitions:-->
+            <nombreRefSet>nuevo refset</nombreRefSet>
+            <nombreRefSet>nuevo refset con conceptos</nombreRefSet>
+            <nombreRefSet>nuevo refset con conceptos 4</nombreRefSet>
+            <nombreRefSet>nuevo refset con conceptos 2</nombreRefSet>
+            <nombreRefSet></nombreRefSet>
+            <!--Optional:-->
+            <numeroPagina>0</numeroPagina>
+            <!--Optional:-->
+            <tamanoPagina>10</tamanoPagina>
+         </peticionBuscarTermino>\r
+      </ser:buscarTruncatePerfect>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="3be5a9b6-e13d-4101-a19f-ebc9897c6b41" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="a44ef9cd-364a-4c4f-937d-9152a1e6bf29" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTruncatePerfect"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="c9eb2345-5fae-4a98-941b-a184f9cec172" name="buscarTruncatePerfect3"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTruncatePerfect</con:operation><con:request name="buscarTruncatePerfect3" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7e4d9c9c-d755-4288-b741-9abfca42b9c1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTruncatePerfect>\r
+         <peticionBuscarTermino>\r
+         	  <termino>Sus</termino>
+            <!--Zero or more repetitions:-->
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <!--Zero or more repetitions:-->
+            <nombreRefSet>nuevo refset</nombreRefSet>
+            <nombreRefSet>nuevo refset con conceptos</nombreRefSet>
+            <nombreRefSet>nuevo refset con conceptos 4</nombreRefSet>
+            <nombreRefSet>nuevo refset con conceptos 2</nombreRefSet>
+            <nombreRefSet></nombreRefSet>
+            <!--Optional:-->
+            <numeroPagina>0</numeroPagina>
+            <!--Optional:-->
+            <tamanoPagina>10</tamanoPagina>
+         </peticionBuscarTermino>\r
+      </ser:buscarTruncatePerfect>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="3be5a9b6-e13d-4101-a19f-ebc9897c6b41" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="a44ef9cd-364a-4c4f-937d-9152a1e6bf29" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTruncatePerfect"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="abeee736-4aed-4d6d-934f-00ebcdc314d2" name="buscarTruncatePerfect4"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTruncatePerfect</con:operation><con:request name="buscarTruncatePerfect4" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7e4d9c9c-d755-4288-b741-9abfca42b9c1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTruncatePerfect>\r
+         <peticionBuscarTermino>\r
+         	  <termino>para</termino>
+            <!--Zero or more repetitions:-->
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <!--Zero or more repetitions:-->
+            <nombreRefSet>nuevo refset</nombreRefSet>
+            <nombreRefSet>nuevo refset con conceptos</nombreRefSet>
+            <nombreRefSet>nuevo refset con conceptos 4</nombreRefSet>
+            <nombreRefSet>nuevo refset con conceptos 2</nombreRefSet>
+            <nombreRefSet></nombreRefSet>
+            <!--Optional:-->
+            <numeroPagina>0</numeroPagina>
+            <!--Optional:-->
+            <tamanoPagina>10</tamanoPagina>
+         </peticionBuscarTermino>\r
+      </ser:buscarTruncatePerfect>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="3be5a9b6-e13d-4101-a19f-ebc9897c6b41" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="a44ef9cd-364a-4c4f-937d-9152a1e6bf29" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTruncatePerfect"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="978eb450-709e-4482-be9e-e79bb12891ef" name="buscarTruncatePerfect5"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTruncatePerfect</con:operation><con:request name="buscarTruncatePerfect5" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7e4d9c9c-d755-4288-b741-9abfca42b9c1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTruncatePerfect>\r
+         <peticionBuscarTermino>\r
+         	  <termino>para</termino>
+            <!--Zero or more repetitions:-->
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <!--Zero or more repetitions:-->
+            <nombreRefSet>nuevo refset</nombreRefSet>
+            <nombreRefSet>nuevo refset con conceptos</nombreRefSet>
+            <nombreRefSet>nuevo refset con conceptos 4</nombreRefSet>
+            <nombreRefSet>nuevo refset con conceptos 2</nombreRefSet>
+            <nombreRefSet></nombreRefSet>
+            <!--Optional:-->
+            <numeroPagina>0</numeroPagina>
+            <!--Optional:-->
+            <tamanoPagina>10</tamanoPagina>
+         </peticionBuscarTermino>\r
+      </ser:buscarTruncatePerfect>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="3be5a9b6-e13d-4101-a19f-ebc9897c6b41" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="a44ef9cd-364a-4c4f-937d-9152a1e6bf29" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTruncatePerfect"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="d269bb43-0a1d-4bd9-8cfe-965fc0cb2a63" name="buscarTruncatePerfect6"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTruncatePerfect</con:operation><con:request name="buscarTruncatePerfect6" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7e4d9c9c-d755-4288-b741-9abfca42b9c1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTruncatePerfect>\r
+         <peticionBuscarTermino>\r
+         	  <termino>para</termino>
+            <!--Zero or more repetitions:-->
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <!--Zero or more repetitions:-->
+            <nombreRefSet>nuevo refset con conceptos</nombreRefSet>
+            <!--Optional:-->
+            <numeroPagina>0</numeroPagina>
+            <!--Optional:-->
+            <tamanoPagina>10</tamanoPagina>
+         </peticionBuscarTermino>\r
+      </ser:buscarTruncatePerfect>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="3be5a9b6-e13d-4101-a19f-ebc9897c6b41" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="a44ef9cd-364a-4c4f-937d-9152a1e6bf29" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTruncatePerfect"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="62cf84d9-16af-4a68-b6cb-90ff5b6552f0" name="buscarTruncatePerfect7"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTruncatePerfect</con:operation><con:request name="buscarTruncatePerfect7" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7e4d9c9c-d755-4288-b741-9abfca42b9c1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTruncatePerfect>\r
+         <peticionBuscarTermino>\r
+         	  <termino>para</termino>
+            <!--Zero or more repetitions:-->
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <!--Zero or more repetitions:-->
+            <nombreRefSet>nuevo refset</nombreRefSet>
+            <!--Optional:-->
+            <numeroPagina>0</numeroPagina>
+            <!--Optional:-->
+            <tamanoPagina>10</tamanoPagina>
+         </peticionBuscarTermino>\r
+      </ser:buscarTruncatePerfect>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="3be5a9b6-e13d-4101-a19f-ebc9897c6b41" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="15e859c6-ad46-4ae7-a156-25063174e8ca" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTruncatePerfect"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="273f4284-4a2d-4d5c-8f2b-b7b00a5da925" name="buscarTruncatePerfect8"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTruncatePerfect</con:operation><con:request name="buscarTruncatePerfect8" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7e4d9c9c-d755-4288-b741-9abfca42b9c1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTruncatePerfect>\r
+         <peticionBuscarTermino>\r
+         	  <termino>Sustancia B (sustancia)</termino>
+            <!--Zero or more repetitions:-->
+            <!--<nombreCategoria>Fármacos - Sustancia</nombreCategoria>-->
+            <!--Zero or more repetitions:-->
+            <nombreRefSet>nuevo refset con conceptos</nombreRefSet>
+            <!--Optional:-->
+            <numeroPagina>0</numeroPagina>
+            <!--Optional:-->
+            <tamanoPagina>10</tamanoPagina>
          </peticionBuscarTermino>\r
       </ser:buscarTruncatePerfect>\r
    </soapenv:Body>\r

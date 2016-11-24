@@ -21,6 +21,20 @@ public class CategoryController {
     @EJB
     private CategoryManager categoryManager;
 
+    public List<Category> findCategories(List<String> categoriesNames) throws NotFoundFault {
+        List<Category> categories;
+        if ( categoriesNames != null && !categoriesNames.isEmpty() ) {
+            try {
+                categories = this.categoryManager.findCategories(categoriesNames);
+            } catch (Exception e) {
+                throw new NotFoundFault(e.getMessage());
+            }
+        } else {
+            categories = this.categoryManager.getCategories();
+        }
+        return categories;
+    }
+
     public List<CategoryResponse> categoryList() throws NotFoundFault {
         List<CategoryResponse> res = new ArrayList<>();
         List<Category> categories = this.categoryManager.getCategories();

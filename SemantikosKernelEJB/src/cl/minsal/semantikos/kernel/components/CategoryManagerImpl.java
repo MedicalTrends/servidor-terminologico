@@ -22,6 +22,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * @author Andrés Farías on 27-05-16.
@@ -114,4 +115,21 @@ public class CategoryManagerImpl implements CategoryManager {
     public List<Category> getRelatedCategories(Category category) {
         return categoryDAO.getRelatedCategories(category);
     }
+
+    @Override
+    public List<Category> findCategories(List<String> categoriesNames) {
+        List<Category> res = new ArrayList<>();
+
+        for ( String categoryName : categoriesNames ) {
+            Category found = this.getCategoryByName(categoryName);
+            if ( found != null ) {
+                res.add(found);
+            } else {
+                throw new NoSuchElementException("Categoria no encontrada: " + categoryName);
+            }
+        }
+
+        return res;
+    }
+
 }

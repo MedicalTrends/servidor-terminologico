@@ -151,6 +151,20 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    public List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int pageNumber, int pageSize) {
+        boolean isModeled = true;
+        //TODO: Actualizar esto de los estados que ya no va.
+
+        categories = (categories == null) ? new Long[0] : categories;
+        refsets = (refsets == null) ? new Long[0] : refsets;
+
+        pattern = standardizationPattern(pattern);
+        String[] arrayPattern = patternToArray(pattern);
+
+        return conceptDAO.getConceptBy(arrayPattern, categories, refsets, isModeled, pageSize, pageNumber);
+    }
+
+    @Override
     public List<ConceptSMTK> findConceptBy(String pattern) {
 
         /* Se realiza la búsqueda estándard */
@@ -219,6 +233,20 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public Integer countModeledConceptsBy(RefSet refSet) {
         return this.conceptDAO.countModeledConceptsBy(refSet);
+    }
+
+    @Override
+    public Integer countConceptBy(String pattern, Long[] categories, Long[] refsets) {
+        boolean isModeled = true;
+        //TODO: Actualizar esto de los estados que ya no va.
+
+        categories = (categories == null) ? new Long[0] : categories;
+        refsets = (refsets == null) ? new Long[0] : refsets;
+
+        pattern = standardizationPattern(pattern);
+        String[] arrayPattern = patternToArray(pattern);
+
+        return this.conceptDAO.countConceptBy(arrayPattern, categories, refsets, isModeled);
     }
 
     @Override
