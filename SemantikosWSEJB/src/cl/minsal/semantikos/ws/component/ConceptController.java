@@ -57,8 +57,6 @@ public class ConceptController {
         } else {
             categories = this.categoryManager.getCategories();
         }
-        System.out.println("Categories:");
-        System.out.println(categories);
 
         List<RefSet> refSets = new ArrayList<>();
         if ( refSetsNames != null ) {
@@ -71,18 +69,14 @@ public class ConceptController {
         } else {
             refSets = this.refSetManager.getAllRefSets();
         }
-        System.out.println("RefSets:");
-        System.out.println(refSets);
 
         TermSearchResponse response = new TermSearchResponse();
 
         List<ConceptResponse> conceptResponses = new ArrayList<>();
         List<Description> descriptions = this.descriptionManager.searchDescriptionsByTerm(term, categories, refSets);
         if ( descriptions != null ) {
-            System.out.println(descriptions);
             List<ConceptSMTK> conceptSMTKS = new ArrayList<>(descriptions.size());
             for ( Description description : descriptions ) {
-                System.out.println(description);
                 if ( !conceptSMTKS.contains(description.getConceptSMTK()) ) {
                     conceptSMTKS.add(description.getConceptSMTK());
                 }
@@ -97,6 +91,10 @@ public class ConceptController {
             }
         }
         response.setConcepts(conceptResponses);
+
+        if ( conceptResponses.isEmpty() ) {
+            throw new NotFoundFault("Termino no encontrado");
+        }
 
         return response;
     }

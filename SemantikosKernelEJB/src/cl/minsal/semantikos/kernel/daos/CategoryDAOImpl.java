@@ -74,9 +74,11 @@ public class CategoryDAOImpl implements CategoryDAO {
         }
 
         Category category = getCategoryByNameFromDB(name);
-        categoryMap.put(category.getId(), category);
-        List<RelationshipDefinition> categoryMetaData = getCategoryMetaData(category.getId());
-        category.setRelationshipDefinitions(categoryMetaData);
+        if ( category != null ) {
+            categoryMap.put(category.getId(), category);
+            List<RelationshipDefinition> categoryMetaData = getCategoryMetaData(category.getId());
+            category.setRelationshipDefinitions(categoryMetaData);
+        }
 
         return category;
     }
@@ -130,7 +132,7 @@ public class CategoryDAOImpl implements CategoryDAO {
             if (rs.next()) {
                 category = createCategoryFromResultSet(rs);
             } else {
-                throw new EJBException("Error en la llamada");
+                return null;
             }
             rs.close();
         } catch (SQLException e) {

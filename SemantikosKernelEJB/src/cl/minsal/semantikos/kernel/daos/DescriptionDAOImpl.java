@@ -415,13 +415,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             Category[] entities = categories.toArray(new Category[categories.size()]);
             RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
             call.setArray(2, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
-            Long[] par = convertListPersistentToListID(refsetEntities);
-            System.out.println("par:");
-            for ( Long l : par ) {
-                System.out.print(l + ", ");
-            }
-            System.out.println();
-            call.setArray(3, connection.createArrayOf("bigint", par));
+            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
             call.execute();
 
             logger.debug("Búsqueda exacta descripciones con término =" + term);
