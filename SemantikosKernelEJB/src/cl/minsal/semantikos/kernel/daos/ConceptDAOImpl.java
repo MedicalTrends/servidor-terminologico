@@ -270,7 +270,6 @@ public class ConceptDAOImpl implements ConceptDAO {
              CallableStatement call = connection.prepareCall("{call semantikos.find_concept_by_pattern_and_categories_and_refsets(?,?,?,?,?,?)}")) {
 
             Array ArrayCategories = connection.createArrayOf("integer", categories);
-            System.out.println(Arrays.toString(refsets));
             Array ArrayRefsets = connection.createArrayOf("integer", refsets);
 
             call.setArray(1, ArrayCategories);

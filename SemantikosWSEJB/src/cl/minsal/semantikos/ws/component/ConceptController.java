@@ -91,7 +91,6 @@ public class ConceptController {
 
         Long[] categoriesArray = Util.getIdArray(categories);
         Long[] refSetsArray = Util.getIdArray(refSets);
-        System.out.println(Arrays.toString(refSetsArray));
         List<ConceptSMTK> conceptSMTKS = this.conceptManager.findConceptTruncatePerfect(term, categoriesArray, refSetsArray, pageNumber, pageSize);
         List<ConceptResponse> conceptResponses = new ArrayList<>();
 
@@ -119,6 +118,17 @@ public class ConceptController {
     public ConceptResponse conceptByDescriptionId(String descriptionId)
         throws NotFoundFault {
         ConceptSMTK conceptSMTK = this.conceptManager.getConceptByDescriptionID(descriptionId);
+        ConceptResponse res = this.getResponse(conceptSMTK);
+        this.loadDescriptions(res, conceptSMTK);
+        this.loadAttributes(res, conceptSMTK);
+        this.loadRelationships(res, conceptSMTK);
+        this.loadCategory(res, conceptSMTK);
+        this.loadRefSets(res, conceptSMTK);
+        return res;
+    }
+
+    public ConceptResponse conceptById(String conceptId) throws NotFoundFault {
+        ConceptSMTK conceptSMTK = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
         ConceptResponse res = this.getResponse(conceptSMTK);
         this.loadDescriptions(res, conceptSMTK);
         this.loadAttributes(res, conceptSMTK);
