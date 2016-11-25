@@ -42,6 +42,43 @@ public class ConceptController {
     @EJB
     private RefSetController refSetController;
 
+    public RelatedConceptsResponse findRelated(String conceptId, String descriptionId, String categoryName) throws NotFoundFault {
+        RelatedConceptsResponse res = new RelatedConceptsResponse();
+
+        ConceptSMTK source = null;
+        if ( conceptId != null ) {
+            source = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
+        } else if ( descriptionId != null ) {
+            source = this.conceptManager.getConceptByDescriptionID(descriptionId);
+        }
+
+        if ( source != null ) {
+            ConceptResponse conceptResponse = this.getResponse(source);
+            this.loadDescriptions(conceptResponse, source);
+            this.loadAttributes(conceptResponse, source);
+            this.loadRelationships(conceptResponse, source);
+            this.loadCategory(conceptResponse, source);
+//            this.loadRefSets(conceptResponse, source);
+            res.setSearchedConcept(conceptResponse);
+        }
+
+        List<ConceptSMTK> relateds = this.conceptManager.getRelatedConcepts(source);
+        List<ConceptResponse> relatedResponses = new ArrayList<>();
+        if ( relateds != null ) {
+            for ( ConceptSMTK related : relateds ) {
+                ConceptResponse relatedResponse = this.getResponse(related);
+                this.loadDescriptions(relatedResponse, related);
+                this.loadAttributes(relatedResponse, related);
+//                this.loadRelationships(relatedResponse, related);
+                this.loadCategory(relatedResponse, related);
+                relatedResponses.add(relatedResponse);
+            }
+        }
+        res.setRelatedConcepts(relatedResponses);
+
+        return res;
+    }
+
     public TermSearchResponse searchTerm(
             String term,
             List<String> categoriesNames,

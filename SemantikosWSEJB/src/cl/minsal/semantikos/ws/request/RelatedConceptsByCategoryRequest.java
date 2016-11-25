@@ -16,6 +16,8 @@ public class RelatedConceptsByCategoryRequest implements Serializable {
     private String conceptId;
     @XmlElement(required = false, name = "idDescripcion")
     private String descriptionId;
+    @XmlElement(required = true, name = "categoriaRelacion")
+    private String relatedCategoryName;
 
     public String getConceptId() {
         return conceptId;
@@ -32,4 +34,13 @@ public class RelatedConceptsByCategoryRequest implements Serializable {
     public void setDescriptionId(String descriptionId) {
         this.descriptionId = descriptionId;
     }
+
+    public String getRelatedCategoryName() {
+        return relatedCategoryName;
+    }
+
+    public void setRelatedCategoryName(String relatedCategoryName) {
+        this.relatedCategoryName = relatedCategoryName;
+    }
+
 }

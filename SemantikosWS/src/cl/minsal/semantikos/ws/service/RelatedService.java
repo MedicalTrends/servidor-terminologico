@@ -1,12 +1,15 @@
 package cl.minsal.semantikos.ws.service;
 
+import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
+import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.request.DescriptionsSuggestionsRequest;
 import cl.minsal.semantikos.ws.request.RelatedConceptsByCategoryRequest;
 import cl.minsal.semantikos.ws.request.RelatedConceptsRequest;
 import cl.minsal.semantikos.ws.response.RelatedConceptsResponse;
 import cl.minsal.semantikos.ws.response.TermSearchResponse;
 
+import javax.ejb.EJB;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -20,6 +23,9 @@ import java.util.List;
  */
 @WebService(serviceName = "ServicioDeRelacionados")
 public class RelatedService {
+
+    @EJB
+    private ConceptController conceptController;
 
     // REQ-WS-006
     @WebResult(name = "respuestaBuscarTermino")
@@ -42,15 +48,15 @@ public class RelatedService {
     @WebMethod(operationName = "conceptosRelacionados")
     public RelatedConceptsResponse conceptosRelacionados(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
-    ) throws IllegalInputFault {
+            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
+                    RelatedConceptsByCategoryRequest request
+    ) throws IllegalInputFault, NotFoundFault {
         if ( (request.getConceptId() == null || "".equals(request.getConceptId()) )
-                && (request.getConceptId() == null || "".equals(request.getDescriptionId())) ) {
+                && (request.getDescriptionId() == null || "".equals(request.getDescriptionId())) ) {
             throw new IllegalInputFault("Debe ingresar un idConcepto o idDescripcion");
         }
         // TODO
-        return null;
+        return this.conceptController.findRelated(request.getConceptId(), request.getDescriptionId(), request.getRelatedCategoryName());
     }
 
     // REQ-WS-010...021 Lite
@@ -58,11 +64,11 @@ public class RelatedService {
     @WebMethod(operationName = "conceptosRelacionadosLite")
     public RelatedConceptsResponse conceptosRelacionadosLite(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
+                    RelatedConceptsByCategoryRequest request
     ) throws IllegalInputFault {
         if ( (request.getConceptId() == null || "".equals(request.getConceptId()) )
-                && (request.getConceptId() == null || "".equals(request.getDescriptionId())) ) {
+                && (request.getDescriptionId() == null || "".equals(request.getDescriptionId())) ) {
             throw new IllegalInputFault("Debe ingresar un idConcepto o idDescripcion");
         }
         // TODO
@@ -75,8 +81,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerMedicamentoClinico")
     public RelatedConceptsResponse obtenerMedicamentoClinico(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -88,8 +94,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerMedicamentoClinicoLite")
     public RelatedConceptsResponse obtenerMedicamentoClinicoLite(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -100,8 +106,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerMedicamentoClinicoPorMedicamentoBasico")
     public RelatedConceptsResponse obtenerMedicamentoClinicoPorMedicamentoBasico(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -112,8 +118,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerMedicamentoClinicoPorMedicamentoBasicoLite")
     public RelatedConceptsResponse obtenerMedicamentoClinicoPorMedicamentoBasicoLite(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -124,8 +130,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerMedicamentoClinicoPorProductoComercial")
     public RelatedConceptsResponse obtenerMedicamentoClinicoPorProductoComercial(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -136,8 +142,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerMedicamentoClinicoPorProductoComercialLite")
     public RelatedConceptsResponse obtenerMedicamentoClinicoPorProductoComercialLite(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -148,8 +154,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerMedicamentoBasico")
     public RelatedConceptsResponse obtenerMedicamentoBasico(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -160,8 +166,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerMedicamentoBasicoLite")
     public RelatedConceptsResponse obtenerMedicamentoBasicoLite(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -172,8 +178,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerMedicamentoBasicoPorMedicamentoClinico")
     public RelatedConceptsResponse obtenerMedicamentoBasicoPorMedicamentoClinico(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -184,8 +190,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerMedicamentoBasicoPorMedicamentoClinicoLite")
     public RelatedConceptsResponse obtenerMedicamentoBasicoPorMedicamentoClinicoLite(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -197,8 +203,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerProductoComercial")
     public RelatedConceptsResponse obtenerProductoComercial(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -210,8 +216,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerProductoComercialLite")
     public RelatedConceptsResponse obtenerProductoComercialLite(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -222,8 +228,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerProductoComercialPorMedicamentoClinico")
     public RelatedConceptsResponse obtenerProductoComercialPorMedicamentoClinico(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -234,8 +240,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerProductoComercialPorMedicamentoClinicoLite")
     public RelatedConceptsResponse obtenerProductoComercialPorMedicamentoClinicoLite(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -246,8 +252,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerProductoComercialPorFamiliaProducto")
     public RelatedConceptsResponse obtenerProductoComercialPorFamiliaProducto(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -258,8 +264,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerProductoComercialPorFamiliaProductoLite")
     public RelatedConceptsResponse obtenerProductoComercialPorFamiliaProductoLite(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -270,8 +276,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerMedicamentoClinicoConEnvase")
     public RelatedConceptsResponse obtenerMedicamentoClinicoConEnvase(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -282,8 +288,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerMedicamentoClinicoConEnvaseLite")
     public RelatedConceptsResponse obtenerMedicamentoClinicoConEnvaseLite(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -294,8 +300,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerMedicamentoClinicoConEnvasePorMedicamentoClinico")
     public RelatedConceptsResponse obtenerMedicamentoClinicoConEnvasePorMedicamentoClinico(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -306,8 +312,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerMedicamentoClinicoConEnvasePorMedicamentoClinicoLite")
     public RelatedConceptsResponse obtenerMedicamentoClinicoConEnvasePorMedicamentoClinicoLite(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -318,8 +324,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerProductoComercialConEnvase")
     public RelatedConceptsResponse obtenerProductoComercialConEnvase(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -330,8 +336,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerProductoComercialConEnvaseLite")
     public RelatedConceptsResponse obtenerProductoComercialConEnvaseLite(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -342,8 +348,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvase")
     public RelatedConceptsResponse obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvase(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -354,8 +360,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvaseLite")
     public RelatedConceptsResponse obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvaseLite(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -366,8 +372,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerFamiliaProducto")
     public RelatedConceptsResponse obtenerFamiliaProducto(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -378,8 +384,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerFamiliaProductoPorGrupoFamiliaProducto")
     public RelatedConceptsResponse obtenerFamiliaProductoPorGrupoFamiliaProducto(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -390,8 +396,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerProductoClinicoConEnvase")
     public RelatedConceptsResponse obtenerProductoClinicoConEnvase(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -402,8 +408,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerProductoClinicoConEnvaseLite")
     public RelatedConceptsResponse obtenerProductoClinicoConEnvaseLite(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -414,8 +420,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerProductoClinicoConEnvasePorProductoComercial")
     public RelatedConceptsResponse obtenerProductoClinicoConEnvasePorProductoComercial(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -426,8 +432,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerProductoClinicoConEnvasePorProductoComercialLite")
     public RelatedConceptsResponse obtenerProductoClinicoConEnvasePorProductoComercialLite(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -438,8 +444,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerSustancia")
     public RelatedConceptsResponse obtenerSustancia(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -450,8 +456,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerSustanciaPorMedicamentoBasico")
     public RelatedConceptsResponse obtenerSustanciaPorMedicamentoBasico(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         // TODO
         return null;
@@ -462,8 +468,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerRegistroISP")
     public RelatedConceptsResponse obtenerRegistroISP(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         return null;
     }
@@ -473,8 +479,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerRegistroISPPorProductoComercial")
     public RelatedConceptsResponse obtenerRegistroISPPorProductoComercial(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         return null;
     }
@@ -484,8 +490,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerBioequivalentes")
     public RelatedConceptsResponse obtenerBioequivalentes(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         return null;
     }
@@ -495,8 +501,8 @@ public class RelatedService {
     @WebMethod(operationName = "obtenerBioequivalentesPorProductoComercial")
     public RelatedConceptsResponse obtenerBioequivalentesPorProductoComercial(
             @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            @WebParam(name = "peticionConceptosRelacionados")
+                    RelatedConceptsRequest request
     ) throws IllegalInputFault {
         return null;
     }
