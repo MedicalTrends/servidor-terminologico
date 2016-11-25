@@ -2,6 +2,7 @@ package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.DescriptionType;
 import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.ws.Util;
@@ -53,6 +54,20 @@ public class ConceptMapper {
         return null;
     }
 
+    private static List<DescriptionResponse> getPreferredDescriptions(ConceptSMTK conceptSMTK) {
+        if ( conceptSMTK != null && conceptSMTK.getDescriptions() != null ) {
+            List<DescriptionResponse> descriptions = new ArrayList<>(conceptSMTK.getDescriptions().size());
+            for ( Description description : conceptSMTK.getDescriptions() ) {
+                if ( DescriptionType.PREFERIDA.equals(description.getDescriptionType()) ) {
+                    descriptions.add(DescriptionMapper.map(description));
+                }
+            }
+            Collections.sort(descriptions);
+            return descriptions;
+        }
+        return null;
+    }
+
     public static ConceptResponse appendDescriptions(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
         if ( conceptResponse != null ) {
             conceptResponse.setDescriptions(getDescriptions(conceptSMTK));
@@ -60,16 +75,23 @@ public class ConceptMapper {
         return conceptResponse;
     }
 
+    public static ConceptResponse appendPreferredDescriptions(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
+        if ( conceptResponse != null ) {
+            conceptResponse.setDescriptions(getPreferredDescriptions(conceptSMTK));
+        }
+        return conceptResponse;
+    }
+
     public static List<AttributeResponse> getAttributes(ConceptSMTK conceptSMTK) {
         if ( conceptSMTK != null ) {
-            List<Relationship> attributes = conceptSMTK.getRelationshipsBasicType();
-            if ( attributes != null ) {
-                List<AttributeResponse> attributeResponses = new ArrayList<>(attributes.size());
-                for ( Relationship relationship : attributes ) {
+            List<AttributeResponse> attributeResponses = new ArrayList<>();
+            List<Relationship> basicRelationships = conceptSMTK.getRelationshipsBasicType();
+            if ( basicRelationships != null ) {
+                for ( Relationship relationship : basicRelationships ) {
                     attributeResponses.add(AttributeMapper.map(relationship));
                 }
-                return attributeResponses;
             }
+            return attributeResponses;
         }
         return null;
     }

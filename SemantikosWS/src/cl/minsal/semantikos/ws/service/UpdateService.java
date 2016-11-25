@@ -6,6 +6,7 @@ import cl.minsal.semantikos.ws.response.NewTermResponse;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlElement;
 
@@ -19,6 +20,7 @@ import javax.xml.bind.annotation.XmlElement;
 public class UpdateService {
 
     // REQ-WS-003
+    @WebResult(name = "respuestaCodificacionDeNuevoTermino")
     @WebMethod
     public NewTermResponse codificacionDeNuevoTermino(
             @XmlElement(required = true)
@@ -30,6 +32,7 @@ public class UpdateService {
     }
 
     // REQ-WS-030
+    @WebResult(name = "descripcion")
     @WebMethod
     public DescriptionResponse incrementarContadorDescripcionConsumida(
             @XmlElement(required = true)

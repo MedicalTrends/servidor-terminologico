@@ -16,6 +16,8 @@ public class RefSetResponse implements Serializable {
 
     @XmlElement(name="nombre")
     private String name;
+    @XmlElement(name="valido")
+    private Boolean isValid;
     @XmlElement(name="validoHasta")
     private Date validityUntil;
     @XmlElement(name="creadoEn")
@@ -40,6 +42,14 @@ public class RefSetResponse implements Serializable {
 
     public void setInstitution(String institution) {
         this.institution = institution;
+    }
+
+    public Boolean getValid() {
+        return isValid;
+    }
+
+    public void setValid(Boolean valid) {
+        isValid = valid;
     }
 
     public Date getValidityUntil() {

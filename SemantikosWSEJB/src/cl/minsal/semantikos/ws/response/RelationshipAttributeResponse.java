@@ -18,6 +18,12 @@ public class RelationshipAttributeResponse implements Serializable {
     private RelationshipAttributeDefinitionResponse relationshipAttributeDefinition;
     @XmlElement(name="relacion")
     private RelationshipResponse relationship;
+    @XmlElement(name="tipo")
+    private String type;
+    @XmlElement(name="nombre")
+    private String name;
+    @XmlElement(name="valor")
+    private String value;
 
     public TargetResponse getTarget() {
         return target;
@@ -41,5 +47,29 @@ public class RelationshipAttributeResponse implements Serializable {
 
     public void setRelationship(RelationshipResponse relationship) {
         this.relationship = relationship;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

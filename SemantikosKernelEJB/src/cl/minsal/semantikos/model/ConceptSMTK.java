@@ -274,7 +274,9 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public List<Relationship> getRelationshipsBasicType() {
         List<Relationship> snomedRelationships = new ArrayList<>();
         for (Relationship relationship : relationships) {
-            if (relationship.getRelationshipDefinition().getTargetDefinition().isBasicType()) {
+            if (relationship.getRelationshipDefinition() != null
+                    && relationship.getRelationshipDefinition().getTargetDefinition() != null
+                    && relationship.getRelationshipDefinition().getTargetDefinition().isBasicType()) {
                 snomedRelationships.add(relationship);
             }
         }

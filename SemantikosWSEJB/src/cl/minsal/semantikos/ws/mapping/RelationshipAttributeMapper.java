@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.ws.mapping;
 
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.ws.response.RelationshipAttributeResponse;
 
@@ -12,9 +13,20 @@ public class RelationshipAttributeMapper {
     public static RelationshipAttributeResponse map(RelationshipAttribute relationshipAttribute) {
         if ( relationshipAttribute != null ) {
             RelationshipAttributeResponse res = new RelationshipAttributeResponse();
-            res.setTarget(TargetMapper.map(relationshipAttribute.getTarget()));
-            res.setRelationshipAttributeDefinition(RelationshipAttributeDefinitionMapper.map(relationshipAttribute.getRelationAttributeDefinition()));
-            res.setRelationship(RelationshipMapper.map(relationshipAttribute.getRelationship()));
+
+            if ( relationshipAttribute.getTarget() != null
+                    && relationshipAttribute.getTarget() instanceof BasicTypeValue) {
+//                res.setType(String.valueOf(relationshipAttribute.getTarget().getTargetType()));
+                res.setValue(String.valueOf(((BasicTypeValue) relationshipAttribute.getTarget()).getValue()));
+                if ( relationshipAttribute.getRelationAttributeDefinition() != null ) {
+                    res.setName(relationshipAttribute.getRelationAttributeDefinition().getName());
+                }
+            } else {
+                res.setTarget(TargetMapper.map(relationshipAttribute.getTarget()));
+                res.setRelationshipAttributeDefinition(RelationshipAttributeDefinitionMapper.map(relationshipAttribute.getRelationAttributeDefinition()));
+                res.setRelationship(RelationshipMapper.map(relationshipAttribute.getRelationship()));
+            }
+
             return res;
         }
 

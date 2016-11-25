@@ -14,8 +14,8 @@ import java.util.Map;
 @XmlType(name = "Objetivo", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class TargetResponse implements Serializable {
 
-    @XmlElement(name="tipoObjetivo")
-    private TargetTypeResponse targetTypeResponse;
+    @XmlElement(name="tipo")
+    private String type;
     @XmlElement(name="activo")
     private Boolean isActive;
     @XmlElement(name="idModulo")
@@ -37,12 +37,12 @@ public class TargetResponse implements Serializable {
     @XmlElement(name="campos")
     private Map<String,String> fields;
 
-    public TargetTypeResponse getTargetTypeResponse() {
-        return targetTypeResponse;
+    public String getType() {
+        return type;
     }
 
-    public void setTargetTypeResponse(TargetTypeResponse targetTypeResponse) {
-        this.targetTypeResponse = targetTypeResponse;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Boolean getActive() {

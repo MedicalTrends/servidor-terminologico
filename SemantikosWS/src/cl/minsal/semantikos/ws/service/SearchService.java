@@ -11,6 +11,7 @@ import cl.minsal.semantikos.ws.response.*;
 import javax.ejb.EJB;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
@@ -30,6 +31,7 @@ public class SearchService {
     private RefSetController refSetController;
 
     // REQ-WS-001
+    @WebResult(name = "respuestaBuscarTermino")
     @WebMethod(operationName = "buscarTermino")
     public TermSearchResponse buscarTermino(
         @XmlElement(required = true)
@@ -47,6 +49,7 @@ public class SearchService {
     }
 
     // REQ-WS-002
+    @WebResult(name = "respuestaConceptosPorCategoria")
     @WebMethod(operationName = "conceptosPorCategoria")
     public ConceptsByCategoryResponse conceptosPorCategoria(
             @XmlElement(required = true)
@@ -56,12 +59,14 @@ public class SearchService {
         return this.conceptController.conceptsByCategory(request.getCategoryName(), request.getPageNumber(), request.getPageSize());
     }
 
+    @WebResult(name = "categoria")
     @WebMethod(operationName = "listaCategorias")
     public List<CategoryResponse> listaCategorias() throws NotFoundFault {
         return this.categoryController.categoryList();
     }
 
     // REQ-WS-004
+    @WebResult(name = "respuestaBuscarTermino")
     @WebMethod(operationName = "buscarTruncatePerfect")
     public TermSearchResponse buscarTruncatePerfect(
             @XmlElement(required = true)
@@ -79,6 +84,7 @@ public class SearchService {
     }
 
     // REQ-WS-005
+    @WebResult(name = "respuestaBuscarTermino")
     @WebMethod(operationName = "obtenerTerminosPedibles")
     public TermSearchResponse obtenerTerminosPedibles(
             @XmlElement(required = true)
@@ -95,6 +101,7 @@ public class SearchService {
 
     // REQ-WS-007
     // REQ-WS-009
+    @WebResult(name = "respuestaRefSetsPorIdDescripcion")
     @WebMethod(operationName = "refSetsPorIdDescripcion")
     public RefSetsByDescriptionIdResponse refSetsPorIdDescripcion(
             @XmlElement(required = true)
@@ -106,6 +113,7 @@ public class SearchService {
     }
 
     // REQ-WS-008
+    @WebResult(name = "refSet")
     @WebMethod(operationName = "listaRefSet")
     public List<RefSetResponse> listaRefSet(
             @XmlElement(required = false, defaultValue = "true")
@@ -116,6 +124,7 @@ public class SearchService {
     }
 
     // REQ-WS-022
+    @WebResult(name = "respuestaConceptosPorRefSet")
     @WebMethod(operationName = "descripcionesPreferidasPorRefSet")
     public ConceptsByRefsetResponse descripcionesPreferidasPorRefSet(
             @XmlElement(required = true)
@@ -126,6 +135,7 @@ public class SearchService {
     }
 
     // REQ-WS-023
+    @WebResult(name = "respuestaConceptosPorRefSet")
     @WebMethod(operationName = "conceptosPorRefSet")
     public ConceptsByRefsetResponse conceptosPorRefSet(
             @XmlElement(required = true)
@@ -136,6 +146,7 @@ public class SearchService {
     }
 
     // REQ-WS-028
+    @WebResult(name = "concepto")
     @WebMethod(operationName = "conceptoPorIdDescripcion")
     public ConceptResponse conceptoPorIdDescripcion(
             @XmlElement(required = true)
@@ -145,7 +156,7 @@ public class SearchService {
         return this.conceptController.conceptByDescriptionId(descriptionId);
     }
 
-
+    @WebResult(name = "concepto")
     @WebMethod(operationName = "conceptoPorId")
     public ConceptResponse conceptoPorId(
             @XmlElement(required = true)

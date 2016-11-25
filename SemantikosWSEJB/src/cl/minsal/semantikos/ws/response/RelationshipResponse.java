@@ -13,10 +13,10 @@ import java.util.List;
 @XmlType(name = "Relacion", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class RelationshipResponse implements Serializable {
 
-    @XmlElement(name = "definicion")
-    private RelationshipDefinitionResponse relationshipDefinition;
     @XmlElement(name = "objetivo")
     private TargetResponse target;
+    @XmlElement(name = "definicion")
+    private RelationshipDefinitionResponse relationshipDefinition;
     @XmlElement(name = "concepto")
     private ConceptResponse concept;
     @XmlElementWrapper(name = "atributos")

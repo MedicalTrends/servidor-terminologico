@@ -22,9 +22,9 @@ public class AttributeMapper {
                 if ( btv.getValue() != null ) {
                     res.setValue(String.valueOf(btv.getValue()));
                 }
-                if (  btv.getTargetType() != null ) {
-                    res.setType(btv.getTargetType().toString());
-                }
+//                if (  btv.getTargetType() != null ) {
+//                    res.setType(btv.getTargetType().toString());
+//                }
             }
             return res;
         }

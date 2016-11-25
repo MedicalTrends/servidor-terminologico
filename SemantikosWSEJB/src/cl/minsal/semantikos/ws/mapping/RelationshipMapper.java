@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.ws.mapping;
 
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.ws.response.RelationshipAttributeResponse;
@@ -17,8 +18,13 @@ public class RelationshipMapper {
     public static RelationshipResponse map(Relationship relationship) {
         if ( relationship != null ) {
             RelationshipResponse res = new RelationshipResponse();
-            res.setRelationshipDefinition(RelationshipDefinitionMapper.map(relationship.getRelationshipDefinition()));
+
             res.setTarget(TargetMapper.map(relationship.getTarget()));
+
+            if ( !(relationship.getTarget() instanceof ConceptSMTK) ) {
+                res.setRelationshipDefinition(RelationshipDefinitionMapper.map(relationship.getRelationshipDefinition()));
+            }
+
             if ( relationship.getRelationshipAttributes() != null ) {
                 List<RelationshipAttributeResponse> relationshipAttributeResponses = new ArrayList<>(relationship.getRelationshipAttributes().size());
                 for ( RelationshipAttribute ra : relationship.getRelationshipAttributes() ) {
@@ -26,6 +32,7 @@ public class RelationshipMapper {
                 }
                 res.setRelationshipAttribute(relationshipAttributeResponses);
             }
+
             return res;
         }
         return null;

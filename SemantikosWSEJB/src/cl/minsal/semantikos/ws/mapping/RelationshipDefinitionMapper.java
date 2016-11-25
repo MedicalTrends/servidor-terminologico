@@ -16,6 +16,7 @@ public class RelationshipDefinitionMapper {
 
     public static RelationshipDefinitionResponse map(RelationshipDefinition relationshipDefinition) {
         if ( relationshipDefinition != null ) {
+
             RelationshipDefinitionResponse res = new RelationshipDefinitionResponse();
             res.setName(relationshipDefinition.getName());
             res.setDescription(relationshipDefinition.getDescription());
@@ -28,6 +29,7 @@ public class RelationshipDefinitionMapper {
                 }
                 res.setRelationshipAttributeDefinitionResponses(relationshipAttributeDefinitionResponses);
             }
+
             return res;
         }
         return null;
