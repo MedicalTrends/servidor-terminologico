@@ -18,10 +18,9 @@
 
 
     <!-- Multiplicidad 1 + Nueva relacion + Sin atributos -->
-
     <p:panel
             id="basicTypeSimpleNew"
-            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
+            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                          and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
             <div class="ui-g">
@@ -144,12 +143,14 @@
                 <p:outputLabel value=" *" rendered="#{!cc.attrs.relationshipDefinition.multiplicity.optional}" />
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" style="width: 80%" />
-                <p:commandLink process="@this"
-                               update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                               action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
-                    <i class="fa fa-close fa-lg"  />
-                </p:commandLink>
+                <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                    <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" style="width: 80%" />
+                    <p:commandLink process="@this"
+                                   update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                   action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                        <i class="fa fa-close fa-lg"  />
+                    </p:commandLink>
+                </h:panelGrid>
             </div>
         </div>
         </p:repeat>
@@ -293,12 +294,14 @@
                     <p:outputLabel value=" *" rendered="#{!cc.attrs.relationshipDefinition.multiplicity.optional}" />
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" style="width: 80%" />
-                    <p:commandLink process="@this"
-                                   update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                                   action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
-                        <i class="fa fa-close fa-lg"  />
-                    </p:commandLink>
+                    <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                        <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" style="width: 80%" />
+                        <p:commandLink process="@this"
+                                       update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                       action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                            <i class="fa fa-close fa-lg"  />
+                        </p:commandLink>
+                    </h:panelGrid>
                 </div>
                 <!-- Atributos de relación -->
                 <p:repeat

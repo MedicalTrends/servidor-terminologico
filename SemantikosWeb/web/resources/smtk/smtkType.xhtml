@@ -120,6 +120,8 @@
              style="margin:20px;" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
+        <p:spacer />
+
         <div class="ui-g">
 
             <div class="ui-g-12 ui-md-6 ui-lg-2">
@@ -194,6 +196,8 @@
 
     <p:panel id="multiplicityN_with_attributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
+
+        <p:spacer />
 
         <div class="ui-g">
 
