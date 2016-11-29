@@ -25,9 +25,10 @@
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:outputLabel for="basicTypeValue11"
-                                   value="#{cc.attrs.relationshipDefinition.name}"/>
-                    <p:outputLabel value=" *" rendered="#{!cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                    <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                    <p:outputLabel for="basicTypeValue11" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"/>
+                    <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                    </h:panelGrid>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <p:selectOneMenu id="basicTypeValue11"
@@ -238,8 +239,7 @@
                              rendered="#{cc.attrs.targetDefinition.type.typeName=='string' and not cc.attrs.targetDefinition.discreteDomain}"
                              inputStyle="width: 80%"
                              style="width: 80%"
-                             styleClass="relationships"
-                >
+                             styleClass="relationships">
                     <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}" />
                 </p:inputText>
                 <p:calendar id="basicTypeValue23"
