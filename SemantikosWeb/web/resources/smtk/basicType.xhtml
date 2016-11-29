@@ -144,7 +144,7 @@
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
                 <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
-                    <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" style="width: 80%" />
+                    <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" style="width: 90%" />
                     <p:commandLink process="@this"
                                    update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                    action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
@@ -295,7 +295,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
-                        <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" style="width: 80%" />
+                        <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" style="width: 90%" />
                         <p:commandLink process="@this"
                                        update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                        action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">

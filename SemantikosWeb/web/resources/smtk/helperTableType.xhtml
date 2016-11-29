@@ -29,43 +29,45 @@
                 <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:autoComplete id="findHTRecords1" scrollHeight="200"
-                                style="width: 90%;"
-                                inputStyle="width: 90%;"
-                                completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                forceSelection="true"
-                                var="record"
-                                placeholder="#{cc.attrs.relationshipDefinition.name}..."
-                                converter="helperTableRecordConverter"
-                                value="#{conceptBean.selectedHelperTableRecord}"
-                                disabled="#{not cc.attrs.concept.editable}"
-                                itemLabel="#{record.fields['description']}"
-                                itemValue="#{record}">
-                    <!-- Parámetros del buscador -->
-                    <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
-                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                    <!-- Parámetros del validador -->
-                    <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
-                    <!---->
-                    <p:column rendered="#{not cc.attrs.relationshipDefinition.ATC}">
-                        <h:outputText value="#{record.fields['description']}"/>
-                    </p:column>
+                <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                    <p:autoComplete id="findHTRecords1" scrollHeight="200"
+                                    style="width: 100%;"
+                                    inputStyle="width: 90%;"
+                                    completeMethod="#{helperTableBean.getRecordSearchInput}"
+                                    forceSelection="true"
+                                    var="record"
+                                    placeholder="#{cc.attrs.relationshipDefinition.name}..."
+                                    converter="helperTableRecordConverter"
+                                    value="#{conceptBean.selectedHelperTableRecord}"
+                                    disabled="#{not cc.attrs.concept.editable}"
+                                    itemLabel="#{record.fields['description']}"
+                                    itemValue="#{record}">
+                        <!-- Parámetros del buscador -->
+                        <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                        <!-- Parámetros del validador -->
+                        <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
+                        <!---->
+                        <p:column rendered="#{not cc.attrs.relationshipDefinition.ATC}">
+                            <h:outputText value="#{record.fields['description']}"/>
+                        </p:column>
 
-                    <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}">
-                        <h:outputText value="#{record.fields['codigoAtc']}"/>
-                    </p:column>
+                        <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}">
+                            <h:outputText value="#{record.fields['codigoAtc']}"/>
+                        </p:column>
 
-                    <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}" style="width: 500px">
-                        <h:outputText value="#{record.fields['dscCompletaAtc']}"/>
-                    </p:column>
+                        <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}" style="width: 500px">
+                            <h:outputText value="#{record.fields['dscCompletaAtc']}"/>
+                        </p:column>
 
-                    <p:ajax event="itemSelect"
-                            listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
-                            update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                            process="@this"/>
+                        <p:ajax event="itemSelect"
+                                listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
+                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                process="@this"/>
 
-                </p:autoComplete>
-                <i class="fa fa-search fa-lg"  />
+                    </p:autoComplete>
+                    <i class="fa fa-search fa-lg"  />
+                </h:panelGrid>
             </div>
         </div>
     </p:panel>
@@ -86,13 +88,15 @@
                     <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-#{cc.attrs.relationshipDefinition.ATC? '6':'2'}">
-                    <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.fields['description']}" style="width: 80%" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
-                    <p:inputTextarea disabled="true" id="findHTRecords2_" value="#{relationship.target.fields['dsc_completa_atc']}" style="width: 80%" rendered="#{cc.attrs.relationshipDefinition.ATC}" />
-                    <p:commandLink process="@this"
-                                   update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                                   action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
-                        <i class="fa fa-close fa-lg"  />
-                    </p:commandLink>
+                    <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                        <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.fields['description']}" style="width: 90%" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
+                        <p:inputTextarea disabled="true" id="findHTRecords2_" value="#{relationship.target.fields['dsc_completa_atc']}" style="width: 90%" rendered="#{cc.attrs.relationshipDefinition.ATC}" />
+                        <p:commandLink process="@this"
+                                       update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                       action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                            <i class="fa fa-close fa-lg"  />
+                        </p:commandLink>
+                    </h:panelGrid>
                 </div>
             </div>
         </ui:repeat>
@@ -111,35 +115,37 @@
                 <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:autoComplete id="findHTRecords3" scrollHeight="200" style="width: 90%;"
-                                inputStyle="width: 90%;"
-                                styleClass="findHTRecords1"
-                                completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                forceSelection="true"
-                                var="record"
-                                placeholder="#{cc.attrs.relationshipDefinition.name}..."
-                                converter="helperTableRecordConverter"
-                                disabled="#{not cc.attrs.concept.editable}"
-                                value="#{conceptBean.selectedHelperTableRecord}"
-                                itemLabel="#{record.fields['description']}"
-                                itemValue="#{record}">
-                    <!-- Parámetros del buscador -->
-                    <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
-                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                    <!-- Parámetros del validador -->
-                    <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
-                    <!---->
-                    <p:column>
-                        <h:outputText value="#{record.fields['description']}"/>
-                    </p:column>
+                <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                    <p:autoComplete id="findHTRecords3" scrollHeight="200" style="width: 100%;"
+                                    inputStyle="width: 90%;"
+                                    styleClass="findHTRecords1"
+                                    completeMethod="#{helperTableBean.getRecordSearchInput}"
+                                    forceSelection="true"
+                                    var="record"
+                                    placeholder="#{cc.attrs.relationshipDefinition.name}..."
+                                    converter="helperTableRecordConverter"
+                                    disabled="#{not cc.attrs.concept.editable}"
+                                    value="#{conceptBean.selectedHelperTableRecord}"
+                                    itemLabel="#{record.fields['description']}"
+                                    itemValue="#{record}">
+                        <!-- Parámetros del buscador -->
+                        <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                        <!-- Parámetros del validador -->
+                        <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
+                        <!---->
+                        <p:column>
+                            <h:outputText value="#{record.fields['description']}"/>
+                        </p:column>
 
-                    <p:ajax event="itemSelect"
-                            listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
-                            update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                            process="@this"/>
+                        <p:ajax event="itemSelect"
+                                listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
+                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                process="@this"/>
 
-                </p:autoComplete>
-                <i class="fa fa-search fa-lg"  />
+                    </p:autoComplete>
+                    <i class="fa fa-search fa-lg"  />
+                </h:panelGrid>
             </div>
             <!-- Atributos de relación -->
             <p:repeat
@@ -181,12 +187,14 @@
                     <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:inputText disabled="true" id="findHTRecords4" value="#{relationship.target.fields['description']}" style="width: 80%" />
-                    <p:commandLink process="@this"
-                                   update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                                   action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
-                        <i class="fa fa-close fa-lg"  />
-                    </p:commandLink>
+                    <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                        <p:inputText disabled="true" id="findHTRecords4" value="#{relationship.target.fields['description']}" style="width: 90%" />
+                        <p:commandLink process="@this"
+                                       update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                       action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                            <i class="fa fa-close fa-lg"  />
+                        </p:commandLink>
+                    </h:panelGrid>
                 </div>
                 <!-- Atributos de relación -->
                 <p:repeat
@@ -224,42 +232,44 @@
         <div class="ui-g">
 
             <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:autoComplete id="findHTRecords5" scrollHeight="200" style="width: 90%;"
-                                styleClass="fragments"
-                                inputStyle="width: 90%;"
-                                completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                minQueryLength="2"
-                                forceSelection="true"
-                                var="helperTableRecord"
-                                placeholder="#{cc.attrs.relationshipDefinition.name}..."
-                                converter="helperTableRecordConverter"
-                                rendered="#{cc.attrs.concept.editable}"
-                                disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
-                                value="#{conceptBean.selectedHelperTableRecord}"
-                                itemLabel="#{helperTableRecord.fields['description']}"
-                                itemValue="#{helperTableRecord}">
+                <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                    <p:autoComplete id="findHTRecords5" scrollHeight="200" style="width: 100%;"
+                                    styleClass="fragments"
+                                    inputStyle="width: 90%;"
+                                    completeMethod="#{helperTableBean.getRecordSearchInput}"
+                                    minQueryLength="2"
+                                    forceSelection="true"
+                                    var="helperTableRecord"
+                                    placeholder="#{cc.attrs.relationshipDefinition.name}..."
+                                    converter="helperTableRecordConverter"
+                                    rendered="#{cc.attrs.concept.editable}"
+                                    disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
+                                    value="#{conceptBean.selectedHelperTableRecord}"
+                                    itemLabel="#{helperTableRecord.fields['description']}"
+                                    itemValue="#{helperTableRecord}">
 
-                    <!-- Parámetros del buscador -->
-                    <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
-                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                    <!-- Parámetros del validador -->
-                    <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
-                    <!---->
-                    <p:column>
-                        <h:outputText value="#{helperTableRecord.fields['description']}"/>
-                    </p:column>
+                        <!-- Parámetros del buscador -->
+                        <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                        <!-- Parámetros del validador -->
+                        <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
+                        <!---->
+                        <p:column>
+                            <h:outputText value="#{helperTableRecord.fields['description']}"/>
+                        </p:column>
 
-                    <p:column rendered="#{cc.attrs.relationshipDefinition.bioequivalente}" width="500px" style="width: 500px">
-                        <h:outputText value="#{helperTableRecord.fields['nombre']}"/>
-                    </p:column>
+                        <p:column rendered="#{cc.attrs.relationshipDefinition.bioequivalente}" width="500px" style="width: 500px">
+                            <h:outputText value="#{helperTableRecord.fields['nombre']}"/>
+                        </p:column>
 
-                    <p:ajax event="itemSelect"
-                            update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                            listener="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
-                            process="@this"/>
+                        <p:ajax event="itemSelect"
+                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                listener="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
+                                process="@this"/>
 
-                </p:autoComplete>
-                <i class="fa fa-search fa-lg"  />
+                    </p:autoComplete>
+                    <i class="fa fa-search fa-lg"  />
+                </h:panelGrid>
             </div>
 
             <smtk:info relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
@@ -461,36 +471,38 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-                    <p:autoComplete id="findHTRecords6" scrollHeight="200" style="width: 90%;"
-                                    inputStyle="width: 90%;"
-                                    completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                    var="record"
-                                    queryDelay="#{cc.attrs.relationshipDefinition.isISP()? 1000 : 0}"
-                                    minQueryLength="#{cc.attrs.relationshipDefinition.isISP()? 3 : 0}"
-                                    forceSelection="true"
-                                    placeholder="#{cc.attrs.relationshipDefinition.name}..."
-                                    converter="helperTableRecordConverter"
-                                    value="#{conceptBean.selectedHelperTableRecord}"
-                                    itemLabel="#{record.fields['description']}"
-                                    itemValue="#{record}"
-                    >
-                        <!-- Parámetros del buscador -->
-                        <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
-                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                        <!-- Parámetros del validador -->
-                        <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
-                        <!---->
+                    <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                        <p:autoComplete id="findHTRecords6" scrollHeight="200" style="width: 100%;"
+                                        inputStyle="width: 90%;"
+                                        completeMethod="#{helperTableBean.getRecordSearchInput}"
+                                        var="record"
+                                        queryDelay="#{cc.attrs.relationshipDefinition.isISP()? 1000 : 0}"
+                                        minQueryLength="#{cc.attrs.relationshipDefinition.isISP()? 3 : 0}"
+                                        forceSelection="true"
+                                        placeholder="#{cc.attrs.relationshipDefinition.name}..."
+                                        converter="helperTableRecordConverter"
+                                        value="#{conceptBean.selectedHelperTableRecord}"
+                                        itemLabel="#{record.fields['description']}"
+                                        itemValue="#{record}"
+                        >
+                            <!-- Parámetros del buscador -->
+                            <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                            <!-- Parámetros del validador -->
+                            <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
+                            <!---->
 
-                        <p:column>
-                            <h:outputText value="#{record.fields['description']}"/>
-                        </p:column>
+                            <p:column>
+                                <h:outputText value="#{record.fields['description']}"/>
+                            </p:column>
 
-                        <p:ajax event="itemSelect"
-                                listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
-                                process="@this"/>
+                            <p:ajax event="itemSelect"
+                                    listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
+                                    process="@this"/>
 
-                    </p:autoComplete>
-                    <i class="fa fa-search fa-lg"  />
+                        </p:autoComplete>
+                        <i class="fa fa-search fa-lg"  />
+                    </h:panelGrid>
                 </div>
 
                 <!-- Atributos de relación -->

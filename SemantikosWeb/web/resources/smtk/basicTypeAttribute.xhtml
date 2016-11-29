@@ -132,13 +132,14 @@
                     value="#{cc.attrs.relationship.relationshipAttributes}"
                     var="relationshipAttribute">
 
-                <p:inputText disabled="true" id="basicTypeValue" value="#{relationshipAttribute.target}" style="width: 70%" />
-                <p:commandLink process="@this"
-                               update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                               action="#{conceptBean.removeRelationshipAttribute(cc.attrs.relationship,relationshipAttribute)}">
-                    <i class="fa fa-close fa-lg"  />
-                </p:commandLink>
-
+                <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                    <p:inputText disabled="true" id="basicTypeValue" value="#{relationshipAttribute.target}" style="width: 70%" />
+                    <p:commandLink process="@this"
+                                   update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                   action="#{conceptBean.removeRelationshipAttribute(cc.attrs.relationship,relationshipAttribute)}">
+                        <i class="fa fa-close fa-lg"  />
+                    </p:commandLink>
+                </h:panelGrid>
             </p:repeat>
 
         </p:outputPanel>
