@@ -117,58 +117,62 @@
                 <p:growl id="growl" showDetail="true" showSummary="true"/>
 
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:selectOneMenu value="#{sctBean.relationshipGroup}" style="margin-right:10px; width: 60%" autoWidth="false">
-                        <f:selectItem itemLabel="Grupo..." itemValue="#{null}" />
-                        <f:selectItems value="#{sctBean.relationshipGroups}" var="relationshipGroup"
-                                       itemLabel="#{relationshipGroup}"
-                                       itemValue="#{relationshipGroup}" />
-                        <p:ajax event="itemSelect" process="@this" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
-                    </p:selectOneMenu>
+                    <h:panelGrid  columns="1"  style="width: 100%" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                        <p:selectOneMenu value="#{sctBean.relationshipGroup}" style="margin-right:10px; width: 60%" autoWidth="false">
+                            <f:selectItem itemLabel="Grupo..." itemValue="#{null}" />
+                            <f:selectItems value="#{sctBean.relationshipGroups}" var="relationshipGroup"
+                                           itemLabel="#{relationshipGroup}"
+                                           itemValue="#{relationshipGroup}" />
+                            <p:ajax event="itemSelect" process="@this" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
                 </div>
 
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-
-                    <p:selectOneMenu value="#{sctBean.searchOption}" style="margin-right:10px; width: 60%" autoWidth="false">
-                        <f:selectItem itemLabel="Buscar por Término" itemValue="term" />
-                        <f:selectItem itemLabel="Buscar por ConceptId" itemValue="conceptId" />
-                        <p:ajax event="itemSelect" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
-                    </p:selectOneMenu>
-
+                    <h:panelGrid  columns="1"  style="width: 100%" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                        <p:selectOneMenu value="#{sctBean.searchOption}" style="margin-right:10px; width: 60%" autoWidth="false">
+                            <f:selectItem itemLabel="Buscar por Término" itemValue="term" />
+                            <f:selectItem itemLabel="Buscar por ConceptId" itemValue="conceptId" />
+                            <p:ajax event="itemSelect" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
                 </div>
 
 
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                        <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
+                                        forceSelection="true"
+                                        id="findConceptSCT2" scrollHeight="200" size="5"
+                                        style="width: 100%;"
+                                        inputStyle="width: 90%;"
+                                        completeMethod="#{sctBean.getConceptSearchInput}"
+                                        placeholder="#{sctBean.searchOption eq 'term'? 'Ingrese término...': 'Ingrese conceptId...'}"
+                                        converter="conceptSCTConverter"
+                                        var="concept"
+                                        value="#{conceptBean.conceptSCTSelected}"
+                                        itemLabel="#{concept.descriptionFSN.term}" itemValue="#{concept}"
+                                        disabled="#{not cc.attrs.concept.editable}"
+                                        >
 
-                    <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
-                                    forceSelection="true"
-                                    id="findConceptSCT2" scrollHeight="200" size="5" style="width: 85%;"
-                                    inputStyle="width: 85%;"
-                                    completeMethod="#{sctBean.getConceptSearchInput}"
-                                    placeholder="#{sctBean.searchOption eq 'term'? 'Ingrese término...': 'Ingrese conceptId...'}"
-                                    converter="conceptSCTConverter"
-                                    var="concept"
-                                    value="#{conceptBean.conceptSCTSelected}"
-                                    itemLabel="#{concept.descriptionFSN.term}" itemValue="#{concept}"
-                                    disabled="#{not cc.attrs.concept.editable}"
-                                    >
+                            <!-- Parámetros del validador -->
+                            <f:attribute name="concept" value="#{cc.attrs.concept}"  />
+                            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                            <!---->
 
-                        <!-- Parámetros del validador -->
-                        <f:attribute name="concept" value="#{cc.attrs.concept}"  />
-                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                        <!---->
+                            <p:column>
+                                <h:outputText value="#{concept.descriptionFSN.term}"/>
+                            </p:column>
 
-                        <p:column>
-                            <h:outputText value="#{concept.descriptionFSN.term}"/>
-                        </p:column>
+                            <p:ajax event="itemSelect"
+                                    listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.conceptSCTSelected)}"
+                                    process="@this"/>
 
-                        <p:ajax event="itemSelect"
-                                listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.conceptSCTSelected)}"
-                                process="@this"/>
+                            <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
 
-                        <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
-
-                    </p:autoComplete>
-                    <i class="fa fa-search fa-lg"  />
+                        </p:autoComplete>
+                        <i class="fa fa-search fa-lg"  />
+                    </h:panelGrid>
                 </div>
                 <!-- Atributos de relación -->
                 <p:repeat

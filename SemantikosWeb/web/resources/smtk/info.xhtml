@@ -14,20 +14,23 @@
 
 <composite:implementation>
 
-<p:outputPanel style="margin: 15px; padding-left: 15px;"  rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary!=0}">
-    <span class="ui-messages-icon fa fa-info-circle" style="color: #03A9F4">
-    </span>
-    <p:outputLabel style="font-size: small; color: #3A87AD">
-            <span class="ui-messages-detail">
-                <c:if test="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary==1}">
-                    #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} elemento es requerido
-                </c:if>
-                <c:if test="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary!=1}">
-                    #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} elementos son requeridos
-                </c:if>
-            </span>
-    </p:outputLabel>
-</p:outputPanel>
+
+<div class="ui-g-12 ui-md-6 ui-lg-1">
+    <p:outputPanel style="margin: 0px; padding-left: 0px;"  rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary!=0}">
+        <span class="ui-messages-icon fa fa-info-circle" style="color: #03A9F4">
+        </span>
+        <p:outputLabel style="font-size: small; color: #3A87AD">
+                <span class="ui-messages-detail">
+                    <c:if test="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary==1}">
+                        #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} elemento es requerido
+                    </c:if>
+                    <c:if test="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary!=1}">
+                        #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} elementos son requeridos
+                    </c:if>
+                </span>
+        </p:outputLabel>
+    </p:outputPanel>
+</div>
 
 </composite:implementation>
 </html>

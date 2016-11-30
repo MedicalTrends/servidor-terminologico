@@ -25,8 +25,10 @@
 
         <div class="ui-g">
             <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:outputLabel for="findHTRecords1" value="#{cc.attrs.relationshipDefinition.name}"/>
-                <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                <h:panelGrid  columns="1"  style="width: 100%" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                    <p:outputLabel for="findHTRecords1" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                    <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                </h:panelGrid>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
                 <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
@@ -84,8 +86,10 @@
                    varStatus="var">
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:outputLabel for="findHTRecords2" value="#{cc.attrs.relationshipDefinition.name}"/>
-                    <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                    <h:panelGrid  columns="1"  style="width: 100%" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                        <p:outputLabel for="findHTRecords2" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                    </h:panelGrid>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-#{cc.attrs.relationshipDefinition.ATC? '6':'2'}">
                     <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
@@ -111,8 +115,10 @@
 
         <div class="ui-g">
             <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:outputLabel for="findHTRecords3" value="#{cc.attrs.relationshipDefinition.name}"/>
-                <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                <h:panelGrid  columns="1"  style="width: 100%" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                    <p:outputLabel for="findHTRecords3" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                    <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                </h:panelGrid>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
                 <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
@@ -183,8 +189,10 @@
                    varStatus="var">
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:outputLabel for="findHTRecords4" value="#{cc.attrs.relationshipDefinition.name}"/>
-                    <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                    <h:panelGrid  columns="1"  style="width: 100%" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                        <p:outputLabel for="findHTRecords4" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                    </h:panelGrid>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
