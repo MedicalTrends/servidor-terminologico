@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DataExportManager">
@@ -40,6 +40,7 @@
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
     <mapping file-url="file://$PROJECT_DIR$/resources/bdd/webservices/20161124_count_concept_by_pattern_and_categories_and_refsets.sql" connection-id="12bba8c2-5ace-4965-982d-6c8d0f9e1962" current-schema="POSTGRES" />
+    <mapping file-url="file://$PROJECT_DIR$/resources/bdd/webservices/20161202_related_concepts.sql" connection-id="12bba8c2-5ace-4965-982d-6c8d0f9e1962" current-schema="POSTGRES" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />

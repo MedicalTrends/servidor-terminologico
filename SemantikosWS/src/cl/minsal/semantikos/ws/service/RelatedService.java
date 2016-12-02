@@ -55,7 +55,6 @@ public class RelatedService {
                 && (request.getDescriptionId() == null || "".equals(request.getDescriptionId())) ) {
             throw new IllegalInputFault("Debe ingresar un idConcepto o idDescripcion");
         }
-        // TODO
         return this.conceptController.findRelated(request.getConceptId(), request.getDescriptionId(), request.getRelatedCategoryName());
     }
 
@@ -66,13 +65,12 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
                     RelatedConceptsByCategoryRequest request
-    ) throws IllegalInputFault {
+    ) throws IllegalInputFault, NotFoundFault {
         if ( (request.getConceptId() == null || "".equals(request.getConceptId()) )
                 && (request.getDescriptionId() == null || "".equals(request.getDescriptionId())) ) {
             throw new IllegalInputFault("Debe ingresar un idConcepto o idDescripcion");
         }
-        // TODO
-        return null;
+        return this.conceptController.findRelatedLite(request.getConceptId(), request.getDescriptionId(), request.getRelatedCategoryName());
     }
 
     // REQ-WS-010
@@ -83,9 +81,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionados(makeRequest(request, ""));
     }
 
     // REQ-WS-010 Lite
@@ -96,9 +93,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionadosLite(makeRequest(request, ""));
     }
 
     // REQ-WS-010
@@ -108,9 +104,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerMedicamentoClinico(request);
     }
 
     // REQ-WS-010.1-Lite
@@ -120,9 +115,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerMedicamentoClinicoLite(request);
     }
 
     // REQ-WS-011
@@ -132,9 +126,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerMedicamentoClinico(request);
     }
 
     // REQ-WS-011.1-Lite
@@ -144,9 +137,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerMedicamentoClinicoLite(request);
     }
 
     // REQ-WS-012
@@ -156,9 +148,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionados(makeRequest(request, ""));
     }
 
     // REQ-WS-012.1-Lite
@@ -168,9 +159,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionadosLite(makeRequest(request, ""));
     }
 
     // REQ-WS-012
@@ -180,9 +170,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerMedicamentoBasico(request);
     }
 
     // REQ-WS-012.1-Lite
@@ -192,9 +181,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerMedicamentoBasicoLite(request);
     }
 
     // REQ-WS-013
@@ -205,9 +193,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionados(makeRequest(request, ""));
     }
 
     // REQ-WS-013 Lite
@@ -218,9 +205,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionados(makeRequest(request, ""));
     }
 
     // REQ-WS-013
@@ -230,9 +216,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerProductoComercial(request);
     }
 
     // REQ-WS-013.1-Lite
@@ -242,9 +227,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerProductoComercialLite(request);
     }
 
     // REQ-WS-017
@@ -254,9 +238,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerProductoComercial(request);
     }
 
     // REQ-WS-017.1-Lite
@@ -266,9 +249,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerProductoComercialLite(request);
     }
 
     // REQ-WS-014
@@ -278,9 +260,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionados(makeRequest(request, ""));
     }
 
     // REQ-WS-014 Lite
@@ -290,9 +271,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionadosLite(makeRequest(request, ""));
     }
 
     // REQ-WS-014
@@ -302,9 +282,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerMedicamentoClinicoConEnvase(request);
     }
 
     // REQ-WS-014.1 Lite
@@ -314,9 +293,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerMedicamentoClinicoConEnvaseLite(request);
     }
 
     // REQ-WS-015
@@ -326,9 +304,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionados(makeRequest(request, ""));
     }
 
     // REQ-WS-015 Lite
@@ -338,9 +315,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionadosLite(makeRequest(request, ""));
     }
 
     // REQ-WS-015
@@ -350,9 +326,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerProductoComercialConEnvase(request);
     }
 
     // REQ-WS-015.1 Lite
@@ -362,9 +337,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerProductoComercialConEnvaseLite(request);
     }
 
     // REQ-WS-016
@@ -374,9 +348,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionados(makeRequest(request, ""));
     }
 
     // REQ-WS-016
@@ -386,9 +359,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerFamiliaProducto(request);
     }
 
     // REQ-WS-018
@@ -398,9 +370,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionados(makeRequest(request, ""));
     }
 
     // REQ-WS-018 Lite
@@ -410,9 +381,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionadosLite(makeRequest(request, ""));
     }
 
     // REQ-WS-018
@@ -422,9 +392,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerProductoClinicoConEnvase(request);
     }
 
     // REQ-WS-018.1 Lite
@@ -434,9 +403,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerProductoClinicoConEnvaseLite(request);
     }
 
     // REQ-WS-019
@@ -446,9 +414,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionados(makeRequest(request, ""));
     }
 
     // REQ-WS-019
@@ -458,9 +425,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        // TODO
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerSustancia(request);
     }
 
     // REQ-WS-020
@@ -470,8 +436,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionados(makeRequest(request, ""));
     }
 
     // REQ-WS-020
@@ -481,8 +447,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerRegistroISP(request);
     }
 
     // REQ-WS-021
@@ -492,8 +458,8 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.conceptosRelacionados(makeRequest(request, ""));
     }
 
     // REQ-WS-021
@@ -503,8 +469,18 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
-    ) throws IllegalInputFault {
-        return null;
+    ) throws IllegalInputFault, NotFoundFault {
+        return this.obtenerBioequivalentes(request);
+    }
+
+    private static RelatedConceptsByCategoryRequest makeRequest(RelatedConceptsRequest source, String category) {
+        RelatedConceptsByCategoryRequest res = new RelatedConceptsByCategoryRequest();
+
+        res.setConceptId(source.getConceptId());
+        res.setDescriptionId(source.getDescriptionId());
+        res.setRelatedCategoryName(category);
+
+        return res;
     }
 
 }
