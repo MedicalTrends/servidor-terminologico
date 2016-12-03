@@ -103,13 +103,15 @@ public class SearchService {
     // REQ-WS-009
     @WebResult(name = "respuestaRefSetsPorIdDescripcion")
     @WebMethod(operationName = "refSetsPorIdDescripcion")
-    public RefSetsByDescriptionIdResponse refSetsPorIdDescripcion(
+    public TermSearchResponse refSetsPorIdDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "peticionRefSetsPorIdDescripcion")
                     RefSetsByDescriptionIdRequest request
-    ) {
-        // TODO
-        return null;
+    ) throws NotFoundFault, IllegalInputFault {
+        if ( request.getDescriptionId() == null || request.getDescriptionId().isEmpty() ) {
+            throw new IllegalInputFault("Debe ingresar por lo menos un idDescripcion");
+        }
+        return this.refSetController.findRefSetsByDescriptionIds(request.getDescriptionId(), request.getIncludeInstitutions());
     }
 
     // REQ-WS-008

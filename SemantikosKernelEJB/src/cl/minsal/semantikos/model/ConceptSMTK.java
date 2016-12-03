@@ -818,4 +818,9 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
         return false;
     }
+
+    @Override
+    public int hashCode() {
+        return getConceptID() != null ? getConceptID().hashCode() : 0;
+    }
 }

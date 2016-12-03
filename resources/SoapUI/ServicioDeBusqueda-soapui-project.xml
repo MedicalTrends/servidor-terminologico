@@ -1597,6 +1597,38 @@
          </peticionRefSetsPorIdDescripcion>\r
       </ser:refSetsPorIdDescripcion>\r
    </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="c65f94e9-d993-4d08-8c89-cca80d71d5c9" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="06f11fa8-65b4-4b54-83bd-9785c9256393" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/refSetsPorIdDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="96be89dc-d173-4048-9c94-38f9e1559483" name="refSetsPorIdDescripcion2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>refSetsPorIdDescripcion</con:operation><con:request name="refSetsPorIdDescripcion2" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="50a6accb-72a9-4bb4-a469-f67560ce4b2f"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:refSetsPorIdDescripcion>\r
+         <peticionRefSetsPorIdDescripcion>\r
+            <!--1 or more repetitions:-->\r
+            <idDescripcion>f0d51672-1</idDescripcion>
+            <idDescripcion>48102c87-9</idDescripcion>
+            <idDescripcion>f0d51672-1</idDescripcion>
+            <idDescripcion>f0d51672-1</idDescripcion>
+            <idDescripcion>f0d51672-1</idDescripcion>
+            <idDescripcion>f0d51672-1</idDescripcion>
+            <!--Optional:-->\r
+            <incluyeEstablecimientos>true</incluyeEstablecimientos>\r
+         </peticionRefSetsPorIdDescripcion>\r
+      </ser:refSetsPorIdDescripcion>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="c65f94e9-d993-4d08-8c89-cca80d71d5c9" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="06f11fa8-65b4-4b54-83bd-9785c9256393" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/refSetsPorIdDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="2d8be5ac-890d-4c99-9c82-3f48743bf783" name="refSetsPorIdDescripcion3"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>refSetsPorIdDescripcion</con:operation><con:request name="refSetsPorIdDescripcion3" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="50a6accb-72a9-4bb4-a469-f67560ce4b2f"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:refSetsPorIdDescripcion>\r
+         <peticionRefSetsPorIdDescripcion>\r
+            <!--1 or more repetitions:-->\r
+            <idDescripcion>f0d51672-1</idDescripcion>
+            <idDescripcion>48102c87-9</idDescripcion>
+            <idDescripcion>638a10a3-0</idDescripcion>
+            <idDescripcion>00e3d710-6</idDescripcion>
+            <!--Optional:-->\r
+            <incluyeEstablecimientos>true</incluyeEstablecimientos>\r
+         </peticionRefSetsPorIdDescripcion>\r
+      </ser:refSetsPorIdDescripcion>\r
+   </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="c65f94e9-d993-4d08-8c89-cca80d71d5c9" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="06f11fa8-65b4-4b54-83bd-9785c9256393" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/refSetsPorIdDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="b1fee864-b27f-41a0-854b-a5cf202815a3" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="conceptoPorId TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="6c30276f-444e-4e8c-8c74-38ff8d4db311" name="conceptoPorId"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>conceptoPorId</con:operation><con:request name="conceptoPorId" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="eef5f885-bd7e-4075-bba2-24838da15ba6"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r

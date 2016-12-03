@@ -1,15 +1,19 @@
 package cl.minsal.semantikos.ws.component;
 
+import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.RefSetManager;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.RefSetMapper;
+import cl.minsal.semantikos.ws.response.ConceptResponse;
+import cl.minsal.semantikos.ws.response.DescriptionResponse;
 import cl.minsal.semantikos.ws.response.RefSetResponse;
+import cl.minsal.semantikos.ws.response.TermSearchResponse;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Development on 2016-11-18.
@@ -20,6 +24,48 @@ public class RefSetController {
 
     @EJB
     private RefSetManager refSetManager;
+
+    @EJB
+    private ConceptManager conceptManager;
+
+    @EJB
+    private ConceptController conceptController;
+
+    public TermSearchResponse findRefSetsByDescriptionIds(List<String> descriptionIds, Boolean includeInstitutions) throws NotFoundFault {
+        TermSearchResponse res = new TermSearchResponse();
+        // TODO: include institutions
+
+        Set<ConceptSMTK> conceptSMTKS = new HashSet<>(descriptionIds.size());
+        for ( String descriptionId : descriptionIds ) {
+            ConceptSMTK found = this.conceptManager.getConceptByDescriptionID(descriptionId);
+            if ( found != null ) {
+                conceptSMTKS.add(found);
+            } else {
+                throw new NotFoundFault("Descripcion no encontrada: " + descriptionId);
+            }
+        }
+
+        List<ConceptResponse> conceptResponses = new ArrayList<>(conceptSMTKS.size());
+        for ( ConceptSMTK conceptSMTK : conceptSMTKS ) {
+            ConceptResponse conceptResponse = this.conceptController.getResponse(conceptSMTK);
+            this.conceptController.loadDescriptions(conceptResponse, conceptSMTK);
+            this.conceptController.loadCategory(conceptResponse, conceptSMTK);
+            this.conceptController.loadRefSets(conceptResponse, conceptSMTK);
+
+            List<DescriptionResponse> toRemove = new ArrayList<>();
+            for (DescriptionResponse descriptionResponse : conceptResponse.getDescriptions() ) {
+                if ( !descriptionIds.contains(descriptionResponse.getDescriptionID()) ) {
+                    toRemove.add(descriptionResponse);
+                }
+            }
+            conceptResponse.getDescriptions().removeAll(toRemove);
+
+            conceptResponses.add(conceptResponse);
+        }
+        res.setConcepts(conceptResponses);
+
+        return res;
+    }
 
     public List<RefSet> findRefsets(List<String> refSetsNames) throws NotFoundFault {
         // TODO: Seguridad
