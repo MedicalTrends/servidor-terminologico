@@ -4,7 +4,7 @@
     <root id="root">
       <element id="javaee-facet-resources" facet="SemantikosCentralEAR/javaeeApplication/JavaEE" />
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/SemantikosCentralEAR/target/SemantikosCentralEAR-2.0.0/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/SemantikosCentralEAR/target/MANIFEST.MF" />
       </element>
       <element id="dir-copy" path="src/main/java" />
       <element id="directory" name="lib">
@@ -32,11 +32,11 @@
       <element id="archive" name="SemantikosKernelEJB-2.0.0.jar">
         <element id="artifact" artifact-name="SemantikosKernelEJB:ejb exploded" />
       </element>
-      <element id="archive" name="SemantikosWS-2.0.0.war">
-        <element id="artifact" artifact-name="SemantikosWS:war exploded" />
-      </element>
       <element id="archive" name="SemantikosWSEJB-2.0.0.jar">
         <element id="artifact" artifact-name="SemantikosWSEJB:ejb exploded" />
+      </element>
+      <element id="archive" name="SemantikosWS-2.0.0.war">
+        <element id="artifact" artifact-name="SemantikosWS:war exploded" />
       </element>
     </root>
   </artifact>
