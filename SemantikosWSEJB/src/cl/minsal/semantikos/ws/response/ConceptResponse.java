@@ -1,8 +1,5 @@
 package cl.minsal.semantikos.ws.response;
 
-import cl.minsal.semantikos.model.ConceptSMTK;
-
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Date;
