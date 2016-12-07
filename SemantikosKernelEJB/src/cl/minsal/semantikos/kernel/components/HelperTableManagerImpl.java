@@ -52,7 +52,9 @@ public class HelperTableManagerImpl implements HelperTableManager {
     public List<HelperTableRecord> getAllRecords(HelperTable helperTable, List<String> columnNames) {
 
         List<HelperTableRecord> allRecords = helperTableDAO.getAllRecords(helperTable);
-        Collections.sort(allRecords);
+
+        /* Se aplican reglas de negocio sobre los resultados retornados */
+        new HelperTableSearchBR().applyPostActions(allRecords);
         logger.debug("Se recuperan " + allRecords.size() + " registros de la tabla " + helperTable);
 
         return allRecords;

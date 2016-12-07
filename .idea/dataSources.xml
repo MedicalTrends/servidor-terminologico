@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="PostgreSQL - semantikos@localhost" read-only="true" uuid="cf88e6e4-731a-474d-a72a-5d2326bec45f">
+  <component name="DataSourceManagerImpl" format="xml" hash="150216017">
+    <data-source source="LOCAL" name="PostgreSQL - semantikos@192.168.0.221" uuid="8546d5f8-2f1d-444a-92c3-9752c1b2cecc">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/semantikos</jdbc-url>
+      <jdbc-url>jdbc:postgresql://192.168.0.221:5432/semantikos</jdbc-url>
     </data-source>
   </component>
 </project>

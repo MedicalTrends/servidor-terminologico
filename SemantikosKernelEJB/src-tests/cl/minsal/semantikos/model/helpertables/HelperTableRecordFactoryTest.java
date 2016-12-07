@@ -74,20 +74,20 @@ public class HelperTableRecordFactoryTest {
     }
 
     private String createJSONRocords() {
-        String json = "{\"tableName\":\"helper_table_atc\",\"records\":[{\"id\":1,\"codigo_atc\":\"atc1\",\"descripcion_atc\":\"Esta es una descripción ATC\"}, \n" +
-                " {\"id\":2,\"codigo_atc\":\"atc2\",\"descripcion_atc\":\"Esta es otra descripción ATC\"}]}";
+        String json = "{\"tableName\":\"helper_table_atc\",\"records\":[{\"id\":1,\"codigo_atc\":\"atc1\",\"descripcion_atc\":\"Esta es una descripción HT_ATC_NAME\"}, \n" +
+                " {\"id\":2,\"codigo_atc\":\"atc2\",\"descripcion_atc\":\"Esta es otra descripción HT_ATC_NAME\"}]}";
         System.out.println(json);
         return json;
     }
 
     private String createJSONRocord() {
-        String json = "{\"tableName\":\"helper_table_atc\",\"fields\":{\"id\":1,\"codigo_atc\":\"atc1\",\"descripcion_atc\":\"Esta es una descripción ATC\"}}";
+        String json = "{\"tableName\":\"helper_table_atc\",\"fields\":{\"id\":1,\"codigo_atc\":\"atc1\",\"descripcion_atc\":\"Esta es una descripción HT_ATC_NAME\"}}";
         System.out.println(json);
         return json;
     }
 
     private String createJSONRocord02() {
-        String json = "{\"tableName\":\"helper_table_atc\",\"fields\":{\"id\":1,\"codigo_atc\":\"atc1\",\"descripcion_atc\":\"Esta es una descripción ATC\",\"is_valid\":true}}";
+        String json = "{\"tableName\":\"helper_table_atc\",\"fields\":{\"id\":1,\"codigo_atc\":\"atc1\",\"descripcion_atc\":\"Esta es una descripción HT_ATC_NAME\",\"is_valid\":true}}";
         System.out.println(json);
         return json;
     }

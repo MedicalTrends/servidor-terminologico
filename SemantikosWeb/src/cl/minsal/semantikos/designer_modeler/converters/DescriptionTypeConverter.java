@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.designer_modeler.converters;
 
-import cl.minsal.semantikos.designer_modeler.designer.ConceptBean;
+import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.model.DescriptionType;
 
 import javax.el.ELContext;

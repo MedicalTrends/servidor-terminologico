@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.designer_modeler.designer;
 
+import cl.minsal.semantikos.beans.concept.ConceptBean;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;

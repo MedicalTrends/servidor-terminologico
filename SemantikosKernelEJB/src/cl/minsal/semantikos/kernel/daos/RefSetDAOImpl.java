@@ -195,6 +195,28 @@ public class RefSetDAOImpl implements RefSetDAO {
         return refSets;
     }
 
+    @Override
+    public RefSet getRefsetBy(long id) {
+        RefSet refSet=null;
+        ConnectionBD connect = new ConnectionBD();
+        String GET_REFSET_BY_ID = "{call semantikos.get_refset_by_id(?)}";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(GET_REFSET_BY_ID)) {
+            call.setLong(1,id);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                refSet=createRefsetFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            logger.error("Error al al obtener los RefSets ", e);
+        }
+
+        return refSet;
+    }
+
     private RefSet createRefsetFromResultSet(ResultSet rs) throws SQLException {
 
         long id= rs.getLong("id");

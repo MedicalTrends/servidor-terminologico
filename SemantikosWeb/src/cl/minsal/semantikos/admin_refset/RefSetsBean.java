@@ -1,13 +1,16 @@
 package cl.minsal.semantikos.admin_refset;
 
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
-import cl.minsal.semantikos.designer_modeler.designer.ConceptBean;
+import cl.minsal.semantikos.beans.concept.ConceptBean;
+import cl.minsal.semantikos.kernel.components.AuditManager;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.RefSetManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.RefSet;
+import cl.minsal.semantikos.model.audit.AuditAction;
+import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -17,9 +20,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static cl.minsal.semantikos.model.audit.AuditActionType.REFSET_UPDATE;
 import static java.lang.System.currentTimeMillis;
 
 /**
@@ -51,6 +56,12 @@ public class RefSetsBean {
     private RefSet refSetSelect;
 
     @EJB
+    AuditManager auditManager;
+
+    private Map<Long,AuditAction> refsetHistoryConcept;
+
+
+    @EJB
     private CategoryManager categoryManager;
 
     @EJB
@@ -71,6 +82,7 @@ public class RefSetsBean {
         categories = categoryManager.getCategories();
         //refSetToCreate = new RefSet(null, authenticationBean.getLoggedUser().getInstitutions().get(0), null);
         refSetList = refSetManager.getAllRefSets();
+        refsetHistoryConcept= new HashMap<>();
 
     }
 
@@ -145,6 +157,7 @@ public class RefSetsBean {
         }
         if(conceptRefSetList!=null){
             conceptRefSetList=refSetManager.getRefsetsBy(conceptBean.getConcept());
+            conceptBean.setRefsetEditConcept(true);
         }
     }
 
@@ -155,7 +168,25 @@ public class RefSetsBean {
         }
         if(conceptRefSetList!=null){
             conceptRefSetList=refSetManager.getRefsetsBy(conceptBean.getConcept());
+            conceptBean.setRefsetEditConcept(true);
         }
+    }
+
+    public void loadHistoryConcept(){
+        List<ConceptAuditAction> auditActions = auditManager.getConceptAuditActions(conceptBean.getConcept(),false);
+
+        for (RefSet refset: conceptRefSetList) {
+            for (ConceptAuditAction conceptAuditAction: auditActions) {
+                if(conceptAuditAction.getAuditActionType().getId()==REFSET_UPDATE.getId()){
+                    if(conceptAuditAction.getAuditableEntity().getId()==refset.getId()){
+                        refsetHistoryConcept.put(refset.getId(),conceptAuditAction);
+                    }
+                }
+
+            }
+        }
+
+
     }
 
 
@@ -239,6 +270,7 @@ public class RefSetsBean {
 
     public List<RefSet> getConceptRefSetList() {
         conceptRefSetList= refSetManager.getRefsetsBy(conceptBean.getConcept());
+        loadHistoryConcept();
         return conceptRefSetList;
     }
 
@@ -260,5 +292,13 @@ public class RefSetsBean {
 
     public void setRefSetSelect(RefSet refSetSelect) {
         this.refSetSelect = refSetSelect;
+    }
+
+    public Map<Long, AuditAction> getRefsetHistoryConcept() {
+        return refsetHistoryConcept;
+    }
+
+    public void setRefsetHistoryConcept(Map<Long, AuditAction> refsetHistoryConcept) {
+        this.refsetHistoryConcept = refsetHistoryConcept;
     }
 }

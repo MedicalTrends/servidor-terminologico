@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.helpertables.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
@@ -56,6 +57,8 @@ public class HelperTableDAOImpl implements HelperTableDAO {
 
             /* Se preparan los parámetros de la función */
             Map<String, String> recordFields = record.getFields();
+            recordFields.put("id_user", Long.toString(user.getIdUser()));
+
             Array column_names = connection.createArrayOf("text", recordFields.keySet().toArray(new String[recordFields.size()]));
             Array column_values = connection.createArrayOf("text", recordFields.values().toArray(new String[recordFields.size()]));
 

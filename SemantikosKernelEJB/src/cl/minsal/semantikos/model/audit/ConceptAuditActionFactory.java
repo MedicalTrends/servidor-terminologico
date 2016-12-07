@@ -157,7 +157,8 @@ enum AuditableEntityType {
     CONCEPT(1, "Concepto"),
     RELATIONSHIP(2, "Relacione"),
     DESCRIPTION(3, "Descripción"),
-    CATEGORY(4, "Categoría");
+    CATEGORY(4, "Categoría"),
+    REFSET(5,"Refset");
 
     /** El identificador único del tipo de Entidad */
     private long id;

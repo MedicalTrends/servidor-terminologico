@@ -14,7 +14,7 @@ import java.util.List;
 public class HelperTable extends PersistentEntity implements TargetDefinition {
 
     /** Columna de sistema con la llave primaria para cada registro de una tabla auxiliar */
-    public static final HelperTableColumn SYSTEM_COLUMN_ID = new HelperTableColumn("id", true, true, false);
+    public static final HelperTableColumn SYSTEM_COLUMN_ID = new HelperTableColumn("id", true, true, true);
 
     /** Columna de sistema con la descripción para cada registro de una tabla auxiliar */
     public static final HelperTableColumn SYSTEM_COLUMN_DESCRIPTION = new HelperTableColumn("description", false, true, true);

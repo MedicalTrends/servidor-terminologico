@@ -1,12 +1,8 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.User;
-import cl.minsal.semantikos.model.crossmaps.Crossmap;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
-import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
+import cl.minsal.semantikos.model.crossmaps.*;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -76,8 +72,8 @@ public interface CrossmapsManager {
 
     /**
      * Este método es responsable de recuperar los crossmaps indirectos de un concepto y actualizarle su lista de
-     * crossmaps. Si el
-     * <code>conceptSMTK</code> no es persistente, se recuperan los crossmaps asociados a su <code>CONCEPT_ID</code>.
+     * crossmaps. Si el <code>conceptSMTK</code> no es persistente, se recuperan los crossmaps asociados a su
+     * <code>CONCEPT_ID</code>.
      *
      * @param conceptSMTK El concepto cuyos Crossmaps se desea recuperar.
      *
@@ -104,7 +100,6 @@ public interface CrossmapsManager {
      * @return Una lista de registros
      */
     public List<CrossmapSetMember> findByPattern(CrossmapSet crossmapSet, String pattern);
-
 
 
 }

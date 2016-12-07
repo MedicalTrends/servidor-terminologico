@@ -40,6 +40,11 @@ public class BasicTypeValue<T extends Comparable> implements Target {
         return TargetType.BasicType;
     }
 
+    @Override
+    public String getRepresentation() {
+        return toString();
+    }
+
     public void setId(long id) {
         this.id = id;
     }

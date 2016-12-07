@@ -61,3 +61,11 @@ form#mainForm table tbody tr td div.relationshipDefinitionError {
 form#mainForm .ui-tabs .ui-tabs-panel {
     padding: 1px !important;
 }
+
+form#mainForm .ui-grid-col-1, .ui-grid-col-2, .ui-grid-col-3, .ui-grid-col-4, .ui-grid-col-5, .ui-grid-col-6, .ui-grid-col-7, .ui-grid-col-8, .ui-grid-col-9, .ui-grid-col-10, .ui-grid-col-11, .ui-grid-col-12 {
+    float: none !important;
+}
+
+form#mainForm .ui-panelgrid .ui-panelgrid-cell {
+
+}

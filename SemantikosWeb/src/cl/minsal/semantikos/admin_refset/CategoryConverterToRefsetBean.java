@@ -1,6 +1,5 @@
 package cl.minsal.semantikos.admin_refset;
 
-import cl.minsal.semantikos.designer_modeler.designer.ConceptBean;
 import cl.minsal.semantikos.model.Category;
 
 import javax.el.ELContext;
@@ -10,7 +9,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
-import java.text.ParseException;
 
 /**
  * Created by des01c7 on 21-09-16.

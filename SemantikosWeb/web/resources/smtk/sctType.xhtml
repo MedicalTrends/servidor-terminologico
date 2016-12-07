@@ -117,13 +117,21 @@
                 <p:growl id="growl" showDetail="true" showSummary="true"/>
 
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:selectOneMenu value="#{sctBean.relationshipGroup}" style="margin-right:10px; width: 60%" autoWidth="false">
-                        <f:selectItem itemLabel="Grupo..." itemValue="#{null}" />
-                        <f:selectItems value="#{sctBean.relationshipGroups}" var="relationshipGroup"
-                                       itemLabel="#{relationshipGroup}"
-                                       itemValue="#{relationshipGroup}" />
-                        <p:ajax event="itemSelect" process="@this" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
-                    </p:selectOneMenu>
+
+                    <p:inputNumber id="basicTypeValue12"
+                                   value="#{sctBean.relationshipGroup}"
+                                   placeholder="Grupo..."
+                                   var="value"
+                                   minValue="0"
+                                   decimalPlaces="0"
+                                   decimalSeparator=","
+                                   thousandSeparator="."
+                                   inputStyle="width: 90%"
+                                   style="width: 80%"
+                                   autocomplete="off">
+                        <p:ajax process="@this" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
+                    </p:inputNumber>
+
                 </div>
 
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
@@ -196,7 +204,7 @@
                             process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                             action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
                             update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader),@(.crossmapindirect)"
-                            disabled="#{conceptBean.existRelationshipISAMapping()}"
+                            disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept)}"
                             value="Agregar">
                     </p:commandButton>
                 </div>

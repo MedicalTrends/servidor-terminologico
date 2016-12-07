@@ -65,4 +65,6 @@ public interface RefSetDAO {
      * @return
      */
     public List<RefSet> findByConcept(ConceptSMTK conceptSMTK);
+
+    public RefSet getRefsetBy(long id);
 }

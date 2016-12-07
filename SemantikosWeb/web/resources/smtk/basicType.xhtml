@@ -18,10 +18,9 @@
 
 
     <!-- Multiplicidad 1 + Nueva relacion + Sin atributos -->
-
     <p:panel
             id="basicTypeSimpleNew"
-            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
+            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                          and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
             <div class="ui-g">
@@ -128,7 +127,7 @@
 
     <p:panel
             id="basicTypeSimple"
-            rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
+            rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                         and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
 
@@ -159,7 +158,7 @@
 
     <p:panel
             id="basicTypeSimpleNewWithAttributes"
-            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
+            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                           and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
         <div class="ui-g">
@@ -278,7 +277,7 @@
 
     <p:panel
             id="basicTypeSimpleWithAttributes"
-            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
+            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                           and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
         <p:repeat  value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
@@ -337,9 +336,9 @@
                             value="Agregar"
                             process="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                            action="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition)}"
+                            action="#{relationshipBean.addRelationship(cc.attrs.relationshipDefinition)}"
                             rendered="#{cc.attrs.concept.editable}"
-                            disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}">
+                            disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition).size())}">
                     </p:commandButton>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-6">

@@ -42,7 +42,7 @@ public class ConceptSMTKWeb extends ConceptSMTK {
                 addDescriptionWeb(new DescriptionWeb(this, description.getId(), description));
             // Si el concepto esta persistido clonar las relaciones con su id
             for (Relationship relationship : conceptSMTK.getValidRelationships())
-                addRelationshipWeb(new RelationshipWeb(this, relationship.getId(), relationship, relationship.getRelationshipAttributes()));
+                addRelationshipWeb(new RelationshipWeb(this, relationship.getId(), relationship, relationship.getRelationshipAttributes(), relationship.getCreationDate()));
             for (Tag tag: conceptSMTK.getTags()) {
                 addTag(tag);
             }

@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.Profile;
 import cl.minsal.semantikos.model.User;
 import org.slf4j.Logger;
@@ -9,11 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.math.BigInteger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -170,6 +164,8 @@ public class AuthDAOImpl implements AuthDAO {
 
         u.setRut(rs.getString(21));
 
+        u.setProfiles(getUserProfiles(u.getIdUser()));
+
         return u;
     }
 
@@ -237,7 +233,6 @@ public class AuthDAOImpl implements AuthDAO {
 
     }
 
-
     @Override
     public void updateUser(User user) {
 
@@ -255,38 +250,27 @@ public class AuthDAOImpl implements AuthDAO {
             call.setLong(6, user.getIdUser());
 
             call.execute();
-
-
         } catch (SQLException e) {
             String errorMsg = "Error al actualizar usuario de la BDD.";
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }
 
-
         sql = "{call semantikos.delete_user_profiles(?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, user.getIdUser());
-
             call.execute();
-
-
         } catch (SQLException e) {
             String errorMsg = "Error al eliminar perfiles de la BDD.";
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }
 
-
         for (Profile p : user.getProfiles()) {
-
             addProfileToUser(user, p);
-
         }
-
-
     }
 
     private void addProfileToUser(User user, Profile p) {
@@ -449,10 +433,11 @@ public class AuthDAOImpl implements AuthDAO {
         ConnectionBD connect = new ConnectionBD();
         Profile profile = null;
 
-        String sql = "{call semantikos.get_profile_by_id()}";
+        String sql = "{call semantikos.get_profile_by_id(?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
+            call.setLong(1,id);
             call.execute();
 
             ResultSet rs = call.getResultSet();
@@ -465,7 +450,6 @@ public class AuthDAOImpl implements AuthDAO {
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }
-
         return profile;
     }
 

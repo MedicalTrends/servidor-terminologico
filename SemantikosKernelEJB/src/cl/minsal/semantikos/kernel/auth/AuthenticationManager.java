@@ -31,7 +31,6 @@ public class AuthenticationManager {
 
     @PermitAll
     public boolean authenticate(String username, String password, HttpServletRequest request) throws AuthenticationException {
-
         return getAuthenticationMethod().authenticate(username, password, request);
     }
 

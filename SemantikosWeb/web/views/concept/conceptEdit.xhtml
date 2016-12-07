@@ -10,11 +10,11 @@
     <ui:define name="content">
 
         <f:metadata>
-            <f:viewParam name="editMode" value="#{conceptBean.editable}"/>
-            <f:viewParam name="idCategory" value="#{conceptBean.idCategory}"/>
-            <f:viewParam name="idConcept" value="#{conceptBean.idConcept}"/>
-            <f:viewParam name="favoriteDescription" value="#{conceptBean.favoriteDescription}"/>
-            <f:viewParam name="descriptionPending" value="#{conceptBean.idTermPending}"/>
+            <f:viewParam name="editMode" value="#{conceptBean.editable}" />
+            <f:viewParam name="idCategory" value="#{conceptBean.idCategory}" />
+            <f:viewParam name="idConcept" value="#{conceptBean.idConcept}" />
+            <f:viewParam name="favoriteDescription" value="#{conceptBean.favoriteDescription}" />
+            <f:viewParam name="descriptionPending" value="#{conceptBean.idTermPending}" />
         </f:metadata>
 
         <div class="Container100">
@@ -25,9 +25,8 @@
                             <div class="ui-grid-responsive">
                                 <div class="ui-grid-col-12">
                                     <p:outputPanel id="createEdit">
-                                        <h:form id="mainForm" rendered="#{ not (conceptBean.concept eq null ) }"
-                                                styleClass="#{conceptBean.editable? '' : 'consult'}">
-                                            <smtk:changeMarketed/>
+                                        <h:form id="mainForm" rendered="#{ not (conceptBean.concept eq null ) }" styleClass="#{conceptBean.editable? '' : 'consult'}">
+                                            <smtk:changeMarketed />
                                             <p:outputPanel>
 
                                                 <p:growl id="growl" showDetail="true" showSummary="true"/>
@@ -36,9 +35,8 @@
                                                 <!--p:messages autoUpdate="true"></p:messages-->
 
                                                 <smtk:title concept="#{conceptBean.concept}"/>
-                                                <p:separator/>
-                                                <p:panel id="conceptHeader" style="border: hidden;"
-                                                         styleClass="conceptHeader">
+                                                <p:separator />
+                                                <p:panel id="conceptHeader" style="border: hidden;" styleClass="conceptHeader">
                                                     <p:growl id="editMsgs2" showDetail="true"/>
                                                     <smtk:conceptHeader concept="#{conceptBean.concept}"/>
                                                 </p:panel>
@@ -50,33 +48,29 @@
 
                                                 <!-- Etiquetas -->
                                                 <p:tab title="Etiquetas">
-                                                    <smtk:tags editable="#{conceptBean.concept.editable}"
-                                                               tagslist="#{conceptBean.concept.tags}"/>
+                                                    <smtk:tags editable="#{conceptBean.concept.editable}" tagslist="#{conceptBean.concept.tags}"/>
                                                 </p:tab>
                                                 <br/>
 
                                                 <p:tab title="Otras descripciones">
                                                     <!-- Otras descripciones -->
-                                                    <smtk:descriptions
-                                                            descriptions="#{conceptBean.concept.getValidDescriptionsButFSNandFavorite()}"
-                                                            otherTermino="#{conceptBean.otherTermino}"
-                                                            otherSensibilidad="#{conceptBean.otherSensibilidad}"
-                                                            otherDescriptionType="#{conceptBean.otherDescriptionType}"
-                                                            descriptionTypes="#{conceptBean.descriptionTypes}"
-                                                            editable="#{conceptBean.concept.editable}">
+                                                    <smtk:descriptions descriptions="#{conceptBean.concept.getValidDescriptionsButFSNandFavorite()}"
+                                                                       otherTermino="#{conceptBean.otherTermino}"
+                                                                       otherSensibilidad="#{conceptBean.otherSensibilidad}"
+                                                                       otherDescriptionType="#{conceptBean.otherDescriptionType}"
+                                                                       descriptionTypes="#{conceptBean.descriptionTypes}"
+                                                                       editable="#{conceptBean.concept.editable}">
                                                     </smtk:descriptions>
                                                 </p:tab>
                                                 <br/>
-                                                <p:tab title="Atributos"
-                                                       rendered="#{not empty conceptBean.category.relationshipDefinitions}">
+                                                <p:tab title="Atributos" rendered="#{not empty conceptBean.category.relationshipDefinitions}">
                                                     <!--Relaciones -->
                                                     <p:outputPanel id="atributos"
                                                                    widgetVar="panelAtributos"
                                                                    styleClass="attributes"
                                                                    rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
-                                                        <h:dataTable style="width: 100%;"
-                                                                     value="#{conceptBean.orderedRelationshipDefinitions}"
+                                                        <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
                                                                      var="relationshipDefinition">
 
                                                             <h:column>
@@ -86,6 +80,9 @@
                                                                         style="border:0px; margin: 0px; padding: 0px;"
                                                                         styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}"
                                                                         rendered="#{not relationshipDefinition.targetDefinition.crossMapType}">
+
+                                                                    <p:growl id="growlAttributes" showDetail="true" showSummary="true"/>
+
 
                                                                     <smtk:smtkType
                                                                             rendered="#{relationshipDefinition.targetDefinition.SMTKType}"
@@ -118,8 +115,7 @@
                                                                    styleClass="attributes"
                                                                    rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
-                                                        <h:dataTable style="width: 100%;"
-                                                                     value="#{conceptBean.orderedRelationshipDefinitions}"
+                                                        <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
                                                                      var="relationshipDefinition">
 
                                                             <h:column>
@@ -133,7 +129,7 @@
                                                                             targetDefinition="#{relationshipDefinition.targetDefinition}"
                                                                             relationshipDefinition="#{relationshipDefinition}"
                                                                             concept="#{conceptBean.concept}"
-                                                                            rendered="#{relationshipDefinition.targetDefinition.snomedCTType}"/>
+                                                                            rendered="#{relationshipDefinition.targetDefinition.snomedCTType}" />
 
                                                                 </p:outputPanel>
 
@@ -141,8 +137,10 @@
                                                         </h:dataTable>
                                                     </p:outputPanel>
                                                 </p:tab>
-                                                <p:tab title="Crossmaps"
-                                                       rendered="#{ conceptBean.concept.persistent and conceptBean.concept.modeled }">
+                                                <p:tab title="Refset" rendered="#{conceptBean.concept.modeled}">
+                                                    <smtk:refset/>
+                                                </p:tab>
+                                                <p:tab title="Crossmaps" rendered="#{ conceptBean.concept.persistent and conceptBean.concept.modeled }">
                                                     <!--Relaciones -->
 
                                                     <p:panel id="indirectCrossmap"
@@ -150,20 +148,18 @@
                                                              styleClass="attributes"
                                                              rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
-                                                        <smtk:crossmapIndirect
-                                                                rendered="#{not empty conceptBean.conceptSMTK.relationshipsIndirectCrossMap}"/>
+                                                        <smtk:crossmapIndirect rendered="#{not empty crossmapBean.indirectCrossmaps}"/>
 
                                                     </p:panel>
 
-                                                    <p:spacer/>
+                                                    <p:spacer />
 
                                                     <p:panel id="directCrossmap"
                                                              widgetVar="panelDirectCrossmap"
                                                              styleClass="attributes"
                                                              rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
-                                                        <h:dataTable style="width: 100%;"
-                                                                     value="#{conceptBean.orderedRelationshipDefinitions}"
+                                                        <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
                                                                      var="relationshipDefinition">
 
                                                             <h:column>
@@ -187,10 +183,6 @@
                                                 </p:tab>
                                                 <br/>
 
-                                                <p:tab title="Refset" rendered="#{conceptBean.concept.modeled}">
-                                                    <smtk:refset/>
-                                                </p:tab>
-
                                                 <!-- Historial -->
                                                 <p:tab title="Historial">
                                                     <smtk:history/>
@@ -201,37 +193,24 @@
 
                                             <br/>
                                             <div style="text-align: right;">
-                                                <p:commandButton actionListener="#{conceptBean.saveConcept}"
-                                                                 icon="fa fa-check"
+                                                <p:commandButton actionListener="#{conceptBean.saveConcept}" icon="fa fa-check"
                                                                  styleClass="ui-priority-primary"
                                                                  rendered="#{conceptBean.concept.editable}"
                                                                  value="Guardar"
                                                                  update="growl, mainForm"/>
 
-                                                <p:commandButton actionListener="#{conceptBean.deleteConcept}"
-                                                                 icon="fa fa-trash"
+                                                <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"
                                                                  styleClass="ui-priority-primary"
                                                                  value="Eliminar" type="submit" process="mainForm"
-                                                                 rendered="#{conceptBean.concept.persistent and not conceptBean.concept.modeled}"
+                                                                 rendered="#{conceptBean.concept.persistent and not conceptBean.concept.modeled and conceptBean.concept.editable}"
                                                                  update="growl, mainForm">
-                                                    <p:confirm header="Confirmation"
-                                                               message="¿Desea eliminar este concepto?"
-                                                               icon="ui-icon-alert"/>
+                                                    <p:confirm header="Confirmation" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
                                                 </p:commandButton>
 
-                                                <p:commandButton actionListener="#{conceptBean.deleteConcept}"
-                                                                 icon="fa fa-ban"
-                                                                 styleClass="ui-priority-primary"
-                                                                 value="Invalidar" type="submit" process="mainForm"
-                                                                 rendered="#{conceptBean.concept.persistent and conceptBean.concept.modeled}"
-                                                                 update="growl, mainForm">
-                                                    <p:confirm header="Confirmation"
-                                                               message="¿Desea invalidar este concepto?"
-                                                               icon="ui-icon-alert"/>
-                                                </p:commandButton>
+                                                <!-- Botón para Trasladar el concepto modelado -->
+                                                <smtk:trasnferConcept rendered="#{conceptBean.concept.modeled and conceptBean.concept.editable}" conceptSMTK="#{conceptBean.concept}"/>
 
-                                                <p:commandButton actionListener="#{conceptBean.cancelConcept}"
-                                                                 icon="fa fa-undo"
+                                                <p:commandButton actionListener="#{conceptBean.cancelConcept}" icon="fa fa-undo"
                                                                  styleClass="ui-priority-primary"
                                                                  value="Deshacer" type="submit" process="mainForm"
                                                                  rendered="#{conceptBean.concept.editable}"
@@ -241,14 +220,13 @@
                                                                icon="ui-icon-alert"/>
                                                 </p:commandButton>
 
-                                                <smtk:export-xls rendered="#{conceptBean.concept.modeled}"/>
+
+                                                <smtk:export-xls rendered="#{conceptBean.concept.modeled}" />
 
                                                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                                    <p:commandButton value="Yes" type="button"
-                                                                     styleClass="ui-confirmdialog-yes"
+                                                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes"
                                                                      icon="ui-icon-check"/>
-                                                    <p:commandButton value="No" type="button"
-                                                                     styleClass="ui-confirmdialog-no"
+                                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
                                                                      icon="ui-icon-close"/>
                                                 </p:confirmDialog>
                                             </div>
@@ -285,13 +263,10 @@
                                                                          value="#{conceptBean.categorySelected}"
                                                                          panelStyle="width:180px"
                                                                          converter="omnifaces.SelectItemsConverter"
-                                                                         effect="fade" var="c" style="width:160px"
-                                                                         filter="true"
+                                                                         effect="fade" var="c" style="width:160px" filter="true"
                                                                          filterMatchMode="startsWith">
-                                                            <f:selectItems value="#{conceptBean.categoryList}"
-                                                                           var="category"
-                                                                           itemLabel="#{category.name}"
-                                                                           itemValue="#{category}"/>
+                                                            <f:selectItems value="#{conceptBean.categoryList}" var="category"
+                                                                           itemLabel="#{category.name}" itemValue="#{category}"/>
                                                             <p:ajax event="itemSelect"/>
 
                                                             <p:column>
@@ -302,8 +277,7 @@
 
                                                     </div>
                                                     <div class="ui-g-12 ui-md-6 ui-lg-2">
-                                                        <p:commandButton actionListener="#{conceptBean.createConcept}"
-                                                                         update=":createEdit"
+                                                        <p:commandButton actionListener="#{conceptBean.createConcept}" update=":createEdit"
                                                                          value="Siguiente"/>
                                                     </div>
                                                 </div>
@@ -314,12 +288,10 @@
                                                 <div class="ui-g">
                                                     <div class="ui-g-12 ui-md-6 ui-lg-9">
                                                         <p:outputLabel value="ID Concepto: " for="NameConcept"/>
-                                                        <p:inputText style="width: 75%" id="idconcept"
-                                                                     value="#{conceptBean.idconceptselect}"/>
+                                                        <p:inputText style="width: 75%" id="idconcept" value="#{conceptBean.idconceptselect}"/>
                                                     </div>
                                                     <div class="ui-g-12 ui-md-6 ui-lg-3">
-                                                        <p:commandButton actionListener="#{conceptBean.createConcept}"
-                                                                         update=":createEdit"
+                                                        <p:commandButton actionListener="#{conceptBean.createConcept}" update=":createEdit"
                                                                          value="Editar Concepto"/>
                                                     </div>
                                                 </div>
@@ -328,10 +300,8 @@
                                             </h:form>
                                         </p:dialog>
 
-                                        <p:dialog id="dialogISP" header="Warning" widgetVar="dialogISP" modal="true"
-                                                  height="100">
-                                            <h:outputText
-                                                    value="La URL de registro ISP no se encuentra disponible en este momento, por favor intente más tarde."/>
+                                        <p:dialog id="dialogISP" header="Warning" widgetVar="dialogISP" modal="true" height="100">
+                                            <h:outputText value="La URL de registro ISP no se encuentra disponible en este momento, por favor intente más tarde." />
                                         </p:dialog>
                                     </p:outputPanel>
                                 </div>
@@ -341,6 +311,7 @@
                 </div>
             </div>
         </div>
+
 
 
         <script type="text/javascript">

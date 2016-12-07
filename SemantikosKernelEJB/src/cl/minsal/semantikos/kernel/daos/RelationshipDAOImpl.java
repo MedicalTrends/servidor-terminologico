@@ -41,13 +41,14 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         long idTarget= targetDAO.persist(relationship.getTarget(),relationship.getRelationshipDefinition().getTargetDefinition());
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.create_relationship(?,?,?)}";
+        String sql = "{call semantikos.create_relationship(?,?,?,?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, relationship.getSourceConcept().getId());
             call.setLong(2, idTarget);
             call.setLong(3, relationship.getRelationshipDefinition().getId());
+            call.setTimestamp(4, relationship.getCreationDate());
             call.execute();
 
             ResultSet rs = call.getResultSet();

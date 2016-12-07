@@ -66,15 +66,14 @@ public class RelationshipManagerImpl implements RelationshipManager {
             auditManager.recordRelationshipCreation(relationship, user);
         }
 
-        /* Se realizan las acciones asociadas a la asociación */
-        new RelationshipBindingBR().postActions(relationship, conceptDAO);
-
         /* Se retorna persistida */
         return relationship;
     }
 
     @Override
     public Relationship createRelationship(Relationship relationship) {
+        // Se setea la fecha de creación de esta relación
+        relationship.setCreationDate(new Timestamp(currentTimeMillis()));
         relationship = relationshipDAO.persist(relationship);
         for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
             relationshipAttribute.setRelationship(relationship);
@@ -96,6 +95,8 @@ public class RelationshipManagerImpl implements RelationshipManager {
             /* Se validan las reglas de negocio */
             new ConceptCreationBR().apply(concept, user);
 
+            // Se setea la fecha de creación de esta relación
+            relationship.setCreationDate(new Timestamp(currentTimeMillis()));
             relationshipDAO.persist(relationship);
 
             /* Se persisten los atributos */

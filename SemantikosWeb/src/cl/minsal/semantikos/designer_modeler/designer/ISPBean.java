@@ -1,12 +1,17 @@
 package cl.minsal.semantikos.designer_modeler.designer;
 
+import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
+import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.components.HelperTableManager;
+import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.components.ispfetcher.ISPFetcher;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import org.primefaces.context.RequestContext;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -21,13 +26,16 @@ import java.util.*;
 public class ISPBean {
 
 
-    private Boolean existe = true;
+    private Boolean existe;
     private String regnum;
-    private int ano;
+    private Integer ano = null;
+
+    private HelperTable ht;
 
 
     private Map<String,String> fetchedData;
 
+    private HelperTableRecord ispRecord = null;
 
     public Map<String, String> getFetchedData() {
         return fetchedData;
@@ -40,11 +48,17 @@ public class ISPBean {
     @EJB
     ISPFetcher ispFetcher;
 
-
     @EJB
     HelperTableManager helperTableManager;
 
+    @EJB
+    UserManager userManager;
 
+    @EJB
+    RelationshipManager relationshipManager;
+
+    @ManagedProperty(value = "#{helperTableBean}")
+    private HelperTableBean helperTableBean;
 
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
@@ -53,9 +67,21 @@ public class ISPBean {
     private ConceptBean conceptBean;
 
 
+    @PostConstruct
+    public void init() {
+        // Se setea en duro la opcionalidad de la relación, esta debería ser opcional.
+        for (RelationshipDefinition rd : conceptBean.getCategory().getRelationshipDefinitions()) {
+            if(rd.isISP()) {
+                rd.getMultiplicity().setLowerBoundary(0);
+            }
+        }
+    }
+
+
     public AuthenticationBean getAuthenticationBean() {
         return authenticationBean;
     }
+
 
     public void setAuthenticationBean(AuthenticationBean authenticationBean) {
         this.authenticationBean = authenticationBean;
@@ -85,46 +111,70 @@ public class ISPBean {
         this.regnum = regnum;
     }
 
-    public int getAno() {
+    public Integer getAno() {
         return ano;
     }
 
-    public void setAno(int ano) {
+    public void setAno(Integer ano) {
         this.ano = ano;
     }
 
     public void fetchData(){
-        fetchedData = ispFetcher.getISPData(regnum+"/"+ano);
+
+        RequestContext context = RequestContext.getCurrentInstance();
+
+        //fetchedData = helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true).get(0).getFields();
+        if(regnum.trim().equals("") || ano == null || ano == 0) {
+            conceptBean.getMessageBean().messageError("Debe ingresar un valor para el dato 'RegNum' y 'RegAño'");
+            return;
+        }
+
+        ispRecord = null;
+
+        for (HelperTableRecord helperTableRecord : helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true)) {
+            ispRecord = helperTableRecord;
+            break;
+        }
+
+        if(ispRecord==null)
+            //fetchedData = ispFetcher.getISPData(regnum+"/"+ano);
+            ispRecord = new HelperTableRecord(getISPHelperTable(), ispFetcher.getISPData(regnum+"/"+ano));
+
+        context.execute("PF('ispfetcheddialog').show();");
     }
 
 
-    public void updateExiste(){
+    public void updateOptionality(RelationshipDefinition relationshipDefinition){
+        if(existe)
+            relationshipDefinition.getMultiplicity().setLowerBoundary(1);
+        else
+            relationshipDefinition.getMultiplicity().setLowerBoundary(0);
     }
 
 
     public List<String> getMapKeys(){
 
-        if (fetchedData == null )
+        if (ispRecord == null )
             return new ArrayList<String>();
 
-        List<String> ret = new ArrayList<>(fetchedData.size());
-        ret.addAll(fetchedData.keySet());
+        List<String> ret = new ArrayList<>(ispRecord.getFields().size());
+        ret.addAll(ispRecord.getFields().keySet());
         return ret;
     }
 
 
     public void agregarISP(RelationshipDefinition relationshipDefinition){
-        HelperTable ispHT = getISPHelperTable();
 
-        HelperTableRecord record = new HelperTableRecord(ispHT, mapFetchedData(fetchedData));
 
-        HelperTableRecord inserted = helperTableManager.insertRecord(ispHT,record,authenticationBean.getLoggedUser());
+        if(!ispRecord.isPersistent()){
+            HelperTable ispHT = getISPHelperTable();
+            ispRecord.setFields(mapFetchedData(ispRecord.getFields()));
+            HelperTableRecord inserted = helperTableManager.insertRecord(ispHT,ispRecord,authenticationBean.getLoggedUser());
+            ispRecord = helperTableManager.getRecord(ispHT,inserted.getId());
+        }
 
-        HelperTableRecord refreshed = helperTableManager.getRecord(ispHT,inserted.getId());
-
-        conceptBean.setSelectedHelperTableRecord(refreshed);
-
-        conceptBean.addRelationship(relationshipDefinition,refreshed);
+        conceptBean.setSelectedHelperTableRecord(ispRecord);
+        conceptBean.addRelationship(relationshipDefinition,ispRecord);
 
         clean();
 
@@ -133,13 +183,12 @@ public class ISPBean {
     private void clean() {
        existe = true;
        regnum = "";
-       ano = 0;
+       ano = null;
+       ispRecord = null;
     }
 
     private Map<String, String> mapFetchedData(Map<String, String> fetchedData) {
         Map<String, String> ret = new HashMap<String, String>();
-
-
 
         ret.put("registro", fetchedData.get("Registro"));
         ret.put("nombre", fetchedData.get("Nombre"));
@@ -165,15 +214,68 @@ public class ISPBean {
 
     public HelperTable getISPHelperTable(){
 
-        Collection<HelperTable> tablas = helperTableManager.getHelperTables();
+        if(ht == null) {
 
 
-        for (HelperTable ht: tablas) {
-            if(ht.getName().equals("smtk_helper_table_isp"))
-                return ht;
+            Collection<HelperTable> tablas = helperTableManager.getHelperTables();
+
+
+            for (HelperTable ht1 : tablas) {
+                if (ht1.getName().equals("smtk_helper_table_isp")) {
+                    ht = ht1;
+                    break;
+                }
+            }
         }
 
-        return null;
+        return ht;
+    }
+
+    public HelperTableRecord getIspRecord() {
+        return ispRecord;
+    }
+
+    public void setIspRecord(HelperTableRecord ispRecord) {
+        this.ispRecord = ispRecord;
+    }
+
+
+    public UserManager getUserManager() {
+        return userManager;
+    }
+
+    public void setUserManager(UserManager userManager) {
+        this.userManager = userManager;
+    }
+
+    public RelationshipManager getRelationshipManager() {
+        return relationshipManager;
+    }
+
+    public void setRelationshipManager(RelationshipManager relationshipManager) {
+        this.relationshipManager = relationshipManager;
+    }
+
+
+    public HelperTableBean getHelperTableBean() {
+        return helperTableBean;
+    }
+
+    public void setHelperTableBean(HelperTableBean helperTableBean) {
+        this.helperTableBean = helperTableBean;
+    }
+
+
+    /*
+verifica si el registro ya existe en la base de datos
+ */
+    public boolean getExisteRegistroISP(){
+        if(ispRecord==null || ispRecord.getFields().size()==0)
+            return false;
+
+        List<HelperTableRecord> records = helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true);
+
+        return  records.size() >0;
     }
 
 }

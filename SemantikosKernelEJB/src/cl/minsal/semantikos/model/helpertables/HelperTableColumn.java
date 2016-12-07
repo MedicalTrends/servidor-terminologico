@@ -6,9 +6,12 @@ package cl.minsal.semantikos.model.helpertables;
 public class HelperTableColumn {
 
     private String columnName;
-    private final boolean isPK;
-    private final boolean isSearchable;
-    private final boolean isShowable;
+    private boolean isPK;
+    private boolean isSearchable;
+    private boolean isShowable;
+
+    public HelperTableColumn() {
+    }
 
     /**
      * This is the default and only constructor for HelperTableColumn.
@@ -43,5 +46,17 @@ public class HelperTableColumn {
 
     public boolean isSearchable() {
         return isSearchable;
+    }
+
+    public void setPK(boolean PK) {
+        isPK = PK;
+    }
+
+    public void setSearchable(boolean searchable) {
+        isSearchable = searchable;
+    }
+
+    public void setShowable(boolean showable) {
+        isShowable = showable;
     }
 }

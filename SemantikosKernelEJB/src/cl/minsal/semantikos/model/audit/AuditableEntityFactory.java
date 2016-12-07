@@ -1,9 +1,6 @@
 package cl.minsal.semantikos.model.audit;
 
-import cl.minsal.semantikos.kernel.daos.CategoryDAO;
-import cl.minsal.semantikos.kernel.daos.ConceptDAO;
-import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
-import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
+import cl.minsal.semantikos.kernel.daos.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -25,6 +22,9 @@ public class AuditableEntityFactory {
 
     @EJB
     RelationshipDAO relationshipDAO;
+
+    @EJB
+    RefSetDAO refSetDAO;
 
     /**
      * Este método es responsable de recuperar la entidad adecuada.
@@ -48,6 +48,9 @@ public class AuditableEntityFactory {
 
             case RELATIONSHIP:
                 return relationshipDAO.getRelationshipByID(idAuditableEntity);
+
+            case REFSET:
+                return refSetDAO.getRefsetBy(idAuditableEntity);
 
             default:
                 throw new IllegalArgumentException("El ID del tipo de Entidad Auditable no existe: " + auditableEntityType);

@@ -188,6 +188,17 @@ public interface ConceptManager {
     public List<ConceptSMTK> getConceptBy(RefSet refSet);
 
     /**
+     * Este método es responsable de obtener los conceptos que se relacionan con el concepto <code>conceptSMTK</code> a
+     * través de relaciones, donde <code>conceptSMTK</code> es el concepto de origen y los conceptos relacionados con
+     * esto son el destino en la relación.
+     *
+     * @param conceptSMTK El concepto origen cuyos objetos relacionados se piden.
+     *
+     * @return Lista de conceptos relacionados (concepto --> relacionados)
+     */
+    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);
+
+    /**
      * Método encargado de obtener los conceptos en borrador
      *
      * @return lista de conceptos en borrador
@@ -202,6 +213,16 @@ public interface ConceptManager {
     public ConceptSMTK getNoValidConcept();
 
     /**
+     * Este método es responsable de trasladar un objeto de su categoría actual a otra categoría.
+     *
+     * @param conceptSMTK El concepto que se desea trasladar.
+     * @param category    La categoría a la cual se desea trasladar el concepto.
+     *
+     * @return El concepto con su categoría actualizada. Esto es necesario para cuando las llamadas al EJB sean remotas.
+     */
+    public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category);
+
+    /**
      * Este método es responsable de retornar la instancia del concepto pendiente.
      *
      * @return La instancia (única) del concepto pendiente.
@@ -209,5 +230,4 @@ public interface ConceptManager {
     public ConceptSMTK getPendingConcept();
 
 
-    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);
 }

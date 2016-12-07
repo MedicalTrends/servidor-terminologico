@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.designer_modeler.designer;
+package cl.minsal.semantikos.beans.concept;
 
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.ConceptManager;

@@ -20,7 +20,7 @@
 
     <p:panel id="helperTableTypeSimpleNew"
              widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
-             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
+             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                           and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }">
 
         <div class="ui-g">
@@ -52,11 +52,11 @@
                     </p:column>
 
                     <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}">
-                        <h:outputText value="#{record.fields['codigoAtc']}"/>
+                        <h:outputText value="#{record.fields['codigo_atc']}"/>
                     </p:column>
 
                     <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}" style="width: 500px">
-                        <h:outputText value="#{record.fields['dscCompletaAtc']}"/>
+                        <h:outputText value="#{record.fields['dsc_completa_atc']}"/>
                     </p:column>
 
                     <p:ajax event="itemSelect"
@@ -74,7 +74,7 @@
 
     <p:panel id="helperTableTypeSimple"
              widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                          and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }">
 
         <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
@@ -85,9 +85,9 @@
                     <p:outputLabel for="findHTRecords2" value="#{cc.attrs.relationshipDefinition.name}"/>
                     <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-6 ui-lg-#{cc.attrs.relationshipDefinition.ATC? '6':'2'}">
                     <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.fields['description']}" style="width: 80%" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
-                    <p:inputText disabled="true" id="findHTRecords2_" value="#{relationship.target.fields['dsc_completa_atc']}" style="width: 80%" rendered="#{cc.attrs.relationshipDefinition.ATC}" />
+                    <p:inputTextarea disabled="true" id="findHTRecords2_" value="#{relationship.target.fields['dsc_completa_atc']}" style="width: 80%" rendered="#{cc.attrs.relationshipDefinition.ATC}" />
                     <p:commandLink process="@this"
                                    update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                    action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
@@ -102,7 +102,7 @@
 
     <p:panel id="helperTableTypeSimpleNewWithAttributes"
              widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
-             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
+             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                           and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }">
 
         <div class="ui-g">
@@ -169,7 +169,7 @@
 
     <p:panel id="helperTableTypeSimpleWithAttributes"
              widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                          and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }">
 
         <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
@@ -216,10 +216,8 @@
     </p:panel>
 
     <!-- Multiplicidad N sin atributos-->
-    <p:panel id="helperTableTypeCollection"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.name != 'ISP'}">
-
-        <h3>#{cc.attrs.relationshipDefinition.name}</h3>
+    <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and not cc.attrs.relationshipDefinition.ISP}">
 
         <p:spacer />
 
@@ -230,8 +228,7 @@
                                 styleClass="fragments"
                                 inputStyle="width: 90%;"
                                 completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                queryDelay="#{cc.attrs.relationshipDefinition.isISP()? 1000 : 0}"
-                                minQueryLength="#{cc.attrs.relationshipDefinition.isISP()? 3 : 0}"
+                                minQueryLength="1"
                                 forceSelection="true"
                                 var="helperTableRecord"
                                 placeholder="#{cc.attrs.relationshipDefinition.name}..."
@@ -250,6 +247,10 @@
                     <!---->
                     <p:column>
                         <h:outputText value="#{helperTableRecord.fields['description']}"/>
+                    </p:column>
+
+                    <p:column rendered="#{cc.attrs.relationshipDefinition.bioequivalente}" width="500px" style="width: 500px">
+                        <h:outputText value="#{helperTableRecord.fields['nombre']}"/>
                     </p:column>
 
                     <p:ajax event="itemSelect"
@@ -274,13 +275,44 @@
                              reflow="true">
                     <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
                                var="column"
-                               columnIndexVar="colIndex"
-                    >
+                               columnIndexVar="colIndex" rendered="#{ not cc.attrs.relationshipDefinition.bioequivalente}">
                         <f:facet name="header">
                             <h:outputText value="#{column.columnName}" />
                         </f:facet>
                         <h:outputText value="#{relationship.target.fields.get(column.columnName)}" />
                     </p:columns>
+
+                    <p:column headerText="Registro" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{relationship.target.fields['registro']}"/>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Nombre" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{relationship.target.fields['nombre']}"/>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Titular" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{relationship.target.fields['titular']}"/>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Usuario" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['id_user'])}"/>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Fecha ingreso" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{relationship.target.fields['creation_date']}"/>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Fecha modificación" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{relationship.target.fields['fecha_proxima_renovacion']}"/>
+                        </div>
+                    </p:column>
+
                     <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
                         <p:commandButton
                                 icon="fa fa-trash"
@@ -299,14 +331,12 @@
     </p:panel>
 
     <!-- ISP -->
-    <p:panel id="helperTableTypeCollectionISP"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.name == 'ISP'}">
-
-        <h3>#{cc.attrs.relationshipDefinition.name}</h3>
+    <p:panel id="helperTableTypeCollectionISP" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.ISP}">
 
         <p:spacer />
 
-        <div class="ui-g">
+        <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherexisteinputs" rendered="#{cc.attrs.concept.editable}">
 
             <div class="ui-g-12 ui-md-6 ui-lg-2">
                 <p:outputLabel for="ispexistebooleanbutton">Existe ISP</p:outputLabel>
@@ -314,12 +344,14 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-2">
                 <p:selectBooleanButton  id="ispexistebooleanbutton" value="#{ispbean.existe}" offLabel="No" onLabel="Si" onIcon="ui-icon-check" offIcon="ui-icon-close" >
-                    <p:ajax immediate="true" listener="#{ispbean.updateExiste}" update="ispfetcherinputs" process="ispexistebooleanbutton"></p:ajax>
+                    <p:ajax async="false" listener="#{ispbean.updateOptionality(cc.attrs.relationshipDefinition)}" update="ispfetcherinputs" process="ispexistebooleanbutton" />
+                    <!-- Parámetros del buscador -->
+
                 </p:selectBooleanButton>
             </div>
 
-        </div>
-        <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherinputs">
+        </p:outputPanel>
+        <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherinputs" rendered="#{cc.attrs.concept.editable}">
             <p:outputPanel  rendered="#{ispbean.existe}">
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <p:outputLabel for="ispregnum">RegNum</p:outputLabel>
@@ -328,26 +360,26 @@
                     <p:inputText id="ispregnum" value="#{ispbean.regnum}" />
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:outputLabel for="ispregano" >Regaño</p:outputLabel>
+                    <p:outputLabel for="ispregano" >RegAño</p:outputLabel>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <p:inputText id="ispregano" value="#{ispbean.ano}" />
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:commandButton id="buttonispcargadatos" action="#{ispbean.fetchData}" update="ispfetcheddialogcontent" onsuccess="PF('ispfetcheddialog').show()" value="Cargar Data" process="@this, ispregnum, ispregano" />
+                    <p:commandButton id="buttonispcargadatos" action="#{ispbean.fetchData}" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" value="Cargar Data" process="@this, ispregnum, ispregano" />
                 </div>
-                <p:dialog id="ispfetcheddialog" widgetVar="ispfetcheddialog" header="Confirmar datos recuperados del Registro ISP" modal="true">
-                    <p>Se han recuperado los siguientes datos desde el ISP:</p>
+                <p:dialog id="ispfetcheddialog" widgetVar="ispfetcheddialog" header="Confirmar datos recuperados del Registro ISP" modal="true" width="750px" height="500px">
+                    <p:outputLabel rendered="#{ not empty ispbean.ispRecord.fields}">Se han recuperado los siguientes datos desde el ISP:</p:outputLabel>
                     <p:panel id="ispfetcheddialogcontent" >
 
                         <p:dataTable value="#{ispbean.mapKeys}" var="key" rendered="#{not empty ispbean.mapKeys}">
                             <p:column width="200">#{key}</p:column>
-                            <p:column width="300">#{ispbean.fetchedData[key]}</p:column>
+                            <p:column width="400">#{ispbean.ispRecord.fields[key]}</p:column>
                         </p:dataTable>
 
 
-                        <p:outputLabel endered="#{empty ispbean.mapKeys}" value="No se pudo recuperar datos del ISP" />
-                        <p:commandButton rendered="#{not empty ispbean.mapKeys}" value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:outputLabel rendered="#{empty ispbean.ispRecord.fields}" value="No se pudo recuperar datos del ISP" />
+                        <p:commandButton rendered="#{not empty ispbean.ispRecord.fields}" value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                         <p:commandButton value="Cancelar" type="button" onclick="PF('ispfetcheddialog').hide()" />
 
                     </p:panel>
@@ -356,49 +388,68 @@
 
             </p:outputPanel>
         </p:outputPanel>
-        <div class="ui-g">
-            <div class="ui-g-12 ui-md-6 ui-lg-12">
-                <p:dataTable id="collectionValues123"
-                             styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
-                             var="relationship"
-                             value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                             style="width: 100%"
-                             reflow="true"
-                             rendered="#{ispbean.existe}" >
-                    <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
-                               var="column"
-                               columnIndexVar="colIndex"
-                    >
-                        <f:facet name="header">
-                            <h:outputText value="#{column.columnName}" />
-                        </f:facet>
-                        <h:outputText value="#{relationship.target.fields.get(column.columnName)}" />
-                    </p:columns>
 
-                    <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
-                        <p:commandButton
-                                icon="fa fa-trash"
-                                title="Eliminar"
-                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                                style="float: right"
-                                process="@this"
-                                immediate="true"
-                                actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                                styleClass="relationships"
-                        />
-                    </p:column>
-                </p:dataTable>
-            </div>
-        </div>
+        <p:outputLabel value="No tiene registro ISP" rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}" />
+        <p:dataTable id="collectionValues123"
+                     styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
+                     var="relationship"
+                     value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     style="width: 100%"
+                     reflow="true"
+                     rendered="#{ not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition) }" >
+
+            <p:column headerText="Registro">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.fields['registro']}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Nombre">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.fields['nombre']}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Titular">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.fields['titular']}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Usuario">
+                <div style="text-align: center;">
+                    <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['id_user'])}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Fecha ingreso">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.fields['creation_date']}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Fecha modificación">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.fields['fecha_proxima_renovacion']}"/>
+                </div>
+            </p:column>
+
+            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
+                <p:commandButton
+                        icon="fa fa-trash"
+                        title="Eliminar"
+                        update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                        style="float: right"
+                        process="@this"
+                        immediate="true"
+                        actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                        styleClass="relationships"
+                />
+            </p:column>
+        </p:dataTable>
+
     </p:panel>
 
 
     <!-- Multiplicidad N con atributos-->
 
-    <p:panel id="helperTableTypeCollectionWithAttributes"
+    <p:panel id="helperTableTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500" collapsed="true"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
-
-        <h3>#{cc.attrs.relationshipDefinition.name}</h3>
 
         <p:spacer />
 

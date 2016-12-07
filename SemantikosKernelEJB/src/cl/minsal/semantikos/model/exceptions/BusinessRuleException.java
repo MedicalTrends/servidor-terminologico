@@ -38,4 +38,10 @@ public class BusinessRuleException extends RuntimeException {
     public ConceptSMTK getConceptSMTK() {
         return conceptSMTK;
     }
+
+    @Override
+    public String getMessage() {
+        return this.code + ": " + super.getMessage();
+
+    }
 }

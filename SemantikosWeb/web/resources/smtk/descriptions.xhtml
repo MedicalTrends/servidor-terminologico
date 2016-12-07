@@ -49,7 +49,7 @@
                     </p:selectOneMenu>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:commandButton value="Agregar" id="btn" action="#{conceptBean.addDescription()}"
+                    <p:commandButton value="Agregar" id="btn" action="#{descriptionBeans.addDescription()}"
                                      process="@(.otherDescriptionsPanel)"
                                      update="@(.otherDescriptionsPanel)"
                                      style="float: right"/>
@@ -67,7 +67,7 @@
                          editable="true"
                          reflow="true">
 
-                <p:ajax listener="#{conceptBean.descriptionEditRow}" event="rowEdit"
+                <p:ajax listener="#{descriptionBeans.descriptionEditRow}" event="rowEdit"
                         update="@(.otherDescriptions),@(.conceptHeader)"/>
 
                 <!--Columnas por defecto -->
@@ -151,7 +151,7 @@
                 </p:column>
 
                 <p:column headerText="Acción" style="width: 6%" rendered="#{cc.attrs.editable}">
-                    <p:commandLink actionListener="#{conceptBean.removeDescription(description)}"
+                    <p:commandLink actionListener="#{descriptionBeans.removeDescription(description)}"
                                    ajax="true"
                                    process="@this"
                                    update="@(.otherDescriptions)"
@@ -303,7 +303,7 @@
 
         <div style="text-align: center;">
             <p:commandButton update="createEdit" icon="fa fa-exchange" value="Trasladar"
-                             actionListener="#{conceptBean.translateDescription}">
+                             actionListener="#{descriptionBeans.traslateDescription}">
             </p:commandButton>
         </div>
 
@@ -459,7 +459,7 @@
 
         <div style="text-align: center;">
             <p:commandButton update="createEdit" icon="fa fa-exchange" value="Trasladar a no valido"
-                             actionListener="#{conceptBean.traslateDescriptionNotValid}">
+                             actionListener="#{descriptionBeans.traslateDescriptionNotValid}">
             </p:commandButton>
         </div>
 

@@ -54,7 +54,22 @@ public class ISPFetcherImpl implements ISPFetcher {
             e.printStackTrace();
         }
 
-        return ret;
 
+        if (validar(ret))
+            return ret;
+
+        return new HashMap<String, String>();
+
+    }
+
+    private boolean validar(Map<String, String> ret) {
+
+        for (String key : ret.keySet()) {
+            String value =  ret.get(key);
+            if(key != null && value !=null && value.trim().length()>1)
+                return true;
+        }
+
+        return false;
     }
 }

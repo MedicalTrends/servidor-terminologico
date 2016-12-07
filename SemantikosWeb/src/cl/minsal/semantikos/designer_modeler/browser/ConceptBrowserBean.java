@@ -271,7 +271,6 @@ public class ConceptBrowserBean implements Serializable {
         this.conceptManager = conceptManager;
     }
 
-
     public AuthenticationBean getAuthenticationBean() {
         return authenticationBean;
     }

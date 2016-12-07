@@ -7,7 +7,7 @@ import cl.minsal.semantikos.kernel.daos.DAO;
  */
 public class CategoryFactory {
 
-    private static final Category nullCategory = new Category(DAO.NON_PERSISTED_ID, "Categoría Raíz", "Raiz", false, false, "black", new TagSMTK(-1, null));
+    private static final Category nullCategory = new Category(DAO.NON_PERSISTED_ID, "Categoría Raíz", "Raiz", false, "black", new TagSMTK(-1, null));
 
     public static Category getNullCategory() {
         return nullCategory;

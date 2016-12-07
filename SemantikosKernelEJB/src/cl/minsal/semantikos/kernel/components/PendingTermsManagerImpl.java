@@ -1,9 +1,6 @@
 package cl.minsal.semantikos.kernel.components;
 
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.DescriptionType;
-import cl.minsal.semantikos.model.PendingTerm;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.PendingTermAddingBR;
 
 import javax.ejb.EJB;
@@ -41,7 +38,9 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
 
         /* 2. Agregarlo al concepto especial 'Pendientes' */
         ConceptSMTK pendingTermsConcept = conceptManager.getPendingConcept();
-        descriptionManager.bindDescriptionToConcept(pendingTermsConcept, pendingTerm.getTerm(), DescriptionType.SYNONYMOUS, loggedUser);
+        Description description = descriptionManager.bindDescriptionToConcept(pendingTermsConcept, pendingTerm.getTerm(), DescriptionType.SYNONYMOUS, loggedUser);
+        pendingTerm.setRelatedDescription(description);
+        pendingTermDAO.bindTerm2Description(pendingTerm, description);
 
         /* Validación de post-condiciones */
         pendingTermAddingBR.validatePostConditions(pendingTerm);

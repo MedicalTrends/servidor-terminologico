@@ -21,11 +21,11 @@ public class HelperTableFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(HelperTableFactory.class);
 
-    public static String ES_UN_MAPEO_DE = "Es un mapeo de";
-
     public static String ISP = "ISP";
 
-    public static String ATC = "ATC";
+    public static String HT_ATC_NAME = "smtk_helper_table_atc";
+
+    public static String BIOEQUIVALENTE = "Bioequivalente";
 
     /**
      * Este método es responsable de crear una lista de relaciones a partir de un arreglo json de relaciones.
@@ -47,7 +47,8 @@ public class HelperTableFactory {
         HelperTableRecordDTO dtoRecords;
         try {
 
-            dtoRecords = mapper.readValue(underScoreToCamelCaseJSON(jsonExpression), HelperTableRecordDTO.class);
+            //dtoRecords = mapper.readValue(underScoreToCamelCaseJSON(jsonExpression), HelperTableRecordDTO.class);
+            dtoRecords = mapper.readValue(jsonExpression, HelperTableRecordDTO.class);
         } catch (IOException e) {
             String errorMsg = "No se pudo parsear el RelationshipDefinition desde un JSON.";
             logger.error(errorMsg);
@@ -55,6 +56,7 @@ public class HelperTableFactory {
         }
 
         List<HelperTableRecord> helperTableRecords = new ArrayList<>();
+
         for (Map<String, String> mapRecord : dtoRecords.getRecords()) {
             HelperTableRecord helperTableRecord = new HelperTableRecord(helperTable, mapRecord);
             /**

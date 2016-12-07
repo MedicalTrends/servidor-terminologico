@@ -24,9 +24,6 @@ public class Category extends PersistentEntity implements TargetDefinition, Audi
     /** El tag Semantikos asociado */
     private TagSMTK tagSemantikos;
 
-    /** Vigencia de la categoría */
-    private boolean isValid;
-
     /** Color de la categoría */
     private String color;
 
@@ -36,13 +33,13 @@ public class Category extends PersistentEntity implements TargetDefinition, Audi
         super();
     }
 
-    public Category(long idCategory, String name, String nameAbbreviated, boolean restriction, boolean isValid, String color, TagSMTK tagSMTK){
+    public Category(long idCategory, String name, String nameAbbreviated, boolean restriction, String color, TagSMTK tagSMTK){
         super(idCategory);
 
         this.name = name;
         this.nameAbbreviated = nameAbbreviated;
         this.restriction = restriction;
-        this.isValid = isValid;
+
         this.color = color;
         this.tagSemantikos = tagSMTK;
     }
@@ -77,14 +74,6 @@ public class Category extends PersistentEntity implements TargetDefinition, Audi
 
     public void setTagSemantikos(TagSMTK tagSemantikos) {
         this.tagSemantikos = tagSemantikos;
-    }
-
-    public boolean isValid() {
-        return isValid;
-    }
-
-    public void setValid(boolean valid) {
-        this.isValid = valid;
     }
 
     public String getColor() {

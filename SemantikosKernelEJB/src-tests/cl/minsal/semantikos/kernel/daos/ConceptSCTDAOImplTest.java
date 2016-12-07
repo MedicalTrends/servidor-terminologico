@@ -12,7 +12,7 @@ public class ConceptSCTDAOImplTest {
     @Test
     public void testCreateConceptCSTFromJSON() throws Exception {
 
-        String jsonResult = "{\"id\":1,\"effectiveTime\":null,\"active\":true,\"moduleId\":1,\"definitionStatusId\":1}";
+        String jsonResult = "{\"id\":1,\"effectiveTime\":null,\"active\":true,\"moduleId\":1}";
 
         ObjectMapper mapper = new ObjectMapper();
         ConceptSCT conceptSCT = mapper.readValue(underScoreToCamelCaseJSON(jsonResult), ConceptSCT.class);

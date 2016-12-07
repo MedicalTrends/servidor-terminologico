@@ -2,6 +2,7 @@ package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.model.relationships.*;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,11 @@ public class RelationshipWeb extends Relationship implements Comparable<Relation
     public RelationshipWeb(ConceptSMTKWeb concept, long id, Relationship r, List<RelationshipAttribute> ra) {
         this(id, r, ra);
         super.setSourceConcept(concept);
+    }
+
+    public RelationshipWeb(ConceptSMTKWeb concept, long id, Relationship r, List<RelationshipAttribute> ra, Timestamp creationDate) {
+        this(concept, id, r, ra);
+        super.setCreationDate(creationDate);
     }
 
     @Override

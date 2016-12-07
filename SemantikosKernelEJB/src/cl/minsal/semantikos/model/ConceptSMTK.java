@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.model.audit.AuditableEntity;
-import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBR;
 import cl.minsal.semantikos.model.crossmaps.CrossMapType;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
@@ -303,10 +302,10 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         List<Crossmap> crossmaps = new ArrayList<>();
         for (Relationship relationship : relationships) {
             if (relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
-                try{
-                    crossmaps.add((IndirectCrossmap)relationship);
-                }catch(ClassCastException e){
-                    crossmaps.add((DirectCrossmap)relationship);
+                try {
+                    crossmaps.add((IndirectCrossmap) relationship);
+                } catch (ClassCastException e) {
+                    crossmaps.add((DirectCrossmap) relationship);
                 }
 
             }
@@ -315,11 +314,11 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         return crossmaps;
     }
 
-    public List<Crossmap> getRelationshipsIndirectCrossMap(){
+    public List<Crossmap> getRelationshipsIndirectCrossMap() {
 
         List<Crossmap> indirectCrossmaps = new ArrayList<>();
         for (Crossmap crossmap : getRelationshipsCrossMap()) {
-            if (crossmap.is(CrossMapType.INDIRECT)){
+            if (crossmap.is(CrossMapType.INDIRECT)) {
                 indirectCrossmaps.add(crossmap);
             }
         }
@@ -340,6 +339,10 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
             }
         }
         return someRelationships;
+    }
+
+    public boolean isRelationshipsLoaded() {
+        return relationshipsLoaded;
     }
 
     /**
@@ -404,7 +407,11 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     }
 
     public void setRelationships(List<Relationship> relationships) {
-        this.relationships = relationships;
+        if (relationships.isEmpty()) {
+            this.relationships = new ArrayList<>();
+        } else {
+            this.relationships = new ArrayList<>(relationships);
+        }
         this.relationshipsLoaded = true;
     }
 
@@ -544,7 +551,8 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * @param relationship La relación que es agregada.
      */
     public void addRelationship(Relationship relationship) {
-        this.getRelationships().add(relationship);
+        //this.getRelationships().add(relationship);
+        this.relationships.add(relationship);
     }
 
     /**
@@ -611,9 +619,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * <p>
      * Este método es responsable de retornar la <i>descripción FSN</i>. Basados en la regla de negocio que dice
      * que un concepto debe siempre tener una y solo una descripción FSN.</p>
-     * <p>
-     * Si el concepto no tuviera descripción preferida, se retorna una descripción "sin tipo".
-     * </p>
      *
      * @return La descripción preferida.
      */
@@ -625,23 +630,24 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
             }
         }
 
-        /* En este punto, no se encontró una descripción preferida, y se arroja una excepción */
-        throw new BusinessRuleException("BR-UNK", "Concepto sin descripción FSN");
+        /* Nunca debiera alcanzar esta parte del código */
+        return null;
     }
 
     @Override
     public String toString() {
 
+        String toString = "CONCEPT_ID=" + this.conceptID;
         if (descriptions.isEmpty()) {
-            return "ID=" + this.getId() + " - ConceptID=" + this.getConceptID();
+            return toString;
         }
 
         if (this.hasFavouriteDescription()) {
             Description descriptionFavorite = getDescriptionFavorite();
-            return "Preferida: " + descriptionFavorite.getTerm();
+            return toString + " - [Pref]: " + descriptionFavorite.getTerm();
         }
         Description aDescription = this.descriptions.get(1);
-        return aDescription.getDescriptionType().getName() + ": " + aDescription.getTerm();
+        return toString + " - " + aDescription.getDescriptionType().getName() + ": " + aDescription.getTerm();
     }
 
     /**
@@ -709,7 +715,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      *
      * @return <code>true</code> si contiene una relación asi y <code>false</code> sino.
      */
-    protected boolean contains(Relationship relationship) {
+    public boolean contains(Relationship relationship) {
         return this.getRelationships().contains(relationship);
     }
 
@@ -757,14 +763,25 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
     @Override
     public boolean equals(Object other) {
-        return (other instanceof ConceptSMTK) && (String.valueOf(conceptID) != null)
-                ? String.valueOf(conceptID).equals(String.valueOf(((ConceptSMTK) other).conceptID))
-                : (other == this);
+
+        /* Si son el mismo objeto */
+        if (other == this) return true;
+
+        if (!(other instanceof ConceptSMTK)) return false;
+
+        String otherConceptID = ((ConceptSMTK) other).conceptID;
+        boolean areEquals = this.conceptID.equals(otherConceptID);
+        return areEquals;
     }
 
     @Override
     public TargetType getTargetType() {
         return TargetType.SMTK;
+    }
+
+    @Override
+    public String getRepresentation() {
+        return toString();
     }
 
     @Override
@@ -790,7 +807,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
     public boolean contains(String snomedRelationshipType) {
         for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
-            if (snomedCTRelationship.getSnomedCTRelationshipType().equalsIgnoreCase(snomedRelationshipType)){
+            if (snomedCTRelationship.getSnomedCTRelationshipType().equalsIgnoreCase(snomedRelationshipType)) {
                 return true;
             }
         }
@@ -811,9 +828,23 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
     private boolean containsLike(SnomedCTRelationship theSnomedRelationship) {
         for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
-            if (theSnomedRelationship.equalsButConceptSource(snomedCTRelationship)){
+            if (theSnomedRelationship.equalsButConceptSource(snomedCTRelationship)) {
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    /**
+     * Este método es repsonsable de determinar si el concepto posee una relaicón de tipo ES UN MAPEO.
+     *
+     * @return <code>true</code> si el concepto posee una relación de tipo ES UN MAPEO y <code>false</code> sino.
+     */
+    public boolean hasES_UN_MAPEO() {
+
+        for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
+            if (snomedCTRelationship.isES_UN_MAPEO()) return true;
         }
 
         return false;

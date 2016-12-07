@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<composite:interface>
+    <composite:attribute name="conceptSMTK" type="cl.minsal.semantikos.model.ConceptSMTK"/>
+</composite:interface>
+
+<composite:implementation>
+
+    <p:commandButton value="Trasladar" type="submit" process="mainForm" rendered="#{conceptBean.concept.persistent and conceptBean.concept.modeled}"
+                     update="mainForm" oncomplete="PF('dialogTC').show()" icon="fa fa-ban" styleClass="ui-priority-primary" >
+
+        <p:confirm header="Confirmation" message="¿Desea trasladar este concepto a otra categoría?"
+                   icon="ui-icon-alert"/>
+    </p:commandButton>
+
+
+    <!-- Diálogo para buscar la categoría y aceptar -->
+    <p:dialog id="dialogTC" header="Trasladar concepto" widgetVar="dialogTC" global="true" showEffect="fade" hideEffect="fade">
+
+        <p:panel id="conceptTranslate" style="width: 100%; border: hidden;">
+                <h3>Trasladar Concepto a...</h3>
+                <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categiría propuesta"/>
+                <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.categoryId}" required="true">
+                    <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
+                                   itemLabel="#{category.name}"/>
+                </p:selectOneMenu>
+
+            <p:commandButton value="Trasladar" type="submit" process="mainForm"
+                             actionListener="#{transferConceptBean.transferConcept(cc.attrs.conceptSMTK)}"
+                             update="mainForm" icon="fa fa-ban" styleClass="ui-priority-primary" >
+
+                <p:confirm header="Confirmation" message="¿Desea realmente trasladar este concepto?"
+                           icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+    </p:dialog>
+
+    <h:outputStylesheet id="_customCSS">
+
+        .ui-row-editor span.ui-icon.ui-icon-pencil {
+            width: 18px !important;
+            height: 18px !important;
+            margin-right: 10px !important;
+        }
+
+        .ui-row-editor span.ui-icon.ui-icon-check {
+            width: 18px !important;
+            height: 18px !important;
+            margin-right: 10px !important;
+        }
+
+        .ui-row-editor span.ui-icon.ui-icon-close {
+            width: 18px !important;
+            height: 18px !important;
+            margin-right: 10px !important;
+        }
+
+    </h:outputStylesheet>
+
+</composite:implementation>
+</html>

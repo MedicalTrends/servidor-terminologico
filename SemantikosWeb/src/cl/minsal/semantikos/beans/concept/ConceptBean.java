@@ -1,28 +1,25 @@
-package cl.minsal.semantikos.designer_modeler.designer;
+package cl.minsal.semantikos.beans.concept;
 
+import cl.minsal.semantikos.beans.description.AutogenerateBeans;
+import cl.minsal.semantikos.beans.messages.MessageBean;
+import cl.minsal.semantikos.beans.snomed.SnomedBeans;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
+import cl.minsal.semantikos.designer_modeler.designer.*;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.businessrules.BusinessRulesContainer;
-import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBR;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
-import cl.minsal.semantikos.model.crossmaps.CrossMapType;
-import cl.minsal.semantikos.model.crossmaps.Crossmap;
+import cl.minsal.semantikos.model.businessrules.RelationshipBindingBRInterface;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
-import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableFactory;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.util.Pair;
 import cl.minsal.semantikos.view.components.ViewAugmenter;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.ReorderEvent;
-import org.primefaces.event.RowEditEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +38,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.*;
 
+import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN_MAPEO_DE;
 
 /**
  * Created by diego on 26/06/2016.
@@ -73,43 +71,58 @@ public class ConceptBean implements Serializable {
     @EJB
     AuditManager auditManager;
 
+    @EJB
+    private ViewAugmenter viewAugmenter;
+
+    @EJB
+    private RelationshipBindingBRInterface relationshipBindingBR;
+
     @ManagedProperty(value = "#{smtkBean}")
     private SMTKTypeBean smtkTypeBean;
 
     @ManagedProperty(value = "#{compositeAditionalBean}")
     private CompositeAditional compositeAditionalBean;
 
-    DescriptionTypeFactory descriptionTypeFactory = DescriptionTypeFactory.getInstance();
+    @ManagedProperty(value = "#{conceptExport}")
+    private ConceptExportMBean conceptBeanExport;
 
-    public User user;
+    @ManagedProperty(value = "#{authenticationBean}")
+    private AuthenticationBean authenticationBean;
+
+    @ManagedProperty(value = "#{changeMarketedBean}")
+    private ChangeMarketedBean changeMarketedBean;
+
+    @ManagedProperty(value = "#{crossmapBean}")
+    private CrossmapBean crossmapBean;
+
+    @ManagedProperty(value = "#{messageBean}")
+    MessageBean messageBean;
+
+    @ManagedProperty( value = "#{autogenerateBeans}")
+    private AutogenerateBeans autogenerateBeans;
+
+    @ManagedProperty( value = "#{snomedBean}")
+    private SnomedBeans snomedBeans;
+
+    public SnomedBeans getSnomedBeans() {
+        return snomedBeans;
+    }
+
+    public void setSnomedBeans(SnomedBeans snomedBeans) {
+        this.snomedBeans = snomedBeans;
+    }
+
+    public AutogenerateBeans getAutogenerateBeans() {
+        return autogenerateBeans;
+    }
+
+    public void setAutogenerateBeans(AutogenerateBeans autogenerateBeans) {
+        this.autogenerateBeans = autogenerateBeans;
+    }
 
     private List<Category> categoryList;
 
-    private Category categorySelected;
-
-    private boolean editable;
-
-    private int idCategory;
-
-    /**
-     * id del concepto sobre la cual se esta editando. Usado como enlace entre la petición desde el ConceptBrowser y el
-     * concepto
-     */
-    private int idConcept;
-
-    private ConceptSMTKWeb concept;
-
     private List<DescriptionWeb> descriptionsToTraslate;
-
-    /**
-     * El concepto original
-     */
-    private ConceptSMTKWeb _concept;
-
-    /**
-     * La categoría asociada a la vista, de la cual se crea un nuevo concepto
-     */
-    private Category category;
 
     private List<DescriptionType> descriptionTypes = new ArrayList<>();
 
@@ -118,6 +131,44 @@ public class ConceptBean implements Serializable {
     private List<Description> selectedDescriptions = new ArrayList<Description>();
 
     private List<TagSMTK> tagSMTKs = new ArrayList<TagSMTK>();
+
+    private List<RelationshipDefinitionWeb> orderedRelationshipDefinitionsList;
+
+    private List<ConceptAuditAction> auditAction;
+
+    private List<String> autoGenerateList = new ArrayList<>();
+
+    private List<NoValidDescription> noValidDescriptions;
+
+    private List<ConceptSMTK> conceptSuggestedList;
+
+    private List<ObservationNoValid> observationNoValids;
+
+    public List<ObservationNoValid> getObservationNoValids() {
+        return observationNoValids;
+    }
+
+    private Category categorySelected;
+
+    DescriptionTypeFactory descriptionTypeFactory = DescriptionTypeFactory.getInstance();
+
+    public User user;
+
+    private boolean editable;
+
+    private int idCategory;
+
+    /** id del concepto sobre la cual se esta editando. Usado como enlace entre la petición desde el ConceptBrowser y el
+     * concepto */
+    private int idConcept;
+
+    private ConceptSMTKWeb concept;
+
+    /** El concepto original */
+    private ConceptSMTKWeb _concept;
+
+    /** La categoría asociada a la vista, de la cual se crea un nuevo concepto */
+    private Category category;
 
     // Placeholder para las descripciones
     private String otherTermino;
@@ -151,7 +202,6 @@ public class ConceptBean implements Serializable {
 
     private Map<RelationshipDefinition, List<RelationshipAttribute>> relationshipAttributesPlaceholder = new HashMap<RelationshipDefinition, List<RelationshipAttribute>>();
 
-
     //Parametros del formulario
 
     private String FSN;
@@ -162,8 +212,6 @@ public class ConceptBean implements Serializable {
 
     private int categorySelect;
 
-    private List<ConceptAuditAction> auditAction;
-
     //para tipo helpertable
     private int helperTableValuePlaceholder;
 
@@ -171,17 +219,7 @@ public class ConceptBean implements Serializable {
 
     private Description descriptionPending;
 
-    public long getIdTermPending() {
-        return idTermPending;
-    }
-
-    public void setIdTermPending(long idTermPending) {
-        this.idTermPending = idTermPending;
-        descriptionPending= descriptionManager.getDescriptionByID(idTermPending);
-        if(descriptionPending!=null){
-            concept.addDescriptionWeb(new DescriptionWeb(descriptionPending));
-        }
-    }
+    private boolean refsetEditConcept;
 
     public Description getDescriptionPending() {
         return descriptionPending;
@@ -190,19 +228,6 @@ public class ConceptBean implements Serializable {
     public void setDescriptionPending(Description descriptionPending) {
         this.descriptionPending = descriptionPending;
     }
-
-    @ManagedProperty(value = "#{conceptExport}")
-    private ConceptExportMBean conceptBeanExport;
-
-
-    @ManagedProperty(value = "#{authenticationBean}")
-    private AuthenticationBean authenticationBean;
-
-    @ManagedProperty(value = "#{changeMarketedBean}")
-    private ChangeMarketedBean changeMarketedBean;
-
-    @EJB
-    private ViewAugmenter viewAugmenter;
 
     private AutogenerateMCCE autogenerateMCCE;
 
@@ -213,8 +238,6 @@ public class ConceptBean implements Serializable {
     /**
      * Un map para almacenar localmente las relaciones aumentadas
      */
-    private List<RelationshipDefinitionWeb> orderedRelationshipDefinitionsList;
-
     public AuthenticationBean getAuthenticationBean() {
         return authenticationBean;
     }
@@ -222,7 +245,6 @@ public class ConceptBean implements Serializable {
     public void setAuthenticationBean(AuthenticationBean authenticationBean) {
         this.authenticationBean = authenticationBean;
     }
-
     public ConceptExportMBean getConceptBeanExport() {
         return conceptBeanExport;
     }
@@ -231,31 +253,27 @@ public class ConceptBean implements Serializable {
         this.conceptBeanExport = conceptBean;
     }
 
-    private List<String> autoGenerateList = new ArrayList<>();
+    private ObservationNoValid observationNoValid;
 
     private ConceptSMTK conceptSMTKNotValid;
 
-    private List<NoValidDescription> noValidDescriptions;
-
-    private ObservationNoValid observationNoValid;
-
-    private List<ConceptSMTK> conceptSuggestedList;
-
     private ConceptSMTK conceptSuggested;
-
-    private List<ObservationNoValid> observationNoValids;
-
-    @EJB
-    private RelationshipBindingBRInterface relationshipBindingBR;
-
-    public List<ObservationNoValid> getObservationNoValids() {
-        return observationNoValids;
-    }
 
     public void setObservationNoValids(List<ObservationNoValid> observationNoValids) {
         this.observationNoValids = observationNoValids;
     }
 
+    public DescriptionManager getDescriptionManager() {
+        return descriptionManager;
+    }
+
+    public List<NoValidDescription> getNoValidDescriptions() {
+        return noValidDescriptions;
+    }
+
+    public List<DescriptionWeb> getDescriptionsToTraslate() {
+        return descriptionsToTraslate;
+    }
     public ObservationNoValid getObservationNoValid() {
         return observationNoValid;
     }
@@ -263,9 +281,6 @@ public class ConceptBean implements Serializable {
     public void setObservationNoValid(ObservationNoValid observationNoValid) {
         this.observationNoValid = observationNoValid;
     }
-
-    @ManagedProperty(value = "#{crossmapBean}")
-    private CrossmapBean crossmapBean;
 
     public CrossmapBean getCrossmapBean() {
         return crossmapBean;
@@ -275,39 +290,33 @@ public class ConceptBean implements Serializable {
         this.crossmapBean = crossmapBean;
     }
 
+    public Map<RelationshipDefinition, List<RelationshipAttribute>> getRelationshipAttributesPlaceholder() {
+        return relationshipAttributesPlaceholder;
+    }
+
+    public void setRelationshipAttributesPlaceholder(Map<RelationshipDefinition, List<RelationshipAttribute>> relationshipAttributesPlaceholder) {
+        this.relationshipAttributesPlaceholder = relationshipAttributesPlaceholder;
+    }
+
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() throws ParseException {
 
         // TODO: Terminar esto o cambiar en el futuro
-
         user = authenticationBean.getLoggedUser();
-        Profile designerProfile = new Profile(2, "Diseñador", "Usuario Diseñador");
-        Profile modelerProfile = new Profile(3, "Modelador", "Usuario Modelador");
-        user.getProfiles().add(designerProfile);
-        user.getProfiles().add(modelerProfile);
         autogenerateMCCE = new AutogenerateMCCE();
         autogenerateMC = new AutogenerateMC();
         autogeneratePCCE = new AutogeneratePCCE();
 
         noValidDescriptions = new ArrayList<>();
-
         observationNoValids = descriptionManager.getObservationsNoValid();
-
         categoryList = categoryManager.getCategories();
-
         descriptionTypes = descriptionTypeFactory.getDescriptionTypesButFSNandFavorite();
-
         descriptionTypesEdit = descriptionTypeFactory.getDescriptionTypesButFSN();
-
         tagSMTKs = tagSMTKManager.getAllTagSMTKs();
-
         orderedRelationshipDefinitionsList = new ArrayList<>();
-
         descriptionsToTraslate = new ArrayList<>();
-
         conceptSMTKNotValid = conceptManager.getNoValidConcept();
-
         conceptSuggestedList = new ArrayList<>();
     }
 
@@ -321,19 +330,18 @@ public class ConceptBean implements Serializable {
     }
 
     /**
-     * Este método se ejecuta al inicio del proceso de creación de un concepto.
-     *
-     * @throws ParseException
+     * Este método se encarga de inicializar un concepto si es que se va a crear un concepto nuevo. Y si se va a editar
+     * invoca al getConceptByID.
      */
-    public void createConcept() throws ParseException {
-        RequestContext context = RequestContext.getCurrentInstance();
+    public void createConcept() {
+
         if (idConcept == 0) {
             setCategory(categoryManager.getCategoryById(idCategory));
             if (category.getId() == 34) changeMultiplicityToRequiredRelationshipDefinitionMC();
 
             /* Se valida que el término propuesto no exista previamente */
             if (categoryManager.categoryContains(category, favoriteDescription)) {
-                messageError("La descripción " + favoriteDescription + " ya existe dentro de la categoría " + category.getName());
+                messageBean.messageError("La descripción " + favoriteDescription + " ya existe dentro de la categoría " + category.getName());
             } else {
                 newConcept(category, favoriteDescription);
             }
@@ -350,21 +358,28 @@ public class ConceptBean implements Serializable {
 
             if (!relationshipDefinition.getRelationshipAttributeDefinitions().isEmpty()) {
                 relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null));
+
                 // Si esta definición de relación es de tipo CROSSMAP, Se agrega el atributo tipo de relacion = "ES_UN_MAPEO_DE" (por defecto)
-                if(relationshipDefinition.getTargetDefinition().isCrossMapType()){
+                if (relationshipDefinition.getTargetDefinition().isCrossMapType()) {
                     for (RelationshipAttributeDefinition attDef : relationshipDefinition.getRelationshipAttributeDefinitions()) {
-                        if(attDef.isRelationshipTypeAttribute()) {
+                        if (attDef.isRelationshipTypeAttribute()) {
                             Relationship r = relationshipPlaceholders.get(relationshipDefinition.getId());
-                            HelperTable helperTable = (HelperTable)attDef.getTargetDefinition();
-                            String[] columnNames= {HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName()};
-                            RelationshipAttribute ra = new RelationshipAttribute(attDef, r, helperTableManager.searchRecords(helperTable, Arrays.asList(columnNames), HelperTableFactory.ES_UN_MAPEO_DE, true).get(0));
+                            HelperTable helperTable = (HelperTable) attDef.getTargetDefinition();
+                            String[] columnNames = {HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName()};
+
+                            List<HelperTableRecord> relationshipTypes = helperTableManager.searchRecords(helperTable, Arrays.asList(columnNames), ES_UN_MAPEO_DE, true);
+                            RelationshipAttribute ra;
+                            if (relationshipTypes.size() == 0) {
+                                logger.error("No hay datos en la tabla de TIPOS DE RELACIONES.");
+                            }
+
+                            ra = new RelationshipAttribute(attDef, r, relationshipTypes.get(0));
                             r.getRelationshipAttributes().add(ra);
                         }
                     }
                 }
             }
         }
-        //context.execute("PF('dialogNameConcept').hide();");
     }
 
     //Este método es responsable de a partir de un concepto SMTK y un término, devolver un concepto WEB con su FSN y su Preferida
@@ -392,9 +407,7 @@ public class ConceptBean implements Serializable {
         String observation = "";
         // TODO: Diego
         TagSMTK tagSMTK = new TagSMTK(category.getTagSemantikos().getId(), category.getTagSemantikos().getName());
-
         ConceptSMTK conceptSMTK = new ConceptSMTK(conceptManager.generateConceptId(), category, false, false, false, false, false, false, observation, tagSMTK);
-
 
         // Se crea el concepto WEB a partir del concepto SMTK
         concept = initConcept(conceptSMTK, term);
@@ -409,8 +422,6 @@ public class ConceptBean implements Serializable {
     /**
      * Este método se encarga de setear el idCategory. En ejecución este metodo es invocado al realizar el request
      * desde el conceptBrowser cuando se desea crear un nuevo concepto dentro de una categoria
-     *
-     * @param idCategory
      */
     public void setIdCategory(int idCategory) {
         this.idCategory = idCategory;
@@ -423,17 +434,11 @@ public class ConceptBean implements Serializable {
     /**
      * Este método se encarga de setear el idConcept. En ejecución este metodo es invocado al realizar el request
      * desde el conceptBrowser cuando se desea ver o editar un concepto existente
-     *
-     * @param idConcept
      */
     public void setIdConcept(int idConcept) {
         this.idConcept = idConcept;
-        if (idConcept != 0) {
-            try {
-                createConcept();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+        if (idConcept != 0 && concept == null) {
+            createConcept();
         }
     }
 
@@ -454,7 +459,6 @@ public class ConceptBean implements Serializable {
         _concept = new ConceptSMTKWeb(conceptSMTK);
 
         concept.setEditable(editable);
-
         auditAction = auditManager.getConceptAuditActions(concept, true);
         category = concept.getCategory();
         conceptBeanExport.setConceptSMTK(concept);
@@ -473,37 +477,25 @@ public class ConceptBean implements Serializable {
     }
 
     /**
-     * Este método es el encargado de remover una descripción específica de la lista de descripciones del concepto.
-     */
-    public void removeDescription(Description description) {
-        concept.removeDescriptionWeb(description);
-    }
-
-    /**
-     * Este método es el encargado de agregar relaciones al concepto recibiendo como parámetro un Relationship
-     * Definition. Este método es utilizado por el componente BasicType, el cual agrega relaciones con target sin valor
-     */
-    public void addRelationship(RelationshipDefinition relationshipDefinition) {
-        Target target = new BasicTypeValue(null);
-        Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
-        // Se utiliza el constructor mínimo (sin id)
-        this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
-    }
-
-    /**
      * Este método es el encargado de agregar relaciones al concepto recibiendo como parámetro un Relationship
      * Definition. Este método es utilizado por el componente BasicType, el cual agrega relaciones con target sin valor
      */
     public void addRelationshipWithAttributes(RelationshipDefinition relationshipDefinition) {
-        if (existRelationshipISAMapping()) {
-            messageError("Cuando existe una relación Es un mapeo, no se pueden agregar más relaciones.");
+        if (snomedBeans.existRelationshipISAMapping(concept)) {
+            messageBean.messageError("Cuando existe una relación 'Es un mapeo de', no se pueden agregar más relaciones.");
             return;
         }
         Relationship relationship = relationshipPlaceholders.get(relationshipDefinition.getId());
 
-        if (existRelationshipToSCT()) crossmapBean.refreshCrossmapIndirect(concept);
-
-        if (isMapping(relationship)) {
+        // Validar placeholders de targets de relacion
+        if (relationship.getTarget() == null) {
+            messageBean.messageError("Debe seleccionar un valor para el atributo " + relationshipDefinition.getName());
+            relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
+            resetPlaceHolders();
+            return;
+        }
+        if (snomedBeans.existRelationshipToSCT(concept)) crossmapBean.refreshCrossmapIndirect(concept);
+        if (snomedBeans.isMapping(relationship)) {
             ConceptSCT conceptSCT = (ConceptSCT) relationship.getTarget();
             fullyDefined = (conceptSCT.isCompletelyDefined()) ? true : false;
             concept.setFullyDefined(fullyDefined);
@@ -512,28 +504,10 @@ public class ConceptBean implements Serializable {
             concept.setInherited(false);
         }
 
-        // Validar placeholders de targets de relacion
-        if (relationship.getTarget() == null) {
-            messageError("Debe seleccionar un valor para el atributo " + relationshipDefinition.getName());
-            relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null));
-            resetPlaceHolders();
-            return;
-        }
-
-        try {
-            if (relationship.getClass().equals(RelationshipWeb.class)) {
-                relationship = ((RelationshipWeb) relationship).toRelationship();
-            }
-            relationshipBindingBR.verifyPreConditions(concept, relationship, user);
-        } catch (EJBException EJB) {
-            messageError(EJB.getMessage());
-            return;
-        }
-
         for (RelationshipAttributeDefinition attributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
             if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) || changeIndirectMultiplicity(relationship, relationshipDefinition, attributeDefinition)) {
-                messageError("Información incompleta para agregar " + relationshipDefinition.getName());
-                relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null));
+                messageBean.messageError("Información incompleta para agregar " + relationshipDefinition.getName());
+                relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
                 resetPlaceHolders();
                 return;
             }
@@ -543,17 +517,13 @@ public class ConceptBean implements Serializable {
             RelationshipAttribute attribute = new RelationshipAttribute(relationshipDefinition.getOrderAttributeDefinition(), relationship, new BasicTypeValue(concept.getValidRelationshipsByRelationDefinition(relationshipDefinition).size() + 1));
             relationship.getRelationshipAttributes().add(attribute);
         }
-
-        autogenerateRelationshipWithAttributes(relationshipDefinition, relationship);
-
-
+        autogenerateBeans.autogenerateRelationshipWithAttributes(relationshipDefinition, relationship,concept,autoGenerateList,autogenerateMC);
         // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
         // Resetear placeholder relacion
-        relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null));
+        relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
         // Resetear placeholder targets
         resetPlaceHolders();
-
     }
 
     public void resetPlaceHolders() {
@@ -564,11 +534,23 @@ public class ConceptBean implements Serializable {
         crossmapSetMemberSelected = null;
     }
 
+    public Relationship resetRelationship(Relationship r) {
+        if (r.getRelationshipDefinition().getTargetDefinition().isCrossMapType())
+            return new Relationship(r.getSourceConcept(), null, r.getRelationshipDefinition(), r.getRelationshipAttributes(), null);
+        else
+            return new Relationship(r.getSourceConcept(), null, r.getRelationshipDefinition(), new ArrayList<RelationshipAttribute>(), null);
+    }
+
     /**
      * Este método es el encargado de agregar una nuva relacion con los parémetros que se indican.
      */
     public void addRelationship(RelationshipDefinition relationshipDefinition, Target target) {
         Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+        if ((relationshipDefinition.isISP() || relationshipDefinition.isBioequivalente()) && concept.contains(relationship)) {
+            messageBean.messageError("Ya existe la relación '" + relationshipDefinition.getName() + "' con el destino '" + target.getRepresentation() + "' para este concepto");
+            resetPlaceHolders();
+            return;
+        }
         // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
         // Resetear placeholder targets
@@ -581,12 +563,11 @@ public class ConceptBean implements Serializable {
     public void addOrChangeRelationship(RelationshipDefinition relationshipDefinition, Target target) {
         Relationship relationship = null;
         boolean isRelationshipFound = false;
-
         if (target.toString().equals(""))
             target = null;
 
         if (relationshipDefinition.getTargetDefinition().isSMTKType() && target.getId() == concept.getId()) {
-            messageError("No puede seleccionar el mismo concepto que está editando");
+            messageBean.messageError("No puede seleccionar el mismo concepto que está editando");
             conceptSelected = null;
             return;
         }
@@ -596,7 +577,7 @@ public class ConceptBean implements Serializable {
                 relationshipWeb.setTarget(target);
                 relationship = relationshipWeb;
                 isRelationshipFound = true;
-                autogenerateRelationship(relationshipDefinition, relationship, target);
+                autogenerateBeans.autogenerateRelationship(relationshipDefinition, relationship, target,concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
                 if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<String>) target).getValue().equalsIgnoreCase("Si"))
                     changeMultiplicityNotRequiredRelationshipDefinitionMC();
                 if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<String>) target).getValue().equalsIgnoreCase("No"))
@@ -614,8 +595,7 @@ public class ConceptBean implements Serializable {
                 changeMultiplicityToRequiredRelationshipDefinitionMC();
         }
         //Autogenerado
-        autogenerateRelationship(relationshipDefinition, relationship, target);
-
+        autogenerateBeans.autogenerateRelationship(relationshipDefinition, relationship, target, concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
         // Se resetean los placeholder para los target de las relaciones
         resetPlaceHolders();
     }
@@ -636,7 +616,7 @@ public class ConceptBean implements Serializable {
                     if (attribute.getRelationAttributeDefinition().equals(relationshipAttributeDefinition)) {
                         attribute.setTarget(target);
                         isAttributeFound = true;
-                        autogenerateAttributeDefinition(relationshipAttributeDefinition, target, attribute);
+                        autogenerateBeans.autogenerateAttributeDefinition(relationshipAttributeDefinition, target, attribute,concept, autogenerateMC, autogenerateMCCE);
                         break;
                     }
                 }
@@ -644,14 +624,13 @@ public class ConceptBean implements Serializable {
                 if (!isAttributeFound) {
                     RelationshipAttribute attribute = new RelationshipAttribute(relationshipAttributeDefinition, relationship, target);
                     relationship.getRelationshipAttributes().add(attribute);
-                    autogenerateAttributeDefinition(relationshipAttributeDefinition, target, attribute);
+                    autogenerateBeans.autogenerateAttributeDefinition(relationshipAttributeDefinition, target, attribute,concept, autogenerateMC, autogenerateMCCE);
                 }
             }
         }
 
         // Si no se encuentra la relación, se crea una nueva relación con el atributo y target vacio
         if (!isRelationshipFound) {
-            ;
             Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
             RelationshipAttribute attribute = new RelationshipAttribute(relationshipAttributeDefinition, relationship, target);
             if (relationshipDefinition.getTargetDefinition().isSMTKType())
@@ -663,17 +642,7 @@ public class ConceptBean implements Serializable {
             relationship.getRelationshipAttributes().add(attribute);
             this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes())); //  new ArrayList<RelationshipAttribute>()));
         }
-        //Autogenerado MCCE
-        if (relationshipAttributeDefinition.getId() == 16) {
-            autogenerateMCCE.setPackUnidad(((HelperTableRecord) target).getValueColumn("description"));
-            concept.getDescriptionFavorite().setTerm(autogenerateMCCE());
-            concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-        }
-        if (relationshipAttributeDefinition.getId() == 17) {
-            autogenerateMCCE.setVolumenUnidad(((HelperTableRecord) target).getValueColumn("description"));
-            concept.getDescriptionFavorite().setTerm(autogenerateMCCE());
-            concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-        }
+
         // Se resetean los placeholder para los target de las relaciones
         resetPlaceHolders();
     }
@@ -711,6 +680,8 @@ public class ConceptBean implements Serializable {
      */
     public void removeRelationship(RelationshipDefinition rd, Relationship r) {
         concept.removeRelationshipWeb(r);
+        concept.removeRelationship(r);
+        autogenerateBeans.autogenerateRemoveRelationshipWithAttributes(rd,r,concept,autoGenerateList,autogenerateMC);
         crossmapBean.refreshCrossmapIndirect(concept);
     }
 
@@ -719,45 +690,6 @@ public class ConceptBean implements Serializable {
      */
     public void removeRelationshipAttribute(Relationship r, RelationshipAttribute ra) {
         r.getRelationshipAttributes().remove(ra);
-    }
-
-    /**
-     * Este método es el encargado de agregar descripciones al concepto
-     */
-    public void addDescription() {
-        if (!otherTermino.trim().equals("")) {
-            if (otherDescriptionType != null) {
-                if (otherDescriptionType.getName().equalsIgnoreCase("abreviada") && concept.getValidDescriptionAbbreviated() != null) {
-                    messageError("Solo puede existir una descripción abreviada");
-                    return;
-                }
-                DescriptionWeb description = new DescriptionWeb(concept, otherTermino, otherDescriptionType);
-                if (categoryManager.categoryContains(category, description.getTerm())) {
-                    messageError("Esta descripcion ya existe en esta categoria");
-                    return;
-                }
-                if (containDescription(description)) {
-                    messageError("Esta descripcion ya existe en este concepto");
-                    return;
-                }
-
-                description.setCaseSensitive(otherSensibilidad);
-                if (otherDescriptionType.getName().equalsIgnoreCase("abreviada") || otherDescriptionType.getName().equalsIgnoreCase("sinónimo")) {
-                    description.setCaseSensitive(concept.getValidDescriptionFavorite().isCaseSensitive());
-                }
-
-                description.setModeled(concept.isModeled());
-                description.setCreatorUser(user);
-                description.setDescriptionId(descriptionManager.generateDescriptionId());
-                concept.addDescriptionWeb(description);
-                otherTermino = "";
-                otherDescriptionType = null;
-            } else {
-                messageError("No se ha seleccionado el tipo de descripción");
-            }
-        } else {
-            messageError("No se ha ingresado el término a la descripción");
-        }
     }
 
     /**
@@ -772,11 +704,11 @@ public class ConceptBean implements Serializable {
             relationshipDefinition.setMultiplicitySatisfied(isMultiplicitySatisfied);
 
             if (!isMultiplicitySatisfied) {
-                messageError("El atributo " + relationshipDefinition.getName() + " no cumple con el minimo requerido");
+                messageBean.messageError("El atributo " + relationshipDefinition.getName() + " no cumple con el minimo requerido");
                 return false;
             }
             if (changeDirectMultiplicity(relationshipDefinition)) {
-                messageError("Información incompleta Cantidad y Unidad en " + relationshipDefinition.getName());
+                messageBean.messageError("Información incompleta Cantidad y Unidad en " + relationshipDefinition.getName());
                 return false;
             }
         }
@@ -792,56 +724,19 @@ public class ConceptBean implements Serializable {
         return false;
     }
 
-    /**
-     * Este método es el responsable de retornar verdadero en caso que se cumpla el UpperBoundary de la multiplicidad,
-     * para asi desactivar
-     * la opción de agregar más relaciones en la vista. En el caso que se retorne falso este seguirá activo el boton en
-     * la presentación.
-     *
-     * @return
-     */
-    public boolean limitRelationship(RelationshipDefinition relationshipD) {
-        if (relationshipD.getMultiplicity().getUpperBoundary() != 0) {
-            if (concept.getValidRelationshipsByRelationDefinition(relationshipD).size() == relationshipD.getMultiplicity().getUpperBoundary()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public List<RelationshipAttribute> getRelationshipAttributesByRelationshipDefinition(RelationshipDefinition definition) {
-
-        if (definition == null)
-            return new ArrayList<RelationshipAttribute>();
-        if (!relationshipAttributesPlaceholder.containsKey(definition)) {
-
-            List<RelationshipAttribute> attributes = new ArrayList<RelationshipAttribute>(definition.getRelationshipAttributeDefinitions().size());
-
-            for (RelationshipAttributeDefinition attributeDefinition : definition.getRelationshipAttributeDefinitions()) {
-                RelationshipAttribute attribute = new RelationshipAttribute();
-                attribute.setRelationAttributeDefinition(attributeDefinition);
-                Target t = new TargetFactory().createPlaceholderTargetFromTargetDefinition(definition.getTargetDefinition());
-                attribute.setTarget(t);
-                attributes.add(attribute);
-            }
-            relationshipAttributesPlaceholder.put(definition, attributes);
-        }
-        return relationshipAttributesPlaceholder.get(definition);
-    }
-
     public void saveConcept() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (validateRelationships()) {
-            if (concept.isModeled() && !existRelationshipToSCT()) {
-                messageError("No es posible guardar el concepto, debe tener al menos una relación a SNOMED CT cuando se encuentra modelado");
+            if (concept.isModeled() && !snomedBeans.existRelationshipToSCT(concept)) {
+                messageBean.messageError("No es posible guardar el concepto, debe tener al menos una relación a SNOMED CT cuando se encuentra modelado");
                 return;
             }
             // Si el concepto está persistido, actualizarlo. Si no, persistirlo
             if (concept.isPersistent()) {
-                try{
+                try {
                     updateConcept(context);
-                }catch (EJBException e){
-                    messageError(e.getMessage());
+                } catch (EJBException e) {
+                    messageBean.messageError(e.getMessage());
                 }
             } else {
                 if (!containDescriptionCategory(concept)) {
@@ -852,26 +747,22 @@ public class ConceptBean implements Serializable {
     }
 
     private boolean containDescriptionCategory(ConceptSMTKWeb conceptSMTK) {
-        boolean contain = false;
         for (Description description : conceptSMTK.getDescriptionsWeb()) {
             if (categoryManager.categoryContains(conceptSMTK.getCategory(), description.getTerm())) {
-                messageError("Ya existe la descripción " + description.getTerm() + " en la categoría " + category.getName());
-                contain = true;
-                return contain;
+                messageBean.messageError("Ya existe la descripción " + description.getTerm() + " en la categoría " + category.getName());
+                return true;
             }
         }
-
-        return contain;
+        return false;
     }
 
     private void persistConcept(FacesContext context) {
         try {
             conceptManager.persist(concept, user);
-
-            if(descriptionPending!=null){
-                ConceptSMTK conceptSource=descriptionPending.getConceptSMTK();
+            if (descriptionPending != null) {
+                ConceptSMTK conceptSource = descriptionPending.getConceptSMTK();
                 descriptionPending.setConceptSMTK(concept);
-                descriptionManager.moveDescriptionToConcept(conceptSource,descriptionPending,user);
+                descriptionManager.moveDescriptionToConcept(conceptSource, descriptionPending, user);
             }
             context.addMessage(null, new FacesMessage("Successful", "Concepto guardado "));
             // Se resetea el concepto, como el concepto está persistido, se le pasa su id
@@ -893,6 +784,8 @@ public class ConceptBean implements Serializable {
         /* Se actualizan las relaciones */
         changes += updateConceptRelationships();
 
+        changes = (refsetEditConcept) ? changes + 1 : changes;
+
         if (changes == 0)
             context.addMessage(null, new FacesMessage("Warning", "No se ha realizado ningún cambio al concepto!!"));
         else {
@@ -907,12 +800,23 @@ public class ConceptBean implements Serializable {
      * @return
      */
     private int updateConceptRelationships() {
-
         List<RelationshipWeb> relationshipsForPersist = concept.getUnpersistedRelationshipsWeb();
+
         /* Se persisten las nuevas relaciones */
         for (RelationshipWeb relationshipWeb : relationshipsForPersist) {
             relationshipWeb.setSourceConcept(concept);
-            relationshipManager.bindRelationshipToConcept(concept, relationshipWeb.toRelationship(), user);
+            try {
+                relationshipManager.bindRelationshipToConcept(concept, relationshipWeb.toRelationship(), user);
+            } catch (EJBException EJB) {
+                messageBean.messageError(EJB.getMessage());
+                return 0;
+            }
+        }
+        for (RelationshipWeb relationshipWeb : relationshipsForPersist) {
+            relationshipWeb.setSourceConcept(concept);
+            if (snomedBeans.existRelationshipToSCT(concept)) {
+                relationshipBindingBR.postActions(relationshipWeb.toRelationship(), user);
+            }
         }
 
         /* Se elimina las relaciones eliminadas */
@@ -940,8 +844,6 @@ public class ConceptBean implements Serializable {
      */
     private int updateConceptDescriptions() {
 
-
-
         /* Se persisten las nuevas descripciones */
         List<DescriptionWeb> unpersistedDescriptions = concept.getUnpersistedDescriptions();
         for (Description description : unpersistedDescriptions) {
@@ -962,7 +864,6 @@ public class ConceptBean implements Serializable {
             description.getSecond().setId(PersistentEntity.NON_PERSISTED_ID);
             descriptionManager.updateDescription(concept, description.getFirst(), description.getSecond(), user);
         }
-
         for (NoValidDescription noValidDescription : noValidDescriptions) {
             descriptionManager.invalidateDescription(concept, noValidDescription, user);
         }
@@ -992,57 +893,29 @@ public class ConceptBean implements Serializable {
     }
 
 
-    public String deleteConcept() throws IOException {
-
-        FacesContext context = FacesContext.getCurrentInstance();
+    public void deleteConcept() throws IOException {
         // Si el concepto está persistido, invalidarlo
         if (concept.isPersistent() && !concept.isModeled()) {
             conceptManager.delete(concept, user);
-            context.addMessage(null, new FacesMessage("Successful", "Concepto eliminado"));
+            messageBean.messageSuccess("Acción exitosa", "Concepto eliminado");
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
             eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptBrowser.xhtml?idCategory=" + category.getId());
         } else {
             conceptManager.invalidate(concept, user);
-            context.addMessage(null, new FacesMessage("Successful", "Concepto invalidado"));
+            messageBean.messageSuccess("Acción exitosa", "Concepto invalidado");
         }
-        return "";
     }
 
     public void cancelConcept() {
-        FacesContext context = FacesContext.getCurrentInstance();
         concept.restore(_concept);
         descriptionsToTraslate.clear();
         noValidDescriptions.clear();
         changeMarketedBean.conceptSelected.clear();
-        context.addMessage(null, new FacesMessage("Info", "Los cambios se han descartado"));
+        messageBean.messageSuccess("Acción exitosa", "Los cambios se han descartado");
     }
 
     public void updateFSN(Description d) {
         concept.getValidDescriptionFSN().setTerm(d.getTerm());
-    }
-
-    public void translateDescription() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        if (conceptSMTKTranslateDes == null) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se seleccionó el concepto de destino"));
-        } else {
-            concept.getDescriptionsWeb().remove(descriptionToTranslate);
-            descriptionToTranslate.setConceptSMTK(conceptSMTKTranslateDes);
-            descriptionsToTraslate.add(new DescriptionWeb(descriptionToTranslate));
-
-            conceptSMTKTranslateDes = null;
-            descriptionToTranslate = null;
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successful", "La descripción se trasladará al momento de guardar el concepto"));
-        }
-    }
-
-    public void traslateDescriptionNotValid() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        descriptionToTranslate.setConceptSMTK(conceptSMTKNotValid);
-        concept.getDescriptionsWeb().remove(descriptionToTranslate);
-        noValidDescriptions.add(new NoValidDescription(descriptionToTranslate, observationNoValid.getId(), conceptSuggestedList));
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successful", "La descripción se trasladará al momento de guardar el concepto"));
-        conceptSuggestedList = new ArrayList<>();
     }
 
     public boolean containDescriptionToTranslate(Description description) {
@@ -1063,26 +936,6 @@ public class ConceptBean implements Serializable {
         return false;
     }
 
-    /**
-     * Metodo encargado de hacer el "enroque" con la preferida.
-     */
-
-    public void descriptionEditRow(RowEditEvent event) {
-        long SYNONYMOUS_ID = 3;
-        DescriptionWeb descriptionWeb = (DescriptionWeb) event.getObject();
-
-        for (DescriptionWeb descriptionRowEdit : concept.getDescriptionsWeb()) {
-            if (descriptionRowEdit.equals(descriptionWeb) /*|| descriptionRowEdit.getId() == ((DescriptionWeb) event.getObject()).getId()*/) {
-                if (descriptionRowEdit.getDescriptionType().equals(descriptionTypeFactory.getFavoriteDescriptionType())) {
-                    descriptionRowEdit.setDescriptionType(descriptionTypeFactory.getDescriptionTypeByID(SYNONYMOUS_ID));
-                    DescriptionWeb descriptionFavorite = concept.getValidDescriptionFavorite();
-                    descriptionFavorite.setDescriptionType(descriptionTypeFactory.getDescriptionTypeByID(SYNONYMOUS_ID));
-                    descriptionRowEdit.setDescriptionType(descriptionTypeFactory.getFavoriteDescriptionType());
-                }
-            }
-        }
-    }
-
     public void onRowReorder(ReorderEvent event) {
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -1099,52 +952,22 @@ public class ConceptBean implements Serializable {
         att2.setTarget(new BasicTypeValue(sourceOrder));
 
         RelationshipDefinition relationshipDefinitionRowEdit = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinitionRowEdit");
-        List<Relationship> relationshipList = concept.getRelationshipsByRelationDefinition(relationshipDefinitionRowEdit);
-
-        if (!concept.isPersistent()) {
-
-            if (relationshipDefinitionRowEdit.getId() == 45) {
-                autoGenerateList = newOrderList(autoGenerateList, event);
-                concept.getDescriptionFavorite().setTerm(autogenerate());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinitionRowEdit.getId() == 47) {
-                autogenerateMC.setSustancias(newOrderList(autogenerateMC.getSustancias(), event));
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinitionRowEdit.getId() == 58) {
-                autogenerateMC.setFfa(newOrderList(autogenerateMC.getFfa(), event));
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-        }
-
+        autogenerateBeans.autogenerateOrder(concept,autoGenerateList,relationshipDefinitionRowEdit,autogenerateMC,event);
     }
-
-    public List<String> newOrderList(List<String> list, ReorderEvent event) {
-        List<String> autoNuevoOrden = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (i != event.getFromIndex()) {
-                if (i == event.getToIndex()) {
-                    if (event.getFromIndex() < event.getToIndex()) {
-                        autoNuevoOrden.add(list.get(i));
-                        autoNuevoOrden.add(list.get(event.getFromIndex()));
-                    } else {
-
-                        autoNuevoOrden.add(list.get(event.getFromIndex()));
-                        autoNuevoOrden.add(list.get(i));
-                    }
-                } else {
-                    autoNuevoOrden.add(list.get(i));
-                }
-            }
-        }
-        return autoNuevoOrden;
-    }
-
 
     // Getter and Setter
+
+    public long getIdTermPending() {
+        return idTermPending;
+    }
+
+    public void setIdTermPending(long idTermPending) {
+        this.idTermPending = idTermPending;
+        descriptionPending = descriptionManager.getDescriptionByID(idTermPending);
+        if (descriptionPending != null) {
+            concept.addDescriptionWeb(new DescriptionWeb(descriptionPending));
+        }
+    }
 
     public String getFSN() {
         return FSN;
@@ -1240,11 +1063,8 @@ public class ConceptBean implements Serializable {
 
     public void setFavoriteDescription(String favoriteDescription) {
         this.favoriteDescription = favoriteDescription;
-        try {
+        if(concept==null)
             createConcept();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     public HelperTableManager getHelperTableManager() {
@@ -1327,6 +1147,14 @@ public class ConceptBean implements Serializable {
 
     public void setConceptSMTKTranslateDes(ConceptSMTK conceptSMTKTranslateDes) {
         this.conceptSMTKTranslateDes = conceptSMTKTranslateDes;
+    }
+
+    public boolean isRefsetEditConcept() {
+        return refsetEditConcept;
+    }
+
+    public void setRefsetEditConcept(boolean refsetEditConcept) {
+        this.refsetEditConcept = refsetEditConcept;
     }
 
     public boolean isEditable() {
@@ -1456,112 +1284,6 @@ public class ConceptBean implements Serializable {
         return orderedRelationshipDefinitionsList;
     }
 
-    //TODO: Metodos de autogenerado del Preferido y FSN (Refactorizar)
-
-    public String autogenerate() {
-        String autogenerateString = "";
-        for (int i = 0; i < autoGenerateList.size(); i++) {
-            if (i == 0) {
-                autogenerateString = autoGenerateList.get(i);
-            } else {
-                autogenerateString = autogenerateString + " + " + autoGenerateList.get(i);
-            }
-        }
-        return autogenerateString;
-    }
-
-    public String autogenerateMCCE() {
-        return autogenerateMCCE.toString();
-    }
-
-    public void autogenerateAttributeDefinition(RelationshipAttributeDefinition relationshipAttributeDefinition, Target target, RelationshipAttribute attribute) {
-        if (!concept.isPersistent()) {
-            if (relationshipAttributeDefinition.getId() == 16) {
-                autogenerateMCCE.setPackUnidad(((HelperTableRecord) target).getValueColumn("description"));
-                concept.getDescriptionFavorite().setTerm(autogenerateMCCE());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipAttributeDefinition.getId() == 17) {
-                autogenerateMCCE.setVolumenUnidad(((HelperTableRecord) target).getValueColumn("description"));
-                concept.getDescriptionFavorite().setTerm(autogenerateMCCE());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipAttributeDefinition.getId() == 12) {
-                autogenerateMC.setUnidadVolumen(attribute);
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipAttributeDefinition.getId() == 15) {
-                autogenerateMCCE.setUnidadMedidaCantidad(((HelperTableRecord) target).getValueColumn("description"));
-                concept.getDescriptionFavorite().setTerm(autogenerateMCCE());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-        }
-    }
-
-    public void autogenerateRelationshipWithAttributes(RelationshipDefinition relationshipDefinition, Relationship relationship) {
-        if (!concept.isPersistent()) {
-            if (relationshipDefinition.getId() == 45) {
-                autoGenerateList.add(((ConceptSMTK) relationship.getTarget()).getDescriptionFavorite().getTerm());
-                concept.getDescriptionFavorite().setTerm(autogenerate());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-
-            if (relationshipDefinition.getId() == 47) {
-                autogenerateMC.addSustancia(relationship);
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinition.getId() == 58) {
-                autogenerateMC.addFFA(relationship);
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-        }
-    }
-
-    public void autogenerateRelationship(RelationshipDefinition relationshipDefinition, Relationship relationship, Target target) {
-        if (!concept.isPersistent()) {
-            if (relationshipDefinition.getId() == 48) {
-                autogenerateMCCE.setMC(((ConceptSMTK) relationship.getTarget()).getDescriptionFavorite().getTerm());
-                concept.getDescriptionFavorite().setTerm(autogenerateMCCE());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinition.getId() == 92) {
-                autogenerateMCCE.setCantidad(relationship.getTarget().toString());
-                concept.getDescriptionFavorite().setTerm(autogenerateMCCE());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinition.getId() == 93) {
-                autogenerateMCCE.setVolumen(target.toString());
-                concept.getDescriptionFavorite().setTerm(autogenerateMCCE());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinition.getId() == 77) {
-                autogenerateMCCE.setPack(target.toString());
-                concept.getDescriptionFavorite().setTerm(autogenerateMCCE());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinition.getId() == 69) {
-                autogenerateMC.setVolumen(relationship);
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinition.getId() == 52) {
-                ConceptSMTK c = (ConceptSMTK) relationship.getTarget();
-                c.setRelationships(relationshipManager.getRelationshipsBySourceConcept(c));
-                autogeneratePCCE.autogeratePCCE((ConceptSMTK) relationship.getTarget());
-                concept.getDescriptionFavorite().setTerm(autogeneratePCCE.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinition.getId() == 51) {
-                autogeneratePCCE.setPc(((ConceptSMTK) relationship.getTarget()).getDescriptionFavorite().getTerm());
-                concept.getDescriptionFavorite().setTerm(autogeneratePCCE.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-        }
-    }
-
     public void changeMultiplicityNotRequiredRelationshipDefinitionMC() {
         for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
             if (relationshipDefinition.getId() == 46) relationshipDefinition.getMultiplicity().setLowerBoundary(0);
@@ -1634,81 +1356,36 @@ public class ConceptBean implements Serializable {
 
     public boolean isFullyDefined() {
         if (concept != null) {
+            concept.setFullyDefined(fullyDefined);
             return (concept.isFullyDefined()) ? true : false;
         }
         return this.fullyDefined;
     }
 
-    @EJB
-    private ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR;
-
-    public void setFullyDefined(boolean fullyDefined) {
-        this.fullyDefined = fullyDefined;
-    }
-
-    public void changeFullyDefined() {
+    public void changeFullyDefined(ConceptSMTKWeb concept) {
         try {
             concept.setFullyDefined((fullyDefined) ? true : false);
             if (concept.isFullyDefined()) conceptDefinitionalGradeBR.apply(concept);
         } catch (EJBException e) {
             concept.setFullyDefined(false);
-            messageError("No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT");
+            fullyDefined=false;
+            messageBean.messageError("No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT");
         }
     }
 
-    private static final long ID_RELATIONSHIP_DEFINITION_SNOMED_CT = 101;
-    private static final long ID_RELATIONSHIP_ATTRIBUTE_DEFINITION_TYPE_RELTIONSHIP_SNOMED_CT = 25;
-    private static final long ID_TYPE_IS_MAPPING = 2;
-
-
-    /**
-     * Metodo encargado de validar si la relacion que recibe por parametro es de tipo Es un Mapeo.
-     *
-     * @param relationship relacion a validar.
-     * @return retorna true o false segun corresponda.
-     */
-    private boolean isMapping(Relationship relationship) {
-        if (relationship.getRelationshipDefinition().getId() == ID_RELATIONSHIP_DEFINITION_SNOMED_CT) {
-            for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
-                if (relationshipAttribute.getRelationAttributeDefinition().getId() == ID_RELATIONSHIP_ATTRIBUTE_DEFINITION_TYPE_RELTIONSHIP_SNOMED_CT) {
-                    HelperTableRecord typeRelationship = (HelperTableRecord) relationshipAttribute.getTarget();
-                    if (typeRelationship.getId() == ID_TYPE_IS_MAPPING) return true;
-                }
-            }
-        }
-        return false;
+    public void setFullyDefined(boolean fullyDefined) {
+        this.fullyDefined = fullyDefined;
     }
 
-    /**
-     * Metodo encargado de ver si existe una relacion Es un mapeo en el concepto que se esta creando o editando.
-     *
-     * @return retorna true o false segun corresponda.
-     */
-    public boolean existRelationshipISAMapping() {
-        for (Relationship relationship : concept.getValidRelationships()) {
-            return isMapping(relationship);
-        }
-        return false;
+    @EJB
+    private ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR;
+
+    public MessageBean getMessageBean() {
+        return messageBean;
     }
 
-    private boolean existRelationshipToSCT() {
-        for (Relationship relationship : concept.getValidRelationships()) {
-            if (!relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType() && (relationship.getRelationshipDefinition().getId() == ID_RELATIONSHIP_DEFINITION_SNOMED_CT)) {
-                return true;
-            }
-        }
-        return false;
+    public void setMessageBean(MessageBean messageBean) {
+        this.messageBean = messageBean;
     }
-
-    /**
-     * Metodo encargado de agregar mensajes de error en la vista.
-     *
-     * @param msg mensaje que se muestra.
-     */
-    private void messageError(String msg) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg));
-    }
-
 
 }

@@ -89,6 +89,13 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
         return null;
     }
 
+
+
+    /*
+    Actualiza el password del usuario
+    recibe el usuario y el pass en texto plano
+    Lo encripta y lo guarda manteniendo los ultimos 5 passwords
+     */
     @Override
     public void setUserPassword(String username, String password) throws PasswordChangeException {
         User user = authDAO.getUserByUsername(username);

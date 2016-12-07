@@ -74,6 +74,11 @@ public class CrossmapSetMember extends PersistentEntity implements Target {
         return TargetType.CrossMap;
     }
 
+    @Override
+    public String getRepresentation() {
+        return toString();
+    }
+
     // Métodos para soportar conversión automática
     @Override
     public boolean equals(Object other) {

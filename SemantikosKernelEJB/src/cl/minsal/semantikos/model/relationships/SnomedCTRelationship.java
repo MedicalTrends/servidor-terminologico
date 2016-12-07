@@ -19,8 +19,8 @@ import static cl.minsal.semantikos.model.helpertables.HelperTable.SYSTEM_COLUMN_
  */
 public class SnomedCTRelationship extends Relationship {
 
-    public static final String ES_UN_MAPEO_DE = "es un mapeo de";
-    public static final String ES_UN = "es un";
+    public static final String ES_UN_MAPEO_DE = "es un mapeo";
+    public static final String ES_UN = "es un[a]";
 
     public SnomedCTRelationship(ConceptSMTK sourceConcept, ConceptSCT conceptSCT, RelationshipDefinition relationshipDefinition, List<RelationshipAttribute> relationshipAttributes, Timestamp validityUntil) {
         super(sourceConcept, conceptSCT, relationshipDefinition, relationshipAttributes, validityUntil);
@@ -67,15 +67,34 @@ public class SnomedCTRelationship extends Relationship {
      * @return <code>true</code> si es definitoria, y <code>false</code> sino.
      */
     public boolean isDefinitional() {
-        return this.isES_UN() || this.isES_UN_MAPEO_DE();
+        return this.isES_UN() || this.isES_UN_MAPEO();
     }
 
     public boolean isES_UN() {
         return getSnomedCTRelationshipType().equalsIgnoreCase(ES_UN);
     }
 
-    public boolean isES_UN_MAPEO_DE() {
+    public boolean isES_UN_MAPEO() {
         return getSnomedCTRelationshipType().equalsIgnoreCase(ES_UN_MAPEO_DE);
+    }
+
+    /**
+     * Este método es responsable de validar si una relación es del tipo Snomed CT de tipo ES UN MAPEO
+     *
+     * @param relationship La relación que se desea validar.
+     *
+     * @return <code>true</code> si la relación es una relación Snomed CT
+     */
+    public static boolean isES_UN_MAPEO(Relationship relationship) {
+
+        /* Se valida que la relación sea de tipo Snomed CT, sino la validación está clara */
+        if (!relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType()) {
+            return false;
+        }
+
+        /* Es una relación SCT. Se realiza el cast y se verifica su tipo */
+        SnomedCTRelationship snomedCTRelationship = (SnomedCTRelationship) relationship;
+        return snomedCTRelationship.isES_UN_MAPEO();
     }
 
     public String getSnomedCTRelationshipType() {
@@ -114,5 +133,11 @@ public class SnomedCTRelationship extends Relationship {
      */
     public static boolean isSnomedCTRelationship(Relationship relationship) {
         return relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType();
+    }
+
+    @Override
+    public String toString() {
+        return this.getSourceConcept() + " --SCT[" + getSnomedCTRelationshipType() + "]--> " + getTarget();
+
     }
 }

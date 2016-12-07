@@ -71,7 +71,7 @@
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                             icon="fa fa-plus"
                             title="Agregar"
-                            disabled="#{conceptBean.limitRelationship(cc.attrs.relationshipDefinition)}"
+                            disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
                     >
 
                     </p:commandButton>
@@ -107,7 +107,7 @@
                     <p:commandButton icon="fa fa-trash" title="Eliminar"
                                      action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                      update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                                     process="@this">
+                                     process="@this" >
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
@@ -117,9 +117,10 @@
     </p:panel>
 
     <p:panel id="multiplicityN"
-             style="margin:20px;"
+             style="margin:20px;" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
-        <h3>#{cc.attrs.relationshipDefinition.name}</h3>
+
+        <p:spacer />
 
         <div class="ui-g">
 
@@ -131,7 +132,7 @@
                                 converter="conceptConverter"
                                 styleClass="fragments"
                                 var="concept"
-                                disabled="#{conceptBean.limitRelationship(cc.attrs.relationshipDefinition)}"
+                                disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
                                 rendered="#{cc.attrs.concept.editable}"
                                 value="#{conceptBean.conceptSelected}"
                                 itemLabel="#{concept.descriptionFavorite.term}"
@@ -193,10 +194,8 @@
 
     </p:panel>
 
-    <p:panel id="multiplicityN_with_attributes"
+    <p:panel id="multiplicityN_with_attributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
-
-        <h3>#{cc.attrs.relationshipDefinition.name}</h3>
 
         <p:spacer />
 
@@ -214,7 +213,7 @@
                                 placeholder="Buscar..."
                                 converter="conceptConverter"
                                 var="concept"
-                                disabled="#{conceptBean.limitRelationship(cc.attrs.relationshipDefinition)}"
+                                disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
                                 value="#{conceptBean.conceptSelected}"
                                 itemLabel="#{concept.descriptionFavorite.term}"
                                 itemValue="#{concept}">
@@ -315,7 +314,7 @@
                 <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
                     <p:commandButton icon="fa fa-trash" title="Eliminar"
                                      action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
-                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id})"
+                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                      process="@this">
                     </p:commandButton>
                 </p:column>

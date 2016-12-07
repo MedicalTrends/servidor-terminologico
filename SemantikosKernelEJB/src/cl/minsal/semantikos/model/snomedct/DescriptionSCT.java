@@ -23,24 +23,31 @@ public class DescriptionSCT extends PersistentEntity {
     /**
      * <p></p>Si la descripción Snomed CT está vigente
      *
-     * <p>Specifies whether the description's state was active or inactive from the nominal release date specified by the
+     * <p>Specifies whether the description's state was active or inactive from the nominal release date specified by
+     * the
      * effectiveTime</p>
      */
     private boolean active;
 
-    /** <p>Identifies the description version's module. Set to a descendant of |Module| within the metadata hierarchy.</p> */
+    /**
+     * <p>Identifies the description version's module. Set to a descendant of |Module| within the metadata
+     * hierarchy.</p>
+     */
     private long moduleId;
 
 
     /**
-     * Identifies the concept to which this description belongs. Set to an Identifier of a concept in the 138875005 | SNOMED CT Concept | hierarchy
-     * within the Concept file. Note that versions of descriptions and concepts don't belong to each other. Which version of any given description
+     * Identifies the concept to which this description belongs. Set to an Identifier of a concept in the 138875005 |
+     * SNOMED CT Concept | hierarchy
+     * within the Concept file. Note that versions of descriptions and concepts don't belong to each other. Which
+     * version of any given description
      * is combined with which version of its owning concept depends on the point in time at which they are accessed.
      */
     private long conceptId;
 
     /**
-     * Specifies the language of the description text using the two character ISO -639-1 code. Note that this specifies a language level only,
+     * Specifies the language of the description text using the two character ISO -639-1 code. Note that this specifies
+     * a language level only,
      * not a dialect or country code.
      */
     private String languageCode;
@@ -61,13 +68,6 @@ public class DescriptionSCT extends PersistentEntity {
 
     /**
      * Este es el constructor completo para la clase descriptionSCT
-     * @param effectiveTime
-     * @param active
-     * @param moduleId
-     * @param conceptId
-     * @param languageCode
-     * @param caseSignificanceId
-     * @param term
      */
     public DescriptionSCT(long id, DescriptionSCTType type, Timestamp effectiveTime, boolean active, long moduleId, long conceptId, String languageCode, String term, long caseSignificanceId) {
         super(id);
@@ -147,5 +147,10 @@ public class DescriptionSCT extends PersistentEntity {
 
     public DescriptionSCTType getDescriptionType() {
         return descriptionType;
+    }
+
+    @Override
+    public String toString() {
+        return term;
     }
 }

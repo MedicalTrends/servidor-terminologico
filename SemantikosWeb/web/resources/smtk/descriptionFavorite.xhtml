@@ -15,48 +15,25 @@
 </composite:interface>
 
 <composite:implementation>
-
-
-
-    <div class="ui-g">
-        <div class="ui-g-12 ui-md-6 ui-lg-2">
-            <p:outputLabel for="favorite" value="Preferida *"/>
-        </div>
-        <div class="ui-g-12 ui-md-6 ui-lg-4">
-            <p:inputText id="favorite"
-                         styleClass="terms"
-                         name="description"
-                         validator="#{validatorBean.validateRequiredInput}"
-                         value="#{cc.attrs.description.term}"
-                         style="width:90%"
-                         disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
-                         autocomplete="off">
-                <p:ajax event="change" update="@this" process="@this" delay="100" />
-            </p:inputText>
-        </div>
-        <!-- DescriptionId -->
-        <div class="ui-g-12 ui-md-6 ui-lg-2">
-            <p:inputText value="DESCID " rendered="#{not cc.attrs.description.persistent}" disabled="true" style="width: 70%" />
-
-            <p:inputText value="DESCID: #{cc.attrs.description.descriptionId}" disabled="true" rendered="#{cc.attrs.description.persistent}" style="width: 70%" />
-        </div>
-        <div class="ui-g-12 ui-md-6 ui-lg-4">
-            <p:selectOneRadio id="customRadio" value="#{cc.attrs.description.caseSensitive}" layout="custom"
-                              disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}">
-                <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
-                <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
-            </p:selectOneRadio>
-
-            <p:panelGrid id="caseSensitiveNew" columns="4" columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3" layout="grid"
-                         styleClass="ui-panelgrid-blank fullyDefined"
-                         style="width: 100%">
-                <p:radioButton id="opt1" for="customRadio" itemIndex="0" />
-                <h:outputLabel for="opt1" value="Insensible" />
-
-                <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>
-                <h:outputLabel for="opt2" value="Sensible" />
-            </p:panelGrid>
-        </div>
-    </div>
+    <h:panelGrid  columns="4"  style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+        <p:outputLabel for="favorite" value="Preferida *"/>
+        <p:inputText id="favorite"
+                     styleClass="terms"
+                     name="description"
+                     validator="#{validatorBean.validateRequiredInput}"
+                     value="#{cc.attrs.description.term}"
+                     style="width:90%"
+                     disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
+                     autocomplete="off">
+            <p:ajax event="change" update="@this" process="@this" delay="100" />
+        </p:inputText>
+        <p:inputText value="DESCID " rendered="#{not cc.attrs.description.persistent}" disabled="true" style="width: 70%" />
+        <p:inputText value="DESCID: #{cc.attrs.description.descriptionId}" disabled="true" rendered="#{cc.attrs.description.persistent}" style="width: 70%" />
+        <p:selectOneRadio id="customRadio2" value="#{cc.attrs.description.caseSensitive}" layout="grid" columns="2"
+                          disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}" style="width: 60%">
+            <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
+            <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
+        </p:selectOneRadio>
+    </h:panelGrid>
 </composite:implementation>
 </html>

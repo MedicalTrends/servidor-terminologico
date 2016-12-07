@@ -62,7 +62,10 @@ public class AutogenerateMC {
      * @param relationship La sustancia, representada por una relación.
      */
     public void addSustancia(Relationship relationship) {
+        sustancias.add(generateNameSustancia(relationship));
+    }
 
+    public String generateNameSustancia(Relationship relationship){
         String sustancia = ((ConceptSMTK) relationship.getTarget()).getDescriptionFavorite().getTerm();
         String[] attributes = new String[4];
         for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
@@ -86,8 +89,7 @@ public class AutogenerateMC {
             }
 
         }
-        sustancias.add(sustancia);
-
+        return sustancia;
     }
 
     public void addFFA(Relationship relationship) {

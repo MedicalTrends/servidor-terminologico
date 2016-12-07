@@ -201,8 +201,9 @@ public class AuditManagerImpl implements AuditManager {
 
     @Override
     public void recordRefSetBinding(RefSet refSet, ConceptSMTK conceptSMTK, User user) {
+
         /* Se crea el registro de historial */
-        RefSetAuditAction refSetAuditAction = new RefSetAuditAction(refSet, REFSET_UPDATE, now(), user);
+        RefSetAuditAction refSetAuditAction = new RefSetAuditAction(refSet, REFSET_UPDATE, now(), user,conceptSMTK);
 
         /* Se validan las reglas de negocio para realizar el registro */
         new HistoryRecordBL().validate(refSetAuditAction);
@@ -213,7 +214,7 @@ public class AuditManagerImpl implements AuditManager {
     @Override
     public void recordRefSetUnbinding(RefSet refSet, ConceptSMTK conceptSMTK, User user) {
         /* Se crea el registro de historial */
-        RefSetAuditAction refSetAuditAction = new RefSetAuditAction(refSet, REFSET_UPDATE, now(), user);
+        RefSetAuditAction refSetAuditAction = new RefSetAuditAction(refSet, REFSET_UPDATE, now(), user, conceptSMTK);
 
         /* Se validan las reglas de negocio para realizar el registro */
         new HistoryRecordBL().validate(refSetAuditAction);

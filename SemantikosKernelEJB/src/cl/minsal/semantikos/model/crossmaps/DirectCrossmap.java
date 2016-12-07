@@ -33,6 +33,11 @@ public class DirectCrossmap extends Crossmap implements Target {
     }
 
     @Override
+    public String getRepresentation() {
+        return toString();
+    }
+
+    @Override
     public Target copy() {
         return null;
     }

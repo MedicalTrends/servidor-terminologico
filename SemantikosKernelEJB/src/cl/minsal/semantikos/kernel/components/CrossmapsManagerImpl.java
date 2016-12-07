@@ -2,14 +2,14 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.CrossmapsDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.MultiplicityFactory;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.businessrules.CrossMapCreationBR;
 import cl.minsal.semantikos.model.businessrules.CrossMapRemovalBR;
 import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -30,6 +30,8 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
 
     @EJB
     private RelationshipManager relationshipManager;
+
+    private static final Logger logger = LoggerFactory.getLogger(CrossmapsManagerImpl.class);
 
     @Override
     public Crossmap create(DirectCrossmap directCrossmap, User user) {
@@ -98,23 +100,23 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSMTK conceptSMTK) {
 
         /* Se valida si el concepto tiene cargada sus relaciones */
-        if (conceptSMTK.getRelationships().size() == 0) {
+        if (!conceptSMTK.isRelationshipsLoaded()) {
             List<Relationship> relationshipsBySourceConcept = relationshipManager.getRelationshipsBySourceConcept(conceptSMTK);
             conceptSMTK.setRelationships(relationshipsBySourceConcept);
         }
 
-
         /* Se recuperan las relaciones a Snomed CT del tipo ES_UN o ES UN MAPEO DE */
-        List<CrossmapSetMember> crossmapSetMembers = new ArrayList<>();
-
         List<SnomedCTRelationship> relationshipsSnomedCT = conceptSMTK.getRelationshipsSnomedCT();
         List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
         for (SnomedCTRelationship snomedCTRelationship : relationshipsSnomedCT) {
-            if (snomedCTRelationship.isES_UN_MAPEO_DE() || snomedCTRelationship.isES_UN()) {
-                indirectCrossmaps = crossmapsDAO.getCrossmapsBySCT(snomedCTRelationship.getTarget().getId(), conceptSMTK);
+            if (snomedCTRelationship.isES_UN_MAPEO() || snomedCTRelationship.isES_UN()) {
+
+                /* Se recuperan los crossmaps del concepto CST y se almacenan */
+                indirectCrossmaps.addAll(crossmapsDAO.getCrossmapsBySCT(snomedCTRelationship.getTarget().getId(), conceptSMTK));
             }
         }
 
+        logger.info("Se cargaron " + indirectCrossmaps.size() + " indirectos para el concepto " + conceptSMTK + ": " + indirectCrossmaps);
         return indirectCrossmaps;
     }
 

@@ -295,12 +295,8 @@
 
     <!-- Multiplicidad N con atributos-->
 
-    <p:outputPanel id="crossmapTypeCollectionWithAttributes"
+    <p:panel id="crossmapTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
-
-        <h3>#{cc.attrs.relationshipDefinition.name}</h3>
-
-        <p:spacer />
 
         <div class="ui-g">
 
@@ -423,6 +419,10 @@
                     <h:outputText value="#{relationship.target.gloss}"/>
                 </p:column>
 
+                <p:column headerText="Fecha Creación">
+                    <h:outputText value="#{relationship.creationDate}"/>
+                </p:column>
+
                 <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
                            var="attribute"
                            columnIndexVar="colIndex">
@@ -447,7 +447,7 @@
                 </p:column>
             </p:dataTable>
         </div>
-    </p:outputPanel>
+    </p:panel>
 
     <script type="text/javascript">
         /*

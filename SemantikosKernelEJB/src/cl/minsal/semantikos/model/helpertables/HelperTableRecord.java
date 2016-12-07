@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.model.helpertables;
 
+import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
 import org.slf4j.Logger;
@@ -16,7 +17,7 @@ import static cl.minsal.semantikos.model.helpertables.HelperTable.SYSTEM_COLUMN_
 /**
  * @author Andrés Farías
  */
-public class HelperTableRecord implements Target, Comparable<HelperTableRecord> {
+public class HelperTableRecord extends PersistentEntity implements Target, Comparable<HelperTableRecord> {
 
     private static final Logger logger = LoggerFactory.getLogger(HelperTableRecord.class);
 
@@ -47,6 +48,7 @@ public class HelperTableRecord implements Target, Comparable<HelperTableRecord> 
      * @param fields      Los valores del registro.
      */
     public HelperTableRecord(HelperTable helperTable, Map<String, String> fields) {
+        super(NON_PERSISTED_ID);
         this.helperTable = helperTable;
         this.id = -1;
         this.fields = fields;
@@ -59,6 +61,7 @@ public class HelperTableRecord implements Target, Comparable<HelperTableRecord> 
      * @param id          La llave primaria del registro de la tabla auxiliar.
      */
     public HelperTableRecord(HelperTable helperTable, long id) {
+        super(id);
         this.helperTable = helperTable;
         this.id = id;
     }
@@ -161,5 +164,13 @@ public class HelperTableRecord implements Target, Comparable<HelperTableRecord> 
      */
     public void addField(String fieldName, String fieldValue) {
         this.fields.put(fieldName, fieldValue);
+    }
+
+    public String getRepresentation(){
+        if (this.getFields() == null) {
+            return "";
+        } else {
+            return this.getFields().get(SYSTEM_COLUMN_DESCRIPTION.getColumnName());
+        }
     }
 }

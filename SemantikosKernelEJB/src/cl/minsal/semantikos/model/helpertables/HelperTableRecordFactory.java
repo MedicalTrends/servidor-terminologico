@@ -81,8 +81,8 @@ public class HelperTableRecordFactory {
         HelperTableJSON[] jsonHelperTables = mapper.readValue(jsonExpression, HelperTableJSON[].class);
         List<HelperTable> helperTableList = new ArrayList<>();
         Collection<HelperTableColumn> columns = Arrays.asList(HelperTable.SYSTEM_COLUMN_ID, HelperTable.SYSTEM_COLUMN_DESCRIPTION);
-        for (int i = 0; i < jsonHelperTables.length; i++) {
-            helperTableList.add(new HelperTable(jsonHelperTables[i].getTableId(),jsonHelperTables[i].getName(), jsonHelperTables[i].getDescription(),jsonHelperTables[i].getTablaName(),columns));
+        for (HelperTableJSON jsonHelperTable : jsonHelperTables) {
+            helperTableList.add(new HelperTable(jsonHelperTable.getTableId(), jsonHelperTable.getName(), jsonHelperTable.getDescription(), jsonHelperTable.getTablaName(), columns));
         }
 
         return helperTableList;
@@ -102,8 +102,6 @@ public class HelperTableRecordFactory {
 
         // Se crean las columnas por defecto que debe especificar esta definición de helperTable
         Collection<HelperTableColumn> columns = Arrays.asList(HelperTable.SYSTEM_COLUMN_ID, HelperTable.SYSTEM_COLUMN_DESCRIPTION);
-
-
 
         return new HelperTable(jsonHelperTable.getTableId(), jsonHelperTable.getName(), jsonHelperTable.getDescription(), jsonHelperTable.getTablaName(), columns);
     }
