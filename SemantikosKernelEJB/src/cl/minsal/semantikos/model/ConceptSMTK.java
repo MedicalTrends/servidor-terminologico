@@ -415,10 +415,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         this.relationshipsLoaded = true;
     }
 
-    public boolean isRelationshipsLoaded() {
-        return relationshipsLoaded;
-    }
-
     public String getConceptID() {
         return conceptID;
     }
