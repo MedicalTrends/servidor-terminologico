@@ -82,7 +82,7 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, ""));
+        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Medicamento Clínico"));
     }
 
     // REQ-WS-010 Lite
@@ -94,7 +94,7 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionadosLite(makeRequest(request, ""));
+        return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Medicamento Clínico"));
     }
 
     // REQ-WS-010
@@ -149,7 +149,7 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, ""));
+        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Medicamento Básico"));
     }
 
     // REQ-WS-012.1-Lite
@@ -160,7 +160,7 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionadosLite(makeRequest(request, ""));
+        return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Medicamento Básico"));
     }
 
     // REQ-WS-012
@@ -194,7 +194,7 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, ""));
+        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Producto Comercial"));
     }
 
     // REQ-WS-013 Lite
@@ -206,7 +206,7 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, ""));
+        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Producto Comercial"));
     }
 
     // REQ-WS-013
@@ -261,7 +261,7 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, ""));
+        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Medicamento Clínico con Envase"));
     }
 
     // REQ-WS-014 Lite
@@ -272,7 +272,7 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionadosLite(makeRequest(request, ""));
+        return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Medicamento Clínico con Envase"));
     }
 
     // REQ-WS-014
@@ -305,7 +305,7 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, ""));
+        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Producto Comercial con Envase"));
     }
 
     // REQ-WS-015 Lite
@@ -316,7 +316,7 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionadosLite(makeRequest(request, ""));
+        return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Producto Comercial con Envase"));
     }
 
     // REQ-WS-015
@@ -349,7 +349,7 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, ""));
+        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Familia de Productos"));
     }
 
     // REQ-WS-016
@@ -371,7 +371,8 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, ""));
+        // TODO: que categoria es esta?
+        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Medicamento Clínico con Envase"));
     }
 
     // REQ-WS-018 Lite
@@ -382,7 +383,7 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionadosLite(makeRequest(request, ""));
+        return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Medicamento Clínico con Envase"));
     }
 
     // REQ-WS-018
@@ -415,7 +416,7 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, ""));
+        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Sustancia"));
     }
 
     // REQ-WS-019
@@ -437,7 +438,8 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, ""));
+        // TODO: Que categoria es esta?
+        return this.conceptosRelacionados(makeRequest(request, "Elemento de Registro"));
     }
 
     // REQ-WS-020
@@ -459,7 +461,7 @@ public class RelatedService {
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, ""));
+        return this.conceptosRelacionados(makeRequest(request, "Elemento de Registro"));
     }
 
     // REQ-WS-021
