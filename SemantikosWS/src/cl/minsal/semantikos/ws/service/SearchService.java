@@ -45,6 +45,7 @@ public class SearchService {
         if ( request.getTerm() == null || "".equals(request.getTerm()) ) {
             throw new IllegalInputFault("Debe ingresar un Termino a buscar");
         }
+        // TODO: usar GenericTermSearchResponse
         return this.conceptController.searchTerm(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
     }
 
