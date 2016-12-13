@@ -1,0 +1,20 @@
+
+{
+  "descripcion":
+  {
+    "idDescripcion": "1",
+    "termino": "hepatitis",
+    "tipoDescripcion": "preferida",
+    "nombreCategoria": "especímenes",
+    "terminoPreferida": "la preferida"
+  },
+  "descripcion":
+  {
+    "idDescripcion": "2",
+    "termino": "hepa",
+    "tipoDescripcion": "preferida",
+    "nombreCategoria": "especímenes",
+    "terminoPreferida": "la preferida"
+  },
+  "cantidadRegistros": "2"
+}

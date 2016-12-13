@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Development on 2016-11-02.
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)

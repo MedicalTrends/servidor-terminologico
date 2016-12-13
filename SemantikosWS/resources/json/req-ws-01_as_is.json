@@ -1,0 +1,27 @@
+{
+  "descripcion":
+  {
+    "idDescripcion": "1",
+    "termino": "hepatitis",
+    "tipoDescripcion": "favorita",
+    "idCategoria": "2",
+    "nombreCategoria": "especímenes",
+    "idConcepto": "3",
+    "idDescripcionPreferida": "4",
+    "terminoPreferida": "la preferida",
+    "validez": "si",
+    "refsets": {"refset": "ges", "refset": "ricarte soto"}
+  },
+  "descripcion":
+  {
+    "idDescripcion": "1",
+    "termino": "hepatitis",
+    "tipoDescripcion": "favorita",
+    "idCategoria": "2",
+    "nombreCategoria": "especímenes",
+    "idConcepto": "3",
+    "idDescripcionPreferida": "4",
+    "terminoPreferida": "la preferida",
+    "validez": "si"
+  },
+"cantidadRegistros": "2"}
