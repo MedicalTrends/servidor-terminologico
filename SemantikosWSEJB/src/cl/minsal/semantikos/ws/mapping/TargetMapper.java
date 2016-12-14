@@ -43,7 +43,6 @@ public class TargetMapper {
                 ConceptSMTK conceptSMTK = (ConceptSMTK) target;
                 ConceptResponse conceptResponse = new ConceptResponse(conceptSMTK);
                 ConceptMapper.appendPreferredDescriptions(conceptResponse, conceptSMTK);
-                ConceptMapper.appendCategory(conceptResponse, conceptSMTK);
                 res.setConcept(conceptResponse);
             }
 

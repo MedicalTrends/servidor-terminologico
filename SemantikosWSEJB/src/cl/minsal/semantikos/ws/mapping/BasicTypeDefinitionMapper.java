@@ -8,21 +8,20 @@ import java.util.List;
 
 /**
  * Created by Development on 2016-10-14.
- *
  */
 public class BasicTypeDefinitionMapper {
 
     public static BasicTypeDefinitionResponse map(BasicTypeDefinition basicTypeDefinition) {
-        if ( basicTypeDefinition != null ) {
+        if (basicTypeDefinition != null) {
             BasicTypeDefinitionResponse res = new BasicTypeDefinitionResponse();
             res.setName(basicTypeDefinition.getName());
             res.setDescription(basicTypeDefinition.getDescription());
             res.setInterval(IntervalMapper.map(basicTypeDefinition.getInterval()));
             res.setType(BasicTypeTypeMapper.map(basicTypeDefinition.getType()));
-            if ( basicTypeDefinition.getDomain() != null ) {
+            if (basicTypeDefinition.getDomain() != null) {
                 List<String> domains = new ArrayList<>(basicTypeDefinition.getDomain().size());
-                for ( Object domain : basicTypeDefinition.getDomain() ) {
-                    if ( domain != null ) {
+                for (Object domain : basicTypeDefinition.getDomain()) {
+                    if (domain != null) {
                         domains.add(String.valueOf(domain));
                     }
                 }

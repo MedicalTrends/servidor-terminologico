@@ -112,6 +112,7 @@ public class ConceptController {
         else {
             throw new IllegalArgumentException("Tanto el DESCRIPTION_ID como el CONCEPT_ID eran nulos.");
         }
+
         return sourceConcept;
     }
 

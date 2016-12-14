@@ -3,7 +3,6 @@ package cl.minsal.semantikos.ws.component;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
-import cl.minsal.semantikos.ws.mapping.CategoryMapper;
 import cl.minsal.semantikos.ws.response.CategoryResponse;
 
 import javax.ejb.EJB;
@@ -50,7 +49,7 @@ public class CategoryController {
         if ( category == null ) {
             throw new NotFoundFault("Categoria no encontrada");
         }
-        return CategoryMapper.map(category);
+        return new CategoryResponse(category);
     }
 
 }
