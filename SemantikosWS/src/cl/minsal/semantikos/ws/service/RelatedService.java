@@ -15,7 +15,6 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlElement;
-import java.util.List;
 
 /**
  * Created by Development on 2016-11-18.
@@ -50,12 +49,16 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
                     RelatedConceptsByCategoryRequest request
-    ) throws IllegalInputFault, NotFoundFault {
+            ) throws IllegalInputFault, NotFoundFault {
+
+        /* Validación de parámetros */
         if ( (request.getConceptId() == null || "".equals(request.getConceptId()) )
                 && (request.getDescriptionId() == null || "".equals(request.getDescriptionId())) ) {
             throw new IllegalInputFault("Debe ingresar un idConcepto o idDescripcion");
         }
-        return this.conceptController.findRelated(request.getConceptId(), request.getDescriptionId(), request.getRelatedCategoryName());
+
+        /* Se realiza la búsqueda */
+        return this.conceptController.findRelated(request.getDescriptionId(), request.getConceptId(), request.getRelatedCategoryName());
     }
 
     // REQ-WS-010...021 Lite

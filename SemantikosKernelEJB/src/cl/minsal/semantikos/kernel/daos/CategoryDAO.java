@@ -15,6 +15,7 @@ import java.util.List;
 
 @Local
 public interface CategoryDAO {
+
     /**
      * Este método es responsable de recuperar toda la información de una categoría desde la BD y retornarla bien
      * organizada en un objeto de negocio.

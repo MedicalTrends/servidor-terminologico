@@ -14,9 +14,24 @@ public interface DescriptionDAO {
 
     public List<DescriptionType> getDescriptionTypes();
 
+    /**
+     * Este método es responsable de recuperar una descripción desde la BDD a partir de su llave primaria.
+     *
+     * @param id La llave de la descripción que se desea recuperar.
+     *
+     * @return Una descripción fresca desde la base de datos.
+     */
     public Description getDescriptionBy(long id);
 
-    public Description getDescriptionBy(String businessId);
+    /**
+     * Este método es responsable de recuperar una descripción desde la BDD a partir de su identificador de negocio, el
+     * <em>DESCRIPTION_ID</em>
+     *
+     * @param descriptionId El identificador de negocio por el cual se realiza la búsqueda.
+     *
+     * @return Una descripción fresca recuperada desde la base de datos.
+     */
+    public Description getDescriptionByDescriptionID(String descriptionId);
 
     /**
      * Este método es responsable de recuperar todas las descripciones de un concepto.
@@ -41,9 +56,7 @@ public interface DescriptionDAO {
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
      * parámetro en cada una de las categorías y refsets indicadas.
-     * @param term
-     * @param categories
-     * @param refSets
+     *
      * @return
      */
     List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets);

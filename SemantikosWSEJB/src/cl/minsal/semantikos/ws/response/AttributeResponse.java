@@ -1,5 +1,8 @@
 package cl.minsal.semantikos.ws.response;
 
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.relationships.Relationship;
+
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
@@ -18,6 +21,14 @@ public class AttributeResponse implements Serializable {
     private String name;
     @XmlElement(name="valor")
     private String value;
+
+    public AttributeResponse() {
+    }
+
+    public AttributeResponse(Relationship relationship) {
+        this.name = relationship.getRelationshipDefinition().getName();
+        this.value = String.valueOf(((BasicTypeValue) relationship.getTarget()).getValue());
+    }
 
     public String getType() {
         return type;

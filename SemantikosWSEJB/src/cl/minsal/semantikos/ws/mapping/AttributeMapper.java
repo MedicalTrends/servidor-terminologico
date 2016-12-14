@@ -10,25 +10,5 @@ import cl.minsal.semantikos.ws.response.AttributeResponse;
  */
 public class AttributeMapper {
 
-    public static AttributeResponse map(Relationship relationship) {
-        if ( relationship != null ) {
-            AttributeResponse res = new AttributeResponse();
-            if ( relationship.getRelationshipDefinition() != null ) {
-                res.setName(relationship.getRelationshipDefinition().getName());
-            }
-            if ( relationship.getTarget() != null
-                    && relationship.getTarget() instanceof BasicTypeValue ) {
-                BasicTypeValue btv = (BasicTypeValue) relationship.getTarget();
-                if ( btv.getValue() != null ) {
-                    res.setValue(String.valueOf(btv.getValue()));
-                }
-//                if (  btv.getTargetType() != null ) {
-//                    res.setType(btv.getTargetType().toString());
-//                }
-            }
-            return res;
-        }
-        return null;
-    }
 
 }

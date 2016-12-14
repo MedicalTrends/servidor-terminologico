@@ -189,11 +189,12 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     }
 
     public List<Description> getDescriptions() {
-        return descriptions;
+        return new ArrayList<Description>(descriptions);
     }
 
     public void setDescriptions(List<Description> descriptions) {
-        this.descriptions = descriptions;
+        this.descriptions = new ArrayList<>();
+        this.descriptions.addAll(descriptions);
     }
 
     /**

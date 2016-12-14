@@ -2,6 +2,7 @@ package cl.minsal.semantikos.ws.service;
 
 import cl.minsal.semantikos.ws.component.CategoryController;
 import cl.minsal.semantikos.ws.component.ConceptController;
+import cl.minsal.semantikos.ws.component.CrossmapController;
 import cl.minsal.semantikos.ws.component.RefSetController;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
@@ -18,15 +19,18 @@ import java.util.List;
 
 /**
  * Created by Development on 2016-11-18.
- *
  */
 @WebService(serviceName = "ServicioDeBusqueda")
 public class SearchService {
 
     @EJB
+    private CrossmapController crossmapsController;
+
+    @EJB
     private ConceptController conceptController;
     @EJB
     private CategoryController categoryController;
+
     @EJB
     private RefSetController refSetController;
 
@@ -34,15 +38,15 @@ public class SearchService {
     @WebResult(name = "respuestaBuscarTermino")
     @WebMethod(operationName = "buscarTermino")
     public TermSearchResponse buscarTermino(
-        @XmlElement(required = true)
-        @WebParam(name = "peticionBuscarTermino")
-                SearchTermRequest request
+            @XmlElement(required = true)
+            @WebParam(name = "peticionBuscarTermino")
+            SearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        if ( (request.getCategoryNames() == null || request.getCategoryNames().isEmpty() )
-                && (request.getRefSetNames() == null || request.getRefSetNames().isEmpty() )) {
+        if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())
+                && (request.getRefSetNames() == null || request.getRefSetNames().isEmpty())) {
             throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet");
         }
-        if ( request.getTerm() == null || "".equals(request.getTerm()) ) {
+        if (request.getTerm() == null || "".equals(request.getTerm())) {
             throw new IllegalInputFault("Debe ingresar un Termino a buscar");
         }
         // TODO: usar GenericTermSearchResponse
@@ -55,7 +59,7 @@ public class SearchService {
     public ConceptsByCategoryResponse conceptosPorCategoria(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosPorCategoria")
-                    ConceptsByCategoryRequest request
+            ConceptsByCategoryRequest request
     ) throws NotFoundFault {
         return this.conceptController.conceptsByCategory(request.getCategoryName(), request.getPageNumber(), request.getPageSize());
     }
@@ -72,13 +76,13 @@ public class SearchService {
     public TermSearchResponse buscarTruncatePerfect(
             @XmlElement(required = true)
             @WebParam(name = "peticionBuscarTermino")
-                    SearchTermRequest request
+            SearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        if ( (request.getCategoryNames() == null || request.getCategoryNames().isEmpty() )
-                && (request.getRefSetNames() == null || request.getRefSetNames().isEmpty() )) {
+        if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())
+                && (request.getRefSetNames() == null || request.getRefSetNames().isEmpty())) {
             throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet");
         }
-        if ( request.getTerm() == null || "".equals(request.getTerm()) ) {
+        if (request.getTerm() == null || "".equals(request.getTerm())) {
             throw new IllegalInputFault("Debe ingresar un Termino a buscar");
         }
         return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames(), request.getRefSetNames(), request.getPageNumber(), request.getPageSize());
@@ -90,9 +94,9 @@ public class SearchService {
     public TermSearchResponse obtenerTerminosPedibles(
             @XmlElement(required = true)
             @WebParam(name = "peticionObtenerTerminosPedibles")
-                    GetRequestableTermsRequest request
+            GetRequestableTermsRequest request
     ) throws IllegalInputFault {
-        if ( (request.getCategoryNames() == null && request.getRefSetNames() == null)
+        if ((request.getCategoryNames() == null && request.getRefSetNames() == null)
                 || (request.getCategoryNames().isEmpty() && request.getRefSetNames().isEmpty())) {
             throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet");
         }
@@ -107,9 +111,9 @@ public class SearchService {
     public TermSearchResponse refSetsPorIdDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "peticionRefSetsPorIdDescripcion")
-                    RefSetsByDescriptionIdRequest request
+            RefSetsByDescriptionIdRequest request
     ) throws NotFoundFault, IllegalInputFault {
-        if ( request.getDescriptionId() == null || request.getDescriptionId().isEmpty() ) {
+        if (request.getDescriptionId() == null || request.getDescriptionId().isEmpty()) {
             throw new IllegalInputFault("Debe ingresar por lo menos un idDescripcion");
         }
         return this.refSetController.findRefSetsByDescriptionIds(request.getDescriptionId(), request.getIncludeInstitutions());
@@ -121,7 +125,7 @@ public class SearchService {
     public List<RefSetResponse> listaRefSet(
             @XmlElement(required = false, defaultValue = "true")
             @WebParam(name = "incluyeEstablecimientos")
-                    Boolean includeInstitutions
+            Boolean includeInstitutions
     ) throws NotFoundFault {
         return this.refSetController.refSetList(includeInstitutions);
     }
@@ -132,7 +136,7 @@ public class SearchService {
     public ConceptsByRefsetResponse descripcionesPreferidasPorRefSet(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosPorRefSet")
-                    ConceptsByRefsetRequest request
+            ConceptsByRefsetRequest request
     ) throws NotFoundFault {
         return this.conceptController.conceptsByRefsetWithPreferedDescriptions(request.getRefSetName(), request.getPageNumber(), request.getPageSize());
     }
@@ -143,9 +147,20 @@ public class SearchService {
     public ConceptsByRefsetResponse conceptosPorRefSet(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosPorRefSet")
-                    ConceptsByRefsetRequest request
+            ConceptsByRefsetRequest request
     ) throws NotFoundFault {
         return this.conceptController.conceptsByRefset(request.getRefSetName(), request.getPageNumber(), request.getPageSize());
+    }
+
+    // REQ-WS-026
+    @WebResult(name = "concepto")
+    @WebMethod(operationName = "crossMapsIndirectosPorIDDescripcion")
+    public IndirectCrossMapsResponse crossMapsIndirectosPorIDDescripcion(
+            @XmlElement(required = true)
+            @WebParam(name = "idDescripcion")
+            String descriptionId
+    ) throws NotFoundFault {
+        return this.crossmapsController.getIndirectCrossmapsByDescriptionID(descriptionId);
     }
 
     // REQ-WS-028
@@ -154,7 +169,7 @@ public class SearchService {
     public ConceptResponse conceptoPorIdDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "idDescripcion")
-                    String descriptionId
+            String descriptionId
     ) throws NotFoundFault {
         return this.conceptController.conceptByDescriptionId(descriptionId);
     }
@@ -164,7 +179,7 @@ public class SearchService {
     public ConceptResponse conceptoPorId(
             @XmlElement(required = true)
             @WebParam(name = "idConcepto")
-                    String conceptId
+            String conceptId
     ) throws NotFoundFault {
         return this.conceptController.conceptById(conceptId);
     }

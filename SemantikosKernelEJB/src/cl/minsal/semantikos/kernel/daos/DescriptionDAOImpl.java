@@ -100,7 +100,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     }
 
     @Override
-    public Description getDescriptionBy(String businessId) {
+    public Description getDescriptionByDescriptionID(String businessId) {
         ConnectionBD connect = new ConnectionBD();
         Description description= null;
 

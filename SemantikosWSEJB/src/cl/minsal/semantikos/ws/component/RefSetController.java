@@ -47,8 +47,7 @@ public class RefSetController {
 
         List<ConceptResponse> conceptResponses = new ArrayList<>(conceptSMTKS.size());
         for ( ConceptSMTK conceptSMTK : conceptSMTKS ) {
-            ConceptResponse conceptResponse = this.conceptController.getResponse(conceptSMTK);
-            this.conceptController.loadDescriptions(conceptResponse, conceptSMTK);
+            ConceptResponse conceptResponse = new ConceptResponse(conceptSMTK);
             this.conceptController.loadCategory(conceptResponse, conceptSMTK);
             this.conceptController.loadRefSets(conceptResponse, conceptSMTK);
 

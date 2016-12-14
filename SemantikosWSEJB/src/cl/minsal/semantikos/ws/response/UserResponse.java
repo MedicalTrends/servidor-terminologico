@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.ws.response;
 
+import cl.minsal.semantikos.model.User;
+
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -15,20 +17,41 @@ public class UserResponse implements Serializable {
 
     @XmlElement(name="nombreUsuario")
     private String username;
+
     @XmlElement(name="nombre")
     private String name;
+
     @XmlElement(name="apellido")
     private String lastName;
+
     @XmlElement(name="segundoApellido")
     private String secondLastName;
+
     @XmlElement(name="email")
     private String email;
+
     @XmlElement(name="rut")
     private String rut;
+
     @XmlElement(name="ultimoLogin")
     private Date lastLogin;
+
     @XmlElement(name="ultimoCambioPassword")
     private Date lastPasswordChange;
+
+    public UserResponse() {
+    }
+
+    public UserResponse(User creatorUser) {
+        this.username = creatorUser.getUsername();
+        this.name = creatorUser.getName();
+        this.lastName = creatorUser.getLastName();
+        this.secondLastName = creatorUser.getSecondLastName();
+        this.email = creatorUser.getEmail();
+        this.rut = creatorUser.getRut();
+        this.lastLogin = creatorUser.getLastLogin();
+        this.lastPasswordChange = creatorUser.getLastPasswordChange();
+    }
 
     public String getUsername() {
         return username;

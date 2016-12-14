@@ -18,10 +18,7 @@ import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.text.Normalizer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.UUID;
+import java.util.*;
 
 import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
 
@@ -78,16 +75,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public ConceptSMTK getConceptByDescriptionID(String descriptionId) {
-        Description description = this.descriptionDAO.getDescriptionBy(descriptionId);
-        if ( description != null ) {
-            return description.getConceptSMTK();
-        }
-        return null;
-    }
-
-    @Override
-    public ConceptSMTK getConceptByID(long id) {
+    public ConceptSMTK getConceptById(long id) {
 
         /* Se recupera el concepto base (sus atributos) sin sus relaciones ni descripciones */
         ConceptSMTK conceptSMTK = this.conceptDAO.getConceptByID(id);
@@ -414,6 +402,12 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    public ConceptSMTK getConceptByDescriptionID(String descriptionId) {
+        /* Se hace delegación sobre el DescriptionManager */
+        return descriptionManager.getDescriptionByDescriptionID(descriptionId).getConceptSMTK();
+    }
+
+    @Override
     public List<Relationship> loadRelationships(ConceptSMTK concept) {
         List<Relationship> relationships = relationshipDAO.getRelationshipsBySourceConcept(concept.getId());
         concept.setRelationships(relationships);
@@ -459,6 +453,32 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK) {
         return conceptDAO.getRelatedConcepts(conceptSMTK);
+    }
+
+    @Override
+    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK, Category... categories) {
+
+        /* Se recuperan los conceptos relacionados */
+        List<ConceptSMTK> relatedConcepts = getRelatedConcepts(conceptSMTK);
+
+        /* Si no hay categorías por las que filtrar, se retorna la lista original */
+        if (categories == null || categories.length == 0) {
+            return relatedConcepts;
+        }
+
+        /* Se filtra para retornar sólo aquellos que pertenecen a alguna de las categorías dadas */
+        ArrayList<ConceptSMTK> filteredRelatedConcepts =new ArrayList<>();
+        for (ConceptSMTK relatedConcept : relatedConcepts) {
+            Category conceptCategory = relatedConcept.getCategory();
+            List<Category> categoryFilters = Arrays.asList(categories);
+
+            /* Se agrega el concepto si su categoría está dentro de las categorías para filtrar */
+            if (categoryFilters.contains(conceptCategory)) {
+                filteredRelatedConcepts.add(relatedConcept);
+            }
+        }
+
+        return filteredRelatedConcepts;
     }
 
     /**
