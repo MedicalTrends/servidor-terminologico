@@ -1,18 +1,23 @@
 package cl.minsal.semantikos.beans.relationship;
 
 import cl.minsal.semantikos.beans.concept.ConceptBean;
+import cl.minsal.semantikos.kernel.components.HelperTableManager;
+import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.ConceptSMTKWeb;
 import cl.minsal.semantikos.model.RelationshipWeb;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.helpertables.HelperTable;
+import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN_MAPEO_DE;
 
 /**
  * Created by des01c7 on 02-12-16.
@@ -20,6 +25,7 @@ import java.util.Map;
 @ManagedBean(name = "relationshipBean")
 @ViewScoped
 public class RelationshipBeans {
+
     @ManagedProperty( value="#{conceptBean}")
     ConceptBean conceptBean;
 
@@ -91,4 +97,5 @@ public class RelationshipBeans {
         }
         return targetSelected.get(relationshipDefinition.getId());
     }
+
 }
