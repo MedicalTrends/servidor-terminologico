@@ -14,6 +14,7 @@ public class TermSearchResponse implements Serializable {
 
     @XmlElement(name="paginacion")
     private PaginationResponse pagination;
+
     @XmlElementWrapper(name="conceptos")
     @XmlElement(name="concepto")
     private List<ConceptResponse> concepts;

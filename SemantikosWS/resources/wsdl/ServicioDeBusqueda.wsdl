@@ -1,542 +1,554 @@
 <?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ws.semantikos.minsal.cl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="ServicioDeBusqueda" targetNamespace="http://service.ws.semantikos.minsal.cl/">
   <wsdl:types>
-    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.ws.semantikos.minsal.cl/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.ws.semantikos.minsal.cl/">
-      <xs:element name="atributo" type="tns:Atributo"/>
-      <xs:element name="atributoRelacion" type="tns:AtributoRelacion"/>
-      <xs:element name="buscarTermino" type="tns:buscarTermino"/>
-      <xs:element name="buscarTerminoResponse" type="tns:buscarTerminoResponse"/>
-      <xs:element name="buscarTruncatePerfect" type="tns:buscarTruncatePerfect"/>
-      <xs:element name="buscarTruncatePerfectResponse" type="tns:buscarTruncatePerfectResponse"/>
-      <xs:element name="categoria" type="tns:Categoria"/>
-      <xs:element name="columnaTablaAuxiliar" type="tns:ColumnaTablaAuxiliar"/>
-      <xs:element name="concepto" type="tns:Concepto"/>
-      <xs:element name="conceptoPorId" type="tns:conceptoPorId"/>
-      <xs:element name="conceptoPorIdDescripcion" type="tns:conceptoPorIdDescripcion"/>
-      <xs:element name="conceptoPorIdDescripcionResponse" type="tns:conceptoPorIdDescripcionResponse"/>
-      <xs:element name="conceptoPorIdResponse" type="tns:conceptoPorIdResponse"/>
-      <xs:element name="conceptosPorCategoria" type="tns:conceptosPorCategoria"/>
-      <xs:element name="conceptosPorCategoriaResponse" type="tns:conceptosPorCategoriaResponse"/>
-      <xs:element name="conceptosPorRefSet" type="tns:conceptosPorRefSet"/>
-      <xs:element name="conceptosPorRefSetResponse" type="tns:conceptosPorRefSetResponse"/>
-      <xs:element name="definicionObjetivo" type="tns:DefinicionObjetivo"/>
-      <xs:element name="definicionRelacion" type="tns:DefinicionRelacion"/>
-      <xs:element name="definicionRelacionAtributo" type="tns:DefinicionRelacionAtributo"/>
-      <xs:element name="descripcion" type="tns:Descripcion"/>
-      <xs:element name="descripcionesPreferidasPorRefSet" type="tns:descripcionesPreferidasPorRefSet"/>
-      <xs:element name="descripcionesPreferidasPorRefSetResponse" type="tns:descripcionesPreferidasPorRefSetResponse"/>
-      <xs:element name="listaCategorias" type="tns:listaCategorias"/>
-      <xs:element name="listaCategoriasResponse" type="tns:listaCategoriasResponse"/>
-      <xs:element name="listaRefSet" type="tns:listaRefSet"/>
-      <xs:element name="listaRefSetResponse" type="tns:listaRefSetResponse"/>
-      <xs:element name="multiplicidad" type="tns:Multiplicidad"/>
-      <xs:element name="objetivo" type="tns:Objetivo"/>
-      <xs:element name="obtenerTerminosPedibles" type="tns:obtenerTerminosPedibles"/>
-      <xs:element name="obtenerTerminosPediblesResponse" type="tns:obtenerTerminosPediblesResponse"/>
-      <xs:element name="paginacion" type="tns:Paginacion"/>
-      <xs:element name="peticionBuscarTermino" type="tns:PeticionBuscarTermino"/>
-      <xs:element name="peticionConceptosPorCategoria" type="tns:PeticionConceptosPorCategoria"/>
-      <xs:element name="peticionConceptosPorRefSet" type="tns:PeticionConceptosPorRefSet"/>
-      <xs:element name="peticionObtenerTerminosPedibles" type="tns:PeticionObtenerTerminosPedibles"/>
-      <xs:element name="peticionRefSetsPorIdDescripcion" type="tns:PeticionRefSetsPorIdDescripcion"/>
-      <xs:element name="refSet" type="tns:RefSet"/>
-      <xs:element name="refSetsPorIdDescripcion" type="tns:refSetsPorIdDescripcion"/>
-      <xs:element name="refSetsPorIdDescripcionResponse" type="tns:refSetsPorIdDescripcionResponse"/>
-      <xs:element name="relacion" type="tns:Relacion"/>
-      <xs:element name="respuestaBuscarTermino" type="tns:RespuestaBuscarTermino"/>
-      <xs:element name="respuestaConceptosPorCategoria" type="tns:RespuestaConceptosPorCategoria"/>
-      <xs:element name="respuestaConceptosPorRefSet" type="tns:RespuestaConceptosPorRefSet"/>
-      <xs:element name="tablaAuxiliar" type="tns:TablaAuxiliar"/>
-      <xs:element name="tagSMTK" type="tns:TagSMTK"/>
-      <xs:element name="usuario" type="tns:Usuario"/>
-      <xs:complexType name="conceptoPorIdDescripcion">
-        <xs:sequence>
-          <xs:element name="idDescripcion" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="conceptoPorIdDescripcionResponse">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="tns:concepto"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="Concepto">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="id" type="xs:string"/>
-          <xs:element minOccurs="0" name="aSerRevisado" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="aSerConsultado" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="modelado" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="completamenteDefinido" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="publicado" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="valido" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="validoHasta" type="xs:dateTime"/>
-          <xs:element minOccurs="0" name="observacion" type="xs:string"/>
-          <xs:element minOccurs="0" ref="tns:tagSMTK"/>
-          <xs:element minOccurs="0" ref="tns:categoria"/>
-          <xs:element minOccurs="0" name="refSets">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:refSet"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-          <xs:element minOccurs="0" name="descripciones">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:descripcion"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-          <xs:element minOccurs="0" name="atributos">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:atributo"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-          <xs:element minOccurs="0" name="relaciones">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:relacion"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="TagSMTK">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="Categoria">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
-          <xs:element minOccurs="0" name="nombreAbreviado" type="xs:string"/>
-          <xs:element minOccurs="0" name="restringida" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="vigente" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="RefSet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
-          <xs:element minOccurs="0" name="valido" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="validoHasta" type="xs:dateTime"/>
-          <xs:element minOccurs="0" name="creadoEn" type="xs:dateTime"/>
-          <xs:element minOccurs="0" name="institucion" type="xs:string"/>
-          <xs:element minOccurs="0" name="conceptos">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="Descripcion">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="id" type="xs:string"/>
-          <xs:element minOccurs="0" name="tipo" type="xs:string"/>
-          <xs:element minOccurs="0" name="termino" type="xs:string"/>
-          <xs:element minOccurs="0" name="valida" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="esSensibleAMayusculas" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="nombreAutgenerado" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="publicado" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="modelado" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="validaHasta" type="xs:dateTime"/>
-          <xs:element minOccurs="0" name="creado" type="xs:dateTime"/>
-          <xs:element minOccurs="0" name="usos" type="xs:long"/>
-          <xs:element minOccurs="0" name="usuarioCreador" type="tns:Usuario"/>
-          <xs:element minOccurs="0" ref="tns:concepto"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="Usuario">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="nombreUsuario" type="xs:string"/>
-          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
-          <xs:element minOccurs="0" name="apellido" type="xs:string"/>
-          <xs:element minOccurs="0" name="segundoApellido" type="xs:string"/>
-          <xs:element minOccurs="0" name="email" type="xs:string"/>
-          <xs:element minOccurs="0" name="rut" type="xs:string"/>
-          <xs:element minOccurs="0" name="ultimoLogin" type="xs:dateTime"/>
-          <xs:element minOccurs="0" name="ultimoCambioPassword" type="xs:dateTime"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="Atributo">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="tipo" type="xs:string"/>
-          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
-          <xs:element minOccurs="0" name="valor" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="Relacion">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="tns:objetivo"/>
-          <xs:element minOccurs="0" name="definicion" type="tns:DefinicionRelacion"/>
-          <xs:element minOccurs="0" ref="tns:concepto"/>
-          <xs:element minOccurs="0" name="atributos">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="atributo" type="tns:AtributoRelacion"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="Objetivo">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="tipo" type="xs:string"/>
-          <xs:element minOccurs="0" name="activo" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="idModulo" type="xs:long"/>
-          <xs:element minOccurs="0" name="estadoDefinicionId" type="xs:long"/>
-          <xs:element minOccurs="0" name="valido" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="tiempoEfectivo" type="xs:dateTime"/>
-          <xs:element minOccurs="0" name="valor" type="xs:string"/>
-          <xs:element minOccurs="0" name="conceptoSMTK" type="tns:Concepto"/>
-          <xs:element minOccurs="0" ref="tns:relacion"/>
-          <xs:element minOccurs="0" ref="tns:tablaAuxiliar"/>
-          <xs:element name="fields">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
-                  <xs:complexType>
-                    <xs:sequence>
-                      <xs:element minOccurs="0" name="key" type="xs:string"/>
-                      <xs:element minOccurs="0" name="value" type="xs:string"/>
-                    </xs:sequence>
-                  </xs:complexType>
-                </xs:element>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="TablaAuxiliar">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
-          <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
-          <xs:element minOccurs="0" name="nombreTabla" type="xs:string"/>
-          <xs:element minOccurs="0" name="columnaTablaAuxiliar">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="columna" type="tns:ColumnaTablaAuxiliar"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="ColumnaTablaAuxiliar">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="nombreColumna" type="xs:string"/>
-          <xs:element minOccurs="0" name="esLlavePrimaria" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="esBuscable" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="esMostrable" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="DefinicionRelacion">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="name" type="xs:string"/>
-          <xs:element minOccurs="0" name="description" type="xs:string"/>
-          <xs:element minOccurs="0" ref="tns:multiplicidad"/>
-          <xs:element minOccurs="0" ref="tns:definicionObjetivo"/>
-          <xs:element minOccurs="0" name="definicionRelacionExcluida" type="tns:DefinicionRelacion"/>
-          <xs:element minOccurs="0" name="definicionesAtributoRelacion">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="definicionAtributoRelacion" type="tns:DefinicionRelacionAtributo"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="Multiplicidad">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="limiteInferior" type="xs:int"/>
-          <xs:element minOccurs="0" name="limiteSuperior" type="xs:int"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="DefinicionObjetivo">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="esTipoBasico" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="esTipoSMTK" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="esTablaAuxiliar" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="esTipoSnomedCT" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="esTipoCrossMap" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="DefinicionRelacionAtributo">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="name" type="xs:string"/>
-          <xs:element minOccurs="0" ref="tns:multiplicidad"/>
-          <xs:element minOccurs="0" ref="tns:definicionObjetivo"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="AtributoRelacion">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="tns:objetivo"/>
-          <xs:element minOccurs="0" name="definicionAtributoRelacion" type="tns:DefinicionRelacionAtributo"/>
-          <xs:element minOccurs="0" ref="tns:relacion"/>
-          <xs:element minOccurs="0" name="tipo" type="xs:string"/>
-          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
-          <xs:element minOccurs="0" name="valor" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="listaRefSet">
-        <xs:sequence>
-          <xs:element default="true" minOccurs="0" name="incluyeEstablecimientos" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="listaRefSetResponse">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:refSet"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="conceptosPorRefSet">
-        <xs:sequence>
-          <xs:element ref="tns:peticionConceptosPorRefSet"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="PeticionConceptosPorRefSet">
-        <xs:sequence>
-          <xs:element name="nombreRefSet" type="xs:string"/>
-          <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
-          <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="conceptosPorRefSetResponse">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="tns:respuestaConceptosPorRefSet"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="RespuestaConceptosPorRefSet">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="tns:refSet"/>
-          <xs:element minOccurs="0" ref="tns:paginacion"/>
-          <xs:element minOccurs="0" name="conceptos">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="Paginacion">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="totalRegistros" type="xs:int"/>
-          <xs:element minOccurs="0" name="paginaActual" type="xs:int"/>
-          <xs:element minOccurs="0" name="registrosPorPagina" type="xs:int"/>
-          <xs:element minOccurs="0" name="mostrandoDesde" type="xs:int"/>
-          <xs:element minOccurs="0" name="mostrandoHasta" type="xs:int"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="buscarTruncatePerfect">
-        <xs:sequence>
-          <xs:element ref="tns:peticionBuscarTermino"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="PeticionBuscarTermino">
-        <xs:sequence>
-          <xs:element name="termino" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreCategoria" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreRefSet" type="xs:string"/>
-          <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
-          <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="buscarTruncatePerfectResponse">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="tns:respuestaBuscarTermino"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="RespuestaBuscarTermino">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="tns:paginacion"/>
-          <xs:element minOccurs="0" name="conceptos">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="conceptoPorId">
-        <xs:sequence>
-          <xs:element name="idConcepto" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="conceptoPorIdResponse">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="tns:concepto"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="refSetsPorIdDescripcion">
-        <xs:sequence>
-          <xs:element ref="tns:peticionRefSetsPorIdDescripcion"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="PeticionRefSetsPorIdDescripcion">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" name="idDescripcion" type="xs:string"/>
-          <xs:element default="true" minOccurs="0" name="incluyeEstablecimientos" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="refSetsPorIdDescripcionResponse">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="respuestaRefSetsPorIdDescripcion" type="tns:RespuestaBuscarTermino"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="listaCategorias">
-        <xs:sequence/>
-      </xs:complexType>
-      <xs:complexType name="listaCategoriasResponse">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:categoria"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="conceptosPorCategoria">
-        <xs:sequence>
-          <xs:element ref="tns:peticionConceptosPorCategoria"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="PeticionConceptosPorCategoria">
-        <xs:sequence>
-          <xs:element name="nombreCategoria" type="xs:string"/>
-          <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
-          <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="conceptosPorCategoriaResponse">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="tns:respuestaConceptosPorCategoria"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="RespuestaConceptosPorCategoria">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="tns:categoria"/>
-          <xs:element minOccurs="0" ref="tns:paginacion"/>
-          <xs:element minOccurs="0" name="conceptos">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="descripcionesPreferidasPorRefSet">
-        <xs:sequence>
-          <xs:element ref="tns:peticionConceptosPorRefSet"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="descripcionesPreferidasPorRefSetResponse">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="tns:respuestaConceptosPorRefSet"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="obtenerTerminosPedibles">
-        <xs:sequence>
-          <xs:element ref="tns:peticionObtenerTerminosPedibles"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="PeticionObtenerTerminosPedibles">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreCategoria" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreRefSet" type="xs:string"/>
-          <xs:element name="pedible" type="xs:string"/>
-          <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
-          <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="obtenerTerminosPediblesResponse">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="tns:respuestaBuscarTermino"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="buscarTermino">
-        <xs:sequence>
-          <xs:element ref="tns:peticionBuscarTermino"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="buscarTerminoResponse">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="tns:respuestaBuscarTermino"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:element name="NotFoundFault" type="tns:NotFoundFault"/>
-      <xs:complexType name="NotFoundFault">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="message" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:element name="IllegalInputFault" type="tns:IllegalInputFault"/>
-      <xs:complexType name="IllegalInputFault">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="message" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-    </xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.ws.semantikos.minsal.cl/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.ws.semantikos.minsal.cl/">
+  <xs:element name="atributo" type="tns:Atributo"/>
+  <xs:element name="atributoRelacion" type="tns:AtributoRelacion"/>
+  <xs:element name="buscarTermino" type="tns:buscarTermino"/>
+  <xs:element name="buscarTerminoResponse" type="tns:buscarTerminoResponse"/>
+  <xs:element name="buscarTruncatePerfect" type="tns:buscarTruncatePerfect"/>
+  <xs:element name="buscarTruncatePerfectResponse" type="tns:buscarTruncatePerfectResponse"/>
+  <xs:element name="categoria" type="tns:Categoria"/>
+  <xs:element name="columnaTablaAuxiliar" type="tns:ColumnaTablaAuxiliar"/>
+  <xs:element name="concepto" type="tns:Concepto"/>
+  <xs:element name="conceptoPorId" type="tns:conceptoPorId"/>
+  <xs:element name="conceptoPorIdDescripcion" type="tns:conceptoPorIdDescripcion"/>
+  <xs:element name="conceptoPorIdDescripcionResponse" type="tns:conceptoPorIdDescripcionResponse"/>
+  <xs:element name="conceptoPorIdResponse" type="tns:conceptoPorIdResponse"/>
+  <xs:element name="conceptosPorCategoria" type="tns:conceptosPorCategoria"/>
+  <xs:element name="conceptosPorCategoriaResponse" type="tns:conceptosPorCategoriaResponse"/>
+  <xs:element name="conceptosPorRefSet" type="tns:conceptosPorRefSet"/>
+  <xs:element name="conceptosPorRefSetResponse" type="tns:conceptosPorRefSetResponse"/>
+  <xs:element name="crossMapsIndirectosPorIDDescripcion" type="tns:crossMapsIndirectosPorIDDescripcion"/>
+  <xs:element name="crossMapsIndirectosPorIDDescripcionResponse" type="tns:crossMapsIndirectosPorIDDescripcionResponse"/>
+  <xs:element name="definicionObjetivo" type="tns:DefinicionObjetivo"/>
+  <xs:element name="definicionRelacion" type="tns:DefinicionRelacion"/>
+  <xs:element name="definicionRelacionAtributo" type="tns:DefinicionRelacionAtributo"/>
+  <xs:element name="descripcion" type="tns:Descripcion"/>
+  <xs:element name="descripcionesPreferidasPorRefSet" type="tns:descripcionesPreferidasPorRefSet"/>
+  <xs:element name="descripcionesPreferidasPorRefSetResponse" type="tns:descripcionesPreferidasPorRefSetResponse"/>
+  <xs:element name="indirectCrossmap" type="tns:IndirectCrossmap"/>
+  <xs:element name="indirectCrossmapsSearch" type="tns:IndirectCrossmapsSearch"/>
+  <xs:element name="listaCategorias" type="tns:listaCategorias"/>
+  <xs:element name="listaCategoriasResponse" type="tns:listaCategoriasResponse"/>
+  <xs:element name="listaRefSet" type="tns:listaRefSet"/>
+  <xs:element name="listaRefSetResponse" type="tns:listaRefSetResponse"/>
+  <xs:element name="multiplicidad" type="tns:Multiplicidad"/>
+  <xs:element name="objetivo" type="tns:Objetivo"/>
+  <xs:element name="obtenerTerminosPedibles" type="tns:obtenerTerminosPedibles"/>
+  <xs:element name="obtenerTerminosPediblesResponse" type="tns:obtenerTerminosPediblesResponse"/>
+  <xs:element name="paginacion" type="tns:Paginacion"/>
+  <xs:element name="peticionBuscarTermino" type="tns:PeticionBuscarTermino"/>
+  <xs:element name="peticionConceptosPorCategoria" type="tns:PeticionConceptosPorCategoria"/>
+  <xs:element name="peticionConceptosPorRefSet" type="tns:PeticionConceptosPorRefSet"/>
+  <xs:element name="peticionObtenerTerminosPedibles" type="tns:PeticionObtenerTerminosPedibles"/>
+  <xs:element name="peticionRefSetsPorIdDescripcion" type="tns:PeticionRefSetsPorIdDescripcion"/>
+  <xs:element name="refSet" type="tns:RefSet"/>
+  <xs:element name="refSetsPorIdDescripcion" type="tns:refSetsPorIdDescripcion"/>
+  <xs:element name="refSetsPorIdDescripcionResponse" type="tns:refSetsPorIdDescripcionResponse"/>
+  <xs:element name="relacion" type="tns:Relacion"/>
+  <xs:element name="respuestaBuscarTermino" type="tns:RespuestaBuscarTermino"/>
+  <xs:element name="respuestaConceptosPorCategoria" type="tns:RespuestaConceptosPorCategoria"/>
+  <xs:element name="respuestaConceptosPorRefSet" type="tns:RespuestaConceptosPorRefSet"/>
+  <xs:element name="tablaAuxiliar" type="tns:TablaAuxiliar"/>
+  <xs:element name="tagSMTK" type="tns:TagSMTK"/>
+  <xs:element name="usuario" type="tns:Usuario"/>
+  <xs:complexType name="conceptoPorIdDescripcion">
+    <xs:sequence>
+      <xs:element name="idDescripcion" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="conceptoPorIdDescripcionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:concepto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Concepto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+      <xs:element minOccurs="0" name="aSerRevisado" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="aSerConsultado" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="modelado" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="completamenteDefinido" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="publicado" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="valido" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="validoHasta" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="observacion" type="xs:string"/>
+      <xs:element minOccurs="0" ref="tns:tagSMTK"/>
+      <xs:element minOccurs="0" ref="tns:categoria"/>
+      <xs:element minOccurs="0" name="refSets">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:refSet"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="descripciones">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:descripcion"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="atributos">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:atributo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="relaciones">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:relacion"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TagSMTK">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Categoria">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+      <xs:element minOccurs="0" name="nombreAbreviado" type="xs:string"/>
+      <xs:element minOccurs="0" name="restringida" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RefSet">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+      <xs:element minOccurs="0" name="valido" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="validoHasta" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="creadoEn" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="institucion" type="xs:string"/>
+      <xs:element minOccurs="0" name="conceptos">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Descripcion">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+      <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+      <xs:element minOccurs="0" name="termino" type="xs:string"/>
+      <xs:element minOccurs="0" name="valida" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="esSensibleAMayusculas" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="nombreAutgenerado" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="publicado" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="modelado" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="validaHasta" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="creado" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="usos" type="xs:long"/>
+      <xs:element minOccurs="0" name="usuarioCreador" type="tns:Usuario"/>
+      <xs:element minOccurs="0" ref="tns:concepto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Usuario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="nombreUsuario" type="xs:string"/>
+      <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+      <xs:element minOccurs="0" name="apellido" type="xs:string"/>
+      <xs:element minOccurs="0" name="segundoApellido" type="xs:string"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="rut" type="xs:string"/>
+      <xs:element minOccurs="0" name="ultimoLogin" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="ultimoCambioPassword" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Atributo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+      <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+      <xs:element minOccurs="0" name="valor" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Relacion">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:objetivo"/>
+      <xs:element minOccurs="0" name="definicion" type="tns:DefinicionRelacion"/>
+      <xs:element minOccurs="0" ref="tns:concepto"/>
+      <xs:element minOccurs="0" name="atributos">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="atributo" type="tns:AtributoRelacion"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Objetivo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+      <xs:element minOccurs="0" name="activo" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="idModulo" type="xs:long"/>
+      <xs:element minOccurs="0" name="estadoDefinicionId" type="xs:long"/>
+      <xs:element minOccurs="0" name="valido" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="tiempoEfectivo" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="valor" type="xs:string"/>
+      <xs:element minOccurs="0" name="conceptoSMTK" type="tns:Concepto"/>
+      <xs:element minOccurs="0" ref="tns:relacion"/>
+      <xs:element minOccurs="0" ref="tns:tablaAuxiliar"/>
+      <xs:element name="fields">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" name="key" type="xs:string"/>
+                  <xs:element minOccurs="0" name="value" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TablaAuxiliar">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+      <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
+      <xs:element minOccurs="0" name="nombreTabla" type="xs:string"/>
+      <xs:element minOccurs="0" name="columnaTablaAuxiliar">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="columna" type="tns:ColumnaTablaAuxiliar"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ColumnaTablaAuxiliar">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="nombreColumna" type="xs:string"/>
+      <xs:element minOccurs="0" name="esLlavePrimaria" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="esBuscable" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="esMostrable" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DefinicionRelacion">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="description" type="xs:string"/>
+      <xs:element minOccurs="0" ref="tns:multiplicidad"/>
+      <xs:element minOccurs="0" ref="tns:definicionObjetivo"/>
+      <xs:element minOccurs="0" name="definicionRelacionExcluida" type="tns:DefinicionRelacion"/>
+      <xs:element minOccurs="0" name="definicionesAtributoRelacion">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="definicionAtributoRelacion" type="tns:DefinicionRelacionAtributo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Multiplicidad">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="limiteInferior" type="xs:int"/>
+      <xs:element minOccurs="0" name="limiteSuperior" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DefinicionObjetivo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="esTipoBasico" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="esTipoSMTK" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="esTablaAuxiliar" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="esTipoSnomedCT" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="esTipoCrossMap" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DefinicionRelacionAtributo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" ref="tns:multiplicidad"/>
+      <xs:element minOccurs="0" ref="tns:definicionObjetivo"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AtributoRelacion">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:objetivo"/>
+      <xs:element minOccurs="0" name="definicionAtributoRelacion" type="tns:DefinicionRelacionAtributo"/>
+      <xs:element minOccurs="0" ref="tns:relacion"/>
+      <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+      <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+      <xs:element minOccurs="0" name="valor" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listaRefSet">
+    <xs:sequence>
+      <xs:element default="true" minOccurs="0" name="incluyeEstablecimientos" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listaRefSetResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:refSet"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="conceptosPorRefSet">
+    <xs:sequence>
+      <xs:element ref="tns:peticionConceptosPorRefSet"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PeticionConceptosPorRefSet">
+    <xs:sequence>
+      <xs:element name="nombreRefSet" type="xs:string"/>
+      <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
+      <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="conceptosPorRefSetResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:respuestaConceptosPorRefSet"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RespuestaConceptosPorRefSet">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:refSet"/>
+      <xs:element minOccurs="0" ref="tns:paginacion"/>
+      <xs:element minOccurs="0" name="conceptos">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Paginacion">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="totalRegistros" type="xs:int"/>
+      <xs:element minOccurs="0" name="paginaActual" type="xs:int"/>
+      <xs:element minOccurs="0" name="registrosPorPagina" type="xs:int"/>
+      <xs:element minOccurs="0" name="mostrandoDesde" type="xs:int"/>
+      <xs:element minOccurs="0" name="mostrandoHasta" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="buscarTruncatePerfect">
+    <xs:sequence>
+      <xs:element ref="tns:peticionBuscarTermino"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PeticionBuscarTermino">
+    <xs:sequence>
+      <xs:element name="termino" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreCategoria" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreRefSet" type="xs:string"/>
+      <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
+      <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="buscarTruncatePerfectResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:respuestaBuscarTermino"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RespuestaBuscarTermino">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:paginacion"/>
+      <xs:element minOccurs="0" name="conceptos">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="conceptoPorId">
+    <xs:sequence>
+      <xs:element name="idConcepto" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="conceptoPorIdResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:concepto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="refSetsPorIdDescripcion">
+    <xs:sequence>
+      <xs:element ref="tns:peticionRefSetsPorIdDescripcion"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PeticionRefSetsPorIdDescripcion">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="idDescripcion" type="xs:string"/>
+      <xs:element default="true" minOccurs="0" name="incluyeEstablecimientos" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="refSetsPorIdDescripcionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="respuestaRefSetsPorIdDescripcion" type="tns:RespuestaBuscarTermino"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listaCategorias">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="listaCategoriasResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:categoria"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="conceptosPorCategoria">
+    <xs:sequence>
+      <xs:element ref="tns:peticionConceptosPorCategoria"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PeticionConceptosPorCategoria">
+    <xs:sequence>
+      <xs:element name="nombreCategoria" type="xs:string"/>
+      <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
+      <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="conceptosPorCategoriaResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:respuestaConceptosPorCategoria"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RespuestaConceptosPorCategoria">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:categoria"/>
+      <xs:element minOccurs="0" ref="tns:paginacion"/>
+      <xs:element minOccurs="0" name="conceptos">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="descripcionesPreferidasPorRefSet">
+    <xs:sequence>
+      <xs:element ref="tns:peticionConceptosPorRefSet"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="descripcionesPreferidasPorRefSetResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:respuestaConceptosPorRefSet"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerTerminosPedibles">
+    <xs:sequence>
+      <xs:element ref="tns:peticionObtenerTerminosPedibles"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PeticionObtenerTerminosPedibles">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreCategoria" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreRefSet" type="xs:string"/>
+      <xs:element name="pedible" type="xs:string"/>
+      <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
+      <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerTerminosPediblesResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:respuestaBuscarTermino"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="buscarTermino">
+    <xs:sequence>
+      <xs:element ref="tns:peticionBuscarTermino"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="buscarTerminoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:respuestaBuscarTermino"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="crossMapsIndirectosPorIDDescripcion">
+    <xs:sequence>
+      <xs:element name="DescripcionID" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="crossMapsIndirectosPorIDDescripcionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="indirectCrossmaps" type="tns:IndirectCrossmapsSearch"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IndirectCrossmapsSearch">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="indirectCrossmaps">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:indirectCrossmap"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IndirectCrossmap">
+    <xs:sequence>
+      <xs:element name="mapGroup" type="xs:int"/>
+      <xs:element name="mapPriority" type="xs:int"/>
+      <xs:element minOccurs="0" name="mapRule" type="xs:string"/>
+      <xs:element minOccurs="0" name="mapAdvice" type="xs:string"/>
+      <xs:element minOccurs="0" name="mapTarget" type="xs:string"/>
+      <xs:element name="correlation" type="xs:long"/>
+      <xs:element name="idCrossmapCategory" type="xs:long"/>
+      <xs:element name="state" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NotFoundFault" type="tns:NotFoundFault"/>
+  <xs:complexType name="NotFoundFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="IllegalInputFault" type="tns:IllegalInputFault"/>
+  <xs:complexType name="IllegalInputFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
   </wsdl:types>
-  <wsdl:message name="conceptosPorRefSetResponse">
-    <wsdl:part element="tns:conceptosPorRefSetResponse" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="conceptoPorId">
     <wsdl:part element="tns:conceptoPorId" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="buscarTermino">
-    <wsdl:part element="tns:buscarTermino" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="obtenerTerminosPediblesResponse">
-    <wsdl:part element="tns:obtenerTerminosPediblesResponse" name="parameters">
+  <wsdl:message name="crossMapsIndirectosPorIDDescripcion">
+    <wsdl:part element="tns:crossMapsIndirectosPorIDDescripcion" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="listaCategorias">
     <wsdl:part element="tns:listaCategorias" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="listaRefSet">
-    <wsdl:part element="tns:listaRefSet" name="parameters">
+  <wsdl:message name="obtenerTerminosPediblesResponse">
+    <wsdl:part element="tns:obtenerTerminosPediblesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarTermino">
+    <wsdl:part element="tns:buscarTermino" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="buscarTruncatePerfect">
     <wsdl:part element="tns:buscarTruncatePerfect" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="obtenerTerminosPedibles">
-    <wsdl:part element="tns:obtenerTerminosPedibles" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="conceptoPorIdDescripcion">
     <wsdl:part element="tns:conceptoPorIdDescripcion" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="obtenerTerminosPedibles">
+    <wsdl:part element="tns:obtenerTerminosPedibles" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="buscarTruncatePerfectResponse">
     <wsdl:part element="tns:buscarTruncatePerfectResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="refSetsPorIdDescripcionResponse">
-    <wsdl:part element="tns:refSetsPorIdDescripcionResponse" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="listaRefSetResponse">
-    <wsdl:part element="tns:listaRefSetResponse" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="conceptoPorIdResponse">
-    <wsdl:part element="tns:conceptoPorIdResponse" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="conceptosPorCategoria">
-    <wsdl:part element="tns:conceptosPorCategoria" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="listaCategoriasResponse">
     <wsdl:part element="tns:listaCategoriasResponse" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="conceptosPorCategoriaResponse">
-    <wsdl:part element="tns:conceptosPorCategoriaResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="buscarTerminoResponse">
@@ -551,20 +563,52 @@
     <wsdl:part element="tns:refSetsPorIdDescripcion" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="descripcionesPreferidasPorRefSetResponse">
-    <wsdl:part element="tns:descripcionesPreferidasPorRefSetResponse" name="parameters">
+  <wsdl:message name="IllegalInputFault">
+    <wsdl:part element="tns:IllegalInputFault" name="IllegalInputFault">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="NotFoundFault">
     <wsdl:part element="tns:NotFoundFault" name="NotFoundFault">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="IllegalInputFault">
-    <wsdl:part element="tns:IllegalInputFault" name="IllegalInputFault">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="descripcionesPreferidasPorRefSet">
     <wsdl:part element="tns:descripcionesPreferidasPorRefSet" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="conceptosPorRefSetResponse">
+    <wsdl:part element="tns:conceptosPorRefSetResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listaRefSet">
+    <wsdl:part element="tns:listaRefSet" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="refSetsPorIdDescripcionResponse">
+    <wsdl:part element="tns:refSetsPorIdDescripcionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="conceptoPorIdResponse">
+    <wsdl:part element="tns:conceptoPorIdResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listaRefSetResponse">
+    <wsdl:part element="tns:listaRefSetResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="conceptosPorCategoria">
+    <wsdl:part element="tns:conceptosPorCategoria" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="conceptosPorCategoriaResponse">
+    <wsdl:part element="tns:conceptosPorCategoriaResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="descripcionesPreferidasPorRefSetResponse">
+    <wsdl:part element="tns:descripcionesPreferidasPorRefSetResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="crossMapsIndirectosPorIDDescripcionResponse">
+    <wsdl:part element="tns:crossMapsIndirectosPorIDDescripcionResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="conceptosPorRefSet">
@@ -574,97 +618,105 @@
   <wsdl:portType name="SearchService">
     <wsdl:operation name="conceptoPorIdDescripcion">
       <wsdl:input message="tns:conceptoPorIdDescripcion" name="conceptoPorIdDescripcion">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:conceptoPorIdDescripcionResponse" name="conceptoPorIdDescripcionResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="listaRefSet">
       <wsdl:input message="tns:listaRefSet" name="listaRefSet">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:listaRefSetResponse" name="listaRefSetResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="conceptosPorRefSet">
       <wsdl:input message="tns:conceptosPorRefSet" name="conceptosPorRefSet">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:conceptosPorRefSetResponse" name="conceptosPorRefSetResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="buscarTruncatePerfect">
       <wsdl:input message="tns:buscarTruncatePerfect" name="buscarTruncatePerfect">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:buscarTruncatePerfectResponse" name="buscarTruncatePerfectResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:IllegalInputFault" name="IllegalInputFault">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="conceptoPorId">
       <wsdl:input message="tns:conceptoPorId" name="conceptoPorId">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:conceptoPorIdResponse" name="conceptoPorIdResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="refSetsPorIdDescripcion">
       <wsdl:input message="tns:refSetsPorIdDescripcion" name="refSetsPorIdDescripcion">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:refSetsPorIdDescripcionResponse" name="refSetsPorIdDescripcionResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:IllegalInputFault" name="IllegalInputFault">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="listaCategorias">
       <wsdl:input message="tns:listaCategorias" name="listaCategorias">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:listaCategoriasResponse" name="listaCategoriasResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="conceptosPorCategoria">
       <wsdl:input message="tns:conceptosPorCategoria" name="conceptosPorCategoria">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:conceptosPorCategoriaResponse" name="conceptosPorCategoriaResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="descripcionesPreferidasPorRefSet">
       <wsdl:input message="tns:descripcionesPreferidasPorRefSet" name="descripcionesPreferidasPorRefSet">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:descripcionesPreferidasPorRefSetResponse" name="descripcionesPreferidasPorRefSetResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="obtenerTerminosPedibles">
       <wsdl:input message="tns:obtenerTerminosPedibles" name="obtenerTerminosPedibles">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:obtenerTerminosPediblesResponse" name="obtenerTerminosPediblesResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:IllegalInputFault" name="IllegalInputFault">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="buscarTermino">
       <wsdl:input message="tns:buscarTermino" name="buscarTermino">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:buscarTerminoResponse" name="buscarTerminoResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:IllegalInputFault" name="IllegalInputFault">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault">
-      </wsdl:fault>
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="crossMapsIndirectosPorIDDescripcion">
+      <wsdl:input message="tns:crossMapsIndirectosPorIDDescripcion" name="crossMapsIndirectosPorIDDescripcion">
+    </wsdl:input>
+      <wsdl:output message="tns:crossMapsIndirectosPorIDDescripcionResponse" name="crossMapsIndirectosPorIDDescripcionResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault">
+    </wsdl:fault>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ServicioDeBusquedaSoapBinding" type="tns:SearchService">
@@ -810,10 +862,22 @@
         <soap:fault name="NotFoundFault" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="crossMapsIndirectosPorIDDescripcion">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="crossMapsIndirectosPorIDDescripcion">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="crossMapsIndirectosPorIDDescripcionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault name="NotFoundFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="ServicioDeBusqueda">
     <wsdl:port binding="tns:ServicioDeBusquedaSoapBinding" name="SearchServicePort">
-      <soap:address location="http://localhost:8080/ws/ServicioDeBusqueda"/>
+      <soap:address location="http://localhost:8080/SemantikosWS/ServicioDeBusqueda"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
