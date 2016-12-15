@@ -30,6 +30,8 @@ public class IndirectCrossMapSearchResponse {
      * @param indirectCrossmaps La lista de crossmaps indirectos de negocio.
      */
     public IndirectCrossMapSearchResponse(List<IndirectCrossmap> indirectCrossmaps) {
+        this();
+
         for (IndirectCrossmap indirectCrossmap : indirectCrossmaps) {
             this.indirectCrossMapResponses.add(new IndirectCrossMapResponse(indirectCrossmap));
         }
