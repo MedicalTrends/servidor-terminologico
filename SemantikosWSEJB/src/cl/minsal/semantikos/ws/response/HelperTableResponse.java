@@ -15,10 +15,13 @@ public class HelperTableResponse implements Serializable {
 
     @XmlElement(name="nombre")
     private String name;
+
     @XmlElement(name="descripcion")
     private String description;
+
     @XmlElement(name="nombreTabla")
     private String tablaName;
+
     @XmlElementWrapper(name = "columnaTablaAuxiliar")
     @XmlElement(name="columna")
     private List<HelperTableColumnResponse> columns;

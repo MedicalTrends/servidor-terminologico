@@ -5,7 +5,7 @@ import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
-import cl.minsal.semantikos.ws.response.IndirectCrossMapsResponse;
+import cl.minsal.semantikos.ws.response.IndirectCrossMapSearchResponse;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -32,7 +32,7 @@ public class CrossmapController {
      * @return La respuesta XML con la lista de los crossmaps indirectos asociados al concepto de la descripción
      * indicada.
      */
-    public IndirectCrossMapsResponse getIndirectCrossmapsByDescriptionID(String descriptionId) {
+    public IndirectCrossMapSearchResponse getIndirectCrossmapsByDescriptionID(String descriptionId) {
 
         /* Se recupera la descripción a partir de su identificador de negocio, y luego el concepto en la que se encuentra */
         Description theDescription = descriptionManager.getDescriptionByDescriptionID(descriptionId);
@@ -40,6 +40,7 @@ public class CrossmapController {
 
         /* Luego se recuperan los crossmaps indirectos del concepto */
         List<IndirectCrossmap> indirectCrossmaps = crossmapManager.getIndirectCrossmaps(conceptSMTK);
-        return new IndirectCrossMapsResponse(indirectCrossmaps);
+
+        return new IndirectCrossMapSearchResponse(indirectCrossmaps);
     }
 }

@@ -182,7 +182,6 @@
       <xs:element minOccurs="0" name="nombre" type="xs:string"/>
       <xs:element minOccurs="0" name="nombreAbreviado" type="xs:string"/>
       <xs:element minOccurs="0" name="restringida" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="vigente" type="xs:boolean"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="RefSet">
@@ -2075,7 +2074,7 @@
   </wsdl:binding>
   <wsdl:service name="ServicioDeRelacionados">
     <wsdl:port binding="tns:ServicioDeRelacionadosSoapBinding" name="RelatedServicePort">
-      <soap:address location="http://localhost:8080/ws/ServicioDeRelacionados"/>
+      <soap:address location="http://localhost:8080/SemantikosWS/ServicioDeRelacionados"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

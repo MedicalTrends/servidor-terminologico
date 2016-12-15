@@ -152,12 +152,24 @@ public class SearchService {
         return this.conceptController.conceptsByRefset(request.getRefSetName(), request.getPageNumber(), request.getPageSize());
     }
 
-    // REQ-WS-026
-    @WebResult(name = "concepto")
+    /**
+     * REQ-WS-026: El sistema Semantikos debe disponer un servicio que permita obtener los CrossMap indirecto a partir
+     * de un ID Descripción.
+     *
+     * @param descriptionId El valor de negocio <em>DESCRIPTION_ID</em> de la descripción cuyo concepto posee los
+     *                      crossmaps indirectos que se desea recuperar.
+     *
+     * @return Una lista de crossmaps indirectos del concepto asociado a la descripción encapsulada en un objeto mapeado
+     * a un elemento XML.
+     *
+     * @throws NotFoundFault Arrojada si no existe una descripción con <em>DESCRIPTION_ID</em> igual al indicado por el
+     *                       parámetro <code>descriptionId</code>.
+     */
+    @WebResult(name = "indirectCrossmaps")
     @WebMethod(operationName = "crossMapsIndirectosPorIDDescripcion")
-    public IndirectCrossMapsResponse crossMapsIndirectosPorIDDescripcion(
+    public IndirectCrossMapSearchResponse crossMapsIndirectosPorIDDescripcion(
             @XmlElement(required = true)
-            @WebParam(name = "idDescripcion")
+            @WebParam(name = "DescripcionID")
             String descriptionId
     ) throws NotFoundFault {
         return this.crossmapsController.getIndirectCrossmapsByDescriptionID(descriptionId);
