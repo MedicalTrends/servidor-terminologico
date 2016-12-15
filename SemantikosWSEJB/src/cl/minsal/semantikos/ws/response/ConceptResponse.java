@@ -1,53 +1,94 @@
 package cl.minsal.semantikos.ws.response;
 
+import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.relationships.Relationship;
+
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Development on 2016-10-11.
- *
+ * @author Alfonso Cornejo on 2016-10-11.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "concepto", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "Concepto", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class ConceptResponse implements Serializable {
 
-    @XmlElement(name="id")
+    @XmlElement(name = "id")
     private String conceptId;
-    @XmlElement(name="aSerRevisado")
-    private Boolean isToBeReviewed;
-    @XmlElement(name="aSerConsultado")
-    private Boolean isToBeConsulted;
-    @XmlElement(name="modelado")
+    @XmlElement(name = "aSerRevisado")
+    private Boolean toBeReviewed;
+    @XmlElement(name = "aSerConsultado")
+    private Boolean toBeConsulted;
+    @XmlElement(name = "modelado")
     private Boolean modeled;
-    @XmlElement(name="completamenteDefinido")
-    private Boolean isFullyDefined;
-    @XmlElement(name="publicado")
+    @XmlElement(name = "completamenteDefinido")
+    private Boolean fullyDefined;
+
+    @XmlElement(name = "publicado")
     private Boolean isPublished;
-    @XmlElement(name="valido")
+
+    @XmlElement(name = "valido")
     private Boolean isValid;
-    @XmlElement(name="validoHasta")
+
+    @XmlElement(name = "validoHasta")
     private Date validUntil;
-    @XmlElement(name="observacion")
+
+    @XmlElement(name = "observacion")
     private String observation;
-    @XmlElement(name="tagSMTK")
+
+    @XmlElement(name = "tagSMTK")
     private TagSMTKResponse tagSMTK;
-    @XmlElement(name="categoria")
+
+    @XmlElement(name = "categoria")
     private CategoryResponse category;
+
     @XmlElementWrapper(name = "refSets")
-    @XmlElement(name="refSet")
+    @XmlElement(name = "refSet")
     private List<RefSetResponse> refsets;
+
     @XmlElementWrapper(name = "descripciones")
-    @XmlElement(name="descripcion")
+    @XmlElement(name = "descripcion")
     private List<DescriptionResponse> descriptions;
+
     @XmlElementWrapper(name = "atributos")
-    @XmlElement(name="atributo")
+    @XmlElement(name = "atributo")
     private List<AttributeResponse> attributes;
+
     @XmlElementWrapper(name = "relaciones")
-    @XmlElement(name="relacion")
+    @XmlElement(name = "relacion")
     private List<RelationshipResponse> relationships;
+
+    public ConceptResponse() {
+        this.relationships = new ArrayList<>();
+        this.attributes = new ArrayList<>();
+        this.descriptions = new ArrayList<>();
+        this.refsets = new ArrayList<>();
+    }
+
+    public ConceptResponse(ConceptSMTK conceptSMTK) {
+        this();
+
+        this.isPublished = conceptSMTK.isPublished();
+        this.modeled = conceptSMTK.isModeled();
+        this.conceptId = conceptSMTK.getConceptID();
+        this.fullyDefined = conceptSMTK.isFullyDefined();
+        this.observation = conceptSMTK.getObservation();
+        this.toBeConsulted = conceptSMTK.isToBeConsulted();
+        this.toBeReviewed = conceptSMTK.isToBeReviewed();
+        this.validUntil = new Date(conceptSMTK.getValidUntil().getTime());
+        this.isValid = this.validUntil.after(new Date());
+
+        /* Se cargan las otras propiedades del concepto */
+        loadPreferredDescriptions(conceptSMTK);
+        loadAttributes(conceptSMTK);
+        this.setCategory(new CategoryResponse(conceptSMTK.getCategory()));
+    }
 
     public String getConceptId() {
         return conceptId;
@@ -58,19 +99,19 @@ public class ConceptResponse implements Serializable {
     }
 
     public Boolean getToBeReviewed() {
-        return isToBeReviewed;
+        return toBeReviewed;
     }
 
     public void setToBeReviewed(Boolean toBeReviewed) {
-        isToBeReviewed = toBeReviewed;
+        this.toBeReviewed = toBeReviewed;
     }
 
     public Boolean getToBeConsulted() {
-        return isToBeConsulted;
+        return toBeConsulted;
     }
 
     public void setToBeConsulted(Boolean toBeConsulted) {
-        isToBeConsulted = toBeConsulted;
+        this.toBeConsulted = toBeConsulted;
     }
 
     public Boolean getModeled() {
@@ -82,11 +123,11 @@ public class ConceptResponse implements Serializable {
     }
 
     public Boolean getFullyDefined() {
-        return isFullyDefined;
+        return fullyDefined;
     }
 
     public void setFullyDefined(Boolean fullyDefined) {
-        isFullyDefined = fullyDefined;
+        this.fullyDefined = fullyDefined;
     }
 
     public Boolean getPublished() {
@@ -167,6 +208,29 @@ public class ConceptResponse implements Serializable {
 
     public void setRelationships(List<RelationshipResponse> relationships) {
         this.relationships = relationships;
+    }
+
+    /**
+     * Este método es responsable de cargar las descripciones de un concepto (<code>toConceptResponse</code>) a otro
+     * (<code>sourceConcept</code>).
+     *
+     * @param sourceConcept El concepto desde el cual se cargan las descripciones
+     */
+    private void loadPreferredDescriptions(@NotNull ConceptSMTK sourceConcept) {
+        for (Description description : sourceConcept.getDescriptions()) {
+            this.descriptions.add(new DescriptionResponse(description));
+        }
+    }
+
+    /**
+     * Este método es responsable de caregar en este concepto los atributos de un concepto fuente.
+     *
+     * @param sourceConcept El concepto desde el cual se cargan los atrubos.
+     */
+    private void loadAttributes(@NotNull ConceptSMTK sourceConcept) {
+        for (Relationship relationship : sourceConcept.getRelationshipsBasicType()) {
+            this.attributes.add(new AttributeResponse(relationship));
+        }
     }
 
     @Override

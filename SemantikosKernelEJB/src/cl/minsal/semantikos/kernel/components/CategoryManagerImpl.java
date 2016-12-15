@@ -30,16 +30,13 @@ import java.util.NoSuchElementException;
 @Stateless
 public class CategoryManagerImpl implements CategoryManager {
 
-    @PersistenceContext(unitName = "SEMANTIKOS_PU")
-    private EntityManager entityManager;
+    private static final Logger logger = LoggerFactory.getLogger(CategoryManagerImpl.class);
 
     @EJB
     private CategoryDAO categoryDAO;
 
     @EJB
     private RelationshipDAO relationshipDAO;
-
-    private static final Logger logger = LoggerFactory.getLogger(CategoryManagerImpl.class);
 
     @EJB
     private DescriptionManager descriptionManager;

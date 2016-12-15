@@ -99,14 +99,7 @@ public interface ConceptManager {
      *
      * @return Un concepto fresco de tipo <code>ConceptSMTK</code>.
      */
-    public ConceptSMTK getConceptByID(long id);
-
-    /**
-     *
-     * @param descriptionId
-     * @return
-     */
-    public ConceptSMTK getConceptByDescriptionID(String descriptionId);
+    public ConceptSMTK getConceptById(long id);
 
     /**
      * Este método es responsable de buscar conceptos cuyo CONCEPT_ID o en descripciones de términos de conceptos, y
@@ -177,6 +170,17 @@ public interface ConceptManager {
     public List<Description> getDescriptionsBy(ConceptSMTK concept);
 
     /**
+     * Este método es responsable de recuperar el concepto que posee una descripción con el <em>DESCRIPTION_ID</em>
+     * dado
+     * como parámetro (<code>descriptionId</code>).
+     *
+     * @param descriptionId El <em>DESCRIPTION_ID</em> de la descripción cuyo concepto contenedor se desea recuperar.
+     *
+     * @return El concepto que contiene la descripción cuyo <em>DESCRIPTION_ID</em> corresponde con el parámetro.
+     */
+    public ConceptSMTK getConceptByDescriptionID(String descriptionId);
+
+    /**
      * Este método es responsable de cargar las relaciones del concepto.
      *
      * @param concept El concepto cuyas relaciones son actualizadas.
@@ -199,6 +203,17 @@ public interface ConceptManager {
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);
 
     /**
+     * Este método es una extensión del método <code>getRelatedConcepts</code>, filtrando los conceptos relacionados a
+     * las categorías especificadas.
+     *
+     * @param conceptSMTK El concepto cuyos conceptos relacionados se desea recuperar.
+     * @param categories  Las categorías a las cuales los conceptos relacionados deben pertenecer.
+     *
+     * @return La lista de conceptos relacionados que pertenecen a alguna de las categorías en <code>categories</code>.
+     */
+    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK, Category... categories);
+
+    /**
      * Método encargado de obtener los conceptos en borrador
      *
      * @return lista de conceptos en borrador
@@ -211,6 +226,7 @@ public interface ConceptManager {
      * @return La instancia (única) del concepto No Válido.
      */
     public ConceptSMTK getNoValidConcept();
+
 
     /**
      * Este método es responsable de trasladar un objeto de su categoría actual a otra categoría.
@@ -228,6 +244,4 @@ public interface ConceptManager {
      * @return La instancia (única) del concepto pendiente.
      */
     public ConceptSMTK getPendingConcept();
-
-
 }

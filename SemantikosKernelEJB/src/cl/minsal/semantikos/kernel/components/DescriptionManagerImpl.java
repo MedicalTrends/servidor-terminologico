@@ -298,6 +298,17 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    public Description getDescriptionByDescriptionID(String descriptionId) {
+
+        /* Validación de integridad */
+        if(descriptionId == null || descriptionId.trim().equals("")){
+            throw new IllegalArgumentException("Se busca una descripción sin indicar su DESCRIPTION_ID.");
+        }
+
+        return descriptionDAO.getDescriptionByDescriptionID(descriptionId);
+    }
+
+    @Override
     public List<ObservationNoValid> getObservationsNoValid() {
         return descriptionDAO.getObservationsNoValid();
     }

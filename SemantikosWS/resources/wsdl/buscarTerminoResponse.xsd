@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.ws.semantikos.minsal.cl/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.ws.semantikos.minsal.cl/">
+
+    <xs:complexType name="RespuestaBuscarTermino">
+        <xs:sequence>
+            <xs:element minOccurs="0" ref="tns:paginacion"/>
+            <xs:element minOccurs="0" name="conceptos">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="atributo" type="tns:Atributo"/>
+    <xs:element name="categoria" type="tns:Categoria"/>
+    <xs:element name="concepto" type="tns:Concepto"/>
+    <xs:element name="definicionObjetivo" type="tns:DefinicionObjetivo"/>
+    <xs:element name="descripcion" type="tns:Descripcion"/>
+    <xs:element name="objetivo" type="tns:Objetivo"/>
+    <xs:element name="paginacion" type="tns:Paginacion"/>
+    <xs:element name="refSet" type="tns:RefSet"/>
+    <xs:element name="relacion" type="tns:Relacion"/>
+    <xs:element name="tablaAuxiliar" type="tns:TablaAuxiliar"/>
+    <xs:element name="tagSMTK" type="tns:TagSMTK"/>
+    <xs:element name="multiplicidad" type="tns:Multiplicidad"/>
+
+    <xs:complexType name="Paginacion">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="totalRegistros" type="xs:int"/>
+            <xs:element minOccurs="0" name="paginaActual" type="xs:int"/>
+            <xs:element minOccurs="0" name="registrosPorPagina" type="xs:int"/>
+            <xs:element minOccurs="0" name="mostrandoDesde" type="xs:int"/>
+            <xs:element minOccurs="0" name="mostrandoHasta" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Concepto">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="id" type="xs:string"/>
+            <xs:element minOccurs="0" name="aSerRevisado" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="aSerConsultado" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="modelado" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="completamenteDefinido" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="publicado" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="valido" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="validoHasta" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="observacion" type="xs:string"/>
+            <xs:element minOccurs="0" ref="tns:tagSMTK"/>
+            <xs:element minOccurs="0" ref="tns:categoria"/>
+            <xs:element minOccurs="0" name="refSets">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:refSet"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="0" name="descripciones">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:descripcion"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="0" name="atributos">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:atributo"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="0" name="relaciones">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:relacion"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RefSet">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+            <xs:element minOccurs="0" name="valido" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="validoHasta" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="creadoEn" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="institucion" type="xs:string"/>
+            <xs:element minOccurs="0" name="conceptos">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TagSMTK">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Categoria">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+            <xs:element minOccurs="0" name="nombreAbreviado" type="xs:string"/>
+            <xs:element minOccurs="0" name="restringida" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="vigente" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Descripcion">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="id" type="xs:string"/>
+            <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+            <xs:element minOccurs="0" name="termino" type="xs:string"/>
+            <xs:element minOccurs="0" name="valida" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="esSensibleAMayusculas" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="nombreAutgenerado" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="publicado" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="modelado" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="validaHasta" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="creado" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="usos" type="xs:long"/>
+            <xs:element minOccurs="0" name="usuarioCreador" type="tns:Usuario"/>
+            <xs:element minOccurs="0" ref="tns:concepto"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Usuario">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="nombreUsuario" type="xs:string"/>
+            <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+            <xs:element minOccurs="0" name="apellido" type="xs:string"/>
+            <xs:element minOccurs="0" name="segundoApellido" type="xs:string"/>
+            <xs:element minOccurs="0" name="email" type="xs:string"/>
+            <xs:element minOccurs="0" name="rut" type="xs:string"/>
+            <xs:element minOccurs="0" name="ultimoLogin" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="ultimoCambioPassword" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Atributo">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+            <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+            <xs:element minOccurs="0" name="valor" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Relacion">
+        <xs:sequence>
+            <xs:element minOccurs="0" ref="tns:objetivo"/>
+            <xs:element minOccurs="0" name="definicion" type="tns:DefinicionRelacion"/>
+            <xs:element minOccurs="0" ref="tns:concepto"/>
+            <xs:element minOccurs="0" name="atributos">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="atributo" type="tns:AtributoRelacion"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Objetivo">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+            <xs:element minOccurs="0" name="activo" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="idModulo" type="xs:long"/>
+            <xs:element minOccurs="0" name="estadoDefinicionId" type="xs:long"/>
+            <xs:element minOccurs="0" name="valido" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="tiempoEfectivo" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="valor" type="xs:string"/>
+            <xs:element minOccurs="0" name="conceptoSMTK" type="tns:Concepto"/>
+            <xs:element minOccurs="0" ref="tns:relacion"/>
+            <xs:element minOccurs="0" ref="tns:tablaAuxiliar"/>
+            <xs:element name="fields">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" name="key" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="value" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DefinicionRelacion">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="name" type="xs:string"/>
+            <xs:element minOccurs="0" name="description" type="xs:string"/>
+            <xs:element minOccurs="0" ref="tns:multiplicidad"/>
+            <xs:element minOccurs="0" ref="tns:definicionObjetivo"/>
+            <xs:element minOccurs="0" name="definicionRelacionExcluida" type="tns:DefinicionRelacion"/>
+            <xs:element minOccurs="0" name="definicionesAtributoRelacion">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="definicionAtributoRelacion" type="tns:DefinicionRelacionAtributo"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AtributoRelacion">
+        <xs:sequence>
+            <xs:element minOccurs="0" ref="tns:objetivo"/>
+            <xs:element minOccurs="0" name="definicionAtributoRelacion" type="tns:DefinicionRelacionAtributo"/>
+            <xs:element minOccurs="0" ref="tns:relacion"/>
+            <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+            <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+            <xs:element minOccurs="0" name="valor" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TablaAuxiliar">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+            <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
+            <xs:element minOccurs="0" name="nombreTabla" type="xs:string"/>
+            <xs:element minOccurs="0" name="columnaTablaAuxiliar">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="columna" type="tns:ColumnaTablaAuxiliar"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Multiplicidad">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="limiteInferior" type="xs:int"/>
+            <xs:element minOccurs="0" name="limiteSuperior" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DefinicionObjetivo">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="esTipoBasico" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="esTipoSMTK" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="esTablaAuxiliar" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="esTipoSnomedCT" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="esTipoCrossMap" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DefinicionRelacionAtributo">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="name" type="xs:string"/>
+            <xs:element minOccurs="0" ref="tns:multiplicidad"/>
+            <xs:element minOccurs="0" ref="tns:definicionObjetivo"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ColumnaTablaAuxiliar">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="nombreColumna" type="xs:string"/>
+            <xs:element minOccurs="0" name="esLlavePrimaria" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="esBuscable" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="esMostrable" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

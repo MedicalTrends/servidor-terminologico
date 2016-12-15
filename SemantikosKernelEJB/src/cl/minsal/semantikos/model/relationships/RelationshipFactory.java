@@ -73,7 +73,7 @@ public class RelationshipFactory {
         RelationshipDTO relationshipDTO = parseRelationshipFromJSON(jsonExpression);
 
         long id = relationshipDTO.id;
-        ConceptSMTK sourceConcept = conceptDAO.getConceptByID(relationshipDTO.getIdSourceConcept());
+        ConceptSMTK sourceConcept = conceptDAO.getConceptById(relationshipDTO.getIdSourceConcept());
         Target target = targetDAO.getTargetByID(relationshipDTO.idTarget);
         RelationshipDefinition relationshipDefinition = relDefDAO.getRelationshipDefinitionByID(relationshipDTO.idRelationshipDefinition);
 
@@ -146,7 +146,7 @@ public class RelationshipFactory {
     private Relationship createRelationshipFromDTO(RelationshipDTO relationshipDTO) {
 
         /* Concepto origen */
-        ConceptSMTK sourceConceptSMTK = conceptDAO.getConceptByID(relationshipDTO.idSourceConcept);
+        ConceptSMTK sourceConceptSMTK = conceptDAO.getConceptById(relationshipDTO.idSourceConcept);
 
         /* Definición de la relación y sus atributos */
         long idRelationshipDefinition = relationshipDTO.idRelationshipDefinition;

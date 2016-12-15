@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.ws.response;
 
+import cl.minsal.semantikos.model.Category;
+
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
@@ -18,8 +20,17 @@ public class CategoryResponse implements Serializable {
     private String nameAbbreviated;
     @XmlElement(name="restringida")
     private Boolean restriction;
-    @XmlElement(name="vigente")
-    private Boolean isValid;
+
+    public CategoryResponse() {
+    }
+
+    public CategoryResponse(Category category) {
+        this();
+
+        this.name = category.getName();
+        this.nameAbbreviated = category.getNameAbbreviated();
+        this.restriction = category.isRestriction();
+    }
 
     public String getName() {
         return name;
@@ -44,13 +55,4 @@ public class CategoryResponse implements Serializable {
     public void setRestriction(Boolean restriction) {
         this.restriction = restriction;
     }
-
-    public Boolean getValid() {
-        return isValid;
-    }
-
-    public void setValid(Boolean valid) {
-        isValid = valid;
-    }
-
 }

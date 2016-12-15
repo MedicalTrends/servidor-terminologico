@@ -1,0 +1,48 @@
+{ "descripciones": [
+  {
+    "idConcepto": "2",
+    "idDescripcion": "1",
+    "termino": "hepatitis",
+    "tipoDescripcion": "preferida",
+    "nombreCategoria": "especímenes",
+    "terminoPreferida": "la preferida"
+  },
+
+  {
+    "razonNoValido": "Mal escrita",
+    "validez": "no",
+    "idConceptosSugeridos": ["1", "2", "3"],
+    "descripcionesSugeridas": [
+      {
+      "idConcepto": "2",
+      "idDescripcion": "1",
+      "termino": "hepatitis",
+      "tipoDescripcion": "preferida",
+      "nombreCategoria": "especímenes",
+      "terminoPreferida": "la preferida"
+      },
+      {
+        "idConcepto": "29",
+        "idDescripcion": "19",
+        "termino": "hepatitisaia",
+        "tipoDescripcion": "preferida",
+        "nombreCategoria": "especímenes",
+        "terminoPreferida": "la preferida"
+      }],
+    "cantidadRegistros": "2"
+  },
+
+  {
+    "pendienteCondificacion": "si",
+    "nombreCategoria": "Conceptos Especiales",
+    "terminoPreferida": "Conceptos Pendientes",
+    "validez": "no",
+    "descripciones":
+      {
+        "idConcepto": "2",
+        "idDescripcion": "1",
+        "termino": "hepatitis",
+        "tipoDescripcion": "preferida"
+      }
+  }],
+"cantidadRegistros": "3"}

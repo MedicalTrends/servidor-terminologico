@@ -449,7 +449,7 @@ public class ConceptBean implements Serializable {
     //Este método es responsable de pasarle a la vista un concepto, dado el id del concepto
     //(llamado desde la vista cuando se desea editar un concepto)
     public void getConceptById(long conceptId) {
-        ConceptSMTK conceptSMTK = conceptManager.getConceptByID(conceptId);
+        ConceptSMTK conceptSMTK = conceptManager.getConceptById(conceptId);
         conceptSMTK.setRelationships(conceptManager.loadRelationships(conceptSMTK));
         crossmapBean.refreshCrossmapIndirect(conceptSMTK);
         this.conceptSMTK = conceptSMTK;

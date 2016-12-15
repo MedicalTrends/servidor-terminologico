@@ -5,12 +5,13 @@ import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.DescriptionType;
 import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.ws.Util;
-import cl.minsal.semantikos.ws.response.*;
+import cl.minsal.semantikos.ws.response.ConceptResponse;
+import cl.minsal.semantikos.ws.response.DescriptionResponse;
+import cl.minsal.semantikos.ws.response.RefSetResponse;
+import cl.minsal.semantikos.ws.response.RelationshipResponse;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,29 +19,6 @@ import java.util.List;
  *
  */
 public class ConceptMapper {
-
-    public static ConceptResponse map(ConceptSMTK conceptSMTK) {
-        if ( conceptSMTK != null ) {
-            ConceptResponse res = new ConceptResponse();
-            res.setPublished(conceptSMTK.isPublished());
-//            res.setModeled(conceptSMTK.isModeled());
-            res.setConceptId(conceptSMTK.getConceptID());
-            res.setFullyDefined(conceptSMTK.isFullyDefined());
-            res.setObservation(conceptSMTK.getObservation());
-//            res.setToBeConsulted(conceptSMTK.isToBeConsulted());
-//            res.setToBeReviewed(conceptSMTK.isToBeReviewed());
-            Date validUntil = Util.toDate(conceptSMTK.getValidUntil());
-            if ( validUntil != null ) {
-                res.setValidUntil(validUntil);
-                res.setValid(validUntil.after(new Date()));
-            } else {
-                res.setValid(Boolean.TRUE);
-            }
-            return res;
-        } else {
-            return null;
-        }
-    }
 
     public static List<DescriptionResponse> getDescriptions(ConceptSMTK conceptSMTK) {
         if ( conceptSMTK != null && conceptSMTK.getDescriptions() != null ) {
@@ -82,27 +60,6 @@ public class ConceptMapper {
         return conceptResponse;
     }
 
-    public static List<AttributeResponse> getAttributes(ConceptSMTK conceptSMTK) {
-        if ( conceptSMTK != null ) {
-            List<AttributeResponse> attributeResponses = new ArrayList<>();
-            List<Relationship> basicRelationships = conceptSMTK.getRelationshipsBasicType();
-            if ( basicRelationships != null ) {
-                for ( Relationship relationship : basicRelationships ) {
-                    attributeResponses.add(AttributeMapper.map(relationship));
-                }
-            }
-            return attributeResponses;
-        }
-        return null;
-    }
-
-    public static ConceptResponse appendAttributes(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
-        if ( conceptResponse != null ) {
-            conceptResponse.setAttributes(getAttributes(conceptSMTK));
-        }
-        return conceptResponse;
-    }
-
     public static List<RelationshipResponse> getRelationships(ConceptSMTK conceptSMTK) {
         if ( conceptSMTK != null  ) {
             List<Relationship> relationships = conceptSMTK.getRelationshipsNonBasicType();
@@ -120,13 +77,6 @@ public class ConceptMapper {
     public static ConceptResponse appendRelationships(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
         if ( conceptResponse != null ) {
             conceptResponse.setRelationships(getRelationships(conceptSMTK));
-        }
-        return conceptResponse;
-    }
-
-    public static ConceptResponse appendCategory(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
-        if ( conceptResponse != null && conceptSMTK != null ) {
-            conceptResponse.setCategory(CategoryMapper.map(conceptSMTK.getCategory()));
         }
         return conceptResponse;
     }

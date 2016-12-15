@@ -41,7 +41,7 @@ public class ConceptDeletionAllServlet extends HttpServlet {
 
         List<String> deletedConcepts = new ArrayList<>();
         for (Long aConceptID : allConceptsID) {
-            ConceptSMTK aConcept = conceptManager.getConceptByID(aConceptID);
+            ConceptSMTK aConcept = conceptManager.getConceptById(aConceptID);
 
             /* Si el concepto no es el invalido o el de pendientes, se puede borrar */
             if (!aConcept.equals(noValidConcept) && !aConcept.equals(pendingConcept)) {

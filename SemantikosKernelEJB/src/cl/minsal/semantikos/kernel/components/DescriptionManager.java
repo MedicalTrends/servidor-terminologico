@@ -127,9 +127,7 @@ public interface DescriptionManager {
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
      * parámetro en cada una de las categorías y refsets indicadas.
-     * @param term
-     * @param categories
-     * @param refSets
+     *
      * @return
      */
     public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets);
@@ -142,9 +140,22 @@ public interface DescriptionManager {
      */
     public void invalidateDescription(ConceptSMTK conceptSMTK, NoValidDescription noValidDescription, User user);
 
+    /**
+     * Este método es responsable de recuperar una descripción a partir de su <em>DESCRIPTION_ID</em>, un valor de
+     * negocio.
+     *
+     * @param descriptionId El <em>DESCRIPTION_ID</em> de la descripción buscada.
+     *
+     * @return Una instancia fresca de la descripción buscada.
+     */
+    public Description getDescriptionByDescriptionID(String descriptionId);
+
+    /**
+     * Este método es responsable de recuperar una descripción a partir de su llave primaria en la base de datos.
+     *
+     * @return La descripción buscada.
+     */
+    public Description getDescriptionByID(long id);
 
     public List<ObservationNoValid> getObservationsNoValid();
-
-
-    public Description getDescriptionByID(long id);
 }

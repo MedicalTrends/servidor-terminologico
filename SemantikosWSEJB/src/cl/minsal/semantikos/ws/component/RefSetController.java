@@ -47,9 +47,7 @@ public class RefSetController {
 
         List<ConceptResponse> conceptResponses = new ArrayList<>(conceptSMTKS.size());
         for ( ConceptSMTK conceptSMTK : conceptSMTKS ) {
-            ConceptResponse conceptResponse = this.conceptController.getResponse(conceptSMTK);
-            this.conceptController.loadDescriptions(conceptResponse, conceptSMTK);
-            this.conceptController.loadCategory(conceptResponse, conceptSMTK);
+            ConceptResponse conceptResponse = new ConceptResponse(conceptSMTK);
             this.conceptController.loadRefSets(conceptResponse, conceptSMTK);
 
             List<DescriptionResponse> toRemove = new ArrayList<>();
