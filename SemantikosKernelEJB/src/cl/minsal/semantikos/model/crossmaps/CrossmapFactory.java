@@ -1,6 +1,8 @@
 package cl.minsal.semantikos.model.crossmaps;
 
 import cl.minsal.semantikos.kernel.daos.CrossmapsDAO;
+import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.Target;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,5 +59,18 @@ public class CrossmapFactory {
 
     public IndirectCrossmap createIndirectCrossmapFromResultSet(ResultSet rs) {
         throw new EJBException("NO IMPLEMENTADO: createIndirectCrossmapFromResultSet");
+    }
+
+    public DirectCrossmap createDirectCrossmap(Relationship relationship) {
+
+        /* Se transforma el target a un CrossmapSetMember */
+        Target target = relationship.getTarget();
+        if (!(target instanceof CrossmapSetMember)){
+            throw new IllegalArgumentException("La relación no es de tipo DirectCrossmap.");
+        }
+        CrossmapSetMember crossmapSetMember = (CrossmapSetMember) target;
+
+        /* Se retorna una instancia fresca */
+        return new DirectCrossmap(relationship.getId(), relationship.getSourceConcept(), crossmapSetMember, relationship.getRelationshipDefinition(), relationship.getValidityUntil());
     }
 }
