@@ -13,7 +13,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -582,24 +581,24 @@ public class ConceptDAOImpl implements ConceptDAO {
         boolean modeled;
         boolean completelyDefined;
         boolean published;
-        boolean heritable = false;
+        boolean heritable;
         String conceptId;
 
         id = Long.valueOf(resultSet.getString("id"));
+        conceptId = resultSet.getString("conceptid");
+
+        /* Se recupera la categoría como objeto de negocio */
         idCategory = Long.valueOf(resultSet.getString("id_category"));
         objectCategory = categoryDAO.getCategoryById(idCategory);
+
         check = resultSet.getBoolean("is_to_be_reviewed");
         consult = resultSet.getBoolean("is_to_be_consultated");
-        modeled = resultSet.getBoolean("is_modeled");
         completelyDefined = resultSet.getBoolean("is_fully_defined");
         published = resultSet.getBoolean("is_published");
-        try {
-            heritable = resultSet.getBoolean("is_inherited");
-        } catch ( Exception ignored ) { }
-        conceptId = resultSet.getString("conceptid");
+        modeled = resultSet.getBoolean("is_modeled");
         String observation = resultSet.getString("observation");
         long idTagSMTK = resultSet.getLong("id_tag_smtk");
-
+        heritable = resultSet.getBoolean("is_inherited");
 
         /* Se recupera su Tag Semántikos */
         TagSMTK tagSMTKByID = tagSMTKDAO.findTagSMTKByID(idTagSMTK);
@@ -878,7 +877,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         ConnectionBD connect = new ConnectionBD();
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call= connection.prepareCall("{call semantikos.get_related_concept(?)}")) {
+             CallableStatement call = connection.prepareCall("{call semantikos.get_related_concept(?)}")) {
 
             call.setLong(1, conceptSMTK.getId());
             call.execute();
@@ -904,7 +903,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call= connection.prepareCall("{call semantikos.get_concepts_id()}")) {
+             CallableStatement call = connection.prepareCall("{call semantikos.get_concepts_id()}")) {
 
             call.execute();
             ResultSet rs = call.getResultSet();

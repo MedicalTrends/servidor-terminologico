@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.relationships.Relationship;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -81,7 +82,9 @@ public class ConceptResponse implements Serializable {
         this.observation = conceptSMTK.getObservation();
         this.toBeConsulted = conceptSMTK.isToBeConsulted();
         this.toBeReviewed = conceptSMTK.isToBeReviewed();
-        this.validUntil = new Date(conceptSMTK.getValidUntil().getTime());
+
+        Timestamp theValidityUntil = conceptSMTK.getValidUntil();
+        this.validUntil = new Date(theValidityUntil==null ? System.currentTimeMillis() : theValidityUntil.getTime());
         this.isValid = this.validUntil.after(new Date());
 
         /* Se cargan las otras propiedades del concepto */

@@ -376,4 +376,13 @@ public class ConceptController {
         Description description = pendingTermManager.addPendingTerm(pendingTerm, user);
         return new NewTermResponse(description.getDescriptionId());
     }
+
+    /**
+     *
+     * @return
+     */
+    public TermSearchResponse searchRequestableDescriptions() {
+        //TODO: Implement me!
+        return null;
+    }
 }

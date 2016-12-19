@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.ws.service;
 
+import cl.minsal.semantikos.kernel.components.CategoryManager;
+import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.ws.component.CategoryController;
 import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.component.CrossmapController;
@@ -15,6 +17,7 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlElement;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,6 +36,9 @@ public class SearchService {
 
     @EJB
     private RefSetController refSetController;
+
+    @EJB
+    private CategoryManager categoryManager;
 
     // REQ-WS-001
     @WebResult(name = "respuestaBuscarTermino")
@@ -88,7 +94,15 @@ public class SearchService {
         return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames(), request.getRefSetNames(), request.getPageNumber(), request.getPageSize());
     }
 
-    // REQ-WS-005
+    /**
+     * REQ-WS-005: El sistema Semantikos debe disponer un servicio que busque todos los términos que pertenezcan a un
+     * concepto que contenga el atributo “Pedible”, esto solo aplica para las categorías de interconsulta, indicaciones
+     * generales e indicaciones de laboratorio.
+     *
+     * @return Los términos solicitados
+     *
+     * @throws IllegalInputFault
+     */
     @WebResult(name = "respuestaBuscarTermino")
     @WebMethod(operationName = "obtenerTerminosPedibles")
     public TermSearchResponse obtenerTerminosPedibles(
@@ -96,12 +110,53 @@ public class SearchService {
             @WebParam(name = "peticionObtenerTerminosPedibles")
             GetRequestableTermsRequest request
     ) throws IllegalInputFault {
-        if ((request.getCategoryNames() == null && request.getRefSetNames() == null)
-                || (request.getCategoryNames().isEmpty() && request.getRefSetNames().isEmpty())) {
-            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet");
+
+        /* Se hace una validación de los parámetros */
+        obtenerTerminosPediblesParamValidation(request);
+
+        return conceptController.searchRequestableDescriptions();
+    }
+
+    /**
+     * Este método es responsable de realizar la validación de los parámetros de entrada del servicio REQ-WS-005.
+     *
+     * @param request La petición con los parámetros de entrada.
+     *
+     * @throws IllegalInputFault Arrojado si se solicitan cateogorías distintas a las objetivo de la búsqueda o que
+     *                           simplemente no existen. También se arroja si existen
+     */
+    private void obtenerTerminosPediblesParamValidation(GetRequestableTermsRequest request) throws IllegalInputFault {
+
+        /* Se valida que haya al menos 1 categoría o 1 refset */
+        validateAtLeastOneCategoryOrOneRefSet(request);
+
+        /* Luego es necesario validar que si hay categorías especificadas, se limiten a "interconsulta", "indicaciones generales" e "indicaciones de laboratorio" */
+        if (request.getCategoryNames().size() > 0) {
+
+            Category interconsultas = categoryManager.getCategoryByName("Interconsultas");
+            Category indicacionesGenerales = categoryManager.getCategoryByName("Indicaciones Generales");
+            Category indicacionesLaboratio = categoryManager.getCategoryByName("Indicaciones de Laboratorio");
+            List<String> categories = Arrays.asList(interconsultas.getName().toLowerCase(), indicacionesGenerales.getName().toLowerCase(), indicacionesLaboratio.getName().toLowerCase());
+
+            for (String category : request.getCategoryNames()) {
+                if (!categories.contains(category.toLowerCase())) {
+                    throw new IllegalInputFault("La categoría " + category + " no es una categoría aceptable de búsqueda");
+                }
+            }
         }
-        // TODO
-        return null;
+    }
+
+    /**
+     * Este método es responsable de validar que una petición posea al menos una categoría o un refset.
+     *
+     * @param request La petición enviada.
+     *
+     * @throws IllegalInputFault Se arroja si se viola la condición.
+     */
+    private void validateAtLeastOneCategoryOrOneRefSet(GetRequestableTermsRequest request) throws IllegalInputFault {
+        if (!(request.getCategoryNames().size() > 0 || request.getRefSetNames().size() > 0)) {
+            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet.");
+        }
     }
 
     // REQ-WS-007
@@ -235,6 +290,7 @@ public class SearchService {
     ) throws NotFoundFault {
         return this.crossmapsController.getDirectCrossmapsSetMembersByDescriptionID(descriptionId);
     }
+
     // REQ-WS-028
     @WebResult(name = "concepto")
     @WebMethod(operationName = "conceptoPorIdDescripcion")
@@ -247,12 +303,13 @@ public class SearchService {
     }
 
     /**
-     * REQ-WS-029: El sistema Semantikos debe disponer un servicio que permita obtener la Expresión de SNOMED-CT a través de un ID Descripción.
+     * REQ-WS-029: El sistema Semantikos debe disponer un servicio que permita obtener la Expresión de SNOMED-CT a
+     * través de un ID Descripción.
      *
      * @param descriptionId El valor de negocio <em>DESCRIPTION_ID</em> de la descripción cuyo concepto posee los
      *                      crossmaps indirectos que se desea recuperar.
-     *
      * @param idInstitution Identificador de la institución.
+     *
      * @return Una lista de crossmaps <em>directos</em> del concepto asociado a la descripción encapsulada en un objeto
      * mapeado
      * a un elemento XML.

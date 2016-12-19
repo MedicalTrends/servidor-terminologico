@@ -15,14 +15,12 @@ public class GetRequestableTermsRequest implements Serializable {
 
     @XmlElement(required = false, name = "nombreCategoria")
     private List<String> categoryNames;
+
     @XmlElement(required = false, name = "nombreRefSet")
     private List<String> refSetNames;
+
     @XmlElement(required = true, name = "pedible")
     private String requestable;
-    @XmlElement(required = false, defaultValue = "0", name = "numeroPagina")
-    private Integer pageNumber;
-    @XmlElement(required = false, defaultValue = "10", name = "tamanoPagina")
-    private Integer pageSize;
 
     public List<String> getCategoryNames() {
         return categoryNames;
@@ -46,21 +44,5 @@ public class GetRequestableTermsRequest implements Serializable {
 
     public void setRequestable(String requestable) {
         this.requestable = requestable;
-    }
-
-    public Integer getPageNumber() {
-        return pageNumber;
-    }
-
-    public void setPageNumber(Integer pageNumber) {
-        this.pageNumber = pageNumber;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
     }
 }
