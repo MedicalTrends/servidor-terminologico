@@ -11,8 +11,8 @@ import java.util.List;
  * @author Andrés Farías on 12/13/16.
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlRootElement(name = "crossmapSetMembersResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "CrossmapSetMembersResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "crossmapSets", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "CrossmapSets", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class CrossmapSetsResponse {
 
     /** La lista de crossmaps indirectos (response) */
@@ -46,7 +46,6 @@ public class CrossmapSetsResponse {
         this.crossmapSetResponses = crossmapSetResponses;
     }
 
-    @XmlElementWrapper(name = "cantidadRegistros")
     @XmlElement(name = "cantidadRegistros")
     public int getCantidadRegistros(){
         return this.crossmapSetResponses.size();

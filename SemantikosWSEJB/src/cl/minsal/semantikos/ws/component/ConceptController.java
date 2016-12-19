@@ -3,6 +3,7 @@ package cl.minsal.semantikos.ws.component;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.ws.Util;
+import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.ConceptMapper;
 import cl.minsal.semantikos.ws.request.NewTermRequest;
@@ -97,15 +98,23 @@ public class ConceptController {
      *
      * @return El concepto buscado.
      */
-    private ConceptSMTK getSourceConcept(String descriptionId, String conceptId) {
+    private ConceptSMTK getSourceConcept(String descriptionId, String conceptId) throws NotFoundFault {
         ConceptSMTK sourceConcept;
         if (descriptionId != null && !descriptionId.trim().equals("")) {
-            sourceConcept = this.conceptManager.getConceptByDescriptionID(descriptionId);
+            try {
+                sourceConcept = this.conceptManager.getConceptByDescriptionID(descriptionId);
+            } catch (Exception e) {
+                throw new NotFoundFault("Descripcion no encontrada: " + descriptionId);
+            }
         }
 
         /* Sólo si falla lo anterior: CONCEPT_ID */
         else if (conceptId != null && !conceptId.trim().equals("")) {
-            sourceConcept = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
+            try {
+                sourceConcept = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
+            } catch (Exception e) {
+                throw new NotFoundFault("Concepto no encontrado: " + conceptId);
+            }
         }
 
         /* Si no hay ninguno de los dos, se arroja una excepción */
@@ -222,7 +231,13 @@ public class ConceptController {
 
     public ConceptResponse conceptByDescriptionId(String descriptionId)
             throws NotFoundFault {
-        ConceptSMTK conceptSMTK = this.conceptManager.getConceptByDescriptionID(descriptionId);
+        ConceptSMTK conceptSMTK;
+        try {
+            conceptSMTK = this.conceptManager.getConceptByDescriptionID(descriptionId);
+        } catch (Exception e) {
+            throw new NotFoundFault("Descripcion no encontrada: " + descriptionId);
+        }
+
         ConceptResponse res = new ConceptResponse(conceptSMTK);
         this.loadRelationships(res, conceptSMTK);
         this.loadRefSets(res, conceptSMTK);
@@ -231,7 +246,12 @@ public class ConceptController {
     }
 
     public ConceptResponse conceptById(String conceptId) throws NotFoundFault {
-        ConceptSMTK conceptSMTK = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
+        ConceptSMTK conceptSMTK;
+        try {
+            conceptSMTK = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
+        } catch (Exception e) {
+            throw new NotFoundFault("Concepto no encontrado: " + conceptId);
+        }
         ConceptResponse res = new ConceptResponse(conceptSMTK);
         this.loadRelationships(res, conceptSMTK);
         this.loadRefSets(res, conceptSMTK);
@@ -356,15 +376,21 @@ public class ConceptController {
      *
      * @return La respuesta respecto a la descripción creada.
      */
-    public NewTermResponse requestTermCreation(NewTermRequest termRequest) {
+    public NewTermResponse requestTermCreation(NewTermRequest termRequest) throws IllegalInputFault {
 
         // TODO: Recuperar el usuario.
         User user = new User(-1, "demo", "Demo User", "demo", false);
+
+        Category category = categoryManager.getCategoryByName(termRequest.getCategory());
+        if (category == null) {
+            throw new IllegalInputFault("Categoria no encontrada: " + termRequest.getCategory());
+        }
+
         PendingTerm pendingTerm = new PendingTerm(
                 termRequest.getTerm(),
                 new Date(),
                 termRequest.getCaseSensitive(),
-                termRequest.getCategory(),
+                category,
                 termRequest.getProfessional(),
                 termRequest.getProfesion(),
                 termRequest.getSpecialty(),

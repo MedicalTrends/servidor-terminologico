@@ -37,10 +37,9 @@ public class RefSetController {
 
         Set<ConceptSMTK> conceptSMTKS = new HashSet<>(descriptionIds.size());
         for ( String descriptionId : descriptionIds ) {
-            ConceptSMTK found = this.conceptManager.getConceptByDescriptionID(descriptionId);
-            if ( found != null ) {
-                conceptSMTKS.add(found);
-            } else {
+            try {
+                conceptSMTKS.add(this.conceptManager.getConceptByDescriptionID(descriptionId));
+            } catch (Exception e) {
                 throw new NotFoundFault("Descripcion no encontrada: " + descriptionId);
             }
         }

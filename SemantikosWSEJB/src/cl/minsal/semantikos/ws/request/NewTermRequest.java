@@ -49,8 +49,7 @@ public class NewTermRequest implements Serializable {
     private String subSpecialty;
 
     @XmlElement(required = true, name = "categoria")
-    private Category category;
-
+    private String category;
 
     public String getIdInstitution() {
         return idInstitution;
@@ -132,11 +131,11 @@ public class NewTermRequest implements Serializable {
         this.specialty = specialty;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 

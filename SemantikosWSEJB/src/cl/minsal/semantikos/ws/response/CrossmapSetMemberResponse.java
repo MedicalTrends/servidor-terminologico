@@ -8,8 +8,8 @@ import javax.xml.bind.annotation.*;
  * @author Andrés Farías on 12/15/16.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "indirectCrossmap", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "IndirectCrossmap", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "crossmapSetMember", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "CrossmapSetMember", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class CrossmapSetMemberResponse {
 
     /** ID de negocio */

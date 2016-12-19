@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.ws.service;
 
 import cl.minsal.semantikos.ws.component.ConceptController;
+import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.request.NewTermRequest;
 import cl.minsal.semantikos.ws.response.DescriptionResponse;
 import cl.minsal.semantikos.ws.response.NewTermResponse;
@@ -35,7 +36,7 @@ public class UpdateService {
     public NewTermResponse codificacionDeNuevoTermino(
             @XmlElement(required = true)
             @WebParam(name = "peticionCodificacionDeNuevoTermino")
-            NewTermRequest termRequest) {
+            NewTermRequest termRequest) throws IllegalInputFault {
 
         return conceptController.requestTermCreation(termRequest);
     }
