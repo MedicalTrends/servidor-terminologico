@@ -12,24 +12,23 @@ import java.io.Serializable;
 @XmlType(name = "RespuestaCodificacionDeNuevoTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class NewTermResponse implements Serializable {
 
-    @XmlElement(name="estado")
-    private String status;
-    @XmlElement(name="concepto")
-    private ConceptResponse conceptResponse;
+    @XmlElement(name="id_descripcion")
+    private String descriptionID;
 
-    public String getStatus() {
-        return status;
+    public NewTermResponse() {
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public NewTermResponse(String descriptionId) {
+        this();
+
+        this.descriptionID = descriptionId;
     }
 
-    public ConceptResponse getConceptResponse() {
-        return conceptResponse;
+    public String getDescriptionID() {
+        return descriptionID;
     }
 
-    public void setConceptResponse(ConceptResponse conceptResponse) {
-        this.conceptResponse = conceptResponse;
+    public void setDescriptionID(String descriptionID) {
+        this.descriptionID = descriptionID;
     }
 }

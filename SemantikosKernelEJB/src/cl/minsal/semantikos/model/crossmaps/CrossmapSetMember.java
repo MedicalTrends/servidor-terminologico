@@ -1,11 +1,8 @@
 package cl.minsal.semantikos.model.crossmaps;
 
 import cl.minsal.semantikos.model.PersistentEntity;
-import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
-
-import java.sql.Timestamp;
 
 /**
  * @author Andrés Farías on 11/3/16.
@@ -18,22 +15,26 @@ public class CrossmapSetMember extends PersistentEntity implements Target {
     /** Terminología a la que pertenece */
     private CrossmapSet crossmapSet;
 
-    private String code;
+    private String code1;
+
+    /** El segundo código */
+    private String code2;
 
     private String gloss;
 
-    public CrossmapSetMember(long idCrossmapSetMember, CrossmapSet crossmapSet, String code, String gloss) {
+    public CrossmapSetMember(long idCrossmapSetMember, CrossmapSet crossmapSet, String code1, String gloss) {
         this.idCrossmapSetMember = idCrossmapSetMember;
         this.crossmapSet = crossmapSet;
-        this.code = code;
+        this.code1 = code1;
         this.gloss = gloss;
     }
 
-    public CrossmapSetMember(long id, long idCrossmapSetMember, CrossmapSet crossmapSet, String code, String gloss) {
+    public CrossmapSetMember(long id, long idCrossmapSetMember, CrossmapSet crossmapSet, String code1, String code2, String gloss) {
         super(id);
         this.idCrossmapSetMember = idCrossmapSetMember;
         this.crossmapSet = crossmapSet;
-        this.code = code;
+        this.code1 = code1;
+        this.code2 = code2;
         this.gloss = gloss;
     }
 
@@ -53,12 +54,20 @@ public class CrossmapSetMember extends PersistentEntity implements Target {
         this.crossmapSet = crossmapSet;
     }
 
-    public String getCode() {
-        return code;
+    public String getCode1() {
+        return code1;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCode1(String code1) {
+        this.code1 = code1;
+    }
+
+    public String getCode2() {
+        return code2;
+    }
+
+    public void setCode2(String code2) {
+        this.code2 = code2;
     }
 
     public String getGloss() {
@@ -100,6 +109,6 @@ public class CrossmapSetMember extends PersistentEntity implements Target {
 
     @Override
     public Target copy() {
-        return new CrossmapSetMember(this.getIdCrossmapSetMember(), this.getIdCrossmapSetMember(), this.getCrossmapSet(), this.getCode(), this.getGloss());
+        return new CrossmapSetMember(this.getIdCrossmapSetMember(), this.getIdCrossmapSetMember(), this.getCrossmapSet(), this.getCode1(), this.code2, this.getGloss());
     }
 }

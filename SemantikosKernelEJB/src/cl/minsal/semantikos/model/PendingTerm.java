@@ -14,6 +14,7 @@ public class PendingTerm extends PersistentEntity {
 
     private boolean sensibility;
 
+    /** La categoría propuesta para el término propuesto */
     private Category category;
 
     private String nameProfessional;

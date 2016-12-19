@@ -14,7 +14,7 @@ import java.util.List;
 @XmlType(name = "IndirectCrossmapsSearch", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class IndirectCrossMapSearchResponse {
 
-
+    /** La lista de crossmaps indirectos (response) */
     @XmlElementWrapper(name = "indirectCrossmaps")
     @XmlElement(name = "indirectCrossmap")
     private List<IndirectCrossMapResponse> indirectCrossMapResponses;
@@ -37,5 +37,11 @@ public class IndirectCrossMapSearchResponse {
         }
     }
 
+    public List<IndirectCrossMapResponse> getIndirectCrossMapResponses() {
+        return indirectCrossMapResponses;
+    }
 
+    public void setIndirectCrossMapResponses(List<IndirectCrossMapResponse> indirectCrossMapResponses) {
+        this.indirectCrossMapResponses = indirectCrossMapResponses;
+    }
 }

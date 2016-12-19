@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.components;
 
+import cl.minsal.semantikos.kernel.daos.PendingTermDAO;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.PendingTermAddingBR;
 
@@ -26,7 +27,7 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
     DescriptionManager descriptionManager;
 
     @Override
-    public void addPendingTerm(PendingTerm pendingTerm, User loggedUser) {
+    public Description addPendingTerm(PendingTerm pendingTerm, User loggedUser) {
 
         /* Validación de pre-condiciones */
         pendingTermAddingBR.validatePreConditions(pendingTerm);
@@ -44,6 +45,9 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
 
         /* Validación de post-condiciones */
         pendingTermAddingBR.validatePostConditions(pendingTerm);
+
+        /* Se retorna la descripción creada */
+        return description;
     }
 
     @Override

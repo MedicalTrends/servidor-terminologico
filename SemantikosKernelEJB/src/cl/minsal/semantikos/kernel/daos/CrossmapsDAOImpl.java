@@ -321,10 +321,11 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     private CrossmapSetMember createCrossmapSetMemberFromResultSet(ResultSet rs, CrossmapSet crossmapSet) throws SQLException {
         // id bigint, id_concept bigint, id_crossmapset bigint, id_user bigint, id_validity_until timestamp
         long id = rs.getLong("id");
-        String code = rs.getString("code");
+        String code1 = rs.getString("code1");
+        String code2 = rs.getString("code2");
         String gloss = rs.getString("gloss");
 
-        return new CrossmapSetMember(id, id, crossmapSet, code, gloss);
+        return new CrossmapSetMember(id, id, crossmapSet, code1, code2, gloss);
     }
 
     /**

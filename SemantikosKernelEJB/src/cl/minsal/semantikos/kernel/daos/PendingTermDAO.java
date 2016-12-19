@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.kernel.components;
+package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.PendingTerm;

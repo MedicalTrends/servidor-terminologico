@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.ws.request;
 
+import cl.minsal.semantikos.model.Category;
+
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
@@ -12,33 +14,50 @@ import java.io.Serializable;
 @XmlType(name = "PeticionCodificacionDeNuevoTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class NewTermRequest implements Serializable {
 
+    /** Identificador de negocio de una institución asociada al usuario que realiza la solicitud de creación */
     @XmlElement(required = true, name = "establecimiento")
-    private String institutionName;
+    private String idInstitution;
+
     @XmlElement(required = true, name = "idConcepto")
     private String conceptId;
+
     @XmlElement(required = true, name = "termino")
     private String term;
+
     @XmlElement(required = false, defaultValue = "Preferida", name = "tipoDescripcion")
     private String descriptionTypeName;
+
     @XmlElement(required = false, defaultValue = "false", name = "esSensibleAMayusculas")
     private Boolean isCaseSensitive;
+
     @XmlElement(required = false, name = "email")
     private String email;
+
     @XmlElement(required = false, name = "observacion")
     private String observation;
+
     @XmlElement(required = false, name = "profesional")
     private String professional;
+
     @XmlElement(required = false, name = "profesion")
     private String profesion;
+
     @XmlElement(required = false, name = "especialidad")
     private String specialty;
 
-    public String getInstitutionName() {
-        return institutionName;
+    @XmlElement(required = true, name = "sub-especialidad")
+    private String subSpecialty;
+
+    @XmlElement(required = true, name = "categoria")
+    private Category category;
+
+
+    public String getIdInstitution() {
+        return idInstitution;
     }
 
-    public void setInstitutionName(String institutionName) {
-        this.institutionName = institutionName;
+    public void setIdInstitution(String idInstitution) {
+        this.idInstitution = idInstitution;
     }
 
     public String getConceptId() {
@@ -111,5 +130,21 @@ public class NewTermRequest implements Serializable {
 
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public String getSubSpecialty() {
+        return subSpecialty;
+    }
+
+    public void setSubSpecialty(String subSpecialty) {
+        this.subSpecialty = subSpecialty;
     }
 }
