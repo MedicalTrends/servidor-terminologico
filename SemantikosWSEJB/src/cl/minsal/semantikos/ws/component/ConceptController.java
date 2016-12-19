@@ -1,16 +1,11 @@
 package cl.minsal.semantikos.ws.component;
 
-import cl.minsal.semantikos.kernel.components.CategoryManager;
-import cl.minsal.semantikos.kernel.components.ConceptManager;
-import cl.minsal.semantikos.kernel.components.DescriptionManager;
-import cl.minsal.semantikos.kernel.components.RefSetManager;
-import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.RefSet;
+import cl.minsal.semantikos.kernel.components.*;
+import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.ws.Util;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.ConceptMapper;
+import cl.minsal.semantikos.ws.request.NewTermRequest;
 import cl.minsal.semantikos.ws.response.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +15,7 @@ import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,8 +39,12 @@ public class ConceptController {
     private PaginationController paginationController;
     @EJB
     private CategoryController categoryController;
+
     @EJB
     private RefSetController refSetController;
+
+    @EJB
+    private PendingTermsManager pendingTermManager;
 
     /**
      * Este método es responsable de recperar los conceptos relacionados (hijos...) de un concepto que se encuentran en
@@ -348,4 +348,32 @@ public class ConceptController {
         return conceptResponse;
     }
 
+    /**
+     * Este método es responspable de interactuar con la componente de negocio encargada de los nuevos términos y
+     * realizar la solicitud de creación de uno.
+     *
+     * @param termRequest La solicitud de creación de término.
+     *
+     * @return La respuesta respecto a la descripción creada.
+     */
+    public NewTermResponse requestTermCreation(NewTermRequest termRequest) {
+
+        // TODO: Recuperar el usuario.
+        User user = new User(-1, "demo", "Demo User", "demo", false);
+        PendingTerm pendingTerm = new PendingTerm(
+                termRequest.getTerm(),
+                new Date(),
+                termRequest.getCaseSensitive(),
+                termRequest.getCategory(),
+                termRequest.getProfessional(),
+                termRequest.getProfesion(),
+                termRequest.getSpecialty(),
+                termRequest.getSubSpecialty(),
+                termRequest.getEmail(),
+                termRequest.getObservation());
+
+        /* Se realiza la solicitud */
+        Description description = pendingTermManager.addPendingTerm(pendingTerm, user);
+        return new NewTermResponse(description.getDescriptionId());
+    }
 }

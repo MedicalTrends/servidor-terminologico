@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.components;
 
+import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.PendingTerm;
 import cl.minsal.semantikos.model.User;
 
@@ -17,8 +18,10 @@ public interface PendingTermsManager {
      *
      * @param pendingTerm El término que se desea agregar.
      * @param loggedUser  El usuario conectado que realiza la operación.
+     *
+     * @return La descripción creada a partir del término pendiente.
      */
-    public void addPendingTerm(PendingTerm pendingTerm, User loggedUser);
+    public Description addPendingTerm(PendingTerm pendingTerm, User loggedUser);
 
     /**
      * Este método es responsable de recuperar todos los términos pendientes, que tienen asociada una descripción en el

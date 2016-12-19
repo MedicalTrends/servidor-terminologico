@@ -1,10 +1,6 @@
-package cl.minsal.semantikos.kernel.components;
+package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.daos.CategoryDAO;
-import cl.minsal.semantikos.kernel.daos.ConceptDAO;
-import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.PendingTerm;
 import org.slf4j.Logger;
