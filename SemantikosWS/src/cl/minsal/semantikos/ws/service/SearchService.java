@@ -114,7 +114,7 @@ public class SearchService {
         /* Se hace una validación de los parámetros */
         obtenerTerminosPediblesParamValidation(request);
 
-        return conceptController.searchRequestableDescriptions();
+        return conceptController.searchRequestableDescriptions(request.getCategoryNames());
     }
 
     /**
@@ -258,7 +258,7 @@ public class SearchService {
      *                       parámetro <code>descriptionId</code>.
      */
     @WebResult(name = "indirectCrossmaps")
-    @WebMethod(operationName = "crossMapsDirectosPorIDDescripcion")
+    @WebMethod(operationName = "crossMapsIndirectosPorIDDescripcion")
     public IndirectCrossMapSearchResponse crossMapsIndirectosPorIDDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "DescripcionID")
@@ -282,7 +282,7 @@ public class SearchService {
      *                       parámetro <code>descriptionId</code>.
      */
     @WebResult(name = "crossmapSetMember")
-    @WebMethod(operationName = "crossMapsIndirectosPorIDDescripcion")
+    @WebMethod(operationName = "crossMapsDirectosPorIDDescripcion")
     public CrossmapSetMembersResponse crossmapSetMembersDirectosPorIDDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "DescripcionID")
@@ -300,35 +300,6 @@ public class SearchService {
             String descriptionId
     ) throws NotFoundFault {
         return this.conceptController.conceptByDescriptionId(descriptionId);
-    }
-
-    /**
-     * REQ-WS-029: El sistema Semantikos debe disponer un servicio que permita obtener la Expresión de SNOMED-CT a
-     * través de un ID Descripción.
-     *
-     * @param descriptionId El valor de negocio <em>DESCRIPTION_ID</em> de la descripción cuyo concepto posee los
-     *                      crossmaps indirectos que se desea recuperar.
-     * @param idInstitution Identificador de la institución.
-     *
-     * @return Una lista de crossmaps <em>directos</em> del concepto asociado a la descripción encapsulada en un objeto
-     * mapeado
-     * a un elemento XML.
-     *
-     * @throws NotFoundFault Arrojada si no existe una descripción con <em>DESCRIPTION_ID</em> igual al indicado por el
-     *                       parámetro <code>descriptionId</code>.
-     */
-    @WebResult(name = "crossmapSetMember")
-    @WebMethod(operationName = "crossMapsIndirectosPorIDDescripcion")
-    public CrossmapSetMembersResponse expresionSnomed(
-            @XmlElement(required = true)
-            @WebParam(name = "DescripcionID")
-            String descriptionId,
-
-            @XmlElement(required = true)
-            @WebParam(name = "idInstitucion")
-            String idInstitution
-    ) throws NotFoundFault {
-        return this.crossmapsController.expresionSnomed(descriptionId, idInstitution);
     }
 
     @WebResult(name = "concepto")
