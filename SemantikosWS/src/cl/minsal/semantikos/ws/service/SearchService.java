@@ -114,7 +114,7 @@ public class SearchService {
         /* Se hace una validación de los parámetros */
         obtenerTerminosPediblesParamValidation(request);
 
-        return conceptController.searchRequestableDescriptions(request.getCategoryNames());
+        return conceptController.searchRequestableDescriptions(request.getCategoryNames(), request.getRequestable());
     }
 
     /**
@@ -160,7 +160,7 @@ public class SearchService {
     }
 
     // REQ-WS-007
-    // REQ-WS-009
+    // REQ-WS-009: TODO: solo retornar el String del nombre del refset.
     @WebResult(name = "respuestaRefSetsPorIdDescripcion")
     @WebMethod(operationName = "refSetsPorIdDescripcion")
     public TermSearchResponse refSetsPorIdDescripcion(

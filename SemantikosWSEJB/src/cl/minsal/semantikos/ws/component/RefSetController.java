@@ -6,10 +6,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.RefSetMapper;
-import cl.minsal.semantikos.ws.response.ConceptResponse;
-import cl.minsal.semantikos.ws.response.DescriptionResponse;
-import cl.minsal.semantikos.ws.response.RefSetResponse;
-import cl.minsal.semantikos.ws.response.TermSearchResponse;
+import cl.minsal.semantikos.ws.response.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -44,18 +41,19 @@ public class RefSetController {
             }
         }
 
-        List<ConceptResponse> conceptResponses = new ArrayList<>(conceptSMTKS.size());
+        List<ConceptLightResponse> conceptResponses = new ArrayList<>(conceptSMTKS.size());
         for ( ConceptSMTK conceptSMTK : conceptSMTKS ) {
-            ConceptResponse conceptResponse = new ConceptResponse(conceptSMTK);
-            this.conceptController.loadRefSets(conceptResponse, conceptSMTK);
+            ConceptLightResponse conceptResponse = new ConceptLightResponse(conceptSMTK);
+            //TODO: Evaluar esta linea para un concepto light: this.conceptController.loadRefSets(conceptResponse, conceptSMTK);
 
+            /* TODO: Revisar esto.
             List<DescriptionResponse> toRemove = new ArrayList<>();
             for (DescriptionResponse descriptionResponse : conceptResponse.getDescriptions() ) {
                 if ( !descriptionIds.contains(descriptionResponse.getDescriptionID()) ) {
                     toRemove.add(descriptionResponse);
                 }
             }
-            conceptResponse.getDescriptions().removeAll(toRemove);
+            conceptResponse.getDescriptions().removeAll(toRemove); */
 
             conceptResponses.add(conceptResponse);
         }

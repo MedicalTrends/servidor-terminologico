@@ -9,6 +9,7 @@ import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,6 +91,11 @@ public class ConceptManagerImpl implements ConceptManager {
 
         //Búsqueda por categoría
         return conceptDAO.getConceptBy(category);
+    }
+
+    @Override
+    public List<ConceptSMTK> findConcepts(Category aCategory, RelationshipDefinition requestableAttribute, Boolean value) {
+        return null;
     }
 
     @Override

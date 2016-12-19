@@ -109,9 +109,4 @@ public class CrossmapController {
     private void verifyInstitution(String idInstitution) {
 
     }
-
-    public CrossmapSetMembersResponse expresionSnomed(String descriptionId, String idInstitution) {
-        //TODO: Implement me!
-        throw new EJBException("SIN IMPLEMENTAR");
-    }
 }

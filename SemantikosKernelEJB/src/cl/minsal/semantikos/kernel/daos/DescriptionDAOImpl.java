@@ -100,7 +100,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     }
 
     @Override
-    public Description getDescriptionByDescriptionID(String businessId) {
+    public Description getDescriptionByDescriptionID(String descriptionId) {
         ConnectionBD connect = new ConnectionBD();
         Description description= null;
 
@@ -108,13 +108,15 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, businessId);
+            call.setString(1, descriptionId);
             call.execute();
 
-            logger.debug("Descripciones recuperadas con Business ID=" + businessId);
+            logger.debug("Descripciones recuperadas con Business ID=" + descriptionId);
             ResultSet rs = call.getResultSet();
-            while (rs.next()) {
+            if (rs.next()) {
                 description = createDescriptionFromResultSet(rs, null);
+            } else {
+                throw new IllegalArgumentException("No existe una descripción con DESCRIPTION_ID = " + descriptionId);
             }
 
         } catch (SQLException e) {

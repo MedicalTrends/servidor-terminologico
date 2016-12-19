@@ -2,6 +2,7 @@ package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.ws.Util;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
@@ -168,7 +169,7 @@ public class ConceptController {
         List<Category> categories = this.categoryController.findCategories(categoriesNames);
         List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
 
-        List<ConceptResponse> conceptResponses = new ArrayList<>();
+        List<ConceptLightResponse> conceptResponses = new ArrayList<>();
         List<Description> descriptions = this.descriptionManager.searchDescriptionsByTerm(term, categories, refSets);
         if (descriptions != null) {
             List<ConceptSMTK> conceptSMTKS = new ArrayList<>(descriptions.size());
@@ -180,7 +181,7 @@ public class ConceptController {
 
             for (ConceptSMTK source : conceptSMTKS) {
                 // TODO: Agregar sugeridos
-                ConceptResponse conceptResponse = new ConceptResponse(source);
+                ConceptLightResponse conceptResponse = new ConceptLightResponse(source);
                 conceptResponses.add(conceptResponse);
             }
         }
@@ -208,12 +209,11 @@ public class ConceptController {
         Long[] categoriesArray = Util.getIdArray(categories);
         Long[] refSetsArray = Util.getIdArray(refSets);
         List<ConceptSMTK> conceptSMTKS = this.conceptManager.findConceptTruncatePerfect(term, categoriesArray, refSetsArray, pageNumber, pageSize);
-        List<ConceptResponse> conceptResponses = new ArrayList<>();
+        List<ConceptLightResponse> conceptResponses = new ArrayList<>();
 
         if (conceptSMTKS != null) {
             for (ConceptSMTK source : conceptSMTKS) {
-                ConceptResponse conceptResponse = new ConceptResponse(source);
-                conceptResponses.add(conceptResponse);
+                conceptResponses.add(new ConceptLightResponse(source));
             }
         }
 
@@ -406,11 +406,42 @@ public class ConceptController {
     /**
      * Este método es responsable de recuperar todos los conceptos en las categorías indicadas.
      *
+     * @param categoryNames Nombres de las categorías en las que se desea realizar la búsqueda.
+     * @param requestable   Indica si el atributo 'Pedible' tiene valor <code>true</code> o <code>false</code>.
+     *
      * @return La lista de Conceptos Light que satisfacen la búsqueda.
-     * @param categoryNames
      */
-    public TermSearchResponse searchRequestableDescriptions(List<String> categoryNames) {
+    public TermSearchResponse searchRequestableDescriptions(List<String> categoryNames, boolean requestable) {
 
-        return null;
+        List<ConceptSMTK> allRequestableConcepts = new ArrayList<>();
+        for (String categoryName : categoryNames) {
+            Category aCategory = categoryManager.getCategoryByName(categoryName);
+
+            /* Se recupera el atributo "Pedible " */
+            RelationshipDefinition requestableAttribute = getRequestableAttribute(aCategory);
+            List<ConceptSMTK> requestableConcepts = conceptManager.findConcepts(aCategory, requestableAttribute, requestable);
+            allRequestableConcepts.addAll(requestableConcepts);
+        }
+
+        return new TermSearchResponse(allRequestableConcepts);
+    }
+
+    /**
+     * Este método es responsable de retornar el atributo 'Pedible' de la categoría dada.
+     *
+     * @param aCategory La categoría cuyo atributo 'Pedible' se busca.
+     *
+     * @return El atributo 'Pedible' de la categoría.
+     */
+    public RelationshipDefinition getRequestableAttribute(Category aCategory) {
+
+        List<RelationshipDefinition> relationshipDefinitions = aCategory.getRelationshipDefinitions();
+        for (RelationshipDefinition relationshipDefinition : relationshipDefinitions) {
+            if (relationshipDefinition.getName().equalsIgnoreCase("Pedible")) {
+                return relationshipDefinition;
+            }
+        }
+
+        throw new IllegalArgumentException("La categoría solicitada no posee un atributo 'Pedible'");
     }
 }

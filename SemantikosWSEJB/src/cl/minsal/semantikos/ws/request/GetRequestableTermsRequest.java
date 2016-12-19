@@ -20,7 +20,7 @@ public class GetRequestableTermsRequest implements Serializable {
     private List<String> refSetNames;
 
     @XmlElement(required = true, name = "pedible")
-    private String requestable;
+    private Boolean requestable;
 
     public List<String> getCategoryNames() {
         return categoryNames;
@@ -38,11 +38,11 @@ public class GetRequestableTermsRequest implements Serializable {
         this.refSetNames = refSetNames;
     }
 
-    public String getRequestable() {
+    public Boolean getRequestable() {
         return requestable;
     }
 
-    public void setRequestable(String requestable) {
+    public void setRequestable(Boolean requestable) {
         this.requestable = requestable;
     }
 }

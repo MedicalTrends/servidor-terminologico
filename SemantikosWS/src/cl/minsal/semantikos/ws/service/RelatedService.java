@@ -18,7 +18,6 @@ import javax.xml.bind.annotation.XmlElement;
 
 /**
  * Created by Development on 2016-11-18.
- *
  */
 @WebService(serviceName = "ServicioDeRelacionados")
 public class RelatedService {
@@ -32,13 +31,13 @@ public class RelatedService {
     public TermSearchResponse sugerenciasDeDescripciones(
             @XmlElement(required = true)
             @WebParam(name = "peticionSugerenciasDeDescripciones")
-                    DescriptionsSuggestionsRequest request
+            DescriptionsSuggestionsRequest request
     ) throws IllegalInputFault {
-        if ( (request.getCategoryNames() == null && request.getRefSetNames() == null)
+        if ((request.getCategoryNames() == null && request.getRefSetNames() == null)
                 || (request.getCategoryNames().isEmpty() && request.getRefSetNames().isEmpty())) {
             throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet");
         }
-        // TODO
+        // TODO: Terminar servicio.
         return null;
     }
 
@@ -48,12 +47,12 @@ public class RelatedService {
     public RelatedConceptsResponse conceptosRelacionados(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
-            ) throws IllegalInputFault, NotFoundFault {
+            RelatedConceptsByCategoryRequest request
+    ) throws IllegalInputFault, NotFoundFault {
 
         /* Validación de parámetros */
-        if ( (request.getConceptId() == null || "".equals(request.getConceptId()) )
-                && (request.getDescriptionId() == null || "".equals(request.getDescriptionId())) ) {
+        if ((request.getConceptId() == null || "".equals(request.getConceptId()))
+                && (request.getDescriptionId() == null || "".equals(request.getDescriptionId()))) {
             throw new IllegalInputFault("Debe ingresar un idConcepto o idDescripcion");
         }
 
@@ -67,10 +66,10 @@ public class RelatedService {
     public RelatedConceptsResponse conceptosRelacionadosLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
-                    RelatedConceptsByCategoryRequest request
+            RelatedConceptsByCategoryRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        if ( (request.getConceptId() == null || "".equals(request.getConceptId()) )
-                && (request.getDescriptionId() == null || "".equals(request.getDescriptionId())) ) {
+        if ((request.getConceptId() == null || "".equals(request.getConceptId()))
+                && (request.getDescriptionId() == null || "".equals(request.getDescriptionId()))) {
             throw new IllegalInputFault("Debe ingresar un idConcepto o idDescripcion");
         }
         return this.conceptController.findRelatedLite(request.getConceptId(), request.getDescriptionId(), request.getRelatedCategoryName());
@@ -83,7 +82,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerMedicamentoClinico(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptosRelacionados(makeRequest(request, "Fármacos - Medicamento Clínico"));
     }
@@ -95,7 +94,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerMedicamentoClinicoLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Medicamento Clínico"));
     }
@@ -106,7 +105,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerMedicamentoClinicoPorMedicamentoBasico(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerMedicamentoClinico(request);
     }
@@ -117,7 +116,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerMedicamentoClinicoPorMedicamentoBasicoLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerMedicamentoClinicoLite(request);
     }
@@ -128,7 +127,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerMedicamentoClinicoPorProductoComercial(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerMedicamentoClinico(request);
     }
@@ -139,7 +138,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerMedicamentoClinicoPorProductoComercialLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerMedicamentoClinicoLite(request);
     }
@@ -150,7 +149,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerMedicamentoBasico(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptosRelacionados(makeRequest(request, "Fármacos - Medicamento Básico"));
     }
@@ -161,7 +160,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerMedicamentoBasicoLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Medicamento Básico"));
     }
@@ -172,7 +171,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerMedicamentoBasicoPorMedicamentoClinico(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerMedicamentoBasico(request);
     }
@@ -183,7 +182,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerMedicamentoBasicoPorMedicamentoClinicoLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerMedicamentoBasicoLite(request);
     }
@@ -195,7 +194,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerProductoComercial(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptosRelacionados(makeRequest(request, "Fármacos - Producto Comercial"));
     }
@@ -207,7 +206,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerProductoComercialLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptosRelacionados(makeRequest(request, "Fármacos - Producto Comercial"));
     }
@@ -218,7 +217,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerProductoComercialPorMedicamentoClinico(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerProductoComercial(request);
     }
@@ -229,7 +228,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerProductoComercialPorMedicamentoClinicoLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerProductoComercialLite(request);
     }
@@ -240,7 +239,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerProductoComercialPorFamiliaProducto(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerProductoComercial(request);
     }
@@ -251,7 +250,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerProductoComercialPorFamiliaProductoLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerProductoComercialLite(request);
     }
@@ -262,7 +261,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerMedicamentoClinicoConEnvase(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptosRelacionados(makeRequest(request, "Fármacos - Medicamento Clínico con Envase"));
     }
@@ -273,7 +272,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerMedicamentoClinicoConEnvaseLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Medicamento Clínico con Envase"));
     }
@@ -284,7 +283,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerMedicamentoClinicoConEnvasePorMedicamentoClinico(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerMedicamentoClinicoConEnvase(request);
     }
@@ -295,7 +294,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerMedicamentoClinicoConEnvasePorMedicamentoClinicoLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerMedicamentoClinicoConEnvaseLite(request);
     }
@@ -306,7 +305,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerProductoComercialConEnvase(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptosRelacionados(makeRequest(request, "Fármacos - Producto Comercial con Envase"));
     }
@@ -317,7 +316,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerProductoComercialConEnvaseLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Producto Comercial con Envase"));
     }
@@ -328,7 +327,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvase(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerProductoComercialConEnvase(request);
     }
@@ -339,7 +338,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvaseLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerProductoComercialConEnvaseLite(request);
     }
@@ -350,7 +349,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerFamiliaProducto(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptosRelacionados(makeRequest(request, "Fármacos - Familia de Productos"));
     }
@@ -361,20 +360,20 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerFamiliaProductoPorGrupoFamiliaProducto(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerFamiliaProducto(request);
     }
 
     // REQ-WS-018
+    // TODO: Alfonso: Reemplazar este método por la llamada del método factorizado...
     @WebResult(name = "respuestaConceptosRelacionados")
     @WebMethod(operationName = "obtenerProductoClinicoConEnvase")
     public RelatedConceptsResponse obtenerProductoClinicoConEnvase(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        // TODO: que categoria es esta?
         return this.conceptosRelacionados(makeRequest(request, "Fármacos - Medicamento Clínico con Envase"));
     }
 
@@ -384,7 +383,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerProductoClinicoConEnvaseLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Medicamento Clínico con Envase"));
     }
@@ -395,7 +394,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerProductoClinicoConEnvasePorProductoComercial(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerProductoClinicoConEnvase(request);
     }
@@ -406,7 +405,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerProductoClinicoConEnvasePorProductoComercialLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerProductoClinicoConEnvaseLite(request);
     }
@@ -417,7 +416,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerSustancia(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptosRelacionados(makeRequest(request, "Fármacos - Sustancia"));
     }
@@ -428,7 +427,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerSustanciaPorMedicamentoBasico(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerSustancia(request);
     }
@@ -439,9 +438,9 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerRegistroISP(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        // TODO: Que categoria es esta?
+        // TODO: Farías: Rehacer esto
         return this.conceptosRelacionados(makeRequest(request, "Elemento de Registro"));
     }
 
@@ -451,7 +450,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerRegistroISPPorProductoComercial(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerRegistroISP(request);
     }
@@ -462,7 +461,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerBioequivalentes(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptosRelacionados(makeRequest(request, "Elemento de Registro"));
     }
@@ -473,7 +472,7 @@ public class RelatedService {
     public RelatedConceptsResponse obtenerBioequivalentesPorProductoComercial(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
-                    RelatedConceptsRequest request
+            RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.obtenerBioequivalentes(request);
     }

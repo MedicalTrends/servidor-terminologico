@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.ejb.Local;
 import javax.validation.constraints.NotNull;
@@ -122,6 +123,18 @@ public interface ConceptManager {
     @Deprecated
     public List<ConceptSMTK> findConceptBy(Category category);
 
+    /**
+     * Este método es responsable de buscar los conceptos que posean un atributo de tipo básico que tenga el valor
+     * <code>value</code>.
+     *
+     * @param aCategory            La categoría en la cual se buscan los conceptos.
+     * @param requestableAttribute El atributo utilizado para filtrar la búsqueda.
+     * @param value                El valor que debe tener el atributo.
+     *
+     * @return Una lista fresca de conceptos, perezosamente incializados.
+     */
+    public List<ConceptSMTK> findConcepts(Category aCategory, RelationshipDefinition requestableAttribute, Boolean value);
+
     public List<ConceptSMTK> findModeledConceptBy(Category category, int pageSize, int pageNumber);
 
     public int countModeledConceptBy(Category category);
@@ -220,13 +233,13 @@ public interface ConceptManager {
      */
     public List<ConceptSMTK> getConceptDraft();
 
+
     /**
      * Este método es responsable de retornar la instancia del concepto no valido.
      *
      * @return La instancia (única) del concepto No Válido.
      */
     public ConceptSMTK getNoValidConcept();
-
 
     /**
      * Este método es responsable de trasladar un objeto de su categoría actual a otra categoría.
