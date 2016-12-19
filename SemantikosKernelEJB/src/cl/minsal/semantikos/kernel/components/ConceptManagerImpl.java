@@ -68,7 +68,6 @@ public class ConceptManagerImpl implements ConceptManager {
         ConceptSMTK concept = this.conceptDAO.getConceptByCONCEPT_ID(conceptId);
 
         /* Se cargan las descripciones del concepto */
-        // TODO: Factorizar esto para que siempre se cree el concepto de la misma manera cuando se crea.
         concept.setDescriptions(descriptionDAO.getDescriptionsByConcept(concept));
 
         return concept;
