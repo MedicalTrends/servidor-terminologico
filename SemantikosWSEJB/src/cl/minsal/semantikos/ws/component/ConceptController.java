@@ -378,11 +378,13 @@ public class ConceptController {
     }
 
     /**
+     * Este método es responsable de recuperar todos los conceptos en las categorías indicadas.
      *
-     * @return
+     * @return La lista de Conceptos Light que satisfacen la búsqueda.
+     * @param categoryNames
      */
-    public TermSearchResponse searchRequestableDescriptions() {
-        //TODO: Implement me!
+    public TermSearchResponse searchRequestableDescriptions(List<String> categoryNames) {
+
         return null;
     }
 }
