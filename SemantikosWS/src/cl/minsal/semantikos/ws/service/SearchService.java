@@ -114,7 +114,7 @@ public class SearchService {
         /* Se hace una validación de los parámetros */
         obtenerTerminosPediblesParamValidation(request);
 
-        return conceptController.searchRequestableDescriptions(request.getCategoryNames(), request.getRequestable());
+        return conceptController.searchRequestableDescriptions(request.getCategoryNames(), request.getRefSetNames(), request.getRequestable());
     }
 
     /**

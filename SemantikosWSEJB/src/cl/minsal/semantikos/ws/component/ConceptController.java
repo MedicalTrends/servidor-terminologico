@@ -407,11 +407,12 @@ public class ConceptController {
      * Este método es responsable de recuperar todos los conceptos en las categorías indicadas.
      *
      * @param categoryNames Nombres de las categorías en las que se desea realizar la búsqueda.
+     * @param refSetNames   Nombres de los refsets en las que deben pertenecer los conceptos.
      * @param requestable   Indica si el atributo 'Pedible' tiene valor <code>true</code> o <code>false</code>.
      *
      * @return La lista de Conceptos Light que satisfacen la búsqueda.
      */
-    public TermSearchResponse searchRequestableDescriptions(List<String> categoryNames, boolean requestable) {
+    public TermSearchResponse searchRequestableDescriptions(List<String> categoryNames, List<String> refSetNames, String requestable) {
 
         List<ConceptSMTK> allRequestableConcepts = new ArrayList<>();
         for (String categoryName : categoryNames) {
@@ -419,7 +420,7 @@ public class ConceptController {
 
             /* Se recupera el atributo "Pedible " */
             RelationshipDefinition requestableAttribute = getRequestableAttribute(aCategory);
-            List<ConceptSMTK> requestableConcepts = conceptManager.findConcepts(aCategory, requestableAttribute, requestable);
+            List<ConceptSMTK> requestableConcepts = conceptManager.findConcepts(aCategory, refSetNames, requestableAttribute, requestable);
             allRequestableConcepts.addAll(requestableConcepts);
         }
 
@@ -433,7 +434,7 @@ public class ConceptController {
      *
      * @return El atributo 'Pedible' de la categoría.
      */
-    public RelationshipDefinition getRequestableAttribute(Category aCategory) {
+    private RelationshipDefinition getRequestableAttribute(Category aCategory) {
 
         List<RelationshipDefinition> relationshipDefinitions = aCategory.getRelationshipDefinitions();
         for (RelationshipDefinition relationshipDefinition : relationshipDefinitions) {

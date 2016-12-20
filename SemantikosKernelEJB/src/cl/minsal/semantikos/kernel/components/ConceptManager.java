@@ -128,12 +128,13 @@ public interface ConceptManager {
      * <code>value</code>.
      *
      * @param aCategory            La categoría en la cual se buscan los conceptos.
+     * @param refSetNames          Los refsets en los cuales deben encontrarse los conceptos.
      * @param requestableAttribute El atributo utilizado para filtrar la búsqueda.
      * @param value                El valor que debe tener el atributo.
      *
      * @return Una lista fresca de conceptos, perezosamente incializados.
      */
-    public List<ConceptSMTK> findConcepts(Category aCategory, RelationshipDefinition requestableAttribute, Boolean value);
+    public List<ConceptSMTK> findConcepts(Category aCategory, List<String> refSetNames, RelationshipDefinition requestableAttribute, String value);
 
     public List<ConceptSMTK> findModeledConceptBy(Category category, int pageSize, int pageNumber);
 

@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -760,6 +761,84 @@ public class ConceptDAOImpl implements ConceptDAO {
         }
 
         return concepts;
+    }
+
+    @Override
+    public List<ConceptSMTK> findConceptsWithStringBasicType(Category aCategory, RelationshipDefinition stringBasicTypeAttribute, String aString) {
+        ConnectionBD connect = new ConnectionBD();
+        List<ConceptSMTK> conceptSMTKs = new ArrayList<>();
+
+        /**
+         * semantikos.find_concepts_by_attribute_boolean(?,?,?)
+         * Param 1: Category ID.
+         * Param 2: Relationship Attribute ID
+         * Param 3: String value.
+         */
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.find_concepts_by_attribute_string(?,?,?)}")) {
+
+            call.setLong(1, aCategory.getId());
+            call.setLong(2, stringBasicTypeAttribute.getId());
+            call.setString(3, aString);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                ConceptSMTK aConcept = createConceptSMTKFromResultSet(rs);
+                conceptSMTKs.add(aConcept);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al llamar la consulta find_concepts_by_attribute_string con parámetros: " + aCategory.getId() + " " + stringBasicTypeAttribute.getId() + " " + stringBasicTypeAttribute.getId();
+            logger.error(errorMsg, e);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return conceptSMTKs;
+    }
+
+    @Override
+    public List<ConceptSMTK> findConceptsWithStringBasicType(Category aCategory, ArrayList<RefSet> refsets, RelationshipDefinition stringBasicTypeAttribute, String aString) {
+        ConnectionBD connect = new ConnectionBD();
+        List<ConceptSMTK> conceptSMTKs = new ArrayList<>();
+
+        Long[] theRefSetIDs = new Long[refsets.size()];
+        int i = 0;
+        for (RefSet refset : refsets) {
+            theRefSetIDs[i] = refset.getId();
+        }
+
+        /**
+         * semantikos.find_concepts_by_attribute_boolean(?,?,?,?)
+         * Param 1: Category ID.
+         * Param 2: Refsets.
+         * Param 3: Relationship Attribute ID
+         * Param 4: String value.
+         */
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.find_concepts_by_attribute_string(?,?,?,?)}")) {
+
+            call.setLong(1, aCategory.getId());
+            call.setArray(2, connection.createArrayOf("integer", theRefSetIDs));
+            call.setLong(3, stringBasicTypeAttribute.getId());
+            call.setString(4, aString);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                ConceptSMTK aConcept = createConceptSMTKFromResultSet(rs);
+                conceptSMTKs.add(aConcept);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al llamar la consulta find_concepts_by_attribute_string con parámetros: " + aCategory.getId() + " " + stringBasicTypeAttribute.getId() + " " + stringBasicTypeAttribute.getId();
+            logger.error(errorMsg, e);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return conceptSMTKs;
     }
 
     @Override

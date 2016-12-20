@@ -2,13 +2,11 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
-import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,25 +31,10 @@ public class ConceptManagerImpl implements ConceptManager {
     private static final Logger logger = LoggerFactory.getLogger(ConceptManagerImpl.class);
 
     @EJB
-    private ConceptDAO conceptDAO;
-
-    @EJB
     private AuditManager auditManager;
 
     @EJB
-    private DescriptionDAO descriptionDAO;
-
-    @EJB
-    private RelationshipDAO relationshipDAO;
-
-    @EJB
-    private TagManager tagManager;
-
-    @EJB
-    private DescriptionManager descriptionManager;
-
-    @EJB
-    private RelationshipManager relationshipManager;
+    private ConceptDAO conceptDAO;
 
     @EJB
     private CrossmapsManager crossmapsManager;
@@ -59,8 +42,26 @@ public class ConceptManagerImpl implements ConceptManager {
     @EJB
     private ConceptTransferBR conceptTransferBR;
 
-     @EJB
-     private RelationshipBindingBRInterface relationshipBindingBR;
+    @EJB
+    private DescriptionManager descriptionManager;
+
+    @EJB
+    private DescriptionDAO descriptionDAO;
+
+    @EJB
+    RefSetManager refSetManager;
+
+    @EJB
+    private RelationshipBindingBRInterface relationshipBindingBR;
+
+    @EJB
+    private RelationshipDAO relationshipDAO;
+
+    @EJB
+    private RelationshipManager relationshipManager;
+
+    @EJB
+    private TagManager tagManager;
 
     @Override
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptId) {
@@ -89,13 +90,32 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public List<ConceptSMTK> findConceptBy(Category category) {
 
-        //Búsqueda por categoría
+        //TODO: Búsqueda por categoría
         return conceptDAO.getConceptBy(category);
     }
 
     @Override
-    public List<ConceptSMTK> findConcepts(Category aCategory, RelationshipDefinition requestableAttribute, Boolean value) {
-        return null;
+    public List<ConceptSMTK> findConcepts(Category aCategory, List<String> refSetNames, RelationshipDefinition basicTypeAttribute, String value) {
+
+        /* Primero se debe validar que el RelationshipDefinition es tipo Tipo Básico */
+        boolean basicType = basicTypeAttribute.getTargetDefinition().isBasicType();
+        if (!basicType) {
+            throw new IllegalArgumentException("Se consideró un tipo básico de un target que no lo es: " + basicTypeAttribute);
+        }
+
+        /* Luego se recuperan los refsets */
+        ArrayList<RefSet> refsets = new ArrayList<>();
+        for (String refSetName : refSetNames) {
+            RefSet refsetByName = refSetManager.getRefsetByName(refSetName);
+            refsets.add(refsetByName);
+        }
+
+        /* Por razones de eficiencia, es mejor realizar la búsqueda directamente en la base de datos */
+        if (refsets.isEmpty()) {
+            return conceptDAO.findConceptsWithStringBasicType(aCategory, basicTypeAttribute, value);
+        } else {
+            return conceptDAO.findConceptsWithStringBasicType(aCategory, refsets, basicTypeAttribute, value);
+        }
     }
 
     @Override
@@ -218,6 +238,7 @@ public class ConceptManagerImpl implements ConceptManager {
         return conceptDAO.countConceptBy((String[]) null, categories, isModeled);
 
     }
+
     @Override
     public int countModeledConceptBy(Category category) {
         return this.conceptDAO.countModeledConceptBy(category.getId());
@@ -285,7 +306,7 @@ public class ConceptManagerImpl implements ConceptManager {
         for (Tag tag : conceptSMTK.getTags()) {
             if (tag.isPersistent()) {
                 tagManager.persist(tag);
-                tagManager.assignTag(conceptSMTK,tag);
+                tagManager.assignTag(conceptSMTK, tag);
             }
         }
 
@@ -302,7 +323,7 @@ public class ConceptManagerImpl implements ConceptManager {
         /* Se actualiza con el DAO */
         conceptDAO.update(updatedConcept);
 
-        if (updatedConcept.isModeled()){
+        if (updatedConcept.isModeled()) {
             auditManager.recordUpdateConcept(updatedConcept, user);
         }
     }
@@ -328,7 +349,7 @@ public class ConceptManagerImpl implements ConceptManager {
         invalidate(conceptSMTK, user);
 
         /* Se elimina físicamente si es borrador */
-        if (!conceptSMTK.isModeled()){
+        if (!conceptSMTK.isModeled()) {
             conceptDAO.delete(conceptSMTK);
         }
     }
@@ -472,7 +493,7 @@ public class ConceptManagerImpl implements ConceptManager {
         }
 
         /* Se filtra para retornar sólo aquellos que pertenecen a alguna de las categorías dadas */
-        ArrayList<ConceptSMTK> filteredRelatedConcepts =new ArrayList<>();
+        ArrayList<ConceptSMTK> filteredRelatedConcepts = new ArrayList<>();
         for (ConceptSMTK relatedConcept : relatedConcepts) {
             Category conceptCategory = relatedConcept.getCategory();
             List<Category> categoryFilters = Arrays.asList(categories);
