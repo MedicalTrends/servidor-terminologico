@@ -11,7 +11,7 @@
     <file type="web" url="file://$PROJECT_DIR$/SemantikosWeb" />
     <file type="web" url="file://$PROJECT_DIR$/SemantikosWS" />
   </component>
-  <component name="IdProvider" IDEtalkID="0D3B3E9A90C8EB9F9276A692A93165DB" />
+  <component name="IdProvider" IDEtalkID="0F7BD49A44D63697AED6173FA8D54004" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
@@ -20,6 +20,6 @@
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/classes" />
+    <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
