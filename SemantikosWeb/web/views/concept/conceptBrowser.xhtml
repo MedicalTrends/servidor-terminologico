@@ -26,6 +26,9 @@
                                         <h2 class="TexAlCenter BigTopic">Navegador General [#{conceptBrowserBean.category.name}]</h2>
                                         <smtk:browserFilter conceptQuery="#{conceptBrowserBean.conceptQuery}" />
                                         <p:spacer />
+                                        <smtk:generalBrowserFilter generalQuery="#{generalBrowserBean.generalQuery}" />
+                                        <p:spacer />
+
                                         <p:dataTable id="conceptTable"
                                                      styleClass="conceptBrowserTable"
                                                      value="#{conceptBrowserBean.concepts}"
@@ -109,6 +112,7 @@
                                             </p:column>
 
                                         </p:dataTable>
+                                        <p:growl id="msgTransfer" showDetail="true" showSummary="true"/>
 
                                         <!-- Diálogo para buscar la categoría y aceptar -->
                                         <p:dialog id="dialogTC2-browser" header="Trasladar concepto" widgetVar="dialogTC2-browser" showEffect="fade" hideEffect="fade">
@@ -127,6 +131,9 @@
                                                     <p:confirm header="Confirmation" message="¿Está seguro de trasladar este concepto?" icon="ui-icon-alert"/>
                                                 </p:commandButton>
 
+                                                    <p:commandButton value="Trasladar" actionListener="#{transferConceptBean.transferConcept(transferConceptBean.conceptSMTKSelected)}"
+                                                                     icon="fa fa-exchange" styleClass="ui-priority-primary" update="msgTransfer" />
+                                                </h:panelGrid>
                                             </p:panel>
                                         </p:dialog>
 

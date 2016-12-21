@@ -179,18 +179,17 @@ public class AutogenerateBeans {
         for (int i = 0; i < list.size(); i++) {
             if (i != event.getFromIndex()) {
                 if (i == event.getToIndex()) {
-                    if (event.getFromIndex() < event.getToIndex()) {
-                        autoNuevoOrden.add(list.get(i));
                         autoNuevoOrden.add(list.get(event.getFromIndex()));
-                    } else {
-
-                        autoNuevoOrden.add(list.get(event.getFromIndex()));
-                        autoNuevoOrden.add(list.get(i));
-                    }
                 } else {
                     autoNuevoOrden.add(list.get(i));
                 }
+            }else{
+                autoNuevoOrden.add(list.get(event.getToIndex()));
             }
+        }
+        list.clear();
+        for (int i = 0; i < autoNuevoOrden.size(); i++) {
+            list.add(autoNuevoOrden.get(i));
         }
         return autoNuevoOrden;
     }

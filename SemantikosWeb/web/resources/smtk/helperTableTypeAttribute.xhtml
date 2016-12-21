@@ -20,12 +20,13 @@
 <composite:implementation>
 
 
-    <div class="ui-g-12 ui-md-6 ui-lg-2">
+    <div class="ui-panelgrid-cell ui-grid-col-2">
 
-        <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes }">
+        <p:outputPanel id="helperTableTypeAttributeNew" rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes }" styleClass="search">
 
-            <p:autoComplete id="helperTableTypeAttributeSimple" scrollHeight="200" style="width: 90%;"
-                            inputStyle="width: 90%;"
+            <p:focus context="helperTableTypeAttributeNew" rendered="#{cc.attrs.relationship != null}" />
+
+            <p:autoComplete id="helperTableTypeAttributeSimple" scrollHeight="200"
                             completeMethod="#{helperTableBean.getRecordSearchInput}"
                             forceSelection="true"
                             disabled="#{not cc.attrs.concept.editable }"
@@ -64,21 +65,24 @@
                     value="#{cc.attrs.relationship.relationshipAttributes}"
                     var="relationshipAttribute">
 
-                <p:inputText disabled="true" id="helperTableRecord" value="#{relationshipAttribute.target.fields['description']}" style="width: 70%" />
-                <p:commandLink process="@this"
-                               update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                               action="#{conceptBean.removeRelationshipAttribute(cc.attrs.relationship,relationshipAttribute)}">
-                    <i class="fa fa-close fa-lg"  />
-                </p:commandLink>
+                <p:outputPanel styleClass="search">
+
+                    <p:inputText disabled="true" id="helperTableRecord" value="#{relationshipAttribute.target.fields['description']}" />
+                    <p:commandLink process="@this"
+                                   update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                   action="#{conceptBean.removeRelationshipAttribute(cc.attrs.relationship,relationshipAttribute)}">
+                        <i class="fa fa-close fa-lg"  />
+                    </p:commandLink>
+
+                </p:outputPanel>
 
             </p:repeat>
 
         </p:outputPanel>
 
-        <p:outputPanel rendered="#{ cc.attrs.relationshipDefinition.multiplicity.collection and not cc.attrs.relationshipAttributeDefinition.multiplicity.collection }">
+        <p:outputPanel rendered="#{ cc.attrs.relationshipDefinition.multiplicity.collection and not cc.attrs.relationshipAttributeDefinition.multiplicity.collection }" styleClass="search">
 
-            <p:autoComplete id="helperTableTypeAttributeCollection" scrollHeight="200" style="width: 90%;"
-                            inputStyle="width: 90%;"
+            <p:autoComplete id="helperTableTypeAttributeCollection" scrollHeight="200"
                             completeMethod="#{helperTableBean.getRecordSearchInput}"
                             forceSelection="true"
                             disabled="#{not cc.attrs.concept.editable }"

@@ -13,20 +13,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by BluePrints Developer on 21-09-2016.
+ * Esta clase representa un filtro de Consulta de un Navegador
+ *
+ * @author Diego Soto.
  */
-public class ConceptQueryFilter {
+public class QueryFilter {
 
+    /**
+     * La definición de este filtro
+     */
     RelationshipDefinition definition;
 
+    /**
+     * La lista de valores seleccionados para este filtro
+     */
     List<Target> targets = new ArrayList<Target>();
 
+    /**
+     * Indica si este filtro acepta selección múltiple o no
+     */
     boolean multiple;
 
+    /**
+     * Indica si este filtro es de tipo checkeable, es decir, solo acepta los valores VERDADERO y FALSO:
+     * VERDADERO para indicar que debe existir la relación establecida por esta definición
+     * FALSO para indicar que no debe existir la relación establecida por esta definición
+     */
     boolean checkable;
 
+    /**
+     * Si este filtro es de tipo chequeable, indica si el valor está seteado en VERDADERO o FALSO
+     */
     boolean checked;
 
+    /**
+     * Indica si este filtro es de 2o orden. Es decir, es decir si su definición corresponde a una relación que
+     * proviene de una relación a concepto SMTK
+     */
     boolean secondOrder;
 
     public ConceptQueryFilter(RelationshipDefinition definition) {
@@ -84,6 +107,12 @@ public class ConceptQueryFilter {
         this.secondOrder = secondOrder;
     }
 
+    /**
+     * Este método es responsable de recuperar los ids de las categorías de los conceptos filtrados en este filtro
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de las
+     * categorías de los conceptos filtrados
+     */
     public List<Long> getCategoryValues(){
 
         List<Long> categoryValues = new ArrayList<>();
@@ -96,6 +125,12 @@ public class ConceptQueryFilter {
         return categoryValues;
     }
 
+    /**
+     * Este método es responsable de recuperar los ids de los conceptos filtrados en este filtro
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de los
+     * conceptos filtrados
+     */
     public List<Long> getConceptValues(){
 
         List<Long> conceptValues = new ArrayList<>();
@@ -110,6 +145,12 @@ public class ConceptQueryFilter {
         return conceptValues;
     }
 
+    /**
+     * Este método es responsable de recuperar los ids de las categorías de los conceptos filtrados en este filtro
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de las
+     * categorías de los conceptos filtrados
+     */
     public List<Long> getHelperTableValues(){
 
         List<Long> helperTableValues = new ArrayList<>();

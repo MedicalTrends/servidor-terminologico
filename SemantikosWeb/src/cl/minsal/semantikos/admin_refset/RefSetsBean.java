@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.admin_refset;
 
+import cl.minsal.semantikos.beans.messages.MessageBean;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.kernel.components.AuditManager;
@@ -8,6 +9,7 @@ import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.RefSetManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.Institution;
 import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.model.audit.AuditAction;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
@@ -19,6 +21,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +35,7 @@ import static java.lang.System.currentTimeMillis;
  */
 @ManagedBean(name = "refsetsBean")
 @ViewScoped
-public class RefSetsBean {
+public class RefSetsBean implements Serializable {
 
 
     private RefSet refSetToCreate;
@@ -55,11 +58,20 @@ public class RefSetsBean {
 
     private RefSet refSetSelect;
 
+    private List<RefSet> refSetListInstitution;
+
+    private Institution institutionSelected;
+
+    private Map<Long, AuditAction> refsetHistoryConcept;
+
+    private Map<Long, AuditAction> conceptBindToRefsetHistory;
+
+    private ConceptSMTK conceptSMTK;
+
+    private List<RefSet> refsetFilter;
+
     @EJB
     AuditManager auditManager;
-
-    private Map<Long,AuditAction> refsetHistoryConcept;
-
 
     @EJB
     private CategoryManager categoryManager;
@@ -73,35 +85,83 @@ public class RefSetsBean {
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
 
-    @ManagedProperty(value ="#{conceptBean}")
+    @ManagedProperty(value = "#{conceptBean}")
     private ConceptBean conceptBean;
+
+    @ManagedProperty(value = "#{messageBean}")
+    private MessageBean messageBean;
 
 
     @PostConstruct
     public void init() {
         categories = categoryManager.getCategories();
-        //refSetToCreate = new RefSet(null, authenticationBean.getLoggedUser().getInstitutions().get(0), null);
         refSetList = refSetManager.getAllRefSets();
-        refsetHistoryConcept= new HashMap<>();
+        refsetHistoryConcept = new HashMap<>();
+        conceptBindToRefsetHistory = new HashMap<>();
+        selectInstitutionMINSAL();
+        refSetListInstitution = refSetManager.getRefsetByInstitution((institutionSelected == null) ? new Institution() : institutionSelected);
+        refSetToCreate = new RefSet(null, new Institution(), null);
 
     }
 
+    /**
+     * Método encargado de obtener Refset según su institución
+     */
+    public void reloadRefsetByInstitution() {
+        refSetListInstitution = refSetManager.getRefsetByInstitution((institutionSelected == null) ? new Institution() : institutionSelected);
+
+    }
+
+    /**
+     * Método encargado de ver si el usuario posee la institución MINSAL en su perfil
+     */
+    public void selectInstitutionMINSAL() {
+        for (Institution institution : authenticationBean.getLoggedUser().getInstitutions()) {
+            if (institution.getName().equals("MINSAL")) {
+                institutionSelected = institution;
+                break;
+            }
+
+        }
+    }
+
+    /**
+     *
+     */
     public void createRefset() {
-        refSetToCreate = refSetManager.createRefSet(refSetToCreate, authenticationBean.getLoggedUser());
-        refSetToCreate = new RefSet(null, authenticationBean.getLoggedUser().getInstitutions().get(0), null);
-        conceptsToCategory = null;
-        conceptsToDescription = null;
+        if(refSetToCreate.getInstitution()!=null && refSetToCreate.getName().length()>0){
+            refSetToCreate = refSetManager.createRefSet(refSetToCreate, authenticationBean.getLoggedUser());
+            refSetToCreate = new RefSet(null, new Institution(), null);
+            conceptsToCategory = null;
+            conceptsToDescription = null;
+            refSetList = refSetManager.getAllRefSets();
+            messageBean.messageSuccess("Éxito", "El RefSet a sido guardado exitosamente.");
+        }else{
+            messageBean.messageError("Falta información para crear el RefSet");
+        }
+
+    }
+
+
+    /**
+     * Método encargado de invalidar el RefSet seleccionado por el usuario
+     */
+    public void invalidRefset(RefSet refSetSelected) {
+        refSetSelected.setValidityUntil(new Timestamp(currentTimeMillis()));
+        refSetManager.updateRefSet(refSetSelected, authenticationBean.getLoggedUser());
         refSetList = refSetManager.getAllRefSets();
     }
 
-    public void invalidRefset() {
-        refSetEdit.setValidityUntil(new Timestamp(currentTimeMillis()));
-        refSetManager.updateRefSet(refSetEdit, authenticationBean.getLoggedUser());
+    /**
+     * Método encargado de validate el RefSet seleccionado por el usuario
+     */
+    public void validRefset(RefSet refSetSelected) {
+        refSetSelected.setValidityUntil(null);
+        refSetManager.updateRefSet(refSetSelected, authenticationBean.getLoggedUser());
         refSetList = refSetManager.getAllRefSets();
     }
 
     public void selectCategoryEvent() {
-
 
         conceptsToCategory = new LazyDataModel<ConceptSMTK>() {
             @Override
@@ -122,7 +182,6 @@ public class RefSetsBean {
             }
 
         };
-
     }
 
 
@@ -141,7 +200,6 @@ public class RefSetsBean {
                     }
 
                 };
-
             } else {
                 conceptsToDescription = null;
             }
@@ -149,43 +207,79 @@ public class RefSetsBean {
         }
     }
 
-
+    /**
+     * Método encargado de agregar conceptos a un RefSet
+     *
+     * @param refSet      refset que almacenara el concepto
+     * @param conceptSMTK Concepto seleccionado para vincularse a un Refset
+     */
     public void addConcept(RefSet refSet, ConceptSMTK conceptSMTK) {
         refSet.bindConceptTo(conceptSMTK);
         if (refSet.isPersistent()) {
             refSetManager.bindConceptToRefSet(conceptSMTK, refSet, authenticationBean.getLoggedUser());
+        }else{
+            this.conceptSMTK = null;
         }
-        if(conceptRefSetList!=null){
-            conceptRefSetList=refSetManager.getRefsetsBy(conceptBean.getConcept());
+        if (conceptRefSetList != null) {
+            conceptRefSetList = refSetManager.getRefsetsBy(conceptBean.getConcept());
             conceptBean.setRefsetEditConcept(true);
         }
     }
+
+    /**
+     * Método encargado de eliminar un Concepto que se encuentra en un RefSet
+     *
+     * @param refSet
+     * @param conceptSMTK
+     */
 
     public void removeConcept(RefSet refSet, ConceptSMTK conceptSMTK) {
         refSet.unbindConceptTo(conceptSMTK);
         if (refSet.isPersistent()) {
             refSetManager.unbindConceptToRefSet(conceptSMTK, refSet, authenticationBean.getLoggedUser());
         }
-        if(conceptRefSetList!=null){
-            conceptRefSetList=refSetManager.getRefsetsBy(conceptBean.getConcept());
+        if (conceptRefSetList != null) {
+            conceptRefSetList = refSetManager.getRefsetsBy(conceptBean.getConcept());
             conceptBean.setRefsetEditConcept(true);
         }
     }
 
-    public void loadHistoryConcept(){
-        List<ConceptAuditAction> auditActions = auditManager.getConceptAuditActions(conceptBean.getConcept(),false);
+    /**
+     * Método encargado de cargar el historial del concepto de acuerdo al RefSet
+     */
 
-        for (RefSet refset: conceptRefSetList) {
-            for (ConceptAuditAction conceptAuditAction: auditActions) {
-                if(conceptAuditAction.getAuditActionType().getId()==REFSET_UPDATE.getId()){
-                    if(conceptAuditAction.getAuditableEntity().getId()==refset.getId()){
-                        refsetHistoryConcept.put(refset.getId(),conceptAuditAction);
+    public void loadHistoryConcept() {
+        List<ConceptAuditAction> auditActions = auditManager.getConceptAuditActions(conceptBean.getConcept(), false);
+
+        for (RefSet refset : conceptRefSetList) {
+            for (ConceptAuditAction conceptAuditAction : auditActions) {
+                if (conceptAuditAction.getAuditActionType().getId() == REFSET_UPDATE.getId()) {
+                    if (conceptAuditAction.getAuditableEntity().getId() == refset.getId()) {
+                        refsetHistoryConcept.put(refset.getId(), conceptAuditAction);
                     }
                 }
 
             }
         }
+    }
 
+    /**
+     * Método encargado de obtener el ingreso de los conceptos al RefSet
+     * @param refsetConsult
+     */
+    public void loadHistoryRefset(RefSet refsetConsult) {
+
+        for (ConceptSMTK conceptSMTK : refsetConsult.getConcepts()) {
+            List<ConceptAuditAction> auditActions = auditManager.getConceptAuditActions(conceptSMTK, false);
+
+            for (ConceptAuditAction conceptAuditAction : auditActions) {
+                if (conceptAuditAction.getAuditActionType().getId() == REFSET_UPDATE.getId()) {
+                    if (conceptAuditAction.getAuditableEntity().getId() == refsetConsult.getId()) {
+                        conceptBindToRefsetHistory.put(conceptSMTK.getId(),conceptAuditAction);
+                    }
+                }
+            }
+        }
 
     }
 
@@ -269,7 +363,7 @@ public class RefSetsBean {
     }
 
     public List<RefSet> getConceptRefSetList() {
-        conceptRefSetList= refSetManager.getRefsetsBy(conceptBean.getConcept());
+        conceptRefSetList = refSetManager.getRefsetsBy(conceptBean.getConcept());
         loadHistoryConcept();
         return conceptRefSetList;
     }
@@ -300,5 +394,49 @@ public class RefSetsBean {
 
     public void setRefsetHistoryConcept(Map<Long, AuditAction> refsetHistoryConcept) {
         this.refsetHistoryConcept = refsetHistoryConcept;
+    }
+
+    public List<RefSet> getRefSetListInstitution() {
+        return refSetListInstitution;
+    }
+
+    public void setRefSetListInstitution(List<RefSet> refSetListInstitution) {
+        this.refSetListInstitution = refSetListInstitution;
+    }
+
+    public Institution getInstitutionSelected() {
+        return institutionSelected;
+    }
+
+    public void setInstitutionSelected(Institution institutionSelected) {
+        this.institutionSelected = institutionSelected;
+    }
+
+    public Map<Long, AuditAction> getConceptBindToRefsetHistory() {
+        return conceptBindToRefsetHistory;
+    }
+
+    public void setConceptBindToRefsetHistory(Map<Long, AuditAction> conceptBindToRefsetHistory) {
+        this.conceptBindToRefsetHistory = conceptBindToRefsetHistory;
+    }
+
+    public ConceptSMTK getConceptSMTK() {
+        return conceptSMTK;
+    }
+
+    public void setConceptSMTK(ConceptSMTK conceptSMTK) {
+        this.conceptSMTK = conceptSMTK;
+    }
+
+    public void setMessageBean(MessageBean messageBean) {
+        this.messageBean = messageBean;
+    }
+
+    public List<RefSet> getRefsetFilter() {
+        return refsetFilter;
+    }
+
+    public void setRefsetFilter(List<RefSet> refsetFilter) {
+        this.refsetFilter = refsetFilter;
     }
 }

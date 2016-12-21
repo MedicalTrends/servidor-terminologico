@@ -50,22 +50,94 @@ form#mainForm table tbody tr td div.relationshipDefinitionError {
     color: #F03369;
 }
 
-.fullyDefined .ui-panelgrid-cell {
-    padding: 0px !important;
-}
-
-.fullyDefined .ui-chkbox-label {
-    padding-left: 14px !important;
+.matchedConcept {
+    /*color: #3bba18 !important;*/
+    font-weight: bold;
 }
 
 form#mainForm .ui-tabs .ui-tabs-panel {
-    padding: 1px !important;
+    padding: 2px !important;
 }
 
 form#mainForm .ui-grid-col-1, .ui-grid-col-2, .ui-grid-col-3, .ui-grid-col-4, .ui-grid-col-5, .ui-grid-col-6, .ui-grid-col-7, .ui-grid-col-8, .ui-grid-col-9, .ui-grid-col-10, .ui-grid-col-11, .ui-grid-col-12 {
     float: none !important;
 }
 
+.filterStatus .ui-grid-col-1, .ui-grid-col-2, .ui-grid-col-3, .ui-grid-col-4, .ui-grid-col-5, .ui-grid-col-6, .ui-grid-col-7, .ui-grid-col-8, .ui-grid-col-9, .ui-grid-col-10, .ui-grid-col-11, .ui-grid-col-12 {
+    float: none !important;
+}
+
 form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
+}
+/*
+.descriptionFilters .ui-inputfield {
+    padding: 0px !important
+}
+*/
+
+.filterStatus .ui-autocomplete {
+    width: 95%;
+}
+
+.descriptionFilters .ui-autocomplete-multiple-container, .noValidFilters .ui-autocomplete-multiple-container, .pendingFilters .ui-autocomplete-multiple-container {
+    width: 100% !important;
+}
+
+.descriptionFilters .ui-autocomplete-input-token input, .noValidFilters .ui-autocomplete-input-token input, .pendingFilters .ui-autocomplete-input-token input {
+    margin: 0px !important;
+}
+
+.descriptionFilters .ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token, .noValidFilters .ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token,
+.pendingFilters .ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token {
+    padding: 2px !important;
+}
+
+.descriptionFilters .ui-autocomplete-token, .noValidFilters .ui-autocomplete-token, .pendingFilters .ui-autocomplete-token {
+    margin: 0px !important;
+    margin-right: 2px !important;
+}
+
+.descriptionFilters .ui-autocomplete-multiple-container, .noValidFilters .ui-autocomplete-multiple-container, .pendingFilters .ui-autocomplete-multiple-container {
+    opacity:100;
+    background-color: #FFF;
+    border-bottom: 0;
+}
+
+.search {
+    position: relative;
+    color: #aaa;
+    font-size: 16px;
+}
+
+.search input { text-indent: 32px;}
+
+.search textarea { text-indent: 32px;}
+
+.consult .search input { text-indent: 0px;}
+
+.consult .search textarea { text-indent: 0px;}
+
+.search .fa-search {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.search .fa.fa-close.fa-lg {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.conceptFilters .ui-menubar .ui-menubar-options {
+    float: left;
+}
+
+#mainMenu .ui-menu .ui-menuitem .ui-menuitem-link {
+    padding: 6px 0px;
+}
+
+.ui-selectonemenu {
+    min-width: 223px !important;
 }

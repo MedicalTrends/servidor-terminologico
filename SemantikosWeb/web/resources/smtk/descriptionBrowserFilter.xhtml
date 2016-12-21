@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions" xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
+
+<composite:interface>
+    <composite:attribute name="descriptionQuery" type="cl.minsal.semantikos.model.browser.DescriptionQuery" />
+</composite:interface>
+<composite:implementation>
+
+    <p:outputPanel id="descriptionFilters" styleClass="descriptionFilters">
+
+        <div class="ui-fluid">
+
+            <p:panelGrid  columns="6"  style="width: 100%"
+                          columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+                          layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+
+                <p:outputPanel styleClass="search">
+                    <p:inputText value="#{cc.attrs.descriptionQuery.query}" placeholder="Buscar...">
+                        <p:ajax event="keyup" update="@(.descriptionBrowserTable),@(.descriptionFilters)" process="@this" />
+                    </p:inputText>
+                    <i class="fa fa-search fa-lg" />
+                </p:outputPanel>
+
+                <p:selectCheckboxMenu id="categories"
+                                      value="#{cc.attrs.descriptionQuery.categories}"
+                                      converter="omnifaces.SelectItemsConverter"
+                                      label="Categorías..."
+                                      filter="true"
+                                      filterMatchMode="startsWith">
+
+                    <p:ajax event="change"
+                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
+                            process="@this" />
+
+                    <f:selectItems value="#{descriptionsBrowserBean.categories}" var="category"
+                                   itemLabel="#{category.name}" itemValue="#{category}"/>
+
+                </p:selectCheckboxMenu>
+
+                <p:selectCheckboxMenu id="descriptionTypes"
+                                      value="#{cc.attrs.descriptionQuery.descriptionTypes}"
+                                      converter="omnifaces.SelectItemsConverter"
+                                      label="Tipos...">
+
+                    <p:ajax event="change"
+                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
+                            process="@this" />
+
+                    <f:selectItems value="#{descriptionsBrowserBean.descriptionTypes}" var="descriptionType"
+                                   itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
+
+                </p:selectCheckboxMenu>
+
+                <p:selectCheckboxMenu id="refsets"
+                                      value="#{cc.attrs.descriptionQuery.refSets}"
+                                      converter="omnifaces.SelectItemsConverter"
+                                      label="RefSets...">
+
+                    <p:ajax event="change"
+                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
+                            process="@this" />
+
+                    <f:selectItems value="#{descriptionsBrowserBean.refSets}" var="refSet"
+                                   itemLabel="#{refSet.name}" itemValue="#{refSet}"/>
+
+                </p:selectCheckboxMenu>
+
+            </p:panelGrid>
+        </div>
+        <p:spacer />
+        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.categories}" itemName="Categorías" />
+        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.descriptionTypes}" itemName="Tipo descriptor" />
+        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.refSets}" itemName="RefSets" />
+        <p:spacer />
+    </p:outputPanel>
+
+    <script type="text/javascript">
+
+        $(document).on("itemSelect", "input[id$=findCategories_input]", function (event) {
+            alert("me llamaron");
+        });
+
+
+    </script>
+
+</composite:implementation>
+</html>

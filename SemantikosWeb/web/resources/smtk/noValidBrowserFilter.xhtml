@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions" xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
+
+<composite:interface>
+    <composite:attribute name="noValidQuery" type="cl.minsal.semantikos.model.browser.NoValidQuery" />
+</composite:interface>
+<composite:implementation>
+
+    <p:outputPanel id="noValidFilters" styleClass="noValidFilters">
+
+        <div class="ui-fluid">
+
+            <p:panelGrid  columns="6"  style="width: 100%"
+                          columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+                          layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+
+                <p:outputPanel styleClass="search">
+                    <p:inputText value="#{cc.attrs.noValidQuery.query}" placeholder="Buscar...">
+                        <p:ajax event="keyup" update="@(.noValidBrowserTable),@(.noValidFilters)" process="@this" />
+                    </p:inputText>
+                    <i class="fa fa-search fa-lg" />
+                </p:outputPanel>
+
+                <p:selectCheckboxMenu id="descriptionTypes"
+                                      value="#{cc.attrs.noValidQuery.descriptionTypes}"
+                                      converter="omnifaces.SelectItemsConverter"
+                                      label="Tipos...">
+
+                    <p:ajax event="change"
+                            update="@(.noValidBrowserTable),@(.noValidFilters)"
+                            process="@this" />
+
+                    <f:selectItems value="#{noValidBrowserBean.descriptionTypes}" var="descriptionType"
+                                   itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
+
+                </p:selectCheckboxMenu>
+
+                <p:selectCheckboxMenu id="observationTypes"
+                                      value="#{cc.attrs.noValidQuery.observationNoValids}"
+                                      converter="omnifaces.SelectItemsConverter"
+                                      label="Observación...">
+
+                    <p:ajax event="change"
+                            update="@(.noValidBrowserTable),@(.noValidFilters)"
+                            process="@this" />
+
+                    <f:selectItems value="#{noValidBrowserBean.observationTypes}" var="observationType"
+                                   itemLabel="#{observationType.description}" itemValue="#{observationType}"/>
+
+                </p:selectCheckboxMenu>
+
+            </p:panelGrid>
+
+        </div>
+        <p:spacer />
+        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.descriptionTypes}" itemName="Tipo descriptor" />
+        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.observationNoValids}" itemName="Observación" />
+    </p:outputPanel>
+
+
+</composite:implementation>
+</html>

@@ -12,7 +12,6 @@ public class ConceptQueryColumn {
     String columnName;
     Sort sort;
     RelationshipDefinition relationshipDefinition;
-
     boolean secondOrder;
 
     public ConceptQueryColumn(String columnName, Sort sort) {
