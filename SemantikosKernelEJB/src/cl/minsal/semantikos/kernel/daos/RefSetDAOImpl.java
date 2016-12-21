@@ -1,7 +1,10 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.Institution;
+import cl.minsal.semantikos.model.RefSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,9 +24,6 @@ public class RefSetDAOImpl implements RefSetDAO {
 
     @EJB
     private ConceptDAO conceptDAO;
-
-    @EJB
-    private InstitutionDAO institutionDAO;
 
     @Override
     public void persist(RefSet refSet) {
@@ -63,11 +63,7 @@ public class RefSetDAOImpl implements RefSetDAO {
             call.setString(2, refSet.getName());
             call.setLong(3, refSet.getInstitution().getId());
             call.setTimestamp(4, refSet.getCreationDate());
-            if(refSet.getValidityUntil()==null){
-                call.setNull(5, Types.TIMESTAMP);
-            }else {
-                call.setTimestamp(5, refSet.getValidityUntil());
-            }
+            call.setTimestamp(5, refSet.getValidityUntil());
             call.execute();
         } catch (SQLException e) {
             logger.error("Error al crear el RefSet:" + refSet, e);
@@ -154,28 +150,49 @@ public class RefSetDAOImpl implements RefSetDAO {
 
         return refSets;
     }
-
     @Override
-    public List<RefSet> getRefsetBy(Institution institution) {
-        List<RefSet> refSetsByInstitution= new ArrayList<>();
+    public List<RefSet> findRefsetsByName(String pattern) {
+        List<RefSet> refSets = new ArrayList<>();
+
         ConnectionBD connect = new ConnectionBD();
-        String ALL_REFSETS_BY_INSTITUTION = "{call semantikos.get_refset_by_institution(?)}";
+        String ALL_REFSETS = "{call semantikos.find_refsets_by_name(?)}";
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(ALL_REFSETS_BY_INSTITUTION)) {
-
-            call.setLong(1,institution.getId());
+             CallableStatement call = connection.prepareCall(ALL_REFSETS)) {
+            call.setString(1, pattern);
             call.execute();
 
             ResultSet rs = call.getResultSet();
-
             while (rs.next()) {
-                refSetsByInstitution.add(createRefsetFromResultSet(rs));
+                refSets.add(createRefsetFromResultSet(rs));
             }
         } catch (SQLException e) {
-            logger.error("Error al al obtener los RefSets ", e);
+            logger.error("Error al buscar los RefSets ", e);
         }
-        return refSetsByInstitution;
+
+        return refSets;
+    }
+
+    @Override
+    public List<RefSet> findByConcept(ConceptSMTK conceptSMTK) {
+        List<RefSet> refSets = new ArrayList<>();
+        ConnectionBD connect = new ConnectionBD();
+        String ALL_REFSETS = "{call semantikos.find_refsets_by_concept(?)}";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(ALL_REFSETS)) {
+            call.setLong(1, conceptSMTK.getId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                refSets.add(createRefsetFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            logger.error("Error al buscar los RefSets ", e);
+        }
+
+        return refSets;
     }
 
     @Override
@@ -200,32 +217,6 @@ public class RefSetDAOImpl implements RefSetDAO {
         return refSet;
     }
 
-    @Override
-    public List<RefSet> getRefsetsBy(List<Long> categories, String pattern) {
-        List<RefSet> refSets= new ArrayList<>();
-
-        ConnectionBD connect = new ConnectionBD();
-        String ALL_REFSETS_BY_CONCEPT = "{call semantikos.get_refsets_by_categories_and_pattern(?,?)}";
-
-        try (Connection connection = connect.getConnection();
-
-             CallableStatement call = connection.prepareCall(ALL_REFSETS_BY_CONCEPT)) {
-            Array categoryIds = connection.createArrayOf("long", categories.toArray(new Long[categories.size()]));
-            call.setArray(1,categoryIds);
-            call.setString(2,pattern);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                refSets.add(createRefsetFromResultSet(rs));
-            }
-        } catch (SQLException e) {
-            logger.error("Error al al obtener los RefSets ", e);
-        }
-
-        return refSets;
-    }
-
     private RefSet createRefsetFromResultSet(ResultSet rs) throws SQLException {
 
         long id= rs.getLong("id");
@@ -233,12 +224,14 @@ public class RefSetDAOImpl implements RefSetDAO {
         Timestamp timestamp= rs.getTimestamp("creation_date");
         Timestamp validity= rs.getTimestamp("validity_until");
 
-        Institution institution= institutionDAO.getInstitutionBy(rs.getLong("institution"));
+        Institution institution= new Institution();
+        institution.setId(1);
+        institution.setName("MINSAL");
 
         RefSet refSet= new RefSet(name,institution,timestamp);
         refSet.setId(id);
         refSet.setValidityUntil(validity);
-        refSet.setConcepts(conceptDAO.getConceptBy(refSet));
+        refSet.setConcepts(conceptDAO.getConceptBy(refSet)); // FIXME: Pueden haber muchos conceptos por RefSet, mucha memoria
         return refSet;
     }
 }

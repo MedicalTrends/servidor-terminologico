@@ -30,7 +30,7 @@ public interface DescriptionManager {
      *
      * @return La descripción creada a partir del término dado.
      */
-    public Description bindDescriptionToConcept(ConceptSMTK concept, String term, boolean caseSensitive, DescriptionType type, User user);
+    public Description bindDescriptionToConcept(ConceptSMTK concept, String term, DescriptionType type, User user);
 
     /**
      * Este método es responsable de asociar (agregar) una descripción a un concepto.
@@ -125,6 +125,14 @@ public interface DescriptionManager {
     public List<Description> searchDescriptionsByTerm(String term, List<Category> categories);
 
     /**
+     * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
+     * parámetro en cada una de las categorías y refsets indicadas.
+     *
+     * @return
+     */
+    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets);
+
+    /**
      * Este método es responsable de hacer que una descripción sea no válida en el sistema.
      *
      * @param noValidDescription La descripción no válida con su observación y conceptos sugeridos.
@@ -132,11 +140,22 @@ public interface DescriptionManager {
      */
     public void invalidateDescription(ConceptSMTK conceptSMTK, NoValidDescription noValidDescription, User user);
 
+    /**
+     * Este método es responsable de recuperar una descripción a partir de su <em>DESCRIPTION_ID</em>, un valor de
+     * negocio.
+     *
+     * @param descriptionId El <em>DESCRIPTION_ID</em> de la descripción buscada.
+     *
+     * @return Una instancia fresca de la descripción buscada.
+     */
+    public Description getDescriptionByDescriptionID(String descriptionId);
 
-    public List<ObservationNoValid> getObservationsNoValid();
-
-
+    /**
+     * Este método es responsable de recuperar una descripción a partir de su llave primaria en la base de datos.
+     *
+     * @return La descripción buscada.
+     */
     public Description getDescriptionByID(long id);
 
-    public NoValidDescription getNoValidDescriptionByID(long id);
+    public List<ObservationNoValid> getObservationsNoValid();
 }

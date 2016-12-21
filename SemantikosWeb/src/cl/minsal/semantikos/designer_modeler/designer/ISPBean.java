@@ -6,10 +6,8 @@ import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.components.HelperTableManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.components.ispfetcher.ISPFetcher;
-import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
-import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.primefaces.context.RequestContext;
 
@@ -75,15 +73,8 @@ public class ISPBean {
         for (RelationshipDefinition rd : conceptBean.getCategory().getRelationshipDefinitions()) {
             if(rd.isISP()) {
                 rd.getMultiplicity().setLowerBoundary(0);
-                if(conceptBean.getConcept().isPersistent()){
-                    List<Relationship> relationshipList =conceptBean.getConcept().getRelationshipsByRelationDefinition(rd);
-                    if(relationshipList.size()>0){
-                        existe=true;
-                    }
-                }
             }
         }
-
     }
 
 
@@ -286,6 +277,5 @@ verifica si el registro ya existe en la base de datos
 
         return  records.size() >0;
     }
-
 
 }

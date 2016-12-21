@@ -104,7 +104,7 @@ public class SCTTypeBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        relationshipGroup=0;
+
     }
 
     public String getPattern() {

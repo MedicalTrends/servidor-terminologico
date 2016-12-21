@@ -55,7 +55,7 @@ public interface RelationshipManager {
      *
      * @return La relación eliminada, con sus campos de vigencia actualizados.
      */
-    public Relationship removeRelationship(ConceptSMTK conceptSMTK, Relationship relationship, User user);
+    public Relationship removeRelationship(Relationship relationship, User user);
 
     /**
      * Este método es responsable de recuperar todas las relaciones que tienen como

@@ -2,7 +2,6 @@ package cl.minsal.semantikos.beans.messages;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -10,7 +9,7 @@ import javax.faces.context.FacesContext;
  * @author Gustavo Punucura
  */
 @ManagedBean(name = "messageBean")
-@SessionScoped
+@ViewScoped
 public class MessageBean {
 
     /**

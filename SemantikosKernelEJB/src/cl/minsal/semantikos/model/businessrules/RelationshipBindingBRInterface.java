@@ -16,6 +16,4 @@ public interface RelationshipBindingBRInterface {
     public void verifyPreConditions(ConceptSMTK concept, Relationship relationship, User user);
 
     public void postActions(Relationship relationship, User user);
-
-    public void brSCT005(ConceptSMTK concept);
 }

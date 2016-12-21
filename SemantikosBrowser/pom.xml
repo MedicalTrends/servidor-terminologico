@@ -6,13 +6,13 @@
 
     <groupId>cl.minsal.semantikos</groupId>
     <artifactId>SemantikosBrowser</artifactId>
-    <version>2.2.2</version>
+    <version>2.1.1</version>
     <packaging>war</packaging>
 
     <parent>
         <groupId>cl.minsal.semantikos</groupId>
         <artifactId>Semantikos</artifactId>
-        <version>2.2.2</version>
+        <version>2.1.1</version>
     </parent>
 
     <properties>
@@ -47,7 +47,7 @@
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosKernelEJB</artifactId>
-            <version>2.2.2</version>
+            <version>2.1.1</version>
             <scope>provided</scope>
         </dependency>
 

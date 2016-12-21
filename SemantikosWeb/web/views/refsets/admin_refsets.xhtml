@@ -3,153 +3,407 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
                 template="/WEB-INF/template/template.xhtml">
 
 
     <ui:define name="content">
-
-        <p:panel>
-            <div style="text-align: center">
-                <h2>Administrador de Refset</h2>
-            </div>
-        </p:panel>
-
-
         <p:panel id="refsetsAdmin">
             <h:form id="formRefset">
 
-                <p:growl id="msg" showDetail="true" autoUpdate="true"></p:growl>
+                <h2>Administrador de RefSets</h2>
 
-                <p:tabView>
-                    <!--Pestaña de administración de los RefSets-->
-                    <p:tab title="Administrador de RefSets">
-                        <p:dataTable id="refsetsTable" value="#{refsetsBean.refSetList}" var="refset"
-                                     rows="15" paginator="true" emptyMessage="No se han creado Refsets"
-                                     styleClass="listRefSets" filteredValue="#{refsetsBean.refsetFilter}">
+                <hr/>
 
-                            <p:column headerText="ID">
-                                <h:outputText value="#{refset.id}"/>
-                            </p:column>
 
-                            <p:column headerText="Nombre" filterBy="#{refset.name}"
-                                      filterMatchMode="contains">
-                                <h:outputText value="#{refset.name}"/>
-                            </p:column>
+                <p:fieldset legend="Agregar RefSets" collapsed="true" toggleable="true">
 
-                            <p:column headerText="Tipo">
-                                <h:outputText value="#{refset.institution.name}"/>
-                            </p:column>
 
-                            <p:column headerText="Fecha de creación">
-                                <h:outputText value="#{refset.creationDate}"/>
-                            </p:column>
+                    <br/>
 
-                            <p:column headerText="Vigencia">
-                                <h:outputText value="Vigente" rendered="#{refset.isValid()}"/>
-                                <h:outputText value="No vigente" rendered="#{!refset.isValid()}"/>
-                            </p:column>
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <h:outputLabel value="Nombre:" style="font-weight:bold"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-4">
+                            <p:inputText value="#{refsetsBean.refSetToCreate.name}" style="width: 100%;"/>
+                        </div>
+                    </div>
 
-                            <p:column headerText="Acción">
-                                <div style="text-align: center">
-                                    <p:commandButton icon="fa fa-edit" update="@(.editRefset)"
-                                                     oncomplete="PF('editRefset').show()">
+
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-6 ui-lg-12">
+                            <div style="text-align: center;">
+                                <h3> Agregar Conceptos </h3>
+                            </div>
+
+                            <br/>
+
+
+                            <p:tabView>
+                                <p:tab title="Búsqueda por término">
+
+
+                                    <div class="ui-g">
+                                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                            <h:outputLabel value="Buscador de terminos :" style="font-weight:bold"/>
+                                        </div>
+                                        <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                            <p:inputText value="#{refsetsBean.pattern}" style="width: 100%;">
+                                                <p:ajax event="keyup" listener="#{refsetsBean.patternEvent}"
+                                                        update="conceptTableDescription"></p:ajax>
+                                            </p:inputText>
+                                        </div>
+                                    </div>
+                                    <div class="ui-g">
+                                        <div class="ui-g-12 ui-md-6 ui-lg-12">
+
+                                            <p:dataTable emptyMessage="No existen conceptos"
+                                                         id="conceptTableDescription"
+                                                         value="#{refsetsBean.conceptsToDescription}" var="conceptSMTK"
+                                                         rows="15"
+                                                         paginator="true" lazy="true" dynamic="true">
+
+                                                <p:column headerText="Concept ID">
+
+                                                    <h:outputText value="#{conceptSMTK.id}"/>
+                                                </p:column>
+
+                                                <p:column headerText="Termino">
+                                                    <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
+                                                </p:column>
+                                                <p:column exportable="false" style="width:32px;text-align: center">
+                                                    <p:commandButton update=":formRefset:conceptLinkToRefset"
+                                                                     icon="fa fa-plus"
+                                                                     actionListener="#{refsetsBean.addConcept(refsetsBean.refSetToCreate,conceptSMTK)}">
+
+                                                    </p:commandButton>
+                                                </p:column>
+
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+
+
+                                </p:tab>
+                                <p:tab title="Navegación por categoría">
+
+
+                                    <div class="ui-g">
+                                        <div class="ui-g-12 ui-md-6 ui-lg-12">
+                                            <h:outputLabel value="Categoria :" style="font-weight:bold"/>
+
+                                        </div>
+                                        <div class="ui-g-12 ui-md-6 ui-lg-12">
+
+                                            <p:selectOneMenu id="categoryRefsetBean"
+                                                             value="#{refsetsBean.categorySelected}"
+                                                             converter="CategoryConverterRefsetBean"
+                                                             panelStyle="width:180px"
+                                                             effect="fade" var="c" style="width:160px" filter="true"
+                                                             filterMatchMode="startsWith">
+                                                <f:selectItems value="#{refsetsBean.categories}" var="category"
+                                                               itemLabel="#{category.name}" itemValue="#{category}"/>
+                                                <p:ajax event="itemSelect" update="conceptTable"
+                                                        listener="#{refsetsBean.selectCategoryEvent}"/>
+
+                                                <p:column>
+                                                    <h:outputText value="#{c.name}"/>
+                                                </p:column>
+                                            </p:selectOneMenu>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="ui-g">
+                                        <div class="ui-g-12 ui-md-6 ui-lg-12">
+
+                                            <p:dataTable emptyMessage="No existen conceptos"
+                                                         id="conceptTable" value="#{refsetsBean.conceptsToCategory}"
+                                                         var="conceptSMTK"
+                                                         rows="15"
+                                                         paginator="true" lazy="true" dynamic="true">
+
+                                                <p:column headerText="Concept ID">
+
+                                                    <h:outputText value="#{conceptSMTK.id}"/>
+                                                </p:column>
+
+                                                <p:column headerText="Termino">
+                                                    <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
+                                                </p:column>
+                                                <p:column exportable="false" style="width:32px;text-align: center">
+                                                    <p:commandButton update=":formRefset:conceptLinkToRefset"
+                                                                     icon="fa fa-plus"
+                                                                     actionListener="#{refsetsBean.addConcept(refsetsBean.refSetToCreate,conceptSMTK)}">
+
+                                                    </p:commandButton>
+                                                </p:column>
+
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+
+
+                                </p:tab>
+
+                                <p:tab title="Navegación por SNOMED-CT">
+                                    <h:panelGrid columns="1" cellpadding="10">
+                                        <h3>Sin implementar</h3>
+                                    </h:panelGrid>
+                                </p:tab>
+
+                                <p:tab title="Navegación por CrossMaps">
+                                    <h:panelGrid columns="1" cellpadding="10">
+                                        <h3>Sin implementar</h3>
+                                    </h:panelGrid>
+                                </p:tab>
+
+                            </p:tabView>
+
+                            <br/>
+
+                            <p:dataTable id="conceptLinkToRefset" emptyMessage="No se han agregado conceptos al RefSets"
+                                         value="#{refsetsBean.refSetToCreate.concepts}" var="conceptSMTK">
+
+                                <p:column headerText="ID">
+                                    <h:outputText value="#{conceptSMTK.id}"/>
+                                </p:column>
+
+                                <p:column headerText="Preferida">
+                                    <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
+                                </p:column>
+
+                                <p:column headerText="Acción">
+                                    <p:commandButton icon="fa fa-chain-broken"
+                                                     actionListener="#{refsetsBean.removeConcept(refsetsBean.refSetToCreate,conceptSMTK)}">
+
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <br/>
+
+                            <div style="text-align: center;">
+                                <h3><p:commandButton value="Crear Refset" actionListener="#{refsetsBean.createRefset}"
+                                                     update="formRefset"/></h3>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </p:fieldset>
+
+                <br/>
+
+                <p:panel header="Mantenedor de RefSets">
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-6 ui-lg-12">
+                            <div style="text-align: center;">
+                                <h3> Refsets </h3>
+                            </div>
+
+
+                            <p:dataTable
+                                    id="refsetsTable" value="#{refsetsBean.refSetList}"
+                                    var="refset"
+                                    rows="15"
+                                    paginator="true" emptyMessage="No se han creado Refsets">
+
+                                <p:column headerText="ID">
+                                    <h:outputText value="#{refset.id}"/>
+                                </p:column>
+
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{refset.name}"/>
+                                </p:column>
+
+                                <p:column headerText="Fecha de creación">
+                                    <h:outputText value="#{refset.creationDate}"/>
+                                </p:column>
+
+                                <p:column headerText="Vigencia">
+                                    <h:outputText value="Vigente" rendered="#{refset.isValid()}"/>
+                                    <h:outputText value="No vigente" rendered="#{!refset.isValid()}"/>
+                                </p:column>
+
+                                <p:column headerText="Acción">
+                                    <p:commandButton icon="fa fa-edit" oncomplete="PF('editRefset').show()"
+                                                     update=":formRefset:editRefsetPanel">
                                         <f:setPropertyActionListener value="#{refset}"
                                                                      target="#{refsetsBean.refSetEdit}"/>
                                     </p:commandButton>
-                                    <p:commandButton icon="fa fa-search" oncomplete="PF('viewRefset').show()"
-                                                     update="@(.viewRefSet)"
-                                                     actionListener="#{refsetsBean.loadHistoryRefset(refset)}">
-                                        <f:setPropertyActionListener value="#{refset}"
-                                                                     target="#{refsetsBean.refSetSelect}"/>
-                                    </p:commandButton>
+                                </p:column>
 
-                                    <p:commandButton icon="fa fa-trash"
-                                                     actionListener="#{refsetsBean.invalidRefset(refset)}"
-                                                     update="@(.listRefSets)">
-
-                                    </p:commandButton>
-                                </div>
-
-                            </p:column>
-
-                        </p:dataTable>
-                    </p:tab>
-
-                    <!--Pestaña crear RefSet-->
-                    <p:tab title="Crear RefSet">
-
-                        <div class="ui-g">
-                            <div class="ui-g-12 ui-md-6 ui-lg-1">
-                                <h:outputLabel value="Nombre:" style="font-weight:bold"/>
-                            </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                                <p:inputText value="#{refsetsBean.refSetToCreate.name}" style="width: 80%;"/>
-                            </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-1">
-                                <h:outputLabel value="Tipo:" style="font-weight:bold"/>
-                            </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                                <p:selectOneMenu value="#{refsetsBean.refSetToCreate.institution}" var="i"
-                                                 converter="omnifaces.SelectItemsConverter">
-                                    <f:selectItem itemValue="" itemLabel="Seleccione una institución"
-                                                  noSelectionOption="true"/>
-                                    <f:selectItems value="#{refsetsBean.authenticationBean.loggedUser.institutions}"
-                                                   var="institution" itemValue="#{institution}"
-                                                   itemLabel="#{institution.name}"></f:selectItems>
-                                    <p:column><h:outputText value="#{i.name}"></h:outputText></p:column>
-                                </p:selectOneMenu>
-                            </div>
+                            </p:dataTable>
                         </div>
-
-                        <p:fieldset toggleable="true" collapsed="true" legend="Agregar conceptos">
-                            <smtk:addConceptToRefset refset="#{refsetsBean.refSetToCreate}"/>
-                        </p:fieldset>
-
-
-                        <br/>
-
-                        <div style="text-align: center;">
-                            <h3><p:commandButton value="Crear Refset" actionListener="#{refsetsBean.createRefset}"
-                                                 update="formRefset"/></h3>
-                        </div>
-
-
-                    </p:tab>
-
-                </p:tabView>
-
-
-                <!-- Consultar conceptos de  un RefSet -->
-
-
-                <p:dialog widgetVar="viewRefset" modal="true" showEffect="fade"
-                          hideEffect="fade" resizable="true" style="margin:40px;"
-                          header="Refset #{refsetsBean.refSetSelect.name}">
-                    <p:outputPanel id="viewRefsetPanel" styleClass="viewRefSet" style="text-align:center;">
-
-                        <p:dataTable value="#{refsetsBean.refSetSelect.concepts}" var="concepts"
-                                     emptyMessage="El RefSet no contiene conceptos"
-                                     >
-                            <p:column headerText="Concepto">
-                                <h:outputText value="#{concepts.descriptionFavorite.term}"/>
-                            </p:column>
-                            <p:column headerText="Fecha ingreso">
-                                <h:outputText
-                                        value="#{refsetsBean.conceptBindToRefsetHistory.get(concepts.id).actionDate}"/>
-                            </p:column>
-                        </p:dataTable>
-
-                    </p:outputPanel>
-                </p:dialog>
+                    </div>
+                </p:panel>
 
                 <p:dialog widgetVar="editRefset" modal="true" showEffect="fade"
                           hideEffect="fade" resizable="true" style="margin:40px;">
-                    <p:outputPanel id="editRefsetPanel" styleClass="editRefset">
-                        <smtk:addConceptToRefset refset="#{refsetsBean.refSetEdit}"/>
-                        <br/>
-                        <p:commandButton rendered="#{not refsetsBean.refSetEdit.valid}"
-                                         value="Vigente" actionListener="#{refsetsBean.validRefset(refsetsBean.refSetEdit)}" update="formRefset"></p:commandButton>
+                    <p:outputPanel id="editRefsetPanel" style="text-align:center;">
+                        <p:scrollPanel mode="native" >
+                            <div class="ui-g">
+
+                                <div class="ui-g-12 ui-md-6 ui-lg-12">
+                                    <h3> Refset: </h3><h:outputText
+                                        value="#{refsetsBean.refSetEdit.name}"></h:outputText>
+                                </div>
+                            </div>
+
+                            <div class="ui-g">
+
+                                <div class="ui-g-12 ui-md-6 ui-lg-12">
+
+                                    <p:dataTable id="conceptoTorefsetEdit" var="concept"
+                                                 value="#{refsetsBean.refSetEdit.concepts}">
+                                        <p:column headerText="Concept ID"><h:outputText
+                                                value="#{concept.conceptID}"/></p:column>
+                                        <p:column headerText="Descripcion favorita"><h:outputText
+                                                value="#{concept.descriptionFavorite}"/></p:column>
+                                        <p:column headerText="Categoria"><h:outputText
+                                                value="#{concept.category.name}"/></p:column>
+                                        <p:column headerText="Eliminar"><p:commandButton
+                                                actionListener="#{refsetsBean.removeConcept(refsetsBean.refSetEdit,concept)}"
+                                                icon="fa fa-trash" update=":formRefset:editRefsetPanel"/></p:column>
+                                    </p:dataTable>
+
+                                </div>
+                            </div>
+
+                            <p:fieldset collapsed="true" toggleable="true" legend="Agregar concepto">
+                                <p:tabView>
+                                    <p:tab title="Búsqueda por término">
+
+
+                                        <div class="ui-g">
+                                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                                <h:outputLabel value="Buscador de terminos :" style="font-weight:bold"/>
+                                            </div>
+                                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                                <p:inputText value="#{refsetsBean.pattern}" style="width: 100%;">
+                                                    <p:ajax event="keyup" listener="#{refsetsBean.patternEvent}"
+                                                            update="conceptTableDescriptionEdit"></p:ajax>
+                                                </p:inputText>
+                                            </div>
+                                        </div>
+                                        <div class="ui-g">
+                                            <div class="ui-g-12 ui-md-6 ui-lg-12">
+
+                                                <p:dataTable emptyMessage="No existen conceptos"
+                                                             id="conceptTableDescriptionEdit"
+                                                             value="#{refsetsBean.conceptsToDescription}" var="conceptSMTK"
+                                                             rows="15"
+                                                             paginator="true" lazy="true" dynamic="true">
+
+                                                    <p:column headerText="Concept ID">
+
+                                                        <h:outputText value="#{conceptSMTK.id}"/>
+                                                    </p:column>
+
+                                                    <p:column headerText="Termino">
+                                                        <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
+                                                    </p:column>
+                                                    <p:column exportable="false" style="width:32px;text-align: center">
+                                                        <p:commandButton update=":formRefset:editRefsetPanel"
+                                                                         icon="fa fa-plus"
+                                                                         actionListener="#{refsetsBean.addConcept(refsetsBean.refSetEdit,conceptSMTK)}">
+
+                                                        </p:commandButton>
+                                                    </p:column>
+
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+
+
+                                    </p:tab>
+
+
+                                    <p:tab title="Navegación por categoría">
+
+
+                                        <div class="ui-g">
+                                            <div class="ui-g-12 ui-md-6 ui-lg-12">
+                                                <h:outputLabel value="Categoria :" style="font-weight:bold"/>
+
+                                            </div>
+                                            <div class="ui-g-12 ui-md-6 ui-lg-12">
+
+                                                <p:selectOneMenu id="categoryRefsetBeanEdit"
+                                                                 value="#{refsetsBean.categorySelected}"
+                                                                 converter="CategoryConverterRefsetBean"
+                                                                 panelStyle="width:180px"
+                                                                 effect="fade" var="c" style="width:160px" filter="true"
+                                                                 filterMatchMode="startsWith">
+                                                    <f:selectItems value="#{refsetsBean.categories}" var="category"
+                                                                   itemLabel="#{category.name}" itemValue="#{category}"/>
+                                                    <p:ajax event="itemSelect" update="conceptTableEdit"
+                                                            listener="#{refsetsBean.selectCategoryEvent}"/>
+
+                                                    <p:column>
+                                                        <h:outputText value="#{c.name}"/>
+                                                    </p:column>
+                                                </p:selectOneMenu>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="ui-g">
+                                            <div class="ui-g-12 ui-md-6 ui-lg-12">
+
+                                                <p:dataTable emptyMessage="No existen conceptos"
+                                                             id="conceptTableEdit" value="#{refsetsBean.conceptsToCategory}"
+                                                             var="conceptSMTK"
+                                                             rows="15"
+                                                             paginator="true" lazy="true" dynamic="true">
+
+                                                    <p:column headerText="Concept ID">
+
+                                                        <h:outputText value="#{conceptSMTK.id}"/>
+                                                    </p:column>
+
+                                                    <p:column headerText="Termino">
+                                                        <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
+                                                    </p:column>
+                                                    <p:column exportable="false" style="width:32px;text-align: center">
+                                                        <p:commandButton update=":formRefset:editRefsetPanel"
+                                                                         icon="fa fa-plus"
+                                                                         actionListener="#{refsetsBean.addConcept(refsetsBean.refSetEdit,conceptSMTK)}">
+
+                                                        </p:commandButton>
+                                                    </p:column>
+
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+
+
+                                    </p:tab>
+
+                                    <p:tab title="Navegación por SNOMED-CT">
+                                        <h:panelGrid columns="1" cellpadding="10">
+                                            <h3>Sin implementar</h3>
+                                        </h:panelGrid>
+                                    </p:tab>
+
+                                    <p:tab title="Navegación por CrossMaps">
+                                        <h:panelGrid columns="1" cellpadding="10">
+                                            <h3>Sin implementar</h3>
+                                        </h:panelGrid>
+                                    </p:tab>
+
+
+                                </p:tabView>
+                            </p:fieldset>
+
+                            <div style="text-align: center;">
+                                <p:commandButton value="Pasar a no vigente" actionListener="#{refsetsBean.invalidRefset}" update="formRefset"/>
+                            </div>
+                        </p:scrollPanel>
                     </p:outputPanel>
                 </p:dialog>
 

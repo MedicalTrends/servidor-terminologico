@@ -97,6 +97,33 @@ public class CategoryDAOImpl implements CategoryDAO {
         return category;
     }
 
+    private Category getCategoryByNameFromDB(String name) {
+        Category category;
+        ConnectionBD connect = new ConnectionBD();
+        String GET_CATEGORY_BY_NAME = "{call semantikos.get_category_by_name(?)}";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(GET_CATEGORY_BY_NAME)) {
+
+            call.setString(1, name);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+                category = createCategoryFromResultSet(rs);
+            } else {
+                return null;
+            }
+            rs.close();
+        } catch (SQLException e) {
+            String errorMsg = "error en getCategoryByName = " + name;
+            logger.error(errorMsg, name, e);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return category;
+    }
+
     @Override
     public List<Category> getAllCategories() {
         ConnectionBD connect = new ConnectionBD();

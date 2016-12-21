@@ -19,7 +19,6 @@
         <p:calendar id="creationDateSince" style="margin-right:10px; width: 90%"
                     value="#{cc.attrs.date}"
                     var="value"
-                    showOn="button"
                     placeholder="#{cc.attrs.dateSince? 'Desde...' : 'Hasta...'}">
             <p:ajax event="dateSelect" update="@(.conceptBrowserTable)"/>
         </p:calendar>

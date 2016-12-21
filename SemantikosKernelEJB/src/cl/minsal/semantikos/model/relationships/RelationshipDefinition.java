@@ -180,15 +180,6 @@ public class RelationshipDefinition {
         return null;
     }
 
-    public RelationshipAttributeDefinition getGroupAttributeDefinition() {
-        for (RelationshipAttributeDefinition relationshipAttributeDefinition : getRelationshipAttributeDefinitions()) {
-            if (relationshipAttributeDefinition.isGroupSCT()) {
-                return relationshipAttributeDefinition;
-            }
-        }
-        return null;
-    }
-
     public boolean isISP() {
         return this.getName().equalsIgnoreCase(HelperTableFactory.ISP);
     }
@@ -204,12 +195,6 @@ public class RelationshipDefinition {
 
     public boolean isBioequivalente() {
         return this.getName().equalsIgnoreCase(HelperTableFactory.BIOEQUIVALENTE);
-    }
-
-    private final String SNOMEDCT="SNOMED CT";
-
-    public boolean isSNOMEDCT(){
-        return this.getName().equalsIgnoreCase(SNOMEDCT);
     }
 
 }

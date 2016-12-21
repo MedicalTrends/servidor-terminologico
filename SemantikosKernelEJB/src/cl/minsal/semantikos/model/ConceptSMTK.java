@@ -84,6 +84,13 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     /** Variable que indica si el grado de definición se obtiene heredado * */
     private boolean inherited;
 
+    /** RefSets a los que pertenece el concepto */
+    private List<RefSet> refsets;
+
+    public ConceptSMTK() {
+        super(PersistentEntity.NON_PERSISTED_ID);
+    }
+
     /**
      * La categoría es la mínima información que se le puede dar a un concepto.
      */
@@ -182,11 +189,12 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     }
 
     public List<Description> getDescriptions() {
-        return descriptions;
+        return new ArrayList<Description>(descriptions);
     }
 
     public void setDescriptions(List<Description> descriptions) {
-        this.descriptions = descriptions;
+        this.descriptions = new ArrayList<>();
+        this.descriptions.addAll(descriptions);
     }
 
     /**
@@ -255,11 +263,33 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
         List<SnomedCTRelationship> snomedRelationships = new ArrayList<>();
         for (Relationship relationship : relationships) {
-            if (SnomedCTRelationship.isSnomedCTRelationship(relationship) && relationship.isValid()) {
+            if (SnomedCTRelationship.isSnomedCTRelationship(relationship)) {
                 snomedRelationships.add(SnomedCTRelationship.createSnomedCT(relationship));
             }
         }
 
+        return snomedRelationships;
+    }
+
+    public List<Relationship> getRelationshipsBasicType() {
+        List<Relationship> snomedRelationships = new ArrayList<>();
+        for (Relationship relationship : relationships) {
+            if (relationship.getRelationshipDefinition() != null
+                    && relationship.getRelationshipDefinition().getTargetDefinition() != null
+                    && relationship.getRelationshipDefinition().getTargetDefinition().isBasicType()) {
+                snomedRelationships.add(relationship);
+            }
+        }
+        return snomedRelationships;
+    }
+
+    public List<Relationship> getRelationshipsNonBasicType() {
+        List<Relationship> snomedRelationships = new ArrayList<>();
+        for (Relationship relationship : relationships) {
+            if (!relationship.getRelationshipDefinition().getTargetDefinition().isBasicType()) {
+                snomedRelationships.add(relationship);
+            }
+        }
         return snomedRelationships;
     }
 
@@ -712,6 +742,14 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         this.tagSMTK = tagSMTK;
     }
 
+    public List<RefSet> getRefsets() {
+        return refsets;
+    }
+
+    public void setRefsets(List<RefSet> refsets) {
+        this.refsets = refsets;
+    }
+
     public boolean isInherited() {
         return inherited;
     }
@@ -807,5 +845,10 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return getConceptID() != null ? getConceptID().hashCode() : 0;
     }
 }

@@ -75,19 +75,6 @@ public class HelperTableBean implements Serializable {
         return someRecords;
     }
 
-    public List<HelperTableRecord> getAllRecord() {
-
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        HelperTable helperTable = (HelperTable) UIComponent.getCurrentComponent(context).getAttributes().get("helperTable");
-
-        List<HelperTableRecord> someRecords;
-
-        someRecords= helperTableManager.getAllRecords(helperTable);
-
-        return someRecords;
-    }
-
 
     public String getPattern() {
         return pattern;

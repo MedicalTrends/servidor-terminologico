@@ -70,14 +70,14 @@ public class AutogenerateMC {
         String[] attributes = new String[4];
         for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 8)
-                attributes[0] = " " + relationshipAttribute.getTarget().toString() +" ";
+                attributes[0] = " " + relationshipAttribute.getTarget().toString();
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 9)
                 attributes[1] = (((HelperTableRecord) relationshipAttribute.getTarget()).getValueColumn("description"));
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 10) {
                 if (Integer.parseInt(relationshipAttribute.getTarget().toString()) > 1) {
-                    attributes[2] = "/" + relationshipAttribute.getTarget().toString()+" ";
+                    attributes[2] = " / " + relationshipAttribute.getTarget().toString();
                 } else {
-                    attributes[2] = "/";
+                    attributes[2] = " / ";
                 }
             }
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 11)

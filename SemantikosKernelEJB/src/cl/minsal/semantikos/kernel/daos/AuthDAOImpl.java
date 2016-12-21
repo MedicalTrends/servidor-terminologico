@@ -6,7 +6,6 @@ import cl.minsal.semantikos.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import java.sql.*;
@@ -22,9 +21,6 @@ import java.util.List;
 public class AuthDAOImpl implements AuthDAO {
 
     static final Logger logger = LoggerFactory.getLogger(AuthDAOImpl.class);
-
-    @EJB
-    private InstitutionDAO institutionDAO;
 
     @Override
     public User getUserById(long id) {
@@ -170,8 +166,6 @@ public class AuthDAOImpl implements AuthDAO {
 
         u.setProfiles(getUserProfiles(u.getIdUser()));
 
-        u.setInstitutions(institutionDAO.getInstitutionBy(u));
-
         return u;
     }
 
@@ -242,8 +236,10 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public void updateUser(User user) {
 
+        ConnectionBD connect = new ConnectionBD();
+
         String sql = "{call semantikos.update_user(?,?,?,?,?,?)}";
-        try (Connection connection = (new ConnectionBD()).getConnection();
+        try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setString(1, user.getName());
@@ -261,7 +257,7 @@ public class AuthDAOImpl implements AuthDAO {
         }
 
         sql = "{call semantikos.delete_user_profiles(?)}";
-        try (Connection connection = (new ConnectionBD()).getConnection();
+        try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, user.getIdUser());

@@ -50,10 +50,6 @@
                     <p:outputLabel id="observationLabel" for="observation" value="Observación"/>
                     <p:inputText type="text" id="observation" value="#{pendingTerms.observation}" required="true"/>
 
-                    <p:outputLabel id="placeOriginLabel" for="placeOrigin" value="Lugar de procedencia"/>
-                    <p:inputText type="text" id="placeOrigin" value="#{pendingTerms.placeOrigin}" required="true"/>
-
-
                     <p:commandButton actionListener="#{pendingTerms.save}" icon="fa fa-check"
                                      styleClass="ui-priority-primary"
                                      value="Guardar" update="addPendingTermPanel"/>

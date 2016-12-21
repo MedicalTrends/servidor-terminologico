@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by root on 11-07-16.
+ *
  */
 public class StringUtils {
 
@@ -44,4 +45,32 @@ public class StringUtils {
         return underScores.toArray(array);
     }
 
+
+    public static String toSQLLikePattern(String pattern) {
+        StringBuilder res = new StringBuilder();
+
+        for ( Integer i = 0; i < pattern.length(); ++i ) {
+            Character c = pattern.charAt(i);
+            if ( isAlphaNumeric(c) ) {
+                res.append(c);
+            } else {
+                res.append("_");
+            }
+        }
+
+        return res.toString();
+    }
+
+    private static Boolean isAlphaNumeric(Character c) {
+        if ( c != null ) {
+            Integer cVal = (int) c.charValue();
+            if ((cVal >= 48 && cVal <= 57)
+                    || (cVal >= 65 && cVal <= 90)
+                    || (cVal >= 97 && cVal <= 122)) {
+                return Boolean.TRUE;
+            }
+        }
+
+        return Boolean.FALSE;
+    }
 }

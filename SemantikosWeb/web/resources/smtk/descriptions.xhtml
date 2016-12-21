@@ -25,166 +25,168 @@
         <p:growl id="editMsgs" showDetail="true"/>
 
         <p:fieldset legend="Agregar descripción" toggleable="true" collapsed="true" rendered="#{cc.attrs.editable}">
-
-            <div class="ui-fluid">
-                <h:panelGrid  columns="5"  style="width: 100%"
-                              columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-3,ui-grid-col-2,ui-grid-col-1"
-                              layout="grid" styleClass="ui-panelgrid-blank">
-
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-6 ui-lg-1">
                     <p:outputLabel for="otherTermino" value="Término"/>
+                </div>
 
-                    <p:inputText id="otherTermino" value="#{cc.attrs.otherTermino}" autocomplete="off" style="width:90%" />
-
-                    <p:selectOneRadio id="radio4" value="#{cc.attrs.otherSensibilidad}" style="width: 95%">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <p:inputText id="otherTermino" value="#{cc.attrs.otherTermino}" style="width:90%" autocomplete="off"/>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:selectOneRadio id="radio4" value="#{cc.attrs.otherSensibilidad}" layout="responsive"
+                                      columns="2" style="width:100%">
                         <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
                         <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
                     </p:selectOneRadio>
-
-                    <p:selectOneMenu id="console" value="#{cc.attrs.otherDescriptionType}" converter="omnifaces.SelectItemsConverter" style="width: 90%">
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <p:selectOneMenu id="console" value="#{cc.attrs.otherDescriptionType}"
+                                     converter="omnifaces.SelectItemsConverter" style="width:60%">
                         <f:selectItem itemLabel="Seleccione tipo" itemValue=""/>
                         <f:selectItems value="#{cc.attrs.descriptionTypes}" var="descriptionType"
                                        itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
                     </p:selectOneMenu>
-
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <p:commandButton value="Agregar" id="btn" action="#{descriptionBeans.addDescription()}"
                                      process="@(.otherDescriptionsPanel)"
                                      update="@(.otherDescriptionsPanel)"
-                                     style="float: right" />
-
-                </h:panelGrid>
+                                     style="float: right"/>
+                </div>
             </div>
-
         </p:fieldset>
 
-        <p:spacer rendered="#{cc.attrs.editable}" />
+        <p:spacer/>
+        <div class="ui-g">
+            <p:dataTable id="otherDescriptions"
+                         styleClass="otherDescriptions"
+                         emptyMessage="El concepto no tiene otras descripciones"
+                         var="description"
+                         value="#{cc.attrs.descriptions}"
+                         editable="true"
+                         reflow="true">
 
-        <p:dataTable id="otherDescriptions"
-                     styleClass="otherDescriptions"
-                     emptyMessage="El concepto no tiene otras descripciones"
-                     var="description"
-                     value="#{cc.attrs.descriptions}"
-                     editable="true"
-                     reflow="true">
+                <p:ajax listener="#{descriptionBeans.descriptionEditRow}" event="rowEdit"
+                        update="@(.otherDescriptions),@(.conceptHeader)"/>
 
-            <p:ajax listener="#{descriptionBeans.descriptionEditRow}" event="rowEdit"
-                    update="@(.otherDescriptions),@(.conceptHeader)"/>
+                <!--Columnas por defecto -->
 
-            <!--Columnas por defecto -->
+                <p:column headerText="DescId" style="width:5%">
+                    <div style="text-align: center;">
+                        <h:outputText value="#{description.descriptionId}"/>
+                    </div>
+                </p:column>
 
-            <p:column headerText="DescId" style="width:5%">
-                <div style="text-align: center;">
-                    <h:outputText value="#{description.descriptionId}"/>
-                </div>
-            </p:column>
-
-            <p:column headerText="Término">
-                <div style="text-align: center;">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{description.term}"/></f:facet>
-                        <f:facet name="input"><p:inputText id="otrasTermino"
-                                                           validator="#{validatorBean.validateTerm}"
-                                                           value="#{description.term}"
-                                                           style="width:100%"
-                        disabled="#{conceptBean.concept.modeled}">
-                            <f:attribute name="description" value="#{description}"/>
-                            <p:growl id="otherDescriptionsError" showDetail="true"/>
-                        </p:inputText>
-                        </f:facet>
-                    </p:cellEditor>
-                </div>
-            </p:column>
-
-            <p:column headerText="Estado">
-                <div style="text-align: center;">
-                    <h:outputText value="Borrador" rendered="#{!description.modeled}"/>
-                    <h:outputText value="Modelado" rendered="#{description.modeled}"/>
-                </div>
-            </p:column>
-
-            <p:column headerText="Tipo Descriptor">
-                <div style="text-align: center;">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText
-                                value="#{description.descriptionType.name}"/></f:facet>
-                        <f:facet name="input">
-                            <p:selectOneMenu value="#{description.descriptionType}"
-                                             validator="#{validatorBean.validateDescriptionType}"
-                                             converter="omnifaces.SelectItemsConverter" style="width:60%">
-                                <f:selectItems value="#{conceptBean.descriptionTypesEdit}"
-                                               var="descriptionType" itemLabel="#{descriptionType.name}"
-                                               itemValue="#{descriptionType}"/>
+                <p:column headerText="Término">
+                    <div style="text-align: center;">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{description.term}"/></f:facet>
+                            <f:facet name="input"><p:inputText id="otrasTermino"
+                                                               validator="#{validatorBean.validateTerm}"
+                                                               value="#{description.term}"
+                                                               style="width:100%"
+                            disabled="#{conceptBean.concept.modeled}">
                                 <f:attribute name="description" value="#{description}"/>
-                            </p:selectOneMenu>
-                        </f:facet>
-                    </p:cellEditor>
-                </div>
-            </p:column>
+                                <p:growl id="otherDescriptionsError" showDetail="true"/>
+                            </p:inputText>
+                            </f:facet>
+                        </p:cellEditor>
+                    </div>
+                </p:column>
 
-            <p:column headerText="Fecha Creación">
-                <div style="text-align: center;">
-                    <h:outputText value="#{description.creationDate}"/>
-                </div>
-            </p:column>
+                <p:column headerText="Estado">
+                    <div style="text-align: center;">
+                        <h:outputText value="Borrador" rendered="#{!description.modeled}"/>
+                        <h:outputText value="Modelado" rendered="#{description.modeled}"/>
+                    </div>
+                </p:column>
 
-            <p:column headerText="Sensibilidad">
-                <div style="text-align: center;">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText value="Sensible" rendered="#{description.caseSensitive}"/>
-                            <h:outputText value="Insensible" rendered="#{!description.caseSensitive}"/>
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:selectOneMenu value="#{description.caseSensitive}" style="width:60%">
-                                <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
-                                <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
-                            </p:selectOneMenu>
-                        </f:facet>
-                    </p:cellEditor>
-                </div>
-            </p:column>
+                <p:column headerText="Tipo Descriptor">
+                    <div style="text-align: center;">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText
+                                    value="#{description.descriptionType.name}"/></f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu value="#{description.descriptionType}"
+                                                 validator="#{validatorBean.validateDescriptionType}"
+                                                 converter="omnifaces.SelectItemsConverter" style="width:60%">
+                                    <f:selectItems value="#{conceptBean.descriptionTypesEdit}"
+                                                   var="descriptionType" itemLabel="#{descriptionType.name}"
+                                                   itemValue="#{descriptionType}"/>
+                                    <f:attribute name="description" value="#{description}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </div>
+                </p:column>
 
-            <p:column headerText="Usuario Creador">
-                <div style="text-align: center;">
-                    <h:outputText value="#{description.creatorUser.name}"/>
-                </div>
-            </p:column>
+                <p:column headerText="Fecha Creación">
+                    <div style="text-align: center;">
+                        <h:outputText value="#{description.creationDate}"/>
+                    </div>
+                </p:column>
 
-            <p:column headerText="Acción" style="width: 6%" rendered="#{cc.attrs.editable}">
-                <p:commandLink actionListener="#{descriptionBeans.removeDescription(description)}"
-                               ajax="true"
-                               process="@this"
-                               update="@(.otherDescriptions)"
-                               style="float: right"
-                               disabled="#{conceptBean.concept.modeled}">
-                    <i class="fa fa-trash fa-lg"/>
-                    <p:confirm header="Confirmation" message="¿Desea eliminar esta descripción?"
-                               icon="ui-icon-alert"/>
-                </p:commandLink>
-                <p:commandLink rendered="#{conceptBean.concept.persistent and description.persistent}"
-                               process="@this"
-                               update=":#{cc.clientId}:conceptTranslate"
-                               oncomplete="PF('dialogTDC').show()">
-                    <i class="fa fa-exchange fa-lg"/>
-                    <f:setPropertyActionListener value="#{description}"
-                                                 target="#{conceptBean.descriptionToTranslate}"/>
-                    <f:setPropertyActionListener value="" target="#{conceptBean.conceptSMTKTranslateDes}"/>
-                    <f:setPropertyActionListener value="" target="#{findConceptBean.categoryArrayID}"/>
-                </p:commandLink>
-                <p:commandLink rendered="#{conceptBean.concept.persistent and description.persistent}"
-                               disabled="#{conceptBean.concept.id==conceptBean.conceptSMTKNotValid.id}"
-                               process="@this"
-                               update=":#{cc.clientId}:conceptTranslateNotValid"
-                               oncomplete="PF('dialogTDNV').show()">
-                    <i class="fa fa-times-circle-o fa-lg"/>
-                    <f:setPropertyActionListener value="#{description}"
-                                                 target="#{conceptBean.descriptionToTranslate}"/>
-                    <f:setPropertyActionListener value="" target="#{conceptBean.observationNoValid}"/>
+                <p:column headerText="Sensibilidad">
+                    <div style="text-align: center;">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="Sensible" rendered="#{description.caseSensitive}"/>
+                                <h:outputText value="Insensible" rendered="#{!description.caseSensitive}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu value="#{description.caseSensitive}" style="width:60%">
+                                    <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
+                                    <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </div>
+                </p:column>
 
-                </p:commandLink>
-                <p:rowEditor id="rowEditor" style="display: inline"/>
-            </p:column>
+                <p:column headerText="Usuario Creador">
+                    <div style="text-align: center;">
+                        <h:outputText value="#{description.creatorUser.name}"/>
+                    </div>
+                </p:column>
 
-        </p:dataTable>
+                <p:column headerText="Acción" style="width: 6%" rendered="#{cc.attrs.editable}">
+                    <p:commandLink actionListener="#{descriptionBeans.removeDescription(description)}"
+                                   ajax="true"
+                                   process="@this"
+                                   update="@(.otherDescriptions)"
+                                   style="float: right"
+                                   disabled="#{conceptBean.concept.modeled}">
+                        <i class="fa fa-trash fa-lg"/>
+                        <p:confirm header="Confirmation" message="¿Desea eliminar esta descripción?"
+                                   icon="ui-icon-alert"/>
+                    </p:commandLink>
+                    <p:commandLink rendered="#{conceptBean.concept.persistent and description.persistent}"
+                                   process="@this"
+                                   update=":#{cc.clientId}:conceptTranslate"
+                                   oncomplete="PF('dialogTDC').show()">
+                        <i class="fa fa-exchange fa-lg"/>
+                        <f:setPropertyActionListener value="#{description}"
+                                                     target="#{conceptBean.descriptionToTranslate}"/>
+                        <f:setPropertyActionListener value="" target="#{conceptBean.conceptSMTKTranslateDes}"/>
+                        <f:setPropertyActionListener value="" target="#{findConceptBean.categoryArrayID}"/>
+                    </p:commandLink>
+                    <p:commandLink rendered="#{conceptBean.concept.persistent and description.persistent}"
+                                   disabled="#{conceptBean.concept.id==conceptBean.conceptSMTKNotValid.id}"
+                                   process="@this"
+                                   update=":#{cc.clientId}:conceptTranslateNotValid"
+                                   oncomplete="PF('dialogTDNV').show()">
+                        <i class="fa fa-times-circle-o fa-lg"/>
+                        <f:setPropertyActionListener value="#{description}"
+                                                     target="#{conceptBean.descriptionToTranslate}"/>
+                        <f:setPropertyActionListener value="" target="#{conceptBean.observationNoValid}"/>
+
+                    </p:commandLink>
+                    <p:rowEditor id="rowEditor" style="display: inline"/>
+                </p:column>
+
+            </p:dataTable>
+        </div>
     </p:panel>
 
 

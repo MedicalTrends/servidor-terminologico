@@ -14,6 +14,7 @@ public class PendingTerm extends PersistentEntity {
 
     private boolean sensibility;
 
+    /** La categoría propuesta para el término propuesto */
     private Category category;
 
     private String nameProfessional;
@@ -28,12 +29,10 @@ public class PendingTerm extends PersistentEntity {
 
     private String observation;
 
-    private String placeOrigin;
-
     /** La descripción a la cual está asociado el término pendiente (en cualquier concepto) */
     private Description relatedDescription;
 
-    public PendingTerm(String term, Date date, boolean sensibility, Category category, String nameProfessional, String profession, String speciality, String subSpeciality, String mail, String observation, String placeOrigin) {
+    public PendingTerm(String term, Date date, boolean sensibility, Category category, String nameProfessional, String profession, String speciality, String subSpeciality, String mail, String observation) {
         this.term = term;
         this.date = date;
         this.sensibility = sensibility;
@@ -45,11 +44,10 @@ public class PendingTerm extends PersistentEntity {
         this.mail = mail;
         this.observation = observation;
         this.relatedDescription = null;
-        this.placeOrigin =placeOrigin;
     }
 
-    public PendingTerm(long id, String term, Timestamp submissionDate, boolean sensibility, Category categoryById, String nameProfessional, String profession, String specialty, String subSpecialty, String mail, String observation, String placeOrigin) {
-        this(term, submissionDate, sensibility, categoryById, nameProfessional, profession, specialty, subSpecialty, mail, observation, placeOrigin);
+    public PendingTerm(long id, String term, Timestamp submissionDate, boolean sensibility, Category categoryById, String nameProfessional, String profession, String specialty, String subSpecialty, String mail, String observation) {
+        this(term, submissionDate, sensibility, categoryById, nameProfessional, profession, specialty, subSpecialty, mail, observation);
         this.setId(id);
     }
 
@@ -103,10 +101,6 @@ public class PendingTerm extends PersistentEntity {
 
     public void setRelatedDescription(Description relatedDescription) {
         this.relatedDescription = relatedDescription;
-    }
-
-    public String getPlaceOrigin() {
-        return placeOrigin;
     }
 
     @Override

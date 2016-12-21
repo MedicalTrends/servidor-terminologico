@@ -17,20 +17,22 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="ui-panelgrid-cell ui-grid-col-2">
+    <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-        <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() and not cc.attrs.multiple }" styleClass="search">
+        <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() and not cc.attrs.multiple }">
 
             <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
                             forceSelection="true"
                             placeholder="#{cc.attrs.relationshipDefinition.name}..."
                             id="findConceptSMTK" scrollHeight="200" size="5"
+                            style="width: 85%;"
+                            inputStyle="width: 90%;"
                             completeMethod="#{smtkBean.getConceptSearchInput}"
                             converter="conceptConverter"
                             var="concept"
-                            value="#{generalBrowserBean.conceptSMTK}"
-                            itemLabel="#{concept.descriptionFavorite.term}"
-                            itemValue="#{concept}">
+                            value="#{conceptBrowserBean.conceptSMTK}"
+                            itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
+                            >
 
                 <!-- Parámetros del validador -->
                 <f:attribute name="concept" value="#{cc.attrs.concept}"  />
@@ -46,7 +48,7 @@
                 </p:column>
 
                 <p:ajax event="itemSelect"
-                        listener="#{generalBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, generalBrowserBean.conceptSMTK)}"
+                        listener="#{conceptBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, conceptBrowserBean.conceptSMTK)}"
                         update="@(.conceptFilters)"
                         process="@this" />
 
@@ -65,11 +67,11 @@
                        var="target"
                        varStatus="var">
 
-                <p:inputText disabled="true" id="itemSelected" value="#{target.descriptionFavorite.term}" />
+                <p:inputText style="width: 75%;" disabled="true" id="itemSelected" value="#{target.descriptionFavorite.term}" />
                 <p:commandLink rendered="#{ not cc.attrs.targets.isEmpty() }"
                                process="@this"
                                update="@(.conceptFilters),@(.conceptBrowserTable)"
-                               action="#{generalBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
+                               action="#{conceptBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
                     <i class="fa fa-close fa-lg"  />
                 </p:commandLink>
 

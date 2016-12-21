@@ -1,0 +1,150 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+                template="/WEB-INF/template/template.xhtml">
+
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:viewParam name="idCategory" value="#{conceptBrowserBean.idCategory}" />
+            <f:event type="preRenderView" listener="#{conceptBrowserBean.executeQuery}" />
+        </f:metadata>
+
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect  ">
+                    <div class="Container100">
+                        <div class="ContainerIndent">
+                            <div class="ui-grid-responsive">
+                                <div class="ui-grid-col-12">
+                                    <h:form id="browserForm">
+                                        <p:messages autoUpdate="true" />
+                                        <h2 class="TexAlCenter BigTopic">Navegador General [#{conceptBrowserBean.category.name}]</h2>
+                                        <smtk:browserFilter conceptQuery="#{conceptBrowserBean.conceptQuery}" />
+                                        <p:spacer />
+                                        <p:dataTable id="conceptTable"
+                                                     styleClass="conceptBrowserTable"
+                                                     value="#{conceptBrowserBean.concepts}"
+                                                     var="concept"
+                                                     rows="30"
+                                                     sortBy="#{1}"
+                                                     paginator="true" lazy="true" dynamic="true"
+                                                     paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                                     emptyMessage="No se han encontrado conceptos con los criterios utilizados">
+
+                                            <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+                                            <p:column headerText="ConceptID" sortBy="#{1}" style="width:7%">
+                                                <h:outputText value="#{concept.id}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Término" sortBy="#{2}">
+                                                <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Observación">
+                                                <h:outputText value="#{concept.observation}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Etiqueta">
+                                                <p:repeat
+                                                        offset="0"
+                                                        size="#{concept.tags.size()}"
+                                                        step="1"
+                                                        varStatus="var"
+                                                        value="#{concept.tags}"
+                                                        var="tag">
+
+                                                    <h:outputText rendered="#{var.index>0}" value=", " />
+                                                    <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter};"  />
+
+                                                </p:repeat>
+                                            </p:column>
+
+                                            <p:column headerText="Está en">
+                                                <h:outputText value="Borrador" rendered="#{not concept.modeled}"/>
+                                                <h:outputText value="Modelado" rendered="#{concept.modeled}"/>
+                                            </p:column>
+
+                                            <p:columns value="#{conceptBrowserBean.conceptQuery.columns}"
+                                                       var="column"
+                                                       columnIndexVar="colIndex">
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{column.relationshipDefinition.name}" />
+                                                </f:facet>
+                                                <p:outputPanel>
+                                                    <smtk:basicTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.basicType}" />
+                                                    <smtk:helperTableTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.helperTable}" />
+                                                    <smtk:smtkTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.SMTKType}" />
+                                                </p:outputPanel>
+                                            </p:columns>
+
+                                            <p:column headerText="Acciones" exportable="false" style="text-align: center">
+                                                <p:button outcome="conceptEdit" icon="fa fa-eye">
+                                                    <f:param name="editMode" value="#{false}" />
+                                                    <f:param name="idConcept" value="#{concept.id}" />
+                                                </p:button>
+                                                <p:button outcome="conceptEdit" icon="fa fa-edit">
+                                                    <f:param name="editMode" value="#{true}" />
+                                                    <f:param name="idConcept" value="#{concept.id}" />
+                                                </p:button>
+                                                <p:commandButton icon="fa fa-exchange" oncomplete="PF('dialogTC2-browser').show()" update="@(.conceptTranslate)" rendered="#{concept.modeled}">
+                                                    <f:setPropertyActionListener value="#{concept}" target="#{transferConceptBean.conceptSMTKSelected}" />
+                                                </p:commandButton>
+
+
+
+                                                <p:commandButton action="#{conceptBrowserBean.deleteConcept(concept)}"
+                                                                 ajax="true"
+                                                                 icon="fa fa-trash"
+                                                                 process="@this"
+                                                                 rendered="#{not concept.modeled}"
+                                                                 update="@(.conceptBrowserTable), growl">
+                                                    <p:confirm header="Confirmation" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
+                                                </p:commandButton>
+                                            </p:column>
+
+                                        </p:dataTable>
+
+                                        <!-- Diálogo para buscar la categoría y aceptar -->
+                                        <p:dialog id="dialogTC2-browser" header="Trasladar concepto" widgetVar="dialogTC2-browser" showEffect="fade" hideEffect="fade">
+
+                                            <p:panel id="conceptTranslate" styleClass="conceptTranslate" style="width: 100%; border: hidden;">
+                                                <h3>Trasladar Concepto a...</h3>
+                                                <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categiría propuesta"/>
+                                                <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.categoryId}" required="true">
+                                                    <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
+                                                                   itemLabel="#{category.name}"/>
+                                                </p:selectOneMenu>
+
+                                                <p:outputLabel value="id concepto: #{transferConceptBean.conceptSMTKSelected.id}" />
+                                                <p:commandButton value="Trasladar" actionListener="#{transferConceptBean.transferConcept(transferConceptBean.conceptSMTKSelected)}"
+                                                                 icon="fa fa-ban" styleClass="ui-priority-primary" >
+                                                    <p:confirm header="Confirmation" message="¿Está seguro de trasladar este concepto?" icon="ui-icon-alert"/>
+                                                </p:commandButton>
+
+                                            </p:panel>
+                                        </p:dialog>
+
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes"
+                                                             icon="ui-icon-check"/>
+                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                                                             icon="ui-icon-close"/>
+                                        </p:confirmDialog>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

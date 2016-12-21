@@ -225,13 +225,6 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
             return;
         }
 
-        /**
-         * Si el concepto es primitivo no válida
-         */
-        if(!concept.isFullyDefined()){
-            return;
-        }
-
         /* Es una relación SCT. Se realiza el cast y se validan las otras dos condiciones para la BR. */
         SnomedCTRelationship sctRel = SnomedCTRelationship.createSnomedCT(theRelationship);
         if (sctRel.isES_UN_MAPEO() || !sctRel.getTarget().isCompletelyDefined()){
@@ -286,25 +279,6 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
 
         if (added) {
             concept.removeRelationship(theRelationship);
-        }
-
-    }
-
-     /* BR-SCT-005 Para que un Concepto Semantiko pueda ser publicado para su uso, deberá estar Modelado con al menos un tipo de relación “Es un” ó “Es un Mapeo” */
-    public void brSCT005(ConceptSMTK concept) {
-
-        int countRelationshipSCT=0;
-
-        List<SnomedCTRelationship> relationshipsSnomedCT = concept.getRelationshipsSnomedCT();
-
-        for (SnomedCTRelationship snomedCTRelationship:relationshipsSnomedCT) {
-            if(snomedCTRelationship.isES_UN() || snomedCTRelationship.isES_UN_MAPEO()){
-                countRelationshipSCT++;
-            }
-        }
-        if(countRelationshipSCT==0){
-            throw new BusinessRuleException("BR-SCT-005", "Para que un Concepto Semantiko pueda ser publicado para su uso, deberá estar Modelado con al menos un tipo de relación “Es un” ó “Es un Mapeo”");
-
         }
 
     }

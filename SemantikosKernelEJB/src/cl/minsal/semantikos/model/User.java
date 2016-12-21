@@ -274,10 +274,6 @@ public class User {
         return institutions;
     }
 
-    public void setInstitutions(List<Institution> institutions) {
-        this.institutions = institutions;
-    }
-
     @Override
     public boolean equals(Object other) {
         return (other instanceof User) && (String.valueOf(idUser) != null)

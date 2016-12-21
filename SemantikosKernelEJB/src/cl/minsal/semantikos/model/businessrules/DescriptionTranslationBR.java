@@ -1,14 +1,11 @@
 package cl.minsal.semantikos.model.businessrules;
 
-import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.EJB;
-import javax.ejb.Singleton;
 import java.util.List;
 
 import static cl.minsal.semantikos.model.DescriptionType.*;
@@ -16,18 +13,16 @@ import static cl.minsal.semantikos.model.DescriptionType.*;
 /**
  * @author Andrés Farías on 8/26/16.
  */
-@Singleton
 public class DescriptionTranslationBR {
 
     private static final Logger logger = LoggerFactory.getLogger(DescriptionTranslationBR.class);
 
-    @EJB
-    private ConceptManager conceptManager;
+    public void apply(ConceptSMTK targetConcept, Description description) {
 
-    public void apply(ConceptSMTK sourceConcept,ConceptSMTK targetConcept, Description description) {
+        ConceptSMTK sourceConcept = description.getConceptSMTK();
 
         /* Se validan las pre-condiciones para realizar el movimiento de descripciones */
-        validatePreConditions(sourceConcept,description, targetConcept);
+        validatePreConditions(description, targetConcept);
 
         /* Traslado de Descripciones abreviadas */
         brDescriptionTranslate001(sourceConcept, targetConcept, description);
@@ -39,13 +34,13 @@ public class DescriptionTranslationBR {
      * @param description   La descripción que se desea validar.
      * @param targetConcept El concepto al cual se desea mover la descripción.
      */
-    public void validatePreConditions(ConceptSMTK sourceConcept, Description description, ConceptSMTK targetConcept) {
+    public void validatePreConditions(Description description, ConceptSMTK targetConcept) {
 
         /* Descripciones que no se pueden trasladar */
         pcDescriptionTranslate001(description);
 
         /* Estados posibles para trasladar descripciones */
-        brDescriptionTranslate011(sourceConcept, targetConcept);
+        brDescriptionTranslate011(description.getConceptSMTK(), targetConcept);
     }
 
     /**
@@ -82,10 +77,6 @@ public class DescriptionTranslationBR {
 
         /* Desde conceptos modelados a conceptos en borrador */
         if (!sourceConcept.isModeled() && targetConcept.isModeled() || sourceConcept.isModeled() && targetConcept.isModeled()  ) {
-            return;
-        }
-
-        if(conceptManager.getPendingConcept().getId()==sourceConcept.getId()){
             return;
         }
 

@@ -113,10 +113,10 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
-    public Relationship removeRelationship(ConceptSMTK conceptSMTK,Relationship relationship, User user) {
+    public Relationship removeRelationship(Relationship relationship, User user) {
 
         /* Primero se validan las reglas de negocio asociadas a la eliminación de un concepto */
-        new RelationshipRemovalBR().applyRules(conceptSMTK, relationship, user);
+        new RelationshipRemovalBR().applyRules(relationship, user);
 
         /* Luego se elimina la relación */
         relationship.setValidityUntil(new Timestamp(currentTimeMillis()));

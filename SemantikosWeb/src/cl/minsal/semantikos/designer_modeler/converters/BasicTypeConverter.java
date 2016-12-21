@@ -26,10 +26,12 @@ public class BasicTypeConverter implements Converter{
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
 
         BasicTypeDefinition basicTypeDefinition = (BasicTypeDefinition) UIComponent.getCurrentComponent(fc).getAttributes().get("basicTypeDefinition");
+        BasicTypeValue basicTypeValue = (BasicTypeValue) UIComponent.getCurrentComponent(fc).getAttributes().get("basicTypeValue");
 
         if(value != null /*&& value.trim().length() > 0*/ ) {
             try {
                 ELContext elContext = fc.getELContext();
+                HelperTableBean bean = (HelperTableBean) FacesContext.getCurrentInstance().getApplication() .getELResolver().getValue(elContext, null, "helperTableBean");
                 if(basicTypeDefinition.contains(value))
                     return new BasicTypeValue(value);
                 else

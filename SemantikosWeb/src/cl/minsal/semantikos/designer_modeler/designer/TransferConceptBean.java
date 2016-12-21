@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.designer_modeler.designer;
 
 import cl.minsal.semantikos.beans.concept.ConceptBean;
-import cl.minsal.semantikos.beans.messages.MessageBean;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.model.Category;
@@ -10,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -37,9 +35,6 @@ public class TransferConceptBean {
     @ManagedProperty(value = "#{conceptBean}")
     private ConceptBean conceptBean;
 
-    @ManagedProperty(value = "#{messageBean}")
-    private MessageBean messageBean;
-
     @EJB
     private CategoryManager categoryManager;
 
@@ -53,14 +48,6 @@ public class TransferConceptBean {
         this.conceptSMTKSelected = conceptSMTKSelected;
     }
 
-    public MessageBean getMessageBean() {
-        return messageBean;
-    }
-
-    public void setMessageBean(MessageBean messageBean) {
-        this.messageBean = messageBean;
-    }
-
     public long getCategoryId() {
         return categoryId;
     }
@@ -71,16 +58,13 @@ public class TransferConceptBean {
 
     public void transferConcept(ConceptSMTK conceptSMTK) {
         Category categoryById = categoryManager.getCategoryById(categoryId);
-        try{
-            conceptManager.transferConcept(conceptSMTK, categoryById, conceptBean.user);
-            ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categoryId + "&idConcept=" + conceptSMTK.getId());
+        conceptManager.transferConcept(conceptSMTK, categoryById);
 
-        }catch (EJBException e){
-            messageBean.messageError(e.getMessage());
-        }
         /* Se redirige a la página de edición */
-        catch (IOException e) {
+        ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categoryId + "&idConcept=" + conceptSMTK.getId());
+        } catch (IOException e) {
             logger.error("Error al redirigir");
         }
     }

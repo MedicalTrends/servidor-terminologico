@@ -59,16 +59,13 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
-    public Description bindDescriptionToConcept(ConceptSMTK concept, String term, boolean caseSensitive, DescriptionType descriptionType, User user) {
+    public Description bindDescriptionToConcept(ConceptSMTK concept, String term, DescriptionType descriptionType, User user) {
 
         /* Se aplican las reglas de negocio para crear la Descripción*/
         descriptionCreationBR.applyRules(concept, term, descriptionType, user, categoryManager);
 
         /* Se crea la descripción */
         Description description = new Description(concept, term, descriptionType);
-        //TODO: AL implementar los webservices este se podria encargar de asignar el description ID
-        description.setDescriptionId(generateDescriptionId());
-        description.setCaseSensitive(caseSensitive);
 
         /* Se aplican las reglas de negocio para crear la Descripción y se persiste y asocia al concepto */
         new DescriptionBindingBR().applyRules(concept, description, user);
@@ -169,17 +166,14 @@ public class DescriptionManagerImpl implements DescriptionManager {
         }
     }
 
-    @EJB
-    private DescriptionTranslationBR descriptionTranslationBR;
-
     @Override
     public void moveDescriptionToConcept(ConceptSMTK sourceConcept, Description description, User user) {
 
         ConceptSMTK targetConcept = description.getConceptSMTK();
 
         /* Se aplican las reglas de negocio para el traslado */
-
-        descriptionTranslationBR.validatePreConditions(sourceConcept, description, targetConcept);
+        DescriptionTranslationBR descriptionTranslationBR = new DescriptionTranslationBR();
+        descriptionTranslationBR.validatePreConditions(description, targetConcept);
 
         /* Se realiza la actualización a nivel del modelo lógico */
 
@@ -194,7 +188,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         description.setConceptSMTK(targetConcept);
 
         /* Se aplican las reglas de negocio asociadas al movimiento de un concepto */
-        descriptionTranslationBR.apply(sourceConcept,targetConcept, description);
+        descriptionTranslationBR.apply(targetConcept, description);
 
         /*Se cambia el estado de la descripción segun el concepto*/
 
@@ -281,6 +275,11 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets) {
+        return descriptionDAO.searchDescriptionsByTerm(term, categories, refSets);
+    }
+
+    @Override
     public void invalidateDescription(ConceptSMTK conceptSMTK, NoValidDescription noValidDescription, User user) {
 
         /* Se aplican las reglas de negocio para el traslado */
@@ -299,6 +298,17 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    public Description getDescriptionByDescriptionID(String descriptionId) {
+
+        /* Validación de integridad */
+        if(descriptionId == null || descriptionId.trim().equals("")){
+            throw new IllegalArgumentException("Se busca una descripción sin indicar su DESCRIPTION_ID.");
+        }
+
+        return descriptionDAO.getDescriptionByDescriptionID(descriptionId);
+    }
+
+    @Override
     public List<ObservationNoValid> getObservationsNoValid() {
         return descriptionDAO.getObservationsNoValid();
     }
@@ -306,10 +316,5 @@ public class DescriptionManagerImpl implements DescriptionManager {
     @Override
     public Description getDescriptionByID(long id) {
         return descriptionDAO.getDescriptionBy(id);
-    }
-
-    @Override
-    public NoValidDescription getNoValidDescriptionByID(long id) {
-        return descriptionDAO.getNoValidDescriptionByID(id);
     }
 }

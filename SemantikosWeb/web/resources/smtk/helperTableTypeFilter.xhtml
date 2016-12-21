@@ -16,31 +16,33 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="ui-panelgrid-cell ui-grid-col-2">
+    <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-        <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() }" styleClass="search">
+        <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() }">
 
             <p:autoComplete id="findHTRecords1" scrollHeight="200"
+                            style="width: 85%;"
+                            inputStyle="width: 90%;"
                             completeMethod="#{helperTableBean.getRecordSearchInput}"
                             forceSelection="true"
                             var="record"
                             placeholder="#{cc.attrs.relationshipDefinition.name}..."
                             converter="helperTableRecordConverter"
-                            value="#{generalBrowserBean.helperTableRecord}"
+                            value="#{conceptBrowserBean.helperTableRecord}"
                             itemLabel="#{record.fields['description']}"
                             itemValue="#{record}">
                 <!-- Parámetros del buscador -->
                 <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
                 <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
                 <!-- Parámetros del validador -->
-                <f:attribute name="helperTableRecord" value="#{generalBrowserBean.helperTableRecord}"  />
+                <f:attribute name="helperTableRecord" value="#{conceptBrowserBean.helperTableRecord}"  />
                 <!---->
                 <p:column>
                     <h:outputText value="#{record.fields['description']}"/>
                 </p:column>
 
                 <p:ajax event="itemSelect"
-                        listener="#{generalBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, generalBrowserBean.helperTableRecord)}"
+                        listener="#{conceptBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, conceptBrowserBean.helperTableRecord)}"
                         update="@(.conceptFilters)"
                         process="@this" />
 
@@ -50,7 +52,7 @@
             <i class="fa fa-search fa-lg" />
         </p:outputPanel>
 
-        <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() }" styleClass="search">
+        <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() }">
 
             <p:repeat  value="#{cc.attrs.targets}"
                        offset="0"
@@ -59,11 +61,11 @@
                        var="target"
                        varStatus="var">
 
-                <p:inputText disabled="true" id="itemSelected" value="#{target.fields['description']}" />
+                <p:inputText style="width: 75%;" disabled="true" id="itemSelected" value="#{target.fields['description']}" />
                 <p:commandLink
-                        process="@this"
-                        update="@(.conceptFilters),@(.conceptBrowserTable)"
-                        action="#{generalBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
+                               process="@this"
+                               update="@(.conceptFilters),@(.conceptBrowserTable)"
+                               action="#{conceptBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
                     <i class="fa fa-close fa-lg"  />
                 </p:commandLink>
             </p:repeat>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+    <composite:attribute name="user" type="cl.minsal.semantikos.model.User"/>
+</composite:interface>
+<composite:implementation>
+
+    <div class="ui-g-12 ui-md-6 ui-lg-2">
+        <p:selectOneMenu value="#{cc.attrs.user}" converter="omnifaces.SelectItemsConverter"
+                         autoWidth="false"
+                         style="margin-right:10px; width: 60%">
+            <f:selectItem itemLabel="Usuario..." itemValue="#{null}"/>
+            <f:selectItems value="#{conceptBrowserBean.users}" var="user"
+                           itemLabel="#{user.username}" itemValue="#{user}"/>
+            <p:ajax event="itemSelect" update="@(.conceptBrowserTable)" />
+        </p:selectOneMenu>
+    </div>
+
+    <h:outputStylesheet id="customCSS">
+        .ui-selectonemenu .ui-selectonemenu-label {
+            overflow: visible;
+        }
+    </h:outputStylesheet>
+
+
+</composite:implementation>
+</html>

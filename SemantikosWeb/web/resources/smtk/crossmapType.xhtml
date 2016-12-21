@@ -95,81 +95,63 @@
              rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
                           and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }">
 
-        <div class="ui-fluid">
-
-            <div class="ui-panelgrid ui-widget ui-panelgrid-blank fullyDefined">
-
-                <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-
-                    <div class="ui-grid-row">
-
-                        <div class="ui-panelgrid-cell ui-grid-col-2">
-
-                            <p:outputLabel for="findCSM3" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}"/>
-                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
-
-                        </div>
-
-                        <div class="ui-panelgrid-cell ui-grid-col-2">
-
-                            <p:outputPanel styleClass="search">
-
-                                <p:autoComplete id="findCSM3" scrollHeight="200"
-                                                styleClass="findCSM3"
-                                                completeMethod="#{crossmapBean.getCrossmapSearchInput}"
-                                                forceSelection="true"
-                                                var="crossmap"
-                                                placeholder="#{cc.attrs.relationshipDefinition.name}..."
-                                                converter="omnifaces.SelectItemsConverter"
-                                                disabled="#{not cc.attrs.concept.editable}"
-                                                value="#{conceptBean.crossmapSetMemberSelected}"
-                                                itemLabel="#{crossmap.target}"
-                                                itemValue="#{crossmap}">
-                                    <!-- Parámetros del buscador -->
-                                    <f:attribute name="concept" value="#{cc.attrs.concept}"  />
-                                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                                    <!-- Parámetros del validador -->
-                                    <f:attribute name="crossmap" value="#{conceptBean.crossmapSetMemberSelected}"  />
-                                    <!---->
-                                    <p:column>
-                                        <h:outputText value="#{crossmap.target}"/>
-                                    </p:column>
-
-                                    <p:ajax event="itemSelect"
-                                            listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.crossmapSetMemberSelected)}"
-                                            update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                                            process="@this"/>
-
-                                </p:autoComplete>
-                                <i class="fa fa-search fa-lg"  />
-
-                            </p:outputPanel>
-
-                        </div>
-                        <!-- Atributos de relación -->
-                        <p:repeat
-                                offset="0"
-                                size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
-                                step="1"
-                                varStatus="var"
-                                value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                                var="relationshipAttributeDefinition">
-                            <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                     relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                     relationship="#{relationship}"
-                                                     targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                     rendered="#{relationshipAttributeDefinition.targetDefinition.basicType}"
-                            />
-                            <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                           relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                           relationship="#{relationship}"
-                                                           targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                           rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
-                            />
-                        </p:repeat>
-                    </div>
-                </div>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <p:outputLabel for="findCSM3" value="#{cc.attrs.relationshipDefinition.name}"/>
+                <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
             </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <p:autoComplete id="findCSM3" scrollHeight="200" style="width: 90%;"
+                                inputStyle="width: 90%;"
+                                styleClass="findCSM3"
+                                completeMethod="#{crossmapBean.getCrossmapSearchInput}"
+                                forceSelection="true"
+                                var="crossmap"
+                                placeholder="#{cc.attrs.relationshipDefinition.name}..."
+                                converter="omnifaces.SelectItemsConverter"
+                                disabled="#{not cc.attrs.concept.editable}"
+                                value="#{conceptBean.crossmapSetMemberSelected}"
+                                itemLabel="#{crossmap.target}"
+                                itemValue="#{crossmap}">
+                    <!-- Parámetros del buscador -->
+                    <f:attribute name="concept" value="#{cc.attrs.concept}"  />
+                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                    <!-- Parámetros del validador -->
+                    <f:attribute name="crossmap" value="#{conceptBean.crossmapSetMemberSelected}"  />
+                    <!---->
+                    <p:column>
+                        <h:outputText value="#{crossmap.target}"/>
+                    </p:column>
+
+                    <p:ajax event="itemSelect"
+                            listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.crossmapSetMemberSelected)}"
+                            update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                            process="@this"/>
+
+                </p:autoComplete>
+                <i class="fa fa-search fa-lg"  />
+            </div>
+            <!-- Atributos de relación -->
+            <p:repeat
+                    offset="0"
+                    size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
+                    step="1"
+                    varStatus="var"
+                    value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
+                    var="relationshipAttributeDefinition">
+                <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                         relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
+                                         relationship="#{relationship}"
+                                         targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                         rendered="#{relationshipAttributeDefinition.targetDefinition.basicType}"
+                />
+                <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                               relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
+                                               relationship="#{relationship}"
+                                               targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                               rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
+                />
+            </p:repeat>
         </div>
     </p:panel>
 
@@ -291,7 +273,7 @@
                     </p:column>
 
                     <p:column headerText="Cod Crossmaps">
-                        <h:outputText value="#{rel.target.code}"/>
+                        <h:outputText value="#{rel.target.code1}"/>
                     </p:column>
 
                     <p:column headerText="Descripción">
@@ -316,106 +298,93 @@
     <p:panel id="crossmapTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
-        <p:spacer />
-
         <div class="ui-g">
 
             <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" rendered="#{cc.attrs.concept.editable}" style="width:100%">
 
                 <p:growl id="growl" showDetail="true" showSummary="true"/>
 
-                <div class="ui-fluid">
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-                    <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                    <p:selectOneMenu value="#{cc.attrs.targetDefinition}" style="margin-right:10px; width: 60%" autoWidth="false" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItems itemLabel="#{crossmapSet.abbreviatedName}" value="#{crossmapBean.crossmapSets}" itemValue="#{crossmapSet}" var="crossmapSet" />
+                        <p:ajax event="itemSelect" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
+                    </p:selectOneMenu>
 
-                        <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-
-                            <div class="ui-grid-row Container">
-
-                                <div class="ui-panelgrid-cell ui-grid-col-2">
-
-                                    <p:selectOneMenu value="#{cc.attrs.targetDefinition}" autoWidth="false" converter="omnifaces.SelectItemsConverter">
-                                        <f:selectItems itemLabel="#{crossmapSet.abbreviatedName}" value="#{crossmapBean.crossmapSets}" itemValue="#{crossmapSet}" var="crossmapSet" />
-                                        <p:ajax event="itemSelect" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
-                                    </p:selectOneMenu>
-
-                                </div>
-
-                                <div class="ui-panelgrid-cell ui-grid-col-2">
-
-                                    <p:outputPanel styleClass="search">
-
-                                        <p:autoComplete id="findCSM6" scrollHeight="200"
-                                                        completeMethod="#{crossmapBean.getCrossmapSearchInput}"
-                                                        forceSelection="true"
-                                                        var="crossmap"
-                                                        placeholder="#{cc.attrs.targetDefinition.abbreviatedName}"
-                                                        converter="crossmapSetMemberConverter"
-                                                        rendered="#{cc.attrs.concept.editable}"
-                                                        disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
-                                                        value="#{conceptBean.crossmapSetMemberSelected}"
-                                                        itemLabel="#{crossmap.gloss}"
-                                                        itemValue="#{crossmap}">
-
-                                            <!-- Parámetros del buscador -->
-                                            <f:attribute name="crossmapSet" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
-                                            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                                            <!-- Parámetros del validador -->
-                                            <f:attribute name="crossmap" value="#{conceptBean.crossmapSetMemberSelected}"  />
-                                            <!---->
-                                            <p:column style="width: 500px">
-                                                <h:outputText value="#{crossmap.gloss}"/>
-                                            </p:column>
-
-                                            <p:ajax event="itemSelect"
-                                                    listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.crossmapSetMemberSelected)}"
-                                                    process="@this"/>
-
-                                            <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
-
-                                        </p:autoComplete>
-                                        <i class="fa fa-search fa-lg"  />
-                                    </p:outputPanel>
-                                </div>
-
-                                <!-- Atributos de relación -->
-                                <p:repeat
-                                        offset="0"
-                                        size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
-                                        step="1"
-                                        varStatus="var"
-                                        value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                                        var="relationshipAttributeDefinition">
-
-                                    <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                             relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                             relationship="#{relationship}"
-                                                             concept="#{cc.attrs.concept}"
-                                                             targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                             rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()}"
-                                    />
-                                    <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                                   relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                                   concept="#{cc.attrs.concept}"
-                                                                   relationship="#{relationship}"
-                                                                   targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                                   rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable and not relationshipAttributeDefinition.relationshipTypeAttribute}"
-                                    />
-                                </p:repeat>
-
-                                <div class="ui-panelgrid-cell Container10 Responsive">
-                                    <p:commandButton
-                                            process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
-                                            action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
-                                            update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                            style="max-width: 100px"
-                                            value="Agregar">
-                                    </p:commandButton>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                    <p:autoComplete id="findCSM6" scrollHeight="200" style="width: 90%;"
+                                    styleClass="fragments"
+                                    inputStyle="width: 90%;"
+                                    completeMethod="#{crossmapBean.getCrossmapSearchInput}"
+                                    forceSelection="true"
+                                    var="crossmap"
+                                    placeholder="#{cc.attrs.targetDefinition.abbreviatedName}"
+                                    converter="crossmapSetMemberConverter"
+                                    rendered="#{cc.attrs.concept.editable}"
+                                    disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
+                                    value="#{conceptBean.crossmapSetMemberSelected}"
+                                    itemLabel="#{crossmap.gloss}"
+                                    itemValue="#{crossmap}">
+
+                        <!-- Parámetros del buscador -->
+                        <f:attribute name="crossmapSet" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                        <!-- Parámetros del validador -->
+                        <f:attribute name="crossmap" value="#{conceptBean.crossmapSetMemberSelected}"  />
+                        <!---->
+                        <p:column>
+                            <h:outputText value="#{crossmap.gloss}"/>
+                        </p:column>
+
+                        <p:ajax event="itemSelect"
+                                listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.crossmapSetMemberSelected)}"
+                                process="@this"/>
+
+                        <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
+
+                    </p:autoComplete>
+                    <i class="fa fa-search fa-lg"  />
+                </div>
+
+                <!-- Atributos de relación -->
+                <p:repeat
+                        offset="0"
+                        size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
+                        step="1"
+                        varStatus="var"
+                        value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
+                        var="relationshipAttributeDefinition">
+
+                    <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                             relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
+                                             relationship="#{relationship}"
+                                             concept="#{cc.attrs.concept}"
+                                             targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                             rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()}"
+                    />
+                    <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                                   relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
+                                                   concept="#{cc.attrs.concept}"
+                                                   relationship="#{relationship}"
+                                                   targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                                   rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable and not relationshipAttributeDefinition.relationshipTypeAttribute}"
+                    />
+                </p:repeat>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                    <p:commandButton
+                            process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                            action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
+                            update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                            value="Agregar">
+                    </p:commandButton>
+                </div>
+
+                <smtk:info relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
+
             </p:outputPanel>
         </div>
 
@@ -443,7 +412,7 @@
                 </p:column>
 
                 <p:column headerText="Cod Crossmaps">
-                    <h:outputText value="#{relationship.target.code}"/>
+                    <h:outputText value="#{relationship.target.code1}"/>
                 </p:column>
 
                 <p:column headerText="Descripción">
@@ -480,5 +449,17 @@
         </div>
     </p:panel>
 
+    <script type="text/javascript">
+        /*
+        $(document).on("change keyup input", "select[id$=tagSemantikos_input]", function (event) {
+            $("input[id$=FSN]").trigger("change");
+        });
+
+        $(document).on("change keyup input", "input[id$=favorite]", function (event) {
+            $("input[id$=FSN]").val($(this).val());
+            $("input[id$=FSN]").trigger("change");
+        });
+        */
+    </script>
 </composite:implementation>
 </html>

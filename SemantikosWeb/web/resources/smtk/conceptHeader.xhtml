@@ -26,7 +26,7 @@
                                      value="#{cc.attrs.concept.toBeConsulted}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
         </p:panelGrid>
         <p:outputLabel for="toBeReviewedCheck" value="Grado de Definición" />
-        <p:selectOneRadio id="city" value="#{conceptBean.fullyDefined}"  layout="grid" columns="2" style="width: 95%" disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept) or not conceptBean.editable}">
+        <p:selectOneRadio id="city" value="#{conceptBean.fullyDefined}"  layout="grid" columns="2" style="width: 95%" disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept)}">
             <f:selectItem itemValue="#{false}" itemLabel="Primitivo" />
             <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>
             <p:ajax event="change" listener="#{conceptBean.changeFullyDefined(conceptBean.concept)}" process="@this" update="@(.conceptHeader)" />
@@ -67,7 +67,6 @@
                          disabled="#{not cc.attrs.concept.editable}"
                          value="#{cc.attrs.concept.observation}"
                          style="width:90%">
-            <p:ajax />
         </p:inputTextarea>
     </h:panelGrid>
 

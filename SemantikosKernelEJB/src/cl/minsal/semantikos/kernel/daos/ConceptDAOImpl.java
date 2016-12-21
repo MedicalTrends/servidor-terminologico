@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -107,6 +108,11 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
+    public List<ConceptSMTK> getModeledConceptBy(Long categoryId, int pageSize, int pageNumber) {
+        return this.getConceptBy(new Long[]{categoryId}, true, pageSize, pageNumber);
+    }
+
+    @Override
     public List<ConceptSMTK> getConceptBy(Long[] categories, boolean modeled, int pageSize, int pageNumber) {
 
         List<ConceptSMTK> concepts = new ArrayList<>();
@@ -133,6 +139,34 @@ public class ConceptDAOImpl implements ConceptDAO {
         } catch (SQLException e) {
             logger.error("Se produjo un error al acceder a la BDD.", e);
             throw new EJBException(e);
+        }
+
+        return concepts;
+    }
+
+    @Override
+    public List<ConceptSMTK> getConceptBy(Category category, int pageSize, int pageNumber) {
+
+        List<ConceptSMTK> concepts = new ArrayList<>();
+        ConnectionBD connect = new ConnectionBD();
+        CallableStatement call;
+
+        try (Connection connection = connect.getConnection();) {
+
+            call = connection.prepareCall("{call semantikos.find_concept_by_category(?,?,?)}");
+
+            call.setLong(1, category.getId());
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                ConceptSMTK e = this.getConceptByID(rs.getLong(1));
+                concepts.add(e);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         return concepts;
@@ -211,6 +245,39 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.setInt(3, pageNumber);
             call.setInt(4, pageSize);
             call.setBoolean(5, modeled);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                ConceptSMTK conceptSMTK = createConceptSMTKFromResultSet(rs);
+                concepts.add(conceptSMTK);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
+        return concepts;
+    }
+
+    @Override
+    public List<ConceptSMTK> getConceptBy(String[] pattern, Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber) {
+        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
+        ConnectionBD connect = new ConnectionBD();
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.find_concept_by_pattern_and_categories_and_refsets(?,?,?,?,?,?)}")) {
+
+            Array ArrayCategories = connection.createArrayOf("integer", categories);
+            Array ArrayRefsets = connection.createArrayOf("integer", refsets);
+
+            call.setArray(1, ArrayCategories);
+            call.setArray(2, ArrayRefsets);
+            call.setArray(3, connection.createArrayOf("text", pattern));
+            call.setInt(4, pageNumber);
+            call.setInt(5, pageSize);
+            call.setBoolean(6, modeled);
             call.execute();
 
             ResultSet rs = call.getResultSet();
@@ -335,6 +402,39 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
+    public Integer countConceptBy(String[] Pattern, Long[] category, Long[] refset, boolean isModeled) {
+        ConnectionBD connect = new ConnectionBD();
+        CallableStatement call;
+        int count = 0;
+
+        try (Connection connection = connect.getConnection();) {
+
+            Array ArrayPattern = connection.createArrayOf("text", Pattern);
+            call = connection.prepareCall("{call semantikos.count_concept_by_pattern_and_categories_and_refsets(?,?,?,?)}");
+            Array ArrayCategories = connection.createArrayOf("integer", category);
+            Array ArrayRefSets = connection.createArrayOf("integer", refset);
+
+            call.setArray(1, ArrayCategories);
+            call.setArray(2, ArrayRefSets);
+            call.setArray(3, ArrayPattern);
+            call.setBoolean(4, isModeled);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                count = Integer.parseInt(rs.getString("count"));
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
+        return count;
+    }
+
+    @Override
     public int countConceptBy(String Pattern, Long[] category, boolean isModeled) {
         ConnectionBD connect = new ConnectionBD();
         int count = 0;
@@ -367,6 +467,11 @@ public class ConceptDAOImpl implements ConceptDAO {
             throw new EJBException(e);
         }
         return count;
+    }
+
+    @Override
+    public int countModeledConceptBy(Long categoryId) {
+        return this.countConceptBy((String[]) null, new Long[]{categoryId}, true);
     }
 
     @Override
@@ -481,18 +586,20 @@ public class ConceptDAOImpl implements ConceptDAO {
         String conceptId;
 
         id = Long.valueOf(resultSet.getString("id"));
+        conceptId = resultSet.getString("conceptid");
+
+        /* Se recupera la categoría como objeto de negocio */
         idCategory = Long.valueOf(resultSet.getString("id_category"));
         objectCategory = categoryDAO.getCategoryById(idCategory);
+
         check = resultSet.getBoolean("is_to_be_reviewed");
         consult = resultSet.getBoolean("is_to_be_consultated");
-        modeled = resultSet.getBoolean("is_modeled");
         completelyDefined = resultSet.getBoolean("is_fully_defined");
         published = resultSet.getBoolean("is_published");
-        heritable = resultSet.getBoolean("is_inherited");
-        conceptId = resultSet.getString("conceptid");
+        modeled = resultSet.getBoolean("is_modeled");
         String observation = resultSet.getString("observation");
         long idTagSMTK = resultSet.getLong("id_tag_smtk");
-
+        heritable = resultSet.getBoolean("is_inherited");
 
         /* Se recupera su Tag Semántikos */
         TagSMTK tagSMTKByID = tagSMTKDAO.findTagSMTKByID(idTagSMTK);
@@ -629,6 +736,136 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
+    public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize) {
+        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
+        ConnectionBD connect = new ConnectionBD();
+        CallableStatement call;
+
+        try (Connection connection = connect.getConnection();) {
+            call = connection.prepareCall("{call semantikos.find_concepts_by_refset_paginated(?,?,?,?)}");
+            call.setLong(1, refSet.getId());
+            call.setInt(2, page);
+            call.setInt(3, pageSize);
+            call.setBoolean(4, Boolean.TRUE);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            concepts = new ArrayList<>();
+            while (rs.next()) {
+                concepts.add(createConceptSMTKFromResultSet(rs));
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return concepts;
+    }
+
+    @Override
+    public List<ConceptSMTK> findConceptsWithStringBasicType(Category aCategory, RelationshipDefinition stringBasicTypeAttribute, String aString) {
+        ConnectionBD connect = new ConnectionBD();
+        List<ConceptSMTK> conceptSMTKs = new ArrayList<>();
+
+        /**
+         * semantikos.find_concepts_by_attribute_boolean(?,?,?)
+         * Param 1: Category ID.
+         * Param 2: Relationship Attribute ID
+         * Param 3: String value.
+         */
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.find_concepts_by_attribute_string(?,?,?)}")) {
+
+            call.setLong(1, aCategory.getId());
+            call.setLong(2, stringBasicTypeAttribute.getId());
+            call.setString(3, aString);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                ConceptSMTK aConcept = createConceptSMTKFromResultSet(rs);
+                conceptSMTKs.add(aConcept);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al llamar la consulta find_concepts_by_attribute_string con parámetros: " + aCategory.getId() + " " + stringBasicTypeAttribute.getId() + " " + stringBasicTypeAttribute.getId();
+            logger.error(errorMsg, e);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return conceptSMTKs;
+    }
+
+    @Override
+    public List<ConceptSMTK> findConceptsWithStringBasicType(Category aCategory, ArrayList<RefSet> refsets, RelationshipDefinition stringBasicTypeAttribute, String aString) {
+        ConnectionBD connect = new ConnectionBD();
+        List<ConceptSMTK> conceptSMTKs = new ArrayList<>();
+
+        Long[] theRefSetIDs = new Long[refsets.size()];
+        int i = 0;
+        for (RefSet refset : refsets) {
+            theRefSetIDs[i] = refset.getId();
+        }
+
+        /**
+         * semantikos.find_concepts_by_attribute_boolean(?,?,?,?)
+         * Param 1: Category ID.
+         * Param 2: Refsets.
+         * Param 3: Relationship Attribute ID
+         * Param 4: String value.
+         */
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.find_concepts_by_attribute_string(?,?,?,?)}")) {
+
+            call.setLong(1, aCategory.getId());
+            call.setArray(2, connection.createArrayOf("integer", theRefSetIDs));
+            call.setLong(3, stringBasicTypeAttribute.getId());
+            call.setString(4, aString);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                ConceptSMTK aConcept = createConceptSMTKFromResultSet(rs);
+                conceptSMTKs.add(aConcept);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al llamar la consulta find_concepts_by_attribute_string con parámetros: " + aCategory.getId() + " " + stringBasicTypeAttribute.getId() + " " + stringBasicTypeAttribute.getId();
+            logger.error(errorMsg, e);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return conceptSMTKs;
+    }
+
+    @Override
+    public Integer countModeledConceptsBy(RefSet refSet) {
+        ConnectionBD connect = new ConnectionBD();
+        CallableStatement call;
+        int count = 0;
+
+        try (Connection connection = connect.getConnection();) {
+            call = connection.prepareCall("{call semantikos.count_concepts_by_refset(?,?)}");
+            call.setLong(1, refSet.getId());
+            call.setBoolean(2, Boolean.TRUE);
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                count = Integer.parseInt(rs.getString("count"));
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+
+    @Override
     public List<ConceptSMTK> getConceptDraft() {
 
         List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
@@ -719,7 +956,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         ConnectionBD connect = new ConnectionBD();
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call= connection.prepareCall("{call semantikos.get_related_concept(?)}")) {
+             CallableStatement call = connection.prepareCall("{call semantikos.get_related_concept(?)}")) {
 
             call.setLong(1, conceptSMTK.getId());
             call.execute();
@@ -745,7 +982,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call= connection.prepareCall("{call semantikos.get_concepts_id()}")) {
+             CallableStatement call = connection.prepareCall("{call semantikos.get_concepts_id()}")) {
 
             call.execute();
             ResultSet rs = call.getResultSet();

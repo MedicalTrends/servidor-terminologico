@@ -15,27 +15,22 @@
 
 <composite:implementation>
 
-    <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-10,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
-
-        <p:outputPanel>
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-6 ui-lg-10">
             <h2>
-                <h:outputText value="Ver " rendered="#{not conceptBean.editable}"/>
-                <h:outputText value="Editar " rendered="#{conceptBean.editable and conceptBean.concept.persistent}" />
-                <h:outputText value="Crear " rendered="#{conceptBean.editable and not conceptBean.concept.persistent}"/>
-
                 <h:outputText value="Nuevo Concepto Borrador, #{cc.attrs.concept.category.name}" rendered="#{ not cc.attrs.concept.persistent}" />
-
                 <h:outputText value="Concepto Borrador #{cc.attrs.concept.conceptID}, #{cc.attrs.concept.category.name}" rendered="#{ cc.attrs.concept.persistent and not cc.attrs.concept.modeled}" />
                 <h:outputText value="Concepto Modelado #{cc.attrs.concept.conceptID}, #{cc.attrs.concept.category.name}" rendered="#{ cc.attrs.concept.persistent and cc.attrs.concept.modeled}" />
             </h2>
-        </p:outputPanel>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <p:button outcome="conceptEdit" value="Editar Concepto" styleClass="CyanButton ui-priority-primary" style="float: right" rendered="#{ not conceptBean.editable}">
+                <f:param name="editMode" value="#{true}" />
+                <f:param name="idConcept" value="#{cc.attrs.concept.id}" />
+            </p:button>
+        </div>
+    </div>
 
-        <p:button outcome="conceptEdit" value="Editar Concepto" styleClass="CyanButton ui-priority-primary" style="float: right" rendered="#{ not conceptBean.editable}">
-            <f:param name="editMode" value="#{true}" />
-            <f:param name="idConcept" value="#{cc.attrs.concept.id}" />
-        </p:button>
-
-    </h:panelGrid>
 
 </composite:implementation>
 </html>

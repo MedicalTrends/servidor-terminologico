@@ -1,9 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.Institution;
 import cl.minsal.semantikos.model.RefSet;
 
 import javax.ejb.Local;
@@ -53,22 +51,20 @@ public interface RefSetDAO {
      */
     public List<RefSet> getReftsets();
 
-    /**
-     * Este método es el encargado de obtener los refset donde se encuentra un concepto
-     * @param conceptSMTK
-     * @return lista de refset relacionados con el concepto
-     */
-
     public List<RefSet> getRefsetsBy(ConceptSMTK conceptSMTK);
 
-    public List<RefSet> getRefsetBy(Institution institution);
+    /**
+     * @param pattern Patron de nombre del REFSET buscado
+     * @return Lista de REFSETs con nombre LIKE el patron ingresado (se espera lista con un solo elemento)
+     */
+    public List<RefSet> findRefsetsByName(String pattern);
 
     /**
-     * Este metodo obtiene un refset por ID
-     * @param id
+     * RefSets a los que pertenece un concepto
+     * @param
      * @return
      */
-    public RefSet getRefsetBy(long id);
+    public List<RefSet> findByConcept(ConceptSMTK conceptSMTK);
 
-    public List<RefSet> getRefsetsBy(List<Long> categories, String pattern);
+    public RefSet getRefsetBy(long id);
 }

@@ -7,7 +7,6 @@ import cl.minsal.semantikos.model.relationships.TargetType;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
-import java.util.List;
 
 /**
  * @author Andrés Farías on 11/24/16.
@@ -47,11 +46,6 @@ public class ConceptTransferBR {
 
         if (!conceptSMTK.isModeled() || !conceptSMTK.getRelationshipsTo(TargetType.SMTK).isEmpty()) {
             throw new BusinessRuleException("BR-TRANS-001", "Sólo se pueden trasladar Conceptos Modelados y que no tengan Relaciones a otros Conceptos Semantikos");
-        }
-        List<ConceptSMTK> conceptSMTKList = conceptManager.getRelatedConcepts(conceptSMTK);
-        if(!conceptSMTKList.isEmpty()){
-            throw new BusinessRuleException("BR-TRANS-001", "Sólo se pueden trasladar Conceptos Modelados y que no tengan Relaciones a otros Conceptos Semantikos");
-
         }
     }
 

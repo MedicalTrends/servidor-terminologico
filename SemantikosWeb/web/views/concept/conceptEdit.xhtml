@@ -15,7 +15,6 @@
             <f:viewParam name="idConcept" value="#{conceptBean.idConcept}" />
             <f:viewParam name="favoriteDescription" value="#{conceptBean.favoriteDescription}" />
             <f:viewParam name="descriptionPending" value="#{conceptBean.idTermPending}" />
-            <f:viewParam name="pendingTerms" value="#{conceptBean.pendingTerms}" />
         </f:metadata>
 
         <div class="Container100">
@@ -35,13 +34,6 @@
 
                                                 <!--p:messages autoUpdate="true"></p:messages-->
 
-                                                <p:breadCrumb>
-                                                    <p:menuitem value="Inicio" url="/views/home.xhtml" />
-                                                    <p:menuitem value="Categorías" url="/views/browser/mainMenu.xhtml" />
-                                                    <p:menuitem value="#{conceptBean.category}" url="/views/browser/generalBrowser.xhtml?idCategory=#{conceptBean.category.id}" />
-                                                    <p:menuitem value="#{conceptBean.concept.persistent?conceptBean.concept.descriptionFSN:'Nuevo Concepto Borrador'}" url="#" />
-                                                </p:breadCrumb>
-                                                <p:spacer />
                                                 <smtk:title concept="#{conceptBean.concept}"/>
                                                 <p:separator />
                                                 <p:panel id="conceptHeader" style="border: hidden;" styleClass="conceptHeader">
@@ -71,14 +63,14 @@
                                                     </smtk:descriptions>
                                                 </p:tab>
                                                 <br/>
-                                                <p:tab title="Atributos" rendered="#{not empty conceptBean.orderedSMTKRelationshipDefinitions}">
+                                                <p:tab title="Atributos" rendered="#{not empty conceptBean.category.relationshipDefinitions}">
                                                     <!--Relaciones -->
                                                     <p:outputPanel id="atributos"
                                                                    widgetVar="panelAtributos"
                                                                    styleClass="attributes"
-                                                                   rendered="#{ not empty conceptBean.orderedSMTKRelationshipDefinitions}">
+                                                                   rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
-                                                        <h:dataTable style="width: 100%;" value="#{conceptBean.orderedSMTKRelationshipDefinitions}"
+                                                        <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
                                                                      var="relationshipDefinition">
 
                                                             <h:column>
@@ -332,7 +324,6 @@
                 $("input[id$=FSN]").val($(this).val());
                 $("input[id$=FSN]").trigger("change");
             });
-
 
         </script>
 

@@ -261,14 +261,6 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
         }
     }
 
-    public void setOrder(int order){
-        RelationshipAttribute attribute = getOrderAttribute();
-
-        if (attribute != null) {
-            attribute.setTarget(new BasicTypeValue(order));
-        }
-    }
-
     public boolean isMultiplicitySatisfied(RelationshipAttributeDefinition attributeDefinition) {
         return this.getAttributesByAttributeDefinition(attributeDefinition).size() >= attributeDefinition.getMultiplicity().getLowerBoundary();
     }

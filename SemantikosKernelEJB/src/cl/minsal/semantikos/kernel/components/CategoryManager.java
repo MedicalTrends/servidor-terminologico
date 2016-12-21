@@ -37,6 +37,13 @@ public interface CategoryManager {
     public Category getCategoryById(long idCategory);
 
     /**
+     * Entrega la Categoría que tiene un nombre LIKE @{name} o NULL si no existe
+     * @param name
+     * @return
+     */
+    public Category getCategoryByName(String name);
+
+    /**
      * Este método responsable de recuperar toda la meta-data que consituye la definición de una categoría, en
      * particular todos los atributos que define.
      *
@@ -66,4 +73,6 @@ public interface CategoryManager {
     public Category createCategory(Category category, User user);
 
     public List<Category> getRelatedCategories(Category category);
+
+    public List<Category> findCategories(List<String> categoriesNames);
 }

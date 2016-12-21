@@ -23,11 +23,6 @@
     </h:head>
 
     <h:body>
-        <h:form id="timeout">
-            <p:idleMonitor timeout="240000">
-                <p:ajax event="idle" listener="#{timeOutSessionBean.timeout}" />
-            </p:idleMonitor>
-        </h:form>
 
         <f:facet name="last">
             <h:outputStylesheet name="semantikos/css/customStyle.css" />

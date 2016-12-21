@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.RefSetDAO;
+import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.*;
 
@@ -8,11 +9,10 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static java.lang.System.currentTimeMillis;
-import static java.lang.System.in;
 
 /**
  * @author Andrés Farías on 9/20/16.
@@ -50,9 +50,9 @@ public class RefSetManagerImpl implements RefSetManager {
         RefSet refSet = new RefSet(name, institution, new Timestamp(currentTimeMillis()));
         refsetDAO.persist(refSet);
 
-        //TODO: Verificar si se debe guardar un registro
+
         /* Se registra la creación */
-        //auditManager.recordRefSetCreation(refSet, user);
+        auditManager.recordRefSetCreation(refSet, user);
 
 
         /* Se registra la creación del RefSet */
@@ -68,10 +68,9 @@ public class RefSetManagerImpl implements RefSetManager {
         /* Se crea el RefSet y se persiste */
         refsetDAO.update(refSet);
 
-
-        //TODO: Verificar si se debe guardar un registro
         /* Se registra la creación */
-        //auditManager.recordRefSetUpdate(refSet, user);
+        auditManager.recordRefSetUpdate(refSet, user);
+
 
 
         /* Se registra la creación del RefSet */
@@ -125,22 +124,49 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
-    public List<RefSet> getRefsetByInstitution(Institution institution) {
-        if(institution.getId()==-1){
-            return Collections.emptyList();
-        }else{
-            return refsetDAO.getRefsetBy(institution);
-        }
-
-    }
-
-    @Override
     public List<RefSet> getRefsetsBy(ConceptSMTK conceptSMTK) {
         return refsetDAO.getRefsetsBy(conceptSMTK);
     }
 
     @Override
-    public List<RefSet> getRefsetsBy(List<Long> categories, String pattern) {
+    public List<RefSet> findRefsetsByName(String pattern) {
+        return this.refsetDAO.findRefsetsByName(StringUtils.toSQLLikePattern(pattern));
+    }
+
+    @Override
+    public RefSet getRefsetByName(String pattern) {
+        List<RefSet> found = this.findRefsetsByName(pattern);
+        if ( found != null && !found.isEmpty() ) {
+            return found.get(0);
+        }
         return null;
+    }
+
+    @Override
+    public List<RefSet> findRefSetsByName(List<String> refSetNames) {
+        List<RefSet> res = new ArrayList<>();
+        if ( refSetNames != null ) {
+            for ( String refSetName : refSetNames ) {
+                RefSet found = this.getRefsetByName(refSetName);
+                if ( found != null ) {
+                    res.add(found);
+                } else {
+                    throw new NoSuchElementException("RefSet no encontrado: " + refSetName);
+                }
+            }
+        }
+        return res;
+    }
+
+    @Override
+    public void loadConceptRefSets(ConceptSMTK conceptSMTK) {
+        if (conceptSMTK != null) {
+            conceptSMTK.setRefsets(this.findByConcept(conceptSMTK));
+        }
+    }
+
+    @Override
+    public List<RefSet> findByConcept(ConceptSMTK conceptSMTK) {
+        return this.refsetDAO.findByConcept(conceptSMTK);
     }
 }

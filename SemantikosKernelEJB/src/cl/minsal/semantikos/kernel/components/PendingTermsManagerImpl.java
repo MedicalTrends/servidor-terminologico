@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.components;
 
+import cl.minsal.semantikos.kernel.daos.PendingTermDAO;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.PendingTermAddingBR;
 
@@ -26,7 +27,7 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
     DescriptionManager descriptionManager;
 
     @Override
-    public void addPendingTerm(PendingTerm pendingTerm, User loggedUser) {
+    public Description addPendingTerm(PendingTerm pendingTerm, User loggedUser) {
 
         /* Validación de pre-condiciones */
         pendingTermAddingBR.validatePreConditions(pendingTerm);
@@ -38,24 +39,19 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
 
         /* 2. Agregarlo al concepto especial 'Pendientes' */
         ConceptSMTK pendingTermsConcept = conceptManager.getPendingConcept();
-        Description description = descriptionManager.bindDescriptionToConcept(pendingTermsConcept, pendingTerm.getTerm(),pendingTerm.isSensibility(), DescriptionType.SYNONYMOUS, loggedUser);
-
+        Description description = descriptionManager.bindDescriptionToConcept(pendingTermsConcept, pendingTerm.getTerm(), DescriptionType.SYNONYMOUS, loggedUser);
         pendingTerm.setRelatedDescription(description);
         pendingTermDAO.bindTerm2Description(pendingTerm, description);
 
         /* Validación de post-condiciones */
         pendingTermAddingBR.validatePostConditions(pendingTerm);
+
+        /* Se retorna la descripción creada */
+        return description;
     }
 
     @Override
     public List<PendingTerm> getAllPendingTerms() {
         return pendingTermDAO.getAllPendingTerms();
     }
-
-    @Override
-    public PendingTerm getPendingTermById(long id) {
-        return pendingTermDAO.getPendingTermById(id);
-    }
-
-
 }

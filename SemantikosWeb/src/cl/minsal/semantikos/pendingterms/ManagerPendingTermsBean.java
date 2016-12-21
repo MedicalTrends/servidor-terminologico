@@ -1,6 +1,5 @@
 package cl.minsal.semantikos.pendingterms;
 
-import cl.minsal.semantikos.beans.messages.MessageBean;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
@@ -15,12 +14,10 @@ import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +26,7 @@ import java.util.List;
 
 
 @ManagedBean(name = "managerPendingTermsBean")
-@SessionScoped
+@ViewScoped
 public class ManagerPendingTermsBean {
 
     @EJB
@@ -47,8 +44,16 @@ public class ManagerPendingTermsBean {
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
 
-    @ManagedProperty( value = "#{messageBean}")
-    private MessageBean messageBean;
+    @ManagedProperty(value="#{conceptBean}")
+    private ConceptBean conceptBean;
+
+    public ConceptBean getConceptBean() {
+        return conceptBean;
+    }
+
+    public void setConceptBean(ConceptBean conceptBean) {
+        this.conceptBean = conceptBean;
+    }
 
     private User user;
 
@@ -64,15 +69,6 @@ public class ManagerPendingTermsBean {
 
     private ConceptSMTK conceptSMTKSelected;
 
-    private Category categorySelected;
-
-    public Category getCategorySelected() {
-        return categorySelected;
-    }
-
-    public void setCategorySelected(Category categorySelected) {
-        this.categorySelected = categorySelected;
-    }
 
     public ConceptSMTK getConceptSMTKSelected() {
         return conceptSMTKSelected;
@@ -129,11 +125,6 @@ public class ManagerPendingTermsBean {
     public void setAuthenticationBean(AuthenticationBean authenticationBean) {
         this.authenticationBean = authenticationBean;
     }
-
-    public void setMessageBean(MessageBean messageBean) {
-        this.messageBean = messageBean;
-    }
-
     @PostConstruct
     public void init() {
         conceptPending = conceptManager.getPendingConcept();
@@ -154,7 +145,7 @@ public class ManagerPendingTermsBean {
 
         try {
             descriptionManager.moveDescriptionToConcept(conceptPending, termSelected.getRelatedDescription(), user);
-        } catch (EJBException e) {
+        }catch (EJBException e){
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
 
         }
@@ -166,53 +157,8 @@ public class ManagerPendingTermsBean {
     }
 
     public void createNewConcept(PendingTerm pendingT) throws IOException {
-
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-        if(categorySelected!=null){
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categorySelected.getId() +"&idConcept=0&favoriteDescription=&descriptionPending="+pendingT.getRelatedDescription().getId() );
-        }else{
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + pendingT.getCategory().getId() +"&idConcept=0&favoriteDescription=&descriptionPending="+pendingT.getRelatedDescription().getId() );
-        }
-    }
-
-    public List<PendingTerm> pendingTermList;
-
-    public List<PendingTerm> getPendingTermList() {
-        return pendingTermList;
-    }
-
-    public void setPendingTermList(List<PendingTerm> pendingTermList) {
-        this.pendingTermList = pendingTermList;
-    }
-
-    public void newConcept() throws IOException {
-        if(!pendingTermList.isEmpty()){
-            ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categorySelected.getId() +"&idConcept=0&favoriteDescription=&pendingTerms=true");
-
-        }else{
-            messageBean.messageError("No se han seleccionado términos");
-        }
-    }
-
-    public void translateMultipleDescription() {
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        for (PendingTerm pendingTerm : pendingTermList) {
-            conceptPending.removeDescription(pendingTerm.getRelatedDescription());
-            pendingTerm.getRelatedDescription().setConceptSMTK(conceptSMTKSelected);
-            try {
-                descriptionManager.moveDescriptionToConcept(conceptPending, pendingTerm.getRelatedDescription(), user);
-            } catch (EJBException e) {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
-
-            }
-        }
-
-        pendingTerms = pendingTermsManager.getAllPendingTerms();
-        conceptSMTKSelected = null;
-        pendingTermList= new ArrayList<>();
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successful", "Las descripciones fueron trasladadas exitosamente"));
+        eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + pendingT.getCategory().getId() +"&idConcept=0&favoriteDescription=&descriptionPending="+pendingT.getRelatedDescription().getId() );
     }
 
 

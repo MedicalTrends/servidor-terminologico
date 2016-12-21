@@ -9,9 +9,6 @@
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: net.bull.javamelody:javamelody-core:1.59.0" />
           <element id="library" level="project" name="Maven: org.jrobin:jrobin:1.5.9" />
-          <element id="library" level="project" name="Maven: com.sun.jersey:jersey-server:1.19.1" />
-          <element id="library" level="project" name="Maven: com.sun.jersey:jersey-core:1.19.1" />
-          <element id="library" level="project" name="Maven: javax.ws.rs:jsr311-api:1.1.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">

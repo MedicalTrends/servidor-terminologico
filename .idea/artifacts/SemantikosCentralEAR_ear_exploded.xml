@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-ear" name="SemantikosCentralEAR:ear exploded">
-    <output-path>$PROJECT_DIR$/SemantikosCentralEAR/target/SemantikosCentralEAR-2.2.2</output-path>
+    <output-path>$PROJECT_DIR$/SemantikosCentralEAR/target/SemantikosCentralEAR-2.1.1</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="SemantikosCentralEAR/javaeeApplication/JavaEE" />
       <element id="directory" name="META-INF">
@@ -23,14 +23,20 @@
         <element id="library" level="project" name="Maven: org.jsoup:jsoup:1.10.1" />
         <element id="library" level="project" name="Maven: javax.validation:validation-api:1.0.0.GA" />
       </element>
-      <element id="archive" name="SemantikosWeb-2.2.2.war">
+      <element id="archive" name="SemantikosWeb-2.1.1.war">
         <element id="artifact" artifact-name="SemantikosWeb:war exploded" />
       </element>
-      <element id="archive" name="SemantikosBrowser-2.2.2.war">
+      <element id="archive" name="SemantikosBrowser-2.1.1.war">
         <element id="artifact" artifact-name="SemantikosBrowser:war exploded" />
       </element>
-      <element id="archive" name="SemantikosKernelEJB-2.2.2.jar">
+      <element id="archive" name="SemantikosKernelEJB-2.1.1.jar">
         <element id="artifact" artifact-name="SemantikosKernelEJB:ejb exploded" />
+      </element>
+      <element id="archive" name="SemantikosWSEJB-2.1.1.jar">
+        <element id="artifact" artifact-name="SemantikosWSEJB:ejb exploded" />
+      </element>
+      <element id="archive" name="SemantikosWS-2.1.1.war">
+        <element id="artifact" artifact-name="SemantikosWS:war exploded" />
       </element>
     </root>
   </artifact>

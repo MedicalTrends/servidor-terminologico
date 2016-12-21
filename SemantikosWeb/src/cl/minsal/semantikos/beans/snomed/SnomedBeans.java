@@ -6,7 +6,6 @@ import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterf
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -64,32 +63,9 @@ public class SnomedBeans {
      * @return retorna true o false segun corresponda.
      */
     public boolean existRelationshipISAMapping(ConceptSMTKWeb concept) {
-
         for (Relationship relationship : concept.getRelationshipsWeb()) {
-            boolean isAMapping= isMapping(relationship);
-            if(isAMapping){
-                return true;
-            }
+            return isMapping(relationship);
         }
-        return false;
-    }
-
-    /**
-     * Metodo encargado de ver si existe una relacion Es un mapeo en el concepto que se esta creando o editando.
-     *
-     * @return retorna true o false segun corresponda.
-     */
-    public boolean existRelationshipISAMapping(ConceptSMTKWeb concept, RelationshipDefinition relationshipDefinition) {
-        if(relationshipDefinition.getId()==ID_RELATIONSHIP_DEFINITION_SNOMED_CT){
-            for (Relationship relationship : concept.getRelationshipsWeb()) {
-                boolean isAMapping= isMapping(relationship);
-                if(isAMapping){
-                    return true;
-                }
-            }
-        }
-
-
         return false;
     }
 

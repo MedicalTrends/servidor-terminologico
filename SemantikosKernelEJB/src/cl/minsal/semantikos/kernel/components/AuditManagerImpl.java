@@ -59,16 +59,11 @@ public class AuditManagerImpl implements AuditManager {
         ConceptAuditAction conceptAuditAddingDescription = new ConceptAuditAction(targetConcept, CONCEPT_DESCRIPTION_RECEPTION, now(), user, description);
 
         /* Se validan las reglas de negocio para realizar el registro */
-        if (sourceConcept.isModeled()) {
-            new HistoryRecordBL().validate(conceptAuditMovement);
-            auditDAO.recordAuditAction(conceptAuditMovement);
-        }
+        if(sourceConcept.isModeled())new HistoryRecordBL().validate(conceptAuditMovement);
+        new HistoryRecordBL().validate(conceptAuditAddingDescription);
 
-        if(targetConcept.isModeled()){
-            new HistoryRecordBL().validate(conceptAuditAddingDescription);
-            auditDAO.recordAuditAction(conceptAuditAddingDescription);
-        }
-
+        if(sourceConcept.isModeled())auditDAO.recordAuditAction(conceptAuditMovement);
+        auditDAO.recordAuditAction(conceptAuditAddingDescription);
     }
 
     @Override
@@ -85,7 +80,7 @@ public class AuditManagerImpl implements AuditManager {
     public void recordFavouriteDescriptionUpdate(ConceptSMTK conceptSMTK, Description originalDescription, User user) {
 
         /* Condición sobre la cual se debe registrar el cambio */
-        if (!conceptSMTK.isModeled() || !originalDescription.getDescriptionType().equals(PREFERIDA)) {
+        if(!conceptSMTK.isModeled() || !originalDescription.getDescriptionType().equals(PREFERIDA)){
             return;
         }
 
@@ -208,7 +203,7 @@ public class AuditManagerImpl implements AuditManager {
     public void recordRefSetBinding(RefSet refSet, ConceptSMTK conceptSMTK, User user) {
 
         /* Se crea el registro de historial */
-        RefSetAuditAction refSetAuditAction = new RefSetAuditAction(refSet, REFSET_UPDATE, now(), user, conceptSMTK);
+        RefSetAuditAction refSetAuditAction = new RefSetAuditAction(refSet, REFSET_UPDATE, now(), user,conceptSMTK);
 
         /* Se validan las reglas de negocio para realizar el registro */
         new HistoryRecordBL().validate(refSetAuditAction);

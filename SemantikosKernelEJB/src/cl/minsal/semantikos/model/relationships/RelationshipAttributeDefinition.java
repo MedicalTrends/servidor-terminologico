@@ -19,11 +19,9 @@ public class RelationshipAttributeDefinition {
     /** Multiplicidad */
     private Multiplicity multiplicity;
 
-    private static final String ORDER_ATTRIBUTE = "orden";
+    private String ORDER_ATTRIBUTE = "orden";
 
-    private static final String RELATIONSHIP_TYPE_ATTRIBUTE = "tipo de relación";
-
-    private static final long GRUOUP_SCT = 29;
+    private String RELATIONSHIP_TYPE_ATTRIBUTE = "tipo de relación";
 
     public RelationshipAttributeDefinition(long id, TargetDefinition target, String name, Multiplicity multiplicity) {
         this.id = id;
@@ -70,10 +68,6 @@ public class RelationshipAttributeDefinition {
 
     public boolean isRelationshipTypeAttribute(){
         return this.getName().equalsIgnoreCase(RELATIONSHIP_TYPE_ATTRIBUTE);
-    }
-
-    public boolean isGroupSCT(){
-        return this.id==GRUOUP_SCT;
     }
 
     public boolean equals(Object o) {

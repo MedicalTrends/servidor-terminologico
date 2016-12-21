@@ -18,14 +18,13 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter("conceptConverter")
 public class ConceptConverter implements Converter{
 
-
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
         if(value != null && value.trim().length() > 0) {
             try {
 
                 ELContext elContext = fc.getELContext();
                 SMTKTypeBean bean = (SMTKTypeBean) FacesContext.getCurrentInstance().getApplication() .getELResolver().getValue(elContext, null, "smtkBean");
-                return bean.getConceptManager().getConceptByID(Long.parseLong(value));
+                return bean.getConceptManager().getConceptById(Long.parseLong(value));
 
             } catch(NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se seleccionó el concepto de destino."));
@@ -44,6 +43,4 @@ public class ConceptConverter implements Converter{
             return null;
         }
     }
-
-
 }

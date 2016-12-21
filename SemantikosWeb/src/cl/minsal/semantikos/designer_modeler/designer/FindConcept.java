@@ -39,7 +39,7 @@ public class FindConcept implements Serializable{
 
     private Long[] categoryArrayID;
 
-    private Category categorySelected;
+
 
     @PostConstruct
     public void init() {
@@ -59,10 +59,6 @@ public class FindConcept implements Serializable{
     }
     public List<ConceptSMTK> getConceptSearchInputAndCategories(String pattern) {
         RequestContext.getCurrentInstance().update("::conceptTranslate");
-
-        if(categorySelected!=null){
-            categoryArrayID= new Long[] {categorySelected.getId()};
-        }
         if (pattern != null) {
             if (pattern.trim().length() >= 2) {
                 if(standardizationPattern(pattern).length()<=1)return null;
@@ -112,6 +108,7 @@ public class FindConcept implements Serializable{
     }
 
     public List<Category> getCategoryList() {
+        System.out.println("getCategoryList");
         return categoryList;
     }
 
@@ -133,13 +130,5 @@ public class FindConcept implements Serializable{
 
     public void setCategoryArrayID(Long[] categoryArrayID) {
         this.categoryArrayID = categoryArrayID;
-    }
-
-    public Category getCategorySelected() {
-        return categorySelected;
-    }
-
-    public void setCategorySelected(Category categorySelected) {
-        this.categorySelected = categorySelected;
     }
 }

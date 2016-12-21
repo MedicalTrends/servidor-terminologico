@@ -1,8 +1,10 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.ejb.Local;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,6 +47,14 @@ public interface ConceptDAO {
     public List<ConceptSMTK> getConceptBy(String[] pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber);
 
     /**
+     * Este método es responsable de recuperar los conceptos que coincidan con un cierto patrón (<code>pattern</code>)
+     * y que pertenezcan a una o más categorías y uno o mas refsets.
+     *
+     * @return
+     */
+    public List<ConceptSMTK> getConceptBy(String[] pattern, Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber);
+
+    /**
      * Este método es responsable de recuperar los conceptos que pertenecen a un conjunto de categorías.
      *
      * @param categories Las categorías desde donde se extraen los conceptos.
@@ -56,7 +66,12 @@ public interface ConceptDAO {
      */
     public List<ConceptSMTK> getConceptBy(Long[] categories, boolean modeled, int pageSize, int pageNumber);
 
+    public List<ConceptSMTK> getModeledConceptBy(Long categoryId, int pageSize, int pageNumber);
+
     /*Método temporal para trabajar con el navegador de conceptos*/
+    @Deprecated
+    public List<ConceptSMTK> getConceptBy(Category category, int pageSize, int pageNumber);
+
     @Deprecated
     public List<ConceptSMTK> getConceptBy(Category category);
 
@@ -66,7 +81,11 @@ public interface ConceptDAO {
 
     public int countConceptBy(String[] Pattern, Long[] category, boolean isModeled);
 
+    public Integer countConceptBy(String[] Pattern, Long[] category, Long[] refset, boolean isModeled);
+
     public int countConceptBy(String Pattern, Long[] category, boolean isModeled);
+
+    public int countModeledConceptBy(Long categoryId);
 
     /**
      * Este método es responsable de recuperar todos los objetos que están asociados a un Tag.
@@ -107,8 +126,39 @@ public interface ConceptDAO {
 
     public List<ConceptSMTK> getConceptBy(RefSet refSet);
 
+    public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize);
+
+    /**
+     * Este método es responsable de encontrar los conceptos de una cierta categoría que poseen un atributo buleano con
+     * un cierto valor <code>aBoolean</code>.
+     *
+     * @param aCategory                 La categoría a la cual pertenecen los objetos buscados.
+     * @param booleanBasicTypeAttribute El atributo buleano.
+     * @param aString                   El valor buleano.
+     *
+     * @return Una lista de conceptos con el atributo en el valor deseado.
+     */
+    public List<ConceptSMTK> findConceptsWithStringBasicType(Category aCategory, RelationshipDefinition booleanBasicTypeAttribute, String aString);
+
+    /**
+     * Este método es responsable de encontrar los conceptos de una cierta categoría que poseen un atributo buleano con
+     * un cierto valor <code>aBoolean</code>. Cada concepto debe encontrarse al menos en uno de los RefSets
+     * especificados en el parámetro <code>refsets</code>.
+     *
+     * @param aCategory                La categoría a la cual pertenecen los objetos buscados.
+     * @param refsets                  Los refsets en los cuales debe encontrarse cada concepto (en uno al menos).
+     * @param stringBasicTypeAttribute El atributo buleano.
+     * @param aString                  El valor buleano.
+     *
+     * @return Una lista de conceptos con el atributo en el valor deseado.
+     */
+    public List<ConceptSMTK> findConceptsWithStringBasicType(Category aCategory, ArrayList<RefSet> refsets, RelationshipDefinition stringBasicTypeAttribute, String aString);
+
+    public Integer countModeledConceptsBy(RefSet refSet);
+
     /**
      * Metodo  que retorna los conceptos en borrador
+     *
      * @return lista de conceptos en borrador
      */
 

@@ -22,6 +22,9 @@ import java.util.List;
 @Stateless
 public class CrossmapsManagerImpl implements CrossmapsManager {
 
+    /** El logger de la clase */
+    private static final Logger logger = LoggerFactory.getLogger(CrossmapsManagerImpl.class);
+
     @EJB
     private AuditManager auditManager;
 
@@ -31,7 +34,18 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     @EJB
     private RelationshipManager relationshipManager;
 
-    private static final Logger logger = LoggerFactory.getLogger(CrossmapsManagerImpl.class);
+    @EJB
+    private CrossmapFactory crossmapFactory;
+
+    /** Caché de los crossmapSets */
+    private List<CrossmapSet> crossmapSetsCache;
+
+    /**
+     * Inicialización básica.
+     */
+    public CrossmapsManagerImpl() {
+        this.crossmapSetsCache = new ArrayList<>();
+    }
 
     @Override
     public Crossmap create(DirectCrossmap directCrossmap, User user) {
@@ -80,20 +94,69 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
 
     @Override
     public List<CrossmapSet> getCrossmapSets() {
-        return crossmapsDAO.getCrossmapSets();
+
+        /* Se actualiza el caché si está vacío */
+        if (crossmapSetsCache.size() == 0){
+            this.crossmapSetsCache.addAll(crossmapsDAO.getCrossmapSets());
+        }
+
+        /* Se retorna el caché, que estamos seguro que fue actualizado */
+        return this.crossmapSetsCache;
     }
 
     @Override
     public List<DirectCrossmap> getDirectCrossmaps(ConceptSMTK conceptSMTK) {
 
-        ArrayList<DirectCrossmap> crossmaps = new ArrayList<>();
-        // TODO
-        return crossmaps;
+        /* Se recuperan todas las relaciones del concepto, dentro de las cuales estarán los crossmaps directos */
+        List<Relationship> relationshipsBySourceConcept = relationshipManager.getRelationshipsBySourceConcept(conceptSMTK);
+
+        /* Luego se filtran las relaciones a crossmaps indirectos */
+        ArrayList<DirectCrossmap> directCrossmaps = new ArrayList<>();
+        for (Relationship relationship : relationshipsBySourceConcept) {
+            if (relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()){
+
+                /* Se crea una instancia precisa */
+                DirectCrossmap directCrossmap;
+                if(relationship instanceof DirectCrossmap){
+                    directCrossmap = (DirectCrossmap) relationship;
+                } else {
+                    directCrossmap = crossmapFactory.createDirectCrossmap(relationship);
+                }
+
+                /* Y se agrega a la lista */
+                directCrossmaps.add(directCrossmap);
+            }
+        }
+
+        return directCrossmaps;
+    }
+
+    @Override
+    public List<CrossmapSetMember> getDirectCrossmapsSetMembersOf(ConceptSMTK conceptSMTK) {
+
+        /* Se obtienen los crossmaps directos del concepto */
+        List<DirectCrossmap> directCrossmaps = this.getDirectCrossmaps(conceptSMTK);
+
+        /* Luego se almacenan los crossmapSetMembers referenciados en una lista */
+        ArrayList<CrossmapSetMember> directCrossmapSetMembers = new ArrayList<>();
+        for (DirectCrossmap directCrossmap : directCrossmaps) {
+            directCrossmapSetMembers.add(directCrossmap.getTarget());
+        }
+
+        return directCrossmapSetMembers;
     }
 
     @Override
     public CrossmapSetMember getCrossmapSetMemberById(long id) {
         return crossmapsDAO.getCrossmapSetMemberById(id);
+    }
+
+    @Override
+    public List<CrossmapSetMember> getCrossmapSetByAbbreviatedName(String crossmapSetAbbreviatedName) {
+
+        /* Lo primero es recuperar el crossmapSet a partir de su nombre abreviado */
+
+        return null;
     }
 
     @Override
