@@ -1076,10 +1076,6 @@
             <nombreCategoria>Fármacos - Sustancia</nombreCategoria>\r
             <!--Zero or more repetitions:-->\r
             <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
-            <!--Optional:-->\r
-            <numeroPagina>0</numeroPagina>\r
-            <!--Optional:-->\r
-            <tamanoPagina>10</tamanoPagina>\r
          </peticionBuscarTermino>\r
       </ser:buscarTermino>\r
    </soapenv:Body>\r
@@ -1093,14 +1089,10 @@
             <nombreCategoria>Fármacos - Sustancia</nombreCategoria>\r
             <!--Zero or more repetitions:-->\r
             <nombreRefSet>nuevo refset</nombreRefSet>\r
-            <!--Optional:-->\r
-            <numeroPagina>0</numeroPagina>\r
-            <!--Optional:-->\r
-            <tamanoPagina>10</tamanoPagina>\r
          </peticionBuscarTermino>\r
       </ser:buscarTermino>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="6431a5de-bbbc-47c1-9871-9b3e2c08ecea" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="13c4366e-493d-4c12-bb19-9602d7c3df8a" name="buscarTermino3"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino3" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="13c4366e-493d-4c12-bb19-9602d7c3df8a" name="buscarTermino3"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino3" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:buscarTermino>\r
@@ -1110,10 +1102,6 @@
             <!--<nombreCategoria>Fármacos - Sustancia</nombreCategoria>\r-->
             <!--Zero or more repetitions:-->\r
             <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
-            <!--Optional:-->\r
-            <numeroPagina>0</numeroPagina>\r
-            <!--Optional:-->\r
-            <tamanoPagina>10</tamanoPagina>\r
          </peticionBuscarTermino>\r
       </ser:buscarTermino>\r
    </soapenv:Body>\r
@@ -1127,10 +1115,6 @@
             <nombreCategoria>Fármacos - Sustanciasss</nombreCategoria>\r
             <!--Zero or more repetitions:-->\r
             <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
-            <!--Optional:-->\r
-            <numeroPagina>0</numeroPagina>\r
-            <!--Optional:-->\r
-            <tamanoPagina>10</tamanoPagina>\r
          </peticionBuscarTermino>\r
       </ser:buscarTermino>\r
    </soapenv:Body>\r
@@ -1144,14 +1128,10 @@
             <nombreCategoria>Fármacos - Sustancia</nombreCategoria>\r
             <!--Zero or more repetitions:-->\r
             <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
-            <!--Optional:-->\r
-            <numeroPagina>0</numeroPagina>\r
-            <!--Optional:-->\r
-            <tamanoPagina>10</tamanoPagina>\r
          </peticionBuscarTermino>\r
       </ser:buscarTermino>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="58651308-657f-49ad-a462-b13f5af7cc58" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="77cd6cab-cb1c-49aa-a9f1-c295aad296ec" name="buscarTermino7"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino7" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="77cd6cab-cb1c-49aa-a9f1-c295aad296ec" name="buscarTermino7"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino7" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:buscarTermino>\r
@@ -1178,14 +1158,10 @@
             <nombreCategoria>Fármacos - Sustancia</nombreCategoria>\r
             <!--Zero or more repetitions:-->\r
             <nombreRefSet>nuevo refset</nombreRefSet>\r
-            <!--Optional:-->\r
-            <numeroPagina>0</numeroPagina>\r
-            <!--Optional:-->\r
-            <tamanoPagina>10</tamanoPagina>\r
          </peticionBuscarTermino>\r
       </ser:buscarTermino>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="4238f148-068b-4e60-8c89-e74011378166" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="af387121-fe79-4ce9-a5b1-46ea311c01b3" name="buscarTermino9"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino9" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="af387121-fe79-4ce9-a5b1-46ea311c01b3" name="buscarTermino9"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino9" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:buscarTermino>\r
@@ -1195,10 +1171,6 @@
             <nombreCategoria>Fármacos - Sustancia</nombreCategoria>\r
             <!--Zero or more repetitions:-->\r
             <nombreRefSet>nuevo refset con conceptos</nombreRefSet>\r
-            <!--Optional:-->\r
-            <numeroPagina>0</numeroPagina>\r
-            <!--Optional:-->\r
-            <tamanoPagina>10</tamanoPagina>\r
          </peticionBuscarTermino>\r
       </ser:buscarTermino>\r
    </soapenv:Body>\r
@@ -1212,14 +1184,1088 @@
             <!--<nombreCategoria>Fármacos - Sustancia</nombreCategoria>\r-->
             <!--Zero or more repetitions:-->\r
             <nombreRefSet>nuevo refset con conceptos</nombreRefSet>\r
-            <!--Optional:-->\r
-            <numeroPagina>0</numeroPagina>\r
-            <!--Optional:-->\r
-            <tamanoPagina>10</tamanoPagina>\r
          </peticionBuscarTermino>\r
       </ser:buscarTermino>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="6642cf7d-f427-4b5b-bc7c-9ffd4ed326a5" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="6b0e2e01-8676-47d4-a283-7b26e7f1ab6c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="buscarTruncatePerfect TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="db306163-3e18-4032-9f3a-ef95d12607cb" name="buscarTruncatePerfect"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTruncatePerfect</con:operation><con:request name="buscarTruncatePerfect" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7e4d9c9c-d755-4288-b741-9abfca42b9c1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="6642cf7d-f427-4b5b-bc7c-9ffd4ed326a5" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="19b40e99-0633-4e9c-b47c-4537d25b12e0" name="buscarTermino11"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino11" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>sustancia A (sustancia)</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="40f72b8c-f21b-462c-b609-c7b4561d0bc2" name="buscarTermino12"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino12" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Concepto no válido</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="09e9938e-bfe9-4400-ba0e-27a37ad8b16e" name="buscarTermino13"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino13" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Concepto no válido (concepto especial)</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="7958f991-2237-4f36-9ce5-11d007d042d8" name="buscarTermino14"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino14" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Pendientes</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="679c8682-1ce0-4df7-984b-eedb34c2d9ff" name="buscarTermino15"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino15" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Pendientes (concepto especial)</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="0829fcca-d7a2-46a1-8bba-8c2d29a33522" name="buscarTermino16"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino16" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>termino 2 amb</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="e34613cd-e75b-4c05-8478-172b6bb12d8f" name="buscarTermino17"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino17" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Un término</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="1ee35174-b274-4614-a6ee-29f0eee1d1c0" name="buscarTermino18"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino18" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino> test 4</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="a418949d-bd0e-4360-95a3-2c0681d91e7e" name="buscarTermino19"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino19" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Sustancia A</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="c9464bf5-821b-4701-8132-afc82d519d8e" name="buscarTermino20"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino20" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Sustancia A (sustancia)</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="6fd76ed5-4023-469b-b1ec-2bd7c0b8987d" name="buscarTermino21"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino21" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Sustancia B</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="27a21a32-95f1-4357-853f-e56302ba4ff0" name="buscarTermino22"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino22" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Sustancia B (sustancia)</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="9e196cf6-5350-4695-bfd3-0e020f2d7868" name="buscarTermino23"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino23" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Sustancia C</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="6615f1e4-531d-4abe-b504-c2dd83c93926" name="buscarTermino24"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino24" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Sustancia C (sustancia)</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="562937ea-af8d-4ead-8737-1e39f388e91c" name="buscarTermino25"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino25" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Sustancia A + Sustancia B</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="be52f70b-7ed3-4f6a-96cc-711eba4f385b" name="buscarTermino26"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino26" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Sustancia A + Sustancia B (producto)</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="c4df548e-cbd9-447a-8a9d-a0606c7c57b6" name="buscarTermino27"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino27" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Sustancia C + Sustancia A</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="dd04bfea-f7b1-408c-ace9-fa12c7f47719" name="buscarTermino28"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino28" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>Sustancia C + Sustancia A (producto)</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="ff148fd9-5a5b-443f-ae51-250669165f84" name="buscarTermino29"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino29" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>A1</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="79f476a4-a626-4c7b-a551-cf1f122d2b3b" name="buscarTermino30"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino30" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>A1 (medio ambiente)</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="f19a9a65-1be0-4eb9-b216-7931b54da255" name="buscarTermino31"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino31" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>tifus</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="db5e9c16-e1a1-46b1-b4ae-56b95bb6a724" name="buscarTermino32"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino32" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>tifus (hallazgo)</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="6b0e2e01-8676-47d4-a283-7b26e7f1ab6c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="buscarTruncatePerfect TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="db306163-3e18-4032-9f3a-ef95d12607cb" name="buscarTruncatePerfect"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTruncatePerfect</con:operation><con:request name="buscarTruncatePerfect" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7e4d9c9c-d755-4288-b741-9abfca42b9c1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:buscarTruncatePerfect>\r

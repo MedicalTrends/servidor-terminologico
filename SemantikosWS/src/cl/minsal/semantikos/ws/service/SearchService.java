@@ -48,7 +48,7 @@ public class SearchService {
     public GenericTermSearchResponse buscarTermino(
             @XmlElement(required = true)
             @WebParam(name = "peticionBuscarTermino")
-            SearchTermRequest request
+                    SimpleSearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault {
         if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())
                 && (request.getRefSetNames() == null || request.getRefSetNames().isEmpty())) {

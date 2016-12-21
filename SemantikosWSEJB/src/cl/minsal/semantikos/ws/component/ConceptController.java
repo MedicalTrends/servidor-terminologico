@@ -193,7 +193,7 @@ public class ConceptController {
                     List<ConceptSMTK> suggestedConcepts = new ArrayList<>(); // TODO: Obtener
                     List<Description> suggestedDescriptions = new ArrayList<>(); // TODO: Obtener
                     noValidDescriptions.add(new NoValidDescriptionResponse(description, suggestedConcepts, suggestedDescriptions));
-                } else if  ( !(description.isModeled() && description.isPublished()) ) {
+                } else if ( !description.isModeled() ) {
                     List<Description> descriptions1 = new ArrayList<>(); // TODO: Obtener
                     pendingDescriptions.add(new PendingDescriptionResponse(description, descriptions1));
                 } else {
