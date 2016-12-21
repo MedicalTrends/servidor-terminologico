@@ -161,6 +161,54 @@ public class ConceptController {
         return res;
     }
 
+    /**
+     * REQ-WS-001
+     * Este método es responsable de buscar un concepto segun una de sus descripciones que coincidan por perfect match
+     * con el <em>TERM</em> dado en los REFSETS y Categorias indicadas.
+     *
+     * @param term              El termino a buscar por perfect Match.
+     * @param categoriesNames   Nombres de las Categorias donde se deben hacer las búsquedas.
+     * @param refSetsNames      Nombres de los REFSETS donde se deben hacer las búsquedas.
+     * @return                  Conceptos buscados segun especificaciones de REQ-WS-001.
+     * @throws NotFoundFault    Si uno de los nombres de Categorias o REFSETS no existe.
+     */
+    public GenericTermSearchResponse searchTermGeneric(
+            String term,
+            List<String> categoriesNames,
+            List<String> refSetsNames
+    ) throws NotFoundFault {
+        GenericTermSearchResponse res = new GenericTermSearchResponse();
+        List<Category> categories = this.categoryController.findCategories(categoriesNames);
+        List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
+
+        List<PerfectMatchDescriptionResponse> perfectMatchDescriptions = new ArrayList<>();
+        List<NoValidDescriptionResponse> noValidDescriptions = new ArrayList<>();
+        List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
+
+        List<Description> descriptions = this.descriptionManager.searchDescriptionsByTerm(term, categories, refSets);
+
+        if ( descriptions != null ) {
+            for ( Description description : descriptions ) {
+                if ( !description.isValid() ) {
+                    List<ConceptSMTK> suggestedConcepts = new ArrayList<>(); // TODO: Obtener
+                    List<Description> suggestedDescriptions = new ArrayList<>(); // TODO: Obtener
+                    noValidDescriptions.add(new NoValidDescriptionResponse(description, suggestedConcepts, suggestedDescriptions));
+                } else if  ( !(description.isModeled() && description.isPublished()) ) {
+                    List<Description> descriptions1 = new ArrayList<>(); // TODO: Obtener
+                    pendingDescriptions.add(new PendingDescriptionResponse(description, descriptions1));
+                } else {
+                    perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
+                }
+            }
+        }
+
+        res.setPerfectMatchDescriptions(perfectMatchDescriptions);
+        res.setNoValidDescriptions(noValidDescriptions);
+        res.setPendingDescriptions(pendingDescriptions);
+
+        return res;
+    }
+
     public TermSearchResponse searchTerm(
             String term,
             List<String> categoriesNames,

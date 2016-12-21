@@ -1,5 +1,8 @@
 package cl.minsal.semantikos.ws.response;
 
+import cl.minsal.semantikos.model.Description;
+
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
@@ -8,8 +11,8 @@ import java.io.Serializable;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "descripcionPendiente", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "DescripcionPendiente", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "descripcionSimplificada", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "DescripcionSimplificada", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class SimplifiedDescriptionResponse implements Serializable {
 
     @XmlElement(name="idConcepto")
@@ -20,6 +23,15 @@ public class SimplifiedDescriptionResponse implements Serializable {
     private String term;
     @XmlElement(name="tipoDescripcion")
     private String descriptionType;
+
+    public SimplifiedDescriptionResponse() {}
+
+    public SimplifiedDescriptionResponse(@NotNull Description description) {
+        this.descriptionId = description.getDescriptionId();
+        this.term = description.getTerm();
+        this.conceptId = description.getConceptSMTK().getConceptID();
+        this.descriptionType = description.getDescriptionType().getName();
+    }
 
     public String getConceptId() {
         return conceptId;

@@ -1,15 +1,20 @@
 package cl.minsal.semantikos.ws.response;
 
+import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.Description;
+
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Andrés Farías on 12/13/16.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "descripcionPerfectMatch", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "DescripcionPerfectMatch", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "descripcionNoValida", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "DescripcionNoValida", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class NoValidDescriptionResponse implements Serializable {
 
     @XmlElement(name="razonNoValido")
@@ -24,6 +29,22 @@ public class NoValidDescriptionResponse implements Serializable {
     private List<PerfectMatchDescriptionResponse> suggestedDescriptions;
     @XmlElement(name="cantidadRegistros")
     private Integer numberOfEntries;
+
+    public NoValidDescriptionResponse() {}
+
+    public NoValidDescriptionResponse(@NotNull Description description, @NotNull List<ConceptSMTK> suggestedConcepts, @NotNull List<Description> suggestedDescriptions) {
+        this.noValidityCause = null; // TODO: Como obtener?
+        this.valid = false;
+        this.numberOfEntries = suggestedDescriptions.size();
+        this.suggestedConceptsId = new ArrayList<>(suggestedConcepts.size());
+        for ( ConceptSMTK conceptSMTK : suggestedConcepts ) {
+            this.suggestedConceptsId.add(conceptSMTK.getConceptID());
+        }
+        this.suggestedDescriptions = new ArrayList<>(suggestedDescriptions.size());
+        for ( Description description1 : suggestedDescriptions ) {
+            this.suggestedDescriptions.add(new PerfectMatchDescriptionResponse(description1));
+        }
+    }
 
     public String getNoValidityCause() {
         return noValidityCause;

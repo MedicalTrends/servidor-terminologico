@@ -14,8 +14,8 @@ import java.util.List;
  * @author Alfonso Cornejo on 2016-10-11.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "concepto", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "Concepto", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "conceptoLight", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "ConceptoLight", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class ConceptLightResponse implements Serializable {
 
     /** Identificador de negocio del concepto retornado */

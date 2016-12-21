@@ -22,6 +22,7 @@ import java.util.List;
 
 /**
  * Created by Development on 2016-11-18.
+ *
  */
 @WebService(serviceName = "ServicioDeBusqueda")
 public class SearchService {
@@ -31,6 +32,7 @@ public class SearchService {
 
     @EJB
     private ConceptController conceptController;
+
     @EJB
     private CategoryController categoryController;
 
@@ -43,7 +45,7 @@ public class SearchService {
     // REQ-WS-001
     @WebResult(name = "respuestaBuscarTermino")
     @WebMethod(operationName = "buscarTermino")
-    public TermSearchResponse buscarTermino(
+    public GenericTermSearchResponse buscarTermino(
             @XmlElement(required = true)
             @WebParam(name = "peticionBuscarTermino")
             SearchTermRequest request
@@ -55,8 +57,7 @@ public class SearchService {
         if (request.getTerm() == null || "".equals(request.getTerm())) {
             throw new IllegalInputFault("Debe ingresar un Termino a buscar");
         }
-        // TODO: usar GenericTermSearchResponse
-        return this.conceptController.searchTerm(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
+        return this.conceptController.searchTermGeneric(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
     }
 
     // REQ-WS-002

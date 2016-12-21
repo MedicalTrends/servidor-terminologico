@@ -20,9 +20,8 @@ public class DescriptionMapper {
                 res.setType(description.getDescriptionType().getName());
             }
             return res;
-        } else {
-            return null;
         }
+        return null;
     }
 
 }

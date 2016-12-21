@@ -1,7 +1,11 @@
 package cl.minsal.semantikos.ws.response;
 
+import cl.minsal.semantikos.model.Description;
+
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +27,19 @@ public class PendingDescriptionResponse implements Serializable {
     @XmlElementWrapper(name="descripciones")
     @XmlElement(name="descripcion")
     private List<SimplifiedDescriptionResponse> descriptions;
+
+    public PendingDescriptionResponse() {}
+
+    public PendingDescriptionResponse(@NotNull Description description, @NotNull List<Description> descriptions) {
+        this.pendingCodification = true;
+        this.valid = description.isValid();
+        this.categoryName = description.getConceptSMTK().getCategory().getName();
+        this.preferredTerm = description.getConceptSMTK().getDescriptionFavorite().getTerm();
+        this.descriptions = new ArrayList<>(descriptions.size());
+        for ( Description description1 : descriptions ) {
+            this.descriptions.add(new SimplifiedDescriptionResponse(description1));
+        }
+    }
 
     public Boolean getPendingCodification() {
         return pendingCodification;

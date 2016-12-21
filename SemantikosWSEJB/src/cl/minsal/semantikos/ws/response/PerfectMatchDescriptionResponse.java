@@ -1,5 +1,9 @@
 package cl.minsal.semantikos.ws.response;
 
+import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.Description;
+
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
@@ -23,6 +27,18 @@ public class PerfectMatchDescriptionResponse implements Serializable {
     private String categoryName;
     @XmlElement(name="terminoPreferido")
     private String preferredTerm;
+
+    public PerfectMatchDescriptionResponse() { }
+
+    public PerfectMatchDescriptionResponse(@NotNull Description description) {
+        this.descriptionId = description.getDescriptionId();
+        this.term = description.getTerm();
+        this.descriptionType = description.getDescriptionType().getName();
+        ConceptSMTK conceptSMTK = description.getConceptSMTK();
+        this.conceptId = conceptSMTK.getConceptID();
+        this.categoryName = conceptSMTK.getCategory().getName();
+        this.preferredTerm = conceptSMTK.getDescriptionFavorite().getTerm();
+    }
 
     public String getConceptId() {
         return conceptId;
