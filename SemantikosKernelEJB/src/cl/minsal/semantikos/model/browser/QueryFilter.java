@@ -52,7 +52,7 @@ public class QueryFilter {
      */
     boolean secondOrder;
 
-    public ConceptQueryFilter(RelationshipDefinition definition) {
+    public QueryFilter(RelationshipDefinition definition) {
         this.definition = definition;
     }
 

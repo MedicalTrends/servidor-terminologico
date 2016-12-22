@@ -5,13 +5,13 @@ import java.lang.reflect.Type;
 /**
  * Created by root on 29-09-16.
  */
-public class ConceptQueryParameter {
+public class QueryParameter {
 
     Type type;
     Object value;
     boolean array;
 
-    public ConceptQueryParameter(Type type, Object value, boolean array) {
+    public QueryParameter(Type type, Object value, boolean array) {
         this.type = type;
         this.value = value;
         this.array = array;
