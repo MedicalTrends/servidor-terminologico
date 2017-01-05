@@ -1395,7 +1395,7 @@ public class ConceptBean implements Serializable {
     public void changeMCSpecial() {
         for (Relationship relationship : concept.getValidRelationships()) {
             if (relationship.getRelationshipDefinition().getId() == 74) {
-                if (((BasicTypeValue<String>) relationship.getTarget()).getValue().equalsIgnoreCase("No")){
+                if (!((BasicTypeValue<Boolean>) relationship.getTarget()).getValue()){
                     if(!concept.isModeled())changeMultiplicityToRequiredRelationshipDefinitionMC();
                 }
                 else{
