@@ -98,7 +98,7 @@ public class LayoutBean implements Serializable {
         LayoutOptions south = new LayoutOptions();
         south.addOption("size", 85);
         south.addOption("resizable", false);
-        south.addOption("closable", false);
+        //south.addOption("closable", false);
         layoutOptions.setSouthOptions(south);
 
     }

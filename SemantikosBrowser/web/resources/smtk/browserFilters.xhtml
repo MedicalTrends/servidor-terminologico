@@ -13,6 +13,8 @@
 </composite:interface>
 <composite:implementation>
 
+<p:outputPanel id="browserFilters" styleClass="browserFilters">
+
     <p:panelGrid style="width:100%" styleClass="ui-panelgrid-blank">
 
         <f:facet name="header">
@@ -32,7 +34,7 @@
                                 <h:outputText value="Patrón" />
                                 <p:inputText value="#{browserBean.browserQuery.query}"
                                              placeholder="Buscar...">
-                                    <p:ajax event="keyup" update="@(.conceptTable)" />
+                                    <p:ajax event="keyup" update="@(.conceptTable),@(.browserFilters)" listener="#{browserBean.setFilterChanged(true)}" />
                                 </p:inputText>
                             </div>
                         </div>
@@ -55,8 +57,8 @@
                                                       filter="true" filterMatchMode="startsWith">
                                     <f:selectItems value="#{browserBean.categories}" var="category"
                                                    itemLabel="#{category.name}" itemValue="#{category}"/>
-                                    <p:ajax event="toggleSelect" update="@(.conceptTable)" />
-                                    <p:ajax update="@(.conceptTable)" />
+                                    <p:ajax event="toggleSelect" update="@(.conceptTable),@(.browserFilters)" listener="#{browserBean.setFilterChanged(true)}" />
+                                    <p:ajax update="@(.conceptTable),@(.browserFilters)" listener="#{browserBean.setFilterChanged(true)}" />
                                 </p:selectCheckboxMenu>
                             </div>
                         </div>
@@ -79,8 +81,8 @@
                                                       autoWidth="false"
                                                       filter="true"
                                                       filterMatchMode="startsWith">
-                                    <p:ajax event="change" update="@(.conceptTable)" />
-                                    <p:ajax event="toggleSelect" update="@(.conceptTable)" />
+                                    <p:ajax event="change" update="@(.conceptTable),@(.browserFilters)" listener="#{browserBean.setFilterChanged(true)}" />
+                                    <p:ajax event="toggleSelect" update="@(.conceptTable),@(.browserFilters)" listener="#{browserBean.setFilterChanged(true)}" />
 
                                     <f:selectItems value="#{browserBean.tags}" var="tag"
                                                    itemLabel="#{tag.name}" itemValue="#{tag}"/>
@@ -93,6 +95,11 @@
         </p:row>
 
     </p:panelGrid>
+
+    <smtk:multipleSelectionStatus selectedItems="#{browserBean.browserQuery.categories}" itemName="Categorías" />
+    <smtk:multipleSelectionStatus selectedItems="#{browserBean.browserQuery.tags}" itemName="Etiquetas" />
+
+</p:outputPanel>
 
     <script type="text/javascript">
 

@@ -57,6 +57,35 @@
     border-width: 0 0 1px;
 }
 
+.filterStatus .ui-autocomplete {
+    width: 95%;
+}
+
+.browserFilters .ui-autocomplete-multiple-container {
+    width: 100% !important;
+}
+
+.browserFilters .ui-autocomplete-input-token input {
+    margin: 0px !important;
+}
+
+.browserFilters .ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token {
+    padding: 2px !important;
+}
+
+.browserFilters .ui-autocomplete-token {
+    margin: 0px !important;
+    margin-right: 2px !important;
+    margin-bottom: 5px !important;
+}
+
+.browserFilters .ui-autocomplete-multiple-container {
+    opacity:100;
+    background-color: #FFF;
+    border-bottom: 0;
+}
+
+
 
 /*
 .ui-widget, .ui-widget .ui-widget

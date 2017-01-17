@@ -67,12 +67,17 @@ public class BrowserBean implements Serializable {
 
 
     /**
-
      * Lista de conceptos para el despliegue del resultado de la consulta
      */
     private LazyDataModel<ConceptSMTK> concepts;
 
     private ConceptSMTK conceptSelected;
+
+
+    /**
+     * Indica si cambió algún filtro. Se utiliza para resetear la páginación al comienzo si se ha filtrado
+     */
+    private boolean isFilterChanged;
 
 
     @EJB
@@ -151,10 +156,13 @@ public class BrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
 
-                if(browserQuery.isFiltered() && first > 0)
+                if(isFilterChanged)
                     browserQuery.setPageNumber(0);
                 else
                     browserQuery.setPageNumber(first);
+
+                isFilterChanged = false;
+
                 browserQuery.setPageSize(pageSize);
                 browserQuery.setOrder(new Integer(sortField));
 
@@ -271,6 +279,14 @@ public class BrowserBean implements Serializable {
 
     public LayoutOptions getLayoutOptionsTwo() {
         return layoutOptionsTwo;
+    }
+
+    public boolean isFilterChanged() {
+        return isFilterChanged;
+    }
+
+    public void setFilterChanged(boolean filterChanged) {
+        isFilterChanged = filterChanged;
     }
 
     public List<Description> getOtherDescriptions(ConceptSMTK concept){

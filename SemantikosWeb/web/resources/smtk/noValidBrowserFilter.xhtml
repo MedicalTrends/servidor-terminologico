@@ -58,7 +58,7 @@
                             <div class="Container100">
                                 <div class="ContainerIndent BoldGray FontBold">
                             <span>
-                                Tipo Observación
+                                Razón de No Válido
                             </span>
                                     <p:selectCheckboxMenu id="observationTypes"
                                                           value="#{cc.attrs.noValidQuery.observationNoValids}"
@@ -80,9 +80,8 @@
                     </div>
                 </div>
 
-
-        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.descriptionTypes}" itemName="Tipo descriptor" />
-        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.observationNoValids}" itemName="Observación" />
+                <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.descriptionTypes}" itemName="Tipo descriptor" />
+                <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.observationNoValids}" itemName="Observación" />
     </p:outputPanel>
 
 

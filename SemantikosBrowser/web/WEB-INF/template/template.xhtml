@@ -35,28 +35,11 @@
 
             <pe:layout id="fullPage" options="#{layoutBean.layoutOptions}"
                        stateCookie="false" widgetVar="fpLayoutWidget" styleClass="browserLayout">
-                <p:ajax event="resize" listener="#{layoutBean.handleResize}" update=":growl"/>
 
                 <pe:layoutPane position="north" styleClassContent="northPane">
                     <ui:include src="topbar.xhtml" />
                 </pe:layoutPane>
                 <pe:layoutPane position="center">
-
-                    <f:facet name="header">
-
-                        <p:panelGrid style="width:100%" styleClass="ui-panelgrid-blank">
-
-                            <f:facet name="header">
-                                <p:row>
-                                    <p:column styleClass="Fs18">
-                                        Browser de Consulta - Conceptos Terminología Médica
-                                    </p:column>
-                                </p:row>
-                            </f:facet>
-
-                        </p:panelGrid>
-
-                    </f:facet>
 
                     <pe:layoutPane position="center">
 

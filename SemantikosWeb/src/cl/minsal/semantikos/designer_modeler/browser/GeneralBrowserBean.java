@@ -85,7 +85,6 @@ public class GeneralBrowserBean implements Serializable {
 
     /**
      * Indica si cambió algún filtro. Se utiliza para resetear la páginación al comienzo si se ha filtrado
-
      */
     private boolean isFilterChanged;
 
