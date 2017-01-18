@@ -86,7 +86,7 @@
                     <p:selectOneMenu id="tagSemantikos"
                                      value="#{cc.attrs.concept.tagSMTK}"
                                      converter="omnifaces.SelectItemsConverter"
-                                     disabled="#{not cc.attrs.concept.editable}"
+                                     disabled="#{not cc.attrs.concept.editable or cc.attrs.concept.modeled}"
                                      filter="true" filterMatchMode="startsWith"
                                      autoWidth="false">
                         <p:ajax event="itemSelect"

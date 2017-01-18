@@ -24,7 +24,7 @@
         <p:growl id="growl" showDetail="true" showSummary="true"/>
         <p:growl id="editMsgs" showDetail="true"/>
 
-
+        <p:panel style="border: hidden" rendered="#{conceptBean.editable}">
         <div class="ui-fluid">
 
                 <div class="Container ContainerIndentBottom">
@@ -71,7 +71,7 @@
                     </div>
             </div>
         </div>
-
+        </p:panel>
         <p:spacer rendered="#{cc.attrs.editable}" />
 
         <p:dataTable id="otherDescriptions"

@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
   <artifact type="ejb-jar" name="SemantikosKernelEJB:ejb">
     <output-path>$PROJECT_DIR$/SemantikosKernelEJB/target</output-path>
-    <root id="archive" name="SemantikosKernelEJB-2.2.8.jar">
+    <root id="archive" name="SemantikosKernelEJB-2.2.9.jar">
       <element id="artifact" artifact-name="SemantikosKernelEJB:ejb exploded" />
     </root>
   </artifact>
