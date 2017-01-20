@@ -8,7 +8,7 @@
                 template="/WEB-INF/template/template.xhtml">
 
     <ui:define name="header">
-        <p:breadCrumb>
+        <p:breadCrumb styleClass="breadUpdate">
             <p:menuitem value="Inicio" url="/views/home.xhtml" />
             <p:menuitem value="#{conceptBean.category}" url="/views/browser/generalBrowser.xhtml?idCategory=#{conceptBean.category.id}" />
             <p:menuitem value="#{conceptBean.concept.descriptionFavorite} (#{conceptBean.concept.conceptID }) [#{conceptBean.concept.modeled?'Modelado':'Borrador'}]" url="#"
@@ -19,6 +19,7 @@
     </ui:define>
 
     <ui:define name="content">
+
 
         <f:metadata>
             <f:viewParam name="editMode" value="#{conceptBean.editable}" />
@@ -97,7 +98,7 @@
                                                         <p:growl id="growlAttributes" showDetail="true" showSummary="true"/>
 
                                                         <smtk:smtkType
-                                                                rendered="#{relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 1}"
+                                                                rendered="#{(relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 1) or (relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 3) or  (relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 2)}"
                                                                 targetDefinition="#{relationshipDefinition.targetDefinition}"
                                                                 relationshipDefinition="#{relationshipDefinition}"
                                                                 concept="#{conceptBean.concept}"/>
@@ -213,7 +214,7 @@
                                                      styleClass="ui-priority-primary"
                                                      rendered="#{conceptBean.concept.editable}"
                                                      value="Guardar"
-                                                     update="growl, mainForm"/>
+                                                     update="growl, mainForm, @(.breadUpdate)"/>
 
                                     <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"
                                                      styleClass="ui-priority-primary"
