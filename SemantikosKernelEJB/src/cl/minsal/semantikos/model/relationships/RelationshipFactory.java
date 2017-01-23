@@ -9,6 +9,7 @@ import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -227,6 +228,7 @@ class RelationshipDTO {
     protected long idTarget;
     protected long idRelationshipDefinition;
     protected Timestamp validityUntil;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSS", timezone="America/Buenos_Aires")
     protected Timestamp creationDate;
 
     public RelationshipDTO() {
