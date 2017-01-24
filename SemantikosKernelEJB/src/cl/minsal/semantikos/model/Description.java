@@ -124,6 +124,8 @@ public class Description extends PersistentEntity implements AuditableEntity {
                 }
             }
 
+            this.term = this.term + " (" + conceptSMTK.getTagSMTK() + ")";
+
         }
     }
 

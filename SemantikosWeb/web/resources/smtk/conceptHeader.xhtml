@@ -90,6 +90,7 @@
                                      filter="true" filterMatchMode="startsWith"
                                      autoWidth="false">
                         <p:ajax event="itemSelect"
+                                listener="#{descriptionBeans.updateFSNFromTagSMTK(cc.attrs.concept)}"
                                 update="@(.FSN)"
                                 process="@this" />
                         <f:selectItem itemLabel="Seleccione tipo" itemValue=""/>

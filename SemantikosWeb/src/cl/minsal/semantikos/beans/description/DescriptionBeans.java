@@ -22,10 +22,10 @@ import java.util.ArrayList;
 @ViewScoped
 public class DescriptionBeans {
 
-    @ManagedProperty( value="#{conceptBean}")
+    @ManagedProperty(value = "#{conceptBean}")
     ConceptBean conceptBean;
 
-    @ManagedProperty( value="#{messageBean}")
+    @ManagedProperty(value = "#{messageBean}")
     MessageBean messageBean;
 
     DescriptionTypeFactory descriptionTypeFactory = DescriptionTypeFactory.getInstance();
@@ -33,12 +33,15 @@ public class DescriptionBeans {
     public ConceptBean getConceptBean() {
         return conceptBean;
     }
+
     public void setConceptBean(ConceptBean conceptBean) {
         this.conceptBean = conceptBean;
     }
+
     public MessageBean getMessageBean() {
         return messageBean;
     }
+
     public void setMessageBean(MessageBean messageBean) {
         this.messageBean = messageBean;
     }
@@ -46,7 +49,7 @@ public class DescriptionBeans {
     private static long SYNONYMOUS_ID = 3;
 
     @PostConstruct
-    public void init(){
+    public void init() {
 
     }
 
@@ -102,8 +105,8 @@ public class DescriptionBeans {
     public void traslateDescriptionNotValid() {
         conceptBean.getDescriptionToTranslate().setConceptSMTK(conceptBean.getConceptSMTKNotValid());
         conceptBean.getConcept().getDescriptionsWeb().remove(conceptBean.getDescriptionToTranslate());
-        conceptBean.getNoValidDescriptions().add(new NoValidDescription(conceptBean.getDescriptionToTranslate(),conceptBean.getObservationNoValid().getId(), conceptBean.getConceptSuggestedList()));
-        messageBean.messageSuccess("Traslado de descripción","La descripción se trasladará al momento de guardar el concepto");
+        conceptBean.getNoValidDescriptions().add(new NoValidDescription(conceptBean.getDescriptionToTranslate(), conceptBean.getObservationNoValid().getId(), conceptBean.getConceptSuggestedList()));
+        messageBean.messageSuccess("Traslado de descripción", "La descripción se trasladará al momento de guardar el concepto");
         conceptBean.setConceptSuggestedList(new ArrayList<ConceptSMTK>());
 
     }
@@ -129,7 +132,7 @@ public class DescriptionBeans {
      */
     public void descriptionEditRow(RowEditEvent event) {
         DescriptionWeb descriptionWeb = (DescriptionWeb) event.getObject();
-        if(descriptionWeb.getDescriptionType().getName().equalsIgnoreCase("abreviada")){
+        if (descriptionWeb.getDescriptionType().getName().equalsIgnoreCase("abreviada")) {
             descriptionWeb.setCaseSensitive(conceptBean.getConcept().getDescriptionFavorite().isCaseSensitive());
         }
         for (DescriptionWeb descriptionRowEdit : conceptBean.getConcept().getDescriptionsWeb()) {
@@ -147,9 +150,13 @@ public class DescriptionBeans {
 
     public void updateFSNFromFavourite(DescriptionWeb description) {
 
+        description.getConceptSMTK().getDescriptionFSN().setTerm(description.getTerm().trim().replaceAll("\\(" + description.getConceptSMTK().getTagSMTK() + "\\)", "").trim());
 
-        description.getConceptSMTK().getDescriptionFSN().setTerm(description.getTerm().trim().replaceAll("\\("+description.getConceptSMTK().getTagSMTK()+"\\)","").trim());
+    }
 
+    public void updateFSNFromTagSMTK(ConceptSMTK conceptSMTK) {
+
+        conceptSMTK.getDescriptionFSN().setTerm(conceptSMTK.getDescriptionFSN().getTerm());
 
     }
 
