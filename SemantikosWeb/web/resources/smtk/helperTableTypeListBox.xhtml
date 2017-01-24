@@ -381,7 +381,7 @@
                 <p:commandButton
                         icon="fa fa-trash"
                         title="Eliminar"
-                        update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id})"
+                        update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.relationships_#{cc.attrs.relationshipDefinition.id})"
                         style="float: right"
                         process="@this"
                         immediate="true"
