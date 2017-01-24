@@ -105,7 +105,7 @@
                                                    disabled="#{(conceptBean.isMCSpecial(cc.attrs.relationshipDefinition) and conceptBean.concept.isModeled()) or conceptBean.editable eq false}">
                                 <p:ajax event="change"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,relationship.target)}"
-                                        process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),,@(.conceptMarketed)" />
+                                        process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.attributes),@(.conceptMarketed)" />
                             </p:selectBooleanButton>
                         </div>
                     </div>
