@@ -38,7 +38,7 @@
                                      value="#{cc.attrs.description.representation}"
                                      disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
                                      autocomplete="off">
-                        <p:ajax event="change" update="@this" process="@this" delay="100" />
+                        <p:ajax event="change" update="@this" process="@this" />
                     </p:inputTextarea>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.TagSMTK;
+import cl.minsal.semantikos.model.TagSMTKFactory;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -26,4 +27,11 @@ public interface TagSMTKDAO {
      * @return El Tag Semántikos a retornar.
      */
     TagSMTK findTagSMTKByID(long idTag);
+
+    /**
+     * Este método es responsable de retornar un Factory.
+     *
+     * @return El factory correspondiente
+     */
+    TagSMTKFactory refreshTagsSMTK();
 }

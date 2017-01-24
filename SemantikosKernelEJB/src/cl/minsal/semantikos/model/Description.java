@@ -4,6 +4,8 @@ import cl.minsal.semantikos.kernel.daos.DAO;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 
 import java.sql.Timestamp;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -113,12 +115,13 @@ public class Description extends PersistentEntity implements AuditableEntity {
     public void setTerm(String term) {
         this.term = term;
         if (this.getDescriptionType().equals(DescriptionType.FSN)) {
-            if(this.term.contains("(") && this.term.contains(")")){
-                    int i=  this.term.lastIndexOf("(");
-                    String subTerm= term.substring(0,i);
-                    this.term = subTerm + (conceptSMTK == null ? "" : " (" + conceptSMTK.getTagSMTK() + ")");
-            }else{
-                this.term = this.term + (conceptSMTK == null ? "" : " (" + conceptSMTK.getTagSMTK() + ")");
+
+            Matcher m = Pattern.compile("\\((.*?)\\)").matcher(term);
+
+            while(m.find()) {
+                if(TagSMTKFactory.getInstance().findTagSMTKByName(m.group(1))!=null) {
+                    this.term = this.term.replace("("+m.group(1)+")","").trim();
+                }
             }
 
         }

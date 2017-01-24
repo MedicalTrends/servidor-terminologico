@@ -334,22 +334,6 @@
         </div>
 
 
-
-
-        <script type="text/javascript">
-
-            $(document).on("change keyup input", "select[id$=tagSemantikos_input]", function (event) {
-                $("textarea[id$=FSN]").trigger("change");
-            });
-
-            $(document).on("change keyup input", "textarea[id$=favorite]", function (event) {
-                $("textarea[id$=FSN]").val($(this).val());
-                $("textarea[id$=FSN]").trigger("change");
-            });
-
-
-        </script>
-
         <h:outputStylesheet id="customCSS">
 
         </h:outputStylesheet>

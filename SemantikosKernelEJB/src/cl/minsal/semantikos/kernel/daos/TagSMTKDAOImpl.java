@@ -2,12 +2,17 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.TagSMTK;
+import cl.minsal.semantikos.model.TagSMTKFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,10 +23,16 @@ import java.util.List;
 /**
  * @author Andrés Farías on 9/5/16.
  */
-@Stateless
+@Singleton
+@Startup
 public class TagSMTKDAOImpl implements TagSMTKDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(TagSMTKDAOImpl.class);
+
+    @PostConstruct
+    private void init() {
+        this.refreshTagsSMTK();
+    }
 
     @Override
     public List<TagSMTK> getAllTagSMTKs() {
@@ -90,5 +101,38 @@ public class TagSMTKDAOImpl implements TagSMTKDAO {
         String name = rs.getString("name");
 
         return new TagSMTK(id, name);
+    }
+
+
+    @Override
+    public TagSMTKFactory refreshTagsSMTK() {
+
+        ConnectionBD connect = new ConnectionBD();
+
+        List<TagSMTK> tagsSMTK = new ArrayList<>();
+
+        String sql = "{call semantikos.get_all_tag_smtks()}";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.execute();
+            ResultSet rs = call.getResultSet();
+
+            /* Se recuperan los tagsSMTK */
+            while (rs.next()) {
+                tagsSMTK.add(createTagSMTKFromResultSet(rs));
+            }
+
+            /* Se setea la lista de tagsSMTK */
+            TagSMTKFactory.getInstance().setTagsSMTK(tagsSMTK);
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al intentar recuperar tagsSMTK de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return TagSMTKFactory.getInstance();
     }
 }

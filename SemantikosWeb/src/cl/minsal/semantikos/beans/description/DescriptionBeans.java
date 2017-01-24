@@ -9,6 +9,9 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIOutput;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import java.util.ArrayList;
 
 /**
@@ -139,6 +142,15 @@ public class DescriptionBeans {
                 }
             }
         }
+    }
+
+
+    public void updateFSNFromFavourite(DescriptionWeb description) {
+
+
+        description.getConceptSMTK().getDescriptionFSN().setTerm(description.getTerm().trim().replaceAll("\\("+description.getConceptSMTK().getTagSMTK()+"\\)","").trim());
+
+
     }
 
 
