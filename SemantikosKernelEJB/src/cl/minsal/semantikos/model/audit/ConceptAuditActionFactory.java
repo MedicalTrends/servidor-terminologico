@@ -85,7 +85,7 @@ class ConceptAuditActionDTO {
     private long idActionType;
 
     /** La fecha en que tomo lugar la acción auditable */
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSS", timezone="America/Buenos_Aires")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss", timezone="America/Buenos_Aires")
     private Timestamp date;
 
     /** El usuario que realizó la acción */

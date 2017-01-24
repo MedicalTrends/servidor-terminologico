@@ -228,7 +228,7 @@ class RelationshipDTO {
     protected long idTarget;
     protected long idRelationshipDefinition;
     protected Timestamp validityUntil;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSS", timezone="America/Buenos_Aires")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss", timezone="America/Buenos_Aires")
     protected Timestamp creationDate;
 
     public RelationshipDTO() {
