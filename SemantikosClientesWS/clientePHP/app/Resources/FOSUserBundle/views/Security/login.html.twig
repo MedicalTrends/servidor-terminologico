@@ -1,0 +1,39 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+
+    <div style="text-align: center">
+        <h2 style="color: #e2eef6cc;">
+            Semantikos - Cliente WebService [PHP]
+        </h2>
+    </div>
+    <br>
+<form class="form-signin text-center" action="{{ path("fos_user_security_check") }}" method="post">
+    <h3 class="form-signin-heading text-center" style="color: #009cffb3"><i class="fa fa-user"></i>Ingreso</h3>
+	
+	<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+    <!-- <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label> -->
+    <input type="text" id="username" name="_username" class="input-block-level text-center" placeholder="Email" required="required" />
+
+    <!-- <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label> -->
+    
+        <input type="password" id="password" name="_password" class="text-center" required="required" placeholder="Contraseña" />
+    
+	<!--label class="checkbox">
+	  <input style="float:none;margin:0" name="_remember_me" type="checkbox" value="remember-me"> {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+	</label-->
+
+	<button name="_submit" class="btn btn-large btn-primary" type="submit">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
+	{% if error %}
+            <div class="alert alert-error" style="margin-top: 20px;margin-bottom:0">                    
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+	{% endif %}
+        <br>    
+        <br>
+    <a target="_blank" style="font-size:0.9em" href="#">Navegadores Soportados</a>
+     - 
+    <a target="_blank" style="font-size:0.9em" href="#">Privacidad</a>
+</form>
+{% endblock fos_user_content %}

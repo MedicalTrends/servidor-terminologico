@@ -1,0 +1,322 @@
+{% extends 'base.html.twig' %}
+{% for form in SearchForms  %}     
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% endfor %}    
+{% block stylesheets %}    
+{% endblock %}
+
+{% block operaciones %}                    
+    <div class="list-group">
+        <span id="ws001" href="#!" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-001
+        </span>
+        <span id="ws002" href="#!" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-002
+        </span>
+        <span id="ws004" href="#!" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-004
+        </span> 
+        <span id="ws005" href="#!" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-005
+        </span>
+        <span id="ws007" href="#!"class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-007
+        </span>
+        <span id="ws008" href="#!" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-008
+        </span>   
+        <span id="ws009" href="#!" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-009
+        </span>
+        <span id="ws022" href="#!" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-022
+        </span>
+        <span id="ws023" href="#!" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-023
+        </span> 
+        <span id="ws024" href="#!" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-024
+        </span>
+        <span id="ws025" href="#!" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-025
+        </span>
+        <span id="ws026" href="#!" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-026
+        </span>  
+        <span id="ws027" href="#!" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-027
+        </span>
+        <span id="ws028" href="#!" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-028
+        </span>
+        <span id="ws029" href="#!" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-029
+        </span> 
+    </div>        
+{% endblock %}
+
+{% block body %}        
+
+    <div id="form" class="row" style="display: none">
+        <div class="col-sm-6">    
+            <div id="ws001">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-001: Buscar Término
+                </p>   
+                <br>
+                {{ form_start(SearchForms['ws001']) }}        
+                {{ form_errors(SearchForms['ws001']) }}         
+                {{ form(SearchForms['ws001']) }}                                                                
+                {{ form_end(SearchForms['ws001']) }}                                                                                
+            </div>
+            <div id="ws002">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-002: Obtener conceptos por categoría
+                </p>   
+                <br>                
+                {{ form_start(SearchForms['ws002']) }}        
+                {{ form_errors(SearchForms['ws002']) }}         
+                {{ form(SearchForms['ws002']) }}                                                                
+                {{ form_end(SearchForms['ws002']) }}                 
+            </div>
+            <div id="ws004">    
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-004: Buscar Truncate Perfect
+                </p>   
+                <br>                
+                {{ form_start(SearchForms['ws004']) }}        
+                {{ form_errors(SearchForms['ws004']) }}         
+                {{ form(SearchForms['ws004']) }}                                                                
+                {{ form_end(SearchForms['ws004']) }}                 
+            </div>
+            <div id="ws005">        
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-005: Buscar términos Pedibles
+                </p>   
+                <br>                    
+                {{ form_start(SearchForms['ws005']) }}        
+                {{ form_errors(SearchForms['ws005']) }}         
+                {{ form(SearchForms['ws005']) }}                                                                
+                {{ form_end(SearchForms['ws005']) }}                 
+            </div>
+            <div id="ws007">        
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-007: Obtener REFSET por DescriptionID
+                </p>   
+                <br>                                    
+                {{ form_start(SearchForms['ws007']) }}        
+                {{ form_errors(SearchForms['ws007']) }}         
+                {{ form(SearchForms['ws007']) }}                                                                
+                {{ form_end(SearchForms['ws007']) }}                 
+            </div>
+            <div id="ws008">        
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-008: Obtener REFSETs
+                </p>   
+                <br>                     
+                {{ form_start(SearchForms['ws008']) }}        
+                {{ form_errors(SearchForms['ws008']) }}         
+                {{ form(SearchForms['ws008']) }}                                                                
+                {{ form_end(SearchForms['ws008']) }}                 
+            </div>
+            <div id="ws009">        
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-009: Obtener REFSET por lote de DescriptionIDs
+                </p>   
+                <br>                                     
+                {{ form_start(SearchForms['ws009']) }}        
+                {{ form_errors(SearchForms['ws009']) }}         
+                {{ form(SearchForms['ws009']) }}                                                                
+                {{ form_end(SearchForms['ws009']) }}                 
+            </div>
+            <div id="ws022">        
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-022: Obtener Miembros Preferidos de un RefSet
+                </p>   
+                <br>                                     
+                {{ form_start(SearchForms['ws022']) }}        
+                {{ form_errors(SearchForms['ws022']) }}         
+                {{ form(SearchForms['ws022']) }}                                                                
+                {{ form_end(SearchForms['ws022']) }}                 
+            </div>
+            <div id="ws023">        
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-023: Obtener Todas las descripciones de un RefSet 
+                </p>   
+                <br>                                     
+                {{ form_start(SearchForms['ws023']) }}        
+                {{ form_errors(SearchForms['ws023']) }}         
+                {{ form(SearchForms['ws023']) }}                                                                
+                {{ form_end(SearchForms['ws023']) }}                 
+            </div>
+            <div id="ws024">        
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-024: Obtener lista de CrossMapsets
+                </p>   
+                <br>                                     
+                {{ form_start(SearchForms['ws024']) }}        
+                {{ form_errors(SearchForms['ws024']) }}         
+                {{ form(SearchForms['ws024']) }}                                                                
+                {{ form_end(SearchForms['ws024']) }}                 
+            </div>
+            <div id="ws025">        
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-025: Obtener los CrossMapsetsMembers de CrossMapsets
+                </p>   
+                <br>                                     
+                {{ form_start(SearchForms['ws025']) }}        
+                {{ form_errors(SearchForms['ws025']) }}         
+                {{ form(SearchForms['ws025']) }}                                                                
+                {{ form_end(SearchForms['ws025']) }}                 
+            </div>
+            <div id="ws026">        
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-026: Obtener los CrossMap Indirectos por DescriptionID
+                </p>   
+                <br>                                     
+                {{ form_start(SearchForms['ws026']) }}        
+                {{ form_errors(SearchForms['ws026']) }}         
+                {{ form(SearchForms['ws026']) }}                                                                
+                {{ form_end(SearchForms['ws026']) }}                 
+            </div>
+            <div id="ws027">        
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-027: Obtener los CrossMap Directos por DescriptionID
+                </p>   
+                <br>                                     
+                {{ form_start(SearchForms['ws027']) }}        
+                {{ form_errors(SearchForms['ws027']) }}         
+                {{ form(SearchForms['ws027']) }}                                                                
+                {{ form_end(SearchForms['ws027']) }}                 
+            </div>            
+            <div id="ws028">        
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-028: Obtener Concepto por DescriptionID
+                </p>   
+                <br>                                     
+                {{ form_start(SearchForms['ws028']) }}        
+                {{ form_errors(SearchForms['ws028']) }}         
+                {{ form(SearchForms['ws028']) }}                                                                
+                {{ form_end(SearchForms['ws028']) }}                 
+            </div>
+        </div>
+        <div class="col-sm-6">            
+            <div class="form-group">
+                <p class="list-group-item ui-widget-header active">
+                    Respuesta WS
+                </p>              
+                <textarea id="response" type="text" class="form-control" id="term" rows="24">
+                </textarea>
+            </div>            
+        </div>                    
+    </div>
+            
+    <div id="dialog" title="Basic dialog">            
+    </div>
+              
+{% endblock %}
+{% block javascripts %}
+<script>      
+    
+    $forms = $( "form" );
+    $operations = $( ".operations" );
+    
+    var dialog = $( "#dialog" ).dialog({
+                    autoOpen: false,
+                    modal: true,
+                    dialogClass: 'myTitleClass'
+                });
+    
+    $( function() {    
+        init();              
+    });      
+    
+    $( document ).ready(function() {        
+        $("#form").show();
+    }); 
+    
+    $forms.on( "submit", function( event ) {               
+        
+        var form = this;
+        
+        event.preventDefault(); 
+        
+        suspend(form);
+        
+        var data = {};
+        data['operation'] = $(this).attr('name'); 
+        data['parameters'] = $(this).serializeArray();    
+                        
+        $.ajax({
+            type: "POST",
+            url: "{{ path('search_call') }}",
+            data: data,            
+            timeout: 30000, // in milliseconds
+            success: function(data) {
+                
+                unSuspend(form);                        
+            
+                var jsonObj = JSON.parse(data);
+                var jsonPretty = JSON.stringify(jsonObj, null, '\t');
+
+                $('#response').text(jsonPretty);
+            },
+            error: function(request, status, err) {
+                
+                unSuspend(form);  
+                                
+                var jsonPretty = JSON.stringify(request, null, '\t');
+
+                $('#response').text(jsonPretty);
+                
+                $(dialog).html(err+":<br>"+request.responseText);
+                dialog.dialog('option','title',status)
+                dialog.dialog( "open" );                
+            }
+        });
+                
+    });   
+    
+    $operations.click(function(event){        
+        selectOperation(this);
+    });
+    
+    function suspend(form){         
+        $(form).find('button').append('<img class="loader" alt="" style=";margin-left:10px" src="{{ asset('bundles/semantikosclient/images/loader-minitrans.gif') }}">');                    
+        $(form).find('button').attr('disabled',true);        
+        $('#response').text("");
+    }
+    
+    function unSuspend(form){         
+        $('.loader').remove();        
+        $(form).find('button').attr('disabled',false);        
+    }
+    
+    function hideForms(){
+        $.each($forms, function(k,v){            
+            $(v).parent().hide();    
+        });  
+    }
+    
+    function selectOperation(operation){        
+        hideForms();        
+        unSelectOperations();
+        $(operation).addClass('active');       
+        $("form[name='"+$(operation).attr('id')+"']").parent().show();
+    }
+    
+    function unSelectOperations(){
+        $operations.removeClass('active');
+    }
+    
+    function initOperations(){
+        selectOperation($operations[0]);
+    }
+    
+    function init(){
+        hideForms();
+        initOperations();
+    }
+
+</script>
+{% endblock %}

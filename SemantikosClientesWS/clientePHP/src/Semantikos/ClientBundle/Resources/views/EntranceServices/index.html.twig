@@ -1,0 +1,160 @@
+{% extends 'base.html.twig' %}
+{% for form in EntranceForms  %}     
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% endfor %}    
+{% block stylesheets %}    
+{% endblock %}
+
+{% block operaciones %}                    
+    <div class="list-group">
+        <span id="ws030" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-030
+        </span>
+        <span id="ws031" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-031
+        </span>
+    </div>        
+{% endblock %}
+
+{% block body %}        
+
+    <div class="row" id="form" style="display: none">
+        <div class="col-sm-6">    
+            <div id="ws030">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-030: Incrementar uso de un término
+                </p>   
+                <br>
+                {{ form_start(EntranceForms['ws030']) }}        
+                {{ form_errors(EntranceForms['ws030']) }}         
+                {{ form(EntranceForms['ws030']) }}                                                                
+                {{ form_end(EntranceForms['ws030']) }}                                                                                
+            </div>
+            <div id="ws031">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-031: Proponer término a codificar
+                </p>   
+                <br>
+                {{ form_start(EntranceForms['ws031']) }}        
+                {{ form_errors(EntranceForms['ws031']) }}         
+                {{ form(EntranceForms['ws031']) }}                                                                
+                {{ form_end(EntranceForms['ws031']) }}                                                                                
+            </div>
+        </div>
+        <div class="col-sm-6">            
+            <div class="form-group">
+                <p class="list-group-item ui-widget-header active">
+                    Respuesta WS
+                </p>              
+                <textarea id="response" type="text" class="form-control" id="term" rows="24">
+                </textarea>
+            </div>            
+        </div>
+    </div>
+ 
+    <div id="dialog" title="Basic dialog">        
+    </div>
+              
+{% endblock %}
+{% block javascripts %}
+<script>      
+    
+    $forms = $( "form" );
+    $operations = $( ".operations" );
+    
+    var dialog = $( "#dialog" ).dialog({
+                    autoOpen: false,
+                    modal: true,
+                    dialogClass: 'myTitleClass'
+                });
+    
+    $( function() {    
+        init();      
+    });       
+    
+            
+    $( document ).ready(function() {
+        $("#form").show();
+    });        
+    
+    $forms.on( "submit", function( event ) {               
+        
+        var form = this;
+        
+        event.preventDefault(); 
+        
+        suspend(form);
+        
+        var data = {};
+        data['operation'] = $(this).attr('name'); 
+        data['parameters'] = $(this).serializeArray();    
+                        
+        $.ajax({
+            type: "POST",
+            url: "{{ path('entrance_call') }}",
+            data: data,            
+            timeout: 30000, // in milliseconds
+            success: function(data) {
+                
+                unSuspend(form);                        
+            
+                var jsonObj = JSON.parse(data);
+                var jsonPretty = JSON.stringify(jsonObj, null, '\t');
+
+                $('#response').text(jsonPretty);
+            },
+            error: function(request, status, err) {
+                
+                unSuspend(form); 
+                
+                $(dialog).text(err);
+                dialog.dialog('option','title',status)
+                dialog.dialog( "open" );                
+            }
+        });
+                
+    });   
+    
+    $operations.click(function(event){        
+        selectOperation(this);
+    });
+    
+    function suspend(form){         
+        $(form).find('button').append('<img class="loader" alt="" style=";margin-left:10px" src="{{ asset('bundles/semantikosclient/images/loader-minitrans.gif') }}">');                    
+        $(form).find('button').attr('disabled',true);        
+        $('#response').text("");
+    }
+    
+    function unSuspend(form){         
+        $('.loader').remove();        
+        $(form).find('button').attr('disabled',false);        
+    }
+    
+    function hideForms(){
+        $.each($forms, function(k,v){            
+            $(v).parent().hide();    
+        });  
+    }
+    
+    function selectOperation(operation){        
+        hideForms();        
+        unSelectOperations();
+        $(operation).addClass('active');       
+        $("form[name='"+$(operation).attr('id')+"']").parent().show();
+    }
+    
+    function unSelectOperations(){
+        $operations.removeClass('active');
+    }
+    
+    function initOperations(){
+        selectOperation($operations[0]);
+    }
+    
+    function init(){
+        hideForms();
+        initOperations();
+    }
+
+</script>
+{% endblock %}
