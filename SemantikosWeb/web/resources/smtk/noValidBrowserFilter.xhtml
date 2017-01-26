@@ -28,7 +28,7 @@
                                 </span>
                                 <p:outputPanel styleClass="search">
                                     <p:inputText value="#{cc.attrs.noValidQuery.query}" placeholder="Buscar...">
-                                        <p:ajax event="keyup" update="@(.browserTable),@(.browserFilters)" listener="#{noValidBrowserBean.setFilterChanged(true)}" process="@this" />
+                                        <p:ajax event="keyup" update="@(.browserTable)" listener="#{noValidBrowserBean.setFilterChanged(true)}" process="@this" />
                                     </p:inputText>
                                     <i class="fa fa-search fa-lg" />
                                 </p:outputPanel>
@@ -46,7 +46,7 @@
                                                       label="Seleccione...">
 
                                     <p:ajax event="change" listener="#{noValidBrowserBean.setFilterChanged(true)}"
-                                            update="@(.browserTable),@(.browserFilters)"
+                                            update="@(.browserTable),@(.filterStatus)"
                                             process="@this" />
 
                                     <f:selectItems value="#{noValidBrowserBean.descriptionTypes}" var="descriptionType"
@@ -67,7 +67,7 @@
                                                           label="Seleccione...">
 
                                         <p:ajax event="change" listener="#{noValidBrowserBean.setFilterChanged(true)}"
-                                                update="@(.browserTable),@(.browserFilters)"
+                                                update="@(.browserTable),@(.filterStatus)"
                                                 process="@this" />
 
                                         <f:selectItems value="#{noValidBrowserBean.observationTypes}" var="observationType"
@@ -80,8 +80,10 @@
                     </div>
                 </div>
 
-                <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.descriptionTypes}" itemName="Tipo descriptor" />
-                <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.observationNoValids}" itemName="Observación" />
+                <p:outputPanel styleClass="filterStatus">
+                    <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.descriptionTypes}" itemName="Tipo descriptor" />
+                    <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.observationNoValids}" itemName="Razón de No Válido" />
+                </p:outputPanel>
     </p:outputPanel>
 
 

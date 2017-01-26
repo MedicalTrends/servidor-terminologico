@@ -27,7 +27,7 @@
                         </span>
                         <p:outputPanel styleClass="search">
                             <p:inputText value="#{cc.attrs.pendingQuery.query}" placeholder="Buscar...">
-                                <p:ajax event="keyup" update="@(.browserTable),@(.pendingQueryFilter)" listener="#{pendingBrowserBean.setFilterChanged(true)}" process="@this" />
+                                <p:ajax event="keyup" update="@(.browserTable)" listener="#{pendingBrowserBean.setFilterChanged(true)}" process="@this" />
                             </p:inputText>
                             <i class="fa fa-search fa-lg" />
                         </p:outputPanel>
@@ -47,7 +47,7 @@
                                               filterMatchMode="startsWith">
 
                             <p:ajax event="change" listener="#{pendingBrowserBean.setFilterChanged(true)}"
-                                    update="@(.browserTable),@(.browserFilters)"
+                                    update="@(.browserTable),@(.filterStatus)"
                                     process="@this" />
 
                             <f:selectItems value="#{pendingBrowserBean.categories}" var="category"
@@ -59,7 +59,9 @@
             </div>
         </div>
 
-        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.pendingQuery.categories}" itemName="Categoría" />
+        <p:outputPanel styleClass="filterStatus">
+            <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.pendingQuery.categories}" itemName="Categoría" />
+        </p:outputPanel>
     </p:outputPanel>
 
 

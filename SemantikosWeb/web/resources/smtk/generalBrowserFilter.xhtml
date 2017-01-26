@@ -43,7 +43,7 @@
                             <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
                             <f:selectItem itemLabel="Sin Revisar" itemValue="#{false}"/>
                             <f:selectItem itemLabel="Revisar" itemValue="#{true}"/>
-                            <p:ajax event="itemSelect" update="@(.browserTable),@(.browserFilters)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                            <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
                         </p:selectOneMenu>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                             <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
                             <f:selectItem itemLabel="Sin Consultar" itemValue="#{false}"/>
                             <f:selectItem itemLabel="Consultar" itemValue="#{true}"/>
-                            <p:ajax event="itemSelect" update="@(.browserTable),@(.browserFilters)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                            <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
                         </p:selectOneMenu>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                             <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
                             <f:selectItem itemLabel="Borrador" itemValue="#{false}"/>
                             <f:selectItem itemLabel="Modelado" itemValue="#{true}"/>
-                            <p:ajax event="itemSelect" update="@(.browserTable),@(.browserFilters)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                            <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
                         </p:selectOneMenu>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
                                               filterMatchMode="startsWith">
                             <p:ajax event="change"
                                     listener="#{generalBrowserBean.setFilterChanged(true)}"
-                                    update="@(.browserTable),@(.browserFilters)"
+                                    update="@(.browserTable),@(.filterStatus)"
                                     process="@this" />
 
                             <f:selectItems value="#{generalBrowserBean.tags}" var="tag"
@@ -138,6 +138,10 @@
 
             </div>
         </div>
+
+        <p:outputPanel styleClass="filterStatus">
+
+        </p:outputPanel>
 
     </p:outputPanel>
 

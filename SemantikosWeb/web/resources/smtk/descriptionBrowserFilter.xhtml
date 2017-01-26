@@ -48,7 +48,7 @@
                                               filterMatchMode="startsWith">
 
                             <p:ajax event="change" listener="#{descriptionsBrowserBean.setFilterChanged(true)}"
-                                    update="@(.browserTable),@(.browserFilters)"
+                                    update="@(.browserTable),@(.filterStatus)"
                                     process="@this" />
 
                             <f:selectItems value="#{descriptionsBrowserBean.categories}" var="category"
@@ -70,7 +70,7 @@
                                               label="Tipos...">
 
                             <p:ajax event="change" listener="#{descriptionsBrowserBean.setFilterChanged(true)}"
-                                    update="@(.browserTable),@(.browserFilters)"
+                                    update="@(.browserTable),@(.filterStatus)"
                                     process="@this" />
 
                             <f:selectItems value="#{descriptionsBrowserBean.descriptionTypes}" var="descriptionType"
@@ -82,9 +82,9 @@
 
                 <div class="Container100">
                     <div class="ContainerIndent BoldGray FontBold">
-                                <span>
-                                    RefSets
-                                </span>
+                        <span>
+                            RefSets
+                        </span>
                         <p:selectCheckboxMenu id="refsets"
                                               value="#{cc.attrs.descriptionQuery.refSets}"
                                               converter="omnifaces.SelectItemsConverter"
@@ -92,7 +92,7 @@
                                               label="Seleccione...">
 
                             <p:ajax event="change" listener="#{descriptionsBrowserBean.setFilterChanged(true)}"
-                                    update="@(.browserTable),@(.browserFilters)"
+                                    update="@(.browserTable),@(.filterStatus)"
                                     process="@this" />
 
                             <f:selectItems value="#{descriptionsBrowserBean.refSets}" var="refSet"
@@ -105,9 +105,11 @@
             </div>
         </div>
 
-        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.categories}" itemName="Categorías" />
-        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.descriptionTypes}" itemName="Tipo descriptor" />
-        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.refSets}" itemName="RefSets" />
+        <p:outputPanel styleClass="filterStatus">
+            <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.categories}" itemName="Categorías" />
+            <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.descriptionTypes}" itemName="Tipo descriptor" />
+            <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.refSets}" itemName="RefSets" />
+        </p:outputPanel>
 
     </p:outputPanel>
 

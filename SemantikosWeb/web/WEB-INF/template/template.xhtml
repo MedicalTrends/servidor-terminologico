@@ -37,7 +37,7 @@
         <h:outputStylesheet name="semantikos/css/customStyle.css"/>
     </f:facet>
 
-            <pe:layout id="fullPage" options="#{layoutBean.layoutOptions}" stateCookie="true" widgetVar="fpLayoutWidget" styleClass="browserLayout">
+    <pe:layout id="fullPage" options="#{layoutBean.layoutOptions}" stateCookie="false" widgetVar="fpLayoutWidget" styleClass="browserLayout">
 
         <p:ajax event="resize" listener="#{layoutBean.handleResize}"/>
 
