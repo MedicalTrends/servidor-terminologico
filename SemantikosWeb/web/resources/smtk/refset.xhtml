@@ -74,7 +74,7 @@
                 <h:outputText value="#{refset.institution.name}"/>
             </p:column>
             <p:column headerText="Fecha ingreso">
-                <h:outputText value="#{refsetsBean.refsetHistoryConcept.get(refset.id).actionDate}"/>
+                <h:outputText value="#{refsetsBean.refsetHistoryConcept.get(refset.id).getActionDateFormat()}"/>
             </p:column>
             <p:column rendered="#{conceptBean.editable}">
                 <p:commandButton title="Eliminar RefSet" icon="fa fa-trash"

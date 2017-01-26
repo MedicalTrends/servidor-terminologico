@@ -53,7 +53,7 @@
             <div class="Container30 White Responsive">
                 <div class="ContainerIndentRight">
                     <p:selectOneRadio id="customRadio2" value="#{cc.attrs.description.caseSensitive}" layout="grid" columns="2" style="padding-top: 0.5em"
-                                      disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}">
+                                      disabled="#{(cc.attrs.description.conceptSMTK.modeled and !cc.attrs.description.conceptSMTK.category.id  eq 33 ) or not cc.attrs.editable}">
                         <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
                         <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
                     </p:selectOneRadio>

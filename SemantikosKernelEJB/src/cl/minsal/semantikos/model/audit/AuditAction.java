@@ -54,7 +54,7 @@ public abstract class AuditAction {
     }
 
     public String getActionDateFormat() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(actionDate);
     }
 

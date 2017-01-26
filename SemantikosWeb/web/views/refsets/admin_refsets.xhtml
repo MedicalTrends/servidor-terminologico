@@ -133,7 +133,7 @@
                             </p:column>
 
                             <p:column headerText="Fecha de creación" sortBy="#{refset.creationDate}">
-                                <h:outputText value="#{refset.creationDate}"/>
+                                <h:outputText value="#{refset.getDateCreationFormat()}"/>
                             </p:column>
 
                             <p:column headerText="Vigencia" sortBy="#{refset.isValid()}">
@@ -213,7 +213,7 @@
                                         </p:column>
                                         <p:column headerText="Fecha ingreso">
                                             <h:outputText
-                                                    value="#{refsetsBean.conceptBindToRefsetHistory.get(concepts.id).actionDate}"/>
+                                                    value="#{refsetsBean.conceptBindToRefsetHistory.get(concepts.id).getActionDateFormat()}"/>
                                         </p:column>
                                     </p:dataTable>
                                 </div>

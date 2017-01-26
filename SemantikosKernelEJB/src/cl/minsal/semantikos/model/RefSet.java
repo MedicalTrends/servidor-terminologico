@@ -3,6 +3,7 @@ package cl.minsal.semantikos.model;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,25 +12,35 @@ import java.util.List;
  */
 public class RefSet extends PersistentEntity implements AuditableEntity {
 
-    /** Nombre del RefSet. Nombre corto y descriptivo de su contenido, para identificación por humanos */
+    /**
+     * Nombre del RefSet. Nombre corto y descriptivo de su contenido, para identificación por humanos
+     */
     private String name;
 
-    /** La institución a la cual pertenece el RefSet */
+    /**
+     * La institución a la cual pertenece el RefSet
+     */
     private Institution institution;
 
-    /** Fecha hasta la cuál es vigente el RefSet */
+    /**
+     * Fecha hasta la cuál es vigente el RefSet
+     */
     private Timestamp validityUntil;
 
-    /** Fecha de Creación */
+    /**
+     * Fecha de Creación
+     */
     private Timestamp creationDate;
 
-    /** Lista de los conceptos en el RefSet */
+    /**
+     * Lista de los conceptos en el RefSet
+     */
     private List<ConceptSMTK> concepts;
 
     private long id;
 
     public RefSet(String name, Institution institution, Timestamp creationDate) {
-        this.id= NON_PERSISTED_ID;
+        this.id = NON_PERSISTED_ID;
         this.institution = institution;
         this.name = name;
         this.creationDate = creationDate;
@@ -60,15 +71,15 @@ public class RefSet extends PersistentEntity implements AuditableEntity {
         return creationDate;
     }
 
-    public boolean bindConceptTo(ConceptSMTK conceptSMTK){
+    public boolean bindConceptTo(ConceptSMTK conceptSMTK) {
         return concepts.add(conceptSMTK);
     }
 
-    public boolean unbindConceptTo(ConceptSMTK conceptSMTK){
+    public boolean unbindConceptTo(ConceptSMTK conceptSMTK) {
         return concepts.remove(conceptSMTK);
     }
 
-    public List<ConceptSMTK> getConcepts(){
+    public List<ConceptSMTK> getConcepts() {
         return new ArrayList<ConceptSMTK>(this.concepts);
     }
 
@@ -84,8 +95,13 @@ public class RefSet extends PersistentEntity implements AuditableEntity {
         return (getValidityUntil() == null || this.getValidityUntil().after(new Timestamp(System.currentTimeMillis())));
     }
 
-    public String getCountConcepts(){
+    public String getCountConcepts() {
         return String.valueOf(concepts.size());
+    }
+
+    public String getDateCreationFormat() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(this.getCreationDate());
     }
 
     @Override

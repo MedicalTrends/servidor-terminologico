@@ -446,7 +446,7 @@
             </p:column>
 
             <p:column headerText="Fecha Creación">
-                <h:outputText value="#{relationship.creationDate}"/>
+                <h:outputText value="#{relationship.getDateCreationFormat()}"/>
             </p:column>
 
             <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"

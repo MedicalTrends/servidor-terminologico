@@ -3,6 +3,7 @@ package cl.minsal.semantikos.model;
 import cl.minsal.semantikos.model.relationships.*;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +79,10 @@ public class RelationshipWeb extends Relationship implements Comparable<Relation
         return new Relationship(this.getSourceConcept(), this.getTarget(), this.getRelationshipDefinition(), this.getRelationshipAttributes(), null);
     }
 
+    public String getDateCreationFormat() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(this.getCreationDate());
+    }
 
     @Override
     public int compareTo(RelationshipWeb o) {

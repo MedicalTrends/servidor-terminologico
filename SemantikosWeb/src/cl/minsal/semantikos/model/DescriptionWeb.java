@@ -1,6 +1,8 @@
 package cl.minsal.semantikos.model;
 
 
+import java.text.SimpleDateFormat;
+
 public class DescriptionWeb extends Description {
 
     public boolean hasBeenModified;
@@ -128,5 +130,10 @@ public class DescriptionWeb extends Description {
         super.setTerm(representation.trim().replaceAll("\\("+getConceptSMTK().getTagSMTK()+"\\)","").trim());
         //super.setTerm(representation.trim());
         this.representation = representation;
+    }
+
+    public String getDateCreationFormat() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(this.getCreationDate());
     }
 }

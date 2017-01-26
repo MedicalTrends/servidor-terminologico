@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.relationships.TargetType;
 
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 /**
  * @author Andrés Farías on 11/3/16.
@@ -41,4 +42,5 @@ public class DirectCrossmap extends Crossmap implements Target {
     public Target copy() {
         return null;
     }
+
 }
