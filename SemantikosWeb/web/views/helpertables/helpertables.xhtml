@@ -29,7 +29,7 @@
                             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                         </p:confirmDialog>
 
-                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                        <p:growl id="messages" showDetail="true" autoUpdate="true" escape="false"/>
 
                         <p:dataTable rows="50" paginator="true" id="helperTablesTable"
                                      value="#{helperTableBean.administrableTables}" var="helperTable" rowIndexVar="rowIndex1"
@@ -69,6 +69,8 @@
                         <ui:repeat value="#{helperTableBean.administrableTables}" var="helperTable" varStatus="varStatus1">
 
                             <p:dialog id="edit-data-dialog" styleClass="edit-data-dialog-#{varStatus1.index}" header="Editar Datos" widgetVar="edit-data-dialog-var-#{varStatus1.index}" height="400" width="900" positionType="absolute">
+
+
 
                                 <p:dataTable resizableColumns="true" widgetVar="table-data-edit-wvar-#{varStatus1.index}" id="table-data-edit" styleClass="table-data-edit-#{varStatus1.index}" var="row" rowKey="#{row.id}" value="#{helperTable.rows}" editable="true">
                                     <f:facet name="header">

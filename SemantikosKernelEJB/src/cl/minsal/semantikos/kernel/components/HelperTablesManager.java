@@ -30,7 +30,11 @@ public interface HelperTablesManager {
      */
     HelperTableRow createRow(Long tableId, String username);
 
-    HelperTableRow updateRow(HelperTableRow row, String username);
+
+    /*
+    actualiza la fila. verifica que si se deja no valida, la fila no sea referencia de otras tablas
+     */
+    HelperTableRow updateRow(HelperTableRow row, String username) throws HelperTablesManagerImpl.RowInUseException;
 
     HelperTableRow getRowById(long idRow);
 

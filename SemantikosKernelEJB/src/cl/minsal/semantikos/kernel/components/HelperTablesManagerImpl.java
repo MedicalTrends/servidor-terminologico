@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.components;
 
 
 import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.helpertables.*;
 import org.slf4j.Logger;
@@ -104,12 +105,26 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
     }
 
     @Override
-    public HelperTableRow updateRow(HelperTableRow row, String username) {
+    public HelperTableRow updateRow(HelperTableRow row, String username) throws RowInUseException {
+
+        if(!row.isValid()){
+            List<ConceptSMTK> cons = isRowUsed(row);
+            if(cons.size()>0)
+                throw new RowInUseException(cons);
+        }
+
 
         row.setLastEditDate(new Date());
         row.setLastEditUsername(username);
 
+
+
+
         return dao.updateRow(row);
+    }
+
+    private List<ConceptSMTK> isRowUsed(HelperTableRow row){
+        return dao.isRowUsed(row);
     }
 
     @Override
@@ -141,5 +156,23 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
         }
 
         return tables;
+    }
+
+
+    public class RowInUseException extends Exception{
+
+        private List<ConceptSMTK> concepts;
+
+        public RowInUseException(List<ConceptSMTK> concepts) {
+            this.concepts = concepts;
+        }
+
+        public List<ConceptSMTK> getConcepts() {
+            return concepts;
+        }
+
+        public void setConcepts(List<ConceptSMTK> concepts) {
+            this.concepts = concepts;
+        }
     }
 }

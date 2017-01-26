@@ -5,6 +5,7 @@ import cl.minsal.semantikos.beans.helpertables.HelperTableBean;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.components.HelperTablesManager;
+import cl.minsal.semantikos.kernel.components.HelperTablesManagerImpl;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.components.ispfetcher.ISPFetcher;
 import cl.minsal.semantikos.model.helpertables.*;
@@ -217,7 +218,12 @@ public class ISPBean {
 
             mapFetchedData(ispRecord,fetchedData);
 
-            HelperTableRow inserted = helperTablesManager.updateRow(ispRecord,authenticationBean.getUsername());
+            HelperTableRow inserted = null;
+            try {
+                inserted = helperTablesManager.updateRow(ispRecord,authenticationBean.getUsername());
+            } catch (HelperTablesManagerImpl.RowInUseException e) {
+
+            }
             ispRecord = inserted;
         }
 

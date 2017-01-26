@@ -2,6 +2,8 @@ package cl.minsal.semantikos.beans.helpertables;
 
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.HelperTablesManager;
+import cl.minsal.semantikos.kernel.components.HelperTablesManagerImpl;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.*;
 import org.primefaces.event.RowEditEvent;
 
@@ -72,7 +74,22 @@ public class HelperTableBean implements Serializable{
 
     public void onRowEdit(RowEditEvent event) {
         HelperTableRow row = (HelperTableRow) event.getObject();
-        HelperTableRow updatedRow = manager.updateRow(row,this.authenticationBean.getUsername());
+        try {
+            HelperTableRow updatedRow = manager.updateRow(row,this.authenticationBean.getUsername());
+        } catch (HelperTablesManagerImpl.RowInUseException e) {
+            String msg = "Conceptos que actualmente usan este registro: <br />";
+
+            for (ConceptSMTK conceptSMTK : e.getConcepts()) {
+                msg += conceptSMTK.getConceptID()+" <br />";
+            }
+
+            //showError("No se pudo guardar registro como no valido",msg);
+
+            FacesContext.getCurrentInstance().addMessage("message-"+row.getHelperTableId(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudo guardar registro como no valido", msg));
+
+
+            FacesContext.getCurrentInstance().validationFailed();
+        }
     }
 
 

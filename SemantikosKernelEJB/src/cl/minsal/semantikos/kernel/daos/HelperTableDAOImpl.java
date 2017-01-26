@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,9 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
     @EJB
     HelperTableRecordFactory helperTableRecordFactory;
+
+    @EJB
+    ConceptDAO conceptDAO;
 
     @Override
     public List<HelperTable> getAllTables() {
@@ -495,5 +499,38 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         }
 
         return recordFromJSON;
+    }
+
+    @Override
+    public List<ConceptSMTK> isRowUsed(HelperTableRow row) {
+
+
+
+        ConnectionBD connectionBD = new ConnectionBD();
+            String selectRecord = "{call semantikos.get_concepts_ids_by_helper_table_target(?)}";
+            List<ConceptSMTK> result = new ArrayList<>();
+
+            try (Connection connection = connectionBD.getConnection();
+                 CallableStatement call = connection.prepareCall(selectRecord)) {
+
+                call.setLong(1,row.getId());
+
+            /* Se prepara y realiza la consulta */
+                call.execute();
+                ResultSet rs = call.getResultSet();
+                while (rs.next()) {
+
+                    Long conceptId = rs.getLong(1);
+                    result.add(conceptDAO.getConceptByID(conceptId));
+
+                }
+                rs.close();
+            } catch (SQLException e) {
+                logger.error("Hubo un error al acceder a la base de datos.", e);
+                throw new EJBException(e);
+            }
+
+
+        return result;
     }
 }
