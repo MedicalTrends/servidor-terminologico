@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using busqueda = ConexionServiciosWS.ServicioDeBusquedaWS;
+using busqueda = ConexionServiciosWS.ServicioDeBusquedaWS1;
 
 namespace ConexionServiciosWS.Clases
 {
@@ -15,159 +15,211 @@ namespace ConexionServiciosWS.Clases
             String[] categoria = new String[] { txtNombreCat };
             String[] refSet = new String[] { txtNombreRefSet };
 
-            busqueda.SearchServiceClient clientBusqueda = new busqueda.SearchServiceClient();
-            //busqueda.buscarTermino termino = new busqueda.buscarTermino();
-            busqueda.PeticionBuscarTermino termino = new busqueda.PeticionBuscarTermino();
-            termino.termino = txtTermino;
-            termino.nombreCategoria = categoria;
-            termino.nombreRefSet = refSet;
-            //respuesta = clientBusqueda.buscarTermino(termino);
-            
-            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
-            return respuesta;
+            try
+            {
+                busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
+                respuesta = clientbusqueda.buscarTermino(txtIdDescripcion).ToString();
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public string RespuestaBuscarTruncatePerfect(string txtTermino, string txtNombreCat, string txtNombreRefSet, string txtIdEstablecimiento)
         {
-            string respuesta = string.Empty;
-
-            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            //incre.idDescripcion = txtIdDescripcion;
-            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
-            return respuesta;
+            try
+            {
+                string respuesta = string.Empty;
+                busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
+                respuesta = clientbusqueda.buscarTruncatePerfect(txtIdDescripcion).ToString();
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public string RespuestaConceptoPorCategoria(string txtNombre, string txtIdEstablecimiento)
         {
-            string respuesta = string.Empty;
-
-            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            //incre.idDescripcion = txtIdDescripcion;
-            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
-            return respuesta;
+            try
+            {
+                string respuesta = string.Empty;
+                busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
+                respuesta = clientbusqueda.conceptosPorCategoria(txtIdDescripcion).ToString();
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public string RespuestaConceptoPorIdDescripcion(string txtIdDescripcion)
         {
-            string respuesta = string.Empty;
-
-            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            //incre.idDescripcion = txtIdDescripcion;
-            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
-            return respuesta;
+            try
+            {
+                string respuesta = string.Empty;
+                busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
+                respuesta = clientbusqueda.conceptoPorIdDescripcion(txtIdDescripcion).ToString();
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public string RespuestaConceptoPorRefSet(string txtNombre, string txtNumeroPagina, string txtTamañoPagina)
         {
-            string respuesta = string.Empty;
-
-            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            //incre.idDescripcion = txtIdDescripcion;
-            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
-            return respuesta;
+            try
+            {
+                string respuesta = string.Empty;
+                busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
+                respuesta = clientbusqueda.conceptopor(txtIdDescripcion).ToString();
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public string RespuestaCrossMapsDirectorsPorIdDescripcion(string txtIdDescripcion)
         {
-            string respuesta = string.Empty;
-
-            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            //incre.idDescripcion = txtIdDescripcion;
-            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
-            return respuesta;
+            try
+            {
+                string respuesta = string.Empty;
+                busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
+                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public string RespuestaCrossMapSetMembersDeCrossmapSet(string txtNombreAbre)
         {
-            string respuesta = string.Empty;
-
-            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            //incre.idDescripcion = txtNombreAbre;
-            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtNombreAbre).ToString();
-            return respuesta;
+            try
+            {
+                string respuesta = string.Empty;
+                busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
+                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public string RespuestaCrossMapsIndiectosPorIdDescripcion(string txtIdDescripcion)
         {
-            string respuesta = string.Empty;
-
-            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            //incre.idDescripcion = txtIdDescripcion;
-            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
-            return respuesta;
+            try
+            {
+                string respuesta = string.Empty;
+                busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
+                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public string RespuestaDescripcionesPreferidasPorRefSet(string txtNombre, string txtNumeroPagina, string txtTamañoPagina)
         {
-            string respuesta = string.Empty;
-
-            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            //incre.idDescripcion = txtNombre;
-            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtNombre).ToString();
-            return respuesta;
+            try
+            {
+                string respuesta = string.Empty;
+                busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
+                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public string RespuestaGetCrossmapSets(string txtIdInstitucion)
         {
-            string respuesta = string.Empty;
-
-            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            //incre.idDescripcion = txtIdInstitucion;
-            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdInstitucion).ToString();
-            return respuesta;
+            try
+            {
+                string respuesta = string.Empty;
+                busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
+                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public string RespuestaListaCategorias()
         {
-            string respuesta = string.Empty;
-
-            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            //incre.idDescripcion = "";
-            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida("").ToString();
-            return respuesta;
+            try
+            {
+                string respuesta = string.Empty;
+                busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
+                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public string RespuestaListaRefSet(string txtIncluyeEstacionamiento)
         {
-            string respuesta = string.Empty;
-
-            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            //incre.idDescripcion = txtIncluyeEstacionamiento;
-            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIncluyeEstacionamiento).ToString();
-            return respuesta;
+            try
+            {
+                string respuesta = string.Empty;
+                busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
+                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public string RespuestaObtenerTerminosPedibles(string txtNombreCategoria, string txtNombreRefSet, string txtPedible)
         {
-            string respuesta = string.Empty;
-
-            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            //incre.idDescripcion = txtNombreCategoria;
-            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtNombreCategoria).ToString();
-            return respuesta;
+            try
+            {
+                string respuesta = string.Empty;
+                busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
+                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public string RespuestaRefSetsPorIdDescripcion(string txtIdDescripcion)
         {
-            string respuesta = string.Empty;
-
-            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            //incre.idDescripcion = txtIdDescripcion;
-            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
-            return respuesta;
+            try
+            {
+                string respuesta = string.Empty;
+                busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
+                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
     }
 }

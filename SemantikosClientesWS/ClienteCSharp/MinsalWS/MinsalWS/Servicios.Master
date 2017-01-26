@@ -35,11 +35,11 @@
             <div class="clear hideSkiplink">
                 <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">                    
                     <Items>
-                        <asp:MenuItem NavigateUrl="~/Menu1.aspx" Text="INGRESO" Value="1">
+                        <asp:MenuItem NavigateUrl="~/Pages/Servicio1.aspx" Text="INGRESO" Value="1">
                             <asp:MenuItem Text="Codificación" Value="New" NavigateUrl="~/Pages/Servicio1/CodificacionNuevoTermino.aspx"></asp:MenuItem>
                             <asp:MenuItem Text="Incrementar" Value="New" NavigateUrl="~/Pages/Servicio1/IncrementarContadorDescripcion.aspx"></asp:MenuItem>
                         </asp:MenuItem>
-                        <asp:MenuItem NavigateUrl="~/Menu1.aspx" Text="BUSQUEDA" Value="1">
+                        <asp:MenuItem NavigateUrl="~/Pages/Servicio1.aspx" Text="BUSQUEDA" Value="1">
                             <asp:MenuItem Text="Buscar termino" Value="New" NavigateUrl="~/Pages/Servicio2/BuscarTermino.aspx"></asp:MenuItem>
                             <asp:MenuItem Text="Buscar truncate" Value="New" NavigateUrl="~/Pages/Servicio2/BuscarTruncatePerfect.aspx"></asp:MenuItem>
                             <asp:MenuItem Text="Concepto categoría" Value="New" NavigateUrl="~/Pages/Servicio2/ConceptoPorCategoria.aspx"></asp:MenuItem>
@@ -55,7 +55,7 @@
                             <asp:MenuItem Text="Obtener terminos pedibles" Value="New" NavigateUrl="~/Pages/Servicio2/ObtenerTerminosPedibles.aspx"></asp:MenuItem>
                             <asp:MenuItem Text="RefSet descripción" Value="New" NavigateUrl="~/Pages/Servicio2/RefSetsPorIdDescripcion.aspx"></asp:MenuItem>
                         </asp:MenuItem>
-                        <asp:MenuItem NavigateUrl="~/Menu1.aspx" Text="RELACIONADOS" Value="1"></asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/Pages/Servicio1.aspx" Text="RELACIONADOS" Value="1"></asp:MenuItem>
                     </Items>
                 </asp:Menu>
             </div>

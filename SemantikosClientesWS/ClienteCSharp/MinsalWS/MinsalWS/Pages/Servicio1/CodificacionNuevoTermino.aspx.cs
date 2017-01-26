@@ -21,7 +21,12 @@ namespace MinsalWS.Pages
         {
             if(this.ConsumirServicio())
             {
-                string script = @"<script type='text/javascript'> alert('Operación ejecutada correctacmente!.');</script>";
+                //string script = @"<script type='text/javascript'> alert('Operación ejecutada correctacmente!.');</script>";
+                //ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
+            }
+            else
+            {
+                string script = @"<script type='text/javascript'> alert('Error al procesar el servicio, contacte al administrador. ');</script>";
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
             }
         }
@@ -36,14 +41,20 @@ namespace MinsalWS.Pages
             {
                 string respuesta = string.Empty;
                 AccesoIngresoWS ingreso = new AccesoIngresoWS();
-                respuesta = ingreso.RespuestaCodificacionNuevoTermino(txtEstablecimiento.Text, txtIdConcepto.Text, txtTermino.Text, txtTipoDescripcion.Text, txtMayusculas.Text, txtEmail.Text, txtObservacion.Text, txtProfesional.Text, txtProfesion.Text, txtEspecialidad.Text);
-                TextArea1.Text = respuesta;
-                return true;
+                respuesta = ingreso.RespuestaCodificacionNuevoTermino(txtEstablecimiento.Text, txtIdConcepto.Text, txtTermino.Text, txtTipoDescripcion.Text, txtMayusculas.Text, txtEmail.Text, txtObservacion.Text, txtProfesional.Text, txtProfesion.Text, txtEspecialidad.Text, txtSubEspecialidad.Text, txtCategoria.Text);
+                if (respuesta != "False")
+                {
+                    TextArea1.Text = respuesta;
+                    return true;
+                }
+                else
+                {
+                    TextArea1.Text = respuesta;
+                    return false;
+                }
             }
             catch (Exception)
             {
-                string script = @"<script type='text/javascript'> alert('Error al procesar el servicio, contacte al administrador. ');</script>";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
                 return false;
             }
         }

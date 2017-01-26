@@ -21,8 +21,8 @@ namespace MinsalWS.Pages
         {
             if (this.ConsumirServicio())
             {
-                string script = @"<script type='text/javascript'> alert('Operación ejecutada correctacmente!.');</script>";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
+                //string script = @"<script type='text/javascript'> alert('Operación ejecutada correctacmente!.');</script>";
+                //ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
             }
         }
 

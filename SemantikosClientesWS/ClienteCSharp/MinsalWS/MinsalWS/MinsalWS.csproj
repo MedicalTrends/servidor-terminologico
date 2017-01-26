@@ -86,7 +86,9 @@
     <Content Include="Global.asax" />
     <Content Include="Styles\Estilos.css" />
     <Content Include="Styles\Site.css" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -220,18 +222,12 @@
       <DependentUpon>Servicios.Master</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\AccesoServiciosWS\AccesoServiciosWS.csproj">
       <Project>{4c35f0cc-050c-44e2-93d3-37cf17dd395c}</Project>
       <Name>AccesoServiciosWS</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

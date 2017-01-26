@@ -3,10 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="ConexionServiciosWS_ServicioDeIngresoWS1_ServicioDeIngreso" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://192.168.0.243:8080/ws/ServicioDeIngreso?wsdl</Value>
+      <Value Profile="(Default)">http://192.168.0.228:8080/ws/ServicioDeIngreso</Value>
+    </Setting>
+    <Setting Name="ConexionServiciosWS_ServicioDeRelacionadosWS1_ServicioDeRelacionados" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://192.168.0.228:8080/ws/ServicioDeRelacionados</Value>
     </Setting>
     <Setting Name="ConexionServiciosWS_ServicioDeBusquedaWS1_ServicioDeBusqueda" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost:8080/ws/ServicioDeBusqueda</Value>
+      <Value Profile="(Default)">http://192.168.0.228:8080/ws/ServicioDeBusqueda</Value>
     </Setting>
   </Settings>
 </SettingsFile>

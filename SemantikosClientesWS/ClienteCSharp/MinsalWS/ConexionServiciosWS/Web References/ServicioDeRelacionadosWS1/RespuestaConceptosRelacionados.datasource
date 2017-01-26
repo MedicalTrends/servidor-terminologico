@@ -5,6 +5,6 @@
     Renaming the file extension or editing the content of this file may   
     cause the file to be unrecognizable by the program.
 -->
-<GenericObjectDataSource DisplayName="Descripcion" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>ConexionServiciosWS.ServicioDeIngresoWS1.Descripcion</TypeInfo>
+<GenericObjectDataSource DisplayName="RespuestaConceptosRelacionados" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+   <TypeInfo>ConexionServiciosWS.ServicioDeRelacionadosWS1.RespuestaConceptosRelacionados</TypeInfo>
 </GenericObjectDataSource>

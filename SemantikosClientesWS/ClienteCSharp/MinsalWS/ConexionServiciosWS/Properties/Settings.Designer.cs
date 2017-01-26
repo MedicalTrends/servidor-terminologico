@@ -26,7 +26,7 @@ namespace ConexionServiciosWS.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://192.168.0.243:8080/ws/ServicioDeIngreso?wsdl")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://192.168.0.228:8080/ws/ServicioDeIngreso")]
         public string ConexionServiciosWS_ServicioDeIngresoWS1_ServicioDeIngreso {
             get {
                 return ((string)(this["ConexionServiciosWS_ServicioDeIngresoWS1_ServicioDeIngreso"]));
@@ -36,7 +36,17 @@ namespace ConexionServiciosWS.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8080/ws/ServicioDeBusqueda")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://192.168.0.228:8080/ws/ServicioDeRelacionados")]
+        public string ConexionServiciosWS_ServicioDeRelacionadosWS1_ServicioDeRelacionados {
+            get {
+                return ((string)(this["ConexionServiciosWS_ServicioDeRelacionadosWS1_ServicioDeRelacionados"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://192.168.0.228:8080/ws/ServicioDeBusqueda")]
         public string ConexionServiciosWS_ServicioDeBusquedaWS1_ServicioDeBusqueda {
             get {
                 return ((string)(this["ConexionServiciosWS_ServicioDeBusquedaWS1_ServicioDeBusqueda"]));

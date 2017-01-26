@@ -1,0 +1,1080 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.ws.semantikos.minsal.cl/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="ServicioDeRelacionados" targetNamespace="http://service.ws.semantikos.minsal.cl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.ws.semantikos.minsal.cl/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="atributo" type="tns:Atributo" />
+      <xs:element name="atributoRelacion" type="tns:AtributoRelacion" />
+      <xs:element name="categoria" type="tns:Categoria" />
+      <xs:element name="columnaTablaAuxiliar" type="tns:ColumnaTablaAuxiliar" />
+      <xs:element name="concepto" type="tns:Concepto" />
+      <xs:element name="conceptoLight" type="tns:ConceptoLight" />
+      <xs:element name="conceptosRelacionados" type="tns:conceptosRelacionados" />
+      <xs:element name="conceptosRelacionadosLite" type="tns:conceptosRelacionadosLite" />
+      <xs:element name="conceptosRelacionadosLiteResponse" type="tns:conceptosRelacionadosLiteResponse" />
+      <xs:element name="conceptosRelacionadosResponse" type="tns:conceptosRelacionadosResponse" />
+      <xs:element name="crossmapSet" type="tns:CrossmapSet" />
+      <xs:element name="crossmapSetMember" type="tns:CrossmapSetMember" />
+      <xs:element name="definicionObjetivo" type="tns:DefinicionObjetivo" />
+      <xs:element name="definicionRelacion" type="tns:DefinicionRelacion" />
+      <xs:element name="definicionRelacionAtributo" type="tns:DefinicionRelacionAtributo" />
+      <xs:element name="descripcion" type="tns:Descripcion" />
+      <xs:element name="indirectCrossmap" type="tns:IndirectCrossmap" />
+      <xs:element name="multiplicidad" type="tns:Multiplicidad" />
+      <xs:element name="objetivo" type="tns:Objetivo" />
+      <xs:element name="obtenerBioequivalentes" type="tns:obtenerBioequivalentes" />
+      <xs:element name="obtenerBioequivalentesResponse" type="tns:obtenerBioequivalentesResponse" />
+      <xs:element name="obtenerFamiliaProducto" type="tns:obtenerFamiliaProducto" />
+      <xs:element name="obtenerFamiliaProductoResponse" type="tns:obtenerFamiliaProductoResponse" />
+      <xs:element name="obtenerMedicamentoBasico" type="tns:obtenerMedicamentoBasico" />
+      <xs:element name="obtenerMedicamentoBasicoLite" type="tns:obtenerMedicamentoBasicoLite" />
+      <xs:element name="obtenerMedicamentoBasicoLiteResponse" type="tns:obtenerMedicamentoBasicoLiteResponse" />
+      <xs:element name="obtenerMedicamentoBasicoResponse" type="tns:obtenerMedicamentoBasicoResponse" />
+      <xs:element name="obtenerMedicamentoClinico" type="tns:obtenerMedicamentoClinico" />
+      <xs:element name="obtenerMedicamentoClinicoConEnvase" type="tns:obtenerMedicamentoClinicoConEnvase" />
+      <xs:element name="obtenerMedicamentoClinicoConEnvaseLite" type="tns:obtenerMedicamentoClinicoConEnvaseLite" />
+      <xs:element name="obtenerMedicamentoClinicoConEnvaseLiteResponse" type="tns:obtenerMedicamentoClinicoConEnvaseLiteResponse" />
+      <xs:element name="obtenerMedicamentoClinicoConEnvaseResponse" type="tns:obtenerMedicamentoClinicoConEnvaseResponse" />
+      <xs:element name="obtenerMedicamentoClinicoLite" type="tns:obtenerMedicamentoClinicoLite" />
+      <xs:element name="obtenerMedicamentoClinicoLiteResponse" type="tns:obtenerMedicamentoClinicoLiteResponse" />
+      <xs:element name="obtenerMedicamentoClinicoResponse" type="tns:obtenerMedicamentoClinicoResponse" />
+      <xs:element name="obtenerProductoComercial" type="tns:obtenerProductoComercial" />
+      <xs:element name="obtenerProductoComercialConEnvase" type="tns:obtenerProductoComercialConEnvase" />
+      <xs:element name="obtenerProductoComercialConEnvaseLite" type="tns:obtenerProductoComercialConEnvaseLite" />
+      <xs:element name="obtenerProductoComercialConEnvaseLiteResponse" type="tns:obtenerProductoComercialConEnvaseLiteResponse" />
+      <xs:element name="obtenerProductoComercialConEnvaseResponse" type="tns:obtenerProductoComercialConEnvaseResponse" />
+      <xs:element name="obtenerProductoComercialLite" type="tns:obtenerProductoComercialLite" />
+      <xs:element name="obtenerProductoComercialLiteResponse" type="tns:obtenerProductoComercialLiteResponse" />
+      <xs:element name="obtenerProductoComercialResponse" type="tns:obtenerProductoComercialResponse" />
+      <xs:element name="obtenerRegistroISP" type="tns:obtenerRegistroISP" />
+      <xs:element name="obtenerRegistroISPResponse" type="tns:obtenerRegistroISPResponse" />
+      <xs:element name="obtenerSustancia" type="tns:obtenerSustancia" />
+      <xs:element name="obtenerSustanciaResponse" type="tns:obtenerSustanciaResponse" />
+      <xs:element name="peticionConceptosRelacionados" type="tns:PeticionConceptosRelacionados" />
+      <xs:element name="peticionConceptosRelacionadosPorCategoria" type="tns:PeticionConceptosRelacionadosPorCategoria" />
+      <xs:element name="peticionSugerenciasDeDescripciones" type="tns:PeticionSugerenciasDeDescripciones" />
+      <xs:element name="refSet" type="tns:RefSet" />
+      <xs:element name="registroISP" type="tns:RegistroISP" />
+      <xs:element name="relacion" type="tns:Relacion" />
+      <xs:element name="relacionSnomedCT" type="tns:RelacionSnomedCT" />
+      <xs:element name="respuestaConceptosPorCategoria" type="tns:RespuestaConceptosPorCategoria" />
+      <xs:element name="respuestaConceptosRelacionados" type="tns:RespuestaConceptosRelacionados" />
+      <xs:element name="respuestaConceptosRelacionadosLite" type="tns:RespuestaConceptosRelacionadosLite" />
+      <xs:element name="sugerenciasDeDescripciones" type="tns:sugerenciasDeDescripciones" />
+      <xs:element name="sugerenciasDeDescripcionesResponse" type="tns:sugerenciasDeDescripcionesResponse" />
+      <xs:element name="tablaAuxiliar" type="tns:TablaAuxiliar" />
+      <xs:element name="usuario" type="tns:Usuario" />
+      <xs:complexType name="sugerenciasDeDescripciones">
+        <xs:sequence>
+          <xs:element ref="tns:peticionSugerenciasDeDescripciones" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PeticionSugerenciasDeDescripciones">
+        <xs:sequence>
+          <xs:element name="termino" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="nombreCategoria" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="nombreRefSet" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sugerenciasDeDescripcionesResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="respuestaBuscarTermino" type="tns:RespuestaConceptosPorCategoria" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RespuestaConceptosPorCategoria">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="conceptos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:concepto" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="cantidadRegistros" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Concepto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="aSerRevisado" type="xs:boolean" />
+          <xs:element minOccurs="0" name="aSerConsultado" type="xs:boolean" />
+          <xs:element minOccurs="0" name="modelado" type="xs:boolean" />
+          <xs:element minOccurs="0" name="completamenteDefinido" type="xs:boolean" />
+          <xs:element minOccurs="0" name="publicado" type="xs:boolean" />
+          <xs:element minOccurs="0" name="valido" type="xs:boolean" />
+          <xs:element minOccurs="0" name="validoHasta" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="observacion" type="xs:string" />
+          <xs:element minOccurs="0" ref="tns:categoria" />
+          <xs:element minOccurs="0" name="refSets">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:refSet" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="descripciones">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:descripcion" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="atributos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:atributo" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="relaciones">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:relacion" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="relacionesSnomedCT">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:relacionSnomedCT" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="crossmapsIndirectos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="crossmapIndirecto" type="tns:IndirectCrossmap" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="crossmapsDirectos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="crossmapDirecto" type="tns:CrossmapSetMember" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Categoria">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string" />
+          <xs:element minOccurs="0" name="nombreAbreviado" type="xs:string" />
+          <xs:element minOccurs="0" name="restringida" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RefSet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string" />
+          <xs:element minOccurs="0" name="valido" type="xs:boolean" />
+          <xs:element minOccurs="0" name="validoHasta" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="creadoEn" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="institucion" type="xs:string" />
+          <xs:element minOccurs="0" name="conceptos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:concepto" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Descripcion">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="tipo" type="xs:string" />
+          <xs:element minOccurs="0" name="termino" type="xs:string" />
+          <xs:element minOccurs="0" name="valida" type="xs:boolean" />
+          <xs:element minOccurs="0" name="esSensibleAMayusculas" type="xs:boolean" />
+          <xs:element minOccurs="0" name="nombreAutgenerado" type="xs:boolean" />
+          <xs:element minOccurs="0" name="publicado" type="xs:boolean" />
+          <xs:element minOccurs="0" name="modelado" type="xs:boolean" />
+          <xs:element minOccurs="0" name="validaHasta" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="creado" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="usos" type="xs:long" />
+          <xs:element minOccurs="0" name="usuarioCreador" type="tns:Usuario" />
+          <xs:element minOccurs="0" ref="tns:concepto" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Usuario">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombreUsuario" type="xs:string" />
+          <xs:element minOccurs="0" name="nombre" type="xs:string" />
+          <xs:element minOccurs="0" name="apellido" type="xs:string" />
+          <xs:element minOccurs="0" name="segundoApellido" type="xs:string" />
+          <xs:element minOccurs="0" name="email" type="xs:string" />
+          <xs:element minOccurs="0" name="rut" type="xs:string" />
+          <xs:element minOccurs="0" name="ultimoLogin" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ultimoCambioPassword" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Atributo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="tipo" type="xs:string" />
+          <xs:element minOccurs="0" name="nombre" type="xs:string" />
+          <xs:element minOccurs="0" name="valor" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Relacion">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:objetivo" />
+          <xs:element minOccurs="0" name="definicion" type="tns:DefinicionRelacion" />
+          <xs:element minOccurs="0" ref="tns:concepto" />
+          <xs:element minOccurs="0" name="atributos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="atributo" type="tns:AtributoRelacion" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Objetivo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="tipo" type="xs:string" />
+          <xs:element minOccurs="0" name="activo" type="xs:boolean" />
+          <xs:element minOccurs="0" name="idModulo" type="xs:long" />
+          <xs:element minOccurs="0" name="estadoDefinicionId" type="xs:long" />
+          <xs:element minOccurs="0" name="valido" type="xs:boolean" />
+          <xs:element minOccurs="0" name="tiempoEfectivo" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="valor" type="xs:string" />
+          <xs:element minOccurs="0" name="conceptoSMTK" type="tns:Concepto" />
+          <xs:element minOccurs="0" ref="tns:relacion" />
+          <xs:element minOccurs="0" ref="tns:tablaAuxiliar" />
+          <xs:element name="fields">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element minOccurs="0" name="key" type="xs:string" />
+                      <xs:element minOccurs="0" name="value" type="xs:string" />
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TablaAuxiliar">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string" />
+          <xs:element minOccurs="0" name="descripcion" type="xs:string" />
+          <xs:element minOccurs="0" name="nombreTabla" type="xs:string" />
+          <xs:element minOccurs="0" name="columnaTablaAuxiliar">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="columna" type="tns:ColumnaTablaAuxiliar" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ColumnaTablaAuxiliar">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombreColumna" type="xs:string" />
+          <xs:element minOccurs="0" name="esBuscable" type="xs:boolean" />
+          <xs:element minOccurs="0" name="esMostrable" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DefinicionRelacion">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+          <xs:element minOccurs="0" name="description" type="xs:string" />
+          <xs:element minOccurs="0" ref="tns:multiplicidad" />
+          <xs:element minOccurs="0" ref="tns:definicionObjetivo" />
+          <xs:element minOccurs="0" name="definicionRelacionExcluida" type="tns:DefinicionRelacion" />
+          <xs:element minOccurs="0" name="definicionesAtributoRelacion">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="definicionAtributoRelacion" type="tns:DefinicionRelacionAtributo" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Multiplicidad">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="limiteInferior" type="xs:int" />
+          <xs:element minOccurs="0" name="limiteSuperior" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DefinicionObjetivo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="esTipoBasico" type="xs:boolean" />
+          <xs:element minOccurs="0" name="esTipoSMTK" type="xs:boolean" />
+          <xs:element minOccurs="0" name="esTablaAuxiliar" type="xs:boolean" />
+          <xs:element minOccurs="0" name="esTipoSnomedCT" type="xs:boolean" />
+          <xs:element minOccurs="0" name="esTipoCrossMap" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DefinicionRelacionAtributo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+          <xs:element minOccurs="0" ref="tns:multiplicidad" />
+          <xs:element minOccurs="0" ref="tns:definicionObjetivo" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AtributoRelacion">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:objetivo" />
+          <xs:element minOccurs="0" name="definicionAtributoRelacion" type="tns:DefinicionRelacionAtributo" />
+          <xs:element minOccurs="0" ref="tns:relacion" />
+          <xs:element minOccurs="0" name="tipo" type="xs:string" />
+          <xs:element minOccurs="0" name="nombre" type="xs:string" />
+          <xs:element minOccurs="0" name="valor" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RelacionSnomedCT">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="tipoRelacion" type="xs:string" />
+          <xs:element minOccurs="0" name="idConceptoSnomedCT" type="xs:string" />
+          <xs:element minOccurs="0" name="descripcion" type="xs:string" />
+          <xs:element minOccurs="0" name="grupo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="IndirectCrossmap">
+        <xs:sequence>
+          <xs:element name="mapGroup" type="xs:int" />
+          <xs:element name="mapPriority" type="xs:int" />
+          <xs:element minOccurs="0" name="mapRule" type="xs:string" />
+          <xs:element minOccurs="0" name="mapAdvice" type="xs:string" />
+          <xs:element minOccurs="0" name="mapTarget" type="xs:string" />
+          <xs:element name="correlation" type="xs:long" />
+          <xs:element name="idCrossmapCategory" type="xs:long" />
+          <xs:element name="state" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CrossmapSetMember">
+        <xs:sequence>
+          <xs:element name="idCrossmapSetMember" type="xs:long" />
+          <xs:element minOccurs="0" ref="tns:crossmapSet" />
+          <xs:element minOccurs="0" name="code" type="xs:string" />
+          <xs:element minOccurs="0" name="gloss" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CrossmapSet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="abbreviatedName" type="xs:string" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+          <xs:element name="version" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerMedicamentoBasico">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PeticionConceptosRelacionados">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="idConcepto" type="xs:string" />
+          <xs:element minOccurs="0" name="idDescripcion" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerMedicamentoBasicoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:respuestaConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RespuestaConceptosRelacionados">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="conceptoBuscado" type="tns:Concepto" />
+          <xs:element minOccurs="0" name="conceptosRelacionados">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:concepto" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerMedicamentoClinicoLite">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerMedicamentoClinicoLiteResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="respuestaConceptosRelacionados" type="tns:RespuestaConceptosRelacionadosLite" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RespuestaConceptosRelacionadosLite">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="conceptosRelacionados">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="concepto" type="tns:ConceptoLight" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConceptoLight">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="conceptID" type="xs:string" />
+          <xs:element minOccurs="0" name="idDescripcionPreferida" type="xs:string" />
+          <xs:element minOccurs="0" name="descripcionPreferida" type="xs:string" />
+          <xs:element minOccurs="0" name="categoria" type="xs:string" />
+          <xs:element minOccurs="0" name="esValido" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="conceptosRelacionadosLite">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionadosPorCategoria" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PeticionConceptosRelacionadosPorCategoria">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="idConcepto" type="xs:string" />
+          <xs:element minOccurs="0" name="idDescripcion" type="xs:string" />
+          <xs:element name="categoriaRelacion" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="conceptosRelacionadosLiteResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="respuestaConceptosRelacionados" type="tns:RespuestaConceptosRelacionadosLite" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerProductoComercial">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerProductoComercialResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:respuestaConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="conceptosRelacionados">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionadosPorCategoria" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="conceptosRelacionadosResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:respuestaConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerProductoComercialConEnvaseLite">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerProductoComercialConEnvaseLiteResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="respuestaConceptosRelacionados" type="tns:RespuestaConceptosRelacionadosLite" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerBioequivalentes">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerBioequivalentesResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="registroBioequivalente" type="tns:RegistroISP" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RegistroISP">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="registro" type="xs:string" />
+          <xs:element minOccurs="0" name="nombre" type="xs:string" />
+          <xs:element minOccurs="0" name="descripcion" type="xs:string" />
+          <xs:element minOccurs="0" name="esValido" type="xs:string" />
+          <xs:element minOccurs="0" name="validoHasta" type="xs:string" />
+          <xs:element minOccurs="0" name="estadoDelRegistro" type="xs:string" />
+          <xs:element minOccurs="0" name="titular" type="xs:string" />
+          <xs:element minOccurs="0" name="referenciaDeTramite" type="xs:string" />
+          <xs:element minOccurs="0" name="equivalenciaTerapeutica" type="xs:string" />
+          <xs:element minOccurs="0" name="resolucionInscribase" type="xs:string" />
+          <xs:element minOccurs="0" name="fechaIngreso" type="xs:string" />
+          <xs:element minOccurs="0" name="fechaInscribase" type="xs:string" />
+          <xs:element minOccurs="0" name="ultimaRenovacion" type="xs:string" />
+          <xs:element minOccurs="0" name="fechaProximaRenovacion" type="xs:string" />
+          <xs:element minOccurs="0" name="regimen" type="xs:string" />
+          <xs:element minOccurs="0" name="viaAdministracion" type="xs:string" />
+          <xs:element minOccurs="0" name="condicionDeVenta" type="xs:string" />
+          <xs:element minOccurs="0" name="expendeTipoEstablecimiento" type="xs:string" />
+          <xs:element minOccurs="0" name="indicacion" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerProductoComercialConEnvase">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerProductoComercialConEnvaseResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:respuestaConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerMedicamentoBasicoLite">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerMedicamentoBasicoLiteResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="respuestaConceptosRelacionados" type="tns:RespuestaConceptosRelacionadosLite" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerRegistroISP">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerRegistroISPResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:registroISP" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerSustancia">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerSustanciaResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:respuestaConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerMedicamentoClinicoConEnvaseLite">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerMedicamentoClinicoConEnvaseLiteResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="respuestaConceptosRelacionados" type="tns:RespuestaConceptosRelacionadosLite" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerProductoComercialLite">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerProductoComercialLiteResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:respuestaConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerFamiliaProducto">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerFamiliaProductoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:respuestaConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerMedicamentoClinico">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerMedicamentoClinicoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:respuestaConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerMedicamentoClinicoConEnvase">
+        <xs:sequence>
+          <xs:element ref="tns:peticionConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="obtenerMedicamentoClinicoConEnvaseResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:respuestaConceptosRelacionados" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="NotFoundFault" type="tns:NotFoundFault" />
+      <xs:complexType name="NotFoundFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="IllegalInputFault" type="tns:IllegalInputFault" />
+      <xs:complexType name="IllegalInputFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="conceptosRelacionadosLite">
+    <wsdl:part name="parameters" element="tns:conceptosRelacionadosLite" />
+  </wsdl:message>
+  <wsdl:message name="obtenerProductoComercialLite">
+    <wsdl:part name="parameters" element="tns:obtenerProductoComercialLite" />
+  </wsdl:message>
+  <wsdl:message name="obtenerMedicamentoClinicoConEnvaseLiteResponse">
+    <wsdl:part name="parameters" element="tns:obtenerMedicamentoClinicoConEnvaseLiteResponse" />
+  </wsdl:message>
+  <wsdl:message name="conceptosRelacionadosLiteResponse">
+    <wsdl:part name="parameters" element="tns:conceptosRelacionadosLiteResponse" />
+  </wsdl:message>
+  <wsdl:message name="obtenerMedicamentoClinicoLite">
+    <wsdl:part name="parameters" element="tns:obtenerMedicamentoClinicoLite" />
+  </wsdl:message>
+  <wsdl:message name="sugerenciasDeDescripciones">
+    <wsdl:part name="parameters" element="tns:sugerenciasDeDescripciones" />
+  </wsdl:message>
+  <wsdl:message name="conceptosRelacionadosResponse">
+    <wsdl:part name="parameters" element="tns:conceptosRelacionadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="sugerenciasDeDescripcionesResponse">
+    <wsdl:part name="parameters" element="tns:sugerenciasDeDescripcionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="obtenerMedicamentoClinico">
+    <wsdl:part name="parameters" element="tns:obtenerMedicamentoClinico" />
+  </wsdl:message>
+  <wsdl:message name="obtenerProductoComercialConEnvaseLiteResponse">
+    <wsdl:part name="parameters" element="tns:obtenerProductoComercialConEnvaseLiteResponse" />
+  </wsdl:message>
+  <wsdl:message name="obtenerProductoComercialConEnvaseResponse">
+    <wsdl:part name="parameters" element="tns:obtenerProductoComercialConEnvaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="obtenerMedicamentoBasicoLiteResponse">
+    <wsdl:part name="parameters" element="tns:obtenerMedicamentoBasicoLiteResponse" />
+  </wsdl:message>
+  <wsdl:message name="obtenerBioequivalentesResponse">
+    <wsdl:part name="parameters" element="tns:obtenerBioequivalentesResponse" />
+  </wsdl:message>
+  <wsdl:message name="obtenerFamiliaProductoResponse">
+    <wsdl:part name="parameters" element="tns:obtenerFamiliaProductoResponse" />
+  </wsdl:message>
+  <wsdl:message name="obtenerSustanciaResponse">
+    <wsdl:part name="parameters" element="tns:obtenerSustanciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="conceptosRelacionados">
+    <wsdl:part name="parameters" element="tns:conceptosRelacionados" />
+  </wsdl:message>
+  <wsdl:message name="obtenerProductoComercialLiteResponse">
+    <wsdl:part name="parameters" element="tns:obtenerProductoComercialLiteResponse" />
+  </wsdl:message>
+  <wsdl:message name="obtenerSustancia">
+    <wsdl:part name="parameters" element="tns:obtenerSustancia" />
+  </wsdl:message>
+  <wsdl:message name="IllegalInputFault">
+    <wsdl:part name="IllegalInputFault" element="tns:IllegalInputFault" />
+  </wsdl:message>
+  <wsdl:message name="NotFoundFault">
+    <wsdl:part name="NotFoundFault" element="tns:NotFoundFault" />
+  </wsdl:message>
+  <wsdl:message name="obtenerMedicamentoBasicoResponse">
+    <wsdl:part name="parameters" element="tns:obtenerMedicamentoBasicoResponse" />
+  </wsdl:message>
+  <wsdl:message name="obtenerMedicamentoClinicoConEnvase">
+    <wsdl:part name="parameters" element="tns:obtenerMedicamentoClinicoConEnvase" />
+  </wsdl:message>
+  <wsdl:message name="obtenerMedicamentoClinicoResponse">
+    <wsdl:part name="parameters" element="tns:obtenerMedicamentoClinicoResponse" />
+  </wsdl:message>
+  <wsdl:message name="obtenerRegistroISPResponse">
+    <wsdl:part name="parameters" element="tns:obtenerRegistroISPResponse" />
+  </wsdl:message>
+  <wsdl:message name="obtenerBioequivalentes">
+    <wsdl:part name="parameters" element="tns:obtenerBioequivalentes" />
+  </wsdl:message>
+  <wsdl:message name="obtenerMedicamentoClinicoConEnvaseResponse">
+    <wsdl:part name="parameters" element="tns:obtenerMedicamentoClinicoConEnvaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="obtenerProductoComercialResponse">
+    <wsdl:part name="parameters" element="tns:obtenerProductoComercialResponse" />
+  </wsdl:message>
+  <wsdl:message name="obtenerMedicamentoClinicoLiteResponse">
+    <wsdl:part name="parameters" element="tns:obtenerMedicamentoClinicoLiteResponse" />
+  </wsdl:message>
+  <wsdl:message name="obtenerMedicamentoBasico">
+    <wsdl:part name="parameters" element="tns:obtenerMedicamentoBasico" />
+  </wsdl:message>
+  <wsdl:message name="obtenerMedicamentoClinicoConEnvaseLite">
+    <wsdl:part name="parameters" element="tns:obtenerMedicamentoClinicoConEnvaseLite" />
+  </wsdl:message>
+  <wsdl:message name="obtenerProductoComercialConEnvaseLite">
+    <wsdl:part name="parameters" element="tns:obtenerProductoComercialConEnvaseLite" />
+  </wsdl:message>
+  <wsdl:message name="obtenerProductoComercialConEnvase">
+    <wsdl:part name="parameters" element="tns:obtenerProductoComercialConEnvase" />
+  </wsdl:message>
+  <wsdl:message name="obtenerFamiliaProducto">
+    <wsdl:part name="parameters" element="tns:obtenerFamiliaProducto" />
+  </wsdl:message>
+  <wsdl:message name="obtenerProductoComercial">
+    <wsdl:part name="parameters" element="tns:obtenerProductoComercial" />
+  </wsdl:message>
+  <wsdl:message name="obtenerMedicamentoBasicoLite">
+    <wsdl:part name="parameters" element="tns:obtenerMedicamentoBasicoLite" />
+  </wsdl:message>
+  <wsdl:message name="obtenerRegistroISP">
+    <wsdl:part name="parameters" element="tns:obtenerRegistroISP" />
+  </wsdl:message>
+  <wsdl:portType name="RelatedService">
+    <wsdl:operation name="sugerenciasDeDescripciones">
+      <wsdl:input name="sugerenciasDeDescripciones" message="tns:sugerenciasDeDescripciones" />
+      <wsdl:output name="sugerenciasDeDescripcionesResponse" message="tns:sugerenciasDeDescripcionesResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerMedicamentoBasico">
+      <wsdl:input name="obtenerMedicamentoBasico" message="tns:obtenerMedicamentoBasico" />
+      <wsdl:output name="obtenerMedicamentoBasicoResponse" message="tns:obtenerMedicamentoBasicoResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerMedicamentoClinicoLite">
+      <wsdl:input name="obtenerMedicamentoClinicoLite" message="tns:obtenerMedicamentoClinicoLite" />
+      <wsdl:output name="obtenerMedicamentoClinicoLiteResponse" message="tns:obtenerMedicamentoClinicoLiteResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="conceptosRelacionadosLite">
+      <wsdl:input name="conceptosRelacionadosLite" message="tns:conceptosRelacionadosLite" />
+      <wsdl:output name="conceptosRelacionadosLiteResponse" message="tns:conceptosRelacionadosLiteResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerProductoComercial">
+      <wsdl:input name="obtenerProductoComercial" message="tns:obtenerProductoComercial" />
+      <wsdl:output name="obtenerProductoComercialResponse" message="tns:obtenerProductoComercialResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="conceptosRelacionados">
+      <wsdl:input name="conceptosRelacionados" message="tns:conceptosRelacionados" />
+      <wsdl:output name="conceptosRelacionadosResponse" message="tns:conceptosRelacionadosResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerProductoComercialConEnvaseLite">
+      <wsdl:input name="obtenerProductoComercialConEnvaseLite" message="tns:obtenerProductoComercialConEnvaseLite" />
+      <wsdl:output name="obtenerProductoComercialConEnvaseLiteResponse" message="tns:obtenerProductoComercialConEnvaseLiteResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerBioequivalentes">
+      <wsdl:input name="obtenerBioequivalentes" message="tns:obtenerBioequivalentes" />
+      <wsdl:output name="obtenerBioequivalentesResponse" message="tns:obtenerBioequivalentesResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerProductoComercialConEnvase">
+      <wsdl:input name="obtenerProductoComercialConEnvase" message="tns:obtenerProductoComercialConEnvase" />
+      <wsdl:output name="obtenerProductoComercialConEnvaseResponse" message="tns:obtenerProductoComercialConEnvaseResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerMedicamentoBasicoLite">
+      <wsdl:input name="obtenerMedicamentoBasicoLite" message="tns:obtenerMedicamentoBasicoLite" />
+      <wsdl:output name="obtenerMedicamentoBasicoLiteResponse" message="tns:obtenerMedicamentoBasicoLiteResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerRegistroISP">
+      <wsdl:input name="obtenerRegistroISP" message="tns:obtenerRegistroISP" />
+      <wsdl:output name="obtenerRegistroISPResponse" message="tns:obtenerRegistroISPResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerSustancia">
+      <wsdl:input name="obtenerSustancia" message="tns:obtenerSustancia" />
+      <wsdl:output name="obtenerSustanciaResponse" message="tns:obtenerSustanciaResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerMedicamentoClinicoConEnvaseLite">
+      <wsdl:input name="obtenerMedicamentoClinicoConEnvaseLite" message="tns:obtenerMedicamentoClinicoConEnvaseLite" />
+      <wsdl:output name="obtenerMedicamentoClinicoConEnvaseLiteResponse" message="tns:obtenerMedicamentoClinicoConEnvaseLiteResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerProductoComercialLite">
+      <wsdl:input name="obtenerProductoComercialLite" message="tns:obtenerProductoComercialLite" />
+      <wsdl:output name="obtenerProductoComercialLiteResponse" message="tns:obtenerProductoComercialLiteResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerFamiliaProducto">
+      <wsdl:input name="obtenerFamiliaProducto" message="tns:obtenerFamiliaProducto" />
+      <wsdl:output name="obtenerFamiliaProductoResponse" message="tns:obtenerFamiliaProductoResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerMedicamentoClinico">
+      <wsdl:input name="obtenerMedicamentoClinico" message="tns:obtenerMedicamentoClinico" />
+      <wsdl:output name="obtenerMedicamentoClinicoResponse" message="tns:obtenerMedicamentoClinicoResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerMedicamentoClinicoConEnvase">
+      <wsdl:input name="obtenerMedicamentoClinicoConEnvase" message="tns:obtenerMedicamentoClinicoConEnvase" />
+      <wsdl:output name="obtenerMedicamentoClinicoConEnvaseResponse" message="tns:obtenerMedicamentoClinicoConEnvaseResponse" />
+      <wsdl:fault name="IllegalInputFault" message="tns:IllegalInputFault" />
+      <wsdl:fault name="NotFoundFault" message="tns:NotFoundFault" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServicioDeRelacionadosSoapBinding" type="tns:RelatedService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="obtenerMedicamentoBasico">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="obtenerMedicamentoBasico">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="obtenerMedicamentoBasicoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sugerenciasDeDescripciones">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="sugerenciasDeDescripciones">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sugerenciasDeDescripcionesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerMedicamentoClinicoLite">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="obtenerMedicamentoClinicoLite">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="obtenerMedicamentoClinicoLiteResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="conceptosRelacionadosLite">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="conceptosRelacionadosLite">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="conceptosRelacionadosLiteResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="conceptosRelacionados">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="conceptosRelacionados">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="conceptosRelacionadosResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerProductoComercial">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="obtenerProductoComercial">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="obtenerProductoComercialResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerProductoComercialConEnvaseLite">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="obtenerProductoComercialConEnvaseLite">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="obtenerProductoComercialConEnvaseLiteResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerBioequivalentes">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="obtenerBioequivalentes">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="obtenerBioequivalentesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerMedicamentoBasicoLite">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="obtenerMedicamentoBasicoLite">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="obtenerMedicamentoBasicoLiteResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerProductoComercialConEnvase">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="obtenerProductoComercialConEnvase">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="obtenerProductoComercialConEnvaseResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerRegistroISP">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="obtenerRegistroISP">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="obtenerRegistroISPResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerMedicamentoClinicoConEnvaseLite">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="obtenerMedicamentoClinicoConEnvaseLite">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="obtenerMedicamentoClinicoConEnvaseLiteResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerSustancia">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="obtenerSustancia">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="obtenerSustanciaResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerMedicamentoClinicoConEnvase">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="obtenerMedicamentoClinicoConEnvase">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="obtenerMedicamentoClinicoConEnvaseResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerMedicamentoClinico">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="obtenerMedicamentoClinico">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="obtenerMedicamentoClinicoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerFamiliaProducto">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="obtenerFamiliaProducto">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="obtenerFamiliaProductoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerProductoComercialLite">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="obtenerProductoComercialLite">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="obtenerProductoComercialLiteResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault use="literal" name="IllegalInputFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault use="literal" name="NotFoundFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServicioDeRelacionados">
+    <wsdl:port name="RelatedServicePort" binding="tns:ServicioDeRelacionadosSoapBinding">
+      <soap:address location="http://localhost:8080/ws/ServicioDeRelacionados" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

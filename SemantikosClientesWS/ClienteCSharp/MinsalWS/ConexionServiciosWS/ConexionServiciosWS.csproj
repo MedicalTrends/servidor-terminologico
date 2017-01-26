@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Runtime.Serialization" />
@@ -58,6 +59,11 @@
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
     <Compile Include="Web References\ServicioDeIngresoWS1\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\ServicioDeRelacionadosWS1\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
@@ -120,15 +126,32 @@
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\ServicioDeIngresoWS1\ServicioDeIngreso.wsdl" />
+    <None Include="Web References\ServicioDeRelacionadosWS1\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\ServicioDeRelacionadosWS1\RegistroISP.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\ServicioDeRelacionadosWS1\RespuestaConceptosPorCategoria.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\ServicioDeRelacionadosWS1\RespuestaConceptosRelacionados.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\ServicioDeRelacionadosWS1\RespuestaConceptosRelacionadosLite.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\ServicioDeRelacionadosWS1\ServicioDeRelacionados.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://192.168.0.243:8080/ws/ServicioDeBusqueda%3fwsdl">
+    <WebReferenceUrl Include="http://192.168.0.228:8080/ws/ServicioDeBusqueda%3fwsdl">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\ServicioDeBusquedaWS1\</RelPath>
-      <UpdateFromURL>http://192.168.0.243:8080/ws/ServicioDeBusqueda%3fwsdl</UpdateFromURL>
+      <UpdateFromURL>http://192.168.0.228:8080/ws/ServicioDeBusqueda%3fwsdl</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -136,16 +159,27 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>ConexionServiciosWS_ServicioDeBusquedaWS1_ServicioDeBusqueda</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://192.168.0.243:8080/ws/ServicioDeIngreso%3fwsdl">
+    <WebReferenceUrl Include="http://192.168.0.228:8080/ws/ServicioDeIngreso%3fwsdl">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\ServicioDeIngresoWS1\</RelPath>
-      <UpdateFromURL>http://192.168.0.243:8080/ws/ServicioDeIngreso%3fwsdl</UpdateFromURL>
+      <UpdateFromURL>http://192.168.0.228:8080/ws/ServicioDeIngreso%3fwsdl</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>ConexionServiciosWS_ServicioDeIngresoWS1_ServicioDeIngreso</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://192.168.0.228:8080/ws/ServicioDeRelacionados%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ServicioDeRelacionadosWS1\</RelPath>
+      <UpdateFromURL>http://192.168.0.228:8080/ws/ServicioDeRelacionados%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>ConexionServiciosWS_ServicioDeRelacionadosWS1_ServicioDeRelacionados</CachedSettingsPropName>
     </WebReferenceUrl>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

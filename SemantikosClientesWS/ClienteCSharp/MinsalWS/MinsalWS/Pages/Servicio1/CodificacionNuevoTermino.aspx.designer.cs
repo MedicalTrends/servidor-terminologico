@@ -193,6 +193,42 @@ namespace MinsalWS.Pages {
         protected global::System.Web.UI.WebControls.TextBox txtEspecialidad;
         
         /// <summary>
+        /// lblSubEspecialidad control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSubEspecialidad;
+        
+        /// <summary>
+        /// txtSubEspecialidad control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSubEspecialidad;
+        
+        /// <summary>
+        /// lblCategoria control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCategoria;
+        
+        /// <summary>
+        /// txtCategoria control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCategoria;
+        
+        /// <summary>
         /// btnInvocar control.
         /// </summary>
         /// <remarks>

@@ -22,7 +22,7 @@
         </tr>
         <tr>
             <td>
-                <asp:Label ID="lblTermino" Text="Termino:" runat="server"></asp:Label>
+                <asp:Label ID="lblTermino" Text="Término:" runat="server"></asp:Label>
             </td>
             <td>
                 <asp:TextBox ID="txtTermino" Text="" runat="server"></asp:TextBox>
@@ -30,7 +30,7 @@
         </tr>
         <tr>
             <td>
-                <asp:Label ID="lbltipoDescripcion" Text="Tipo escripcion:" runat="server"></asp:Label>
+                <asp:Label ID="lbltipoDescripcion" Text="Tipo descripcion:" runat="server"></asp:Label>
             </td>
             <td>
                 <asp:TextBox ID="txtTipoDescripcion" Text="Preferida" runat="server"></asp:TextBox>
@@ -82,6 +82,22 @@
             </td>
             <td>
                 <asp:TextBox ID="txtEspecialidad" Text="" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblSubEspecialidad" Text="Sub Especialidad:" runat="server"></asp:Label>
+            </td>
+            <td>
+                <asp:TextBox ID="txtSubEspecialidad" Text="" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblCategoria" Text="Categoría:" runat="server"></asp:Label>
+            </td>
+            <td>
+                <asp:TextBox ID="txtCategoria" Text="" runat="server"></asp:TextBox>
             </td>
         </tr>
         <tr>

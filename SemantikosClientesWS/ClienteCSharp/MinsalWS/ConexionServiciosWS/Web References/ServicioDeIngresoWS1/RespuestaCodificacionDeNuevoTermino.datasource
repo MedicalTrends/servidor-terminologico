@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="RespuestaCodificacionDeNuevoTermino" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>ConexionServiciosWS.ServicioDeIngresoWS1.RespuestaCodificacionDeNuevoTermino, Web References.ServicioDeIngresoWS1.Reference.cs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>ConexionServiciosWS.ServicioDeIngresoWS1.RespuestaCodificacionDeNuevoTermino</TypeInfo>
 </GenericObjectDataSource>
