@@ -150,6 +150,169 @@ class RelationshipServiceClientsHelper {
         }
                 
         return json_encode($result);
-    }    
-    
+    }
+
+    public function callWS014($params_array = null){
+
+        $peticion = $this->container->get('client.helper.relationship_mapping')->mapWS014Parameters($params_array);
+
+        try {
+            //$result = $this->soapClient->conceptosRelacionadosChildren($peticion);
+            $result = $this->soapClient->obtenerMedicamentoClinicoConEnvase($peticion);
+        } catch (\SoapFault $soapFault) {
+            return json_encode($soapFault);
+        }
+
+        return json_encode($result);
+    }
+
+    public function callWS014_01($params_array = null){
+
+        $peticion = $this->container->get('client.helper.relationship_mapping')->mapWS014Parameters($params_array);
+
+        try {
+            $result = $this->soapClient->obtenerMedicamentoClinicoConEnvaseLite($peticion);
+        } catch (\SoapFault $soapFault) {
+            return json_encode($soapFault);
+        }
+
+        return json_encode($result);
+    }
+
+    public function callWS015($params_array = null){
+
+        $peticion = $this->container->get('client.helper.relationship_mapping')->mapWS015Parameters($params_array);
+
+        try {
+            //$result = $this->soapClient->conceptosRelacionadosChildren($peticion);
+            $result = $this->soapClient->obtenerProductoComercialConEnvase($peticion);
+        } catch (\SoapFault $soapFault) {
+            return json_encode($soapFault);
+        }
+
+        return json_encode($result);
+    }
+
+    public function callWS015_01($params_array = null){
+
+        $peticion = $this->container->get('client.helper.relationship_mapping')->mapWS015Parameters($params_array);
+
+        try {
+            $result = $this->soapClient->obtenerProductoComercialConEnvaseLite($peticion);
+        } catch (\SoapFault $soapFault) {
+            return json_encode($soapFault);
+        }
+
+        return json_encode($result);
+    }
+
+    public function callWS016($params_array = null){
+
+        $peticion = $this->container->get('client.helper.relationship_mapping')->mapWS016Parameters($params_array);
+
+        try {
+            //$result = $this->soapClient->conceptosRelacionadosChildren($peticion);
+            $result = $this->soapClient->obtenerFamiliaProducto($peticion);
+        } catch (\SoapFault $soapFault) {
+            return json_encode($soapFault);
+        }
+
+        return json_encode($result);
+    }
+
+    public function callWS017($params_array = null){
+
+        $peticion = $this->container->get('client.helper.relationship_mapping')->mapWS017Parameters($params_array);
+
+        try {
+            //$result = $this->soapClient->conceptosRelacionadosChildren($peticion);
+            $result = $this->soapClient->obtenerProductoComercial($peticion);
+        } catch (\SoapFault $soapFault) {
+            return json_encode($soapFault);
+        }
+
+        return json_encode($result);
+    }
+
+    public function callWS017_01($params_array = null){
+
+        $peticion = $this->container->get('client.helper.relationship_mapping')->mapWS017Parameters($params_array);
+
+        try {
+            $result = $this->soapClient->obtenerProductoComercialLite($peticion);
+        } catch (\SoapFault $soapFault) {
+            return json_encode($soapFault);
+        }
+
+        return json_encode($result);
+    }
+
+    public function callWS018($params_array = null){
+
+        $peticion = $this->container->get('client.helper.relationship_mapping')->mapWS018Parameters($params_array);
+
+        try {
+            //$result = $this->soapClient->conceptosRelacionadosChildren($peticion);
+            $result = $this->soapClient->obtenerProductoComercialConEnvase($peticion);
+        } catch (\SoapFault $soapFault) {
+            return json_encode($soapFault);
+        }
+
+        return json_encode($result);
+    }
+
+    public function callWS018_01($params_array = null){
+
+        $peticion = $this->container->get('client.helper.relationship_mapping')->mapWS018Parameters($params_array);
+
+        try {
+            $result = $this->soapClient->obtenerProductoComercialConEnvaseLite($peticion);
+        } catch (\SoapFault $soapFault) {
+            return json_encode($soapFault);
+        }
+
+        return json_encode($result);
+    }
+
+    public function callWS019($params_array = null){
+
+        $peticion = $this->container->get('client.helper.relationship_mapping')->mapWS019Parameters($params_array);
+
+        try {
+            //$result = $this->soapClient->conceptosRelacionadosChildren($peticion);
+            $result = $this->soapClient->obtenerSustancia($peticion);
+        } catch (\SoapFault $soapFault) {
+            return json_encode($soapFault);
+        }
+
+        return json_encode($result);
+    }
+
+    public function callWS020($params_array = null){
+
+        $peticion = $this->container->get('client.helper.relationship_mapping')->mapWS020Parameters($params_array);
+
+        try {
+            //$result = $this->soapClient->conceptosRelacionadosChildren($peticion);
+            $result = $this->soapClient->obtenerRegistroISP($peticion);
+        } catch (\SoapFault $soapFault) {
+            return json_encode($soapFault);
+        }
+
+        return json_encode($result);
+    }
+
+    public function callWS021($params_array = null){
+
+        $peticion = $this->container->get('client.helper.relationship_mapping')->mapWS021Parameters($params_array);
+
+        try {
+            //$result = $this->soapClient->conceptosRelacionadosChildren($peticion);
+            $result = $this->soapClient->obtenerBioequivalentes($peticion);
+        } catch (\SoapFault $soapFault) {
+            return json_encode($soapFault);
+        }
+
+        return json_encode($result);
+    }
 }                

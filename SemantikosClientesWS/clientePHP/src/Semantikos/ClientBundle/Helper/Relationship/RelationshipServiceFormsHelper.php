@@ -239,6 +239,200 @@ class RelationshipServiceFormsHelper {
             ->add('call', SubmitType::class, array('label' => 'Invocar WS', 'attr' => array('class' => 'btn btn-primary')))                                  
             ->getForm()->createView();                    
     }
-    
+
+    public function getWS015Form(){
+
+        return $ws015Form = $this->formFactory->createNamedBuilder('ws015', FormType::class, null)
+            ->setAction($this->container->get('router')->generate('relationship_call'))
+            ->setMethod('POST')
+            ->add('descriptionId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID de Descripción de Medicamento Clínico")
+            ))
+            ->add('conceptId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID Concepto de Medicamento Clínico")
+            ))
+            ->add('idEstablecimiento', NumberType::class)
+            ->add('call', SubmitType::class, array('label' => 'Invocar WS', 'attr' => array('class' => 'btn btn-primary')))
+            ->getForm()->createView();
+    }
+
+    public function getWS015_01Form(){
+
+        return $ws015_01Form = $this->formFactory->createNamedBuilder('ws015_01', FormType::class, null)
+            ->setAction($this->container->get('router')->generate('relationship_call'))
+            ->setMethod('POST')
+            ->add('descriptionId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID de Descripción de Medicamento Clínico con Envase")
+            ))
+            ->add('conceptId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID Concepto de Medicamento Clínico con Envase")
+            ))
+            ->add('idEstablecimiento', NumberType::class)
+            ->add('call', SubmitType::class, array('label' => 'Invocar WS', 'attr' => array('class' => 'btn btn-primary')))
+            ->getForm()->createView();
+    }
+
+    public function getWS016Form(){
+
+        return $ws016Form = $this->formFactory->createNamedBuilder('ws016', FormType::class, null)
+            ->setAction($this->container->get('router')->generate('relationship_call'))
+            ->setMethod('POST')
+            ->add('descriptionId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID de Descripción de Grupo Familia de Producto")
+            ))
+            ->add('conceptId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID Concepto de Grupo Familia de Producto")
+            ))
+            ->add('idEstablecimiento', NumberType::class)
+            ->add('call', SubmitType::class, array('label' => 'Invocar WS', 'attr' => array('class' => 'btn btn-primary')))
+            ->getForm()->createView();
+    }
+
+    public function getWS017Form(){
+
+        return $ws017Form = $this->formFactory->createNamedBuilder('ws017', FormType::class, null)
+            ->setAction($this->container->get('router')->generate('relationship_call'))
+            ->setMethod('POST')
+            ->add('descriptionId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID de Descripción de Familia de Producto")
+            ))
+            ->add('conceptId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID Concepto de Familia de Producto")
+            ))
+            ->add('idEstablecimiento', NumberType::class)
+            ->add('call', SubmitType::class, array('label' => 'Invocar WS', 'attr' => array('class' => 'btn btn-primary')))
+            ->getForm()->createView();
+    }
+
+    public function getWS017_01Form(){
+
+        return $ws017_01Form = $this->formFactory->createNamedBuilder('ws017_01', FormType::class, null)
+            ->setAction($this->container->get('router')->generate('relationship_call'))
+            ->setMethod('POST')
+            ->add('descriptionId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID de Descripción de Familia de Producto")
+            ))
+            ->add('conceptId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID Concepto de Familia de Producto")
+            ))
+            ->add('idEstablecimiento', NumberType::class)
+            ->add('call', SubmitType::class, array('label' => 'Invocar WS', 'attr' => array('class' => 'btn btn-primary')))
+            ->getForm()->createView();
+    }
+
+
+    public function getWS018Form(){
+
+        return $ws018Form = $this->formFactory->createNamedBuilder('ws018', FormType::class, null)
+            ->setAction($this->container->get('router')->generate('relationship_call'))
+            ->setMethod('POST')
+            ->add('descriptionId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID de Descripción de Producto Comercial")
+            ))
+            ->add('conceptId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID Concepto de Producto Comercial")
+            ))
+            ->add('idEstablecimiento', NumberType::class)
+            ->add('call', SubmitType::class, array('label' => 'Invocar WS', 'attr' => array('class' => 'btn btn-primary')))
+            ->getForm()->createView();
+    }
+
+    public function getWS018_01Form(){
+
+        return $ws018_01Form = $this->formFactory->createNamedBuilder('ws018_01', FormType::class, null)
+            ->setAction($this->container->get('router')->generate('relationship_call'))
+            ->setMethod('POST')
+            ->add('descriptionId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID de Descripción de Producto Comercial")
+            ))
+            ->add('conceptId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID Concepto de Producto Comercial")
+            ))
+            ->add('idEstablecimiento', NumberType::class)
+            ->add('call', SubmitType::class, array('label' => 'Invocar WS', 'attr' => array('class' => 'btn btn-primary')))
+            ->getForm()->createView();
+    }
+
+    public function getWS019Form(){
+
+        return $ws019Form = $this->formFactory->createNamedBuilder('ws019', FormType::class, null)
+            ->setAction($this->container->get('router')->generate('relationship_call'))
+            ->setMethod('POST')
+            ->add('descriptionId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID de Descripción de Medicamento Básico")
+            ))
+            ->add('conceptId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID Concepto de Medicamento Básico")
+            ))
+            ->add('idEstablecimiento', NumberType::class)
+            ->add('call', SubmitType::class, array('label' => 'Invocar WS', 'attr' => array('class' => 'btn btn-primary')))
+            ->getForm()->createView();
+    }
+
+    public function getWS020Form(){
+
+        return $ws020Form = $this->formFactory->createNamedBuilder('ws020', FormType::class, null)
+            ->setAction($this->container->get('router')->generate('relationship_call'))
+            ->setMethod('POST')
+            ->add('descriptionId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID de Descripción de Producto Comercial")
+            ))
+            ->add('conceptId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID Concepto de Producto Comercial")
+            ))
+            ->add('idEstablecimiento', NumberType::class)
+            ->add('call', SubmitType::class, array('label' => 'Invocar WS', 'attr' => array('class' => 'btn btn-primary')))
+            ->getForm()->createView();
+    }
+
+    public function getWS021Form(){
+
+        return $ws021Form = $this->formFactory->createNamedBuilder('ws021', FormType::class, null)
+            ->setAction($this->container->get('router')->generate('relationship_call'))
+            ->setMethod('POST')
+            ->add('descriptionId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID de Descripción de Producto Comercial")
+            ))
+            ->add('conceptId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID Concepto de Producto Comercial")
+            ))
+            ->add('idEstablecimiento', NumberType::class)
+            ->add('call', SubmitType::class, array('label' => 'Invocar WS', 'attr' => array('class' => 'btn btn-primary')))
+            ->getForm()->createView();
+    }
+
+    public function getWS022Form(){
+
+        return $ws022Form = $this->formFactory->createNamedBuilder('ws022', FormType::class, null)
+            ->setAction($this->container->get('router')->generate('relationship_call'))
+            ->setMethod('POST')
+            ->add('descriptionId', TextType::class, array(
+                'required' => false,
+                'attr' => array( 'placeholder' => "ID de Descripción de Producto Comercial")
+            ))
+            ->add('idEstablecimiento', NumberType::class)
+            ->add('call', SubmitType::class, array('label' => 'Invocar WS', 'attr' => array('class' => 'btn btn-primary')))
+            ->getForm()->createView();
+    }
     
 }                

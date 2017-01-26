@@ -73,5 +73,84 @@ class RelationshipServiceMappingHelper {
         
         return array( 'peticionConceptosRelacionados' => $peticionConceptosRelacionados );
     }
-        
+
+    public function mapWS014Parameters($parameters = null){
+
+        $peticionConceptosRelacionados = new PeticionConceptosRelacionados();
+
+        $peticionConceptosRelacionados->setIdConcepto($parameters['conceptId']);
+        $peticionConceptosRelacionados->setIdDescripcion($parameters['descriptionId']);
+
+        return array( 'peticionConceptosRelacionados' => $peticionConceptosRelacionados );
+    }
+
+    public function mapWS015Parameters($parameters = null){
+
+        $peticionConceptosRelacionados = new PeticionConceptosRelacionados();
+
+        $peticionConceptosRelacionados->setIdConcepto($parameters['conceptId']);
+        $peticionConceptosRelacionados->setIdDescripcion($parameters['descriptionId']);
+
+        return array( 'peticionConceptosRelacionados' => $peticionConceptosRelacionados );
+    }
+
+    public function mapWS016Parameters($parameters = null){
+
+        $peticionConceptosRelacionados = new PeticionConceptosRelacionados();
+
+        $peticionConceptosRelacionados->setIdConcepto($parameters['conceptId']);
+        $peticionConceptosRelacionados->setIdDescripcion($parameters['descriptionId']);
+
+        return array( 'peticionConceptosRelacionados' => $peticionConceptosRelacionados );
+    }
+
+    public function mapWS017Parameters($parameters = null){
+
+        $peticionConceptosRelacionados = new PeticionConceptosRelacionados();
+
+        $peticionConceptosRelacionados->setIdConcepto($parameters['conceptId']);
+        $peticionConceptosRelacionados->setIdDescripcion($parameters['descriptionId']);
+
+        return array( 'peticionConceptosRelacionados' => $peticionConceptosRelacionados );
+    }
+
+    public function mapWS018Parameters($parameters = null){
+
+        $peticionConceptosRelacionados = new PeticionConceptosRelacionados();
+
+        $peticionConceptosRelacionados->setIdConcepto($parameters['conceptId']);
+        $peticionConceptosRelacionados->setIdDescripcion($parameters['descriptionId']);
+
+        return array( 'peticionConceptosRelacionados' => $peticionConceptosRelacionados );
+    }
+
+    public function mapWS019Parameters($parameters = null){
+
+        $peticionConceptosRelacionados = new PeticionConceptosRelacionados();
+
+        $peticionConceptosRelacionados->setIdConcepto($parameters['conceptId']);
+        $peticionConceptosRelacionados->setIdDescripcion($parameters['descriptionId']);
+
+        return array( 'peticionConceptosRelacionados' => $peticionConceptosRelacionados );
+    }
+
+    public function mapWS020Parameters($parameters = null){
+
+        $peticionConceptosRelacionados = new PeticionConceptosRelacionados();
+
+        $peticionConceptosRelacionados->setIdConcepto($parameters['conceptId']);
+        $peticionConceptosRelacionados->setIdDescripcion($parameters['descriptionId']);
+
+        return array( 'peticionConceptosRelacionados' => $peticionConceptosRelacionados );
+    }
+
+    public function mapWS021Parameters($parameters = null){
+
+        $peticionConceptosRelacionados = new PeticionConceptosRelacionados();
+
+        $peticionConceptosRelacionados->setIdConcepto($parameters['conceptId']);
+        $peticionConceptosRelacionados->setIdDescripcion($parameters['descriptionId']);
+
+        return array( 'peticionConceptosRelacionados' => $peticionConceptosRelacionados );
+    }
 }                

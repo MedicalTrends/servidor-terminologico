@@ -58,8 +58,19 @@ class FormsExtension extends \Twig_Extension {
                                           "ws012_01" => $this->container->get("client.helper.relationship_forms")->getWS012_01Form(),
                                           "ws013" => $this->container->get("client.helper.relationship_forms")->getWS013Form(),
                                           "ws013_01" => $this->container->get("client.helper.relationship_forms")->getWS013_01Form(),
-                                          "ws014" => $this->container->get("client.helper.relationship_forms")->getWS013Form(),
-                                          "ws014_01" => $this->container->get("client.helper.relationship_forms")->getWS013_01Form(),
+                                          "ws014" => $this->container->get("client.helper.relationship_forms")->getWS014Form(),
+                                          "ws014_01" => $this->container->get("client.helper.relationship_forms")->getWS014_01Form(),
+                                          "ws015" => $this->container->get("client.helper.relationship_forms")->getWS015Form(),
+                                          "ws015_01" => $this->container->get("client.helper.relationship_forms")->getWS015_01Form(),
+                                          "ws016" => $this->container->get("client.helper.relationship_forms")->getWS016Form(),
+                                          "ws017" => $this->container->get("client.helper.relationship_forms")->getWS017Form(),
+                                          "ws017_01" => $this->container->get("client.helper.relationship_forms")->getWS017_01Form(),
+                                          "ws018" => $this->container->get("client.helper.relationship_forms")->getWS018Form(),
+                                          "ws018_01" => $this->container->get("client.helper.relationship_forms")->getWS018_01Form(),
+                                          "ws019" => $this->container->get("client.helper.relationship_forms")->getWS019Form(),
+                                          "ws020" => $this->container->get("client.helper.relationship_forms")->getWS020Form(),
+                                          "ws021" => $this->container->get("client.helper.relationship_forms")->getWS021Form(),
+                                          "ws022" => $this->container->get("client.helper.relationship_forms")->getWS022Form(),
             )
         );
     }

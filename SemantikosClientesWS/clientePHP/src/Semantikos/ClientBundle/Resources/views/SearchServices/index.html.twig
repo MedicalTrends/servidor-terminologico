@@ -269,7 +269,7 @@
 
                 $('#response').text(jsonPretty);
                 
-                $(dialog).html(err+":<br>"+request.responseText);
+                $(dialog).html(err);
                 dialog.dialog('option','title',status)
                 dialog.dialog( "open" );                
             }
