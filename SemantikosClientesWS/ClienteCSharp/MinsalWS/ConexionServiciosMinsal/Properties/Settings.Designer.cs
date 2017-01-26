@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ConexionServiciosWS.Properties {
+namespace ConexionServiciosMinsal.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -26,20 +26,10 @@ namespace ConexionServiciosWS.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://192.168.0.243:8080/ws/ServicioDeIngreso?wsdl")]
-        public string ConexionServiciosWS_ServicioDeIngresoWS1_ServicioDeIngreso {
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8080/ws/ServicioDeIngreso")]
+        public string ConexionServiciosMinsal_IngesoWS2_ServicioDeIngreso {
             get {
-                return ((string)(this["ConexionServiciosWS_ServicioDeIngresoWS1_ServicioDeIngreso"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8080/ws/ServicioDeBusqueda")]
-        public string ConexionServiciosWS_ServicioDeBusquedaWS1_ServicioDeBusqueda {
-            get {
-                return ((string)(this["ConexionServiciosWS_ServicioDeBusquedaWS1_ServicioDeBusqueda"]));
+                return ((string)(this["ConexionServiciosMinsal_IngesoWS2_ServicioDeIngreso"]));
             }
         }
     }

@@ -1,1 +1,6 @@
+C:\BP2017\Proyecto Farias\MinsalWS\ConexionServiciosWS\bin\Debug\ConexionServiciosWS.dll.config
+C:\BP2017\Proyecto Farias\MinsalWS\ConexionServiciosWS\bin\Debug\ConexionServiciosWS.dll
+C:\BP2017\Proyecto Farias\MinsalWS\ConexionServiciosWS\bin\Debug\ConexionServiciosWS.pdb
+C:\BP2017\Proyecto Farias\MinsalWS\ConexionServiciosWS\obj\Debug\ConexionServiciosWS.dll
+C:\BP2017\Proyecto Farias\MinsalWS\ConexionServiciosWS\obj\Debug\ConexionServiciosWS.pdb
 C:\BP2017\Proyecto Farias\MinsalWS\ConexionServiciosWS\obj\Debug\ConexionServiciosWS.csprojResolveAssemblyReference.cache

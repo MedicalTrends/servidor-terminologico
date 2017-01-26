@@ -21,9 +21,9 @@ namespace ConexionServiciosWS.Clases
             termino.termino = txtTermino;
             termino.nombreCategoria = categoria;
             termino.nombreRefSet = refSet;
-            respuesta = clientBusqueda.buscarTermino(termino);
+            //respuesta = clientBusqueda.buscarTermino(termino);
             
-            respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
             return respuesta;
         }
 
@@ -31,10 +31,10 @@ namespace ConexionServiciosWS.Clases
         {
             string respuesta = string.Empty;
 
-            busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            incre.idDescripcion = txtIdDescripcion;
-            respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
+            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
+            //incre.idDescripcion = txtIdDescripcion;
+            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
             return respuesta;
         }
 
@@ -42,10 +42,10 @@ namespace ConexionServiciosWS.Clases
         {
             string respuesta = string.Empty;
 
-            busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            incre.idDescripcion = txtIdDescripcion;
-            respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
+            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
+            //incre.idDescripcion = txtIdDescripcion;
+            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
             return respuesta;
         }
 
@@ -53,10 +53,10 @@ namespace ConexionServiciosWS.Clases
         {
             string respuesta = string.Empty;
 
-            busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            incre.idDescripcion = txtIdDescripcion;
-            respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
+            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
+            //incre.idDescripcion = txtIdDescripcion;
+            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
             return respuesta;
         }
 
@@ -64,10 +64,10 @@ namespace ConexionServiciosWS.Clases
         {
             string respuesta = string.Empty;
 
-            busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            incre.idDescripcion = txtIdDescripcion;
-            respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
+            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
+            //incre.idDescripcion = txtIdDescripcion;
+            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
             return respuesta;
         }
 
@@ -75,10 +75,10 @@ namespace ConexionServiciosWS.Clases
         {
             string respuesta = string.Empty;
 
-            busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            incre.idDescripcion = txtIdDescripcion;
-            respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
+            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
+            //incre.idDescripcion = txtIdDescripcion;
+            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
             return respuesta;
         }
 
@@ -86,10 +86,10 @@ namespace ConexionServiciosWS.Clases
         {
             string respuesta = string.Empty;
 
-            busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            incre.idDescripcion = txtNombreAbre;
-            respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtNombreAbre).ToString();
+            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
+            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
+            //incre.idDescripcion = txtNombreAbre;
+            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtNombreAbre).ToString();
             return respuesta;
         }
 
@@ -97,10 +97,10 @@ namespace ConexionServiciosWS.Clases
         {
             string respuesta = string.Empty;
 
-            busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            incre.idDescripcion = txtIdDescripcion;
-            respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
+            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
+            //incre.idDescripcion = txtIdDescripcion;
+            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
             return respuesta;
         }
 
@@ -108,10 +108,10 @@ namespace ConexionServiciosWS.Clases
         {
             string respuesta = string.Empty;
 
-            busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            incre.idDescripcion = txtNombre;
-            respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtNombre).ToString();
+            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
+            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
+            //incre.idDescripcion = txtNombre;
+            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtNombre).ToString();
             return respuesta;
         }
 
@@ -119,10 +119,10 @@ namespace ConexionServiciosWS.Clases
         {
             string respuesta = string.Empty;
 
-            busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            incre.idDescripcion = txtIdInstitucion;
-            respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdInstitucion).ToString();
+            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
+            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
+            //incre.idDescripcion = txtIdInstitucion;
+            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdInstitucion).ToString();
             return respuesta;
         }
 
@@ -130,10 +130,10 @@ namespace ConexionServiciosWS.Clases
         {
             string respuesta = string.Empty;
 
-            busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            incre.idDescripcion = "";
-            respuesta = clientIngreso.incrementarContadorDescripcionConsumida("").ToString();
+            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
+            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
+            //incre.idDescripcion = "";
+            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida("").ToString();
             return respuesta;
         }
 
@@ -141,10 +141,10 @@ namespace ConexionServiciosWS.Clases
         {
             string respuesta = string.Empty;
 
-            busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            incre.idDescripcion = txtIncluyeEstacionamiento;
-            respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIncluyeEstacionamiento).ToString();
+            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
+            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
+            //incre.idDescripcion = txtIncluyeEstacionamiento;
+            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIncluyeEstacionamiento).ToString();
             return respuesta;
         }
 
@@ -152,10 +152,10 @@ namespace ConexionServiciosWS.Clases
         {
             string respuesta = string.Empty;
 
-            busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            incre.idDescripcion = txtNombreCategoria;
-            respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtNombreCategoria).ToString();
+            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
+            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
+            //incre.idDescripcion = txtNombreCategoria;
+            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtNombreCategoria).ToString();
             return respuesta;
         }
 
@@ -163,10 +163,10 @@ namespace ConexionServiciosWS.Clases
         {
             string respuesta = string.Empty;
 
-            busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
-            busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
-            incre.idDescripcion = txtIdDescripcion;
-            respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+            //busqueda.ServicioDeIngresoClient clientIngreso = new busqueda.ServicioDeIngresoClient();
+            //busqueda.incrementarContadorDescripcionConsumida incre = new busqueda.incrementarContadorDescripcionConsumida();
+            //incre.idDescripcion = txtIdDescripcion;
+            //respuesta = clientIngreso.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
             return respuesta;
         }
     }

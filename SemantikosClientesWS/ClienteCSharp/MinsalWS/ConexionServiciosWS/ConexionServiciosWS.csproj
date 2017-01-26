@@ -52,134 +52,101 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Service References\ServicioDeBusquedaWS\Reference.cs">
+    <Compile Include="Web References\ServicioDeBusquedaWS1\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
+      <DependentUpon>Reference.map</DependentUpon>
     </Compile>
-    <Compile Include="Service References\ServicioDeIngresoWS\Reference.cs">
+    <Compile Include="Web References\ServicioDeIngresoWS1\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
+      <DependentUpon>Reference.map</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.buscarDescripcionExactaResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
+    <None Include="Web References\ServicioDeBusquedaWS1\Concepto.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.buscarTerminoResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
+    <None Include="Web References\ServicioDeBusquedaWS1\CrossmapSetMembersResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.buscarTruncatePerfectResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
+    <None Include="Web References\ServicioDeBusquedaWS1\CrossmapSetsResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.Concepto.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
+    <None Include="Web References\ServicioDeBusquedaWS1\IndirectCrossmapsSearch.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.conceptoPorIdDescripcionResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.conceptosPorCategoriaResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.crossMapsDirectosPorIDDescripcionResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.crossmapSetMembersDeCrossmapSetResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.CrossmapSetMembersResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.CrossmapSetsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.crossMapsIndirectosPorDescripcionIDorConceptIDResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.getCrossmapSetsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.IndirectCrossmapsSearch.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.listaRefSetResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.obtenerTerminosPediblesResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.refSetsPorIdDescripcionResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.RespuestaBuscarTermino.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.RespuestaBuscarTerminoGenerica.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.RespuestaCategorias.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.RespuestaConceptosPorCategoria.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.RespuestaConceptosPorRefSet.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.RespuestaDescripciones.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ConexionServiciosWS.ServicioDeBusquedaWS.RespuestaRefSets.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeBusquedaWS\ServicioDeBusqueda.wsdl" />
-    <None Include="Service References\ServicioDeIngresoWS\ConexionServiciosWS.ServicioDeIngresoWS.Descripcion.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeIngresoWS\ConexionServiciosWS.ServicioDeIngresoWS.incrementarContadorDescripcionConsumidaResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeIngresoWS\ConexionServiciosWS.ServicioDeIngresoWS.RespuestaCodificacionDeNuevoTermino.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServicioDeIngresoWS\ServicioDeIngreso.wsdl" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\ServicioDeBusquedaWS\" />
-    <WCFMetadataStorage Include="Service References\ServicioDeIngresoWS\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServicioDeBusquedaWS\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServicioDeBusquedaWS\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServicioDeBusquedaWS\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
+    <None Include="Web References\ServicioDeBusquedaWS1\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServicioDeIngresoWS\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServicioDeIngresoWS\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServicioDeIngresoWS\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
+    <None Include="Web References\ServicioDeBusquedaWS1\RespuestaBuscarTermino.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\ServicioDeBusquedaWS1\RespuestaBuscarTerminoGenerica.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\ServicioDeBusquedaWS1\RespuestaCategorias.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\ServicioDeBusquedaWS1\RespuestaConceptosPorCategoria.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\ServicioDeBusquedaWS1\RespuestaConceptosPorRefSet.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\ServicioDeBusquedaWS1\RespuestaDescripciones.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\ServicioDeBusquedaWS1\RespuestaRefSets.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\ServicioDeBusquedaWS1\ServicioDeBusqueda.wsdl" />
+    <None Include="Web References\ServicioDeIngresoWS1\Descripcion.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\ServicioDeIngresoWS1\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Web References\ServicioDeIngresoWS1\RespuestaCodificacionDeNuevoTermino.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\ServicioDeIngresoWS1\ServicioDeIngreso.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://192.168.0.243:8080/ws/ServicioDeBusqueda%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ServicioDeBusquedaWS1\</RelPath>
+      <UpdateFromURL>http://192.168.0.243:8080/ws/ServicioDeBusqueda%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>ConexionServiciosWS_ServicioDeBusquedaWS1_ServicioDeBusqueda</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://192.168.0.243:8080/ws/ServicioDeIngreso%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ServicioDeIngresoWS1\</RelPath>
+      <UpdateFromURL>http://192.168.0.243:8080/ws/ServicioDeIngreso%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>ConexionServiciosWS_ServicioDeIngresoWS1_ServicioDeIngreso</CachedSettingsPropName>
+    </WebReferenceUrl>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
