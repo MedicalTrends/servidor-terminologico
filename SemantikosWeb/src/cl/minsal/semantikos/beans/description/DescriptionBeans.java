@@ -160,6 +160,19 @@ public class DescriptionBeans {
 
     }
 
+    public boolean disableSensibilityFSN(Description description){
+
+        if( description.getConceptSMTK().isModeled() && description.getConceptSMTK().getCategory().getId()== 33L){
+            return false;
+        }
+        if(description.getConceptSMTK().isModeled()){
+            return true;
+        }
+
+
+        return false;
+    }
+
 
 
 }
