@@ -143,9 +143,14 @@ public class DescriptionManagerImpl implements DescriptionManager {
         new DescriptionEditionBR().validatePreConditions(initDescription, finalDescription);
 
         /* Se actualiza el modelo de negocio primero */
-        descriptionDAO.invalidate(initDescription);
-        finalDescription.setConceptSMTK(conceptSMTK);
-        this.bindDescriptionToConcept(conceptSMTK, finalDescription, true, user);
+        if(initDescription.getConceptSMTK().getId()!=finalDescription.getConceptSMTK().getId()){
+            finalDescription.setId(PersistentEntity.NON_PERSISTED_ID);
+            descriptionDAO.invalidate(initDescription);
+            finalDescription.setConceptSMTK(conceptSMTK);
+            this.bindDescriptionToConcept(conceptSMTK, finalDescription, true, user);
+        }else{
+            descriptionDAO.update(finalDescription);
+        }
 
         /* Registrar en el Historial si es preferida (Historial BR) */
         auditManager.recordFavouriteDescriptionUpdate(conceptSMTK, initDescription, user);

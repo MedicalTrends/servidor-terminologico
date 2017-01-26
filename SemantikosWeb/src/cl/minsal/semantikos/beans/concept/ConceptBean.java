@@ -930,7 +930,6 @@ public class ConceptBean implements Serializable {
         /* Se actualizan las que tienen cambios */
         List<Pair<DescriptionWeb, DescriptionWeb>> descriptionsForUpdate = concept.getModifiedDescriptionsWeb(_concept);
         for (Pair<DescriptionWeb, DescriptionWeb> description : descriptionsForUpdate) {
-            description.getSecond().setId(PersistentEntity.NON_PERSISTED_ID);
             descriptionManager.updateDescription(concept, description.getFirst(), description.getSecond(), user);
         }
         for (NoValidDescription noValidDescription : noValidDescriptions) {

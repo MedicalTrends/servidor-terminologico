@@ -11,6 +11,7 @@ import static cl.minsal.semantikos.model.DescriptionType.PREFERIDA;
  */
 public class DescriptionEditionBR implements BusinessRulesContainer {
 
+
     /**
      * Este método es responsable de aplicar todas las validaciones de pre-condiciones.
      *
@@ -34,7 +35,7 @@ public class DescriptionEditionBR implements BusinessRulesContainer {
 
         /* Si la descripción es FSN y está modelado es OK */
         if (original.getDescriptionType().equals(FSN) & original.getConceptSMTK().isModeled()) {
-            if (original.equals(changed)) {
+            if (!original.getTerm().equals(changed.getTerm()) && !original.getDescriptionType().equals(changed.getDescriptionType())) {
                 throw new BusinessRuleException("REQ-DES-004", "No se puede modificar la descripción FSN de un concepto modelado");
             }
 

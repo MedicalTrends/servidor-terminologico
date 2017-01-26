@@ -143,4 +143,5 @@ public class Category extends PersistentEntity implements TargetDefinition, Audi
     public boolean isCrossMapType() {
         return false;
     }
+
 }
