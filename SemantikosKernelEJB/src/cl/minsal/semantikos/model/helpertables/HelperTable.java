@@ -15,6 +15,7 @@ public class HelperTable implements TargetDefinition{
     private String name;
     private String description;
     private List<HelperTableColumn> columns;
+    private List<HelperTableRow> rows;
 
     public long getId() {
         return id;
@@ -111,5 +112,13 @@ public class HelperTable implements TargetDefinition{
     @Override
     public boolean isCrossMapType() {
         return false;
+    }
+
+    public List<HelperTableRow> getRows() {
+        return rows;
+    }
+
+    public void setRows(List<HelperTableRow> rows) {
+        this.rows = rows;
     }
 }

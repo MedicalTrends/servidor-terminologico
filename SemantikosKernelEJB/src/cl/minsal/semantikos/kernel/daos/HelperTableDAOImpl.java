@@ -192,6 +192,42 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         return recordFromJSON;
     }
 
+    @Override
+    public List<HelperTableRow> getValidTableRows(long tableId) {
+
+        ConnectionBD connectionBD = new ConnectionBD();
+        String selectRecord = "{call semantikos.get_valid_helper_table_rows(?)}";
+        List<HelperTableRow> recordFromJSON;
+        try (Connection connection = connectionBD.getConnection();
+             CallableStatement call = connection.prepareCall(selectRecord)) {
+
+            call.setLong(1,tableId);
+            /* Se prepara y realiza la consulta */
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+
+                String json = rs.getString(1);
+                if(json==null)
+                    return new ArrayList<>();
+
+                recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
+
+            } else {
+                throw new EJBException("Error imposible en HelperTableDAOImpl");
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Hubo un error al acceder a la base de datos.", e);
+            throw new EJBException(e);
+        } catch (IOException e) {
+            logger.error("Hubo un error procesar los resultados con JSON.", e);
+            throw new EJBException(e);
+        }
+
+        return recordFromJSON;
+    }
+
     /*
     crea solo el elemento de la fila sin las celdas
      */
@@ -380,7 +416,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.setBoolean(9, row.isValid());
 
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = call.executeQuery();
 
         } catch (SQLException e) {
             logger.error("Error al crear la row:" + row, e);

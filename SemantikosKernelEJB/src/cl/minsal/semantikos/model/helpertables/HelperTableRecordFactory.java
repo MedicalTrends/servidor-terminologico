@@ -56,6 +56,10 @@ public class HelperTableRecordFactory {
         List<HelperTableRow> records = new ArrayList<>();
 
         for (HelperTableRow row: jSONecords ) {
+
+            if(row.getCells()==null)
+                row.setCells(new ArrayList<HelperTableData>());
+
             records.add(row);
         }
 
@@ -68,6 +72,10 @@ public class HelperTableRecordFactory {
         List<HelperTable> helperTableList = new ArrayList<>();
 
         for (HelperTable table : jsonHelperTables) {
+
+            if(table.getColumns()==null)
+                table.setColumns(new ArrayList<HelperTableColumn>());
+
             helperTableList.add( table);
         }
 
@@ -99,6 +107,8 @@ public class HelperTableRecordFactory {
     public HelperTable createHelperTableFromJSON(String jsonExpression) throws IOException {
         HelperTable helperTable = mapper.readValue(jsonExpression, HelperTable.class);
 
+        if(helperTable.getColumns()==null)
+            helperTable.setColumns(new ArrayList<HelperTableColumn>());
 
         return helperTable;
     }

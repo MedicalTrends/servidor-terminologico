@@ -28,7 +28,7 @@ public interface HelperTablesManager {
     crea una nueva fila con campos por defecto para la tabla proporcionada
 
      */
-    HelperTableRow createRow(HelperTable table, String username);
+    HelperTableRow createRow(Long tableId, String username);
 
     HelperTableRow updateRow(HelperTableRow row, String username);
 
@@ -48,4 +48,10 @@ public interface HelperTablesManager {
 
 
     HelperTableImportReport loadFromFile(HelperTable helperTable, LoadMode loadModeSelected, Reader in, User loggedUser);
+
+
+    List<HelperTableRow> getValidTableRows(long id);
+
+    List<HelperTable> getFullDatabase();
+
 }

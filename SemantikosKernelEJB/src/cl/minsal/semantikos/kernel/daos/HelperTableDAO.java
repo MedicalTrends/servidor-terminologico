@@ -30,4 +30,6 @@ public interface HelperTableDAO {
     HelperTable getHelperTableByID(long tableId);
 
     List<HelperTableRow> searchRecords(HelperTable helperTable, String pattern);
+
+    List<HelperTableRow> getValidTableRows(long id);
 }

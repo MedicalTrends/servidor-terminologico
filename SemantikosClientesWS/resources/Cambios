@@ -1,0 +1,38 @@
+Namespaces en "":
+
+BuscarTruncatePerfect::peticionBuscarTermino
+ObtenerTerminosPedibles::peticionObtenerTerminosPedibles
+RefSetsPorIdDescripcion::peticionRefSetsPorIdDescripcion
+
+Setters:
+
+PeticionBuscarTerminoSimple
+
+Otros metodos:
+
+RespuestaRefSets::
+    public void addAllRefsets(RespuestaRefSets response) {
+        Refsets refsets = response.getRefsets();
+        if (refsets != null) {
+            if (this.refsets == null){
+                this.refsets = new Refsets();
+                if (this.refsets.getRefset() == null){
+                    this.refsets.refset = new ArrayList<>();
+                }
+            }
+            this.refsets.getRefset().addAll(refsets.getRefset());
+        }
+    }
+
+
+
+ID's importantes
+================
+
+Cat: Estructura Corporal
+Term: Pierna (104c21e9-e)
+Refsets: Refset Andres
+
+Cat: Interconsultas
+Term: Radiologia (faac1cda-8)
+Refsets: Refset 3

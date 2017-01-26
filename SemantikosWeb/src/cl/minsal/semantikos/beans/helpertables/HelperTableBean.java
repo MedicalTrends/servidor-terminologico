@@ -12,7 +12,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Blueprints on 1/27/2016.
@@ -23,12 +26,8 @@ public class HelperTableBean implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    private HelperTable selected;
 
-    private String newHelperTableName;
-    private String newHelperTableDescription;
-
-    List<HelperTableRow> selectedTableRows;
+    List<HelperTable> fullDatabase;
 
     @EJB
     HelperTablesManager manager;
@@ -50,33 +49,25 @@ public class HelperTableBean implements Serializable{
     }
 
 
-    public void select(HelperTable helperTable){
-        this.selected = helperTable;
-        this.selectedTableRows =null;
+    public List<HelperTable> getAdministrableTables(){
+
+        List<HelperTable> administrableTables = new ArrayList<>();
+
+        for (HelperTable table : getFullDatabase()) {
+            if(table.getId()<=17)
+                administrableTables.add(table);
+        }
+
+        return administrableTables;
     }
 
-    public List<HelperTable> getAllHelperTables(){
-        return manager.findAll();
+    private List<HelperTable> getFullDatabase() {
+        if(fullDatabase==null)
+            fullDatabase = manager.getFullDatabase();
+
+        return fullDatabase;
     }
 
-    public HelperTable getSelected() {
-        return selected;
-    }
-
-    public void onColumnEdit(RowEditEvent event) {
-
-        HelperTableColumn column = (HelperTableColumn) event.getObject();
-
-        HelperTableColumn newcolumn = manager.updateColumn(column);
-        column.setForeignKeyHelperTable(newcolumn.getForeignKeyHelperTable());
-        column.setForeignKeyHelperTableId(newcolumn.getForeignKeyHelperTableId());
-        column.setHelperTableDataType(newcolumn.getHelperTableDataType());
-        column.setHelperTableDataTypeId(newcolumn.getHelperTableDataTypeId());
-        column.setId(newcolumn.getId());
-    }
-
-    public void onColumnEditCancel(RowEditEvent event) {
-    }
 
 
     public void onRowEdit(RowEditEvent event) {
@@ -84,54 +75,19 @@ public class HelperTableBean implements Serializable{
         HelperTableRow updatedRow = manager.updateRow(row,this.authenticationBean.getUsername());
     }
 
-    public void onRowEditCancel(RowEditEvent event) {
+
+    public void addRow(Long tableId){
+
+        HelperTableRow newRow = manager.createRow(tableId,authenticationBean.getUsername());
+
+        for (HelperTable helperTable : fullDatabase) {
+                if(helperTable.getId()==tableId)
+                    helperTable.getRows().add(0,newRow);
+        }
 
     }
 
 
-
-    public List<HelperTableDataType> getAllDataTypes(){
-
-        return manager.getAllDataTypes();
-    }
-
-    public void addColumn(){
-        if(this.selected == null)
-            return;
-        HelperTableColumn newColumn = new HelperTableColumn();
-
-        newColumn.setName("columna " + (selected.getColumns().size() +1));
-        newColumn.setDescription("columna " + (selected.getColumns().size() +1));
-        //newColumn.setHelperTable(selected);
-        newColumn.setHelperTableId(selected.getId());
-        newColumn.setHelperTableDataTypeId(1);
-
-
-        newColumn = manager.createColumn(newColumn);
-
-        this.selected = manager.getById(this.selected.getId());
-    }
-
-
-    public void addRow(){
-        if(this.selected == null)
-            return;
-        HelperTableRow newRow = manager.createRow(this.selected,authenticationBean.getUsername());
-        selectedTableRows = null;
-    }
-
-    public List<HelperTableRow> getSelectedTableRows() {
-
-        if(selectedTableRows==null && this.selected != null)
-            this.selectedTableRows = manager.getTableRows(selected.getId());
-
-        return this.selectedTableRows;
-    }
-
-
-    public List<HelperTableRow> getTableRows(long tableId) {
-        return manager.getTableRows(tableId);
-    }
 
     protected void showInfo(String title, String message) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, title, message));
@@ -142,7 +98,7 @@ public class HelperTableBean implements Serializable{
     }
 
 
-    public List<HelperTableRow> getAllTableRecords(HelperTable table){
-        return manager.getTableRows(table.getId());
+    public List<HelperTableRow> getValidTableRows(HelperTable table){
+        return manager.getValidTableRows(table.getId());
     }
 }

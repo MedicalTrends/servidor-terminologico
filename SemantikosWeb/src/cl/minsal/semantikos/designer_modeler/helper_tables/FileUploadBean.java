@@ -157,4 +157,7 @@ public class FileUploadBean {
         FacesMessage msg = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
+
+
+
 }

@@ -67,7 +67,9 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
 
 
     @Override
-    public HelperTableRow createRow(HelperTable table, String username) {
+    public HelperTableRow createRow(Long tableId, String username) {
+        HelperTable table= getById(tableId);
+
         HelperTableRow newRow = new HelperTableRow();
 
         newRow.setCreationDate(new Date());
@@ -125,5 +127,19 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
         throw new NotImplementedException();
     }
 
+    @Override
+    public List<HelperTableRow> getValidTableRows(long id) {
+        return dao.getValidTableRows(id);
+    }
 
+    @Override
+    public List<HelperTable> getFullDatabase() {
+        List<HelperTable> tables= dao.getAllTables();
+
+        for (HelperTable table : tables) {
+            table.setRows(getTableRows(table.getId()));
+        }
+
+        return tables;
+    }
 }

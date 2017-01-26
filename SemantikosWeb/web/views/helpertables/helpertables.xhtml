@@ -7,7 +7,9 @@
 
 
     <ui:define name="header">
-        <h2>Tablas Auxiliares</h2>
+        <div class="Card ShadowEffect TexAlCenter">
+            <h2>Tablas Auxiliares</h2>
+        </div>
     </ui:define>
 
     <ui:define name="content">
@@ -17,12 +19,10 @@
                     <h:form id="form" prependId="false">
 
                         <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-
                         <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                             <p:graphicImage name="images/preloader.gif" library="rio-layout"/>
                             <p>Cargando...</p>
                         </p:dialog>
-
 
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                             <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
@@ -31,10 +31,10 @@
 
                         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 
-                        <p:dataTable rows="50" paginator="true" id="helperTablesTable" var="helperTable"
-                                     paginatorTemplate="{CurrentPageReport}  {PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
-                                     rowsPerPageTemplate="10,20,50,100" paginatorPosition="bottom"
-                                     value="#{helperTableBean.allHelperTables}" style="margin-top: 20px" >
+                        <p:dataTable rows="50" paginator="true" id="helperTablesTable"
+                                     value="#{helperTableBean.administrableTables}" var="helperTable" rowIndexVar="rowIndex1"
+
+                                      style="margin-top: 20px" >
 
                             <p:column headerText="ID" width="30">
                                 <h:outputText value="#{helperTable.id}" />
@@ -49,125 +49,39 @@
                             </p:column>
 
                             <p:column headerText="Acciones" width="150">
-                                <p:commandButton icon="ui-icon-gear"
-                                                 ajax="true"
-                                                 id="edit-columns"
-                                                 alt="Configurar Estructura"
-                                                 action="#{helperTableBean.select(helperTable)}"
-                                                 update="edit-columns-dialog-panel"
-                                                 process="@this"
-                                                 onsuccess="PF('edit-culumns-dialog-var').show()" />
+
+
                                 <p:commandButton icon="ui-icon-pencil"
                                                  ajax="true"
                                                  id="edit-data"
                                                  alt="Editar Datos"
-                                                 action="#{helperTableBean.select(helperTable)}"
-                                                 update="edit-data-dialog-panel"
+                                                 type="button"
                                                  process="@this"
-                                                 onsuccess="PF('edit-data-dialog-var').show()"/>
+                                                 onclick="PF('edit-data-dialog-var-#{rowIndex1}').show()"/>
+
+
+
                             </p:column>
 
                         </p:dataTable>
 
-                        <p:dialog id="edit-columns-dialog" header="Editar Columnas" widgetVar="edit-culumns-dialog-var"  height="400" width="900" positionType="absolute">
 
-                            <p:fragment id="edit-columns-dialog-panel">
-                                <p:dataTable id="table-columns-edit" var="column" value="#{helperTableBean.selected.columns}" editable="true" rendered="#{ (not empty helperTableBean.selected) or (helperTableBean.selected != null) }">
+                        <ui:repeat value="#{helperTableBean.administrableTables}" var="helperTable" varStatus="varStatus1">
+
+                            <p:dialog id="edit-data-dialog" styleClass="edit-data-dialog-#{varStatus1.index}" header="Editar Datos" widgetVar="edit-data-dialog-var-#{varStatus1.index}" height="400" width="900" positionType="absolute">
+
+                                <p:dataTable resizableColumns="true" widgetVar="table-data-edit-wvar-#{varStatus1.index}" id="table-data-edit" styleClass="table-data-edit-#{varStatus1.index}" var="row" rowKey="#{row.id}" value="#{helperTable.rows}" editable="true">
                                     <f:facet name="header">
-                                        Columnas de la tabla #{helperTableBean.selected.name}
-                                    </f:facet>
-
-                                    <p:ajax event="rowEdit" listener="#{helperTableBean.onColumnEdit}" />
-                                    <p:ajax event="rowEditCancel" listener="#{helperTableBean.onColumnEditCancel}" />
-
-                                    <p:column headerText="Id">
-                                        <h:outputText value="#{column.id}" />
-                                    </p:column>
-
-                                    <p:column headerText="Nombre">
-                                        <p:cellEditor>
-                                            <f:facet name="output"><h:outputText value="#{column.name}" /></f:facet>
-                                            <f:facet name="input"><p:inputText value="#{column.name}" label="Nombre"/></f:facet>
-                                        </p:cellEditor>
-                                    </p:column>
-
-                                    <p:column headerText="Descripcion">
-                                        <p:cellEditor>
-                                            <f:facet name="output"><h:outputText value="#{column.description}" /></f:facet>
-                                            <f:facet name="input"><p:inputText value="#{column.description}" label="Nombre"/></f:facet>
-                                        </p:cellEditor>
-                                    </p:column>
-
-                                    <p:column headerText="Tipo Basico">
-                                        <p:cellEditor>
-                                            <f:facet name="output">
-                                                <h:outputText value="#{column.helperTableDataType.name}"  rendered="#{not column.foreignKey}"/>
-                                            </f:facet>
-                                            <f:facet name="input">
-                                                <p:selectOneMenu id="datatypeselect" value="#{column.helperTableDataTypeId}" style="width:100%">
-                                                    <f:selectItems value="#{helperTableBean.allDataTypes}" var="columnType" itemLabel="#{columnType.name}" itemValue="#{columnType.id}" />
-                                                </p:selectOneMenu>
-                                            </f:facet>
-                                        </p:cellEditor>
-                                    </p:column>
-
-                                    <p:column headerText="Es llave foranea?">
-                                        <p:cellEditor>
-                                            <f:facet name="output">
-                                                <h:outputText value="No"  rendered="#{not column.foreignKey}"/>
-                                                <h:outputText value="Si"  rendered="#{column.foreignKey}"/>
-                                            </f:facet>
-                                            <f:facet name="input">
-                                                <p:selectBooleanButton id="fkboolbutton" onLabel="Si" offLabel="No" value="#{column.foreignKey}" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
-                                            </f:facet>
-                                        </p:cellEditor>
-                                    </p:column>
-
-                                    <p:column headerText="Tabla llave foranea">
-                                        <p:cellEditor>
-                                            <f:facet name="output">
-                                                <h:outputText value="#{column.foreignKeyHelperTable.name}"  rendered="#{column.foreignKey}"/>
-                                            </f:facet>
-                                            <f:facet name="input">
-                                                <p:selectOneMenu id="foreignkeyselect" value="#{column.foreignKeyHelperTableId}" style="width:100%" >
-                                                    <f:selectItems value="#{helperTableBean.allHelperTables}" var="fktable" itemLabel="#{fktable.name}" itemValue="#{fktable.id}" />
-                                                </p:selectOneMenu>
-                                            </f:facet>
-                                        </p:cellEditor>
-                                    </p:column>
-                                    <p:column style="width:32px">
-                                        <p:rowEditor editTitle="Editar" cancelTitle="Cancelar" saveTitle="Guardar"  />
-                                    </p:column>
-                                </p:dataTable>
-
-
-                                <p:commandButton icon="ui-icon-plus"
-                                                 value="Agregar Columna"
-                                                 ajax="true"
-                                                 id="add-column-button"
-                                                 alt="Agregar Columna"
-                                                 action="#{helperTableBean.addColumn()}"
-                                                 update="table-columns-edit"
-                                                 process="@this"/>
-
-                            </p:fragment>
-
-                        </p:dialog>
-
-                        <p:dialog id="edit-data-dialog" header="Editar Datos" widgetVar="edit-data-dialog-var" height="400" width="900" positionType="absolute">
-                            <p:fragment id="edit-data-dialog-panel">
-                                <p:dataTable resizableColumns="true" id="table-data-edit" var="row" rowKey="#{row.id}" value="#{helperTableBean.selectedTableRows}" editable="true" rendered="#{not empty helperTableBean.selected}">
-                                    <f:facet name="header">
-                                        Editor de datos Tabla: #{helperTableBean.selected.name}
+                                        Editor de datos Tabla: #{helperTable.name}
                                     </f:facet>
 
                                     <p:ajax event="rowEdit" listener="#{helperTableBean.onRowEdit}" />
 
-                                    <p:column headerText="Id" sortable="true" width="30px">
+                                    <p:column headerText="ID" sortable="true" width="30" filterBy="#{row.id}">
                                         <h:outputText value="#{row.id}"/>
                                     </p:column>
 
-                                    <p:column headerText="Descripcion" sortable="true">
+                                    <p:column headerText="DESCRIPCION" sortable="true" filterBy="#{row.description}" filterMatchMode="contains">
                                         <p:cellEditor>
                                             <f:facet name="output">
                                                 <h:outputText value="#{row.description}"/>
@@ -178,7 +92,7 @@
                                         </p:cellEditor>
                                     </p:column>
 
-                                    <p:columns columnIndexVar="columnIndex" var="column" value="#{helperTableBean.selected.columns}" filterable="true" sortable="true" headerText="#{column.name}">
+                                    <p:columns columnIndexVar="columnIndex" var="column" value="#{helperTable.columns}" filterable="true" sortable="true" headerText="#{column.description}">
                                         <p:cellEditor>
                                             <f:facet name="output">
                                                 <h:outputText value="#{row.cells[columnIndex].stringValue}"             rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1}" />
@@ -195,14 +109,21 @@
                                                 <p:inputNumber          value="#{row.cells[columnIndex].floatValue}"        rendered="#{!column.foreignKey and column.helperTableDataTypeId == 4}" />
                                                 <p:calendar             value="#{row.cells[columnIndex].dateValue}"         rendered="#{!column.foreignKey and column.helperTableDataTypeId == 5}"  locale="es" navigator="true" pattern="dd-MM-yyyy" mask="true" />
                                                 <p:selectOneMenu        value="#{row.cells[columnIndex].foreignKeyValue}"   rendered="#{column.foreignKey }" >
-                                                    <f:selectItems value="#{helperTableBean.getTableRows(column.foreignKeyHelperTableId)}" var="fkTableRow" itemValue="#{fkTableRow.id}" itemLabel="#{fkTableRow.description}" >
+                                                    <f:selectItems value="#{helperTableBean.getValidTableRows(helperTable)}" var="fkTableRow" itemValue="#{fkTableRow.id}" itemLabel="#{fkTableRow.description}" >
                                                     </f:selectItems>
                                                 </p:selectOneMenu>
                                             </f:facet>
                                         </p:cellEditor>
                                     </p:columns>
 
-                                    <p:column headerText="Valido" sortable="true"  width="30px" >
+                                    <p:column headerText="ESTADO DE VIGENCIA" sortable="true"  width="30px" filterBy="#{row.valid}">
+                                        <f:facet name="filter">
+                                            <p:selectOneMenu onchange="PF('table-data-edit-wvar-#{helperTable.id}').filter()" >
+                                                <f:selectItem itemLabel="Elegir..." itemValue="#{null}" noSelectionOption="true" />
+                                                <f:selectItem itemLabel="Si" itemValue="#{true}" />
+                                                <f:selectItem itemLabel="No" itemValue="#{false}" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
                                         <p:cellEditor>
                                             <f:facet name="output">
                                                 <h:outputText value="#{row.valid?'Si':'No'}"/>
@@ -212,27 +133,19 @@
                                             </f:facet>
                                         </p:cellEditor>
                                     </p:column>
-                                    <p:column headerText="Valido Hasta" sortable="true">
-                                        <p:cellEditor>
-                                            <f:facet name="output">
-                                                <h:outputText value="#{row.validityUntil}" >
-                                                    <f:convertDateTime pattern="dd-MM-yyyy" />
-                                                </h:outputText>
-                                            </f:facet>
-                                            <f:facet name="input">
-                                                <p:calendar value="#{row.validityUntil}" locale="es" navigator="true" pattern="dd-MM-yyyy" mask="true"/>
-                                            </f:facet>
-                                        </p:cellEditor>
-                                    </p:column>
 
-                                    <p:column headerText="Ult. Edicion" sortable="true">
+
+                                    <p:column headerText="ULTIMA EDICION" sortable="true" width="60">
                                         <h:outputText value="#{row.lastEditDate}" >
                                             <f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
-                                        </h:outputText> por <h:outputText value="#{row.lastEditUsername}" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="EDITADO POR" sortable="true" width="60">
+                                        <h:outputText value="#{row.lastEditUsername}" />
                                     </p:column>
 
 
-                                    <p:column width="50px" headerText="Accion">
+                                    <p:column width="50" headerText="Accion">
                                         <p:rowEditor editTitle="Editar" cancelTitle="Cancelar" saveTitle="Guardar"  />
                                     </p:column>
 
@@ -243,12 +156,14 @@
                                                  ajax="true"
                                                  id="add-row-button"
                                                  alt="Agregar Fila"
-                                                 action="#{helperTableBean.addRow()}"
-                                                 update="table-data-edit"
+                                                 action="#{helperTableBean.addRow(helperTable.id)}"
+                                                 update="@(.table-data-edit-#{varStatus1.index})"
                                                  process="@this"/>
-                            </p:fragment>
 
-                        </p:dialog>
+                            </p:dialog>
+
+
+                        </ui:repeat>
 
                     </h:form>
 
