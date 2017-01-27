@@ -14,18 +14,10 @@
         </tr>
         <tr>
             <td>
-                <asp:Label ID="lblNumeroPagina" Text="N° página:" runat="server"></asp:Label>
+                <asp:Label ID="lblIdEstablecimiento" Text="Id Establecimiento:" runat="server"></asp:Label>
             </td>
             <td>
-                <asp:TextBox ID="txtNumeroPagina" Text="" runat="server"></asp:TextBox>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <asp:Label ID="lbTamañoPagina" Text="tamaño página:" runat="server"></asp:Label>
-            </td>
-            <td>
-                <asp:TextBox ID="txtTamañoPagina" Text="" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtIdEstablecimiento" Text="" runat="server"></asp:TextBox>
             </td>
         </tr>
         <tr>

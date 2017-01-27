@@ -60,6 +60,7 @@
     <Content Include="Pages\Servicio1\CodificacionNuevoTermino.aspx" />
     <Content Include="Pages\Servicio1\IncrementarContadorDescripcion.aspx" />
     <Content Include="Pages\Servicio1.aspx" />
+    <Content Include="Pages\Servicio2\BuscarDescripcionExacta.aspx" />
     <Content Include="Pages\Servicio2\BuscarTermino.aspx" />
     <Content Include="Pages\Servicio2\BuscarTruncatePerfect.aspx" />
     <Content Include="Pages\Servicio2\ConceptoPorCategoria.aspx" />
@@ -74,6 +75,23 @@
     <Content Include="Pages\Servicio2\ListaRefSet.aspx" />
     <Content Include="Pages\Servicio2\ObtenerTerminosPedibles.aspx" />
     <Content Include="Pages\Servicio2\RefSetsPorIdDescripcion.aspx" />
+    <Content Include="Pages\Servicio3\ConceptosRelacionados.aspx" />
+    <Content Include="Pages\Servicio3\ConceptosRelacionadosLite.aspx" />
+    <Content Include="Pages\Servicio3\ObtenerBioequivalentes.aspx" />
+    <Content Include="Pages\Servicio3\ObtenerFamiliaProducto.aspx" />
+    <Content Include="Pages\Servicio3\ObtenerMedicamentoBasico.aspx" />
+    <Content Include="Pages\Servicio3\ObtenerMedicamentoBasicoLite.aspx" />
+    <Content Include="Pages\Servicio3\ObtenerMedicamentoClinico.aspx" />
+    <Content Include="Pages\Servicio3\ObtenerMedicamentoClinicoConEnvase.aspx" />
+    <Content Include="Pages\Servicio3\ObtenerMedicamentoClinicoConEnvaseLite.aspx" />
+    <Content Include="Pages\Servicio3\ObtenerMedicamentoClinicoLite.aspx" />
+    <Content Include="Pages\Servicio3\ObtenerProductoComercial.aspx" />
+    <Content Include="Pages\Servicio3\ObtenerProductoComercialConEnvase.aspx" />
+    <Content Include="Pages\Servicio3\ObtenerProductoComercialConEnvaseLite.aspx" />
+    <Content Include="Pages\Servicio3\ObtenerProductoComercialLite.aspx" />
+    <Content Include="Pages\Servicio3\ObtenerRegistroISP.aspx" />
+    <Content Include="Pages\Servicio3\ObtenerSustancia.aspx" />
+    <Content Include="Pages\Servicio3\SugerenciasDeDescripciones.aspx" />
     <Content Include="Servicios.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -114,6 +132,13 @@
     </Compile>
     <Compile Include="Pages\Servicio1.aspx.designer.cs">
       <DependentUpon>Servicio1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio2\BuscarDescripcionExacta.aspx.cs">
+      <DependentUpon>BuscarDescripcionExacta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio2\BuscarDescripcionExacta.aspx.designer.cs">
+      <DependentUpon>BuscarDescripcionExacta.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Servicio2\BuscarTermino.aspx.cs">
       <DependentUpon>BuscarTermino.aspx</DependentUpon>
@@ -212,6 +237,125 @@
     </Compile>
     <Compile Include="Pages\Servicio2\RefSetsPorIdDescripcion.aspx.designer.cs">
       <DependentUpon>RefSetsPorIdDescripcion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ConceptosRelacionados.aspx.cs">
+      <DependentUpon>ConceptosRelacionados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ConceptosRelacionados.aspx.designer.cs">
+      <DependentUpon>ConceptosRelacionados.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ConceptosRelacionadosLite.aspx.cs">
+      <DependentUpon>ConceptosRelacionadosLite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ConceptosRelacionadosLite.aspx.designer.cs">
+      <DependentUpon>ConceptosRelacionadosLite.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerBioequivalentes.aspx.cs">
+      <DependentUpon>ObtenerBioequivalentes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerBioequivalentes.aspx.designer.cs">
+      <DependentUpon>ObtenerBioequivalentes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerFamiliaProducto.aspx.cs">
+      <DependentUpon>ObtenerFamiliaProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerFamiliaProducto.aspx.designer.cs">
+      <DependentUpon>ObtenerFamiliaProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerMedicamentoBasico.aspx.cs">
+      <DependentUpon>ObtenerMedicamentoBasico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerMedicamentoBasico.aspx.designer.cs">
+      <DependentUpon>ObtenerMedicamentoBasico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerMedicamentoBasicoLite.aspx.cs">
+      <DependentUpon>ObtenerMedicamentoBasicoLite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerMedicamentoBasicoLite.aspx.designer.cs">
+      <DependentUpon>ObtenerMedicamentoBasicoLite.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerMedicamentoClinico.aspx.cs">
+      <DependentUpon>ObtenerMedicamentoClinico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerMedicamentoClinico.aspx.designer.cs">
+      <DependentUpon>ObtenerMedicamentoClinico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerMedicamentoClinicoConEnvase.aspx.cs">
+      <DependentUpon>ObtenerMedicamentoClinicoConEnvase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerMedicamentoClinicoConEnvase.aspx.designer.cs">
+      <DependentUpon>ObtenerMedicamentoClinicoConEnvase.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerMedicamentoClinicoConEnvaseLite.aspx.cs">
+      <DependentUpon>ObtenerMedicamentoClinicoConEnvaseLite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerMedicamentoClinicoConEnvaseLite.aspx.designer.cs">
+      <DependentUpon>ObtenerMedicamentoClinicoConEnvaseLite.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerMedicamentoClinicoLite.aspx.cs">
+      <DependentUpon>ObtenerMedicamentoClinicoLite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerMedicamentoClinicoLite.aspx.designer.cs">
+      <DependentUpon>ObtenerMedicamentoClinicoLite.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerProductoComercial.aspx.cs">
+      <DependentUpon>ObtenerProductoComercial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerProductoComercial.aspx.designer.cs">
+      <DependentUpon>ObtenerProductoComercial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerProductoComercialConEnvase.aspx.cs">
+      <DependentUpon>ObtenerProductoComercialConEnvase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerProductoComercialConEnvase.aspx.designer.cs">
+      <DependentUpon>ObtenerProductoComercialConEnvase.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerProductoComercialConEnvaseLite.aspx.cs">
+      <DependentUpon>ObtenerProductoComercialConEnvaseLite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerProductoComercialConEnvaseLite.aspx.designer.cs">
+      <DependentUpon>ObtenerProductoComercialConEnvaseLite.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerProductoComercialLite.aspx.cs">
+      <DependentUpon>ObtenerProductoComercialLite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerProductoComercialLite.aspx.designer.cs">
+      <DependentUpon>ObtenerProductoComercialLite.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerRegistroISP.aspx.cs">
+      <DependentUpon>ObtenerRegistroISP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerRegistroISP.aspx.designer.cs">
+      <DependentUpon>ObtenerRegistroISP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerSustancia.aspx.cs">
+      <DependentUpon>ObtenerSustancia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\ObtenerSustancia.aspx.designer.cs">
+      <DependentUpon>ObtenerSustancia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Servicio3\SugerenciasDeDescripciones.aspx.cs">
+      <DependentUpon>SugerenciasDeDescripciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Servicio3\SugerenciasDeDescripciones.aspx.designer.cs">
+      <DependentUpon>SugerenciasDeDescripciones.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicios.Master.cs">
