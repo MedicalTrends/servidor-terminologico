@@ -101,16 +101,16 @@ public class ConceptManagerImpl implements ConceptManager {
         categories = (categories == null) ? new Long[0] : categories;
 
         //Búsqueda por categoría
-        if (categories.length > 0 && patternOrConceptID.trim().length()==0) {
+        if (categories.length > 0 && patternOrConceptID.trim().length() == 0) {
             return conceptDAO.getConceptBy(categories, isModeled, pageSize, pageNumber);
         }
 
         //Búsqueda páginas
-        if(categories.length==0 && patternOrConceptID.trim().length()==0){
+        if (categories.length == 0 && patternOrConceptID.trim().length() == 0) {
             return conceptDAO.getConceptsBy(isModeled, pageSize, pageNumber);
         }
 
-        return findConceptBy(patternOrConceptID,categories,pageNumber,pageSize,isModeled);
+        return findConceptBy(patternOrConceptID, categories, pageNumber, pageSize, isModeled);
     }
 
     @Override
@@ -124,11 +124,10 @@ public class ConceptManagerImpl implements ConceptManager {
         if (categories.length > 0) {
             return conceptDAO.countConceptBy((String[]) null, categories, isModeled);
         }
-        if(categories.length == 0 && pattern.trim().length()==0){
+        if (categories.length == 0 && pattern.trim().length() == 0) {
             return conceptDAO.countConceptBy((String[]) null, categories, isModeled);
         }
-        return countConceptBy(pattern,categories,isModeled);
-
+        return countConceptBy(pattern, categories, isModeled);
 
 
     }
@@ -354,19 +353,22 @@ public class ConceptManagerImpl implements ConceptManager {
 
         String patternStandard = standardizationPattern(pattern);
 
-        List<ConceptSMTK> resultToFind = perfectMatch(patternStandard, categories, pageNumber, pageSize, isModeled);
+        if (patternStandard.length() > 2) {
+            List<ConceptSMTK> resultToFind = perfectMatch(patternStandard, categories, pageNumber, pageSize, isModeled);
 
-        if (!resultToFind.isEmpty()) {
-            return resultToFind;
-        } else {
-
-            resultToFind = truncateMatch(patternStandard, categories, pageNumber, pageSize, isModeled);
-            if (resultToFind.isEmpty()){
-                return Collections.emptyList();
-            }else{
+            if (!resultToFind.isEmpty()) {
                 return resultToFind;
+            } else {
+
+                resultToFind = truncateMatch(patternStandard, categories, pageNumber, pageSize, isModeled);
+                if (resultToFind.isEmpty()) {
+                    return Collections.emptyList();
+                } else {
+                    return resultToFind;
+                }
             }
         }
+        return Collections.emptyList();
     }
 
     @Override
@@ -376,7 +378,7 @@ public class ConceptManagerImpl implements ConceptManager {
          * Existe al menos una categoría y el patron de búsqueda
          */
         if ((categories.length != 0 && pattern.length() != 0)) {
-           return conceptDAO.findPerfectMatchConceptBy(pattern, categories, isModeled, pageSize, pageNumber);
+            return conceptDAO.findPerfectMatchConceptBy(pattern, categories, isModeled, pageSize, pageNumber);
         }
 
         /**
@@ -418,15 +420,15 @@ public class ConceptManagerImpl implements ConceptManager {
     public int countConceptBy(String pattern, Long[] categories, Boolean isModeled) {
         String patternStandard = standardizationPattern(pattern);
 
-        int count= countPerfectMatch(patternStandard, categories, isModeled);
+        int count = countPerfectMatch(patternStandard, categories, isModeled);
 
-        if (count!=0) {
+        if (count != 0) {
             return count;
         } else {
             count = countTruncateMatch(patternStandard, categories, isModeled);
-            if (count == 0){
+            if (count == 0) {
                 return 0;
-            }else{
+            } else {
                 return count;
             }
         }
@@ -445,7 +447,7 @@ public class ConceptManagerImpl implements ConceptManager {
          * No existen categorías pero si un patrón de búsqueda
          */
         if ((categories.length == 0 && pattern.length() != 0)) {
-            return conceptDAO.countPerfectMatchConceptBy(pattern,new Long[0], isModeled);
+            return conceptDAO.countPerfectMatchConceptBy(pattern, new Long[0], isModeled);
         }
 
         return 0;
@@ -488,8 +490,8 @@ public class ConceptManagerImpl implements ConceptManager {
             pattern = pattern.toLowerCase();
             pattern = pattern.replaceAll("[^\\p{ASCII}]", "");
             pattern = pattern.replaceAll("\\p{Punct}+", "");
-        }else{
-            pattern="";
+        } else {
+            pattern = "";
         }
         return pattern;
     }
@@ -503,9 +505,13 @@ public class ConceptManagerImpl implements ConceptManager {
     private String truncatePattern(String pattern) {
         pattern = standardizationPattern(pattern);
         String[] arrayToPattern = patternToArray(pattern);
-
+        String patternTruncate="";
         for (int i = 0; i < arrayToPattern.length; i++) {
-            pattern = arrayToPattern[i].substring(0, 3) + " ";
+            if ( arrayToPattern[i].length()<=2) {
+                patternTruncate = patternTruncate + arrayToPattern[i].substring(0, arrayToPattern[i].length()) + " ";
+            } else {
+                patternTruncate = patternTruncate + arrayToPattern[i].substring(0, 3) + " ";
+            }
         }
         return pattern;
     }
