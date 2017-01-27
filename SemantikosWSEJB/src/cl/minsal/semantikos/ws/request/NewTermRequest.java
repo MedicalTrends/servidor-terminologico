@@ -45,7 +45,7 @@ public class NewTermRequest implements Serializable {
     @XmlElement(required = false, name = "especialidad")
     private String specialty;
 
-    @XmlElement(required = true, name = "sub-especialidad")
+    @XmlElement(required = true, name = "subespecialidad")
     private String subSpecialty;
 
     @XmlElement(required = true, name = "categoria")

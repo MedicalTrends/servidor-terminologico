@@ -15,8 +15,10 @@ public class DescriptionsSuggestionsRequest implements Serializable {
 
     @XmlElement(required = true, name = "termino")
     private String term;
+
     @XmlElement(required = false, name = "nombreCategoria")
     private List<String> categoryNames;
+
     @XmlElement(required = false, name = "nombreRefSet")
     private List<String> refSetNames;
 
