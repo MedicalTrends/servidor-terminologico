@@ -60,7 +60,7 @@ public class DescriptionCreationBR {
         ConceptSMTK aConcept = categoryManager.categoryContains(category, term);
 
         if (aConcept != null) {
-            throw new BusinessRuleException("BR-UNK", "Un término sólo puede existir una vez en una categoría. Término perteneciente a concepto: "+aConcept);
+            throw new BusinessRuleException("BR-UNK", "Un término sólo puede existir una vez en una categoría. Descripción perteneciente a concepto: "+aConcept);
         }
     }
 

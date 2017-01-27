@@ -112,8 +112,10 @@ public class DescriptionTranslationBR {
      */
     private void brDescriptionTranslate012(ConceptSMTK targetConcept, Description description) {
 
-        if (categoryManager.categoryContains(targetConcept.getCategory(), description.getTerm())) {
-            throw new BusinessRuleException("BR-UNK", "Un término sólo puede existir una vez en una categoría. Descripción asociada a concepto");
+        ConceptSMTK aConcept = categoryManager.categoryContains(targetConcept.getCategory(), description.getTerm());
+
+        if (aConcept != null) {
+            throw new BusinessRuleException("BR-UNK", "Un término sólo puede existir una vez en una categoría. Descripción perteneciente a concepto: "+aConcept);
         }
 
     }

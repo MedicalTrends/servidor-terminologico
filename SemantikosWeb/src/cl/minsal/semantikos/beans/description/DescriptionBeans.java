@@ -64,8 +64,11 @@ public class DescriptionBeans {
                     return;
                 }
                 DescriptionWeb description = new DescriptionWeb(conceptBean.getConcept(), conceptBean.getOtherTermino(), conceptBean.getOtherDescriptionType());
-                if (conceptBean.getCategoryManager().categoryContains(conceptBean.getCategory(), description.getTerm())) {
-                    messageBean.messageError("Esta descripcion ya existe en esta categoria");
+
+                ConceptSMTK aConcept = conceptBean.getCategoryManager().categoryContains(conceptBean.getCategory(), description.getTerm());
+
+                if (aConcept != null) {
+                    messageBean.messageError("Esta descripcion ya existe en esta categoria. Descripción perteneciente a concepto:" + aConcept);
                     return;
                 }
                 if (conceptBean.containDescription(description)) {

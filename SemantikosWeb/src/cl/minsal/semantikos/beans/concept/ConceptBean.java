@@ -354,9 +354,11 @@ public class ConceptBean implements Serializable {
             setCategory(categoryManager.getCategoryById(idCategory));
             if (category.getId() == 34) changeMultiplicityToRequiredRelationshipDefinitionMC();
 
+            ConceptSMTK aConcept = categoryManager.categoryContains(category, favoriteDescription);
+
             /* Se valida que el término propuesto no exista previamente */
-            if (categoryManager.categoryContains(category, favoriteDescription)) {
-                messageBean.messageError("La descripción " + favoriteDescription + " ya existe dentro de la categoría " + category.getName());
+            if (aConcept != null) {
+                messageBean.messageError("La descripción " + favoriteDescription + " ya existe dentro de la categoría " + category.getName() +". Descripción perteneciente a concepto: "+aConcept);
             } else {
                 newConcept(category, favoriteDescription);
             }
@@ -421,7 +423,7 @@ public class ConceptBean implements Serializable {
     public void newConcept(Category category, String term) {
         /* Valores iniciales para el concepto */
         String observation = "";
-        // TODO: Diego
+
         TagSMTK tagSMTK = new TagSMTK(category.getTagSemantikos().getId(), category.getTagSemantikos().getName());
         ConceptSMTK conceptSMTK = new ConceptSMTK(conceptManager.generateConceptId(), category, false, false, false, false, false, false, observation, tagSMTK);
 
@@ -816,8 +818,11 @@ public class ConceptBean implements Serializable {
 
     private boolean containDescriptionCategory(ConceptSMTKWeb conceptSMTK) {
         for (Description description : conceptSMTK.getDescriptionsWeb()) {
-            if (categoryManager.categoryContains(conceptSMTK.getCategory(), description.getTerm())) {
-                messageBean.messageError("Ya existe la descripción " + description.getTerm() + " en la categoría " + category.getName());
+
+            ConceptSMTK aConcept = categoryManager.categoryContains(conceptSMTK.getCategory(), description.getTerm());
+
+            if (aConcept != null) {
+                messageBean.messageError("Ya existe la descripción " + description.getTerm() + " en la categoría " + category.getName() +". Descripción perteneciente a concepto: "+aConcept);
                 return true;
             }
         }

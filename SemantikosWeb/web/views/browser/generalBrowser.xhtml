@@ -83,6 +83,11 @@
                                         <h:outputText value="Modelado" rendered="#{concept.modeled}"/>
                                     </p:column>
 
+                                    <p:column headerText="Sensibilidad" rendered="#{ generalBrowserBean.idCategory eq 33 }">
+                                        <h:outputText value="Sensible" rendered="#{ concept.descriptionFavorite.caseSensitive }"/>
+                                        <h:outputText value="Insensible" rendered="#{ not concept.descriptionFavorite.caseSensitive }"/>
+                                    </p:column>
+
                                     <p:columns value="#{generalBrowserBean.generalQuery.columns}" rendered="true"
                                                var="column"
                                                columnIndexVar="colIndex">

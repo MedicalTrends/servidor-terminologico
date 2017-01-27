@@ -179,6 +179,14 @@ public class NoValidBrowserBean implements Serializable {
             for (NoValidDescription noValidDescription : noValidDescriptionsSelected) {
 
                 ConceptSMTK sourceConcept = noValidDescription.getNoValidDescription().getConceptSMTK();
+                Description description = noValidDescription.getNoValidDescription();
+
+                try{
+                    descriptionTranslationBR.apply(sourceConcept, conceptSelected, description);
+                }catch (EJBException e) {
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+                    return;
+                }
 
                 sourceConcept.removeDescription(noValidDescription.getNoValidDescription());
                 noValidDescription.getNoValidDescription().setConceptSMTK(conceptSelected);

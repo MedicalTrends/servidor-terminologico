@@ -74,8 +74,11 @@ public class TransferConceptBean {
         Category categoryById = categoryManager.getCategoryById(categoryId);
         try{
             for (Description description : conceptSMTK.getDescriptions()) {
-                if(categoryManager.categoryContains(categoryById, description.getTerm())){
-                    messageBean.messageError("Una(s) de las descripciones ya existe en categoría");
+
+                ConceptSMTK aConcept = categoryManager.categoryContains(categoryById, description.getTerm());
+
+                if(aConcept != null){
+                    messageBean.messageError("La descripción: "+description+" ya existe en la categoría. Descripción perteneciente a concepto: "+aConcept);
                     return;
                 }
             }
