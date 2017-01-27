@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
@@ -24,7 +25,7 @@ public interface CategoryManager {
      *
      * @return <code>true</code> si la categoría contiene el término <code>term</code> y <code>false</code> sino.
      */
-    public boolean categoryContains(Category category, String term);
+    public ConceptSMTK categoryContains(Category category, String term);
 
     /**
      * Este método es responsable de recuperar una Categoría completa, con sus propiedades básicas y todos sus

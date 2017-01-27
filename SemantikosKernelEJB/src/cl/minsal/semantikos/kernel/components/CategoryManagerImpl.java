@@ -4,6 +4,7 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.kernel.daos.CategoryDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.businessrules.CategoryCreationBR;
@@ -75,17 +76,17 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
-    public boolean categoryContains(Category category, String term) {
+    public ConceptSMTK categoryContains(Category category, String term) {
 
         List<Description> descriptions = descriptionManager.searchDescriptionsByTerm(term, Arrays.asList(category));
 
         /* Si la búsqueda resultó con al menos un término vigente, entonces si contiene */
         for (Description description : descriptions) {
             if (description.isValid()){
-                return true;
+                return description.getConceptSMTK();
             }
         }
-        return false;
+        return null;
     }
 
     @Override

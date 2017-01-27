@@ -57,9 +57,10 @@ public class DescriptionCreationBR {
      */
     private void brDescriptionCreation001(ConceptSMTK concept, String term, CategoryManager categoryManager) {
         Category category = concept.getCategory();
+        ConceptSMTK aConcept = categoryManager.categoryContains(category, term);
 
-        if (categoryManager.categoryContains(category, term)) {
-                throw new BusinessRuleException("BR-UNK", "Un término sólo puede existir una vez en una categoría.");
+        if (aConcept != null) {
+            throw new BusinessRuleException("BR-UNK", "Un término sólo puede existir una vez en una categoría. Término perteneciente a concepto: "+aConcept);
         }
     }
 

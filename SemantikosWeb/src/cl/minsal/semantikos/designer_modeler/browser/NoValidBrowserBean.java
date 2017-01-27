@@ -6,6 +6,8 @@ import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.DescriptionQuery;
 import cl.minsal.semantikos.model.browser.NoValidQuery;
+import cl.minsal.semantikos.model.businessrules.ConceptTransferBR;
+import cl.minsal.semantikos.model.businessrules.DescriptionTranslationBR;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.slf4j.Logger;
@@ -71,6 +73,9 @@ public class NoValidBrowserBean implements Serializable {
     private ConceptSMTK conceptSelected = null;
 
     private User user;
+
+    @EJB
+    private DescriptionTranslationBR descriptionTranslationBR;
 
     /**
      * Indica si cambió algún filtro. Se utiliza para resetear la páginación al comienzo si se ha filtrado
@@ -166,12 +171,16 @@ public class NoValidBrowserBean implements Serializable {
     }
 
     public void translateDescription() {
+
         FacesContext context = FacesContext.getCurrentInstance();
 
         if(noValidDescriptionSelected == null){
+
             for (NoValidDescription noValidDescription : noValidDescriptionsSelected) {
 
-                noValidDescription.getNoValidDescription().getConceptSMTK().removeDescription(noValidDescription.getNoValidDescription());
+                ConceptSMTK sourceConcept = noValidDescription.getNoValidDescription().getConceptSMTK();
+
+                sourceConcept.removeDescription(noValidDescription.getNoValidDescription());
                 noValidDescription.getNoValidDescription().setConceptSMTK(conceptSelected);
 
                 try {
@@ -183,11 +192,22 @@ public class NoValidBrowserBean implements Serializable {
             }
         }
         else{
-            noValidDescriptionSelected.getNoValidDescription().getConceptSMTK().removeDescription(noValidDescriptionSelected.getNoValidDescription());
-            noValidDescriptionSelected.getNoValidDescription().setConceptSMTK(conceptSelected);
+
+            ConceptSMTK sourceConcept = noValidDescriptionSelected.getNoValidDescription().getConceptSMTK();
+            Description description = noValidDescriptionSelected.getNoValidDescription();
+
+            try{
+                descriptionTranslationBR.apply(sourceConcept, conceptSelected, description);
+            }catch (EJBException e) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+                return;
+            }
+
+            sourceConcept.removeDescription(noValidDescriptionSelected.getNoValidDescription());
+            description.setConceptSMTK(conceptSelected);
 
             try {
-                descriptionManager.moveDescriptionToConcept(conceptSelected, noValidDescriptionSelected.getNoValidDescription(), user);
+                descriptionManager.moveDescriptionToConcept(conceptSelected, description, user);
             } catch (EJBException e) {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
             }

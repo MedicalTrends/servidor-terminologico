@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.model.businessrules;
 
+import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
@@ -24,6 +25,10 @@ public class DescriptionTranslationBR {
     @EJB
     private ConceptManager conceptManager;
 
+    @EJB
+    private CategoryManager categoryManager;
+
+
     public void apply(ConceptSMTK sourceConcept,ConceptSMTK targetConcept, Description description) {
 
         /* Se validan las pre-condiciones para realizar el movimiento de descripciones */
@@ -46,6 +51,9 @@ public class DescriptionTranslationBR {
 
         /* Estados posibles para trasladar descripciones */
         brDescriptionTranslate011(sourceConcept, targetConcept);
+
+        /* Condiciones en concepto destino */
+        brDescriptionTranslate012(targetConcept, description);
     }
 
     /**
@@ -93,6 +101,24 @@ public class DescriptionTranslationBR {
     }
 
     /**
+     * ﻿BR-DES-004: Al trasladar una descripción, ésta no debe existir dentro de la categoría del concepto destino
+     * Los tipos de traslado pueden ser:
+     * <ul>
+     * <li> Trasladar una descripción</li>
+     * </ul>
+     *
+     * @param targetConcept El concepto al cual se traslada la descripción.
+     * @param description la descripción.
+     */
+    private void brDescriptionTranslate012(ConceptSMTK targetConcept, Description description) {
+
+        if (categoryManager.categoryContains(targetConcept.getCategory(), description.getTerm())) {
+            throw new BusinessRuleException("BR-UNK", "Un término sólo puede existir una vez en una categoría. Descripción asociada a concepto");
+        }
+
+    }
+
+    /**
      * En el proceso de trasladar una Descripción de Tipo Descriptor “Abreviada”, si el concepto destino ya tiene
      * definida una descripción Abreviada, entonces la descripción a ser trasladada pasará como tipo descriptor
      * “General”.
@@ -119,4 +145,5 @@ public class DescriptionTranslationBR {
         }
 
     }
+
 }
