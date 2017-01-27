@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.SnomedCTDAO;
+import cl.minsal.semantikos.model.businessrules.ConceptSearchBR;
 import cl.minsal.semantikos.model.snomedct.*;
 
 import javax.ejb.EJB;
@@ -18,6 +19,9 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
 
     @EJB
     private SnomedCTDAO snomedctDAO;
+
+    @EJB
+    private ConceptSearchBR conceptSearchBR;
 
     @Override
     public SnapshotProcessingResult processSnapshot(SnomedCTSnapshot snomedCTSnapshot) {
@@ -46,6 +50,29 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     @Override
     public List<ConceptSCT> findConceptsByPattern(String pattern, Integer group) {
         return snomedctDAO.findConceptsBy(pattern, group);
+    }
+
+    @Override
+    public int countConceptBy(String pattern, Integer group) {
+        String patternStandard = conceptSearchBR.standardizationPattern(pattern);
+
+        int count= countPerfectMatch(patternStandard, group);
+
+        if (count!=0) {
+            return count;
+        } else {
+            return countTruncateMatch(patternStandard, group);
+        }
+    }
+
+    public int countPerfectMatch(String pattern, Integer group) {
+        //return snomedctDAO.countPerfectMatchConceptBy(pattern, group);
+        return 0;
+    }
+
+    public int countTruncateMatch(String pattern, Integer group) {
+        //return snomedctDAO.countPerfectMatchConceptBy(pattern, group);
+        return 0;
     }
 
     @Override

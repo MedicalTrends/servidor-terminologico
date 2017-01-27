@@ -24,7 +24,20 @@
             var="relationship">
 
         <h:outputText rendered="#{var.index>0}" value=", " />
-        <h:outputText value="#{relationship.target}" />
+        <h:outputText value="#{relationship.target} " />
+
+        <p:repeat
+                offset="0"
+                size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
+                step="1"
+                varStatus="var2"
+                value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
+                var="attribute">
+            <h:outputText value="(" />
+            <smtk:basicTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.basicType}" />
+            <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
+            <h:outputText value=")" />
+        </p:repeat>
 
     </p:repeat>
 

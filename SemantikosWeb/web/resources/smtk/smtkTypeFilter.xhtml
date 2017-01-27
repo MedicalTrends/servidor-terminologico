@@ -18,70 +18,72 @@
 <composite:implementation>
 
 
-                <div class="Container100">
-                    <div class="ContainerIndent BoldGray FontBold">
+    <div class="Container100">
+        <div class="ContainerIndent BoldGray FontBold">
 
-                        <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() and not cc.attrs.multiple }" styleClass="search">
+            <h:outputText value="#{cc.attrs.relationshipDefinition.name}" />
 
-                            <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
-                                            forceSelection="true"
-                                            placeholder="Buscar..."
-                                            id="findConceptSMTK" scrollHeight="200" size="5"
-                                            completeMethod="#{smtkBean.getConceptSearchInput}"
-                                            converter="conceptConverter"
-                                            var="concept"
-                                            value="#{generalBrowserBean.conceptSMTK}"
-                                            itemLabel="#{concept.descriptionFavorite.term}"
-                                            itemValue="#{concept}">
+            <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() and not cc.attrs.multiple }" styleClass="search">
 
-                                <!-- Parámetros del validador -->
-                                <f:attribute name="concept" value="#{cc.attrs.concept}"  />
-                                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                                <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
-                                <!---->
-                                <p:column>
-                                    <h:outputText value="#{concept.descriptionFavorite.id}"/>
-                                </p:column>
+                <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
+                                forceSelection="true"
+                                placeholder="Buscar..."
+                                id="findConceptSMTK" scrollHeight="200" size="5"
+                                completeMethod="#{smtkBean.getConceptSearchInput}"
+                                converter="conceptConverter"
+                                var="concept"
+                                value="#{generalBrowserBean.conceptSMTK}"
+                                itemLabel="#{concept.descriptionFavorite.term}"
+                                itemValue="#{concept}">
 
-                                <p:column>
-                                    <h:outputText value="#{concept.descriptionFavorite.term}"/>
-                                </p:column>
+                    <!-- Parámetros del validador -->
+                    <f:attribute name="concept" value="#{cc.attrs.concept}"  />
+                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                    <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
+                    <!---->
+                    <p:column>
+                        <h:outputText value="#{concept.descriptionFavorite.id}"/>
+                    </p:column>
 
-                                <p:ajax event="itemSelect"
-                                        listener="#{generalBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, generalBrowserBean.conceptSMTK)}"
-                                        update="@(.browserFilters)"
-                                        process="@this" />
+                    <p:column>
+                        <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                    </p:column>
 
-                                <p:ajax event="itemSelect" update="@(.browserTable)" />
+                    <p:ajax event="itemSelect"
+                            listener="#{generalBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, generalBrowserBean.conceptSMTK)}"
+                            update="@(.browserFilters)"
+                            process="@this" />
 
-                            </p:autoComplete>
-                            <i class="fa fa-search fa-lg" />
-                        </p:outputPanel>
+                    <p:ajax event="itemSelect" update="@(.browserTable)" />
 
-                        <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() and not cc.attrs.multiple }">
+                </p:autoComplete>
+                <i class="fa fa-search fa-lg" />
+            </p:outputPanel>
 
-                            <p:repeat  value="#{cc.attrs.targets}"
-                                       offset="0"
-                                       size="#{cc.attrs.targets.size()}"
-                                       step="1"
-                                       var="target"
-                                       varStatus="var">
+            <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() and not cc.attrs.multiple }">
 
-                                <p:inputText disabled="true" id="itemSelected" value="#{target.descriptionFavorite.term}" />
-                                <p:commandLink rendered="#{ not cc.attrs.targets.isEmpty() }"
-                                               process="@this"
-                                               update="@(.browserFilters),@(.browserTable)"
-                                               action="#{generalBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
-                                    <i class="fa fa-close fa-lg"  />
-                                </p:commandLink>
+                <p:repeat  value="#{cc.attrs.targets}"
+                           offset="0"
+                           size="#{cc.attrs.targets.size()}"
+                           step="1"
+                           var="target"
+                           varStatus="var">
+
+                    <p:inputText disabled="true" id="itemSelected" value="#{target.descriptionFavorite.term}" />
+                    <p:commandLink rendered="#{ not cc.attrs.targets.isEmpty() }"
+                                   process="@this"
+                                   update="@(.browserFilters),@(.browserTable)"
+                                   action="#{generalBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
+                        <i class="fa fa-close fa-lg"  />
+                    </p:commandLink>
 
 
-                            </p:repeat>
+                </p:repeat>
 
-                        </p:outputPanel>
+            </p:outputPanel>
 
-                    </div>
-                </div>
+        </div>
+    </div>
 
 
 </composite:implementation>

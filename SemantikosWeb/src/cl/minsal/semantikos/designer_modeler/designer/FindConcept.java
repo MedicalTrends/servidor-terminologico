@@ -148,8 +148,6 @@ public class FindConcept implements Serializable{
     }
 
 
-
-
     /**
      * Getter and Setter
      *
