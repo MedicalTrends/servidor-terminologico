@@ -47,7 +47,7 @@ public class FindConcept implements Serializable{
 
     @PostConstruct
     public void init() {
-        findConcepts = new ArrayList<ConceptSMTK>();
+        findConcepts = new ArrayList<>();
         categoryList = categoryManager.getCategories();
     }
 
@@ -57,26 +57,11 @@ public class FindConcept implements Serializable{
     public void getConceptByCategory(){
        if(pattern==null || pattern.trim().length()==0){
            categoryArrayID= new Long[] {categorySelected.getId()};
-           findConcepts =conceptManager.findConceptBy(pattern,categoryArrayID,0,conceptManager.countConceptBy(pattern,categoryArrayID));
+           int countConcept=conceptManager.countConceptBy(pattern,categoryArrayID,true);
+           findConcepts =conceptManager.findConceptBy(pattern,categoryArrayID,0,countConcept,true);
        }else{
            getConceptSearchInputAndCategories(pattern);
        }
-    }
-
-    /**
-     * Este método es el encargado de realizar la búsqueda de conceptos por patrón de texto
-     * @param pattern
-     * @return
-     */
-    public List<ConceptSMTK> getConceptSearchInput(String pattern) {
-
-        if (pattern != null) {
-            if (pattern.length() >= 2) {
-                findConcepts=conceptManager.findConceptBy(pattern);
-                return findConcepts;
-            }
-        }
-        return findConcepts;
     }
 
     /**
@@ -93,7 +78,8 @@ public class FindConcept implements Serializable{
         if (pattern != null) {
             if (pattern.trim().length() >= 2) {
                 if(standardizationPattern(pattern).length()<=1)return null;
-                findConcepts=conceptManager.findConceptBy(pattern,categoryArrayID,0,conceptManager.countConceptBy(pattern,categoryArrayID));
+                int countConcept=conceptManager.countConceptBy(pattern,categoryArrayID,true);
+                findConcepts=conceptManager.findConceptBy(pattern,categoryArrayID,0,countConcept,true);
                 return findConcepts;
             }
         }
@@ -112,13 +98,13 @@ public class FindConcept implements Serializable{
                 if(standardizationPattern(pattern).length()<=1)return null;
 
                 if(categorySelected==null){
-
                     FacesContext context = FacesContext.getCurrentInstance();
                     Category category = (Category) UIComponent.getCurrentComponent(context).getAttributes().get("category");
                     categoryArrayID= new Long[] {category.getId()};
                 }
 
-                findConcepts=conceptManager.findConceptBy(pattern,categoryArrayID,0,conceptManager.countConceptBy(pattern,categoryArrayID));
+                int countConcept=conceptManager.countConceptBy(pattern,categoryArrayID,true);
+                findConcepts=conceptManager.findConceptBy(pattern,categoryArrayID,0,countConcept,true);
                 return findConcepts;
             }
         }
@@ -135,7 +121,8 @@ public class FindConcept implements Serializable{
         if (pattern != null) {
             if (pattern.trim().length() >= 2) {
                 if(standardizationPattern(pattern).length()<=1)return null;
-                findConcepts=conceptManager.findConceptBy(pattern,new Long[0],0,conceptManager.countConceptBy(pattern,new Long[0]));
+                int countConcept=conceptManager.countConceptBy(pattern,categoryArrayID,true);
+                findConcepts=conceptManager.findConceptBy(pattern,new Long[0],0,countConcept,true);
                 return findConcepts;
             }
         }

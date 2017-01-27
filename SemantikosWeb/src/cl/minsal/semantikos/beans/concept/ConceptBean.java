@@ -1421,10 +1421,10 @@ public class ConceptBean implements Serializable {
         for (Relationship relationship : concept.getValidRelationships()) {
             if (relationship.getRelationshipDefinition().getId() == 74) {
                 if (!((BasicTypeValue<Boolean>) relationship.getTarget()).getValue()){
-                    if(!concept.isModeled())changeMultiplicityToRequiredRelationshipDefinitionMC();
+                    changeMultiplicityToRequiredRelationshipDefinitionMC();
                 }
                 else{
-                    if(!concept.isModeled())changeMultiplicityNotRequiredRelationshipDefinitionMC();
+                    changeMultiplicityNotRequiredRelationshipDefinitionMC();
                 }
             }
         }

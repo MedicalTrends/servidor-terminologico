@@ -124,16 +124,7 @@ public interface ConceptManager {
      */
     public List<ConceptSMTK> findConceptBy(Category category);
 
-    /**
-     * Método encargado de realizar la búsqueda de conceptos por patron, en caso de no encontrar un "Perfect Match" por
-     * la cadena de texto entregada, realiza un truncate match, el que consiste en cortar cada palabra de la cadena de
-     * texto en las tres primeras letras para luego realizar la búsqueda nuevamente.
-     *
-     * @param pattern cadena de texto
-     *
-     * @return retorna lista de conceptos
-     */
-    public List<ConceptSMTK> findConceptBy(String pattern);
+
 
     /**
      * Este método se encarga de entregar la cantidad de conceptos según patron y categoría
@@ -223,5 +214,50 @@ public interface ConceptManager {
      */
     public ConceptSMTK getPendingConcept();
 
+    /**
+     * Método encargado de realizar la búsqueda de conceptos
+     *
+     * @param pattern patrón de búsqueda
+     * @param categories categorías en las que desea buscar el concepto
+     * @param pageNumber número de la página
+     * @param pageSize tamaño de la página
+     * @param isModeled conceptos modelados (true) o en borrador (false)
+     * @return Lista de conceptos que concuerdan con los parámetros de búsqueda
+     */
+
+    public List<ConceptSMTK> findConceptBy(String pattern, Long[] categories, int pageNumber, int pageSize,boolean isModeled);
+
+    /**
+     * Método encargado de hacer Perfect Match según los parámetros ingresados
+     * @return  Lista de conceptos que concuerdan con los parámetros de búsqueda
+     */
+    public List<ConceptSMTK> perfectMatch(String pattern, Long[] categories, int pageNumber, int pageSize, Boolean isModeled);
+
+    /**
+     * Método encargado de hacer Truncate Match según los parámetros ingresados
+     * @return  Lista de conceptos que concuerdan con los parámetros de búsqueda
+     */
+    public List<ConceptSMTK> truncateMatch(String pattern, Long[] categories, int pageNumber, int pageSize, Boolean isModeled);
+
+
+    /**
+     * Este método se encarga de entregar la cantidad de conceptos según patron, categoría y si esta modelado o no.
+     * @param pattern    patrón de búsqueda
+     * @param categories arreglo de idś de categorías
+     * @param isModeled conceptos modelados (true) o borrador (false)
+     * @return cantidad de conceptos según los parámetros ingresados
+     */
+    public int countConceptBy(String pattern, Long[] categories, Boolean isModeled);
+
+    /**
+     * Este método se encarga de entregar la cantidad de conceptos por Perfect Match según patron, categoría y si esta modelado o no.
+     * @return cantidad de conceptos según los parámetros ingresados
+     */
+    public int countPerfectMatch(String pattern, Long[] categories, Boolean isModeled);
+    /**
+     * Este método se encarga de entregar la cantidad de conceptos por Truncate Match según patron, categoría y si esta modelado o no.
+     * @return cantidad de conceptos según los parámetros ingresados
+     */
+    public int countTruncateMatch(String pattern, Long[] categories, Boolean isModeled);
 
 }
