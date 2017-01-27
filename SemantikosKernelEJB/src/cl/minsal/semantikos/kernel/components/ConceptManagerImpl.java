@@ -513,7 +513,7 @@ public class ConceptManagerImpl implements ConceptManager {
                 patternTruncate = patternTruncate + arrayToPattern[i].substring(0, 3) + " ";
             }
         }
-        return pattern;
+        return patternTruncate;
     }
 
     /**
