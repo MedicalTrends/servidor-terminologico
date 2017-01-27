@@ -21,7 +21,12 @@ namespace MinsalWS.Pages.Servicio2
         {
             if (this.ConsumirServicio())
             {
-                string script = @"<script type='text/javascript'> alert('Operación ejecutada correctacmente!.');</script>";
+                //string script = @"<script type='text/javascript'> alert('Operación ejecutada correctacmente!.');</script>";
+                //ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
+            }
+            else
+            {
+                string script = @"<script type='text/javascript'> alert('Error al procesar el servicio, contacte al administrador. ');</script>";
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
             }
         }
@@ -36,14 +41,20 @@ namespace MinsalWS.Pages.Servicio2
             {
                 string respuesta = string.Empty;
                 AccesoBusquedaWS ingreso = new AccesoBusquedaWS();
-                respuesta = ingreso.RespuestaRefSetsPorIdDescripcion(txtIdDescripcion.Text);
-                TextArea1.Text = respuesta;
-                return true;
+                respuesta = ingreso.RespuestaRefSetsPorIdDescripcion(txtIdDescripcion.Text, txtIdEstablecimiento.Text);
+                if (respuesta != "False")
+                {
+                    TextArea1.Text = respuesta;
+                    return true;
+                }
+                else
+                {
+                    TextArea1.Text = respuesta;
+                    return false;
+                }
             }
             catch (Exception)
             {
-                string script = @"<script type='text/javascript'> alert('Error al procesar el servicio, contacte al administrador. ');</script>";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
                 return false;
             }
         }

@@ -31,6 +31,24 @@ namespace MinsalWS.Pages.Servicio2 {
         protected global::System.Web.UI.WebControls.TextBox txtNombreCategoria;
         
         /// <summary>
+        /// lblIdEstablecimiento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblIdEstablecimiento;
+        
+        /// <summary>
+        /// txtIdEstablecimiento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtIdEstablecimiento;
+        
+        /// <summary>
         /// lblNombreRefSet control.
         /// </summary>
         /// <remarks>
@@ -65,6 +83,15 @@ namespace MinsalWS.Pages.Servicio2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPedible;
+        
+        /// <summary>
+        /// lblNota control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNota;
         
         /// <summary>
         /// btnInvocar control.

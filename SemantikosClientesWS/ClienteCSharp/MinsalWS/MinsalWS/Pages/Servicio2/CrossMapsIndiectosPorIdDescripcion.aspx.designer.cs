@@ -31,6 +31,42 @@ namespace MinsalWS.Pages.Servicio2 {
         protected global::System.Web.UI.WebControls.TextBox txtIdDescripcion;
         
         /// <summary>
+        /// lblConcepto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblConcepto;
+        
+        /// <summary>
+        /// txtIdConcepto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtIdConcepto;
+        
+        /// <summary>
+        /// lblEstablecimiento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEstablecimiento;
+        
+        /// <summary>
+        /// txtIdEstablecimiento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtIdEstablecimiento;
+        
+        /// <summary>
         /// btnInvocar control.
         /// </summary>
         /// <remarks>

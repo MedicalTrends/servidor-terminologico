@@ -14,6 +14,22 @@
         </tr>
         <tr>
             <td>
+                <asp:Label ID="lblConcepto" Text="Concepto id:" runat="server"></asp:Label>
+            </td>
+            <td>
+                <asp:TextBox ID="txtIdConcepto" Text="" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblEstablecimiento" Text="Establecimiento id:" runat="server"></asp:Label>
+            </td>
+            <td>
+                <asp:TextBox ID="txtIdEstablecimiento" Text="" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 
             </td>
             <td>

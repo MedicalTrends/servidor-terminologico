@@ -9,6 +9,12 @@ namespace AccesoServiciosWS.Clases
 {
     public class AccesoBusquedaWS
     {
+        public string RespuestaBuscarDescripcionExacta(string txtIdEstableccimiento, string txtPattern)
+        {
+            ConexionBusquedaWS conex = new ConexionBusquedaWS();
+            return conex.RespuestaBuscarDescripcionExacta(txtIdEstableccimiento, txtPattern);
+        }
+
         public string RespuestaBuscarTermino(string txtTermino, string txtNombreCat, string txtNombreRefSet)
         {
             ConexionBusquedaWS conex = new ConexionBusquedaWS();
@@ -33,16 +39,16 @@ namespace AccesoServiciosWS.Clases
             return conex.RespuestaConceptoPorIdDescripcion(txtIdDescripcion);
         }
 
-        public string RespuestaConceptoPorRefSet(string txtNombre, string txtNumeroPagina, string txtTamañoPagina)
+        public string RespuestaConceptoPorRefSet(string txtNombre, string txtIdEstablecimiento)
         {
             ConexionBusquedaWS conex = new ConexionBusquedaWS();
-            return conex.RespuestaConceptoPorRefSet(txtNombre, txtNumeroPagina, txtTamañoPagina);
+            return conex.RespuestaConceptoPorRefSet(txtNombre, txtIdEstablecimiento);
         }
 
-        public string RespuestaCrossMapsDirectorsPorIdDescripcion(string txtIdDescripcion)
+        public string RespuestaCrossMapsDirectorsPorIdDescripcion(string txtIdDescripcion, string txtIdConcepto, string txtIdEstablecimiento)
         {
             ConexionBusquedaWS conex = new ConexionBusquedaWS();
-            return conex.RespuestaCrossMapsDirectorsPorIdDescripcion(txtIdDescripcion);
+            return conex.RespuestaCrossMapsDirectorsPorIdDescripcion(txtIdDescripcion, txtIdConcepto, txtIdEstablecimiento);
         }
 
         public string RespuestaCrossMapSetMembersDeCrossmapSet(string txtNombreAbre)
@@ -51,16 +57,16 @@ namespace AccesoServiciosWS.Clases
             return conex.RespuestaCrossMapSetMembersDeCrossmapSet(txtNombreAbre);
         }
 
-        public string RespuestaCrossMapsIndiectosPorIdDescripcion(string txtIdDescripcion)
+        public string RespuestaCrossMapsIndiectosPorIdDescripcionIDorConceptoID(string txtIdDescripcion, string txtIdConcepto, string txtIdEstablecimiento)
         {
             ConexionBusquedaWS conex = new ConexionBusquedaWS();
-            return conex.RespuestaCrossMapsIndiectosPorIdDescripcion(txtIdDescripcion);
+            return conex.RespuestaCrossMapsIndiectosPorIdDescripcionIDorConceptoID(txtIdDescripcion, txtIdConcepto, txtIdEstablecimiento);
         }
 
-        public string RespuestaDescripcionesPreferidasPorRefSet(string txtNombre, string txtNumeroPagina, string txtTamañoPagina)
+        public string RespuestaDescripcionesPreferidasPorRefSet(string txtNombre, string txtIdEstablecimiento)
         {
             ConexionBusquedaWS conex = new ConexionBusquedaWS();
-            return conex.RespuestaDescripcionesPreferidasPorRefSet(txtNombre, txtNumeroPagina, txtTamañoPagina);
+            return conex.RespuestaDescripcionesPreferidasPorRefSet(txtNombre, txtIdEstablecimiento);
         }
 
         public string RespuestaGetCrossmapSets(string txtIdInstitucion)
@@ -75,22 +81,22 @@ namespace AccesoServiciosWS.Clases
             return conex.RespuestaListaCategorias();
         }
 
-        public string RespuestaListaRefSet(string txtIncluyeEstacionamiento)
+        public string RespuestaListaRefSet(bool txtIncluyeEstacionamiento, string txtEstablecimientoNombre)
         {
             ConexionBusquedaWS conex = new ConexionBusquedaWS();
-            return conex.RespuestaListaRefSet(txtIncluyeEstacionamiento);
+            return conex.RespuestaListaRefSet(Convert.ToBoolean(txtIncluyeEstacionamiento), txtEstablecimientoNombre);
         }
 
-        public string RespuestaObtenerTerminosPedibles(string txtNombreCategoria, string txtNombreRefSet, string txtPedible)
+        public string RespuestaObtenerTerminosPedibles(string txtNombreCategoria, string txtIdEstablecimiento, string txtNombreRefSet, string txtPedible)
         {
             ConexionBusquedaWS conex = new ConexionBusquedaWS();
-            return conex.RespuestaObtenerTerminosPedibles(txtNombreCategoria, txtNombreRefSet, txtPedible);
+            return conex.RespuestaObtenerTerminosPedibles(txtNombreCategoria, txtIdEstablecimiento, txtNombreRefSet, txtPedible);
         }
 
-        public string RespuestaRefSetsPorIdDescripcion(string txtIdDescripcion)
+        public string RespuestaRefSetsPorIdDescripcion(string txtIdDescripcion, string txtIdEstablecimiento)
         {
             ConexionBusquedaWS conex = new ConexionBusquedaWS();
-            return conex.RespuestaRefSetsPorIdDescripcion(txtIdDescripcion);
+            return conex.RespuestaRefSetsPorIdDescripcion(txtIdDescripcion, txtIdEstablecimiento);
         }
     }
 }

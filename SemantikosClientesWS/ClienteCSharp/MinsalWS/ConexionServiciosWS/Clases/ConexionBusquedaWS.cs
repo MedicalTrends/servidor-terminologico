@@ -9,6 +9,24 @@ namespace ConexionServiciosWS.Clases
 {
     public class ConexionBusquedaWS
     {
+        public string RespuestaBuscarDescripcionExacta(string txtIdEstableccimiento, string txtPattern)
+        {
+            try
+            {
+                string respuesta = string.Empty;
+                busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
+                busqueda.PatronDeBusqueda patron = new busqueda.PatronDeBusqueda();
+                patron.idEstablecimiento = txtIdEstableccimiento;
+                patron.pattern = txtPattern;
+                respuesta = clientbusqueda.buscarDescripcionExacta(patron).ToString();
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
         public string RespuestaBuscarTermino(string txtTermino, string txtNombreCat, string txtNombreRefSet)
         {
             string respuesta = string.Empty;
@@ -18,7 +36,11 @@ namespace ConexionServiciosWS.Clases
             try
             {
                 busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
-                respuesta = clientbusqueda.buscarTermino(txtIdDescripcion).ToString();
+                busqueda.PeticionBuscarTerminoSimple termino = new busqueda.PeticionBuscarTerminoSimple();
+                termino.termino = txtTermino;
+                termino.nombreCategoria = categoria;
+                termino.nombreRefSet = refSet;
+                respuesta = clientbusqueda.buscarTermino(termino).ToString();
                 return respuesta;
             }
             catch (Exception ex)
@@ -29,11 +51,19 @@ namespace ConexionServiciosWS.Clases
 
         public string RespuestaBuscarTruncatePerfect(string txtTermino, string txtNombreCat, string txtNombreRefSet, string txtIdEstablecimiento)
         {
+            string respuesta = string.Empty;
+            String[] categoria = new String[] { txtNombreCat };
+            String[] refSet = new String[] { txtNombreRefSet };
+
             try
             {
-                string respuesta = string.Empty;
                 busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
-                respuesta = clientbusqueda.buscarTruncatePerfect(txtIdDescripcion).ToString();
+                busqueda.PeticionBuscarTermino termino = new busqueda.PeticionBuscarTermino();
+                termino.termino = txtTermino;
+                termino.nombreCategoria = categoria;
+                termino.nombreRefSet = refSet;
+                termino.idEstablecimiento = txtIdEstablecimiento;
+                respuesta = clientbusqueda.buscarTruncatePerfect(termino).ToString();
                 return respuesta;
             }
             catch (Exception ex)
@@ -48,7 +78,10 @@ namespace ConexionServiciosWS.Clases
             {
                 string respuesta = string.Empty;
                 busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
-                respuesta = clientbusqueda.conceptosPorCategoria(txtIdDescripcion).ToString();
+                busqueda.PeticionPorCategoria categoria = new busqueda.PeticionPorCategoria();
+                categoria.nombreCategoria = txtNombre;
+                categoria.idEstablecimiento = txtIdEstablecimiento;
+                respuesta = clientbusqueda.conceptosPorCategoria(categoria).ToString();
                 return respuesta;
             }
             catch (Exception ex)
@@ -72,13 +105,16 @@ namespace ConexionServiciosWS.Clases
             }
         }
 
-        public string RespuestaConceptoPorRefSet(string txtNombre, string txtNumeroPagina, string txtTamañoPagina)
+        public string RespuestaConceptoPorRefSet(string txtNombre, string txtIdEstablecimiento)
         {
             try
             {
                 string respuesta = string.Empty;
                 busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
-                respuesta = clientbusqueda.conceptopor(txtIdDescripcion).ToString();
+                busqueda.PeticionConceptosPorRefSet conceptos = new busqueda.PeticionConceptosPorRefSet();
+                conceptos.idEstablecimiento = txtIdEstablecimiento;
+                conceptos.nombreRefSet = txtNombre;
+                respuesta = clientbusqueda.conceptosPorRefSet(conceptos).ToString();
                 return respuesta;
             }
             catch (Exception ex)
@@ -87,13 +123,17 @@ namespace ConexionServiciosWS.Clases
             }
         }
 
-        public string RespuestaCrossMapsDirectorsPorIdDescripcion(string txtIdDescripcion)
+        public string RespuestaCrossMapsDirectorsPorIdDescripcion(string txtIdDescripcion, string txtIdConcepto, string txtIdEstablecimiento)
         {
             try
             {
                 string respuesta = string.Empty;
                 busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
-                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                busqueda.descriptionIDorConceptIDRequest maps = new busqueda.descriptionIDorConceptIDRequest();
+                maps.description_id = txtIdDescripcion;
+                maps.concept_id = txtIdConcepto;
+                maps.stablishment_id = txtIdEstablecimiento;
+                respuesta = clientbusqueda.crossMapsDirectosPorIDDescripcion(maps).ToString();
                 return respuesta;
             }
             catch (Exception ex)
@@ -108,7 +148,7 @@ namespace ConexionServiciosWS.Clases
             {
                 string respuesta = string.Empty;
                 busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
-                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                respuesta = clientbusqueda.crossmapSetMembersDeCrossmapSet(txtNombreAbre).ToString();
                 return respuesta;
             }
             catch (Exception ex)
@@ -117,13 +157,17 @@ namespace ConexionServiciosWS.Clases
             }
         }
 
-        public string RespuestaCrossMapsIndiectosPorIdDescripcion(string txtIdDescripcion)
+        public string RespuestaCrossMapsIndiectosPorIdDescripcionIDorConceptoID(string txtIdDescripcion, string txtIdConcepto, string txtIdEstablecimiento)
         {
             try
             {
                 string respuesta = string.Empty;
                 busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
-                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                busqueda.descriptionIDorConceptIDRequest concept = new busqueda.descriptionIDorConceptIDRequest();
+                concept.description_id = txtIdDescripcion;
+                concept.concept_id = txtIdConcepto;
+                concept.stablishment_id = txtIdEstablecimiento;
+                respuesta = clientbusqueda.crossMapsIndirectosPorDescripcionIDorConceptID(concept).ToString();
                 return respuesta;
             }
             catch (Exception ex)
@@ -132,13 +176,16 @@ namespace ConexionServiciosWS.Clases
             }
         }
 
-        public string RespuestaDescripcionesPreferidasPorRefSet(string txtNombre, string txtNumeroPagina, string txtTamañoPagina)
+        public string RespuestaDescripcionesPreferidasPorRefSet(string txtNombre, string txtIdEstablecimiento)
         {
             try
             {
                 string respuesta = string.Empty;
                 busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
-                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                busqueda.PeticionConceptosPorRefSet conceptos = new busqueda.PeticionConceptosPorRefSet();
+                conceptos.nombreRefSet = txtNombre; ;
+                conceptos.idEstablecimiento = txtIdEstablecimiento;
+                respuesta = clientbusqueda.descripcionesPreferidasPorRefSet(conceptos).ToString();
                 return respuesta;
             }
             catch (Exception ex)
@@ -153,7 +200,7 @@ namespace ConexionServiciosWS.Clases
             {
                 string respuesta = string.Empty;
                 busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
-                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                respuesta = clientbusqueda.getCrossmapSets(txtIdInstitucion).ToString();
                 return respuesta;
             }
             catch (Exception ex)
@@ -168,7 +215,7 @@ namespace ConexionServiciosWS.Clases
             {
                 string respuesta = string.Empty;
                 busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
-                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                respuesta = clientbusqueda.listaCategorias().ToString();
                 return respuesta;
             }
             catch (Exception ex)
@@ -177,13 +224,13 @@ namespace ConexionServiciosWS.Clases
             }
         }
 
-        public string RespuestaListaRefSet(string txtIncluyeEstacionamiento)
+        public string RespuestaListaRefSet(bool establecimiento, string txtIncluyeEstacionamiento)
         {
             try
             {
                 string respuesta = string.Empty;
                 busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
-                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                respuesta = clientbusqueda.listaRefSet(establecimiento, txtIncluyeEstacionamiento).ToString();
                 return respuesta;
             }
             catch (Exception ex)
@@ -192,13 +239,22 @@ namespace ConexionServiciosWS.Clases
             }
         }
 
-        public string RespuestaObtenerTerminosPedibles(string txtNombreCategoria, string txtNombreRefSet, string txtPedible)
+        public string RespuestaObtenerTerminosPedibles(string txtNombreCategoria, string txtIdEstablecimiento, string txtNombreRefSet, string txtPedible)
         {
+            String[] categoria = new String[] { txtNombreCategoria };
+            String[] nombreRef = new String[] { txtNombreRefSet };
+
             try
             {
                 string respuesta = string.Empty;
                 busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
-                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                busqueda.PeticionConceptosPedibles pedibles = new busqueda.PeticionConceptosPedibles();
+                pedibles.nombreCategoria = categoria;
+                pedibles.idEstablecimiento = txtIdEstablecimiento;
+                pedibles.nombreRefSet = nombreRef;
+                pedibles.pedible = Convert.ToBoolean(txtPedible);
+                
+                respuesta = clientbusqueda.obtenerTerminosPedibles(pedibles).ToString();
                 return respuesta;
             }
             catch (Exception ex)
@@ -207,13 +263,16 @@ namespace ConexionServiciosWS.Clases
             }
         }
 
-        public string RespuestaRefSetsPorIdDescripcion(string txtIdDescripcion)
+        public string RespuestaRefSetsPorIdDescripcion(string txtIdDescripcion, string txtIdEstablecimiento)
         {
             try
             {
                 string respuesta = string.Empty;
                 busqueda.ServicioDeBusqueda clientbusqueda = new busqueda.ServicioDeBusqueda();
-                respuesta = clientbusqueda.incrementarContadorDescripcionConsumida(txtIdDescripcion).ToString();
+                busqueda.PeticionRefSetsPorIdDescripcion refSet = new busqueda.PeticionRefSetsPorIdDescripcion();
+                refSet.idDescripcion = txtIdDescripcion;
+                refSet.idStablishment = txtIdEstablecimiento;
+                respuesta = clientbusqueda.refSetsPorIdDescripcion(refSet).ToString();
                 return respuesta;
             }
             catch (Exception ex)

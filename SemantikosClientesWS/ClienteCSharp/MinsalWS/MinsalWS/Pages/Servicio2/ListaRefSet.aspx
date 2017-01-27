@@ -12,6 +12,14 @@
                 <asp:TextBox ID="txtIncluyeEstacionamiento" Text="True" runat="server"></asp:TextBox>
             </td>
         </tr>
+<tr>
+            <td>
+                <asp:Label ID="lblEstablecimiento" Text="Estacionamiento:" runat="server"></asp:Label>
+            </td>
+            <td>
+                <asp:TextBox ID="txtEstablecimientoNombre" Text="" runat="server"></asp:TextBox>
+            </td>
+        </tr>
         <tr>
             <td>
                 

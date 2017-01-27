@@ -31,40 +31,22 @@ namespace MinsalWS.Pages.Servicio2 {
         protected global::System.Web.UI.WebControls.TextBox txtNombre;
         
         /// <summary>
-        /// lblNumeroPagina control.
+        /// lblIdEstablecimiento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNumeroPagina;
+        protected global::System.Web.UI.WebControls.Label lblIdEstablecimiento;
         
         /// <summary>
-        /// txtNumeroPagina control.
+        /// txtIdEstablecimiento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNumeroPagina;
-        
-        /// <summary>
-        /// lbTamañoPagina control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbTamañoPagina;
-        
-        /// <summary>
-        /// txtTamañoPagina control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTamañoPagina;
+        protected global::System.Web.UI.WebControls.TextBox txtIdEstablecimiento;
         
         /// <summary>
         /// btnInvocar control.
