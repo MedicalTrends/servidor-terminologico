@@ -121,7 +121,8 @@ public class DrugsBrowserBean implements Serializable {
 
     public List<ConceptSMTK> getConceptSearchInput(String patron) {
 
-        concepts = conceptManager.findConceptBy(patron, drugsCategories, 0, 30);
+        int countConcept=conceptManager.countConceptBy(patron,drugsCategories,true);
+        concepts = conceptManager.findConceptBy(patron, drugsCategories, 0, countConcept,true);
 
         return concepts;
     }

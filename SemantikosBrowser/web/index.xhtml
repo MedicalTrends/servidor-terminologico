@@ -8,70 +8,9 @@
       xmlns:pm="http://primefaces.org/mobile">
 <h:head>
    <title>Title</title>
-
-
 </h:head>
 <h:body>
-   <p:growl id="growl" showDetail="true" autoUpdate="true"/>
-   <p:dataTable id="vehiclesTable" var="conceptSMTK" value="#{navBrowser.concepts}">
-      <f:facet name="header">
-         Expand rows to see detailed information
-      </f:facet>
-
-      <p:column style="width:2%" exportable="false">
-         <p:rowToggler />
-      </p:column>
-
-      <p:column style="width:49%">
-         <f:facet name="header">
-            Manufacturer
-         </f:facet>
-         <h:outputText value="#{conceptSMTK.id}" />
-      </p:column>
-
-      <p:column style="width:49%">
-         <f:facet name="header">
-            Color
-         </f:facet>
-         <h:outputText value="#{conceptSMTK.category.name}" />
-      </p:column>
 
 
-      <p:rowExpansion>
-         <p:dataTable lazy="true" id="display" var="description" value="#{conceptSMTK.descriptions}" style="width:300px;" >
-
-            <f:facet name="header">
-               <h:outputText value="Customer Details"></h:outputText>
-            </f:facet>
-            <p:column>
-               <f:facet name="header">
-                  <h:outputText value="Customer Name"></h:outputText>
-               </f:facet>
-               <h:outputText  value="#{description.idDescripcionConcepto}" />
-            </p:column>
-            <p:column>
-               <f:facet name="header">
-                  <h:outputText value="Country"></h:outputText>
-               </f:facet>
-               <h:outputText  value="#{description.term}" />
-            </p:column>
-         </p:dataTable>
-
-      </p:rowExpansion>
-   </p:dataTable>
-
-   <p:spacer height="30"/>
-
-
-   <p:panel header="Export PDF and Excel">
-
-
-      <p:commandButton value="Excel">
-
-         <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />
-
-      </p:commandButton>
-
-   </p:panel>
 </h:body>
 </html>

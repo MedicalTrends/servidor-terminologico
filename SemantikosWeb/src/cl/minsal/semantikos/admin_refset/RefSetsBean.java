@@ -165,52 +165,6 @@ public class RefSetsBean implements Serializable {
         refSetList = refSetManager.getAllRefSets();
     }
 
-    public void selectCategoryEvent() {
-
-        conceptsToCategory = new LazyDataModel<ConceptSMTK>() {
-            @Override
-            public List<ConceptSMTK> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-                List<ConceptSMTK> conceptSMTKs;
-                Long[] idCategory;
-                if (categorySelected == null) {
-                    idCategory = new Long[0];
-                } else {
-                    idCategory = new Long[1];
-                    idCategory[0] = categorySelected.getId();
-                }
-
-                conceptSMTKs = conceptManager.findConceptBy(null, idCategory, first, pageSize);
-                this.setRowCount(conceptManager.countConceptBy(null, idCategory));
-
-                return conceptSMTKs;
-            }
-
-        };
-    }
-
-
-    public void patternEvent() {
-
-        if (pattern != null) {
-            if (pattern.length() > 2) {
-                conceptsToDescription = new LazyDataModel<ConceptSMTK>() {
-                    @Override
-                    public List<ConceptSMTK> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-                        List<ConceptSMTK> conceptSMTKs;
-                        conceptSMTKs = conceptManager.findConceptBy(pattern, new Long[0], first, pageSize);
-                        this.setRowCount(conceptManager.countConceptBy(pattern, new Long[0]));
-
-                        return conceptSMTKs;
-                    }
-
-                };
-            } else {
-                conceptsToDescription = null;
-            }
-
-        }
-    }
-
     /**
      * Método encargado de agregar conceptos a un RefSet
      *

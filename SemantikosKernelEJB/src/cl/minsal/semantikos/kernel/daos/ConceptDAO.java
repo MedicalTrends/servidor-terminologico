@@ -150,4 +150,47 @@ public interface ConceptDAO {
      * @return Una lista con los ID's de los conceptos.
      */
     public List<Long> getAllConceptsId();
+
+    /**
+     *
+     * @return
+     */
+
+    /**
+     * Método encargado de realizar perfect match con patrón de búsqueda y categorías
+     * @return
+     */
+    public List<ConceptSMTK> findPerfectMatchConceptBy(String pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber);
+
+    /**
+     * Método encargado de realizar perfect match con patrón de búsqueda
+     * @return
+     */
+    public List<ConceptSMTK> findPerfectMatchConceptBy(String pattern, boolean modeled, int pageSize, int pageNumber);
+
+    /**
+     * Método encargado de realizar truncate match con patrón de búsqueda y categorías
+     * @return
+     */
+    public List<ConceptSMTK> findTruncateMatchConceptBy(String pattern[], Long[] categories, boolean modeled, int pageSize, int pageNumber);
+
+    /**
+     * Método encargado de realizar truncate match con patrón de búsqueda
+     * @return
+     */
+    public List<ConceptSMTK> findTruncateMatchConceptBy(String pattern[], boolean modeled, int pageSize, int pageNumber);
+
+    /**
+     * Método encargado de contar los conceptos con perfect match
+     * @return
+     */
+    public int countPerfectMatchConceptBy(String pattern, Long[] categories, boolean modeled);
+
+    /**
+     * Método encargado de contar los conceptos con truncate match
+     * @return
+     */
+    public int countTruncateMatchConceptBy(String pattern[], Long[] categories, boolean modeled);
+
+
 }
