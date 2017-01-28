@@ -87,15 +87,15 @@ be_simple_soap:
   clients:
     search:
         # required
-        wsdl: http://192.168.0.226:8080/ws/ServicioDeBusqueda?wsdl                 
+        wsdl: http://localhost:8080/ws/ServicioDeBusqueda?wsdl
         classmap:
                 PeticionPorCategoria: Semantikos\ClientBundle\API\PeticionPorCategoria                 
                 RespuestaConceptosPorCategoria: Semantikos\ClientBundle\API\RespuestaConceptosPorCategoria
     entrance:
         # required
-        wsdl: http://192.168.0.226:8080/ws/ServicioDeIngreso?wsdl              
+        wsdl: http://localhost:8080/ws/ServicioDeIngreso?wsdl
         classmap:
                 PeticionCodificacionDeNuevoTermino: Semantikos\ClientBundle\API\PeticionCodificacionDeNuevoTermino                
     relationship:
         # required
-        wsdl: http://192.168.0.226:8080/ws/ServicioDeRelacionados?wsdl              
+        wsdl: http://localhost:8080/ws/ServicioDeRelacionados?wsdl
