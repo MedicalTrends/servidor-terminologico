@@ -36,6 +36,8 @@ public interface QueryDAO {
 
     List<RelationshipDefinition> getSearchableAttributesByCategory(Category category);
 
+    List<RelationshipDefinition> getSecondOrderSearchableAttributesByCategory(Category category);
+
     List<RelationshipDefinition> getShowableAttributesByCategory(Category category);
 
     List<RelationshipDefinition> getSecondOrderShowableAttributesByCategory(Category category);

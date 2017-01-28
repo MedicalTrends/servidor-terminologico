@@ -85,6 +85,19 @@ public class QueryManagerImpl implements QueryManager {
             query.getFilters().add(queryFilter);
         }
 
+        // Adding second order filters, if this apply
+        for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions() ) {
+            if(relationshipDefinition.getTargetDefinition().isSMTKType()){
+                Category categoryDestination = (Category) relationshipDefinition.getTargetDefinition();
+                for (RelationshipDefinition relationshipDefinitionDestination : getSecondOrderSearchableAttributesByCategory(categoryDestination)) {
+                    QueryFilter secondOrderQueryFilter = new QueryFilter(relationshipDefinitionDestination);
+                    secondOrderQueryFilter.setMultiple(getMultipleFilteringValue(categoryDestination, relationshipDefinition));
+                    secondOrderQueryFilter.setSecondOrder(true);
+                    query.getFilters().add(secondOrderQueryFilter);
+                }
+            }
+        }
+
         return query;
     }
 
@@ -147,6 +160,7 @@ public class QueryManagerImpl implements QueryManager {
                 }
 
                 conceptSMTK.getRelationships().addAll(secondOrderRelationships);
+
                 // Adding related concepts to relationships, if this apply
                 if(getShowableRelatedConceptsValue(category)){
                     for (ConceptSMTK relatedConcept : conceptManager.getRelatedConcepts(conceptSMTK)) {
@@ -271,6 +285,10 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public List<RelationshipDefinition> getSearchableAttributesByCategory(Category category) {
         return queryDAO.getSearchableAttributesByCategory(category);
+    }
+
+    public List<RelationshipDefinition> getSecondOrderSearchableAttributesByCategory(Category category){
+        return queryDAO.getSecondOrderSearchableAttributesByCategory(category);
     }
 
     private boolean getCustomFilteringValue(Category category){

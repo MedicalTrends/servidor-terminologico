@@ -37,9 +37,9 @@ public class LayoutBean implements Serializable {
 
         // options for north pane
         LayoutOptions north = new LayoutOptions();
-        north.addOption("size",60);
+        north.addOption("size",65);
         north.addOption("resizable", false);
-        north.addOption("closable", false);
+        //north.addOption("closable", false);
         layoutOptions.setNorthOptions(north);
         //closable="false" resizeWhileDragging="false"
 

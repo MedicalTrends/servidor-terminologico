@@ -319,7 +319,7 @@ public class GeneralQuery {
      * tablas auxiliares filtrados en el objeto de consulta del navegador de categorías
      *
      * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de las
-     * categorías de los conceptos filtrados
+     * tablas auxiliares de los conceptos filtrados
      */
     public Long[] getHelperTableValues(){
 
