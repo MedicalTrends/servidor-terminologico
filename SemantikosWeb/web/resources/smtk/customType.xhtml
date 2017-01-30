@@ -28,6 +28,11 @@
                                           relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                           concept="#{cc.attrs.concept}"/>
 
+    <smtk:customSMTKViewFSN rendered="#{cc.attrs.relationshipDefinition.compositeID eq 8}"
+                                          targetDefinition="#{cc.attrs.relationshipDefinition.targetDefinition}"
+                                          relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                          concept="#{cc.attrs.concept}"/>
+
 
 </composite:implementation>
 </html>

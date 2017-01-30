@@ -396,23 +396,39 @@ public class ConceptManagerImpl implements ConceptManager {
     public List<ConceptSMTK> truncateMatch(String pattern, Long[] categories, int pageNumber, int pageSize, Boolean isModeled) {
 
         String patternTruncate = truncatePattern(pattern);
-        String[] arrayPattern = patternToArray(patternTruncate);
-
+        List <ConceptSMTK> conceptSMTKs= new ArrayList<>();
         /**
          * Existe al menos una categoría y el patron de búsqueda
          */
         if ((categories.length != 0 && pattern.length() != 0)) {
-            return conceptDAO.findTruncateMatchConceptBy(arrayPattern, categories, isModeled, pageSize, pageNumber);
+            conceptSMTKs= conceptDAO.findTruncateMatchConceptBy(patternTruncate, categories, isModeled, pageSize, pageNumber);
+        }else{
+            if ((categories.length == 0 && pattern.length() != 0)) {
+                conceptSMTKs= conceptDAO.findTruncateMatchConceptBy(patternTruncate, isModeled, pageSize, pageNumber);
+            }
         }
 
-        /**
-         * No existen categorías pero si un patrón de búsqueda
-         */
-        if ((categories.length == 0 && pattern.length() != 0)) {
-            return conceptDAO.findTruncateMatchConceptBy(arrayPattern, isModeled, pageSize, pageNumber);
+
+        if(conceptSMTKs.isEmpty()){
+            return Collections.emptyList();
+        }
+        Collections.sort(conceptSMTKs,new ConceptSMTKComparator());
+
+        return conceptSMTKs;
+    }
+
+    class ConceptSMTKComparator implements Comparator<ConceptSMTK> {
+
+        @Override
+        public int compare(ConceptSMTK conceptSMTK1, ConceptSMTK conceptSMTK2) {
+
+            return conceptSMTK1.getDescriptionFavorite().getTerm().length() -  conceptSMTK2.getDescriptionFavorite().getTerm().length();
         }
 
-        return Collections.emptyList();
+        @Override
+        public boolean equals(Object obj) {
+            return false;
+        }
     }
 
 
@@ -456,20 +472,19 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public int countTruncateMatch(String pattern, Long[] categories, Boolean isModeled) {
         String patternTruncate = truncatePattern(pattern);
-        String[] arrayPattern = patternToArray(patternTruncate);
 
         /**
          * Existe al menos una categoría y el patron de búsqueda
          */
         if ((categories.length != 0 && pattern.length() != 0)) {
-            return conceptDAO.countTruncateMatchConceptBy(arrayPattern, categories, isModeled);
+            return conceptDAO.countTruncateMatchConceptBy(patternTruncate, categories, isModeled);
         }
 
         /**
          * No existen categorías pero si un patrón de búsqueda
          */
         if ((categories.length == 0 && pattern.length() != 0)) {
-            return conceptDAO.countTruncateMatchConceptBy(arrayPattern, new Long[0], isModeled);
+            return conceptDAO.countTruncateMatchConceptBy(patternTruncate, new Long[0], isModeled);
         }
 
         return 0;
@@ -512,6 +527,9 @@ public class ConceptManagerImpl implements ConceptManager {
             } else {
                 patternTruncate = patternTruncate + arrayToPattern[i].substring(0, 3) + " ";
             }
+        }
+        if(patternTruncate.charAt(patternTruncate.length()-1)==' '){
+            patternTruncate=patternTruncate.substring(0,patternTruncate.length()-1);
         }
         return patternTruncate;
     }
