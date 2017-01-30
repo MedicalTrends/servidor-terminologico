@@ -225,7 +225,7 @@
 
         <p:dataTable id="collectionValuesWithAttributes"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
-                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
+                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and not cc.attrs.concept.modeled}"
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      style="width: 100%"
