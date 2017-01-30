@@ -172,13 +172,13 @@ public interface ConceptDAO {
      * Método encargado de realizar truncate match con patrón de búsqueda y categorías
      * @return
      */
-    public List<ConceptSMTK> findTruncateMatchConceptBy(String pattern[], Long[] categories, boolean modeled, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findTruncateMatchConceptBy(String pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber);
 
     /**
      * Método encargado de realizar truncate match con patrón de búsqueda
      * @return
      */
-    public List<ConceptSMTK> findTruncateMatchConceptBy(String pattern[], boolean modeled, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findTruncateMatchConceptBy(String pattern, boolean modeled, int pageSize, int pageNumber);
 
     /**
      * Método encargado de contar los conceptos con perfect match
@@ -190,7 +190,7 @@ public interface ConceptDAO {
      * Método encargado de contar los conceptos con truncate match
      * @return
      */
-    public int countTruncateMatchConceptBy(String pattern[], Long[] categories, boolean modeled);
+    public int countTruncateMatchConceptBy(String pattern, Long[] categories, boolean modeled);
 
 
 }

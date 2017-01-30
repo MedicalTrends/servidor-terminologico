@@ -168,6 +168,9 @@ public class DescriptionBeans {
         if( description.getConceptSMTK().isModeled() && description.getConceptSMTK().getCategory().getId()== 33L){
             return false;
         }
+        if( description.getConceptSMTK().isModeled() && description.getConceptSMTK().getCategory().getId()== 35L){
+            return false;
+        }
         if(description.getConceptSMTK().isModeled()){
             return true;
         }

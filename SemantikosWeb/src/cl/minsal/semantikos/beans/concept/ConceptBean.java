@@ -739,7 +739,7 @@ public class ConceptBean implements Serializable {
         if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
         autogenerateBeans.autogenerateRemoveRelationship(rd,r,concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
-        autogenerateBeans.autogenerateRemoveRelationshipWithAttributes(rd,r,concept,autoGenerateList,autogenerateMC);
+        autogenerateBeans.autogenerateRemoveRelationshipWithAttributes(rd,r,concept,autoGenerateList,autogenerateMC,autogenerateMCCE);
         crossmapBean.refreshCrossmapIndirect(concept);
 
     }
@@ -751,7 +751,7 @@ public class ConceptBean implements Serializable {
         r.getRelationshipAttributes().remove(ra);
         if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
-        autogenerateBeans.autogenerateRemoveAttribute(ra.getRelationAttributeDefinition(),concept,autogenerateMC);
+        autogenerateBeans.autogenerateRemoveAttribute(ra.getRelationAttributeDefinition(),concept,autogenerateMC, autogenerateMCCE);
 
     }
 

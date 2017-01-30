@@ -81,7 +81,7 @@ public class AutogenerateBeans {
         }
     }
 
-    public void autogenerateRemoveRelationshipWithAttributes(RelationshipDefinition relationshipDefinition, Relationship relationship, ConceptSMTKWeb concept, List<String> autoGenerateList, AutogenerateMC autogenerateMC) {
+    public void autogenerateRemoveRelationshipWithAttributes(RelationshipDefinition relationshipDefinition, Relationship relationship, ConceptSMTKWeb concept, List<String> autoGenerateList, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE) {
         if (!concept.isModeled()) {
             if (relationshipDefinition.getId() == 45) {
                 ConceptSMTK conceptRelationship = ((ConceptSMTK) relationship.getTarget());
@@ -105,6 +105,16 @@ public class AutogenerateBeans {
             if (relationshipDefinition.getId() == 58) {
                 autogenerateMC.voidRemoveFFA(relationship);
                 concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+            if(relationshipDefinition.getId() == 77){
+                autogenerateMCCE.setPack("");
+                concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+            if(relationshipDefinition.getId() == 93){
+                autogenerateMCCE.setVolumen("");
+                concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }
         }
@@ -136,11 +146,21 @@ public class AutogenerateBeans {
         }
     }
 
-    public void autogenerateRemoveAttribute(RelationshipAttributeDefinition relationshipAttributeDefinition, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC) {
+    public void autogenerateRemoveAttribute(RelationshipAttributeDefinition relationshipAttributeDefinition, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE) {
         if (!concept.isModeled()) {
             if (relationshipAttributeDefinition.getId() == 12) {
                 autogenerateMC.setUnidadVolumenEmpty();
                 concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+            if (relationshipAttributeDefinition.getId() == 16) {
+                autogenerateMCCE.setPackUnidad("");
+                concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+            if (relationshipAttributeDefinition.getId() == 17) {
+                autogenerateMCCE.setVolumenUnidad("");
+                concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }
         }

@@ -838,7 +838,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> findTruncateMatchConceptBy(String[] pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber) {
+    public List<ConceptSMTK> findTruncateMatchConceptBy(String pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber) {
         List<ConceptSMTK> concepts;
 
         ConnectionBD connect = new ConnectionBD();
@@ -848,11 +848,11 @@ public class ConceptDAOImpl implements ConceptDAO {
         try (Connection connection = connect.getConnection(); CallableStatement call =
                 connection.prepareCall(QUERY_TRUNCATE_MATCH)) {
 
-            Array ArrayPattern = connection.createArrayOf("text", pattern);
+
             Array ArrayCategories = connection.createArrayOf("integer", categories);
 
             call.setArray(1, ArrayCategories);
-            call.setArray(2, ArrayPattern);
+            call.setString(2, pattern);
             call.setInt(3, pageNumber);
             call.setInt(4, pageSize);
             call.setBoolean(5, modeled);
@@ -875,7 +875,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> findTruncateMatchConceptBy(String[] pattern, boolean modeled, int pageSize, int pageNumber) {
+    public List<ConceptSMTK> findTruncateMatchConceptBy(String pattern, boolean modeled, int pageSize, int pageNumber) {
         List<ConceptSMTK> concepts;
 
         ConnectionBD connect = new ConnectionBD();
@@ -885,12 +885,10 @@ public class ConceptDAOImpl implements ConceptDAO {
         try (Connection connection = connect.getConnection(); CallableStatement call =
                 connection.prepareCall(QUERY_TRUNCATE_MATCH)) {
 
-            Array ArrayPattern = connection.createArrayOf("text", pattern);
-
-            call.setArray(2, ArrayPattern);
-            call.setInt(3, pageNumber);
-            call.setInt(4, pageSize);
-            call.setBoolean(5, modeled);
+            call.setString(1, pattern);
+            call.setInt(2, pageNumber);
+            call.setInt(3, pageSize);
+            call.setBoolean(4, modeled);
             call.execute();
 
             ResultSet rs = call.getResultSet();
@@ -950,7 +948,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public int countTruncateMatchConceptBy(String pattern[], Long[] categories, boolean modeled) {
+    public int countTruncateMatchConceptBy(String pattern, Long[] categories, boolean modeled) {
         int concepts=0;
 
         ConnectionBD connect = new ConnectionBD();
@@ -961,15 +959,14 @@ public class ConceptDAOImpl implements ConceptDAO {
         try (Connection connection = connect.getConnection(); CallableStatement call =
                 connection.prepareCall(QUERY)) {
 
-            Array ArrayPattern = connection.createArrayOf("text", pattern);
             if(categories.length>0){
                 Array ArrayCategories = connection.createArrayOf("integer", categories);
                 call.setArray(1, ArrayCategories);
-                call.setArray(2, ArrayPattern);
+                call.setString(2, pattern);
                 call.setBoolean(3, modeled);
                 call.execute();
             }else{
-                call.setArray(1, ArrayPattern);
+                call.setString(1, pattern);
                 call.setBoolean(2, modeled);
             }
 
