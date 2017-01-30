@@ -58,6 +58,7 @@
                                       disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}">
                         <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
                         <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
+                        <p:ajax/>
                     </p:selectOneRadio>
                 </div>
             </div>
