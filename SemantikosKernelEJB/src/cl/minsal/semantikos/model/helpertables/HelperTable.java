@@ -199,6 +199,15 @@ public class HelperTable extends PersistentEntity implements TargetDefinition {
         return systemColumns;
     }
 
+    public boolean isISP() {
+        return this.getName().equals(HelperTableFactory.HT_ISP_NAME);
+    }
+
+    public boolean isATC(){
+        return this.getName().equals(HelperTableFactory.HT_ATC_NAME);
+    }
+
+
     @Override
     public String toString() {
         return "HelperTable{" +

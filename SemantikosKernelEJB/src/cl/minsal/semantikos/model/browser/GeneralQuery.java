@@ -16,7 +16,7 @@ import java.util.*;
  *
  * @author Diego Soto.
  */
-public class GeneralQuery {
+public class GeneralQuery implements IQuery {
 
     /**
      * Filtros estáticos
@@ -38,6 +38,11 @@ public class GeneralQuery {
      * Filtros dinámicos
      */
     private List<QueryFilter> filters = new ArrayList<>();
+
+    /**
+     * Filtros dinámicos por atributos de relación
+     */
+    private List<QueryFilterAttribute> attributeFilters = new ArrayList<>();
 
     /**
      * Columnas dinámicas
@@ -77,6 +82,15 @@ public class GeneralQuery {
 
     public void setFilters(List<QueryFilter> filters) {
         this.filters = filters;
+    }
+
+
+    public List<QueryFilterAttribute> getAttributeFilters() {
+        return attributeFilters;
+    }
+
+    public void setAttributeFilters(List<QueryFilterAttribute> attributeFilters) {
+        this.attributeFilters = attributeFilters;
     }
 
     public Boolean getToBeReviewed() {
@@ -325,8 +339,11 @@ public class GeneralQuery {
 
         List<Long> helperTableValues = new ArrayList<>();
 
-        for (QueryFilter filter : filters)
-            helperTableValues.addAll(filter.getHelperTableValues());
+        for (QueryFilter filter : filters) {
+            if(!filter.isSecondOrder()) {
+                helperTableValues.addAll(filter.getHelperTableValues());
+            }
+        }
 
         if(helperTableValues.isEmpty())
             return null;
@@ -348,8 +365,111 @@ public class GeneralQuery {
 
         List<Long> helperTableRecordValues = new ArrayList<>();
 
-        for (QueryFilter filter : filters)
-            helperTableRecordValues.addAll(filter.getHelperTableRecordValues());
+        for (QueryFilter filter : filters) {
+            if(!filter.isSecondOrder()) {
+                helperTableRecordValues.addAll(filter.getHelperTableRecordValues());
+            }
+        }
+
+        if(helperTableRecordValues.isEmpty())
+            return null;
+
+        else {
+            Long[] array = new Long[helperTableRecordValues.size()];
+            return helperTableRecordValues.toArray(array);
+        }
+    }
+
+    /**
+     * Este método es responsable de recuperar los ids de las tablas auxiliares como relaciones de 2o orden
+     * correspondientes a los registros de tablas auxiliares filtrados en el objeto de consulta del navegador de categorías
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de las
+     * tablas auxiliares de los conceptos filtrados
+     */
+    public Long[] getSecondOrderHelperTableValues(){
+
+        List<Long> helperTableValues = new ArrayList<>();
+
+        for (QueryFilter filter : filters) {
+            if(filter.isSecondOrder())
+                helperTableValues.addAll(filter.getHelperTableValues());
+        }
+
+        if(helperTableValues.isEmpty())
+            return null;
+
+        else {
+            Long[] array = new Long[helperTableValues.size()];
+            return helperTableValues.toArray(array);
+        }
+    }
+
+    /**
+     * Este método es responsable de recuperar los ids de los registros de tablas auxiliares como relaciones de 2o orden
+     * filtrados en el objeto de consulta del navegador de categorías
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de los
+     * registros de tablas auxiliares filtrados
+     */
+    public Long[] getSecondOrderHelperTableRecordValues(){
+
+        List<Long> helperTableRecordValues = new ArrayList<>();
+
+        for (QueryFilter filter : filters) {
+            if(filter.isSecondOrder())
+                helperTableRecordValues.addAll(filter.getHelperTableRecordValues());
+        }
+
+        if(helperTableRecordValues.isEmpty())
+            return null;
+
+        else {
+            Long[] array = new Long[helperTableRecordValues.size()];
+            return helperTableRecordValues.toArray(array);
+        }
+    }
+
+    /**
+     * Este método es responsable de recuperar los ids de las tablas auxiliares como como atributos de relación
+     * correspondientes a los registros de tablas auxiliares filtrados en el objeto de consulta del navegador de categorías
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de las
+     * tablas auxiliares de los conceptos filtrados
+     */
+    public Long[] getAttributeHelperTableValues(){
+
+        List<Long> helperTableValues = new ArrayList<>();
+
+        for (QueryFilterAttribute filter : attributeFilters) {
+            if(!filter.isSecondOrder())
+                helperTableValues.addAll(filter.getHelperTableValues());
+        }
+
+        if(helperTableValues.isEmpty())
+            return null;
+
+        else {
+            Long[] array = new Long[helperTableValues.size()];
+            return helperTableValues.toArray(array);
+        }
+    }
+
+    /**
+     * Este método es responsable de recuperar los ids de los registros de tablas auxiliares como atributos de relación
+     * filtrados en el objeto de consulta del navegador de categorías
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de los
+     * registros de tablas auxiliares filtrados
+     */
+    public Long[] getAttributeHelperTableRecordValues(){
+
+        List<Long> helperTableRecordValues = new ArrayList<>();
+
+        for (QueryFilterAttribute filter : attributeFilters) {
+            if(!filter.isSecondOrder())
+                helperTableRecordValues.addAll(filter.getHelperTableRecordValues());
+        }
 
         if(helperTableRecordValues.isEmpty())
             return null;
@@ -434,6 +554,7 @@ public class GeneralQuery {
      * @return Una lista de <code>cl.minsal.semantikos.model.browser.QueryParameter</code> correspondiente a los
      * parámetros de los filtros
      */
+    @Override
     public List<QueryParameter> getQueryParameters(){
 
         List<QueryParameter> queryParameters = new ArrayList<>();
@@ -450,6 +571,10 @@ public class GeneralQuery {
         queryParameters.add(new QueryParameter(String.class, getBasicTypeValues(), true)); /** ids basicTypeValues **/
         queryParameters.add(new QueryParameter(Long.class, getHelperTableValues(), true)); /** ids helperTableValues **/
         queryParameters.add(new QueryParameter(Long.class, getHelperTableRecordValues(), true)); /** ids helperTableRecordValues **/
+        queryParameters.add(new QueryParameter(Long.class, getSecondOrderHelperTableValues(), true)); /** ids helperTableValues de 2o Orden **/
+        queryParameters.add(new QueryParameter(Long.class, getSecondOrderHelperTableRecordValues(), true)); /** ids helperTableRecordValues de 2o Orden **/
+        queryParameters.add(new QueryParameter(Long.class, getAttributeHelperTableValues(), true)); /** ids atributos de targetDef helperTableValues **/
+        queryParameters.add(new QueryParameter(Long.class, getAttributeHelperTableRecordValues(), true)); /** ids atributos de target helperTableRecordValues **/
         queryParameters.add(new QueryParameter(Timestamp.class, getCreationDateSince(), false));
         queryParameters.add(new QueryParameter(Timestamp.class, getCreationDateTo(), false));
         queryParameters.add(new QueryParameter(Long.class, getUserValue(), false));

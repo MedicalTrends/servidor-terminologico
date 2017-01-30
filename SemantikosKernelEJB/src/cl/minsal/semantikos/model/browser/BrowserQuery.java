@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by BluePrints Developer on 21-09-2016.
  */
-public class BrowserQuery {
+public class BrowserQuery implements IQuery {
 
     /**
      * Static filters

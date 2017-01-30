@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.browser.GeneralQuery;
 import cl.minsal.semantikos.model.browser.QueryFilter;
+import cl.minsal.semantikos.model.browser.QueryFilterAttribute;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
 import org.primefaces.event.ToggleEvent;
@@ -332,6 +333,49 @@ public class GeneralBrowserBean implements Serializable {
         }
     }
 
+    /**
+     * Este método se encarga de agregar o cambiar el filtro para el caso de selección simple
+     */
+    public void setSimpleSelection(RelationshipAttributeDefinition relationshipAttributeDefinition, Target target) {
+
+        if(target == null)
+            return;
+
+        setFilterChanged(true);
+
+        // Se busca el filtro
+        for (QueryFilterAttribute queryFilter : generalQuery.getAttributeFilters()) {
+            if (queryFilter.getDefinition().equals(relationshipAttributeDefinition)) {
+                if(queryFilter.getTargets().isEmpty()) //Si la lista de targets está vacía, se agrega el target
+                    queryFilter.getTargets().add(target);
+                else //Si no, se modifica
+                    queryFilter.getTargets().set(0, target);
+                break;
+            }
+        }
+        // Se resetean los placeholder para los target de las relaciones
+        basicTypeValue = new BasicTypeValue(null);
+        helperTableRecord = null;
+        conceptSMTK = null;
+        //Ajax.update("@(.conceptBrowserTable)");
+    }
+
+    public void removeTarget(RelationshipAttributeDefinition relationshipAttributeDefinition, Target target){
+
+        if(target == null)
+            return;
+
+        setFilterChanged(true);
+
+        // Se busca el filtro
+        for (QueryFilterAttribute queryFilter : generalQuery.getAttributeFilters()) {
+            if (queryFilter.getDefinition().equals(relationshipAttributeDefinition)) {
+                queryFilter.getTargets().remove(target);
+                break;
+            }
+        }
+    }
+
 
     public void deleteConcept(ConceptSMTK concept) throws IOException {
 
@@ -350,7 +394,6 @@ public class GeneralBrowserBean implements Serializable {
     }
 
     public void createConcept() throws IOException {
-        // Si el concepto está persistido, invalidarlo
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
         String query = "";
         if(generalQuery.isFiltered() && concepts.getRowCount()==0)

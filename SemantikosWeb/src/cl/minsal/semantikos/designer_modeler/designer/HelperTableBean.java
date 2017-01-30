@@ -6,6 +6,8 @@ import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
@@ -51,24 +53,24 @@ public class HelperTableBean implements Serializable {
         RelationshipDefinition relationshipDefinition = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinition");
 
         List<HelperTableRecord> someRecords;
-        String[] columnNames;
+        String[] columnNames = new String[]{};
 
-        if(relationshipDefinition.isATC()) {
-            columnNames = new String[]{"codigo_atc", "dsc_completa_atc"};
+        if(relationshipDefinition != null) {
+            if (relationshipDefinition.isATC()) {
+                columnNames = new String[]{"codigo_atc", "dsc_completa_atc"};
+            } else if (relationshipDefinition.isISP()) {
+                columnNames = new String[]{"registro"};
+            } else if (relationshipDefinition.isBioequivalente()) {
+                columnNames = new String[]{"registro", "nombre"};
+            }
         }
-        else if(relationshipDefinition.isISP()) {
-            columnNames = new String[]{"registro"};
-        }
-        else if(relationshipDefinition.isBioequivalente()) {
-            columnNames = new String[]{"registro","nombre"};
-        }
-        else {
+        if(columnNames.length == 0) {
             columnNames = new String[]{HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName()};
         }
 
         someRecords = helperTableManager.searchRecords(helperTable, Arrays.asList(columnNames), patron, true);
 
-        if(relationshipDefinition.isISP() && someRecords.isEmpty()){
+        if(relationshipDefinition!= null && relationshipDefinition.isISP() && someRecords.isEmpty()){
             context2.execute("PF('dialogISP').show();");
         }
 

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by BluePrints Developer on 21-09-2016.
  */
-public class PendingQuery {
+public class PendingQuery implements IQuery {
 
     /**
      * Static filters

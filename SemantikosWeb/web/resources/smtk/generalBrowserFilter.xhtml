@@ -127,6 +127,22 @@
 
                 </p:repeat>
 
+                <p:repeat
+                        offset="0"
+                        size="#{cc.attrs.generalQuery.attributeFilters.size()}"
+                        step="1"
+                        varStatus="var"
+                        value="#{cc.attrs.generalQuery.attributeFilters}"
+                        var="attributeFilter">
+
+                    <smtk:helperTableTypeAttributeFilter
+                            relationshipAttributeDefinition="#{attributeFilter.definition}"
+                            targetDefinition="#{attributeFilter.definition.targetDefinition}"
+                            targets="#{attributeFilter.targets}"
+                            rendered="#{attributeFilter.definition.targetDefinition.helperTable and not attributeFilter.multiple}" />
+
+                </p:repeat>
+
                 <smtk:DateTypeFilter date="#{cc.attrs.generalQuery.creationDateSince}"
                                      dateSince="#{true}"
                                      rendered="#{cc.attrs.generalQuery.customFilterable}" />

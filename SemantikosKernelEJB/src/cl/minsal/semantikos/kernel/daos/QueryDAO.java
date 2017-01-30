@@ -2,6 +2,8 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.*;
+import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.ejb.Local;
@@ -14,29 +16,16 @@ import java.util.List;
 @Local
 public interface QueryDAO {
 
-    List<ConceptSMTK> executeQuery(GeneralQuery query);
 
-    List<Description> executeQuery(DescriptionQuery query);
+    List<Object> executeQuery(IQuery query);
 
-    List<NoValidDescription> executeQuery(NoValidQuery query);
-
-    List<PendingTerm> executeQuery(PendingQuery query);
-
-    List<ConceptSMTK> executeQuery(BrowserQuery query);
-
-    long countByQuery(GeneralQuery query);
-
-    long countByQuery(DescriptionQuery query);
-
-    long countByQuery(NoValidQuery query);
-
-    long countByQuery(PendingQuery query);
-
-    long countByQuery(BrowserQuery query);
+    long countByQuery(IQuery query);
 
     List<RelationshipDefinition> getSearchableAttributesByCategory(Category category);
 
     List<RelationshipDefinition> getSecondOrderSearchableAttributesByCategory(Category category);
+
+    List<RelationshipAttributeDefinition> getSecondDerivateSearchableAttributesByCategory(Category category);
 
     List<RelationshipDefinition> getShowableAttributesByCategory(Category category);
 

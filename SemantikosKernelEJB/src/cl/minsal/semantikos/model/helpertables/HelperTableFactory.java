@@ -23,6 +23,8 @@ public class HelperTableFactory {
 
     public static final String HT_ATC_NAME = "smtk_helper_table_atc";
 
+    public static final String HT_ISP_NAME = "smtk_helper_table_isp";
+
     /**
      * Este método es responsable de crear una lista de relaciones a partir de un arreglo json de relaciones.
      * <code>

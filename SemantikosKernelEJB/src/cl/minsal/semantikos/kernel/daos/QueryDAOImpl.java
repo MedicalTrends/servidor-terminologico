@@ -6,6 +6,8 @@ import cl.minsal.semantikos.kernel.components.PendingTermsManager;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.*;
+import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,34 +36,28 @@ public class QueryDAOImpl implements QueryDAO {
     @EJB
     PendingTermsManager pendingTermsManager;
 
-    @Override
-    public List<ConceptSMTK> executeQuery(GeneralQuery query) {
+    public List<Object> executeQuery(IQuery query) {
 
-        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
+        List<Object> queryResult = new ArrayList<Object>();
 
         ConnectionBD connect = new ConnectionBD();
 
-        //TODO: hacer funcion en pg
+        String QUERY = "";
+
+        if(  query instanceof  GeneralQuery )
+            QUERY = "{call semantikos.get_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        if(  query instanceof  DescriptionQuery )
+            QUERY = "{call semantikos.get_description_by_description_query(?,?,?,?,?,?,?,?)}";
+        if(  query instanceof  NoValidQuery )
+            QUERY = "{call semantikos.get_description_by_no_valid_query(?,?,?,?,?,?,?)}";
+        if(  query instanceof  PendingQuery )
+            QUERY = "{call semantikos.get_pending_term_by_pending_query(?,?,?,?,?,?)}";
+        if(  query instanceof  BrowserQuery )
+            QUERY = "{call semantikos.get_concept_by_browser_query(?,?,?,?,?,?,?)}";
+
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}" )){
 
-            /*
-                1. p_id_category integer, --static
-                2. p_pattern text, --static
-                3. p_modeled boolean, --static
-                4. p_review boolean, --static
-                5. p_consult boolean, --static
-                6. p_tag_id integer, --static
-                7. p_basic_type_values text[], --dynamic
-                8. p_helper_table_records integer[], --dynamic
-                9. p_creation_date_from date, --dynamic
-                10. p_creation_date_to date, --dynamic
-                11. p_orden text, --static
-                12. p_page integer, --static
-                13. p_page_size integer --static
-            */
-
-            //bindParameter();
+             CallableStatement call = connection.prepareCall(QUERY)){
 
             int paramNumber = 1;
 
@@ -76,8 +72,27 @@ public class QueryDAOImpl implements QueryDAO {
 
             while (rs.next()) {
 
-                ConceptSMTK recoveredConcept = conceptManager.getConceptByID( rs.getLong(1));
-                concepts.add(recoveredConcept);
+                if(  query instanceof  GeneralQuery ) {
+                    ConceptSMTK recoveredConcept = conceptManager.getConceptByID( rs.getLong(1));
+                    queryResult.add(recoveredConcept);
+                }
+                if(  query instanceof  DescriptionQuery ) {
+                    Description recoveredDescription =  descriptionManager.getDescriptionByID(rs.getLong(1));
+                    queryResult.add(recoveredDescription);
+                }
+                if(  query instanceof  NoValidQuery ) {
+                    NoValidDescription noValidDescription =  descriptionManager.getNoValidDescriptionByID(rs.getLong(1));
+                    queryResult.add(noValidDescription);
+                }
+                if(  query instanceof  PendingQuery ) {
+                    PendingTerm pendingTerm =  pendingTermsManager.getPendingTermById(rs.getLong(1));
+                    queryResult.add(pendingTerm);
+                }
+                if(  query instanceof  BrowserQuery ) {
+                    ConceptSMTK recoveredConcept = conceptManager.getConceptByID( rs.getLong(1));
+                    queryResult.add(recoveredConcept);
+                }
+
             }
             rs.close();
 
@@ -85,215 +100,32 @@ public class QueryDAOImpl implements QueryDAO {
             e.printStackTrace();
         }
 
-        return concepts;
-    }
-
-    @Override
-    public List<Description> executeQuery(DescriptionQuery query) {
-
-        List<Description> descriptions = new ArrayList<Description>();
-
-        ConnectionBD connect = new ConnectionBD();
-
-        //TODO: hacer funcion en pg
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_description_by_description_query(?,?,?,?,?,?,?,?)}" )){
-
-            /*
-                1. p_id_category integer, --static
-                2. p_pattern text, --static
-                3. p_refset integer, --static
-                4. p_refset integer, --static
-                11. p_orden text, --static
-                12. p_page integer, --static
-                13. p_page_size integer --static
-            */
-
-            //bindParameter();
-
-            int paramNumber = 1;
-
-            for (QueryParameter queryParameter : query.getQueryParameters()) {
-                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
-                paramNumber++;
-            }
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-
-            while (rs.next()) {
-
-                Description recoveredDescription =  descriptionManager.getDescriptionByID(rs.getLong(1));
-                descriptions.add(recoveredDescription);
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return descriptions;
-    }
-
-    @Override
-    public List<NoValidDescription> executeQuery(NoValidQuery query) {
-
-        List<NoValidDescription> noValidDescriptions = new ArrayList<NoValidDescription>();
-
-        ConnectionBD connect = new ConnectionBD();
-
-        //TODO: hacer funcion en pg
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_description_by_no_valid_query(?,?,?,?,?,?,?)}" )){
-
-            /*
-                1. p_id_category integer, --static
-                2. p_pattern text, --static
-                3. p_refset integer, --static
-                4. p_refset integer, --static
-                11. p_orden text, --static
-                12. p_page integer, --static
-                13. p_page_size integer --static
-            */
-
-            //bindParameter();
-
-            int paramNumber = 1;
-
-            for (QueryParameter queryParameter : query.getQueryParameters()) {
-                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
-                paramNumber++;
-            }
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-
-            while (rs.next()) {
-
-                NoValidDescription noValidDescription =  descriptionManager.getNoValidDescriptionByID(rs.getLong(1));
-                noValidDescriptions.add(noValidDescription);
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return noValidDescriptions;
-    }
-
-    @Override
-    public List<PendingTerm> executeQuery(PendingQuery query) {
-
-        List<PendingTerm> pendingTerms = new ArrayList<PendingTerm>();
-
-        ConnectionBD connect = new ConnectionBD();
-
-        //TODO: hacer funcion en pg
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_pending_term_by_pending_query(?,?,?,?,?,?)}" )){
-
-            /*
-                1. p_id_category integer, --static
-                2. p_pattern text, --static
-                11. p_orden text, --static
-                12. p_page integer, --static
-                13. p_page_size integer --static
-            */
-
-            //bindParameter();
-
-            int paramNumber = 1;
-
-            for (QueryParameter queryParameter : query.getQueryParameters()) {
-                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
-                paramNumber++;
-            }
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-
-            while (rs.next()) {
-
-                PendingTerm pendingTerm =  pendingTermsManager.getPendingTermById(rs.getLong(1));
-                pendingTerms.add(pendingTerm);
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return pendingTerms;
-    }
-
-    @Override
-    public List<ConceptSMTK> executeQuery(BrowserQuery query) {
-        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
-
-        ConnectionBD connect = new ConnectionBD();
-
-        //TODO: hacer funcion en pg
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_concept_by_browser_query(?,?,?,?,?,?,?)}" )){
-
-            /*
-                1. p_id_category integer, --static
-                2. p_pattern text, --static
-                3. p_modeled boolean, --static
-                4. p_review boolean, --static
-                5. p_consult boolean, --static
-                6. p_tag_id integer, --static
-                7. p_basic_type_values text[], --dynamic
-                8. p_helper_table_records integer[], --dynamic
-                9. p_creation_date_from date, --dynamic
-                10. p_creation_date_to date, --dynamic
-                11. p_orden text, --static
-                12. p_page integer, --static
-                13. p_page_size integer --static
-            */
-
-            //bindParameter();
-
-            int paramNumber = 1;
-
-            for (QueryParameter queryParameter : query.getQueryParameters()) {
-                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
-                paramNumber++;
-            }
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-
-            while (rs.next()) {
-
-                ConceptSMTK recoveredConcept = conceptManager.getConceptByID( rs.getLong(1));
-                concepts.add(recoveredConcept);
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return concepts;
+        return queryResult;
     }
 
 
-    @Override
-    public long countByQuery(GeneralQuery query) {
+    public long countByQuery(IQuery query) {
 
-        long conceptsNumber = 0;
+        long resultCount = 0;
 
         ConnectionBD connect = new ConnectionBD();
 
-        //TODO: hacer funcion en pg
+        String QUERY = "";
+
+        if(  query instanceof  GeneralQuery )
+            QUERY = "{call semantikos.count_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        if(  query instanceof  DescriptionQuery )
+            QUERY = "{call semantikos.count_description_by_description_query(?,?,?,?,?,?,?,?)}";
+        if(  query instanceof  NoValidQuery )
+            QUERY = "{call semantikos.count_description_by_no_valid_query(?,?,?,?,?,?,?,?)}";
+        if(  query instanceof  PendingQuery )
+            QUERY = "{call semantikos.count_pending_term_by_no_pending_query(?,?,?,?,?,?)}";
+        if(  query instanceof  BrowserQuery )
+            QUERY = "{call semantikos.count_concept_by_browser_query(?,?,?,?,?,?,?)}";
+
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.count_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}" )){
+
+             CallableStatement call = connection.prepareCall(QUERY)){
 
             int paramNumber = 1;
 
@@ -308,7 +140,8 @@ public class QueryDAOImpl implements QueryDAO {
 
             while (rs.next()) {
 
-                conceptsNumber = rs.getLong(1);
+                resultCount = rs.getLong(1);
+
             }
             rs.close();
 
@@ -316,145 +149,7 @@ public class QueryDAOImpl implements QueryDAO {
             e.printStackTrace();
         }
 
-        return conceptsNumber;
-    }
-
-    @Override
-    public long countByQuery(DescriptionQuery query) {
-        long descriptionsNumber = 0;
-
-        ConnectionBD connect = new ConnectionBD();
-
-        //TODO: hacer funcion en pg
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.count_description_by_description_query(?,?,?,?,?,?,?,?)}" )){
-
-            int paramNumber = 1;
-
-            for (QueryParameter queryParameter : query.getQueryParameters()) {
-                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
-                paramNumber++;
-            }
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-
-            while (rs.next()) {
-
-                descriptionsNumber = rs.getLong(1);
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return descriptionsNumber;
-    }
-
-    @Override
-    public long countByQuery(NoValidQuery query) {
-
-        long descriptionsNumber = 0;
-
-        ConnectionBD connect = new ConnectionBD();
-
-        //TODO: hacer funcion en pg
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.count_description_by_no_valid_query(?,?,?,?,?,?,?,?)}" )){
-
-            int paramNumber = 1;
-
-            for (QueryParameter queryParameter : query.getQueryParameters()) {
-                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
-                paramNumber++;
-            }
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-
-            while (rs.next()) {
-
-                descriptionsNumber = rs.getLong(1);
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return descriptionsNumber;
-    }
-
-    @Override
-    public long countByQuery(PendingQuery query) {
-
-        long pendingTermNumber = 0;
-
-        ConnectionBD connect = new ConnectionBD();
-
-        //TODO: hacer funcion en pg
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.count_pending_term_by_no_pending_query(?,?,?,?,?,?)}" )){
-
-            int paramNumber = 1;
-
-            for (QueryParameter queryParameter : query.getQueryParameters()) {
-                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
-                paramNumber++;
-            }
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-
-            while (rs.next()) {
-
-                pendingTermNumber = rs.getLong(1);
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return pendingTermNumber;
-    }
-
-    @Override
-    public long countByQuery(BrowserQuery query) {
-        long pendingTermNumber = 0;
-
-        ConnectionBD connect = new ConnectionBD();
-
-        //TODO: hacer funcion en pg
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.count_concept_by_browser_query(?,?,?,?,?,?,?)}" )){
-
-            int paramNumber = 1;
-
-            for (QueryParameter queryParameter : query.getQueryParameters()) {
-                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
-                paramNumber++;
-            }
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-
-            while (rs.next()) {
-
-                pendingTermNumber = rs.getLong(1);
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return pendingTermNumber;
+        return resultCount;
     }
 
     @Override
@@ -532,6 +227,49 @@ public class QueryDAOImpl implements QueryDAO {
             throw new EJBException(e);
         }
         return someRelationshipDefinitions;
+    }
+
+    @Override
+    public List<RelationshipAttributeDefinition> getSecondDerivateSearchableAttributesByCategory(Category category) {
+        ConnectionBD connect = new ConnectionBD();
+        String sql = "{call semantikos.get_view_info_by_relationship_attribute_definition(?,?)}";
+
+        List<RelationshipAttributeDefinition> someRelationshipAttributeDefinitions = new ArrayList<>();
+
+        try (Connection connection = connect.getConnection();
+
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
+
+                for (RelationshipAttributeDefinition relationshipAttributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
+
+                    boolean searchable;
+
+                    call.setLong(1, category.getId());
+                    call.setLong(2, relationshipAttributeDefinition.getId());
+                    call.execute();
+
+                    ResultSet rs = call.getResultSet();
+
+                    if (rs.next()) {
+
+                        searchable = rs.getBoolean("searchable_by_browser");
+
+                        if(searchable)
+                            someRelationshipAttributeDefinitions.add(relationshipAttributeDefinition);
+                    }
+
+                }
+
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar información adicional sobre esta definición desde la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+        return someRelationshipAttributeDefinitions;
     }
 
     @Override

@@ -3,29 +3,29 @@ package cl.minsal.semantikos.model.browser;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
-import cl.minsal.semantikos.model.relationships.BasicTypeType;
+import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
-import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by BluePrints Developer on 21-09-2016.
  */
+
 /**
  * Esta clase representa un filtro de Consulta del Navegador
  *
  * @author Diego Soto.
  */
-public class QueryFilter {
+public class QueryFilterAttribute {
 
     /**
      * La definición de este filtro
      */
-    RelationshipDefinition definition;
+    RelationshipAttributeDefinition definition;
 
     /**
      * La lista de valores seleccionados para este filtro
@@ -55,15 +55,15 @@ public class QueryFilter {
      */
     boolean secondOrder;
 
-    public QueryFilter(RelationshipDefinition definition) {
+    public QueryFilterAttribute(RelationshipAttributeDefinition definition) {
         this.definition = definition;
     }
 
-    public RelationshipDefinition getDefinition() {
+    public RelationshipAttributeDefinition getDefinition() {
         return definition;
     }
 
-    public void setDefinition(RelationshipDefinition definition) {
+    public void setDefinition(RelationshipAttributeDefinition definition) {
         this.definition = definition;
     }
 

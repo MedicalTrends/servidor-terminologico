@@ -4,10 +4,7 @@ import cl.minsal.semantikos.kernel.daos.QueryDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.*;
-import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
+import cl.minsal.semantikos.model.relationships.*;
 import sun.security.krb5.internal.crypto.Des;
 
 import javax.ejb.EJB;
@@ -98,6 +95,12 @@ public class QueryManagerImpl implements QueryManager {
             }
         }
 
+        // Adding attribute filters, if this apply
+        for (RelationshipAttributeDefinition relationshipAttributeDefinition : getSecondDerivateSearchableAttributesByCategory(category)) {
+            QueryFilterAttribute queryFilter = new QueryFilterAttribute(relationshipAttributeDefinition);
+            query.getAttributeFilters().add(queryFilter);
+        }
+
         return query;
     }
 
@@ -133,7 +136,7 @@ public class QueryManagerImpl implements QueryManager {
     public List<ConceptSMTK> executeQuery(GeneralQuery query) {
 
         //return conceptQueryDAO.callQuery(query);
-        List<ConceptSMTK> conceptSMTKs = queryDAO.executeQuery(query);
+        List<ConceptSMTK> conceptSMTKs = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
 
         for (ConceptSMTK conceptSMTK : conceptSMTKs) {
 
@@ -178,7 +181,7 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public List<Description> executeQuery(DescriptionQuery query) {
 
-        List<Description> descriptions = queryDAO.executeQuery(query);
+        List<Description> descriptions = (List<Description>) (Object) queryDAO.executeQuery(query);
 
         for (Description description : descriptions) {
 
@@ -218,7 +221,7 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public List<NoValidDescription> executeQuery(NoValidQuery query) {
 
-        List<NoValidDescription> noValidDescriptions = queryDAO.executeQuery(query);
+        List<NoValidDescription> noValidDescriptions = (List<NoValidDescription>) (Object) queryDAO.executeQuery(query);
 
         return noValidDescriptions;
     }
@@ -226,14 +229,14 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public List<PendingTerm> executeQuery(PendingQuery query) {
 
-        List<PendingTerm> pendingTerms = queryDAO.executeQuery(query);
+        List<PendingTerm> pendingTerms = (List<PendingTerm>) (Object) queryDAO.executeQuery(query);
 
         return pendingTerms;
     }
 
     @Override
     public List<ConceptSMTK> executeQuery(BrowserQuery query) {
-        return queryDAO.executeQuery(query);
+        return (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
     }
 
     @Override
@@ -289,6 +292,10 @@ public class QueryManagerImpl implements QueryManager {
 
     public List<RelationshipDefinition> getSecondOrderSearchableAttributesByCategory(Category category){
         return queryDAO.getSecondOrderSearchableAttributesByCategory(category);
+    }
+
+    public List<RelationshipAttributeDefinition> getSecondDerivateSearchableAttributesByCategory(Category category){
+        return queryDAO.getSecondDerivateSearchableAttributesByCategory(category);
     }
 
     private boolean getCustomFilteringValue(Category category){
