@@ -28,37 +28,18 @@
                 </p:commandButton>
             </f:facet>
 
-
-            <p:column style="width:16px" exportable="false">
-                <p:rowToggler />
+            <p:column headerText="Fecha">
+                <h:outputText value="#{history.actionDateFormat}"></h:outputText>
             </p:column>
             <p:column headerText="Tipo de cambio">
                 <h:outputText value="#{history.auditActionType.name}"></h:outputText>
             </p:column>
+            <p:column headerText="Detalle">
+                <h:outputText value="#{history.detailAuditAction()}"></h:outputText>
+            </p:column>
             <p:column headerText="Usuario">
                 <h:outputText value="#{history.user.name}"></h:outputText>
             </p:column>
-            <p:column headerText="Fecha">
-                <h:outputText value="#{history.actionDateFormat}"></h:outputText>
-            </p:column>
-            <p:rowExpansion>
-                <p:panelGrid  columns="2" columnClasses="label,value" >
-                    <f:facet name="header">
-                        <h3>Detalle del cambio</h3>
-                    </f:facet>
-
-
-
-                    <h:outputText value="ID Atributo:" />
-                    <h:outputText value="#{history.auditableEntity.id}" />
-
-                    <h:outputText value="Atributo:" />
-                    <h:outputText value="#{history.auditableEntity}" />
-
-
-
-                </p:panelGrid>
-            </p:rowExpansion>
         </p:dataTable>
 
     </p:panel>

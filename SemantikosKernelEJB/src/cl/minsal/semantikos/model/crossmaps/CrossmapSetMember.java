@@ -76,7 +76,9 @@ public class CrossmapSetMember extends PersistentEntity implements Target {
 
     @Override
     public String getRepresentation() {
-        return toString();
+
+        return this.getCrossmapSet().getAbbreviatedName()+" - Código Crossmap: ("+this.getCode()+") - "+this.getGloss();
+
     }
 
     // Métodos para soportar conversión automática

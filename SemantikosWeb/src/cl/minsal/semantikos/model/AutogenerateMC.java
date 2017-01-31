@@ -4,6 +4,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,14 +75,17 @@ public class AutogenerateMC {
     public String generateNameSustancia(Relationship relationship){
         String sustancia = ((ConceptSMTK) relationship.getTarget()).getDescriptionFavorite().getTerm();
         String[] attributes = new String[4];
+        DecimalFormat format = new DecimalFormat();
+        format.setDecimalSeparatorAlwaysShown(false);
+
         for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 8)
-                attributes[0] = " " + relationshipAttribute.getTarget().toString() +" ";
+                attributes[0] = " " + format.format(Double.valueOf(relationshipAttribute.getTarget().toString())) +" ";
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 9)
                 attributes[1] = (((HelperTableRecord) relationshipAttribute.getTarget()).getValueColumn("description"));
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 10) {
                 if (Float.parseFloat(relationshipAttribute.getTarget().toString()) != 1) {
-                    attributes[2] = "/" + relationshipAttribute.getTarget().toString()+" ";
+                    attributes[2] = "/" + format.format(Double.valueOf(relationshipAttribute.getTarget().toString()))+" ";
                 } else {
                     attributes[2] = "/";
                 }
