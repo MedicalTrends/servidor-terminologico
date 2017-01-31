@@ -14,6 +14,8 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String BIOEQUIVALENTE = "Bioequivalente";
 
+    public static final String U_ASIST = "Unidad de U_Asist";
+
     /**
      * Este metodo es responsable de determinar si el target type es de tipo básico es o no.
      *

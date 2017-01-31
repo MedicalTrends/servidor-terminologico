@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface >
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.helpertables.HelperTable" />
+    <composite:attribute name="concept" type="cl.minsal.semantikos.model.ConceptSMTKWeb" />
+</composite:interface>
+<composite:implementation>
+
+    <!-- ISP -->
+    <p:panel id="helperTableTypeCollectionISP" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
+             collapsed="#{ispbean.existe?false:true}"
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.ISP}">
+
+        <p:spacer />
+
+        <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
+            <p:outputPanel rendered="#{cc.attrs.concept.editable and cc.attrs.relationshipDefinition.multiplicity.lowerBoundary>0}">
+                <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
+                <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
+            </p:outputPanel>
+            <p:outputPanel rendered="#{cc.attrs.concept.editable and cc.attrs.relationshipDefinition.multiplicity.lowerBoundary eq 0}">
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="Atributo opcional" style="font-size: small;" />
+            </p:outputPanel>
+        </f:facet>
+
+        <h:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" width="100%" id="ispfetcherexisteinputs" rendered="#{cc.attrs.concept.editable}">
+
+            <p:outputLabel for="ispexistebooleanbutton">Existe ISP</p:outputLabel>
+
+            <p:selectBooleanButton  id="ispexistebooleanbutton" value="#{ispbean.existe}" offLabel="No" onLabel="Si" onIcon="ui-icon-check" offIcon="ui-icon-close" >
+                <p:ajax async="false" listener="#{ispbean.updateOptionality(cc.attrs.relationshipDefinition)}" update="ispfetcherinputs" process="ispexistebooleanbutton" />
+                <!-- Parámetros del buscador -->
+            </p:selectBooleanButton>
+
+        </h:panelGrid>
+        <p:spacer />
+
+        <p:outputPanel style="display:block" id="ispfetcherinputs" rendered="#{cc.attrs.concept.editable}">
+
+            <h:panelGrid columns="5" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-4" width="100%" rendered="#{ispbean.existe}">
+
+                    <p:outputLabel for="ispregnum">RegNum</p:outputLabel>
+
+                    <p:inputText id="ispregnum" value="#{ispbean.regnum}" />
+
+                    <p:outputLabel for="ispregano" >RegAño</p:outputLabel>
+
+                    <p:inputText id="ispregano" value="#{ispbean.ano}" />
+
+                    <p:commandButton id="buttonispcargadatos" action="#{ispbean.fetchData}" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" value="Cargar Data" process="@this, ispregnum, ispregano" >
+                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                    </p:commandButton>
+
+            </h:panelGrid>
+
+        </p:outputPanel>
+
+        <p:dialog id="ispfetcheddialog" styleClass="dialogISP" widgetVar="ispfetcheddialog" header="Confirmar datos recuperados del Registro ISP"  width="750px" height="300px">
+            <p:outputLabel rendered="#{ not empty ispbean.ispRecord.fields}">Se han recuperado los siguientes datos desde el ISP:</p:outputLabel>
+            <p:panel id="ispfetcheddialogcontent" >
+
+                <p:dataTable value="#{ispbean.mapKeys}" var="key" rendered="#{not empty ispbean.mapKeys}">
+                    <p:column width="200">#{key}</p:column>
+                    <p:column width="400">#{ispbean.ispRecord.fields[key]}</p:column>
+                </p:dataTable>
+
+
+                <p:outputLabel rendered="#{empty ispbean.ispRecord.fields}" value="No se pudo recuperar datos del ISP" />
+                <p:commandButton rendered="#{not empty ispbean.ispRecord.fields}" value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="Cancelar" type="button" onclick="PF('ispfetcheddialog').hide()" />
+
+            </p:panel>
+
+        </p:dialog>
+
+        <p:spacer />
+
+        <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+            <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+            <p:outputLabel value="No tiene registro ISP" />
+        </p:outputPanel>
+
+        <p:dataTable id="collectionValues123"
+                     styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
+                     var="relationship"
+                     value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     style="width: 100%"
+                     reflow="true"
+                     rendered="#{ not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition) }" >
+
+            <p:column headerText="Registro">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.fields['registro']}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Nombre">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.fields['nombre']}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Titular">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.fields['titular']}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Usuario">
+                <div style="text-align: center;">
+                    <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['id_user'])}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Fecha ingreso">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.fields['creation_date']}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Fecha modificación">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.fields['fecha_proxima_renovacion']}"/>
+                </div>
+            </p:column>
+
+            <p:column headerText="Acción" rendered="#{cc.attrs.concept.editable}">
+                <div style="text-align: center">
+                    <p:commandButton
+                            icon="fa fa-trash"
+                            title="Eliminar"
+                            update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                            process="@this"
+                            immediate="true"
+                            actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                            styleClass="relationships"
+                    />
+                    <p:commandButton
+                            icon="fa fa-search"
+                            title="Ver"
+                            update="@(.dialogISP)"
+                            actionListener="#{ispbean.fetchData(relationship.target.fields['registro'])}"
+                            process="@this"
+                            rendered="#{cc.attrs.relationshipDefinition.bioequivalente}"
+                    />
+                </div>
+            </p:column>
+        </p:dataTable>
+
+        <p:dialog id="dialogISP" styleClass="dialogISP" widgetVar="dialogISP" header="Información de Registro ISP"  width="750px" height="300px">
+
+            <p:dataTable value="#{ispbean.mapKeys}" var="key" rendered="#{not empty ispbean.mapKeys}" styleClass="">
+                <p:column width="200">#{key}</p:column>
+                <p:column width="400">#{ispbean.ispRecord.fields[key]}</p:column>
+            </p:dataTable>
+
+        </p:dialog>
+
+    </p:panel>
+
+</composite:implementation>
+</html>

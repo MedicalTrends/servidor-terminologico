@@ -210,6 +210,8 @@ public class RelationshipDefinition {
         return this.getName().equalsIgnoreCase(TargetDefinition.COMERCIALIZADO);
     }
 
+    public boolean isU_asist() { return this.getName().equalsIgnoreCase(TargetDefinition.U_ASIST); }
+
     private final String SNOMEDCT="SNOMED CT";
 
     public boolean isSNOMEDCT(){

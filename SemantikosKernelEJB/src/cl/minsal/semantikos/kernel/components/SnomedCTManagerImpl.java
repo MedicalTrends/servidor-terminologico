@@ -49,7 +49,16 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
 
     @Override
     public List<ConceptSCT> findConceptsByPattern(String pattern, Integer group) {
-        return snomedctDAO.findConceptsBy(pattern, group);
+
+        String patternStandard = conceptSearchBR.standardizationPattern(pattern);
+        List<ConceptSCT> results;
+
+        results = snomedctDAO.findPerfectMatch(patternStandard, group);
+
+        if(results.isEmpty())
+            results = snomedctDAO.findTruncateMatch(patternStandard, group);
+
+        return results;
     }
 
     @Override

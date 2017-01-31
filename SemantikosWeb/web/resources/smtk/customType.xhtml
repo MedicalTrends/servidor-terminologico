@@ -33,6 +33,18 @@
                                           relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                           concept="#{cc.attrs.concept}"/>
 
+    <smtk:helperTableTypeISP
+            rendered="#{cc.attrs.relationshipDefinition.compositeID eq 9}"
+            targetDefinition="#{cc.attrs.relationshipDefinition.targetDefinition}"
+            relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+            concept="#{cc.attrs.concept}"/>
+
+    <smtk:helperTableTypeBioequivalente
+            rendered="#{cc.attrs.relationshipDefinition.compositeID eq 10}"
+            targetDefinition="#{cc.attrs.relationshipDefinition.targetDefinition}"
+            relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+            concept="#{cc.attrs.concept}"/>
+
 
 </composite:implementation>
 </html>

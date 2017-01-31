@@ -29,8 +29,9 @@
                 <h:outputText value="Cantidad: "/>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <h:outputText
-                        value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,69).target}"/>
+                <h:outputText value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,69).target.value}"  >
+                    <f:convertNumber locale="es_CL" minFractionDigits="0" maxFractionDigits="2" />
+                </h:outputText>
             </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-1">

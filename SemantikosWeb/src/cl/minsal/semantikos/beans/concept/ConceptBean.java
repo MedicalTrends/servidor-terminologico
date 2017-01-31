@@ -582,6 +582,12 @@ public class ConceptBean implements Serializable {
 
         Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
 
+        List<Relationship> relationshipsLike = new ArrayList<>();
+
+        if(target != null) {
+            relationshipsLike = relationshipManager.findRelationshipsLike(relationshipDefinition, target);
+        }
+
         try{
             relationshipBindingBR.brSTK001(concept, relationship);
             relationshipBindingBR.brSTK002(concept, relationship);

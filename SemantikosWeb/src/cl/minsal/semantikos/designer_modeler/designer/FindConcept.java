@@ -121,7 +121,7 @@ public class FindConcept implements Serializable{
         if (pattern != null) {
             if (pattern.trim().length() >= 2) {
                 if(standardizationPattern(pattern).length()<=1)return null;
-                int countConcept=conceptManager.countConceptBy(pattern,categoryArrayID,true);
+                int countConcept=conceptManager.countConceptBy(pattern,new Long[0],true);
                 findConcepts=conceptManager.findConceptBy(pattern,new Long[0],0,countConcept,true);
                 return findConcepts;
             }

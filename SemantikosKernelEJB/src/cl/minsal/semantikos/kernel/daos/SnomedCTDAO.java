@@ -53,4 +53,26 @@ public interface SnomedCTDAO {
      * pertenecen (dado que una descripción no conoce el concepto al que está asociada).
      */
     Map<DescriptionSCT, ConceptSCT> findDescriptionsByPattern(String pattern);
+
+    /**
+     * Este método es responsable de buscar aquellos conceptos que posean un CONCEPT_ID que coincida con el
+     * <code>conceptIdPattern</code> dado como parámetro. El patron
+     *
+     * @param pattern El concept ID por el cual se realiza la búsqueda.
+     * @param group            El grupo usado como filtro.
+     *
+     * @return La lista de conceptos que satisfacen el criterio de búsqueda.
+     */
+    List<ConceptSCT> findPerfectMatch(String pattern, Integer group);
+
+    /**
+     * Este método es responsable de buscar aquellos conceptos que posean un CONCEPT_ID que coincida con el
+     * <code>conceptIdPattern</code> dado como parámetro. El patron
+     *
+     * @param pattern El concept ID por el cual se realiza la búsqueda.
+     * @param group            El grupo usado como filtro.
+     *
+     * @return La lista de conceptos que satisfacen el criterio de búsqueda.
+     */
+    List<ConceptSCT> findTruncateMatch(String pattern, Integer group);
 }

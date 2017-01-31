@@ -925,12 +925,12 @@ public class ConceptDAOImpl implements ConceptDAO {
                 call.setArray(1, ArrayCategories);
                 call.setString(2, pattern);
                 call.setBoolean(3, modeled);
-                call.execute();
             }else{
                 call.setString(1, pattern);
                 call.setBoolean(2, modeled);
             }
 
+            call.execute();
 
             ResultSet rs = call.getResultSet();
             while (rs.next()) {
@@ -964,12 +964,12 @@ public class ConceptDAOImpl implements ConceptDAO {
                 call.setArray(1, ArrayCategories);
                 call.setString(2, pattern);
                 call.setBoolean(3, modeled);
-                call.execute();
             }else{
                 call.setString(1, pattern);
                 call.setBoolean(2, modeled);
             }
 
+            call.execute();
 
             ResultSet rs = call.getResultSet();
             while (rs.next()) {

@@ -175,6 +175,28 @@ public class ISPBean {
         context.execute("PF('ispfetcheddialog').show();");
     }
 
+    public void fetchData(String registro){
+
+        RequestContext context = RequestContext.getCurrentInstance();
+
+        String[] tokens = registro.split("/");
+
+        regnum = tokens[0];
+        ano = Integer.parseInt(tokens[1]);
+
+        ispRecord = null;
+
+        /**
+         * Primero se busca un registro isp local
+         */
+        for (HelperTableRecord helperTableRecord : helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true)) {
+            ispRecord = helperTableRecord;
+            break;
+        }
+
+        context.execute("PF('dialogISP').show();");
+    }
+
 
     public void updateOptionality(RelationshipDefinition relationshipDefinition){
         if(existe)

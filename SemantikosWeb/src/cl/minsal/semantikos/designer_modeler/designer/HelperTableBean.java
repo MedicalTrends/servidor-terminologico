@@ -2,13 +2,12 @@ package cl.minsal.semantikos.designer_modeler.designer;
 
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.HelperTableManager;
+import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
-import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
-import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.*;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -39,6 +38,9 @@ public class HelperTableBean implements Serializable {
 
     @EJB
     private HelperTableManager helperTableManager;
+
+    @EJB
+    private RelationshipManager relationshipManager;
 
     @PostConstruct
     public void init() {
@@ -90,6 +92,16 @@ public class HelperTableBean implements Serializable {
         return someRecords;
     }
 
+    public List<Relationship> findRelationshipsLike(RelationshipDefinition relationshipDefinition, Target target) {
+
+        List<Relationship> relationshipsLike = new ArrayList<>();
+
+        if(target != null) {
+            relationshipsLike = relationshipManager.findRelationshipsLike(relationshipDefinition, target);
+        }
+
+        return relationshipsLike;
+    }
 
     public String getPattern() {
         return pattern;

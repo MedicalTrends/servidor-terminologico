@@ -58,6 +58,70 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     }
 
     @Override
+    public List<ConceptSCT> findPerfectMatch(String pattern, Integer group) {
+        List<ConceptSCT> concepts = new ArrayList<>();
+
+        ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.find_sct_perfect_match(?,?)}")) {
+
+            call.setString(1, pattern);
+            if (group == null) {
+                call.setNull(2, Types.INTEGER);
+            } else {
+                call.setInt(2, group);
+            }
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                ConceptSCT recoveredConcept = createConceptSCTFromResultSet(rs);
+                concepts.add(recoveredConcept);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al buscar Snomed CT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return concepts;
+    }
+
+    @Override
+    public List<ConceptSCT> findTruncateMatch(String pattern, Integer group) {
+        List<ConceptSCT> concepts = new ArrayList<>();
+
+        ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.find_sct_truncate_match(?,?)}")) {
+
+            call.setString(1, pattern);
+            if (group == null) {
+                call.setNull(2, Types.INTEGER);
+            } else {
+                call.setInt(2, group);
+            }
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                ConceptSCT recoveredConcept = createConceptSCTFromResultSet(rs);
+                concepts.add(recoveredConcept);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al buscar Snomed CT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return concepts;
+    }
+
+    @Override
     public ConceptSCT getConceptByID(long conceptID) {
 
         ConnectionBD connect = new ConnectionBD();
