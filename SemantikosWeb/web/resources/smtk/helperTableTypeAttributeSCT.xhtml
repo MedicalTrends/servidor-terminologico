@@ -33,7 +33,7 @@
                                  filter="true" >
                     <p:ajax event="itemSelect"/>
                     <f:selectItem itemLabel="Tipo de relación" value="#{null}" itemDisabled="true" />
-                    <f:selectItems value="#{helperTableBean.getAllTableRecords(cc.attrs.targetDefinition)}" var="record"
+                    <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition)}" var="record"
                                    itemLabel="#{record.description}"
                                    itemValue="#{record}"/>
                     <p:column>

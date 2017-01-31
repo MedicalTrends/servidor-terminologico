@@ -38,7 +38,7 @@
                                  converter="omnifaces.SelectItemsConverter">
 
                     <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
-                    <f:selectItems value="#{helperTableBean.getAllTableRecords(cc.attrs.targetDefinition)}"
+                    <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition)}"
                                    var="record"
                                    itemLabel="#{record.description}"
                                    itemValue="#{record}"/>
@@ -97,7 +97,7 @@
                                  converter="omnifaces.SelectItemsConverter">
 
                     <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
-                    <f:selectItems value="#{helperTableBean.getAllTableRecords(cc.attrs.targetDefinition)}"
+                    <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition)}"
                                    var="record"
                                    itemLabel="#{record.description}"
                                    itemValue="#{record}"/>

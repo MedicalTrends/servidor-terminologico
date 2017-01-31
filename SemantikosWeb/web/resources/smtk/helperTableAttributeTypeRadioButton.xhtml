@@ -27,7 +27,7 @@
             <p:outputPanel id="helperTableTypeAttributeNew" styleClass="search">
 
                 <p:selectOneRadio id="helperTableTypeAttributeSimpleCustom"  style="padding-top: 0.9em" value="#{conceptBean.selectedHelperTableRecord}" layout="grid" columns="3" converter="omnifaces.SelectItemsConverter">
-                    <f:selectItems value="#{helperTableBean.getAllTableRecords(cc.attrs.targetDefinition)}"
+                    <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition)}"
                                    var="record"
                                    itemLabel="#{record.description}"
                                    itemValue="#{record}"/>
