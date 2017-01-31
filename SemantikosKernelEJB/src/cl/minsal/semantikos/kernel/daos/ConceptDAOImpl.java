@@ -809,7 +809,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         ConnectionBD connect = new ConnectionBD();
 
-        String QUERY_PERFECT_MATCH = "{call semantikos.perfect_match_pattern(?,?,?,?,?)}";
+        String QUERY_PERFECT_MATCH = "{call semantikos.perfect_match_pattern(?,?,?,?)}";
 
         try (Connection connection = connect.getConnection(); CallableStatement call =
                 connection.prepareCall(QUERY_PERFECT_MATCH)) {
@@ -880,7 +880,8 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         ConnectionBD connect = new ConnectionBD();
 
-        String QUERY_TRUNCATE_MATCH = "{call semantikos.truncate_match_by_pattern(?,?,?,?,?)}";
+        String QUERY_TRUNCATE_MATCH = "{call semantikos.truncate_match_by_pattern(?,?,?,?" +
+                ")}";
 
         try (Connection connection = connect.getConnection(); CallableStatement call =
                 connection.prepareCall(QUERY_TRUNCATE_MATCH)) {
@@ -925,12 +926,11 @@ public class ConceptDAOImpl implements ConceptDAO {
                 call.setArray(1, ArrayCategories);
                 call.setString(2, pattern);
                 call.setBoolean(3, modeled);
-                call.execute();
             }else{
                 call.setString(1, pattern);
                 call.setBoolean(2, modeled);
             }
-
+            call.execute();
 
             ResultSet rs = call.getResultSet();
             while (rs.next()) {
@@ -964,11 +964,11 @@ public class ConceptDAOImpl implements ConceptDAO {
                 call.setArray(1, ArrayCategories);
                 call.setString(2, pattern);
                 call.setBoolean(3, modeled);
-                call.execute();
             }else{
                 call.setString(1, pattern);
                 call.setBoolean(2, modeled);
             }
+            call.execute();
 
 
             ResultSet rs = call.getResultSet();

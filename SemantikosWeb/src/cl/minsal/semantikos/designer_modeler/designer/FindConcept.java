@@ -71,10 +71,8 @@ public class FindConcept implements Serializable{
      */
     public List<ConceptSMTK> getConceptSearchInputAndCategories(String pattern) {
         RequestContext.getCurrentInstance().update("::conceptTranslate");
+        categoryArrayID= (categorySelect==null)? new Long[0]:new Long[] {categorySelected.getId()};
 
-        if(categorySelected!=null){
-            categoryArrayID= new Long[] {categorySelected.getId()};
-        }
         if (pattern != null) {
             if (pattern.trim().length() >= 2) {
                 if(standardizationPattern(pattern).length()<=1)return null;
