@@ -68,7 +68,7 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
 
 
     @Override
-    public HelperTableRow createRow(Long tableId, String username) {
+    public HelperTableRow createEmptyRow(Long tableId, String username) {
         HelperTable table= getById(tableId);
 
         HelperTableRow newRow = new HelperTableRow();
@@ -92,6 +92,28 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
         return dao.getRowById(newRow.getId());
     }
 
+
+    /*
+       inserta una fila no persistida
+        */
+    @Override
+    public HelperTableRow insertRow(HelperTableRow newRow,String username) {
+
+
+        newRow.setCreationDate(new Date());
+        newRow.setCreationUsername(username);
+        newRow.setLastEditDate(new Date());
+        newRow.setLastEditUsername(username);
+
+        newRow = dao.createRow(newRow);
+
+        for (HelperTableData cell: newRow.getCells()) {
+            cell.setRowId(newRow.getId());
+            dao.createData(cell);
+        }
+
+        return dao.getRowById(newRow.getId());
+    }
 
     private HelperTableData createCell(HelperTableColumn column, HelperTableRow row) {
         HelperTableData data = new HelperTableData();

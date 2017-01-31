@@ -70,14 +70,26 @@
 
                             <p:dialog id="edit-data-dialog" styleClass="edit-data-dialog-#{varStatus1.index}" header="Editar Datos" widgetVar="edit-data-dialog-var-#{varStatus1.index}" height="400" width="900" positionType="absolute">
 
-
+                                <p:remoteCommand name="onRowEditCancel#{varStatus1.index}" update="@(.table-data-edit-#{varStatus1.index})" />
 
                                 <p:dataTable resizableColumns="true" widgetVar="table-data-edit-wvar-#{varStatus1.index}" id="table-data-edit" styleClass="table-data-edit-#{varStatus1.index}" var="row" rowKey="#{row.id}" value="#{helperTable.rows}" editable="true">
                                     <f:facet name="header">
                                         Editor de datos Tabla: #{helperTable.name}
+
+                                        <p:commandButton icon="ui-icon-plus"
+                                                         value="Agregar Fila"
+                                                         ajax="true"
+                                                         id="add-row-button"
+                                                         alt="Agregar Fila"
+                                                         action="#{helperTableBean.addRow(helperTable)}"
+                                                         update="@(.table-data-edit-#{varStatus1.index})"
+                                                         process="@this"
+                                                         oncomplete="jQuery('.table-data-edit-#{varStatus1.index} tbody tr').first().find('span.ui-icon-pencil').each(function(){jQuery(this).click()});"
+                                        />
                                     </f:facet>
 
                                     <p:ajax event="rowEdit" listener="#{helperTableBean.onRowEdit}" />
+                                    <p:ajax event="rowEditCancel" listener="#{helperTableBean.onRowEditCancel}" oncomplete="onRowEditCancel#{varStatus1.index}()"   />
 
                                     <p:column headerText="ID" sortable="true" width="30" filterBy="#{row.id}">
                                         <h:outputText value="#{row.id}"/>
@@ -111,7 +123,7 @@
                                                 <p:inputNumber          value="#{row.cells[columnIndex].floatValue}"        rendered="#{!column.foreignKey and column.helperTableDataTypeId == 4}" />
                                                 <p:calendar             value="#{row.cells[columnIndex].dateValue}"         rendered="#{!column.foreignKey and column.helperTableDataTypeId == 5}"  locale="es" navigator="true" pattern="dd-MM-yyyy" mask="true" />
                                                 <p:selectOneMenu        value="#{row.cells[columnIndex].foreignKeyValue}"   rendered="#{column.foreignKey }" >
-                                                    <f:selectItems value="#{helperTableBean.getValidTableRows(helperTable)}" var="fkTableRow" itemValue="#{fkTableRow.id}" itemLabel="#{fkTableRow.description}" >
+                                                    <f:selectItems value="#{helperTableBean.getReferencedTableRows(column.foreignKeyHelperTableId)}" var="fkTableRow" itemValue="#{fkTableRow.id}" itemLabel="#{fkTableRow.description}" >
                                                     </f:selectItems>
                                                 </p:selectOneMenu>
                                             </f:facet>
@@ -120,7 +132,7 @@
 
                                     <p:column headerText="ESTADO DE VIGENCIA" sortable="true"  width="30px" filterBy="#{row.valid}">
                                         <f:facet name="filter">
-                                            <p:selectOneMenu onchange="PF('table-data-edit-wvar-#{helperTable.id}').filter()" >
+                                            <p:selectOneMenu onchange="PF('table-data-edit-wvar-#{varStatus1.index}').filter()" >
                                                 <f:selectItem itemLabel="Elegir..." itemValue="#{null}" noSelectionOption="true" />
                                                 <f:selectItem itemLabel="Si" itemValue="#{true}" />
                                                 <f:selectItem itemLabel="No" itemValue="#{false}" />
@@ -153,14 +165,7 @@
 
                                 </p:dataTable>
 
-                                <p:commandButton icon="ui-icon-plus"
-                                                 value="Agregar Fila"
-                                                 ajax="true"
-                                                 id="add-row-button"
-                                                 alt="Agregar Fila"
-                                                 action="#{helperTableBean.addRow(helperTable.id)}"
-                                                 update="@(.table-data-edit-#{varStatus1.index})"
-                                                 process="@this"/>
+
 
                             </p:dialog>
 

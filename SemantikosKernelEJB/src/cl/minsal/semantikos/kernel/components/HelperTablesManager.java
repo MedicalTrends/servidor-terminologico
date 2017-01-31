@@ -26,9 +26,8 @@ public interface HelperTablesManager {
 
     /*
     crea una nueva fila con campos por defecto para la tabla proporcionada
-
      */
-    HelperTableRow createRow(Long tableId, String username);
+    HelperTableRow createEmptyRow(Long tableId, String username);
 
 
     /*
@@ -58,4 +57,8 @@ public interface HelperTablesManager {
 
     List<HelperTable> getFullDatabase();
 
+    /*
+    inserta una fila no persistida
+     */
+    HelperTableRow insertRow(HelperTableRow row, String username);
 }

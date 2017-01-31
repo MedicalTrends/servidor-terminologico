@@ -213,7 +213,7 @@ public class ISPBean {
         if(fetchedData != null){
             HelperTable ispHT = getISPHelperTable();
 
-            ispRecord = helperTablesManager.createRow(ispHT.getId(),authenticationBean.getUsername());
+            ispRecord = helperTablesManager.createEmptyRow(ispHT.getId(),authenticationBean.getUsername());
 
 
             mapFetchedData(ispRecord,fetchedData);
