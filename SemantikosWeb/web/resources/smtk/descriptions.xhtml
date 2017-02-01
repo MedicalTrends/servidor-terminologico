@@ -440,7 +440,7 @@
 
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-6 ui-lg-12">
-                    <p:panel style="width: 100%;">
+                    <p:panel style="width: 100%;" styleClass="suggestedConcepts">
                         <h3>Conceptos sugeridos:</h3>
                         <div class="ui-g">
                             <div class="ui-g-12 ui-md-6 ui-lg-2">
@@ -453,8 +453,8 @@
                                 emptyMessage="No se encontraron conceptos relacionados"
                                 placeholder="Buscar concepto por término"
                                 forceSelection="true">
-                                   <p:ajax event="itemSelect" listener="#{conceptBean.addSuggest}" update="@(.tableConceptSuggest)"></p:ajax>
-                                       </p:autoComplete>
+                                   <p:ajax event="itemSelect" listener="#{conceptBean.addSuggest}" update="@(.suggestedConcepts)"></p:ajax>
+                               </p:autoComplete>
                             </div>
                         </div>
                         <div class="ui-g">

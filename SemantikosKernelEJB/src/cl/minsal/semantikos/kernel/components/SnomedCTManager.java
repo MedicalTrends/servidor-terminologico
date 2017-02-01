@@ -57,7 +57,7 @@ public interface SnomedCTManager {
      * @param group    El grupo por el cual se filtran los resultados.
      * @return cantidad de conceptos según los parámetros ingresados
      */
-    public int countConceptBy(String pattern, Integer group);
+    public long countConceptByPattern(String pattern, Integer group);
 
     /**
      * Este método es responsable de buscar aquellos conceptos que posean un CONCEPT_ID que coincida con el

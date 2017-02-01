@@ -9,6 +9,8 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import org.primefaces.context.RequestContext;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -20,6 +22,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Collections.emptyList;
 
 /**
  * Created by root on 02-09-16.
@@ -219,8 +223,6 @@ public class ValidatorBean {
 
     }
 
-
-
     public void validateGradeOfDefinition(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 
         String msg;
@@ -239,6 +241,23 @@ public class ValidatorBean {
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg));
         }
 
+    }
+
+    public void validateQueryResultSize(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+
+        /*
+        RequestContext context = RequestContext.getCurrentInstance();
+
+        if (cstManager.countConceptByPattern(patron, relationshipGroup) < 1000) {
+                concepts = cstManager.findConceptsByPattern(patron, relationshipGroup);
+            }
+            else {
+                context.execute("PF('dialogSCT').show();");
+            }
+        }
+
+        return concepts;
+        */
     }
 
 

@@ -29,9 +29,6 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     private static final Logger logger = LoggerFactory.getLogger(RelationshipDAOImpl.class);
 
     @EJB
-    private ConceptSCTFactory conceptSCTFactory;
-
-    @EJB
     private RelationshipFactory relationshipFactory;
 
     @EJB

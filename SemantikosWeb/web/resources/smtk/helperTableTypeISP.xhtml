@@ -114,6 +114,11 @@
                     <h:outputText value="#{relationship.target.fields['titular']}"/>
                 </div>
             </p:column>
+            <p:column headerText="Vigencia ISP">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.fields['estado_del_registro']}"/>
+                </div>
+            </p:column>
             <p:column headerText="Usuario">
                 <div style="text-align: center;">
                     <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['id_user'])}"/>
@@ -147,20 +152,10 @@
                             update="@(.dialogISP)"
                             actionListener="#{ispbean.fetchData(relationship.target.fields['registro'])}"
                             process="@this"
-                            rendered="#{cc.attrs.relationshipDefinition.bioequivalente}"
                     />
                 </div>
             </p:column>
         </p:dataTable>
-
-        <p:dialog id="dialogISP" styleClass="dialogISP" widgetVar="dialogISP" header="Información de Registro ISP"  width="750px" height="300px">
-
-            <p:dataTable value="#{ispbean.mapKeys}" var="key" rendered="#{not empty ispbean.mapKeys}" styleClass="">
-                <p:column width="200">#{key}</p:column>
-                <p:column width="400">#{ispbean.ispRecord.fields[key]}</p:column>
-            </p:dataTable>
-
-        </p:dialog>
 
     </p:panel>
 

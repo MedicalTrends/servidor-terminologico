@@ -10,17 +10,31 @@ import javax.validation.constraints.NotNull;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.List;
 
 import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
 
 /**
  * @author Andrés Farías
  */
-@Singleton
 public class ConceptSCTFactory {
+
+    private static final ConceptSCTFactory instance = new ConceptSCTFactory();
 
     /** El logger para esta clase */
     private static final Logger logger = LoggerFactory.getLogger(ConceptSCTFactory.class);
+
+    /**
+     * Constructor privado para el Singleton del Factory.
+     */
+    private ConceptSCTFactory() {
+
+    }
+
+    public static ConceptSCTFactory getInstance() {
+        return instance;
+    }
 
     public ConceptSCT createFromJSON(@NotNull String jsonExpression){
 
@@ -36,5 +50,21 @@ public class ConceptSCTFactory {
 
         return conceptSCT;
     }
+
+    public List<ConceptSCT> createListFromJSON(@NotNull String jsonExpression){
+
+        ConceptSCT[] conceptsSCT = new ConceptSCT[0];
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            conceptsSCT = mapper.readValue(underScoreToCamelCaseJSON(jsonExpression), ConceptSCT[].class);
+        } catch (IOException e) {
+            String errorMsg = "Error al parsear un JSON hacia un ConceptSCT";
+            logger.error(errorMsg, e);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return Arrays.asList(conceptsSCT);
+    }
+
 }
 

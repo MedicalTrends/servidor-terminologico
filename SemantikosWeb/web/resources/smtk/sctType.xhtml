@@ -19,91 +19,6 @@
 
 <composite:implementation>
 
-    <p:panel id="multiplicityOne"
-             styleClass="concept"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple}">
-
-            <p:outputPanel id="panel_autocomplete" style="width: 100%" rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
-                <div class="ui-g">
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
-
-                    <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"  value="#{cc.attrs.relationshipDefinition.name}" for="findConceptSCT"/>
-                    <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" value="#{cc.attrs.relationshipDefinition.name} *" for="findConceptSCT"/>
-
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
-                                    forceSelection="true"
-                                    id="findConceptSCT" scrollHeight="200" size="5" style="width: 85%;"
-                                    inputStyle="width: 85%;"
-                                    completeMethod="#{sctBean.getConceptSearchInput}"
-                                    converter="conceptSCTConverter"
-                                    var="concept"
-                                    value="#{conceptBean.conceptSCTSelected}"
-                                    itemLabel="#{concept.descriptionFSN.term}" itemValue="#{concept}"
-                                    disabled="#{not cc.attrs.concept.editable}"
-                                    rendered="#{conceptBean.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size()==0}">
-
-                        <!-- Parámetros del validador -->
-                        <f:attribute name="concept" value="#{cc.attrs.concept}"  />
-                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                        <!---->
-
-                        <p:column>
-                            <h:outputText value="#{concept.descriptionFSN.term}"/>
-                        </p:column>
-
-                        <p:ajax update="@(.concept), @(.conceptHeader),:mainForm:editMsgs" event="itemSelect"
-                                listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.conceptSCTSelected)}"
-                                process="@this"/>
-
-                        <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
-                    </p:autoComplete>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-
-                </div>
-                </div>
-            </p:outputPanel>
-
-            <p:outputPanel id="panel_input" style="width: 100%" rendered="#{not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
-                <div class="ui-g">
-
-                    <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                               var="relationship"
-                               varStatus="var">
-                        <div class="ui-g-12 ui-md-6 ui-lg-2">
-                            <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"  value="#{cc.attrs.relationshipDefinition.name}: " for="itemSelected"/>
-                            <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" value="#{cc.attrs.relationshipDefinition.name}: (*)" for="itemSelected"/>
-                        </div>
-
-                        <div class="ui-g-12 ui-md-6 ui-lg-3">
-                            <p:inputText style="width: 70%;" disabled="true" id="itemSelected" value="#{relationship.target.descriptionFSN.term}" />
-                            <p:commandButton icon="fa fa-trash" title="Eliminar"
-                                             action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}"
-                                             styleClass="ui-datepicker-trigger ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"
-                                             update="@(.concept)"
-                                             rendered="#{conceptBean.concept.hasRelationships(cc.attrs.relationshipDefinition)}"
-                                             process="@this">
-                            </p:commandButton>
-                        </div>
-                        <div class="ui-g-12 ui-md-6 ui-lg-1">
-                            <h:outputText value="Concept ID"/>
-                        </div>
-                        <div class="ui-g-12 ui-md-6 ui-lg-2">
-                            <p:inputText value="#{relationship.target.idSnomedCT}" disabled="true" />
-                        </div>
-
-                    </ui:repeat>
-
-                </div>
-            </p:outputPanel>
-
-
-
-    </p:panel>
-
     <p:panel id="multiplicityN_with_attributes"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
@@ -151,12 +66,13 @@
 
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
-                            <p:outputPanel styleClass="search">
+                            <p:outputPanel styleClass="search searchSCT">
 
                                 <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
                                                 forceSelection="true"
                                                 id="findConceptSCT2" scrollHeight="200" size="5"
                                                 completeMethod="#{sctBean.getConceptSearchInput}"
+                                                validator="#{validatorBean.}"
                                                 placeholder="#{sctBean.searchOption eq 'term'? 'Ingrese término...': 'Ingrese conceptId...'}"
                                                 converter="conceptSCTConverter"
                                                 var="concept"
@@ -170,7 +86,7 @@
                                     <!---->
 
                                     <p:column style="width: 500px">
-                                        <h:outputText value="#{concept.descriptionFSN.term}"/>
+                                        <h:outputText value="#{concept.descriptionFSN.term}" />
                                     </p:column>
 
                                     <p:ajax event="itemSelect"

@@ -151,15 +151,6 @@
             </p:column>
         </p:dataTable>
 
-        <p:dialog id="dialogISP" styleClass="dialogISP" widgetVar="dialogISP" header="Información de Registro ISP"  width="750px" height="300px">
-
-            <p:dataTable value="#{ispbean.mapKeys}" var="key" rendered="#{not empty ispbean.mapKeys}" styleClass="">
-                <p:column width="200">#{key}</p:column>
-                <p:column width="400">#{ispbean.ispRecord.fields[key]}</p:column>
-            </p:dataTable>
-
-        </p:dialog>
-
     </p:panel>
 
 </composite:implementation>

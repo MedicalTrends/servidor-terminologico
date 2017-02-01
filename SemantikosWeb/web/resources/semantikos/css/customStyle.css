@@ -192,3 +192,11 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 .browserTableDetail .ui-column-title {
     display: none;
 }
+
+.ui-autocomplete-query {
+    background: yellow;
+}
+
+.searchSCT.ui-autocomplete-panel {
+    width: 50%;
+}

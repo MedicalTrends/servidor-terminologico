@@ -62,21 +62,20 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     }
 
     @Override
-    public int countConceptBy(String pattern, Integer group) {
+    public long countConceptByPattern(String pattern, Integer group) {
         String patternStandard = conceptSearchBR.standardizationPattern(pattern);
 
-        int count= countPerfectMatch(patternStandard, group);
+        long count= countPerfectMatch(patternStandard, group);
 
-        if (count!=0) {
+        if (count != 0) {
             return count;
         } else {
             return countTruncateMatch(patternStandard, group);
         }
     }
 
-    public int countPerfectMatch(String pattern, Integer group) {
-        //return snomedctDAO.countPerfectMatchConceptBy(pattern, group);
-        return 0;
+    public long countPerfectMatch(String pattern, Integer group) {
+        return snomedctDAO.countPerfectMatch(pattern, group);
     }
 
     public int countTruncateMatch(String pattern, Integer group) {

@@ -74,9 +74,13 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
             call.execute();
 
             ResultSet rs = call.getResultSet();
-            while (rs.next()) {
+
+            int cont = 0;
+
+            while (rs.next() && cont < 1000) {
                 ConceptSCT recoveredConcept = createConceptSCTFromResultSet(rs);
                 concepts.add(recoveredConcept);
+                cont++;
             }
             rs.close();
 
@@ -109,6 +113,38 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
             while (rs.next()) {
                 ConceptSCT recoveredConcept = createConceptSCTFromResultSet(rs);
                 concepts.add(recoveredConcept);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al buscar Snomed CT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return concepts;
+    }
+
+    @Override
+    public long countPerfectMatch(String pattern, Integer group) {
+        long concepts = 0;
+
+        ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.count_sct_perfect_match(?,?)}")) {
+
+            call.setString(1, pattern);
+            if (group == null) {
+                call.setNull(2, Types.INTEGER);
+            } else {
+                call.setInt(2, group);
+            }
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+                concepts = rs.getLong(1);
             }
             rs.close();
 

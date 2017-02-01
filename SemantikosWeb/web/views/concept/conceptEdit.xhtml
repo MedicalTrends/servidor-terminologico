@@ -322,9 +322,22 @@
                                 </h:form>
                             </p:dialog>
 
-                            <p:dialog id="dialogISP" header="Warning" widgetVar="dialogISP"  height="100">
-                                <h:outputText value="La URL de registro ISP no se encuentra disponible en este momento, por favor intente más tarde." />
+                            <p:dialog id="dialogISP" styleClass="dialogISP" widgetVar="dialogISP" header="Información de Registro ISP"  width="750px" height="300px">
+                                <p:dataTable value="#{ispbean.mapKeys}" var="key" rendered="#{not empty ispbean.mapKeys}" styleClass="">
+                                    <p:column width="200">#{key}</p:column>
+                                    <p:column width="400">#{ispbean.ispRecord.fields[key]}</p:column>
+                                </p:dataTable>
                             </p:dialog>
+
+
+                            <p:confirmDialog id="dialogSCT" widgetVar="dialogSCT" global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Búsqueda Lazy" type="button" styleClass="CyanButton"
+                                                 icon="ui-icon-check"/>
+                                <p:commandButton value="Esperar resultados" type="button" styleClass="OrangeButton"
+                                                 icon="ui-icon-close"/>
+                                <p:commandButton value="Cancelar" type="button"
+                                                 icon="ui-icon-close"/>
+                            </p:confirmDialog>
                         </p:outputPanel>
 
                         </div>

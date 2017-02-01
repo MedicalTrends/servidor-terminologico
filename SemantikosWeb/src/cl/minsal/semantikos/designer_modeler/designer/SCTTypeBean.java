@@ -3,12 +3,15 @@ package cl.minsal.semantikos.designer_modeler.designer;
 import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import org.apache.commons.lang3.StringUtils;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.*;
 
@@ -67,23 +70,33 @@ public class SCTTypeBean implements Serializable {
      */
     public List<ConceptSCT> getConceptSearchInput(String patron) {
 
+        pattern = patron;
+        RequestContext context = RequestContext.getCurrentInstance();
+        List<ConceptSCT> concepts = new ArrayList<>();
+
         /* Si el patrón viene vacío o es menor a tres caracteres, no se hace nada */
-        if ( searchOption.equals("term") &&  ( patron == null || patron.trim().length() <= 3 ) ) {
+        if ( searchOption.equals("term") &&  ( patron == null || patron.trim().length() < 3 ) ) {
             return emptyList();
         }
 
         /* La búsqueda empieza aquí */
-        if(searchOption.equals("term"))
-            return cstManager.findConceptsByPattern(patron, relationshipGroup);
+        if(searchOption.equals("term")) {
+            if (cstManager.countConceptByPattern(patron, relationshipGroup) < 1000) {
+                concepts = cstManager.findConceptsByPattern(patron, relationshipGroup);
+            }
+            else {
+                context.execute("PF('dialogSCT').show();");
+            }
+        }
         else{
             try{
-                return cstManager.findConceptsByConceptID(new Long(patron), relationshipGroup);
+                concepts = cstManager.findConceptsByConceptID(new Long(patron), relationshipGroup);
             }
             catch (NumberFormatException e){
                 return null;
             }
         }
-
+        return concepts;
     }
 
     public Integer getRelationshipGroup() {
@@ -131,5 +144,13 @@ public class SCTTypeBean implements Serializable {
         this.relationshipGroups = relationshipGroups;
     }
 
+    public String highlightTerm(String term) {
+        String[] searchList = pattern.split(" ");
+        String[] replacementList = pattern.split(" ");
+        for (int i = 0; i< replacementList.length; ++i) {
+            replacementList[i] = "<b>"+replacementList[i]+"</b>";
+        }
+        return StringUtils.replaceEach(term, searchList, replacementList);
+    }
 
 }
