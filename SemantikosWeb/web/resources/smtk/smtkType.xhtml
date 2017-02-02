@@ -177,7 +177,9 @@
 
                     </div>
                     <!-- Atributos de relación -->
-                    <smtk:attributes
+                    <smtk:attributes concept="#{cc.attrs.concept}"
+                                     relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                     />
                     <div class="Container20 White Responsive">
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
                             <p:commandButton

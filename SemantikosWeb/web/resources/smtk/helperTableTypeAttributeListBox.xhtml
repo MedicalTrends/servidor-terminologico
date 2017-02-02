@@ -26,9 +26,6 @@
 
             <p:outputPanel id="helperTableTypeAttributeNew" rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes }" styleClass="search">
 
-                <p:focus context="helperTableTypeAttributeNew" rendered="#{cc.attrs.relationship != null}" />
-
-
                 <p:selectOneMenu id="helperTableTypeAttributeSimple" scrollHeight="200"
                                  forceSelection="true"
                                  value="#{conceptBean.selectedHelperTableRecord}"
@@ -60,7 +57,7 @@
 
             </p:outputPanel>
 
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.relationship.relationshipAttributes }">
+            <p:outputPanel id="helperTableTypeAttribute" rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.relationship.relationshipAttributes }">
 
                 <p:repeat
                         offset="0"
@@ -117,7 +114,9 @@
                 </p:selectOneMenu>
 
             </p:outputPanel>
+
         </div>
+
     </div>
 
     <h:outputStylesheet id="customCSS">

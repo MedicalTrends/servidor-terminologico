@@ -183,26 +183,7 @@
 
                 </div>
                 <!-- Atributos de relación -->
-                <p:repeat
-                        offset="0"
-                        size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
-                        step="1"
-                        varStatus="var"
-                        value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                        var="relationshipAttributeDefinition">
-                    <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                             relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                             concept="#{cc.attrs.concept}"
-                                             targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                             rendered="#{relationshipAttributeDefinition.targetDefinition.basicType}"
-                    />
-                    <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                   relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                   targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                   concept="#{cc.attrs.concept}"
-                                                   rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
-                    />
-                </p:repeat>
+                <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
             </div>
         </div>
     </p:panel>
@@ -247,28 +228,8 @@
                     </div>
 
                     <!-- Atributos de relación -->
-                    <p:repeat
-                            offset="0"
-                            size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
-                            step="1"
-                            varStatus="var"
-                            value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                            var="relationshipAttributeDefinition">
-                        <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                 relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                 targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                 relationship="#{relationship}"
-                                                 concept="#{cc.attrs.concept}"
-                                                 rendered="#{relationshipAttributeDefinition.targetDefinition.basicType}"
-                        />
-                        <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                       relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                       targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                       relationship="#{relationship}"
-                                                       concept="#{cc.attrs.concept}"
-                                                       rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
-                        />
-                    </p:repeat>
+                    <!-- Atributos de relación -->
+                    <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
                 </div>
             </div>
         </ui:repeat>
@@ -434,27 +395,8 @@
                     </div>
 
                     <!-- Atributos de relación -->
-                    <p:repeat
-                            offset="0"
-                            size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
-                            step="1"
-                            varStatus="var"
-                            value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                            var="relationshipAttributeDefinition">
+                    <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
 
-                        <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                 relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                 targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                 concept="#{cc.attrs.concept}"
-                                                 rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()}"
-                        />
-                        <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                       relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                       targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                       concept="#{cc.attrs.concept}"
-                                                       rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
-                        />
-                    </p:repeat>
                     <div class="Container20 White Responsive">
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}" style="text-align: center">
                             <p:commandButton

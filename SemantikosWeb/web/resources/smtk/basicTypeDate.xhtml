@@ -149,20 +149,7 @@
                     </div>
                 </div>
                 <!-- Atributos de relación -->
-                <p:repeat
-                        offset="0"
-                        size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
-                        step="1"
-                        varStatus="var"
-                        value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                        var="relationshipAttributeDefinition">
-                    <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                   relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                   concept="#{cc.attrs.concept}"
-                                                   targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                   rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
-                    />
-                </p:repeat>
+                <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
             </div>
         </div>
     </p:panel>
@@ -206,21 +193,11 @@
                     </div>
 
                     <!-- Atributos de relación -->
-                    <p:repeat
-                            offset="0"
-                            size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
-                            step="1"
-                            varStatus="var"
-                            value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                            var="relationshipAttributeDefinition">
-                        <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                       relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                       relationship="#{relationship}"
-                                                       concept="#{cc.attrs.concept}"
-                                                       targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                       rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
-                        />
-                    </p:repeat>
+                    <smtk:attributes concept="#{cc.attrs.concept}"
+                                     relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                     relationship="#{relationship}"
+                    />
+
                 </div>
             </div>
         </p:repeat>

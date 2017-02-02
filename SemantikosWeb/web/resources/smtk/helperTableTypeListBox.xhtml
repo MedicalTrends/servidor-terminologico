@@ -182,33 +182,8 @@
                     </div>
 
                     <!-- Atributos de relación -->
-                    <p:repeat
-                            offset="0"
-                            size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitionWebs.size()}"
-                            step="1"
-                            varStatus="var"
-                            value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitionWebs}"
-                            var="relationshipAttributeDefinition">
-
-                        <smtk:helperTableAttributeTypeRadioButton relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                                  relationshipAttributeDefinition="#{relationshipAttributeDefinition.relationshipAttributeDefinition}"
-                                                                  targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                                  concept="#{cc.attrs.concept}"
-                                                                  rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable and relationshipAttributeDefinition.compositeID eq 6}"
-                        />
-                        <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                 relationshipAttributeDefinition="#{relationshipAttributeDefinition.relationshipAttributeDefinition}"
-                                                 targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                 concept="#{cc.attrs.concept}"
-                                                 rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()}"
-                        />
-                        <smtk:helperTableTypeAttributeListBox relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                       relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                       targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                       concept="#{cc.attrs.concept}"
-                                                       rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable and relationshipAttributeDefinition.compositeID eq -1}"
-                        />
-                    </p:repeat>
+                    <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
+                    
                     <div class="Container20 White Responsive">
 
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
