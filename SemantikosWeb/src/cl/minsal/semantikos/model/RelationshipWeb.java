@@ -80,8 +80,11 @@ public class RelationshipWeb extends Relationship implements Comparable<Relation
     }
 
     public String getDateCreationFormat() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return format.format(this.getCreationDate());
+        if(this.getCreationDate()!=null){
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return format.format(this.getCreationDate());
+        }return "";
+
     }
 
     @Override

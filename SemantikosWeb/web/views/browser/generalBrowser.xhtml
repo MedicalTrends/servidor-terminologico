@@ -176,7 +176,8 @@
                                                 <f:param name="idConcept" value="#{concept.id}" />
                                             </p:link>
 
-                                            <p:commandLink oncomplete="PF('dialogTC2-browser').show()" update="@(.conceptTranslate)" title="Trasladar" style="padding: 5px">
+                                            <p:commandLink oncomplete="PF('dialogTC2-browser').show()" update="@(.conceptTranslate)" title="Trasladar" style="padding: 5px"
+                                                           rendered="#{not conceptSpecialBean.isSpecial(concept)}">
                                                 <i class="fa fa-exchange fa-lg"/>
                                                 <f:setPropertyActionListener value="#{concept}" target="#{transferConceptBean.conceptSMTKSelected}" />
                                                 <p:confirm header="Confirmación" message="¿Desea realmente trasladar este concepto?"

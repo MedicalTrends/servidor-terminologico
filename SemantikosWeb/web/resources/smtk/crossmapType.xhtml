@@ -459,7 +459,7 @@
                 <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
             </p:columns>
 
-            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
+            <p:column headerText="Acción" style="width: 4%" rendered="#{cc.attrs.concept.editable}">
                 <p:commandButton
                         icon="fa fa-trash"
                         title="Eliminar"
@@ -469,7 +469,10 @@
                         immediate="true"
                         actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
                         styleClass="relationships"
-                />
+                >
+                    <p:confirm header="Confirmation" message="¿Está seguro de eliminar este Crossmaps Directo?"
+                               icon="ui-icon-alert"/>
+                </p:commandButton>
             </p:column>
         </p:dataTable>
     </p:panel>
