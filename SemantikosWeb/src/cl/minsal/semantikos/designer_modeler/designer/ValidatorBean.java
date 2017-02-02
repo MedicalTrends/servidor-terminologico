@@ -157,13 +157,16 @@ public class ValidatorBean {
     public void validateDescriptionType(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 
         String msg;
-
-        List<Description> aDescription = ((DescriptionWeb) component.getAttributes().get("description")).getConceptSMTK().getDescriptions();
+        DescriptionWeb description=((DescriptionWeb)component.getAttributes().get("description"));
+        if(description.getCreatorUser()!=User.getDummyUser()){
+            List<Description> aDescription = ((DescriptionWeb) component.getAttributes().get("description")).getConceptSMTK().getDescriptions();
 
             if(countAbbreviatedDescription(aDescription)>1){
                 msg = "Un concepto no puede tener más de una descripción abreviada";
                 throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg));
             }
+        }
+
 
     }
 

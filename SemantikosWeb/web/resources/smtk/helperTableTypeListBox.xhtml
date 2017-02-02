@@ -37,12 +37,13 @@
 
                     <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
-                        <p:outputPanel styleClass="search">
+                        <p:outputPanel styleClass="search" rendered="#{cc.attrs.concept.editable}">
                             <p:selectOneMenu id="findHTRecords1" scrollHeight="200"
                                              forceSelection="true"
                                              value="#{conceptBean.selectedHelperTableRecord}"
                                              var="r"
                                              filter="true"
+
                                              converter="omnifaces.SelectItemsConverter">
 
                                 <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..." noSelectionOption="true" itemDisabled="true"/>
@@ -64,6 +65,9 @@
                                 <!---->
                             </p:selectOneMenu>
 
+                        </p:outputPanel>
+                        <p:outputPanel styleClass="search" rendered="#{not cc.attrs.concept.editable}">
+                            <p:inputText disabled="true" id="findHTRecords" value="#{relationship.target.fields['description']}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
                         </p:outputPanel>
                     </div>
                 </div>
@@ -151,6 +155,7 @@
                                                  var="r"
                                                  autoWidth="false"
                                                  filter="true"
+                                                 rendered="#{cc.attrs.concept.editable}"
                                                  converter="omnifaces.SelectItemsConverter">
 
                                     <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
@@ -304,6 +309,7 @@
                                              forceSelection="true"
                                              value="#{conceptBean.selectedHelperTableRecord}"
                                              var="r"
+                                             rendered="#{cc.attrs.concept.editable}"
                                              filter="true"
                                              converter="omnifaces.SelectItemsConverter">
 

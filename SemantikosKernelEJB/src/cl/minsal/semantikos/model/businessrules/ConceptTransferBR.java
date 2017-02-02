@@ -64,7 +64,7 @@ public class ConceptTransferBR {
     private void preCondition002(ConceptSMTK conceptSMTK) {
 
         ConceptSMTK noValidConcept = conceptManager.getNoValidConcept();
-        ConceptSMTK pendingConcept = null; //TODO: conceptManager.getNoValidConcept();
+        ConceptSMTK pendingConcept = conceptManager.getPendingConcept();
 
         /* Se valida que el concepto en cuestión no sea ni el no valido ni el pendientes */
         if (conceptSMTK.equals(noValidConcept) || conceptSMTK.equals(pendingConcept)){

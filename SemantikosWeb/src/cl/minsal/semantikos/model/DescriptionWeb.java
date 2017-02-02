@@ -79,7 +79,7 @@ public class DescriptionWeb extends Description {
 
     @Override
     public void setDescriptionType(DescriptionType descriptionType) {
-        if(descriptionType == null)
+        if(descriptionType == null || this.getConceptSMTK()==null)
             return;
 
         for (Description description : this.getConceptSMTK().getValidDescriptions()) {
