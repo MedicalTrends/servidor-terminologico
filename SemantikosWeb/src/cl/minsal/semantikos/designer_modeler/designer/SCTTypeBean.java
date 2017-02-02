@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import org.apache.commons.lang3.StringUtils;
+import org.omnifaces.util.Ajax;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 
@@ -107,16 +108,17 @@ public class SCTTypeBean implements Serializable {
         if ( searchOption.equals("term") &&  pattern.trim().length() >= 3  ) {
 
             if (cstManager.countConceptByPattern(pattern, relationshipGroup) > 10000) {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "Resultados exceden los 10.000 registros. Mostrando resultados truncados"));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "Resultados exceden los 10.000 registros. El despliegue puede tardar"));
+                Ajax.update("mainForm:growl");
                 //rContext.execute("PF('dialogSCT').show();");
-                return false;
+                return true;
             }
 
             return true;
 
         }
 
-        return false;
+        return true;
 
     }
 

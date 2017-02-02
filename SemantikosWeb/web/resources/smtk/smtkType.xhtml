@@ -177,33 +177,7 @@
 
                     </div>
                     <!-- Atributos de relación -->
-                    <p:repeat
-                            offset="0"
-                            size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
-                            step="1"
-                            varStatus="var"
-                            value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                            var="relationshipAttributeDefinition">
-                        <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                 relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                 targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                 concept="#{cc.attrs.concept}"
-                                                 rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()}"
-                        />
-                        <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                       relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                       targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                       concept="#{cc.attrs.concept}"
-                                                       rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
-                        />
-
-                        <smtk:smtkTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                concept="#{cc.attrs.concept}"
-                                                rendered="#{relationshipAttributeDefinition.targetDefinition.SMTKType}"
-                        />
-                    </p:repeat>
+                    <smtk:attributes
                     <div class="Container20 White Responsive">
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
                             <p:commandButton
