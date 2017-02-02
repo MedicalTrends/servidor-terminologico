@@ -507,8 +507,15 @@ public class ConceptBean implements Serializable {
             messageBean.messageError("Cuando existe una relación 'Es un mapeo de', no se pueden agregar más relaciones.");
             return;
         }
-        Relationship relationship = relationshipPlaceholders.get(relationshipDefinition.getId());
 
+        Relationship relationship = relationshipPlaceholders.get(relationshipDefinition.getId());
+        try{
+            relationshipBindingBR.brSCT001(concept, relationship);
+        }catch (EJBException e) {
+            messageBean.messageError(e.getMessage());
+            resetPlaceHolders();
+            return;
+        }
         if(CompoundSpecialty.existCompounSpeciality(concept.getRelationships(),relationship)){
             messageBean.messageError("Solo puede existir una especialidad compuesta con este nombre");
             return;
@@ -549,8 +556,8 @@ public class ConceptBean implements Serializable {
         }
 
 
-        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0 && !relationshipDefinition.isSNOMEDCT())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
-        autogenerateBeans.autogenerateRelationshipWithAttributes(relationshipDefinition, relationship,concept,autoGenerateList,autogenerateMC);
+        if(!isMCSpecial() && concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0 && !relationshipDefinition.isSNOMEDCT())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+        if(!isMCSpecial())autogenerateBeans.autogenerateRelationshipWithAttributes(relationshipDefinition, relationship,concept,autoGenerateList,autogenerateMC);
         // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
         // Resetear placeholder relacion
@@ -744,8 +751,8 @@ public class ConceptBean implements Serializable {
         }
         if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
-        autogenerateBeans.autogenerateRemoveRelationship(rd,r,concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
-        autogenerateBeans.autogenerateRemoveRelationshipWithAttributes(rd,r,concept,autoGenerateList,autogenerateMC,autogenerateMCCE);
+        if(!isMCSpecial())autogenerateBeans.autogenerateRemoveRelationship(rd,r,concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
+        if(!isMCSpecial())autogenerateBeans.autogenerateRemoveRelationshipWithAttributes(rd,r,concept,autoGenerateList,autogenerateMC,autogenerateMCCE);
         crossmapBean.refreshCrossmapIndirect(concept);
 
     }
@@ -1421,7 +1428,16 @@ public class ConceptBean implements Serializable {
             return true;
         }return false;
     }
-
+    public boolean isMCSpecial() {
+        for (Relationship relationship : concept.getValidRelationships()) {
+            if (relationship.getRelationshipDefinition().getId() == 74) {
+                if (((BasicTypeValue<Boolean>) relationship.getTarget()).getValue()){
+                   return true;
+                }
+            }
+        }
+        return false;
+    }
 
     public void changeMCSpecial() {
         for (Relationship relationship : concept.getValidRelationships()) {

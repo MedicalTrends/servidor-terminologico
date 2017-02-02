@@ -132,6 +132,7 @@ public class ValidatorBean {
         String msg;
 
         DescriptionWeb aDescription = (DescriptionWeb) component.getAttributes().get("description");
+        if(aDescription.getConceptSMTK()==null)return;
         String term = (String) value;
 
         if(term.trim().equals("")) {

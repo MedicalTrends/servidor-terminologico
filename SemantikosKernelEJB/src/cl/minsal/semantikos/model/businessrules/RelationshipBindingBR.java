@@ -89,7 +89,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
      * @param concept      El concepto al cual se desea agregar la relación.
      * @param relationship La relación que se desea agregar.
      */
-    private void brSCT001(ConceptSMTK concept, Relationship relationship) {
+    public void brSCT001(ConceptSMTK concept, Relationship relationship) {
 
         /* Esta regla de negocio aplica sólo a relaciones de tipo SnomedCT */
         if (!isSnomedCTRelationship(relationship)) {
