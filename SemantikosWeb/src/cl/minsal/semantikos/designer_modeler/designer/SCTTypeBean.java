@@ -9,6 +9,7 @@ import org.primefaces.model.LazyDataModel;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -71,8 +72,11 @@ public class SCTTypeBean implements Serializable {
     public List<ConceptSCT> getConceptSearchInput(String patron) {
 
         pattern = patron;
-        RequestContext context = RequestContext.getCurrentInstance();
+
         List<ConceptSCT> concepts = new ArrayList<>();
+
+        if( !validateQueryResultSize() )
+            return concepts;
 
         /* Si el patrón viene vacío o es menor a tres caracteres, no se hace nada */
         if ( searchOption.equals("term") &&  ( patron == null || patron.trim().length() < 3 ) ) {
@@ -81,12 +85,7 @@ public class SCTTypeBean implements Serializable {
 
         /* La búsqueda empieza aquí */
         if(searchOption.equals("term")) {
-            if (cstManager.countConceptByPattern(patron, relationshipGroup) < 1000) {
-                concepts = cstManager.findConceptsByPattern(patron, relationshipGroup);
-            }
-            else {
-                context.execute("PF('dialogSCT').show();");
-            }
+            concepts = cstManager.findConceptsByPattern(patron, relationshipGroup);
         }
         else{
             try{
@@ -97,6 +96,32 @@ public class SCTTypeBean implements Serializable {
             }
         }
         return concepts;
+    }
+
+
+    public boolean validateQueryResultSize() {
+
+        RequestContext rContext = RequestContext.getCurrentInstance();
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if ( searchOption.equals("term") &&  pattern.trim().length() >= 3  ) {
+
+            if (cstManager.countConceptByPattern(pattern, relationshipGroup) > 10000) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "Resultados exceden los 10.000 registros. Mostrando resultados truncados"));
+                //rContext.execute("PF('dialogSCT').show();");
+                return false;
+            }
+
+            return true;
+
+        }
+
+        return false;
+
+    }
+
+    public List<ConceptSCT> triggerSearch() {
+        return getConceptSearchInput(pattern);
     }
 
     public Integer getRelationshipGroup() {

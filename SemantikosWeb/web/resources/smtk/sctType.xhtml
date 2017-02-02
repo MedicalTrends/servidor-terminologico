@@ -19,7 +19,7 @@
 
 <composite:implementation>
 
-    <p:panel id="multiplicityN_with_attributes"
+    <p:panel id="multiplicityN_with_attributes" styleClass="sctPanel"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
         <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%" rendered="#{cc.attrs.concept.editable}">
@@ -70,24 +70,31 @@
 
                                 <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
                                                 forceSelection="true"
-                                                id="findConceptSCT2" scrollHeight="200" size="5"
+                                                id="findConceptSCT"
+                                                widgetVar="findConceptSCT"
+                                                scrollHeight="200" size="5"
                                                 completeMethod="#{sctBean.getConceptSearchInput}"
-                                                validator="#{validatorBean.}"
                                                 placeholder="#{sctBean.searchOption eq 'term'? 'Ingrese término...': 'Ingrese conceptId...'}"
                                                 converter="conceptSCTConverter"
                                                 var="concept"
                                                 value="#{conceptBean.conceptSCTSelected}"
-                                                itemLabel="#{concept.descriptionFSN.term}" itemValue="#{concept}"
+                                                itemLabel="#{concept.descriptionFSN.term}"
+                                                itemValue="#{concept}"
                                                 disabled="#{not cc.attrs.concept.editable}">
 
                                     <!-- Parámetros del validador -->
                                     <f:attribute name="concept" value="#{cc.attrs.concept}"  />
                                     <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+
+                                    <f:attribute name="searchOption" value="#{sctBean.searchOption}"  />
+                                    <f:attribute name="relationshipGroup" value="#{sctBean.relationshipGroup}"  />
                                     <!---->
 
                                     <p:column style="width: 500px">
                                         <h:outputText value="#{concept.descriptionFSN.term}" />
                                     </p:column>
+
+                                    <p:ajax event="query" onstart="customFunction()" />
 
                                     <p:ajax event="itemSelect"
                                             listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.conceptSCTSelected)}"
@@ -187,6 +194,16 @@
                 </p:commandButton>
             </p:column>
         </p:dataTable>
+
+
+        <p:dialog id="dialogSCT" widgetVar="dialogSCT" global="true" showEffect="fade" hideEffect="fade"
+                         header="Advertencia"
+                         message="Los resultados de esta búsqueda exceden los 10.000 registros. La recuperación de los resultados puede demorar ¿Qué desea hacer?">
+            <p:commandButton value="Truncar resultados ( 1°s 1000 registros )" type="button" styleClass="CyanButton" actionListener="#{sctBean.triggerSearch()}" update="findConceptSCT"
+                             icon="fa fa-scissors"/>
+            <p:commandButton value="Continuar con la búsqueda" type="button" styleClass="OrangeButton" actionListener="#{sctBean.triggerSearch()}" update="findConceptSCT"
+                             icon="fa fa-clock-o"/>
+        </p:dialog>
 
     </p:panel>
 

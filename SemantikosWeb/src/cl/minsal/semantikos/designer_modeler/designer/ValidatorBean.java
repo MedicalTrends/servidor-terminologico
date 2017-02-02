@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.designer_modeler.designer;
 
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
+import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
@@ -37,6 +38,9 @@ public class ValidatorBean {
 
     @EJB
     private RelationshipManager relationshipManager;
+
+    @EJB
+    private SnomedCTManager snomedCTManager;
 
     /**
      * Este metodo revisa que las relaciones cumplan el lower_boundary del
@@ -245,19 +249,21 @@ public class ValidatorBean {
 
     public void validateQueryResultSize(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 
-        /*
-        RequestContext context = RequestContext.getCurrentInstance();
+        RequestContext rContext = RequestContext.getCurrentInstance();
+        String searchOption = (String) component.getAttributes().get("searchOption");
+        Integer relationshipGroup = (Integer) component.getAttributes().get("relationshipGroup");
+        String pattern = (String) value;
 
-        if (cstManager.countConceptByPattern(patron, relationshipGroup) < 1000) {
-                concepts = cstManager.findConceptsByPattern(patron, relationshipGroup);
+        if ( searchOption.equals("term") &&  pattern.trim().length() >= 3  ) {
+
+            if (snomedCTManager.countConceptByPattern(pattern, relationshipGroup) > 1000) {
+                rContext.execute("PF('dialogSCT').show();");
+                String msg = "Los resultados de esta búsqueda son extensos.";
+                throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", msg));
             }
-            else {
-                context.execute("PF('dialogSCT').show();");
-            }
+
         }
 
-        return concepts;
-        */
     }
 
 

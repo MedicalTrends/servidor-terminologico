@@ -78,9 +78,8 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
         return snomedctDAO.countPerfectMatch(pattern, group);
     }
 
-    public int countTruncateMatch(String pattern, Integer group) {
-        //return snomedctDAO.countPerfectMatchConceptBy(pattern, group);
-        return 0;
+    public long countTruncateMatch(String pattern, Integer group) {
+        return snomedctDAO.countTruncateMatch(pattern, group);
     }
 
     @Override
