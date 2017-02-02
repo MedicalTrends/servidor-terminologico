@@ -13,15 +13,15 @@
 </composite:interface>
 <composite:implementation>
 
-    <p:panel header="Crossmap Indirecto" collapsed="true" toggleable="true" styleClass="crossmapindirect">
+    <p:panel header="Crossmaps Indirecto" collapsed="true" toggleable="true" styleClass="crossmapindirect">
         <p:dataTable value="#{crossmapBean.indirectCrossmaps}" var="crossmapsIndirect">
             <p:column headerText="Terminología">
                 <h:outputText value="#{crossmapsIndirect.target.crossmapSet.name}"/>
             </p:column>
-            <p:column headerText="Cod. Crossmaps">
+            <p:column headerText="Cod-1 Crossmapset Member">
                 <h:outputText value="#{crossmapsIndirect.target.code}"/>
             </p:column>
-            <p:column headerText="Descripcion">
+            <p:column headerText="Descripción">
                 <h:outputText value="#{crossmapsIndirect.target.gloss}"/>
             </p:column>
             <p:column headerText="MapRule">

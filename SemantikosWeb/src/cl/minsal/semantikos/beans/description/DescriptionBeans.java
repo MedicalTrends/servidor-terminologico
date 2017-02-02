@@ -48,9 +48,11 @@ public class DescriptionBeans {
 
     private static long SYNONYMOUS_ID = 3;
 
+    private DescriptionWeb descriptionEdit;
+
     @PostConstruct
     public void init() {
-
+        descriptionEdit= new DescriptionWeb();
     }
 
     /**
@@ -133,8 +135,7 @@ public class DescriptionBeans {
     /**
      * Metodo encargado de hacer el "enroque" con la preferida.
      */
-    public void descriptionEditRow(RowEditEvent event) {
-        DescriptionWeb descriptionWeb = (DescriptionWeb) event.getObject();
+    public void descriptionEditRow(DescriptionWeb descriptionWeb) {
         if (descriptionWeb.getDescriptionType().getName().equalsIgnoreCase("abreviada")) {
             descriptionWeb.setCaseSensitive(conceptBean.getConcept().getDescriptionFavorite().isCaseSensitive());
         }
@@ -179,6 +180,11 @@ public class DescriptionBeans {
         return false;
     }
 
+    public DescriptionWeb getDescriptionEdit() {
+        return descriptionEdit;
+    }
 
-
+    public void setDescriptionEdit(DescriptionWeb descriptionEdit) {
+        this.descriptionEdit = descriptionEdit;
+    }
 }
