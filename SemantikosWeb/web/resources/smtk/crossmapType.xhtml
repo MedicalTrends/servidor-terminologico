@@ -460,15 +460,6 @@
                 <h:outputText value="#{relationship.getDateCreationFormat()}"/>
             </p:column>
 
-            <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                       var="attribute"
-                       columnIndexVar="colIndex">
-                <f:facet name="header">
-                    <h:outputText value="#{attribute.name}" />
-                </f:facet>
-                <smtk:basicTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.basicType}" />
-                <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
-            </p:columns>
 
             <p:column headerText="Acción" style="width: 4%" rendered="#{cc.attrs.concept.editable}">
                 <p:commandButton

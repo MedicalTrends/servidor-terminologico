@@ -135,7 +135,6 @@ public class User {
         this.secondLastName = secondLastName;
     }
 
-
     public String getFullName() {
         return name +
                 ((lastName != null) ? " " + lastName : "") +

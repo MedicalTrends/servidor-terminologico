@@ -142,8 +142,7 @@ public class ManagerPendingTermsBean {
 
 
         user = authenticationBean.getLoggedUser();
-        Profile modelerProfile = new Profile(3, "Modelador", "Usuario Modelador");
-        user.getProfiles().add(modelerProfile);
+
     }
 
     public void translateDescription() {

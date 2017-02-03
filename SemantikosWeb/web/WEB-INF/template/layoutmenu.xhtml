@@ -39,22 +39,16 @@
 
         <pr:menu id="menu2">
 
-            <p:menuitem id="rm_users_web" value="Administracion Usuarios" icon="icon-two385" outcome="/views/users" />
+            <p:menuitem id="rm_users_web" value="Administracion Usuarios" icon="icon-two385" outcome="/views/users" rendered="#{profilePermissionsBeans.modeler}"/>
 
-            <p:menuitem id="rm_menu_principal" value="Menú Principal" icon="fa fa-home" outcome="/views/browser/mainMenu.xhtml" rendered="false"/>
+            <p:menuitem id="rm_admin_refsets" value="Administrador de RefSets" icon="fa fa-dropbox" outcome="/views/refsets/admin_refsets.xhtml" rendered="#{profilePermissionsBeans.modeler}"/>
 
-            <p:menuitem id="rm_concept_draft" value="Conceptos en Borrador" icon="fa fa-pencil-square-o" outcome="/views/concept/conceptDraft.xhtml" rendered="false"/>
-
-            <p:menuitem id="rm_create_category" value="Crear categoria" icon="fa fa-list-alt" outcome="/views/category/createCategory.xhtml" rendered="false"/>
-
-            <p:menuitem id="rm_admin_refsets" value="Administrador de RefSets" icon="fa fa-dropbox" outcome="/views/refsets/admin_refsets.xhtml"/>
-
-            <p:menuitem id="rm_admin_helper_tables" value="Manager Helper Tables" icon="fa fa-dropbox" outcome="/views/helper_tables/helperTableManteiner.xhtml"/>
+            <p:menuitem id="rm_admin_helper_tables" value="Manager Helper Tables" icon="fa fa-dropbox" outcome="/views/helper_tables/helperTableManteiner.xhtml" rendered="#{profilePermissionsBeans.modeler}"/>
 
             <p:separator />
 
-            <p:submenu id="rm_administracion" label="Administración" icon="icon-planet29">
-                <p:menuitem id="rm_configuraciones" value="Configuaciones" icon="icon-planet29" outcome="/views/configuraciones.xhtml" update=""  />
+            <p:submenu id="rm_administracion" label="Administración" icon="icon-planet29" rendered="#{profilePermissionsBeans.modeler}">
+                <p:menuitem id="rm_configuraciones" value="Configuaciones" icon="icon-planet29" outcome="/views/configuraciones.xhtml" update="" rendered="#{profilePermissionsBeans.modeler}" />
             </p:submenu>
 
             <p:submenu id="rm_theme" label="Ejemplos Rio Theme" icon="icon-mountains14" rendered="false">
