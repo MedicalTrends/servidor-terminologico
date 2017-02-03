@@ -40,6 +40,8 @@ public class CrossmapBean implements Serializable {
 
     private List<IndirectCrossmap> indirectCrossmaps;
 
+    private String typeSearch;
+
     @EJB
     private CrossmapsManager crossmapsManager;
 
@@ -61,7 +63,12 @@ public class CrossmapBean implements Serializable {
 
         CrossmapSet crossmapSet = (CrossmapSet) UIComponent.getCurrentComponent(context).getAttributes().get("crossmapSet");
 
-        List<CrossmapSetMember> someCrossmapSetMembers = crossmapsManager.findByPattern(crossmapSet, patron);
+        List<CrossmapSetMember> someCrossmapSetMembers;
+        if(typeSearch.equals("1")){
+            someCrossmapSetMembers= crossmapsManager.findByPatternCode1(crossmapSet,patron);
+        }else{
+            someCrossmapSetMembers =crossmapsManager.findByPattern(crossmapSet, patron);
+        }
 
         return someCrossmapSetMembers;
     }
@@ -109,5 +116,13 @@ public class CrossmapBean implements Serializable {
 
     public void setIndirectCrossmaps(List<IndirectCrossmap> indirectCrossmaps) {
         this.indirectCrossmaps = indirectCrossmaps;
+    }
+
+    public String getTypeSearch() {
+        return typeSearch;
+    }
+
+    public void setTypeSearch(String typeSearch) {
+        this.typeSearch = typeSearch;
     }
 }

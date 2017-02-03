@@ -69,6 +69,17 @@ public interface CrossmapsDAO {
      */
     public List<CrossmapSetMember> findCrossmapSetMemberBy(CrossmapSet crossmapSet, String pattern);
 
+
+    /**
+     * Este método es responsable de recuperar un CrossmapSetMember dada su terminología y un patrón de búsqueda
+     *
+     * @param crossmapSet La terminología
+     * @param cod     El código de búsqueda
+     *
+     * @return Un CrossmapSetMember fresco.
+     */
+    public List<CrossmapSetMember> findCrossmapSetMemberByCod1(CrossmapSet crossmapSet, String cod);
+
     /**
      * Este método es responsable de recuperar todas las terminologías válidas existentes en el sistema
      *

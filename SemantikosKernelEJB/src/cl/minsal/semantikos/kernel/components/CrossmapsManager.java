@@ -100,6 +100,15 @@ public interface CrossmapsManager {
      * @return Una lista de registros
      */
     public List<CrossmapSetMember> findByPattern(CrossmapSet crossmapSet, String pattern);
+    /**
+     * Este método busca registros en las terminologías externas términos que cumplan con el código.
+     *
+     * @param crossmapSet La terminología donde se busca el código.
+     * @param code     El código de búsqueda.
+     *
+     * @return Una lista de registros
+     */
+    public List<CrossmapSetMember> findByPatternCode1(CrossmapSet crossmapSet, String code);
 
 
 }

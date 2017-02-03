@@ -129,4 +129,9 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     public List<CrossmapSetMember> findByPattern(CrossmapSet crossmapSet, String pattern) {
         return crossmapsDAO.findCrossmapSetMemberBy(crossmapSet, pattern);
     }
+
+    @Override
+    public List<CrossmapSetMember> findByPatternCode1(CrossmapSet crossmapSet, String code) {
+        return crossmapsDAO.findCrossmapSetMemberByCod1(crossmapSet,code);
+    }
 }

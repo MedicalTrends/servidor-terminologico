@@ -229,6 +229,32 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     }
 
     @Override
+    public List<CrossmapSetMember> findCrossmapSetMemberByCod1(CrossmapSet crossmapSet, String cod) {
+        List<CrossmapSetMember> crossmapSetMembers = new ArrayList<CrossmapSetMember>();
+        ConnectionBD connect = new ConnectionBD();
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.find_crossmapsetmember_by_cod1_and_crossmapset(?,?)}")) {
+
+            call.setLong(1, crossmapSet.getId());
+            call.setString(2, cod);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                CrossmapSetMember crossmapSetMember = createCrossmapSetMemberFromResultSet(rs, crossmapSet);
+                crossmapSetMembers.add(crossmapSetMember);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
+        return crossmapSetMembers;
+    }
+
+    @Override
     public List<CrossmapSet> getCrossmapSets() {
         ConnectionBD connect = new ConnectionBD();
         List<CrossmapSet> crossmapSets = new ArrayList<>();
