@@ -106,19 +106,21 @@
                     <h:outputText value="#{relationship.target.fields['titular']}"/>
                 </div>
             </p:column>
+
             <p:column headerText="Producto Comercial" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
                 <div style="text-align: center;">
                     <p:repeat
                             offset="0"
-                            size="#{helperTableBean.findRelationshipsLike(cc.attrs.relationshipDefinition, relationship.target).size()}"
+                            size="#{helperTableBean.findRelationshipsLike(cc.attrs.concept, cc.attrs.relationshipDefinition, relationship.target).size()}"
                             step="1"
                             varStatus="var"
-                            value="#{helperTableBean.findRelationshipsLike(cc.attrs.relationshipDefinition, relationship.target)}"
+                            value="#{helperTableBean.findRelationshipsLike(cc.attrs.concept, cc.attrs.relationshipDefinition, relationship.target)}"
                             var="relationshipLike">
-                        <h:outputText value="#{relationshipLike.sourceConcept}"/>
+                        <h:outputText value="#{relationshipLike.sourceConcept.descriptionFavorite}"/>
                     </p:repeat>
                 </div>
             </p:column>
+
             <p:column headerText="Usuario" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
                 <div style="text-align: center;">
                     <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['id_user'])}"/>

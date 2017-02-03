@@ -59,7 +59,8 @@ public class QueryManagerImpl implements QueryManager {
                 Category categoryDestination = (Category) relationshipDefinition.getTargetDefinition();
                 for (RelationshipDefinition relationshipDefinitionDestination : getSecondOrderShowableAttributesByCategory(categoryDestination)) {
                     QueryColumn secondOrderColumn = new QueryColumn(relationshipDefinitionDestination.getName(), new Sort(null, false), relationshipDefinitionDestination);
-                    query.getColumns().add(secondOrderColumn);
+                    if(!relationshipDefinition.isU_asist() && !category.getNameAbbreviated().equals("MCCE"))
+                        query.getColumns().add(secondOrderColumn);
                     secondOrderColumn.setSecondOrder(true);
                 }
             }

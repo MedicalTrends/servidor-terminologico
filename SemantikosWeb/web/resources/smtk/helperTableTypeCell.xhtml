@@ -24,7 +24,6 @@
             var="relationship">
 
         <h:outputText rendered="#{var.index>0 and not cc.attrs.relationshipDefinition.u_asist}" value=", " />
-        <p:spacer rendered="#{var.index>0 and cc.attrs.relationshipDefinition.u_asist}"  />
         <h:outputText value="#{relationship.target.fields['description']}" />
 
     </p:repeat>

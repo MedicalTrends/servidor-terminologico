@@ -38,8 +38,10 @@
                 varStatus="var2"
                 value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
                 var="attribute">
+            <h:outputText value=" " />
             <smtk:basicTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.basicType}" />
             <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
+            <h:outputText value=" " />
         </p:repeat>
 
     </p:repeat>

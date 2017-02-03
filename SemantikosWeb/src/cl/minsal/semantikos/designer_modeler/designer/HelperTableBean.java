@@ -92,12 +92,17 @@ public class HelperTableBean implements Serializable {
         return someRecords;
     }
 
-    public List<Relationship> findRelationshipsLike(RelationshipDefinition relationshipDefinition, Target target) {
+    public List<Relationship> findRelationshipsLike(ConceptSMTK sourceConcept, RelationshipDefinition relationshipDefinition, Target target) {
 
         List<Relationship> relationshipsLike = new ArrayList<>();
 
         if(target != null) {
-            relationshipsLike = relationshipManager.findRelationshipsLike(relationshipDefinition, target);
+
+            for (Relationship relationship : relationshipManager.findRelationshipsLike(relationshipDefinition, target)) {
+                if(!relationship.getSourceConcept().equals(sourceConcept)) {
+                    relationshipsLike.add(relationship);
+                }
+            }
         }
 
         return relationshipsLike;
