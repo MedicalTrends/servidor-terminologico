@@ -2,6 +2,7 @@ package cl.minsal.semantikos.beans.concept;
 
 import cl.minsal.semantikos.beans.description.AutogenerateBeans;
 import cl.minsal.semantikos.beans.messages.MessageBean;
+import cl.minsal.semantikos.beans.session.ProfilePermissionsBeans;
 import cl.minsal.semantikos.beans.snomed.SnomedBeans;
 import cl.minsal.semantikos.designer_modeler.CompoundSpecialty;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
@@ -366,6 +367,7 @@ public class ConceptBean implements Serializable {
             getConceptById(idConcept);
             if (category.getId() == 34) changeMCSpecial();
         }
+
         // Una vez que se ha inicializado el concepto, inicializar los placeholders para las relaciones
         for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
             RelationshipDefinitionWeb relationshipDefinitionWeb = viewAugmenter.augmentRelationshipDefinition(category, relationshipDefinition);
@@ -556,8 +558,8 @@ public class ConceptBean implements Serializable {
         }
 
 
-        if(!isMCSpecial() && concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0 && !relationshipDefinition.isSNOMEDCT())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
-        if(!isMCSpecial())autogenerateBeans.autogenerateRelationshipWithAttributes(relationshipDefinition, relationship,concept,autoGenerateList,autogenerateMC);
+        if(!isMCSpecialThisConcept() && concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0 && !relationshipDefinition.isSNOMEDCT())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+        if(!isMCSpecialThisConcept())autogenerateBeans.autogenerateRelationshipWithAttributes(relationshipDefinition, relationship,concept,autoGenerateList,autogenerateMC);
         // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
         // Resetear placeholder relacion
@@ -751,8 +753,8 @@ public class ConceptBean implements Serializable {
         }
         if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
-        if(!isMCSpecial())autogenerateBeans.autogenerateRemoveRelationship(rd,r,concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
-        if(!isMCSpecial())autogenerateBeans.autogenerateRemoveRelationshipWithAttributes(rd,r,concept,autoGenerateList,autogenerateMC,autogenerateMCCE);
+        if(!isMCSpecialThisConcept())autogenerateBeans.autogenerateRemoveRelationship(rd,r,concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
+        if(!isMCSpecialThisConcept())autogenerateBeans.autogenerateRemoveRelationshipWithAttributes(rd,r,concept,autoGenerateList,autogenerateMC,autogenerateMCCE);
         crossmapBean.refreshCrossmapIndirect(concept);
 
     }
@@ -1257,6 +1259,14 @@ public class ConceptBean implements Serializable {
     public void setEditable(boolean editable) {
         this.editable = editable;
     }
+
+    @ManagedProperty(value = "#{profilePermissionsBeans}")
+    private ProfilePermissionsBeans profilePermissionsBeans;
+
+    public void setProfilePermissionsBeans(ProfilePermissionsBeans profilePermissionsBeans) {
+        this.profilePermissionsBeans = profilePermissionsBeans;
+    }
+
     //TODO: editar concepto
 
     private long idconceptselect;
@@ -1428,7 +1438,7 @@ public class ConceptBean implements Serializable {
             return true;
         }return false;
     }
-    public boolean isMCSpecial() {
+    public boolean isMCSpecialThisConcept() {
         for (Relationship relationship : concept.getValidRelationships()) {
             if (relationship.getRelationshipDefinition().getId() == 74) {
                 if (((BasicTypeValue<Boolean>) relationship.getTarget()).getValue()){
