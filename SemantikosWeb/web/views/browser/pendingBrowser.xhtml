@@ -92,7 +92,7 @@
                                         </f:facet>
                                         <div style="text-align: center;">
                                             <p:commandLink title="Trasladar a concepto" oncomplete="PF('dialogTDP').show()"
-                                                           update="@(.browserTable),@(.pending-description)" style="padding: 5px">
+                                                           update="@(.browserTable),@(.pending-description)" style="padding: 5px" rendered="#{profilePermissionsBeans.modeler}">
                                                 <i class="fa fa-external-link fa-lg"/>
                                                 <f:setPropertyActionListener value="#{pendingTerm}" target="#{pendingBrowserBean.termSelected}"/>
                                                 <f:setPropertyActionListener value="" target="#{pendingBrowserBean.conceptSelected}"/>
@@ -100,7 +100,7 @@
                                             </p:commandLink>
 
                                             <p:commandLink oncomplete="PF('dialogNC').show()" title="Crear nuevo concepto" process="@this"
-                                                           update="@(.browserTable),@(.create-concept)" style="padding: 5px">
+                                                           update="@(.browserTable),@(.create-concept)" style="padding: 5px" rendered="#{profilePermissionsBeans.modeler}">
                                                 <i class="fa fa-plus fa-lg"/>
                                                 <f:setPropertyActionListener value="#{pendingTerm}" target="#{pendingBrowserBean.termSelected}"/>
                                                 <f:setPropertyActionListener value="#{pendingTerm.category}" target="#{pendingBrowserBean.categorySelected}" />

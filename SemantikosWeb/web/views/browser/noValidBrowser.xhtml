@@ -103,7 +103,7 @@
                                         <div style="text-align: center;">
 
                                             <p:commandLink oncomplete="PF('dialogTDP').show()" title="Trasladar a concepto" style="padding: 5px" process="@this"
-                                                           update="@(.browserTable),@(.dialogTDP)">
+                                                           update="@(.browserTable),@(.dialogTDP)" rendered="#{profilePermissionsBeans.modeler}">
                                                 <i class="fa fa-external-link fa-lg"/>
                                                 <f:setPropertyActionListener value="#{noValidDescription}" target="#{noValidBrowserBean.noValidDescriptionSelected}"/>
                                                 <f:setPropertyActionListener value="" target="#{noValidBrowserBean.conceptSelected}"/>

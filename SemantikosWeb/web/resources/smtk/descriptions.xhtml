@@ -24,7 +24,7 @@
         <p:growl id="growl" showDetail="true" showSummary="true"/>
         <p:growl id="editMsgs" showDetail="true"/>
 
-        <p:panel style="border: hidden" rendered="#{conceptBean.editable}">
+        <p:panel style="border: hidden" rendered="#{conceptBean.editable and profilePermissionsBeans.permissionsBy(conceptBean.category)}">
             <div class="ui-fluid">
 
                 <div class="Container ContainerIndentBottom">
@@ -189,7 +189,7 @@
                                icon="ui-icon-alert"/>
                 </p:commandLink>
 
-                <p:commandLink rendered="#{conceptBean.concept.persistent and description.persistent}"
+                <p:commandLink rendered="#{conceptBean.concept.persistent and description.persistent and profilePermissionsBeans.permissionsBy(conceptBean.category)}"
                                process="@this"
                                style="padding: 5px"
                                update=":#{cc.clientId}:conceptTranslate"
@@ -201,7 +201,7 @@
                     <f:setPropertyActionListener value="" target="#{findConceptBean.categoryArrayID}"/>
                 </p:commandLink>
 
-                <p:commandLink rendered="#{conceptBean.concept.persistent and description.persistent}"
+                <p:commandLink rendered="#{conceptBean.concept.persistent and description.persistent and profilePermissionsBeans.permissionsBy(conceptBean.category)}"
                                disabled="#{conceptBean.concept.id==conceptBean.conceptSMTKNotValid.id}"
                                process="@this"
                                style="padding: 5px"

@@ -95,7 +95,7 @@
                                                         <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
                                                     </p:link>
 
-                                                    <p:link outcome="/views/concept/conceptEdit" title="Editar" style="padding: 5px">
+                                                    <p:link outcome="/views/concept/conceptEdit" title="Editar" style="padding: 5px" rendered="#{profilePermissionsBeans.modeler}">
                                                         <i class="fa fa-edit fa-lg"/>
                                                         <f:param name="editMode" value="#{true}" />
                                                         <f:param name="idConcept" value="#{description.conceptSMTK.id}" />

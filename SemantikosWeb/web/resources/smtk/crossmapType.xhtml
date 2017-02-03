@@ -316,7 +316,7 @@
     <p:panel id="crossmapTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
-        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" rendered="#{cc.attrs.concept.editable}" style="width:100%">
+        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}" style="width:100%">
 
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
@@ -339,7 +339,7 @@
 
                             <p:selectOneMenu value="#{crossmapBean.typeSearch}" autoWidth="false" >
                                 <f:selectItem itemLabel="Búsqueda por descripción" itemValue="0"></f:selectItem>
-                                <f:selectItem itemLabel="Búsqueda por Código-1" itemValue="1"></f:selectItem>
+                                <f:selectItem itemLabel="Búsqueda por Cod-1 Crossmapset" itemValue="1"></f:selectItem>
                                 <p:ajax event="itemSelect"  />
                             </p:selectOneMenu>
 
@@ -461,7 +461,7 @@
             </p:column>
 
 
-            <p:column headerText="Acción" style="width: 4%" rendered="#{cc.attrs.concept.editable}">
+            <p:column headerText="Acción" style="width: 4%" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}">
                 <p:commandButton
                         icon="fa fa-trash"
                         title="Eliminar"
