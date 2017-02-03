@@ -618,8 +618,9 @@ public class ConceptBean implements Serializable {
     public void addOrChangeRelationship(RelationshipDefinition relationshipDefinition, Target target) {
         Relationship relationship = null;
         boolean isRelationshipFound = false;
-        if (target.toString().equals(""))
-            target = null;
+
+        if ( target.getRepresentation().equals("null") )
+            return;
 
         if (relationshipDefinition.getTargetDefinition().isSMTKType() && target.getId() == concept.getId()) {
             messageBean.messageError("No puede seleccionar el mismo concepto que está editando");

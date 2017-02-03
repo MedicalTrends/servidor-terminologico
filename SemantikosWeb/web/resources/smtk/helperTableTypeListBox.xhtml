@@ -56,7 +56,7 @@
                                 </p:column>
                                 <p:ajax event="itemSelect"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
-                                        update="@(.panel_#{cc.  attrs.relationshipDefinition.id})"
+                                        update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                         process="@this"/>
                                 <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
                                 <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
@@ -281,6 +281,7 @@
 
 
                             <p:selectOneMenu id="findHTRecords5" scrollHeight="200"
+                                             autoWidth="false"
                                              forceSelection="true"
                                              value="#{conceptBean.selectedHelperTableRecord}"
                                              var="r"

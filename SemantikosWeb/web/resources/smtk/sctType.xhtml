@@ -190,12 +190,18 @@
                 <h:outputText value="#{rel.target.descriptionFSN.term}"/>
             </p:column>
 
-            <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
-                <p:commandButton icon="fa fa-trash" title="Eliminar"
-                                 action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
-                                 update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}), @(.attributes),@(.crossmapindirect)"
-                                 process="@this">
-                </p:commandButton>
+            <p:column headerText="Acción">
+                <div style="text-align: center">
+                    <p:commandButton title="Ver" oncomplete="PF('dialogC').show()" process="@this"
+                                   update="@(.query-concept-sct)" icon="fa fa-search">
+                        <f:setPropertyActionListener value="#{rel.target}" target="#{sctBean.conceptSelected}"/>
+                    </p:commandButton>
+                    <p:commandButton icon="fa fa-trash" title="Eliminar"
+                                     actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
+                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}), @(.attributes),@(.crossmapindirect)"
+                                     process="@this">
+                    </p:commandButton>
+                </div>
             </p:column>
         </p:dataTable>
 
@@ -207,6 +213,55 @@
                              icon="fa fa-scissors"/>
             <p:commandButton value="Continuar con la búsqueda" type="button" styleClass="OrangeButton" actionListener="#{sctBean.triggerSearch()}" update="findConceptSCT"
                              icon="fa fa-clock-o"/>
+        </p:dialog>
+
+        <!-- Consulta término pendiente -->
+        <p:dialog id="dialogC" header="Ver Concepto SNOMED" widgetVar="dialogC" global="true" width="700px"
+                  showEffect="fade" hideEffect="fade">
+
+            <p:panel styleClass="query-concept-sct">
+                <p:panelGrid style="width:100%">
+                    <f:facet name="header">
+                        <p:row>
+                            <p:column colspan="2">
+                                #{sctBean.conceptSelected.descriptionFSN}
+                            </p:column>
+                        </p:row>
+                    </f:facet>
+                    <p:row>
+                        <p:column styleClass="BoldGray FontBold">ConceptID</p:column>
+                        <p:column>#{sctBean.conceptSelected.idSnomedCT}</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column styleClass="BoldGray FontBold">FSN</p:column>
+                        <p:column>#{sctBean.conceptSelected.descriptionFSN}</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column styleClass="BoldGray FontBold">Preferida</p:column>
+                        <p:column>#{sctBean.conceptSelected.descriptionFavouriteSynonymous}</p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:dataTable id="otherDescriptions"
+                             var="description"
+                             value="#{sctBean.getOtherDescriptions(sctBean.conceptSelected)}"
+                             rendered="#{ not empty sctBean.conceptSelected.descriptions }"
+                             editable="true"
+                             reflow="true">
+                    <p:columnGroup type="header">
+
+                        <p:row>
+                            <p:column colspan="2" headerText="Otras Descripciones"/>
+                        </p:row>
+
+                    </p:columnGroup>
+                    <p:column style="width: 25%" styleClass="BoldGray FontBold">
+                        #{description.descriptionType}
+                    </p:column>
+                    <p:column>
+                        #{description.term}
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
         </p:dialog>
 
     </p:panel>

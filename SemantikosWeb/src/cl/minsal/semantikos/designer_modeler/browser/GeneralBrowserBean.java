@@ -396,7 +396,7 @@ public class GeneralBrowserBean implements Serializable {
     public void createConcept() throws IOException {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
         String query = "";
-        if(generalQuery.isFiltered() && concepts.getRowCount()==0)
+        if(generalQuery.getQuery() != null && concepts.getRowCount()==0)
             query=generalQuery.getQuery();
         eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + idCategory +"&idConcept=0&favoriteDescription=" + query);
     }

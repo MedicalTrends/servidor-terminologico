@@ -3,6 +3,8 @@ package cl.minsal.semantikos.designer_modeler.designer;
 import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import cl.minsal.semantikos.model.snomedct.DescriptionSCT;
+import cl.minsal.semantikos.model.snomedct.DescriptionSCTType;
 import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Ajax;
 import org.primefaces.context.RequestContext;
@@ -171,6 +173,14 @@ public class SCTTypeBean implements Serializable {
         this.relationshipGroups = relationshipGroups;
     }
 
+    public ConceptSCT getConceptSelected() {
+        return conceptSelected;
+    }
+
+    public void setConceptSelected(ConceptSCT conceptSelected) {
+        this.conceptSelected = conceptSelected;
+    }
+
     public String highlightTerm(String term) {
         String[] searchList = pattern.split(" ");
         String[] replacementList = pattern.split(" ");
@@ -178,6 +188,22 @@ public class SCTTypeBean implements Serializable {
             replacementList[i] = "<b>"+replacementList[i]+"</b>";
         }
         return StringUtils.replaceEach(term, searchList, replacementList);
+    }
+
+    public List<DescriptionSCT> getOtherDescriptions(ConceptSCT concept){
+
+        if(concept == null)
+            return null;
+
+        List<DescriptionSCT> otherDescriptions = new ArrayList<DescriptionSCT>();
+
+        for (DescriptionSCT description : concept.getDescriptions()) {
+            if(!description.getDescriptionType().equals(DescriptionSCTType.FSN) && !description.equals(concept.getDescriptionFavouriteSynonymous())) {
+                otherDescriptions.add(description);
+            }
+        }
+
+        return otherDescriptions;
     }
 
 }

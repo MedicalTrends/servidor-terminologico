@@ -24,11 +24,14 @@
 
         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
-            <p:outputPanel id="helperTableTypeAttributeNew" rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes }" styleClass="search">
+            <p:outputPanel id="helperTableTypeAttributeNew"
+                           rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes }"
+                           styleClass="search">
 
                 <p:selectOneMenu id="helperTableTypeAttributeSimple" scrollHeight="200"
                                  forceSelection="true"
                                  value="#{conceptBean.selectedHelperTableRecord}"
+                                 disabled="#{ cc.attrs.relationship eq null }"
                                  var="r"
                                  autoWidth="false"
                                  filter="true"
@@ -42,6 +45,7 @@
                     <p:column>
                         <h:outputText value="#{r.fields['description']}"/>
                     </p:column>
+
                     <p:ajax event="itemSelect"
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                             listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.selectedHelperTableRecord)}"

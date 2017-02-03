@@ -67,12 +67,12 @@
                         </p:column>
 
                         <p:column exportable="false" style="width:32px;text-align: center">
+
                             <p:commandLink update="conceptTable,@(.conceptDetail)" oncomplete="PF('carOP').show('#{component.clientId}')"
                                            title="Ver Detalle">
                                 <i class="fa fa-search fa-lg" />
                                 <f:setPropertyActionListener value="#{conceptSMTK}" target="#{browserBean.conceptSelected}"/>
                             </p:commandLink>
-
 
                         </p:column>
 

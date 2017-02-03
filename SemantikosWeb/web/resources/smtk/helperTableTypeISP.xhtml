@@ -138,6 +138,13 @@
             <p:column headerText="Acción" rendered="#{cc.attrs.concept.editable}">
                 <div style="text-align: center">
                     <p:commandButton
+                            icon="fa fa-search"
+                            title="Ver"
+                            update="@(.dialogISP)"
+                            actionListener="#{ispbean.fetchData(relationship.target.fields['registro'])}"
+                            process="@this"
+                    />
+                    <p:commandButton
                             icon="fa fa-trash"
                             title="Eliminar"
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
@@ -145,13 +152,6 @@
                             immediate="true"
                             actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
                             styleClass="relationships"
-                    />
-                    <p:commandButton
-                            icon="fa fa-search"
-                            title="Ver"
-                            update="@(.dialogISP)"
-                            actionListener="#{ispbean.fetchData(relationship.target.fields['registro'])}"
-                            process="@this"
                     />
                 </div>
             </p:column>

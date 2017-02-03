@@ -78,7 +78,7 @@
                                         <f:facet name="header">
                                             <p:outputPanel styleClass="globalActions">
                                                 <p:outputPanel rendered="#{not empty pendingBrowserBean.termsSelected}">
-                                                    <p:commandLink title="Trasladar a concepto" update="@(.browserTable),@(.pending-description)" oncomplete="PF('dialogTDP').show()" style="padding: 5px">
+                                                    <p:commandLink title="Trasladar seleccionados a concepto" update="@(.browserTable),@(.pending-description)" oncomplete="PF('dialogTDP').show()" style="padding: 5px">
                                                         <i class="fa fa-external-link fa-lg"/>
                                                     </p:commandLink>
                                                     <p:commandLink oncomplete="PF('dialogNC').show()" update="@(.browserTable),@(.create-concept)" title="Crear nuevo concepto" style="padding: 5px">

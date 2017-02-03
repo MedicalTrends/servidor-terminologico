@@ -85,7 +85,7 @@
                                         <f:facet name="header">
                                             <p:outputPanel styleClass="globalActions">
                                                 <p:outputPanel rendered="#{not empty noValidBrowserBean.noValidDescriptionsSelected}">
-                                                    <p:commandLink title="Trasladar a concepto" update="@(.pending-description)" oncomplete="PF('dialogTDP').show()" style="padding: 5px">
+                                                    <p:commandLink title="Trasladar seleccionados a concepto" update="@(.pending-description)" oncomplete="PF('dialogTDP').show()" style="padding: 5px">
                                                         <i class="fa fa-external-link fa-lg"/>
                                                         <f:setPropertyActionListener value="#{noValidDescription}"
                                                                                      target="#{noValidBrowserBean.noValidDescriptionSelected}"/>
@@ -110,7 +110,7 @@
                                                 <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
                                             </p:commandLink>
 
-                                            <p:link outcome="/views/concept/conceptEdit" style="padding: 5px">
+                                            <p:link outcome="/views/concept/conceptEdit" title="Consultar" style="padding: 5px">
                                                 <i class="fa fa-eye fa-lg"/>
                                                 <f:param name="editMode" value="#{false}" />
                                                 <f:param name="idConcept" value="#{noValidDescription.noValidDescription.conceptSMTK.id}" />
