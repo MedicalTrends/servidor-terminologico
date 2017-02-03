@@ -12,19 +12,22 @@
 <composite:interface>
     <composite:attribute name="date" type="java.util.Date"/>
     <composite:attribute name="dateSince" type="java.lang.Boolean"/>
+    <composite:attribute name="name" type="java.lang.String"/>
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container20 White Responsive">
+    <div class="Container100">
 
-        <div class="ContainerIndent">
+        <div class="ContainerIndent BoldGray FontBold">
+
+            <h:outputText value="#{cc.attrs.name}" />
 
             <p:calendar id="creationDateSince" style="margin-right:10px; width: 90%"
                         value="#{cc.attrs.date}"
                         var="value"
-                        showOn="button"
                         placeholder="#{cc.attrs.dateSince? 'Desde...' : 'Hasta...'}">
-                <p:ajax event="dateSelect" update="@(.conceptBrowserTable)"/>
+
+                <p:ajax event="dateSelect" update="@(.browserTable)" />
             </p:calendar>
 
         </div>

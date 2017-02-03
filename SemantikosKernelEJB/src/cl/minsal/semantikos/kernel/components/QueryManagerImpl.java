@@ -59,9 +59,16 @@ public class QueryManagerImpl implements QueryManager {
                 Category categoryDestination = (Category) relationshipDefinition.getTargetDefinition();
                 for (RelationshipDefinition relationshipDefinitionDestination : getSecondOrderShowableAttributesByCategory(categoryDestination)) {
                     QueryColumn secondOrderColumn = new QueryColumn(relationshipDefinitionDestination.getName(), new Sort(null, false), relationshipDefinitionDestination);
-                    if(!relationshipDefinition.isU_asist() && !category.getNameAbbreviated().equals("MCCE"))
+                    if(relationshipDefinitionDestination.isU_asist() && category.getNameAbbreviated().equals("MCCE")) {
+                        continue;
+                    }
+                    if(relationshipDefinitionDestination.isCondicionDeVenta() && category.getNameAbbreviated().equals("PC")) {
+                        continue;
+                    }
+                    else {
                         query.getColumns().add(secondOrderColumn);
-                    secondOrderColumn.setSecondOrder(true);
+                        secondOrderColumn.setSecondOrder(true);
+                    }
                 }
             }
         }
@@ -96,7 +103,7 @@ public class QueryManagerImpl implements QueryManager {
             }
         }
 
-        // Adding attribute filters, if this apply
+        // Adding second derivate filters, if this apply
         for (RelationshipAttributeDefinition relationshipAttributeDefinition : getSecondDerivateSearchableAttributesByCategory(category)) {
             QueryFilterAttribute queryFilter = new QueryFilterAttribute(relationshipAttributeDefinition);
             query.getAttributeFilters().add(queryFilter);
@@ -295,15 +302,15 @@ public class QueryManagerImpl implements QueryManager {
         return queryDAO.getSecondOrderSearchableAttributesByCategory(category);
     }
 
-    public List<RelationshipAttributeDefinition> getSecondDerivateSearchableAttributesByCategory(Category category){
+    public List<RelationshipAttributeDefinition> getSecondDerivateSearchableAttributesByCategory(Category category) {
         return queryDAO.getSecondDerivateSearchableAttributesByCategory(category);
     }
 
-    private boolean getCustomFilteringValue(Category category){
+    private boolean getCustomFilteringValue(Category category) {
         return queryDAO.getCustomFilteringValue(category);
     }
 
-    private boolean getMultipleFilteringValue(Category category, RelationshipDefinition relationshipDefinition){
+    private boolean getMultipleFilteringValue(Category category, RelationshipDefinition relationshipDefinition) {
         return queryDAO.getMultipleFilteringValue(category, relationshipDefinition);
     }
 
@@ -313,5 +320,9 @@ public class QueryManagerImpl implements QueryManager {
 
     private boolean getShowableValue(Category category){
         return queryDAO.getShowableValue(category);
+    }
+
+    private int getCompositeValue(Category category, RelationshipDefinition relationshipDefinition) {
+        return queryDAO.getCompositeValue(category, relationshipDefinition);
     }
 }

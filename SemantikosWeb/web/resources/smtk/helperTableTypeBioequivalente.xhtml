@@ -128,7 +128,7 @@
             </p:column>
             <p:column headerText="Fecha ingreso" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
                 <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['creation_date']}"/>
+                    <h:outputText value="#{relationship.target.getDateCreationFormat()}"/>
                 </div>
             </p:column>
             <p:column headerText="Fecha modificación" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">

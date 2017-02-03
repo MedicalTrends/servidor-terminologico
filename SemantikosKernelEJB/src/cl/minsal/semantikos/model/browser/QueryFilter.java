@@ -55,6 +55,12 @@ public class QueryFilter {
      */
     boolean secondOrder;
 
+    /**
+     * Indica el componente de vista para este filtro
+
+     */
+    int composite;
+
     public QueryFilter(RelationshipDefinition definition) {
         this.definition = definition;
     }
@@ -208,6 +214,14 @@ public class QueryFilter {
 
         return basicTypeValues;
 
+    }
+
+    public int getComposite() {
+        return composite;
+    }
+
+    public void setComposite(int composite) {
+        this.composite = composite;
     }
 
 }

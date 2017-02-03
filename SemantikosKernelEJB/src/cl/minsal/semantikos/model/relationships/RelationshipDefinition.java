@@ -212,6 +212,8 @@ public class RelationshipDefinition {
 
     public boolean isU_asist() { return this.getName().equalsIgnoreCase(TargetDefinition.U_ASIST); }
 
+    public boolean isCondicionDeVenta() { return this.getName().equalsIgnoreCase(TargetDefinition.CONDICION_DE_VENTA); }
+
     private final String SNOMEDCT="SNOMED CT";
 
     public boolean isSNOMEDCT(){

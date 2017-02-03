@@ -66,7 +66,7 @@ public class QueryDAOImpl implements QueryDAO {
                 paramNumber++;
             }
 
-            call.execute();
+                call.execute();
 
             ResultSet rs = call.getResultSet();
 
@@ -476,6 +476,39 @@ public class QueryDAOImpl implements QueryDAO {
         }
 
         return multipleFilteringValue;
+    }
+
+    @Override
+    public int getCompositeValue(Category category, RelationshipDefinition relationshipDefinition) {
+
+        ConnectionBD connect = new ConnectionBD();
+        String sql = "{call semantikos.get_view_info_by_relationship_definition(?,?)}";
+
+        int compositeValue = -1;
+
+        try (Connection connection = connect.getConnection();
+
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setLong(1, category.getId());
+            call.setLong(2, relationshipDefinition.getId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            if (rs.next()) {
+
+                compositeValue = rs.getInt("id_composite");
+
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar información adicional sobre esta categoría desde la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return compositeValue;
     }
 
     private void bindParameter(int paramNumber, CallableStatement call, Connection connection, QueryParameter param)

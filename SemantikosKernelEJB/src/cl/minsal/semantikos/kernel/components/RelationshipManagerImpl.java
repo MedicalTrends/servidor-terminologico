@@ -205,11 +205,18 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
             /* Primero se versiona el original */
             this.invalidate(originalRelationship);
-            relationshipDAO.persist(editedRelationship);
+            relationshipDAO.update(editedRelationship);
+
+            /* Se agregan los atributos */
+            for (RelationshipAttribute attribute : editedRelationship.getRelationshipAttributes()) {
+                relationshipAttributeDAO.update(attribute);
+                targetDAO.update(attribute);
+            }
 
             /* Se actualiza el objeto de negocio */
             List<Relationship> relationships = conceptSMTK.getRelationships();
             relationships.remove(originalRelationship);
+
             if (!relationships.contains(editedRelationship)) {
                 relationships.add(editedRelationship);
             }

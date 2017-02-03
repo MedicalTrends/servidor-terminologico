@@ -11,19 +11,22 @@
 
 <composite:interface>
     <composite:attribute name="user" type="cl.minsal.semantikos.model.User"/>
+    <composite:attribute name="name" type="java.lang.String"/>
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container20 White Responsive">
+    <div class="Container100">
+        <div class="ContainerIndent BoldGray FontBold">
 
-        <div class="ContainerIndent">
+            <h:outputText value="#{cc.attrs.name}" />
 
             <p:selectOneMenu value="#{cc.attrs.user}" converter="omnifaces.SelectItemsConverter"
                              autoWidth="false">
                 <f:selectItem itemLabel="Usuario..." itemValue="#{null}"/>
                 <f:selectItems value="#{generalBrowserBean.users}" var="user"
                                itemLabel="#{user.username}" itemValue="#{user}"/>
-                <p:ajax event="itemSelect" update="@(.conceptBrowserTable)" />
+
+                <p:ajax event="itemSelect" update="@(.browserTable)" />
             </p:selectOneMenu>
 
         </div>

@@ -16,6 +16,8 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String U_ASIST = "Unidad de UAsist";
 
+    public static final String CONDICION_DE_VENTA = "Condición de Venta";
+
     /**
      * Este metodo es responsable de determinar si el target type es de tipo básico es o no.
      *

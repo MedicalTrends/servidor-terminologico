@@ -39,5 +39,7 @@ public interface QueryDAO {
 
     boolean getShowableValue(Category category);
 
+    int getCompositeValue(Category category, RelationshipDefinition relationshipDefinition);
+
 
 }

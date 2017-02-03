@@ -7,10 +7,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static cl.minsal.semantikos.model.helpertables.HelperTable.SYSTEM_COLUMN_CREATION_DATE;
 import static cl.minsal.semantikos.model.helpertables.HelperTable.SYSTEM_COLUMN_DESCRIPTION;
 
 
@@ -146,6 +151,21 @@ public class HelperTableRecord extends PersistentEntity implements Target, Compa
         return helperTableRecord;
     }
 
+    public String getDateCreationFormat() {
+
+        if(getFields().get(SYSTEM_COLUMN_CREATION_DATE.getColumnName()) != null) {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date parsedDate = inputFormat.parse(getFields().get(SYSTEM_COLUMN_CREATION_DATE.getColumnName()));
+                return outputFormat.format(parsedDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return "";
+    }
 
     @Override
     public int compareTo(@NotNull HelperTableRecord helperTableRecord) {

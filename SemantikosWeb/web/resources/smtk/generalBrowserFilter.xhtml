@@ -117,7 +117,13 @@
                             relationshipDefinition="#{filter.definition}"
                             targetDefinition="#{filter.definition.targetDefinition}"
                             targets="#{filter.targets}"
-                            rendered="#{filter.definition.targetDefinition.helperTable and not filter.multiple}" />
+                            rendered="#{filter.definition.targetDefinition.helperTable and not filter.multiple }" />
+
+                    <smtk:helperTableTypeFilterListBox
+                            relationshipDefinition="#{filter.definition}"
+                            targetDefinition="#{filter.definition.targetDefinition}"
+                            targets="#{filter.targets}"
+                            rendered="#{filter.definition.targetDefinition.helperTable and not filter.multiple and filter.composite eq 11 }" />
 
                     <smtk:smtkTypeFilter relationshipDefinition="#{filter.definition}"
                                          targetDefinition="#{filter.definition.targetDefinition}"
@@ -143,13 +149,13 @@
 
                 </p:repeat>
 
-                <smtk:DateTypeFilter date="#{cc.attrs.generalQuery.creationDateSince}"
+                <smtk:DateTypeFilter date="#{cc.attrs.generalQuery.creationDateSince}" name="Ingresados Desde"
                                      dateSince="#{true}"
                                      rendered="#{cc.attrs.generalQuery.customFilterable}" />
-                <smtk:DateTypeFilter date="#{cc.attrs.generalQuery.creationDateTo}"
+                <smtk:DateTypeFilter date="#{cc.attrs.generalQuery.creationDateTo}" name="Ingresados Hasta"
                                      dateSince="#{false}"
                                      rendered="#{cc.attrs.generalQuery.customFilterable}" />
-                <smtk:userTypeFilter user="#{cc.attrs.generalQuery.user}"
+                <smtk:userTypeFilter user="#{cc.attrs.generalQuery.user}" name="Usuario"
                                      rendered="#{cc.attrs.generalQuery.customFilterable}" />
 
             </div>
