@@ -56,10 +56,6 @@ public class ChangeMarketedBean {
     public void init() {
         conceptSMTKList = new ArrayList<>();
         user = authenticationBean.getLoggedUser();
-        Profile designerProfile = new Profile(2, "Diseñador", "Usuario Diseñador");
-        Profile modelerProfile = new Profile(3, "Modelador", "Usuario Modelador");
-        user.getProfiles().add(designerProfile);
-        user.getProfiles().add(modelerProfile);
     }
 
     public void changeMarketedEvent(ConceptSMTK conceptSMTK, RelationshipDefinition relationshipDefinition, Target target) {

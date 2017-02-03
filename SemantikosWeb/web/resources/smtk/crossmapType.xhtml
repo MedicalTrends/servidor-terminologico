@@ -334,6 +334,17 @@
 
                             </div>
                         </div>
+                    <div class="Container20 White Responsive">
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                            <p:selectOneMenu value="#{crossmapBean.typeSearch}" autoWidth="false" >
+                                <f:selectItem itemLabel="Búsqueda por descripción" itemValue="0"></f:selectItem>
+                                <f:selectItem itemLabel="Búsqueda por Código-1" itemValue="1"></f:selectItem>
+                                <p:ajax event="itemSelect"  />
+                            </p:selectOneMenu>
+
+                        </div>
+                    </div>
 
                     <div class="Container20 White Responsive">
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
@@ -449,15 +460,6 @@
                 <h:outputText value="#{relationship.getDateCreationFormat()}"/>
             </p:column>
 
-            <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                       var="attribute"
-                       columnIndexVar="colIndex">
-                <f:facet name="header">
-                    <h:outputText value="#{attribute.name}" />
-                </f:facet>
-                <smtk:basicTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.basicType}" />
-                <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
-            </p:columns>
 
             <p:column headerText="Acción" style="width: 4%" rendered="#{cc.attrs.concept.editable}">
                 <p:commandButton
