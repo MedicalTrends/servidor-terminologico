@@ -1043,7 +1043,7 @@ public class ConceptBean implements Serializable {
         RelationshipDefinition relationshipDefinitionRowEdit = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinitionRowEdit");
         if(relationshipDefinitionRowEdit==null)relationshipDefinitionRowEdit=relationshipDefinition;
 
-        autogenerateBeans.autogenerateOrder(concept,autoGenerateList,relationshipDefinitionRowEdit,autogenerateMC,event);
+        autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
     }
 
     // Getter and Setter

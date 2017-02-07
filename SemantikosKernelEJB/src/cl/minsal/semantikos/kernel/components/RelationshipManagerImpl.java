@@ -200,16 +200,21 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
         }
 
-        /* Si el concepto está modelado, se versiona y actualiza */
+        /* Si el concepto está modelado, se versiona y crea la nueva relación */
         if (conceptSMTK.isModeled()) {
 
             /* Primero se versiona el original */
             this.invalidate(originalRelationship);
-            relationshipDAO.update(editedRelationship);
+            relationshipDAO.persist(editedRelationship);
 
             /* Se agregan los atributos */
             for (RelationshipAttribute attribute : editedRelationship.getRelationshipAttributes()) {
-                relationshipAttributeDAO.update(attribute);
+                if(attribute.getIdRelationshipAttribute()==null){
+                    relationshipAttributeDAO.createRelationshipAttribute(attribute);
+                }else{
+                    relationshipAttributeDAO.update(attribute);
+                }
+
                 targetDAO.update(attribute);
             }
 

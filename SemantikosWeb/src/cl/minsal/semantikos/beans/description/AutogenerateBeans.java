@@ -166,7 +166,6 @@ public class AutogenerateBeans {
         }
     }
 
-
     public void autogenerateRelationship(RelationshipDefinition relationshipDefinition, Relationship relationship, Target target, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE) {
         if (!concept.isModeled()) {
             if (relationshipDefinition.getId() == 48) {
@@ -278,6 +277,7 @@ public class AutogenerateBeans {
 
     public void loadAutogenerate(ConceptSMTKWeb conceptSMTKWeb, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE, List<String> autogenerateList){
         ordenSustancias= new HashMap<>();
+        autogenerateMC=new AutogenerateMC();
         for (Relationship relationship :  conceptSMTKWeb.getRelationshipsWeb()) {
 
             if(!relationship.getRelationshipAttributes().isEmpty()){
@@ -302,12 +302,14 @@ public class AutogenerateBeans {
             ordenSustancias.put(relationship.getOrder(),((ConceptSMTK)relationship.getTarget()).getDescriptionFavorite().getTerm());
         }
     }
+
     public void reorderSustancias( List<String> autogenerateList){
         autogenerateList.clear();
         for (int i =1; i <= ordenSustancias.size(); i++) {
             autogenerateList.add(ordenSustancias.get(i));
         }
     }
+
     public void autogenerateMB(ConceptSMTK concept,List<String> autogenerateList){
         String term= autogenerate(autogenerateList);
         concept.getDescriptionFavorite().setTerm(term);

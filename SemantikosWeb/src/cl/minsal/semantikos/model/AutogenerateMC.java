@@ -6,7 +6,9 @@ import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Gustavo Punucura on 18-10-16.
@@ -14,12 +16,14 @@ import java.util.List;
 public class AutogenerateMC {
     private List<String> sustancias;
     private List<String> ffa;
+    private Map<Integer,String> ffaMap;
     private String volumen;
     private String unidadVolumen;
 
     public AutogenerateMC() {
         this.sustancias = new ArrayList<>();
         this.ffa = new ArrayList<>();
+        this.ffaMap= new HashMap<>();
         this.volumen = "";
         this.unidadVolumen = "";
     }
@@ -104,6 +108,7 @@ public class AutogenerateMC {
 
     public void addFFA(Relationship relationship) {
         ffa.add(((HelperTableRecord) relationship.getTarget()).getValueColumn("description") + "");
+        ffaMap.put(relationship.getOrder(),((HelperTableRecord) relationship.getTarget()).getValueColumn("description") + "");
     }
     public void voidRemoveFFA(Relationship relationship) {
         ffa.remove(((HelperTableRecord) relationship.getTarget()).getValueColumn("description") + "");
@@ -131,7 +136,7 @@ public class AutogenerateMC {
         term = " " + term;
         for (int i = 0; i < ffa.size(); i++) {
 
-            term = term + " " + ffa.get(i);
+            term = term + " " + ffaMap.get(i+1);
 
         }
         term = term + " " + volumen + " " + unidadVolumen;

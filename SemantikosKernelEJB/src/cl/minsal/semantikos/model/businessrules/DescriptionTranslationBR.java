@@ -113,8 +113,10 @@ public class DescriptionTranslationBR {
     private void brDescriptionTranslate012(ConceptSMTK targetConcept, Description description) {
 
         ConceptSMTK aConcept = categoryManager.categoryContains(targetConcept.getCategory(), description.getTerm());
-
         if (aConcept != null) {
+            if(aConcept.getId() == conceptManager.getNoValidConcept().getId()){
+                return;
+            }
             throw new BusinessRuleException("BR-UNK", "Un término sólo puede existir una vez en una categoría. Descripción perteneciente a concepto: "+aConcept);
         }
 

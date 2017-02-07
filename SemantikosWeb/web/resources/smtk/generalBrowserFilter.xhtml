@@ -39,10 +39,10 @@
                         <span>
                             Revisar
                         </span>
-                        <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeReviewed}" autoWidth="false">
+                        <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeReviewedString}" autoWidth="false">
                             <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
-                            <f:selectItem itemLabel="Sin Revisar" itemValue="#{false}"/>
-                            <f:selectItem itemLabel="Revisar" itemValue="#{true}"/>
+                            <f:selectItem itemLabel="Sin Revisar" itemValue="false"/>
+                            <f:selectItem itemLabel="Revisar" itemValue="true"/>
                             <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
                         </p:selectOneMenu>
                     </div>
@@ -53,10 +53,10 @@
                         <span>
                             Consultar
                         </span>
-                        <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeConsulted}" autoWidth="false">
+                        <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeConsultedString}" autoWidth="false">
                             <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
-                            <f:selectItem itemLabel="Sin Consultar" itemValue="#{false}"/>
-                            <f:selectItem itemLabel="Consultar" itemValue="#{true}"/>
+                            <f:selectItem itemLabel="Sin Consultar" itemValue="false"/>
+                            <f:selectItem itemLabel="Consultar" itemValue="true"/>
                             <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
                         </p:selectOneMenu>
                     </div>
@@ -67,10 +67,10 @@
                         <span>
                             Estado
                         </span>
-                        <p:selectOneMenu value="#{cc.attrs.generalQuery.modeled}" autoWidth="false">
+                        <p:selectOneMenu value="#{cc.attrs.generalQuery.modeledString}" autoWidth="false">
                             <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
-                            <f:selectItem itemLabel="Borrador" itemValue="#{false}"/>
-                            <f:selectItem itemLabel="Modelado" itemValue="#{true}"/>
+                            <f:selectItem itemLabel="Borrador" itemValue="false"/>
+                            <f:selectItem itemLabel="Modelado" itemValue="true"/>
                             <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
                         </p:selectOneMenu>
                     </div>

@@ -35,13 +35,6 @@ public class BooleanConverter implements Converter{
     @Override
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
 
-        Boolean booleanObject = (Boolean) o;
-
-        if(booleanObject == null)
-            return "0";
-        if(booleanObject)
-            return "1";
-        else
-            return "2";
+        return o.toString();
     }
 }

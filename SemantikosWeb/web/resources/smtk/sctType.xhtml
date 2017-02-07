@@ -196,7 +196,7 @@
                                    update="@(.query-concept-sct)" icon="fa fa-search">
                         <f:setPropertyActionListener value="#{rel.target}" target="#{sctBean.conceptSelected}"/>
                     </p:commandButton>
-                    <p:commandButton rendered="#{profilePermissionsBeans.modeler}" icon="fa fa-trash" title="Eliminar"
+                    <p:commandButton rendered="#{profilePermissionsBeans.modeler and cc.attrs.concept.editable}" icon="fa fa-trash" title="Eliminar"
                                      actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                      update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}), @(.attributes),@(.crossmapindirect)"
                                      process="@this">

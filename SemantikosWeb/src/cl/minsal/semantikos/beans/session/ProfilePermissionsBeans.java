@@ -34,6 +34,23 @@ public class ProfilePermissionsBeans {
         return false;
     }
 
+    public boolean isAdminRefSet(){
+        for (Profile profile : authenticationBean.getLoggedUser().getProfiles()) {
+            if(profile.equals(ProfileFactory.ADMINISTRATOR_REFSETS_PROFILE)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean isAdmin(){
+        for (Profile profile : authenticationBean.getLoggedUser().getProfiles()) {
+            if(profile.equals(ProfileFactory.ADMINISTRATOR_PROFILE)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean isDesigner(){
         for (Profile profile : authenticationBean.getLoggedUser().getProfiles()) {
             if(profile.equals(ProfileFactory.DESIGNER_PROFILE)){

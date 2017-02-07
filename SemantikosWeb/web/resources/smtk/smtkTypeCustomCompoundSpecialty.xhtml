@@ -33,7 +33,7 @@
             </p:outputPanel>
         </f:facet>
 
-        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%" rendered="#{cc.attrs.concept.editable}">
+        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}">
 
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
@@ -45,7 +45,7 @@
 
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
-                            <p:outputPanel styleClass="search">
+                            <p:outputPanel styleClass="search" >
 
                                 <p:autoComplete id="findConceptSMTK3" scrollHeight="200"
                                                 completeMethod="#{smtkBean.getConceptSearchInput}"
@@ -166,7 +166,7 @@
                 </p:outputPanel>
             </p:columns>
 
-            <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
+            <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}" >
                 <p:commandButton icon="fa fa-trash" title="Eliminar"
                                  action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                  update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"

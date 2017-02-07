@@ -50,6 +50,7 @@ public class CrossmapBean implements Serializable {
     public void init() {
         crossmapSets = crossmapsManager.getCrossmapSets();
         indirectCrossmaps=new ArrayList<>();
+        typeSearch="0";
     }
 
     public List<CrossmapSetMember> getCrossmapSearchInput(String patron) {
