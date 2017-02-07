@@ -209,6 +209,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
             /* Se agregan los atributos */
             for (RelationshipAttribute attribute : editedRelationship.getRelationshipAttributes()) {
+                attribute.setRelationship(editedRelationship);
                 if(attribute.getIdRelationshipAttribute()==null){
                     relationshipAttributeDAO.createRelationshipAttribute(attribute);
                 }else{

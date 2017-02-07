@@ -498,7 +498,7 @@ public class ConceptManagerImpl implements ConceptManager {
      * @return patrón normalizado
      */
     //TODO: Falta quitar los StopWords (no se encuentran definidos)
-    private String standardizationPattern(String pattern) {
+    public String standardizationPattern(String pattern) {
 
         if (pattern != null) {
             pattern = Normalizer.normalize(pattern, Normalizer.Form.NFD);

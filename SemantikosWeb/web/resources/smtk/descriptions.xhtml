@@ -169,6 +169,7 @@
 
                 <p:commandLink disabled="#{conceptBean.concept.id==conceptBean.conceptSMTKNotValid.id}"
                                process="@this"
+                               title="Editar Descripción"
                                style="padding: 5px"
                                update="@(.panelEditDescription)"
                                oncomplete="PF('dialogEditDescription').show()">
@@ -181,6 +182,7 @@
                 <p:commandLink actionListener="#{descriptionBeans.removeDescription(description)}"
                                ajax="true"
                                process="@this"
+                               title="Eliminar Descripción"
                                update="@(.otherDescriptions)"
                                style="padding: 5px"
                                disabled="#{conceptBean.concept.modeled}">
@@ -191,6 +193,7 @@
 
                 <p:commandLink rendered="#{conceptBean.concept.persistent and description.persistent and profilePermissionsBeans.permissionsBy(conceptBean.category)}"
                                process="@this"
+                               title="Trasladar descripción"
                                style="padding: 5px"
                                update=":#{cc.clientId}:conceptTranslate"
                                oncomplete="PF('dialogTDC').show()">
@@ -204,6 +207,7 @@
                 <p:commandLink rendered="#{conceptBean.concept.persistent and description.persistent and profilePermissionsBeans.permissionsBy(conceptBean.category)}"
                                disabled="#{conceptBean.concept.id==conceptBean.conceptSMTKNotValid.id}"
                                process="@this"
+                               title="Enviar descripción a no válidos"
                                style="padding: 5px"
                                update=":#{cc.clientId}:conceptTranslateNotValid"
                                oncomplete="PF('dialogTDNV').show()">

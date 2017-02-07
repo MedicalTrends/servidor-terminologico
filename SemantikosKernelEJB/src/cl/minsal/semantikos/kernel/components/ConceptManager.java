@@ -260,4 +260,7 @@ public interface ConceptManager {
      */
     public int countTruncateMatch(String pattern, Long[] categories, Boolean isModeled);
 
+
+    public String standardizationPattern(String pattern);
+
 }

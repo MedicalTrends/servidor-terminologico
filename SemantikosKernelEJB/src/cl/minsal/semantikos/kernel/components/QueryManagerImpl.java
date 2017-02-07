@@ -244,6 +244,7 @@ public class QueryManagerImpl implements QueryManager {
 
     @Override
     public List<ConceptSMTK> executeQuery(BrowserQuery query) {
+        query.setQuery(conceptManager.standardizationPattern(query.getQuery()));
         return (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
     }
 
