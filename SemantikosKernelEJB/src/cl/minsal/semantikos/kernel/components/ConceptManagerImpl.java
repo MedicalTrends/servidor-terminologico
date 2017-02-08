@@ -170,7 +170,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         //Búsqueda por categoría
         if (categories.length > 0 && patternOrConceptID.trim().length() == 0) {
-            return conceptDAO.getConceptBy(categories, isModeled, pageSize, pageNumber);
+            return conceptDAO.findConceptsBy(categories, isModeled, pageSize, pageNumber);
         }
 
         //Búsqueda páginas
@@ -222,6 +222,21 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    public int countConceptBy(String pattern, Long[] categories) {
+        boolean isModeled = true;
+        pattern = standardizationPattern(pattern);
+        //Cuenta por categoría
+        if (categories.length > 0) {
+            return conceptDAO.countConceptBy((String[]) null, categories, isModeled);
+        }
+        if (categories.length == 0 && pattern.trim().length() == 0) {
+            return conceptDAO.countConceptBy((String[]) null, categories, isModeled);
+        }
+        return countConceptBy(pattern, categories, isModeled);
+
+    }
+
+    @Override
     public List<ConceptSMTK> findConceptsBy(String pattern) {
 
         /* Se realiza la búsqueda estándard */
@@ -235,22 +250,6 @@ public class ConceptManagerImpl implements ConceptManager {
             pattern = truncatePattern(pattern);
             return findConceptsBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
         }
-
-
-    @Override
-    public int countConceptBy(String pattern, Long[] categories) {
-
-        boolean isModeled = true;
-        pattern = standardizationPattern(pattern);
-        //Cuenta por categoría
-        if (categories.length > 0) {
-            return conceptDAO.countConceptBy((String[]) null, categories, isModeled);
-        }
-        if (categories.length == 0 && pattern.trim().length() == 0) {
-            return conceptDAO.countConceptBy((String[]) null, categories, isModeled);
-        }
-        return countConceptBy(pattern, categories, isModeled);
-
 
     }
 

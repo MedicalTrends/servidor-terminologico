@@ -199,7 +199,7 @@ public class ISPBean {
         /**
          * Primero se busca un registro isp local
          */
-        for (HelperTableRecord helperTableRecord : helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true)) {
+        for (HelperTableRow helperTableRecord : helperTablesManager.searchRows(getISPHelperTable(),regnum+"/"+ano)) {
             ispRecord = helperTableRecord;
             break;
         }

@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.model;
 
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+
 import cl.minsal.semantikos.model.relationships.*;
 
 import java.sql.Timestamp;

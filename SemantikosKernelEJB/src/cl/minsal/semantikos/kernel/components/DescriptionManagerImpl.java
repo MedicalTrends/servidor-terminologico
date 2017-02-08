@@ -183,7 +183,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
         /* Se aplican las reglas de negocio para el traslado */
         DescriptionTranslationBR descriptionTranslationBR = new DescriptionTranslationBR();
-        descriptionTranslationBR.validatePreConditions(description, targetConcept);
+        descriptionTranslationBR.validatePreConditions(sourceConcept,description, targetConcept);
 
         /* Se realiza la actualización a nivel del modelo lógico */
 
