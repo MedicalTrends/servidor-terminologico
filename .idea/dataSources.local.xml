@@ -7,5 +7,6 @@
       <schema-pattern>semantikos.*</schema-pattern>
       <default-schemas>semantikos.public</default-schemas>
     </data-source>
+    <data-source name="PostgreSQL - postgres@192.168.0.242 TESTING" uuid="971e7d08-b990-4ddb-bb58-c2f8f6ae9fca" />
   </component>
 </project>

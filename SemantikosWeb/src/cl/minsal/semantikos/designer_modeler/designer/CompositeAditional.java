@@ -4,7 +4,7 @@ import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.ConceptSMTKWeb;
 import cl.minsal.semantikos.model.RelationshipWeb;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 
 import javax.annotation.PostConstruct;
@@ -61,7 +61,7 @@ public class CompositeAditional {
         ConceptSMTKWeb conceptSMTKWeb = new ConceptSMTKWeb(conceptSMTK);
 
         for (RelationshipWeb relationshipWeb : conceptSMTKWeb.getValidPersistedRelationshipsWeb()) {
-            if (relationshipWeb.getRelationshipDefinition().getId() == 69) {
+            if (relationshipWeb.getRelationshipDefinition().getId() == 69) {//TODO: reparar este numero magico
 
                 return relationshipWeb.getTarget().toString();
             }
@@ -75,11 +75,11 @@ public class CompositeAditional {
         conceptSMTK.setRelationships(getRelationships(conceptSMTK));
         ConceptSMTKWeb conceptSMTKWeb = new ConceptSMTKWeb(conceptSMTK);
         for (RelationshipWeb relationshipWeb : conceptSMTKWeb.getValidPersistedRelationshipsWeb()) {
-            if (relationshipWeb.getRelationshipDefinition().getId() == 69) {
+            if (relationshipWeb.getRelationshipDefinition().getId() == 69) { //TODO: reparar este numero magico
                 for (RelationshipAttribute relationshipAttribute : relationshipWeb.getRelationshipAttributes()) {
-                    if (relationshipAttribute.getRelationAttributeDefinition().getId() == 12) {
-                        HelperTableRecord helperRecord = (HelperTableRecord) relationshipAttribute.getTarget();
-                        return helperRecord.getValueColumn("description");
+                    if (relationshipAttribute.getRelationAttributeDefinition().getId() == 12) { //TODO: reparar este numero magico
+                        HelperTableRow helperRecord = (HelperTableRow) relationshipAttribute.getTarget();
+                        return helperRecord.getDescription();
                     }
 
                 }

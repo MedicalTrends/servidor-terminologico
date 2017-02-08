@@ -1,16 +1,11 @@
 package cl.minsal.semantikos.designer_modeler.designer;
 
 import cl.minsal.semantikos.kernel.components.CrossmapsManager;
-import cl.minsal.semantikos.kernel.components.HelperTableManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
-import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;

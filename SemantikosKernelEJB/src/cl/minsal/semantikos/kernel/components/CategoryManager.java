@@ -22,7 +22,6 @@ public interface CategoryManager {
      *
      * @param category La categoría en la cual se realiza la búsqueda.
      * @param term     El término que se busca en la categoría.
-     *
      * @return <code>true</code> si la categoría contiene el término <code>term</code> y <code>false</code> sino.
      */
     public ConceptSMTK categoryContains(Category category, String term);
@@ -32,17 +31,23 @@ public interface CategoryManager {
      * meta-atributos
      *
      * @param idCategory Identificador único de la categoría.
-     *
      * @return La categoría buscada.
      */
     public Category getCategoryById(long idCategory);
+
+    /**
+     * Entrega la Categoría que tiene un nombre LIKE @{name} o NULL si no existe
+     *
+     * @param name
+     * @return
+     */
+    public Category getCategoryByName(String name);
 
     /**
      * Este método responsable de recuperar toda la meta-data que consituye la definición de una categoría, en
      * particular todos los atributos que define.
      *
      * @param id Identificador único de la categoría.
-     *
      * @return La lista de definiciones de atributos de la categoría.
      */
     public List<RelationshipDefinition> getCategoryMetaData(int id);
@@ -61,10 +66,18 @@ public interface CategoryManager {
      *
      * @param category La categoría que se desea crear.
      * @param user     El usuario que crea la categoría.
-     *
      * @return La Categoría con su ID actualizado.
      */
     public Category createCategory(Category category, User user);
 
     public List<Category> getRelatedCategories(Category category);
+
+    /**
+     * Este método es responsable de retornar la representación de objeto de cada uno de los nombres de categorías que
+     * se da como parámetro en <code>categoriesNames</code>.
+     *
+     * @param categoriesNames La lista de nombres de categorías.
+     * @return La lista de cada una de las categorías solicitadas.
+     */
+    public List<Category> findCategories(List<String> categoriesNames);
 }

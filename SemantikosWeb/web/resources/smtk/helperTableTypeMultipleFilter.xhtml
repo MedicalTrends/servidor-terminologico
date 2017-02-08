@@ -24,7 +24,7 @@
                     converter="helperTableRecordConverter"
                     value="#{cc.attrs.targets}"
                     multiple="true"
-                    itemLabel="#{record.fields['description']}"
+                    itemLabel="#{record.description}"
                     itemValue="#{record}">
         <!-- Parámetros del buscador -->
         <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
@@ -33,7 +33,7 @@
         <f:attribute name="helperTableRecord" value="#{generalBrowserBean.helperTableRecord}"  />
         <!---->
         <p:column>
-            <h:outputText value="#{record.fields['description']}"/>
+            <h:outputText value="#{record.description}"/>
         </p:column>
 
         <p:ajax event="itemSelect" update="@(.conceptBrowserTable),@(.conceptFilters)" />

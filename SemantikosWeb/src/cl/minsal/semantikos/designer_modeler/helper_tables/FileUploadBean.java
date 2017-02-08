@@ -16,7 +16,7 @@
 package cl.minsal.semantikos.designer_modeler.helper_tables;
 
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
-import cl.minsal.semantikos.kernel.components.HelperTableManager;
+import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableImportReport;
 import cl.minsal.semantikos.model.helpertables.LoadMode;
@@ -36,7 +36,6 @@ import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean(name = "fileUploadBean")
@@ -46,7 +45,7 @@ public class FileUploadBean {
     private static final Logger logger = LoggerFactory.getLogger(FileUploadBean.class);
 
     @EJB
-    private HelperTableManager helperTableManager;
+    private HelperTablesManager helperTablesManager;
 
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
@@ -115,7 +114,7 @@ public class FileUploadBean {
 
     @PostConstruct
     public void init(){
-        helperTableList= (List<HelperTable>) helperTableManager.getHelperTables();
+        helperTableList= (List<HelperTable>) helperTablesManager.findAll();
         loadModes= LoadMode.values();
     }
 
@@ -137,7 +136,7 @@ public class FileUploadBean {
             }
 
             /* Se invoca la función de negocio para cargar el archivo */
-            HelperTableImportReport helperTableImportReport = helperTableManager.loadFromFile(helperTable, loadModeSelected, in, authenticationBean.getLoggedUser());
+            HelperTableImportReport helperTableImportReport = helperTablesManager.loadFromFile(helperTable, loadModeSelected, in, authenticationBean.getLoggedUser());
             if (helperTableImportReport.getStatus().equals(LoadStatus.CANCELED)){
                 FacesMessage msg = new FacesMessage("Carga cancelada! " + helperTableImportReport.getExceptions());
                 FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -158,4 +157,7 @@ public class FileUploadBean {
         FacesMessage msg = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
+
+
+
 }

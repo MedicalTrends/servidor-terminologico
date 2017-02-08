@@ -3,7 +3,7 @@ package cl.minsal.semantikos.beans.snomed;
 import cl.minsal.semantikos.beans.messages.MessageBean;
 import cl.minsal.semantikos.model.ConceptSMTKWeb;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -23,6 +23,8 @@ public class SnomedBeans {
 
     private static final long ID_RELATIONSHIP_DEFINITION_SNOMED_CT = 101;
     private static final long ID_RELATIONSHIP_ATTRIBUTE_DEFINITION_TYPE_RELTIONSHIP_SNOMED_CT = 25;
+
+
     private static final long ID_TYPE_IS_MAPPING = 2;
 
     @ManagedProperty( value="#{messageBean}")
@@ -50,8 +52,8 @@ public class SnomedBeans {
         if (relationship.getRelationshipDefinition().getId() == ID_RELATIONSHIP_DEFINITION_SNOMED_CT) {
             for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
                 if (relationshipAttribute.getRelationAttributeDefinition().getId() == ID_RELATIONSHIP_ATTRIBUTE_DEFINITION_TYPE_RELTIONSHIP_SNOMED_CT) {
-                    HelperTableRecord typeRelationship = (HelperTableRecord) relationshipAttribute.getTarget();
-                    if (typeRelationship.getId() == ID_TYPE_IS_MAPPING) return true;
+                    HelperTableRow row = (HelperTableRow) relationshipAttribute.getTarget();
+                    if (row.getId() == ID_TYPE_IS_MAPPING) return true;
                 }
             }
         }

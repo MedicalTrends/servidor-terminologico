@@ -1,16 +1,24 @@
-<datasource jndi-name="java:jboss/PostgresDS" pool-name="SemantikosDS" enabled="true">
-    <connection-url>jdbc:postgresql://192.168.0.221:5432/semantikos</connection-url>
-    <driver>postgresql</driver>
-    <pool>
-        <min-pool-size>0</min-pool-size>
-        <max-pool-size>20</max-pool-size>
-    </pool>
-    <security>
-        <user-name>postgres</user-name>
-        <password>postgres</password>
-    </security>
-    <validation>
-        <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker"/>
-        <exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter"/>
-    </validation>
-</datasource>
+<datasources>
+    <datasource jndi-name="java:jboss/PostgresDS" pool-name="SemantikosDS" enabled="true">
+        <connection-url>jdbc:postgresql://192.168.0.221:5432/semantikos</connection-url>
+        <driver>postgresql</driver>
+        <pool>
+            <min-pool-size>0</min-pool-size>
+            <max-pool-size>20</max-pool-size>
+        </pool>
+        <security>
+            <user-name>postgres</user-name>
+            <password>postgres</password>
+        </security>
+        <validation>
+            <valid-connection-checker
+                    class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker"/>
+            <exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter"/>
+        </validation>
+    </datasource>
+    <drivers>
+        <driver name="postgresql" module="org.postgresql">
+            <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
+        </driver>
+    </drivers>
+</datasources>

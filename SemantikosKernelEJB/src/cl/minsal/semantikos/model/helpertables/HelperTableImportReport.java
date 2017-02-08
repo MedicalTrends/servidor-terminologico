@@ -27,7 +27,7 @@ public class HelperTableImportReport {
     private ArrayList<Exception> exceptions;
 
     /** Los records que se querían actualizar */
-    private List<HelperTableRecord> CSVLoadedRecords;
+    private List<HelperTableRow> CSVLoadedRecords;
 
     private long insertedRecords;
 
@@ -50,11 +50,11 @@ public class HelperTableImportReport {
         this.exceptions.add(e);
     }
 
-    public void setCSVLoadedRecords(List<HelperTableRecord> CSVLoadedRecords) {
+    public void setCSVLoadedRecords(List<HelperTableRow> CSVLoadedRecords) {
         this.CSVLoadedRecords = CSVLoadedRecords;
     }
 
-    public List<HelperTableRecord> getCSVLoadedRecords() {
+    public List<HelperTableRow> getCSVLoadedRecords() {
         return CSVLoadedRecords;
     }
 

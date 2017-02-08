@@ -21,6 +21,7 @@ public class CrossmapSetMember extends PersistentEntity implements Target {
     private String code;
 
     private String gloss;
+    private String code1;
 
     public CrossmapSetMember(long idCrossmapSetMember, CrossmapSet crossmapSet, String code, String gloss) {
         this.idCrossmapSetMember = idCrossmapSetMember;
@@ -103,5 +104,13 @@ public class CrossmapSetMember extends PersistentEntity implements Target {
     @Override
     public Target copy() {
         return new CrossmapSetMember(this.getIdCrossmapSetMember(), this.getIdCrossmapSetMember(), this.getCrossmapSet(), this.getCode(), this.getGloss());
+    }
+
+    public String getCode1() {
+        return code1;
+    }
+
+    public void setCode1(String code1) {
+        this.code1 = code1;
     }
 }

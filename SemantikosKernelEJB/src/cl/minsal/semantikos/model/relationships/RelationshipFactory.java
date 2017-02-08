@@ -1,13 +1,13 @@
 package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.kernel.components.ConceptManager;
-import cl.minsal.semantikos.kernel.components.HelperTableManager;
+import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.kernel.daos.*;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -62,7 +62,7 @@ public class RelationshipFactory {
     private CrossmapsDAO crossmapDAO;
 
     @EJB
-    private HelperTableManager helperTableManager;
+    private HelperTablesManager helperTableManager;
 
     @EJB
     private RelationshipAttributeDAO relationshipAttributeDAO;
@@ -189,9 +189,9 @@ public class RelationshipFactory {
             /**
              * Se setea el id desde el fields para ser utilizado por el custom converter
              */
-            HelperTableRecord helperTableRecord = (HelperTableRecord) target;
-            helperTableRecord.setId(new Long(helperTableRecord.getFields().get("id")));
-            return new Relationship(relationshipDTO.getId(), sourceConceptSMTK, helperTableRecord, relationshipDefinition, relationshipDTO.validityUntil, new ArrayList<RelationshipAttribute>());
+            HelperTableRow helperTableRow = (HelperTableRow) target;
+
+            return new Relationship(relationshipDTO.getId(), sourceConceptSMTK, helperTableRow, relationshipDefinition, relationshipDTO.validityUntil, new ArrayList<RelationshipAttribute>());
         }
 
         /* El target puede ser un concepto SMTK */

@@ -176,17 +176,14 @@ public class DescriptionManagerImpl implements DescriptionManager {
         }
     }
 
-    @EJB
-    private DescriptionTranslationBR descriptionTranslationBR;
-
     @Override
     public void moveDescriptionToConcept(ConceptSMTK sourceConcept, Description description, User user) {
 
         ConceptSMTK targetConcept = description.getConceptSMTK();
 
         /* Se aplican las reglas de negocio para el traslado */
-
-        descriptionTranslationBR.validatePreConditions(sourceConcept, description, targetConcept);
+        DescriptionTranslationBR descriptionTranslationBR = new DescriptionTranslationBR();
+        descriptionTranslationBR.validatePreConditions(description, targetConcept);
 
         /* Se realiza la actualización a nivel del modelo lógico */
 
@@ -201,7 +198,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         description.setConceptSMTK(targetConcept);
 
         /* Se aplican las reglas de negocio asociadas al movimiento de un concepto */
-        descriptionTranslationBR.apply(sourceConcept,targetConcept, description);
+        descriptionTranslationBR.apply(sourceConcept, targetConcept, description);
 
         /*Se cambia el estado de la descripción segun el concepto*/
 
@@ -288,6 +285,15 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets) {
+        long init = currentTimeMillis();
+        List<Description> descriptions = descriptionDAO.searchDescriptionsByTerm(term, categories, refSets);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        return descriptions;
+    }
+
+    @Override
     public void invalidateDescription(ConceptSMTK conceptSMTK, NoValidDescription noValidDescription, User user) {
 
         /* Se aplican las reglas de negocio para el traslado */
@@ -306,6 +312,17 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    public Description getDescriptionByDescriptionID(String descriptionId) {
+
+        /* Validación de integridad */
+        if (descriptionId == null || descriptionId.trim().equals("")) {
+            throw new IllegalArgumentException("Se busca una descripción sin indicar su DESCRIPTION_ID.");
+        }
+
+        return descriptionDAO.getDescriptionByDescriptionID(descriptionId);
+    }
+
+    @Override
     public List<ObservationNoValid> getObservationsNoValid() {
         return descriptionDAO.getObservationsNoValid();
     }
@@ -318,5 +335,21 @@ public class DescriptionManagerImpl implements DescriptionManager {
     @Override
     public NoValidDescription getNoValidDescriptionByID(long id) {
         return descriptionDAO.getNoValidDescriptionByID(id);
+    }
+
+    @Override
+    public Description incrementDescriptionHits(String descriptionId) {
+
+        /* Primero se recupera la descripción */
+        Description descriptionByDescriptionID = descriptionDAO.getDescriptionByDescriptionID(descriptionId);
+        logger.info("DESCRIPTION ID=" + descriptionId + " tiene " + descriptionByDescriptionID.getUses() + " usos.");
+
+        /* Se incrementa y se actualiza en la BDD */
+        descriptionByDescriptionID.setUses(descriptionByDescriptionID.getUses() + 1);
+        descriptionDAO.update(descriptionByDescriptionID);
+        logger.info("DESCRIPTION ID=" + descriptionId + " tiene ahora " + descriptionByDescriptionID.getUses() + " usos.");
+
+        /* Finalmente se retorna */
+        return descriptionByDescriptionID;
     }
 }

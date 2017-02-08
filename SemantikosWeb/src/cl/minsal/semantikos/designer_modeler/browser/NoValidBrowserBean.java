@@ -117,7 +117,7 @@ public class NoValidBrowserBean implements Serializable {
             @Override
             public List<NoValidDescription> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 
-                //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
+                //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptsBy(category, first, pageSize);
 
                 if(isFilterChanged)
                     noValidQuery.setPageNumber(0);

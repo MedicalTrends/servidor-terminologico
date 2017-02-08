@@ -5,7 +5,7 @@ import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.crossmaps.*;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -175,7 +175,7 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
             return (target instanceof BasicTypeValue);
         }
 
-        return relationshipDefinition.getTargetDefinition().isHelperTable() && (target instanceof HelperTableRecord);
+        return relationshipDefinition.getTargetDefinition().isHelperTable() && (target instanceof HelperTableRow);
     }
 
     /**

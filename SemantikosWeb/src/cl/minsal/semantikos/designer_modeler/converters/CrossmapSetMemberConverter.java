@@ -1,11 +1,7 @@
 package cl.minsal.semantikos.designer_modeler.converters;
 
 import cl.minsal.semantikos.designer_modeler.designer.CrossmapBean;
-import cl.minsal.semantikos.designer_modeler.designer.HelperTableBean;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
-import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 
 import javax.el.ELContext;
 import javax.faces.application.FacesMessage;

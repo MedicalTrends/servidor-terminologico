@@ -1,10 +1,7 @@
 package cl.minsal.semantikos.designer_modeler.converters;
 
-import cl.minsal.semantikos.designer_modeler.designer.HelperTableBean;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 
 import javax.el.ELContext;
 import javax.faces.application.FacesMessage;

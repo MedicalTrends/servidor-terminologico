@@ -1,10 +1,7 @@
 package cl.minsal.semantikos.designer_modeler.converters;
 
-import cl.minsal.semantikos.designer_modeler.designer.HelperTableBean;
-import cl.minsal.semantikos.designer_modeler.designer.SMTKTypeBean;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.beans.helpertables.HelperTableBean;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 
 import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
@@ -19,21 +16,18 @@ import javax.faces.convert.FacesConverter;
  */
 
 //@FacesConverter("helperTableRecordConverter")
-@FacesConverter(value="helperTableRecordConverter",forClass = HelperTableRecord.class)
+@FacesConverter(value="helperTableRecordConverter",forClass = HelperTableRow.class)
 public class HelperTableRecordConverter implements Converter{
 
 
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
-
-        HelperTable helperTable = (HelperTable) UIComponent.getCurrentComponent(fc).getAttributes().get("helperTable");
 
         if(value != null /*&& value.trim().length() > 0*/ ) {
             try {
 
                 ELContext elContext = fc.getELContext();
                 HelperTableBean bean = (HelperTableBean) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext, null, "helperTableBean");
-                return bean.getHelperTableManager().getRecord(helperTable, Long.parseLong(value));
-                //return bean.getRecordById(helperTable, Long.parseLong(value));
+                return bean.getHelperTablesManager().getRowById( Long.parseLong(value));
 
             } catch(NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar un valor."));
@@ -46,7 +40,7 @@ public class HelperTableRecordConverter implements Converter{
 
     public String getAsString(FacesContext fc, UIComponent uic, Object object) {
         if(object != null) {
-            return String.valueOf(((HelperTableRecord) object).getId());
+            return String.valueOf(((HelperTableRow) object).getId());
         }
         else {
             return "";

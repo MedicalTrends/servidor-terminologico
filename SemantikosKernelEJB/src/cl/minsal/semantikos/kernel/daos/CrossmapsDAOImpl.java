@@ -306,6 +306,59 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         return indirectCrossmaps;
     }
 
+    @Override
+    public List<CrossmapSetMember> getCrossmapSetMemberByAbbreviatedName(String crossmapSetAbbreviatedName) {
+        List<CrossmapSetMember> crossmapSetMembers = new ArrayList<CrossmapSetMember>();
+
+        CrossmapSet crossmapSet = getCrossmapSetByAbbreviatedName(crossmapSetAbbreviatedName);
+        ConnectionBD connect = new ConnectionBD();
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.get_crossmapsetmember_by_cms_abbreviated_name(?)}")) {
+
+            call.setString(1, crossmapSetAbbreviatedName);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                CrossmapSetMember crossmapSetMember = createCrossmapSetMemberFromResultSet(rs, crossmapSet);
+                crossmapSetMembers.add(crossmapSetMember);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
+        return crossmapSetMembers;
+    }
+
+    private CrossmapSet getCrossmapSetByAbbreviatedName(String crossmapSetAbbreviatedName) {
+
+        ConnectionBD connect = new ConnectionBD();
+
+        ResultSet rs;
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.get_crossmapset_by_cms_abbreviated_name(?)}")) {
+
+            call.setString(1, crossmapSetAbbreviatedName);
+            call.execute();
+
+            rs = call.getResultSet();
+            if (rs.next()) {
+                CrossmapSet crossmapSetFromResultSet = createCrossmapSetFromResultSet(rs);
+                rs.close();
+                return crossmapSetFromResultSet;
+            } else {
+                rs.close();
+                throw new IllegalArgumentException("No existe un Crossmap Set de nombre abreviado " + crossmapSetAbbreviatedName);
+            }
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+    }
+
     private IndirectCrossmap createIndirectCrossMapFromResultSet(ResultSet rs, ConceptSMTK sourceConcept) throws SQLException {
 
         long id = rs.getLong("id");

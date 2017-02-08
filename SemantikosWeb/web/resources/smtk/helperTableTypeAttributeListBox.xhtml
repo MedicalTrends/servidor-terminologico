@@ -38,12 +38,12 @@
                                  converter="omnifaces.SelectItemsConverter">
 
                     <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
-                    <f:selectItems value="#{helperTableBean.allRecord}"
+                    <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition)}"
                                    var="record"
-                                   itemLabel="#{record.fields['description']}"
+                                   itemLabel="#{record.description}"
                                    itemValue="#{record}"/>
                     <p:column>
-                        <h:outputText value="#{r.fields['description']}"/>
+                        <h:outputText value="#{r.description}"/>
                     </p:column>
 
                     <p:ajax event="itemSelect"
@@ -73,7 +73,7 @@
 
                     <p:outputPanel styleClass="search">
 
-                        <p:inputText disabled="true" id="helperTableRecord" value="#{relationshipAttribute.target.fields['description']}" />
+                        <p:inputText disabled="true" id="helperTableRecord" value="#{relationshipAttribute.target.description}" />
                         <p:commandLink process="@this"
                                        update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                        action="#{conceptBean.removeRelationshipAttribute(cc.attrs.relationship,relationshipAttribute)}">
@@ -98,12 +98,12 @@
                                  converter="omnifaces.SelectItemsConverter">
 
                     <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
-                    <f:selectItems value="#{helperTableBean.allRecord}"
+                    <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition)}"
                                    var="record"
-                                   itemLabel="#{record.fields['description']}"
+                                   itemLabel="#{record.description}"
                                    itemValue="#{record}"/>
                     <p:column>
-                        <h:outputText value="#{r.fields['description']}"/>
+                        <h:outputText value="#{r.description}"/>
                     </p:column>
                     <p:ajax event="itemSelect"
                             listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.selectedHelperTableRecord)}"

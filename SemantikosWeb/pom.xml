@@ -21,7 +21,6 @@
 
     <dependencies>
 
-
         <!-- dependencia del runtime de jboss que incluye jee, ejb, jsf y mucho mas -->
         <dependency>
             <groupId>org.jboss.spec</groupId>
@@ -33,12 +32,12 @@
 
 
         <!-- dependencias no necesarias dado que se incluye el runtime de jboss -->
-        <!-- dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
-        </dependency-->
+        </dependency>
 
         <dependency>
             <groupId>javax.faces</groupId>
@@ -87,7 +86,6 @@
             <scope>provided</scope>
         </dependency>
 
-
         <!-- https://mvnrepository.com/artifact/org.omnifaces/omnifaces -->
         <dependency>
             <groupId>org.omnifaces</groupId>
@@ -115,7 +113,6 @@
         </dependency>
 
         <!-- Para subir archivos -->
-
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
@@ -127,9 +124,7 @@
             <artifactId>commons-io</artifactId>
             <version>2.5</version>
         </dependency>
-
     </dependencies>
-
 
     <!-- para poner automaticamente estampa de version en footer -->
     <build>
@@ -163,15 +158,10 @@
                     <webXml>web\WEB-INF\web.xml</webXml>
                     <warName>SemantikosWeb</warName>
                     <warSourceDirectory>web</warSourceDirectory>
-
                 </configuration>
             </plugin>
 
         </plugins>
 
     </build>
-
-
-
-
 </project>

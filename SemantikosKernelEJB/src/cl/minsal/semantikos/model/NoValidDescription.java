@@ -12,14 +12,14 @@ public class NoValidDescription {
     private Description noValidDescription;
 
     /** La observación que indica por qué la descripción es propuesta como no válida */
-    private long observationID;
+    private Long observationID;
 
     private ObservationNoValid observationNoValid;
 
     /** Conceptos sugeridos como alternativa a la descripción */
     private List<ConceptSMTK> suggestedConcepts;
 
-    public NoValidDescription(Description noValidDescription, long observationID) {
+    public NoValidDescription(Description noValidDescription, Long observationID) {
         this.noValidDescription = noValidDescription;
         this.observationID = observationID;
         this.suggestedConcepts = new ArrayList<>();
@@ -31,7 +31,7 @@ public class NoValidDescription {
     }
 
     public NoValidDescription(Description noValidDescription, ObservationNoValid observationNoValid, List<ConceptSMTK> suggestedConcepts) {
-        this(noValidDescription, observationNoValid.getId());
+        this(noValidDescription, observationNoValid != null ? observationNoValid.getId() : null);
         this.observationNoValid = observationNoValid;
 
         this.suggestedConcepts.addAll(suggestedConcepts);

@@ -84,6 +84,13 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     /** Variable que indica si el grado de definición se obtiene heredado * */
     private boolean inherited;
 
+    /** RefSets a los que pertenece el concepto */
+    private List<RefSet> refsets;
+
+    public ConceptSMTK() {
+        super(PersistentEntity.NON_PERSISTED_ID);
+    }
+
     /**
      * La categoría es la mínima información que se le puede dar a un concepto.
      */
@@ -182,25 +189,11 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     }
 
     public List<Description> getDescriptions() {
-        return descriptions;
+        return new ArrayList<>(descriptions);
     }
 
     public void setDescriptions(List<Description> descriptions) {
-        this.descriptions = descriptions;
-    }
-
-    /**
-     * Este método es responsable de recuperar las relaciones del concepto.
-     *
-     * @return Una lista con las relaciones del concepto.
-     */
-    public List<Relationship> getRelationships() {
-
-        if (!relationshipsLoaded) {
-            throw new EJBException("Las relaciones de este concepto no han sido cargadas aun.");
-        }
-
-        return relationships;
+        this.descriptions = new ArrayList<>(descriptions);
     }
 
     /**
@@ -226,6 +219,53 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         return relatedConcepts;
+    }
+
+    /**
+     * Este método es responsable de recuperar las relaciones del concepto.
+     *
+     * @return Una lista con las relaciones del concepto.
+     */
+    public List<Relationship> getRelationships() {
+
+        if (!relationshipsLoaded) {
+            throw new EJBException("Las relaciones de este concepto no han sido cargadas aun.");
+        }
+
+        return relationships;
+    }
+
+    /**
+     * Este método es responsable de recuperar todas las relaciones que son de tipo Basic Type.
+     *
+     * @return Una lista de los atributos de tipo báisco del concepto.
+     */
+    public List<Relationship> getRelationshipsBasicType() {
+        List<Relationship> snomedRelationships = new ArrayList<>();
+        for (Relationship relationship : relationships) {
+            if ( relationship.isValid()
+                    && relationship.getRelationshipDefinition() != null
+                    && relationship.getRelationshipDefinition().getTargetDefinition() != null
+                    && relationship.getRelationshipDefinition().getTargetDefinition().isBasicType()) {
+                snomedRelationships.add(relationship);
+            }
+        }
+        return snomedRelationships;
+    }
+
+    /**
+     * Este método es responsable de recuperar todas las relaciones del concepto que no son básicas.
+     *
+     * @return Una lista con las relaciones del concepto.
+     */
+    public List<Relationship> getRelationshipsNonBasicType() {
+        List<Relationship> snomedRelationships = new ArrayList<>();
+        for (Relationship relationship : relationships) {
+            if (!relationship.getRelationshipDefinition().getTargetDefinition().isBasicType()) {
+                snomedRelationships.add(relationship);
+            }
+        }
+        return snomedRelationships;
     }
 
     /**
@@ -704,6 +744,14 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         return justPublished;
     }
 
+    public List<RefSet> getRefsets() {
+        return refsets;
+    }
+
+    public void setRefsets(List<RefSet> refsets) {
+        this.refsets = refsets;
+    }
+
     public TagSMTK getTagSMTK() {
         return tagSMTK;
     }
@@ -807,5 +855,14 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         return false;
+    }
+
+    /**
+     * Sobreescritura de este método para poder usar objetos de esta clase en un HashSet. Andrés por favor no lo borres.
+     * @author Alfonso Cornejo
+     */
+    @Override
+    public int hashCode() {
+        return getConceptID() != null ? getConceptID().hashCode() : 0;
     }
 }

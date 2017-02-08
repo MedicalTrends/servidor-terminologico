@@ -171,7 +171,6 @@ public class QueryManagerImpl implements QueryManager {
                 }
 
                 conceptSMTK.getRelationships().addAll(secondOrderRelationships);
-
                 // Adding related concepts to relationships, if this apply
                 if(getShowableRelatedConceptsValue(category)){
                     for (ConceptSMTK relatedConcept : conceptManager.getRelatedConcepts(conceptSMTK)) {
@@ -321,9 +320,5 @@ public class QueryManagerImpl implements QueryManager {
 
     private boolean getShowableValue(Category category){
         return queryDAO.getShowableValue(category);
-    }
-
-    private int getCompositeValue(Category category, RelationshipDefinition relationshipDefinition) {
-        return queryDAO.getCompositeValue(category, relationshipDefinition);
     }
 }

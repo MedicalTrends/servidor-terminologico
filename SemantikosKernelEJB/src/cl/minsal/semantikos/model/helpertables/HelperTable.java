@@ -1,145 +1,92 @@
 package cl.minsal.semantikos.model.helpertables;
 
-import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
- * @author Andrés Farías
+ * Created by BluePrints Developer on 14-12-2016.
  */
-public class HelperTable extends PersistentEntity implements TargetDefinition {
 
-    /** Columna de sistema con la llave primaria para cada registro de una tabla auxiliar */
-    public static final HelperTableColumn SYSTEM_COLUMN_ID = new HelperTableColumn("id", true, true, true);
-
-    /** Columna de sistema con la descripción para cada registro de una tabla auxiliar */
-    public static final HelperTableColumn SYSTEM_COLUMN_DESCRIPTION = new HelperTableColumn("description", false, true, true);
-
-    /** Columna de sistema con la fecha de creación para cada registro de una tabla auxiliar */
-    public static final HelperTableColumn SYSTEM_COLUMN_CREATION_DATE = new HelperTableColumn("creation_date", false, true, true);
-
-    /** Columna de sistema con la fecha hasta la cual cada registro se encuentra vigente de una tabla auxiliar */
-    public static final HelperTableColumn SYSTEM_COLUMN_VALIDITY_UNTIL = new HelperTableColumn("validity_until", false, true, true);
-
-    /** Columna de sistema del usuario que modificó por última vez un registro de una tabla auxiliar */
-    public static final HelperTableColumn SYSTEM_COLUMN_USER = new HelperTableColumn("user", false, true, true);
-
-    /** Un nombre legible por humanos para la Tabla Auxiliar */
+public class HelperTable implements TargetDefinition{
+    private long id;
     private String name;
-
-    /* Una breve descripción de la tabla auxiliar */
     private String description;
+    private List<HelperTableColumn> columns;
+    private List<HelperTableRow> rows;
 
-    /** El nombre de la tabla física */
-    private String tablaName;
-
-    /** El nombre de las columnas que posee la tabla física */
-    private Collection<HelperTableColumn> columns;
-
-    /**
-     * Este constructor permite crear un objeto <code>HelperTable</code> que no ha sido persistido en la base de datos
-     * (sin ID).
-     */
-    public HelperTable(@NotNull String name, String description, String tablaName, @NotNull Collection<HelperTableColumn> columns) {
-        this(-1, name, description, tablaName, columns);
+    public long getId() {
+        return id;
     }
 
-    /**
-     * Constructor completo. Tiene los principales valores por defecto.
-     *
-     * @param id          Identificador único de la tabla.
-     * @param name        Nombre de la tabla
-     * @param description Descripción de la tabla.
-     * @param tablaName   Nombre de la Tabla en la Base de Datos.
-     * @param columns     Columnas de la tabla auxiliar.
-     */
-    public HelperTable(long id, @NotNull String name, String description, String tablaName, @NotNull Collection<HelperTableColumn> columns) {
-        super(id);
-        this.name = name;
-        this.description = description;
-        this.tablaName = tablaName;
-        this.columns = new ArrayList<>(columns);
+    @Override
+    public boolean isPersistent() {
+        return true;
     }
 
-    public Collection<HelperTableColumn> getColumns() {
-        return columns;
+    public void setId(long id) {
+        this.id = id;
     }
+
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public String getTablaName() {
-        return tablaName;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    /**
-     * Este método es responsable de retornar aquellas columnas que han sido definidas como <i>mostrables</i>.
-     *
-     * @return Un objeto <code>java.util.List</code> con las columnas parametrizadas como mostrables para esa tabla.
-     */
-    public List<HelperTableColumn> getShowableColumns() {
-        List<HelperTableColumn> showableColumns = new ArrayList<>();
-        for (HelperTableColumn column : columns) {
-            if (column.isShowable()) {
-                showableColumns.add(column);
-            }
-        }
 
+    public List<HelperTableColumn> getColumns() {
+        return columns;
+    }
+
+    public List<HelperTableColumn> getShowableColumns() {
+
+        List<HelperTableColumn> showableColumns = new ArrayList<>();
+
+        for (HelperTableColumn column: getColumns()) {
+            if(column.isShowable())
+                showableColumns.add(column);
+        }
         return showableColumns;
     }
 
-    /**
-     * Este método es responsable de retornar una lista con los nombres de todas las columnas.
-     *
-     * @return Un <code>java.util.List</code> con los nombres de las columnas.
-     */
-    public List<String> getAllColumnsNames() {
-        return extractColumnsName(columns);
+    public void setColumns(List<HelperTableColumn> columns) {
+        this.columns = columns;
     }
 
-    /**
-     * Este método es responsable de retornar la columna con el nombre dado como parámetro.
-     *
-     * @param columnName El nombre de la columna que se desea recuperar.
-     *
-     * @return La columna cuyo nombre coincide con <code>columnName</code>.
-     *
-     * @throws java.lang.IllegalArgumentException Cuando la tabla no tiene una columna de nombre <code>columnName</code>.
-     */
-    public HelperTableColumn getColumnByName(String columnName) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        for (HelperTableColumn column : columns) {
-            if (column.getColumnName().equalsIgnoreCase(columnName)) {
-                return column;
-            }
-        }
+        HelperTable that = (HelperTable) o;
 
-        throw new IllegalArgumentException("La tabla auxiliar " + this + " no posee una columna de nombre " + columnName);
+        if (id != that.id) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+
+        return true;
     }
 
-    /**
-     * Este método es responsable de retornar una lista con los nombres las columnas dadas como parámetro.
-     *
-     * @param columns Las columnas cuyos nombres se desea obtener
-     *
-     * @return Un <code>java.util.List</code> con los nombres de las columnas.
-     */
-    public List<String> extractColumnsName(Collection<HelperTableColumn> columns) {
-        List<String> columnNames = new ArrayList<>();
-        for (HelperTableColumn column : columns) {
-            columnNames.add(column.getColumnName());
-        }
-
-        return columnNames;
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -167,51 +114,11 @@ public class HelperTable extends PersistentEntity implements TargetDefinition {
         return false;
     }
 
-    /**
-     * Este método es responsable de retornar el nombre de las columnas mostrables.
-     *
-     * @return Un arreglo de <code>String</code> con los nombres de las columnas mostrables.
-     */
-    public List<String> getShowableColumnsNames() {
-
-        List<String> showableColumnsNames = new ArrayList<>();
-        for (HelperTableColumn showableColumn : getShowableColumns()) {
-            showableColumnsNames.add(showableColumn.getColumnName());
-        }
-
-        return showableColumnsNames;
+    public List<HelperTableRow> getRows() {
+        return rows;
     }
 
-    /**
-     * Este método es responsable de retornar las columnas de sistema de toda tabla auxiliar.
-     *
-     * @return Una colección con las columnas de sistema.
-     */
-    public static Collection<HelperTableColumn> getSystemColumns() {
-
-        Collection<HelperTableColumn> systemColumns = new ArrayList<>();
-        systemColumns.add(SYSTEM_COLUMN_ID);
-        systemColumns.add(SYSTEM_COLUMN_DESCRIPTION);
-        systemColumns.add(SYSTEM_COLUMN_CREATION_DATE);
-        systemColumns.add(SYSTEM_COLUMN_VALIDITY_UNTIL);
-        systemColumns.add(SYSTEM_COLUMN_USER);
-
-        return systemColumns;
-    }
-
-    public boolean isISP() {
-        return this.getName().equals(HelperTableFactory.HT_ISP_NAME);
-    }
-
-    public boolean isATC(){
-        return this.getName().equals(HelperTableFactory.HT_ATC_NAME);
-    }
-
-
-    @Override
-    public String toString() {
-        return "HelperTable{" +
-                "name='" + name + '\'' +
-                '}';
+    public void setRows(List<HelperTableRow> rows) {
+        this.rows = rows;
     }
 }

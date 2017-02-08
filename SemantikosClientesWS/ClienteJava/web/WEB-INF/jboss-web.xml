@@ -1,0 +1,3 @@
+<jboss-web>
+    <context-root>ws-consumers</context-root>
+</jboss-web>

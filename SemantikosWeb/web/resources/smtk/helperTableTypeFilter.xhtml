@@ -31,7 +31,7 @@
                                 placeholder="Buscar..."
                                 converter="helperTableRecordConverter"
                                 value="#{generalBrowserBean.helperTableRecord}"
-                                itemLabel="#{record.fields['description']}"
+                                itemLabel="#{record.description}"
                                 itemValue="#{record}">
                     <!-- Parámetros del buscador -->
                     <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
@@ -40,7 +40,7 @@
                     <f:attribute name="helperTableRecord" value="#{generalBrowserBean.helperTableRecord}"  />
                     <!---->
                     <p:column>
-                        <h:outputText value="#{record.fields['description']}"/>
+                        <h:outputText value="#{record.description}"/>
                     </p:column>
 
                     <p:ajax event="itemSelect"
@@ -64,7 +64,7 @@
                            var="target"
                            varStatus="var">
 
-                    <p:inputText disabled="true" id="itemSelected" value="#{target.fields['description']}" />
+                    <p:inputText disabled="true" id="itemSelected" value="#{target.description}" />
                     <p:commandLink
                             process="@this"
                             update="@(.browserFilters),@(.browserTable)"

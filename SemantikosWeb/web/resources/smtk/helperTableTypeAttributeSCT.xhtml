@@ -33,11 +33,11 @@
                                  filter="true" >
                     <p:ajax event="itemSelect"/>
                     <f:selectItem itemLabel="Tipo de relación" value="#{null}" itemDisabled="true" />
-                    <f:selectItems value="#{helperTableBean.allRecord}" var="record"
-                                   itemLabel="#{record.fields['description']}"
+                    <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition)}" var="record"
+                                   itemLabel="#{record.description}"
                                    itemValue="#{record}"/>
                     <p:column>
-                        <h:outputText value="#{helperT.fields['description']}"/>
+                        <h:outputText value="#{helperT.description}"/>
                     </p:column>
 
                     <!-- Parámetros del buscador -->

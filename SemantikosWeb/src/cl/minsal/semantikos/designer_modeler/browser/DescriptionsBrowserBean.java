@@ -39,7 +39,7 @@ public class DescriptionsBrowserBean implements Serializable {
     RefSetManager refSetManager;
 
     @EJB
-    HelperTableManager helperTableManager;
+    HelperTablesManager helperTablesManager;
 
     @EJB
     UserManager userManager;

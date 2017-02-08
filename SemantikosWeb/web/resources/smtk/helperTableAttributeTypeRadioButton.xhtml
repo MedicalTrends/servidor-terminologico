@@ -27,9 +27,9 @@
             <p:outputPanel id="helperTableTypeAttributeNew" styleClass="search">
 
                 <p:selectOneRadio id="helperTableTypeAttributeSimpleCustom"  style="padding-top: 0.9em" value="#{conceptBean.selectedHelperTableRecord}" layout="grid" columns="3" converter="omnifaces.SelectItemsConverter">
-                    <f:selectItems value="#{helperTableBean.allRecord}"
+                    <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition)}"
                                    var="record"
-                                   itemLabel="#{record.fields['description']}"
+                                   itemLabel="#{record.description}"
                                    itemValue="#{record}"/>
                     <p:ajax
                             listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.selectedHelperTableRecord)}"

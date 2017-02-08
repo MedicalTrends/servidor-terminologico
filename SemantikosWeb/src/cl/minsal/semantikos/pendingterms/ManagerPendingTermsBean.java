@@ -23,11 +23,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by des01c7 on 22-11-16.
- */
-
-
 @ManagedBean(name = "managerPendingTermsBean")
 @SessionScoped
 public class ManagerPendingTermsBean {

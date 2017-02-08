@@ -64,7 +64,6 @@ public interface RefSetDAO {
      * @param conceptSMTK
      * @return lista de refset relacionados con el concepto
      */
-
     public List<RefSet> getRefsetsBy(ConceptSMTK conceptSMTK);
 
     public List<RefSet> getRefsetBy(Institution institution);
@@ -77,4 +76,17 @@ public interface RefSetDAO {
     public RefSet getRefsetBy(long id);
 
     public List<RefSet> getRefsetsBy(List<Long> categories, String pattern);
+
+    /**
+     * @param pattern Patron de nombre del REFSET buscado
+     * @return Lista de REFSETs con nombre LIKE el patron ingresado (se espera lista con un solo elemento)
+     */
+    public List<RefSet> findRefsetsByName(String pattern);
+
+    /**
+     * RefSets a los que pertenece un concepto
+     * @param
+     * @return
+     */
+    public List<RefSet> findByConcept(ConceptSMTK conceptSMTK);
 }

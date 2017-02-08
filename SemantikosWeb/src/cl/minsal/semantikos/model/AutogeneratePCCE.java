@@ -1,13 +1,9 @@
 package cl.minsal.semantikos.model;
 
-import cl.minsal.semantikos.kernel.components.RelationshipManager;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
-import javax.ejb.EJB;
 
 /**
  * Created by des01c7 on 18-10-16.
@@ -39,21 +35,21 @@ public class AutogeneratePCCE {
             if(relationship.getRelationshipDefinition().getId()==92){
                 for (RelationshipAttribute attribute: relationship.getRelationshipAttributes()) {
                     if(attribute.getRelationAttributeDefinition().getId()==15){
-                        cantidad = relationship.getTarget().toString()+" "+(((HelperTableRecord)attribute.getTarget()).getValueColumn("description"));
+                        cantidad = relationship.getTarget().toString()+" "+(((HelperTableRow)attribute.getTarget()).getDescription());
                     }
                 }
             }
             if(relationship.getRelationshipDefinition().getId()==77){
                 for (RelationshipAttribute attribute: relationship.getRelationshipAttributes()) {
                     if(attribute.getRelationAttributeDefinition().getId()==16){
-                        pack = relationship.getTarget().toString()+" "+(((HelperTableRecord)attribute.getTarget()).getValueColumn("description"));
+                        pack = relationship.getTarget().toString()+" "+(((HelperTableRow)attribute.getTarget()).getDescription());
                     }
                 }
             }
             if(relationship.getRelationshipDefinition().getId()==93){
                 for (RelationshipAttribute attribute: relationship.getRelationshipAttributes()) {
                     if(attribute.getRelationAttributeDefinition().getId()==17){
-                        vol = relationship.getTarget().toString()+" "+(((HelperTableRecord)attribute.getTarget()).getValueColumn("description"));
+                        vol = relationship.getTarget().toString()+" "+(((HelperTableRow)attribute.getTarget()).getDescription());
                     }
                 }
             }

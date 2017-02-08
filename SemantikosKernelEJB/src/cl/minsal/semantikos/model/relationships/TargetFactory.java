@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.model.relationships;
 
-import cl.minsal.semantikos.kernel.components.HelperTableManager;
+import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.CrossmapsDAO;
 import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
@@ -8,7 +8,7 @@ import cl.minsal.semantikos.kernel.daos.SnomedCTDAO;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class TargetFactory {
     private HelperTableDAO helperTableDAO;
 
     @EJB
-    private HelperTableManager helperTableManager;
+    private HelperTablesManager helperTablesManager;
 
     @EJB
     private SnomedCTDAO snomedCTDAO;
@@ -72,7 +72,7 @@ public class TargetFactory {
 
         /* Se evalúa caso a caso. Helper Tables: */
         if (idHelperTableRecord > 0) {
-            target = helperTableManager.getRecord(idHelperTableRecord);
+            target = helperTablesManager.getRowById(idHelperTableRecord);
         } else if (idExtern > 0) {
             target = crossmapsDAO.getCrossmapSetMemberById(idExtern);
         } else if (idConceptSct > 0) {
@@ -138,7 +138,7 @@ public class TargetFactory {
 
                 /* Se evalúa caso a caso. Helper Tables: */
         if (definition.isHelperTable()) {
-            return new HelperTableRecord((HelperTable)definition,-1);
+            return new HelperTableRow((HelperTable)definition);
         } else {
             throw new EJBException("No implementado!");
         }

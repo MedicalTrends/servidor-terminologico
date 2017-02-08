@@ -36,7 +36,7 @@
                                 placeholder="#{cc.attrs.relationshipAttributeDefinition.name}..."
                                 converter="helperTableRecordConverter"
                                 value="#{conceptBean.selectedHelperTableRecord}"
-                                itemLabel="#{record.fields['description']}"
+                                itemLabel="#{record.description}"
                                 itemValue="#{record}">
                     <!-- Parámetros del buscador -->
                     <f:attribute name="helperTable" value="#{cc.attrs.relationshipAttributeDefinition.targetDefinition}"  />
@@ -45,7 +45,7 @@
                     <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
                     <!---->
                     <p:column>
-                        <h:outputText value="#{record.fields['description']}"/>
+                        <h:outputText value="#{record.description}"/>
                     </p:column>
 
                     <p:ajax event="itemSelect"
@@ -69,7 +69,7 @@
 
                     <p:outputPanel styleClass="search">
 
-                        <p:inputText disabled="true" id="helperTableRecord" value="#{relationshipAttribute.target.fields['description']}" />
+                        <p:inputText disabled="true" id="helperTableRecord" value="#{relationshipAttribute.target.description}" />
                         <p:commandLink process="@this"
                                        update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                        action="#{conceptBean.removeRelationshipAttribute(cc.attrs.relationship,relationshipAttribute)}">
@@ -92,7 +92,7 @@
                                 placeholder="#{cc.attrs.relationshipAttributeDefinition.name}..."
                                 converter="helperTableRecordConverter"
                                 value="#{conceptBean.selectedHelperTableRecord}"
-                                itemLabel="#{record.fields['description']}"
+                                itemLabel="#{record.description}"
                                 itemValue="#{record}">
                     <!-- Parámetros del buscador -->
                     <f:attribute name="helperTable" value="#{cc.attrs.relationshipAttributeDefinition.targetDefinition}"  />
@@ -101,7 +101,7 @@
                     <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
                     <!---->
                     <p:column>
-                        <h:outputText value="#{record.fields['description']}"/>
+                        <h:outputText value="#{record.description}"/>
                     </p:column>
 
 

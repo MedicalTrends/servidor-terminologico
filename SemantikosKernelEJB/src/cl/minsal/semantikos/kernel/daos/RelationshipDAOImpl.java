@@ -2,7 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.snomedct.ConceptSCTFactory;
@@ -254,8 +254,8 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
             if(relationshipDefinition.getTargetDefinition().isHelperTable()){
                 call.setLong(1, relationshipDefinition.getTargetDefinition().getId());
-                HelperTableRecord helperTableRecord = (HelperTableRecord) target;
-                call.setString(2, String.valueOf(helperTableRecord.getId()));
+                HelperTableRow helperTableRow = (HelperTableRow) target;
+                call.setString(2, String.valueOf(helperTableRow.getId()));
             }
 
             if(relationshipDefinition.getTargetDefinition().isBasicType()){

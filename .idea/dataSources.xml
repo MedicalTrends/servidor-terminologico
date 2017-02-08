@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="3340576850">
-    <data-source source="LOCAL" name="Semantikos Desarrollo" uuid="8546d5f8-2f1d-444a-92c3-9752c1b2cecc">
+  <component name="DataSourceManagerImpl" format="xml" hash="3996325221">
+    <data-source source="LOCAL" name="PostgreSQL - postgres@192.168.0.221" uuid="8546d5f8-2f1d-444a-92c3-9752c1b2cecc">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://192.168.0.221:5432/semantikos</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="PostgreSQL - postgres@192.168.0.242 TESTING" uuid="971e7d08-b990-4ddb-bb58-c2f8f6ae9fca">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://192.168.0.242:5432/semantikos</jdbc-url>
     </data-source>
   </component>
 </project>

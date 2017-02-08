@@ -1,10 +1,6 @@
-import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.browser.BrowserQuery;
-import cl.minsal.semantikos.model.browser.GeneralQuery;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -14,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import java.io.Serializable;
@@ -154,7 +149,7 @@ public class BrowserBean implements Serializable {
             @Override
             public List<ConceptSMTK> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 
-                //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
+                //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptsBy(category, first, pageSize);
 
                 if(isFilterChanged)
                     browserQuery.setPageNumber(0);

@@ -133,6 +133,8 @@ public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public Category getCategoryByName(String categoryName) {
 
+        logger.debug("CategoryDAO.getCategoryByName(" + categoryName + ")");
+
         /* Si no están cargadas las categorías, se cargan */
         if (categoryMapByID.isEmpty()){
             getAllCategories();

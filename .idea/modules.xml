@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/SemantikosClientesWS/ClienteJava/ClienteJava.iml" filepath="$PROJECT_DIR$/SemantikosClientesWS/ClienteJava/ClienteJava.iml" />
       <module fileurl="file://$PROJECT_DIR$/Semantikos.iml" filepath="$PROJECT_DIR$/Semantikos.iml" />
       <module fileurl="file://$PROJECT_DIR$/SemantikosBrowser/SemantikosBrowser.iml" filepath="$PROJECT_DIR$/SemantikosBrowser/SemantikosBrowser.iml" />
       <module fileurl="file://$PROJECT_DIR$/SemantikosCentralEAR/SemantikosCentralEAR.iml" filepath="$PROJECT_DIR$/SemantikosCentralEAR/SemantikosCentralEAR.iml" />

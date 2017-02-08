@@ -2,7 +2,7 @@ package cl.minsal.semantikos.model.businessrules;
 
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import static cl.minsal.semantikos.model.helpertables.HelperTableFactory.HT_ATC_NAME;
+
 
 /**
  * @author Andrés Farías on 11/11/16.
@@ -19,6 +19,7 @@ public class HelperTableSearchBR {
 
     /** Mínima cantidad de caracteres en el patrón de búsqueda en tablas auxiliares */
     public static final short MINIMUM_PATTERN_LENGTH = 1;
+    public static final long HT_ATC_ID = 1;
 
     /**
      * Método para realizar las validaciones.
@@ -53,45 +54,50 @@ public class HelperTableSearchBR {
      *
      * @param records Los registros que se desea ordenar.
      */
-    public void applyPostActions(@NotNull List<HelperTableRecord> records) {
+    public void applyPostActions(@NotNull List<HelperTableRow> records) {
 
         /* Se ordenan los resultados */
         postActionsortCollections(records);
     }
 
-    private void postActionsortCollections(List<HelperTableRecord> records) {
+    private void postActionsortCollections(List<HelperTableRow> rows) {
 
         /* Las listas vacías no requieren ser ordenadas */
-        if (records == null || records.isEmpty()){
+        if (rows == null || rows.isEmpty()){
             return;
         }
 
         /* Si la lista de registros es de la tabla HT_ATC_NAME, el ordenamiento es especial */
-        HelperTableRecord helperTableRecord = records.get(0);
-        if (helperTableRecord.getHelperTable().getName().equals(HT_ATC_NAME)){
-            Collections.sort(records, new ATCRecordComparator());
+        HelperTableRow helperTableRow = rows.get(0);
+        if (helperTableRow.getHelperTableId()==HT_ATC_ID){
+            Collections.sort(rows, new ATCRecordComparator());
         }
         else{
             /* Sino, se ordena alfabéticamente */
-            Collections.sort(records);
+            Collections.sort(rows, new DefaultRecordComparator());
         }
     }
 
-    class ATCRecordComparator implements Comparator<HelperTableRecord> {
+    class ATCRecordComparator implements Comparator<HelperTableRow> {
 
         @Override
-        public int compare(HelperTableRecord atc1, HelperTableRecord atc2) {
+        public int compare(HelperTableRow atc1, HelperTableRow atc2) {
 
-            Map<String, String> fieldsATC1 = atc1.getFields();
-            Map<String, String> fieldsATC2 = atc2.getFields();
+            return atc1.getDescription().length() - atc2.getDescription().length();
+        }
 
-            //String recordATC1 = fieldsATC1.get("description").concat(fieldsATC1.get("dsc_atc"));
-            //String recordATC2 = fieldsATC2.get("description").concat(fieldsATC2.get("dsc_atc"));
+        @Override
+        public boolean equals(Object obj) {
+            return false;
+        }
+    }
 
-            String recordATC1 = fieldsATC1.get("dsc_atc");
-            String recordATC2 = fieldsATC2.get("dsc_atc");
+    class DefaultRecordComparator implements Comparator<HelperTableRow> {
 
-            return recordATC1.length() - recordATC2.length();
+        @Override
+        public int compare(HelperTableRow row1, HelperTableRow row2) {
+
+            return row1.getDescription().compareTo(row2.getDescription());
         }
 
         @Override

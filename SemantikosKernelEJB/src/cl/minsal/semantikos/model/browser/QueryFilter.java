@@ -2,7 +2,7 @@ package cl.minsal.semantikos.model.browser;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.BasicTypeType;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
@@ -181,7 +181,7 @@ public class QueryFilter {
 
         if(definition.getTargetDefinition().isHelperTable()){
             for (Target target : targets) {
-                HelperTableRecord helperTableRecord = (HelperTableRecord) target;
+                HelperTableRow helperTableRecord = (HelperTableRow) target;
                 helperTableRecordValues.add(helperTableRecord.getId());
             }
         }

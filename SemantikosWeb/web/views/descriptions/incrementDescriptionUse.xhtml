@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+                template="/WEB-INF/template/template.xhtml">
+    >
+    <ui:define name="content">
+        <p:panel id="incrementDescriptionUsePanel">
+
+            <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+            <h:form>
+                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+                    <p:outputLabel id="descriptionIDLabel" for="descriptionID" value="DESCRIPTION ID"/>
+                    <p:inputText id="descriptionID" value="#{descriptionTestsBean.descriptionId}" required="true"/>
+
+                    <p:commandButton actionListener="#{descriptionTestsBean.incrementUse}" icon="fa fa-check"
+                                     styleClass="ui-priority-primary"
+                                     value="Uso!" update="incrementDescriptionUsePanel"/>
+
+                    <p/>
+                    <smtk:descriptionPanel rendered="${descriptionTestsBean.description != null}" description="${descriptionTestsBean.description}"/>
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
+    </ui:define>
+</ui:composition>

@@ -32,6 +32,12 @@
       <element id="archive" name="SemantikosKernelEJB-2.2.12.jar">
         <element id="artifact" artifact-name="SemantikosKernelEJB:ejb exploded" />
       </element>
+      <element id="archive" name="SemantikosWSEJB-1.1.jar">
+        <element id="artifact" artifact-name="SemantikosWSEJB:ejb exploded" />
+      </element>
+      <element id="archive" name="SemantikosWS-1.1.war">
+        <element id="artifact" artifact-name="SemantikosWS:war exploded" />
+      </element>
     </root>
   </artifact>
 </component>

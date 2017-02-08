@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.model;
 
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 
@@ -61,7 +61,7 @@ public class AutogenerateMC {
     }
 
     public void setUnidadVolumen(RelationshipAttribute relationshipAttribute) {
-        this.unidadVolumen = (((HelperTableRecord) relationshipAttribute.getTarget()).getValueColumn("description"));
+        this.unidadVolumen = (((HelperTableRow) relationshipAttribute.getTarget()).getDescription());
     }
     public void setUnidadVolumenEmpty() {
         this.unidadVolumen = "";
@@ -86,7 +86,7 @@ public class AutogenerateMC {
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 8)
                 attributes[0] = " " + format.format(Double.valueOf(relationshipAttribute.getTarget().toString())) +" ";
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 9)
-                attributes[1] = (((HelperTableRecord) relationshipAttribute.getTarget()).getValueColumn("description"));
+                attributes[1] = (((HelperTableRow) relationshipAttribute.getTarget()).getDescription());
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 10) {
                 if (Float.parseFloat(relationshipAttribute.getTarget().toString()) != 1) {
                     attributes[2] = "/" + format.format(Double.valueOf(relationshipAttribute.getTarget().toString()))+" ";
@@ -95,7 +95,7 @@ public class AutogenerateMC {
                 }
             }
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 11)
-                attributes[3] = (((HelperTableRecord) relationshipAttribute.getTarget()).getValueColumn("description"));
+                attributes[3] = (((HelperTableRow) relationshipAttribute.getTarget()).getDescription());
         }
         for (int i = 0; i < 4; i++) {
             if (attributes[i] != null) {
@@ -107,18 +107,18 @@ public class AutogenerateMC {
     }
 
     public void addFFA(Relationship relationship) {
-        ffa.add(((HelperTableRecord) relationship.getTarget()).getValueColumn("description") + "");
-        ffaMap.put(relationship.getOrder(),((HelperTableRecord) relationship.getTarget()).getValueColumn("description") + "");
+        ffa.add(((HelperTableRow) relationship.getTarget()).getDescription() + "");
+        ffaMap.put(relationship.getOrder(),((HelperTableRow) relationship.getTarget()).getDescription() + "");
     }
     public void voidRemoveFFA(Relationship relationship) {
-        ffa.remove(((HelperTableRecord) relationship.getTarget()).getValueColumn("description") + "");
+        ffa.remove(((HelperTableRow) relationship.getTarget()).getDescription() + "");
     }
 
     public void addVol(Relationship relationship) {
         String vol = relationship.getTarget().toString();
         for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 12)
-                vol = " " + (((HelperTableRecord) relationshipAttribute.getTarget()).getValueColumn("description"));
+                vol = " " + (((HelperTableRow) relationshipAttribute.getTarget()).getDescription());
         }
         volumen = vol;
     }

@@ -3,6 +3,7 @@
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
     <file url="file://$PROJECT_DIR$/SemantikosBrowser" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosCentralEAR" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SemantikosClientesWS/ClienteJava" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosKernelEJB" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosWS" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosWSEJB" charset="UTF-8" />

@@ -39,8 +39,6 @@
 
     <pe:layout id="fullPage" options="#{layoutBean.layoutOptions}" stateCookie="false" widgetVar="fpLayoutWidget" styleClass="browserLayout">
 
-        <p:ajax event="resize" listener="#{layoutBean.handleResize}"/>
-
         <pe:layoutPane position="north" styleClassContent="northPane">
             <h:form prependId="false">
                 <ui:include src="topbar.xhtml"/>
