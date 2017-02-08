@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="Semantikos Desarrollo" uuid="8546d5f8-2f1d-444a-92c3-9752c1b2cecc">
+  <data-source name="PostgreSQL - postgres@192.168.0.221" uuid="8546d5f8-2f1d-444a-92c3-9752c1b2cecc">
     <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
   </data-source>
 </component>

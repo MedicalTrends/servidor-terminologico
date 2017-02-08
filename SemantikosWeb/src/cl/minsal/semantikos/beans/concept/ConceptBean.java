@@ -559,9 +559,10 @@ public class ConceptBean implements Serializable {
 
 
         if(!isMCSpecialThisConcept() && concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0 && !relationshipDefinition.isSNOMEDCT())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
-        if(!isMCSpecialThisConcept())autogenerateBeans.autogenerateRelationshipWithAttributes(relationshipDefinition, relationship,concept,autoGenerateList,autogenerateMC);
-        // Se utiliza el constructor mínimo (sin id)
+       // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
+        if(!isMCSpecialThisConcept())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+
         // Resetear placeholder relacion
         relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
         // Resetear placeholder targets
@@ -754,8 +755,8 @@ public class ConceptBean implements Serializable {
         }
         if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
-        if(!isMCSpecialThisConcept())autogenerateBeans.autogenerateRemoveRelationship(rd,r,concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
-        if(!isMCSpecialThisConcept())autogenerateBeans.autogenerateRemoveRelationshipWithAttributes(rd,r,concept,autoGenerateList,autogenerateMC,autogenerateMCCE);
+        if(!isMCSpecialThisConcept())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+
         crossmapBean.refreshCrossmapIndirect(concept);
 
     }
@@ -1040,10 +1041,12 @@ public class ConceptBean implements Serializable {
         att1.setTarget(new BasicTypeValue(targetOrder));
         att2.setTarget(new BasicTypeValue(sourceOrder));
 
+
         RelationshipDefinition relationshipDefinitionRowEdit = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinitionRowEdit");
         if(relationshipDefinitionRowEdit==null)relationshipDefinitionRowEdit=relationshipDefinition;
 
         autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+
     }
 
     // Getter and Setter
