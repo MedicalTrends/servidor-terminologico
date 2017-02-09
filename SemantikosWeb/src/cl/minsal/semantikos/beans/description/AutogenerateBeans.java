@@ -278,7 +278,7 @@ public class AutogenerateBeans {
     public void loadAutogenerate(ConceptSMTKWeb conceptSMTKWeb, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE, List<String> autogenerateList){
         ordenSustancias= new HashMap<>();
         autogenerateMC=new AutogenerateMC();
-        for (Relationship relationship :  conceptSMTKWeb.getRelationshipsWeb()) {
+        for (RelationshipWeb relationship :  conceptSMTKWeb.getRelationshipsWeb()) {
 
             if(!relationship.getRelationshipAttributes().isEmpty()){
                 autogenerateRelationshipWithAttributes(relationship.getRelationshipDefinition(),relationship,conceptSMTKWeb,autogenerateList,autogenerateMC);
@@ -291,23 +291,35 @@ public class AutogenerateBeans {
             }else{
                 autogenerateRelationship(relationship.getRelationshipDefinition(),relationship,relationship.getTarget(),conceptSMTKWeb,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
             }
-            addSustancia(relationship);
+            addSustancia(relationship,autogenerateMC);
         }
-        reorderSustancias(autogenerateList);
+        reorderSustancias(autogenerateList,autogenerateMC);
         if(conceptSMTKWeb.getCategory().getId()==33)autogenerateMB(conceptSMTKWeb,autogenerateList);
+        if(conceptSMTKWeb.getCategory().getId()==34)autogenerateMC.autogenerateMCName(conceptSMTKWeb);
     }
 
-    public void addSustancia(Relationship relationship){
+    public void addSustancia(Relationship relationship, AutogenerateMC autogenerateMC){
         if(relationship.getRelationshipDefinition().getId()==45 ){
             ordenSustancias.put(relationship.getOrder(),((ConceptSMTK)relationship.getTarget()).getDescriptionFavorite().getTerm());
         }
+        if(relationship.getRelationshipDefinition().getId()==47 ){
+            ordenSustancias.put(relationship.getOrder(),autogenerateMC.generateNameSustancia(relationship));
+        }
     }
 
-    public void reorderSustancias( List<String> autogenerateList){
+    public void reorderSustancias( List<String> autogenerateList, AutogenerateMC autogenerateMC){
         autogenerateList.clear();
+
         for (int i =1; i <= ordenSustancias.size(); i++) {
             autogenerateList.add(ordenSustancias.get(i));
         }
+        if(autogenerateMC!=null && autogenerateMC.getSustancias()!=null){
+            autogenerateMC.getSustancias().clear();
+            for (int i =1; i <= ordenSustancias.size(); i++) {
+                autogenerateMC.getSustancias().add(ordenSustancias.get(i));
+            }
+        }
+
     }
 
     public void autogenerateMB(ConceptSMTK concept,List<String> autogenerateList){

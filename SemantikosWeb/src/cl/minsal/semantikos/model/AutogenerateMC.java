@@ -72,8 +72,10 @@ public class AutogenerateMC {
      *
      * @param relationship La sustancia, representada por una relación.
      */
-    public void addSustancia(Relationship relationship) {
-        sustancias.add(generateNameSustancia(relationship));
+    public String addSustancia(Relationship relationship) {
+        String sustancia=generateNameSustancia(relationship);
+        sustancias.add(sustancia);
+        return sustancia;
     }
 
     public String generateNameSustancia(Relationship relationship){
@@ -121,6 +123,11 @@ public class AutogenerateMC {
                 vol = " " + (((HelperTableRow) relationshipAttribute.getTarget()).getDescription());
         }
         volumen = vol;
+    }
+
+    public void autogenerateMCName(ConceptSMTK concept){
+        concept.getDescriptionFavorite().setTerm(this.toString());
+        concept.getDescriptionFSN().setTerm(this.toString());
     }
 
     @Override

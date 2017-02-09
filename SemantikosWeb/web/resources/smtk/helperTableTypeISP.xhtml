@@ -135,7 +135,7 @@
                 </div>
             </p:column>
 
-            <p:column headerText="Acción" rendered="#{cc.attrs.concept.editable}">
+            <p:column headerText="Acción" >
                 <div style="text-align: center">
                     <p:commandButton
                             icon="fa fa-search"
@@ -147,6 +147,7 @@
                     <p:commandButton
                             icon="fa fa-trash"
                             title="Eliminar"
+                            rendered="#{cc.attrs.concept.editable}"
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                             process="@this"
                             immediate="true"
