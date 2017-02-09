@@ -4,8 +4,6 @@
     <data-source name="PostgreSQL - postgres@192.168.0.221" uuid="8546d5f8-2f1d-444a-92c3-9752c1b2cecc">
       <secret-storage>memory</secret-storage>
     </data-source>
-    <data-source name="PostgreSQL - postgres@192.168.0.242 TESTING" uuid="971e7d08-b990-4ddb-bb58-c2f8f6ae9fca">
-      <secret-storage>memory</secret-storage>
-    </data-source>
+    <data-source name="PostgreSQL - postgres@192.168.0.242 TESTING" uuid="971e7d08-b990-4ddb-bb58-c2f8f6ae9fca" />
   </component>
 </project>
