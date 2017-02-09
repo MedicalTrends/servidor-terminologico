@@ -122,10 +122,13 @@
                                                 <p:inputNumber          value="#{row.cells[columnIndex].intValue}"          rendered="#{!column.foreignKey and column.helperTableDataTypeId == 3}" decimalPlaces="0"/>
                                                 <p:inputNumber          value="#{row.cells[columnIndex].floatValue}"        rendered="#{!column.foreignKey and column.helperTableDataTypeId == 4}" />
                                                 <p:calendar             value="#{row.cells[columnIndex].dateValue}"         rendered="#{!column.foreignKey and column.helperTableDataTypeId == 5}"  locale="es" navigator="true" pattern="dd-MM-yyyy" mask="true" />
-                                                <p:selectOneMenu        value="#{row.cells[columnIndex].foreignKeyValue}"   rendered="#{column.foreignKey }" >
-                                                    <f:selectItems value="#{helperTableBean.getReferencedTableRows(column.foreignKeyHelperTableId)}" var="fkTableRow" itemValue="#{fkTableRow.id}" itemLabel="#{fkTableRow.description}" >
-                                                    </f:selectItems>
-                                                </p:selectOneMenu>
+                                                <p:outputPanel rendered="#{row.cells[columnIndex].foreignKeyValue != null}">
+                                                    <p:selectOneMenu        value="#{row.cells[columnIndex].foreignKeyValue}"   rendered="#{column.foreignKey }" >
+                                                        <f:selectItems value="#{helperTableBean.getReferencedTableRows(column.foreignKeyHelperTableId)}" var="fkTableRow" itemValue="#{fkTableRow.id}" itemLabel="#{fkTableRow.description}" >
+                                                        </f:selectItems>
+                                                    </p:selectOneMenu>
+                                                </p:outputPanel>
+
                                             </f:facet>
                                         </p:cellEditor>
                                     </p:columns>
