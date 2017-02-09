@@ -643,7 +643,7 @@ public class ConceptBean implements Serializable {
                 if(relationshipDefinition.isComercializado())
                     changeMarketedBean.changeMarketedEvent(concept, relationshipDefinition, target);
 
-                autogenerateBeans.autogenerateRelationship(relationshipDefinition, relationship, target,concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
+                autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
                 if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<Boolean>) target).getValue())
                     changeMultiplicityNotRequiredRelationshipDefinitionMC();
@@ -664,7 +664,7 @@ public class ConceptBean implements Serializable {
         //Autogenerado
         if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
-        autogenerateBeans.autogenerateRelationship(relationshipDefinition, relationship, target, concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
+        autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
         // Se resetean los placeholder para los target de las relaciones
         resetPlaceHolders();
     }
@@ -687,7 +687,7 @@ public class ConceptBean implements Serializable {
                         isAttributeFound = true;
                         if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
-                        autogenerateBeans.autogenerateAttributeDefinition(relationshipAttributeDefinition, target, attribute,concept, autogenerateMC, autogenerateMCCE);
+                        autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
                         break;
                     }
                 }
@@ -697,7 +697,7 @@ public class ConceptBean implements Serializable {
                     relationship.getRelationshipAttributes().add(attribute);
                     if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
-                    autogenerateBeans.autogenerateAttributeDefinition(relationshipAttributeDefinition, target, attribute,concept, autogenerateMC, autogenerateMCCE);
+                    autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
                 }
             }
         }
@@ -768,7 +768,7 @@ public class ConceptBean implements Serializable {
         r.getRelationshipAttributes().remove(ra);
         if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
-        autogenerateBeans.autogenerateRemoveAttribute(ra.getRelationAttributeDefinition(),concept,autogenerateMC, autogenerateMCCE);
+        autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
     }
 
