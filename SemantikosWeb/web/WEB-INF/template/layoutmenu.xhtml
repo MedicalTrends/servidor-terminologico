@@ -45,6 +45,8 @@
 
             <p:menuitem id="rm_admin_helper_tables" value="Manager Helper Tables" icon="fa fa-dropbox" outcome="/views/helper_tables/helperTableManteiner.xhtml" rendered="#{profilePermissionsBeans.modeler}"/>
 
+            <p:menuitem id="rm_helpertables" value="Manager Auxiliares" icon="fa fa-list-alt" outcome="/views/helpertables/helpertables.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
+
             <p:separator />
 
             <p:submenu id="rm_administracion" label="Administración" icon="icon-planet29" rendered="#{profilePermissionsBeans.modeler}">

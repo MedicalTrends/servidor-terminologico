@@ -55,7 +55,7 @@ public class HelperTableBean implements Serializable{
         List<HelperTable> administrableTables = new ArrayList<>();
 
         for (HelperTable table : getFullDatabase()) {
-            if(table.getId()<=17)
+            if(table.getId()<=21)
                 administrableTables.add(table);
         }
 
