@@ -92,7 +92,7 @@
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
-                                               rendered="#{not conceptBean.isMCSpecial(cc.attrs.relationshipDefinition) and not conceptBean.concept.isModeled()}"
+                                               rendered="#{not conceptBean.isMCSpecial(cc.attrs.relationshipDefinition) }"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
                                     <i class="fa fa-close fa-lg"  />
