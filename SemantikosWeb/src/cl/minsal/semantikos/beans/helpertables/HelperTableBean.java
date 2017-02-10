@@ -5,6 +5,9 @@ import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.kernel.components.HelperTablesManagerImpl;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.*;
+import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.TargetDefinition;
 import org.primefaces.event.RowEditEvent;
 
 import javax.ejb.EJB;
@@ -21,9 +24,9 @@ import java.util.List;
 /**
  * Created by Blueprints on 1/27/2016.
  */
-@ManagedBean(name="helperTableBean")
+@ManagedBean(name = "helperTableBean")
 @ViewScoped
-public class HelperTableBean implements Serializable{
+public class HelperTableBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,17 +48,17 @@ public class HelperTableBean implements Serializable{
         this.authenticationBean = authenticationBean;
     }
 
-    public HelperTablesManager getHelperTablesManager(){
+    public HelperTablesManager getHelperTablesManager() {
         return manager;
     }
 
 
-    public List<HelperTable> getAdministrableTables(){
+    public List<HelperTable> getAdministrableTables() {
 
         List<HelperTable> administrableTables = new ArrayList<>();
 
         for (HelperTable table : getFullDatabase()) {
-            if(table.getId()<=21)
+            if (table.getId() <= 21)
                 administrableTables.add(table);
         }
 
@@ -63,7 +66,7 @@ public class HelperTableBean implements Serializable{
     }
 
     private List<HelperTable> getFullDatabase() {
-        if(fullDatabase==null)
+        if (fullDatabase == null)
             fullDatabase = manager.getFullDatabase();
 
         return fullDatabase;
@@ -73,13 +76,13 @@ public class HelperTableBean implements Serializable{
     public void onRowEditCancel(RowEditEvent event) {
         HelperTableRow row = (HelperTableRow) event.getObject();
 
-        if(row.isPersistent())
+        if (row.isPersistent())
             return;
 
         Long tableId = row.getHelperTableId();
 
         for (HelperTable helperTable : fullDatabase) {
-            if(helperTable.getId()==tableId) {
+            if (helperTable.getId() == tableId) {
                 helperTable.getRows().remove(row);
             }
         }
@@ -90,10 +93,9 @@ public class HelperTableBean implements Serializable{
         HelperTableRow row = (HelperTableRow) event.getObject();
         try {
             HelperTableRow updatedRow;
-            if(row.isPersistent()) {
+            if (row.isPersistent()) {
                 updatedRow = manager.updateRow(row, this.authenticationBean.getUsername());
-            }
-            else{
+            } else {
                 updatedRow = manager.insertRow(row, this.authenticationBean.getUsername());
             }
             row.setLastEditDate(updatedRow.getLastEditDate());
@@ -106,12 +108,12 @@ public class HelperTableBean implements Serializable{
             String msg = "Conceptos que actualmente usan este registro: <br />";
 
             for (ConceptSMTK conceptSMTK : e.getConcepts()) {
-                msg += conceptSMTK.getConceptID()+" <br />";
+                msg += conceptSMTK.getConceptID() + " <br />";
             }
 
             //showError("No se pudo guardar registro como no valido",msg);
 
-            FacesContext.getCurrentInstance().addMessage("message-"+row.getHelperTableId(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudo guardar registro como no valido", msg));
+            FacesContext.getCurrentInstance().addMessage("message-" + row.getHelperTableId(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudo guardar registro como no valido", msg));
 
 
             FacesContext.getCurrentInstance().validationFailed();
@@ -119,11 +121,11 @@ public class HelperTableBean implements Serializable{
     }
 
 
-    public void addRow(HelperTable table){
+    public void addRow(HelperTable table) {
 
         HelperTableRow newRow = createNewHelperTableRow(table);
 
-        table.getRows().add(0,newRow);
+        table.getRows().add(0, newRow);
 
     }
 
@@ -141,8 +143,8 @@ public class HelperTableBean implements Serializable{
 
 
         newRow.setCells(new ArrayList<HelperTableData>());
-        for (HelperTableColumn column: table.getColumns()) {
-            HelperTableData data = createCell(column,newRow);
+        for (HelperTableColumn column : table.getColumns()) {
+            HelperTableData data = createCell(column, newRow);
             newRow.getCells().add(data);
         }
         return newRow;
@@ -162,13 +164,82 @@ public class HelperTableBean implements Serializable{
     }
 
 
-
-
-    public List<HelperTableRow> getValidTableRows(HelperTable table){
+    public List<HelperTableRow> getValidTableRows(HelperTable table) {
         return getReferencedTableRows(table.getId());
     }
 
-    public List<HelperTableRow> getReferencedTableRows(Long tableId){
+    public List<HelperTableRow> getValidTableRows(HelperTable table, RelationshipAttributeDefinition relationshipAttributeDefinition) {
+        List<HelperTableRow> helperTableRows = getReferencedTableRows(table.getId());
+        List<HelperTableRow> helperTableRowsFiltered;
+
+
+        switch ((int)relationshipAttributeDefinition.getId()) {
+
+            case (int)HelperTableRecordFactory.U_VOLUMEN_ID:
+                helperTableRowsFiltered = getValidTableRowsUnit(helperTableRows,HelperTableRecordFactory.COLUMN_U_VOL);
+                if(helperTableRows.size()!=0){
+                    return helperTableRowsFiltered;
+                }
+            case (int)HelperTableRecordFactory.U_POTENCIA_ID:
+                helperTableRowsFiltered = getValidTableRowsUnit(helperTableRows,HelperTableRecordFactory.COLUMN_U_POTENCIA);
+                if(helperTableRows.size()!=0){
+                    return helperTableRowsFiltered;
+                }
+            case (int)HelperTableRecordFactory.U_UNIDAD_CANTIDAD_ID:
+                helperTableRowsFiltered = getValidTableRowsUnit(helperTableRows,HelperTableRecordFactory.COLUMN_U_UNIDAD_CANTIDAD);
+                if(helperTableRows.size()!=0){
+                    return helperTableRowsFiltered;
+                }
+            case (int)HelperTableRecordFactory.U_PACK_MULTI_ID:
+                helperTableRowsFiltered = getValidTableRowsUnit(helperTableRows,HelperTableRecordFactory.COLUMN_U_PACK_MULTI);
+                if(helperTableRows.size()!=0){
+                    return helperTableRowsFiltered;
+                }
+            case (int)HelperTableRecordFactory.U_VOLUMEN_TOT_ID:
+                helperTableRowsFiltered = getValidTableRowsUnit(helperTableRows,HelperTableRecordFactory.COLUMN_U_VOLUMEN_TOT);
+                if(helperTableRows.size()!=0){
+                    return helperTableRowsFiltered;
+                }
+            default:
+                return helperTableRows;
+        }
+
+    }
+
+    public List<HelperTableRow> getValidTableRowsRD( HelperTable table, long idRelationshipDefinition) {
+        List<HelperTableRow> helperTableRows = getReferencedTableRows(table.getId());
+        List<HelperTableRow> helperTableRowsFiltered;
+
+
+        switch ((int)idRelationshipDefinition) {
+            case (int)HelperTableRecordFactory.U_ASIST_ID:
+                helperTableRowsFiltered = getValidTableRowsUnit(helperTableRows,HelperTableRecordFactory.COLUMN_U_ASIST);
+                if(helperTableRows.size()!=0){
+                    return helperTableRowsFiltered;
+                }
+            default:
+                return helperTableRows;
+        }
+    }
+
+    public List<HelperTableRow> getValidTableRowsUnit(List<HelperTableRow> helperTableRows, long idColumn) {
+        List<HelperTableRow> helperTableRowsFiltered = new ArrayList<>();
+        for (HelperTableRow helperTableRow : helperTableRows) {
+            for (HelperTableData helperTableData : helperTableRow.getCells()) {
+                if (helperTableData.getColumnId() == idColumn) {
+                    if (helperTableData.isBooleanValue()) {
+                        helperTableRowsFiltered.add(helperTableRow);
+                        break;
+                    }
+                }
+
+            }
+        }
+        return helperTableRowsFiltered;
+    }
+
+
+    public List<HelperTableRow> getReferencedTableRows(Long tableId) {
         List<HelperTableRow> validTableRows = manager.getValidTableRows(tableId);
         return validTableRows;
     }

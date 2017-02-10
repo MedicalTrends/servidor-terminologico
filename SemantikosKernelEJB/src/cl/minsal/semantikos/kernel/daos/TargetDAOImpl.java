@@ -412,6 +412,7 @@ public class TargetDAOImpl implements TargetDAO {
         call.setNull(9, BIGINT);
         call.setNull(10, BIGINT);
     }
+
     private void setDefaultValuesForUpdateTargetFunction(CallableStatement call) throws SQLException {
         setDefaultValuesForCreateTargetFunction(call);
         call.setNull(11, BIGINT);
