@@ -276,26 +276,28 @@ public class AutogenerateBeans {
     }
 
     public void loadAutogenerate(ConceptSMTKWeb conceptSMTKWeb, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE, List<String> autogenerateList){
-        ordenSustancias= new HashMap<>();
-        autogenerateMC=new AutogenerateMC();
-        for (RelationshipWeb relationship :  conceptSMTKWeb.getRelationshipsWeb()) {
+        if(!conceptSMTKWeb.isModeled()){
+            ordenSustancias= new HashMap<>();
+            autogenerateMC=new AutogenerateMC();
+            for (RelationshipWeb relationship :  conceptSMTKWeb.getRelationshipsWeb()) {
 
-            if(!relationship.getRelationshipAttributes().isEmpty()){
-                autogenerateRelationshipWithAttributes(relationship.getRelationshipDefinition(),relationship,conceptSMTKWeb,autogenerateList,autogenerateMC);
-                autogenerateRelationship(relationship.getRelationshipDefinition(),relationship,relationship.getTarget(),conceptSMTKWeb,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
-                for (RelationshipAttributeDefinition relationshipAttributeDefinition : relationship.getRelationshipDefinition().getRelationshipAttributeDefinitions()) {
-                    if(relationship.getAttribute(relationshipAttributeDefinition)!=null) {
-                        autogenerateAttributeDefinition(relationshipAttributeDefinition, relationship.getAttribute(relationshipAttributeDefinition).getTarget(), relationship.getAttribute(relationshipAttributeDefinition), conceptSMTKWeb, autogenerateMC, autogenerateMCCE);
+                if(!relationship.getRelationshipAttributes().isEmpty()){
+                    autogenerateRelationshipWithAttributes(relationship.getRelationshipDefinition(),relationship,conceptSMTKWeb,autogenerateList,autogenerateMC);
+                    autogenerateRelationship(relationship.getRelationshipDefinition(),relationship,relationship.getTarget(),conceptSMTKWeb,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
+                    for (RelationshipAttributeDefinition relationshipAttributeDefinition : relationship.getRelationshipDefinition().getRelationshipAttributeDefinitions()) {
+                        if(relationship.getAttribute(relationshipAttributeDefinition)!=null) {
+                            autogenerateAttributeDefinition(relationshipAttributeDefinition, relationship.getAttribute(relationshipAttributeDefinition).getTarget(), relationship.getAttribute(relationshipAttributeDefinition), conceptSMTKWeb, autogenerateMC, autogenerateMCCE);
+                        }
                     }
+                }else{
+                    autogenerateRelationship(relationship.getRelationshipDefinition(),relationship,relationship.getTarget(),conceptSMTKWeb,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
                 }
-            }else{
-                autogenerateRelationship(relationship.getRelationshipDefinition(),relationship,relationship.getTarget(),conceptSMTKWeb,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
+                addSustancia(relationship,autogenerateMC);
             }
-            addSustancia(relationship,autogenerateMC);
+            reorderSustancias(autogenerateList,autogenerateMC);
+            if(conceptSMTKWeb.getCategory().getId()==33)autogenerateMB(conceptSMTKWeb,autogenerateList);
+            if(conceptSMTKWeb.getCategory().getId()==34)autogenerateMC.autogenerateMCName(conceptSMTKWeb);
         }
-        reorderSustancias(autogenerateList,autogenerateMC);
-        if(conceptSMTKWeb.getCategory().getId()==33)autogenerateMB(conceptSMTKWeb,autogenerateList);
-        if(conceptSMTKWeb.getCategory().getId()==34)autogenerateMC.autogenerateMCName(conceptSMTKWeb);
     }
 
     public void addSustancia(Relationship relationship, AutogenerateMC autogenerateMC){
