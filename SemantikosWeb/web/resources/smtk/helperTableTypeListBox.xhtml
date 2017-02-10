@@ -325,6 +325,11 @@
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      reflow="true">
+            <p:column headerText="Descripción"
+                       var="column"
+                       columnIndexVar="colIndex" rendered="#{ not cc.attrs.relationshipDefinition.bioequivalente}">
+                <h:outputText value="#{relationship.target.description}" />
+            </p:column>
             <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
                        var="column"
                        columnIndexVar="colIndex" rendered="#{ not cc.attrs.relationshipDefinition.bioequivalente}">
