@@ -1,10 +1,10 @@
 <component name="ArtifactManager">
   <artifact type="exploded-ear" name="SemantikosCentralEAR:ear exploded">
-    <output-path>$PROJECT_DIR$/SemantikosCentralEAR/target/SemantikosCentralEAR-2.2.12</output-path>
+    <output-path>$PROJECT_DIR$/SemantikosCentralEAR/target/SemantikosCentralEAR-3.0.3</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="SemantikosCentralEAR/javaeeApplication/JavaEE" />
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/SemantikosCentralEAR/target/SemantikosCentralEAR-2.2.12/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/SemantikosCentralEAR/target/SemantikosCentralEAR-3.0.3/META-INF/MANIFEST.MF" />
       </element>
       <element id="dir-copy" path="src/main/java" />
       <element id="directory" name="lib">
