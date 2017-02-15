@@ -319,6 +319,8 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
     private DescriptionSCT createDescriptionSCTFromResultSet(ResultSet resultSet) throws SQLException {
 
+
+
         long id = resultSet.getLong("id");
         Timestamp effectiveTime = resultSet.getTimestamp("effectivetime");
         boolean active = resultSet.getBoolean("active");
@@ -328,13 +330,18 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         long typeID = resultSet.getLong("typeId");
         String term = resultSet.getString("term");
         long caseSignificanceID = resultSet.getLong("caseSignificanceId");
+        long acceptabilityID = resultSet.getLong("acceptabilityId");
 
         /**
          * Identifies whether the description is an FSN, Synonym or other description type.
          * This field is set to a child of 900000000000446008 | Description type | in the Metadata hierarchy.
          */
         try {
-            return new DescriptionSCT(id, DescriptionSCTType.valueOf(typeID), effectiveTime, active, moduleID, conceptID, languageCode, term, caseSignificanceID);
+            DescriptionSCT descriptionSCT = new DescriptionSCT(id, DescriptionSCTType.valueOf(typeID), effectiveTime, active, moduleID, conceptID, languageCode, term, caseSignificanceID);
+
+            descriptionSCT.setFavourite(DescriptionSCTType.valueOf(acceptabilityID).equals(DescriptionSCTType.PREFERRED));
+
+            return descriptionSCT;
         } catch (Exception e) {
             e.printStackTrace();
         }

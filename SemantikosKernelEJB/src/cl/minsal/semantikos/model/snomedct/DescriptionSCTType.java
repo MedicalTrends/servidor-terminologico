@@ -5,7 +5,7 @@ package cl.minsal.semantikos.model.snomedct;
  */
 public enum DescriptionSCTType {
 
-    SYNONYM(900000000000013009L), FSN(900000000000003001L);
+    SYNONYM(900000000000013009L), FSN(900000000000003001L), PREFERRED(900000000000548007L);
 
     private long typeId;
 
@@ -18,6 +18,8 @@ public enum DescriptionSCTType {
             return FSN;
         } else if (SYNONYM.typeId == typeId) {
             return SYNONYM;
+        } else if (PREFERRED.typeId == typeId) {
+            return PREFERRED;
         }
 
         throw new Exception("Error parseando el valor del Description Type");

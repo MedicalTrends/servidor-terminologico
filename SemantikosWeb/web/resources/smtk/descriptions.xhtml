@@ -227,6 +227,7 @@
     <p:dialog id="dialogTDC" header="Trasladar descripcion" widgetVar="dialogTDC" global="true"
               showEffect="fade" hideEffect="fade">
 
+        <p:growl id="descriptionTranslateError" showDetail="true"/>
 
         <p:panel id="conceptTranslate" style="width: 100%; border: hidden;">
 
@@ -274,8 +275,7 @@
                                         itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
                                         emptyMessage="No se encontraron conceptos relacionados"
                                         placeholder="Buscar concepto por término"
-                                        disabled="#{conceptBean.conceptSMTKTranslateDes!=null}"
-                        >
+                                        disabled="#{conceptBean.conceptSMTKTranslateDes!=null}">
                             <p:ajax event="itemSelect" update=":#{cc.clientId}:conceptTranslate"/>
 
                         </p:autoComplete>
@@ -344,7 +344,7 @@
     </p:dialog>
 
 
-    <p:dialog id="dialogTDNV" header="Trasladar Descripción a No Válido" widgetVar="dialogTDNV" global="true"
+    <p:dialog id="dialogTDNV" header="Trasladar Descripción a No Válido" widgetVar="dialogTDNV" global="true" visible="#{descriptionBeans.error != ''}"
               showEffect="fade" hideEffect="fade" width="780px" height="500px">
 
 
@@ -431,6 +431,7 @@
                         <div class="Container60 Responsive">
                             <p:selectOneMenu value="#{conceptBean.observationNoValid}"
                                              autoWidth="false"
+                                             styleClass="#{descriptionBeans.error}"
                                              converter="omnifaces.SelectItemsConverter"
                                              disabled="#{conceptBean.observationNoValid!=null}">
                                 <f:selectItem itemLabel="Seleccione una observación" itemDisabled="true"/>

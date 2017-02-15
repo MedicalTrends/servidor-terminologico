@@ -59,7 +59,7 @@ public class HelperTableBean implements Serializable {
 
         if(relationshipDefinition != null) {
             if (relationshipDefinition.isATC()) {
-                columnNames = new String[]{"codigo_atc", "dsc_completa_atc"};
+                columnNames = new String[]{"codigo_atc", HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName()};
             } else if (relationshipDefinition.isISP()) {
                 columnNames = new String[]{"registro"};
             } else if (relationshipDefinition.isBioequivalente()) {

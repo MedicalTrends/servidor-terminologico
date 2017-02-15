@@ -523,9 +523,10 @@ public class ConceptBean implements Serializable {
             return;
         }
 
-        if(relationshipDefinition.isSNOMEDCT()){
-           BasicTypeValue<Integer> targetGroup = new BasicTypeValue<Integer>(sctTypeBean.getRelationshipGroup());
+        if(relationshipDefinition.isSNOMEDCT()) {
+            BasicTypeValue<Integer> targetGroup = new BasicTypeValue<Integer>(sctTypeBean.getRelationshipGroup());
             relationship.getRelationshipAttributes().add(new RelationshipAttribute( relationshipDefinition.getGroupAttributeDefinition(),relationship,targetGroup));
+            //Collections.reverse(relationship.getRelationshipAttributes());
         }
 
         // Validar placeholders de targets de relacion
