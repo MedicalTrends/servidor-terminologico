@@ -5,9 +5,8 @@ import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.kernel.components.HelperTablesManagerImpl;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.*;
-import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model.relationships.TargetDefinition;
+import cl.minsal.semantikos.model.relationships.*;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
 import javax.ejb.EJB;
@@ -15,9 +14,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -243,4 +244,42 @@ public class HelperTableBean implements Serializable {
         List<HelperTableRow> validTableRows = manager.getValidTableRows(tableId);
         return validTableRows;
     }
+
+    public List<HelperTableRow> getRecordSearchInput(String patron) {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        RequestContext context2 = RequestContext.getCurrentInstance();
+
+        HelperTable helperTable = (HelperTable) UIComponent.getCurrentComponent(context).getAttributes().get("helperTable");
+        RelationshipDefinition relationshipDefinition = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinition");
+
+        List<HelperTableRow> someRows;
+        String[] columnNames = new String[]{};
+
+        someRows = manager.searchRows(helperTable, patron);
+
+        if(relationshipDefinition!= null && relationshipDefinition.isISP() && someRows.isEmpty()){
+            context2.execute("PF('dialogISP').show();");
+        }
+
+        return someRows;
+    }
+
+    /*
+    public List<Relationship> findRelationshipsLike(ConceptSMTK sourceConcept, RelationshipDefinition relationshipDefinition, Target target) {
+
+        List<Relationship> relationshipsLike = new ArrayList<>();
+
+        if(target != null) {
+
+            for (Relationship relationship : relationshipManager.findRelationshipsLike(relationshipDefinition, target)) {
+                if(!relationship.getSourceConcept().equals(sourceConcept)) {
+                    relationshipsLike.add(relationship);
+                }
+            }
+        }
+
+        return relationshipsLike;
+    }
+    */
 }
