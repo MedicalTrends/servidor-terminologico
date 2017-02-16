@@ -95,6 +95,7 @@
                                                 forceSelection="true"
                                                 id="findConceptSCT"
                                                 widgetVar="findConceptSCT"
+                                                queryDelay="500"
                                                 scrollHeight="200" size="5"
                                                 completeMethod="#{sctBean.getConceptSearchInput}"
                                                 placeholder="#{sctBean.searchOption eq 'term'? 'Ingrese término...': 'Ingrese conceptId...'}"
@@ -249,7 +250,7 @@
                 <p:dataTable id="otherDescriptions"
                              var="description"
                              value="#{sctBean.getOtherDescriptions(sctBean.conceptSelected)}"
-                             rendered="#{ not empty sctBean.conceptSelected.descriptions }"
+                             rendered="#{ not empty sctBean.getOtherDescriptions(sctBean.conceptSelected) }"
                              editable="true"
                              reflow="true">
                     <p:columnGroup type="header">
@@ -260,7 +261,7 @@
 
                     </p:columnGroup>
                     <p:column style="width: 25%" styleClass="BoldGray FontBold">
-                        #{description.descriptionType}
+                        #{description.descriptionType.name}
                     </p:column>
                     <p:column>
                         #{description.term}

@@ -319,8 +319,6 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
     private DescriptionSCT createDescriptionSCTFromResultSet(ResultSet resultSet) throws SQLException {
 
-
-
         long id = resultSet.getLong("id");
         Timestamp effectiveTime = resultSet.getTimestamp("effectivetime");
         boolean active = resultSet.getBoolean("active");
