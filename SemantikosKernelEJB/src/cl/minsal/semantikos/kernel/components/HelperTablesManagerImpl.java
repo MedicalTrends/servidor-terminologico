@@ -197,4 +197,5 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
             this.concepts = concepts;
         }
     }
+
 }

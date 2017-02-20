@@ -20,6 +20,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -164,10 +165,13 @@ public class ISPBean {
          * Si no existe, se va a buscar a la página del registro isp
          */
         if(ispRecord==null) {
-            //fetchedData = ispFetcher.getISPData(regnum+"/"+ano);
 
+            ispRecord = new HelperTableRow((HelperTable)relationshipDefinition.getTargetDefinition());
             fetchedData = ispFetcher.getISPData(regnum + "/" + ano);
 
+            if(!fetchedData.isEmpty()) {
+                mapIspRecord((HelperTable) relationshipDefinition.getTargetDefinition(), ispRecord, fetchedData);
+            }
 
         }
         else {
@@ -183,6 +187,26 @@ public class ISPBean {
         }
 
         context.execute("PF('ispfetcheddialog').show();");
+    }
+
+    public void mapIspRecord(HelperTable ispHelperTable, HelperTableRow ispRecord, Map<String,String> fetchedRecord){
+
+        for (HelperTableColumn helperTableColumn : ispHelperTable.getColumns()) {
+            for (String s : fetchedRecord.keySet()) {
+                if(helperTableColumn.getDescription().toLowerCase().contains(s.toLowerCase())) {
+                    HelperTableData cell = new HelperTableData();
+                    cell.setColumn(helperTableColumn);
+                    if(helperTableColumn.getDescription().toLowerCase().contains("fecha") ||
+                       helperTableColumn.getDescription().toLowerCase().contains("última") ) {
+                        cell.setDateValue(new Timestamp(Date.parse(fetchedRecord.get(s))));
+                    }
+                    else {
+                        cell.setStringValue(fetchedRecord.get(s));
+                    }
+                    ispRecord.getCells().add(cell);
+                }
+            }
+        }
     }
 
     public void fetchData(String registro){
@@ -232,13 +256,19 @@ public class ISPBean {
     public void agregarISP(RelationshipDefinition relationshipDefinition){
 
 
-        if(fetchedData != null){
+        if(!ispRecord.isPersistent()){
             HelperTable ispHT = getISPHelperTable();
 
-            ispRecord = helperTablesManager.createEmptyRow(ispHT.getId(),authenticationBean.getUsername());
+            //ispRecord = helperTablesManager.createEmptyRow(ispHT.getId(),authenticationBean.getUsername());
 
+            //mapFetchedData(ispRecord,fetchedData);
 
-            mapFetchedData(ispRecord,fetchedData);
+            ispRecord.setCreationDate(new Date());
+            ispRecord.setCreationUsername(authenticationBean.getLoggedUser().getUsername());
+            ispRecord.setLastEditDate(new Date());
+            ispRecord.setLastEditUsername(authenticationBean.getLoggedUser().getUsername());
+            ispRecord.setDescription(ispRecord.getCellByColumnName("registro").toString());
+            ispRecord.setValid(true);
 
             HelperTableRow inserted = null;
             try {
@@ -248,6 +278,11 @@ public class ISPBean {
             }
             ispRecord = inserted;
         }
+
+        conceptBean.setSelectedHelperTableRecord(ispRecord);
+        conceptBean.addRelationship(relationshipDefinition,ispRecord);
+
+        clean();
 
         conceptBean.setSelectedHelperTableRecord(ispRecord);
         conceptBean.addRelationship(relationshipDefinition,ispRecord);

@@ -158,5 +158,25 @@ public class HelperTableData {
         return result;
     }
 
+    @Override
+    public String toString() {
+
+        if(intValue != 0) {
+            return String.valueOf(intValue);
+        }
+        else if(floatValue != null) {
+            return String.valueOf(floatValue);
+        }
+        else if(stringValue != null) {
+            return stringValue;
+        }
+        else if(dateValue != null) {
+            return  String.valueOf(dateValue);
+        }
+        else {
+            return String.valueOf(id);
+        }
+
+    }
 
 }

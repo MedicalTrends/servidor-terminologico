@@ -191,4 +191,11 @@ public class HelperTableColumn {
     public void setRequired(boolean required) {
         this.required = required;
     }
+
+    @Override
+    public String toString() {
+        return "HelperTableColumn{" +
+                "description='" + description + '\'' +
+                '}';
+    }
 }

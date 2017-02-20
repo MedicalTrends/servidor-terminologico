@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class HelperTableRow implements Target{
     private String description;
     private String creationUsername;
     private String lastEditUsername;
-    private List<HelperTableData> cells;
+    private List<HelperTableData> cells = new ArrayList<>();
     private long helperTableId;
 
 
@@ -36,6 +37,15 @@ public class HelperTableRow implements Target{
     public HelperTableRow(HelperTable helperTable) {
         this.id=-1;
         this.helperTableId=helperTable.getId();
+    }
+
+    /*
+    crea fila placeholder a partir de la tabla y data adicional
+     */
+    public HelperTableRow(HelperTable helperTable, List<HelperTableData> cells) {
+        this.id=-1;
+        this.helperTableId=helperTable.getId();
+        this.cells = cells;
     }
 
 
@@ -76,6 +86,14 @@ public class HelperTableRow implements Target{
 
     }
 
+    public HelperTableData getCellByColumnName(String columnName) {
+        for (HelperTableData cell : cells) {
+            if(cell.getColumn().getDescription().toLowerCase().equals(columnName.toLowerCase())) {
+                return cell;
+            }
+        }
+        return null;
+    }
 
 
     public void setId(long id) {

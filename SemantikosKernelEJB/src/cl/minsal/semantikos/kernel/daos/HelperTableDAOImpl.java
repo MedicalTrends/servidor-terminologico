@@ -504,8 +504,6 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
     @Override
     public List<ConceptSMTK> isRowUsed(HelperTableRow row) {
 
-
-
         ConnectionBD connectionBD = new ConnectionBD();
             String selectRecord = "{call semantikos.get_concepts_ids_by_helper_table_target(?)}";
             List<ConceptSMTK> result = new ArrayList<>();
