@@ -3,6 +3,7 @@ package cl.minsal.semantikos.beans.description;
 import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.beans.messages.MessageBean;
 import cl.minsal.semantikos.model.*;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIOutput;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
 import java.util.ArrayList;
@@ -49,6 +51,8 @@ public class DescriptionBeans {
     private static long SYNONYMOUS_ID = 3;
 
     private DescriptionWeb descriptionEdit;
+
+    private String error = "";
 
     @PostConstruct
     public void init() {
@@ -108,12 +112,22 @@ public class DescriptionBeans {
      * Este método es el encargado de trasladar las descripciones al concepto especial no válido
      */
     public void traslateDescriptionNotValid() {
+
+        RequestContext context = RequestContext.getCurrentInstance();
+        FacesContext fContext = FacesContext.getCurrentInstance();
+
+        if(conceptBean.getObservationNoValid() == null ) {
+            messageBean.messageError("Indique razón de No Válido");
+            error = "ui-state-error";
+
+            return;
+        }
         conceptBean.getDescriptionToTranslate().setConceptSMTK(conceptBean.getConceptSMTKNotValid());
         conceptBean.getConcept().getDescriptionsWeb().remove(conceptBean.getDescriptionToTranslate());
         conceptBean.getNoValidDescriptions().add(new NoValidDescription(conceptBean.getDescriptionToTranslate(), conceptBean.getObservationNoValid().getId(), conceptBean.getConceptSuggestedList()));
         messageBean.messageSuccess("Traslado de descripción", "La descripción se trasladará al momento de guardar el concepto");
         conceptBean.setConceptSuggestedList(new ArrayList<ConceptSMTK>());
-
+        error = "";
     }
 
     /**
@@ -186,5 +200,13 @@ public class DescriptionBeans {
 
     public void setDescriptionEdit(DescriptionWeb descriptionEdit) {
         this.descriptionEdit = descriptionEdit;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

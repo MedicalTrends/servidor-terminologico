@@ -3,6 +3,7 @@ package cl.minsal.semantikos.model.relationships;
 import cl.minsal.semantikos.model.Multiplicity;
 
 import javax.validation.constraints.NotNull;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -61,6 +62,7 @@ public class RelationshipDefinitionWeb extends RelationshipDefinition implements
     }
 
     public List<RelationshipAttributeDefinitionWeb> getRelationshipAttributeDefinitionWebs() {
+        Collections.sort(relationshipAttributeDefinitionWebs);
         return relationshipAttributeDefinitionWebs;
     }
 

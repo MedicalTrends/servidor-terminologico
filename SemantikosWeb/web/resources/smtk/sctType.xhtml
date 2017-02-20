@@ -53,14 +53,37 @@
 
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
-                            <p:selectOneMenu value="#{sctBean.searchOption}">
+                            <p:selectOneRadio value="#{sctBean.searchOption}">
                                 <f:selectItem itemLabel="Buscar por Término" itemValue="term" />
                                 <f:selectItem itemLabel="Buscar por ConceptId" itemValue="conceptId" />
-                                <p:ajax event="itemSelect" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
-                            </p:selectOneMenu>
+                                <p:ajax update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
+                            </p:selectOneRadio>
 
                         </div>
+
                     </div>
+
+                    <p:repeat
+                            offset="0"
+                            size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
+                            step="1"
+                            varStatus="var"
+                            value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
+                            var="relationshipAttributeDefinition">
+                        <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                                 concept="#{cc.attrs.concept}"
+                                                 relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
+                                                 targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                                 rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()
+                                                             and not relationshipAttributeDefinition.groupSCT}"
+                        />
+                        <smtk:helperTableTypeAttributeSCT relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                                          concept="#{cc.attrs.concept}"
+                                                          relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
+                                                          targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                                          rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
+                        />
+                    </p:repeat>
 
                     <div class="Container20 White Responsive">
 
@@ -72,6 +95,7 @@
                                                 forceSelection="true"
                                                 id="findConceptSCT"
                                                 widgetVar="findConceptSCT"
+                                                queryDelay="500"
                                                 scrollHeight="200" size="5"
                                                 completeMethod="#{sctBean.getConceptSearchInput}"
                                                 placeholder="#{sctBean.searchOption eq 'term'? 'Ingrese término...': 'Ingrese conceptId...'}"
@@ -112,27 +136,6 @@
                         </div>
                     </div>
 
-                    <p:repeat
-                            offset="0"
-                            size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
-                            step="1"
-                            varStatus="var"
-                            value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                            var="relationshipAttributeDefinition">
-                        <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                 concept="#{cc.attrs.concept}"
-                                                 relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                 targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                 rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()
-                                                             and not relationshipAttributeDefinition.groupSCT}"
-                        />
-                        <smtk:helperTableTypeAttributeSCT relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                          concept="#{cc.attrs.concept}"
-                                                          relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                          targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                          rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
-                        />
-                    </p:repeat>
                     <div class="Container20 White Responsive">
 
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
@@ -168,25 +171,28 @@
                     update="@(.conceptHeader),@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id})">
 
             </p:ajax>
+
             <f:attribute name="relationshipDefinitionRowEdit" value="#{cc.attrs.relationshipDefinition}" />
 
-            <p:column headerText="ID">
-                <h:outputText value="#{rel.target.idSnomedCT}"/>
-            </p:column>
-
-            <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
+            <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitionWebs}"
                        var="attribute"
                        columnIndexVar="colIndex">
                 <f:facet name="header">
                     <h:outputText value="#{attribute.name}" />
                 </f:facet>
-                <p:outputPanel rendered="#{not empty rel.getAttributesByAttributeDefinition(attribute)}">
-                    <smtk:basicTypeAttributeCell attribute="#{attribute}" relationship="#{rel}" rendered="#{attribute.targetDefinition.basicType}" />
-                    <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{rel}" rendered="#{attribute.targetDefinition.helperTable}" />
+                <p:outputPanel rendered="#{not empty rel.getAttributesByAttributeDefinition(attribute.relationshipAttributeDefinition)}">
+                    <smtk:basicTypeAttributeCell attribute="#{attribute.relationshipAttributeDefinition}" relationship="#{rel}"
+                                                 rendered="#{attribute.targetDefinition.basicType}" />
+                    <smtk:helperTableTypeAttributeCell attribute="#{attribute.relationshipAttributeDefinition}" relationship="#{rel}"
+                                                       rendered="#{attribute.targetDefinition.helperTable}" />
                 </p:outputPanel>
             </p:columns>
 
-            <p:column headerText="Descripción">
+            <p:column headerText="ConceptID">
+                <h:outputText value="#{rel.target.idSnomedCT}"/>
+            </p:column>
+
+            <p:column headerText="FSN">
                 <h:outputText value="#{rel.target.descriptionFSN.term}"/>
             </p:column>
 
@@ -244,7 +250,7 @@
                 <p:dataTable id="otherDescriptions"
                              var="description"
                              value="#{sctBean.getOtherDescriptions(sctBean.conceptSelected)}"
-                             rendered="#{ not empty sctBean.conceptSelected.descriptions }"
+                             rendered="#{ not empty sctBean.getOtherDescriptions(sctBean.conceptSelected) }"
                              editable="true"
                              reflow="true">
                     <p:columnGroup type="header">
@@ -255,7 +261,7 @@
 
                     </p:columnGroup>
                     <p:column style="width: 25%" styleClass="BoldGray FontBold">
-                        #{description.descriptionType}
+                        #{description.descriptionType.name}
                     </p:column>
                     <p:column>
                         #{description.term}

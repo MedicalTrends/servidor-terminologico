@@ -96,7 +96,9 @@
                                                         <p:growl id="growlAttributes" showDetail="true" showSummary="true"/>
 
                                                         <smtk:smtkType
-                                                                rendered="#{(relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 1) or (relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 3) or  (relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 2)}"
+                                                                rendered="#{(relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 1) or
+                                                                            (relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 3) or
+                                                                            (relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 2)}"
                                                                 targetDefinition="#{relationshipDefinition.targetDefinition}"
                                                                 relationshipDefinition="#{relationshipDefinition}"
                                                                 concept="#{conceptBean.concept}"/>

@@ -58,6 +58,8 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
         if(results.isEmpty())
             results = snomedctDAO.findTruncateMatch(patternStandard, group);
 
+        new ConceptSearchBR().applyPostActions(results);
+
         return results;
     }
 
