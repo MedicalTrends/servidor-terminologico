@@ -103,6 +103,13 @@ public class HelperTableRecordFactory {
         return helperTableList;
     }
 
+    public HelperTableColumn createHelperTableColumnFromJSON(String jsonExpression) throws IOException {
+
+        HelperTableColumn jsonHelperTableColumn = mapper.readValue(jsonExpression, HelperTableColumn.class);
+
+        return jsonHelperTableColumn;
+    }
+
 
 
     public List<HelperTableDataType> createHelperTablesDataTypesFromJSON(String jsonExpression) throws IOException {

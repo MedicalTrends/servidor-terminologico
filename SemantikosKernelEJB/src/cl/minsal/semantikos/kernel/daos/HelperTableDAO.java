@@ -26,6 +26,8 @@ public interface HelperTableDAO {
 
     HelperTableRow getRowById(long id);
 
+    HelperTableColumn getColumnById(long id);
+
     HelperTableRow updateRow(HelperTableRow row);
 
     HelperTable getHelperTableByID(long tableId);

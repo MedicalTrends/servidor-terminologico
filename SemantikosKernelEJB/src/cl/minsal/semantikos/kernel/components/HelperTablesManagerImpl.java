@@ -12,6 +12,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.io.Reader;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -73,9 +74,9 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
 
         HelperTableRow newRow = new HelperTableRow();
 
-        newRow.setCreationDate(new Date());
+        newRow.setCreationDate(new Timestamp(System.currentTimeMillis()));
         newRow.setCreationUsername(username);
-        newRow.setLastEditDate(new Date());
+        newRow.setLastEditDate(new Timestamp(System.currentTimeMillis()));
         newRow.setLastEditUsername(username);
 
         newRow.setDescription("Nuevo Elemento");
@@ -100,9 +101,9 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
     public HelperTableRow insertRow(HelperTableRow newRow,String username) {
 
 
-        newRow.setCreationDate(new Date());
+        newRow.setCreationDate(new Timestamp(System.currentTimeMillis()));
         newRow.setCreationUsername(username);
-        newRow.setLastEditDate(new Date());
+        newRow.setLastEditDate(new Timestamp(System.currentTimeMillis()));
         newRow.setLastEditUsername(username);
 
         newRow = dao.createRow(newRow);
@@ -136,7 +137,7 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
         }
 
 
-        row.setLastEditDate(new Date());
+        row.setLastEditDate(new Timestamp(System.currentTimeMillis()));
         row.setLastEditUsername(username);
 
 
@@ -152,6 +153,11 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
     @Override
     public HelperTableRow getRowById(long idRow) {
         return dao.getRowById(idRow);
+    }
+
+    @Override
+    public HelperTableColumn getColumnById(long idColumn) {
+        return dao.getColumnById(idColumn);
     }
 
     @Override

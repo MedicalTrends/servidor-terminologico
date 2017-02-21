@@ -247,11 +247,11 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
             call.setLong(1, row.getHelperTableId());
             call.setString(2, row.getDescription());
-            call.setDate(3, new Date(row.getCreationDate().getTime()));
+            call.setTimestamp(3, row.getCreationDate());
             call.setString(4, row.getCreationUsername());
-            call.setDate(5, new Date(row.getLastEditDate().getTime()));
+            call.setTimestamp(5, row.getLastEditDate());
             call.setString(6, row.getLastEditUsername());
-            call.setDate(7, row.getValidityUntil()!=null?new Date(row.getValidityUntil().getTime()):null);
+            call.setTimestamp(7, row.getValidityUntil()!=null?new Timestamp(row.getValidityUntil().getTime()):null);
             call.setBoolean(8, row.isValid());
 
             ResultSet rs = call.executeQuery();
@@ -296,8 +296,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.setBoolean(5,cell.isBooleanValue());
             call.setLong(6, cell.getForeignKeyValue());
             call.setLong(7,cell.getRowId());
-            call.setLong(8,cell.getColumnId());
-
+            call.setLong(8,cell.getColumn().getId());
 
 
             ResultSet rs = call.executeQuery();
@@ -375,6 +374,11 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
                     return null;
 
                 recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
+
+                for (HelperTableData cell : recordFromJSON.get(0).getCells()) {
+                    cell.setColumn(getColumnById(cell.getColumnId()));
+                }
+
                 if(recordFromJSON==null)
                     throw new EJBException("Error imposible en HelperTableDAOImpl");
             } else {
@@ -390,6 +394,43 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         }
 
         return recordFromJSON.get(0);
+    }
+
+    @Override
+    public HelperTableColumn getColumnById(long id) {
+        ConnectionBD connectionBD = new ConnectionBD();
+        String selectRecord = "{call semantikos.get_helper_table_column(?)}";
+        HelperTableColumn columnFromJSON;
+        try (Connection connection = connectionBD.getConnection();
+             CallableStatement call = connection.prepareCall(selectRecord)) {
+
+            call.setLong(1,id);
+            /* Se prepara y realiza la consulta */
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+
+                String json = rs.getString(1);
+                if(json==null)
+                    return null;
+
+                columnFromJSON = this.helperTableRecordFactory.createHelperTableColumnFromJSON(json);
+
+                if(columnFromJSON==null)
+                    throw new EJBException("Error imposible en HelperTableDAOImpl");
+            } else {
+                throw new EJBException("Error imposible en HelperTableDAOImpl");
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Hubo un error al acceder a la base de datos.", e);
+            throw new EJBException(e);
+        } catch (IOException e) {
+            logger.error("Hubo un error procesar los resultados con JSON.", e);
+            throw new EJBException(e);
+        }
+
+        return columnFromJSON;
     }
 
     /*
@@ -412,13 +453,12 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.setLong(1, row.getId());
             call.setLong(2, row.getHelperTableId());
             call.setString(3, row.getDescription());
-            call.setDate(4, new Date(row.getCreationDate().getTime()));
+            call.setTimestamp(4, row.getCreationDate());
             call.setString(5, row.getCreationUsername());
-            call.setDate(6, new Date(row.getLastEditDate().getTime()));
+            call.setTimestamp(6, row.getLastEditDate());
             call.setString(7, row.getLastEditUsername());
-            call.setDate(8, row.getValidityUntil()==null?null:new Date(row.getValidityUntil().getTime()));
+            call.setTimestamp(8, row.getValidityUntil()!=null?new Timestamp(row.getValidityUntil().getTime()):null);
             call.setBoolean(9, row.isValid());
-
 
             ResultSet rs = call.executeQuery();
 
@@ -485,6 +525,10 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
                     return new ArrayList<>();
 
                 recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
+
+                for (HelperTableData cell : recordFromJSON.get(0).getCells()) {
+                    cell.setColumn(getColumnById(cell.getColumnId()));
+                }
 
             } else {
                 throw new EJBException("Error imposible en HelperTableDAOImpl");

@@ -53,7 +53,7 @@
                                             rendered="#{cc.attrs.concept.editable}"
                                             disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
                                             value="#{conceptBean.selectedHelperTableRecord}"
-                                            itemLabel="#{helperTableRecord.fields['description']}"
+                                            itemLabel="#{helperTableRecord.description}"
                                             itemValue="#{helperTableRecord}">
 
                                 <!-- Parámetros del buscador -->
@@ -63,11 +63,11 @@
                                 <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
                                 <!---->
                                 <p:column>
-                                    <h:outputText value="#{helperTableRecord.fields['description']}"/>
+                                    <h:outputText value="#{helperTableRecord.description}"/>
                                 </p:column>
 
-                                <p:column rendered="#{cc.attrs.relationshipDefinition.bioequivalente}" width="500px" style="width: 500px">
-                                    <h:outputText value="#{helperTableRecord.fields['nombre']}"/>
+                                <p:column width="500px" style="width: 500px">
+                                    <h:outputText value="#{helperTableRecord.getCellByColumnName('nombre')}"/>
                                 </p:column>
 
                                 <p:ajax event="itemSelect"
@@ -92,18 +92,18 @@
 
             <p:column headerText="RegNum/RegAño" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
                 <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['registro']}"/>
+                    <h:outputText value="#{relationship.target.getCellByColumnName('registro')}"/>
                 </div>
             </p:column>
 
             <p:column headerText="Nombre" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
                 <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['nombre']}"/>
+                    <h:outputText value="#{relationship.target.getCellByColumnName('nombre')}"/>
                 </div>
             </p:column>
             <p:column headerText="Titular" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
                 <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['titular']}"/>
+                    <h:outputText value="#{relationship.target.getCellByColumnName('titular')}"/>
                 </div>
             </p:column>
 
@@ -111,10 +111,10 @@
                 <div style="text-align: center;">
                     <p:repeat
                             offset="0"
-                            size="#{helperTableBean.findRelationshipsLike(cc.attrs.concept, cc.attrs.relationshipDefinition, relationship.target).size()}"
+                            size="#{ispbean.findRelationshipsLike(cc.attrs.concept, cc.attrs.relationshipDefinition, relationship.target).size()}"
                             step="1"
                             varStatus="var"
-                            value="#{helperTableBean.findRelationshipsLike(cc.attrs.concept, cc.attrs.relationshipDefinition, relationship.target)}"
+                            value="#{ispbean.findRelationshipsLike(cc.attrs.concept, cc.attrs.relationshipDefinition, relationship.target)}"
                             var="relationshipLike">
                         <h:outputText value="#{relationshipLike.sourceConcept.descriptionFavorite}"/>
                     </p:repeat>
@@ -123,7 +123,7 @@
 
             <p:column headerText="Usuario" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
                 <div style="text-align: center;">
-                    <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['id_user'])}"/>
+                    <h:outputText value="#{relationship.target.creationUsername}"/>
                 </div>
             </p:column>
             <p:column headerText="Fecha ingreso" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
@@ -133,7 +133,7 @@
             </p:column>
             <p:column headerText="Fecha modificación" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
                 <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['fecha_proxima_renovacion']}"/>
+                    <h:outputText value="#{relationship.target.getCellByColumnName('fecha próxima renovación')}"/>
                 </div>
             </p:column>
 
@@ -143,10 +143,11 @@
                             icon="fa fa-search"
                             title="Ver"
                             update="@(.dialogISP)"
-                            actionListener="#{ispbean.fetchData(relationship.target.fields['registro'])}"
+                            actionListener="#{ispbean.fetchData(relationship.target.getCellByColumnName('registro'))}"
                             process="@this"
-                            rendered="#{cc.attrs.relationshipDefinition.bioequivalente}"
-                    />
+                            rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                    </p:commandButton>
                     <p:commandButton
                             icon="fa fa-trash"
                             title="Eliminar"

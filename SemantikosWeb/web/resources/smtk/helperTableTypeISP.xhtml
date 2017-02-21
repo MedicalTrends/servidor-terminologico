@@ -71,10 +71,9 @@
             <p:panel id="ispfetcheddialogcontent" >
 
                 <p:dataTable value="#{ispbean.ispRecord.cells}" var="cell" rendered="#{not empty ispbean.ispRecord.cells}">
-                    <p:column width="200">#{cell.column.description}</p:column>
+                    <p:column width="200" styleClass="FontBold Fs13">#{cell.column.description}</p:column>
                     <p:column width="400">#{cell}</p:column>
                 </p:dataTable>
-
 
                 <p:outputLabel rendered="#{empty ispbean.ispRecord.cells}" value="No se pudo recuperar datos del ISP" />
                 <p:commandButton rendered="#{not empty ispbean.ispRecord.cells}" value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
@@ -116,12 +115,12 @@
             </p:column>
             <p:column headerText="Vigencia ISP">
                 <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.getCellByColumnName('estado_del_registro')}"/>
+                    <h:outputText value="#{relationship.target.getCellByColumnName('estado del registro')}"/>
                 </div>
             </p:column>
             <p:column headerText="Usuario">
                 <div style="text-align: center;">
-                    <h:outputText value="#{ispbean.userManager.getUser(relationship.target.getCellByColumnName('id_user'))}"/>
+                    <h:outputText value="#{relationship.target.creationUsername}"/>
                 </div>
             </p:column>
             <p:column headerText="Fecha ingreso">
@@ -131,7 +130,7 @@
             </p:column>
             <p:column headerText="Fecha modificación">
                 <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.getCellByColumnName('fecha_proxima_renovacion')}"/>
+                    <h:outputText value="#{relationship.target.getCellByColumnName('fecha próxima renovación')}"/>
                 </div>
             </p:column>
 
@@ -142,8 +141,9 @@
                             title="Ver"
                             update="@(.dialogISP)"
                             actionListener="#{ispbean.fetchData(relationship.target.getCellByColumnName('registro'))}"
-                            process="@this"
-                    />
+                            process="@this">
+                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                    </p:commandButton>
                     <p:commandButton
                             icon="fa fa-trash"
                             title="Eliminar"

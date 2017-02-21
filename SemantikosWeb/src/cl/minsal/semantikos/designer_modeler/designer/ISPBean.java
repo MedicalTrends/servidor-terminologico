@@ -8,9 +8,11 @@ import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.kernel.components.HelperTablesManagerImpl;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.components.ispfetcher.ISPFetcher;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.Target;
 import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
@@ -38,9 +40,6 @@ public class ISPBean {
     private Boolean existe;
     private String regnum;
     private Integer ano = null;
-
-    private HelperTable ht;
-
 
     private Map<String,String> fetchedData;
 
@@ -145,7 +144,8 @@ public class ISPBean {
 
         RelationshipDefinition relationshipDefinition = (RelationshipDefinition) UIComponent.getCurrentComponent(fContext).getAttributes().get("relationshipDefinition");
 
-        //fetchedData = helperTablesManager.searchRows(getISPHelperTable(),"description",regnum+"/"+ano,true).get(0).getFields();
+        HelperTable ispHelperTable = (HelperTable) relationshipDefinition.getTargetDefinition();
+
         if(regnum.trim().equals("") || ano == null || ano == 0) {
             conceptBean.getMessageBean().messageError("Debe ingresar un valor para el dato 'RegNum' y 'RegAño'");
             return;
@@ -156,7 +156,7 @@ public class ISPBean {
         /**
          * Primero se busca un registro isp local
          */
-        for (HelperTableRow helperTableRecord : helperTablesManager.searchRows(getISPHelperTable(),regnum+"/"+ano)) {
+        for (HelperTableRow helperTableRecord : helperTablesManager.searchRows(ispHelperTable,regnum+"/"+ano)) {
             ispRecord = helperTableRecord;
             break;
         }
@@ -166,11 +166,11 @@ public class ISPBean {
          */
         if(ispRecord==null) {
 
-            ispRecord = new HelperTableRow((HelperTable)relationshipDefinition.getTargetDefinition());
+            ispRecord = new HelperTableRow(ispHelperTable);
             fetchedData = ispFetcher.getISPData(regnum + "/" + ano);
 
             if(!fetchedData.isEmpty()) {
-                mapIspRecord((HelperTable) relationshipDefinition.getTargetDefinition(), ispRecord, fetchedData);
+                mapIspRecord(ispHelperTable, ispRecord, fetchedData);
             }
 
         }
@@ -197,13 +197,14 @@ public class ISPBean {
                     HelperTableData cell = new HelperTableData();
                     cell.setColumn(helperTableColumn);
                     if(helperTableColumn.getDescription().toLowerCase().contains("fecha") ||
-                       helperTableColumn.getDescription().toLowerCase().contains("última") ) {
+                       helperTableColumn.getDescription().toLowerCase().contains("ultima") ) {
                         cell.setDateValue(new Timestamp(Date.parse(fetchedRecord.get(s))));
                     }
                     else {
                         cell.setStringValue(fetchedRecord.get(s));
                     }
                     ispRecord.getCells().add(cell);
+                    break;
                 }
             }
         }
@@ -212,6 +213,11 @@ public class ISPBean {
     public void fetchData(String registro){
 
         RequestContext context = RequestContext.getCurrentInstance();
+        FacesContext fContext = FacesContext.getCurrentInstance();
+
+        RelationshipDefinition relationshipDefinition = (RelationshipDefinition) UIComponent.getCurrentComponent(fContext).getAttributes().get("relationshipDefinition");
+
+        HelperTable ispHelperTable = (HelperTable) relationshipDefinition.getTargetDefinition();
 
         String[] tokens = registro.split("/");
 
@@ -223,7 +229,7 @@ public class ISPBean {
         /**
          * Primero se busca un registro isp local
          */
-        for (HelperTableRow helperTableRecord : helperTablesManager.searchRows(getISPHelperTable(),regnum+"/"+ano)) {
+        for (HelperTableRow helperTableRecord : helperTablesManager.searchRows(ispHelperTable,regnum+"/"+ano)) {
             ispRecord = helperTableRecord;
             break;
         }
@@ -255,40 +261,29 @@ public class ISPBean {
 
     public void agregarISP(RelationshipDefinition relationshipDefinition){
 
-
         if(!ispRecord.isPersistent()){
-            HelperTable ispHT = getISPHelperTable();
 
-            //ispRecord = helperTablesManager.createEmptyRow(ispHT.getId(),authenticationBean.getUsername());
-
-            //mapFetchedData(ispRecord,fetchedData);
-
-            ispRecord.setCreationDate(new Date());
-            ispRecord.setCreationUsername(authenticationBean.getLoggedUser().getUsername());
-            ispRecord.setLastEditDate(new Date());
-            ispRecord.setLastEditUsername(authenticationBean.getLoggedUser().getUsername());
             ispRecord.setDescription(ispRecord.getCellByColumnName("registro").toString());
             ispRecord.setValid(true);
 
             HelperTableRow inserted = null;
-            try {
-                inserted = helperTablesManager.updateRow(ispRecord,authenticationBean.getUsername());
-            } catch (HelperTablesManagerImpl.RowInUseException e) {
 
-            }
+            inserted = helperTablesManager.insertRow(ispRecord,authenticationBean.getUsername());
             ispRecord = inserted;
+        }
+        else {
+            HelperTableRow updated = null;
+            try {
+                updated = helperTablesManager.updateRow(ispRecord,authenticationBean.getUsername());
+            } catch (HelperTablesManagerImpl.RowInUseException e) {
+                e.printStackTrace();
+            }
+            ispRecord = updated;
         }
 
         conceptBean.setSelectedHelperTableRecord(ispRecord);
         conceptBean.addRelationship(relationshipDefinition,ispRecord);
-
         clean();
-
-        conceptBean.setSelectedHelperTableRecord(ispRecord);
-        conceptBean.addRelationship(relationshipDefinition,ispRecord);
-
-        clean();
-
     }
 
     private void clean() {
@@ -296,71 +291,6 @@ public class ISPBean {
        regnum = "";
        ano = null;
        ispRecord = null;
-    }
-
-    //llena los valores de las celdas del row con los valores del mapa recuperado de la pgina del ISP
-    private void mapFetchedData(HelperTableRow row, Map<String, String> fetchedData) {
-        Map<String, String> ret = new HashMap<String, String>();
-
-
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-
-        for (HelperTableData cell: row.getCells()) {
-            if(cell.getColumn().getName().equals("REGISTRO")) cell.setStringValue(fetchedData.get("Registro"));
-
-
-            if(cell.getColumn().getName().equals("EQ_TERAPEUTICA")) cell.setStringValue(fetchedData.get("Equivalencia Terapéutica"));
-            if(cell.getColumn().getName().equals("TITULAR")) cell.setStringValue(fetchedData.get("Titular"));
-            if(cell.getColumn().getName().equals("ESTADO_REGISTRO")) cell.setBooleanValue( "Vigente".equals(fetchedData.get("Estado del Registro")));
-
-            try{
-                if (cell.getColumn().getName().equals("RESOLUCION")) cell.setIntValue(Integer.parseInt(fetchedData.get("Resolución Inscríbase")));
-            }catch (NumberFormatException e){}
-
-            try {
-                if (cell.getColumn().getName().equals("FEC_INS_BASE")) cell.setDateValue(df.parse(fetchedData.get("Fecha Inscríbase")));
-            } catch (ParseException e){}
-
-            try {
-                if(cell.getColumn().getName().equals("FEC_ULT_RENOV")) cell.setDateValue(df.parse(fetchedData.get("Ultima Renovación")));
-            } catch (ParseException e){}
-
-
-            if(cell.getColumn().getName().equals("REGIMEN")) cell.setStringValue(fetchedData.get("Régimen"));
-            if(cell.getColumn().getName().equals("VIA_ADMINISTRACION")) cell.setStringValue(fetchedData.get("Vía Administración"));
-            if(cell.getColumn().getName().equals("CONDICION_VENTA")) cell.setStringValue(fetchedData.get("Condición de Venta"));
-            if(cell.getColumn().getName().equals("EXP_TIPO_ESTAB")) cell.setStringValue(fetchedData.get("Expende tipo establecimiento"));
-            if(cell.getColumn().getName().equals("INDICACION")) cell.setStringValue(fetchedData.get("Indicación"));
-
-
-            // columnas que estan en la pagina pero no se usan en semantikos
-            //if(cell.getColumn().getName().equals("Referencia de Tramite")) cell.setStringValue(fetchedData.get("Referencia de Tramite"));
-            //if(cell.getColumn().getName().equals("FEC_PROX_REN")) cell.setStringValue(fetchedData.get("Fecha Próxima renovación"));
-
-            row.setValid(true);
-            row.setDescription(fetchedData.get("Nombre"));
-
-        }
-
-    }
-
-    public HelperTable getISPHelperTable(){
-
-        if(ht == null) {
-
-
-            List<HelperTable> tablas = helperTablesManager.findAll();
-
-
-            for (HelperTable ht1 : tablas) {
-                if (ht1.getId()==ISP_TABLE_ID) {
-                    ht = ht1;
-                    break;
-                }
-            }
-        }
-
-        return ht;
     }
 
     public HelperTableRow getIspRecord() {
@@ -397,18 +327,20 @@ public class ISPBean {
         this.helperTableBean = helperTableBean;
     }
 
+    public List<Relationship> findRelationshipsLike(ConceptSMTK sourceConcept, RelationshipDefinition relationshipDefinition, Target target) {
 
-    /*
-verifica si el registro ya existe en la base de datos
- */
-    public boolean getExisteRegistroISP(){
-        if(ispRecord==null )
-            return false;
+        List<Relationship> relationshipsLike = new ArrayList<>();
 
-        List<HelperTableRow> records = helperTablesManager.searchRows(getISPHelperTable(),regnum+"/"+ano);
+        if(target != null) {
 
-        return  records.size() >0;
+            for (Relationship relationship : relationshipManager.findRelationshipsLike(relationshipDefinition, target)) {
+                if(!relationship.getSourceConcept().equals(sourceConcept)) {
+                    relationshipsLike.add(relationship);
+                }
+            }
+        }
+
+        return relationshipsLike;
     }
-
 
 }

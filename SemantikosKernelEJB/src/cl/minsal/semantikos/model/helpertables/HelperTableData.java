@@ -1,15 +1,20 @@
 package cl.minsal.semantikos.model.helpertables;
 
+import cl.minsal.semantikos.kernel.daos.DAO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
 
 /**
  * Created by BluePrints Developer on 14-12-2016.
  */
 
 public class HelperTableData {
+
     private long id;
     private long intValue;
     private Double floatValue;
@@ -128,6 +133,7 @@ public class HelperTableData {
         this.column = column;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -144,6 +150,23 @@ public class HelperTableData {
         if (dateValue != null ? !dateValue.equals(that.dateValue) : that.dateValue != null) return false;
 
         return true;
+    }
+    */
+
+    @Override
+    public boolean equals(Object other) {
+
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
+
+        HelperTableData that = (HelperTableData) other;
+
+        /* Si ambas están persistidas y no tienen el mismo ID, entonces son distintas */
+        if (this.id != NON_PERSISTED_ID && that.id != NON_PERSISTED_ID && this.getId() != that.getId()) return false;
+
+        /* Si alguna de ellas no está persistida, comparamos su representación */
+        return this.toString().equals(that.toString());
+
     }
 
     @Override
@@ -171,7 +194,8 @@ public class HelperTableData {
             return stringValue;
         }
         else if(dateValue != null) {
-            return  String.valueOf(dateValue);
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+            return outputFormat.format(dateValue);
         }
         else {
             return String.valueOf(id);

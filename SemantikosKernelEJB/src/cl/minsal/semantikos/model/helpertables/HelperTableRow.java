@@ -2,9 +2,12 @@ package cl.minsal.semantikos.model.helpertables;
 
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,12 +17,15 @@ import java.util.List;
  * Created by BluePrints Developer on 14-12-2016.
  */
 
-public class HelperTableRow implements Target{
+public class HelperTableRow implements Target {
+
     private long id;
-    private Date creationDate;
-    private Date lastEditDate;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss", timezone="America/Buenos_Aires")
+    private Timestamp creationDate;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss", timezone="America/Buenos_Aires")
+    private Timestamp lastEditDate;
     private boolean valid;
-    private Date validityUntil;
+    private Timestamp validityUntil;
     private String description;
     private String creationUsername;
     private String lastEditUsername;
@@ -95,28 +101,38 @@ public class HelperTableRow implements Target{
         return null;
     }
 
+    public String getDateCreationFormat() {
+
+        if(getCreationDate() != null) {
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return outputFormat.format(getCreationDate());
+        }
+
+        return "";
+    }
+
 
     public void setId(long id) {
         this.id = id;
     }
 
     @JsonProperty("creation_date")
-    public Date getCreationDate() {
+    public Timestamp getCreationDate() {
         return creationDate;
     }
 
     @JsonProperty("creation_date")
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(Timestamp creationDate) {
         this.creationDate = creationDate;
     }
 
     @JsonProperty("last_edit_date")
-    public Date getLastEditDate() {
+    public Timestamp getLastEditDate() {
         return lastEditDate;
     }
 
     @JsonProperty("last_edit_date")
-    public void setLastEditDate(Date lastEditDate) {
+    public void setLastEditDate(Timestamp lastEditDate) {
         this.lastEditDate = lastEditDate;
     }
 
@@ -137,7 +153,7 @@ public class HelperTableRow implements Target{
 
 
     @JsonProperty("validity_until")
-    public void setValidityUntil(Date validityUntil) {
+    public void setValidityUntil(Timestamp validityUntil) {
         this.validityUntil = validityUntil;
     }
 
@@ -192,8 +208,7 @@ public class HelperTableRow implements Target{
         this.lastEditUsername = lastEditUsername;
     }
 
-
-
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -210,6 +225,37 @@ public class HelperTableRow implements Target{
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
 
         return true;
+    }
+    */
+
+    @Override
+    public boolean equals(Object other) {
+
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
+
+        HelperTableRow that = (HelperTableRow) other;
+
+        /* Si ambas están persistidas y no tienen el mismo ID, entonces son distintas */
+        if (this.isPersistent() && that.isPersistent() && this.getId() != that.getId()) return false;
+
+        /* Si alguna de ellas no está persistida, comparamos 1. tabla auxiliar, 2. descripción del row, y 3. campos del row */
+
+        /* 1. Se compara la tabla auxiliar  */
+        if (this.getHelperTableId() != that.getHelperTableId()) return false;
+
+        /* 2. Se compara la descripción */
+        if(!this.getDescription().equals(that.getDescription())) return false;
+
+        /* 2. Si no tienen los mismos campos */
+        for (HelperTableData cell : this.getCells()) {
+            if (!that.getCells().contains(cell)) {
+                return false;
+            }
+        }
+
+        return true;
+
     }
 
     @Override

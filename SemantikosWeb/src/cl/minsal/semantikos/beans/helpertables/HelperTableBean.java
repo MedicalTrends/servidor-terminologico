@@ -17,6 +17,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -133,9 +134,9 @@ public class HelperTableBean implements Serializable {
     private HelperTableRow createNewHelperTableRow(HelperTable table) {
         HelperTableRow newRow = new HelperTableRow();
         newRow.setId(-1);
-        newRow.setCreationDate(new Date());
+        newRow.setCreationDate(new Timestamp(System.currentTimeMillis()));
         newRow.setCreationUsername(authenticationBean.getUsername());
-        newRow.setLastEditDate(new Date());
+        newRow.setLastEditDate(new Timestamp(System.currentTimeMillis()));
         newRow.setLastEditUsername(authenticationBean.getUsername());
 
         newRow.setDescription("Nuevo Elemento");
@@ -265,21 +266,5 @@ public class HelperTableBean implements Serializable {
         return someRows;
     }
 
-    /*
-    public List<Relationship> findRelationshipsLike(ConceptSMTK sourceConcept, RelationshipDefinition relationshipDefinition, Target target) {
 
-        List<Relationship> relationshipsLike = new ArrayList<>();
-
-        if(target != null) {
-
-            for (Relationship relationship : relationshipManager.findRelationshipsLike(relationshipDefinition, target)) {
-                if(!relationship.getSourceConcept().equals(sourceConcept)) {
-                    relationshipsLike.add(relationship);
-                }
-            }
-        }
-
-        return relationshipsLike;
-    }
-    */
 }

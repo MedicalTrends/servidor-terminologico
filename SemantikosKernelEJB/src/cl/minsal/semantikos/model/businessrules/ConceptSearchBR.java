@@ -1,11 +1,5 @@
 package cl.minsal.semantikos.model.businessrules;
 
-import cl.minsal.semantikos.kernel.components.ConceptManager;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
-import cl.minsal.semantikos.model.relationships.TargetType;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.EJB;

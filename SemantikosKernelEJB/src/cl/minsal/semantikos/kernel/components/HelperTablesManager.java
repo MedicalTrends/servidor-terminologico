@@ -37,6 +37,8 @@ public interface HelperTablesManager {
 
     HelperTableRow getRowById(long idRow);
 
+    HelperTableColumn getColumnById(long idColumn);
+
     /**
      * Este método es responsable de recuperar registros de una tabla auxiliar de acuerdo a un patrón de búsqueda sobre
      * una de sus descripcion.
@@ -61,4 +63,5 @@ public interface HelperTablesManager {
     inserta una fila no persistida
      */
     HelperTableRow insertRow(HelperTableRow row, String username);
+
 }
