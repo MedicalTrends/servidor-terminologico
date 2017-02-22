@@ -1,7 +1,9 @@
 package cl.minsal.semantikos.model.businessrules;
 
+import cl.minsal.semantikos.model.HelperTableColumnFactory;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
+import cl.minsal.semantikos.model.helpertables.HelperTableRecordFactory;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 
 import javax.validation.constraints.NotNull;
@@ -18,8 +20,9 @@ import java.util.Map;
 public class HelperTableSearchBR {
 
     /** Mínima cantidad de caracteres en el patrón de búsqueda en tablas auxiliares */
+    public static final short ATC_MINIMUM_PATTERN_LENGTH = 3;
     public static final short MINIMUM_PATTERN_LENGTH = 1;
-    public static final long HT_ATC_ID = 1;
+    public static final long HT_ATC_ID = 14;
 
     /**
      * Método para realizar las validaciones.
@@ -32,8 +35,22 @@ public class HelperTableSearchBR {
      */
     public void validatePreConditions(HelperTable helperTable, String columnName, String pattern) {
 
+        /* El nombre de la columna debe ser un nombre válido */
+        precondition02(columnName);
         /* El patrón de búsqueda sobre la columna debe ser mayor a dos caracteres */
-        precondition03(pattern);
+        //precondition03(pattern);
+    }
+
+    /**
+     * El patrón de búsqueda debe ser de al menos dos caracteres.
+     *
+     * @param columnName El nombre de la columna.
+     */
+    protected void precondition02(String columnName) {
+
+        if(HelperTableColumnFactory.getInstance().findColumnByName(columnName)==null) {
+            throw new BusinessRuleException("BR-HT-PC02", "El nombre de columna proporcionado '"+columnName+"' no corresponde a ninguno de los nombres de columnas existentes en el sistema");
+        }
     }
 
     /**
@@ -78,12 +95,23 @@ public class HelperTableSearchBR {
         }
     }
 
+    public static int getMinQueryLength(HelperTable helperTable) {
+
+        if(helperTable.getId() == HT_ATC_ID) {
+            return ATC_MINIMUM_PATTERN_LENGTH;
+        }
+        else {
+            return MINIMUM_PATTERN_LENGTH;
+        }
+    }
+
     class ATCRecordComparator implements Comparator<HelperTableRow> {
 
         @Override
         public int compare(HelperTableRow atc1, HelperTableRow atc2) {
 
-            return atc1.getDescription().length() - atc2.getDescription().length();
+            return atc1.getCellByColumnName("descripcion completa").toString().length() -
+                   atc2.getCellByColumnName("descripcion completa").toString().length();
         }
 
         @Override
@@ -91,6 +119,7 @@ public class HelperTableSearchBR {
             return false;
         }
     }
+
 
     class DefaultRecordComparator implements Comparator<HelperTableRow> {
 

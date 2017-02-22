@@ -4,6 +4,7 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.businessrules.HelperTableSearchBR;
 import cl.minsal.semantikos.model.helpertables.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -136,12 +137,8 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
                 throw new RowInUseException(cons);
         }
 
-
         row.setLastEditDate(new Timestamp(System.currentTimeMillis()));
         row.setLastEditUsername(username);
-
-
-
 
         return dao.updateRow(row);
     }
@@ -163,6 +160,31 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
     @Override
     public List<HelperTableRow> searchRows(HelperTable helperTable, String pattern) {
         return dao.searchRecords( helperTable, pattern);
+    }
+
+    public List<HelperTableRow> searchRows(HelperTable helperTable, String pattern, String columnName) {
+        /* Se validan las pre-condiciones de búsqueda */
+        new HelperTableSearchBR().validatePreConditions(helperTable, columnName, pattern);
+
+        /* Se delega la búsqueda al DAO, ya que pasaron las pre-condiciones */
+        List<HelperTableRow> foundRows = dao.searchRecords(helperTable, pattern, columnName);
+
+        /* Se aplican reglas de negocio sobre los resultados retornados */
+        new HelperTableSearchBR().applyPostActions(foundRows);
+
+        return foundRows;
+    }
+
+    @Override
+    public List<HelperTableRow> searchRows(HelperTable helperTable, String pattern, List<String> searchColumns) {
+
+        List<HelperTableRow> rows = new ArrayList<>();
+
+        for (String searchColumn : searchColumns) {
+            rows.addAll(searchRows(helperTable, pattern, searchColumn));
+        }
+
+        return rows;
     }
 
     @Override

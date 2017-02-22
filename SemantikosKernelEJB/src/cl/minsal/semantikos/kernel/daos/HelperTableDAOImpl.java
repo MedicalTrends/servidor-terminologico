@@ -3,16 +3,19 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.HelperTableColumnFactory;
 import cl.minsal.semantikos.model.helpertables.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.*;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -181,6 +184,12 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
                 recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
 
+                for (HelperTableRow helperTableRow : recordFromJSON) {
+                    for (HelperTableData cell : helperTableRow.getCells()) {
+                        cell.setColumn(getColumnById(cell.getColumnId()));
+                    }
+                }
+
             } else {
                 throw new EJBException("Error imposible en HelperTableDAOImpl");
             }
@@ -216,6 +225,12 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
                     return new ArrayList<>();
 
                 recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
+
+                for (HelperTableRow helperTableRow : recordFromJSON) {
+                    for (HelperTableData cell : helperTableRow.getCells()) {
+                        cell.setColumn(getColumnById(cell.getColumnId()));
+                    }
+                }
 
             } else {
                 throw new EJBException("Error imposible en HelperTableDAOImpl");
@@ -357,6 +372,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
     @Override
     public HelperTableRow getRowById(long id) {
+
         ConnectionBD connectionBD = new ConnectionBD();
         String selectRecord = "{call semantikos.get_helper_table_row(?)}";
         List<HelperTableRow> recordFromJSON;
@@ -375,8 +391,10 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
                 recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
 
-                for (HelperTableData cell : recordFromJSON.get(0).getCells()) {
-                    cell.setColumn(getColumnById(cell.getColumnId()));
+                for (HelperTableRow helperTableRow : recordFromJSON) {
+                    for (HelperTableData cell : helperTableRow.getCells()) {
+                        cell.setColumn(getColumnById(cell.getColumnId()));
+                    }
                 }
 
                 if(recordFromJSON==null)
@@ -472,6 +490,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
     @Override
     public HelperTable getHelperTableByID(long tableId) {
+
         ConnectionBD connectionBD = new ConnectionBD();
         String selectRecord = "{call semantikos.get_helper_table(?)}";
         List<HelperTable> recordFromJSON;
@@ -526,8 +545,55 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
                 recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
 
-                for (HelperTableData cell : recordFromJSON.get(0).getCells()) {
-                    cell.setColumn(getColumnById(cell.getColumnId()));
+                for (HelperTableRow helperTableRow : recordFromJSON) {
+                    for (HelperTableData cell : helperTableRow.getCells()) {
+                        cell.setColumn(getColumnById(cell.getColumnId()));
+                    }
+                }
+
+            } else {
+                throw new EJBException("Error imposible en HelperTableDAOImpl");
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Hubo un error al acceder a la base de datos.", e);
+            throw new EJBException(e);
+        } catch (IOException e) {
+            logger.error("Hubo un error procesar los resultados con JSON.", e);
+            throw new EJBException(e);
+        }
+
+        return recordFromJSON;
+    }
+
+    @Override
+    public List<HelperTableRow> searchRecords(HelperTable helperTable, String pattern, String columnName) {
+        ConnectionBD connectionBD = new ConnectionBD();
+        String selectRecord = "{call semantikos.get_helper_table_rows(?,?,?)}";
+        List<HelperTableRow> recordFromJSON;
+        try (Connection connection = connectionBD.getConnection();
+             CallableStatement call = connection.prepareCall(selectRecord)) {
+
+            call.setLong(1,helperTable.getId());
+            call.setString(2,pattern);
+            call.setString(3, columnName);
+
+            /* Se prepara y realiza la consulta */
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+
+                String json = rs.getString(1);
+                if(json==null)
+                    return new ArrayList<>();
+
+                recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
+
+                for (HelperTableRow helperTableRow : recordFromJSON) {
+                    for (HelperTableData cell : helperTableRow.getCells()) {
+                        cell.setColumn(getColumnById(cell.getColumnId()));
+                    }
                 }
 
             } else {

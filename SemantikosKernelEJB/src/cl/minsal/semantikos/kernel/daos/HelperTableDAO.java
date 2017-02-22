@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.HelperTableColumnFactory;
 import cl.minsal.semantikos.model.helpertables.*;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
@@ -33,6 +34,8 @@ public interface HelperTableDAO {
     HelperTable getHelperTableByID(long tableId);
 
     List<HelperTableRow> searchRecords(HelperTable helperTable, String pattern);
+
+    List<HelperTableRow> searchRecords(HelperTable helperTable, String pattern, String columnName);
 
     List<HelperTableRow> getValidTableRows(long id);
 

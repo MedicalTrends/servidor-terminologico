@@ -4,6 +4,7 @@ import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.kernel.components.HelperTablesManagerImpl;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.businessrules.HelperTableSearchBR;
 import cl.minsal.semantikos.model.helpertables.*;
 import cl.minsal.semantikos.model.relationships.*;
 import org.primefaces.context.RequestContext;
@@ -37,7 +38,6 @@ public class HelperTableBean implements Serializable {
 
     @EJB
     HelperTablesManager manager;
-
 
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
@@ -255,9 +255,19 @@ public class HelperTableBean implements Serializable {
         RelationshipDefinition relationshipDefinition = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinition");
 
         List<HelperTableRow> someRows;
-        String[] columnNames = new String[]{};
 
-        someRows = manager.searchRows(helperTable, patron);
+        if(relationshipDefinition.isATC()) {
+
+            List<String> columnNames = new ArrayList<>();
+
+            columnNames.add("codigo atc");
+
+            someRows = manager.searchRows(helperTable, patron, columnNames);
+
+        }
+        else {
+            someRows = manager.searchRows(helperTable, patron);
+        }
 
         if(relationshipDefinition!= null && relationshipDefinition.isISP() && someRows.isEmpty()){
             context2.execute("PF('dialogISP').show();");
@@ -266,5 +276,8 @@ public class HelperTableBean implements Serializable {
         return someRows;
     }
 
+    public int getMinQueryLength(HelperTable helperTable) {
+        return HelperTableSearchBR.getMinQueryLength(helperTable);
+    }
 
 }

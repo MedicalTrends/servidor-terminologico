@@ -10,6 +10,8 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String COMERCIALIZADO = "Comercializado";
 
+    public static final String ATC = "ATC";
+
     public static final String ISP = "ISP";
 
     public static final String BIOEQUIVALENTE = "Bioequivalente";

@@ -7,10 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.ejb.EJBException;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
+import javax.ejb.*;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -25,8 +22,7 @@ import static java.sql.Types.TIMESTAMP;
 /**
  * @author Andres Farias.
  */
-@Singleton
-@Startup
+@Stateless
 public class DescriptionDAOImpl implements DescriptionDAO {
 
     /** El logger para esta clase */
@@ -34,11 +30,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @EJB
     private ConceptDAO conceptDAO;
-
-    @PostConstruct
-    private void init() {
-        this.refreshDescriptionTypes();
-    }
 
     @EJB
     private AuthDAO authDAO;
@@ -185,50 +176,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         }
 
         return descriptions;
-    }
-
-    @Override
-    public DescriptionTypeFactory refreshDescriptionTypes() {
-
-        ConnectionBD connect = new ConnectionBD();
-        ObjectMapper mapper = new ObjectMapper();
-
-        List<DescriptionType> descriptionTypes = new ArrayList<>();
-
-        String sql = "{call semantikos.get_description_types()}";
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.execute();
-            ResultSet rs = call.getResultSet();
-
-            /* Se recuperan los description types */
-            DescriptionTypeDTO[] theDescriptionTypes = new DescriptionTypeDTO[0];
-            if (rs.next()) {
-                String resultJSON = rs.getString(1);
-                theDescriptionTypes = mapper.readValue(underScoreToCamelCaseJSON(resultJSON), DescriptionTypeDTO[].class);
-            }
-
-            if (theDescriptionTypes.length > 0) {
-                for (DescriptionTypeDTO aDescriptionType : theDescriptionTypes) {
-                    DescriptionType descriptionType = aDescriptionType.getDescriptionType();
-                    descriptionTypes.add(descriptionType);
-                }
-            }
-
-            /* Se setea la lista de Tipos de descripción */
-            DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypes);
-        } catch (SQLException e) {
-            String errorMsg = "Error al intentar recuperar Description Types de la BDD.";
-            logger.error(errorMsg, e);
-            throw new EJBException(errorMsg, e);
-        } catch (IOException e) {
-            String errorMsg = "Error al intentar parsear Description Types en JSON.";
-            logger.error(errorMsg, e);
-            throw new EJBException(errorMsg, e);
-        }
-
-        return DescriptionTypeFactory.getInstance();
     }
 
     @Override

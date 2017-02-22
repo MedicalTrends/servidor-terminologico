@@ -51,6 +51,19 @@ public interface HelperTablesManager {
      */
     List<HelperTableRow> searchRows(HelperTable helperTable, String pattern);
 
+    /**
+     * Este método es responsable de recuperar registros de una tabla auxiliar de acuerdo a un patrón de búsqueda sobre:
+     * Su descriṕción y campos adicionales
+     *
+     * @param helperTable La tabla sobre la cual se realiza la búsqueda.
+     * @param pattern     El patrón utilizado para la búsqueda.
+     * @param pattern     Los nombres de los campos de búsqueda adicionales
+     *
+     * @return La lista de registros en la tabla <code>helperTable</code> que cumplen con el <code>pattern</code> de
+     * búsqueda.
+     */
+    List<HelperTableRow> searchRows(HelperTable helperTable, String pattern, List<String> columnNames);
+
 
     HelperTableImportReport loadFromFile(HelperTable helperTable, LoadMode loadModeSelected, Reader in, User loggedUser);
 

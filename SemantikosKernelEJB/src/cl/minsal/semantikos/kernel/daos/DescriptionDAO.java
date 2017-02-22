@@ -64,13 +64,6 @@ public interface DescriptionDAO {
     List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets);
 
     /**
-     * Este método es responsable de retornar un Factory.
-     *
-     * @return El factory adecuado... //TODO: WHAT?!
-     */
-    public DescriptionTypeFactory refreshDescriptionTypes();
-
-    /**
      * Este método es responsable de persistir una descripción en la BDD. Luego de ser persistida, la descripción es
      * actualizada con su nuevo Identificador único.
      *
