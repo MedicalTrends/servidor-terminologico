@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.beans.helpertables;
 
+import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.kernel.components.HelperTablesManagerImpl;
@@ -19,10 +20,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Blueprints on 1/27/2016.
@@ -42,6 +40,9 @@ public class HelperTableBean implements Serializable {
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
 
+    @ManagedProperty(value = "#{conceptBean}")
+    private ConceptBean conceptBean;
+
     public AuthenticationBean getAuthenticationBean() {
         return authenticationBean;
     }
@@ -49,6 +50,16 @@ public class HelperTableBean implements Serializable {
     public void setAuthenticationBean(AuthenticationBean authenticationBean) {
         this.authenticationBean = authenticationBean;
     }
+
+    public ConceptBean getConceptBean() {
+        return conceptBean;
+
+    }
+
+    public void setConceptBean(ConceptBean conceptBean) {
+        this.conceptBean = conceptBean;
+    }
+
 
     public HelperTablesManager getHelperTablesManager() {
         return manager;
@@ -174,7 +185,6 @@ public class HelperTableBean implements Serializable {
         List<HelperTableRow> helperTableRows = getReferencedTableRows(table.getId());
         List<HelperTableRow> helperTableRowsFiltered;
 
-
         switch ((int)relationshipAttributeDefinition.getId()) {
 
             case (int)HelperTableRecordFactory.U_VOLUMEN_ID:
@@ -206,6 +216,19 @@ public class HelperTableBean implements Serializable {
                 return helperTableRows;
         }
 
+    }
+
+    public List<HelperTableRow> getValidTableRows(HelperTable table, RelationshipAttributeDefinition attributeDefinition, RelationshipDefinition relationshipDefinition) {
+
+        List<HelperTableRow> someRows = new ArrayList<>();
+
+        Relationship relationship = conceptBean.getRelationshipPlaceholders().get(relationshipDefinition.getId());
+
+        for (RelationshipAttribute attribute : relationship.getAttributesByAttributeDefinition(attributeDefinition)) {
+            someRows.addAll(manager.searchRows(table, String.valueOf(attribute.getTarget().getId()), Arrays.asList(new String[]{attributeDefinition.getName()})));
+        }
+
+        return someRows;
     }
 
     public List<HelperTableRow> getValidTableRowsRD( HelperTable table, long idRelationshipDefinition) {

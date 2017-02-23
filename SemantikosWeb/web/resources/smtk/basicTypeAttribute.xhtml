@@ -18,7 +18,7 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container20 White Responsive" style="text-align: center">
+    <div class="Container#{cc.attrs.targetDefinition.type.typeName eq 'boolean'?'10':'20'} White Responsive" style="text-align: center">
 
         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
             <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes}">

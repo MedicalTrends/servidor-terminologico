@@ -3,6 +3,7 @@ package cl.minsal.semantikos.model.relationships;
 import cl.minsal.semantikos.model.Multiplicity;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -64,6 +65,29 @@ public class RelationshipDefinitionWeb extends RelationshipDefinition implements
     public List<RelationshipAttributeDefinitionWeb> getRelationshipAttributeDefinitionWebs() {
         Collections.sort(relationshipAttributeDefinitionWebs);
         return relationshipAttributeDefinitionWebs;
+    }
+
+    public List<RelationshipAttributeDefinitionWeb> getRelationshipAttributeDefinitionWebsByName(String name) {
+
+        List<RelationshipAttributeDefinitionWeb> someAttributes = new ArrayList<>();
+
+        for (RelationshipAttributeDefinitionWeb relationshipAttributeDefinitionWeb : relationshipAttributeDefinitionWebs) {
+            if(relationshipAttributeDefinitionWeb.getName().toLowerCase().equals(name.toLowerCase())) {
+                someAttributes.add(relationshipAttributeDefinitionWeb);
+            }
+        }
+        Collections.sort(someAttributes);
+        return someAttributes;
+    }
+
+    public RelationshipAttributeDefinition getRelationshipAttributeDefinitionByName(String name) {
+
+        for (RelationshipAttributeDefinitionWeb relationshipAttributeDefinitionWeb : relationshipAttributeDefinitionWebs) {
+            if(relationshipAttributeDefinitionWeb.getName().toLowerCase().equals(name.toLowerCase())) {
+                return relationshipAttributeDefinitionWeb.getRelationshipAttributeDefinition();
+            }
+        }
+        return null;
     }
 
     public void setRelationshipAttributeDefinitionWebs(List<RelationshipAttributeDefinitionWeb> relationshipAttributeDefinitionWebs) {

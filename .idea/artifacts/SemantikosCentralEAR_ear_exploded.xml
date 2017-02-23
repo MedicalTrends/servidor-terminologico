@@ -23,13 +23,13 @@
         <element id="library" level="project" name="Maven: org.jsoup:jsoup:1.10.1" />
         <element id="library" level="project" name="Maven: javax.validation:validation-api:1.0.0.GA" />
       </element>
-      <element id="archive" name="SemantikosWeb-2.2.12.war">
+      <element id="archive" name="SemantikosWeb-3.0.4.war">
         <element id="artifact" artifact-name="SemantikosWeb:war exploded" />
       </element>
-      <element id="archive" name="SemantikosBrowser-2.2.12.war">
+      <element id="archive" name="SemantikosBrowser-3.0.4.war">
         <element id="artifact" artifact-name="SemantikosBrowser:war exploded" />
       </element>
-      <element id="archive" name="SemantikosKernelEJB-2.2.12.jar">
+      <element id="archive" name="SemantikosKernelEJB-3.0.4.jar">
         <element id="artifact" artifact-name="SemantikosKernelEJB:ejb exploded" />
       </element>
       <element id="archive" name="SemantikosWSEJB-1.1.jar">
