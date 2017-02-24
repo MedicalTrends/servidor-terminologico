@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="Container30 White Responsive">
-
+                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
                         <p:inputText id="basicTypeValue11"
                                      value="#{conceptBean.basicTypeValue.value}"
                                      var="value"
@@ -51,7 +51,7 @@
                             <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id})"/>
                         </p:inputText>
-
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,8 +87,7 @@
                     </div>
 
                     <div class="Container30 White Responsive">
-                        <div class="ContainerIndent">
-
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
@@ -98,7 +97,6 @@
                                     <i class="fa fa-close fa-lg"  />
                                 </p:commandLink>
                             </p:outputPanel>
-
                         </div>
                     </div>
                 </div>

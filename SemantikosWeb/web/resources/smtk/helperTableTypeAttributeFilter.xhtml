@@ -10,6 +10,7 @@
       xmlns:p="http://primefaces.org/ui">
 
 <composite:interface >
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
     <composite:attribute name="relationshipAttributeDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition" />
     <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.helpertables.HelperTable" />
     <composite:attribute name="targets" type="java.util.List"/>
@@ -22,40 +23,39 @@
 
             <h:outputText value="#{cc.attrs.relationshipAttributeDefinition.name}" />
 
-            <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() }" styleClass="search">
+            <p:selectOneMenu id="findHTRecords1" scrollHeight="200"
+                             forceSelection="true"
+                             autoWidth="false"
+                             value="#{generalBrowserBean.helperTableRecord}"
+                             rendered="#{cc.attrs.targets.isEmpty()}"
+                             var="r"
+                             filter="true"
+                             converter="omnifaces.SelectItemsConverter">
 
-                <p:autoComplete id="findHTRecords1" scrollHeight="200"
-                                completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                forceSelection="true"
-                                var="record"
-                                placeholder="Buscar..."
-                                converter="helperTableRecordConverter"
-                                value="#{generalBrowserBean.helperTableRecord}"
-                                itemLabel="#{record.fields['description']}"
-                                itemValue="#{record}">
-                    <!-- Parámetros del buscador -->
-                    <f:attribute name="helperTable" value="#{cc.attrs.relationshipAttributeDefinition.targetDefinition}"  />
-                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                    <!-- Parámetros del validador -->
-                    <f:attribute name="helperTableRecord" value="#{generalBrowserBean.helperTableRecord}"  />
-                    <!---->
-                    <p:column>
-                        <h:outputText value="#{record.fields['description']}"/>
-                    </p:column>
+                <f:selectItem itemLabel="Seleccione..." noSelectionOption="true" itemDisabled="true"/>
+                <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition,cc.attrs.relationshipAttributeDefinition)}"
+                               var="record"
+                               itemLabel="#{record.description}"
+                               itemValue="#{record}"/>
+                <p:column>
+                    <h:outputText value="#{r.description}"/>
+                </p:column>
 
-                    <p:ajax event="itemSelect"
-                            listener="#{generalBrowserBean.setSimpleSelection(cc.attrs.relationshipAttributeDefinition, generalBrowserBean.helperTableRecord)}"
-                            update="@(.browserFilters)"
-                            process="@this" />
+                <p:ajax event="itemSelect"
+                        listener="#{generalBrowserBean.setSimpleSelection(cc.attrs.relationshipAttributeDefinition, generalBrowserBean.helperTableRecord)}"
+                        update="@(.browserFilters)"
+                        process="@this" />
 
-                    <p:ajax event="itemSelect" update="@(.browserTable)" />
+                <p:ajax event="itemSelect" update="@(.browserTable)" />
+                <!-- Parámetros del buscador -->
+                <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                <!-- Parámetros del validador -->
+                <f:attribute name="helperTableRecord" value="#{generalBrowserBean.helperTableRecord}"  />
+                <!---->
+            </p:selectOneMenu>
 
-                </p:autoComplete>
-                <i class="fa fa-search fa-lg" />
-
-            </p:outputPanel>
-
-                        <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() }" styleClass="search">
+            <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() }" styleClass="search">
 
                 <p:repeat  value="#{cc.attrs.targets}"
                            offset="0"
@@ -64,7 +64,7 @@
                            var="target"
                            varStatus="var">
 
-                    <p:inputText disabled="true" id="itemSelected" value="#{target.fields['description']}" />
+                    <p:inputText disabled="true" id="itemSelected" value="#{target.description}" />
                     <p:commandLink
                             process="@this"
                             update="@(.browserFilters),@(.browserTable)"

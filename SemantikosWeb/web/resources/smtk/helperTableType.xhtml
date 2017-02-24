@@ -104,7 +104,7 @@
                         </div>
                     </div>
 
-                    <div class="Container30 White Responsive">
+                    <div class="Container#{cc.attrs.relationshipDefinition.ATC?'50':'30'} White Responsive">
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />

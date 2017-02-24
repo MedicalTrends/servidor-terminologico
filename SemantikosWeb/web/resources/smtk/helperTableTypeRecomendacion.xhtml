@@ -132,29 +132,28 @@
 
             <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
                        var="column"
-                       columnIndexVar="colIndex"
-            >
+                       columnIndexVar="colIndex">
                 <f:facet name="header">
                     <h:outputText value="#{column.name}" />
                 </f:facet>
                 <h:outputText value="#{relationship.target.getColumnValue(column)}" />
             </p:columns>
 
-            <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
+            <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitionWebs}"
                        var="attribute"
                        columnIndexVar="colIndex">
                 <f:facet name="header">
                     <h:outputText value="#{attribute.name}" />
                 </f:facet>
-                <smtk:basicTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.basicType}" />
-                <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
+                <smtk:basicTypeAttributeCell attribute="#{attribute.relationshipAttributeDefinition}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.basicType}" />
+                <smtk:helperTableTypeAttributeCell attribute="#{attribute.relationshipAttributeDefinition}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
             </p:columns>
 
             <p:column headerText="Descripción">
                 <h:outputText value="#{relationship.target.description}"/>
             </p:column>
 
-            <p:column rendered="#{cc.attrs.concept.editable}">
+            <p:column rendered="#{cc.attrs.concept.editable}" headerText="Acción">
                 <div style="text-align: center">
                     <p:commandButton
                             icon="fa fa-trash"

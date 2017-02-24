@@ -448,12 +448,14 @@ public class GeneralQuery implements IQuery {
         List<Long> helperTableValues = new ArrayList<>();
 
         for (QueryFilter filter : filters) {
-            if(filter.isSecondOrder())
+            if(filter.isSecondOrder()) {
                 helperTableValues.addAll(filter.getHelperTableValues());
+            }
         }
 
-        if(helperTableValues.isEmpty())
+        if(helperTableValues.isEmpty()) {
             return null;
+        }
 
         else {
             Long[] array = new Long[helperTableValues.size()];
@@ -473,12 +475,14 @@ public class GeneralQuery implements IQuery {
         List<Long> helperTableRecordValues = new ArrayList<>();
 
         for (QueryFilter filter : filters) {
-            if(filter.isSecondOrder())
+            if(filter.isSecondOrder()) {
                 helperTableRecordValues.addAll(filter.getHelperTableRecordValues());
+            }
         }
 
-        if(helperTableRecordValues.isEmpty())
+        if(helperTableRecordValues.isEmpty()) {
             return null;
+        }
 
         else {
             Long[] array = new Long[helperTableRecordValues.size()];
@@ -487,7 +491,7 @@ public class GeneralQuery implements IQuery {
     }
 
     /**
-     * Este método es responsable de recuperar los ids de las tablas auxiliares como como atributos de relación
+     * Este método es responsable de recuperar los ids de las tablas auxiliares como atributos de relación
      * correspondientes a los registros de tablas auxiliares filtrados en el objeto de consulta del navegador de categorías
      *
      * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de las
@@ -498,12 +502,14 @@ public class GeneralQuery implements IQuery {
         List<Long> helperTableValues = new ArrayList<>();
 
         for (QueryFilterAttribute filter : attributeFilters) {
-            if(!filter.isSecondOrder())
+            if(!filter.isSecondOrder()) {
                 helperTableValues.addAll(filter.getHelperTableValues());
+            }
         }
 
-        if(helperTableValues.isEmpty())
+        if(helperTableValues.isEmpty()) {
             return null;
+        }
 
         else {
             Long[] array = new Long[helperTableValues.size()];
@@ -523,12 +529,14 @@ public class GeneralQuery implements IQuery {
         List<Long> helperTableRecordValues = new ArrayList<>();
 
         for (QueryFilterAttribute filter : attributeFilters) {
-            if(!filter.isSecondOrder())
+            if(!filter.isSecondOrder()) {
                 helperTableRecordValues.addAll(filter.getHelperTableRecordValues());
+            }
         }
 
-        if(helperTableRecordValues.isEmpty())
+        if(helperTableRecordValues.isEmpty()) {
             return null;
+        }
 
         else {
             Long[] array = new Long[helperTableRecordValues.size()];
@@ -594,13 +602,6 @@ public class GeneralQuery implements IQuery {
             return null;
         else
             return getUser().getIdUser();
-    }
-
-
-    public boolean isFiltered(){
-        return ( (getQuery() != null && !getQuery().isEmpty()) || getTagValues() != null || getConceptValues() != null || getHelperTableRecordValues() != null ||
-                 getBasicTypeValues() != null || getToBeReviewed() != null || getToBeConsulted() != null || getModeled() != null ||
-                 getUserValue() != null || getCreationDateSince() != null || getCreationDateTo() != null );
     }
 
     /**

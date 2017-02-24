@@ -86,7 +86,7 @@ public class ConceptManagerImpl implements ConceptManager {
         ConceptSMTK conceptSMTK = this.conceptDAO.getConceptByID(id);
 
         /* Se cargan las descripciones del concepto */
-        conceptSMTK.setDescriptions(descriptionDAO.getDescriptionsByConcept(conceptSMTK));
+        //conceptSMTK.setDescriptions(descriptionDAO.getDescriptionsByConcept(conceptSMTK));
 
         return conceptSMTK;
     }
