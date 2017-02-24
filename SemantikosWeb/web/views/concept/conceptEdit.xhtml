@@ -167,11 +167,9 @@
                                                  styleClass="attributes"
                                                  rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
-                                            <smtk:crossmapIndirect rendered="#{not empty crossmapBean.indirectCrossmaps}"/>
+                                            <smtk:crossmapIndirect concept="#{conceptBean.concept}"/>
 
                                         </p:panel>
-
-                                        <p:spacer />
 
                                         <p:panel id="directCrossmap"
                                                  widgetVar="panelDirectCrossmap"

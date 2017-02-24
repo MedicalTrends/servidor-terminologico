@@ -17,8 +17,7 @@
 <composite:implementation>
 
     <!-- ISP -->
-    <p:panel id="helperTableTypeCollectionISP" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
-             collapsed="#{ispbean.existe?false:true}"
+    <p:panel id="helperTableTypeCollectionISP" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.ISP}">
 
         <p:spacer />

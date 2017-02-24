@@ -237,15 +237,15 @@
     </p:panel>
 
     <!-- Multiplicidad N sin atributos-->
-    <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500" collapsed="true"
+    <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.relationshipDefinition.required}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and not cc.attrs.relationshipDefinition.ISP}">
 
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
-            <p:outputPanel rendered="#{cc.attrs.concept.editable and cc.attrs.relationshipDefinition.multiplicity.lowerBoundary>0}">
+            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.required}">
                 <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
                 <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
             </p:outputPanel>
-            <p:outputPanel rendered="#{cc.attrs.concept.editable and cc.attrs.relationshipDefinition.multiplicity.lowerBoundary eq 0}">
+            <p:outputPanel rendered="#{not cc.attrs.relationshipDefinition.required}">
                 <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
                 <h:outputText value="Atributo opcional" style="font-size: small;" />
             </p:outputPanel>
@@ -332,15 +332,15 @@
 
     <!-- Multiplicidad N con atributos-->
 
-    <p:panel id="helperTableTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500" collapsed="true"
+    <p:panel id="helperTableTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.relationshipDefinition.required}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary>0}">
+            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.required}">
                 <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
                 <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
             </p:outputPanel>
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary eq 0}">
+            <p:outputPanel rendered="#{not cc.attrs.relationshipDefinition.required}">
                 <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
                 <h:outputText value="Atributo opcional" style="font-size: small;" />
             </p:outputPanel>

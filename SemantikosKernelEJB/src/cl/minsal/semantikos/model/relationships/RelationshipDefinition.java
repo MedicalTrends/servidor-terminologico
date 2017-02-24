@@ -189,6 +189,10 @@ public class RelationshipDefinition {
         return null;
     }
 
+    public boolean isRequired() {
+        return getMultiplicity().getLowerBoundary() > 0;
+    }
+
     public boolean isISP() {
         return this.getName().equalsIgnoreCase(TargetDefinition.ISP);
     }

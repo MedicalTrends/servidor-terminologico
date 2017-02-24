@@ -19,7 +19,7 @@
 
 <composite:implementation>
 
-    <p:panel id="multiplicityN_with_attributes" styleClass="sctPanel"
+    <p:panel id="multiplicityN_with_attributes" styleClass="sctPanel" 
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
         <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}">

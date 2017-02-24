@@ -114,15 +114,15 @@
 
     </p:panel>
 
-    <p:panel id="multiplicityN_with_attributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true"  toggleSpeed="500" collapsed="true"
+    <p:panel id="multiplicityN_with_attributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}"  toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary>0}">
+            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.required}">
                 <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
                 <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
             </p:outputPanel>
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary eq 0}">
+            <p:outputPanel rendered="#{not cc.attrs.relationshipDefinition.required}">
                 <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
                 <h:outputText value="Atributo opcional" style="font-size: small;" />
             </p:outputPanel>
@@ -195,9 +195,17 @@
             </div>
         </p:outputPanel>
 
+        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
+            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="No tiene #{cc.attrs.relationshipDefinition.name}" style="font-size: small;" />
+            </p:outputPanel>
+        </f:facet>
+
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
                      id="tableRelationship3"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
+                     rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and cc.attrs.concept.editable}" style="margin: 10px;"
                      value="#{conceptBean.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      var="rel">
