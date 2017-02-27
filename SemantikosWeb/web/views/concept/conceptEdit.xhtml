@@ -61,12 +61,8 @@
                                 <br/>
                                 <p:tabView>
 
-                                    <!-- Etiquetas -->
-                                    <p:tab title="Etiquetas">
-                                        <smtk:tags editable="#{conceptBean.concept.editable}" tagslist="#{conceptBean.concept.tags}"/>
-                                    </p:tab>
+                                    <!-- Otras descripciones -->
                                     <p:tab title="Otras descripciones">
-                                        <!-- Otras descripciones -->
                                         <smtk:descriptions descriptions="#{conceptBean.concept.getValidDescriptionsButFSNandFavorite()}"
                                                            otherTermino="#{conceptBean.otherTermino}"
                                                            otherSensibilidad="#{conceptBean.otherSensibilidad}"
@@ -76,8 +72,8 @@
                                         </smtk:descriptions>
                                     </p:tab>
 
+                                    <!--Relaciones -->
                                     <p:tab title="Atributos" rendered="#{not empty conceptBean.orderedSMTKRelationshipDefinitions}">
-                                        <!--Relaciones -->
                                         <p:outputPanel id="atributos"
                                                        widgetVar="panelAtributos"
                                                        styleClass="attributes"
@@ -126,9 +122,8 @@
                                         </p:outputPanel>
                                     </p:tab>
 
-
+                                    <!--Relaciones SNOMED -->
                                     <p:tab title="SNOMED-CT">
-                                        <!--Relaciones -->
                                         <p:outputPanel id="atributoSCT"
                                                        widgetVar="panelAtributoSCT"
                                                        styleClass="attributes"
@@ -141,7 +136,6 @@
 
                                                     <p:outputPanel
                                                             id="panelRelationshipDefinitonSCT"
-                                                            style="border:0px; margin: 0px; padding: 0px;"
                                                             styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}">
 
                                                         <smtk:sctType
@@ -156,12 +150,9 @@
                                             </h:dataTable>
                                         </p:outputPanel>
                                     </p:tab>
-                                    <p:tab title="RefSets" rendered="#{conceptBean.concept.modeled}">
-                                        <smtk:refset/>
-                                    </p:tab>
-                                    <p:tab title="Crossmaps" rendered="#{ conceptBean.concept.persistent and conceptBean.concept.modeled }">
-                                        <!--Relaciones -->
 
+                                    <!--Crossmaps -->
+                                    <p:tab title="Crossmaps" rendered="#{ conceptBean.concept.persistent and conceptBean.concept.modeled }">
                                         <p:panel id="indirectCrossmap"
                                                  widgetVar="panelIndirectCrossmap"
                                                  styleClass="attributes"
@@ -198,7 +189,16 @@
                                             </h:dataTable>
                                         </p:panel>
                                     </p:tab>
-                                    <br/>
+
+                                    <!--RefSets -->
+                                    <p:tab title="RefSets" rendered="#{conceptBean.concept.modeled}">
+                                        <smtk:refset/>
+                                    </p:tab>
+
+                                    <!-- Etiquetas -->
+                                    <p:tab title="Etiquetas">
+                                        <smtk:tags editable="#{conceptBean.concept.editable}" tagslist="#{conceptBean.concept.tags}"/>
+                                    </p:tab>
 
                                     <!-- Historial -->
                                     <p:tab title="Historial" rendered="#{conceptBean.concept.modeled}">

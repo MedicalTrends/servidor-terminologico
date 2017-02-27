@@ -5,13 +5,20 @@ import cl.minsal.semantikos.kernel.auth.PasswordChangeException;
 import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.model.Profile;
 import cl.minsal.semantikos.model.User;
+import org.omnifaces.util.Ajax;
 import org.primefaces.model.DualListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,11 +44,22 @@ public class UsersBean {
 
     List<Profile> allProfiles;
 
-    DualListModel<Profile> selectedUserProfileModel;
+    DualListModel<Profile> selectedUserProfileModel = new DualListModel<>();
 
+    String userNameError = "";
+
+    String nameError = "";
+
+    String rutError = "";
 
     String newPass1;
     String newPass2;
+
+    //Inicializacion del Bean
+    @PostConstruct
+    protected void initialize() throws ParseException {
+        newUser();
+    }
 
     public String getNewPass2() {
         return newPass2;
@@ -69,6 +87,8 @@ public class UsersBean {
 
         //se debe actualizar la lista del picklist con los perfiles del usuario
         updateAvailableProfiles(this.selectedUser);
+
+        Ajax.update("form:user-edit-dialog");
 
     }
 
@@ -98,13 +118,35 @@ public class UsersBean {
     }
 
 
-    public void newUser(){
+    public void newUser() {
+
         selectedUser = new User();
         selectedUser.setIdUser(-1);
         updateAvailableProfiles(selectedUser);
     }
 
-    public void saveUser(){
+    public void saveUser() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if(selectedUser.getUsername().trim().equals("")) {
+            userNameError = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar 'Nombre de usuario'"));
+        }
+
+        if(selectedUser.getName().trim().equals("")) {
+            nameError = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar su nombre"));
+        }
+
+        if(selectedUser.getRut().trim().equals("")) {
+            rutError = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar su RUT"));
+        }
+
+        if(!userNameError.concat(nameError).concat(rutError).equals("")) {
+            return;
+        }
 
         try {
             selectedUser.setProfiles(selectedUserProfileModel.getTarget());
@@ -155,6 +197,30 @@ public class UsersBean {
 
     public void unlockUser(){
         userManager.unlockUser(selectedUser.getUsername());
+    }
+
+    public String getUserNameError() {
+        return userNameError;
+    }
+
+    public void setUserNameError(String userNameError) {
+        this.userNameError = userNameError;
+    }
+
+    public String getNameError() {
+        return nameError;
+    }
+
+    public void setNameError(String nameError) {
+        this.nameError = nameError;
+    }
+
+    public String getRutError() {
+        return rutError;
+    }
+
+    public void setRutError(String rutError) {
+        this.rutError = rutError;
     }
 
 }

@@ -63,7 +63,14 @@
             </div>
         </p:panel>
 
-        <p:dataTable var="refset" value="#{refsetsBean.conceptRefSetList}">
+        <f:facet name="#{(not conceptBean.editable)? 'footer':null}">
+            <p:outputPanel rendered="#{empty refsetsBean.conceptRefSetList}">
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="El concepto no tiene Refsets asociados" />
+            </p:outputPanel>
+        </f:facet>
+
+        <p:dataTable var="refset" value="#{refsetsBean.conceptRefSetList}" rendered="#{conceptBean.editable}">
             <p:column headerText="ID RefSet">
                 <h:outputText value="#{refset.id}"/>
             </p:column>

@@ -19,10 +19,11 @@
 
 <composite:implementation>
 
-    <p:panel id="multiplicityN_with_attributes" styleClass="sctPanel" 
+    <p:panel id="multiplicityN_with_attributes" styleClass="sctPanel"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
         <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}">
+
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
             <div class="ui-fluid">
@@ -156,8 +157,16 @@
             </div>
         </p:outputPanel>
 
+        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
+            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="El concepto no tiene Relaciones a SNOMED" />
+            </p:outputPanel>
+        </f:facet>
+
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
                      id="tableRelationship3"
+                     rendered="#{cc.attrs.concept.editable}"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and cc.attrs.concept.editable}" style="margin: 10px;"
                      value="#{conceptBean.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
