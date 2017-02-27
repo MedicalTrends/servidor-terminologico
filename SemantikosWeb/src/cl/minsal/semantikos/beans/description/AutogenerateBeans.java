@@ -3,6 +3,7 @@ package cl.minsal.semantikos.beans.description;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.helpertables.HelperTableData;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 import org.primefaces.event.ReorderEvent;
@@ -233,12 +234,22 @@ public class AutogenerateBeans {
     public void autogenerateAttributeDefinition(RelationshipAttributeDefinition relationshipAttributeDefinition, Target target, RelationshipAttribute attribute, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE) {
         if (!concept.isModeled()) {
             if (relationshipAttributeDefinition.getId() == 16) {
-                autogenerateMCCE.setPackUnidad(((HelperTableRow) target).getDescription());
+                HelperTableRow helperTableRow= ((HelperTableRow) target);
+                for (HelperTableData helperTableData : helperTableRow.getCells()) {
+                    if(helperTableData.getColumnId()==9){
+                        autogenerateMCCE.setPackUnidad(helperTableData.getStringValue());
+                    }
+                }
                 concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }
             if (relationshipAttributeDefinition.getId() == 17) {
-                autogenerateMCCE.setVolumenUnidad(((HelperTableRow) target).getDescription());
+                HelperTableRow helperTableRow= ((HelperTableRow) target);
+                for (HelperTableData helperTableData : helperTableRow.getCells()) {
+                    if(helperTableData.getColumnId()==9){
+                        autogenerateMCCE.setVolumenUnidad(helperTableData.getStringValue());
+                    }
+                }
                 concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }
@@ -248,7 +259,12 @@ public class AutogenerateBeans {
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }
             if (relationshipAttributeDefinition.getId() == 15) {
-                autogenerateMCCE.setUnidadMedidaCantidad(((HelperTableRow) target).getDescription());
+                HelperTableRow helperTableRow= ((HelperTableRow) target);
+                for (HelperTableData helperTableData : helperTableRow.getCells()) {
+                    if(helperTableData.getColumnId()==9){
+                        autogenerateMCCE.setUnidadMedidaCantidad(helperTableData.getStringValue());
+                    }
+                }
                 concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }

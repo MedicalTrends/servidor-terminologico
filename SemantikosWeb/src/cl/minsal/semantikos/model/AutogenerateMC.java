@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.model;
 
+import cl.minsal.semantikos.model.helpertables.HelperTableData;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
@@ -61,7 +62,12 @@ public class AutogenerateMC {
     }
 
     public void setUnidadVolumen(RelationshipAttribute relationshipAttribute) {
-        this.unidadVolumen = (((HelperTableRow) relationshipAttribute.getTarget()).getDescription());
+        HelperTableRow helperTableRow= ((HelperTableRow) relationshipAttribute.getTarget());
+        for (HelperTableData helperTableData : helperTableRow.getCells()) {
+            if(helperTableData.getColumnId()==9){
+                this.unidadVolumen = helperTableData.getStringValue();
+            }
+        }
     }
     public void setUnidadVolumenEmpty() {
         this.unidadVolumen = "";
@@ -87,8 +93,14 @@ public class AutogenerateMC {
         for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 8)
                 attributes[0] = " " + format.format(Double.valueOf(relationshipAttribute.getTarget().toString())) +" ";
-            if (relationshipAttribute.getRelationAttributeDefinition().getId() == 9)
-                attributes[1] = (((HelperTableRow) relationshipAttribute.getTarget()).getDescription());
+            if (relationshipAttribute.getRelationAttributeDefinition().getId() == 9){
+                HelperTableRow helperTableRow= ((HelperTableRow) relationshipAttribute.getTarget());
+                for (HelperTableData helperTableData : helperTableRow.getCells()) {
+                    if(helperTableData.getColumnId()==9){
+                        attributes[1] = helperTableData.getStringValue();
+                    }
+                }
+            }
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 10) {
                 if (Float.parseFloat(relationshipAttribute.getTarget().toString()) != 1) {
                     attributes[2] = "/" + format.format(Double.valueOf(relationshipAttribute.getTarget().toString()))+" ";
@@ -96,8 +108,14 @@ public class AutogenerateMC {
                     attributes[2] = "/";
                 }
             }
-            if (relationshipAttribute.getRelationAttributeDefinition().getId() == 11)
-                attributes[3] = (((HelperTableRow) relationshipAttribute.getTarget()).getDescription());
+            if (relationshipAttribute.getRelationAttributeDefinition().getId() == 11){
+                HelperTableRow helperTableRow= ((HelperTableRow) relationshipAttribute.getTarget());
+                for (HelperTableData helperTableData : helperTableRow.getCells()) {
+                    if(helperTableData.getColumnId()==9){
+                        attributes[3] = helperTableData.getStringValue();
+                    }
+                }
+            }
         }
         for (int i = 0; i < 4; i++) {
             if (attributes[i] != null) {
