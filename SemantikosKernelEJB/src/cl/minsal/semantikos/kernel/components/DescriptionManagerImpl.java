@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.components;
 
 
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
+import cl.minsal.semantikos.kernel.util.IDGenerator;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.*;
 import org.slf4j.Logger;
@@ -50,6 +51,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
         descriptionCreationBR1.applyRules(conceptSMTK, description.getTerm(), description.getDescriptionType(), user, categoryManager);
         if (!description.isPersistent()) {
             descriptionDAO.persist(description, user);
+            description.setDescriptionId(generateDescriptionId(description.getId()));
+            descriptionDAO.update(description);
         }
 
         /* Si el concepto al cual se agrega la descripción está modelado, se registra en el historial */
@@ -66,13 +69,14 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
         /* Se crea la descripción */
         Description description = new Description(concept, term, descriptionType);
-        //TODO: AL implementar los webservices este se podria encargar de asignar el description ID
-        description.setDescriptionId(generateDescriptionId());
+        description.setDescriptionId("");
         description.setCaseSensitive(caseSensitive);
 
         /* Se aplican las reglas de negocio para crear la Descripción y se persiste y asocia al concepto */
         new DescriptionBindingBR().applyRules(concept, description, user);
         descriptionDAO.persist(description, user);
+        description.setDescriptionId(generateDescriptionId(description.getId()));
+        descriptionDAO.update(description);
         if (!concept.getDescriptions().contains(description)) {
             concept.addDescription(description);
         }
@@ -102,6 +106,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
         /* Lo esperable es que la descripción no se encontrara persistida */
         if (!description.isPersistent()) {
             descriptionDAO.persist(description, user);
+            description.setDescriptionId(generateDescriptionId(description.getId()));
+            descriptionDAO.update(description);
         }
 
         descriptionDAO.update(description);
@@ -275,8 +281,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
-    public String generateDescriptionId() {
-        return UUID.randomUUID().toString().substring(0, 10);
+    public String generateDescriptionId(long id) {
+        return IDGenerator.generator(String.valueOf(id),IDGenerator.TYPE_DESCRIPTION);
     }
 
     @Override
