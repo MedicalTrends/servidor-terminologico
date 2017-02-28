@@ -5,6 +5,13 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template/template.xhtml">
 
+    <ui:define name="header">
+        <p:breadCrumb>
+            <p:menuitem value="Inicio" url="/views/home.xhtml" />
+            <p:menuitem value="Administración de Usuarios" url="#" />
+        </p:breadCrumb>
+    </ui:define>
+
     <ui:define name="content">
 
         <div class="Container100">
@@ -12,19 +19,23 @@
                 <div class="Card ShadowEffect  ">
                     <div class="Container100">
                         <div class="ContainerIndent">
-                            <h2 class="TexAlCenter BigTopic">Administracion de Usuarios</h2>
 
                             <h:form id="form">
 
-                                <p:commandButton action="#{users.newUser}"  update=":form:user-edit" oncomplete="PF('editDialog').show()" icon="fa fa-plus" title="Crear Nuevo Usuario" />
-
                                 <p:dataTable id="singleDT" var="user" value="#{users.allUsers}" rowKey="#{user.idUser}"
-                                             rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
                                              rowsPerPageTemplate="10,50,100" emptyMessage="No hay usuarios en la Base de Datos" reflow="true">
 
                                     <p:ajax event="rowSelect" update=":form:user-detail" oncomplete="PF('userDialog').show()" />
 
-                                    <p:column headerText="Id" sortBy="#{user.idUser}" footerText="Id" width="10">
+                                    <f:facet name="{Exporters}">
+                                        <p:commandButton actionListener="#{users.newUser}" icon="fa fa-plus" update=":form:user-edit"
+                                                         oncomplete="PF('editDialog').show()"
+                                                         value="Crear Nuevo">
+                                        </p:commandButton>
+                                    </f:facet>
+
+                                    <p:column headerText="Id" sortBy="#{user.idUser}" footerText="Id">
                                         <h:outputText value="#{user.idUser}" />
                                     </p:column>
                                     <p:column headerText="Nombre de Usuario" sortBy="#{user.username}" footerText="Nombre de Usuario">
@@ -38,8 +49,19 @@
                                     </p:column>
 
                                     <p:column exportable="false" style="width:85px;text-align: center">
-                                        <p:commandButton action="#{users.setSelectedUser(user)}" update=":form:user-detail" oncomplete="PF('userDialog').show()" icon="fa fa-view" title="Ver"  process="@this"  />
-                                        <p:commandButton action="#{users.setSelectedUser(user)}" update=":form:user-edit" oncomplete="PF('editDialog').show()" icon="fa fa-edit" title="Editar"   process="@this" />
+                                        <div style="text-align: center;">
+
+                                            <p:commandLink action="#{users.setSelectedUser(user)}" update=":form:user-detail" oncomplete="PF('userDialog').show()"
+                                                           title="Ver" process="@this" style="padding: 5px">
+                                                <i class="fa fa-eye fa-lg"/>
+                                            </p:commandLink>
+
+                                            <p:commandLink action="#{users.setSelectedUser(user)}" oncomplete="PF('editDialog').show()"
+                                                           title="Ver" process="@this" style="padding: 5px">
+                                                <i class="fa fa-edit fa-lg"/>
+                                            </p:commandLink>
+
+                                        </div>
                                     </p:column>
 
                                 </p:dataTable>
@@ -122,74 +144,128 @@
                                     </h:panelGroup>
                                 </p:dialog>
 
+                                <p:dialog id="user-edit-dialog" height="400" width="60%" header="#{users.selectedUser.idUser eq -1?'Crear':'Editar'} Usuario" widgetVar="editDialog"  showEffect="fade" hideEffect="fade" resizable="true" responsive="true">
 
-                                <p:dialog id="user-edit-dialog" height="500" width="600" header="Editar Usuario" widgetVar="editDialog"  showEffect="fade" hideEffect="fade" resizable="true" responsive="true">
-                                    <h:panelGroup layout="block" id="user-edit" styleClass="Container100">
+                                    <p:outputPanel layout="block" id="user-edit" styleClass="Container100">
 
-                                        <p:panelGrid columns="2" styleClass="Wid100" rendered="#{users.selectedUser.idUser != -1}">
-                                            <f:facet name="header">
-                                                Datos Basicos
-                                            </f:facet>
-                                            <h:outputText value="Id:" style="font-weight: bold"/>
-                                            <h:outputText value="#{users.selectedUser.idUser}" />
+                                        <p:growl showDetail="true" showSummary="true"/>
 
-                                            <h:outputText value="Username" style="font-weight: bold"/>
-                                            <h:outputText value="#{users.selectedUser.username}" />
+                                        <div class="ui-fluid">
 
-                                        </p:panelGrid>
+                                            <div class="Container ContainerIndent">
 
-                                        <br />
-                                        <div class="separator" />
-                                        <br />
+                                                <div class="Container20 White Responsive">
+                                                    <div class="ContainerIndent">
+                                                        <p:outputLabel for="input-username2" value="Nombre de Usuario *:" styleClass="#{users.userNameError}" />
+                                                    </div>
+                                                </div>
 
-                                        <p:panelGrid columns="1" layout="grid" rendered="#{users.selectedUser != null}" styleClass="ui-panelgrid-blank">
-                                            <f:facet name="header">
-                                                Datos Usuario
-                                            </f:facet>
+                                                <div class="Container30 White Responsive">
+                                                    <div class="ContainerIndentRight">
+                                                        <p:inputText id="input-username2" value="#{users.selectedUser.username}" styleClass="#{users.userNameError}" />
+                                                    </div>
+                                                </div>
 
-                                            <p:outputLabel for="input-username" value="Nombre de Usuario:"  rendered="#{users.selectedUser.idUser == -1}" />
-                                            <p:inputText id="input-username" value="#{users.selectedUser.username}" required="true" styleClass="Wid90" rendered="#{users.selectedUser.idUser == -1}" />
-                                            <p:message for="input-username" rendered="#{users.selectedUser.idUser == -1}"  />
+                                                <div class="Container20 White Responsive">
+                                                    <div class="ContainerIndent">
+                                                        <p:outputLabel for="input-user-name2" value="Nombre *:" styleClass="#{users.nameError}" />
+                                                    </div>
+                                                </div>
 
-                                            <p:outputLabel for="input-user-name" value="Nombre:"/>
-                                            <p:inputText id="input-user-name" value="#{users.selectedUser.name}" required="true" styleClass="Wid90"/>
-                                            <p:message for="input-user-name" />
+                                                <div class="Container30 White Responsive">
+                                                    <div class="ContainerIndentRight">
+                                                        <p:inputText id="input-user-name2" value="#{users.selectedUser.name}" styleClass="#{users.nameError}" />
+                                                    </div>
+                                                </div>
 
-                                            <p:outputLabel for="input-user-lastname" value="Apellido Paterno:"  required="true"/>
-                                            <p:inputText id="input-user-lastname" value="#{users.selectedUser.lastName}" styleClass="Wid90"/>
-                                            <p:message for="input-user-lastname" />
+                                            </div>
 
-                                            <p:outputLabel for="input-user-secondlastname" value="Apellido Materno:"/>
-                                            <p:inputText id="input-user-secondlastname" value="#{users.selectedUser.secondLastName}" styleClass="Wid90"/>
-                                            <p:message for="input-user-secondlastname" />
+                                            <div class="Container ContainerIndent">
 
-                                            <p:outputLabel for="input-user-rut" value="RUT:" style="font-weight: bold" />
-                                            <p:inputText id="input-user-rut" value="#{users.selectedUser.rut}" required="true" styleClass="Wid90" />
-                                            <p:message for="input-user-rut" />
+                                                <div class="Container20 White Responsive">
+                                                    <div class="ContainerIndent">
+                                                        <p:outputLabel for="input-user-lastname2" value="Apellido Paterno:"  validator="#{users.validateRequiredInput}" />
+                                                    </div>
+                                                </div>
 
-                                            <p:outputLabel for="input-user-email" value="Email" style="font-weight: bold" />
-                                            <p:inputText id="input-user-email" value="#{users.selectedUser.email}"  styleClass="Wid90" />
-                                            <p:message for="input-user-email" />
+                                                <div class="Container30 White Responsive">
+                                                    <div class="ContainerIndentRight">
+                                                        <p:inputText id="input-user-lastname2" value="#{users.selectedUser.lastName}" />
+                                                    </div>
+                                                </div>
 
-                                        </p:panelGrid>
+                                                <div class="Container20 White Responsive">
+                                                    <div class="ContainerIndent">
+                                                        <p:outputLabel for="input-user-secondlastname2" value="Apellido Materno:"/>
+                                                    </div>
+                                                </div>
 
-                                        <p:pickList id="pickList1" value="#{users.selectedUserProfileModel}" var="profile3" itemLabel="#{profile3.name}" itemValue="#{profile3}"
-                                                    showSourceFilter="true" showTargetFilter="true" responsive="true" converter="profileConverter" >
-                                            <f:facet name="sourceCaption">Perfiles disponibles</f:facet>
-                                            <f:facet name="targetCaption">Perfiles Asignados</f:facet>
-                                        </p:pickList>
+                                                <div class="Container30 White Responsive">
+                                                    <div class="ContainerIndentRight">
+                                                        <p:inputText id="input-user-secondlastname2" value="#{users.selectedUser.secondLastName}" />
+                                                    </div>
+                                                </div>
 
-                                        <p:commandButton value="Guardar" icon="fa-save" action="#{users.saveUser}" oncomplete="PF('editDialog').hide()" update="form" />
+                                            </div>
 
-                                        <br />
-                                        <div class="separator" />
-                                        <br />
+                                            <div class="Container ContainerIndent">
+
+                                                <div class="Container20 White Responsive">
+                                                    <div class="ContainerIndent">
+                                                        <p:outputLabel for="input-user-rut2" value="RUT *:" style="font-weight: bold" styleClass="#{users.rutError}" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="Container30 White Responsive">
+                                                    <div class="ContainerIndentRight">
+                                                        <p:inputText id="input-user-rut2" value="#{users.selectedUser.rut}" styleClass="#{users.rutError}" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="Container20 White Responsive">
+                                                    <div class="ContainerIndent">
+                                                        <p:outputLabel for="input-user-email2" value="Email" style="font-weight: bold" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="Container30 White Responsive">
+                                                    <div class="ContainerIndentRight">
+                                                        <p:inputText id="input-user-email2" value="#{users.selectedUser.email}" />
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="Container ContainerIndent">
+
+                                                <div class="Container100 White Responsive">
+
+                                                    <div class="ContainerIndent">
+
+                                                        <p:pickList id="pickList1" value="#{users.selectedUserProfileModel}" var="profile3"
+                                                                    itemLabel="#{profile3.name}" itemValue="#{profile3}"
+                                                            responsive="false" converter="profileConverter" style="width: 100%" >
+                                                    <f:facet name="sourceCaption">Perfiles disponibles</f:facet>
+                                                    <f:facet name="targetCaption">Perfiles Asignados</f:facet>
+                                                </p:pickList>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <p:commandButton value="Guardar" icon="fa-save" action="#{users.saveUser}" oncomplete="PF('editDialog').hide()"
+                                                         update=":form:user-edit,:form:singleDT" />
+
 
                                         <p:commandButton value="Desbloquear Usuario" action="#{users.unlockUser}" disabled="#{not users.selectedUser.locked}"  rendered="#{users.selectedUser != null and users.selectedUser.idUser != -1}" process="@this" />
                                         <p:commandButton value="Cambiar Password Usuario" rendered="#{users.selectedUser != null and users.selectedUser.idUser != -1}" oncomplete="PF('passwordChangeDialog').show()" update=":form:pcdialog"   process="@this" />
 
 
-                                    </h:panelGroup>
+                                    </p:outputPanel>
                                 </p:dialog>
 
                                 <p:dialog id="pcdialog" height="200" width="600" header="Cambiar Password Usuario" widgetVar="passwordChangeDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="true" responsive="true" >
@@ -209,7 +285,6 @@
                                     <p:commandButton process="pcdialog" value="Cambiar Password Usuario" rendered="#{users.selectedUser != null}" action="#{users.changePass}" oncomplete="PF('passwordChangeDialog').hide()"  />
 
                                 </p:dialog>
-
 
                             </h:form>
                         </div>

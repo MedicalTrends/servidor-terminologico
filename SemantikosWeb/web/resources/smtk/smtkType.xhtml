@@ -198,7 +198,7 @@
         <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
             <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
                 <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="No tiene #{cc.attrs.relationshipDefinition.name}" style="font-size: small;" />
+                <h:outputText value="El concepto no tiene #{cc.attrs.relationshipDefinition.name}" style="font-size: small;" />
             </p:outputPanel>
         </f:facet>
 
@@ -206,7 +206,8 @@
                      id="tableRelationship3"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
                      rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and cc.attrs.concept.editable}" style="margin: 10px;"
+                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and cc.attrs.concept.editable}"
+                     style="margin: 0px;"
                      value="#{conceptBean.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      var="rel">
 

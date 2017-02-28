@@ -1390,7 +1390,7 @@ public class ConceptBean implements Serializable {
      * @return Una lista ordenada de las relaciones de la categoría.
      */
     public List<RelationshipDefinitionWeb> getOrderedSMTKRelationshipDefinitions() {
-        if (orderedRelationshipDefinitionsList.isEmpty()) {
+        if (orderedRelationshipDefinitionsList.isEmpty() && category != null) {
             for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
                 RelationshipDefinitionWeb relationshipDefinitionWeb = viewAugmenter.augmentRelationshipDefinition(category, relationshipDefinition);
                 orderedRelationshipDefinitionsList.add(relationshipDefinitionWeb);

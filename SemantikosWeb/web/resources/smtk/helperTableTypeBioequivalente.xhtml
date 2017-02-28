@@ -84,6 +84,13 @@
             </div>
         </div>
 
+        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
+            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="El concepto no tiene #{cc.attrs.relationshipDefinition.name}" style="font-size: small;" />
+            </p:outputPanel>
+        </f:facet>
+
         <p:dataTable id="collectionValues12"
                      styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
                      var="relationship"

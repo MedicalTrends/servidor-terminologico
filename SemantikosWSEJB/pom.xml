@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>SemantikosWSEJB</artifactId>
-    <version>1.1</version>
+    <version>3.0.4</version>
     <packaging>ejb</packaging>
 
     <properties>

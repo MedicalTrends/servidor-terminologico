@@ -76,10 +76,18 @@
         </p:panel>
         <p:spacer rendered="#{cc.attrs.editable}"/>
 
+        <f:facet name="#{(not cc.attrs.editable)? 'footer':null}">
+            <p:outputPanel rendered="#{empty cc.attrs.descriptions}">
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="El concepto no tiene Otras Descripciones" />
+            </p:outputPanel>
+        </f:facet>
+
         <p:dataTable id="otherDescriptions"
                      styleClass="otherDescriptions TextAlCenter"
                      emptyMessage="El concepto no tiene otras descripciones"
                      var="description"
+                     rendered="#{cc.attrs.editable and not empty cc.attrs.descriptions}"
                      value="#{cc.attrs.descriptions}"
                      editable="true"
                      reflow="true">
@@ -576,30 +584,6 @@
             </div>
         </p:panel>
     </p:dialog>
-
-
-    <h:outputStylesheet id="_customCSS">
-
-        .ui-row-editor span.ui-icon.ui-icon-pencil {
-            width: 18px !important;
-            height: 18px !important;
-            margin-right: 10px !important;
-        }
-
-        .ui-row-editor span.ui-icon.ui-icon-check {
-            width: 18px !important;
-            height: 18px !important;
-            margin-right: 10px !important;
-        }
-
-        .ui-row-editor span.ui-icon.ui-icon-close {
-            width: 18px !important;
-            height: 18px !important;
-            margin-right: 10px !important;
-        }
-
-    </h:outputStylesheet>
-
 
 </composite:implementation>
 </html>
