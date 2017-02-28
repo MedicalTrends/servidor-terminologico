@@ -32,6 +32,9 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(Relationship.class);
 
+    /** ID de negocio (Solo utilizado en relaciones SCT) */
+    private String idRelationship;
+
     /** El concepto origen de esta relación */
     private ConceptSMTK sourceConcept;
 
@@ -101,6 +104,14 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
         } else {
             super.setId(id);
         }
+    }
+
+    public String getIdRelationship() {
+        return idRelationship;
+    }
+
+    public void setIdRelationship(String idRelationship) {
+        this.idRelationship = idRelationship;
     }
 
     public ConceptSMTK getSourceConcept() {

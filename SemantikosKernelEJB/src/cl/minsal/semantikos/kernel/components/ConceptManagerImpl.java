@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
+import cl.minsal.semantikos.kernel.util.IDGenerator;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
@@ -274,6 +275,8 @@ public class ConceptManagerImpl implements ConceptManager {
 
         /* En este momento se está listo para persistir el concepto (sus atributos básicos) */
         conceptDAO.persistConceptAttributes(conceptSMTK, user);
+        conceptSMTK.setConceptID(IDGenerator.generator(String.valueOf(conceptSMTK.getId()),IDGenerator.TYPE_CONCEPT));
+        conceptDAO.update(conceptSMTK);
 
         /* Y se persisten sus descripciones */
         for (Description description : conceptSMTK.getDescriptions()) {
@@ -403,8 +406,8 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public String generateConceptId() {
-        return UUID.randomUUID().toString().substring(0, 10);
+    public String generateConceptId(long id) {
+        return IDGenerator.generator(String.valueOf(id),IDGenerator.TYPE_CONCEPT);
     }
 
     @Override

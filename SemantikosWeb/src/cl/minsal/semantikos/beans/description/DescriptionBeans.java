@@ -89,7 +89,7 @@ public class DescriptionBeans {
 
                 description.setModeled(conceptBean.getConcept().isModeled());
                 description.setCreatorUser(conceptBean.user);
-                description.setDescriptionId(conceptBean.getDescriptionManager().generateDescriptionId());
+                description.setDescriptionId("");
                 conceptBean.getConcept().addDescriptionWeb(description);
                 conceptBean.setOtherTermino("");
                 conceptBean.setOtherDescriptionType(null);

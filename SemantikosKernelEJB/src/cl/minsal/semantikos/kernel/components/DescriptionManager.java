@@ -110,7 +110,7 @@ public interface DescriptionManager {
      *
      * @return Un objeto <code>java.util.List</code> con las descripciones del concepto <code>concept</code>.
      */
-    public String generateDescriptionId();
+    public String generateDescriptionId(long id);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como

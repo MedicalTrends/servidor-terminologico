@@ -405,10 +405,10 @@ public class ConceptBean implements Serializable {
         ConceptSMTKWeb conceptWeb = new ConceptSMTKWeb(concept);
 
         DescriptionWeb fsnDescription = new DescriptionWeb(conceptWeb, term, descriptionManager.getTypeFSN());
-        fsnDescription.setDescriptionId(descriptionManager.generateDescriptionId());
+        fsnDescription.setDescriptionId("");
 
         DescriptionWeb favouriteDescription = new DescriptionWeb(conceptWeb, term, descriptionManager.getTypeFavorite());
-        favouriteDescription.setDescriptionId(descriptionManager.generateDescriptionId());
+        favouriteDescription.setDescriptionId("");
 
         for (DescriptionWeb description : new DescriptionWeb[]{favouriteDescription, fsnDescription})
             conceptWeb.addDescriptionWeb(description);
@@ -425,7 +425,7 @@ public class ConceptBean implements Serializable {
         String observation = "";
 
         TagSMTK tagSMTK = new TagSMTK(category.getTagSemantikos().getId(), category.getTagSemantikos().getName());
-        ConceptSMTK conceptSMTK = new ConceptSMTK(conceptManager.generateConceptId(), category, false, false, false, false, false, false, observation, tagSMTK);
+        ConceptSMTK conceptSMTK = new ConceptSMTK("", category, false, false, false, false, false, false, observation, tagSMTK);
 
         // Se crea el concepto WEB a partir del concepto SMTK
         concept = initConcept(conceptSMTK, term);

@@ -224,6 +224,7 @@ public class RelationshipFactory {
 class RelationshipDTO {
 
     protected long id;
+    protected String idRelationship;
     protected long idSourceConcept;
     protected long idTarget;
     protected long idRelationshipDefinition;
@@ -240,6 +241,14 @@ class RelationshipDTO {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getIdRelationship() {
+        return idRelationship;
+    }
+
+    public void setIdRelationship(String idRelationship) {
+        this.idRelationship = idRelationship;
     }
 
     public long getIdSourceConcept() {

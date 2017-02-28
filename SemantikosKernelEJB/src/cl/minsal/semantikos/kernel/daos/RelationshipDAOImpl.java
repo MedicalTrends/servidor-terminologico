@@ -19,6 +19,8 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
+import static java.sql.Types.VARCHAR;
+
 /**
  * @author Diego Soto / Gustavo Punucura
  */
@@ -40,14 +42,19 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         long idTarget= targetDAO.persist(relationship.getTarget(),relationship.getRelationshipDefinition().getTargetDefinition());
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.create_relationship(?,?,?,?)}";
+        String sql = "{call semantikos.create_relationship(?,?,?,?,?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, relationship.getSourceConcept().getId());
-            call.setLong(2, idTarget);
-            call.setLong(3, relationship.getRelationshipDefinition().getId());
-            call.setTimestamp(4, relationship.getCreationDate());
+            if(relationship.getIdRelationship()!=null){
+                call.setString(1,relationship.getIdRelationship());
+            }else{
+               call.setNull(1,VARCHAR);
+            }
+            call.setLong(2, relationship.getSourceConcept().getId());
+            call.setLong(3, idTarget);
+            call.setLong(4, relationship.getRelationshipDefinition().getId());
+            call.setTimestamp(5, relationship.getCreationDate());
             call.execute();
 
             ResultSet rs = call.getResultSet();
@@ -116,12 +123,17 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     @Override
     public void update(Relationship relationship) {
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.update_relation(?,?,?,?,?)}";
+        String sql = "{call semantikos.update_relation(?,?,?,?,?,?)}";
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, relationship.getId());
+            if(relationship.getIdRelationship()!=null){
+                call.setString(2,relationship.getIdRelationship());
+            }else{
+                call.setNull(2,VARCHAR);
+            }
             call.setLong(2, relationship.getSourceConcept().getId());
             call.setLong(3, getTargetByRelationship(relationship));
             call.setLong(4, relationship.getRelationshipDefinition().getId());
