@@ -44,8 +44,15 @@ public class AuthenticationManager {
     }
 
 
-    @RolesAllowed("Administrador")
+    //@RolesAllowed("Administrador")
+    @PermitAll()
     public void setUserPassword(String username, String password) throws PasswordChangeException {
         getAuthenticationMethod().setUserPassword(username, password);
+    }
+
+    @PermitAll()
+    //@RolesAllowed("Administrador")
+    public void createUserPassword(User user, String username, String password) throws PasswordChangeException {
+        user.setPasswordHash(getAuthenticationMethod().createUserPassword(username, password));
     }
 }

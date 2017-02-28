@@ -18,7 +18,7 @@ public class User {
     private String name;
     private String lastName;
     private String secondLastName;
-    private String email;
+    private String email = " ";
 
     private String rut;
 
@@ -30,7 +30,7 @@ public class User {
 
     private Date lastLogin;
     private Date lastPasswordChange;
-    private boolean locked;
+    private boolean locked = false;
     private int failedLoginAttempts;
 
     private String lastPasswordHash1;

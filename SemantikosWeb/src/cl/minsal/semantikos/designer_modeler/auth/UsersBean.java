@@ -18,9 +18,12 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by BluePrints Developer on 14-07-2016.
@@ -50,9 +53,13 @@ public class UsersBean {
 
     String nameError = "";
 
+    String lastNameError = "";
+
     String rutError = "";
 
-    String newPass1;
+    String passwordError = "";
+
+    String newPass1 = "";
     String newPass2;
 
     //Inicializacion del Bean
@@ -74,7 +81,9 @@ public class UsersBean {
     }
 
     public void setNewPass1(String newPass1) {
-        this.newPass1 = newPass1;
+        if(!newPass1.isEmpty()) {
+            this.newPass1 = newPass1;
+        }
     }
 
     public User getSelectedUser() {
@@ -83,12 +92,13 @@ public class UsersBean {
 
     public void setSelectedUser(User selectedUser) {
 
+        clean();
+        newPass1 = "*************************";
+
         this.selectedUser = userManager.getUser(selectedUser.getIdUser());
 
         //se debe actualizar la lista del picklist con los perfiles del usuario
         updateAvailableProfiles(this.selectedUser);
-
-        Ajax.update("form:user-edit-dialog");
 
     }
 
@@ -111,8 +121,9 @@ public class UsersBean {
 
     public List<User> getAllUsers(){
 
-        if(allUsers==null)
+        if(allUsers==null) {
             allUsers = userManager.getAllUsers();
+        }
 
         return allUsers;
     }
@@ -123,6 +134,64 @@ public class UsersBean {
         selectedUser = new User();
         selectedUser.setIdUser(-1);
         updateAvailableProfiles(selectedUser);
+        newPass1 = "";
+        clean();
+    }
+
+    public void clean() {
+        userNameError = "";
+        nameError = "";
+        lastNameError = "";
+        rutError = "";
+    }
+
+    public void validateRut() {
+        String rut = selectedUser.getRut();
+
+        Pattern p = Pattern.compile( "^0*(\\d{1,3}(\\.?\\d{3})*)\\-?([\\dkK])$" );
+        Matcher m = p.matcher( rut );
+
+        if(!m.matches()) {
+            rutError = "ui-state-error";
+        }
+
+        rut.replace("-","");
+        rut.replace(".","");
+
+        int num = Integer.parseInt(rut.substring(0,rut.length()-1));
+
+        if(!validarRut(num,rut.charAt(rut.length()))) {
+            rutError = "ui-state-error";
+        }
+
+        rutError = "";
+    }
+
+    public static boolean validarRut(int rut, char dv)
+    {
+        int m = 0, s = 1;
+        for (; rut != 0; rut /= 10)
+        {
+            s = (s + rut % 10 * (9 - m++ % 6)) % 11;
+        }
+        return dv == (char) (s != 0 ? s + 47 : 75);
+    }
+
+    public String formatRut(String rut) {
+        rut.replace("-","");
+        rut.replace(".","");
+
+        int num = Integer.parseInt(rut.substring(0,rut.length()-1));
+
+        DecimalFormat df = new DecimalFormat("##.###.###");
+
+        String fRut = df.format(num);
+
+        fRut.concat("-");
+
+        fRut.concat(rut.substring(rut.length()-1));
+
+        return fRut;
     }
 
     public void saveUser() {
@@ -133,18 +202,43 @@ public class UsersBean {
             userNameError = "ui-state-error";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar 'Nombre de usuario'"));
         }
+        else {
+            userNameError = "";
+        }
 
         if(selectedUser.getName().trim().equals("")) {
             nameError = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar su nombre"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar nombre"));
+        }
+        else {
+            nameError = "";
+        }
+
+        if(selectedUser.getLastName().trim().equals("")) {
+            lastNameError = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar apellido paterno"));
+        }
+        else {
+            lastNameError = "";
         }
 
         if(selectedUser.getRut().trim().equals("")) {
             rutError = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar su RUT"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar RUT"));
+        }
+        else {
+            rutError = "";
         }
 
-        if(!userNameError.concat(nameError).concat(rutError).equals("")) {
+        if(newPass1.trim().equals("")) {
+            passwordError = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar una contraseña"));
+        }
+        else {
+            passwordError = "";
+        }
+
+        if(!userNameError.concat(nameError).concat(rutError).concat(passwordError).trim().equals("")) {
             return;
         }
 
@@ -152,11 +246,13 @@ public class UsersBean {
             selectedUser.setProfiles(selectedUserProfileModel.getTarget());
 
 
-            if(selectedUser.getIdUser() == -1)
+            if(selectedUser.getIdUser() == -1) {
+                authenticationManager.createUserPassword(selectedUser,selectedUser.getUsername(),newPass1);
                 userManager.createUser(selectedUser);
-            else
+            }
+            else {
                 userManager.updateUser(selectedUser);
-
+            }
 
         }catch (Exception e){
             logger.error("error al actualizar usuario",e);
@@ -221,6 +317,22 @@ public class UsersBean {
 
     public void setRutError(String rutError) {
         this.rutError = rutError;
+    }
+
+    public String getLastNameError() {
+        return lastNameError;
+    }
+
+    public void setLastNameError(String lastNameError) {
+        this.lastNameError = lastNameError;
+    }
+
+    public String getPasswordError() {
+        return passwordError;
+    }
+
+    public void setPasswordError(String passwordError) {
+        this.passwordError = passwordError;
     }
 
 }

@@ -49,5 +49,10 @@ public class DummyAuthenticationBean extends AuthenticationMethod{
 
     }
 
+    @Override
+    public String createUserPassword(String username, String password) {
+        return null;
+    }
+
 
 }

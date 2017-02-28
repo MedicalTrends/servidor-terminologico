@@ -20,6 +20,9 @@ public class UserManager {
     @EJB
     AuthDAO authDAO;
 
+    @EJB
+    AuthenticationManager authenticationManager;
+
 
     public List<User> getAllUsers() {
 
@@ -37,8 +40,6 @@ public class UserManager {
     }
 
     public void createUser(User user) throws AuthDAO.UserExistsException {
-
-
         authDAO.createUser(user);
 
     }

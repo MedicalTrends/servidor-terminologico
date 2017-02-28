@@ -214,18 +214,19 @@ public class AuthDAOImpl implements AuthDAO {
 
         ConnectionBD connect = new ConnectionBD();
 
-        String sql = "{call semantikos.create_user(?,?,?,?,?,?,?,?)}";
+        String sql = "{call semantikos.create_user(?,?,?,?,?,?,?,?,?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, user.getUsername());
-            call.setString(2, user.getName());
-            call.setString(3, user.getLastName());
-            call.setString(4, user.getSecondLastName());
-            call.setString(5, user.getEmail());
+            call.setString(1, user.getUsername().trim());
+            call.setString(2, user.getName().trim());
+            call.setString(3, user.getLastName().trim());
+            call.setString(4, user.getSecondLastName().trim());
+            call.setString(5, user.getEmail().trim());
             call.setBoolean(6, false);
             call.setInt(7, 0);
             call.setString(8, user.getRut());
+            call.setString(9, user.getPasswordHash());
 
             call.execute();
 

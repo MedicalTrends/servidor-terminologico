@@ -123,6 +123,11 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
     }
 
     @Override
+    public String createUserPassword(String username, String password) {
+        return createPasswordHash("MD5", BASE64_ENCODING, null, null, password);
+    }
+
+    @Override
     public User getUser(String username) {
         return authDAO.getUserByUsername(username);
     }
