@@ -4,6 +4,8 @@ import cl.minsal.semantikos.kernel.daos.AuthDAO;
 
 import cl.minsal.semantikos.model.Profile;
 import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.businessrules.ConceptDeletionBR;
+import cl.minsal.semantikos.model.businessrules.UserCreationBR;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -34,14 +36,22 @@ public class UserManager {
         return authDAO.getUserById(idUser);
     }
 
+    public User getUserByRut(String rut) { return authDAO.getUserByRut(rut); }
+
+    public User getUserByUsername(String username) { return authDAO.getUserByUsername(username); }
+
     public void updateUser(User user) {
 
         authDAO.updateUser(user);
     }
 
-    public void createUser(User user) throws AuthDAO.UserExistsException {
-        authDAO.createUser(user);
+    public void createUser(User user) {
 
+        /* Se validan las pre-condiciones para crear un usuario */
+        //UserCreationBR userCreationBR = new UserCreationBR();
+        //userCreationBR.preconditions(user);
+
+        authDAO.createUser(user);
     }
 
     public List<Profile> getAllProfiles() {

@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.model;
 
+import cl.minsal.semantikos.kernel.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,10 +16,10 @@ public class User {
     private static User dummyUser = new User(NON_PERSISTED_ID, "dummy", "Usuario de Prueba", true);
 
     private long idUser;
-    private String username;
+    private String username = " ";
     private String name;
     private String lastName;
-    private String secondLastName;
+    private String secondLastName = " ";
     private String email = " ";
 
     private String rut;
@@ -182,7 +184,7 @@ public class User {
     }
 
     public String getRut() {
-        return rut;
+        return StringUtils.formatRut(rut);
     }
 
     public void setRut(String rut) {
