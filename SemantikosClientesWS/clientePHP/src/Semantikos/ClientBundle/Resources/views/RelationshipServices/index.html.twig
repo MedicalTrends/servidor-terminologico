@@ -1,0 +1,423 @@
+{% extends 'base.html.twig' %}
+{% for form in RelationshipForms  %}     
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% endfor %}    
+{% block stylesheets %}    
+{% endblock %}
+
+{% block operaciones %}                    
+    <div class="list-group">
+        <span id="ws006" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-006
+        </span>        
+        <span id="ws010" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-010
+        </span> 
+        <span id="ws010_01" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-010.01
+        </span>  
+        <span id="ws011" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-011
+        </span> 
+        <span id="ws011_01" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-011.01
+        </span>  
+        <span id="ws012" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-012
+        </span> 
+        <span id="ws012_01" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-012.01
+        </span> 
+        <span id="ws013" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-013
+        </span> 
+        <span id="ws013_01" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-013.01
+        </span>
+        <span id="ws014" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-014
+        </span> 
+        <span id="ws014_01" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-014.01
+        </span>
+        <span id="ws015" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-015
+        </span>
+        <span id="ws015_01" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-015.01
+        </span>
+        <span id="ws016" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-016
+        </span>
+        <span id="ws017" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-017
+        </span>
+        <span id="ws017_01" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-017.01
+        </span>
+        <span id="ws018" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-018
+        </span>
+        <span id="ws018_01" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-018.01
+        </span>
+        <span id="ws019" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-019
+        </span>
+        <span id="ws020" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-020
+        </span>
+        <span id="ws021" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-021
+        </span>
+        <span id="ws022" class="list-group-item operations">
+            <i class="fa fa-cog"></i> WS-REQ-022
+        </span>
+    </div>        
+{% endblock %}
+
+{% block body %}        
+
+    <div id="form" class="row" style="display: none">
+        <div class="col-sm-6">    
+            <div id="ws006">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-006: Sugerencias De Descripciones
+                </p>   
+                <br>
+                {{ form_start(RelationshipForms['ws006']) }}        
+                {{ form_errors(RelationshipForms['ws006']) }}         
+                {{ form(RelationshipForms['ws006']) }}                                                                
+                {{ form_end(RelationshipForms['ws006']) }}                                                                                
+            </div>
+            <div id="ws010">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-010: Obtener Medicamento Clínico Por Medicamento Básico
+                </p>   
+                <br>
+                {{ form_start(RelationshipForms['ws010']) }}        
+                {{ form_errors(RelationshipForms['ws010']) }}         
+                {{ form(RelationshipForms['ws010']) }}                                                                
+                {{ form_end(RelationshipForms['ws010']) }}                                                                                
+            </div>            
+            <div id="ws010_01">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-010.01: Obtener Medicamento Clínico Por Medicamento Básico Lite
+                </p>   
+                <br>
+                {{ form_start(RelationshipForms['ws010_01']) }}        
+                {{ form_errors(RelationshipForms['ws010_01']) }}         
+                {{ form(RelationshipForms['ws010_01']) }}                                                                
+                {{ form_end(RelationshipForms['ws010_01']) }}                                                                                
+            </div>
+            <div id="ws011">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-011: Obtener Medicamento Clínico Por Producto Comercial
+                </p>   
+                <br>
+                {{ form_start(RelationshipForms['ws011']) }}        
+                {{ form_errors(RelationshipForms['ws011']) }}         
+                {{ form(RelationshipForms['ws011']) }}                                                                
+                {{ form_end(RelationshipForms['ws011']) }}                                                                                
+            </div> 
+            <div id="ws011_01">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-011.01: Obtener Medicamento Clínico Por Producto Comercial Lite
+                </p>   
+                <br>
+                {{ form_start(RelationshipForms['ws011_01']) }}        
+                {{ form_errors(RelationshipForms['ws011_01']) }}         
+                {{ form(RelationshipForms['ws011_01']) }}                                                                
+                {{ form_end(RelationshipForms['ws011_01']) }}                                                                                
+            </div>
+            <div id="ws012">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-012: Obtener Medicamento Básico Por Medicamento Clínico
+                </p>   
+                <br>
+                {{ form_start(RelationshipForms['ws012']) }}        
+                {{ form_errors(RelationshipForms['ws012']) }}         
+                {{ form(RelationshipForms['ws012']) }}                                                                
+                {{ form_end(RelationshipForms['ws012']) }}                                                                                
+            </div> 
+            <div id="ws012_01">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-012.01: Obtener Medicamento Básico Por Medicamento Clínico Lite
+                </p>   
+                <br>
+                {{ form_start(RelationshipForms['ws012_01']) }}        
+                {{ form_errors(RelationshipForms['ws012_01']) }}         
+                {{ form(RelationshipForms['ws012_01']) }}                                                                
+                {{ form_end(RelationshipForms['ws012_01']) }}                                                                                
+            </div> 
+            <div id="ws013">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-013: Obtener Producto Comercial Por Medicamento Clínico
+                </p>   
+                <br>
+                {{ form_start(RelationshipForms['ws013']) }}        
+                {{ form_errors(RelationshipForms['ws013']) }}         
+                {{ form(RelationshipForms['ws013']) }}                                                                
+                {{ form_end(RelationshipForms['ws013']) }}                                                                                
+            </div> 
+            <div id="ws013_01">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-013.01: Obtener Producto Comercial Por Medicamento Clínico Lite
+                </p>   
+                <br>
+                {{ form_start(RelationshipForms['ws013_01']) }}        
+                {{ form_errors(RelationshipForms['ws013_01']) }}         
+                {{ form(RelationshipForms['ws013_01']) }}                                                                
+                {{ form_end(RelationshipForms['ws013_01']) }}                                                                                
+            </div>  
+            <div id="ws014">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-014: ObtenerMedicamento Clínico con Envase Por Medicamento Clínico
+                </p>   
+                <br>
+                {{ form_start(RelationshipForms['ws014']) }}        
+                {{ form_errors(RelationshipForms['ws014']) }}         
+                {{ form(RelationshipForms['ws014']) }}                                                                
+                {{ form_end(RelationshipForms['ws014']) }}                                                                                
+            </div> 
+            <div id="ws014_01">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-014.01:Obtener Producto Comercial con Envase Por Medicamento Clínico Lite
+                </p>   
+                <br>
+                {{ form_start(RelationshipForms['ws014_01']) }}        
+                {{ form_errors(RelationshipForms['ws014_01']) }}         
+                {{ form(RelationshipForms['ws014_01']) }}                                                                
+                {{ form_end(RelationshipForms['ws014_01']) }}                                                                                
+            </div>
+            <div id="ws015">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-015: Obtener Producto Comercial con Envase por Medicamento Clínico Con Envase
+                </p>
+                <br>
+                {{ form_start(RelationshipForms['ws015']) }}
+                {{ form_errors(RelationshipForms['ws015']) }}
+                {{ form(RelationshipForms['ws015']) }}
+                {{ form_end(RelationshipForms['ws015']) }}
+            </div>
+            <div id="ws015_01">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-015.01:Obtener Producto Comercial con Envase por Medicamento Clínico Con Envase Lite
+                </p>
+                <br>
+                {{ form_start(RelationshipForms['ws015_01']) }}
+                {{ form_errors(RelationshipForms['ws015_01']) }}
+                {{ form(RelationshipForms['ws015_01']) }}
+                {{ form_end(RelationshipForms['ws015_01']) }}
+            </div>
+            <div id="ws016">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-016: Obtener Familia Producto por Grupo Familia de Producto
+                </p>
+                <br>
+                {{ form_start(RelationshipForms['ws016']) }}
+                {{ form_errors(RelationshipForms['ws016']) }}
+                {{ form(RelationshipForms['ws016']) }}
+                {{ form_end(RelationshipForms['ws016']) }}
+            </div>
+            <div id="ws017">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-017: Obtener Producto Comercial por Familia Producto
+                </p>
+                <br>
+                {{ form_start(RelationshipForms['ws017']) }}
+                {{ form_errors(RelationshipForms['ws017']) }}
+                {{ form(RelationshipForms['ws017']) }}
+                {{ form_end(RelationshipForms['ws017']) }}
+            </div>
+            <div id="ws017_01">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-017.01: Obtener Producto Comercial por Familia Producto Lite
+                </p>
+                <br>
+                {{ form_start(RelationshipForms['ws017_01']) }}
+                {{ form_errors(RelationshipForms['ws017_01']) }}
+                {{ form(RelationshipForms['ws017_01']) }}
+                {{ form_end(RelationshipForms['ws017_01']) }}
+            </div>
+            <div id="ws018">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-018: Obtener Producto Comercial con Envase por Producto Comercial
+                </p>
+                <br>
+                {{ form_start(RelationshipForms['ws018']) }}
+                {{ form_errors(RelationshipForms['ws018']) }}
+                {{ form(RelationshipForms['ws018']) }}
+                {{ form_end(RelationshipForms['ws018']) }}
+            </div>
+            <div id="ws018_01">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-018.01: Obtener Producto Comercial con Envase por Producto Comercial Lite
+                </p>
+                <br>
+                {{ form_start(RelationshipForms['ws018_01']) }}
+                {{ form_errors(RelationshipForms['ws018_01']) }}
+                {{ form(RelationshipForms['ws018_01']) }}
+                {{ form_end(RelationshipForms['ws018_01']) }}
+            </div>
+            <div id="ws019">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-019: Obtener Sustancias por Medicamento Básico
+                </p>
+                <br>
+                {{ form_start(RelationshipForms['ws019']) }}
+                {{ form_errors(RelationshipForms['ws019']) }}
+                {{ form(RelationshipForms['ws019']) }}
+                {{ form_end(RelationshipForms['ws019']) }}
+            </div>
+            <div id="ws020">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-020: Obtener Registro ISP por Producto Comercial
+                </p>
+                <br>
+                {{ form_start(RelationshipForms['ws020']) }}
+                {{ form_errors(RelationshipForms['ws020']) }}
+                {{ form(RelationshipForms['ws020']) }}
+                {{ form_end(RelationshipForms['ws020']) }}
+            </div>
+            <div id="ws021">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-021: Obtener Bioequivalentes por Producto Comercial
+                </p>
+                <br>
+                {{ form_start(RelationshipForms['ws021']) }}
+                {{ form_errors(RelationshipForms['ws021']) }}
+                {{ form(RelationshipForms['ws021']) }}
+                {{ form_end(RelationshipForms['ws021']) }}
+            </div>
+            <div id="ws022">
+                <p class="list-group-item ui-widget-header active">
+                    WS-REQ-022: Obtener Miembros Preferidos de un REFSET
+                </p>
+                <br>
+                {{ form_start(RelationshipForms['ws022']) }}
+                {{ form_errors(RelationshipForms['ws022']) }}
+                {{ form(RelationshipForms['ws022']) }}
+                {{ form_end(RelationshipForms['ws022']) }}
+            </div>
+        </div>
+        <div class="col-sm-6">            
+            <div class="form-group">
+                <p class="list-group-item ui-widget-header active">
+                    Respuesta WS
+                </p>              
+                <textarea id="response" type="text" class="form-control" id="term" rows="24">
+                </textarea>
+            </div>            
+        </div>
+    </div>
+ 
+    <div id="dialog" title="Basic dialog">        
+    </div>
+              
+{% endblock %}
+{% block javascripts %}
+<script>      
+    
+    $forms = $( "form" );
+    $operations = $( ".operations" );
+    
+    var dialog = $( "#dialog" ).dialog({
+                    autoOpen: false,
+                    modal: true,
+                    dialogClass: 'myTitleClass'
+                });
+    
+    $( function() {    
+        init();      
+    });            
+    
+    $( document ).ready(function() {
+        $("#form").show();
+    });  
+    
+    $forms.on( "submit", function( event ) {               
+        
+        var form = this;
+        
+        event.preventDefault(); 
+        
+        suspend(form);
+        
+        var data = {};
+        data['operation'] = $(this).attr('name'); 
+        data['parameters'] = $(this).serializeArray();                    
+                        
+        $.ajax({
+            type: "POST",
+            url: "{{ path('relationship_call') }}",
+            data: data,            
+            timeout: 30000, // in milliseconds
+            success: function(data) {
+                
+                unSuspend(form);                        
+            
+                var jsonObj = JSON.parse(data);
+                var jsonPretty = JSON.stringify(jsonObj, null, '\t');
+
+                $('#response').text(jsonPretty);
+            },
+            error: function(request, status, err) {
+                
+                unSuspend(form);  
+                                
+                var jsonPretty = JSON.stringify(request, null, '\t');
+
+                $('#response').text(jsonPretty);
+                
+                $(dialog).html(err);
+                dialog.dialog('option','title',status)
+                dialog.dialog( "open" );                
+            }
+        });
+                
+    });   
+    
+    $operations.click(function(event){        
+        selectOperation(this);
+    });
+    
+    function suspend(form){         
+        $(form).find('button').append('<img class="loader" alt="" style=";margin-left:10px" src="{{ asset('bundles/semantikosclient/images/loader-minitrans.gif') }}">');                    
+        $(form).find('button').attr('disabled',true);        
+        $('#response').text("");
+    }
+    
+    function unSuspend(form){         
+        $('.loader').remove();        
+        $(form).find('button').attr('disabled',false);        
+    }
+    
+    function hideForms(){
+        $.each($forms, function(k,v){            
+            $(v).parent().hide();    
+        });  
+    }
+    
+    function selectOperation(operation){        
+        hideForms();        
+        unSelectOperations();
+        $(operation).addClass('active');       
+        $("form[name='"+$(operation).attr('id')+"']").parent().show();
+    }
+    
+    function unSelectOperations(){
+        $operations.removeClass('active');
+    }
+    
+    function initOperations(){
+        selectOperation($operations[0]);
+    }
+    
+    function init(){
+        hideForms();
+        initOperations();
+    }
+
+</script>
+{% endblock %}

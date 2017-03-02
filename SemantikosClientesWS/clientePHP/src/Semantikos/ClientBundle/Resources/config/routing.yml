@@ -1,0 +1,36 @@
+root:
+    path:     /
+    defaults: 
+        _controller: FrameworkBundle:Redirect:Redirect
+        route: fos_user_security_login
+        permanent: true
+
+search_index:
+    path:     /SearchServices
+    defaults: { _controller: "SemantikosClientBundle:SearchServices:index" }
+    methods:  [GET,POST]
+    
+search_call:
+    path:     /SearchServices/call
+    defaults: { _controller: "SemantikosClientBundle:SearchServices:call" }
+    methods:  [GET,POST]    
+    
+entrance_index:
+    path:     /EntranceServices
+    defaults: { _controller: "SemantikosClientBundle:EntranceServices:index" }
+    methods:  [GET,POST]
+    
+entrance_call:
+    path:     /EntranceServices/call
+    defaults: { _controller: "SemantikosClientBundle:EntranceServices:call" }
+    methods:  [GET,POST]     
+    
+relationship_index:
+    path:     /RelationshipServices
+    defaults: { _controller: "SemantikosClientBundle:RelationshipServices:index" }
+    methods:  [GET,POST]    
+    
+relationship_call:
+    path:     /RelationshipServices/call
+    defaults: { _controller: "SemantikosClientBundle:RelationshipServices:call" }
+    methods:  [GET,POST]    
