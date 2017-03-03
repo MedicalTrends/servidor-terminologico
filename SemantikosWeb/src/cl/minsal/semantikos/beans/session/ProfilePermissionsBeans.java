@@ -34,9 +34,9 @@ public class ProfilePermissionsBeans {
         return false;
     }
 
-    public boolean isAdminRefSet(){
+    public boolean isWsConsumer(){
         for (Profile profile : authenticationBean.getLoggedUser().getProfiles()) {
-            if(profile.equals(ProfileFactory.ADMINISTRATOR_REFSETS_PROFILE)){
+            if(profile.equals(ProfileFactory.WS_CONSUMER_PROFILE)){
                 return true;
             }
         }

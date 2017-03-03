@@ -152,7 +152,7 @@
                                     </h:panelGroup>
                                 </p:dialog>
 
-                                <p:dialog id="user-edit-dialog" height="450" width="60%" header="#{users.selectedUser.idUser eq -1?'Crear':'Editar'} Usuario" widgetVar="editDialog"
+                                <p:dialog id="user-edit-dialog" width="50%" header="#{users.selectedUser.idUser eq -1?'Crear':'Editar'} Usuario" widgetVar="editDialog"
                                           visible="#{ not users.userNameError.concat(users.nameError).concat(users.rutError).concat(users.passwordError).concat(users.password2Error).trim().equals('') }"
                                           showEffect="fade" hideEffect="fade" resizable="true" responsive="true">
 
@@ -191,10 +191,11 @@
 
                                             <p:inputText id="input-username2" value="#{users.selectedUser.username}" styleClass="#{users.userNameError} Wid90" />
 
-                                            <p:outputLabel for="password1" value="Password *" style="font-weight: bold" styleClass="#{users.passwordError} Wid20" />
+                                            <p:outputLabel for="password1" value="Password *" rendered="#{users.selectedUser.idUser eq -1}" styleClass="#{users.passwordError} Wid20" />
 
                                             <p:password id="password1" value="#{users.newPass1}" feedback="true"
                                                         promptLabel="Ingrese una contraseña" weakLabel="Poco segura"
+                                                        rendered="#{users.selectedUser.idUser eq -1}"
                                                         goodLabel="Aceptable" strongLabel="Segura"
                                                         redisplay="true" disabled="#{users.selectedUser.idUser != -1}" styleClass="#{users.passwordError} Wid90">
                                                 <p:ajax event="blur" update="@this" />
@@ -213,37 +214,19 @@
 
                                         </p:panelGrid>
 
-                                        <p:panelGrid columns="2" styleClass="Wid100 ui-panelgrid-blank">
+                                        <p:panelGrid columns="1" styleClass="Wid100" style="padding: 0" >
 
-                                            <p:panelGrid columns="1" styleClass="Wid50" style="padding: 0" >
+                                            <f:facet name="header">
+                                                Perfiles
+                                            </f:facet>
 
-                                                <f:facet name="header">
-                                                    Perfiles
-                                                </f:facet>
+                                            <p:pickList id="pickList1" value="#{users.selectedUserProfileModel}" var="profile3"
+                                                        itemLabel="#{profile3.name}" itemValue="#{profile3}"
+                                                        responsive="false" converter="profileConverter" style="width: 100%" >
+                                                <f:facet name="sourceCaption">Disponibles</f:facet>
+                                                <f:facet name="targetCaption">Asignados</f:facet>
+                                            </p:pickList>
 
-                                                <p:pickList id="pickList1" value="#{users.selectedUserProfileModel}" var="profile3"
-                                                            itemLabel="#{profile3.name}" itemValue="#{profile3}"
-                                                            responsive="false" converter="profileConverter" style="width: 100%" >
-                                                    <f:facet name="sourceCaption">Disponibles</f:facet>
-                                                    <f:facet name="targetCaption">Asignados</f:facet>
-                                                </p:pickList>
-
-                                            </p:panelGrid>
-
-                                            <p:panelGrid columns="1" styleClass="Wid50" style="padding: 0" >
-
-                                                <f:facet name="header">
-                                                    Establecimientos
-                                                </f:facet>
-
-                                                <p:pickList id="pickList2" value="#{users.selectedUserInsitutionModel}" var="institution"
-                                                            itemLabel="#{institution.name}" itemValue="#{institution}"
-                                                            responsive="false" converter="omnifaces.SelectItemsConverter" style="width: 100%" >
-                                                    <f:facet name="sourceCaption">Disponibles</f:facet>
-                                                    <f:facet name="targetCaption">Asignados</f:facet>
-                                                </p:pickList>
-
-                                            </p:panelGrid>
                                         </p:panelGrid>
 
                                         <div style="text-align: right;">

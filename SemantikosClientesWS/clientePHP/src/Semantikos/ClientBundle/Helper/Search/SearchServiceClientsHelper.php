@@ -32,7 +32,10 @@ class SearchServiceClientsHelper {
         /**
          * Agregar opciones al builder
          */
-        $this->soapClient = $builder->build();            
+        $builder->withBasicAuthentication('admin', 'admin');
+
+        $this->soapClient = $builder->build();
+
         $this->restClient = $this->container->get('circle.restclient');
     }
       

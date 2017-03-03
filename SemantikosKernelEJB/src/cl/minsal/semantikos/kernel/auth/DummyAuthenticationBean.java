@@ -13,7 +13,7 @@ import java.util.List;
  * Created by BluePrints Developer on 18-05-2016.
  */
 @Stateless(name = "DummyAuthenticationEJB")
-public class DummyAuthenticationBean extends AuthenticationMethod{
+public class DummyAuthenticationBean extends AuthenticationMethod {
 
     static private final Logger logger = LoggerFactory.getLogger(DummyAuthenticationBean.class);
 
@@ -22,6 +22,11 @@ public class DummyAuthenticationBean extends AuthenticationMethod{
             return true;
 
         throw new AuthenticationException("Usuario y/o Contraseña incorrecta");
+    }
+
+    @Override
+    public boolean authenticate(String username, String password) throws AuthenticationException {
+        return false;
     }
 
     public User getUser(String username) {

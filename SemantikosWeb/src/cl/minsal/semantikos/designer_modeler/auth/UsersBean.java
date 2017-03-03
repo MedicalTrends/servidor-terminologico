@@ -113,7 +113,8 @@ public class UsersBean {
     public void setSelectedUser(User selectedUser) {
 
         clean();
-        newPass1 = "********************";
+        newPass1 = "";
+        newPass2 = "";
 
         this.selectedUser = userManager.getUser(selectedUser.getIdUser());
 

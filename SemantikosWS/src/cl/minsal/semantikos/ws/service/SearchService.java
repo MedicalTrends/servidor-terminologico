@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.ws.service;
 
+import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.RefSet;
@@ -11,22 +12,37 @@ import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.request.*;
 import cl.minsal.semantikos.ws.response.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.InvocationContext;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.ws.WebServiceClient;
+import javax.xml.ws.WebServiceContext;
+import javax.xml.ws.handler.MessageContext;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+
 
 /**
  * Created by Development on 2016-11-18.
  */
 @WebService(serviceName = "ServicioDeBusqueda")
+
 public class SearchService {
 
     @EJB
@@ -44,7 +60,27 @@ public class SearchService {
     @EJB
     private CategoryManager categoryManager;
 
+    @EJB
+    private AuthenticationManager authenticationManager;
+
+    @Resource
+    WebServiceContext wsctx;
+
     private static final Logger logger = LoggerFactory.getLogger(SearchService.class);
+
+    //Inicializacion del Bean
+    //@PostConstruct
+    @AroundInvoke
+    protected Object authenticate(InvocationContext ctx) throws Exception {
+
+        try {
+            authenticationManager.authenticate(wsctx.getMessageContext());
+        }
+        catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
+        return ctx.proceed();
+    }
 
     // REQ-WS-001
     @WebResult(name = "respuestaBuscarTermino")
@@ -54,6 +90,7 @@ public class SearchService {
             @WebParam(name = "peticionBuscarTermino")
                     SimpleSearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault {
+
         if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())
                 && (request.getRefSetNames() == null || request.getRefSetNames().isEmpty())) {
             throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet");

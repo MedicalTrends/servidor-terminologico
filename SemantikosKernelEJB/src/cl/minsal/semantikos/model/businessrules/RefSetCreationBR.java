@@ -4,7 +4,8 @@ import cl.minsal.semantikos.model.Institution;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 
-import static cl.minsal.semantikos.model.ProfileFactory.ADMINISTRATOR_REFSETS_PROFILE;
+import static cl.minsal.semantikos.model.ProfileFactory.ADMINISTRATOR_PROFILE;
+
 
 /**
  * @author Andrés Farías on 9/20/16.
@@ -35,8 +36,8 @@ public class RefSetCreationBR {
      * @param user El usuario que realiza la creación.
      */
     private void brRefSet001(User user) {
-        if (!user.getProfiles().contains(ADMINISTRATOR_REFSETS_PROFILE)) {
-            throw new BusinessRuleException("BR-RefSet-001", "El RefSet puede ser creado por un usuario con el perfil " + ADMINISTRATOR_REFSETS_PROFILE);
+        if (!user.getProfiles().contains(ADMINISTRATOR_PROFILE)) {
+            throw new BusinessRuleException("BR-RefSet-001", "El RefSet puede ser creado por un usuario con el perfil " + ADMINISTRATOR_PROFILE);
         }
     }
 }
