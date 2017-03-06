@@ -87,7 +87,7 @@
                      styleClass="otherDescriptions TextAlCenter"
                      emptyMessage="El concepto no tiene otras descripciones"
                      var="description"
-                     rendered="#{cc.attrs.editable and not empty cc.attrs.descriptions}"
+                     rendered="#{cc.attrs.editable or not empty cc.attrs.descriptions}"
                      value="#{cc.attrs.descriptions}"
                      editable="true"
                      reflow="true">

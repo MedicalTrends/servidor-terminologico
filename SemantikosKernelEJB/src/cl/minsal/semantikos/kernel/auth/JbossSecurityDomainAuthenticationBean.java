@@ -91,7 +91,7 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
             return true;
         }
         else {
-            throw new AuthenticationException("No posee los perfiles necesarios para realizar esta acción");
+            throw new AuthenticationException("No posee los perfiles suficientes para realizar esta acción");
         }
 
     }
@@ -133,7 +133,7 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
             }
         }
 
-        throw new AuthenticationException("No posee los perfiles necesarios para realizar esta acción");
+        throw new AuthenticationException("No posee los perfiles suficientes para realizar esta acción");
 
     }
 

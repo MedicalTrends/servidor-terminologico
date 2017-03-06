@@ -45,7 +45,7 @@
       <xs:element minOccurs="0" name="profesional" type="xs:string"/>
       <xs:element minOccurs="0" name="profesion" type="xs:string"/>
       <xs:element minOccurs="0" name="especialidad" type="xs:string"/>
-      <xs:element name="sub-especialidad" type="xs:string"/>
+      <xs:element name="subespecialidad" type="xs:string"/>
       <xs:element name="categoria" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>

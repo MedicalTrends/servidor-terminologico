@@ -74,8 +74,7 @@ public class NoValidBrowserBean implements Serializable {
 
     private User user;
 
-    @EJB
-    private DescriptionTranslationBR descriptionTranslationBR;
+    private DescriptionTranslationBR descriptionTranslationBR = new DescriptionTranslationBR();
 
     /**
      * Indica si cambió algún filtro. Se utiliza para resetear la páginación al comienzo si se ha filtrado
@@ -91,6 +90,9 @@ public class NoValidBrowserBean implements Serializable {
 
     @EJB
     private ConceptManager conceptManager;
+
+    @EJB
+    private CategoryManager categoryManager;
 
     @PostConstruct
     public void init(){
@@ -182,7 +184,7 @@ public class NoValidBrowserBean implements Serializable {
                 Description description = noValidDescription.getNoValidDescription();
 
                 try{
-                    descriptionTranslationBR.apply(sourceConcept, conceptSelected, description);
+                    descriptionTranslationBR.apply(sourceConcept, conceptSelected, description, conceptManager, categoryManager);
                 }catch (EJBException e) {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
                     return;
@@ -205,7 +207,7 @@ public class NoValidBrowserBean implements Serializable {
             Description description = noValidDescriptionSelected.getNoValidDescription();
 
             try{
-                descriptionTranslationBR.apply(sourceConcept, conceptSelected, description);
+                descriptionTranslationBR.apply(sourceConcept, conceptSelected, description, conceptManager, categoryManager);
             }catch (EJBException e) {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
                 return;

@@ -250,49 +250,56 @@ public class UsersBean {
             rutError = "";
         }
 
-        if(newPass1.trim().equals("")) {
-            passwordError = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar una contraseña"));
-        }
-        else {
-            passwordError = "";
-        }
+        /**
+         * Si el usuario se está creando, validar password, existencia de rut y username
+         */
+        if(selectedUser.getIdUser()==-1) {
 
-        if(newPass2.trim().equals("")) {
-            password2Error = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe confirmar la contraseña"));
-        }
-        else {
-            password2Error = "";
-        }
+            if(newPass1.trim().equals("")) {
+                passwordError = "ui-state-error";
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar una contraseña"));
+            }
+            else {
+                passwordError = "";
+            }
 
-        if(!newPass1.equals(newPass2)) {
-            password2Error = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La confirmación de contraseña no coincide con la original"));
-        }
-        else {
-            password2Error = "";
+            if(newPass2.trim().equals("")) {
+                password2Error = "ui-state-error";
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe confirmar la contraseña"));
+            }
+            else {
+                password2Error = "";
+            }
+
+            if(!newPass1.equals(newPass2)) {
+                password2Error = "ui-state-error";
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La confirmación de contraseña no coincide con la original"));
+            }
+            else {
+                password2Error = "";
+            }
+
+            try{
+                userCreationBR.br301UniqueRut(selectedUser);
+            }
+            catch (EJBException e) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+                rutError = "ui-state-error";
+                return;
+            }
+
+            try{
+                userCreationBR.br302UniqueUsername(selectedUser);
+            }
+            catch (EJBException e) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+                userNameError = "ui-state-error";
+                return;
+            }
+
         }
 
         if(!userNameError.concat(nameError).concat(lastNameError).concat(rutError).concat(passwordError).concat(password2Error).trim().equals("")) {
-            return;
-        }
-
-        try{
-            userCreationBR.br301UniqueRut(selectedUser);
-        }
-        catch (EJBException e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
-            rutError = "ui-state-error";
-            return;
-        }
-
-        try{
-            userCreationBR.br302UniqueUsername(selectedUser);
-        }
-        catch (EJBException e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
-            userNameError = "ui-state-error";
             return;
         }
 

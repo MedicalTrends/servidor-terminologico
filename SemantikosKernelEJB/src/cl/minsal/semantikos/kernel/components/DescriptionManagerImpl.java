@@ -189,7 +189,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
         /* Se aplican las reglas de negocio para el traslado */
         DescriptionTranslationBR descriptionTranslationBR = new DescriptionTranslationBR();
-        descriptionTranslationBR.validatePreConditions(sourceConcept,description, targetConcept);
+        descriptionTranslationBR.validatePreConditions(sourceConcept,description, targetConcept, conceptManager, categoryManager);
 
         /* Se realiza la actualización a nivel del modelo lógico */
 
@@ -204,7 +204,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         description.setConceptSMTK(targetConcept);
 
         /* Se aplican las reglas de negocio asociadas al movimiento de un concepto */
-        descriptionTranslationBR.apply(sourceConcept, targetConcept, description);
+        descriptionTranslationBR.apply(sourceConcept, targetConcept, description, conceptManager, categoryManager);
 
         /*Se cambia el estado de la descripción segun el concepto*/
 
@@ -294,6 +294,24 @@ public class DescriptionManagerImpl implements DescriptionManager {
     public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
         List<Description> descriptions = descriptionDAO.searchDescriptionsByTerm(term, categories, refSets);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        return descriptions;
+    }
+
+    @Override
+    public List<Description> searchDescriptionsPerfectMatch(String term, List<Category> categories, List<RefSet> refSets) {
+        long init = currentTimeMillis();
+        List<Description> descriptions = descriptionDAO.searchDescriptionsPerfectMatch(term, categories, refSets);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        return descriptions;
+    }
+
+    @Override
+    public List<Description> searchDescriptionsTruncateMatch(String term, List<Category> categories, List<RefSet> refSets) {
+        long init = currentTimeMillis();
+        List<Description> descriptions = descriptionDAO.searchDescriptionsTruncateMatch(term, categories, refSets);
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;

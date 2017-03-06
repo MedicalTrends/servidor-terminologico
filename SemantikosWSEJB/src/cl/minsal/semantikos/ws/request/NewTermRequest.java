@@ -18,8 +18,10 @@ public class NewTermRequest implements Serializable {
     @XmlElement(required = true, name = "establecimiento")
     private String idInstitution;
 
+    /*
     @XmlElement(required = true, name = "idConcepto")
     private String conceptId;
+    */
 
     @XmlElement(required = true, name = "termino")
     private String term;
@@ -45,7 +47,7 @@ public class NewTermRequest implements Serializable {
     @XmlElement(required = false, name = "especialidad")
     private String specialty;
 
-    @XmlElement(required = true, name = "sub-especialidad")
+    @XmlElement(required = true, name = "subespecialidad")
     private String subSpecialty;
 
     @XmlElement(required = true, name = "categoria")
@@ -59,6 +61,7 @@ public class NewTermRequest implements Serializable {
         this.idInstitution = idInstitution;
     }
 
+    /*
     public String getConceptId() {
         return conceptId;
     }
@@ -66,6 +69,7 @@ public class NewTermRequest implements Serializable {
     public void setConceptId(String conceptId) {
         this.conceptId = conceptId;
     }
+    */
 
     public String getTerm() {
         return term;

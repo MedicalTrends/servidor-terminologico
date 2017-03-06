@@ -47,7 +47,7 @@ public class AuthenticationManager {
         ArrayList list = (ArrayList) http_headers.get("Authorization");
 
         if (list == null || list.size() == 0) {
-            throw new Exception("Authentication failed! This WS needs BASIC Authentication!");
+            throw new Exception("Error de autenticación: Este WS necesita Autenticación!");
         }
 
         String userpass = (String) list.get(0);
@@ -67,7 +67,7 @@ public class AuthenticationManager {
             password = credentials.substring(p+1);
         }
         else {
-            throw new Exception("There was an error while decoding the Authentication!");
+            throw new Exception("Hubo un error al decodificar la autenticación");
         }
         // This should be changed to a DB / Ldap authentication check
         try {

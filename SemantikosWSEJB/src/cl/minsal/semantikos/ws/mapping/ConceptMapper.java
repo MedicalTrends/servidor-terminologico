@@ -21,12 +21,11 @@ public class ConceptMapper {
     public static List<AttributeResponse> getAttributes(ConceptSMTK conceptSMTK) {
         if ( conceptSMTK != null ) {
             List<AttributeResponse> attributeResponses = new ArrayList<>();
-            List<Relationship> basicRelationships = conceptSMTK.getRelationshipsBasicType();
-            if ( basicRelationships != null ) {
-                for ( Relationship relationship : basicRelationships ) {
-                    attributeResponses.add(AttributeMapper.map(relationship));
-                }
+
+            for ( Relationship relationship : conceptSMTK.getRelationships() ) {
+                attributeResponses.add(AttributeMapper.map(relationship));
             }
+
             return attributeResponses;
         }
         return null;
