@@ -192,7 +192,7 @@ public class ConceptController {
         List<NoValidDescriptionResponse> noValidDescriptions = new ArrayList<>();
         List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
 
-        List<Description> descriptions = this.descriptionManager.searchDescriptionsByTerm(term, categories, refSets);
+        List<Description> descriptions = this.descriptionManager.searchDescriptionsPerfectMatch(term, categories, refSets);
         logger.debug("ws-req-001. descripciones encontradas: " + descriptions);
 
         for (Description description : descriptions) {
@@ -294,17 +294,21 @@ public class ConceptController {
         }
 
         List<ConceptSMTK> concepts = this.conceptManager.findConceptsBy(category);
+
         List<ConceptResponse> conceptResponses = new ArrayList<>();
-        if (concepts != null) {
-            for (ConceptSMTK source : concepts) {
-                ConceptResponse conceptResponse = new ConceptResponse(source);
-                conceptResponse.setForREQWS002();
-                this.loadAttributes(conceptResponse, source);
-                conceptResponses.add(conceptResponse);
-            }
+
+        for (ConceptSMTK source : concepts) {
+            ConceptResponse conceptResponse = new ConceptResponse(source);
+            conceptResponse.setForREQWS002();
+            this.loadAttributes(conceptResponse, source);
+            this.loadSnomedCTRelationships(conceptResponse, source);
+
+            conceptResponses.add(conceptResponse);
         }
+
         ConceptsResponse res = new ConceptsResponse();
         res.setConceptResponses(conceptResponses);
+        res.setQuantity(conceptResponses.size());
 
         return res;
     }
@@ -483,6 +487,7 @@ public class ConceptController {
     public NewTermResponse requestTermCreation(NewTermRequest termRequest) throws IllegalInputFault {
 
         User user = new User(1, "demo", "Demo User", "demo", false);
+
 
         Category category = categoryManager.getCategoryByName(termRequest.getCategory());
         if (category == null) {

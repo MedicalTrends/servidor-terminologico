@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.ejb.Stateless;
 import java.util.List;
 
 import static cl.minsal.semantikos.model.DescriptionType.*;
@@ -17,22 +19,15 @@ import static cl.minsal.semantikos.model.DescriptionType.*;
 /**
  * @author Andrés Farías on 8/26/16.
  */
-@Singleton
 public class DescriptionTranslationBR {
 
     private static final Logger logger = LoggerFactory.getLogger(DescriptionTranslationBR.class);
 
-    @EJB
-    private ConceptManager conceptManager;
-
-    @EJB
-    private CategoryManager categoryManager;
-
-
-    public void apply(ConceptSMTK sourceConcept,ConceptSMTK targetConcept, Description description) {
+    public void apply(ConceptSMTK sourceConcept,ConceptSMTK targetConcept, Description description,
+                      ConceptManager conceptManager, CategoryManager categoryManager) {
 
         /* Se validan las pre-condiciones para realizar el movimiento de descripciones */
-        validatePreConditions(sourceConcept,description, targetConcept);
+        validatePreConditions(sourceConcept,description, targetConcept, conceptManager, categoryManager);
 
         /* Traslado de Descripciones abreviadas */
         brDescriptionTranslate001(sourceConcept, targetConcept, description);
@@ -44,16 +39,17 @@ public class DescriptionTranslationBR {
      * @param description   La descripción que se desea validar.
      * @param targetConcept El concepto al cual se desea mover la descripción.
      */
-    public void validatePreConditions(ConceptSMTK sourceConcept, Description description, ConceptSMTK targetConcept) {
+    public void validatePreConditions(ConceptSMTK sourceConcept, Description description, ConceptSMTK targetConcept,
+                                      ConceptManager conceptManager, CategoryManager categoryManager) {
 
         /* Descripciones que no se pueden trasladar */
         pcDescriptionTranslate001(description);
 
         /* Estados posibles para trasladar descripciones */
-        brDescriptionTranslate011(sourceConcept, targetConcept);
+        brDescriptionTranslate011(sourceConcept, targetConcept, conceptManager);
 
         /* Condiciones en concepto destino */
-        brDescriptionTranslate012(targetConcept, description);
+        brDescriptionTranslate012(targetConcept, description, conceptManager, categoryManager);
     }
 
     /**
@@ -86,14 +82,15 @@ public class DescriptionTranslationBR {
      *
      * @param targetConcept El concepto al cual se traslada la descripción.
      */
-    private void brDescriptionTranslate011(ConceptSMTK sourceConcept, ConceptSMTK targetConcept) {
+    private void brDescriptionTranslate011(ConceptSMTK sourceConcept, ConceptSMTK targetConcept,
+                                           ConceptManager conceptManager) {
 
         /* Desde conceptos modelados a conceptos en borrador */
         if (!sourceConcept.isModeled() && targetConcept.isModeled() || sourceConcept.isModeled() && targetConcept.isModeled()  ) {
             return;
         }
 
-        if(conceptManager.getPendingConcept().getId()==sourceConcept.getId()){
+        if(conceptManager.getPendingConcept().getId()==sourceConcept.getId()) {
             return;
         }
 
@@ -110,7 +107,8 @@ public class DescriptionTranslationBR {
      * @param targetConcept El concepto al cual se traslada la descripción.
      * @param description la descripción.
      */
-    private void brDescriptionTranslate012(ConceptSMTK targetConcept, Description description) {
+    private void brDescriptionTranslate012(ConceptSMTK targetConcept, Description description,
+                                           ConceptManager conceptManager, CategoryManager categoryManager) {
 
         ConceptSMTK aConcept = categoryManager.categoryContains(targetConcept.getCategory(), description.getTerm());
         if (aConcept != null) {

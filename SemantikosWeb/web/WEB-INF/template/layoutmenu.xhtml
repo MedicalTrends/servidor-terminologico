@@ -26,9 +26,9 @@
             <p:menuitem id="rm_home" value="Inicio" icon="fa fa-home" outcome="/views/home.xhtml" />
         </pr:menu>
 
-        <pr:menu id="rm_categories" model="#{mainMenuBean.categoryMenuModel}" />
+        <pr:menu id="rm_categories" model="#{mainMenuBean.categoryMenuModel}" rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}" />
 
-        <pr:menu id="rm_otros">
+        <pr:menu id="rm_otros" rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}">
             <p:submenu id="rm_otros_sm" label="Otros" icon="fa fa-plus-square">
                 <p:menuitem id="rm_descriptions" value="Descripciones" icon="fa fa-edit Fs15" url="/views/browser/descriptionBrowser.xhtml" />
                 <p:menuitem id="rm_drugs" value="Fármacos" icon="fa fa-medkit Fs15" url="/views/browser/drugsBrowser.xhtml" />
@@ -41,7 +41,7 @@
 
             <p:menuitem id="rm_users_web" value="Administracion Usuarios" icon="icon-two385" outcome="/views/users" rendered="#{profilePermissionsBeans.admin}"/>
 
-            <p:menuitem id="rm_admin_refsets" value="Administrador de RefSets" icon="fa fa-dropbox" outcome="/views/refsets/admin_refsets.xhtml" rendered="#{profilePermissionsBeans.adminRefSet}"/>
+            <p:menuitem id="rm_admin_refsets" value="Administrador de RefSets" icon="fa fa-dropbox" outcome="/views/refsets/admin_refsets.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
 
             <p:menuitem id="rm_admin_helper_tables" value="Manager Helper Tables" icon="fa fa-dropbox" outcome="/views/helper_tables/helperTableManteiner.xhtml" rendered="#{profilePermissionsBeans.modeler}"/>
 

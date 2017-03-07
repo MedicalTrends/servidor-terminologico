@@ -1,8 +1,10 @@
 package cl.minsal.semantikos.kernel.util;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -72,5 +74,91 @@ public class StringUtils {
         }
 
         return Boolean.FALSE;
+    }
+
+    public static boolean validateRutFormat(String rut) {
+
+        Pattern p = Pattern.compile( "^0*(\\d{1,3}(\\.?\\d{3})*)\\-?([\\dkK])$" );
+        Matcher m = p.matcher( rut );
+
+        if(!m.matches()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean validateRutVerificationDigit(String rut) {
+
+        rut = rut.replace("-","");
+        rut = rut.replace(".","");
+        rut = rut.toUpperCase();
+
+        if(rut.length()<2) {
+            return true;
+        }
+
+        if(rut.length()>10) {
+            return false;
+        }
+
+        int num = Integer.parseInt(rut.substring(0,rut.length()-1));
+
+        if(!validarRut(num,rut.charAt(rut.length()-1))) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private static boolean validarRut(int rut, char dv)
+    {
+        int m = 0, s = 1;
+        for (; rut != 0; rut /= 10)
+        {
+            s = (s + rut % 10 * (9 - m++ % 6)) % 11;
+        }
+        return dv == (char) (s != 0 ? s + 47 : 75);
+    }
+
+    public static String formatRut(String rut) {
+
+        if(rut == null || rut.trim().isEmpty() || rut.trim().length() < 2) {
+            return rut;
+        }
+
+        rut = rut.trim();
+        rut = rut.replace("-","");
+        rut = rut.replace(".","");
+
+        long num = 0L;
+
+        try {
+            num = Long.parseLong(rut.substring(0,rut.length()-1));
+        }
+        catch (NumberFormatException e) {
+            return rut;
+        }
+
+        DecimalFormat df = new DecimalFormat("###,###,###,###");
+
+        //String fRut = String.format(new Locale("es-CL"),"%d", num);
+
+        String fRut = df.format(num);
+
+        fRut = fRut.concat("-");
+
+        fRut = fRut.concat(rut.substring(rut.length()-1));
+
+        return fRut;
+    }
+
+    public static String parseRut(String rut) {
+
+        //rut = rut.replace("-","");
+        rut = rut.replace(".","");
+        rut = rut.toUpperCase();
+
+        return rut;
     }
 }

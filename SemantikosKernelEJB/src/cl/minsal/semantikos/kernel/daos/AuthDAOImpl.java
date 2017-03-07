@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.Profile;
 import cl.minsal.semantikos.model.User;
 import org.slf4j.Logger;
@@ -43,6 +44,35 @@ public class AuthDAOImpl implements AuthDAO {
             while (rs.next()) {
                 user = makeUserFromResult(rs);
 
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar usuario de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return user;
+
+
+    }
+
+    @Override
+    public User getUserByRut(String rut) {
+
+        ConnectionBD connect = new ConnectionBD();
+        User user = null;
+
+        String sql = "{call semantikos.get_user_by_rut(?)}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setString(1, rut);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                user = makeUserFromResult(rs);
             }
 
         } catch (SQLException e) {
@@ -115,8 +145,6 @@ public class AuthDAOImpl implements AuthDAO {
         }
 
         return profiles;
-
-
 
     }
 
@@ -209,23 +237,24 @@ public class AuthDAOImpl implements AuthDAO {
     }
 
     @Override
-    public void createUser(User user) throws UserExistsException {
+    public void createUser(User user) {
 
 
         ConnectionBD connect = new ConnectionBD();
 
-        String sql = "{call semantikos.create_user(?,?,?,?,?,?,?,?)}";
+        String sql = "{call semantikos.create_user(?,?,?,?,?,?,?,?,?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, user.getUsername());
-            call.setString(2, user.getName());
-            call.setString(3, user.getLastName());
-            call.setString(4, user.getSecondLastName());
-            call.setString(5, user.getEmail());
+            call.setString(1, user.getUsername().trim());
+            call.setString(2, user.getName().trim());
+            call.setString(3, user.getLastName().trim());
+            call.setString(4, user.getSecondLastName().trim());
+            call.setString(5, user.getEmail().trim());
             call.setBoolean(6, false);
             call.setInt(7, 0);
-            call.setString(8, user.getRut());
+            call.setString(8, StringUtils.parseRut(user.getRut().trim()));
+            call.setString(9, user.getPasswordHash());
 
             call.execute();
 
@@ -333,12 +362,13 @@ public class AuthDAOImpl implements AuthDAO {
     public void updateUserPasswords(User user) {
 
         ConnectionBD connect = new ConnectionBD();
+        boolean updated = false;
 
         String sql = "{call semantikos.update_user_passwords(?,?,?,?,?,?,?,?,?,?,?,?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setDate(1, new java.sql.Date(user.getLastPasswordChange().getTime()));
+            call.setTimestamp(1, new Timestamp(user.getLastPasswordChange().getTime()));
             call.setString(2, user.getPasswordHash());
             call.setString(3, user.getLastPasswordHash1());
             call.setString(4, user.getLastPasswordHash2());
@@ -354,6 +384,18 @@ public class AuthDAOImpl implements AuthDAO {
 
             call.execute();
 
+            ResultSet rs = call.getResultSet();
+
+            if (rs.next()) {
+                /* Se recupera el status de la transacción */
+                updated = rs.getBoolean(1);
+            } else {
+                String errorMsg = "El concepto no fue creado por una razón desconocida. Alertar al area de desarrollo" +
+                        " sobre esto";
+                logger.error(errorMsg);
+                throw new EJBException(errorMsg);
+            }
+
 
         } catch (SQLException e) {
             String errorMsg = "Error al actualizar usuario de la BDD.";
@@ -362,7 +404,13 @@ public class AuthDAOImpl implements AuthDAO {
         }
 
 
-
+        if (updated) {
+            logger.info("Información de usuario (USER_ID=" + user.getIdUser() + ") actualizada exitosamente.");
+        } else {
+            String errorMsg = "Información de usuario (USER_ID=" + user.getIdUser() + ") no fue actualizada.";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg);
+        }
 
     }
 
@@ -370,7 +418,6 @@ public class AuthDAOImpl implements AuthDAO {
     /* marca la ultima fecha de ingreso del usuario */
     @Override
     public void markLogin(String username) {
-
 
         ConnectionBD connect = new ConnectionBD();
 

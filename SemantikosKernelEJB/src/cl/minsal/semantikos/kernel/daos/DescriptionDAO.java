@@ -64,6 +64,22 @@ public interface DescriptionDAO {
     List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets);
 
     /**
+     * Este método es responsable de buscar y retornar todas las descripciones que hagan perfect match con el término
+     * dado como parámetro en cada una de las categorías y refsets indicadas.
+     *
+     * @return
+     */
+    List<Description> searchDescriptionsPerfectMatch(String term, List<Category> categories, List<RefSet> refSets);
+
+    /**
+     * Este método es responsable de buscar y retornar todas las descripciones que hagan truncate match con el término
+     * dado como parámetro en cada una de las categorías y refsets indicadas.
+     *
+     * @return
+     */
+    List<Description> searchDescriptionsTruncateMatch(String term, List<Category> categories, List<RefSet> refSets);
+
+    /**
      * Este método es responsable de persistir una descripción en la BDD. Luego de ser persistida, la descripción es
      * actualizada con su nuevo Identificador único.
      *

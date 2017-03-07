@@ -14,11 +14,13 @@ public interface AuthDAO {
 
     User getUserByUsername(String username);
 
+    User getUserByRut(String rut);
+
     List<Profile> getUserProfiles(Long userId);
 
     List<User> getAllUsers();
 
-    void createUser(User user) throws AuthDAOImpl.UserExistsException;
+    void createUser(User user);
 
     void updateUser(User user);
 

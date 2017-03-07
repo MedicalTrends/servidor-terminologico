@@ -5,7 +5,7 @@ import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 
-import static cl.minsal.semantikos.model.ProfileFactory.ADMINISTRATOR_REFSETS_PROFILE;
+import static cl.minsal.semantikos.model.ProfileFactory.ADMINISTRATOR_PROFILE;
 
 /**
  * @author Andrés Farías on 9/20/16.
@@ -29,8 +29,8 @@ public class RefSetUpdateBR {
      * @param user El usuario que realiza la operación.
      */
     protected void brRefSet001(User user) {
-        if (user.getProfiles().equals(ADMINISTRATOR_REFSETS_PROFILE)) {
-            throw new BusinessRuleException("BR-RefSet-001", "Los RefSets puede ser actualizados sólo por usuario con el perfil " + ADMINISTRATOR_REFSETS_PROFILE);
+        if (user.getProfiles().equals(ADMINISTRATOR_PROFILE)) {
+            throw new BusinessRuleException("BR-RefSet-001", "Los RefSets puede ser actualizados sólo por usuario con el perfil " + ADMINISTRATOR_PROFILE);
         }
     }
 

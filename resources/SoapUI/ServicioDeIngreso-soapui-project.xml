@@ -434,7 +434,7 @@
             <profesion>profesion</profesion>\r
             <!--Optional:-->\r
             <especialidad>especialidad</especialidad>\r
-            <sub-especialidad>subespecialidad</sub-especialidad>
+            <subespecialidad>subespecialidad</subespecialidad>
             <categoria>Fármacos - Producto Comercial</categoria>
          </peticionCodificacionDeNuevoTermino>\r
       </ser:codificacionDeNuevoTermino>\r

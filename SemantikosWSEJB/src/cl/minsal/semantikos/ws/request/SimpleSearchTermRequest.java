@@ -19,6 +19,8 @@ public class SimpleSearchTermRequest implements Serializable {
 
     private List<String> refSetNames;
 
+    private String idStablishment;
+
     @XmlElement(required = true, name = "termino")
     public String getTerm() {
         return term;
@@ -41,6 +43,14 @@ public class SimpleSearchTermRequest implements Serializable {
     }
     public void setRefSetNames(List<String> refSetNames) {
         this.refSetNames = refSetNames;
+    }
+
+    @XmlElement(required = true, name="idEstablecimiento")
+    public String getIdStablishment() {
+        return idStablishment;
+    }
+    public void setIdStablishment(String idStablishment) {
+        this.idStablishment = idStablishment;
     }
 
 }

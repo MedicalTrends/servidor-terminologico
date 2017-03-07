@@ -50,11 +50,11 @@
 
                     </div>
 
-                    <div class="Container20 White Responsive">
+                    <div class="Container30 White Responsive">
 
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
-                            <p:selectOneRadio value="#{sctBean.searchOption}">
+                            <p:selectOneRadio value="#{sctBean.searchOption}" style="width:100%">
                                 <f:selectItem itemLabel="Buscar por Término" itemValue="term" />
                                 <f:selectItem itemLabel="Buscar por ConceptId" itemValue="conceptId" />
                                 <p:ajax update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
@@ -137,7 +137,7 @@
                         </div>
                     </div>
 
-                    <div class="Container20 White Responsive">
+                    <div class="Container10 White Responsive">
 
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
@@ -166,7 +166,7 @@
 
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
                      id="tableRelationship3"
-                     rendered="#{cc.attrs.concept.editable}"
+                     rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and cc.attrs.concept.editable}" style="margin: 10px;"
                      value="#{conceptBean.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"

@@ -212,6 +212,7 @@ public class ConceptManagerImpl implements ConceptManager {
         int page = 1;
         boolean thereAreMore;
         do {
+            //List<ConceptSMTK> conceptTruncatePerfect = truncateMatch(termPattern, getIdArray(categories), pageNumber, pageSize, isModeled);
             List<ConceptSMTK> conceptTruncatePerfect = findConceptTruncatePerfect(termPattern, getIdArray(categories), getIdArray(refSets), page++, 1000);
             concepts.addAll(conceptTruncatePerfect);
 
@@ -480,7 +481,7 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK, Category... categories) {
 
-        /* Se recuperan los conceptos relacionados */
+        /* Se recuperan los conceptos relacionados: 1o se intenta con los conceptos padres */
         List<ConceptSMTK> relatedConcepts = getRelatedConcepts(conceptSMTK);
 
         /* Si no hay categorías por las que filtrar, se retorna la lista original */
@@ -497,6 +498,21 @@ public class ConceptManagerImpl implements ConceptManager {
             /* Se agrega el concepto si su categoría está dentro de las categorías para filtrar */
             if (categoryFilters.contains(conceptCategory)) {
                 filteredRelatedConcepts.add(relatedConcept);
+            }
+        }
+
+        /* Si no se obtuvieron conceptos relacionados se intenta con los conceptos hijos */
+        if(filteredRelatedConcepts.isEmpty()) {
+            for (Relationship relationship : getRelationships(conceptSMTK)) {
+                if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
+                    ConceptSMTK relatedConcept = (ConceptSMTK) relationship.getTarget();
+                    List<Category> categoryFilters = Arrays.asList(categories);
+
+                    /* Se agrega el concepto si su categoría está dentro de las categorías para filtrar */
+                    if (categoryFilters.contains(relatedConcept.getCategory())) {
+                        filteredRelatedConcepts.add(relatedConcept);
+                    }
+                }
             }
         }
 

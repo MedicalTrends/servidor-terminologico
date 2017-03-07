@@ -1,19 +1,32 @@
 package cl.minsal.semantikos.kernel.auth;
 
 import cl.minsal.semantikos.kernel.daos.AuthDAO;
+import cl.minsal.semantikos.model.Profile;
+import cl.minsal.semantikos.model.ProfileFactory;
 import cl.minsal.semantikos.model.User;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.naming.AuthenticationException;
+import javax.security.auth.login.LoginException;
+import javax.security.auth.spi.LoginModule;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.security.acl.Group;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import static cl.minsal.semantikos.model.ProfileFactory.ADMINISTRATOR_PROFILE;
+import static cl.minsal.semantikos.model.ProfileFactory.DESIGNER_PROFILE;
+
 
 /**
  * @author Francisco Méndez on 18-05-2016.
@@ -30,10 +43,17 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
     @EJB
     AuthDAO authDAO;
 
+    /**
+     * Autenticación utilizada al logearse desde la aplicación WEB.
+     * @param username
+     * @param password
+     * @param request
+     * @return
+     * @throws AuthenticationException
+     */
     public boolean authenticate(String username, String password, HttpServletRequest request) throws AuthenticationException {
 
         User user = authDAO.getUserByUsername(username);
-
 
         if (user == null)
             throw new AuthenticationException("Usuario no existe");
@@ -59,11 +79,62 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
 
             logger.debug("Error de login", e);
             throw (AuthenticationException) new AuthenticationException("Error de autenticacion: " + e.getMessage()).initCause(e);
-
         }
 
-        authDAO.markLogin(username);
-        return true;
+        /**
+         * Validar perfiles
+         */
+        if( user.getProfiles().contains(ADMINISTRATOR_PROFILE) ||
+            user.getProfiles().contains(DESIGNER_PROFILE) ||
+            user.getProfiles().contains(DESIGNER_PROFILE) ) {
+            authDAO.markLogin(username);
+            return true;
+        }
+        else {
+            throw new AuthenticationException("No posee los perfiles suficientes para realizar esta acción");
+        }
+
+    }
+
+    /**
+     * Autenticación utilizada al invocar un WS. La autenticación básica únicamente provee un username y un password
+     * @param username
+     * @param password
+     * @return
+     * @throws AuthenticationException
+     */
+    public boolean authenticate(String username, String password) throws AuthenticationException {
+
+        User user = authDAO.getUserByUsername(username);
+
+        if (user == null) {
+            throw new AuthenticationException("Usuario no existe");
+        }
+
+        if (user.isLocked()) {
+            throw new AuthenticationException("Usuario bloqueado. Contacte al administrador");
+        }
+
+        String passwordHash = createPasswordHash("MD5", BASE64_ENCODING, null, null, password);
+
+        if (!user.getPasswordHash().equals(passwordHash)) {
+            //aumenta en 1 los intentos fallidos y si son mas que el maximo bloquea a usuario
+            failLogin(user);
+            throw new AuthenticationException("Nombre de usuario o contraseña no es correcta");
+        }
+
+        /**
+         * Validar perfiles
+         */
+        for (Profile profile : user.getProfiles()) {
+            if(profile.equals(ProfileFactory.WS_CONSUMER_PROFILE)) {
+                authDAO.markLogin(username);
+                return true;
+            }
+        }
+
+        throw new AuthenticationException("No posee los perfiles suficientes para realizar esta acción");
+
     }
 
     private void failLogin(User user) {
@@ -120,6 +191,11 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
 
 
         authDAO.updateUserPasswords(user);
+    }
+
+    @Override
+    public String createUserPassword(String username, String password) {
+        return createPasswordHash("MD5", BASE64_ENCODING, null, null, password);
     }
 
     @Override
@@ -214,6 +290,7 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
         String base64 = null;
         try {
             base64 = Base64Encoder.encode(bytes);
+
         } catch (Exception e) {
         }
         return base64;
