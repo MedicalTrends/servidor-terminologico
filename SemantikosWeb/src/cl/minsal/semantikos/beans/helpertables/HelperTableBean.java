@@ -34,6 +34,8 @@ public class HelperTableBean implements Serializable {
 
     List<HelperTable> fullDatabase;
 
+    HelperTable helperTableSelected;
+
     @EJB
     HelperTablesManager manager;
 
@@ -54,6 +56,14 @@ public class HelperTableBean implements Serializable {
     public ConceptBean getConceptBean() {
         return conceptBean;
 
+    }
+
+    public HelperTable getHelperTableSelected() {
+        return helperTableSelected;
+    }
+
+    public void setHelperTableSelected(HelperTable helperTableSelected) {
+        this.helperTableSelected = helperTableSelected;
     }
 
     public void setConceptBean(ConceptBean conceptBean) {
@@ -80,9 +90,13 @@ public class HelperTableBean implements Serializable {
 
     private List<HelperTable> getFullDatabase() {
         if (fullDatabase == null)
-            fullDatabase = manager.getFullDatabase();
+            fullDatabase = manager.getLiteDatabase();
 
         return fullDatabase;
+    }
+
+    public void chargeRow(HelperTable helperTable){
+        helperTable.setRows(manager.getTableRows(helperTable.getId()));
     }
 
 

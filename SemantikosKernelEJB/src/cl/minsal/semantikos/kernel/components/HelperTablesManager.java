@@ -72,6 +72,8 @@ public interface HelperTablesManager {
 
     List<HelperTable> getFullDatabase();
 
+    List<HelperTable> getLiteDatabase();
+
     /*
     inserta una fila no persistida
      */
