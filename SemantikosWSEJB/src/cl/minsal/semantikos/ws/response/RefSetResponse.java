@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.ws.response;
 
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.RefSet;
 
 import javax.xml.bind.annotation.*;
@@ -46,6 +47,11 @@ public class RefSetResponse implements Serializable {
         this.creationDate = refSet.getCreationDate();
         this.institution = refSet.getInstitution().getName();
         this.concepts = new ArrayList<>();
+        /*
+        for (ConceptSMTK conceptSMTK : refSet.getConcepts()) {
+            this.concepts.add(new ConceptResponse(conceptSMTK));
+        }
+        */
     }
 
     public String getName() {

@@ -223,6 +223,11 @@ public class RelationshipDefinition {
 
     public boolean isCondicionDeVenta() { return this.getName().equalsIgnoreCase(TargetDefinition.CONDICION_DE_VENTA); }
 
+    public boolean isPedible(){
+
+        return this.getName().equalsIgnoreCase(TargetDefinition.PEDIBLE);
+    }
+
     private final String SNOMEDCT="SNOMED CT";
 
     public boolean isSNOMEDCT(){

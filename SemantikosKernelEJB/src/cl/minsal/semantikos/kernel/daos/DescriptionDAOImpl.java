@@ -34,6 +34,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     @EJB
     private AuthDAO authDAO;
 
+    public static List<String> NO_VALID_TERMS = Arrays.asList(new String[]{"Concepto no válido", "Concepto no válido (concepto especial)"});
+
     @Override
     public List<DescriptionType> getDescriptionTypes() {
 

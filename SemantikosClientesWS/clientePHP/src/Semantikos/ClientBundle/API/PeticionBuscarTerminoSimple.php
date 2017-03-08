@@ -21,6 +21,11 @@ class PeticionBuscarTerminoSimple
     protected $nombreRefSet = null;
 
     /**
+     * @var string $idEstablecimiento
+     */
+    protected $idEstablecimiento = null;
+
+    /**
      * @param string $termino
      */
     public function __construct()
@@ -79,6 +84,24 @@ class PeticionBuscarTerminoSimple
     {
       $this->nombreRefSet = $nombreRefSet;
       return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdEstablecimiento()
+    {
+        return $this->idEstablecimiento;
+    }
+
+    /**
+     * @param string $idEstablecimiento
+     * @return PeticionBuscarTermino
+     */
+    public function setIdEstablecimiento($idEstablecimiento)
+    {
+        $this->idEstablecimiento = $idEstablecimiento;
+        return $this;
     }
 
 }

@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.RefSet;
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.ws.component.CategoryController;
 import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.component.CrossmapController;
@@ -83,8 +84,8 @@ public class SearchService {
     }
 
     // REQ-WS-001
-    @WebResult(name = "respuestaBuscarTermino")
-    @WebMethod(operationName = "buscarTermino")
+    @WebResult(name = "respuestaBuscarTerminoPerfectMatch")
+    @WebMethod(operationName = "buscarTerminoPerfectMatch")
     public GenericTermSearchResponse buscarTermino(
             @XmlElement(required = true)
             @WebParam(name = "peticionBuscarTermino")
@@ -129,6 +130,7 @@ public class SearchService {
     }
 
     // REQ-WS-004
+    /*
     @WebResult(name = "respuestaConceptos")
     @WebMethod(operationName = "buscarTruncatePerfect")
     public ConceptsResponse buscarTruncatePerfect(
@@ -145,6 +147,26 @@ public class SearchService {
             throw new IllegalInputFault("Debe ingresar un Termino a buscar");
         }
         return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames(), request
+                .getRefSetNames());
+    }
+    */
+    // REQ-WS-004
+    @WebResult(name = "respuestaBuscarTerminoTruncatePerfect")
+    @WebMethod(operationName = "buscarTerminoTruncatePerfect")
+    public GenericTermSearchResponse buscarTruncatePerfect(
+            @XmlElement(required = true)
+            @WebParam(name = "peticionBuscarTermino")
+                    SearchTermRequest request
+    ) throws IllegalInputFault, NotFoundFault {
+
+        if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())
+                && (request.getRefSetNames() == null || request.getRefSetNames().isEmpty())) {
+            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet");
+        }
+        if (request.getTerm() == null || "".equals(request.getTerm())) {
+            throw new IllegalInputFault("Debe ingresar un Termino a buscar");
+        }
+        return this.conceptController.searchTermGeneric2(request.getTerm(), request.getCategoryNames(), request
                 .getRefSetNames());
     }
 
@@ -168,7 +190,7 @@ public class SearchService {
         obtenerTerminosPediblesParamValidation(request);
 
         return conceptController.searchRequestableDescriptions(request.getCategoryNames(), request.getRefSetNames(),
-                request.getRequestable());
+                new BasicTypeValue(request.getRequestable()));
     }
 
     /**

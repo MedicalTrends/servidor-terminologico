@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.ConceptMapper;
@@ -21,8 +22,12 @@ import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import static cl.minsal.semantikos.kernel.daos.DescriptionDAOImpl.NO_VALID_TERMS;
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 
 /**
  * @author Alfonso Cornejo on 2016-11-17.
@@ -37,6 +42,8 @@ public class ConceptController {
 
     @EJB
     private ConceptManager conceptManager;
+    @EJB
+    private RelationshipManager relationshipManager;
     @EJB
     private DescriptionManager descriptionManager;
     @EJB
@@ -184,6 +191,10 @@ public class ConceptController {
             List<String> categoriesNames,
             List<String> refSetsNames
     ) throws NotFoundFault {
+
+        if(!categoriesNames.contains("Concepto Especial")) {
+            categoriesNames.add("Concepto Especial");
+        }
         GenericTermSearchResponse res = new GenericTermSearchResponse();
         List<Category> categories = this.categoryController.findCategories(categoriesNames);
         List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
@@ -193,6 +204,62 @@ public class ConceptController {
         List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
 
         List<Description> descriptions = this.descriptionManager.searchDescriptionsPerfectMatch(term, categories, refSets);
+        logger.debug("ws-req-001. descripciones encontradas: " + descriptions);
+
+        for (Description description : descriptions) {
+
+            logger.info("ws-req-001. descripciones encontrada: " + description.fullToString());
+
+            /* Caso 1: es una descripcion del concepto especial No valido */
+            if ("Concepto no válido".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm()) && !NO_VALID_TERMS.contains(description.getTerm())) {
+                NoValidDescription noValidDescription = this.descriptionManager.getNoValidDescriptionByID(description.getId());
+                if (noValidDescription != null) {
+                    noValidDescriptions.add(new NoValidDescriptionResponse(noValidDescription));
+                } else {
+                    perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
+                }
+            } else if ("Pendientes".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm())) {
+                pendingDescriptions.add(new PendingDescriptionResponse(description));
+            } else {
+                perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
+            }
+        }
+
+        res.setPerfectMatchDescriptions(perfectMatchDescriptions);
+        res.setNoValidDescriptions(noValidDescriptions);
+        res.setPendingDescriptions(pendingDescriptions);
+
+        return res;
+    }
+
+    /**
+     * REQ-WS-004
+     * Este método es responsable de buscar un concepto segun una de sus descripciones que coincidan por truncate match
+     * con el <em>TERM</em> dado en los REFSETS y Categorias indicadas.
+     *
+     * @param term            El termino a buscar por perfect Match.
+     * @param categoriesNames Nombres de las Categorias donde se deben hacer las búsquedas.
+     * @param refSetsNames    Nombres de los REFSETS donde se deben hacer las búsquedas.
+     * @return Conceptos buscados segun especificaciones de REQ-WS-001.
+     * @throws NotFoundFault Si uno de los nombres de Categorias o REFSETS no existe.
+     */
+    public GenericTermSearchResponse searchTermGeneric2(
+            String term,
+            List<String> categoriesNames,
+            List<String> refSetsNames
+    ) throws NotFoundFault {
+        GenericTermSearchResponse res = new GenericTermSearchResponse();
+        if(!categoriesNames.contains("Concepto Especial")) {
+            categoriesNames.add("Concepto Especial");
+        }
+        List<Category> categories = this.categoryController.findCategories(categoriesNames);
+        List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
+
+        List<PerfectMatchDescriptionResponse> perfectMatchDescriptions = new ArrayList<>();
+        List<NoValidDescriptionResponse> noValidDescriptions = new ArrayList<>();
+        List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
+
+        List<Description> descriptions = this.descriptionManager.searchDescriptionsTruncateMatch(term, categories, refSets);
         logger.debug("ws-req-001. descripciones encontradas: " + descriptions);
 
         for (Description description : descriptions) {
@@ -521,17 +588,51 @@ public class ConceptController {
      * @return La lista de Conceptos Light que satisfacen la búsqueda.
      */
     public TermSearchResponse searchRequestableDescriptions(List<String> categoryNames, List<String> refSetNames,
-                                                            String requestable) {
+                                                            Target requestable) {
 
         List<ConceptSMTK> allRequestableConcepts = new ArrayList<>();
-        for (String categoryName : categoryNames) {
-            Category aCategory = categoryManager.getCategoryByName(categoryName);
 
-            /* Se recupera el atributo "Pedible " */
-            RelationshipDefinition requestableAttribute = getRequestableAttribute(aCategory);
-            List<ConceptSMTK> requestableConcepts = conceptManager.findConcepts(aCategory, refSetNames,
-                    requestableAttribute, requestable);
-            allRequestableConcepts.addAll(requestableConcepts);
+        for (String categoryName : categoryNames) {
+
+            Category aCategory = categoryManager.getCategoryByName(categoryName);
+            RelationshipDefinition theRelationshipDefinition = null;
+
+            for (RelationshipDefinition relationshipDefinition : aCategory.getRelationshipDefinitions()) {
+                if(relationshipDefinition.isPedible()){
+                    theRelationshipDefinition = relationshipDefinition;
+                    break;
+                }
+            }
+
+            for (Relationship relationship : relationshipManager.findRelationshipsLike(theRelationshipDefinition, requestable)) {
+
+                boolean belongsToCategory = false;
+                boolean belongsToRefset = false;
+
+                if(relationship.getSourceConcept().getCategory().equals(aCategory)) {
+                    belongsToCategory = true;
+                }
+                else{
+                    belongsToCategory = false;
+                }
+                if(refSetNames.isEmpty() || refSetNames.equals(Arrays.asList(new String[]{EMPTY_STRING}))) {
+                    belongsToRefset = true;
+                }
+                else {
+                    for (String refSetName : refSetNames) {
+                        for (RefSet refSet : refSetManager.getRefsetsBy(relationship.getSourceConcept())) {
+                            if(refSet.getName().equals(refSetName)) {
+                                belongsToRefset = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if(belongsToCategory && belongsToRefset) {
+                    allRequestableConcepts.add(relationship.getSourceConcept());
+                }
+            }
         }
 
         return new TermSearchResponse(allRequestableConcepts);

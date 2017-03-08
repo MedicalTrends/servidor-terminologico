@@ -62,10 +62,9 @@ class SearchServiceClientsHelper {
     
     public function callWS001($params_array = null){          
         
-        $peticion = $this->container->get('client.helper.search_mapping')->mapWS001Parameters($params_array);                                                                                                                                                                                                                                   
-        
+        $peticion = $this->container->get('client.helper.search_mapping')->mapWS001Parameters($params_array);
         try {            
-            $result = $this->soapClient->buscarTermino($peticion);                    
+            $result = $this->soapClient->buscarTerminoPerfectMatch($peticion);                    
         } catch (\SoapFault $soapFault) {
             return json_encode($soapFault);
         }
@@ -91,7 +90,7 @@ class SearchServiceClientsHelper {
         $peticion = $this->container->get('client.helper.search_mapping')->mapWS004Parameters($params_array);                                                  
         
         try {
-            $result = $this->soapClient->buscarTruncatePerfect($peticion);                    
+            $result = $this->soapClient->buscarTerminoTruncatePerfect($peticion);
         } catch (\SoapFault $soapFault) {
             return json_encode($soapFault);
         }

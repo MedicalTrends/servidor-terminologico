@@ -17,7 +17,7 @@ public class TermSearchResponse implements Serializable {
 
     @XmlElementWrapper(name = "conceptos")
     @XmlElement(name = "concepto")
-    private List<ConceptLightResponse> concepts;
+    private List<ConceptLightResponse> concepts = new ArrayList<>();
 
     public TermSearchResponse() {
         this.concepts = new ArrayList<>();

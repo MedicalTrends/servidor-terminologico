@@ -61,6 +61,9 @@ public class ConceptDAOImpl implements ConceptDAO {
     @EJB
     TagDAO tagDAO;
 
+    @EJB
+    RefSetDAO refSetDAO;
+
     @Override
     public void delete(ConceptSMTK conceptSMTK) {
 
@@ -639,6 +642,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         /* Se recuperan sus Etiquetas */
         conceptSMTK.setTags(tagDAO.getTagsByConcept(id));
+
         return conceptSMTK;
     }
 

@@ -20,6 +20,8 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String CONDICION_DE_VENTA = "Condición de Venta";
 
+    public static final String PEDIBLE = "Pedible";
+
     /**
      * Este metodo es responsable de determinar si el target type es de tipo básico es o no.
      *

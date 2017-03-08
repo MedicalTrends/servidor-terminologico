@@ -74,7 +74,7 @@ class SearchServicesController extends Controller
             case 'ws028':
                 $response = $this->container->get('client.helper.search_clients')->callWS028($ws_params);
                 break;              
-        }                                                
+        }
         
         return new Response($response);
     }    

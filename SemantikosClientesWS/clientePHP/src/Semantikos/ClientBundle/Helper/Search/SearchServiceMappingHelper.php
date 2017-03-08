@@ -33,7 +33,8 @@ class SearchServiceMappingHelper {
         
         $peticionBuscarTerminoSimple->setTermino($parameters['termino']);
         $peticionBuscarTerminoSimple->setNombreCategoria(explode(',',$parameters['categorias']));
-        $peticionBuscarTerminoSimple->setNombreRefSet(explode(',',$parameters['refSets']));                                                                                      
+        $peticionBuscarTerminoSimple->setNombreRefSet(explode(',',$parameters['refSets']));
+        $peticionBuscarTerminoSimple->setIdEstablecimiento($parameters['idEstablecimiento']);
         
         return array( 'peticionBuscarTermino' => $peticionBuscarTerminoSimple );
     }

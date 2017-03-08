@@ -18,6 +18,13 @@ import java.util.List;
 @XmlType(name = "DescripcionNoValida", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class NoValidDescriptionResponse implements Serializable {
 
+    @XmlElement(name="idConcepto")
+    private String conceptId;
+    @XmlElement(name="idDescripcion")
+    private String descriptionId;
+    @XmlElement(name="termino")
+    private String term;
+
     @XmlElement(name="razonNoValido")
     private String noValidityCause;
     @XmlElement(name="validez")
@@ -25,13 +32,18 @@ public class NoValidDescriptionResponse implements Serializable {
     @XmlElementWrapper(name="descripcionesSugeridas")
     @XmlElement(name="descripcionSugerida")
     private List<PerfectMatchDescriptionResponse> suggestedDescriptions;
-    @XmlElement(name="cantidadRegistros")
-    private Integer numberOfEntries;
+    //@XmlElement(name="cantidadRegistros")
+    //private Integer numberOfEntries;
 
     public NoValidDescriptionResponse() {}
 
     public NoValidDescriptionResponse(@NotNull NoValidDescription noValidDescription) {
         this.valid = false;
+
+        this.descriptionId = noValidDescription.getNoValidDescription().getDescriptionId();
+        this.conceptId = noValidDescription.getNoValidDescription().getConceptSMTK().getConceptID();
+        this.term = noValidDescription.getNoValidDescription().getTerm();
+
         if ( noValidDescription.getObservationNoValid() != null ) {
             this.noValidityCause = noValidDescription.getObservationNoValid().getDescription();
         }
@@ -41,9 +53,9 @@ public class NoValidDescriptionResponse implements Serializable {
             for (ConceptSMTK suggestedConcept : noValidDescription.getSuggestedConcepts()) {
                 this.suggestedDescriptions.add(new PerfectMatchDescriptionResponse(suggestedConcept.getDescriptionFavorite()));
             }
-            this.numberOfEntries = size;
+            //this.numberOfEntries = size;
         } else {
-            this.numberOfEntries = 0;
+            //this.numberOfEntries = 0;
         }
     }
 
@@ -71,6 +83,31 @@ public class NoValidDescriptionResponse implements Serializable {
         this.suggestedDescriptions = suggestedDescriptions;
     }
 
+    public String getConceptId() {
+        return conceptId;
+    }
+
+    public void setConceptId(String conceptId) {
+        this.conceptId = conceptId;
+    }
+
+    public String getDescriptionId() {
+        return descriptionId;
+    }
+
+    public void setDescriptionId(String descriptionId) {
+        this.descriptionId = descriptionId;
+    }
+
+    public String getTerm() {
+        return term;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
+    }
+
+    /*
     public Integer getNumberOfEntries() {
         return numberOfEntries;
     }
@@ -78,4 +115,5 @@ public class NoValidDescriptionResponse implements Serializable {
     public void setNumberOfEntries(Integer numberOfEntries) {
         this.numberOfEntries = numberOfEntries;
     }
+    */
 }

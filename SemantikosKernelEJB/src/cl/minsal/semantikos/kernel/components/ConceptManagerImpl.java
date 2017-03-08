@@ -210,6 +210,8 @@ public class ConceptManagerImpl implements ConceptManager {
          */
         List<ConceptSMTK> concepts = new ArrayList<>();
         int page = 1;
+
+
         boolean thereAreMore;
         do {
             //List<ConceptSMTK> conceptTruncatePerfect = truncateMatch(termPattern, getIdArray(categories), pageNumber, pageSize, isModeled);

@@ -97,10 +97,10 @@ class SearchServiceFormsHelper {
             ->setAction($this->container->get('router')->generate('search_call'))
             ->setMethod('POST')                    
             ->add('pedible', ChoiceType::class, array(
-                  'choices' => array('Si' => 'Si', 'No' => 'No'), 
+                  'choices' => array('Si' => true, 'No' => false),
                   'choices_as_values' => true, 
                   'expanded' => true,
-                  'data' => 'Si'                  
+                  'data' => true
             ))
             ->add('categorias', TextType::class, array(
                   'required' => false,
