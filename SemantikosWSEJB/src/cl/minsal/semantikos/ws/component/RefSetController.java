@@ -32,7 +32,7 @@ public class RefSetController {
     @EJB
     private ConceptController conceptController;
 
-    public List<RefSet> findRefSetsByDescriptions(@NotNull String descriptionId, Boolean includeInstitutions, String
+    public RefSetSearchResponse findRefSetsByDescriptions(@NotNull String descriptionId, Boolean includeInstitutions, String
             idStablishment) throws NotFoundFault {
 
         /* Se recupera el concepto asociado a la descripción */
@@ -43,8 +43,17 @@ public class RefSetController {
             throw new NotFoundFault("Descripcion no encontrada: " + descriptionId);
         }
 
-        /* Se retornan los refsets asociados al concepto */
-        return refSetManager.findByConcept(conceptByDescriptionID);
+        RefSetSearchResponse res = new RefSetSearchResponse();
+
+        List<RefSet> refSets = refSetManager.findByConcept(conceptByDescriptionID);
+
+        res.setConceptId(conceptByDescriptionID.getConceptID());
+        res.setDescriptionId(conceptByDescriptionID.getDescriptionFavorite().getDescriptionId());
+        res.setDescription(conceptByDescriptionID.getDescriptionFavorite().getTerm());
+        res.setCategory(conceptByDescriptionID.getCategory().getName());
+        res.setRefSetsResponse(new RefSetsResponse(refSets));
+
+        return res;
     }
 
     public List<RefSet> findRefsets(List<String> refSetsNames) throws NotFoundFault {

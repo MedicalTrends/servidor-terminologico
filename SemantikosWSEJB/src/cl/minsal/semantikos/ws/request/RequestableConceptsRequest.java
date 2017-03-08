@@ -28,6 +28,7 @@ public class RequestableConceptsRequest implements Serializable {
         this.categoryNames = categoryNames;
     }
 
+    /*
     @XmlElement(name = "nombreRefSet")
     public List<String> getRefSetNames() {
         return refSetNames;
@@ -35,6 +36,7 @@ public class RequestableConceptsRequest implements Serializable {
     public void setRefSetNames(List<String> refSetNames) {
         this.refSetNames = refSetNames;
     }
+    */
 
     @XmlElement(required = true, name = "pedible")
     public boolean getRequestable() {

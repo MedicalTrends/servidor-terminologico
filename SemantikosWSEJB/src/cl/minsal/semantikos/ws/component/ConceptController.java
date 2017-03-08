@@ -210,8 +210,12 @@ public class ConceptController {
 
             logger.info("ws-req-001. descripciones encontrada: " + description.fullToString());
 
+            if( NO_VALID_TERMS.contains(description.getTerm()) ) {
+                continue;
+            }
+
             /* Caso 1: es una descripcion del concepto especial No valido */
-            if ("Concepto no válido".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm()) && !NO_VALID_TERMS.contains(description.getTerm())) {
+            if ("Concepto no válido".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm()) ) {
                 NoValidDescription noValidDescription = this.descriptionManager.getNoValidDescriptionByID(description.getId());
                 if (noValidDescription != null) {
                     noValidDescriptions.add(new NoValidDescriptionResponse(noValidDescription));
@@ -225,9 +229,21 @@ public class ConceptController {
             }
         }
 
-        res.setPerfectMatchDescriptions(perfectMatchDescriptions);
-        res.setNoValidDescriptions(noValidDescriptions);
-        res.setPendingDescriptions(pendingDescriptions);
+        PerfectMatchDescriptionsResponse perfectMatchDescriptionsResponse = new PerfectMatchDescriptionsResponse();
+        perfectMatchDescriptionsResponse.setPerfectMatchDescriptionsResponse(perfectMatchDescriptions);
+        perfectMatchDescriptionsResponse.setQuantity(perfectMatchDescriptions.size());
+
+        NoValidDescriptionsResponse noValidDescriptionsResponse = new NoValidDescriptionsResponse();
+        noValidDescriptionsResponse.setNoValidDescriptionsResponse(noValidDescriptions);
+        noValidDescriptionsResponse.setQuantity(noValidDescriptions.size());
+
+        PendingDescriptionsResponse pendingDescriptionsResponse = new PendingDescriptionsResponse();
+        pendingDescriptionsResponse.setPendingDescriptionsResponse(pendingDescriptions);
+        pendingDescriptionsResponse.setQuantity(pendingDescriptions.size());
+
+        res.setPerfectMatchDescriptions(perfectMatchDescriptionsResponse);
+        res.setNoValidDescriptions(noValidDescriptionsResponse);
+        res.setPendingDescriptions(pendingDescriptionsResponse);
 
         return res;
     }
@@ -266,6 +282,10 @@ public class ConceptController {
 
             logger.info("ws-req-001. descripciones encontrada: " + description.fullToString());
 
+            if( NO_VALID_TERMS.contains(description.getTerm()) ) {
+                continue;
+            }
+
             /* Caso 1: es una descripcion del concepto especial No valido */
             if ("Concepto no válido".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm())) {
                 NoValidDescription noValidDescription = this.descriptionManager.getNoValidDescriptionByID(description
@@ -282,9 +302,22 @@ public class ConceptController {
             }
         }
 
-        res.setPerfectMatchDescriptions(perfectMatchDescriptions);
-        res.setNoValidDescriptions(noValidDescriptions);
-        res.setPendingDescriptions(pendingDescriptions);
+        PerfectMatchDescriptionsResponse perfectMatchDescriptionsResponse = new PerfectMatchDescriptionsResponse();
+        perfectMatchDescriptionsResponse.setPerfectMatchDescriptionsResponse(perfectMatchDescriptions);
+        perfectMatchDescriptionsResponse.setQuantity(perfectMatchDescriptions.size());
+
+        NoValidDescriptionsResponse noValidDescriptionsResponse = new NoValidDescriptionsResponse();
+        noValidDescriptionsResponse.setNoValidDescriptionsResponse(noValidDescriptions);
+        noValidDescriptionsResponse.setQuantity(noValidDescriptions.size());
+
+        PendingDescriptionsResponse pendingDescriptionsResponse = new PendingDescriptionsResponse();
+        pendingDescriptionsResponse.setPendingDescriptionsResponse(pendingDescriptions);
+        pendingDescriptionsResponse.setQuantity(pendingDescriptions.size());
+
+
+        res.setPerfectMatchDescriptions(perfectMatchDescriptionsResponse);
+        res.setNoValidDescriptions(noValidDescriptionsResponse);
+        res.setPendingDescriptions(pendingDescriptionsResponse);
 
         return res;
     }
@@ -583,12 +616,10 @@ public class ConceptController {
      * Este método es responsable de recuperar todos los conceptos en las categorías indicadas.
      *
      * @param categoryNames Nombres de las categorías en las que se desea realizar la búsqueda.
-     * @param refSetNames   Nombres de los refsets en las que deben pertenecer los conceptos.
      * @param requestable   Indica si el atributo 'Pedible' tiene valor <code>true</code> o <code>false</code>.
      * @return La lista de Conceptos Light que satisfacen la búsqueda.
      */
-    public TermSearchResponse searchRequestableDescriptions(List<String> categoryNames, List<String> refSetNames,
-                                                            Target requestable) {
+    public TermSearchResponse searchRequestableDescriptions(List<String> categoryNames, Target requestable) {
 
         List<ConceptSMTK> allRequestableConcepts = new ArrayList<>();
 
@@ -606,30 +637,7 @@ public class ConceptController {
 
             for (Relationship relationship : relationshipManager.findRelationshipsLike(theRelationshipDefinition, requestable)) {
 
-                boolean belongsToCategory = false;
-                boolean belongsToRefset = false;
-
                 if(relationship.getSourceConcept().getCategory().equals(aCategory)) {
-                    belongsToCategory = true;
-                }
-                else{
-                    belongsToCategory = false;
-                }
-                if(refSetNames.isEmpty() || refSetNames.equals(Arrays.asList(new String[]{EMPTY_STRING}))) {
-                    belongsToRefset = true;
-                }
-                else {
-                    for (String refSetName : refSetNames) {
-                        for (RefSet refSet : refSetManager.getRefsetsBy(relationship.getSourceConcept())) {
-                            if(refSet.getName().equals(refSetName)) {
-                                belongsToRefset = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if(belongsToCategory && belongsToRefset) {
                     allRequestableConcepts.add(relationship.getSourceConcept());
                 }
             }

@@ -12,39 +12,36 @@ import java.util.List;
 @XmlType(name = "RespuestaBuscarTerminoGenerica", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class GenericTermSearchResponse implements Serializable {
 
-    @XmlElementWrapper(name="descripcionesPerfectMatch")
-    @XmlElement(name="descripcionPerfectMatch")
-    private List<PerfectMatchDescriptionResponse> perfectMatchDescriptions;
+    @XmlElement(name="descripcionesPerfectMatch")
+    private PerfectMatchDescriptionsResponse perfectMatchDescriptions;
 
-    @XmlElementWrapper(name="descripcionesNoValidas")
-    @XmlElement(name="descripcionNoValida")
-    private List<NoValidDescriptionResponse> noValidDescriptions;
+    @XmlElement(name="descripcionesNoValidas")
+    private NoValidDescriptionsResponse noValidDescriptions;
 
-    @XmlElementWrapper(name="descripcionesPendientes")
-    @XmlElement(name="descripcionPendiente")
-    private List<PendingDescriptionResponse> pendingDescriptions;
+    @XmlElement(name="descripcionesPendientes")
+    private PendingDescriptionsResponse pendingDescriptions;
 
-    public List<PerfectMatchDescriptionResponse> getPerfectMatchDescriptions() {
+    public PerfectMatchDescriptionsResponse getPerfectMatchDescriptions() {
         return perfectMatchDescriptions;
     }
 
-    public void setPerfectMatchDescriptions(List<PerfectMatchDescriptionResponse> perfectMatchDescriptions) {
+    public void setPerfectMatchDescriptions(PerfectMatchDescriptionsResponse perfectMatchDescriptions) {
         this.perfectMatchDescriptions = perfectMatchDescriptions;
     }
 
-    public List<NoValidDescriptionResponse> getNoValidDescriptions() {
+    public NoValidDescriptionsResponse getNoValidDescriptions() {
         return noValidDescriptions;
     }
 
-    public void setNoValidDescriptions(List<NoValidDescriptionResponse> noValidDescriptions) {
+    public void setNoValidDescriptions(NoValidDescriptionsResponse noValidDescriptions) {
         this.noValidDescriptions = noValidDescriptions;
     }
 
-    public List<PendingDescriptionResponse> getPendingDescriptions() {
+    public PendingDescriptionsResponse getPendingDescriptions() {
         return pendingDescriptions;
     }
 
-    public void setPendingDescriptions(List<PendingDescriptionResponse> pendingDescriptions) {
+    public void setPendingDescriptions(PendingDescriptionsResponse pendingDescriptions) {
         this.pendingDescriptions = pendingDescriptions;
     }
 }

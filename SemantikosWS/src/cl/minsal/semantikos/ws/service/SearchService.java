@@ -189,8 +189,7 @@ public class SearchService {
         /* Se hace una validación de los parámetros */
         obtenerTerminosPediblesParamValidation(request);
 
-        return conceptController.searchRequestableDescriptions(request.getCategoryNames(), request.getRefSetNames(),
-                new BasicTypeValue(request.getRequestable()));
+        return conceptController.searchRequestableDescriptions(request.getCategoryNames(), new BasicTypeValue(request.getRequestable()));
     }
 
     /**
@@ -232,16 +231,16 @@ public class SearchService {
      * @throws cl.minsal.semantikos.ws.fault.IllegalInputFault Se arroja si se viola la condición.
      */
     private void validateAtLeastOneCategoryOrOneRefSet(RequestableConceptsRequest request) throws IllegalInputFault {
-        if (!(request.getCategoryNames().size() > 0 || request.getRefSetNames().size() > 0)) {
-            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet.");
+        if (!(request.getCategoryNames().size() > 0 )) {
+            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría.");
         }
     }
 
     // REQ-WS-007
     // REQ-WS-009
-    @WebResult(name = "refsetResponse")
+    @WebResult(name = "refsetSearchResponse")
     @WebMethod(operationName = "refSetsPorIdDescripcion")
-    public RefSetsResponse refSetsPorIdDescripcion(
+    public RefSetSearchResponse refSetsPorIdDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "peticionRefSetsPorIdDescripcion")
                     RefSetsByDescriptionIdRequest request
@@ -254,10 +253,9 @@ public class SearchService {
         if (descriptionId == null || descriptionId.isEmpty()) {
             throw new IllegalInputFault("Debe ingresar por lo menos un idDescripcion");
         }
-        List<RefSet> refSets = this.refSetController.findRefSetsByDescriptions(descriptionId, includeInstitutions,
+        return this.refSetController.findRefSetsByDescriptions(descriptionId, includeInstitutions,
                 idStablishment);
 
-        return new RefSetsResponse(refSets);
     }
 
     // REQ-WS-008
