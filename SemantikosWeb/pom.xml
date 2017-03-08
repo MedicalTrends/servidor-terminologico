@@ -68,6 +68,18 @@
         </dependency>
 
         <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>poseidon</artifactId>
+            <version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.glassfish</groupId>
+                    <artifactId>javax.faces</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>rio</artifactId>
             <version>3.1.2</version>
@@ -77,7 +89,7 @@
                     <artifactId>javax.faces</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency-->
 
         <dependency>
             <groupId>org.slf4j</groupId>

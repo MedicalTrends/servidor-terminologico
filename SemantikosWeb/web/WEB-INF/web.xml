@@ -27,7 +27,7 @@
 
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>rio</param-value>
+        <param-value>poseidon-turquoise</param-value>
     </context-param>
 
 

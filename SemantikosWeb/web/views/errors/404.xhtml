@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <f:facet name="first">
@@ -12,38 +12,25 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
             <meta name="apple-mobile-web-app-capable" content="yes" />
         </f:facet>
-        <title>PrimeFaces RIO</title>
-        <ui:insert name="head" />
+        <title>PrimeFaces Poseidon - Error</title>
     </h:head>
 
-    <h:body styleClass="loginbodyorange">
-        
-        <div class="Wid90 DispBlock MarAuto MarTopPerc10 TexAlCenter">
-            <div class="Wid33 MarAuto WidAutoOnMobile">
-                <div class="EmptyBox30"></div>
-                <div class="Card ShadowEffect">
-                    <div class="EmptyBox40"></div>
-                    <i class="icon-windows Fs100 Orange"></i> 
-                    <div class="Wid100 OvHidden Fs30 Orange">404 Page Not Found !</div>
-                    <div class="Wid100 OvHidden Fs20 BoldGray">Sorry, but the resource you are looking<br/> for has not been found.</div>
-                    <div class="EmptyBox20"></div>
-                    <div class="Separator"></div>
-                    <div class="EmptyBox10"></div>
-                    <div class="Wid100"><p:button value="Back To Dashboard" icon="fa fa-dashboard" styleClass="OrangeButton Wid60 Fs18 White RaisedButton" href="dashboard.xhtml"/></div>
-                    <div class="EmptyBox20"></div>
-                </div>
-                <div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular WhiteBlue">
-                        <i class="fa fa-copyright"></i>  PrimeFaces RIO Theme And Layout <br/> All rights reserved.
-                    </div>
-            </div>
+    <h:body styleClass="exception-body notfound-page">
+    
+        <div class="exception-top">
+            <p:graphicImage name="images/icon-404.png" library="poseidon-layout" />
         </div>
         
-        <h:outputStylesheet name="css/core-layout.css" library="rio-layout" />
-        <h:outputStylesheet name="css/animate.css" library="rio-layout" />
-        <h:outputStylesheet name="css/rio-font.css" library="rio-layout" />
-        <h:outputStylesheet name="css/ripple-effect.css" library="rio-layout" />
-        <h:outputStylesheet name="css/font-awesome.css" library="rio-layout" />
-        <h:outputStylesheet name="css/rio-layout.css" library="rio-layout" />
+        <div class="exception-bottom">
+            <div class="exception-wrapper">
+                <span class="exception-summary">Access Denied</span>
+                <span class="exception-detail">You Don't Have Permissions To Access This Resource</span>
+                <!--p:button outcome="/dashboard" value="Dashboard" icon="fa fa-home" styleClass="turquoise-btn"/-->
+                <p:graphicImage name="images/logo-icon-white.png" library="poseidon-layout" styleClass="logo-icon"/>
+                <span class="exception-footer">PrimeFaces Poseidon</span>
+            </div>
+        </div>
+        <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="poseidon-layout" />
     </h:body>
 
 </html>

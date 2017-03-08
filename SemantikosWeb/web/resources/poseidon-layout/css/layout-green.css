@@ -1,0 +1,54 @@
+/*
+Error: File to import not found or unreadable: ../../sass/layout/_layout.
+       Load path: /home/des01c7/semantikos/servidor-terminologico/SemantikosWeb/web/resources
+        on line 3 of resources/poseidon-layout/css/layout-green.scss
+
+1: $primaryColor:#57c279;
+2: 
+3: @import '../../sass/layout/_layout';
+
+Backtrace:
+resources/poseidon-layout/css/layout-green.scss:3
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/import_node.rb:67:in `rescue in import'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/import_node.rb:45:in `import'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/import_node.rb:28:in `imported_file'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/import_node.rb:37:in `css_import?'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:313:in `visit_import'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:36:in `visit'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/stack.rb:79:in `block in with_base'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/stack.rb:115:in `with_frame'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/stack.rb:79:in `with_base'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:160:in `visit'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:52:in `map'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:169:in `block in visit_children'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:181:in `with_environment'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:168:in `visit_children'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:188:in `visit_root'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:36:in `visit'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:159:in `visit'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:8:in `visit'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/root_node.rb:36:in `css_tree'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/tree/root_node.rb:20:in `render'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/engine.rb:281:in `render'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/plugin/compiler.rb:494:in `update_stylesheet'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/plugin/compiler.rb:209:in `each'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/plugin/compiler.rb:294:in `watch'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/plugin.rb:109:in `method_missing'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/exec/sass_scss.rb:360:in `watch_or_update'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/exec/sass_scss.rb:51:in `process_result'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/exec/base.rb:52:in `parse'
+/usr/local/share/gems/gems/sass-3.4.23/lib/sass/exec/base.rb:19:in `parse!'
+/usr/local/share/gems/gems/sass-3.4.23/bin/sass:13:in `<top (required)>'
+/usr/local/bin/sass:23:in `load'
+/usr/local/bin/sass:23:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: File to import not found or unreadable: ../../sass/layout/_layout.\A        Load path: /home/des01c7/semantikos/servidor-terminologico/SemantikosWeb/web/resources\A         on line 3 of resources/poseidon-layout/css/layout-green.scss\A \A 1: $primaryColor:#57c279;\A 2: \A 3: @import '../../sass/layout/_layout';"; }

@@ -1,0 +1,74 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pp="http://primefaces.org/poseidon">
+    
+    <h:form id="menuform"> 
+        <div class="layout-menu-container">
+            <div class="nano">
+                <div class="nano-content menu-scroll-content">
+                    <div class="search-input">
+                        <input type="text" placeholder="Search"/>
+                        <i class="fa fa-search"></i>
+                    </div>
+
+                    <pp:menu id="menu1">
+                        <p:menuitem id="rm_home" value="Inicio" icon="fa fa-home Fs30" outcome="/views/home.xhtml" />
+                    </pp:menu>
+
+                    <pp:menu id="rm_categories" model="#{mainMenuBean.categoryMenuModel}" />
+
+                    <pp:menu id="rm_otros">
+                        <p:submenu id="rm_otros_sm" label="Otros" icon="fa fa-plus-square">
+                            <p:menuitem id="rm_descriptions" value="Descripciones" icon="fa fa-edit Fs15" url="/views/browser/descriptionBrowser.xhtml" />
+                            <p:menuitem id="rm_drugs" value="Fármacos" icon="fa fa-medkit Fs15" url="/views/browser/drugsBrowser.xhtml" />
+                            <p:menuitem id="rm_pendings" value="Pendientes" icon="fa fa-exclamation-triangle  Fs15" url="/views/browser/pendingBrowser.xhtml" />
+                            <p:menuitem id="rm_no_valids" value="No Válidos" icon="fa fa-ban Fs15" url="/views/browser/noValidBrowser.xhtml" />
+                        </p:submenu>
+                    </pp:menu>
+
+                    <pp:menu id="menu2">
+
+                        <p:menuitem id="rm_users_web" value="Administracion Usuarios" icon="icon-two385" outcome="/views/users" />
+
+                        <p:menuitem id="rm_menu_principal" value="Menú Principal" icon="fa fa-home" outcome="/views/browser/mainMenu.xhtml" rendered="false"/>
+
+                        <p:menuitem id="rm_concept_draft" value="Conceptos en Borrador" icon="fa fa-pencil-square-o" outcome="/views/concept/conceptDraft.xhtml" rendered="false"/>
+
+                        <p:menuitem id="rm_create_category" value="Crear categoria" icon="fa fa-list-alt" outcome="/views/category/createCategory.xhtml" rendered="false"/>
+
+                        <p:menuitem id="rm_admin_refsets" value="Administrador de RefSets" icon="fa fa-dropbox" outcome="/views/refsets/admin_refsets.xhtml"/>
+
+                        <p:menuitem id="rm_admin_helper_tables" value="Carga Helper Tables" icon="fa fa-dropbox" outcome="/views/helper_tables/helperTableManteiner.xhtml"/>
+
+                        <p:menuitem id="rm_helpertables" value="Manager Auxiliares" icon="fa fa-list-alt" outcome="/views/helpertables/helpertables.xhtml"/>
+
+                        <p:separator />
+
+                        <p:submenu id="rm_administracion" label="Administración" icon="icon-planet29">
+                            <p:menuitem id="rm_configuraciones" value="Configuaciones" icon="icon-planet29" outcome="/views/configuraciones.xhtml"  />
+                            <p:menuitem id="rm_users" value="Administracion Usuarios" icon="icon-two385" outcome="/views/users"/>
+                        </p:submenu>
+
+
+                        <p:separator />
+                    </pp:menu>
+                    
+                    <div class="layout-menu-footer">
+                        <span class="layout-menu-footer-title">Tasks Overview</span>
+                        
+                        <p:progressBar value="50" labelTemplate="" displayOnly="true"/>
+                        Today
+                        
+                        <p:progressBar value="80" labelTemplate=""  displayOnly="true"/>
+                        Overall
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </h:form>
+</ui:composition>

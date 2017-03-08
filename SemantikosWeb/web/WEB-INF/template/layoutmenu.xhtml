@@ -1,4 +1,4 @@
-<ui:composition
+<ui:composition 
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
@@ -7,55 +7,30 @@
     xmlns:pr="http://primefaces.org/rio">
 
     <div class="Animated05" id="layout-menu-cover">
-
         <ul class="layout-menu">
             <li>
                 <a class="menulink ripplelink">
-                    <i class="icon-round58 Fs40" />
-                    <span class="Fs18"><h:outputText value="#{authenticationBean.loggedUser.fullName}" /><i class="icon-downwards Fright Fs20" /><br /><span class="Fs12 FontRobotoLight"><h:outputText value="#{authenticationBean.loggedUser.rut}" /></span></span>
+                    <i class="icon-round58 Fs40"></i>
+                    <span class="Fs18">John Wilkins<i class="icon-downwards Fright Fs20"></i><br /><span class="Fs12 FontRobotoLight">Sr. System Administrator</span></span>
                 </a>
                 <ul>
-                    <li><p:commandLink style="color: #455a64" action="#{authenticationBean.logout}" styleClass="menulink ripplelink"><i class="icon-thermostat1 Fs16" /> Logout</p:commandLink></li>
+                    <li><a href="#" class="menulink ripplelink"><i class="icon-user158 Fs16"></i> User Profile</a></li>
+                    <li><a href="#" class="menulink ripplelink"><i class="icon-two385 Fs16"></i> Change User</a></li>
+                    <li><a href="#" class="menulink ripplelink"><i class="icon-settings49 Fs16"></i> System Settings</a></li>
+                    <li><a href="#" class="menulink ripplelink"><i class="icon-thermostat1 Fs16"></i> Logout</a></li>
                 </ul>
             </li>
         </ul>
-
         <div class="Separator"></div>
 
-        <pr:menu id="menu1">
-            <p:menuitem id="rm_home" value="Inicio" icon="fa fa-home" outcome="/views/home.xhtml" />
-        </pr:menu>
 
-        <pr:menu id="rm_categories" model="#{mainMenuBean.categoryMenuModel}" rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}" />
+        <pr:menu>
 
-        <pr:menu id="rm_otros" rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}">
-            <p:submenu id="rm_otros_sm" label="Otros" icon="fa fa-plus-square">
-                <p:menuitem id="rm_descriptions" value="Descripciones" icon="fa fa-edit Fs15" url="/views/browser/descriptionBrowser.xhtml" />
-                <p:menuitem id="rm_drugs" value="Fármacos" icon="fa fa-medkit Fs15" url="/views/browser/drugsBrowser.xhtml" />
-                <p:menuitem id="rm_pendings" value="Pendientes" icon="fa fa-exclamation-triangle  Fs15" url="/views/browser/pendingBrowser.xhtml" />
-                <p:menuitem id="rm_no_valids" value="No Válidos" icon="fa fa-ban Fs15" url="/views/browser/noValidBrowser.xhtml" />
-            </p:submenu>
-        </pr:menu>
-
-        <pr:menu id="menu2">
-
-            <p:menuitem id="rm_users_web" value="Administracion Usuarios" icon="icon-two385" outcome="/views/users" rendered="#{profilePermissionsBeans.admin}"/>
-
-            <p:menuitem id="rm_admin_refsets" value="Administrador de RefSets" icon="fa fa-dropbox" outcome="/views/refsets/admin_refsets.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
-
-            <p:menuitem id="rm_admin_helper_tables" value="Manager Helper Tables" icon="fa fa-dropbox" outcome="/views/helper_tables/helperTableManteiner.xhtml" rendered="#{profilePermissionsBeans.modeler}"/>
-
-            <p:menuitem id="rm_helpertables" value="Manager Auxiliares" icon="fa fa-list-alt" outcome="/views/helpertables/helpertables.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
-
-            <p:separator />
-
-            <p:submenu id="rm_administracion" label="Administración" icon="icon-planet29" rendered="#{profilePermissionsBeans.modeler}">
-                <p:menuitem id="rm_configuraciones" value="Configuaciones" icon="icon-planet29" outcome="/views/configuraciones.xhtml" update="" rendered="#{profilePermissionsBeans.modeler}" />
-            </p:submenu>
-
+            <p:menuitem id="rm_configuraciones" value="Configuaciones" icon="icon-planet29" outcome="/views/configuraciones.xhtml"/>
 
             <p:separator />
         </pr:menu>
+
 
 
 
