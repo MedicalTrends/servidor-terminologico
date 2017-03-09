@@ -26,12 +26,12 @@ public class GeneralQuery implements IQuery {
     private String query;
 
     private Boolean toBeReviewed;
-    private String toBeReviewedString;
+
     private Boolean toBeConsulted;
-    private String toBeConsultedString;
+
 
     private Boolean modeled;
-    private String modeledString;
+
 
     private List<Tag> tags = new ArrayList<>();
 
@@ -210,58 +210,6 @@ public class GeneralQuery implements IQuery {
     public void setCustomFilterable(boolean customFilterable) {
         this.customFilterable = customFilterable;
     }
-
-    public String getToBeReviewedString() {
-        return toBeReviewedString;
-    }
-
-    public void setToBeReviewedString(String toBeReviewedString) {
-        this.toBeReviewedString = toBeReviewedString;
-        if(toBeReviewedString.equals("true")){
-            setToBeReviewed(true);
-        }
-        if(toBeReviewedString.equals("false")){
-            setToBeReviewed(false);
-        }
-        if(toBeReviewedString.equals(null) || toBeReviewedString.equals("")){
-            setToBeReviewed(null);
-        }
-    }
-
-    public String getModeledString() {
-        return modeledString;
-    }
-
-    public void setModeledString(String modeledString) {
-        this.modeledString = modeledString;
-        if(modeledString.equals("true")){
-            setModeled(true);
-        }
-        if(modeledString.equals("false")){
-            setModeled(false);
-        }
-        if(modeledString.equals(null) || modeledString.equals("")){
-            setModeled(null);
-        }
-    }
-
-    public String getToBeConsultedString() {
-        return toBeConsultedString;
-    }
-
-    public void setToBeConsultedString(String toBeConsultedString) {
-        this.toBeConsultedString = toBeConsultedString;
-        if(toBeConsultedString.equals("true")){
-            setToBeConsulted(true);
-        }
-        if(toBeConsultedString.equals("false")){
-            setToBeConsulted(false);
-        }
-        if(toBeConsultedString.equals(null) || toBeConsultedString.equals("")){
-            setToBeConsulted(null);
-        }
-    }
-
 
 
     public List<QueryColumn> getColumnsByRelationshipDefinition(RelationshipDefinition relationshipDefinition){

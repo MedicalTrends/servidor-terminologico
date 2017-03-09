@@ -39,7 +39,7 @@
                         <span>
                             Revisar
                         </span>
-                        <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeReviewedString}" autoWidth="false">
+                        <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeReviewed}" autoWidth="false">
                             <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
                             <f:selectItem itemLabel="Sin Revisar" itemValue="false"/>
                             <f:selectItem itemLabel="Revisar" itemValue="true"/>
@@ -53,7 +53,7 @@
                         <span>
                             Consultar
                         </span>
-                        <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeConsultedString}" autoWidth="false">
+                        <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeConsulted}" autoWidth="false">
                             <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
                             <f:selectItem itemLabel="Sin Consultar" itemValue="false"/>
                             <f:selectItem itemLabel="Consultar" itemValue="true"/>
@@ -67,7 +67,7 @@
                         <span>
                             Estado
                         </span>
-                        <p:selectOneMenu value="#{cc.attrs.generalQuery.modeledString}" autoWidth="false">
+                        <p:selectOneMenu value="#{cc.attrs.generalQuery.modeled}" autoWidth="false">
                             <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
                             <f:selectItem itemLabel="Borrador" itemValue="false"/>
                             <f:selectItem itemLabel="Modelado" itemValue="true"/>
