@@ -4,7 +4,7 @@ Error: File to import not found or unreadable: ../../sass/layout/_layout.
         on line 3 of resources/poseidon-layout/css/layout-turquoise.scss
 
 1: $primaryColor:#00acac;
-2: 
+2:
 3: @import '../../sass/layout/_layout';
 
 Backtrace:
