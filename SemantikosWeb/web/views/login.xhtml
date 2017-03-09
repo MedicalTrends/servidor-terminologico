@@ -13,7 +13,9 @@
             <meta name="apple-mobile-web-app-capable" content="yes" />
             <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
         </f:facet>
-        <h:outputScript name="js/layout.js" library="rio-layout" />
+        <h:outputScript name="js/layout.js" library="poseidon-layout" />
+        <h:outputScript name="js/nanoscroller.js" library="poseidon-layout" />
+        <h:outputScript name="js/swipe.js" library="poseidon-layout" />
         <title>Semantikos - Consola de Administración</title>
         <ui:insert name="head" />
     </h:head>
@@ -50,7 +52,9 @@
         </div>
 
         <h:outputStylesheet name="css/layout-turquoise.css" library="poseidon-layout" />
-        <h:outputScript name="js/layout.js" library="poseidon-layout" />
+        <h:outputStylesheet name="css/fonts.css" library="poseidon-layout" />
+        <h:outputStylesheet name="css/grid.css" library="poseidon-layout" />
+        <h:outputStylesheet name="css/nanoscroller.css" library="poseidon-layout" />
 
     </h:body>
 
