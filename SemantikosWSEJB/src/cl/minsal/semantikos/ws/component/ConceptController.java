@@ -438,7 +438,7 @@ public class ConceptController {
             throw new NotFoundFault("No se encontró una categoría de nombre '" + categoryName + "'");
         }
 
-        List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptBy(category, pageSize, pageNumber);
+        List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptBy(category, pageNumber*pageSize, pageNumber);
 
         List<ConceptResponse> conceptResponses = new ArrayList<>();
 
