@@ -101,7 +101,9 @@ public class ConceptResponse implements Serializable {
 
         /* Se cargan las otras propiedades del concepto */
         loadDescriptions(conceptSMTK);
-        loadAttributes(conceptSMTK);
+        if(conceptSMTK.isRelationshipsLoaded()) {
+            loadAttributes(conceptSMTK);
+        }
         this.setCategory(new CategoryResponse(conceptSMTK.getCategory()));
     }
 

@@ -42,7 +42,14 @@ class SearchServiceMappingHelper {
     public function mapWS002Parameters($parameters = null){                                    
         
         $peticionPorCategoria = new PeticionPorCategoria($parameters['nombreCategoria'],
-                                                         $parameters['idEstablecimiento']);        
+                                                         $parameters['idEstablecimiento']);
+
+        $peticionPorCategoria->setNombreCategoria($parameters['nombreCategoria']);
+        $peticionPorCategoria->setIdEstablecimiento($parameters['idEstablecimiento']);
+        $peticionPorCategoria->setNumeroPagina($parameters['numeroPagina']);
+        $peticionPorCategoria->setTamanoPagina($parameters['tamanoPagina']);
+
+        var_dump($peticionPorCategoria);
         
         return array( 'peticionConceptosPorCategoria' => $peticionPorCategoria );
     }

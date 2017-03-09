@@ -209,11 +209,13 @@
 
                                 <br/>
                                 <div style="text-align: right;">
+
                                     <p:commandButton actionListener="#{conceptBean.saveConcept}" icon="fa fa-check"
                                                      styleClass="ui-priority-primary"
                                                      rendered="#{conceptBean.concept.editable}"
                                                      value="Guardar"
-                                                     update="growl, mainForm, @(.breadUpdate)"/>
+                                                     update="growl, mainForm, @(.breadUpdate)">
+                                    </p:commandButton>
 
                                     <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"
                                                      styleClass="ui-priority-primary"

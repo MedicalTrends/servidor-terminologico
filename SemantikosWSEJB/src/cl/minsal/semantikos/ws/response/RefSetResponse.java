@@ -38,6 +38,7 @@ public class RefSetResponse implements Serializable {
     private List<ConceptResponse> concepts;
 
     public RefSetResponse() {
+        concepts = new ArrayList<>();
     }
 
     public RefSetResponse(RefSet refSet) {

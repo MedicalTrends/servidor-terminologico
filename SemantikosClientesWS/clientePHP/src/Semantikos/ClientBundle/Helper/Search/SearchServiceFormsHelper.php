@@ -66,7 +66,9 @@ class SearchServiceFormsHelper {
         return $ws002Form = $this->formFactory->createNamedBuilder('ws002',FormType::class, null)
             ->setAction($this->container->get('router')->generate('search_call'))
             ->setMethod('POST')            
-            ->add('nombreCategoria', TextType::class)            
+            ->add('nombreCategoria', TextType::class)
+            ->add('numeroPagina', NumberType::class)
+            ->add('tamanoPagina', NumberType::class)
             ->add('idEstablecimiento', NumberType::class)                              
             ->add('call', SubmitType::class, array('label' => 'Invocar WS', 'attr' => array('class' => 'btn btn-primary')))
             ->getForm()->createView();                    

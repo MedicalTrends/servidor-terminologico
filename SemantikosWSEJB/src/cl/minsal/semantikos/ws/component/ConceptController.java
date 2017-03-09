@@ -27,7 +27,6 @@ import java.util.Date;
 import java.util.List;
 
 import static cl.minsal.semantikos.kernel.daos.DescriptionDAOImpl.NO_VALID_TERMS;
-import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 
 /**
  * @author Alfonso Cornejo on 2016-11-17.
@@ -414,33 +413,71 @@ public class ConceptController {
     }
 
     /**
+     * Este metodo recupera los conceptos de una categoria
+     *
+     * @param categoryName      La Categoría
+     * @param idEstablecimiento El establecimiento.
+     * @return La lista de conceptos.
+     * @throws NotFoundFault
+     */
+    public ConceptsResponse findConceptsByCategoryPaginated(
+            String categoryName,
+            String idEstablecimiento,
+            int pageNumber,
+            int pageSize
+    ) throws NotFoundFault {
+
+        /* Logging de invocación del servicio */
+        logger.info("SearchService:findConceptsByCategory(" + categoryName + ", " + idEstablecimiento + ")");
+
+        /* Se recupera la categoría */
+        Category category;
+        try {
+            category = this.categoryManager.getCategoryByName(categoryName);
+        } catch (IllegalArgumentException iae) {
+            throw new NotFoundFault("No se encontró una categoría de nombre '" + categoryName + "'");
+        }
+
+        List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptBy(category, pageSize, pageNumber);
+
+        List<ConceptResponse> conceptResponses = new ArrayList<>();
+
+        for (ConceptSMTK source : concepts) {
+            ConceptResponse conceptResponse = new ConceptResponse(source);
+            conceptResponse.setForREQWS002();
+            this.loadAttributes(conceptResponse, source);
+            this.loadSnomedCTRelationships(conceptResponse, source);
+
+            conceptResponses.add(conceptResponse);
+        }
+
+        ConceptsResponse res = new ConceptsResponse();
+        res.setConceptResponses(conceptResponses);
+        res.setQuantity(conceptResponses.size());
+
+        return res;
+    }
+
+    /**
      * Este método es responsable de recuperar todos los conceptos de un RefSet.
      *
      * @param refSetName El RefSet cuyos conceptos se desea recuperar.
      * @return Una lista de conceptos que pertenecen al refset <code>refSetName</code>.
      * @throws NotFoundFault Arrojada si...
      */
-    public ConceptsByRefsetResponse conceptsByRefset(String refSetName) throws NotFoundFault {
-        ConceptsByRefsetResponse res = new ConceptsByRefsetResponse();
-
+    public RefSetResponse conceptsByRefset(String refSetName) throws NotFoundFault {
         RefSet refSet = this.refSetManager.getRefsetByName(refSetName);
-        res.setRefSet(this.refSetController.getResponse(refSet));
+        RefSetResponse res = new RefSetResponse();
 
-        boolean conceptsLeft;
-        int page = 1;
-        List<ConceptSMTK> allConcepts = new ArrayList<>();
-        do {
-            List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptsBy(refSet, page++, 1000);
-            logger.debug("ConceptController.conceptsByRefset(" + refSetName +") --> " + concepts.size() + " conceptos.");
-            allConcepts.addAll(concepts);
-            conceptsLeft = concepts.size() == 1000;
-        } while (conceptsLeft);
+        res.setName(refSet.getName());
+        res.setInstitution(refSet.getInstitution().getName());
+        res.setCreationDate(refSet.getCreationDate());
+        res.setValid(refSet.getValidityUntil()==null);
+        res.setValidityUntil(refSet.getValidityUntil());
 
-        List<ConceptLightResponse> conceptResponses = new ArrayList<>();
-        for (ConceptSMTK aConcept : allConcepts) {
-            conceptResponses.add(new ConceptLightResponse(aConcept));
+        for (ConceptSMTK conceptSMTK : refSet.getConcepts()) {
+            res.getConcepts().add(new ConceptResponse(conceptSMTK));
         }
-        res.setConcepts(conceptResponses);
 
         return res;
     }

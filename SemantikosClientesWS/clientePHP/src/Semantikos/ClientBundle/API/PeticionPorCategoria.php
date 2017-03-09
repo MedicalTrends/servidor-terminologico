@@ -11,6 +11,16 @@ class PeticionPorCategoria
     protected $nombreCategoria = null;
 
     /**
+     * @var int $numeroPagina
+     */
+    protected $numeroPagina = null;
+
+    /**
+     * @var int $tamanoPagina
+     */
+    protected $tamanoPagina = null;
+
+    /**
      * @var string $idEstablecimiento
      */
     protected $idEstablecimiento = null;
@@ -19,10 +29,40 @@ class PeticionPorCategoria
      * @param string $nombreCategoria
      * @param string $idEstablecimiento
      */
-    public function __construct($nombreCategoria, $idEstablecimiento)
+    public function __construct()
     {
-      $this->nombreCategoria = $nombreCategoria;
-      $this->idEstablecimiento = $idEstablecimiento;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumeroPagina()
+    {
+        return $this->numeroPagina;
+    }
+
+    /**
+     * @param int $numeroPagina
+     */
+    public function setNumeroPagina($numeroPagina)
+    {
+        $this->numeroPagina = $numeroPagina;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTamanoPagina()
+    {
+        return $this->tamanoPagina;
+    }
+
+    /**
+     * @param int $tamanoPagina
+     */
+    public function setTamanoPagina($tamanoPagina)
+    {
+        $this->tamanoPagina = $tamanoPagina;
     }
 
     /**

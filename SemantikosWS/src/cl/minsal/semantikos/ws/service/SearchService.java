@@ -3,7 +3,6 @@ package cl.minsal.semantikos.ws.service;
 import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.ws.component.CategoryController;
 import cl.minsal.semantikos.ws.component.ConceptController;
@@ -17,26 +16,20 @@ import cl.minsal.semantikos.ws.response.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.faces.context.FacesContext;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
-import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.WebServiceContext;
-import javax.xml.ws.handler.MessageContext;
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 
 
 /**
@@ -92,13 +85,8 @@ public class SearchService {
                     SimpleSearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault {
 
-        if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())
-                && (request.getRefSetNames() == null || request.getRefSetNames().isEmpty())) {
-            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet");
-        }
-        if (request.getTerm() == null || "".equals(request.getTerm())) {
-            throw new IllegalInputFault("Debe ingresar un Termino a buscar");
-        }
+        /* Se hace una validación de los parámetros */
+        validateAtLeastOneCategoryOrOneRefSet(request);
 
         logger.debug("ws-req-001: " + request.getTerm() + ", " + request.getCategoryNames() + " " + request
                 .getRefSetNames());
@@ -115,6 +103,18 @@ public class SearchService {
                     CategoryRequest request
     ) throws NotFoundFault {
         return this.conceptController.findConceptsByCategory(request.getCategoryName(), request.getIdStablishment());
+    }
+
+    // REQ-WS-002 Paginados
+    @WebResult(name = "respuestaConceptos")
+    @WebMethod(operationName = "conceptosPorCategoriaPaginados")
+    public ConceptsResponse conceptosPorCategoriaPaginados(
+            @XmlElement(required = true)
+            @WebParam(name = "peticionConceptosPorCategoria")
+                    CategoryRequestPaginated request
+    ) throws NotFoundFault {
+        return this.conceptController.findConceptsByCategoryPaginated(request.getCategoryName(), request.getIdStablishment(),
+                                                                      request.getPageNumber(), request.getPageSize());
     }
 
     @WebResult(name = "respuestaCategorias")
@@ -156,16 +156,12 @@ public class SearchService {
     public GenericTermSearchResponse buscarTruncatePerfect(
             @XmlElement(required = true)
             @WebParam(name = "peticionBuscarTermino")
-                    SearchTermRequest request
+                    SimpleSearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault {
 
-        if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())
-                && (request.getRefSetNames() == null || request.getRefSetNames().isEmpty())) {
-            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet");
-        }
-        if (request.getTerm() == null || "".equals(request.getTerm())) {
-            throw new IllegalInputFault("Debe ingresar un Termino a buscar");
-        }
+        /* Se hace una validación de los parámetros */
+        validateAtLeastOneCategoryOrOneRefSet(request);
+
         return this.conceptController.searchTermGeneric2(request.getTerm(), request.getCategoryNames(), request
                 .getRefSetNames());
     }
@@ -203,7 +199,7 @@ public class SearchService {
     private void obtenerTerminosPediblesParamValidation(RequestableConceptsRequest request) throws IllegalInputFault {
 
         /* Se valida que haya al menos 1 categoría o 1 refset */
-        validateAtLeastOneCategoryOrOneRefSet(request);
+        validateAtLeastOneCategory(request);
 
         /* Luego es necesario validar que si hay categorías especificadas, se limiten a "interconsulta",
         "indicaciones generales" e "indicaciones de laboratorio" */
@@ -230,10 +226,23 @@ public class SearchService {
      * @param request La petición enviada.
      * @throws cl.minsal.semantikos.ws.fault.IllegalInputFault Se arroja si se viola la condición.
      */
-    private void validateAtLeastOneCategoryOrOneRefSet(RequestableConceptsRequest request) throws IllegalInputFault {
-        if (!(request.getCategoryNames().size() > 0 )) {
+    private void validateAtLeastOneCategory(RequestableConceptsRequest request) throws IllegalInputFault {
+        if (isEmpty(request.getCategoryNames())) {
             throw new IllegalInputFault("Debe ingresar por lo menos una Categoría.");
         }
+    }
+
+    private void validateAtLeastOneCategoryOrOneRefSet(SimpleSearchTermRequest request) throws IllegalInputFault {
+        if (isEmpty(request.getCategoryNames()) && isEmpty(request.getRefSetNames())) {
+            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet.");
+        }
+        if (request.getTerm() == null || request.getTerm().trim().isEmpty()) {
+            throw new IllegalInputFault("Debe ingresar un Termino a buscar");
+        }
+    }
+
+    public boolean isEmpty(List<String> list) {
+        return list.isEmpty() || (list.size() == 1 && list.contains(EMPTY_STRING));
     }
 
     // REQ-WS-007
@@ -275,7 +284,7 @@ public class SearchService {
     // REQ-WS-022
     @WebResult(name = "respuestaConceptosPorRefSet")
     @WebMethod(operationName = "descripcionesPreferidasPorRefSet")
-    public ConceptsByRefsetResponse descripcionesPreferidasPorRefSet(
+    public RefSetResponse descripcionesPreferidasPorRefSet(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosPorRefSet")
                     ConceptsByRefsetRequest request
@@ -286,7 +295,7 @@ public class SearchService {
     // REQ-WS-023
     @WebResult(name = "respuestaConceptosPorRefSet")
     @WebMethod(operationName = "conceptosPorRefSet")
-    public ConceptsByRefsetResponse conceptosPorRefSet(
+    public RefSetResponse conceptosPorRefSet(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosPorRefSet")
                     ConceptsByRefsetRequest request

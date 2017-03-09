@@ -77,7 +77,7 @@ class SearchServiceClientsHelper {
         $peticion = $this->container->get('client.helper.search_mapping')->mapWS002Parameters($params_array);                                                                                                                                                                                                                                   
         
         try {
-            $result = $this->soapClient->conceptosPorCategoria($peticion);                    
+            $result = $this->soapClient->conceptosPorCategoriaPaginados($peticion);
         } catch (\SoapFault $soapFault) {
             return json_encode($soapFault);
         }
