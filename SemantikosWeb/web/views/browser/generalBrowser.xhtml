@@ -35,7 +35,7 @@
                                              styleClass="browserTable"
                                              value="#{generalBrowserBean.concepts}"
                                              var="concept"
-                                             rows="30"
+                                             rows="#{generalBrowserBean.category.name eq 'Fármacos - Medicamento Clínico'?'20':'30'}"
                                              sortBy="#{1}"
                                              expandedRow="true"
                                              paginator="true" lazy="true" dynamic="true" reflow="true"

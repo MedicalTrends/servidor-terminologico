@@ -158,7 +158,7 @@ public class ConceptController {
 
         if (source != null) {
             List<ConceptLightResponse> relatedResponses = new ArrayList<>();
-            List<ConceptSMTK> relatedConcepts = this.conceptManager.getRelatedConcepts(source);
+            List<ConceptSMTK> relatedConcepts = this.conceptManager.getRelatedConcepts(source, category);
 
             if (relatedConcepts != null) {
                 for (ConceptSMTK related : relatedConcepts) {

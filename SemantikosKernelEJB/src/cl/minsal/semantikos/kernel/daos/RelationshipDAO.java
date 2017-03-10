@@ -7,7 +7,9 @@ import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.Local;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Andrés Farías
@@ -93,6 +95,16 @@ public interface RelationshipDAO {
      * @return Una lista con las relaciones del concepto.
      */
     List<Relationship> getRelationshipsBySourceConcept(long idConcept);
+
+    /**
+     * Este método es responsable de recuperar las relaciones donde el concepto de origen coincide con el
+     * <code>idConcept</code> dado como argumento.
+     *
+     * @param idsConcept El id del concepto cuyas relaciones se quiere recuperar.
+     *
+     * @return Una lista con las relaciones del concepto.
+     */
+    Map<Long, ArrayList<Relationship>> getRelationshipsBySourceConcepts(List<Long> idsConcept);
 
 
     public Long getTargetByRelationship(Relationship relationship);

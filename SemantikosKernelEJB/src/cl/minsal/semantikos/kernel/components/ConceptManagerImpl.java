@@ -427,12 +427,11 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public List<Relationship> loadRelationships(ConceptSMTK concept) {
         List<Relationship> relationships = relationshipDAO.getRelationshipsBySourceConcept(concept.getId());
-        concept.setRelationships(relationships);
-        List<IndirectCrossmap> relationshipsCrossMapIndirect = crossmapsManager.getIndirectCrossmaps(concept);
-        relationships.addAll(relationshipsCrossMapIndirect);
-
         /* Se agregan las relaciones al componente */
         concept.setRelationships(relationships);
+        /* Se agregan los crossmaps indirectos al componente */
+        List<IndirectCrossmap> relationshipsCrossMapIndirect = crossmapsManager.getIndirectCrossmaps(concept);
+        relationships.addAll(relationshipsCrossMapIndirect);
 
         /* Se retorna la lista de relaciones agregadas al concepto */
         return relationships;

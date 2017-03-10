@@ -11,7 +11,9 @@ import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.Local;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Andres Farias
@@ -143,4 +145,13 @@ public interface RelationshipManager {
      * @return Una lista de relaciones asociadas al concepto.
      */
     List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK concept);
+
+    /**
+     * Este método es responsable de recuperar todas las relaciones del <code>concepto</code>.
+     *
+     * @param concept El concepto cuyas relaciones son recuperadas.
+     *
+     * @return Una lista de relaciones asociadas al concepto.
+     */
+    Map<Long, ArrayList<Relationship>> getRelationshipsBySourceConcepts(List<ConceptSMTK> concept);
 }

@@ -16,8 +16,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static java.sql.Types.VARCHAR;
 
@@ -351,6 +350,48 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         }
 
         return relationshipFactory.createRelationshipsFromJSON(resultJSON);
+    }
+
+    @Override
+    public Map<Long, ArrayList<Relationship>> getRelationshipsBySourceConcepts(List<Long> idsConcept) {
+
+        ConnectionBD connect = new ConnectionBD();
+        String sql = "{call semantikos.get_relationships_by_source_concept_ids(?)}";
+        String resultJSON;
+        Map<Long, ArrayList<Relationship>> relationshipsMap = new HashMap<>();
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setArray(1, connection.createArrayOf("bigint", idsConcept.toArray()));
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+                resultJSON = rs.getString(1);
+            } else {
+                String errorMsg = "No se obtuvo respuesta desde la base de datos.";
+                logger.error(errorMsg);
+                throw new IllegalArgumentException(errorMsg);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw new EJBException(e);
+        }
+
+        List<Relationship> relationships = relationshipFactory.createRelationshipsFromJSON(resultJSON);
+
+        for (Relationship relationship : relationships) {
+            if(relationshipsMap.containsKey(relationship.getSourceConcept().getId())) {
+                relationshipsMap.get(relationship.getSourceConcept().getId()).add(relationship);
+            }
+            else {
+                relationshipsMap.put(relationship.getSourceConcept().getId(), new ArrayList<Relationship>());
+                relationshipsMap.get(relationship.getSourceConcept().getId()).add(relationship);
+            }
+        }
+
+        return relationshipsMap;
     }
 
     @Override

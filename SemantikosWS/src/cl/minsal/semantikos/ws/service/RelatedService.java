@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.ws.service;
 
+import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
 import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
@@ -8,12 +9,16 @@ import cl.minsal.semantikos.ws.request.RelatedConceptsByCategoryRequest;
 import cl.minsal.semantikos.ws.request.RelatedConceptsRequest;
 import cl.minsal.semantikos.ws.response.*;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.InvocationContext;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.ws.WebServiceContext;
 import java.util.List;
 
 /**
@@ -25,6 +30,26 @@ public class RelatedService {
 
     @EJB
     private ConceptController conceptController;
+
+    @EJB
+    private AuthenticationManager authenticationManager;
+
+    @Resource
+    WebServiceContext wsctx;
+
+    //Inicializacion del Bean
+    //@PostConstruct
+    @AroundInvoke
+    protected Object authenticate(InvocationContext ctx) throws Exception {
+
+        try {
+            authenticationManager.authenticate(wsctx.getMessageContext());
+        }
+        catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
+        return ctx.proceed();
+    }
 
     // REQ-WS-006
     @WebResult(name = "respuestaBuscarTermino")

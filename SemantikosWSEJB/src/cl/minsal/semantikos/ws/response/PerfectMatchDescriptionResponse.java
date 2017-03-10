@@ -27,6 +27,8 @@ public class PerfectMatchDescriptionResponse implements Serializable {
     private String categoryName;
     @XmlElement(name="terminoPreferido")
     private String preferredTerm;
+    @XmlElement(name="idTerminoPreferido")
+    private String preferredTermId;
 
     public PerfectMatchDescriptionResponse() { }
 
@@ -38,6 +40,7 @@ public class PerfectMatchDescriptionResponse implements Serializable {
         this.conceptId = conceptSMTK.getConceptID();
         this.categoryName = conceptSMTK.getCategory().getName();
         this.preferredTerm = conceptSMTK.getDescriptionFavorite().getTerm();
+        this.preferredTermId = conceptSMTK.getDescriptionFavorite().getDescriptionId();
     }
 
     public String getConceptId() {
@@ -86,5 +89,13 @@ public class PerfectMatchDescriptionResponse implements Serializable {
 
     public void setPreferredTerm(String preferredTerm) {
         this.preferredTerm = preferredTerm;
+    }
+
+    public String getPreferredTermId() {
+        return preferredTermId;
+    }
+
+    public void setPreferredTermId(String preferredTermId) {
+        this.preferredTermId = preferredTermId;
     }
 }

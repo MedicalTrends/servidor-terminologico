@@ -18,7 +18,9 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -274,5 +276,14 @@ public class RelationshipManagerImpl implements RelationshipManager {
     @Override
     public List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK concept) {
         return relationshipDAO.getRelationshipsBySourceConcept(concept.getId());
+    }
+
+    @Override
+    public Map<Long, ArrayList<Relationship>> getRelationshipsBySourceConcepts(List<ConceptSMTK> concept) {
+        List<Long> conceptIds = new ArrayList<>();
+        for (ConceptSMTK conceptSMTK : concept) {
+            conceptIds.add(conceptSMTK.getId());
+        }
+        return relationshipDAO.getRelationshipsBySourceConcepts(conceptIds);
     }
 }

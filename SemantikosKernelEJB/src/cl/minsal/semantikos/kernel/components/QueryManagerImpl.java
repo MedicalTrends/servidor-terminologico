@@ -12,6 +12,7 @@ import javax.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by BluePrints Developer on 21-09-2016.
@@ -30,7 +31,7 @@ public class QueryManagerImpl implements QueryManager {
     private CategoryManager categoryManager;
 
     @EJB
-    private RelationshipDAO relationshipDAO;
+    private RelationshipManager relationshipManager;
 
     @Override
     public GeneralQuery getDefaultGeneralQuery(Category category) {
@@ -50,7 +51,6 @@ public class QueryManagerImpl implements QueryManager {
         // Adding dynamic columns
         for (RelationshipDefinition relationshipDefinition : getShowableAttributesByCategory(category)) {
             query.getColumns().add(new QueryColumn(relationshipDefinition.getName(), new Sort(null, false), relationshipDefinition));
-
         }
 
         // Adding second order columns, if this apply
@@ -74,7 +74,7 @@ public class QueryManagerImpl implements QueryManager {
         }
 
         // Adding related concepts category to columns, if this apply
-        if(getShowableRelatedConceptsValue(category)){
+        if(getShowableRelatedConceptsValue(category)) {
             for (Category relatedCategory : categoryManager.getRelatedCategories(category)) {
                 if(getShowableValue(relatedCategory)) {
                     RelationshipDefinition rd = new RelationshipDefinition(relatedCategory.getId(), relatedCategory.getName(), relatedCategory.getName(), relatedCategory, MultiplicityFactory.ONE_TO_ONE);
@@ -145,39 +145,53 @@ public class QueryManagerImpl implements QueryManager {
 
         //return conceptQueryDAO.callQuery(query);
         List<ConceptSMTK> conceptSMTKs = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
+        //Map<Long, ArrayList<Relationship>> relationshipsMap = relationshipManager.getRelationshipsBySourceConcepts(conceptSMTKs);
+
+        Category category = query.getCategories().get(0);
+        boolean showRelatedConcepts = getShowableRelatedConceptsValue(category);
+        List<RelationshipDefinition> sourceSecondOrderShowableAttributes = getSourceSecondOrderShowableAttributesByCategory(category);
 
         for (ConceptSMTK conceptSMTK : conceptSMTKs) {
 
             if(!query.getColumns().isEmpty()) {
 
-                conceptSMTK.setRelationships(conceptManager.loadRelationships(conceptSMTK));
-                Category category = query.getCategories().get(0);
-                List<RelationshipDefinition> secondOrderAttributes = query.getSecondOrderDefinitions();
+                //conceptSMTK.setRelationships(conceptManager.loadRelationships(conceptSMTK));
+                conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
+                //conceptSMTK.setRelationships(relationshipsMap.get(conceptSMTK.getId()));
+
                 // Adding second order columns, if this apply
+
                 List<Relationship> secondOrderRelationships = new ArrayList<>();
 
-                for (RelationshipDefinition relationshipDefinition : getSourceSecondOrderShowableAttributesByCategory(category)) {
+                for (RelationshipDefinition secondOrderAttributes : query.getSecondOrderDefinitions()) {
 
-                    for (Relationship firstOrderRelationship : conceptSMTK.getRelationshipsByRelationDefinition(relationshipDefinition)) {
+                    for (RelationshipDefinition relationshipDefinition : sourceSecondOrderShowableAttributes) {
 
-                        ConceptSMTK targetConcept = (ConceptSMTK)firstOrderRelationship.getTarget();
+                        for (Relationship firstOrderRelationship : conceptSMTK.getRelationshipsByRelationDefinition(relationshipDefinition)) {
 
-                        for (Relationship secondOrderRelationship : relationshipDAO.getRelationshipsBySourceConcept(targetConcept.getId())) {
+                            ConceptSMTK targetConcept = (ConceptSMTK)firstOrderRelationship.getTarget();
 
-                            if(secondOrderAttributes.contains(secondOrderRelationship.getRelationshipDefinition()))
-                                secondOrderRelationships.add(secondOrderRelationship);
+                            for (Relationship secondOrderRelationship : relationshipManager.getRelationshipsBySourceConcept(targetConcept)) {
+
+                                if(secondOrderAttributes.equals(secondOrderRelationship.getRelationshipDefinition())) {
+
+                                    secondOrderRelationships.add(secondOrderRelationship);
+
+                                }
+                            }
                         }
                     }
                 }
 
                 conceptSMTK.getRelationships().addAll(secondOrderRelationships);
                 // Adding related concepts to relationships, if this apply
-                if(getShowableRelatedConceptsValue(category)){
+                if(showRelatedConcepts) {
                     for (ConceptSMTK relatedConcept : conceptManager.getRelatedConcepts(conceptSMTK)) {
                         RelationshipDefinition rd = new RelationshipDefinition(relatedConcept.getCategory().getId(), relatedConcept.getCategory().getName(), relatedConcept.getCategory().getName(), relatedConcept.getCategory(), MultiplicityFactory.ONE_TO_ONE);
                         conceptSMTK.addRelationship(new Relationship(conceptSMTK, relatedConcept, rd, new ArrayList<RelationshipAttribute>(), null));
                     }
                 }
+
             }
         }
 
@@ -198,8 +212,9 @@ public class QueryManagerImpl implements QueryManager {
 
                 if(relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType()){
 
-                    if(otherThanFullyDefinitional == null)
+                    if(otherThanFullyDefinitional == null) {
                         otherThanFullyDefinitional = relationship;
+                    }
 
                     // Si existe una relación ES_UN_MAPEO, se agrega esta relación y se detiene la búsqueda
                     SnomedCTRelationship fullyDefinitional = (SnomedCTRelationship) relationship;
