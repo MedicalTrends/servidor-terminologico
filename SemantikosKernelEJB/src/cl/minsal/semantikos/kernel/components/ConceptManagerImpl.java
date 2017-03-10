@@ -691,6 +691,7 @@ public class ConceptManagerImpl implements ConceptManager {
      * @return arreglo de String con las palabras truncadas
      */
     private String truncatePattern(String pattern) {
+        if(pattern.length()==0)return pattern;
         pattern = standardizationPattern(pattern);
         String[] arrayToPattern = patternToArray(pattern);
         String patternTruncate="";

@@ -208,6 +208,11 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
         return tables;
     }
 
+    @Override
+    public List<HelperTable> getLiteDatabase() {
+        List<HelperTable> tables= dao.getAllTables();
+        return tables;
+    }
 
     public class RowInUseException extends Exception{
 
