@@ -57,8 +57,8 @@ public class FindConcept implements Serializable{
     public void getConceptByCategory(){
        if(pattern==null || pattern.trim().length()==0){
            categoryArrayID= new Long[] {categorySelected.getId()};
-           int countConcept=conceptManager.countConceptBy(pattern,categoryArrayID,true);
-           findConcepts =conceptManager.findConceptBy(pattern,categoryArrayID,0,countConcept,true);
+           int countConcept=conceptManager.countConceptBy(pattern,categoryArrayID);
+           findConcepts =conceptManager.findConceptsBy(pattern,categoryArrayID,0,countConcept);
        }else{
            getConceptSearchInputAndCategories(pattern);
        }
