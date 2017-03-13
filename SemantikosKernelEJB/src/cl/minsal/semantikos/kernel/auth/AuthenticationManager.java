@@ -99,4 +99,9 @@ public class AuthenticationManager {
     public void createUserPassword(User user, String username, String password) throws PasswordChangeException {
         user.setPasswordHash(getAuthenticationMethod().createUserPassword(username, password));
     }
+
+    @PermitAll()
+    public boolean checkPassword(User user, String username, String password) {
+        return getAuthenticationMethod().createUserPassword(username, password).equals(user.getPasswordHash());
+    }
 }

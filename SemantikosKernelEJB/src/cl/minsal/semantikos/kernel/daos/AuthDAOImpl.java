@@ -258,13 +258,28 @@ public class AuthDAOImpl implements AuthDAO {
 
             call.execute();
 
+            ResultSet rs = call.getResultSet();
+
+            if (rs.next()) {
+                user.setIdUser(rs.getLong(1));
+            } else {
+                String errorMsg = "El usuario no fué creado. Esta es una situación imposible. Contactar a Desarrollo";
+                logger.error(errorMsg);
+                throw new IllegalArgumentException(errorMsg);
+            }
 
         } catch (SQLException e) {
-            String errorMsg = "Error al recuperar perfiles de la BDD.";
+            String errorMsg = "Error al crear el usuario en la BDD.";
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }
 
+        /**
+         * Agregar los perfiles
+         */
+        for (Profile p : user.getProfiles()) {
+            addProfileToUser(user, p);
+        }
 
     }
 

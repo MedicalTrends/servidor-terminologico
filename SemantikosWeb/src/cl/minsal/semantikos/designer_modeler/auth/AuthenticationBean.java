@@ -68,7 +68,6 @@ public class AuthenticationBean {
             //quitar password de la memoria
             password=null;
 
-
             //poner datos de usuario en sesión
             loggedUser = authenticationManager.getUserDetails(username);
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();

@@ -120,16 +120,16 @@ public class GeneralBrowserBean implements Serializable {
         /**
          * Si la categoría no está seteada, retornar inmediatamente
          */
-        if(category == null)
+        if(category == null) {
             return;
+        }
 
         /**
          * Si el objeto de consulta no está inicializado, inicializarlo
          */
-        if(generalQuery == null)
+        if(generalQuery == null) {
             generalQuery = queryManager.getDefaultGeneralQuery(category);
-
-
+        }
 
         /**
          * Ejecutar la consulta

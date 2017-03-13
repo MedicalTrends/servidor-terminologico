@@ -1,9 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.model.DescriptionTypeFactory;
-import cl.minsal.semantikos.model.HelperTableColumnFactory;
-import cl.minsal.semantikos.model.TagSMTK;
-import cl.minsal.semantikos.model.TagSMTKFactory;
+import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.browser.QueryFactory;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -14,6 +12,19 @@ import java.util.List;
 @Local
 public interface InitFactoriesDAO {
 
+    /**
+     * Este método es responsable de retornar un Factory.
+     *
+     * @return El factory correspondiente
+     */
+    CategoryFactory refreshCategories();
+
+    /**
+     * Este método es responsable de retornar un Factory.
+     *
+     * @return El factory correspondiente
+     */
+    QueryFactory refreshQueries();
 
     /**
      * Este método es responsable de retornar un Factory.

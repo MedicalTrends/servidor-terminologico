@@ -3,10 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.CategoryDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
-import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.CategoryCreationBR;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.slf4j.Logger;
@@ -84,12 +81,14 @@ public class CategoryManagerImpl implements CategoryManager {
 
     @Override
     public Category getCategoryById(long id) {
-        return categoryDAO.getCategoryById(id);
+        return CategoryFactory.getInstance().findCategoryById(id);
+        //return categoryDAO.getCategoryById(id);
     }
 
     @Override
     public Category getCategoryByName(String name) {
-        return this.categoryDAO.getCategoryByName(name);
+        return CategoryFactory.getInstance().findCategoryByName(name);
+        //return this.categoryDAO.getCategoryByName(name);
     }
 
     @Override

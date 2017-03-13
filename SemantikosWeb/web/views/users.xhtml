@@ -22,6 +22,8 @@
 
                             <h:form id="form">
 
+                                <p:growl id="globalMessage" showDetail="true" showSummary="true"/>
+
                                 <p:dataTable id="singleDT" var="user" value="#{users.allUsers}" rowKey="#{user.idUser}" styleClass="users"
                                              rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
                                              rowsPerPageTemplate="10,50,100" emptyMessage="No hay usuarios en la Base de Datos" reflow="true" sortBy="#{user.rut}">
@@ -127,11 +129,9 @@
 
                                         </p:panelGrid>
 
-
                                         <br />
                                         <div class="separator" />
                                         <br />
-
 
                                         <p:panelGrid columns="2" styleClass="Wid100" rendered="#{users.selectedUser != null and not empty users.selectedUser.profiles}">
                                             <f:facet name="header">
@@ -231,8 +231,7 @@
 
                                         <div style="text-align: right;">
                                             <p:commandButton value="Guardar" icon="fa-save" action="#{users.saveUser}"
-                                                             update=":form:user-edit" />
-
+                                                             process=":form:user-edit" update=":form:user-edit,@(.users)" />
 
                                             <p:commandButton value="Desbloquear Usuario" action="#{users.unlockUser}"
                                                              disabled="#{not users.selectedUser.locked}"
@@ -240,7 +239,7 @@
                                                              process="@this" update=":form:user-edit,@(.users)" />
 
                                             <p:commandButton value="Cambiar Password Usuario" rendered="#{users.selectedUser != null and users.selectedUser.idUser != -1}"
-                                                             actionListener="#{users.setNewPass1('')}"
+                                                             actionListener="#{users.clean}"
                                                              oncomplete="PF('passwordChangeDialog').show()" update=":form:pcdialog" process="@this" />
                                         </div>
 
@@ -248,7 +247,7 @@
                                 </p:dialog>
 
                                 <p:dialog id="pcdialog" height="200" width="600" header="Cambiar Password Usuario" widgetVar="passwordChangeDialog" modal="false" showEffect="fade" hideEffect="fade"
-                                          resizable="true" visible="#{ not users.passwordError.concat(users.password2Error).trim().equals('') }"
+                                          resizable="true" visible="#{ not users.oldPasswordError.concat(users.passwordError.concat(users.password2Error)).trim().equals('') }"
                                           responsive="true" >
 
                                     <p:growl showDetail="true" showSummary="true"/>
@@ -258,19 +257,21 @@
                                             Cambiar Password
                                         </f:facet>
 
-                                        <p:outputLabel for="input-user-new-pass-1" value="Nuevo Password:" style="font-weight: bold" styleClass="#{users.passwordError}"/>
-                                        <p:password id="input-user-new-pass-1" value="#{users.newPass1}"  styleClass="#{users.passwordError} Wid90" >
-                                            <p:ajax event="blur" update="@this" />
+                                        <p:outputLabel for="input-user-new-pass-1" value="Password Actual:" style="font-weight: bold" styleClass="#{users.oldPasswordError}"/>
+                                        <p:password id="input-user-new-pass-old" value="#{users.oldPass}"  styleClass="#{users.oldPasswordError} Wid90" >
                                         </p:password>
 
-                                        <p:outputLabel for="input-user-new-pass-2" value="Confirme Password" style="font-weight: bold" styleClass="#{users.passwordError}"/>
+                                        <p:outputLabel for="input-user-new-pass-1" value="Nuevo Password:" style="font-weight: bold" styleClass="#{users.passwordError}"/>
+                                        <p:password id="input-user-new-pass-1" value="#{users.newPass1}"  styleClass="#{users.passwordError} Wid90" >
+                                        </p:password>
+
+                                        <p:outputLabel for="input-user-new-pass-2" value="Confirme Password" style="font-weight: bold" styleClass="#{users.password2Error}"/>
                                         <p:password id="input-user-new-pass-2" value="#{users.newPass2}"  styleClass="#{users.password2Error} Wid90" >
-                                            <p:ajax event="blur" update="@this" />
                                         </p:password>
 
                                     </p:panelGrid>
 
-                                    <p:commandButton process="pcdialog" value="Cambiar Password Usuario" update="pcdialog" rendered="#{users.selectedUser != null}" action="#{users.changePass}" />
+                                    <p:commandButton process="pcdialog" value="Cambiar Password Usuario" update="pcdialog,user-edit-dialog,:form:globalMessage" rendered="#{users.selectedUser != null}" action="#{users.changePass}" />
 
                                 </p:dialog>
 

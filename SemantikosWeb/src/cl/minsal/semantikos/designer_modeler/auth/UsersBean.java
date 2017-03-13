@@ -77,13 +77,27 @@ public class UsersBean {
 
     String password2Error = "";
 
+    String oldPasswordError = "";
+
     String newPass1 = "";
     String newPass2 = "";
+
+    String oldPass = "";
 
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() throws ParseException {
         newUser();
+    }
+
+    public String getOldPass() {
+        return oldPass;
+    }
+
+    public void setOldPass(String oldPass) {
+        if(!oldPass.isEmpty()) {
+            this.oldPass = oldPass;
+        }
     }
 
     public String getNewPass2() {
@@ -102,7 +116,7 @@ public class UsersBean {
 
     public void setNewPass1(String newPass1) {
         if(!newPass1.isEmpty()) {
-            this.newPass1 = newPass1;
+                this.newPass1 = newPass1;
         }
     }
 
@@ -161,9 +175,9 @@ public class UsersBean {
 
     public List<User> getAllUsers(){
 
-        if(allUsers==null) {
+        //if(allUsers==null) {
             allUsers = userManager.getAllUsers();
-        }
+        //}
 
         return allUsers;
     }
@@ -187,6 +201,14 @@ public class UsersBean {
         this.password2Error = password2Error;
     }
 
+    public String getOldPasswordError() {
+        return oldPasswordError;
+    }
+
+    public void setOldPasswordError(String oldPasswordError) {
+        this.oldPasswordError = oldPasswordError;
+    }
+
     public void clean() {
         userNameError = "";
         nameError = "";
@@ -194,7 +216,7 @@ public class UsersBean {
         rutError = "";
         passwordError = "";
         password2Error = "";
-
+        oldPasswordError = "";
     }
 
     public void formatRut() {
@@ -312,7 +334,6 @@ public class UsersBean {
                     userManager.createUser(selectedUser);
                     rContext.execute("PF('editDialog').hide();");
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario creado de manera exitosa!!"));
-                    Ajax.update("singleDT");
                 }
                 catch (EJBException e) {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
@@ -322,7 +343,6 @@ public class UsersBean {
                 userManager.updateUser(selectedUser);
                 rContext.execute("PF('editDialog').hide();");
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario modificado de manera exitosa!!"));
-                Ajax.update("singleDT");
             }
 
         }catch (Exception e){
@@ -357,6 +377,8 @@ public class UsersBean {
         FacesContext context = FacesContext.getCurrentInstance();
 
         try {
+
+
             if(newPass1.trim().equals("")) {
                 passwordError = "ui-state-error";
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar una contraseña"));
@@ -373,6 +395,18 @@ public class UsersBean {
                 password2Error = "";
             }
 
+            if(!oldPasswordError.concat(passwordError).concat(password2Error).trim().equals("")) {
+                return;
+            }
+
+            if(!authenticationManager.checkPassword(selectedUser, selectedUser.getUsername(), oldPass)) {
+                oldPasswordError = "ui-state-error";
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La contraseña actual no es correcta"));
+            }
+            else {
+                oldPasswordError = "";
+            }
+
             if(!newPass1.equals(newPass2)) {
                 password2Error = "ui-state-error";
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La confirmación de contraseña no coincide con la original"));
@@ -381,12 +415,17 @@ public class UsersBean {
                 password2Error = "";
             }
 
-            if(!passwordError.concat(password2Error).trim().equals("")) {
+            if(!oldPasswordError.concat(passwordError).concat(password2Error).trim().equals("")) {
                 return;
             }
 
             authenticationManager.setUserPassword(selectedUser.getUsername(),newPass1);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Contraseña modificada de manera exitosa!!"));
+
         } catch (PasswordChangeException e) {
+            passwordError = "ui-state-error";
+            password2Error = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
             e.printStackTrace();
         }
     }

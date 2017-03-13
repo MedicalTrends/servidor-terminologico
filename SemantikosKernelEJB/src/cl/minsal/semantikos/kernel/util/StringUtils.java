@@ -104,7 +104,13 @@ public class StringUtils {
 
         int num = Integer.parseInt(rut.substring(0,rut.length()-1));
 
-        if(!validarRut(num,rut.charAt(rut.length()-1))) {
+        char dv = rut.charAt(rut.length()-1);
+
+        if(dv == 'k') {
+            dv = 'K';
+        }
+
+        if(!validarRut(num,dv)) {
             return false;
         }
 
