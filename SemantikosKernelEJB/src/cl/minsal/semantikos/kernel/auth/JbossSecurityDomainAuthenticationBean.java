@@ -26,6 +26,7 @@ import java.util.List;
 
 import static cl.minsal.semantikos.model.ProfileFactory.ADMINISTRATOR_PROFILE;
 import static cl.minsal.semantikos.model.ProfileFactory.DESIGNER_PROFILE;
+import static cl.minsal.semantikos.model.ProfileFactory.MODELER_PROFILE;
 
 
 /**
@@ -86,7 +87,7 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
          */
         if( user.getProfiles().contains(ADMINISTRATOR_PROFILE) ||
             user.getProfiles().contains(DESIGNER_PROFILE) ||
-            user.getProfiles().contains(DESIGNER_PROFILE) ) {
+            user.getProfiles().contains(MODELER_PROFILE) ) {
             authDAO.markLogin(username);
             return true;
         }

@@ -975,7 +975,8 @@ public class ConceptDAOImpl implements ConceptDAO {
         /* De otro modo, se recupera desde la base de datos. Primero se busca su categoría por nombre */
         Category specialConceptCategory;
         try {
-            specialConceptCategory = categoryDAO.getCategoryByName("Concepto Especial");
+            //specialConceptCategory = categoryDAO.getCategoryByName("Concepto Especial");
+            specialConceptCategory = CategoryFactory.getInstance().findCategoryByName("Concepto Especial");
         } catch (IllegalArgumentException iae) {
             String errorMsg = "No se encontró la categoría Especial!";
             logger.error(errorMsg, iae);

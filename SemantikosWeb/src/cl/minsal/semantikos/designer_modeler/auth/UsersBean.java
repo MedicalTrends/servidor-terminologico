@@ -378,10 +378,18 @@ public class UsersBean {
 
         try {
 
+            if(oldPass.trim().equals("")) {
+                oldPasswordError = "ui-state-error";
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar contraseña actual"));
+            }
+            else {
+                oldPasswordError = "";
+            }
+
 
             if(newPass1.trim().equals("")) {
                 passwordError = "ui-state-error";
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar una contraseña"));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar una nueva contraseña"));
             }
             else {
                 passwordError = "";
@@ -389,13 +397,15 @@ public class UsersBean {
 
             if(newPass2.trim().equals("")) {
                 password2Error = "ui-state-error";
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe confirmar la contraseña"));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe confirmar la nueva contraseña"));
             }
             else {
                 password2Error = "";
             }
 
             if(!oldPasswordError.concat(passwordError).concat(password2Error).trim().equals("")) {
+                Ajax.update("form:pcdialog");
+                Ajax.update("form");
                 return;
             }
 
@@ -416,11 +426,15 @@ public class UsersBean {
             }
 
             if(!oldPasswordError.concat(passwordError).concat(password2Error).trim().equals("")) {
+                Ajax.update("form:pcdialog");
+                Ajax.update("form");
                 return;
             }
 
             authenticationManager.setUserPassword(selectedUser.getUsername(),newPass1);
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Contraseña modificada de manera exitosa!!"));
+            Ajax.update("form:pcdialog");
+            Ajax.update("form");
 
         } catch (PasswordChangeException e) {
             passwordError = "ui-state-error";
