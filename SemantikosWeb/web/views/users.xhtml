@@ -276,6 +276,7 @@
 
                                     <p:commandButton process="pcdialog" value="Cambiar Password Usuario"
                                                      rendered="#{users.selectedUser != null}"
+                                                     update="pcdialog,user-edit-dialog,:form,@(.users)"
                                                      action="#{users.changePass}">
                                         <p:resetInput target="passwordChangeGrid" />
                                     </p:commandButton>

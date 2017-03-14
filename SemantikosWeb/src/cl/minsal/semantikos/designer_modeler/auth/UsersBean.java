@@ -217,6 +217,7 @@ public class UsersBean {
         passwordError = "";
         password2Error = "";
         oldPasswordError = "";
+        oldPass = "";
     }
 
     public void formatRut() {
@@ -404,8 +405,6 @@ public class UsersBean {
             }
 
             if(!oldPasswordError.concat(passwordError).concat(password2Error).trim().equals("")) {
-                Ajax.update("form:pcdialog");
-                Ajax.update("form");
                 return;
             }
 
@@ -426,15 +425,11 @@ public class UsersBean {
             }
 
             if(!oldPasswordError.concat(passwordError).concat(password2Error).trim().equals("")) {
-                Ajax.update("form:pcdialog");
-                Ajax.update("form");
                 return;
             }
 
             authenticationManager.setUserPassword(selectedUser.getUsername(),newPass1);
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Contraseña modificada de manera exitosa!!"));
-            Ajax.update("form:pcdialog");
-            Ajax.update("form");
 
         } catch (PasswordChangeException e) {
             passwordError = "ui-state-error";

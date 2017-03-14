@@ -16,11 +16,11 @@ public class User {
     private static User dummyUser = new User(NON_PERSISTED_ID, "dummy", "Usuario de Prueba", true);
 
     private long idUser;
-    private String username = " ";
+    private String username = "";
     private String name;
     private String lastName;
-    private String secondLastName = " ";
-    private String email = " ";
+    private String secondLastName = "";
+    private String email = "";
 
     private String rut;
 

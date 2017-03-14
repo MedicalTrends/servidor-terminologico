@@ -156,7 +156,13 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
             for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions() ) {
                 if(relationshipDefinition.getTargetDefinition().isSMTKType()){
                     Category categoryDestination = (Category) relationshipDefinition.getTargetDefinition();
+
                     for (RelationshipDefinition relationshipDefinitionDestination : queryDAO.getSecondOrderShowableAttributesByCategory(categoryDestination)) {
+
+                        if(relationshipDefinition.getTargetDefinition().isSMTKType()) {
+                            query.getSourceSecondOrderShowableAttributes().add(relationshipDefinition);
+                        }
+
                         QueryColumn secondOrderColumn = new QueryColumn(relationshipDefinitionDestination.getName(), new Sort(null, false), relationshipDefinitionDestination);
                         if(relationshipDefinitionDestination.isU_asist() && category.getNameAbbreviated().equals("MCCE")) {
                             continue;
@@ -174,6 +180,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
             // Adding related concepts category to columns, if this apply
             if(queryDAO.getShowableRelatedConceptsValue(category)) {
+                query.setShowRelatedConcepts(true);
                 for (Category relatedCategory : categoryDAO.getRelatedCategories(category)) {
                     if(queryDAO.getShowableValue(relatedCategory)) {
                         RelationshipDefinition rd = new RelationshipDefinition(relatedCategory.getId(), relatedCategory.getName(), relatedCategory.getName(), relatedCategory, MultiplicityFactory.ONE_TO_ONE);
