@@ -69,6 +69,7 @@
                                                  update="@(.table-data-edit-#{varStatus1.index})"/>
 
 
+
                                 <p:dataTable resizableColumns="true" widgetVar="table-data-edit-wvar-#{varStatus1.index}"
                                              id="table-data-edit" styleClass="table-data-edit-#{varStatus1.index}" var="row"
                                              rowKey="#{row.id}" value="#{helperTableBean.helperTableSelected.rows}"
@@ -108,7 +109,7 @@
                                         </p:cellEditor>
                                     </p:column>
 
-                                    <p:columns columnIndexVar="columnIndex" var="column" value="#{helperTable.columns}"
+                                    <p:columns columnIndexVar="columnIndex" var="column" value="#{helperTableBean.helperTableSelected.columns}"
                                                filterable="true" sortable="true" headerText="#{column.description}">
                                         <p:cellEditor>
                                             <f:facet name="output">
