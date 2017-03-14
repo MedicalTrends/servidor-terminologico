@@ -343,7 +343,7 @@ public class UsersBean {
             else {
                 userManager.updateUser(selectedUser);
                 rContext.execute("PF('editDialog').hide();");
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario modificado de manera exitosa!!"));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario: "+selectedUser.getUsername()+" modificado de manera exitosa!!"));
             }
 
         }catch (Exception e){
@@ -429,7 +429,7 @@ public class UsersBean {
             }
 
             authenticationManager.setUserPassword(selectedUser.getUsername(),newPass1);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Contraseña modificada de manera exitosa!!"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Contraseña de usuario:"+selectedUser.getUsername()+" modificada de manera exitosa!!"));
 
         } catch (PasswordChangeException e) {
             passwordError = "ui-state-error";
