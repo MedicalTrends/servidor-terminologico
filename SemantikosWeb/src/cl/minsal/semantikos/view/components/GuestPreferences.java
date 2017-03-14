@@ -15,7 +15,7 @@ public class GuestPreferences implements Serializable {
     private Map<String,String> themeColors;
     
     //theme name
-    private String theme = "green";
+    private String theme = "blue";
     
     //menu mode    
     private String menuLayout = "static";
