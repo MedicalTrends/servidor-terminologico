@@ -30,9 +30,7 @@
 
                         <p:dataTable rows="50" paginator="true" id="helperTablesTable"
                                      value="#{helperTableBean.administrableTables}" var="helperTable"
-                                     rowIndexVar="rowIndex1"
-
-                                     style="margin-top: 20px">
+                                     rowIndexVar="rowIndex1" style="margin-top: 20px">
 
                             <p:column headerText="ID" width="30">
                                 <h:outputText value="#{helperTable.id}"/>
@@ -69,6 +67,7 @@
                             <p:outputPanel styleClass="edit-data-panel">
                                 <p:remoteCommand name="onRowEditCancel#{varStatus1.index}"
                                                  update="@(.table-data-edit-#{varStatus1.index})"/>
+
 
                                 <p:dataTable resizableColumns="true" widgetVar="table-data-edit-wvar-#{varStatus1.index}"
                                              id="table-data-edit" styleClass="table-data-edit-#{varStatus1.index}" var="row"
