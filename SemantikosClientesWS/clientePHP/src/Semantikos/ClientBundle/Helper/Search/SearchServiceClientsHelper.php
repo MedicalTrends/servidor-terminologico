@@ -63,6 +63,7 @@ class SearchServiceClientsHelper {
     public function callWS001($params_array = null){          
         
         $peticion = $this->container->get('client.helper.search_mapping')->mapWS001Parameters($params_array);
+
         try {            
             $result = $this->soapClient->buscarTerminoPerfectMatch($peticion);                    
         } catch (\SoapFault $soapFault) {
@@ -74,7 +75,7 @@ class SearchServiceClientsHelper {
 
     public function callWS002($params_array = null){                                                                        
         
-        $peticion = $this->container->get('client.helper.search_mapping')->mapWS002Parameters($params_array);                                                                                                                                                                                                                                   
+        $peticion = $this->container->get('client.helper.search_mapping')->mapWS002Parameters($params_array);
         
         try {
             $result = $this->soapClient->conceptosPorCategoriaPaginados($peticion);

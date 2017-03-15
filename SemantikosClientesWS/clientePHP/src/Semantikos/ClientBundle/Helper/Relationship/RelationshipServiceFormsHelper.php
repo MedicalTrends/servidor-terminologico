@@ -52,10 +52,7 @@ class RelationshipServiceFormsHelper {
                   'required' => false,                
                   'attr' => array( 'placeholder' => "Ingrese las Categorías separadas por ','")  
             ))
-            ->add('refSets', TextType::class, array(
-                  'required' => false,
-                  'attr' => array( 'placeholder' => "Ingrese los RefSets separados por ','")
-            ))             
+            ->add('idEstablecimiento', NumberType::class)
             ->add('call', SubmitType::class, array('label' => 'Invocar WS', 'attr' => array('class' => 'btn btn-primary')))                                  
             ->getForm()->createView();                    
     }    

@@ -24,7 +24,8 @@ public class NoValidDescriptionResponse implements Serializable {
     private String descriptionId;
     @XmlElement(name="termino")
     private String term;
-
+    @XmlElement(name="tipoDescripcion")
+    private String descriptionType;
     @XmlElement(name="razonNoValido")
     private String noValidityCause;
     @XmlElement(name="validez")
@@ -43,6 +44,7 @@ public class NoValidDescriptionResponse implements Serializable {
         this.descriptionId = noValidDescription.getNoValidDescription().getDescriptionId();
         this.conceptId = noValidDescription.getNoValidDescription().getConceptSMTK().getConceptID();
         this.term = noValidDescription.getNoValidDescription().getTerm();
+        this.descriptionType = noValidDescription.getNoValidDescription().getDescriptionType().getName();
 
         if ( noValidDescription.getObservationNoValid() != null ) {
             this.noValidityCause = noValidDescription.getObservationNoValid().getDescription();
@@ -105,6 +107,14 @@ public class NoValidDescriptionResponse implements Serializable {
 
     public void setTerm(String term) {
         this.term = term;
+    }
+
+    public String getDescriptionType() {
+        return descriptionType;
+    }
+
+    public void setDescriptionType(String descriptionType) {
+        this.descriptionType = descriptionType;
     }
 
     /*

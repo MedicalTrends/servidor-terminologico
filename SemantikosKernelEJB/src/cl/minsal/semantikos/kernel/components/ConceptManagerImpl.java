@@ -137,6 +137,11 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    public List<ConceptSMTK> findModeledConceptPaginated(Category category, int pageSize, int pageNumber) {
+        return this.conceptDAO.getModeledConceptPaginated(category.getId(), pageSize, pageNumber);
+    }
+
+    @Override
     public int countModeledConceptBy(Category category) {
         return this.conceptDAO.countModeledConceptBy(category.getId());
     }

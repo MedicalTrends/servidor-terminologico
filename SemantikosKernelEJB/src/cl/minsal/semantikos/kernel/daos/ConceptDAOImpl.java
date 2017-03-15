@@ -122,6 +122,37 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
+    public List<ConceptSMTK> getModeledConceptPaginated(Long categoryId, int pageSize, int pageNumber) {
+        List<ConceptSMTK> concepts = new ArrayList<>();
+        ConnectionBD connect = new ConnectionBD();
+        CallableStatement call;
+
+        try (Connection connection = connect.getConnection();) {
+
+            call = connection.prepareCall("{call semantikos.find_concept_by_categories_paginated(?,?,?,?)}");
+
+            call.setArray(1, connect.getConnection().createArrayOf("integer", new Long[]{categoryId}));
+            call.setInt(2, pageNumber);
+            call.setInt(3, pageSize);
+            call.setBoolean(4, true);
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                ConceptSMTK e = this.createConceptSMTKFromResultSet(rs);
+                concepts.add(e);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
+        return concepts;
+    }
+
+    @Override
     public List<ConceptSMTK> findConceptsBy(Long[] categories, boolean modeled, int pageSize, int pageNumber) {
 
         List<ConceptSMTK> concepts = new ArrayList<>();

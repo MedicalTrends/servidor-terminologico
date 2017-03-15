@@ -4,6 +4,7 @@ namespace Semantikos\ClientBundle\Helper\Search;
 
 use Semantikos\ClientBundle\API\PeticionBuscarTerminoSimple;
 use Semantikos\ClientBundle\API\PeticionPorCategoria;
+use Semantikos\ClientBundle\API\PeticionPorCategoriaPaginada;
 use Semantikos\ClientBundle\API\PeticionBuscarTermino;
 use Semantikos\ClientBundle\API\PeticionConceptosPedibles;
 use Semantikos\ClientBundle\API\PeticionRefSetsPorIdDescripcion;
@@ -39,17 +40,14 @@ class SearchServiceMappingHelper {
         return array( 'peticionBuscarTermino' => $peticionBuscarTerminoSimple );
     }
     
-    public function mapWS002Parameters($parameters = null){                                    
+    public function mapWS002Parameters($parameters = null){
         
-        $peticionPorCategoria = new PeticionPorCategoria($parameters['nombreCategoria'],
-                                                         $parameters['idEstablecimiento']);
+        $peticionPorCategoria = new PeticionPorCategoriaPaginada();
 
         $peticionPorCategoria->setNombreCategoria($parameters['nombreCategoria']);
         $peticionPorCategoria->setIdEstablecimiento($parameters['idEstablecimiento']);
         $peticionPorCategoria->setNumeroPagina($parameters['numeroPagina']);
         $peticionPorCategoria->setTamanoPagina($parameters['tamanoPagina']);
-
-        var_dump($peticionPorCategoria);
         
         return array( 'peticionConceptosPorCategoria' => $peticionPorCategoria );
     }
