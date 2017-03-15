@@ -75,8 +75,9 @@ public class QueryManagerImpl implements QueryManager {
         //Map<Long, ArrayList<Relationship>> relationshipsMap = relationshipManager.getRelationshipsBySourceConcepts(conceptSMTKs);
 
         Category category = query.getCategories().get(0);
-        boolean showRelatedConcepts = getShowableRelatedConceptsValue(category);
-        List<RelationshipDefinition> sourceSecondOrderShowableAttributes = getSourceSecondOrderShowableAttributesByCategory(category);
+
+        boolean showRelatedConcepts = query.isShowRelatedConcepts();//getShowableRelatedConceptsValue(category);
+        List<RelationshipDefinition> sourceSecondOrderShowableAttributes = query.getSourceSecondOrderShowableAttributes();//getSourceSecondOrderShowableAttributesByCategory(category);
 
         for (ConceptSMTK conceptSMTK : conceptSMTKs) {
 

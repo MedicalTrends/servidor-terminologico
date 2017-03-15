@@ -55,7 +55,7 @@
 
                                     <p:column headerText="Status" sortBy="#{user.locked}">
                                         <h:outputText value="Activo" rendered="#{not user.locked}" />
-                                        <h:outputText value="Bloquead" rendered="#{user.locked}" />
+                                        <h:outputText value="Bloqueado" rendered="#{user.locked}" />
                                     </p:column>
 
                                     <p:column exportable="false" headerText="Acción">
@@ -257,21 +257,29 @@
                                             Cambiar Password
                                         </f:facet>
 
-                                        <p:outputLabel for="input-user-new-pass-1" value="Password Actual:" style="font-weight: bold" styleClass="#{users.oldPasswordError}"/>
-                                        <p:password id="input-user-new-pass-old" value="#{users.oldPass}"  styleClass="#{users.oldPasswordError} Wid90" >
+                                        <p:outputLabel for="input-user-pass-old" value="Password Actual:" style="font-weight: bold" styleClass="#{users.oldPasswordError}"/>
+                                        <p:password id="input-user-pass-old" value="#{users.oldPass}" styleClass="#{users.oldPasswordError} Wid90"
+                                                    redisplay="true">
                                         </p:password>
 
                                         <p:outputLabel for="input-user-new-pass-1" value="Nuevo Password:" style="font-weight: bold" styleClass="#{users.passwordError}"/>
-                                        <p:password id="input-user-new-pass-1" value="#{users.newPass1}"  styleClass="#{users.passwordError} Wid90" >
+                                        <p:password id="input-user-new-pass-1" value="#{users.newPass1}" styleClass="#{users.passwordError} Wid90"
+                                                    redisplay="true">
                                         </p:password>
 
                                         <p:outputLabel for="input-user-new-pass-2" value="Confirme Password" style="font-weight: bold" styleClass="#{users.password2Error}"/>
-                                        <p:password id="input-user-new-pass-2" value="#{users.newPass2}"  styleClass="#{users.password2Error} Wid90" >
+                                        <p:password id="input-user-new-pass-2" value="#{users.newPass2}" styleClass="#{users.password2Error} Wid90"
+                                                    redisplay="true">
                                         </p:password>
 
                                     </p:panelGrid>
 
-                                    <p:commandButton process="pcdialog" value="Cambiar Password Usuario" update="pcdialog,user-edit-dialog,:form:globalMessage" rendered="#{users.selectedUser != null}" action="#{users.changePass}" />
+                                    <p:commandButton process="pcdialog" value="Cambiar Password Usuario"
+                                                     rendered="#{users.selectedUser != null}"
+                                                     update="pcdialog,user-edit-dialog,:form,@(.users)"
+                                                     action="#{users.changePass}">
+                                        <p:resetInput target="passwordChangeGrid" />
+                                    </p:commandButton>
 
                                 </p:dialog>
 

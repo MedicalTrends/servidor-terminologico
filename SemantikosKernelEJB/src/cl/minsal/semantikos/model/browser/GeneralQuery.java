@@ -37,6 +37,8 @@ public class GeneralQuery implements IQuery {
 
     private boolean customFilterable;
 
+    private boolean showRelatedConcepts;
+
     /**
      * Filtros dinámicos
      */
@@ -51,6 +53,11 @@ public class GeneralQuery implements IQuery {
      * Columnas dinámicas
      */
     private List<QueryColumn> columns = new ArrayList<>();
+
+    /**
+     * Definiciones para las columnas de 2o orden
+     */
+    private List<RelationshipDefinition> sourceSecondOrderShowableAttributes = new ArrayList<>();
 
     /**
      * Filtros custom
@@ -209,6 +216,22 @@ public class GeneralQuery implements IQuery {
 
     public void setCustomFilterable(boolean customFilterable) {
         this.customFilterable = customFilterable;
+    }
+
+    public boolean isShowRelatedConcepts() {
+        return showRelatedConcepts;
+    }
+
+    public void setShowRelatedConcepts(boolean showRelatedConcepts) {
+        this.showRelatedConcepts = showRelatedConcepts;
+    }
+
+    public List<RelationshipDefinition> getSourceSecondOrderShowableAttributes() {
+        return sourceSecondOrderShowableAttributes;
+    }
+
+    public void setSourceSecondOrderShowableAttributes(List<RelationshipDefinition> sourceSecondOrderShowableAttributes) {
+        this.sourceSecondOrderShowableAttributes = sourceSecondOrderShowableAttributes;
     }
 
 
