@@ -27,6 +27,10 @@ public interface HelperTableDAO {
 
     HelperTableRow getRowById(long id);
 
+    HelperTableRow getRowBy(long tableId,long id);
+
+    List<HelperTableRow> getRowBy(long tableId, boolean valid);
+
     HelperTableColumn getColumnById(long id);
 
     HelperTableRow updateRow(HelperTableRow row);
@@ -34,6 +38,8 @@ public interface HelperTableDAO {
     HelperTable getHelperTableByID(long tableId);
 
     List<HelperTableRow> searchRecords(HelperTable helperTable, String pattern);
+
+    List<HelperTableRow> searchAllRecords(HelperTable helperTable, String pattern);
 
     List<HelperTableRow> searchRecords(HelperTable helperTable, String pattern, String columnName);
 
