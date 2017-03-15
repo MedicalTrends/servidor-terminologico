@@ -16,7 +16,7 @@
         <div class="Container100">
             <div class="ContainerIndent">
                 <div class="Card ShadowEffect TexAlCenter">
-                    <h:form id="form" >
+                    <h:form id="form">
 
 
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -48,7 +48,7 @@
 
 
                                 <p:commandButton icon="ui-icon-pencil"
-                                                update="@(.edit-data-panel)"
+                                                 update="@(.edit-data-panel)"
                                                  id="edit-data"
                                                  title="Editar Datos"
                                                  actionListener="#{helperTableBean.chargeRow(helperTable)}"
@@ -63,17 +63,51 @@
 
                         <p:dialog id="edit-data-dialog-var"
                                   header="Editar Datos" widgetVar="edit-data-dialog-var"
-                                  global="true" showEffect="fade" hideEffect="fade" height="400" width="900" positionType="absolute">
+                                  global="true" showEffect="fade" hideEffect="fade" height="400" width="900"
+                                  positionType="absolute">
                             <p:outputPanel styleClass="edit-data-panel">
+
+                                <div class="Container">
+                                    <div class="Container20">
+                                        <h3>Filtros:</h3>
+                                    </div>
+                                    <div class="Container20">
+                                        <p:inputText placeholder="ID" type="number" value="#{helperTableBean.id}" title="Busqueda por ID">
+                                            <p:ajax event="keyup" update="@(.table-data-edit-#{varStatus1.index})"
+                                                    process="@this"
+                                                    listener="#{helperTableBean.getRecordSearchID(helperTableBean.helperTableSelected,helperTableBean.id)}"/>
+                                        </p:inputText>
+                                    </div>
+                                    <div class="Container30">
+                                        <p:inputText placeholder="Descripcion" value="#{helperTableBean.pattern}" title="Busqueda por descripcion">
+                                            <p:ajax event="keyup" update="@(.table-data-edit-#{varStatus1.index})"
+                                                    process="@this"
+                                                    listener="#{helperTableBean.getRecordSearchInput(helperTableBean.helperTableSelected,helperTableBean.pattern)}"/>
+
+                                        </p:inputText>
+                                    </div>
+                                    <div class="Container20">
+                                        <p:selectOneMenu value="#{helperTableBean.valid}" title="Busqueda por vigencia">
+                                            <f:selectItem itemLabel="Seleccione una opcion" />
+                                            <f:selectItem itemLabel="Si" itemValue="si"/>
+                                            <f:selectItem itemLabel="No" itemValue="no"/>
+                                            <p:ajax event="itemSelect" update="@(.table-data-edit-#{varStatus1.index})"
+                                                    process="@this"
+                                                    listener="#{helperTableBean.getRecordSearchValid(helperTableBean.helperTableSelected,helperTableBean.valid)}"/>
+
+
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+
                                 <p:remoteCommand name="onRowEditCancel#{varStatus1.index}"
                                                  update="@(.table-data-edit-#{varStatus1.index})"/>
-
-
-
-                                <p:dataTable resizableColumns="true" widgetVar="table-data-edit-wvar-#{varStatus1.index}"
-                                             id="table-data-edit" styleClass="table-data-edit-#{varStatus1.index}" var="row"
+                                <p:dataTable resizableColumns="true"
+                                             widgetVar="table-data-edit-wvar-#{varStatus1.index}"
+                                             id="table-data-edit" styleClass="table-data-edit-#{varStatus1.index}"
+                                             var="row"
                                              rowKey="#{row.id}" value="#{helperTableBean.helperTableSelected.rows}"
-                                             editable="true" paginator="true" rows="20" >
+                                             editable="true" paginator="true" rows="20">
                                     <f:facet name="header">
                                         Editor de datos Tabla: #{helperTableBean.helperTableSelected.name}
 
@@ -93,12 +127,11 @@
                                     <p:ajax event="rowEditCancel" listener="#{helperTableBean.onRowEditCancel}"
                                             oncomplete="onRowEditCancel#{varStatus1.index}()"/>
 
-                                    <p:column headerText="ID" sortable="true" width="30" filterBy="#{row.id}">
+                                    <p:column headerText="ID" sortable="true" width="30">
                                         <h:outputText value="#{row.id}"/>
                                     </p:column>
 
-                                    <p:column headerText="DESCRIPCION" sortable="true" filterBy="#{row.description}"
-                                              filterMatchMode="contains">
+                                    <p:column headerText="DESCRIPCION" sortable="true">
                                         <p:cellEditor>
                                             <f:facet name="output">
                                                 <h:outputText value="#{row.description}"/>
@@ -109,7 +142,8 @@
                                         </p:cellEditor>
                                     </p:column>
 
-                                    <p:columns columnIndexVar="columnIndex" var="column" value="#{helperTableBean.helperTableSelected.columns}"
+                                    <p:columns columnIndexVar="columnIndex" var="column"
+                                               value="#{helperTableBean.helperTableSelected.columns}"
                                                filterable="true" sortable="true" headerText="#{column.description}">
                                         <p:cellEditor>
                                             <f:facet name="output">
@@ -139,8 +173,10 @@
                                                                rendered="#{!column.foreignKey and column.helperTableDataTypeId == 4}"/>
                                                 <p:calendar value="#{row.cells[columnIndex].dateValue}"
                                                             rendered="#{!column.foreignKey and column.helperTableDataTypeId == 5}"
-                                                            locale="es" navigator="true" pattern="dd-MM-yyyy" mask="true"/>
-                                                <p:outputPanel rendered="#{row.cells[columnIndex].foreignKeyValue != null}">
+                                                            locale="es" navigator="true" pattern="dd-MM-yyyy"
+                                                            mask="true"/>
+                                                <p:outputPanel
+                                                        rendered="#{row.cells[columnIndex].foreignKeyValue != null}">
                                                     <p:selectOneMenu value="#{row.cells[columnIndex].foreignKeyValue}"
                                                                      rendered="#{column.foreignKey }">
                                                         <f:selectItems
@@ -155,8 +191,7 @@
                                         </p:cellEditor>
                                     </p:columns>
 
-                                    <p:column headerText="ESTADO DE VIGENCIA" sortable="true" width="30px"
-                                              filterBy="#{row.valid}">
+                                    <p:column headerText="ESTADO DE VIGENCIA" sortable="true" width="30px">
                                         <f:facet name="filter">
                                             <p:selectOneMenu
                                                     onchange="PF('table-data-edit-wvar-#{varStatus1.index}').filter()">

@@ -313,8 +313,80 @@ public class HelperTableBean implements Serializable {
         return someRows;
     }
 
+    public List<HelperTableRow> getRecordSearchInput(HelperTable helperTable, String patron) {
+
+        List<HelperTableRow> someRows;
+        someRows = manager.searchAllRows(helperTable, patron);
+        helperTable.setRows(someRows);
+        return someRows;
+    }
+
+    public List<HelperTableRow> getRecordSearchValid(HelperTable helperTable, String valid) {
+        System.out.println(valid);
+        List<HelperTableRow> someRows=null;
+        if(valid.equals("si")){
+            someRows = manager.getRowBy(helperTable, true);
+            helperTable.setRows(someRows);
+        }else{
+            if(valid.equals("no")){
+                someRows = manager.getRowBy(helperTable, false);
+                helperTable.setRows(someRows);
+            }else{
+                chargeRow(helperTable);
+            }
+        }
+
+
+        return someRows;
+    }
+
+    public HelperTableRow getRecordSearchID(HelperTable helperTable, long id) {
+
+        HelperTableRow someRow;
+        someRow = manager.getRowBy(helperTable, id);
+        helperTable.setRows(new ArrayList<HelperTableRow>());
+        if(someRow!=null){
+            helperTable.getRows().add(someRow);
+        }
+        if(id==0){
+            chargeRow(helperTable);
+        }
+
+
+        return someRow;
+    }
+
     public int getMinQueryLength(HelperTable helperTable) {
         return HelperTableSearchBR.getMinQueryLength(helperTable);
     }
 
+    private String pattern;
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
+
+    private long id;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    private String valid;
+
+    public String getValid() {
+        return valid;
+    }
+
+    public void setValid(String valid) {
+        this.valid = valid;
+    }
 }

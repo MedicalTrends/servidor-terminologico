@@ -37,6 +37,10 @@ public interface HelperTablesManager {
 
     HelperTableRow getRowById(long idRow);
 
+    HelperTableRow getRowBy(HelperTable helperTable,long idRow);
+
+    List<HelperTableRow> getRowBy(HelperTable helperTable,boolean valid);
+
     HelperTableColumn getColumnById(long idColumn);
 
     /**
@@ -50,6 +54,19 @@ public interface HelperTablesManager {
      * búsqueda.
      */
     List<HelperTableRow> searchRows(HelperTable helperTable, String pattern);
+
+    /**
+     * Este método es responsable de recuperar registros vigentes y no vigentes de una tabla auxiliar de acuerdo a un
+     * patrón de búsqueda sobre una de sus descripcion.
+     *
+     * @param helperTable La tabla sobre la cual se realiza la búsqueda.
+     * @param pattern     El patrón utilizado para la búsqueda.
+     *
+     * @return La lista de registros en la tabla <code>helperTable</code> que cumplen con el <code>pattern</code> de
+     * búsqueda.
+     */
+    List<HelperTableRow> searchAllRows(HelperTable helperTable, String pattern);
+
 
     /**
      * Este método es responsable de recuperar registros de una tabla auxiliar de acuerdo a un patrón de búsqueda sobre:

@@ -153,6 +153,11 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
     }
 
     @Override
+    public HelperTableRow getRowBy(HelperTable helperTable, long idRow) {
+        return dao.getRowBy(helperTable.getId(),idRow);
+    }
+
+    @Override
     public HelperTableColumn getColumnById(long idColumn) {
         return dao.getColumnById(idColumn);
     }
@@ -160,6 +165,16 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
     @Override
     public List<HelperTableRow> searchRows(HelperTable helperTable, String pattern) {
         return dao.searchRecords( helperTable, pattern);
+    }
+
+    @Override
+    public List<HelperTableRow> getRowBy(HelperTable helperTable, boolean valid) {
+        return dao.getRowBy(helperTable.getId(),valid);
+    }
+
+    @Override
+    public List<HelperTableRow> searchAllRows(HelperTable helperTable, String pattern) {
+        return dao.searchAllRecords( helperTable, pattern);
     }
 
     public List<HelperTableRow> searchRows(HelperTable helperTable, String pattern, String columnName) {
