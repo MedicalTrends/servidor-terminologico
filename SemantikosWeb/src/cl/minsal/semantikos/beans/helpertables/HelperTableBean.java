@@ -34,6 +34,8 @@ public class HelperTableBean implements Serializable {
 
     List<HelperTable> fullDatabase;
 
+    Map<Long,List<HelperTableRow>> validRow;
+
     HelperTable helperTableSelected;
 
     @EJB
@@ -279,7 +281,14 @@ public class HelperTableBean implements Serializable {
 
 
     public List<HelperTableRow> getReferencedTableRows(Long tableId) {
+        if(validRow==null){
+            validRow= new HashMap<>();
+        }
+        if(validRow.get(tableId)!=null){
+            return validRow.get(tableId);
+        }
         List<HelperTableRow> validTableRows = manager.getValidTableRows(tableId);
+        validRow.put(tableId,validTableRows);
         return validTableRows;
     }
 
@@ -322,7 +331,6 @@ public class HelperTableBean implements Serializable {
     }
 
     public List<HelperTableRow> getRecordSearchValid(HelperTable helperTable, String valid) {
-        System.out.println(valid);
         List<HelperTableRow> someRows=null;
         if(valid.equals("si")){
             someRows = manager.getRowBy(helperTable, true);
@@ -353,6 +361,13 @@ public class HelperTableBean implements Serializable {
         }
 
 
+        return someRow;
+    }
+
+    public HelperTableRow getRow( long id) {
+
+        HelperTableRow someRow;
+        someRow = manager.getRowById(id);
         return someRow;
     }
 

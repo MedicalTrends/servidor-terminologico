@@ -157,8 +157,10 @@
                                                               rendered="#{!column.foreignKey and column.helperTableDataTypeId == 4}"/>
                                                 <h:outputText value="#{row.cells[columnIndex].dateValue}"
                                                               rendered="#{!column.foreignKey and column.helperTableDataTypeId == 5}"/>
-                                                <h:outputText value="#{row.cells[columnIndex].row.description}"
+                                                <h:outputText value="#{helperTableBean.getRow(row.cells[columnIndex].foreignKeyValue).description}"
                                                               rendered="#{column.foreignKey }"/>
+                                                <h:outputText value="Sin clave foránea"
+                                                              rendered="#{column.foreignKey and helperTableBean.getRow(row.cells[columnIndex].foreignKeyValue) eq null}"/>
                                             </f:facet>
                                             <f:facet name="input">
                                                 <p:inputText value="#{row.cells[columnIndex].stringValue}"
