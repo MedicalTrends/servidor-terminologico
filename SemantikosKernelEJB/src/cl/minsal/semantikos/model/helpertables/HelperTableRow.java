@@ -259,6 +259,11 @@ public class HelperTableRow implements Target {
     }
 
     @Override
+    public String toString() {
+        return description;
+    }
+
+    @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);

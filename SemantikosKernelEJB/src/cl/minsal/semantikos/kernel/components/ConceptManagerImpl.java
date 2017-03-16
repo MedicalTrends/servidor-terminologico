@@ -488,7 +488,7 @@ public class ConceptManagerImpl implements ConceptManager {
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK, Category... categories) {
 
         /* Se recuperan los conceptos relacionados: 1o se intenta con los conceptos padres */
-        List<ConceptSMTK> relatedConcepts = getRelatedConcepts(conceptSMTK);
+        List<ConceptSMTK> relatedConcepts =  getRelatedConcepts(conceptSMTK);
 
         /* Si no hay categorías por las que filtrar, se retorna la lista original */
         if (categories == null || categories.length == 0) {
@@ -498,6 +498,7 @@ public class ConceptManagerImpl implements ConceptManager {
         /* Se filtra para retornar sólo aquellos que pertenecen a alguna de las categorías dadas */
         ArrayList<ConceptSMTK> filteredRelatedConcepts = new ArrayList<>();
         for (ConceptSMTK relatedConcept : relatedConcepts) {
+
             Category conceptCategory = relatedConcept.getCategory();
             List<Category> categoryFilters = Arrays.asList(categories);
 

@@ -17,11 +17,8 @@ public class RefSetSearchResponse implements Serializable {
     private String descriptionId;
     @XmlElement(name="descripcionPreferida")
     private String description;
-
     @XmlElement(name="nombreCategoria")
-
     private String category;
-
 
     @XmlElement(name="refsets")
     private RefSetsResponse refSetsResponse;

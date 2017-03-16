@@ -95,11 +95,16 @@ public class ConceptController {
         List<ConceptResponse> relatedResponses = new ArrayList<>();
         List<ConceptSMTK> relatedConcepts = this.conceptManager.getRelatedConcepts(sourceConcept, category);
         for (ConceptSMTK related : relatedConcepts) {
-            relatedResponses.add(new ConceptResponse(related));
+            ConceptResponse conceptResponse = new ConceptResponse(related);
+            //conceptResponse.setForREQWS002();
+            this.loadAttributes(conceptResponse, related);
+            this.loadSnomedCTRelationships(conceptResponse, related);
+            relatedResponses.add(conceptResponse);
         }
 
-        RelatedConceptsResponse res = new RelatedConceptsResponse();
+        RelatedConceptsResponse res = new RelatedConceptsResponse(sourceConcept);
         res.setRelatedConcepts(relatedResponses);
+        res.setQuantity(relatedResponses.size());
 
         return res;
     }
@@ -158,6 +163,7 @@ public class ConceptController {
         }
 
         if (source != null) {
+            res = new RelatedConceptsLiteResponse(source);
             List<ConceptLightResponse> relatedResponses = new ArrayList<>();
             List<ConceptSMTK> relatedConcepts = this.conceptManager.getRelatedConcepts(source, category);
 
@@ -168,8 +174,8 @@ public class ConceptController {
                     }
                 }
             }
-
             res.setRelatedConcepts(relatedResponses);
+            res.setQuantity(relatedResponses.size());
         }
 
         return res;
