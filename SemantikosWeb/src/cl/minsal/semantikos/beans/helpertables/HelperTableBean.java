@@ -322,7 +322,6 @@ public class HelperTableBean implements Serializable {
     }
 
     public List<HelperTableRow> getRecordSearchValid(HelperTable helperTable, String valid) {
-        System.out.println(valid);
         List<HelperTableRow> someRows=null;
         if(valid.equals("si")){
             someRows = manager.getRowBy(helperTable, true);
@@ -353,6 +352,13 @@ public class HelperTableBean implements Serializable {
         }
 
 
+        return someRow;
+    }
+
+    public HelperTableRow getRow( long id) {
+
+        HelperTableRow someRow;
+        someRow = manager.getRowById(id);
         return someRow;
     }
 
