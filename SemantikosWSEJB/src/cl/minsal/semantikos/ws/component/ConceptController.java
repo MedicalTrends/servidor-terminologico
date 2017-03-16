@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 import static cl.minsal.semantikos.kernel.daos.DescriptionDAOImpl.NO_VALID_TERMS;
+import static java.util.Collections.EMPTY_LIST;
 
 /**
  * @author Alfonso Cornejo on 2016-11-17.
@@ -313,10 +314,56 @@ public class ConceptController {
         pendingDescriptionsResponse.setPendingDescriptionsResponse(pendingDescriptions);
         pendingDescriptionsResponse.setQuantity(pendingDescriptions.size());
 
-
         res.setPerfectMatchDescriptions(perfectMatchDescriptionsResponse);
         res.setNoValidDescriptions(noValidDescriptionsResponse);
         res.setPendingDescriptions(pendingDescriptionsResponse);
+
+        return res;
+    }
+
+    /**
+     * REQ-WS-004
+     * Este método es responsable de buscar un concepto segun una de sus descripciones que coincidan por truncate match
+     * con el <em>TERM</em> dado en los REFSETS y Categorias indicadas.
+     *
+     * @param term            El termino a buscar por perfect Match.
+     * @param categoriesNames Nombres de las Categorias donde se deben hacer las búsquedas.
+     * @return Conceptos buscados segun especificaciones de REQ-WS-001.
+     * @throws NotFoundFault Si uno de los nombres de Categorias o REFSETS no existe.
+     */
+    public SuggestedDescriptionsResponse searchSuggestedDescriptions(
+            String term,
+            List<String> categoriesNames
+    ) throws NotFoundFault {
+
+        SuggestedDescriptionsResponse res = new SuggestedDescriptionsResponse();
+
+        List<Category> categories = this.categoryController.findCategories(categoriesNames);
+
+        List<SuggestedDescriptionResponse> suggestedDescriptions = new ArrayList<>();
+
+        List<Description> descriptions = this.descriptionManager.searchDescriptionsTruncateMatch(term, categories, EMPTY_LIST);
+
+        logger.debug("ws-req-006. descripciones encontradas: " + descriptions);
+
+        int cont = 0;
+
+        for (Description description : descriptions) {
+
+            if(cont==5) {
+                break;
+            }
+
+            logger.info("ws-req-006. descripciones encontrada: " + description.fullToString());
+
+            suggestedDescriptions.add(new SuggestedDescriptionResponse(description));
+
+            cont++;
+        }
+
+        res.setPattern(term);
+        res.setSuggestedDescriptionResponses(suggestedDescriptions);
+        res.setQuantity(descriptions.size());
 
         return res;
     }
@@ -438,7 +485,7 @@ public class ConceptController {
             throw new NotFoundFault("No se encontró una categoría de nombre '" + categoryName + "'");
         }
 
-        List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptBy(category, pageNumber*pageSize, pageNumber);
+        List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptPaginated(category, pageSize, pageNumber);
 
         List<ConceptResponse> conceptResponses = new ArrayList<>();
 

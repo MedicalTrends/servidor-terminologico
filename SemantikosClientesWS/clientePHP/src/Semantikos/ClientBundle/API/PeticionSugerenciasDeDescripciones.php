@@ -16,16 +16,16 @@ class PeticionSugerenciasDeDescripciones
     protected $nombreCategoria = null;
 
     /**
-     * @var string[] $nombreRefSet
+     * @var string $idEstablecimiento
      */
-    protected $nombreRefSet = null;
+    protected $idEstablecimiento = null;
 
     /**
      * @param string $termino
+     * @param string $idEstablecimiento
      */
     public function __construct()
     {
-      
     }
 
     /**
@@ -33,7 +33,7 @@ class PeticionSugerenciasDeDescripciones
      */
     public function getTermino()
     {
-      return $this->termino;
+        return $this->termino;
     }
 
     /**
@@ -42,8 +42,8 @@ class PeticionSugerenciasDeDescripciones
      */
     public function setTermino($termino)
     {
-      $this->termino = $termino;
-      return $this;
+        $this->termino = $termino;
+        return $this;
     }
 
     /**
@@ -51,7 +51,7 @@ class PeticionSugerenciasDeDescripciones
      */
     public function getNombreCategoria()
     {
-      return $this->nombreCategoria;
+        return $this->nombreCategoria;
     }
 
     /**
@@ -60,26 +60,26 @@ class PeticionSugerenciasDeDescripciones
      */
     public function setNombreCategoria(array $nombreCategoria = null)
     {
-      $this->nombreCategoria = $nombreCategoria;
-      return $this;
+        $this->nombreCategoria = $nombreCategoria;
+        return $this;
     }
 
     /**
-     * @return string[]
+     * @return string
      */
-    public function getNombreRefSet()
+    public function getIdEstablecimiento()
     {
-      return $this->nombreRefSet;
+        return $this->idEstablecimiento;
     }
 
     /**
-     * @param string[] $nombreRefSet
+     * @param string $idEstablecimiento
      * @return PeticionSugerenciasDeDescripciones
      */
-    public function setNombreRefSet(array $nombreRefSet = null)
+    public function setIdEstablecimiento($idEstablecimiento)
     {
-      $this->nombreRefSet = $nombreRefSet;
-      return $this;
+        $this->idEstablecimiento = $idEstablecimiento;
+        return $this;
     }
 
 }

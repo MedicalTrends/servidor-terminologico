@@ -65,6 +65,8 @@ public interface ConceptDAO {
 
     public List<ConceptSMTK> getModeledConceptBy(Long categoryId, int pageSize, int pageNumber);
 
+    public List<ConceptSMTK> getModeledConceptPaginated(Long categoryId, int pageSize, int pageNumber);
+
     /*Método temporal para trabajar con el navegador de conceptos*/
     @Deprecated
     public List<ConceptSMTK> findConceptsBy(Category category, int pageSize, int pageNumber);

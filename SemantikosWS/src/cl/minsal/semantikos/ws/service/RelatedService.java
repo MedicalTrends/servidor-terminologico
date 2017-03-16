@@ -54,23 +54,23 @@ public class RelatedService {
     // REQ-WS-006
     @WebResult(name = "respuestaBuscarTermino")
     @WebMethod(operationName = "sugerenciasDeDescripciones")
-    public ConceptsResponse sugerenciasDeDescripciones(
+    public SuggestedDescriptionsResponse sugerenciasDeDescripciones(
             @XmlElement(required = true)
             @WebParam(name = "peticionSugerenciasDeDescripciones")
             DescriptionsSuggestionsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())
-                && (request.getRefSetNames() == null || request.getRefSetNames().isEmpty())) {
-            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet");
+        if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())) {
+            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría");
         }
         if (request.getTerm() == null || "".equals(request.getTerm())) {
             throw new IllegalInputFault("Debe ingresar un Termino a buscar");
         }
-        if ( request.getTerm().length() < 2 ) {
-            throw new IllegalInputFault("El termino a buscar debe tener minimo 2 caracteres de largo");
+        if ( request.getTerm().length() < 3 ) {
+            throw new IllegalInputFault("El termino a buscar debe tener minimo 3 caracteres de largo");
         }
 
-        return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
+        return this.conceptController.searchSuggestedDescriptions(request.getTerm(), request.getCategoryNames());
+        //return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames());
     }
 
     // REQ-WS-010...021

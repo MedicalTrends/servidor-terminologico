@@ -28,7 +28,7 @@ class RelationshipServiceMappingHelper {
         
         $peticionSugerenciaDeDescripciones->setTermino($parameters['termino']);
         $peticionSugerenciaDeDescripciones->setNombreCategoria(explode(',',$parameters['categorias']));        
-        $peticionSugerenciaDeDescripciones->setNombreRefSet(explode(',',$parameters['refSets']));                
+        $peticionSugerenciaDeDescripciones->setIdEstablecimiento($parameters['idEstablecimiento']);
         
         return array( 'peticionSugerenciasDeDescripciones' => $peticionSugerenciaDeDescripciones );
     }   

@@ -18,6 +18,9 @@ public class RefSetsResponse {
     @XmlElement(name = "refset")
     private List<RefSetResponse> refSetResponses;
 
+    @XmlElement(name = "cantidadRegistros")
+    private int quantity;
+
     public RefSetsResponse() {
         this.refSetResponses = new ArrayList<>();
     }
@@ -32,6 +35,8 @@ public class RefSetsResponse {
         for (RefSet refSet : refSets) {
             refSetResponses.add(new RefSetResponse(refSet));
         }
+
+        this.quantity = refSets.size();
     }
 
     public List<RefSetResponse> getRefSetResponses() {
@@ -40,5 +45,13 @@ public class RefSetsResponse {
 
     public void setRefSetResponses(List<RefSetResponse> refSetResponses) {
         this.refSetResponses = refSetResponses;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

@@ -17,8 +17,10 @@ public class DescriptionsSuggestionsRequest implements Serializable {
     private String term;
     @XmlElement(required = false, name = "nombreCategoria")
     private List<String> categoryNames;
-    @XmlElement(required = false, name = "nombreRefSet")
-    private List<String> refSetNames;
+    //@XmlElement(required = false, name = "nombreRefSet")
+    //private List<String> refSetNames;
+    @XmlElement(required = true, defaultValue = "1", name = "idEstablecimiento")
+    private String idStablishment;
 
     public String getTerm() {
         return term;
@@ -36,11 +38,21 @@ public class DescriptionsSuggestionsRequest implements Serializable {
         this.categoryNames = categoryNames;
     }
 
+    /*
     public List<String> getRefSetNames() {
         return refSetNames;
     }
 
     public void setRefSetNames(List<String> refSetNames) {
         this.refSetNames = refSetNames;
+    }
+    */
+
+    public String getIdStablishment() {
+        return idStablishment;
+    }
+
+    public void setIdStablishment(String idStablishment) {
+        this.idStablishment = idStablishment;
     }
 }

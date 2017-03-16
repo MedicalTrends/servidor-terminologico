@@ -173,30 +173,30 @@
 
                                             <p:outputLabel for="input-user-name2" value="Nombres *" styleClass="#{users.nameError} Wid20" />
 
-                                            <p:inputText id="input-user-name2" value="#{users.selectedUser.name}" styleClass="#{users.nameError} Wid90" />
+                                            <p:inputText id="input-user-name2" value="#{users.selectedUser.name}" styleClass="#{users.nameError} Wid90" autocomplete="off" />
 
                                             <p:outputLabel for="input-user-lastname2" value="Apellido Paterno *" styleClass="#{users.lastNameError} Wid20"  />
 
-                                            <p:inputText id="input-user-lastname2" value="#{users.selectedUser.lastName}" styleClass="#{users.lastNameError} Wid90" />
+                                            <p:inputText id="input-user-lastname2" value="#{users.selectedUser.lastName}" styleClass="#{users.lastNameError} Wid90" autocomplete="off" />
 
                                             <p:outputLabel for="input-user-secondlastname2" value="Apellido Materno" styleClass="Wid20" />
 
-                                            <p:inputText id="input-user-secondlastname2" value="#{users.selectedUser.secondLastName}" styleClass="Wid90" />
+                                            <p:inputText id="input-user-secondlastname2" value="#{users.selectedUser.secondLastName}" styleClass="Wid90" autocomplete="off" />
 
                                             <p:outputLabel for="input-user-email" value="Email" style="font-weight: bold" styleClass="Wid20" />
 
-                                            <p:inputText id="input-user-email" value="#{users.selectedUser.email}" styleClass="Wid90" />
+                                            <p:inputText id="input-user-email" value="#{users.selectedUser.email}" styleClass="Wid90" autocomplete="off" />
 
                                             <p:outputLabel for="input-username2" value="Nombre de Usuario *" styleClass="#{users.userNameError} Wid20" />
 
-                                            <p:inputText id="input-username2" value="#{users.selectedUser.username}" styleClass="#{users.userNameError} Wid90" />
+                                            <p:inputText id="input-username2" value="#{users.selectedUser.username}" styleClass="#{users.userNameError} Wid90" autocomplete="off" />
 
                                             <p:outputLabel for="password1" value="Password *" rendered="#{users.selectedUser.idUser eq -1}" styleClass="#{users.passwordError} Wid20" />
 
                                             <p:password id="password1" value="#{users.newPass1}" feedback="true"
                                                         promptLabel="Ingrese una contraseña" weakLabel="Poco segura"
                                                         rendered="#{users.selectedUser.idUser eq -1}"
-                                                        goodLabel="Aceptable" strongLabel="Segura"
+                                                        goodLabel="Aceptable" strongLabel="Segura" autocomplete="off"
                                                         redisplay="true" disabled="#{users.selectedUser.idUser != -1}" styleClass="#{users.passwordError} Wid90">
                                                 <p:ajax event="blur" update="@this" />
                                             </p:password>
@@ -206,7 +206,7 @@
                                             <p:password id="password2" value="#{users.newPass2}" feedback="true"
                                                         promptLabel="Confirme la contraseña" weakLabel="Poco segura"
                                                         rendered="#{users.selectedUser.idUser eq -1}"
-                                                        goodLabel="Aceptable" strongLabel="Segura"
+                                                        goodLabel="Aceptable" strongLabel="Segura" autocomplete="off"
                                                         redisplay="true" disabled="#{users.selectedUser.idUser != -1}"
                                                         styleClass="#{users.password2Error} Wid90">
                                                 <p:ajax event="blur" update="@this" />
@@ -258,17 +258,17 @@
                                         </f:facet>
 
                                         <p:outputLabel for="input-user-pass-old" value="Password Actual:" style="font-weight: bold" styleClass="#{users.oldPasswordError}"/>
-                                        <p:password id="input-user-pass-old" value="#{users.oldPass}" styleClass="#{users.oldPasswordError} Wid90"
+                                        <p:password id="input-user-pass-old" value="#{users.oldPass}" styleClass="#{users.oldPasswordError} Wid90" autocomplete="off"
                                                     redisplay="true">
                                         </p:password>
 
                                         <p:outputLabel for="input-user-new-pass-1" value="Nuevo Password:" style="font-weight: bold" styleClass="#{users.passwordError}"/>
-                                        <p:password id="input-user-new-pass-1" value="#{users.newPass1}" styleClass="#{users.passwordError} Wid90"
+                                        <p:password id="input-user-new-pass-1" value="#{users.newPass1}" styleClass="#{users.passwordError} Wid90" autocomplete="off"
                                                     redisplay="true">
                                         </p:password>
 
                                         <p:outputLabel for="input-user-new-pass-2" value="Confirme Password" style="font-weight: bold" styleClass="#{users.password2Error}"/>
-                                        <p:password id="input-user-new-pass-2" value="#{users.newPass2}" styleClass="#{users.password2Error} Wid90"
+                                        <p:password id="input-user-new-pass-2" value="#{users.newPass2}" styleClass="#{users.password2Error} Wid90" autocomplete="off"
                                                     redisplay="true">
                                         </p:password>
 
