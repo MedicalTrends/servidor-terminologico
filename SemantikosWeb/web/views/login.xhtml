@@ -13,7 +13,9 @@
             <meta name="apple-mobile-web-app-capable" content="yes" />
             <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
         </f:facet>
-        <h:outputScript name="js/layout.js" library="rio-layout" />
+        <h:outputScript name="js/layout.js" library="poseidon-layout" />
+        <h:outputScript name="js/nanoscroller.js" library="poseidon-layout" />
+        <h:outputScript name="js/swipe.js" library="poseidon-layout" />
         <title>Semantikos - Consola de Administración</title>
         <ui:insert name="head" />
     </h:head>
@@ -48,16 +50,13 @@
             </div>
         </div>
 
-        <h:outputStylesheet name="css/animate.css" library="rio-layout" />
-        <h:outputStylesheet name="css/rio-font.css" library="rio-layout" />
-        <h:outputStylesheet name="css/ripple-effect.css" library="rio-layout" />
-        <h:outputStylesheet name="css/font-awesome.css" library="rio-layout" />
-        <h:outputStylesheet name="css/rio-layout.css" library="rio-layout" />
-        <h:outputStylesheet name="css/core-layout.css" library="rio-layout" />
+        <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="poseidon-layout" />
+        <h:outputStylesheet name="css/font-awesome.css" library="rio-layout"/>
+        <h:outputStylesheet name="css/grid.css" library="poseidon-layout" />
+        <h:outputStylesheet name="css/nanoscroller.css" library="poseidon-layout" />
+        <h:outputStylesheet name="css/animate.css" library="poseidon-layout" />
 
-        <script type="text/javascript">
-            Rio.clearMenuState();
-        </script>
+
     </h:body>
 
 </html>

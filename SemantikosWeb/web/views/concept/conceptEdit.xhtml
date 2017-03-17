@@ -18,6 +18,14 @@
         </p:breadCrumb>
     </ui:define>
 
+    <ui:define name="viewname">
+        <p:link outcome="/views/browser/generalBrowser.xhtml?idCategory=#{conceptBean.category.id}" value="#{conceptBean.category}" />
+        <span>/</span>
+        <p:outputLabel value="#{conceptBean.concept.descriptionFavorite} (#{conceptBean.concept.conceptID }) [#{conceptBean.concept.modeled?'Modelado':'Borrador'}]"
+                       rendered="#{conceptBean.concept.persistent}"/>
+        <p:outputLabel value="Nuevo Concepto Borrador" rendered="#{not conceptBean.concept.persistent}"/>
+    </ui:define>
+
     <ui:define name="content">
 
 
