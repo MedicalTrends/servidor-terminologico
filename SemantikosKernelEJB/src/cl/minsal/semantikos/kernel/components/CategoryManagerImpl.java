@@ -96,7 +96,8 @@ public class CategoryManagerImpl implements CategoryManager {
 
         logger.debug("Recuperando todas las categorías.");
 
-        List<Category> categories = categoryDAO.getAllCategories();
+        List<Category> categories = CategoryFactory.getInstance().getCategories();
+        //List<Category> categories = categoryDAO.getAllCategories();
         logger.debug(categories.size() + "categorías recuperadas.");
 
         return categories;
