@@ -303,9 +303,9 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
 
             if(cell.getFloatValue()==null)
-                call.setNull(3, Types.NUMERIC);
+                call.setNull(3, Types.REAL);
             else
-                call.setDouble(3, cell.getFloatValue());
+                call.setFloat(3, cell.getFloatValue());
 
             call.setLong(4, cell.getIntValue());
             call.setBoolean(5,cell.isBooleanValue());

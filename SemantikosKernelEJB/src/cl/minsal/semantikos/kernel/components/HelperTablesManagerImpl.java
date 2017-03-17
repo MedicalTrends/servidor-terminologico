@@ -114,7 +114,7 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
             dao.createData(cell);
         }
 
-        return dao.getRowById(newRow.getId());
+        return newRow;
     }
 
     private HelperTableData createCell(HelperTableColumn column, HelperTableRow row) {

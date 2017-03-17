@@ -17,7 +17,7 @@ public class HelperTableData {
 
     private long id;
     private long intValue;
-    private Double floatValue;
+    private Float floatValue;
     private String stringValue;
     private Date dateValue;
     private boolean booleanValue;
@@ -47,12 +47,12 @@ public class HelperTableData {
     }
 
     @JsonProperty("float_value")
-    public Double getFloatValue() {
+    public Float getFloatValue() {
         return floatValue;
     }
 
     @JsonProperty("float_value")
-    public void setFloatValue(Double floatValue) {
+    public void setFloatValue(Float floatValue) {
         this.floatValue = floatValue;
     }
 
