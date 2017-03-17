@@ -99,6 +99,8 @@ public class ConceptController {
             //conceptResponse.setForREQWS002();
             this.loadAttributes(conceptResponse, related);
             this.loadSnomedCTRelationships(conceptResponse, related);
+            this.loadIndirectCrossmaps(conceptResponse, related);
+            this.loadDirectCrossmaps(conceptResponse, related);
             relatedResponses.add(conceptResponse);
         }
 
