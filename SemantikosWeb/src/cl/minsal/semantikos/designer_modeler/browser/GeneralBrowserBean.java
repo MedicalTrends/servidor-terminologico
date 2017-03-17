@@ -110,6 +110,7 @@ public class GeneralBrowserBean implements Serializable {
     public void init(){
         tags = tagManager.getAllTags();
         users = userManager.getAllUsers();
+        generalQuery = null;
     }
 
     /**
