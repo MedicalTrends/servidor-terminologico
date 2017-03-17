@@ -397,7 +397,7 @@ body.exception-body.notfound-page {
       width: 175px;
       height: 49px;
       /*background: url("#{resource['poseidon-layout:images/logo-white.png']}") top left no-repeat;*/
-      background: url("#{resource['semantikos/images/minsal.png']}") top left no-repeat;
+      background: url("#{resource['semantikos/images/logo-1.png']}") top left no-repeat;
       background-size: 175px 49px; }
     .landing-wrapper #header .header-top #menu {
       float: right;
@@ -688,7 +688,7 @@ body {
     width: 175px;
     height: 49px;
     /*background: url("#{resource['poseidon-layout:images/logo-white.png']}") top left no-repeat;*/
-    background: url("#{resource['semantikos/images/minsal.png']}") top left no-repeat;
+    background: url("#{resource['semantikos/images/logo-1.png']}") top left no-repeat;
     background-size: 175px 49px; }
   .layout-wrapper .topbar .topbar-left {
     box-sizing: border-box;
