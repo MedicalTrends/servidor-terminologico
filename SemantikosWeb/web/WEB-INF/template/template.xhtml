@@ -3,6 +3,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
@@ -30,8 +31,7 @@
                 <div class="route-bar">
                     <i class="fa fa-home"></i> <span>/ </span>
                     <ui:insert name="viewname" />
-                    
-                    <ui:include src="./right-sidebar.xhtml" />
+                    <smtk:filters rendered="#{request.requestURI.contains('browser')}" />
                 </div>
                 <div class="layout-main-content">
                     <ui:insert name="content"/>
