@@ -348,17 +348,15 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.setDate(3, cell.getDateValue()==null?null:new Date(cell.getDateValue().getTime()));
 
             if(cell.getFloatValue()==null)
-                call.setNull(4, Types.NUMERIC);
+                call.setNull(4, Types.REAL);
             else
-                call.setDouble(4, cell.getFloatValue());
+                call.setFloat(4, cell.getFloatValue());
 
             call.setLong(5, cell.getIntValue());
             call.setBoolean(6,cell.isBooleanValue());
             call.setLong(7, cell.getForeignKeyValue());
 
-
-            ResultSet rs = call.getResultSet();
-
+            call.execute();
 
         } catch (SQLException e) {
             logger.error("Error al crear la row:" + cell, e);
