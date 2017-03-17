@@ -16,7 +16,7 @@ import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
 public class HelperTableData {
 
     private long id;
-    private long intValue;
+    private Long intValue;
     private Float floatValue;
     private String stringValue;
     private Date dateValue;
