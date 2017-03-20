@@ -268,7 +268,7 @@ public class HelperTableBean implements Serializable {
         for (HelperTableRow helperTableRow : helperTableRows) {
             for (HelperTableData helperTableData : helperTableRow.getCells()) {
                 if (helperTableData.getColumnId() == idColumn) {
-                    if (helperTableData.isBooleanValue()) {
+                    if (helperTableData.getBooleanValue()) {
                         helperTableRowsFiltered.add(helperTableRow);
                         break;
                     }

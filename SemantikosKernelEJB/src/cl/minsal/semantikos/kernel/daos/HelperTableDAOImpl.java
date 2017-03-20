@@ -307,15 +307,15 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             else
                 call.setFloat(3, cell.getFloatValue());
 
-            if(cell.getFloatValue()==null)
+            if(cell.getIntValue()==null)
                 call.setNull(4, Types.BIGINT);
             else
                 call.setLong(4, cell.getIntValue());
 
-            if(cell.isBooleanValue()==null)
+            if(cell.getBooleanValue()==null)
                 call.setNull(5, Types.BOOLEAN);
             else
-                call.setBoolean(5,cell.isBooleanValue());
+                call.setBoolean(5,cell.getBooleanValue());
 
             call.setLong(6, cell.getForeignKeyValue());
             call.setLong(7,cell.getRowId());
@@ -360,8 +360,16 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             else
                 call.setFloat(4, cell.getFloatValue());
 
-            call.setLong(5, cell.getIntValue());
-            call.setBoolean(6,cell.isBooleanValue());
+            if(cell.getIntValue()==null)
+                call.setNull(5, Types.BIGINT);
+            else
+                call.setLong(5, cell.getIntValue());
+
+            if(cell.getBooleanValue()==null)
+                call.setNull(6, Types.BOOLEAN);
+            else
+                call.setBoolean(6,cell.getBooleanValue());
+
             call.setLong(7, cell.getForeignKeyValue());
 
             call.execute();

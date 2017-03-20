@@ -149,7 +149,7 @@
                                             <f:facet name="output">
                                                 <h:outputText value="#{row.cells[columnIndex].stringValue}"
                                                               rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1}"/>
-                                                <h:outputText value="#{row.cells[columnIndex].booleanValue?'Si':'No'}"
+                                                <h:outputText value="#{row.cells[columnIndex].booleanValue}"
                                                               rendered="#{!column.foreignKey and column.helperTableDataTypeId == 2}"/>
                                                 <h:outputText value="#{row.cells[columnIndex].intValue}"
                                                               rendered="#{!column.foreignKey and column.helperTableDataTypeId == 3}"/>
@@ -165,9 +165,13 @@
                                             <f:facet name="input">
                                                 <p:inputText value="#{row.cells[columnIndex].stringValue}"
                                                              rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1}"/>
-                                                <p:selectBooleanButton value="#{row.cells[columnIndex].booleanValue}"
-                                                                       rendered="#{!column.foreignKey and column.helperTableDataTypeId == 2}"
-                                                                       onLabel="Si" offLabel="No"/>
+                                                <p:selectOneMenu value="#{row.cells[columnIndex].booleanValue}" autoWidth="false"
+                                                                 style="width: 70%"
+                                                                 rendered="#{!column.foreignKey and column.helperTableDataTypeId == 2}">
+                                                    <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                                    <f:selectItem itemLabel="false" itemValue="false"/>
+                                                    <f:selectItem itemLabel="true" itemValue="true"/>
+                                                </p:selectOneMenu>
                                                 <p:inputNumber value="#{row.cells[columnIndex].intValue}"
                                                                rendered="#{!column.foreignKey and column.helperTableDataTypeId == 3}"
                                                                decimalPlaces="0"/>

@@ -77,7 +77,7 @@ public class HelperTableData {
     }
 
     @JsonProperty("boolean_value")
-    public Boolean isBooleanValue() {
+    public Boolean getBooleanValue() {
         return booleanValue;
     }
 
