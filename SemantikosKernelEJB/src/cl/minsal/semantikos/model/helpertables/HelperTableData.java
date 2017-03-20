@@ -16,11 +16,11 @@ import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
 public class HelperTableData {
 
     private long id;
-    private long intValue;
+    private Long intValue;
     private Float floatValue;
     private String stringValue;
     private Date dateValue;
-    private boolean booleanValue;
+    private Boolean booleanValue;
     private long foreignKeyValue;
     private long rowId;
     private long columnId;
@@ -37,12 +37,12 @@ public class HelperTableData {
     }
 
     @JsonProperty("int_value")
-    public long getIntValue() {
+    public Long getIntValue() {
         return intValue;
     }
 
     @JsonProperty("int_value")
-    public void setIntValue(long intValue) {
+    public void setIntValue(Long intValue) {
         this.intValue = intValue;
     }
 
@@ -77,12 +77,12 @@ public class HelperTableData {
     }
 
     @JsonProperty("boolean_value")
-    public boolean isBooleanValue() {
+    public Boolean getBooleanValue() {
         return booleanValue;
     }
 
     @JsonProperty("boolean_value")
-    public void setBooleanValue(boolean booleanValue) {
+    public void setBooleanValue(Boolean booleanValue) {
         this.booleanValue = booleanValue;
     }
 

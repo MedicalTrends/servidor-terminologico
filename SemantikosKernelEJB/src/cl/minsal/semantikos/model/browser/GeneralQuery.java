@@ -575,6 +575,15 @@ public class GeneralQuery implements IQuery {
             return getUser().getIdUser();
     }
 
+    public void resetFilters() {
+        this.modeled = null;
+        this.toBeConsulted = null;
+        this.toBeReviewed = null;
+        this.tags = new ArrayList<>();
+        this.filters = new ArrayList<>();
+        this.query = null;
+    }
+
     /**
      * Este método es responsable de recuperar los parámetros de los filtros del objeto de consulta del navegador de
      * categorías

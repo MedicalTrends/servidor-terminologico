@@ -35,8 +35,9 @@ public class QueryManagerImpl implements QueryManager {
 
     @Override
     public GeneralQuery getDefaultGeneralQuery(Category category) {
-
-        return QueryFactory.getInstance().findQueryByCategory(category);
+        GeneralQuery query = QueryFactory.getInstance().findQueryByCategory(category);
+        query.resetFilters();
+        return query;
     }
 
     @Override

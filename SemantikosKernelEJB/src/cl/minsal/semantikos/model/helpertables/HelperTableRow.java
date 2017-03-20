@@ -296,7 +296,7 @@ public class HelperTableRow implements Target {
                     return cell.getStringValue();
 
                 if (column.getHelperTableDataTypeId()==2)
-                    return ""+cell.isBooleanValue();
+                    return ""+cell.getBooleanValue();
 
                 if (column.getHelperTableDataTypeId()==3)
                     return ""+cell.getIntValue();

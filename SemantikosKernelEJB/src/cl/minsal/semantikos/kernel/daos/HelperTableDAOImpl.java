@@ -299,16 +299,24 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
              CallableStatement call = connection.prepareCall(UPDATE)) {
 
             call.setString(1, cell.getStringValue());
-            call.setDate(2, cell.getDateValue()==null?null:new Date(cell.getDateValue().getTime()));
 
+            call.setDate(2, cell.getDateValue()==null?null:new Date(cell.getDateValue().getTime()));
 
             if(cell.getFloatValue()==null)
                 call.setNull(3, Types.REAL);
             else
                 call.setFloat(3, cell.getFloatValue());
 
-            call.setLong(4, cell.getIntValue());
-            call.setBoolean(5,cell.isBooleanValue());
+            if(cell.getIntValue()==null)
+                call.setNull(4, Types.BIGINT);
+            else
+                call.setLong(4, cell.getIntValue());
+
+            if(cell.getBooleanValue()==null)
+                call.setNull(5, Types.BOOLEAN);
+            else
+                call.setBoolean(5,cell.getBooleanValue());
+
             call.setLong(6, cell.getForeignKeyValue());
             call.setLong(7,cell.getRowId());
             call.setLong(8,cell.getColumn().getId());
@@ -348,17 +356,23 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.setDate(3, cell.getDateValue()==null?null:new Date(cell.getDateValue().getTime()));
 
             if(cell.getFloatValue()==null)
-                call.setNull(4, Types.NUMERIC);
+                call.setNull(4, Types.REAL);
             else
-                call.setDouble(4, cell.getFloatValue());
+                call.setFloat(4, cell.getFloatValue());
 
-            call.setLong(5, cell.getIntValue());
-            call.setBoolean(6,cell.isBooleanValue());
+            if(cell.getIntValue()==null)
+                call.setNull(5, Types.BIGINT);
+            else
+                call.setLong(5, cell.getIntValue());
+
+            if(cell.getBooleanValue()==null)
+                call.setNull(6, Types.BOOLEAN);
+            else
+                call.setBoolean(6,cell.getBooleanValue());
+
             call.setLong(7, cell.getForeignKeyValue());
 
-
-            ResultSet rs = call.getResultSet();
-
+            call.execute();
 
         } catch (SQLException e) {
             logger.error("Error al crear la row:" + cell, e);
