@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.snomedct.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -104,58 +105,36 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
         return snomedctDAO.getConceptByID(conceptID);
     }
 
+
     @Override
-    public void persistSnapshotConceptSCT() {
+    public void chargeSNAPSHOT(List<ConceptSCT> conceptSCTs, List<DescriptionSCT> descriptionSCTs, List<RelationshipSnapshotSCT> relationshipSnapshotSCTs, List<LanguageRefsetSCT> languageRefsetSCTs, List<TransitiveSCT> transitiveSCTs) {
+        validateDescriptionSCT(conceptSCTs,descriptionSCTs);
+    }
+
+    private void validateDescriptionSCT(List<ConceptSCT> conceptSCTs, List<DescriptionSCT> descriptionSCTs){
+        List<DescriptionSCT> descriptionSCTsWithConcept = new ArrayList<>();
+
+        for (DescriptionSCT descriptionSCT : descriptionSCTs) {
+            for (ConceptSCT conceptSCT : conceptSCTs) {
+                if(descriptionSCT.getConceptId()== conceptSCT.getId()){
+                    descriptionSCTsWithConcept.add(descriptionSCT);
+                }
+            }
+        }
+
+        if(descriptionSCTsWithConcept.size()==descriptionSCTs.size()){
+            return;
+        }
+        List<DescriptionSCT> descriptionSCTsDeprecated= new ArrayList<>();
+        for (DescriptionSCT descriptionSCT : descriptionSCTs) {
+            if(!descriptionSCTsWithConcept.contains(descriptionSCT)){
+                descriptionSCTsDeprecated.add(descriptionSCT);
+            }
+        }
+
+
+
 
     }
 
-    @Override
-    public void persistSnapshotDescriptionSCT() {
-
-    }
-
-    @Override
-    public void persistSnapshotRelationshipSCT() {
-
-    }
-
-    @Override
-    public void persistSnapshotTransitiveSCT() {
-
-    }
-
-    @Override
-    public void persistSnapshotLanguageRefSetSCT() {
-
-    }
-
-    @Override
-    public void updateSnapshotConceptSCT() {
-
-    }
-
-    @Override
-    public void updateSnapshotDescriptionSCT() {
-
-    }
-
-    @Override
-    public void updateSnapshotRelationshipSCT() {
-
-    }
-
-    @Override
-    public void updateSnapshotTransitiveSCT() {
-
-    }
-
-    @Override
-    public void updateSnapshotLanguageRefSetSCT() {
-
-    }
-
-    @Override
-    public void deleteSnapshotTransitiveSCT() {
-
-    }
 }

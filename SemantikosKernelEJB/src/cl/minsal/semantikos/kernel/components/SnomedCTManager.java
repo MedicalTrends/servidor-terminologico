@@ -100,18 +100,8 @@ public interface SnomedCTManager {
      */
     public ConceptSCT getConceptByID(long conceptID);
 
-    public void persistSnapshotConceptSCT();
-    public void persistSnapshotDescriptionSCT();
-    public void persistSnapshotRelationshipSCT();
-    public void persistSnapshotTransitiveSCT();
-    public void persistSnapshotLanguageRefSetSCT();
 
+    public void chargeSNAPSHOT(List<ConceptSCT> conceptSCTs, List<DescriptionSCT> descriptionSCTs, List<RelationshipSnapshotSCT> relationshipSnapshotSCTs
+            , List<LanguageRefsetSCT> languageRefsetSCTs, List<TransitiveSCT> transitiveSCTs);
 
-    public void updateSnapshotConceptSCT();
-    public void updateSnapshotDescriptionSCT();
-    public void updateSnapshotRelationshipSCT();
-    public void updateSnapshotTransitiveSCT();
-    public void updateSnapshotLanguageRefSetSCT();
-
-    public void deleteSnapshotTransitiveSCT();
 }

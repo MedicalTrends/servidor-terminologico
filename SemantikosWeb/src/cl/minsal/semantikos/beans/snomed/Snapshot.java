@@ -118,30 +118,36 @@ public class Snapshot {
 
         BufferedReader b = new BufferedReader(f);
 
+        boolean first=true;
         while ((cadena = b.readLine()) != null) {
 
-            int i = 0;
-            long id=0L;
-            String affectiveTime="";
-            boolean active=false;
-            long moduleId=0L;
-            long definitionStatusId=0L;
+            if(!first){
+                int i = 0;
+                long id=0L;
+                String affectiveTime="";
+                boolean active=false;
+                long moduleId=0L;
+                long definitionStatusId=0L;
 
-            for (String token : cadena.split("\t")) {
-                if (token.trim().length() != 0 && i == 0)
-                    id=Long.valueOf(token);
-                if (token.trim().length() != 0 && i == 1)
-                    affectiveTime=token;
-                if (token.trim().length() != 0 && i == 2)
-                    active=(token.equals("1"))?true:false;
-                if (token.trim().length() != 0 && i == 3)
-                    moduleId=Long.valueOf(token);
-                if (token.trim().length() != 0 && i == 4)
-                    definitionStatusId=Long.valueOf(token);
-                ++i;
+                for (String token : cadena.split("\t")) {
+                    if (token.trim().length() != 0 && i == 0)
+                        id=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 1)
+                        affectiveTime=token;
+                    if (token.trim().length() != 0 && i == 2)
+                        active=(token.equals("1"))?true:false;
+                    if (token.trim().length() != 0 && i == 3)
+                        moduleId=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 4)
+                        definitionStatusId=Long.valueOf(token);
+                    ++i;
+                }
+                String time= affectiveTime.substring(0,4)+"-"+affectiveTime.substring(4,6)+"-"+affectiveTime.substring(6,8)+" 00:00:00";
+                conceptSCTs.add(new ConceptSCT(id,Timestamp.valueOf(time),active,moduleId,definitionStatusId));
+            }else{
+                first= false;
             }
 
-            conceptSCTs.add(new ConceptSCT(id,Timestamp.valueOf(affectiveTime),active,moduleId,definitionStatusId));
         }
 
         } catch (FileNotFoundException e) {
@@ -162,43 +168,51 @@ public class Snapshot {
 
             BufferedReader b = new BufferedReader(f);
 
+
+            boolean first=true;
             while ((cadena = b.readLine()) != null) {
 
-                int i = 0;
-                long id=0L;
-                String effectiveTime=null;
-                boolean active= false;
-                long moduleId=0L;
-                long conceptId=0L;
-                String languageCode=null;
-                long typeId= 0L;
-                String term= null;
-                long caseSignificanceId=0L;
+                if (!first) {
+                    int i = 0;
+                    long id = 0L;
+                    String effectiveTime = null;
+                    boolean active = false;
+                    long moduleId = 0L;
+                    long conceptId = 0L;
+                    String languageCode = null;
+                    long typeId = 0L;
+                    String term = null;
+                    long caseSignificanceId = 0L;
 
-                for (String token : cadena.split("\t")) {
-                    if (token.trim().length() != 0 && i == 0)
-                        id=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 1)
-                        effectiveTime=token;
-                    if (token.trim().length() != 0 && i == 2)
-                        active=(token.equals("1"))?true:false;
-                    if (token.trim().length() != 0 && i == 3)
-                        moduleId=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 4)
-                        conceptId=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 5)
-                        languageCode=token;
-                    if (token.trim().length() != 0 && i == 6)
-                        typeId=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 7)
-                        term=token;
-                    if (token.trim().length() != 0 && i == 8)
-                        caseSignificanceId=Long.valueOf(token);
-                    ++i;
+                    for (String token : cadena.split("\t")) {
+                        if (token.trim().length() != 0 && i == 0)
+                            id = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 1)
+                            effectiveTime = token;
+                        if (token.trim().length() != 0 && i == 2)
+                            active = (token.equals("1")) ? true : false;
+                        if (token.trim().length() != 0 && i == 3)
+                            moduleId = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 4)
+                            conceptId = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 5)
+                            languageCode = token;
+                        if (token.trim().length() != 0 && i == 6)
+                            typeId = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 7)
+                            term = token;
+                        if (token.trim().length() != 0 && i == 8)
+                            caseSignificanceId = Long.valueOf(token);
+                        ++i;
+                    }
+                    String time= effectiveTime.substring(0,4)+"-"+effectiveTime.substring(4,6)+"-"+effectiveTime.substring(6,8)+" 00:00:00";
+
+                    descriptionSCTs.add(new DescriptionSCT(id, DescriptionSCTType.valueOf(typeId), Timestamp.valueOf(time), active, moduleId, conceptId, languageCode, term, caseSignificanceId));
+
+                }else{
+                    first=false;
                 }
-                descriptionSCTs.add(new DescriptionSCT(id,DescriptionSCTType.valueOf(typeId),Timestamp.valueOf(effectiveTime),active,moduleId,conceptId,languageCode,term,caseSignificanceId));
             }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -219,47 +233,53 @@ public class Snapshot {
 
             BufferedReader b = new BufferedReader(f);
 
+            boolean first=true;
             while ((cadena = b.readLine()) != null) {
 
-                int i = 0;
-                long id=0L;
-                String effectiveTime=null;
-                boolean active=false;
-                long moduleId=0L;
-                long sourceId=0L;
-                long destinationId=0L;
-                long relationshipGroup=0L;
-                long typeId=0L;
-                long characteristicTypeId=0L;
-                long modifierId=0L;
+                if (!first) {
+                    int i = 0;
+                    long id = 0L;
+                    String effectiveTime = null;
+                    boolean active = false;
+                    long moduleId = 0L;
+                    long sourceId = 0L;
+                    long destinationId = 0L;
+                    long relationshipGroup = 0L;
+                    long typeId = 0L;
+                    long characteristicTypeId = 0L;
+                    long modifierId = 0L;
 
 
-                for (String token : cadena.split("\t")) {
-                    if (token.trim().length() != 0 && i == 0)
-                        id=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 1)
-                        effectiveTime=token;
-                    if (token.trim().length() != 0 && i == 2)
-                        active=(token.equals("1"))?true:false;
-                    if (token.trim().length() != 0 && i == 3)
-                        moduleId=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 4)
-                        sourceId=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 5)
-                        destinationId=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 6)
-                        relationshipGroup=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 7)
-                        typeId=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 8)
-                        characteristicTypeId=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 8)
-                        modifierId=Long.valueOf(token);
-                    ++i;
+                    for (String token : cadena.split("\t")) {
+                        if (token.trim().length() != 0 && i == 0)
+                            id = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 1)
+                            effectiveTime = token;
+                        if (token.trim().length() != 0 && i == 2)
+                            active = (token.equals("1")) ? true : false;
+                        if (token.trim().length() != 0 && i == 3)
+                            moduleId = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 4)
+                            sourceId = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 5)
+                            destinationId = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 6)
+                            relationshipGroup = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 7)
+                            typeId = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 8)
+                            characteristicTypeId = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 8)
+                            modifierId = Long.valueOf(token);
+                        ++i;
+                    }
+                    String time= effectiveTime.substring(0,4)+"-"+effectiveTime.substring(4,6)+"-"+effectiveTime.substring(6,8)+" 00:00:00";
+
+                    relationshipSCTs.add(new RelationshipSnapshotSCT(id, Timestamp.valueOf(time), active, moduleId, sourceId, destinationId, relationshipGroup, typeId, characteristicTypeId, modifierId));
+                }else{
+                    first=false;
                 }
-                relationshipSCTs.add(new RelationshipSnapshotSCT(id,Timestamp.valueOf(effectiveTime),active,moduleId,sourceId,destinationId,relationshipGroup,typeId,characteristicTypeId,modifierId));
             }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -278,38 +298,44 @@ public class Snapshot {
 
             BufferedReader b = new BufferedReader(f);
 
+            boolean first=true;
             while ((cadena = b.readLine()) != null) {
 
-                int i = 0;
-                long id=0L;
-                String affectiveTime=null;
-                boolean active=false;
-                long moduleId=0L;
-                long refsetId=0L;
-                long referencedComponentId=0L;
-                long acceptabilityId=0L;
+                if (!first) {
+                    int i = 0;
+                    long id = 0L;
+                    String affectiveTime = null;
+                    boolean active = false;
+                    long moduleId = 0L;
+                    long refsetId = 0L;
+                    long referencedComponentId = 0L;
+                    long acceptabilityId = 0L;
 
-                for (String token : cadena.split("\t")) {
-                    if (token.trim().length() != 0 && i == 0)
-                        id=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 1)
-                        affectiveTime=token;
-                    if (token.trim().length() != 0 && i == 2)
-                        active=(token.equals("1"))?true:false;
-                    if (token.trim().length() != 0 && i == 3)
-                        moduleId=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 4)
-                        refsetId=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 5)
-                        referencedComponentId=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 6)
-                        acceptabilityId=Long.valueOf(token);
+                    for (String token : cadena.split("\t")) {
+                        if (token.trim().length() != 0 && i == 0)
+                            id = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 1)
+                            affectiveTime = token;
+                        if (token.trim().length() != 0 && i == 2)
+                            active = (token.equals("1")) ? true : false;
+                        if (token.trim().length() != 0 && i == 3)
+                            moduleId = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 4)
+                            refsetId = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 5)
+                            referencedComponentId = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 6)
+                            acceptabilityId = Long.valueOf(token);
 
-                    ++i;
+                        ++i;
+                    }
+                    String time= affectiveTime.substring(0,4)+"-"+affectiveTime.substring(4,6)+"-"+affectiveTime.substring(6,8)+" 00:00:00";
+
+                    languageRefsetSCTs.add(new LanguageRefsetSCT(id, Timestamp.valueOf(time), active, moduleId, refsetId, referencedComponentId, acceptabilityId));
+                }else{
+                   first = false;
                 }
-                languageRefsetSCTs.add(new LanguageRefsetSCT(id,Timestamp.valueOf(affectiveTime),active,moduleId,refsetId,referencedComponentId,acceptabilityId));
             }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -353,6 +379,12 @@ public class Snapshot {
             e.printStackTrace();
         }
 
+    }
+
+    public void chargeSNAPSHOT(){
+        if(conceptSCTs.isEmpty() && descriptionSCTs.isEmpty() && relationshipSCTs.isEmpty() && languageRefsetSCTs.isEmpty() && transitiveSCTs.isEmpty()){
+           snomedCTManager.chargeSNAPSHOT(conceptSCTs,descriptionSCTs,relationshipSCTs,languageRefsetSCTs,transitiveSCTs);
+        }
     }
 
 
