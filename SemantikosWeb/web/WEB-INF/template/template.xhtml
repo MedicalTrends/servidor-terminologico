@@ -22,6 +22,18 @@
     </h:head>
 
     <h:body styleClass="main-body">
+
+        <h:form>
+            <p:idleMonitor timeout="#{timeOutSessionBean.timeOut}">
+                <p:ajax event="idle" process="@this" listener="#{timeOutSessionBean.redirectSession}"/>
+                <p:ajax event="active" listener="#{timeOutSessionBean.redirectSession}"/>
+            </p:idleMonitor>
+        </h:form>
+
+
+        <f:facet name="last">
+            <h:outputStylesheet name="semantikos/css/customStyle.css"/>
+        </f:facet>
         
         <div class="layout-wrapper #{guestPreferences.menuLayout}">
             <ui:include src="./topbar.xhtml" />
@@ -31,7 +43,8 @@
                 <div class="route-bar">
                     <i class="fa fa-home"></i> <span>/ </span>
                     <ui:insert name="viewname" />
-                    <smtk:filters rendered="#{request.requestURI.contains('browser')}" />
+                    <!--ui:include src="./right-sidebar.xhtml" /-->
+                    <smtk:filters generalQuery="#{generalBrowserBean.generalQuery}" rendered="#{request.requestURI.contains('browser')}"  />
                 </div>
                 <div class="layout-main-content">
                     <ui:insert name="content"/>
@@ -41,9 +54,9 @@
             </div>
         </div>
         
-        <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+        <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px;z-index: 999999">
            <f:facet name="start">
-               <i class="fa fa-circle-o-notch fa-spin ajax-loader" aria-hidden="true"></i>
+               <i class="fa fa-circle-o-notch fa-spin ajax-loader" aria-hidden="true" />
            </f:facet>
 
            <f:facet name="complete">

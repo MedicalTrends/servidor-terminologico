@@ -16,154 +16,253 @@
 </composite:interface>
 <composite:implementation>
 
-    <p:outputPanel id="browserFilters" styleClass="browserFilters">
+    <a id="right-sidebar-button-open" href="#">
+        <i class="fa fa-angle-left"></i>
+    </a>
 
-        <div class="ui-fluid">
-            <div class="Container">
-                <div class="Container100">
-                    <div class="ContainerIndent BoldGray FontBold">
-                        <span>
-                            Patrón
-                        </span>
-                        <p:outputPanel styleClass="search">
-                            <p:inputText value="#{cc.attrs.generalQuery.query}" placeholder="Buscar...">
-                                <p:ajax event="keyup" update="@(.browserTable)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" />
-                            </p:inputText>
-                            <i class="fa fa-search fa-lg" />
+    <div id="right-sidebar" class="right-sidebar">
+        <div class="nano">
+            <div class="right-sidebar-header ui-widget-header">
+                <i class="fa fa-star"></i>
+                <span>Filtros Semantikos</span>
+                <a id="right-sidebar-button-close" href="#">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+
+            <div class="nano-content sidebar-scroll-content">
+                <p:accordionPanel activeIndex="0" multiple="true">
+                    <p:tab title="Filtros">
+                        <!--ul class="contact-list">
+                            <li>
+                                <a href="#">
+                                    <p:graphicImage name="images/avatar1.png" library="poseidon-layout" width="45"/>
+                                    <span class="name">Joshua Williams</span>
+                                    <span class="email">joshua@pf-poseidon.com</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <p:graphicImage name="images/avatar2.png" library="poseidon-layout" width="45"/>
+                                    <span class="name">Emily Clark</span>
+                                    <span class="email">emily@pf-poseidon.com</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <p:graphicImage name="images/avatar3.png" library="poseidon-layout" width="45"/>
+                                    <span class="name">Susan Johnson</span>
+                                    <span class="email">susan@pf-poseidon.com</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <p:graphicImage name="images/avatar4.png" library="poseidon-layout" width="45"/>
+                                    <span class="name">Kelly Stark</span>
+                                    <span class="email">kelly@pf-poseidon.com</span>
+                                </a>
+                            </li>
+                        </ul-->
+                        <p:outputPanel id="browserFilters" styleClass="browserFilters">
+
+                            <div class="ui-g ui-fluid contact-form">
+                                <div class="ui-g-12">
+                                <span>
+                                    Patrón
+                                </span>
+                                    <p:outputPanel styleClass="search">
+                                        <p:inputText value="#{cc.attrs.generalQuery.query}" placeholder="Buscar...">
+                                            <p:ajax event="keyup" update="@(.browserTable)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" />
+                                        </p:inputText>
+                                        <i class="fa fa-search fa-lg" />
+                                    </p:outputPanel>
+                                </div>
+                                <div class="ui-g-12">
+                                <span>
+                                    Revisar
+                                </span>
+                                    <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeReviewed}" autoWidth="false">
+                                        <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                        <f:selectItem itemLabel="Sin Revisar" itemValue="false"/>
+                                        <f:selectItem itemLabel="Revisar" itemValue="true"/>
+                                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="ui-g-12">
+                                <span>
+                                    Consultar
+                                </span>
+                                    <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeConsulted}" autoWidth="false">
+                                        <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                        <f:selectItem itemLabel="Sin Consultar" itemValue="false"/>
+                                        <f:selectItem itemLabel="Consultar" itemValue="true"/>
+                                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="ui-g-12">
+                                <span>
+                                    Estado
+                                </span>
+                                    <p:selectOneMenu value="#{cc.attrs.generalQuery.modeled}" autoWidth="false">
+                                        <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                        <f:selectItem itemLabel="Borrador" itemValue="false"/>
+                                        <f:selectItem itemLabel="Modelado" itemValue="true"/>
+                                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="ui-g-12">
+                                <span>
+                                    Estado
+                                </span>
+                                    <p:selectOneMenu value="#{cc.attrs.generalQuery.modeled}" autoWidth="false">
+                                        <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                        <f:selectItem itemLabel="Borrador" itemValue="false"/>
+                                        <f:selectItem itemLabel="Modelado" itemValue="true"/>
+                                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="ui-g-12">
+                                <span>
+                                    Etiquetas
+                                </span>
+                                    <p:selectCheckboxMenu id="tags"
+                                                          value="#{cc.attrs.generalQuery.tags}"
+                                                          converter="omnifaces.SelectItemsConverter"
+                                                          label="Seleccione..."
+                                                          autoWidth="false"
+                                                          filter="true"
+                                                          filterMatchMode="startsWith">
+                                        <p:ajax event="change"
+                                                listener="#{generalBrowserBean.setFilterChanged(true)}"
+                                                update="@(.browserTable),@(.filterStatus)"
+                                                process="@this" />
+
+                                        <f:selectItems value="#{generalBrowserBean.tags}" var="tag"
+                                                       itemLabel="#{tag.name}" itemValue="#{tag}"/>
+                                    </p:selectCheckboxMenu>
+                                </div>
+                            </div>
+
+
+                            <p:repeat
+                                    offset="0"
+                                    size="#{cc.attrs.generalQuery.filters.size()}"
+                                    step="1"
+                                    varStatus="var"
+                                    value="#{cc.attrs.generalQuery.filters}"
+                                    var="filter">
+
+                                <smtk:basicTypeFilter relationshipDefinition="#{filter.definition}"
+                                                      targetDefinition="#{filter.definition.targetDefinition}"
+                                                      targets="#{filter.targets}"
+                                                      multiple="#{filter.multiple}"
+                                                      rendered="#{filter.definition.targetDefinition.basicType}" />
+
+                                <smtk:helperTableTypeFilter
+                                        relationshipDefinition="#{filter.definition}"
+                                        targetDefinition="#{filter.definition.targetDefinition}"
+                                        targets="#{filter.targets}"
+                                        rendered="#{filter.definition.targetDefinition.helperTable and not filter.multiple }" />
+
+                                <smtk:helperTableTypeFilterListBox
+                                        relationshipDefinition="#{filter.definition}"
+                                        targetDefinition="#{filter.definition.targetDefinition}"
+                                        targets="#{filter.targets}"
+                                        rendered="#{filter.definition.targetDefinition.helperTable and not filter.multiple and filter.composite eq 11 }" />
+
+                                <smtk:smtkTypeFilter relationshipDefinition="#{filter.definition}"
+                                                     targetDefinition="#{filter.definition.targetDefinition}"
+                                                     targets="#{filter.targets}"
+                                                     multiple="#{filter.multiple}"
+                                                     rendered="#{filter.definition.targetDefinition.SMTKType}" />
+
+                            </p:repeat>
+
+                            <p:repeat
+                                    offset="0"
+                                    size="#{cc.attrs.generalQuery.attributeFilters.size()}"
+                                    step="1"
+                                    varStatus="var"
+                                    value="#{cc.attrs.generalQuery.attributeFilters}"
+                                    var="attributeFilter">
+
+                                <smtk:helperTableTypeAttributeFilter
+                                        relationshipAttributeDefinition="#{attributeFilter.definition}"
+                                        targetDefinition="#{attributeFilter.definition.targetDefinition}"
+                                        targets="#{attributeFilter.targets}"
+                                        rendered="#{attributeFilter.definition.targetDefinition.helperTable and not attributeFilter.multiple}" />
+
+                            </p:repeat>
+
+                            <smtk:DateTypeFilter date="#{cc.attrs.generalQuery.creationDateSince}" name="Ingresados Desde"
+                                                 dateSince="#{true}"
+                                                 rendered="#{cc.attrs.generalQuery.customFilterable}" />
+                            <smtk:DateTypeFilter date="#{cc.attrs.generalQuery.creationDateTo}" name="Ingresados Hasta"
+                                                 dateSince="#{false}"
+                                                 rendered="#{cc.attrs.generalQuery.customFilterable}" />
+                            <smtk:userTypeFilter user="#{cc.attrs.generalQuery.user}" name="Usuario"
+                                                 rendered="#{cc.attrs.generalQuery.customFilterable}" />
+
+                            <p:outputPanel styleClass="filterStatus">
+
+                            </p:outputPanel>
+
                         </p:outputPanel>
-                    </div>
-                </div>
+                    </p:tab>
+                    <p:tab title="Notes">
+                        <ul class="note-list">
+                            <li>
+                                <p:selectBooleanCheckbox />
+                                <span class="task-name">Sales Reports</span>
+                                <i class="fa fa-briefcase"></i>
+                            </li>
+                            <li>
+                                <p:selectBooleanCheckbox />
+                                <span class="task-name">Pay Invoices</span>
+                                <i class="fa fa-credit-card"></i>
+                            </li>
+                            <li>
+                                <p:selectBooleanCheckbox />
+                                <span class="task-name">Dinner with Tony</span>
+                                <i class="fa fa-cutlery"></i>
+                            </li>
+                            <li>
+                                <p:selectBooleanCheckbox />
+                                <span class="task-name">Client Meeting</span>
+                                <i class="fa fa-user"></i>
+                            </li>
+                            <li>
+                                <p:selectBooleanCheckbox />
+                                <span class="task-name">New Theme</span>
+                                <i class="fa fa-paint-brush"></i>
+                            </li>
+                            <li>
+                                <p:selectBooleanCheckbox />
+                                <span class="task-name">Flight Ticket</span>
+                                <i class="fa fa-fighter-jet"></i>
+                            </li>
+                        </ul>
+                    </p:tab>
+                    <p:tab title="Contact Form">
+                        <div class="ui-g ui-fluid contact-form">
+                            <div class="ui-g-12">
+                                <p:inputText placeholder="Name"/>
+                            </div>
+                            <div class="ui-g-12">
+                                <p:inputText placeholder="Message"/>
+                            </div>
+                            <div class="ui-g-12">
+                                <p:commandButton type="button" value="Send" icon="fa fa-paper-plane-o"></p:commandButton>
+                            </div>
+                        </div>
 
-                <div class="Container100">
-                    <div class="ContainerIndent BoldGray FontBold">
-                        <span>
-                            Revisar
-                        </span>
-                        <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeReviewed}" autoWidth="false">
-                            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
-                            <f:selectItem itemLabel="Sin Revisar" itemValue="false"/>
-                            <f:selectItem itemLabel="Revisar" itemValue="true"/>
-                            <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
-                        </p:selectOneMenu>
-                    </div>
-                </div>
-
-                <div class="Container100">
-                    <div class="ContainerIndent BoldGray FontBold">
-                        <span>
-                            Consultar
-                        </span>
-                        <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeConsulted}" autoWidth="false">
-                            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
-                            <f:selectItem itemLabel="Sin Consultar" itemValue="false"/>
-                            <f:selectItem itemLabel="Consultar" itemValue="true"/>
-                            <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
-                        </p:selectOneMenu>
-                    </div>
-                </div>
-
-                <div class="Container100">
-                    <div class="ContainerIndent BoldGray FontBold">
-                        <span>
-                            Estado
-                        </span>
-                        <p:selectOneMenu value="#{cc.attrs.generalQuery.modeled}" autoWidth="false">
-                            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
-                            <f:selectItem itemLabel="Borrador" itemValue="false"/>
-                            <f:selectItem itemLabel="Modelado" itemValue="true"/>
-                            <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
-                        </p:selectOneMenu>
-                    </div>
-                </div>
-
-                <div class="Container100">
-                    <div class="ContainerIndent BoldGray FontBold">
-                        <span>
-                            Etiquetas
-                        </span>
-                        <p:selectCheckboxMenu id="tags"
-                                              value="#{cc.attrs.generalQuery.tags}"
-                                              converter="omnifaces.SelectItemsConverter"
-                                              label="Seleccione..."
-                                              autoWidth="false"
-                                              filter="true"
-                                              filterMatchMode="startsWith">
-                            <p:ajax event="change"
-                                    listener="#{generalBrowserBean.setFilterChanged(true)}"
-                                    update="@(.browserTable),@(.filterStatus)"
-                                    process="@this" />
-
-                            <f:selectItems value="#{generalBrowserBean.tags}" var="tag"
-                                           itemLabel="#{tag.name}" itemValue="#{tag}"/>
-                        </p:selectCheckboxMenu>
-                    </div>
-                </div>
-
-                <p:repeat
-                        offset="0"
-                        size="#{cc.attrs.generalQuery.filters.size()}"
-                        step="1"
-                        varStatus="var"
-                        value="#{cc.attrs.generalQuery.filters}"
-                        var="filter">
-
-                    <smtk:basicTypeFilter relationshipDefinition="#{filter.definition}"
-                                          targetDefinition="#{filter.definition.targetDefinition}"
-                                          targets="#{filter.targets}"
-                                          multiple="#{filter.multiple}"
-                                          rendered="#{filter.definition.targetDefinition.basicType}" />
-
-                    <smtk:helperTableTypeFilter
-                            relationshipDefinition="#{filter.definition}"
-                            targetDefinition="#{filter.definition.targetDefinition}"
-                            targets="#{filter.targets}"
-                            rendered="#{filter.definition.targetDefinition.helperTable and not filter.multiple }" />
-
-                    <smtk:helperTableTypeFilterListBox
-                            relationshipDefinition="#{filter.definition}"
-                            targetDefinition="#{filter.definition.targetDefinition}"
-                            targets="#{filter.targets}"
-                            rendered="#{filter.definition.targetDefinition.helperTable and not filter.multiple and filter.composite eq 11 }" />
-
-                    <smtk:smtkTypeFilter relationshipDefinition="#{filter.definition}"
-                                         targetDefinition="#{filter.definition.targetDefinition}"
-                                         targets="#{filter.targets}"
-                                         multiple="#{filter.multiple}"
-                                         rendered="#{filter.definition.targetDefinition.SMTKType}" />
-
-                </p:repeat>
-
-                <p:repeat
-                        offset="0"
-                        size="#{cc.attrs.generalQuery.attributeFilters.size()}"
-                        step="1"
-                        varStatus="var"
-                        value="#{cc.attrs.generalQuery.attributeFilters}"
-                        var="attributeFilter">
-
-                    <smtk:helperTableTypeAttributeFilter
-                            relationshipAttributeDefinition="#{attributeFilter.definition}"
-                            targetDefinition="#{attributeFilter.definition.targetDefinition}"
-                            targets="#{attributeFilter.targets}"
-                            rendered="#{attributeFilter.definition.targetDefinition.helperTable and not attributeFilter.multiple}" />
-
-                </p:repeat>
-
-                <smtk:DateTypeFilter date="#{cc.attrs.generalQuery.creationDateSince}" name="Ingresados Desde"
-                                     dateSince="#{true}"
-                                     rendered="#{cc.attrs.generalQuery.customFilterable}" />
-                <smtk:DateTypeFilter date="#{cc.attrs.generalQuery.creationDateTo}" name="Ingresados Hasta"
-                                     dateSince="#{false}"
-                                     rendered="#{cc.attrs.generalQuery.customFilterable}" />
-                <smtk:userTypeFilter user="#{cc.attrs.generalQuery.user}" name="Usuario"
-                                     rendered="#{cc.attrs.generalQuery.customFilterable}" />
-
+                    </p:tab>
+                </p:accordionPanel>
             </div>
         </div>
+    </div>
 
-        <p:outputPanel styleClass="filterStatus">
-
-        </p:outputPanel>
+    <p:outputPanel styleClass="filterStatus">
 
     </p:outputPanel>
 

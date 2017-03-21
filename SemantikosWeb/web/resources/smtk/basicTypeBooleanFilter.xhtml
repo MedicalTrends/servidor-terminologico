@@ -16,11 +16,10 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container100">
-        <div class="ContainerIndent BoldGray FontBold">
-            <h:outputText value="#{cc.attrs.relationshipDefinition.name}" />
+    <div class="ui-g-12">
+        <h:outputText value="#{cc.attrs.relationshipDefinition.name}" />
 
-            <p:selectOneMenu value="#{generalBrowserBean.basicTypeValue.value}"
+        <p:selectOneMenu value="#{generalBrowserBean.basicTypeValue.value}"
                              itemLabel="#{cc.attrs.relationshipDefinition.name}"
                              converter="omnifaces.SelectItemsConverter"
                              rendered="#{ empty cc.attrs.targets }" >
@@ -39,8 +38,7 @@
                         process="@this" />
             </p:selectOneMenu>
 
-
-            <p:repeat  value="#{cc.attrs.targets}"
+        <p:repeat  value="#{cc.attrs.targets}"
                        offset="0"
                        size="#{cc.attrs.targets.size()}"
                        step="1"
@@ -60,7 +58,6 @@
 
 
             </p:repeat>
-        </div>
     </div>
 
 

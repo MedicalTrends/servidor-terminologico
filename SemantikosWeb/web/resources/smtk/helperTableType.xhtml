@@ -25,17 +25,17 @@
 
         <div class="ui-fluid">
 
-            <div class="Container">
+                <div class="ui-g">
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
                         <p:outputLabel for="findHTRecords1" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                         <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
-                    </div>
-                </div>
 
-                <div class="Container30 White Responsive">
-                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    </div>
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+
                         <p:outputPanel styleClass="search">
                             <p:autoComplete id="findHTRecords1" scrollHeight="200"
                                             completeMethod="#{helperTableBean.getRecordSearchInput}"
@@ -76,7 +76,7 @@
                         </p:outputPanel>
                     </div>
                 </div>
-            </div>
+
         </div>
     </p:panel>
 
@@ -93,19 +93,17 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
 
                             <p:outputLabel for="findHTRecords2" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                             <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
-                        </div>
                     </div>
 
-                    <div class="Container#{cc.attrs.relationshipDefinition.ATC?'50':'30'} White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-6 ui-lg-#{cc.attrs.relationshipDefinition.ATC?'5':'3'}">
+
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
                                 <p:inputTextarea disabled="true" id="findHTRecords2_" value="#{relationship.target.getCellByColumnName('descripcion completa')}" rendered="#{cc.attrs.relationshipDefinition.ATC}"  />
@@ -115,7 +113,7 @@
                                     <i class="fa fa-close fa-lg"  />
                                 </p:commandLink>
                             </p:outputPanel>
-                        </div>
+
                     </div>
 
                 </div>
@@ -132,20 +130,16 @@
 
         <div class="ui-fluid">
 
-            <div class="Container">
+            <div class="ui-g">
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
 
                         <p:outputLabel for="findHTRecords3" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                         <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
-                    </div>
                 </div>
 
-                <div class="Container20 White Responsive">
-
-                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
 
                         <p:outputPanel styleClass="search">
 
@@ -181,8 +175,6 @@
 
                         </p:outputPanel>
 
-                    </div>
-
                 </div>
                 <!-- Atributos de relación -->
                 <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
@@ -203,19 +195,16 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
 
                             <p:outputLabel for="findHTRecords4" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                             <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
-                        </div>
                     </div>
 
-                    <div class="Container30 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
 
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="findHTRecords4" value="#{relationship.target.description}" />
@@ -226,7 +215,6 @@
                                 </p:commandLink>
                             </p:outputPanel>
 
-                        </div>
                     </div>
 
                     <!-- Atributos de relación -->
@@ -253,10 +241,9 @@
 
         <div class="ui-fluid">
 
-            <div class="Container">
+            <div class="ui-g">
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
 
                         <p:outputPanel styleClass="search">
 
@@ -293,7 +280,6 @@
                             </p:autoComplete>
                             <i class="fa fa-search fa-lg"  />
                         </p:outputPanel>
-                    </div>
                 </div>
             </div>
         </div>

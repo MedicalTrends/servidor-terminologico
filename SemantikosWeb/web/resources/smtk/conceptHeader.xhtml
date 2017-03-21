@@ -27,7 +27,7 @@
 
                     <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
 
-                            <p:outputLabel for="toBeReviewedCheck" value="Indicadores" style="padding-top: 0.5em" />
+                            <p:outputLabel for="toBeReviewedCheck" value="Indicadores" />
 
                             <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank">
                                 <p:selectBooleanCheckbox id="toBeReviewedCheck" itemLabel="Revisar" disabled="#{not cc.attrs.concept.editable}"
@@ -36,7 +36,7 @@
                                                          value="#{cc.attrs.concept.toBeConsulted}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
                             </p:panelGrid>
 
-                            <p:outputLabel for="toBeReviewedCheck" value="Grado de Definición" style="padding-top: 0.5em" />
+                            <p:outputLabel for="toBeReviewedCheck" value="Grado de Definición"  />
 
                             <p:selectOneRadio id="city" value="#{conceptBean.fullyDefined}" layout="grid" columns="2"
                                               disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept) or not conceptBean.editable}">

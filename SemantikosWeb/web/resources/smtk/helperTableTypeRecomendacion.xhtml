@@ -40,7 +40,8 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
+
 
                     <!-- Atributo tipo recomendación -->
                     <smtk:attributeByName concept="#{cc.attrs.concept}"
@@ -48,40 +49,38 @@
                                           name="tipo recomendación"
                     />
 
-                    <div class="Container20 White Responsive">
 
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
 
-                            <p:selectOneMenu id="findHTRecords6" scrollHeight="200"
-                                             forceSelection="true"
-                                             styleClass="recomendacion  "
-                                             value="#{conceptBean.selectedHelperTableRecord}"
-                                             var="r"
-                                             autoWidth="false"
-                                             filter="true"
-                                             rendered="#{cc.attrs.concept.editable}"
-                                             converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu id="findHTRecords6" scrollHeight="200"
+                                         forceSelection="true"
+                                         styleClass="recomendacion  "
+                                         value="#{conceptBean.selectedHelperTableRecord}"
+                                         var="r"
+                                         autoWidth="false"
+                                         filter="true"
+                                         rendered="#{cc.attrs.concept.editable}"
+                                         converter="omnifaces.SelectItemsConverter">
 
-                                <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
-                                <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition, cc.attrs.relationshipDefinition.getRelationshipAttributeDefinitionByName('tipo recomendación'), cc.attrs.relationshipDefinition)}"
-                                               var="record"
-                                               itemLabel="#{record.description}"
-                                               itemValue="#{record}"/>
-                                <p:column>
-                                    <h:outputText value="#{r.description}"/>
-                                </p:column>
-                                <p:ajax event="itemSelect"
-                                        listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
+                            <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
+                            <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition, cc.attrs.relationshipDefinition.getRelationshipAttributeDefinitionByName('tipo recomendación'), cc.attrs.relationshipDefinition)}"
+                                           var="record"
+                                           itemLabel="#{record.description}"
+                                           itemValue="#{record}"/>
+                            <p:column>
+                                <h:outputText value="#{r.description}"/>
+                            </p:column>
+                            <p:ajax event="itemSelect"
+                                    listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
 
-                                        process="@this"/>
-                                <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
-                                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                                <!-- Parámetros del validador -->
-                                <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
-                                <!---->
-                            </p:selectOneMenu>
+                                    process="@this"/>
+                            <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                            <!-- Parámetros del validador -->
+                            <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
+                            <!---->
+                        </p:selectOneMenu>
 
-                        </div>
                     </div>
 
                     <!-- Atributos: receta, gestión, indicación -->
@@ -100,8 +99,7 @@
                                           name="indicación"
                     />
 
-                    <div class="Container10 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}" style="text-align: center">
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
                             <p:commandButton
                                     process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                     action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
@@ -109,7 +107,6 @@
                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                     value="Agregar">
                             </p:commandButton>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -128,7 +125,7 @@
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                     style="width: 100%"
+                     style="width: 100%; margin: 10px"
                      reflow="true">
 
             <!-- Parámetros del validador -->

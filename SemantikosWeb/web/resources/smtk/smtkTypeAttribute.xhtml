@@ -20,11 +20,9 @@
 
 <composite:implementation>
 
-    <div class="Container20 White Responsive">
+    <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-            <p:outputPanel id="smtkTypeAttributeNew"  styleClass="search">
+        <p:outputPanel id="smtkTypeAttributeNew"  styleClass="search">
 
                 <p:autoComplete id="smtkTypeAttributeSimple" scrollHeight="200"
 
@@ -53,7 +51,6 @@
                 <i class="fa fa-search fa-lg"  />
             </p:outputPanel>
 
-        </div>
     </div>
 
     <h:outputStylesheet id="customCSS">

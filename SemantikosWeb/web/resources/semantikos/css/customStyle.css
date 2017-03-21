@@ -138,6 +138,10 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     left: 10px;
 }
 
+.fa-lg {
+    line-height: .5em !important;
+}
+
 .conceptFilters .ui-menubar .ui-menubar-options {
     float: left;
 }
@@ -199,4 +203,8 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 .searchSCT.ui-autocomplete-panel {
     width: 50%;
+}
+
+.layout-wrapper .right-sidebar {
+    z-index: 999 !important;
 }
