@@ -53,7 +53,7 @@ public interface QueryManager {
      *
      * @param query El objeto de consulta para el navegador de categorías
      */
-    public List<ConceptSMTK> executeQuery(GeneralQuery query);
+    public List<ConceptDTO> executeQuery(GeneralQuery query);
 
     /**
      * Este método es responsable de ejecutar una consulta en el navegador de descripciones,

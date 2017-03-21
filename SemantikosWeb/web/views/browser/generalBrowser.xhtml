@@ -100,9 +100,7 @@
                                             <h:outputText value="#{column.relationshipDefinition.name}" />
                                         </f:facet>
                                         <p:outputPanel>
-                                            <smtk:basicTypeCell basicTypeDefinition="#{column.relationshipDefinition.targetDefinition}" relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.basicType}" />
-                                            <smtk:helperTableTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.helperTable}" />
-                                            <smtk:smtkTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.SMTKType}" />
+                                            <smtk:relationshipDTO relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" />
                                         </p:outputPanel>
                                     </p:columns>
 

@@ -5,6 +5,7 @@ import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.browser.ConceptDTO;
 import cl.minsal.semantikos.model.browser.GeneralQuery;
 import cl.minsal.semantikos.model.browser.QueryFilter;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
@@ -71,7 +72,7 @@ public class GeneralBrowserBean implements Serializable {
     /**
      * Lista de conceptos para el despliegue del resultado de la consulta
      */
-    private LazyDataModel<ConceptSMTK> concepts;
+    private LazyDataModel<ConceptDTO> concepts;
 
     /**
      * Categoría sobre la cual se está navegando
@@ -134,9 +135,9 @@ public class GeneralBrowserBean implements Serializable {
         /**
          * Ejecutar la consulta
          */
-        concepts = new LazyDataModel<ConceptSMTK>() {
+        concepts = new LazyDataModel<ConceptDTO>() {
             @Override
-            public List<ConceptSMTK> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+            public List<ConceptDTO> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
 
@@ -155,7 +156,7 @@ public class GeneralBrowserBean implements Serializable {
                 else
                     generalQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
 
-                List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(generalQuery);
+                List<ConceptDTO> conceptSMTKs = queryManager.executeQuery(generalQuery);
                 this.setRowCount(queryManager.countQueryResults(generalQuery));
 
                 return conceptSMTKs;
@@ -190,11 +191,11 @@ public class GeneralBrowserBean implements Serializable {
         return someTags;
     }
 
-    public LazyDataModel<ConceptSMTK> getConcepts() {
+    public LazyDataModel<ConceptDTO> getConcepts() {
         return concepts;
     }
 
-    public void setConcepts(LazyDataModel<ConceptSMTK> concepts) {
+    public void setConcepts(LazyDataModel<ConceptDTO> concepts) {
         this.concepts = concepts;
     }
 

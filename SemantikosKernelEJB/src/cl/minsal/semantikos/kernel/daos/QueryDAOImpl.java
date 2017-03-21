@@ -9,14 +9,17 @@ import cl.minsal.semantikos.model.browser.*;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -74,7 +77,7 @@ public class QueryDAOImpl implements QueryDAO {
 
                 if(  query instanceof  GeneralQuery ) {
                     ConceptSMTK recoveredConcept = conceptManager.getConceptByID( rs.getLong(1));
-                    queryResult.add(recoveredConcept);
+                    queryResult.add(new ConceptDTO(recoveredConcept));
                 }
                 if(  query instanceof  DescriptionQuery ) {
                     Description recoveredDescription =  descriptionManager.getDescriptionByID(rs.getLong(1));
@@ -509,6 +512,46 @@ public class QueryDAOImpl implements QueryDAO {
         }
 
         return compositeValue;
+    }
+
+    @Override
+    public List<RelationshipDTO> getRelationshipsDTOByConcept(ConceptDTO concept) {
+
+        ConnectionBD connectionBD = new ConnectionBD();
+        String selectRecord = "{call semantikos.get_relationships_dto_by_concept(?)}";
+        ObjectMapper mapper = new ObjectMapper();
+        RelationshipDTO[] jsonRecords;
+        try (Connection connection = connectionBD.getConnection();
+             CallableStatement call = connection.prepareCall(selectRecord)) {
+
+            call.setLong(1,concept.getId());
+            /* Se prepara y realiza la consulta */
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+
+                String json = rs.getString(1);
+                if(json==null)
+                    return new ArrayList<>();
+
+                try {
+                    jsonRecords = mapper.readValue(json, RelationshipDTO[].class);
+                } catch (IOException e) {
+                    logger.error("Hubo un error procesar los resultados con JSON.", e);
+                    e.printStackTrace();
+                    throw new EJBException(e);
+                }
+
+            } else {
+                throw new EJBException("Error imposible en HelperTableDAOImpl");
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Hubo un error al acceder a la base de datos.", e);
+            throw new EJBException(e);
+        }
+
+        return Arrays.asList(jsonRecords);
     }
 
     private void bindParameter(int paramNumber, CallableStatement call, Connection connection, QueryParameter param)

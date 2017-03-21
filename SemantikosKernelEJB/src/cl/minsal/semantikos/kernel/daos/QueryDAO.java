@@ -31,6 +31,8 @@ public interface QueryDAO {
 
     List<RelationshipDefinition> getSecondOrderShowableAttributesByCategory(Category category);
 
+    List<RelationshipDTO> getRelationshipsDTOByConcept(ConceptDTO concept);
+
     boolean getCustomFilteringValue(Category category);
 
     boolean getMultipleFilteringValue(Category category, RelationshipDefinition relationshipDefinition);

@@ -31,7 +31,7 @@ public class QueryManagerImpl implements QueryManager {
     private CategoryManager categoryManager;
 
     @EJB
-    private RelationshipManager relationshipManager;
+    private RelationshipDAO relationshipDAO;
 
     @Override
     public GeneralQuery getDefaultGeneralQuery(Category category) {
@@ -69,55 +69,48 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
-    public List<ConceptSMTK> executeQuery(GeneralQuery query) {
+    public List<ConceptDTO> executeQuery(GeneralQuery query) {
 
         //return conceptQueryDAO.callQuery(query);
-        List<ConceptSMTK> conceptSMTKs = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
-        //Map<Long, ArrayList<Relationship>> relationshipsMap = relationshipManager.getRelationshipsBySourceConcepts(conceptSMTKs);
+        List<ConceptDTO> conceptSMTKs = (List<ConceptDTO>) (Object) queryDAO.executeQuery(query);
 
-        Category category = query.getCategories().get(0);
-
-        boolean showRelatedConcepts = query.isShowRelatedConcepts();//getShowableRelatedConceptsValue(category);
-        List<RelationshipDefinition> sourceSecondOrderShowableAttributes = query.getSourceSecondOrderShowableAttributes();//getSourceSecondOrderShowableAttributesByCategory(category);
-
-        for (ConceptSMTK conceptSMTK : conceptSMTKs) {
+        for (ConceptDTO conceptSMTK : conceptSMTKs) {
 
             if(!query.getColumns().isEmpty()) {
 
-                //conceptSMTK.setRelationships(conceptManager.loadRelationships(conceptSMTK));
-                conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
-                //conceptSMTK.setRelationships(relationshipsMap.get(conceptSMTK.getId()));
+                //conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
+                conceptSMTK.setRelationshipsDTO(queryDAO.getRelationshipsDTOByConcept(conceptSMTK));
 
                 // Adding second order columns, if this apply
-
                 List<Relationship> secondOrderRelationships = new ArrayList<>();
 
                 for (RelationshipDefinition secondOrderAttributes : query.getSecondOrderDefinitions()) {
 
-                    for (RelationshipDefinition relationshipDefinition : sourceSecondOrderShowableAttributes) {
+                    for (RelationshipDefinition relationshipDefinition : query.getSourceSecondOrderShowableAttributes()) {
 
-                        for (Relationship firstOrderRelationship : conceptSMTK.getRelationshipsByRelationDefinition(relationshipDefinition)) {
+                        for (RelationshipDTO firstOrderRelationship : conceptSMTK.getRelationshipsDTOByName(relationshipDefinition.getName())) {
 
-                            ConceptSMTK targetConcept = (ConceptSMTK)firstOrderRelationship.getTarget();
+                            TargetDTO targetConcept = firstOrderRelationship.getTarget();
 
-                            for (Relationship secondOrderRelationship : relationshipManager.getRelationshipsBySourceConcept(targetConcept)) {
+                            for (Relationship secondOrderRelationship : relationshipDAO.getRelationshipsBySourceConcept(targetConcept.getId())) {
 
                                 if(secondOrderAttributes.equals(secondOrderRelationship.getRelationshipDefinition())) {
-
-                                    secondOrderRelationships.add(secondOrderRelationship);
-
+                                    //secondOrderRelationships.add(secondOrderRelationship);
+                                    conceptSMTK.getRelationshipsDTO().add(new RelationshipDTO(secondOrderRelationship));
                                 }
                             }
                         }
                     }
                 }
 
-                conceptSMTK.getRelationships().addAll(secondOrderRelationships);
+                //conceptSMTK.getRelationships().addAll(secondOrderRelationships);
                 // Adding related concepts to relationships, if this apply
-                if(showRelatedConcepts) {
+                if(query.isShowRelatedConcepts()) {
                     for (ConceptSMTK relatedConcept : conceptManager.getRelatedConcepts(conceptSMTK)) {
                         RelationshipDefinition rd = new RelationshipDefinition(relatedConcept.getCategory().getId(), relatedConcept.getCategory().getName(), relatedConcept.getCategory().getName(), relatedConcept.getCategory(), MultiplicityFactory.ONE_TO_ONE);
-                        conceptSMTK.addRelationship(new Relationship(conceptSMTK, relatedConcept, rd, new ArrayList<RelationshipAttribute>(), null));
+                        Relationship r = new Relationship(conceptSMTK, relatedConcept, rd, new ArrayList<RelationshipAttribute>(), null);
+                        //conceptSMTK.addRelationship(new Relationship(conceptSMTK, relatedConcept, rd, new ArrayList<RelationshipAttribute>(), null));
+                        conceptSMTK.getRelationshipsDTO().add(new RelationshipDTO(r));
                     }
                 }
 
