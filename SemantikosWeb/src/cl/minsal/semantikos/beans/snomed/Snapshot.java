@@ -1,38 +1,94 @@
 package cl.minsal.semantikos.beans.snomed;
 
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
-import org.apache.commons.io.FilenameUtils;
+import cl.minsal.semantikos.kernel.components.SnomedCTManager;
+import cl.minsal.semantikos.model.snomedct.*;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
 
 import java.io.*;
-import java.nio.file.Files;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @ManagedBean(name = "snapshotBean")
 public class Snapshot {
 
     private String destination="/home/des01c7/Documentos/temp/";
 
-    public void handleFileUpload(FileUploadEvent event) {
+
+    private List<ConceptSCT> conceptSCTs;
+    private List<DescriptionSCT> descriptionSCTs;
+    private List<RelationshipSnapshotSCT> relationshipSCTs;
+    private List<LanguageRefsetSCT> languageRefsetSCTs;
+    private List<TransitiveSCT> transitiveSCTs;
+
+
+    @EJB
+    private SnomedCTManager snomedCTManager;
+
+    public void uploadFileConcept(FileUploadEvent event) {
         FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            String dir=copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            chargeConcept(dir);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void uploadFileDescription(FileUploadEvent event) {
+        FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        try {
+            String dir=copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            chargeDescription(dir);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void uploadFileRelationship(FileUploadEvent event) {
+        FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        try {
+            String dir=copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            chargeRelationship(dir);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void uploadFileTransitive(FileUploadEvent event) {
+        FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        try {
+            String dir=copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            chargeTransitive(dir);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public void uploadFileLanguageRefSet(FileUploadEvent event) {
+        FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
 
-    public void copyFile(String fileName, InputStream in) {
+        FacesContext.getCurrentInstance().addMessage(null, message);
         try {
+            String dir=copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            chargeLanguajeRefset(dir);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-
-            // write the inputStream to a FileOutputStream
+    public String copyFile(String fileName, InputStream in) {
+        try {
             OutputStream out = new FileOutputStream(new File(destination + fileName));
 
             int read = 0;
@@ -46,9 +102,259 @@ public class Snapshot {
             out.flush();
             out.close();
 
-            System.out.println("New file created!");
+            return destination + fileName;
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        return null;
     }
+
+    public void chargeConcept(String dir){
+        String cadena;
+        FileReader f = null;
+        conceptSCTs= new ArrayList<>();
+        try {
+            f = new FileReader(dir);
+
+        BufferedReader b = new BufferedReader(f);
+
+        while ((cadena = b.readLine()) != null) {
+
+            int i = 0;
+            long id=0L;
+            String affectiveTime="";
+            boolean active=false;
+            long moduleId=0L;
+            long definitionStatusId=0L;
+
+            for (String token : cadena.split("\t")) {
+                if (token.trim().length() != 0 && i == 0)
+                    id=Long.valueOf(token);
+                if (token.trim().length() != 0 && i == 1)
+                    affectiveTime=token;
+                if (token.trim().length() != 0 && i == 2)
+                    active=(token.equals("1"))?true:false;
+                if (token.trim().length() != 0 && i == 3)
+                    moduleId=Long.valueOf(token);
+                if (token.trim().length() != 0 && i == 4)
+                    definitionStatusId=Long.valueOf(token);
+                ++i;
+            }
+
+            conceptSCTs.add(new ConceptSCT(id,Timestamp.valueOf(affectiveTime),active,moduleId,definitionStatusId));
+        }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void chargeDescription(String dir){
+        String cadena;
+        FileReader f = null;
+        descriptionSCTs= new ArrayList<>();
+        try {
+            f = new FileReader(dir);
+
+            BufferedReader b = new BufferedReader(f);
+
+            while ((cadena = b.readLine()) != null) {
+
+                int i = 0;
+                long id=0L;
+                String effectiveTime=null;
+                boolean active= false;
+                long moduleId=0L;
+                long conceptId=0L;
+                String languageCode=null;
+                long typeId= 0L;
+                String term= null;
+                long caseSignificanceId=0L;
+
+                for (String token : cadena.split("\t")) {
+                    if (token.trim().length() != 0 && i == 0)
+                        id=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 1)
+                        effectiveTime=token;
+                    if (token.trim().length() != 0 && i == 2)
+                        active=(token.equals("1"))?true:false;
+                    if (token.trim().length() != 0 && i == 3)
+                        moduleId=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 4)
+                        conceptId=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 5)
+                        languageCode=token;
+                    if (token.trim().length() != 0 && i == 6)
+                        typeId=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 7)
+                        term=token;
+                    if (token.trim().length() != 0 && i == 8)
+                        caseSignificanceId=Long.valueOf(token);
+                    ++i;
+                }
+                descriptionSCTs.add(new DescriptionSCT(id,DescriptionSCTType.valueOf(typeId),Timestamp.valueOf(effectiveTime),active,moduleId,conceptId,languageCode,term,caseSignificanceId));
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void chargeRelationship(String dir){
+        String cadena;
+        FileReader f = null;
+        relationshipSCTs= new ArrayList<>();
+        try {
+            f = new FileReader(dir);
+
+            BufferedReader b = new BufferedReader(f);
+
+            while ((cadena = b.readLine()) != null) {
+
+                int i = 0;
+                long id=0L;
+                String effectiveTime=null;
+                boolean active=false;
+                long moduleId=0L;
+                long sourceId=0L;
+                long destinationId=0L;
+                long relationshipGroup=0L;
+                long typeId=0L;
+                long characteristicTypeId=0L;
+                long modifierId=0L;
+
+
+                for (String token : cadena.split("\t")) {
+                    if (token.trim().length() != 0 && i == 0)
+                        id=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 1)
+                        effectiveTime=token;
+                    if (token.trim().length() != 0 && i == 2)
+                        active=(token.equals("1"))?true:false;
+                    if (token.trim().length() != 0 && i == 3)
+                        moduleId=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 4)
+                        sourceId=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 5)
+                        destinationId=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 6)
+                        relationshipGroup=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 7)
+                        typeId=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 8)
+                        characteristicTypeId=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 8)
+                        modifierId=Long.valueOf(token);
+                    ++i;
+                }
+                relationshipSCTs.add(new RelationshipSnapshotSCT(id,Timestamp.valueOf(effectiveTime),active,moduleId,sourceId,destinationId,relationshipGroup,typeId,characteristicTypeId,modifierId));
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void chargeLanguajeRefset(String dir){
+        String cadena;
+        FileReader f = null;
+        languageRefsetSCTs= new ArrayList<>();
+        try {
+            f = new FileReader(dir);
+
+            BufferedReader b = new BufferedReader(f);
+
+            while ((cadena = b.readLine()) != null) {
+
+                int i = 0;
+                long id=0L;
+                String affectiveTime=null;
+                boolean active=false;
+                long moduleId=0L;
+                long refsetId=0L;
+                long referencedComponentId=0L;
+                long acceptabilityId=0L;
+
+                for (String token : cadena.split("\t")) {
+                    if (token.trim().length() != 0 && i == 0)
+                        id=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 1)
+                        affectiveTime=token;
+                    if (token.trim().length() != 0 && i == 2)
+                        active=(token.equals("1"))?true:false;
+                    if (token.trim().length() != 0 && i == 3)
+                        moduleId=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 4)
+                        refsetId=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 5)
+                        referencedComponentId=Long.valueOf(token);
+                    if (token.trim().length() != 0 && i == 6)
+                        acceptabilityId=Long.valueOf(token);
+
+                    ++i;
+                }
+                languageRefsetSCTs.add(new LanguageRefsetSCT(id,Timestamp.valueOf(affectiveTime),active,moduleId,refsetId,referencedComponentId,acceptabilityId));
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public void chargeTransitive(String dir){
+        String cadena;
+        FileReader f = null;
+        transitiveSCTs= new ArrayList<>();
+        try {
+            f = new FileReader(dir);
+
+            BufferedReader b = new BufferedReader(f);
+
+            while ((cadena = b.readLine()) != null) {
+
+                int i = 0;
+                long parent=0L;
+                long child=0L;
+
+                for (String token : cadena.split("\t")) {
+                    if (token.trim().length() != 0 && i == 0)
+                        parent=Long.valueOf(token.replace("\"", ""));
+                    if (token.trim().length() != 0 && i == 1)
+                        child=Long.valueOf(token);
+
+                    ++i;
+                }
+                transitiveSCTs.add(new TransitiveSCT(parent,child));
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
 }

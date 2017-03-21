@@ -1,9 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.model.snomedct.ConceptSCT;
-import cl.minsal.semantikos.model.snomedct.DescriptionSCT;
-import cl.minsal.semantikos.model.snomedct.DescriptionSCTType;
+import cl.minsal.semantikos.model.snomedct.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -184,6 +182,186 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         }
 
         return concepts;
+    }
+
+    @Override
+    public void persistSnapshotConceptSCT(ConceptSCT conceptSCT) {
+        long idConceptSCT = 0;
+
+        ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.create_concept_sct(?,?,?,?,?)}")) {
+
+            call.setLong(1,conceptSCT.getId());
+            call.setTimestamp(2,conceptSCT.getEffectiveTime());
+            call.setBoolean(3,conceptSCT.isActive());
+            call.setLong(4,conceptSCT.getModuleId());
+            call.setLong(5,conceptSCT.getDefinitionStatusId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+                idConceptSCT = rs.getLong(1);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al persistir Concept Snomed CT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+    }
+
+    @Override
+    public void persistSnapshotDescriptionSCT(DescriptionSCT descriptionSCT) {
+        long idDescriptionSCT = 0;
+
+        ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.create_description_sct(?,?,?,?,?,?,?,?,?)}")) {
+
+            call.setLong(1,descriptionSCT.getId());
+            call.setTimestamp(2,descriptionSCT.getEffectiveTime());
+            call.setBoolean(3,descriptionSCT.isActive());
+            call.setLong(4,descriptionSCT.getModuleId());
+            call.setLong(5,descriptionSCT.getConceptId());
+            call.setString(6,descriptionSCT.getLanguageCode());
+            call.setLong(7,descriptionSCT.getDescriptionType().getTypeId());
+            call.setString(8,descriptionSCT.getTerm());
+            call.setLong(9,descriptionSCT.getCaseSignificanceId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+                idDescriptionSCT = rs.getLong(1);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al persistir Description Snomed CT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+    }
+
+    @Override
+    public void persistSnapshotRelationshipSCT(RelationshipSnapshotSCT relationshipSnapshotSCT) {
+        long idRelationshipSCT = 0;
+
+        ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.create_description_sct(?,?,?,?,?,?,?,?,?,?)}")) {
+
+            call.setLong(1,relationshipSnapshotSCT.getId());
+            call.setTimestamp(2,relationshipSnapshotSCT.getEffectiveTime());
+            call.setBoolean(3,relationshipSnapshotSCT.isActive());
+            call.setLong(4,relationshipSnapshotSCT.getModuleId());
+            call.setLong(5,relationshipSnapshotSCT.getSourceId());
+            call.setLong(6,relationshipSnapshotSCT.getDestinationId());
+            call.setLong(7,relationshipSnapshotSCT.getRelationshipGroup());
+            call.setLong(8,relationshipSnapshotSCT.getTypeId());
+            call.setLong(9,relationshipSnapshotSCT.getCharacteristicTypeId());
+            call.setLong(10,relationshipSnapshotSCT.getModifierId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+                idRelationshipSCT = rs.getLong(1);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al persistir Relationship Snomed CT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+    }
+
+    @Override
+    public void persistSnapshotTransitiveSCT(TransitiveSCT transitiveSCT) {
+        long idTransitiveSCT = 0;
+
+        ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.create_transitive_sct(?,?)}")) {
+
+            call.setLong(1,transitiveSCT.getIdPartent());
+            call.setLong(2,transitiveSCT.getIdChild());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+                idTransitiveSCT = rs.getLong(1);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al persistir Relationship Snomed CT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+    }
+
+    @Override
+    public void persistSnapshotLanguageRefSetSCT(LanguageRefsetSCT languageRefsetSCT) {
+        long idTransitiveSCT = 0;
+
+        ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.create_transitive_sct(?,?)}")) {
+
+            call.setLong(1,languageRefsetSCT.getId());
+            call.setTimestamp(2,languageRefsetSCT.getEffectiveTime());
+            call.setBoolean(3,languageRefsetSCT.isActive());
+            call.setLong(4,languageRefsetSCT.getModuleId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+                idTransitiveSCT = rs.getLong(1);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al persistir Relationship Snomed CT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+    }
+
+    @Override
+    public void updateSnapshotConceptSCT() {
+
+    }
+
+    @Override
+    public void updateSnapshotDescriptionSCT() {
+
+    }
+
+    @Override
+    public void updateSnapshotRelationshipSCT() {
+
+    }
+
+    @Override
+    public void updateSnapshotTransitiveSCT() {
+
+    }
+
+    @Override
+    public void updateSnapshotLanguageRefSetSCT() {
+
+    }
+
+    @Override
+    public void deleteSnapshotTransitiveSCT() {
+
     }
 
     @Override

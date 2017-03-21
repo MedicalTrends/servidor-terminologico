@@ -32,7 +32,7 @@
 
                         <h2>Concept</h2>
 
-                        <p:fileUpload fileUploadListener="#{snapshotBean.handleFileUpload}" mode="advanced"
+                        <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileConcept}" mode="advanced"
                                       dragDropSupport="false"
                                       multiple="true" update="messages1" sizeLimit="1000000000" fileLimit="1"
                                       />
@@ -48,9 +48,9 @@
 
                         <h2>Description</h2>
 
-                        <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced"
+                        <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileDescription}" mode="advanced"
                                       dragDropSupport="false"
-                                      multiple="true" update="messages2" sizeLimit="100000" fileLimit="3"
+                                      multiple="true" update="messages2" sizeLimit="1000000000" fileLimit="1"
                                       allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
 
                         <p:growl id="messages2" showDetail="true"/>
@@ -64,9 +64,9 @@
 
                         <h2>Relationship</h2>
 
-                        <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced"
+                        <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileRelationship}" mode="advanced"
                                       dragDropSupport="false"
-                                      multiple="true" update="messages3" sizeLimit="100000" fileLimit="3"
+                                      multiple="true" update="messages3" sizeLimit="1000000000" fileLimit="1"
                                       allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
 
                         <p:growl id="messages3" showDetail="true"/>
@@ -78,14 +78,30 @@
                 <div class="Container100">
                     <div class="ContainerIndent">
 
-                        <h2>Transitive</h2>
+                        <h2>Language RefSet</h2>
 
-                        <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced"
+                        <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileLanguageRefSet}" mode="advanced"
                                       dragDropSupport="false"
-                                      multiple="true" update="messages4" sizeLimit="100000" fileLimit="3"
+                                      multiple="true" update="messages4" sizeLimit="1000000000" fileLimit="1"
                                       allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
 
                         <p:growl id="messages4" showDetail="true"/>
+
+
+                    </div>
+                </div>
+
+                <div class="Container100">
+                    <div class="ContainerIndent">
+
+                        <h2>Transitive</h2>
+
+                        <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileTransitive}" mode="advanced"
+                                      dragDropSupport="false"
+                                      multiple="true" update="messages5" sizeLimit="1000000000" fileLimit="1"
+                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+
+                        <p:growl id="messages5" showDetail="true"/>
 
 
                     </div>

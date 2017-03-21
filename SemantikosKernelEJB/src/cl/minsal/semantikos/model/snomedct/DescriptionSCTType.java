@@ -30,6 +30,14 @@ public enum DescriptionSCTType {
         throw new Exception("Error parseando el valor del Description Type");
     }
 
+    public long getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(long typeId) {
+        this.typeId = typeId;
+    }
+
     public String getName() {
         return name;
     }

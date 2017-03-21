@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.model.snomedct.ConceptSCT;
-import cl.minsal.semantikos.model.snomedct.DescriptionSCT;
+import cl.minsal.semantikos.model.RefSet;
+import cl.minsal.semantikos.model.snomedct.*;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -97,4 +97,19 @@ public interface SnomedCTDAO {
      * @return La lista de conceptos que satisfacen el criterio de búsqueda.
      */
     long countTruncateMatch(String pattern, Integer group);
+
+    public void persistSnapshotConceptSCT(ConceptSCT conceptSCT);
+    public void persistSnapshotDescriptionSCT(DescriptionSCT descriptionSCT);
+    public void persistSnapshotRelationshipSCT(RelationshipSnapshotSCT relationshipSnapshotSCT);
+    public void persistSnapshotTransitiveSCT(TransitiveSCT transitiveSCT);
+    public void persistSnapshotLanguageRefSetSCT(LanguageRefsetSCT languageRefsetSCT);
+
+
+    public void updateSnapshotConceptSCT();
+    public void updateSnapshotDescriptionSCT();
+    public void updateSnapshotRelationshipSCT();
+    public void updateSnapshotTransitiveSCT();
+    public void updateSnapshotLanguageRefSetSCT();
+
+    public void deleteSnapshotTransitiveSCT();
 }

@@ -103,4 +103,59 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     public ConceptSCT getConceptByID(long conceptID) {
         return snomedctDAO.getConceptByID(conceptID);
     }
+
+    @Override
+    public void persistSnapshotConceptSCT() {
+
+    }
+
+    @Override
+    public void persistSnapshotDescriptionSCT() {
+
+    }
+
+    @Override
+    public void persistSnapshotRelationshipSCT() {
+
+    }
+
+    @Override
+    public void persistSnapshotTransitiveSCT() {
+
+    }
+
+    @Override
+    public void persistSnapshotLanguageRefSetSCT() {
+
+    }
+
+    @Override
+    public void updateSnapshotConceptSCT() {
+
+    }
+
+    @Override
+    public void updateSnapshotDescriptionSCT() {
+
+    }
+
+    @Override
+    public void updateSnapshotRelationshipSCT() {
+
+    }
+
+    @Override
+    public void updateSnapshotTransitiveSCT() {
+
+    }
+
+    @Override
+    public void updateSnapshotLanguageRefSetSCT() {
+
+    }
+
+    @Override
+    public void deleteSnapshotTransitiveSCT() {
+
+    }
 }

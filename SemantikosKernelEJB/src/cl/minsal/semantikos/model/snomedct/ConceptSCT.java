@@ -99,6 +99,14 @@ public class ConceptSCT extends PersistentEntity implements Target {
         return idSnomedCT;
     }
 
+    public long getDefinitionStatusId() {
+        return definitionStatusId;
+    }
+
+    public void setDefinitionStatusId(long definitionStatusId) {
+        this.definitionStatusId = definitionStatusId;
+    }
+
     @Override
     public TargetType getTargetType() {
         return TargetType.SnomedCT;

@@ -99,4 +99,19 @@ public interface SnomedCTManager {
      * @return El Concepto cuyo CONCEPT_ID corresponde a <code>conceptID</code>.
      */
     public ConceptSCT getConceptByID(long conceptID);
+
+    public void persistSnapshotConceptSCT();
+    public void persistSnapshotDescriptionSCT();
+    public void persistSnapshotRelationshipSCT();
+    public void persistSnapshotTransitiveSCT();
+    public void persistSnapshotLanguageRefSetSCT();
+
+
+    public void updateSnapshotConceptSCT();
+    public void updateSnapshotDescriptionSCT();
+    public void updateSnapshotRelationshipSCT();
+    public void updateSnapshotTransitiveSCT();
+    public void updateSnapshotLanguageRefSetSCT();
+
+    public void deleteSnapshotTransitiveSCT();
 }
