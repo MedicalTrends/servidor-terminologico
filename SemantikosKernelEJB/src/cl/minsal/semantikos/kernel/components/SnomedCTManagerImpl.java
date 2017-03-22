@@ -56,7 +56,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
 
         results = snomedctDAO.findPerfectMatch(patternStandard, group);
 
-        if(results.isEmpty())
+        if (results.isEmpty())
             results = snomedctDAO.findTruncateMatch(patternStandard, group);
 
         new ConceptSearchBR().applyPostActions(results);
@@ -68,7 +68,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     public long countConceptByPattern(String pattern, Integer group) {
         String patternStandard = conceptSearchBR.standardizationPattern(pattern);
 
-        long count= countPerfectMatch(patternStandard, group);
+        long count = countPerfectMatch(patternStandard, group);
 
         if (count != 0) {
             return count;
@@ -108,31 +108,76 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
 
     @Override
     public void chargeSNAPSHOT(List<ConceptSCT> conceptSCTs, List<DescriptionSCT> descriptionSCTs, List<RelationshipSnapshotSCT> relationshipSnapshotSCTs, List<LanguageRefsetSCT> languageRefsetSCTs, List<TransitiveSCT> transitiveSCTs) {
-        validateDescriptionSCT(conceptSCTs,descriptionSCTs);
+
+        for (ConceptSCT conceptSCT : conceptSCTs) {
+            snomedctDAO.persistSnapshotConceptSCT(conceptSCT);
+            break;
+        }
+        /*
+        for (DescriptionSCT descriptionSCT : descriptionSCTs) {
+            snomedctDAO.persistSnapshotDescriptionSCT(descriptionSCT);
+        }
+        for (RelationshipSnapshotSCT relationshipSnapshotSCT : relationshipSnapshotSCTs) {
+            snomedctDAO.persistSnapshotRelationshipSCT(relationshipSnapshotSCT);
+        }
+        for (LanguageRefsetSCT languageRefsetSCT : languageRefsetSCTs) {
+            snomedctDAO.persistSnapshotLanguageRefSetSCT(languageRefsetSCT);
+        }
+        for (TransitiveSCT transitiveSCT : transitiveSCTs) {
+            snomedctDAO.persistSnapshotTransitiveSCT(transitiveSCT);
+        }*/
+
     }
 
-    private void validateDescriptionSCT(List<ConceptSCT> conceptSCTs, List<DescriptionSCT> descriptionSCTs){
+    @Override
+    public void persistConceptSCT(ConceptSCT conceptSCT) {
+        snomedctDAO.persistSnapshotConceptSCT(conceptSCT);
+    }
+
+    private void validateDescriptionSCT(List<ConceptSCT> conceptSCTs, List<DescriptionSCT> descriptionSCTs) {
         List<DescriptionSCT> descriptionSCTsWithConcept = new ArrayList<>();
+        List<Long> idsConcept = new ArrayList<>();
+        for (ConceptSCT conceptSCT : conceptSCTs) {
+            idsConcept.add(conceptSCT.getIdSnomedCT());
+        }
 
         for (DescriptionSCT descriptionSCT : descriptionSCTs) {
-            for (ConceptSCT conceptSCT : conceptSCTs) {
-                if(descriptionSCT.getConceptId()== conceptSCT.getId()){
-                    descriptionSCTsWithConcept.add(descriptionSCT);
-                }
+
+            if (idsConcept.contains(descriptionSCT.getConceptId())) {
+                descriptionSCTsWithConcept.add(descriptionSCT);
+
             }
         }
 
-        if(descriptionSCTsWithConcept.size()==descriptionSCTs.size()){
+        if (descriptionSCTsWithConcept.size() == descriptionSCTs.size()) {
             return;
         }
-        List<DescriptionSCT> descriptionSCTsDeprecated= new ArrayList<>();
+        List<DescriptionSCT> descriptionSCTsDeprecated = new ArrayList<>();
         for (DescriptionSCT descriptionSCT : descriptionSCTs) {
-            if(!descriptionSCTsWithConcept.contains(descriptionSCT)){
+            if (!descriptionSCTsWithConcept.contains(descriptionSCT)) {
                 descriptionSCTsDeprecated.add(descriptionSCT);
             }
         }
 
 
+    }
+    private void validateRelationshipSCT(List<ConceptSCT> conceptSCTs, List<RelationshipSnapshotSCT> relationshipSnapshotSCTs) {
+        List<RelationshipSnapshotSCT> relationshipSnapshotSCTs1 = new ArrayList<>();
+        List<Long> idsConcept = new ArrayList<>();
+        for (ConceptSCT conceptSCT : conceptSCTs) {
+            idsConcept.add(conceptSCT.getIdSnomedCT());
+        }
+
+        for (RelationshipSnapshotSCT relationshipSnapshotSCT : relationshipSnapshotSCTs) {
+
+            if (idsConcept.contains(relationshipSnapshotSCT.getSourceId()) && idsConcept.contains(relationshipSnapshotSCT.getDestinationId())) {
+                relationshipSnapshotSCTs1.add(relationshipSnapshotSCT);
+            }
+        }
+
+        for (ConceptSCT conceptSCT : conceptSCTs) {
+
+        }
 
 
     }
