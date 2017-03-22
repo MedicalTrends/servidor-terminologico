@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.browser.DescriptionQuery;
 import cl.minsal.semantikos.model.browser.NoValidQuery;
 import cl.minsal.semantikos.model.businessrules.ConceptTransferBR;
 import cl.minsal.semantikos.model.businessrules.DescriptionTranslationBR;
+import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.slf4j.Logger;
@@ -209,6 +210,9 @@ public class NoValidBrowserBean implements Serializable {
             try{
                 descriptionTranslationBR.apply(sourceConcept, conceptSelected, description, conceptManager, categoryManager);
             }catch (EJBException e) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+                return;
+            }catch (BusinessRuleException e) {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
                 return;
             }

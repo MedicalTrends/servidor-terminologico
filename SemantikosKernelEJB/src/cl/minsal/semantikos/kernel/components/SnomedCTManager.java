@@ -104,4 +104,7 @@ public interface SnomedCTManager {
     public void chargeSNAPSHOT(List<ConceptSCT> conceptSCTs, List<DescriptionSCT> descriptionSCTs, List<RelationshipSnapshotSCT> relationshipSnapshotSCTs
             , List<LanguageRefsetSCT> languageRefsetSCTs, List<TransitiveSCT> transitiveSCTs);
 
+
+    public void persistConceptSCT(ConceptSCT conceptSCT);
+
 }

@@ -3,6 +3,7 @@ package cl.minsal.semantikos.beans.snomed;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import cl.minsal.semantikos.kernel.components.SnomedCTManager;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean(name = "snapshotBean")
+@ViewScoped
 public class Snapshot {
 
     private String destination="/home/des01c7/Documentos/temp/";
@@ -303,7 +305,7 @@ public class Snapshot {
 
                 if (!first) {
                     int i = 0;
-                    long id = 0L;
+                    String id = null;
                     String affectiveTime = null;
                     boolean active = false;
                     long moduleId = 0L;
@@ -313,7 +315,7 @@ public class Snapshot {
 
                     for (String token : cadena.split("\t")) {
                         if (token.trim().length() != 0 && i == 0)
-                            id = Long.valueOf(token);
+                            id = token;
                         if (token.trim().length() != 0 && i == 1)
                             affectiveTime = token;
                         if (token.trim().length() != 0 && i == 2)
@@ -361,11 +363,11 @@ public class Snapshot {
                 long parent=0L;
                 long child=0L;
 
-                for (String token : cadena.split("\t")) {
+                for (String token : cadena.split(";")) {
                     if (token.trim().length() != 0 && i == 0)
                         parent=Long.valueOf(token.replace("\"", ""));
                     if (token.trim().length() != 0 && i == 1)
-                        child=Long.valueOf(token);
+                        child=Long.valueOf(token.replace("\"", ""));
 
                     ++i;
                 }
@@ -382,8 +384,16 @@ public class Snapshot {
     }
 
     public void chargeSNAPSHOT(){
-        if(conceptSCTs.isEmpty() && descriptionSCTs.isEmpty() && relationshipSCTs.isEmpty() && languageRefsetSCTs.isEmpty() && transitiveSCTs.isEmpty()){
-           snomedCTManager.chargeSNAPSHOT(conceptSCTs,descriptionSCTs,relationshipSCTs,languageRefsetSCTs,transitiveSCTs);
+        if(!conceptSCTs.isEmpty() && !descriptionSCTs.isEmpty() && !relationshipSCTs.isEmpty() && !languageRefsetSCTs.isEmpty() && !transitiveSCTs.isEmpty()){
+           //snomedCTManager.chargeSNAPSHOT(conceptSCTs,descriptionSCTs,relationshipSCTs,languageRefsetSCTs,transitiveSCTs);
+            for (ConceptSCT conceptSCT : conceptSCTs) {
+                try {
+                    snomedCTManager.persistConceptSCT(conceptSCT);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
         }
     }
 

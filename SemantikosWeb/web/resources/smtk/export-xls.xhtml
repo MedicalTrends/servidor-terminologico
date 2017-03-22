@@ -29,22 +29,22 @@
         <p:dataTable id="conceptDescriptionsTable" var="descriptions" value="#{conceptExport.conceptSMTK.descriptions}"
                      paginator="false" rows="6">
 
-            <p:column>
+            <p:column headerText="IdDescription">
                 <h:outputText value="#{descriptions.descriptionId}"/>
             </p:column>
-            <p:column>
+            <p:column headerText="Término">
                 <h:outputText value="#{descriptions.term}"/>
             </p:column>
-            <p:column>
+            <p:column headerText="Tipo de descripción">
                 <h:outputText value="#{descriptions.descriptionType}"/>
             </p:column>
-            <p:column>
+            <p:column headerText="Sensibilidad">
                 <h:outputText value="#{descriptions.caseSensitive ? 'Sensible' : 'Insensible'}"/>
             </p:column>
-            <p:column>
+            <p:column headerText="Usos">
                 <h:outputText value="#{descriptions.uses}"/>
             </p:column>
-            <p:column>
+            <p:column headerText="Fecha de creación">
                 <h:outputText value="#{descriptions.creationDate}"/>
             </p:column>
         </p:dataTable>

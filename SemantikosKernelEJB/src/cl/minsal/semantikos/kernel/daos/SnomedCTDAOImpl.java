@@ -192,7 +192,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.create_concept_sct(?,?,?,?,?)}")) {
 
-            call.setLong(1,conceptSCT.getId());
+            call.setLong(1,conceptSCT.getIdSnomedCT());
             call.setTimestamp(2,conceptSCT.getEffectiveTime());
             call.setBoolean(3,conceptSCT.isActive());
             call.setLong(4,conceptSCT.getModuleId());
@@ -314,7 +314,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.create_transitive_sct(?,?)}")) {
 
-            call.setLong(1,languageRefsetSCT.getId());
+            call.setString(1,languageRefsetSCT.getId());
             call.setTimestamp(2,languageRefsetSCT.getEffectiveTime());
             call.setBoolean(3,languageRefsetSCT.isActive());
             call.setLong(4,languageRefsetSCT.getModuleId());

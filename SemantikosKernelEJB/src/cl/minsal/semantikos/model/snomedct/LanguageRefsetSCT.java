@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 public class LanguageRefsetSCT {
 
 
-    private long id;
+    private String id;
     private Timestamp effectiveTime;
     private boolean active;
     private long moduleId;
@@ -16,7 +16,7 @@ public class LanguageRefsetSCT {
     private long referencedComponentId;
     private long acceptabilityId;
 
-    public LanguageRefsetSCT(long id, Timestamp effectiveTime, boolean active, long moduleId, long refsetId, long referencedComponentId, long acceptabilityId) {
+    public LanguageRefsetSCT(String id, Timestamp effectiveTime, boolean active, long moduleId, long refsetId, long referencedComponentId, long acceptabilityId) {
         this.id = id;
         this.effectiveTime = effectiveTime;
         this.active = active;
@@ -27,11 +27,11 @@ public class LanguageRefsetSCT {
     }
 
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

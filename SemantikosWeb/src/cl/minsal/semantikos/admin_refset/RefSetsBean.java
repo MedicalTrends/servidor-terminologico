@@ -172,7 +172,10 @@ public class RefSetsBean implements Serializable {
      * @param conceptSMTK Concepto seleccionado para vincularse a un Refset
      */
     public void addConcept(RefSet refSet, ConceptSMTK conceptSMTK) {
-
+        if(refSet==null){
+            messageBean.messageError("Debe seleccionar un RefSet");
+           return;
+        }
         if (refSet.isPersistent()) {
             refSet.bindConceptTo(conceptSMTK);
             refSetManager.bindConceptToRefSet(conceptSMTK, refSet, authenticationBean.getLoggedUser());
