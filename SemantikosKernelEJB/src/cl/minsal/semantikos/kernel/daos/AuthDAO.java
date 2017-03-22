@@ -14,7 +14,11 @@ public interface AuthDAO {
 
     User getUserByUsername(String username);
 
+    User getUserByEmail(String username);
+
     User getUserByRut(String rut);
+
+    User getUserByVerificationCode(String key);
 
     List<Profile> getUserProfiles(Long userId);
 

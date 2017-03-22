@@ -101,6 +101,12 @@ public class AuthenticationManager {
     }
 
     @PermitAll()
+    //@RolesAllowed("Administrador")
+    public void createUserVerificationCode(User user, String username, String password) throws PasswordChangeException {
+        user.setVerificationCode(getAuthenticationMethod().createUserPassword(username, username+"."+password));
+    }
+
+    @PermitAll()
     public boolean checkPassword(User user, String username, String password) {
         return getAuthenticationMethod().createUserPassword(username, password).equals(user.getPasswordHash());
     }

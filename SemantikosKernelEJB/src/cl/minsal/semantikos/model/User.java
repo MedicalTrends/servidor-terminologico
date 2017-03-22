@@ -44,6 +44,8 @@ public class User {
     private String lastPasswordHash4;
     private String lastPasswordSalt4;
 
+    private String verificationCode;
+
     // TODO: Francisco. Actualizar esto en el modelo de datos.
     /** BR-RefSet-004: La institución en la que trabaja el usuario */
     private List<Institution> institutions;
@@ -291,6 +293,14 @@ public class User {
         return (String.valueOf(idUser) != null)
                 ? (this.getClass().hashCode() + String.valueOf(idUser).hashCode())
                 : super.hashCode();
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
     }
 
     @Override

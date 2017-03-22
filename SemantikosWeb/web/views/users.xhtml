@@ -152,7 +152,7 @@
                                     </h:panelGroup>
                                 </p:dialog>
 
-                                <p:dialog id="user-edit-dialog" width="50%" header="#{users.selectedUser.idUser eq -1?'Crear':'Editar'} Usuario" widgetVar="editDialog"
+                                <p:dialog id="user-edit-dialog" width="40%" header="#{users.selectedUser.idUser eq -1?'Crear':'Editar'} Usuario" widgetVar="editDialog"
                                           visible="#{ not users.userNameError.concat(users.nameError).concat(users.rutError).concat(users.passwordError).concat(users.password2Error).trim().equals('') }"
                                           showEffect="fade" hideEffect="fade" resizable="true" responsive="true">
 
@@ -160,10 +160,15 @@
 
                                         <p:growl showDetail="true" showSummary="true"/>
 
-                                        <p:panelGrid columns="4" styleClass="Wid100" >
+                                        <p:panelGrid columns="2" styleClass="Wid100" >
+
                                             <f:facet name="header">
                                                 Datos Personales
                                             </f:facet>
+
+                                            <p:outputLabel for="input-user-email" value="Email *" style="font-weight: bold" styleClass="Wid20" />
+
+                                            <p:inputText id="input-user-email" value="#{users.selectedUser.email}" styleClass="Wid90" autocomplete="off" />
 
                                             <p:outputLabel for="input-user-rut2" value="RUT *" style="font-weight: bold" styleClass="#{users.rutError} Wid20" />
 
@@ -171,7 +176,7 @@
                                                 <p:ajax event="blur" listener="#{users.formatRut}" update="@this" />
                                             </p:inputText>
 
-                                            <p:outputLabel for="input-user-name2" value="Nombres *" styleClass="#{users.nameError} Wid20" />
+                                            <p:outputLabel for="input-user-name2" value="Nombres *" styleClass="#{users.nameError} Wid20"  />
 
                                             <p:inputText id="input-user-name2" value="#{users.selectedUser.name}" styleClass="#{users.nameError} Wid90" autocomplete="off" />
 
@@ -183,34 +188,6 @@
 
                                             <p:inputText id="input-user-secondlastname2" value="#{users.selectedUser.secondLastName}" styleClass="Wid90" autocomplete="off" />
 
-                                            <p:outputLabel for="input-user-email" value="Email" style="font-weight: bold" styleClass="Wid20" />
-
-                                            <p:inputText id="input-user-email" value="#{users.selectedUser.email}" styleClass="Wid90" autocomplete="off" />
-
-                                            <p:outputLabel for="input-username2" value="Nombre de Usuario *" styleClass="#{users.userNameError} Wid20" />
-
-                                            <p:inputText id="input-username2" value="#{users.selectedUser.username}" styleClass="#{users.userNameError} Wid90" autocomplete="off" />
-
-                                            <p:outputLabel for="password1" value="Password *" rendered="#{users.selectedUser.idUser eq -1}" styleClass="#{users.passwordError} Wid20" />
-
-                                            <p:password id="password1" value="#{users.newPass1}" feedback="true"
-                                                        promptLabel="Ingrese una contraseña" weakLabel="Poco segura"
-                                                        rendered="#{users.selectedUser.idUser eq -1}"
-                                                        goodLabel="Aceptable" strongLabel="Segura" autocomplete="off"
-                                                        redisplay="true" disabled="#{users.selectedUser.idUser != -1}" styleClass="#{users.passwordError} Wid90">
-                                                <p:ajax event="blur" update="@this" />
-                                            </p:password>
-
-                                            <p:outputLabel value="Confirmar Password*" rendered="#{users.selectedUser.idUser eq -1}" styleClass="#{users.password2Error} Wid20"/>
-
-                                            <p:password id="password2" value="#{users.newPass2}" feedback="true"
-                                                        promptLabel="Confirme la contraseña" weakLabel="Poco segura"
-                                                        rendered="#{users.selectedUser.idUser eq -1}"
-                                                        goodLabel="Aceptable" strongLabel="Segura" autocomplete="off"
-                                                        redisplay="true" disabled="#{users.selectedUser.idUser != -1}"
-                                                        styleClass="#{users.password2Error} Wid90">
-                                                <p:ajax event="blur" update="@this" />
-                                            </p:password>
 
                                         </p:panelGrid>
 

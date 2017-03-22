@@ -23,7 +23,8 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        if (req.getRequestURI().contains(Constants.LOGIN_PAGE) || req.getRequestURI().contains(Constants.ERRORS_FOLDER) || hasPermission(req)) {
+        if (req.getRequestURI().contains(Constants.LOGIN_PAGE) || req.getRequestURI().contains(Constants.ERRORS_FOLDER) ||
+            req.getRequestURI().contains(Constants.ACCOUNT_ACTIVATION_PAGE) || hasPermission(req)) {
             logger.debug("Request válido, se deja continuar: " + req);
             chain.doFilter(request, response);
         }

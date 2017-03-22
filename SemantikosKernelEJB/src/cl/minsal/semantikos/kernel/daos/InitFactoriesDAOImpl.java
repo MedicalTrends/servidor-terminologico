@@ -159,10 +159,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
                     for (RelationshipDefinition relationshipDefinitionDestination : queryDAO.getSecondOrderShowableAttributesByCategory(categoryDestination)) {
 
-                        if(relationshipDefinition.getTargetDefinition().isSMTKType()) {
-                            query.getSourceSecondOrderShowableAttributes().add(relationshipDefinition);
-                        }
-
                         QueryColumn secondOrderColumn = new QueryColumn(relationshipDefinitionDestination.getName(), new Sort(null, false), relationshipDefinitionDestination);
                         if(relationshipDefinitionDestination.isU_asist() && category.getNameAbbreviated().equals("MCCE")) {
                             continue;
@@ -171,6 +167,10 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
                             continue;
                         }
                         else {
+                            if(relationshipDefinition.getTargetDefinition().isSMTKType()) {
+                                query.getSourceSecondOrderShowableAttributes().add(relationshipDefinition);
+                            }
+
                             query.getColumns().add(secondOrderColumn);
                             secondOrderColumn.setSecondOrder(true);
                         }

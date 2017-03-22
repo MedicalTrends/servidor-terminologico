@@ -62,7 +62,6 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
         if (user.isLocked())
             throw new AuthenticationException("Usuario bloqueado. Contacte al administrador");
 
-
         try {
 
             //si ya esta logueado debo desbloguearlo para evitar exception

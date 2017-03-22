@@ -82,10 +82,34 @@ public class AuthDAOImpl implements AuthDAO {
         }
 
         return user;
-
-
     }
 
+    @Override
+    public User getUserByVerificationCode(String key) {
+
+        ConnectionBD connect = new ConnectionBD();
+        User user = null;
+
+        String sql = "{call semantikos.get_user_by_verification_code(?)}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setString(1, key);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                user = makeUserFromResult(rs);
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar usuario de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return user;
+    }
 
     @Override
     public User getUserByUsername(String username) {
@@ -99,6 +123,34 @@ public class AuthDAOImpl implements AuthDAO {
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setString(1, username);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                user = makeUserFromResult(rs);
+
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar usuario de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return user;
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+
+        ConnectionBD connect = new ConnectionBD();
+        User user = null;
+
+        String sql = "{call semantikos.get_user_by_email(?)}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setString(1, email);
             call.execute();
 
             ResultSet rs = call.getResultSet();
@@ -195,6 +247,7 @@ public class AuthDAOImpl implements AuthDAO {
         u.setLastPasswordSalt4(rs.getString(20));
 
         u.setRut(rs.getString(21));
+        u.setVerificationCode(rs.getString(22));
 
         u.setProfiles(getUserProfiles(u.getIdUser()));
 
@@ -242,7 +295,7 @@ public class AuthDAOImpl implements AuthDAO {
 
         ConnectionBD connect = new ConnectionBD();
 
-        String sql = "{call semantikos.create_user(?,?,?,?,?,?,?,?,?)}";
+        String sql = "{call semantikos.create_user(?,?,?,?,?,?,?,?,?,?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -255,6 +308,7 @@ public class AuthDAOImpl implements AuthDAO {
             call.setInt(7, 0);
             call.setString(8, StringUtils.parseRut(user.getRut().trim()));
             call.setString(9, user.getPasswordHash());
+            call.setString(10, user.getVerificationCode());
 
             call.execute();
 
@@ -286,7 +340,7 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public void updateUser(User user) {
 
-        String sql = "{call semantikos.update_user(?,?,?,?,?,?)}";
+        String sql = "{call semantikos.update_user(?,?,?,?,?,?,?,?)}";
         try (Connection connection = (new ConnectionBD()).getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -295,7 +349,12 @@ public class AuthDAOImpl implements AuthDAO {
             call.setString(3, user.getSecondLastName());
             call.setString(4, user.getEmail());
             call.setString(5, user.getRut());
-            call.setLong(6, user.getIdUser());
+            call.setBoolean(6, user.isLocked());
+            if(user.getVerificationCode()==null)
+                call.setNull(7, Types.VARCHAR);
+            else
+                call.setString(7, user.getVerificationCode());
+            call.setLong(8, user.getIdUser());
 
             call.execute();
         } catch (SQLException e) {

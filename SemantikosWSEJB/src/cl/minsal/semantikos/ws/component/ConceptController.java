@@ -176,6 +176,10 @@ public class ConceptController {
                     }
                 }
             }
+            res.setConceptId(source.getConceptID());
+            res.setDescription(source.getDescriptionFavorite().getTerm());
+            res.setDescriptionId(source.getDescriptionFavorite().getDescriptionId());
+            res.setCategory(source.getCategory().getName());
             res.setRelatedConcepts(relatedResponses);
             res.setQuantity(relatedResponses.size());
         }
