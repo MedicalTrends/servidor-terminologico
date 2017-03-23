@@ -63,7 +63,7 @@ public class Emailer implements Serializable {
 
     private String subject = "Confirmación Cuenta Semantikos";
 
-    private String body = "<b>Bienvenido a Semantikos!</b><br><br>Una cuenta asociada a este correo ha sido creada. <ul><li>Para activar su cuenta, por favor pinche el siguiente link: <br>%link%</li><li>Una vez activada su cuenta ingrese al sitio web %link2% con la siguiente contraseña: %password%</li><li>Cambie su contraseña en la opción Perfil de la pestaña Usuario</li></ul>El Equipo Semantikos";
+    private String body = "<b>Bienvenido a Semantikos!</b><br><br>Una cuenta asociada a este correo ha sido creada. <ul><li>Para activar su cuenta, por favor pinche el siguiente link: <br>%link%</li><li>Una vez activada su cuenta ingrese al sitio web:<br>%link2%<br>con la siguiente contraseña: %password%</li><li>Cambie su contraseña en la opción Perfil de la pestaña Usuario</li></ul>El Equipo Semantikos";
 
     public Emailer() {
     }
@@ -125,7 +125,7 @@ public class Emailer implements Serializable {
             message.setContent(body, "text/html; charset=utf-8");
             Transport.send(message);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 }

@@ -3,8 +3,7 @@ package cl.minsal.semantikos.model.businessrules;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
-
-import java.util.List;
+import cl.minsal.semantikos.model.users.User;
 
 import static cl.minsal.semantikos.model.DescriptionType.*;
 

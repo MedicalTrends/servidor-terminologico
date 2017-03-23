@@ -16,6 +16,9 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.mail.Session;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.sql.CallableStatement;
@@ -58,6 +61,11 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         this.refreshDescriptionTypes();
         this.refreshTagsSMTK();
         this.refreshColumns();
+        try {
+            this.refreshEmail();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -343,5 +351,14 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         }
 
         return HelperTableColumnFactory.getInstance();
+    }
+
+    @Override
+    public EmailFactory refreshEmail() throws NamingException {
+        InitialContext c = new InitialContext();
+        Session session = (Session)c.lookup("java:jboss/mail/Default");
+        EmailFactory.getInstance().setMySession(session);
+
+        return EmailFactory.getInstance();
     }
 }

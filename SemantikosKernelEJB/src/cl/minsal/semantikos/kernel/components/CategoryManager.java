@@ -2,11 +2,10 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.ejb.Local;
-import java.text.ParseException;
 import java.util.List;
 
 /**

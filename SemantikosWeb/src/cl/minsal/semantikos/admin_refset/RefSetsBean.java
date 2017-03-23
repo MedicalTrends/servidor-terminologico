@@ -9,12 +9,11 @@ import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.RefSetManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Institution;
+import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.model.audit.AuditAction;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;

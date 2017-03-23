@@ -1,10 +1,7 @@
 package cl.minsal.semantikos.model.crossmaps;
 
 import cl.minsal.semantikos.model.PersistentEntity;
-import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
-
-import java.sql.Timestamp;
 
 /**
  * Esta clase implementa el concepto de terminología externa

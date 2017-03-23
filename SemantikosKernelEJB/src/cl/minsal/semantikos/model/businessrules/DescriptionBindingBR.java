@@ -3,7 +3,7 @@ package cl.minsal.semantikos.model.businessrules;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 
 /**
  * @author Andrés Farías on 8/29/16.

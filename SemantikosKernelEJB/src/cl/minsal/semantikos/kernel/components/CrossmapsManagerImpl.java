@@ -2,7 +2,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.CrossmapsDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.businessrules.CrossMapCreationBR;
 import cl.minsal.semantikos.model.businessrules.CrossMapRemovalBR;
 import cl.minsal.semantikos.model.crossmaps.*;

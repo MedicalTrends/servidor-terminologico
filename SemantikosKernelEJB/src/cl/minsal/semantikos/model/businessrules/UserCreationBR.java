@@ -1,11 +1,11 @@
 package cl.minsal.semantikos.model.businessrules;
 
 import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
-import cl.minsal.semantikos.kernel.auth.Emailer;
 import cl.minsal.semantikos.kernel.auth.PasswordChangeException;
 import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.EmailFactory;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,24 +119,47 @@ public class UserCreationBR implements UserCreationBRInterface {
         try {
             String password = RandomStringUtils.random(8, 0, 20, true, true, "qw32rfHIJk9iQ8Ud7h0X".toCharArray());
             user.setPassword(password);
-            authenticationManager.createUserPassword(user,user.getUsername(),user.getPassword());
+            authenticationManager.createUserPassword(user,user.getEmail(),user.getPassword());
         } catch (PasswordChangeException e) {
             e.printStackTrace();
+            throw new BusinessRuleException("BR-304-DefaultPassword", "No se pudo generar una contraseña por defecto. Contactar a desarrollo");
         }
     }
 
     /**
-     * Esta regla de negocio establece que al momento de crear un usuario, se le debe crear código de verificación para ser confirmado vía
-     * petición http mediante un link enviado a su correo electrónico
+     *  Esta regla de negocio establece que posterior a la creación de un usuario, se le debe crear código de verificación para ser confirmado vía
+     *  petición http mediante un link enviado a su correo electrónico.
      *
      * @param user El usuario
      */
     public void br305VerificationCode(User user) {
 
+        /*
         try {
-            authenticationManager.createUserVerificationCode(user,user.getUsername(),user.getPassword());
+            authenticationManager.createUserVerificationCode(user,user.getEmail(),user.getPassword());
         } catch (PasswordChangeException e) {
             e.printStackTrace();
+            throw new BusinessRuleException("BR-305-VerificationCode", "No se pudo generar el código de activación. Contactar a desarrollo");
+        }
+        */
+        //String verificationCode = UUID.randomUUID().toString().substring(0, 20);
+        String verificationCode = RandomStringUtils.random(20, 0, 20, true, true, "qw32rfHI5Jk9iQ84Ud7h0X".toCharArray());
+        user.setVerificationCode(verificationCode);
+    }
+
+    /**
+     *  Esta regla de negocio establece que posterior a la creación de un usuario, el usuario debe quedar en estado bloqueado
+     *
+     * @param user El usuario
+     */
+    public void br308LockUser(User user) {
+
+        try {
+            user.setLocked(true);
+            userManager.updateUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BusinessRuleException("BR-308-LockUser", "No se pudo bloquear el usuario. Contactar a desarrollo");
         }
     }
 
@@ -153,10 +176,11 @@ public class UserCreationBR implements UserCreationBRInterface {
         try {
             String link = getURLWithContextPath(request) + "/designer/views/activateAccount.xhtml?key="+user.getVerificationCode();
             String link2 = getURLWithContextPath(request) + "/designer/views/login.xhtml";
-            Emailer emailer = new Emailer(user.getEmail(), user.getPassword(), link, link2);
-            emailer.send();
+            EmailFactory.getInstance().prepareMail(user.getEmail(), user.getPassword(), link, link2);
+            EmailFactory.getInstance().send();
         } catch (Exception e) {
             e.printStackTrace();
+            throw new BusinessRuleException("BR-306-SendEmail", "No se pudo enviar correo a usuario. Contactar a desarrollo");
         }
     }
 
@@ -183,19 +207,20 @@ public class UserCreationBR implements UserCreationBRInterface {
     @Override
     public void verifyPreConditions(User user) throws BusinessRuleException {
         br301UniqueRut(user);
-        br302UniqueEmail(user);
         br303ValidEmail(user);
+        br302UniqueEmail(user);
     }
 
     @Override
     public void preActions(User user) throws BusinessRuleException {
         br304DefaultPassword(user);
-        br305VerificationCode(user);
     }
 
     @Override
     public void postActions(User user, HttpServletRequest request) throws BusinessRuleException {
+        br305VerificationCode(user);
         br306SendEmail(user, request);
+        br308LockUser(user);
     }
 
     /**

@@ -1,13 +1,10 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.Institution;
+import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.RefSet;
 
 import javax.ejb.Local;
-import java.sql.Timestamp;
 import java.util.List;
 
 /**

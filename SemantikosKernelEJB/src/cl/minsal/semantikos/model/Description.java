@@ -2,6 +2,7 @@ package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.kernel.daos.DAO;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
+import cl.minsal.semantikos.model.users.User;
 
 import java.sql.Timestamp;
 import java.util.regex.Matcher;

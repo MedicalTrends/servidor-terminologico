@@ -2,8 +2,8 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.util.StringUtils;
-import cl.minsal.semantikos.model.Profile;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.Profile;
+import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -491,7 +491,7 @@ public class AuthDAOImpl implements AuthDAO {
 
     /* marca la ultima fecha de ingreso del usuario */
     @Override
-    public void markLogin(String username) {
+    public void markLogin(String email) {
 
         ConnectionBD connect = new ConnectionBD();
 
@@ -500,7 +500,7 @@ public class AuthDAOImpl implements AuthDAO {
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setDate(1, new java.sql.Date(new Date().getTime()));
-            call.setString(2, username);
+            call.setString(2, email);
             call.execute();
 
 

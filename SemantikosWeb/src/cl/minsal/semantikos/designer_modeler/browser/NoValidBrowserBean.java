@@ -1,14 +1,12 @@
 package cl.minsal.semantikos.designer_modeler.browser;
 
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
-import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.browser.DescriptionQuery;
 import cl.minsal.semantikos.model.browser.NoValidQuery;
-import cl.minsal.semantikos.model.businessrules.ConceptTransferBR;
 import cl.minsal.semantikos.model.businessrules.DescriptionTranslationBR;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
+import cl.minsal.semantikos.model.users.User;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.slf4j.Logger;
@@ -24,7 +22,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 

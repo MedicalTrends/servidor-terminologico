@@ -1,8 +1,6 @@
 package cl.minsal.semantikos.model.businessrules;
 
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.User;
-import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
 import javax.servlet.http.HttpServletRequest;

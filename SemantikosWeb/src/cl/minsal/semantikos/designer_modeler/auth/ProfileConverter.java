@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.designer_modeler.auth;
 
-import cl.minsal.semantikos.model.Profile;
+import cl.minsal.semantikos.model.users.Profile;
 
 import javax.el.ELContext;
 import javax.faces.application.FacesMessage;

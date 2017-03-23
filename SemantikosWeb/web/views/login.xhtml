@@ -19,6 +19,7 @@
     </h:head>
 
     <h:body styleClass="loginbodyblue">
+
         
         <div class="Wid90 DispBlock MarAuto MarTopPerc5 TexAlCenter">
             <div class="Wid33 MarAuto WidAutoOnMobile">
@@ -28,22 +29,31 @@
                 <div class="Card ShadowEffect">
 
                     <div class="EmptyBox20"></div>
-                    <div class="Wid100 OvHidden BigTopic Fs30"><i class="icon-users Fs40"></i>Ingreso</div>
+                    <div class="Wid100 OvHidden BigTopic Fs30"><i class="icon-users Fs40" />Ingreso</div>
                     <div class="EmptyBox20"></div>
 
                     <p:messages id="login-form-messages" showDetail="true" autoUpdate="true" closable="false" />
+                    <p:growl id="login-form-messages-2" showDetail="true" showSummary="true"  />
 
-                    <div class="Wid100"><p:inputText placeholder="Usuario" value="#{authenticationBean.username}" styleClass="Wid80 TexAlCenter Fs18"/></div>
+                    <div class="Wid100">
+                        <p:inputText placeholder="E-mail" value="#{authenticationBean.email}"
+                                     styleClass="Wid80 TexAlCenter Fs18 #{authenticationBean.emailError}"/>
+                    </div>
                     <div class="EmptyBox10"></div>
-                    <div class="Wid100"><p:inputText type="password" placeholder="Contraseña" value="#{authenticationBean.password}" styleClass="Wid80 TexAlCenter Fs18"/></div>
+                    <div class="Wid100">
+                        <p:inputText type="password" placeholder="Contraseña" value="#{authenticationBean.password}"
+                                     styleClass="Wid80 TexAlCenter Fs18 #{authenticationBean.passwordError}"/>
+                    </div>
                     <div class="EmptyBox30"></div>
-                    <div class="Wid100"><p:commandButton update="login-form-messages" value="Ingresar" icon="fa fa-sign-in" styleClass="Wid60 Fs18 White RaisedButton" action="#{authenticationBean.login}"/></div>
+                    <div class="Wid100">
+                        <p:commandButton update="loginform" value="Ingresar" icon="fa fa-sign-in" styleClass="Wid60 Fs18 White RaisedButton" action="#{authenticationBean.login}"/>
+                    </div>
                     <div class="EmptyBox20"></div>
                 </div>
                 </h:form>
                 <div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular WhiteBlue">
-                    <i class="fa fa-copyright"></i>2016 <a class="WhiteBlue" href="http://www.semantikos.cl">Ministerio de Salud.</a><br/>
-                    <span>Version: <h:outputText value="${bpversion['version']} ${bpversion['build.date']}"></h:outputText></span>
+                    <i class="fa fa-copyright" />2016 <a class="WhiteBlue" href="http://www.semantikos.cl">Ministerio de Salud.</a><br/>
+                    <span>Version: <h:outputText value="${bpversion['version']} ${bpversion['build.date']}" /></span>
                 </div>
             </div>
         </div>

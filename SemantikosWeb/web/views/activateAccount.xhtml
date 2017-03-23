@@ -24,17 +24,73 @@
                 <div class="EmptyBox30"></div>
                 <div class="Card ShadowEffect">
                     <div class="EmptyBox40"></div>
-                    <i class="icon-virtual2 Fs100 Blue"></i>
-                    <div class="Wid100 OvHidden Fs30 Blue">Cuenta activada!!
-                    <div class="Wid100 OvHidden Fs20 BoldGray">Ingrese al login y acceda con la contraseña que le fue enviada a su correo electrónico.</div>
+                    <i class="icon-virtual2 Fs100 Blue" />
+                    <div class="Wid100 OvHidden Fs30 Blue">Activación de Cuenta
+                    <div class="Wid100 OvHidden Fs20 BoldGray">Confirme su contraseña inicial.</div>
                     <div class="EmptyBox20"></div>
                     <div class="Separator"></div>
                     <div class="EmptyBox10"></div>
-                    <div class="Wid100"><p:button value="Volver al Login" icon="fa fa-sign-in" styleClass="BlueTextButton Wid60 Fs18 White RaisedButton" href="dashboard.xhtml"/></div>
+                    <p:panel menuTitle="Confirmar Contraseña">
+
+                        <p:panelGrid id="password" columns="4" columnClasses="label, value" styleClass="Wid100" >
+
+                            <p:outputLabel value="Contraseña *" style="font-weight: bold" styleClass="Wid20" />
+
+                            <p:inputText value="#{accountActivation.password}" styleClass="Wid90" autocomplete="off" />
+
+                            <p:inputText value="#{accountActivation.newPassword1}" styleClass="Wid90" autocomplete="off" />
+
+                            <p:inputText value="#{accountActivation.newPassword2}" styleClass="Wid90" autocomplete="off" />
+
+                            <p:password value="#{accountActivation.password}" styleClass="#{accountActivation.passwordError} Wid90"
+                                        autocomplete="off" promptLabel="Ingrese la contraseña enviada a su correo electrónico"
+                                        redisplay="true" placeholder="Contraseña actual">
+                            </p:password>
+
+                            <p:password value="#{accountActivation.newPassword1}" feedback="true"
+                                        promptLabel="Ingrese su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
+                                        redisplay="true"
+                                        styleClass="#{accountActivation.newPassword1Error} Wid90">
+                                <p:ajax event="blur" update="@this" />
+                            </p:password>
+
+                            <p:password value="#{accountActivation.newPassword2}" feedback="true"
+                                        promptLabel="Confirme su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
+                                        redisplay="true"
+                                        styleClass="#{accountActivation.newPassword2Error} Wid90">
+                                <p:ajax event="blur" update="@this" />
+                            </p:password>
+
+                        </p:panelGrid>
+                    </p:panel>
+                    <p:panel menuTitle="Preguntas de seguridad">
+                        <h:dataTable id="questions" style="width: 100%;" value="#{accountActivation.questionList}"
+                                     var="question">
+
+                            <h:column>
+                                <p:checkbox>
+                                    <p:ajax event="change" listener="#{accountActivation.updateQuestions(question)}" update="questions" />
+                                </p:checkbox>
+                            </h:column>
+
+                            <h:column>
+                                <p:outputLabel value="#{question.question}" />
+                            </h:column>
+
+                            <h:column>
+                                <ui:repeat value="#{question.answers}" var="answer">
+                                    <p:outputLabel value="#{answer.answer}" />
+                                </ui:repeat>
+                            </h:column>
+
+                        </h:dataTable>
+
+                    </p:panel>
+                    <div class="Wid100"><p:button value="Activar Cuenta" icon="fa fa-sign-in" styleClass="BlueTextButton Wid60 Fs18 White RaisedButton" href="dashboard.xhtml"/></div>
                     <div class="EmptyBox20"></div>
                 </div>
                 <div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular WhiteBlue">
-                    <i class="fa fa-copyright"></i>  PrimeFaces RIO Theme And Layout <br/> All rights reserved.
+                    <i class="fa fa-copyright" />  PrimeFaces RIO Theme And Layout <br/> All rights reserved.
                 </div>
             </div>
         </div>

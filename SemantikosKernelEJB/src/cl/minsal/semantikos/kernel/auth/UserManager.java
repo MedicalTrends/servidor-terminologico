@@ -2,23 +2,15 @@ package cl.minsal.semantikos.kernel.auth;
 
 import cl.minsal.semantikos.kernel.daos.AuthDAO;
 
-import cl.minsal.semantikos.model.Profile;
-import cl.minsal.semantikos.model.User;
-import cl.minsal.semantikos.model.businessrules.ConceptDeletionBR;
-import cl.minsal.semantikos.model.businessrules.UserCreationBR;
+import cl.minsal.semantikos.kernel.daos.QuestionDAO;
+import cl.minsal.semantikos.model.users.Profile;
+import cl.minsal.semantikos.model.users.Question;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.businessrules.UserCreationBRInterface;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 
-import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.faces.context.FacesContext;
-import javax.mail.Address;
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -32,6 +24,9 @@ public class UserManager {
 
     @EJB
     AuthDAO authDAO;
+
+    @EJB
+    QuestionDAO questionDAO;
 
     @EJB
     AuthenticationManager authenticationManager;
@@ -63,6 +58,10 @@ public class UserManager {
         authDAO.updateUser(user);
     }
 
+    public List<Question> getAllQuestions() {
+        return questionDAO.getAllQuestions();
+    }
+
     public void createUser(User user, HttpServletRequest request) throws BusinessRuleException {
 
         /* Se validan las pre-condiciones para crear un usuario */
@@ -74,7 +73,6 @@ public class UserManager {
             authDAO.createUser(user);
             //user = authDAO.getUserById(user.getIdUser());
             userCreationBR.postActions(user, request);
-
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -99,6 +97,21 @@ public class UserManager {
         }
     }
 
+    public boolean checkActivationCode(String key) {
+
+        /* Se validan las pre-condiciones para crear un usuario */
+        //UserCreationBR userCreationBR = new UserCreationBR();
+        //userCreationBR.preconditions(user);
+        User user = userCreationBR.br307verificationCodeExists(key);
+
+        if(user!=null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public List<Profile> getAllProfiles() {
 
         return authDAO.getAllProfiles();
@@ -108,8 +121,12 @@ public class UserManager {
         return authDAO.getProfile(id);
     }
 
-    public void unlockUser(String username) {
-        authDAO.unlockUser(username);
+    public void unlockUser(String email) {
+        authDAO.unlockUser(email);
+    }
+
+    public void lockUser(String email) {
+        authDAO.lockUser(email);
     }
 
 }

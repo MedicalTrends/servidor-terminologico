@@ -5,12 +5,10 @@ import cl.minsal.semantikos.kernel.auth.PasswordChangeException;
 import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.components.InstitutionManager;
 import cl.minsal.semantikos.kernel.util.StringUtils;
-import cl.minsal.semantikos.model.Institution;
-import cl.minsal.semantikos.model.Profile;
-import cl.minsal.semantikos.model.User;
-import cl.minsal.semantikos.model.businessrules.UserCreationBR;
+import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.Profile;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.businessrules.UserCreationBRInterface;
-import org.omnifaces.util.Ajax;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DualListModel;
 import org.slf4j.Logger;
@@ -19,21 +17,14 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.ejb.TransactionRolledbackLocalException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpServletRequest;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by BluePrints Developer on 14-07-2016.
@@ -151,7 +142,6 @@ public class UsersBean {
         List<Profile> availableProfiles = new ArrayList<Profile>();
 
         availableProfiles.addAll(userManager.getAllProfiles());
-
 
         for (Profile p: selectedUser.getProfiles()){
             availableProfiles.remove(p);

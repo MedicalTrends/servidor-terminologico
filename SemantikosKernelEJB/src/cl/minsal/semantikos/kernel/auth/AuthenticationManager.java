@@ -1,16 +1,14 @@
 package cl.minsal.semantikos.kernel.auth;
 
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 import org.apache.commons.codec.binary.Base64;
 import org.jboss.ejb3.annotation.SecurityDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.faces.application.FacesMessage;
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.ws.handler.MessageContext;
@@ -35,8 +33,8 @@ public class AuthenticationManager {
 
 
     @PermitAll
-    public boolean authenticate(String username, String password, HttpServletRequest request) throws AuthenticationException {
-        return getAuthenticationMethod().authenticate(username, password, request);
+    public boolean authenticate(String email, String password, HttpServletRequest request) throws AuthenticationException {
+        return getAuthenticationMethod().authenticate(email, password, request);
     }
 
     @PermitAll
@@ -79,8 +77,8 @@ public class AuthenticationManager {
     }
 
     @PermitAll
-    public User getUserDetails(String username) {
-        return getAuthenticationMethod().getUser(username);
+    public User getUserDetails(String email) {
+        return getAuthenticationMethod().getUser(email);
     }
 
     private AuthenticationMethod getAuthenticationMethod() {

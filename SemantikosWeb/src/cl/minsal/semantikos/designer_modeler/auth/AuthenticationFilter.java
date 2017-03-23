@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.designer_modeler.auth;
 
 import cl.minsal.semantikos.designer_modeler.Constants;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

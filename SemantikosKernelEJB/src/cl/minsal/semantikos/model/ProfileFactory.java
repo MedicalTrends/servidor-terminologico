@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.model;
 
+import cl.minsal.semantikos.model.users.Profile;
+
 /**
  * @author Andrés Farías on 9/2/16.
  */

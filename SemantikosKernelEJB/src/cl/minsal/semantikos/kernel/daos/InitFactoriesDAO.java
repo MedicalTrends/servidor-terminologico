@@ -4,6 +4,7 @@ import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.QueryFactory;
 
 import javax.ejb.Local;
+import javax.naming.NamingException;
 import java.util.List;
 
 /**
@@ -46,4 +47,11 @@ public interface InitFactoriesDAO {
      * @return El factory correspondiente
      */
     HelperTableColumnFactory refreshColumns();
+
+    /**
+     * Este método es responsable de retornar un Factory.
+     *
+     * @return El factory correspondiente
+     */
+    EmailFactory refreshEmail() throws NamingException;
 }

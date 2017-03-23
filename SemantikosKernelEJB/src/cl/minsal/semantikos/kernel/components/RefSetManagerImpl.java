@@ -4,6 +4,8 @@ import cl.minsal.semantikos.kernel.daos.RefSetDAO;
 import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.*;
+import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +18,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import static java.lang.System.currentTimeMillis;
-import static java.lang.System.in;
 
 /**
  * @author Andrés Farías on 9/20/16.
