@@ -22,7 +22,9 @@ public class RelationshipAttribute {
     public RelationshipAttribute(RelationshipAttributeDefinition relationAttributeDefinition, Relationship relationship, Target target) {
         this.relationAttributeDefinition = relationAttributeDefinition;
         Relationship = relationship;
-        this.target = target;
+        //this.target = target;
+        if(target != null)
+            this.setTarget(target.copy());
     }
 
     public RelationshipAttribute(Long idRelationshipAttribute, RelationshipAttributeDefinition relationAttributeDefinition, Relationship relationship, Target target) {

@@ -92,4 +92,13 @@ public class RelationshipWeb extends Relationship implements Comparable<Relation
     public int compareTo(RelationshipWeb o) {
         return this.getOrder() - o.getOrder();
     }
+
+    public RelationshipAttribute getAttribute(RelationshipAttributeDefinition definition) {
+        for (RelationshipAttribute attribute : getRelationshipAttributes()) {
+            if (definition.equals(attribute.getRelationAttributeDefinition()))
+                return attribute;
+        }
+
+        return null;
+    }
 }
