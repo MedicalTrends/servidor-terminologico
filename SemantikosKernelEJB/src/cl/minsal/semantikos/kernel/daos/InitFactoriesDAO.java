@@ -2,10 +2,10 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.QueryFactory;
+import cl.minsal.semantikos.model.users.EmailFactory;
 
 import javax.ejb.Local;
 import javax.naming.NamingException;
-import java.util.List;
 
 /**
  * @author Diego Soto on 22/02/17

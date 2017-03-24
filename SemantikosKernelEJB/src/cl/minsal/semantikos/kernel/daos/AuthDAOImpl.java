@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.util.StringUtils;
+import cl.minsal.semantikos.model.users.Answer;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
@@ -350,6 +351,7 @@ public class AuthDAOImpl implements AuthDAO {
             call.setString(4, user.getEmail());
             call.setString(5, user.getRut());
             call.setBoolean(6, user.isLocked());
+
             if(user.getVerificationCode()==null)
                 call.setNull(7, Types.VARCHAR);
             else
@@ -378,6 +380,22 @@ public class AuthDAOImpl implements AuthDAO {
         for (Profile p : user.getProfiles()) {
             addProfileToUser(user, p);
         }
+
+        sql = "{call semantikos.delete_user_answers(?)}";
+        try (Connection connection = (new ConnectionBD()).getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setLong(1, user.getIdUser());
+            call.execute();
+        } catch (SQLException e) {
+            String errorMsg = "Error al eliminar perfiles de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        for (Answer a : user.getAnswers()) {
+            addAnswerToUser(user, a);
+        }
     }
 
     private void addProfileToUser(User user, Profile p) {
@@ -397,6 +415,29 @@ public class AuthDAOImpl implements AuthDAO {
 
         } catch (SQLException e) {
             String errorMsg = "Error al agregar perfila a usuario de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+    }
+
+    private void addAnswerToUser(User user, Answer a) {
+
+        ConnectionBD connect = new ConnectionBD();
+
+        String sql = "{call semantikos.add_answer(?,?,?)}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setLong(1, user.getIdUser());
+            call.setLong(2,  a.getQuestion().getId());
+            call.setString(3, a.getAnswer());
+
+            call.execute();
+
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al agregar respuesta a usuario de la BDD.";
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }

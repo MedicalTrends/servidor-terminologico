@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecordFactory;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.users.EmailFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

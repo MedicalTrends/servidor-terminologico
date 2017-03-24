@@ -79,22 +79,20 @@ public class UserManager {
         }
     }
 
-    public boolean activateAccount(String key) {
+    public void activateAccount(User user) {
 
         /* Se validan las pre-condiciones para crear un usuario */
         //UserCreationBR userCreationBR = new UserCreationBR();
         //userCreationBR.preconditions(user);
-        User user = userCreationBR.br307verificationCodeExists(key);
+        try {
+            authenticationManager.createUserPassword(user,user.getEmail(),user.getPassword());
+        } catch (PasswordChangeException e) {
+            e.printStackTrace();
+        }
+        user.setLocked(false);
+        user.setVerificationCode(null);
+        authDAO.updateUser(user);
 
-        if(user!=null) {
-            user.setLocked(false);
-            user.setVerificationCode(null);
-            authDAO.updateUser(user);
-            return true;
-        }
-        else {
-            return false;
-        }
     }
 
     public boolean checkActivationCode(String key) {

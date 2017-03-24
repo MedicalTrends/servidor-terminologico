@@ -4,7 +4,7 @@ import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
 import cl.minsal.semantikos.kernel.auth.PasswordChangeException;
 import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.EmailFactory;
+import cl.minsal.semantikos.model.users.EmailFactory;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import org.slf4j.Logger;
@@ -176,8 +176,7 @@ public class UserCreationBR implements UserCreationBRInterface {
         try {
             String link = getURLWithContextPath(request) + "/designer/views/activateAccount.xhtml?key="+user.getVerificationCode();
             String link2 = getURLWithContextPath(request) + "/designer/views/login.xhtml";
-            EmailFactory.getInstance().prepareMail(user.getEmail(), user.getPassword(), link, link2);
-            EmailFactory.getInstance().send();
+            EmailFactory.getInstance().send(user.getEmail(), user.getPassword(), link, link2);
         } catch (Exception e) {
             e.printStackTrace();
             throw new BusinessRuleException("BR-306-SendEmail", "No se pudo enviar correo a usuario. Contactar a desarrollo");

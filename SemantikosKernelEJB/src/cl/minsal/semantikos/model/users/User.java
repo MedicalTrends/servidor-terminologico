@@ -50,8 +50,6 @@ public class User {
     /** BR-RefSet-004: La institución en la que trabaja el usuario */
     private List<Institution> institutions;
 
-    private List<Question> questions;
-
     private List<Answer> answers;
 
     /**
@@ -60,6 +58,7 @@ public class User {
     public User() {
         this.profiles = new ArrayList<>();
         this.institutions = new ArrayList<>();
+        this.answers = new ArrayList<>();
     }
 
     private User(long idUser, String username, String name, boolean locked) {
@@ -307,20 +306,23 @@ public class User {
         this.verificationCode = verificationCode;
     }
 
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
-
     public List<Answer> getAnswers() {
         return answers;
     }
 
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    public List<Answer> getAnswersByQuestion(Question question) {
+        List<Answer> someAnswers = new ArrayList<>();
+
+        for (Answer answer : getAnswers()) {
+            if(answer.getQuestion().equals(question)) {
+                someAnswers.add(answer);
+            }
+        }
+        return someAnswers;
     }
 
     @Override

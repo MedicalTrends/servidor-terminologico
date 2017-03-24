@@ -19,33 +19,39 @@
     <p:outputPanel rendered="#{accountActivation.valid}">
         <h:body styleClass="loginbodyblue">
         
-        <div class="Wid90 DispBlock MarAuto MarTopPerc10 TexAlCenter">
-            <div class="Wid33 MarAuto WidAutoOnMobile">
+        <div class="Wid90 DispBlock MarAuto MarTopPerc10">
+            <div class="Wid50 MarAuto WidAutoOnMobile">
                 <div class="EmptyBox30"></div>
                 <div class="Card ShadowEffect">
                     <div class="EmptyBox40"></div>
-                    <i class="icon-virtual2 Fs100 Blue" />
-                    <div class="Wid100 OvHidden Fs30 Blue">Activación de Cuenta
-                    <div class="Wid100 OvHidden Fs20 BoldGray">Confirme su contraseña inicial.</div>
+                    <div class="TexAlCenter"><i class="icon-virtual2 Fs100 Blue" /></div>
+                    <div class="Wid100 OvHidden Fs30 Blue"><div class="TexAlCenter">Activación de Cuenta</div>
                     <div class="EmptyBox20"></div>
                     <div class="Separator"></div>
                     <div class="EmptyBox10"></div>
-                    <p:panel menuTitle="Confirmar Contraseña">
+                    <h:form id="mainForm">
+                    <p:growl id="growl" showDetail="true" showSummary="true"/>
+                    <p:panel header="Cambio de contraseña">
 
-                        <p:panelGrid id="password" columns="4" columnClasses="label, value" styleClass="Wid100" >
+                        <f:facet name="footer">
+                            <p:outputPanel>
+                                <i class="fa  fa-info-circle fa-lg" style="padding-right:10px" />
+                                <h:outputText value="Actualice su contraseña a una que usted pueda recordar fácilmente" />
+                            </p:outputPanel>
+                        </f:facet>
 
-                            <p:outputLabel value="Contraseña *" style="font-weight: bold" styleClass="Wid20" />
+                        <p:panelGrid id="password" columns="2" columnClasses="label, value" styleClass="Wid100 ui-panelgrid-blank">
 
-                            <p:inputText value="#{accountActivation.password}" styleClass="Wid90" autocomplete="off" />
+                            <p:outputLabel value="Contraseña Actual *" style="font-weight: bold" styleClass="#{accountActivation.passwordError} Wid20" />
 
-                            <p:inputText value="#{accountActivation.newPassword1}" styleClass="Wid90" autocomplete="off" />
-
-                            <p:inputText value="#{accountActivation.newPassword2}" styleClass="Wid90" autocomplete="off" />
-
-                            <p:password value="#{accountActivation.password}" styleClass="#{accountActivation.passwordError} Wid90"
-                                        autocomplete="off" promptLabel="Ingrese la contraseña enviada a su correo electrónico"
-                                        redisplay="true" placeholder="Contraseña actual">
+                            <p:password value="#{accountActivation.password}"
+                                        promptLabel="Ingrese su nueva contraseña"
+                                        redisplay="true" autocomplete="off"
+                                        styleClass="#{accountActivation.passwordError} Wid90">
+                                <p:ajax event="blur" update="@this" />
                             </p:password>
+
+                            <p:outputLabel value="Nueva Contraseña *" style="font-weight: bold" styleClass="#{accountActivation.passwordError} Wid20" />
 
                             <p:password value="#{accountActivation.newPassword1}" feedback="true"
                                         promptLabel="Ingrese su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
@@ -53,6 +59,8 @@
                                         styleClass="#{accountActivation.newPassword1Error} Wid90">
                                 <p:ajax event="blur" update="@this" />
                             </p:password>
+
+                            <p:outputLabel value="Confirmar Contraseña *" style="font-weight: bold" styleClass="#{accountActivation.passwordError} Wid20" />
 
                             <p:password value="#{accountActivation.newPassword2}" feedback="true"
                                         promptLabel="Confirme su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
@@ -63,14 +71,23 @@
 
                         </p:panelGrid>
                     </p:panel>
-                    <p:panel menuTitle="Preguntas de seguridad">
-                        <h:dataTable id="questions" style="width: 100%;" value="#{accountActivation.questionList}"
+                    <br />
+                    <p:panel header="Preguntas de desbloqueo">
+
+                        <f:facet name="footer">
+                            <p:outputPanel>
+                                <i class="fa  fa-info-circle fa-lg" style="padding-right:10px" />
+                                <h:outputText value="Si usted olvida su contraseña, puede responder 3 preguntas de seguridad para recuperarla" />
+                            </p:outputPanel>
+                        </f:facet>
+
+                        <h:dataTable id="questions" styleClass="questions" style="width: 100%;" value="#{accountActivation.questionList}"
                                      var="question">
 
                             <h:column>
-                                <p:checkbox>
-                                    <p:ajax event="change" listener="#{accountActivation.updateQuestions(question)}" update="questions" />
-                                </p:checkbox>
+                                <p:selectBooleanCheckbox value="#{question.selected}" disabled="#{accountActivation.user.answers.size() >= 3 and not question.selected}">
+                                    <p:ajax listener="#{accountActivation.updateAnswers(question)}" update="@(.questions)" process="@this" />
+                                </p:selectBooleanCheckbox>
                             </h:column>
 
                             <h:column>
@@ -78,15 +95,25 @@
                             </h:column>
 
                             <h:column>
-                                <ui:repeat value="#{question.answers}" var="answer">
-                                    <p:outputLabel value="#{answer.answer}" />
+                                <ui:repeat value="#{accountActivation.user.getAnswersByQuestion(question)}" var="answer">
+                                    <p:inputText value="#{answer.answer}" autocomplete="off" styleClass="Wid90" >
+                                        <p:ajax process="@this" update="@this" />
+                                    </p:inputText>
                                 </ui:repeat>
                             </h:column>
 
                         </h:dataTable>
 
                     </p:panel>
-                    <div class="Wid100"><p:button value="Activar Cuenta" icon="fa fa-sign-in" styleClass="BlueTextButton Wid60 Fs18 White RaisedButton" href="dashboard.xhtml"/></div>
+                    <br />
+                    <div class="Wid100 TextAlCenter" style="text-align: center">
+                        <p:commandButton actionListener="#{accountActivation.activate}" icon="fa fa-check"
+                                         styleClass="ui-priority-primary Fs20"
+                                         value="Activar Cuenta" type="submit" process="mainForm"
+                                         update="growl, mainForm">
+                        </p:commandButton>
+                    </div>
+                    </h:form>
                     <div class="EmptyBox20"></div>
                 </div>
                 <div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular WhiteBlue">
