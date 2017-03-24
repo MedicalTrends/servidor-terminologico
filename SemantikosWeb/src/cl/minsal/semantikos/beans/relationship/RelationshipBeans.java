@@ -5,6 +5,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.RelationshipWeb;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.relationships.*;
+import org.primefaces.event.RowEditEvent;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -22,6 +23,8 @@ import java.util.Map;
 public class RelationshipBeans {
     @ManagedProperty( value="#{conceptBean}")
     ConceptBean conceptBean;
+
+    private Relationship relationshipSelected;
 
     public ConceptBean getConceptBean() {
         return conceptBean;
@@ -91,4 +94,17 @@ public class RelationshipBeans {
         }
         return targetSelected.get(relationshipDefinition.getId());
     }
+
+    public void onRowEdit(RowEditEvent event) {
+
+    }
+
+    public Relationship getRelationshipSelected() {
+        return relationshipSelected;
+    }
+
+    public void setRelationshipSelected(Relationship relationshipSelected) {
+        this.relationshipSelected = relationshipSelected;
+    }
+
 }
