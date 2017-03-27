@@ -62,7 +62,7 @@ public class AuthenticationBean {
             //valida user y pass
             if(email.trim().equals("")) {
                 emailError = "ui-state-error";
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar 'E-mail'"));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar 'e-mail'"));
             }
             else {
                 emailError = "";
@@ -82,7 +82,7 @@ public class AuthenticationBean {
 
             if(!isValidEmailAddress(email)) {
                 emailError = "ui-state-error";
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El formato del 'E-mail' no es válido"));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El formato del 'e-mail' no es válido"));
             }
             else {
                 emailError = "";

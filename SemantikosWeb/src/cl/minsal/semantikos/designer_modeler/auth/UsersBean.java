@@ -231,7 +231,7 @@ public class UsersBean {
 
         if(selectedUser.getEmail().trim().equals("")) {
             userNameError = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar 'Nombre de usuario'"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar 'e-mail'"));
         }
         else {
             userNameError = "";
@@ -282,8 +282,9 @@ public class UsersBean {
                     HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
                     userManager.createUser(selectedUser, request);
                     rContext.execute("PF('editDialog').hide();");
-                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario creado de manera exitosa!!"));
-                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Se ha enviado un correo de notificación al usuario para confirmar esta cuenta. Este usuario permanecerá inactivo hasta que confirme el correo"));
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "1° Usuario creado de manera exitosa!!"));
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "2° Se ha enviado un correo de notificación al usuario para activar esta cuenta."));
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "3° Este usuario permanecerá bloqueado hasta que él active su cuenta"));
                 }
                 catch (EJBException e) {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));

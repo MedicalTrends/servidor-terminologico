@@ -73,7 +73,7 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
 
             logger.debug("Error de login", e);
             //throw (AuthenticationException) new AuthenticationException("Error de autenticacion: " + e.getMessage()).initCause(e);
-            throw (AuthenticationException) new AuthenticationException("Error de autenticacion: E-mail o contraseña no son correctos");
+            throw (AuthenticationException) new AuthenticationException("Error de autenticacion: e-mail o contraseña no son correctos");
         }
 
         /**

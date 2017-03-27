@@ -28,6 +28,9 @@ public class AuthDAOImpl implements AuthDAO {
     @EJB
     private InstitutionDAO institutionDAO;
 
+    @EJB
+    private QuestionDAO questionDAO;
+
     @Override
     public User getUserById(long id) {
 
@@ -254,6 +257,8 @@ public class AuthDAOImpl implements AuthDAO {
 
         u.setInstitutions(institutionDAO.getInstitutionBy(u));
 
+        u.setAnswers(questionDAO.getAnswersByUser(u));
+
         return u;
     }
 
@@ -341,7 +346,7 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public void updateUser(User user) {
 
-        String sql = "{call semantikos.update_user(?,?,?,?,?,?,?,?)}";
+        String sql = "{call semantikos.update_user(?,?,?,?,?,?,?,?,?)}";
         try (Connection connection = (new ConnectionBD()).getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -351,12 +356,13 @@ public class AuthDAOImpl implements AuthDAO {
             call.setString(4, user.getEmail());
             call.setString(5, user.getRut());
             call.setBoolean(6, user.isLocked());
+            call.setString(7, user.getPasswordHash());
 
             if(user.getVerificationCode()==null)
-                call.setNull(7, Types.VARCHAR);
+                call.setNull(8, Types.VARCHAR);
             else
-                call.setString(7, user.getVerificationCode());
-            call.setLong(8, user.getIdUser());
+                call.setString(8, user.getVerificationCode());
+            call.setLong(9, user.getIdUser());
 
             call.execute();
         } catch (SQLException e) {

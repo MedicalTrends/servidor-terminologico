@@ -18,7 +18,7 @@ public class Mailer implements Runnable {
 
     private String subject = "Confirmación Cuenta Semantikos";
 
-    private String body = "<b>Bienvenido a Semantikos!</b><br><br>Una cuenta asociada a este correo ha sido creada. <ul><li>Para activar su cuenta, por favor pinche el siguiente link: <br>%link%</li><li>Una vez activada su cuenta ingrese al sitio web:<br>%link2%<br>con la siguiente contraseña: %password%</li><li>Cambie su contraseña en la opción Perfil de la pestaña Usuario</li></ul>El Equipo Semantikos";
+    private String body = "<b>Bienvenido a Semantikos!</b><br><br>Una cuenta asociada a este correo ha sido creada. <ul><li>Para activar su cuenta, por favor pinche el siguiente link: <br>%link%</li><li>Su contraseña inicial es: %password%<br>Cambie su contraseña inicial</li><li>Configure sus preguntas de seguridad</li></ul>El Equipo Semantikos";
 
 
     protected Mailer(Session session, String to, String password, String link, String link2) {

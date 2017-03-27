@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.designer_modeler.designer;
 
+import cl.minsal.semantikos.designer_modeler.Constants;
 import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
 import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.util.StringUtils;
@@ -16,9 +17,13 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
+
+import static org.primefaces.util.Constants.EMPTY_STRING;
 
 /**
  * Created by root on 22-03-17.
@@ -32,11 +37,13 @@ public class AccountActivation {
 
     private boolean valid;
 
-    private String password;
+    private boolean accountActive = false;
 
-    private String newPassword1;
+    private String password = null;
 
-    private String newPassword2;
+    private String newPassword1 = null;
+
+    private String newPassword2 = null;
 
     private String passwordError;
 
@@ -71,6 +78,12 @@ public class AccountActivation {
             return true;
         }
         else {
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            try {
+                context.redirect(context.getRequestContextPath() + "/" + Constants.VIEWS_FOLDER+ "/" + Constants.LOGIN_PAGE );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return false;
         }
     }
@@ -173,6 +186,14 @@ public class AccountActivation {
         }
     }
 
+    public boolean isAccountActive() {
+        return accountActive;
+    }
+
+    public void setAccountActive(boolean accountActive) {
+        this.accountActive = accountActive;
+    }
+
     public void activate() {
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -195,18 +216,21 @@ public class AccountActivation {
         }
 
         if(newPassword2.isEmpty()) {
+            newPassword2Error = "ui-state-error";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe confirmar su nueva contraseña"));
         }
         else {
             newPassword2Error = "";
         }
 
-        if(!newPassword1.equals(newPassword2)) {
-            newPassword2Error = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La confirmación de contraseña no coincide con la original"));
+        if(password.length() < 8) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La contraseña debe tener al menos 8 caracteres"));
+            passwordError = "ui-state-error";
+            passwordError = "ui-state-error";
         }
-        else {
-            newPassword2Error = "";
+        else{
+            passwordError = "";;
+            passwordError = "";
         }
 
         if(newPassword1.length() < 8) {
@@ -233,6 +257,15 @@ public class AccountActivation {
             return;
         }
 
+        if(!newPassword1.equals(newPassword2)) {
+            newPassword2Error = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La confirmación de contraseña no coincide con la original"));
+            return;
+        }
+        else {
+            newPassword2Error = "";
+        }
+
         if(user.getAnswers().size() < 3) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe seleccionar 3 preguntas de desbloqueo"));
             return;
@@ -255,14 +288,9 @@ public class AccountActivation {
         }
 
         try {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
             user.setPassword(newPassword1);
             userManager.activateAccount(user);
-
-            rContext.execute("PF('editDialog').hide();");
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario creado de manera exitosa!!"));
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Se ha enviado un correo de notificación al usuario para confirmar esta cuenta. Este usuario permanecerá inactivo hasta que confirme el correo"));
+            accountActive = true;
         }
         catch (EJBException e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));

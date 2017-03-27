@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.auth;
 import cl.minsal.semantikos.kernel.daos.AuthDAO;
 
 import cl.minsal.semantikos.kernel.daos.QuestionDAO;
+import cl.minsal.semantikos.model.users.Answer;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.Question;
 import cl.minsal.semantikos.model.users.User;
@@ -49,7 +50,9 @@ public class UserManager {
 
     public User getUserByUsername(String username) { return authDAO.getUserByUsername(username); }
 
-    public User getUserByEmail(String username) { return authDAO.getUserByEmail(username); }
+    public User getUserByEmail(String username) {
+        return authDAO.getUserByEmail(username);
+    }
 
     public User getUserByVerificationCode(String key) { return authDAO.getUserByVerificationCode(key); }
 
@@ -108,6 +111,17 @@ public class UserManager {
         else {
             return false;
         }
+    }
+
+    public boolean checkAnswers(User user) {
+        User persistedUser = getUserByEmail(user.getEmail());
+
+        for (Answer answer : persistedUser.getAnswers()) {
+            if(!user.getAnswers().contains(answer)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public List<Profile> getAllProfiles() {

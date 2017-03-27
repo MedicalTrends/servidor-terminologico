@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.audit.RefSetAuditAction;
+import cl.minsal.semantikos.model.users.Answer;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.Question;
 import cl.minsal.semantikos.model.users.User;
@@ -26,6 +27,8 @@ public class QuestionDAOImpl implements QuestionDAO {
 
     static final Logger logger = LoggerFactory.getLogger(QuestionDAOImpl.class);
 
+    @EJB
+    private AuthDAO authDao;
 
     @Override
     public List<Question> getAllQuestions() {
@@ -47,8 +50,45 @@ public class QuestionDAOImpl implements QuestionDAO {
     }
 
     @Override
-    public List<Question> getQuestionsByUser() {
-        return null;
+    public List<Answer> getAnswersByUser(User user) {
+
+        ConnectionBD connect = new ConnectionBD();
+        String GET_ANSWERS_BY_USERS = "{call semantikos.get_answers_by_user(?)}";
+        List<Answer> answers= new ArrayList<>();
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(GET_ANSWERS_BY_USERS)) {
+            call.setLong(1, user.getIdUser());
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                answers.add(createAnswerFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            logger.error("Error al obtener los Answers ", e);
+        }
+
+        return answers;
+    }
+
+    @Override
+    public Question getQuestionById(long id) {
+        ConnectionBD connect = new ConnectionBD();
+        String GET_QUESTION_BY_ID = "{call semantikos.get_question_by_id(?)}";
+        Question question = null;
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(GET_QUESTION_BY_ID)) {
+            call.setLong(1, id);
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+                question = createQuestionFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            logger.error("Error al al obtener los RefSets ", e);
+        }
+
+        return question;
     }
 
     private Question createQuestionFromResultSet(ResultSet resultSet) {
@@ -60,6 +100,28 @@ public class QuestionDAOImpl implements QuestionDAO {
             e.printStackTrace();
         }
         return question;
+    }
+
+    private Answer createAnswerFromResultSet(ResultSet resultSet) {
+
+        Answer answer = new Answer();
+
+        try {
+            answer.setId(resultSet.getLong("id"));
+            answer.setAnswer(resultSet.getString("answer"));
+
+            User user = authDao.getUserById(resultSet.getLong("id_user"));
+
+            Question question = getQuestionById(resultSet.getLong("id_question"));
+
+            answer.setUser(user);
+            answer.setQuestion(question);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return answer;
     }
 
 }
