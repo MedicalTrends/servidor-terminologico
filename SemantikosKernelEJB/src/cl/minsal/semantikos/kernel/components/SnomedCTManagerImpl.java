@@ -108,12 +108,15 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
 
     @Override
     public void chargeSNAPSHOT(List<ConceptSCT> conceptSCTs, List<DescriptionSCT> descriptionSCTs, List<RelationshipSnapshotSCT> relationshipSnapshotSCTs, List<LanguageRefsetSCT> languageRefsetSCTs, List<TransitiveSCT> transitiveSCTs) {
+        for (DescriptionSCT descriptionSCT : descriptionSCTs) {
+            snomedctDAO.persistSnapshotDescriptionSCT(descriptionSCT);
+        }
 
-        for (ConceptSCT conceptSCT : conceptSCTs) {
+        /*for (ConceptSCT conceptSCT : conceptSCTs) {
             snomedctDAO.persistSnapshotConceptSCT(conceptSCT);
             break;
         }
-        /*
+
         for (DescriptionSCT descriptionSCT : descriptionSCTs) {
             snomedctDAO.persistSnapshotDescriptionSCT(descriptionSCT);
         }
@@ -131,7 +134,41 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
 
     @Override
     public void persistConceptSCT(ConceptSCT conceptSCT) {
-        snomedctDAO.persistSnapshotConceptSCT(conceptSCT);
+        if(snomedctDAO.existConceptSCT(conceptSCT)){
+            if(!conceptSCT.equals(snomedctDAO.getConceptByID(conceptSCT.getIdSnomedCT()))){
+                snomedctDAO.updateSnapshotConceptSCT(conceptSCT);
+            }
+        }else{
+            snomedctDAO.persistSnapshotConceptSCT(conceptSCT);
+        }
+
+    }
+
+    @Override
+    public void persistSnapshotDescriptionSCT(DescriptionSCT descriptionSCT) {
+        if(snomedctDAO.existDescriptionSCT(descriptionSCT)){
+            if(!descriptionSCT.equals(snomedctDAO.getDescriptionSCTBy(descriptionSCT.getId()))){
+                snomedctDAO.updateSnapshotDescriptionSCT(descriptionSCT);
+            }
+        }else{
+            snomedctDAO.persistSnapshotDescriptionSCT(descriptionSCT);
+        }
+
+    }
+
+    @Override
+    public void persistSnapshotRelationshipSCT(RelationshipSnapshotSCT relationshipSnapshotSCT) {
+        snomedctDAO.persistSnapshotRelationshipSCT(relationshipSnapshotSCT);
+    }
+
+    @Override
+    public void persistSnapshotTransitiveSCT(TransitiveSCT transitiveSCT) {
+       snomedctDAO.persistSnapshotTransitiveSCT(transitiveSCT);
+    }
+
+    @Override
+    public void persistSnapshotLanguageRefSetSCT(LanguageRefsetSCT languageRefsetSCT) {
+        snomedctDAO.persistSnapshotLanguageRefSetSCT(languageRefsetSCT);
     }
 
     private void validateDescriptionSCT(List<ConceptSCT> conceptSCTs, List<DescriptionSCT> descriptionSCTs) {

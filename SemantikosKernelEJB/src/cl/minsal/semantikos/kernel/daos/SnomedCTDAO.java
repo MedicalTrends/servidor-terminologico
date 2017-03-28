@@ -98,18 +98,76 @@ public interface SnomedCTDAO {
      */
     long countTruncateMatch(String pattern, Integer group);
 
+    /**
+     * Método encargado de persistir un concepto SNOMED CT
+     * @param conceptSCT
+     */
     public void persistSnapshotConceptSCT(ConceptSCT conceptSCT);
+
+    /**
+     * Método encargado de persistir una descripción SNOMED CT
+     * @param descriptionSCT
+     */
     public void persistSnapshotDescriptionSCT(DescriptionSCT descriptionSCT);
+
+    /**
+     * Método encargado de persistir una relación SNOMED CT
+     * @param relationshipSnapshotSCT
+     */
     public void persistSnapshotRelationshipSCT(RelationshipSnapshotSCT relationshipSnapshotSCT);
+
+    /**
+     * Método encargado de persistir transitivos de SNOMED CT
+     * @param transitiveSCT
+     */
     public void persistSnapshotTransitiveSCT(TransitiveSCT transitiveSCT);
+
+    /**
+     * Método encargado de persisitir un lenguaje de RefSet SNOMED CT
+     * @param languageRefsetSCT
+     */
     public void persistSnapshotLanguageRefSetSCT(LanguageRefsetSCT languageRefsetSCT);
 
 
-    public void updateSnapshotConceptSCT();
-    public void updateSnapshotDescriptionSCT();
-    public void updateSnapshotRelationshipSCT();
-    public void updateSnapshotTransitiveSCT();
-    public void updateSnapshotLanguageRefSetSCT();
+    /**
+     * Método encargado de actualizar los atributos de un concepto SNOMED CT
+     * @param conceptSCT
+     */
+    public void updateSnapshotConceptSCT(ConceptSCT conceptSCT);
 
-    public void deleteSnapshotTransitiveSCT();
+    /**
+     * Método encargado de actualizar los atributos de una descripción SNOMED CT
+     * @param descriptionSCT
+     */
+    public void updateSnapshotDescriptionSCT(DescriptionSCT descriptionSCT);
+
+    /**
+     * Método encargado de actualizar una relación de SNOMED CT
+     * @param relationshipSnapshotSCT
+     */
+    public void updateSnapshotRelationshipSCT(RelationshipSnapshotSCT relationshipSnapshotSCT);
+
+    /**
+     * Método encargado de actualizar los atributos de un lenguaje RefSet de SNOMED CT
+     * @param languageRefsetSCT
+     */
+    public void updateSnapshotLanguageRefSetSCT(LanguageRefsetSCT languageRefsetSCT);
+
+    /**
+     * Metodo encargado de eliminar un registro de transitivos de SNOMED CT
+     */
+    public void deleteSnapshotTransitiveSCT(TransitiveSCT transitiveSCT);
+
+
+    /**
+     * Método encargado de verificar si existe el concepto SNOMED CT dado por parámetro
+     * @param conceptSCT
+     * @return
+     */
+    public boolean existConceptSCT(ConceptSCT conceptSCT);
+
+    public boolean existDescriptionSCT(DescriptionSCT descriptionSCT);
+
+    public DescriptionSCT getDescriptionSCTBy(long idDescriptionSCT);
+
 }
