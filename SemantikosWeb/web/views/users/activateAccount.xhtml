@@ -39,7 +39,7 @@
                     <div class="EmptyBox10"></div>
                     <h:form id="mainForm" rendered="#{not accountActivation.accountActive}">
                     <p:growl id="growl" showDetail="true" showSummary="true"/>
-                    <p:panel header="Cambio de contraseña">
+                    <p:panel header="Paso 1: Cambio de contraseña">
 
                         <f:facet name="footer">
                             <p:outputPanel>
@@ -77,7 +77,7 @@
                         </p:panelGrid>
                     </p:panel>
                     <br />
-                    <p:panel header="Preguntas de seguridad">
+                    <p:panel header="Paso 2: Preguntas de seguridad">
 
                         <f:facet name="footer">
                             <p:outputPanel>
@@ -111,9 +111,9 @@
 
                     </p:panel>
                     <br />
-                    <div class="Wid100 TextAlCenter" style="text-align: right">
+                    <div class="Wid100 TextAlCenter" style="text-align: center">
                         <p:commandButton actionListener="#{accountActivation.activate}"
-                                         styleClass="ui-priority-primary"
+                                         styleClass="ui-priority-primary Fs20"
                                          value="Enviar" type="submit" process="mainForm"
                                          update="growl, account-activation">
                         </p:commandButton>

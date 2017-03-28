@@ -135,11 +135,10 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
     private void failLogin(User user) {
 
 
-        authDAO.markLoginFail(user.getUsername());
-
+        authDAO.markLoginFail(user.getEmail());
 
         if (user.getFailedLoginAttempts() + 1 == MAX_FAILED_LOGIN_ATTEMPTS)
-            authDAO.lockUser(user.getUsername());
+            authDAO.lockUser(user.getEmail());
 
     }
 
@@ -164,7 +163,7 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
      */
     @Override
     public void setUserPassword(String username, String password) throws PasswordChangeException {
-        User user = authDAO.getUserByUsername(username);
+        User user = authDAO.getUserByEmail(username);
 
         String passwordHash = createPasswordHash("MD5", BASE64_ENCODING, null, null, password);
 

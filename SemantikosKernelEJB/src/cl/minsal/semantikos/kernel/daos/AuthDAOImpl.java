@@ -236,22 +236,23 @@ public class AuthDAOImpl implements AuthDAO {
 
         u.setLocked(rs.getBoolean(9));
         u.setFailedLoginAttempts(rs.getInt(10));
+        u.setFailedAnswerAttempts(rs.getInt(11));
 
-        u.setLastLogin(rs.getTimestamp(11));
-        u.setLastPasswordChange(rs.getTimestamp(12));
+        u.setLastLogin(rs.getTimestamp(12));
+        u.setLastPasswordChange(rs.getTimestamp(13));
 
-        u.setLastPasswordHash1(rs.getString(13));
-        u.setLastPasswordHash2(rs.getString(14));
-        u.setLastPasswordHash3(rs.getString(15));
-        u.setLastPasswordHash4(rs.getString(16));
+        u.setLastPasswordHash1(rs.getString(14));
+        u.setLastPasswordHash2(rs.getString(15));
+        u.setLastPasswordHash3(rs.getString(16));
+        u.setLastPasswordHash4(rs.getString(17));
 
-        u.setLastPasswordSalt1(rs.getString(17));
-        u.setLastPasswordSalt2(rs.getString(18));
-        u.setLastPasswordSalt3(rs.getString(19));
-        u.setLastPasswordSalt4(rs.getString(20));
+        u.setLastPasswordSalt1(rs.getString(18));
+        u.setLastPasswordSalt2(rs.getString(19));
+        u.setLastPasswordSalt3(rs.getString(20));
+        u.setLastPasswordSalt4(rs.getString(21));
 
-        u.setRut(rs.getString(21));
-        u.setVerificationCode(rs.getString(22));
+        u.setRut(rs.getString(22));
+        u.setVerificationCode(rs.getString(23));
 
         u.setProfiles(getUserProfiles(u.getIdUser()));
 
@@ -565,6 +566,48 @@ public class AuthDAOImpl implements AuthDAO {
         ConnectionBD connect = new ConnectionBD();
 
         String sql = "{call semantikos.mark_login_fail(?)}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setString(1, username);
+            call.execute();
+
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al actualizar usuario de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+    }
+
+    /* marca la ultima fecha de ingreso del usuario */
+    @Override
+    public void markAnswer(String email) {
+
+        ConnectionBD connect = new ConnectionBD();
+
+        String sql = "{call semantikos.mark_answer(?)}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setString(1, email);
+            call.execute();
+
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al actualizar usuario de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+
+    }
+
+    @Override
+    public void markAnswerFail(String username) {
+        ConnectionBD connect = new ConnectionBD();
+
+        String sql = "{call semantikos.mark_answer_fail(?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 

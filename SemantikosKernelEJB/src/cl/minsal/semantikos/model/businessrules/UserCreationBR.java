@@ -174,7 +174,7 @@ public class UserCreationBR implements UserCreationBRInterface {
     public void br306SendEmail(User user, HttpServletRequest request) {
 
         try {
-            String link = getURLWithContextPath(request) + "/designer/views/activateAccount.xhtml?key="+user.getVerificationCode();
+            String link = getURLWithContextPath(request) + "/designer/views/users/activateAccount.xhtml?key="+user.getVerificationCode();
             String link2 = getURLWithContextPath(request) + "/designer/views/login.xhtml";
             EmailFactory.getInstance().send(user.getEmail(), user.getPassword(), link, link2);
         } catch (Exception e) {

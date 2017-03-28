@@ -2,6 +2,7 @@ package cl.minsal.semantikos.designer_modeler.designer;
 
 import cl.minsal.semantikos.designer_modeler.Constants;
 import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
+import cl.minsal.semantikos.kernel.auth.PasswordChangeException;
 import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.users.Answer;
@@ -28,9 +29,9 @@ import static org.primefaces.util.Constants.EMPTY_STRING;
 /**
  * Created by root on 22-03-17.
  */
-@ManagedBean(name = "passwordRecovery")
+@ManagedBean(name = "accountRecovery")
 @ViewScoped
-public class PasswordRecovery {
+public class AccountRecovery {
 
     private boolean valid;
 
@@ -52,6 +53,7 @@ public class PasswordRecovery {
 
     private String newPassword2Error;
 
+    private boolean passwordChanged = false;
 
     @EJB
     UserManager userManager;
@@ -127,6 +129,14 @@ public class PasswordRecovery {
         this.newPassword2Error = newPassword2Error;
     }
 
+    public boolean isPasswordChanged() {
+        return passwordChanged;
+    }
+
+    public void setPasswordChanged(boolean passwordChanged) {
+        this.passwordChanged = passwordChanged;
+    }
+
     public void findUser() {
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -173,6 +183,12 @@ public class PasswordRecovery {
             }
         }
 
+        if(user.isLocked()) {
+            /**
+             * Usuario bloqueado
+             */
+        }
+
         /**
          * Borrar las respuestas
          */
@@ -190,6 +206,7 @@ public class PasswordRecovery {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe responder las 3 preguntas de seguridad"));
                 return;
             }
+
         }
 
         if(!userManager.checkAnswers(user)) {
@@ -211,5 +228,68 @@ public class PasswordRecovery {
         }
         return result;
     }
+
+    public boolean maxAttemptsReached() {
+        if(user == null) {
+            return false;
+        }
+        else {
+            if(user.isLocked()) {
+                findUser();
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public void changePassword() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        try {
+
+            if(newPassword1.trim().equals("")) {
+                newPassword1Error = "ui-state-error";
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar una nueva contraseña"));
+            }
+            else {
+                newPassword1Error = "";
+            }
+
+            if(newPassword2.trim().equals("")) {
+                newPassword2Error = "ui-state-error";
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe confirmar la nueva contraseña"));
+            }
+            else {
+                newPassword2Error = "";
+            }
+
+            if(!newPassword1Error.concat(newPassword2Error).trim().equals("")) {
+                return;
+            }
+
+            if(!newPassword1.equals(newPassword2)) {
+                newPassword2Error = "ui-state-error";
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La confirmación de contraseña no coincide con la original"));
+            }
+            else {
+                newPassword2Error = "";
+            }
+
+            if(!newPassword1Error.concat(newPassword2Error).trim().equals("")) {
+                return;
+            }
+
+            authenticationManager.setUserPassword(user.getEmail(),newPassword1);
+            passwordChanged = true;
+
+        } catch (PasswordChangeException e) {
+            newPassword1Error = "ui-state-error";
+            newPassword2Error = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+            e.printStackTrace();
+        }
+    }
+
 
 }

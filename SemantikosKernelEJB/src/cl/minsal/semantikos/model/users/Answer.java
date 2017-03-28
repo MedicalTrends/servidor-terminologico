@@ -12,7 +12,7 @@ public class Answer extends PersistentEntity {
 
     private String answer;
 
-    private User user;
+    private long idUser;
 
     private Question question;
 
@@ -41,12 +41,12 @@ public class Answer extends PersistentEntity {
         this.answer = answer;
     }
 
-    public User getUser() {
-        return user;
+    public long getIdUser() {
+        return idUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setIdUser(long idUser) {
+        this.idUser = idUser;
     }
 
     public Question getQuestion() {
@@ -80,7 +80,7 @@ public class Answer extends PersistentEntity {
         Answer that = (Answer) other;
 
         /* 1. Se compara el usuario  */
-        if (this.getUser() != that.getUser()) return false;
+        if (this.getIdUser() != that.getIdUser()) return false;
 
         /* 2. Se compara la pregunta */
         if(!this.getQuestion().equals(that.getQuestion())) return false;

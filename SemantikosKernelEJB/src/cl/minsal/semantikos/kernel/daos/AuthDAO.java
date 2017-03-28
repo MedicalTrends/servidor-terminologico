@@ -37,6 +37,10 @@ public interface AuthDAO {
 
     void markLoginFail(String email);
 
+    void markAnswer(String email);
+
+    void markAnswerFail(String email);
+
     void lockUser(String email);
 
     Profile getProfile(long id);

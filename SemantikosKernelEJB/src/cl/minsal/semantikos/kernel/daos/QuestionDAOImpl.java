@@ -108,13 +108,11 @@ public class QuestionDAOImpl implements QuestionDAO {
 
         try {
             answer.setId(resultSet.getLong("id"));
+            answer.setIdUser(resultSet.getLong("id_user"));
             answer.setAnswer(resultSet.getString("answer"));
-
-            User user = authDao.getUserById(resultSet.getLong("id_user"));
 
             Question question = getQuestionById(resultSet.getLong("id_question"));
 
-            answer.setUser(user);
             answer.setQuestion(question);
 
         } catch (SQLException e) {

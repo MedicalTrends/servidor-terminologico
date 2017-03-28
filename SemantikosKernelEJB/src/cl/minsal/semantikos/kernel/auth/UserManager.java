@@ -22,6 +22,7 @@ import java.util.List;
 @Stateless
 public class UserManager {
 
+    private static final int MAX_FAILED_ANSWER_ATTEMPTS = 2;
 
     @EJB
     AuthDAO authDAO;
@@ -118,10 +119,26 @@ public class UserManager {
 
         for (Answer answer : persistedUser.getAnswers()) {
             if(!user.getAnswers().contains(answer)) {
+                failAnswer(user);
                 return false;
             }
         }
+
+        authDAO.markAnswer(user.getEmail());
         return true;
+    }
+
+    private void failAnswer(User user) {
+
+        authDAO.markAnswerFail(user.getEmail());
+        user.setFailedAnswerAttempts(user.getFailedAnswerAttempts()+1);
+        //user = authDAO.getUserByEmail(user.getEmail());
+
+        if (user.getFailedAnswerAttempts() >= MAX_FAILED_ANSWER_ATTEMPTS) {
+            user.setLocked(true);
+            authDAO.lockUser(user.getEmail());
+        }
+
     }
 
     public List<Profile> getAllProfiles() {

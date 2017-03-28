@@ -34,6 +34,7 @@ public class User {
     private Date lastPasswordChange;
     private boolean locked = false;
     private int failedLoginAttempts;
+    private int failedAnswerAttempts;
 
     private String lastPasswordHash1;
     private String lastPasswordSalt1;
@@ -210,6 +211,14 @@ public class User {
 
     public void setFailedLoginAttempts(int failedLoginAttempts) {
         this.failedLoginAttempts = failedLoginAttempts;
+    }
+
+    public int getFailedAnswerAttempts() {
+        return failedAnswerAttempts;
+    }
+
+    public void setFailedAnswerAttempts(int failedAnswerAttempts) {
+        this.failedAnswerAttempts = failedAnswerAttempts;
     }
 
     public String getLastPasswordHash1() {
