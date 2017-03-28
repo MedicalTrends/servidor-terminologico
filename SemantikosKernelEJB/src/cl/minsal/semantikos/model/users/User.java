@@ -22,6 +22,7 @@ public class User {
     private String secondLastName = "";
     private String email = "";
 
+    private boolean rutDocument = true;
     private String rut;
 
     private String password;
@@ -187,6 +188,14 @@ public class User {
 
     public void setLastPasswordChange(Date lastPasswordChange) {
         this.lastPasswordChange = lastPasswordChange;
+    }
+
+    public boolean isRutDocument() {
+        return rutDocument;
+    }
+
+    public void setRutDocument(boolean rutDocument) {
+        this.rutDocument = rutDocument;
     }
 
     public String getRut() {

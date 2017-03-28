@@ -25,17 +25,25 @@
 
                                 <p:growl id="globalMessage" showDetail="true" showSummary="true"/>
 
-                                <p:panel header="Datos Personales" id="user-edit" >
+                                <p:panel header="Datos Personales">
 
                                     <p:growl showDetail="true" showSummary="true"/>
 
-                                    <p:panelGrid columns="4" columnClasses="label, value, label, value" >
+                                    <div class="ui-fluid">
 
-                                        <p:outputLabel for="input-user-email" value="Email *" style="font-weight: bold" styleClass="Wid20" />
+                                    <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"  layout="grid" styleClass="ui-panelgrid-blank">
 
-                                        <p:inputText id="input-user-email" value="#{users.selectedUser.email}" styleClass="Wid90" autocomplete="off" />
+                                        <p:outputLabel for="input-user-document-type" value="Tipo documento" style="font-weight: bold" styleClass="Wid20" />
 
-                                        <p:outputLabel for="input-user-rut2" value="RUT *" style="font-weight: bold" styleClass="#{users.rutError} Wid20" />
+                                        <p:selectOneRadio id="input-user-document-type" value="#{users.selectedUser.rutDocument}" layout="grid" columns="2">
+                                            <f:selectItem itemValue="#{true}" itemLabel="Cédula de identidad" />
+                                            <f:selectItem itemValue="#{false}" itemLabel="Pasaporte"/>
+                                        </p:selectOneRadio>
+
+                                        <p:outputPanel />
+                                        <p:outputPanel />
+
+                                        <p:outputLabel for="input-user-rut2" value="N° Documento *" style="font-weight: bold" styleClass="#{users.rutError} Wid20" />
 
                                         <p:inputText id="input-user-rut2" value="#{users.selectedUser.rut}" styleClass="#{users.rutError} Wid90" maxlength="12">
                                             <p:ajax event="blur" listener="#{users.formatRut}" update="@this" />
@@ -53,39 +61,60 @@
 
                                         <p:inputText id="input-user-secondlastname2" value="#{users.selectedUser.secondLastName}" styleClass="Wid90" autocomplete="off" />
 
+                                        <p:outputLabel for="input-user-email" value="Email *" style="font-weight: bold" styleClass="Wid20" />
+
+                                        <p:inputText id="input-user-email" value="#{users.selectedUser.email}" styleClass="Wid90" autocomplete="off" />
+
 
                                     </p:panelGrid>
 
-                                    <p:panelGrid columns="1" styleClass="Wid100" style="padding: 0" >
-
-                                        <f:facet name="header">
-                                            Perfiles
-                                        </f:facet>
-
-                                        <p:pickList id="pickList1" value="#{users.selectedUserProfileModel}" var="profile3"
-                                                    itemLabel="#{profile3.name}" itemValue="#{profile3}"
-                                                    responsive="false" converter="profileConverter" style="width: 100%" >
-                                            <f:facet name="sourceCaption">Disponibles</f:facet>
-                                            <f:facet name="targetCaption">Asignados</f:facet>
-                                        </p:pickList>
-
-                                    </p:panelGrid>
-
-                                    <div style="text-align: right;">
-                                        <p:commandButton value="Guardar" icon="fa-save" action="#{users.saveUser}"
-                                                         process=":form:user-edit" update=":form:user-edit,@(.users)" />
-
-                                        <p:commandButton value="Desbloquear Usuario" action="#{users.unlockUser}"
-                                                         disabled="#{not users.selectedUser.locked}"
-                                                         rendered="#{users.selectedUser != null and users.selectedUser.idUser != -1}"
-                                                         process="@this" update=":form:user-edit,@(.users)" />
-
-                                        <p:commandButton value="Cambiar Password Usuario" rendered="#{users.selectedUser != null and users.selectedUser.idUser != -1}"
-                                                         actionListener="#{users.clean}"
-                                                         oncomplete="PF('passwordChangeDialog').show()" update=":form:pcdialog" process="@this" />
                                     </div>
 
                                 </p:panel>
+
+                                <div class="ui-fluid">
+
+                                <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank" style="padding: 0" >
+
+                                <p:panel header="Perfiles">
+
+                                    <p:pickList id="pickList1" value="#{users.selectedUserProfileModel}" var="profile3"
+                                                itemLabel="#{profile3.name}" itemValue="#{profile3}"
+                                                responsive="true" converter="profileConverter" style="width: 100%" >
+                                        <f:facet name="sourceCaption">Disponibles</f:facet>
+                                        <f:facet name="targetCaption">Asignados</f:facet>
+                                    </p:pickList>
+
+                                </p:panel>
+
+                                <p:panel header="Establecimientos">
+
+                                    <p:pickList id="pickList2" value="#{users.selectedUserInsitutionModel}" var="profile3"
+                                                itemLabel="#{profile3.name}" itemValue="#{profile3}"
+                                                responsive="true" converter="omnifaces.SelectItemsConverter" style="width: 100%" >
+                                        <f:facet name="sourceCaption">Disponibles</f:facet>
+                                        <f:facet name="targetCaption">Asignados</f:facet>
+                                    </p:pickList>
+
+                                </p:panel>
+
+                                </p:panelGrid>
+
+                                </div>
+
+                                <div style="text-align: right;">
+                                    <p:commandButton value="Guardar" icon="fa-save" action="#{users.saveUser}"
+                                                     process="form" update="form" />
+
+                                    <p:commandButton value="Desbloquear Usuario" action="#{users.unlockUser}"
+                                                     disabled="#{not users.selectedUser.locked}"
+                                                     rendered="#{users.selectedUser != null and users.selectedUser.idUser != -1}"
+                                                     process="@this" update="form" />
+
+                                    <p:commandButton value="Cambiar Password Usuario" rendered="#{users.selectedUser != null and users.selectedUser.idUser != -1}"
+                                                     actionListener="#{users.clean}"
+                                                     oncomplete="PF('passwordChangeDialog').show()" update=":form:pcdialog" process="@this" />
+                                </div>
 
                                 <p:dialog id="pcdialog" height="200" width="600" header="Cambiar Password Usuario" widgetVar="passwordChangeDialog" modal="false" showEffect="fade" hideEffect="fade"
                                           resizable="true" visible="#{ not users.oldPasswordError.concat(users.passwordError.concat(users.password2Error)).trim().equals('') }"
@@ -117,7 +146,7 @@
 
                                     <p:commandButton process="pcdialog" value="Cambiar Password Usuario"
                                                      rendered="#{users.selectedUser != null}"
-                                                     update="pcdialog,user-edit-dialog,:form,@(.users)"
+                                                     update="form"
                                                      action="#{users.changePass}">
                                         <p:resetInput target="passwordChangeGrid" />
                                     </p:commandButton>
