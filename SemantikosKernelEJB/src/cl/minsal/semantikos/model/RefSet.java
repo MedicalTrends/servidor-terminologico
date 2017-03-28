@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.model.audit.AuditableEntity;
+import cl.minsal.semantikos.model.users.Institution;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;

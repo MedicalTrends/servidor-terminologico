@@ -1,13 +1,12 @@
 package cl.minsal.semantikos.kernel.auth;
 
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.Stateless;
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * Created by BluePrints Developer on 18-05-2016.

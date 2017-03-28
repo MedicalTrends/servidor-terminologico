@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model;
+package cl.minsal.semantikos.model.users;
 
 import cl.minsal.semantikos.kernel.util.StringUtils;
 
@@ -44,9 +44,13 @@ public class User {
     private String lastPasswordHash4;
     private String lastPasswordSalt4;
 
+    private String verificationCode;
+
     // TODO: Francisco. Actualizar esto en el modelo de datos.
     /** BR-RefSet-004: La institución en la que trabaja el usuario */
     private List<Institution> institutions;
+
+    private List<Answer> answers;
 
     /**
      * Constructor base para inicializar los objetos que lo requieren.
@@ -54,6 +58,7 @@ public class User {
     public User() {
         this.profiles = new ArrayList<>();
         this.institutions = new ArrayList<>();
+        this.answers = new ArrayList<>();
     }
 
     private User(long idUser, String username, String name, boolean locked) {
@@ -291,6 +296,33 @@ public class User {
         return (String.valueOf(idUser) != null)
                 ? (this.getClass().hashCode() + String.valueOf(idUser).hashCode())
                 : super.hashCode();
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
+
+    public List<Answer> getAnswersByQuestion(Question question) {
+        List<Answer> someAnswers = new ArrayList<>();
+
+        for (Answer answer : getAnswers()) {
+            if(answer.getQuestion().equals(question)) {
+                someAnswers.add(answer);
+            }
+        }
+        return someAnswers;
     }
 
     @Override

@@ -2,12 +2,12 @@ package cl.minsal.semantikos.pendingterms;
 
 import cl.minsal.semantikos.beans.messages.MessageBean;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
-import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.components.PendingTermsManager;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.users.User;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -16,7 +16,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;

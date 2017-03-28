@@ -2,7 +2,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.PendingTerm;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
 import java.util.List;

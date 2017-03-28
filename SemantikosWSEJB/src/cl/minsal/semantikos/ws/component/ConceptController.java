@@ -5,6 +5,7 @@ import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.ConceptMapper;
@@ -22,7 +23,6 @@ import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -176,6 +176,10 @@ public class ConceptController {
                     }
                 }
             }
+            res.setConceptId(source.getConceptID());
+            res.setDescription(source.getDescriptionFavorite().getTerm());
+            res.setDescriptionId(source.getDescriptionFavorite().getDescriptionId());
+            res.setCategory(source.getCategory().getName());
             res.setRelatedConcepts(relatedResponses);
             res.setQuantity(relatedResponses.size());
         }

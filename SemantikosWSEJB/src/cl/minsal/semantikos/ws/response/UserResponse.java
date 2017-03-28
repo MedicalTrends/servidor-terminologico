@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.ws.response;
 
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;

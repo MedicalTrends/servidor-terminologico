@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.crossmaps.*;
 
 import javax.ejb.Local;

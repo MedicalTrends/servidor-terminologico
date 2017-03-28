@@ -1,9 +1,9 @@
 package cl.minsal.semantikos.model.businessrules;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Profile;
+import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.ProfileFactory;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 
 import java.util.List;

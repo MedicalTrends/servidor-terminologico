@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.audit.RefSetAuditAction;
 import cl.minsal.semantikos.model.businessrules.HistoryRecordBL;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

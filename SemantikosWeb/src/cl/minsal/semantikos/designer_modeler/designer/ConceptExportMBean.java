@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_CREATION;
 import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_PUBLICATION;
 
 /**
@@ -69,6 +70,7 @@ public class ConceptExportMBean extends UINamingContainer {
             conceptBasics.add(new ConceptBasic("Categoría", conceptSMTK.getCategory().toString()));
             conceptBasics.add(new ConceptBasic("Estado", conceptSMTK.isModeled() ? "Modelado" : "Borrador"));
             conceptBasics.add(new ConceptBasic("Fecha Informe", getReportDate()));
+            conceptBasics.add(new ConceptBasic("Fecha Creación", getCreationDate(auditAction)));
             conceptBasics.add(new ConceptBasic("Fecha Publicación", getPublicationDate(auditAction)));
             conceptBasics.add(new ConceptBasic("FSN", conceptSMTK.getDescriptionFSN().toString()));
             conceptBasics.add(new ConceptBasic("Preferida", conceptSMTK.getDescriptionFavorite().toString()));
@@ -82,6 +84,14 @@ public class ConceptExportMBean extends UINamingContainer {
     public String getPublicationDate(List<ConceptAuditAction> conceptAuditActions) {
         for (ConceptAuditAction conceptAuditAction : conceptAuditActions) {
             if( conceptAuditAction.getAuditActionType().equals(CONCEPT_PUBLICATION)) {
+                return conceptAuditAction.getActionDateFormat();
+            }
+        }
+        return "";
+    }
+    public String getCreationDate(List<ConceptAuditAction> conceptAuditActions) {
+        for (ConceptAuditAction conceptAuditAction : conceptAuditActions) {
+            if( conceptAuditAction.getAuditActionType().equals(CONCEPT_CREATION)) {
                 return conceptAuditAction.getActionDateFormat();
             }
         }

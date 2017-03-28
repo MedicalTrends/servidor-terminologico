@@ -123,9 +123,9 @@ public class HelperTableBean implements Serializable {
         try {
             HelperTableRow updatedRow;
             if (row.isPersistent()) {
-                updatedRow = manager.updateRow(row, this.authenticationBean.getUsername());
+                updatedRow = manager.updateRow(row, this.authenticationBean.getEmail());
             } else {
-                updatedRow = manager.insertRow(row, this.authenticationBean.getUsername());
+                updatedRow = manager.insertRow(row, this.authenticationBean.getEmail());
             }
             row.setLastEditDate(updatedRow.getLastEditDate());
             row.setLastEditUsername(updatedRow.getLastEditUsername());
@@ -162,9 +162,9 @@ public class HelperTableBean implements Serializable {
         HelperTableRow newRow = new HelperTableRow();
         newRow.setId(-1);
         newRow.setCreationDate(new Timestamp(System.currentTimeMillis()));
-        newRow.setCreationUsername(authenticationBean.getUsername());
+        newRow.setCreationUsername(authenticationBean.getEmail());
         newRow.setLastEditDate(new Timestamp(System.currentTimeMillis()));
-        newRow.setLastEditUsername(authenticationBean.getUsername());
+        newRow.setLastEditUsername(authenticationBean.getEmail());
 
         newRow.setDescription("Nuevo Elemento");
         newRow.setValid(false);

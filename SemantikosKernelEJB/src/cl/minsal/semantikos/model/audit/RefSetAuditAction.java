@@ -2,7 +2,7 @@ package cl.minsal.semantikos.model.audit;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.RefSet;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 
 import java.sql.Timestamp;
 

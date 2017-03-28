@@ -3,7 +3,7 @@ package cl.minsal.semantikos.designer_modeler.browser;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;

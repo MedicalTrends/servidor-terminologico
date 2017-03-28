@@ -122,7 +122,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     @Override
     public void update(Relationship relationship) {
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.update_relation(?,?,?,?,?,?)}";
+        String sql = "{call semantikos.update_relation(?,?,?,?,?)}";
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {

@@ -3,7 +3,7 @@ package cl.minsal.semantikos.view.tests.descriptions;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -10,6 +10,7 @@ import cl.minsal.semantikos.model.browser.QueryFilter;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.browser.QueryFilterAttribute;
 import cl.minsal.semantikos.model.relationships.*;
+import cl.minsal.semantikos.model.users.User;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;

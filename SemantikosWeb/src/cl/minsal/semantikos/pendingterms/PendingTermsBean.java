@@ -5,8 +5,7 @@ import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.PendingTermsManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.PendingTerm;
-import cl.minsal.semantikos.model.User;
-import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
+import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

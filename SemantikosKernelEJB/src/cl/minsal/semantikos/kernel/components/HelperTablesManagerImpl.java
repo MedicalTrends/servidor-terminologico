@@ -3,7 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.businessrules.HelperTableSearchBR;
 import cl.minsal.semantikos.model.helpertables.*;
 import org.slf4j.Logger;
@@ -15,7 +15,6 @@ import javax.ejb.Stateless;
 import java.io.Reader;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

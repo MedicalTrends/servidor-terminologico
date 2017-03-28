@@ -1,14 +1,10 @@
 package cl.minsal.semantikos.model.businessrules;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.DescriptionType;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static cl.minsal.semantikos.model.DescriptionType.*;
-import static cl.minsal.semantikos.model.DescriptionType.BAD_WRITTEN;
 
 /**
  * @author Andrés Farías on 8/25/16.

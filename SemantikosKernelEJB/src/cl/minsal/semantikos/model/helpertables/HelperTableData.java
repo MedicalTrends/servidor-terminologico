@@ -184,7 +184,7 @@ public class HelperTableData {
     @Override
     public String toString() {
 
-        if(intValue != 0) {
+        if(intValue != null) {
             return String.valueOf(intValue);
         }
         else if(floatValue != null) {
