@@ -3,6 +3,7 @@ package cl.minsal.semantikos.beans.snomed;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import cl.minsal.semantikos.kernel.components.SnomedCTManager;
@@ -15,9 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean(name = "snapshotBean")
+@ViewScoped
 public class Snapshot {
 
-    private String destination="/home/des01c7/Documentos/temp/";
+    private String destination = "/home/des01c7/Documentos/temp/";
 
 
     private List<ConceptSCT> conceptSCTs;
@@ -35,40 +37,43 @@ public class Snapshot {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            String dir=copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            String dir = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
             chargeConcept(dir);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     public void uploadFileDescription(FileUploadEvent event) {
         FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            String dir=copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            String dir = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
             chargeDescription(dir);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     public void uploadFileRelationship(FileUploadEvent event) {
         FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            String dir=copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            String dir = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
             chargeRelationship(dir);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     public void uploadFileTransitive(FileUploadEvent event) {
         FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            String dir=copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            String dir = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
             chargeTransitive(dir);
         } catch (IOException e) {
             e.printStackTrace();
@@ -80,7 +85,7 @@ public class Snapshot {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            String dir=copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            String dir = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
             chargeLanguajeRefset(dir);
         } catch (IOException e) {
             e.printStackTrace();
@@ -109,67 +114,66 @@ public class Snapshot {
         return null;
     }
 
-    public void chargeConcept(String dir){
+    public void chargeConcept(String dir) {
         String cadena;
         FileReader f = null;
-        conceptSCTs= new ArrayList<>();
+        conceptSCTs = new ArrayList<>();
         try {
             f = new FileReader(dir);
 
-        BufferedReader b = new BufferedReader(f);
+            BufferedReader b = new BufferedReader(f);
 
-        boolean first=true;
-        while ((cadena = b.readLine()) != null) {
+            boolean first = true;
+            while ((cadena = b.readLine()) != null) {
 
-            if(!first){
-                int i = 0;
-                long id=0L;
-                String affectiveTime="";
-                boolean active=false;
-                long moduleId=0L;
-                long definitionStatusId=0L;
+                if (!first) {
+                    int i = 0;
+                    long id = 0L;
+                    String affectiveTime = "";
+                    boolean active = false;
+                    long moduleId = 0L;
+                    long definitionStatusId = 0L;
 
-                for (String token : cadena.split("\t")) {
-                    if (token.trim().length() != 0 && i == 0)
-                        id=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 1)
-                        affectiveTime=token;
-                    if (token.trim().length() != 0 && i == 2)
-                        active=(token.equals("1"))?true:false;
-                    if (token.trim().length() != 0 && i == 3)
-                        moduleId=Long.valueOf(token);
-                    if (token.trim().length() != 0 && i == 4)
-                        definitionStatusId=Long.valueOf(token);
-                    ++i;
+                    for (String token : cadena.split("\t")) {
+                        if (token.trim().length() != 0 && i == 0)
+                            id = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 1)
+                            affectiveTime = token;
+                        if (token.trim().length() != 0 && i == 2)
+                            active = (token.equals("1")) ? true : false;
+                        if (token.trim().length() != 0 && i == 3)
+                            moduleId = Long.valueOf(token);
+                        if (token.trim().length() != 0 && i == 4)
+                            definitionStatusId = Long.valueOf(token);
+                        ++i;
+                    }
+                    String time = affectiveTime.substring(0, 4) + "-" + affectiveTime.substring(4, 6) + "-" + affectiveTime.substring(6, 8) + " 00:00:00";
+                    conceptSCTs.add(new ConceptSCT(id, Timestamp.valueOf(time), active, moduleId, definitionStatusId));
+                } else {
+                    first = false;
                 }
-                String time= affectiveTime.substring(0,4)+"-"+affectiveTime.substring(4,6)+"-"+affectiveTime.substring(6,8)+" 00:00:00";
-                conceptSCTs.add(new ConceptSCT(id,Timestamp.valueOf(time),active,moduleId,definitionStatusId));
-            }else{
-                first= false;
-            }
 
-        }
+            }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void chargeDescription(String dir){
+    public void chargeDescription(String dir) {
         String cadena;
         FileReader f = null;
-        descriptionSCTs= new ArrayList<>();
+        descriptionSCTs = new ArrayList<>();
         try {
             f = new FileReader(dir);
 
             BufferedReader b = new BufferedReader(f);
 
 
-            boolean first=true;
+            boolean first = true;
             while ((cadena = b.readLine()) != null) {
 
                 if (!first) {
@@ -205,18 +209,17 @@ public class Snapshot {
                             caseSignificanceId = Long.valueOf(token);
                         ++i;
                     }
-                    String time= effectiveTime.substring(0,4)+"-"+effectiveTime.substring(4,6)+"-"+effectiveTime.substring(6,8)+" 00:00:00";
+                    String time = effectiveTime.substring(0, 4) + "-" + effectiveTime.substring(4, 6) + "-" + effectiveTime.substring(6, 8) + " 00:00:00";
 
                     descriptionSCTs.add(new DescriptionSCT(id, DescriptionSCTType.valueOf(typeId), Timestamp.valueOf(time), active, moduleId, conceptId, languageCode, term, caseSignificanceId));
 
-                }else{
-                    first=false;
+                } else {
+                    first = false;
                 }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
@@ -224,16 +227,16 @@ public class Snapshot {
 
     }
 
-    public void chargeRelationship(String dir){
+    public void chargeRelationship(String dir) {
         String cadena;
         FileReader f = null;
-        relationshipSCTs= new ArrayList<>();
+        relationshipSCTs = new ArrayList<>();
         try {
             f = new FileReader(dir);
 
             BufferedReader b = new BufferedReader(f);
 
-            boolean first=true;
+            boolean first = true;
             while ((cadena = b.readLine()) != null) {
 
                 if (!first) {
@@ -273,37 +276,36 @@ public class Snapshot {
                             modifierId = Long.valueOf(token);
                         ++i;
                     }
-                    String time= effectiveTime.substring(0,4)+"-"+effectiveTime.substring(4,6)+"-"+effectiveTime.substring(6,8)+" 00:00:00";
+                    String time = effectiveTime.substring(0, 4) + "-" + effectiveTime.substring(4, 6) + "-" + effectiveTime.substring(6, 8) + " 00:00:00";
 
                     relationshipSCTs.add(new RelationshipSnapshotSCT(id, Timestamp.valueOf(time), active, moduleId, sourceId, destinationId, relationshipGroup, typeId, characteristicTypeId, modifierId));
-                }else{
-                    first=false;
+                } else {
+                    first = false;
                 }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void chargeLanguajeRefset(String dir){
+    public void chargeLanguajeRefset(String dir) {
         String cadena;
         FileReader f = null;
-        languageRefsetSCTs= new ArrayList<>();
+        languageRefsetSCTs = new ArrayList<>();
         try {
             f = new FileReader(dir);
 
             BufferedReader b = new BufferedReader(f);
 
-            boolean first=true;
+            boolean first = true;
             while ((cadena = b.readLine()) != null) {
 
                 if (!first) {
                     int i = 0;
-                    long id = 0L;
+                    String id = null;
                     String affectiveTime = null;
                     boolean active = false;
                     long moduleId = 0L;
@@ -313,7 +315,7 @@ public class Snapshot {
 
                     for (String token : cadena.split("\t")) {
                         if (token.trim().length() != 0 && i == 0)
-                            id = Long.valueOf(token);
+                            id = token;
                         if (token.trim().length() != 0 && i == 1)
                             affectiveTime = token;
                         if (token.trim().length() != 0 && i == 2)
@@ -329,27 +331,26 @@ public class Snapshot {
 
                         ++i;
                     }
-                    String time= affectiveTime.substring(0,4)+"-"+affectiveTime.substring(4,6)+"-"+affectiveTime.substring(6,8)+" 00:00:00";
+                    String time = affectiveTime.substring(0, 4) + "-" + affectiveTime.substring(4, 6) + "-" + affectiveTime.substring(6, 8) + " 00:00:00";
 
                     languageRefsetSCTs.add(new LanguageRefsetSCT(id, Timestamp.valueOf(time), active, moduleId, refsetId, referencedComponentId, acceptabilityId));
-                }else{
-                   first = false;
+                } else {
+                    first = false;
                 }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
 
-    public void chargeTransitive(String dir){
+    public void chargeTransitive(String dir) {
         String cadena;
         FileReader f = null;
-        transitiveSCTs= new ArrayList<>();
+        transitiveSCTs = new ArrayList<>();
         try {
             f = new FileReader(dir);
 
@@ -358,35 +359,74 @@ public class Snapshot {
             while ((cadena = b.readLine()) != null) {
 
                 int i = 0;
-                long parent=0L;
-                long child=0L;
+                long parent = 0L;
+                long child = 0L;
 
-                for (String token : cadena.split("\t")) {
+                for (String token : cadena.split(";")) {
                     if (token.trim().length() != 0 && i == 0)
-                        parent=Long.valueOf(token.replace("\"", ""));
+                        parent = Long.valueOf(token.replace("\"", ""));
                     if (token.trim().length() != 0 && i == 1)
-                        child=Long.valueOf(token);
+                        child = Long.valueOf(token.replace("\"", ""));
 
                     ++i;
                 }
-                transitiveSCTs.add(new TransitiveSCT(parent,child));
+                transitiveSCTs.add(new TransitiveSCT(parent, child));
             }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void chargeSNAPSHOT(){
-        if(conceptSCTs.isEmpty() && descriptionSCTs.isEmpty() && relationshipSCTs.isEmpty() && languageRefsetSCTs.isEmpty() && transitiveSCTs.isEmpty()){
-           snomedCTManager.chargeSNAPSHOT(conceptSCTs,descriptionSCTs,relationshipSCTs,languageRefsetSCTs,transitiveSCTs);
-        }
-    }
+    public void chargeSNAPSHOT() {
+        //if(!conceptSCTs.isEmpty() && !descriptionSCTs.isEmpty() && !relationshipSCTs.isEmpty() && !languageRefsetSCTs.isEmpty() && !transitiveSCTs.isEmpty()){
+        //snomedCTManager.chargeSNAPSHOT(conceptSCTs,descriptionSCTs,relationshipSCTs,languageRefsetSCTs,transitiveSCTs);
+            /*
+for (ConceptSCT conceptSCT : conceptSCTs) {
+            try {
+                snomedCTManager.persistConceptSCT(conceptSCT);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
+        }
+            for (DescriptionSCT descriptionSCT : descriptionSCTs) {
+                try {
+                    snomedCTManager.persistSnapshotDescriptionSCT(descriptionSCT);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            for (RelationshipSnapshotSCT relationshipSCT : relationshipSCTs) {
+                try {
+                    snomedCTManager.persistSnapshotRelationshipSCT(relationshipSCT);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            for (LanguageRefsetSCT languageRefsetSCT : languageRefsetSCTs) {
+
+            try {
+                snomedCTManager.persistSnapshotLanguageRefSetSCT(languageRefsetSCT);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+            */
+
+        for (DescriptionSCT descriptionSCT : descriptionSCTs) {
+            try {
+                snomedCTManager.persistSnapshotDescriptionSCT(descriptionSCT);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        // }
+    }
 
 
 }
