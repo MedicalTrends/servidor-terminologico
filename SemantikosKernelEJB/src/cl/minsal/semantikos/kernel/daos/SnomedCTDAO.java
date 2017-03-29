@@ -100,9 +100,8 @@ public interface SnomedCTDAO {
 
     /**
      * Método encargado de persistir un concepto SNOMED CT
-     * @param conceptSCT
      */
-    public void persistSnapshotConceptSCT(ConceptSCT conceptSCT);
+    public void persistSnapshotConceptSCT(List<ConceptSCT> conceptSCTs);
 
     /**
      * Método encargado de persistir una descripción SNOMED CT
@@ -114,7 +113,7 @@ public interface SnomedCTDAO {
      * Método encargado de persistir una relación SNOMED CT
      * @param relationshipSnapshotSCT
      */
-    public void persistSnapshotRelationshipSCT(RelationshipSnapshotSCT relationshipSnapshotSCT);
+    public void persistSnapshotRelationshipSCT(List<RelationshipSnapshotSCT> relationshipSnapshotSCT);
 
     /**
      * Método encargado de persistir transitivos de SNOMED CT

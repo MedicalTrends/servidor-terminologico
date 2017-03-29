@@ -400,6 +400,15 @@ for (ConceptSCT conceptSCT : conceptSCTs) {
                     e.printStackTrace();
                 }
             }
+
+            for (DescriptionSCT descriptionSCT : descriptionSCTs) {
+            try {
+                snomedCTManager.persistSnapshotDescriptionSCT(descriptionSCT);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
             for (RelationshipSnapshotSCT relationshipSCT : relationshipSCTs) {
                 try {
                     snomedCTManager.persistSnapshotRelationshipSCT(relationshipSCT);
@@ -417,13 +426,70 @@ for (ConceptSCT conceptSCT : conceptSCTs) {
         }
             */
 
-        for (DescriptionSCT descriptionSCT : descriptionSCTs) {
+        /*boolean ok = true;
+        List<RelationshipSnapshotSCT> relationshipSnapshotSCTListBlock = null;
+        System.out.println( relationshipSCTs.size());
+        int i=1;
+        while (ok) {
+            if (relationshipSnapshotSCTListBlock != null) {
+
+                if (relationshipSCTs.size() >= (300000*i)) {
+                    relationshipSnapshotSCTListBlock = relationshipSCTs.subList((300000*(i-1)), (300000*i));
+                    snomedCTManager.persistSnapshotRelationshipSCT(relationshipSnapshotSCTListBlock);
+                } else {
+                    relationshipSnapshotSCTListBlock = relationshipSCTs.subList(relationshipSnapshotSCTListBlock.size(), relationshipSCTs.size());
+                    snomedCTManager.persistSnapshotRelationshipSCT(relationshipSnapshotSCTListBlock);
+                    ok = false;
+                }
+            } else {
+                if (relationshipSCTs.size() >= 300000) {
+                    relationshipSnapshotSCTListBlock = relationshipSCTs.subList(0, 300000);
+                    snomedCTManager.persistSnapshotRelationshipSCT(relationshipSnapshotSCTListBlock);
+                } else {
+                    relationshipSnapshotSCTListBlock.subList(0, relationshipSCTs.size());
+                    snomedCTManager.persistSnapshotRelationshipSCT(relationshipSnapshotSCTListBlock);
+                    ok = false;
+                }
+            }
+            i++;
             try {
-                snomedCTManager.persistSnapshotDescriptionSCT(descriptionSCT);
-            }catch (Exception e){
+                Thread.sleep(15000);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            System.out.println("bloque "+i);
+        }*/
+
+
+        boolean ok = true;
+        List<ConceptSCT> conceptSnapshotSCTListBlock = null;
+        int i=1;
+        while (ok) {
+            if (conceptSnapshotSCTListBlock != null) {
+
+                if (conceptSCTs.size() >= (30000*i)) {
+                    conceptSnapshotSCTListBlock = conceptSCTs.subList((30000*(i-1)), (30000*i));
+                    snomedCTManager.persistConceptSCT(conceptSnapshotSCTListBlock);
+                } else {
+                    conceptSnapshotSCTListBlock = conceptSCTs.subList(conceptSnapshotSCTListBlock.size()+1, conceptSCTs.size());
+                    snomedCTManager.persistConceptSCT(conceptSnapshotSCTListBlock);
+                    ok = false;
+                }
+            } else {
+                if (conceptSCTs.size() >= 30000) {
+                    conceptSnapshotSCTListBlock = conceptSCTs.subList(0, 30000);
+                    snomedCTManager.persistConceptSCT(conceptSnapshotSCTListBlock);
+                } else {
+                    conceptSnapshotSCTListBlock=conceptSCTs.subList(0, conceptSCTs.size());
+                    snomedCTManager.persistConceptSCT(conceptSnapshotSCTListBlock);
+                    ok = false;
+                }
+            }
+            i++;
+
+            System.out.println("bloque "+i);
         }
+
 
         // }
     }
