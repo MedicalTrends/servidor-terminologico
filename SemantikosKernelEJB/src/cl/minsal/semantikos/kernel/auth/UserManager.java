@@ -47,7 +47,7 @@ public class UserManager {
         return authDAO.getUserById(idUser);
     }
 
-    public User getUserByRut(String rut) { return authDAO.getUserByRut(rut); }
+    public User getUserByDocumentNumber(String documentNumber) { return authDAO.getUserByDocumentNumber(documentNumber); }
 
     public User getUserByUsername(String username) { return authDAO.getUserByUsername(username); }
 

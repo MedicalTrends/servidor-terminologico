@@ -62,16 +62,16 @@ public class AuthDAOImpl implements AuthDAO {
     }
 
     @Override
-    public User getUserByRut(String rut) {
+    public User getUserByDocumentNumber(String documentNumber) {
 
         ConnectionBD connect = new ConnectionBD();
         User user = null;
 
-        String sql = "{call semantikos.get_user_by_rut(?)}";
+        String sql = "{call semantikos.get_user_by_document_number(?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, rut);
+            call.setString(1, documentNumber);
             call.execute();
 
             ResultSet rs = call.getResultSet();
@@ -251,7 +251,7 @@ public class AuthDAOImpl implements AuthDAO {
         u.setLastPasswordSalt3(rs.getString(20));
         u.setLastPasswordSalt4(rs.getString(21));
 
-        u.setRut(rs.getString(22));
+        u.setDocumentNumber(rs.getString(22));
         u.setVerificationCode(rs.getString(23));
 
         u.setProfiles(getUserProfiles(u.getIdUser()));
@@ -313,7 +313,7 @@ public class AuthDAOImpl implements AuthDAO {
             call.setString(5, user.getEmail().trim());
             call.setBoolean(6, false);
             call.setInt(7, 0);
-            call.setString(8, StringUtils.parseRut(user.getRut().trim()));
+            call.setString(8, user.isRutDocument()?StringUtils.parseRut(user.getDocumentNumber().trim()):user.getDocumentNumber());
             call.setString(9, user.getPasswordHash());
             call.setString(10, user.getVerificationCode());
 
@@ -355,7 +355,7 @@ public class AuthDAOImpl implements AuthDAO {
             call.setString(2, user.getLastName());
             call.setString(3, user.getSecondLastName());
             call.setString(4, user.getEmail());
-            call.setString(5, user.getRut());
+            call.setString(5, user.getDocumentNumber());
             call.setBoolean(6, user.isLocked());
             call.setString(7, user.getPasswordHash());
 

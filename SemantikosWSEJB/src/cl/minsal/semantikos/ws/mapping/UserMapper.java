@@ -17,7 +17,7 @@ public class UserMapper {
             res.setLastLogin(user.getLastLogin());
             res.setLastName(user.getLastName());
             res.setLastPasswordChange(user.getLastPasswordChange());
-            res.setRut(user.getRut());
+            res.setRut(user.getDocumentNumber());
             res.setSecondLastName(user.getSecondLastName());
             res.setUsername(user.getUsername());
             return res;

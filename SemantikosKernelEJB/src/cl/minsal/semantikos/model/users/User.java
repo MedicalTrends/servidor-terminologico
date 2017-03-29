@@ -21,9 +21,10 @@ public class User {
     private String lastName;
     private String secondLastName = "";
     private String email = "";
+    private String appointment;
 
     private boolean rutDocument = true;
-    private String rut;
+    private String documentNumber;
 
     private String password;
     private String passwordHash;
@@ -33,7 +34,7 @@ public class User {
 
     private Date lastLogin;
     private Date lastPasswordChange;
-    private boolean locked = false;
+    private boolean locked = true;
     private int failedLoginAttempts;
     private int failedAnswerAttempts;
 
@@ -198,12 +199,25 @@ public class User {
         this.rutDocument = rutDocument;
     }
 
-    public String getRut() {
-        return StringUtils.formatRut(rut);
+    public String getAppointment() {
+        return appointment;
     }
 
-    public void setRut(String rut) {
-        this.rut = rut;
+    public void setAppointment(String appointment) {
+        this.appointment = appointment;
+    }
+
+    public String getDocumentNumber() {
+        if(isRutDocument()) {
+            return StringUtils.formatRut(documentNumber);
+        }
+        else {
+            return documentNumber;
+        }
+    }
+
+    public void setDocumentNumber(String documentNumber) {
+        this.documentNumber = documentNumber;
     }
 
     public boolean isLocked() {

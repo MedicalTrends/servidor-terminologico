@@ -105,14 +105,6 @@ public class UsersBroswerBean {
     }
 
 
-    public void formatRut() {
-
-        if(!selectedUser.getRut().trim().isEmpty()) {
-            selectedUser.setRut(StringUtils.formatRut(selectedUser.getRut()));
-        }
-
-    }
-
     public Profile getProfileById(long profileId){
         return userManager.getProfileById(profileId);
 

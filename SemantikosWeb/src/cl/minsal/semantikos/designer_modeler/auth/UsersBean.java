@@ -68,7 +68,7 @@ public class UsersBean {
 
     String lastNameError = "";
 
-    String rutError = "";
+    String documentNumberError = "";
 
     String passwordError = "";
 
@@ -81,10 +81,21 @@ public class UsersBean {
 
     String oldPass = "";
 
+    long idUser;
+
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() throws ParseException {
-        newUser();
+        createOrUpdateUser();
+    }
+
+    public void createOrUpdateUser() {
+        if(idUser == 0) {
+            newUser();
+        }
+        else {
+            getUser(idUser);
+        }
     }
 
     public String getOldPass() {
@@ -135,14 +146,6 @@ public class UsersBean {
         //se debe actualizar la lista del picklist con las instituciones del usuario
         updateAvailableInsitutions(this.selectedUser);
 
-        ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-
-        try {
-            eContext.redirect(eContext.getRequestContextPath() + "/views/users/userEdit.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     private void updateAvailableProfiles(User selectedUser) {
@@ -177,20 +180,18 @@ public class UsersBean {
     }
 
 
-    public List<User> getAllUsers(){
-
-        //if(allUsers==null) {
-            allUsers = userManager.getAllUsers();
-        //}
-
-        return allUsers;
-    }
-
-
     public void newUser() {
 
         selectedUser = new User();
         selectedUser.setIdUser(-1);
+        updateAvailableProfiles(selectedUser);
+        updateAvailableInsitutions(selectedUser);
+        clean();
+    }
+
+    public void getUser(long idUser) {
+
+        selectedUser = userManager.getUser(idUser);
         updateAvailableProfiles(selectedUser);
         updateAvailableInsitutions(selectedUser);
         clean();
@@ -217,7 +218,7 @@ public class UsersBean {
         userNameError = "";
         nameError = "";
         lastNameError = "";
-        rutError = "";
+        documentNumberError = "";
         passwordError = "";
         password2Error = "";
         oldPasswordError = "";
@@ -228,8 +229,8 @@ public class UsersBean {
 
     public void formatRut() {
 
-        if(!selectedUser.getRut().trim().isEmpty()) {
-            selectedUser.setRut(StringUtils.formatRut(selectedUser.getRut()));
+        if(!selectedUser.getDocumentNumber().trim().isEmpty() && selectedUser.isRutDocument()) {
+            selectedUser.setDocumentNumber(StringUtils.formatRut(selectedUser.getDocumentNumber()));
         }
 
     }
@@ -238,14 +239,6 @@ public class UsersBean {
 
         FacesContext context = FacesContext.getCurrentInstance();
         RequestContext rContext = RequestContext.getCurrentInstance();
-
-        if(selectedUser.getEmail().trim().equals("")) {
-            userNameError = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar 'e-mail'"));
-        }
-        else {
-            userNameError = "";
-        }
 
         if(selectedUser.getName().trim().equals("")) {
             nameError = "ui-state-error";
@@ -263,28 +256,61 @@ public class UsersBean {
             lastNameError = "";
         }
 
-        if(selectedUser.getRut().trim().equals("")) {
-            rutError = "ui-state-error";
+        if(selectedUser.getDocumentNumber().trim().equals("")) {
+            documentNumberError = "ui-state-error";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar RUT"));
         }
-        else if(!StringUtils.validateRutFormat(selectedUser.getRut())) {
-            rutError = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Formato de RUT no es corrrecto'"));
-        }
-        else if(!StringUtils.validateRutVerificationDigit(selectedUser.getRut())) {
-            rutError = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El dígito verificador no es correcto'"));
-        }
         else {
-            rutError = "";
+            documentNumberError = "";
         }
 
-        if(!userNameError.concat(nameError).concat(lastNameError).concat(rutError).concat(passwordError).concat(password2Error).trim().equals("")) {
+        if(selectedUser.isRutDocument()) {
+
+            if(!StringUtils.validateRutFormat(selectedUser.getDocumentNumber())) {
+                documentNumberError = "ui-state-error";
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Formato de RUT no es corrrecto'"));
+            }
+            else if(!StringUtils.validateRutVerificationDigit(selectedUser.getDocumentNumber())) {
+                documentNumberError = "ui-state-error";
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El dígito verificador no es correcto'"));
+            }
+            else {
+                documentNumberError = "";
+            }
+        }
+        else {
+
+        }
+
+        if(selectedUser.getEmail().trim().equals("")) {
+            emailError = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar 'e-mail'"));
+        }
+        else {
+            emailError = "";
+        }
+
+        if(!StringUtils.isValidEmailAddress(selectedUser.getEmail())) {
+            emailError = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El formato del 'e-mail' no es válido"));
+            return;
+        }
+        else {
+            emailError = "";
+        }
+
+        if(!userNameError.concat(nameError).concat(lastNameError).concat(documentNumberError).concat(passwordError).concat(password2Error).trim().equals("")) {
+            return;
+        }
+
+        selectedUser.setProfiles(selectedUserProfileModel.getTarget());
+
+        if(selectedUser.getProfiles().isEmpty()) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe asignar por lo menos 1 perfil"));
             return;
         }
 
         try {
-            selectedUser.setProfiles(selectedUserProfileModel.getTarget());
 
             if(selectedUser.getIdUser() == -1) {
                 try {
@@ -423,12 +449,12 @@ public class UsersBean {
         this.nameError = nameError;
     }
 
-    public String getRutError() {
-        return rutError;
+    public String getDocumentNumberError() {
+        return documentNumberError;
     }
 
-    public void setRutError(String rutError) {
-        this.rutError = rutError;
+    public void setDocumentNumberError(String documentNumberError) {
+        this.documentNumberError = documentNumberError;
     }
 
     public String getLastNameError() {
@@ -445,6 +471,23 @@ public class UsersBean {
 
     public void setPasswordError(String passwordError) {
         this.passwordError = passwordError;
+    }
+
+    public String getEmailError() {
+        return emailError;
+    }
+
+    public void setEmailError(String emailError) {
+        this.emailError = emailError;
+    }
+
+    public long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(long idUser) {
+        this.idUser = idUser;
+        createOrUpdateUser();
     }
 
 }

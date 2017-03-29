@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 @Local
 public interface UserCreationBRInterface {
 
-    public void br301UniqueRut(User user);
+    public void br301UniqueDocumentNumber(User user);
 
     public void br302UniqueEmail(User user);
 

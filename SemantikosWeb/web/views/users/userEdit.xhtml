@@ -15,6 +15,10 @@
 
     <ui:define name="content">
 
+        <f:metadata>
+            <f:viewParam name="idUser" value="#{users.idUser}" />
+        </f:metadata>
+
         <div class="Container100">
             <div class="ContainerIndent">
                 <div class="Card ShadowEffect  ">
@@ -40,12 +44,16 @@
                                             <f:selectItem itemValue="#{false}" itemLabel="Pasaporte"/>
                                         </p:selectOneRadio>
 
-                                        <p:outputPanel />
-                                        <p:outputPanel />
+                                        <p:outputLabel for="input-user-document-type" value="Acceso" style="font-weight: bold" styleClass="Wid20" />
 
-                                        <p:outputLabel for="input-user-rut2" value="N° Documento *" style="font-weight: bold" styleClass="#{users.rutError} Wid20" />
+                                        <p:selectOneRadio id="input-user-locked" value="#{users.selectedUser.locked}" layout="grid" columns="2" disabled="true">
+                                            <f:selectItem itemValue="#{true}" itemLabel="Bloqueado" />
+                                            <f:selectItem itemValue="#{false}" itemLabel="Desbloqueado"/>
+                                        </p:selectOneRadio>
 
-                                        <p:inputText id="input-user-rut2" value="#{users.selectedUser.rut}" styleClass="#{users.rutError} Wid90" maxlength="12">
+                                        <p:outputLabel for="input-user-rut2" value="N° Documento *" style="font-weight: bold" styleClass="#{users.documentNumberError} Wid20 Label" />
+
+                                        <p:inputText id="input-user-rut2" value="#{users.selectedUser.documentNumber}" styleClass="#{users.documentNumberError} Wid90" maxlength="12">
                                             <p:ajax event="blur" listener="#{users.formatRut}" update="@this" />
                                         </p:inputText>
 
@@ -61,9 +69,13 @@
 
                                         <p:inputText id="input-user-secondlastname2" value="#{users.selectedUser.secondLastName}" styleClass="Wid90" autocomplete="off" />
 
-                                        <p:outputLabel for="input-user-email" value="Email *" style="font-weight: bold" styleClass="Wid20" />
+                                        <p:outputLabel for="input-user-email" value="Email *" style="font-weight: bold" styleClass="Wid20 #{users.emailError}" />
 
-                                        <p:inputText id="input-user-email" value="#{users.selectedUser.email}" styleClass="Wid90" autocomplete="off" />
+                                        <p:inputText id="input-user-email" value="#{users.selectedUser.email}" styleClass="Wid90 #{users.emailError}" autocomplete="off" />
+
+                                        <p:outputLabel for="input-user-appointment" value="Cargo" style="font-weight: bold" styleClass="Wid20" />
+
+                                        <p:inputText id="input-user-appointment" value="#{users.selectedUser.appointment}" styleClass="Wid90" autocomplete="off" />
 
 
                                     </p:panelGrid>
