@@ -251,7 +251,7 @@ public class PendingBrowserBean implements Serializable {
                     descriptionManager.moveDescriptionToConcept(conceptPending, pendingTerm.getRelatedDescription(), user);
                 } catch (EJBException e) {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
-
+                    return;
                 }
             }
         }
@@ -264,7 +264,7 @@ public class PendingBrowserBean implements Serializable {
 
             } catch (EJBException e) {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
-
+                return;
             }
         }
 
