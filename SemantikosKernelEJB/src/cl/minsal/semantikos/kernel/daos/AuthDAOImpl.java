@@ -226,6 +226,7 @@ public class AuthDAOImpl implements AuthDAO {
         User u = new User();
 
         u.setIdUser(rs.getBigDecimal(1).longValue());
+        u.setId(rs.getBigDecimal(1).longValue());
         u.setUsername(rs.getString(2));
         u.setPasswordHash(rs.getString(3));
         u.setPasswordSalt(rs.getString(4));

@@ -115,55 +115,24 @@
                                 </div>
 
                                 <div style="text-align: right;">
-                                    <p:commandButton value="Guardar" icon="fa-save" action="#{users.saveUser}"
+                                    <p:commandButton value="Guardar" icon="fa fa-check" action="#{users.saveUser}" styleClass="ui-priority-primary"
                                                      process="form" update="form" />
 
-                                    <p:commandButton value="Desbloquear Usuario" action="#{users.unlockUser}"
-                                                     disabled="#{not users.selectedUser.locked}"
-                                                     rendered="#{users.selectedUser != null and users.selectedUser.idUser != -1}"
+                                    <p:commandButton value="Cancelar" icon="fa fa-undo" action="#{users.saveUser}" styleClass="ui-priority-primary"
+                                                     process="form" update="form" />
+
+                                    <p:commandButton value="Resetear cuenta" icon="fa fa-unlock" action="#{users.unlockUser}" styleClass="ui-priority-primary"
+                                                     disabled="#{not users.selectedUser.locked or users.selectedUser.verificationCode != null }"
+                                                     rendered="#{users.idUser != 0}"
                                                      process="@this" update="form" />
 
-                                    <p:commandButton value="Cambiar Password Usuario" rendered="#{users.selectedUser != null and users.selectedUser.idUser != -1}"
-                                                     actionListener="#{users.clean}"
-                                                     oncomplete="PF('passwordChangeDialog').show()" update=":form:pcdialog" process="@this" />
+                                    <p:commandButton value="Eliminar" icon="fa fa-trash" action="#{users.saveUser}" styleClass="ui-priority-primary"
+                                                     process="form" update="form" />
+
+                                    <p:commandButton value="Historial de perfiles" icon="fa fa-history" action="#{users.saveUser}" styleClass="ui-priority-primary"
+                                                     process="form" update="form" />
                                 </div>
 
-                                <p:dialog id="pcdialog" height="200" width="600" header="Cambiar Password Usuario" widgetVar="passwordChangeDialog" modal="false" showEffect="fade" hideEffect="fade"
-                                          resizable="true" visible="#{ not users.oldPasswordError.concat(users.passwordError.concat(users.password2Error)).trim().equals('') }"
-                                          responsive="true" >
-
-                                    <p:growl showDetail="true" showSummary="true"/>
-
-                                    <p:panelGrid id="passwordChangeGrid" columns="2" styleClass="Wid100" >
-                                        <f:facet name="header">
-                                            Cambiar Password
-                                        </f:facet>
-
-                                        <p:outputLabel for="input-user-pass-old" value="Password Actual:" style="font-weight: bold" styleClass="#{users.oldPasswordError}"/>
-                                        <p:password id="input-user-pass-old" value="#{users.oldPass}" styleClass="#{users.oldPasswordError} Wid90" autocomplete="off"
-                                                    redisplay="true">
-                                        </p:password>
-
-                                        <p:outputLabel for="input-user-new-pass-1" value="Nuevo Password:" style="font-weight: bold" styleClass="#{users.passwordError}"/>
-                                        <p:password id="input-user-new-pass-1" value="#{users.newPass1}" styleClass="#{users.passwordError} Wid90" autocomplete="off"
-                                                    redisplay="true">
-                                        </p:password>
-
-                                        <p:outputLabel for="input-user-new-pass-2" value="Confirme Password" style="font-weight: bold" styleClass="#{users.password2Error}"/>
-                                        <p:password id="input-user-new-pass-2" value="#{users.newPass2}" styleClass="#{users.password2Error} Wid90" autocomplete="off"
-                                                    redisplay="true">
-                                        </p:password>
-
-                                    </p:panelGrid>
-
-                                    <p:commandButton process="pcdialog" value="Cambiar Password Usuario"
-                                                     rendered="#{users.selectedUser != null}"
-                                                     update="form"
-                                                     action="#{users.changePass}">
-                                        <p:resetInput target="passwordChangeGrid" />
-                                    </p:commandButton>
-
-                                </p:dialog>
 
                             </h:form>
                         </div>

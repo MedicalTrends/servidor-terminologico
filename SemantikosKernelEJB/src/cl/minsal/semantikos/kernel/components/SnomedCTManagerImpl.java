@@ -6,7 +6,10 @@ import cl.minsal.semantikos.model.snomedct.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,18 +27,70 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     @EJB
     private ConceptSearchBR conceptSearchBR;
 
+    private List<ISnomedCT> snapshotBuffer = new ArrayList<>();
+
+    private static int BUFFER_SIZE = 100000;
+
+    private List<ISnomedCT> inserts = new ArrayList<>();
+
+    private List<ISnomedCT> updates = new ArrayList<>();
+
     @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public SnapshotProcessingResult processSnapshot(SnomedCTSnapshot snomedCTSnapshot) {
 
-        List<ConceptSCT> conceptSCTs = SnomedCTSnapshotFactory.getInstance().createConceptsSCTFromPath(snomedCTSnapshot.getConceptSnapshotPath());
+        /**
+         * Primero se procesan los conceptos
+         */
+        SnomedCTSnapshotFactory.getInstance().initReader(snomedCTSnapshot.getConceptSnapshotPath());
 
-        List<DescriptionSCT> descriptionSCTs = SnomedCTSnapshotFactory.getInstance().createDescriptionsSCTFromPath(snomedCTSnapshot.getDescriptionSnapshotPath());
-
-        for (DescriptionSCT descriptionSCT : descriptionSCTs) {
-
+        /*
+        Se hace un update de los cambios al buffer de snapshot
+         */
+        while(!(snapshotBuffer = (List<ISnomedCT>) (Object) SnomedCTSnapshotFactory.getInstance().createConceptsSCTFromPath(BUFFER_SIZE)).isEmpty()) {
+            /*
+            Se commitean los cambios: Esto es, extraer los elementos a insertar y a actualizar
+             */
+            commit();
+            /*
+            Se pushean los cambios a la BD
+             */
+            push();
         }
 
+        SnomedCTSnapshotFactory.getInstance().haltReader(snomedCTSnapshot.getConceptSnapshotPath());
+
+
         return new SnapshotProcessingResult();
+    }
+
+    public void commit() {
+        List<Long> ids = new ArrayList<>();
+        Map<Long, ISnomedCT> map = new HashMap<>();
+
+        for (ISnomedCT iSnomedCT : snapshotBuffer) {
+            ids.add(iSnomedCT.getId());
+            map.put(iSnomedCT.getId(), iSnomedCT);
+            /*
+            if(snomedctDAO.existsInDB(iSnomedCT)) {
+                updates.add(iSnomedCT);
+            }
+            else {
+                inserts.add(iSnomedCT);
+            }
+            */
+        }
+
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void push() {
+        snomedctDAO.persist(inserts);
+        snomedctDAO.update(updates);
+        snapshotBuffer.clear();
+        inserts.clear();
+        updates.clear();
     }
 
     @Override
@@ -136,6 +191,8 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     public void persistConceptSCT(List<ConceptSCT> conceptSCTs) {
         long time_start, time_end;
         time_start = System.currentTimeMillis();
+
+        /*
         for (ConceptSCT conceptSCT : conceptSCTs) {
             if (snomedctDAO.existConceptSCT(conceptSCT)) {
 
@@ -143,6 +200,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
 
             }
         }
+        */
 
         time_end = System.currentTimeMillis();
         System.out.println("Revision " + ((time_end - time_start) / 1000) + " seconds");

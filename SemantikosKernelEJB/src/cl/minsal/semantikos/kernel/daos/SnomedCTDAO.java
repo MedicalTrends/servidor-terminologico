@@ -169,4 +169,8 @@ public interface SnomedCTDAO {
 
     public DescriptionSCT getDescriptionSCTBy(long idDescriptionSCT);
 
+    public boolean existsInDB(ISnomedCT iSnomedCT);
+    public void persist(List<ISnomedCT> iSnomedCTs);
+    public void update(List<ISnomedCT> iSnomedCTs);
+
 }

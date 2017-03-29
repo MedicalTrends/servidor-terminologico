@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  * @version 1.0
  * @created 28-09-2016
  */
-public class DescriptionSCT extends PersistentEntity {
+public class DescriptionSCT extends PersistentEntity implements ISnomedCT {
 
     private DescriptionSCTType descriptionType;
     /**

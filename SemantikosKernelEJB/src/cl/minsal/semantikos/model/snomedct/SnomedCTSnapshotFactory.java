@@ -27,6 +27,10 @@ public class SnomedCTSnapshotFactory {
         return instance;
     }
 
+    public Path path;
+
+    public BufferedReader reader; // = Files.newBufferedReader(conceptSnapshot, Charset.defaultCharset());
+
     private ConceptSCT createConceptSCTFromString(String string) {
 
         String[] tokens = string.split("\\t");
@@ -36,9 +40,11 @@ public class SnomedCTSnapshotFactory {
 
         long idSnomedCT = Long.parseLong(tokens[0]);
 
-        Timestamp effectiveTime = Timestamp.valueOf(tokens[1]);
+        String time = tokens[1].substring(0, 4) + "-" + tokens[1].substring(4, 6) + "-" + tokens[1].substring(6, 8) + " 00:00:00";
 
-        boolean isActive = Boolean.parseBoolean(tokens[2]);
+        Timestamp effectiveTime = Timestamp.valueOf(time);
+
+        boolean isActive = (tokens[2].equals("1")) ? true : false;
 
         long moduleId = Long.parseLong(tokens[3]);
 
@@ -48,21 +54,48 @@ public class SnomedCTSnapshotFactory {
 
     }
 
-    public List<ConceptSCT> createConceptsSCTFromPath(String path) {
+    public void initReader(String path) {
+        this.path = Paths.get(path);
+        try {
+            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+            /**
+             * skip header line (supposed to include header)
+             */
+            reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-        Path conceptSnapshot = Paths.get(path);
+    public void haltReader(String path) {
+        try {
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public List<ConceptSCT> createConceptsSCTFromPath(int streamSize) {
+
         List<ConceptSCT> conceptSCTs = new ArrayList<>();
 
         try {
 
             //BufferedReader reader = Files.newBufferedReader(FileSystems.getDefault().getPath(".", name), Charset.defaultCharset() );
 
-            BufferedReader reader = Files.newBufferedReader(conceptSnapshot, Charset.defaultCharset());
-
             String line;
+            int cont = 0;
 
             while ((line = reader.readLine()) != null) {
+
+                if(cont >= streamSize) {
+                    break;
+                }
+
                 conceptSCTs.add(createConceptSCTFromString(line));
+
+                ++cont;
             }
 
         } catch (IOException e) {

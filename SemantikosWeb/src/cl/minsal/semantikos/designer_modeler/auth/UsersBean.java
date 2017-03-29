@@ -90,10 +90,10 @@ public class UsersBean {
     }
 
     public void createOrUpdateUser() {
-        if(idUser == 0) {
+        if(idUser == 0 && selectedUser == null) {
             newUser();
         }
-        else {
+        if(idUser != 0 && !selectedUser.isPersistent() ) {
             getUser(idUser);
         }
     }

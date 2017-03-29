@@ -106,7 +106,7 @@ public interface SnomedCTManager {
 
     /**
      * Método encargado de persistir un concepto SNOMED CT
-     * @param conceptSCT
+     * @param conceptSCTs
      */
     public void persistConceptSCT(List<ConceptSCT> conceptSCTs);
 

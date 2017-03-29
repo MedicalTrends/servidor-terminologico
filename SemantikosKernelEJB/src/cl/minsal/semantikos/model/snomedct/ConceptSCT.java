@@ -20,7 +20,7 @@ import static java.util.Collections.emptyList;
  * @version 1.0
  * @created 17-ago-2016 12:52:05
  */
-public class ConceptSCT extends PersistentEntity implements Target {
+public class ConceptSCT extends PersistentEntity implements Target, ISnomedCT {
 
     public static final long COMPLETELY_DEFINED = 900000000000073002l;
     public static final long PRIMITIVE = 900000000000074008l;
