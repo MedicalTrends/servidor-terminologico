@@ -136,13 +136,13 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     public void persistConceptSCT(List<ConceptSCT> conceptSCTs) {
         long time_start, time_end;
         time_start = System.currentTimeMillis();
-        for (ConceptSCT conceptSCT : conceptSCTs) {
+        /*for (ConceptSCT conceptSCT : conceptSCTs) {
             if (snomedctDAO.existConceptSCT(conceptSCT)) {
 
             } else {
 
             }
-        }
+        }*/
 
         time_end = System.currentTimeMillis();
         System.out.println("Revision " + ((time_end - time_start) / 1000) + " seconds");
