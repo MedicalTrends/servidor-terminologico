@@ -476,17 +476,16 @@ for (ConceptSCT conceptSCT : conceptSCTs) {
                 e.printStackTrace();
             }
             System.out.println("bloque "+i);
-        }*/
+        }
 
-
-        boolean ok = true;
+         boolean ok = true;
         List<ConceptSCT> conceptSnapshotSCTListBlock = null;
         int i=1;
         while (ok) {
             if (conceptSnapshotSCTListBlock != null) {
 
-                if (conceptSCTs.size() >= (30000*i)) {
-                    conceptSnapshotSCTListBlock = conceptSCTs.subList((30000*(i-1)), (30000*i));
+                if (conceptSCTs.size() >= (100000*i)) {
+                    conceptSnapshotSCTListBlock = conceptSCTs.subList((100000*(i-1)), (100000*i));
                     snomedCTManager.persistConceptSCT(conceptSnapshotSCTListBlock);
                 } else {
                     conceptSnapshotSCTListBlock = conceptSCTs.subList(conceptSnapshotSCTListBlock.size()+1, conceptSCTs.size());
@@ -494,8 +493,8 @@ for (ConceptSCT conceptSCT : conceptSCTs) {
                     ok = false;
                 }
             } else {
-                if (conceptSCTs.size() >= 30000) {
-                    conceptSnapshotSCTListBlock = conceptSCTs.subList(0, 30000);
+                if (conceptSCTs.size() >= 100000) {
+                    conceptSnapshotSCTListBlock = conceptSCTs.subList(0, 100000);
                     snomedCTManager.persistConceptSCT(conceptSnapshotSCTListBlock);
                 } else {
                     conceptSnapshotSCTListBlock=conceptSCTs.subList(0, conceptSCTs.size());
@@ -507,6 +506,10 @@ for (ConceptSCT conceptSCT : conceptSCTs) {
 
             System.out.println("bloque "+i);
         }
+        */
+
+
+        snomedCTManager.persistConceptSCT(conceptSCTs);
 
 
         // }
