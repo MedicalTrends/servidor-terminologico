@@ -92,6 +92,7 @@
                                     listener="#{generalBrowserBean.setFilterChanged(true)}"
                                     update="@(.browserTable),@(.filterStatus)"
                                     process="@this" />
+                            <p:ajax event="toggleSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" />
 
                             <f:selectItems value="#{generalBrowserBean.tags}" var="tag"
                                            itemLabel="#{tag.name}" itemValue="#{tag}"/>
