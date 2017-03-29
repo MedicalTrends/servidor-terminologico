@@ -133,37 +133,61 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     }
 
     @Override
-    public void persistConceptSCT(ConceptSCT conceptSCT) {
-        if(snomedctDAO.existConceptSCT(conceptSCT)){
-            if(!conceptSCT.equals(snomedctDAO.getConceptByID(conceptSCT.getIdSnomedCT()))){
+    public void persistConceptSCT(List<ConceptSCT> conceptSCTs) {
+        long time_start, time_end;
+        time_start = System.currentTimeMillis();
+        for (ConceptSCT conceptSCT : conceptSCTs) {
+            if (snomedctDAO.existConceptSCT(conceptSCT)) {
+
+            } else {
+
+            }
+        }
+
+        time_end = System.currentTimeMillis();
+        System.out.println("Revision " + ((time_end - time_start) / 1000) + " seconds");
+
+
+        time_start = System.currentTimeMillis();
+        snomedctDAO.persistSnapshotConceptSCT(conceptSCTs);
+        time_end = System.currentTimeMillis();
+        System.out.println("Persistir " + ((time_end - time_start) / 1000) + " seconds");
+
+        /*if (snomedctDAO.existConceptSCT(conceptSCT)) {
+            if (!conceptSCT.equals(snomedctDAO.getConceptByID(conceptSCT.getIdSnomedCT()))) {
                 snomedctDAO.updateSnapshotConceptSCT(conceptSCT);
             }
-        }else{
+        } else {
             snomedctDAO.persistSnapshotConceptSCT(conceptSCT);
-        }
+        }*/
 
     }
 
     @Override
     public void persistSnapshotDescriptionSCT(DescriptionSCT descriptionSCT) {
-        if(snomedctDAO.existDescriptionSCT(descriptionSCT)){
-            if(!descriptionSCT.equals(snomedctDAO.getDescriptionSCTBy(descriptionSCT.getId()))){
+        if (snomedctDAO.existDescriptionSCT(descriptionSCT)) {
+            if (!descriptionSCT.equals(snomedctDAO.getDescriptionSCTBy(descriptionSCT.getId()))) {
                 snomedctDAO.updateSnapshotDescriptionSCT(descriptionSCT);
             }
-        }else{
+        } else {
             snomedctDAO.persistSnapshotDescriptionSCT(descriptionSCT);
         }
 
     }
 
     @Override
-    public void persistSnapshotRelationshipSCT(RelationshipSnapshotSCT relationshipSnapshotSCT) {
+    public void persistSnapshotRelationshipSCT(List<RelationshipSnapshotSCT> relationshipSnapshotSCT) {
+        long time_start, time_end;
+        time_start = System.currentTimeMillis();
         snomedctDAO.persistSnapshotRelationshipSCT(relationshipSnapshotSCT);
+        time_end = System.currentTimeMillis();
+        System.out.println("the task has taken " + ((time_end - time_start) / 1000) + " seconds");
+
     }
 
     @Override
     public void persistSnapshotTransitiveSCT(TransitiveSCT transitiveSCT) {
-       snomedctDAO.persistSnapshotTransitiveSCT(transitiveSCT);
+        snomedctDAO.persistSnapshotTransitiveSCT(transitiveSCT);
     }
 
     @Override
@@ -198,6 +222,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
 
 
     }
+
     private void validateRelationshipSCT(List<ConceptSCT> conceptSCTs, List<RelationshipSnapshotSCT> relationshipSnapshotSCTs) {
         List<RelationshipSnapshotSCT> relationshipSnapshotSCTs1 = new ArrayList<>();
         List<Long> idsConcept = new ArrayList<>();

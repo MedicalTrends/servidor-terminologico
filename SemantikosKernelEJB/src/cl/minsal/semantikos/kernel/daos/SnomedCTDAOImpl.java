@@ -186,18 +186,23 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     }
 
     @Override
-    public void persistSnapshotConceptSCT(ConceptSCT conceptSCT) {
+    public void persistSnapshotConceptSCT(List<ConceptSCT> conceptSCTs) {
 
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.create_concept_sct(?,?,?,?,?)}")) {
+            int i=0;
+            for (ConceptSCT conceptSCT : conceptSCTs) {
+                call.setLong(1,conceptSCT.getIdSnomedCT());
+                call.setTimestamp(2,conceptSCT.getEffectiveTime());
+                call.setBoolean(3,conceptSCT.isActive());
+                call.setLong(4,conceptSCT.getModuleId());
+                call.setLong(5,conceptSCT.getDefinitionStatusId());
+                call.addBatch();
+                i++;
+            }
 
-            call.setLong(1,conceptSCT.getIdSnomedCT());
-            call.setTimestamp(2,conceptSCT.getEffectiveTime());
-            call.setBoolean(3,conceptSCT.isActive());
-            call.setLong(4,conceptSCT.getModuleId());
-            call.setLong(5,conceptSCT.getDefinitionStatusId());
-            call.execute();
+            call.executeBatch();
 
         } catch (SQLException e) {
             String errorMsg = "Error al persistir Concept Snomed CT";
@@ -232,31 +237,30 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     }
 
     @Override
-    public void persistSnapshotRelationshipSCT(RelationshipSnapshotSCT relationshipSnapshotSCT) {
+    public void persistSnapshotRelationshipSCT(List<RelationshipSnapshotSCT> relationshipSnapshotSCTs) {
         long idRelationshipSCT = 0;
 
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.create_relationship_sct(?,?,?,?,?,?,?,?,?,?)}")) {
-
-            call.setLong(1,relationshipSnapshotSCT.getId());
-            call.setTimestamp(2,relationshipSnapshotSCT.getEffectiveTime());
-            call.setBoolean(3,relationshipSnapshotSCT.isActive());
-            call.setLong(4,relationshipSnapshotSCT.getModuleId());
-            call.setLong(5,relationshipSnapshotSCT.getSourceId());
-            call.setLong(6,relationshipSnapshotSCT.getDestinationId());
-            call.setLong(7,relationshipSnapshotSCT.getRelationshipGroup());
-            call.setLong(8,relationshipSnapshotSCT.getTypeId());
-            call.setLong(9,relationshipSnapshotSCT.getCharacteristicTypeId());
-            call.setLong(10,relationshipSnapshotSCT.getModifierId());
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-
-            while (rs.next()) {
-                idRelationshipSCT = rs.getLong(1);
+            int i=0;
+            for (RelationshipSnapshotSCT relationshipSnapshotSCT : relationshipSnapshotSCTs) {
+                call.setLong(1,relationshipSnapshotSCT.getId());
+                call.setTimestamp(2,relationshipSnapshotSCT.getEffectiveTime());
+                call.setBoolean(3,relationshipSnapshotSCT.isActive());
+                call.setLong(4,relationshipSnapshotSCT.getModuleId());
+                call.setLong(5,relationshipSnapshotSCT.getSourceId());
+                call.setLong(6,relationshipSnapshotSCT.getDestinationId());
+                call.setLong(7,relationshipSnapshotSCT.getRelationshipGroup());
+                call.setLong(8,relationshipSnapshotSCT.getTypeId());
+                call.setLong(9,relationshipSnapshotSCT.getCharacteristicTypeId());
+                call.setLong(10,relationshipSnapshotSCT.getModifierId());
+                call.addBatch();
+                i++;
+                if(i==50000) break;
             }
-            rs.close();
+
+            call.executeBatch();
 
         } catch (SQLException e) {
             String errorMsg = "Error al persistir Relationship Snomed CT";

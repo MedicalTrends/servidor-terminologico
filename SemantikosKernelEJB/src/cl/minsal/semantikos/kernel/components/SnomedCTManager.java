@@ -108,14 +108,14 @@ public interface SnomedCTManager {
      * Método encargado de persistir un concepto SNOMED CT
      * @param conceptSCT
      */
-    public void persistConceptSCT(ConceptSCT conceptSCT);
+    public void persistConceptSCT(List<ConceptSCT> conceptSCTs);
 
     /**
      * Método encargado de persistir una descripción SNOMED CT
      * @param descriptionSCT
      */
     public void persistSnapshotDescriptionSCT(DescriptionSCT descriptionSCT);
-    public void persistSnapshotRelationshipSCT(RelationshipSnapshotSCT relationshipSnapshotSCT);
+    public void persistSnapshotRelationshipSCT(List<RelationshipSnapshotSCT> relationshipSnapshotSCT);
     public void persistSnapshotTransitiveSCT(TransitiveSCT transitiveSCT);
     public void persistSnapshotLanguageRefSetSCT(LanguageRefsetSCT languageRefsetSCT);
 }
