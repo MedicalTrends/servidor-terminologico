@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.designer_modeler.auth;
 
 import cl.minsal.semantikos.designer_modeler.Constants;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +9,10 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static javax.ws.rs.core.HttpHeaders.EXPIRES;
+import static org.apache.axis.transport.http.HTTPConstants.HEADER_CACHE_CONTROL;
+import static org.apache.axis.transport.http.HTTPConstants.HEADER_PRAGMA;
 
 /**
  * @author Francisco Mendez on 19-05-2016.
@@ -23,7 +27,15 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        if (req.getRequestURI().contains(Constants.LOGIN_PAGE) || req.getRequestURI().contains(Constants.ERRORS_FOLDER) || hasPermission(req)) {
+        if (req.getRequestURI().contains(Constants.LOGIN_PAGE) || req.getRequestURI().contains(Constants.ERRORS_FOLDER) ||
+            req.getRequestURI().contains(Constants.ACCOUNT_ACTIVATION_PAGE) || req.getRequestURI().contains(Constants.FORGOT_PASSWORD_PAGE) ||
+            hasPermission(req)) {
+            if(req.getRequestURI().contains(Constants.LOGIN_PAGE) || req.getRequestURI().contains(Constants.ACCOUNT_ACTIVATION_PAGE) ||
+                req.getRequestURI().contains(Constants.FORGOT_PASSWORD_PAGE)) {
+                ((HttpServletResponse) response).setHeader(HEADER_CACHE_CONTROL, "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+                ((HttpServletResponse) response).addHeader(HEADER_PRAGMA, "no-cache"); // HTTP 1.0.
+                ((HttpServletResponse) response).addHeader(EXPIRES, "0"); // Proxies.
+            }
             logger.debug("Request válido, se deja continuar: " + req);
             chain.doFilter(request, response);
         }

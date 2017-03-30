@@ -2,7 +2,7 @@ package cl.minsal.semantikos.model.browser;
 
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.Tag;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import java.sql.Timestamp;

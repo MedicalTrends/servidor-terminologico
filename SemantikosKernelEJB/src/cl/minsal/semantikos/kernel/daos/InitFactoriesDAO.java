@@ -2,9 +2,10 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.QueryFactory;
+import cl.minsal.semantikos.model.users.EmailFactory;
 
 import javax.ejb.Local;
-import java.util.List;
+import javax.naming.NamingException;
 
 /**
  * @author Diego Soto on 22/02/17
@@ -46,4 +47,11 @@ public interface InitFactoriesDAO {
      * @return El factory correspondiente
      */
     HelperTableColumnFactory refreshColumns();
+
+    /**
+     * Este método es responsable de retornar un Factory.
+     *
+     * @return El factory correspondiente
+     */
+    EmailFactory refreshEmail() throws NamingException;
 }

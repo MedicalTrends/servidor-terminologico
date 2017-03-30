@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.PendingTermAddingBR;
+import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

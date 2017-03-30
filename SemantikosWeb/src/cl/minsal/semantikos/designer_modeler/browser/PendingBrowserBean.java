@@ -3,10 +3,8 @@ package cl.minsal.semantikos.designer_modeler.browser;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.browser.NoValidQuery;
 import cl.minsal.semantikos.model.browser.PendingQuery;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.UnselectEvent;
+import cl.minsal.semantikos.model.users.User;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.slf4j.Logger;
@@ -19,7 +17,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
@@ -254,7 +251,7 @@ public class PendingBrowserBean implements Serializable {
                     descriptionManager.moveDescriptionToConcept(conceptPending, pendingTerm.getRelatedDescription(), user);
                 } catch (EJBException e) {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
-
+                    return;
                 }
             }
         }
@@ -267,7 +264,7 @@ public class PendingBrowserBean implements Serializable {
 
             } catch (EJBException e) {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
-
+                return;
             }
         }
 

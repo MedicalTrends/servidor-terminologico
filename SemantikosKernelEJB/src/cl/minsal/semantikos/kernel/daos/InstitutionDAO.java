@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.model.Institution;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
 import java.util.List;

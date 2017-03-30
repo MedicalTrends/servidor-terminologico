@@ -1,8 +1,8 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.model.Institution;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

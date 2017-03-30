@@ -268,13 +268,13 @@ public class ISPBean {
 
             HelperTableRow inserted = null;
 
-            inserted = helperTablesManager.insertRow(ispRecord,authenticationBean.getUsername());
+            inserted = helperTablesManager.insertRow(ispRecord,authenticationBean.getEmail());
             ispRecord = inserted;
         }
         else {
             HelperTableRow updated = null;
             try {
-                updated = helperTablesManager.updateRow(ispRecord,authenticationBean.getUsername());
+                updated = helperTablesManager.updateRow(ispRecord,authenticationBean.getEmail());
             } catch (HelperTablesManagerImpl.RowInUseException e) {
                 e.printStackTrace();
             }

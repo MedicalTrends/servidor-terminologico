@@ -1,0 +1,163 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/template.xhtml">
+
+    <ui:define name="header">
+        <p:breadCrumb>
+            <p:menuitem value="Inicio" url="/views/home.xhtml" />
+            <p:menuitem value="Administración de Usuarios" url="#" />
+        </p:breadCrumb>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect  ">
+                    <div class="Container100">
+                        <div class="ContainerIndent">
+
+                            <h:form id="form">
+
+                                <p:growl id="globalMessage" showDetail="true" showSummary="true"/>
+
+                                <p:dataTable id="singleDT" var="user" value="#{usersBrowser.allUsers}" rowKey="#{user.idUser}" styleClass="users"
+                                             rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                                             rowsPerPageTemplate="10,50,100" emptyMessage="No hay usuarios en la Base de Datos" reflow="true" sortBy="#{user.rut}">
+
+                                    <p:ajax event="rowSelect" update=":form:user-detail" oncomplete="PF('userDialog').show()" />
+
+                                    <f:facet name="{Exporters}">
+                                        <p:commandButton actionListener="#{usersBrowser.newUser()}" icon="fa fa-plus" type="submit" process="form"
+                                                         value="Crear Nuevo">
+                                        </p:commandButton>
+                                    </f:facet>
+
+                                    <p:column headerText="RUT" sortBy="#{user.rut}">
+                                        <h:outputText value="#{user.rut}" />
+                                    </p:column>
+
+                                    <p:column headerText="Nombre de Usuario" sortBy="#{user.username}">
+                                        <h:outputText value="#{user.username}" />
+                                    </p:column>
+
+                                    <p:column headerText="Nombre" sortBy="#{user.lastName}">
+                                        <h:outputText value="#{user.name} #{user.lastName} #{user.secondLastName}" />
+                                    </p:column>
+
+                                    <p:column headerText="Email" sortBy="#{user.email}">
+                                        <h:outputText value="#{user.email}" />
+                                    </p:column>
+
+                                    <p:column headerText="Status" sortBy="#{user.locked}">
+                                        <h:outputText value="Activo" rendered="#{not user.locked}" />
+                                        <h:outputText value="Bloqueado" rendered="#{user.locked}" />
+                                    </p:column>
+
+                                    <p:column exportable="false" headerText="Acción">
+                                        <div style="text-align: center;">
+
+                                            <p:commandLink action="#{usersBrowser.setSelectedUser(user)}" update=":form:user-detail" oncomplete="PF('userDialog').show()"
+                                                           title="Ver" process="@this" style="padding: 5px">
+                                                <i class="fa fa-eye fa-lg"/>
+                                            </p:commandLink>
+
+                                            <p:commandLink action="#{usersBrowser.setSelectedUser(user)}"
+                                                           title="Ver" process="@this" style="padding: 5px">
+                                                <i class="fa fa-edit fa-lg"/>
+                                            </p:commandLink>
+
+                                        </div>
+                                    </p:column>
+
+                                </p:dataTable>
+
+
+                                <p:dialog height="300" width="500" header="Detalles del Usuario" widgetVar="userDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="true" responsive="true">
+                                    <h:panelGroup layout="block" id="user-detail" styleClass="Container100">
+                                        <p:panelGrid columns="2" styleClass="Wid100" rendered="#{usersBrowser.selectedUser != null}">
+                                            <f:facet name="header">
+                                                Datos Personales
+                                            </f:facet>
+                                            <h:outputText value="Id:" style="font-weight: bold"/>
+                                            <h:outputText value="#{usersBrowser.selectedUser.idUser}" />
+
+                                            <h:outputText value="Username" style="font-weight: bold"/>
+                                            <h:outputText value="#{usersBrowser.selectedUser.username}" />
+
+                                            <h:outputText value="Nombre:" style="font-weight: bold"/>
+                                            <h:outputText value="#{usersBrowser.selectedUser.name}"/>
+
+                                            <h:outputText value="Apellido Paterno:" style="font-weight: bold"/>
+                                            <h:outputText value="#{usersBrowser.selectedUser.lastName}"/>
+
+                                            <h:outputText value="Apellido Materno:" style="font-weight: bold"/>
+                                            <h:outputText value="#{usersBrowser.selectedUser.secondLastName}"/>
+
+                                            <h:outputText value="RUT:" style="font-weight: bold"/>
+                                            <h:outputText value="#{usersBrowser.selectedUser.rut}"/>
+
+                                            <h:outputText value="Email" style="font-weight: bold"/>
+                                            <h:outputText value="#{usersBrowser.selectedUser.email}" />
+
+                                        </p:panelGrid>
+
+                                        <br />
+                                        <div class="separator" ></div>
+                                        <br />
+
+                                        <p:panelGrid columns="2" styleClass="Wid100" rendered="#{usersBrowser.selectedUser != null}">
+                                            <f:facet name="header">
+                                                Datos De acceso
+                                            </f:facet>
+                                            <h:outputText value="Fecha Ultimo acceso:" style="font-weight: bold"/>
+                                            <h:outputText value="#{usersBrowser.selectedUser.lastLogin}">
+                                                <f:convertDateTime type="date" pattern="dd-MM-yyyy hh:mm"/>
+                                            </h:outputText>
+
+                                            <h:outputText value="Fecha Ultimo cambio de contraseña" style="font-weight: bold"/>
+                                            <h:outputText value="#{usersBrowser.selectedUser.lastPasswordChange}">
+                                                <f:convertDateTime type="date" pattern="dd-MM-yyyy hh:mm"/>
+                                            </h:outputText>
+
+                                            <h:outputText value="Bloqueado:" style="font-weight: bold"/>
+                                            <h:outputText value="#{usersBrowser.selectedUser.locked?'Si':'No'}"/>
+
+                                        </p:panelGrid>
+
+                                        <br />
+                                        <div class="separator" ></div>
+                                        <br />
+
+                                        <p:panelGrid columns="2" styleClass="Wid100" rendered="#{usersBrowser.selectedUser != null and not empty usersBrowser.selectedUser.profiles}">
+                                            <f:facet name="header">
+                                                Perfiles
+                                            </f:facet>
+                                            <h:outputText value="Perfil" style="font-weight: bold"/>
+                                            <h:outputText value="Descripcion" style="font-weight: bold"/>
+
+
+                                            <ui:repeat value="#{usersBrowser.selectedUser.profiles}" var="profile2" >
+                                                <h:outputText value="#{profile2.name}" />
+                                                <h:outputText value="#{profile2.description}" />
+                                            </ui:repeat>
+
+                                        </p:panelGrid>
+                                        <h:outputText value="Usuario no tiene Perfiles asignados" rendered="#{usersBrowser.selectedUser != null and empty usersBrowser.selectedUser.profiles}" />
+
+                                    </h:panelGroup>
+                                </p:dialog>
+
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

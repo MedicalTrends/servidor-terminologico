@@ -1,4 +1,7 @@
-package cl.minsal.semantikos.model;
+package cl.minsal.semantikos.model.users;
+
+import cl.minsal.semantikos.model.Permission;
+import cl.minsal.semantikos.model.PersistentEntity;
 
 import java.util.List;
 

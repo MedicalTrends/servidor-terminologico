@@ -85,13 +85,19 @@
     </servlet-mapping>
 
 
-
-    <security-constraint>
+    <!--security-constraint>
         <web-resource-collection>
             <web-resource-name>Permit all</web-resource-name>
             <url-pattern>/*</url-pattern>
         </web-resource-collection>
+    </security-constraint-->
 
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>All pages</web-resource-name>
+            <description>Protects all resources</description>
+            <url-pattern>*.xhtml</url-pattern>
+        </web-resource-collection>
     </security-constraint>
 
 

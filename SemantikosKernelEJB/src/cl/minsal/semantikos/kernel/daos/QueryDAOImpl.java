@@ -557,7 +557,6 @@ public class QueryDAOImpl implements QueryDAO {
     private void bindParameter(int paramNumber, CallableStatement call, Connection connection, QueryParameter param)
             throws SQLException {
 
-
         if(param.getValue() == null){
 
             if(param.isArray()){

@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.model.Profile;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.Profile;
+import cl.minsal.semantikos.model.users.User;
 
 import java.util.List;
 
@@ -14,7 +14,11 @@ public interface AuthDAO {
 
     User getUserByUsername(String username);
 
+    User getUserByEmail(String email);
+
     User getUserByRut(String rut);
+
+    User getUserByVerificationCode(String key);
 
     List<Profile> getUserProfiles(Long userId);
 
@@ -29,15 +33,19 @@ public interface AuthDAO {
     void updateUserPasswords(User user);
 
     /* marca la ultima fecha de ingreso del usuario */
-    void markLogin(String username);
+    void markLogin(String email);
 
-    void markLoginFail(String username);
+    void markLoginFail(String email);
 
-    void lockUser(String username);
+    void markAnswer(String email);
+
+    void markAnswerFail(String email);
+
+    void lockUser(String email);
 
     Profile getProfile(long id);
 
-    void unlockUser(String username);
+    void unlockUser(String email);
 
     public class UserExistsException extends Exception {
     }

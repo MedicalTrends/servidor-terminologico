@@ -7,9 +7,8 @@ import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterf
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import cl.minsal.semantikos.model.users.User;
 import org.primefaces.context.RequestContext;
 
 import javax.ejb.EJB;
@@ -20,10 +19,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
-import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Collections.emptyList;
 
 /**
  * Created by root on 02-09-16.
@@ -158,7 +154,7 @@ public class ValidatorBean {
 
         String msg;
         DescriptionWeb description=((DescriptionWeb)component.getAttributes().get("description"));
-        if(description.getCreatorUser()!=User.getDummyUser()){
+        if(description.getCreatorUser()!= User.getDummyUser()){
             List<Description> aDescription = ((DescriptionWeb) component.getAttributes().get("description")).getConceptSMTK().getDescriptions();
 
             if(countAbbreviatedDescription(aDescription)>1){

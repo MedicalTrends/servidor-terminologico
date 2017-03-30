@@ -92,12 +92,14 @@ public class FindConcept implements Serializable{
     public List<ConceptSMTK> getConceptSearchInputCategoryContext(String pattern) {
 
         if (pattern != null) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            Category category = (Category) UIComponent.getCurrentComponent(context).getAttributes().get("category");
+
             if (pattern.trim().length() >= 2) {
                 if(standardizationPattern(pattern).length()<=1)return null;
 
-                if(categorySelected==null){
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    Category category = (Category) UIComponent.getCurrentComponent(context).getAttributes().get("category");
+                if(category!=null){
+
                     categoryArrayID= new Long[] {category.getId()};
                 }
 

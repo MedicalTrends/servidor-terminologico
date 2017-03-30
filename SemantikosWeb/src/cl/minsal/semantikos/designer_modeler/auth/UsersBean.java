@@ -5,12 +5,10 @@ import cl.minsal.semantikos.kernel.auth.PasswordChangeException;
 import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.components.InstitutionManager;
 import cl.minsal.semantikos.kernel.util.StringUtils;
-import cl.minsal.semantikos.model.Institution;
-import cl.minsal.semantikos.model.Profile;
-import cl.minsal.semantikos.model.User;
-import cl.minsal.semantikos.model.businessrules.UserCreationBR;
+import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.Profile;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.businessrules.UserCreationBRInterface;
-import org.omnifaces.util.Ajax;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DualListModel;
 import org.slf4j.Logger;
@@ -19,19 +17,16 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.ejb.TransactionRolledbackLocalException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
-import java.text.DecimalFormat;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by BluePrints Developer on 14-07-2016.
@@ -64,6 +59,8 @@ public class UsersBean {
     DualListModel<Profile> selectedUserProfileModel = new DualListModel<>();
 
     DualListModel<Institution> selectedUserInsitutionModel = new DualListModel<>();
+
+    String emailError = "";
 
     String userNameError = "";
 
@@ -138,6 +135,14 @@ public class UsersBean {
         //se debe actualizar la lista del picklist con las instituciones del usuario
         updateAvailableInsitutions(this.selectedUser);
 
+        ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+
+        try {
+            eContext.redirect(eContext.getRequestContextPath() + "/views/users/userEdit.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void updateAvailableProfiles(User selectedUser) {
@@ -147,7 +152,6 @@ public class UsersBean {
         List<Profile> availableProfiles = new ArrayList<Profile>();
 
         availableProfiles.addAll(userManager.getAllProfiles());
-
 
         for (Profile p: selectedUser.getProfiles()){
             availableProfiles.remove(p);
@@ -189,7 +193,6 @@ public class UsersBean {
         selectedUser.setIdUser(-1);
         updateAvailableProfiles(selectedUser);
         updateAvailableInsitutions(selectedUser);
-        newPass1 = "";
         clean();
     }
 
@@ -210,6 +213,7 @@ public class UsersBean {
     }
 
     public void clean() {
+        emailError = "";
         userNameError = "";
         nameError = "";
         lastNameError = "";
@@ -218,6 +222,8 @@ public class UsersBean {
         password2Error = "";
         oldPasswordError = "";
         oldPass = "";
+        newPass1 = "";
+        newPass2 = "";
     }
 
     public void formatRut() {
@@ -233,9 +239,9 @@ public class UsersBean {
         FacesContext context = FacesContext.getCurrentInstance();
         RequestContext rContext = RequestContext.getCurrentInstance();
 
-        if(selectedUser.getUsername().trim().equals("")) {
+        if(selectedUser.getEmail().trim().equals("")) {
             userNameError = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar 'Nombre de usuario'"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar 'e-mail'"));
         }
         else {
             userNameError = "";
@@ -273,55 +279,6 @@ public class UsersBean {
             rutError = "";
         }
 
-        /**
-         * Si el usuario se está creando, validar password, existencia de rut y username
-         */
-        if(selectedUser.getIdUser()==-1) {
-
-            if(newPass1.trim().equals("")) {
-                passwordError = "ui-state-error";
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar una contraseña"));
-            }
-            else {
-                passwordError = "";
-            }
-
-            if(newPass2.trim().equals("")) {
-                password2Error = "ui-state-error";
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe confirmar la contraseña"));
-            }
-            else {
-                password2Error = "";
-            }
-
-            if(!newPass1.equals(newPass2)) {
-                password2Error = "ui-state-error";
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La confirmación de contraseña no coincide con la original"));
-            }
-            else {
-                password2Error = "";
-            }
-
-            try{
-                userCreationBR.br301UniqueRut(selectedUser);
-            }
-            catch (EJBException e) {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
-                rutError = "ui-state-error";
-                return;
-            }
-
-            try{
-                userCreationBR.br302UniqueUsername(selectedUser);
-            }
-            catch (EJBException e) {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
-                userNameError = "ui-state-error";
-                return;
-            }
-
-        }
-
         if(!userNameError.concat(nameError).concat(lastNameError).concat(rutError).concat(passwordError).concat(password2Error).trim().equals("")) {
             return;
         }
@@ -331,10 +288,13 @@ public class UsersBean {
 
             if(selectedUser.getIdUser() == -1) {
                 try {
-                    authenticationManager.createUserPassword(selectedUser,selectedUser.getUsername(),newPass1);
-                    userManager.createUser(selectedUser);
+                    FacesContext facesContext = FacesContext.getCurrentInstance();
+                    HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+                    userManager.createUser(selectedUser, request);
                     rContext.execute("PF('editDialog').hide();");
-                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario creado de manera exitosa!!"));
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "1° Usuario creado de manera exitosa!!"));
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "2° Se ha enviado un correo de notificación al usuario para activar esta cuenta."));
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "3° Este usuario permanecerá bloqueado hasta que él active su cuenta"));
                 }
                 catch (EJBException e) {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
@@ -386,7 +346,6 @@ public class UsersBean {
             else {
                 oldPasswordError = "";
             }
-
 
             if(newPass1.trim().equals("")) {
                 passwordError = "ui-state-error";

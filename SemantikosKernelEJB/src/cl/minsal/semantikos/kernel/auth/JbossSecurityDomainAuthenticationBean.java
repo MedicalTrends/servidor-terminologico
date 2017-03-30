@@ -1,26 +1,20 @@
 package cl.minsal.semantikos.kernel.auth;
 
 import cl.minsal.semantikos.kernel.daos.AuthDAO;
-import cl.minsal.semantikos.model.Profile;
+import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.ProfileFactory;
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.naming.AuthenticationException;
-import javax.security.auth.login.LoginException;
-import javax.security.auth.spi.LoginModule;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
-import java.security.acl.Group;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -46,22 +40,21 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
 
     /**
      * Autenticación utilizada al logearse desde la aplicación WEB.
-     * @param username
+     * @param email
      * @param password
      * @param request
      * @return
      * @throws AuthenticationException
      */
-    public boolean authenticate(String username, String password, HttpServletRequest request) throws AuthenticationException {
+    public boolean authenticate(String email, String password, HttpServletRequest request) throws AuthenticationException {
 
-        User user = authDAO.getUserByUsername(username);
+        User user = authDAO.getUserByEmail(email);
 
         if (user == null)
             throw new AuthenticationException("Usuario no existe");
 
         if (user.isLocked())
             throw new AuthenticationException("Usuario bloqueado. Contacte al administrador");
-
 
         try {
 
@@ -71,7 +64,7 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
             }
 
             //login programático que resuelve jboss
-            request.login(username, password);
+            request.login(email, password);
 
         } catch (ServletException e) {
 
@@ -79,7 +72,8 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
             failLogin(user);
 
             logger.debug("Error de login", e);
-            throw (AuthenticationException) new AuthenticationException("Error de autenticacion: " + e.getMessage()).initCause(e);
+            //throw (AuthenticationException) new AuthenticationException("Error de autenticacion: " + e.getMessage()).initCause(e);
+            throw (AuthenticationException) new AuthenticationException("Error de autenticacion: e-mail o contraseña no son correctos");
         }
 
         /**
@@ -88,7 +82,7 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
         if( user.getProfiles().contains(ADMINISTRATOR_PROFILE) ||
             user.getProfiles().contains(DESIGNER_PROFILE) ||
             user.getProfiles().contains(MODELER_PROFILE) ) {
-            authDAO.markLogin(username);
+            authDAO.markLogin(email);
             return true;
         }
         else {
@@ -141,11 +135,10 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
     private void failLogin(User user) {
 
 
-        authDAO.markLoginFail(user.getUsername());
-
+        authDAO.markLoginFail(user.getEmail());
 
         if (user.getFailedLoginAttempts() + 1 == MAX_FAILED_LOGIN_ATTEMPTS)
-            authDAO.lockUser(user.getUsername());
+            authDAO.lockUser(user.getEmail());
 
     }
 
@@ -170,7 +163,7 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
      */
     @Override
     public void setUserPassword(String username, String password) throws PasswordChangeException {
-        User user = authDAO.getUserByUsername(username);
+        User user = authDAO.getUserByEmail(username);
 
         String passwordHash = createPasswordHash("MD5", BASE64_ENCODING, null, null, password);
 
@@ -200,8 +193,8 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
     }
 
     @Override
-    public User getUser(String username) {
-        return authDAO.getUserByUsername(username);
+    public User getUser(String email) {
+        return authDAO.getUserByEmail(email);
     }
 
 

@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecordFactory;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.users.EmailFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,9 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.mail.Session;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.sql.CallableStatement;
@@ -58,6 +62,11 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         this.refreshDescriptionTypes();
         this.refreshTagsSMTK();
         this.refreshColumns();
+        try {
+            this.refreshEmail();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -159,10 +168,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
                     for (RelationshipDefinition relationshipDefinitionDestination : queryDAO.getSecondOrderShowableAttributesByCategory(categoryDestination)) {
 
-                        if(relationshipDefinition.getTargetDefinition().isSMTKType()) {
-                            query.getSourceSecondOrderShowableAttributes().add(relationshipDefinition);
-                        }
-
                         QueryColumn secondOrderColumn = new QueryColumn(relationshipDefinitionDestination.getName(), new Sort(null, false), relationshipDefinitionDestination);
                         if(relationshipDefinitionDestination.isU_asist() && category.getNameAbbreviated().equals("MCCE")) {
                             continue;
@@ -171,6 +176,10 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
                             continue;
                         }
                         else {
+                            if(relationshipDefinition.getTargetDefinition().isSMTKType()) {
+                                query.getSourceSecondOrderShowableAttributes().add(relationshipDefinition);
+                            }
+
                             query.getColumns().add(secondOrderColumn);
                             secondOrderColumn.setSecondOrder(true);
                         }
@@ -343,5 +352,14 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         }
 
         return HelperTableColumnFactory.getInstance();
+    }
+
+    @Override
+    public EmailFactory refreshEmail() throws NamingException {
+        InitialContext c = new InitialContext();
+        Session session = (Session)c.lookup("java:jboss/mail/Default");
+        EmailFactory.getInstance().setMySession(session);
+
+        return EmailFactory.getInstance();
     }
 }

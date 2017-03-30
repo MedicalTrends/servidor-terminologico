@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.ws.mapping;
 
-import cl.minsal.semantikos.model.Institution;
+import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.ws.response.InstitutionResponse;
 
 /**

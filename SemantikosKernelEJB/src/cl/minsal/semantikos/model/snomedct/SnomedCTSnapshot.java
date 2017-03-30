@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.model.snomedct;
 
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 
 import java.sql.Timestamp;
 

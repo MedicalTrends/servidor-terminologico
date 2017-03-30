@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model;
+package cl.minsal.semantikos.model.users;
 
 import cl.minsal.semantikos.kernel.util.StringUtils;
 
@@ -22,6 +22,7 @@ public class User {
     private String secondLastName = "";
     private String email = "";
 
+    private boolean rutDocument = true;
     private String rut;
 
     private String password;
@@ -34,6 +35,7 @@ public class User {
     private Date lastPasswordChange;
     private boolean locked = false;
     private int failedLoginAttempts;
+    private int failedAnswerAttempts;
 
     private String lastPasswordHash1;
     private String lastPasswordSalt1;
@@ -44,9 +46,13 @@ public class User {
     private String lastPasswordHash4;
     private String lastPasswordSalt4;
 
+    private String verificationCode;
+
     // TODO: Francisco. Actualizar esto en el modelo de datos.
     /** BR-RefSet-004: La institución en la que trabaja el usuario */
     private List<Institution> institutions;
+
+    private List<Answer> answers;
 
     /**
      * Constructor base para inicializar los objetos que lo requieren.
@@ -54,6 +60,7 @@ public class User {
     public User() {
         this.profiles = new ArrayList<>();
         this.institutions = new ArrayList<>();
+        this.answers = new ArrayList<>();
     }
 
     private User(long idUser, String username, String name, boolean locked) {
@@ -183,6 +190,14 @@ public class User {
         this.lastPasswordChange = lastPasswordChange;
     }
 
+    public boolean isRutDocument() {
+        return rutDocument;
+    }
+
+    public void setRutDocument(boolean rutDocument) {
+        this.rutDocument = rutDocument;
+    }
+
     public String getRut() {
         return StringUtils.formatRut(rut);
     }
@@ -205,6 +220,14 @@ public class User {
 
     public void setFailedLoginAttempts(int failedLoginAttempts) {
         this.failedLoginAttempts = failedLoginAttempts;
+    }
+
+    public int getFailedAnswerAttempts() {
+        return failedAnswerAttempts;
+    }
+
+    public void setFailedAnswerAttempts(int failedAnswerAttempts) {
+        this.failedAnswerAttempts = failedAnswerAttempts;
     }
 
     public String getLastPasswordHash1() {
@@ -291,6 +314,33 @@ public class User {
         return (String.valueOf(idUser) != null)
                 ? (this.getClass().hashCode() + String.valueOf(idUser).hashCode())
                 : super.hashCode();
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
+
+    public List<Answer> getAnswersByQuestion(Question question) {
+        List<Answer> someAnswers = new ArrayList<>();
+
+        for (Answer answer : getAnswers()) {
+            if(answer.getQuestion().equals(question)) {
+                someAnswers.add(answer);
+            }
+        }
+        return someAnswers;
     }
 
     @Override

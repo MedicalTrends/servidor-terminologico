@@ -1,11 +1,9 @@
 package cl.minsal.semantikos.kernel.components;
 
-import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.helpertables.*;
-import cl.minsal.semantikos.model.relationships.Target;
 
 import java.io.Reader;
-import java.util.Collection;
 import java.util.List;
 
 /**
