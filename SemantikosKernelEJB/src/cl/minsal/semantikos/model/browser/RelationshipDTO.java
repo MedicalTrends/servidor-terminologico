@@ -21,7 +21,7 @@ public class RelationshipDTO {
 
     private TargetDTO target;
 
-    private List<RelationshipAttributeDTO> relationshipAttributes;
+    private List<RelationshipAttributeDTO> relationshipAttributes = new ArrayList<>();
 
     public RelationshipDTO() {
     }

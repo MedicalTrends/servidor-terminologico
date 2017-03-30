@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class ConceptDTO extends ConceptSMTK {
 
-    private List<RelationshipDTO> relationshipsDTO;
+    private List<RelationshipDTO> relationshipsDTO = new ArrayList<>();
 
     public ConceptDTO(ConceptSMTK concept) {
         super(concept.getId(), concept.getConceptID(), concept.getCategory(), concept.isToBeReviewed(),

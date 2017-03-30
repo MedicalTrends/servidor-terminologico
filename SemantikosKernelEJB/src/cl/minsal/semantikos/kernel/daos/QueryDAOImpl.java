@@ -551,7 +551,7 @@ public class QueryDAOImpl implements QueryDAO {
             throw new EJBException(e);
         }
 
-        return Arrays.asList(jsonRecords);
+        return new ArrayList<>(Arrays.asList(jsonRecords));
     }
 
     private void bindParameter(int paramNumber, CallableStatement call, Connection connection, QueryParameter param)
