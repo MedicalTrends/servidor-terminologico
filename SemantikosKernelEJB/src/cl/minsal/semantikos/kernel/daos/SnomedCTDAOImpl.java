@@ -212,21 +212,25 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     }
 
     @Override
-    public void persistSnapshotDescriptionSCT(DescriptionSCT descriptionSCT) {
+    public void persistSnapshotDescriptionSCT(List<DescriptionSCT> descriptionSCTs) {
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.create_description_sct(?,?,?,?,?,?,?,?,?)}")) {
 
-            call.setLong(1,descriptionSCT.getId());
-            call.setTimestamp(2,descriptionSCT.getEffectiveTime());
-            call.setBoolean(3,descriptionSCT.isActive());
-            call.setLong(4,descriptionSCT.getModuleId());
-            call.setLong(5,descriptionSCT.getConceptId());
-            call.setString(6,descriptionSCT.getLanguageCode());
-            call.setLong(7,descriptionSCT.getDescriptionType().getTypeId());
-            call.setString(8,descriptionSCT.getTerm());
-            call.setLong(9,descriptionSCT.getCaseSignificanceId());
-            call.execute();
+            for (DescriptionSCT descriptionSCT : descriptionSCTs) {
+                call.setLong(1,descriptionSCT.getId());
+                call.setTimestamp(2,descriptionSCT.getEffectiveTime());
+                call.setBoolean(3,descriptionSCT.isActive());
+                call.setLong(4,descriptionSCT.getModuleId());
+                call.setLong(5,descriptionSCT.getConceptId());
+                call.setString(6,descriptionSCT.getLanguageCode());
+                call.setLong(7,descriptionSCT.getDescriptionType().getTypeId());
+                call.setString(8,descriptionSCT.getTerm());
+                call.setLong(9,descriptionSCT.getCaseSignificanceId());
+                call.addBatch();
+            }
+
+            call.executeBatch();
 
 
         } catch (SQLException e) {
@@ -243,7 +247,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.create_relationship_sct(?,?,?,?,?,?,?,?,?,?)}")) {
-            int i=0;
+
             for (RelationshipSnapshotSCT relationshipSnapshotSCT : relationshipSnapshotSCTs) {
                 call.setLong(1,relationshipSnapshotSCT.getId());
                 call.setTimestamp(2,relationshipSnapshotSCT.getEffectiveTime());
@@ -256,8 +260,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
                 call.setLong(9,relationshipSnapshotSCT.getCharacteristicTypeId());
                 call.setLong(10,relationshipSnapshotSCT.getModifierId());
                 call.addBatch();
-                i++;
-                if(i==50000) break;
+
             }
 
             call.executeBatch();

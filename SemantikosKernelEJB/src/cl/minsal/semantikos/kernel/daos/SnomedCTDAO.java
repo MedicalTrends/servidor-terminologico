@@ -107,7 +107,7 @@ public interface SnomedCTDAO {
      * Método encargado de persistir una descripción SNOMED CT
      * @param descriptionSCT
      */
-    public void persistSnapshotDescriptionSCT(DescriptionSCT descriptionSCT);
+    public void persistSnapshotDescriptionSCT(List<DescriptionSCT> descriptionSCTs);
 
     /**
      * Método encargado de persistir una relación SNOMED CT

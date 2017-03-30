@@ -176,8 +176,13 @@ public class RefSetsBean implements Serializable {
            return;
         }
         if (refSet.isPersistent()) {
-            refSet.bindConceptTo(conceptSMTK);
-            refSetManager.bindConceptToRefSet(conceptSMTK, refSet, authenticationBean.getLoggedUser());
+            if(!existConceptRefSet(refSet,conceptSMTK)){
+                refSet.bindConceptTo(conceptSMTK);
+                refSetManager.bindConceptToRefSet(conceptSMTK, refSet, authenticationBean.getLoggedUser());
+            }else{
+                messageBean.messageError("No se pueden repetir los conceptos en el mismo RefSet");
+            }
+
         } else {
             if (conceptSMTK != null) {
                 refSet.bindConceptTo(conceptSMTK);
@@ -191,6 +196,19 @@ public class RefSetsBean implements Serializable {
             conceptBean.setRefsetEditConcept(true);
         }
     }
+
+    private boolean existConceptRefSet(RefSet refSet, ConceptSMTK conceptSMTK){
+        for (ConceptSMTK smtk : refSet.getConcepts()) {
+            if(smtk.equals(conceptSMTK)){
+                return true;
+            }
+        }
+
+
+        return false;
+    }
+
+
     /**
      * Método encargado de agregar conceptos a un RefSet
      *

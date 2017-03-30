@@ -491,9 +491,9 @@ for (ConceptSCT conceptSCT : conceptSCTs) {
         */
 
 
-        snomedCTManager.persistConceptSCT(conceptSCTs);
-
-
+        //snomedCTManager.persistConceptSCT(conceptSCTs);
+        //snomedCTManager.persistSnapshotDescriptionSCT(descriptionSCTs);
+        snomedCTManager.persistSnapshotRelationshipSCT(relationshipSCTs);
         // }
     }
 
