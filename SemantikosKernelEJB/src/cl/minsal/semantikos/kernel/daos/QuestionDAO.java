@@ -22,4 +22,6 @@ public interface QuestionDAO {
 
     public Question getQuestionById(long id);
 
+    public void deleteUserAnswers(User user);
+
 }

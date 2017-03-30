@@ -97,9 +97,9 @@ public class UsersBroswerBean {
 
     public List<User> getAllUsers(){
 
-        //if(allUsers==null) {
+        if(allUsers==null) {
             allUsers = userManager.getAllUsers();
-        //}
+        }
 
         return allUsers;
     }

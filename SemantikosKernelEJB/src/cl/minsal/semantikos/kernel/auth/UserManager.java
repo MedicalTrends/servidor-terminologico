@@ -115,6 +115,7 @@ public class UserManager {
     }
 
     public boolean checkAnswers(User user) {
+
         User persistedUser = getUserByEmail(user.getEmail());
 
         for (Answer answer : persistedUser.getAnswers()) {
@@ -139,6 +140,17 @@ public class UserManager {
             authDAO.lockUser(user.getEmail());
         }
 
+    }
+
+    public void resetAccount(User user, HttpServletRequest request) {
+        questionDAO.deleteUserAnswers(user);
+        userCreationBR.preActions(user);
+        userCreationBR.postActions(user, request);
+    }
+
+    public void deleteUser(User user) {
+        user.setValid(false);
+        authDAO.updateUser(user);
     }
 
     public List<Profile> getAllProfiles() {

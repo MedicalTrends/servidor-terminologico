@@ -57,6 +57,7 @@ public class SnomedCTSnapshotFactory {
     }
 
     public void initReader(String path) {
+
         this.path = Paths.get(path);
         try {
             reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
@@ -97,7 +98,7 @@ public class SnomedCTSnapshotFactory {
 
                 ConceptSCT conceptSCT = createConceptSCTFromString(line);
 
-                conceptSCTs.put(conceptSCT.getId(), conceptSCT);
+                conceptSCTs.put(conceptSCT.getIdSnomedCT(), conceptSCT);
 
                 ++cont;
             }
@@ -120,9 +121,11 @@ public class SnomedCTSnapshotFactory {
 
         long id = Long.parseLong(tokens[0]);
 
-        Timestamp effectiveTime = Timestamp.valueOf(tokens[1]);
+        String time = tokens[1].substring(0, 4) + "-" + tokens[1].substring(4, 6) + "-" + tokens[1].substring(6, 8) + " 00:00:00";
 
-        boolean active = Boolean.parseBoolean(tokens[2]);
+        Timestamp effectiveTime = Timestamp.valueOf(time);
+
+        boolean isActive = (tokens[2].equals("1")) ? true : false;
 
         long moduleId = Long.parseLong(tokens[3]);
 
@@ -131,37 +134,46 @@ public class SnomedCTSnapshotFactory {
         String languageCode = tokens[5];
 
         long typeId = Long.parseLong(tokens[6]);
+
         DescriptionSCTType descriptionSCTType = DescriptionSCTType.valueOf(typeId);
 
         String term = tokens[7];
 
         long caseSignificanceId = Long.parseLong(tokens[8]);
 
-        return new DescriptionSCT(id, descriptionSCTType, effectiveTime, active, moduleId, conceptId, languageCode, term, caseSignificanceId);
+        return new DescriptionSCT(id, descriptionSCTType, effectiveTime, isActive, moduleId, conceptId, languageCode, term, caseSignificanceId);
 
     }
 
-    public List<DescriptionSCT> createDescriptionsSCTFromPath(String path) {
+    public Map<Long, DescriptionSCT> createDescriptionsSCTFromPath(int streamSize) {
 
-        Path descriptionSnapshot = Paths.get(path);
-        List<DescriptionSCT> descriptionSCTs = new ArrayList<>();
+        Map<Long, DescriptionSCT> descriptionSCTs = new HashMap<>();
 
         try {
 
             //BufferedReader reader = Files.newBufferedReader(FileSystems.getDefault().getPath(".", name), Charset.defaultCharset() );
 
-            BufferedReader reader = Files.newBufferedReader(descriptionSnapshot, Charset.defaultCharset());
-
             String line;
+            int cont = 0;
 
             while ((line = reader.readLine()) != null) {
-                descriptionSCTs.add(createDescriptionSCTFromString(line));
+
+                if(cont >= streamSize) {
+                    break;
+                }
+
+                try {
+                    DescriptionSCT descriptionSCT = createDescriptionSCTFromString(line);
+                    descriptionSCTs.put(descriptionSCT.getId(), descriptionSCT);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                ++cont;
             }
 
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            logger.error("Error al parsear una descripción SCT", e);
         }
 
         return descriptionSCTs;

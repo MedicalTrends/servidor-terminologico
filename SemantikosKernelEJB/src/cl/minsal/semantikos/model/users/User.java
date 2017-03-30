@@ -36,6 +36,8 @@ public class User extends PersistentEntity {
     private Date lastLogin;
     private Date lastPasswordChange;
     private boolean locked = true;
+    private boolean valid = true;
+
     private int failedLoginAttempts;
     private int failedAnswerAttempts;
 
@@ -227,6 +229,14 @@ public class User extends PersistentEntity {
 
     public void setLocked(boolean locked) {
         this.locked = locked;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 
     public int getFailedLoginAttempts() {

@@ -10,10 +10,9 @@ import sun.jdbc.odbc.JdbcOdbcBatchUpdateException;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.logging.FileHandler;
 
 /**
  * Funciones de base de dato para acceder a los datos de Snomed.
@@ -581,12 +580,14 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
         ConnectionBD connect = new ConnectionBD();
 
+        FileHandler fh = null;
+
         String QUERY = "";
 
         if (!iSnomedCTs.isEmpty() && iSnomedCTs.get(0) instanceof ConceptSCT )
             QUERY = "{call semantikos.create_concept_sct(?,?,?,?,?)}";
         if (!iSnomedCTs.isEmpty() && iSnomedCTs.get(0) instanceof DescriptionSCT)
-            QUERY = "{call semantikos.get_description_by_description_query(?,?,?,?,?,?,?,?)}";
+            QUERY = "{call semantikos.create_description_sct(?,?,?,?,?,?,?,?,?)}";
         if (!iSnomedCTs.isEmpty() && iSnomedCTs.get(0) instanceof RelationshipSCT)
             QUERY = "{call semantikos.get_description_by_no_valid_query(?,?,?,?,?,?,?)}";
 
@@ -602,32 +603,30 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
                     call.setLong(4, conceptSCT.getModuleId());
                     call.setLong(5, conceptSCT.getDefinitionStatusId());
                     call.addBatch();
-                    i++;
                 }
             if (!iSnomedCTs.isEmpty() && iSnomedCTs.get(0) instanceof DescriptionSCT)
                 for (DescriptionSCT descriptionSCT : (List<DescriptionSCT>) (Object) iSnomedCTs) {
-                    /*
-                    call.setLong(1, conceptSCT.getIdSnomedCT());
-                    call.setTimestamp(2, conceptSCT.getEffectiveTime());
-                    call.setBoolean(3, conceptSCT.isActive());
-                    call.setLong(4, conceptSCT.getModuleId());
-                    call.setLong(5, conceptSCT.getDefinitionStatusId());
-                    */
+                    call.setLong(1, descriptionSCT.getId());
+                    call.setTimestamp(2, descriptionSCT.getEffectiveTime());
+                    call.setBoolean(3, descriptionSCT.isActive());
+                    call.setLong(4, descriptionSCT.getModuleId());
+                    call.setLong(5, descriptionSCT.getConceptId());
+                    call.setString(6, descriptionSCT.getLanguageCode());
+                    call.setLong(7, descriptionSCT.getDescriptionType().getTypeId());
+                    call.setString(8, descriptionSCT.getTerm());
+                    call.setLong(9, descriptionSCT.getCaseSignificanceId());
                     call.addBatch();
-                    i++;
                 }
 
             call.executeBatch();
         }
-        catch (JdbcOdbcBatchUpdateException jdbce) {
-            jdbce.getNextException().printStackTrace();
-            logger.error(jdbce.getMessage());
-            throw new EJBException(jdbce.getMessage(), jdbce);
-        }
         catch (SQLException e) {
             String errorMsg = "Error al persistir Concept Snomed CT";
+            // Aquí se debe registrar el error en el log de salida
+            //SnomedCTSnapshotFactory.logError(errorMsg);
             logger.error(errorMsg);
-            throw new EJBException(errorMsg, e);
+            //throw new EJBException(errorMsg, e);
+
         }
 
     }
@@ -648,24 +647,24 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof ConceptSCT )
             QUERY = "{call semantikos.get_existing_concept_sct_ids(?)}";
         if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof DescriptionSCT)
-            QUERY = "{call semantikos.get_description_by_description_query(?,?,?,?,?,?,?,?)}";
+            QUERY = "{call semantikos.get_existing_description_sct_ids(?)}";
         if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof RelationshipSCT)
-            QUERY = "{call semantikos.get_description_by_no_valid_query(?,?,?,?,?,?,?)}";
+            QUERY = "{call semantikos.get_existing_relationship_sct_ids(?)}";
 
         List<ISnomedCT> registersToUpdate = new ArrayList<>();
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(QUERY)) {
 
-            if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof ConceptSCT)
-                call.setArray(1, connect.getConnection().createArrayOf("bigint", map.keySet().toArray()));
+            //if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof ConceptSCT)
+            call.setArray(1, connection.createArrayOf("bigint", map.keySet().toArray(new Long[map.size()])));
 
             call.execute();
 
             ResultSet rs = call.getResultSet();
 
             while (rs.next()) {
-                registersToUpdate.add(map.get(rs.getLong(0)));
+                registersToUpdate.add(map.get(rs.getLong(1)));
             }
         }
         catch (SQLException e) {

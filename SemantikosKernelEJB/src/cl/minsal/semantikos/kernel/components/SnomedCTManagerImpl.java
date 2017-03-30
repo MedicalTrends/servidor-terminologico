@@ -8,10 +8,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Collections.emptyList;
 
@@ -39,36 +36,44 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public SnapshotProcessingResult processSnapshot(SnomedCTSnapshot snomedCTSnapshot) {
 
-        /**
-         * Primero se procesan los conceptos
-         */
+        // Primero se procesan los conceptos
         SnomedCTSnapshotFactory.getInstance().initReader(snomedCTSnapshot.getConceptSnapshotPath());
 
-        /*
-        Se hace un update de los cambios al buffer de snapshot
-         */
+        //Se hace un update de los cambios al buffer de snapshot
         while(!(snapshotBuffer = (Map<Long, ISnomedCT>) (Object) SnomedCTSnapshotFactory.getInstance().createConceptsSCTFromPath(BUFFER_SIZE)).isEmpty()) {
-            /*
-            Se commitean los cambios: Esto es, extraer los elementos a insertar y a actualizar
-             */
+            //Se commitean los cambios: Esto es, extraer los elementos a insertar y a actualizar
             commit();
-            /*
-            Se pushean los cambios a la BD
-             */
+            //Se pushean los cambios a la BD
             push();
         }
 
         SnomedCTSnapshotFactory.getInstance().haltReader(snomedCTSnapshot.getConceptSnapshotPath());
 
+        // Luego se procesan las descripciones
+        SnomedCTSnapshotFactory.getInstance().initReader(snomedCTSnapshot.getDescriptionSnapshotPath());
+
+        //Se hace un update de los cambios al buffer de snapshot
+        while(!(snapshotBuffer = (Map<Long, ISnomedCT>) (Object) SnomedCTSnapshotFactory.getInstance().createDescriptionsSCTFromPath(BUFFER_SIZE)).isEmpty()) {
+            //Se commitean los cambios: Esto es, extraer los elementos a insertar y a actualizar
+            commit();
+            //Se pushean los cambios a la BD
+            push();
+        }
+
+        SnomedCTSnapshotFactory.getInstance().haltReader(snomedCTSnapshot.getDescriptionSnapshotPath());
 
         return new SnapshotProcessingResult();
     }
 
     public void commit() {
 
+        //snapshotBuffer.extractReferenceViolations()
+
         updates = snomedctDAO.getRegistersToUpdate(snapshotBuffer);
 
-        inserts = (List<ISnomedCT>) snapshotBuffer.values();
+        //inserts = (List<ISnomedCT>) (Object) Arrays.asList(snapshotBuffer.values().toArray());
+
+        inserts = new ArrayList<ISnomedCT>((List<ISnomedCT>) (Object) Arrays.asList(snapshotBuffer.values().toArray()));
 
         inserts.removeAll(updates);
 

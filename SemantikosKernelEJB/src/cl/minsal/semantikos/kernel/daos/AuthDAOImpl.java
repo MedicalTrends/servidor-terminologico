@@ -254,6 +254,7 @@ public class AuthDAOImpl implements AuthDAO {
 
         u.setDocumentNumber(rs.getString(22));
         u.setVerificationCode(rs.getString(23));
+        u.setValid(rs.getBoolean(24));
 
         u.setProfiles(getUserProfiles(u.getIdUser()));
 
@@ -348,7 +349,7 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public void updateUser(User user) {
 
-        String sql = "{call semantikos.update_user(?,?,?,?,?,?,?,?,?)}";
+        String sql = "{call semantikos.update_user(?,?,?,?,?,?,?,?,?,?)}";
         try (Connection connection = (new ConnectionBD()).getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -364,7 +365,10 @@ public class AuthDAOImpl implements AuthDAO {
                 call.setNull(8, Types.VARCHAR);
             else
                 call.setString(8, user.getVerificationCode());
-            call.setLong(9, user.getIdUser());
+
+            call.setBoolean(9, user.isValid());
+
+            call.setLong(10, user.getIdUser());
 
             call.execute();
         } catch (SQLException e) {

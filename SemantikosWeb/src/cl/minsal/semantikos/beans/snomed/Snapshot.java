@@ -516,8 +516,12 @@ for (ConceptSCT conceptSCT : conceptSCTs) {
     }
 
     public void processSnapshotSCT() {
+        long time_start, time_end;
+        time_start = System.currentTimeMillis();
         snomedCTSnapshot = new SnomedCTSnapshot("1.0",conceptSnapshotPath, descriptionSnapshotPath, relationshipSnapshotPath, new Timestamp(currentTimeMillis()), authenticationBean.getLoggedUser() );
         snomedCTManager.processSnapshot(snomedCTSnapshot);
+        time_end = System.currentTimeMillis();
+        System.out.println("Tiempo: " + ((time_end - time_start) / 1000) + " segundos");
     }
 
 

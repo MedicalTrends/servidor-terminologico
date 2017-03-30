@@ -317,6 +317,7 @@ public class UsersBean {
                     FacesContext facesContext = FacesContext.getCurrentInstance();
                     HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
                     userManager.createUser(selectedUser, request);
+                    selectedUser = userManager.getUser(selectedUser.getIdUser());
                     rContext.execute("PF('editDialog').hide();");
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "1° Usuario creado de manera exitosa!!"));
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "2° Se ha enviado un correo de notificación al usuario para activar esta cuenta."));
@@ -328,12 +329,14 @@ public class UsersBean {
             }
             else {
                 userManager.updateUser(selectedUser);
+                selectedUser = userManager.getUser(selectedUser.getIdUser());
                 rContext.execute("PF('editDialog').hide();");
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario: "+selectedUser.getUsername()+" modificado de manera exitosa!!"));
             }
 
-        }catch (Exception e){
+        } catch (Exception e){
             logger.error("error al actualizar usuario",e);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
         }
     }
 
@@ -359,78 +362,36 @@ public class UsersBean {
         }
     }
 
-    public void changePass() {
-
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        try {
-
-            if(oldPass.trim().equals("")) {
-                oldPasswordError = "ui-state-error";
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar contraseña actual"));
-            }
-            else {
-                oldPasswordError = "";
-            }
-
-            if(newPass1.trim().equals("")) {
-                passwordError = "ui-state-error";
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar una nueva contraseña"));
-            }
-            else {
-                passwordError = "";
-            }
-
-            if(newPass2.trim().equals("")) {
-                password2Error = "ui-state-error";
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe confirmar la nueva contraseña"));
-            }
-            else {
-                password2Error = "";
-            }
-
-            if(!oldPasswordError.concat(passwordError).concat(password2Error).trim().equals("")) {
-                return;
-            }
-
-            if(!authenticationManager.checkPassword(selectedUser, selectedUser.getUsername(), oldPass)) {
-                oldPasswordError = "ui-state-error";
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La contraseña actual no es correcta"));
-            }
-            else {
-                oldPasswordError = "";
-            }
-
-            if(!newPass1.equals(newPass2)) {
-                password2Error = "ui-state-error";
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La confirmación de contraseña no coincide con la original"));
-            }
-            else {
-                password2Error = "";
-            }
-
-            if(!oldPasswordError.concat(passwordError).concat(password2Error).trim().equals("")) {
-                return;
-            }
-
-            authenticationManager.setUserPassword(selectedUser.getUsername(),newPass1);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Contraseña de usuario:"+selectedUser.getUsername()+" modificada de manera exitosa!!"));
-
-        } catch (PasswordChangeException e) {
-            passwordError = "ui-state-error";
-            password2Error = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
-            e.printStackTrace();
-        }
-    }
-
     public Profile getProfileById(long profileId){
         return userManager.getProfileById(profileId);
 
     }
 
     public void unlockUser(){
-        userManager.unlockUser(selectedUser.getUsername());
+        //userManager.unlockUser(selectedUser.getUsername());
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+        try {
+            userManager.resetAccount(selectedUser, request);
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "1° Se ha enviado un correo de notificación al usuario para activar esta cuenta."));
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "2° Este usuario permanecerá bloqueado hasta que él active su cuenta"));
+        } catch (Exception e){
+            logger.error("error al actualizar usuario",e);
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+        }
+    }
+
+    public void deleteUser(){
+        //userManager.unlockUser(selectedUser.getUsername());
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        try {
+            userManager.deleteUser(selectedUser);
+            selectedUser = userManager.getUser(selectedUser.getIdUser());
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "El usuario ha quedado en estado No Vigente."));
+        } catch (Exception e){
+            logger.error("error al actualizar usuario",e);
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+        }
     }
 
     public String getUserNameError() {
