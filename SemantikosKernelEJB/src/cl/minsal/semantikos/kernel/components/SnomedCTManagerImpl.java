@@ -27,7 +27,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     @EJB
     private ConceptSearchBR conceptSearchBR;
 
-    private List<ISnomedCT> snapshotBuffer = new ArrayList<>();
+    private Map<Long, ISnomedCT> snapshotBuffer = new HashMap<>();
 
     private static int BUFFER_SIZE = 100000;
 
@@ -47,7 +47,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
         /*
         Se hace un update de los cambios al buffer de snapshot
          */
-        while(!(snapshotBuffer = (List<ISnomedCT>) (Object) SnomedCTSnapshotFactory.getInstance().createConceptsSCTFromPath(BUFFER_SIZE)).isEmpty()) {
+        while(!(snapshotBuffer = (Map<Long, ISnomedCT>) (Object) SnomedCTSnapshotFactory.getInstance().createConceptsSCTFromPath(BUFFER_SIZE)).isEmpty()) {
             /*
             Se commitean los cambios: Esto es, extraer los elementos a insertar y a actualizar
              */
@@ -65,22 +65,12 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     }
 
     public void commit() {
-        List<Long> ids = new ArrayList<>();
-        Map<Long, ISnomedCT> map = new HashMap<>();
 
-        for (ISnomedCT iSnomedCT : snapshotBuffer) {
-            ids.add(iSnomedCT.getId());
-            map.put(iSnomedCT.getId(), iSnomedCT);
-            /*
-            if(snomedctDAO.existsInDB(iSnomedCT)) {
-                updates.add(iSnomedCT);
-            }
-            else {
-                inserts.add(iSnomedCT);
-            }
-            */
-        }
+        updates = snomedctDAO.getRegistersToUpdate(snapshotBuffer);
 
+        inserts = (List<ISnomedCT>) snapshotBuffer.values();
+
+        inserts.removeAll(updates);
 
     }
 

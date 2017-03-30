@@ -173,4 +173,6 @@ public interface SnomedCTDAO {
     public void persist(List<ISnomedCT> iSnomedCTs);
     public void update(List<ISnomedCT> iSnomedCTs);
 
+    public List<ISnomedCT> getRegistersToUpdate(Map<Long, ISnomedCT> map);
+
 }

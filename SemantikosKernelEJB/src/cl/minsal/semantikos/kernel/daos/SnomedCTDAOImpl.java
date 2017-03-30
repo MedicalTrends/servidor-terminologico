@@ -639,6 +639,45 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     }
 
     @Override
+    public List<ISnomedCT> getRegistersToUpdate(Map<Long, ISnomedCT> map) {
+
+        ConnectionBD connect = new ConnectionBD();
+
+        String QUERY = "";
+
+        if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof ConceptSCT )
+            QUERY = "{call semantikos.get_existing_concept_sct_ids(?)}";
+        if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof DescriptionSCT)
+            QUERY = "{call semantikos.get_description_by_description_query(?,?,?,?,?,?,?,?)}";
+        if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof RelationshipSCT)
+            QUERY = "{call semantikos.get_description_by_no_valid_query(?,?,?,?,?,?,?)}";
+
+        List<ISnomedCT> registersToUpdate = new ArrayList<>();
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(QUERY)) {
+
+            if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof ConceptSCT)
+                call.setArray(1, connect.getConnection().createArrayOf("bigint", map.keySet().toArray()));
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+                registersToUpdate.add(map.get(rs.getLong(0)));
+            }
+        }
+        catch (SQLException e) {
+            String errorMsg = "Error al persistir Concept Snomed CT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return registersToUpdate;
+    }
+
+    @Override
     public ConceptSCT getConceptByID(long conceptID) {
 
         ConnectionBD connect = new ConnectionBD();

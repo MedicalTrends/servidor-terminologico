@@ -11,7 +11,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by root on 28-09-16.
@@ -76,9 +78,9 @@ public class SnomedCTSnapshotFactory {
     }
 
 
-    public List<ConceptSCT> createConceptsSCTFromPath(int streamSize) {
+    public Map<Long, ConceptSCT> createConceptsSCTFromPath(int streamSize) {
 
-        List<ConceptSCT> conceptSCTs = new ArrayList<>();
+        Map<Long, ConceptSCT> conceptSCTs = new HashMap<>();
 
         try {
 
@@ -93,7 +95,9 @@ public class SnomedCTSnapshotFactory {
                     break;
                 }
 
-                conceptSCTs.add(createConceptSCTFromString(line));
+                ConceptSCT conceptSCT = createConceptSCTFromString(line);
+
+                conceptSCTs.put(conceptSCT.getId(), conceptSCT);
 
                 ++cont;
             }
