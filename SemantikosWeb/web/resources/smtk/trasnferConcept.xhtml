@@ -18,8 +18,7 @@
     <p:commandButton value="Trasladar" type="submit" process="mainForm" rendered="#{conceptBean.concept.persistent and conceptBean.concept.modeled and profilePermissionsBeans.modeler}"
                      update="mainForm" oncomplete="PF('dialogTC').show()" icon="fa fa-exchange" styleClass="ui-priority-primary" >
 
-        <p:confirm header="Confirmation" message="¿Desea trasladar este concepto a otra categoría?"
-                   icon="ui-icon-alert"/>
+
     </p:commandButton>
 
 
