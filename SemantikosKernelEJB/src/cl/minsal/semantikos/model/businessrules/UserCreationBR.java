@@ -60,7 +60,7 @@ public class UserCreationBR implements UserCreationBRInterface {
 
         User found = userManager.getUserByDocumentNumber(user.getDocumentNumber());
 
-        if(found != null) {
+        if(found != null && found.isValid()) {
             throw new BusinessRuleException("BR-301-UniqueDocumentNumber", "Ya existe un usuario con este número de documento en el sistema.");
         }
     }
@@ -74,7 +74,7 @@ public class UserCreationBR implements UserCreationBRInterface {
 
         User found = userManager.getUserByEmail(user.getEmail());
 
-        if(found != null) {
+        if(found != null && found.isValid()) {
             throw new BusinessRuleException("BR-302-UniqueEmail", "Ya existe un usuario con este Email en el sistema.");
         }
     }

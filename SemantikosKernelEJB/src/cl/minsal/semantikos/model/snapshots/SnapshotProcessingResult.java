@@ -1,4 +1,6 @@
-package cl.minsal.semantikos.model.snomedct;
+package cl.minsal.semantikos.model.snapshots;
+
+import cl.minsal.semantikos.model.snomedct.SnomedCT;
 
 import java.util.List;
 

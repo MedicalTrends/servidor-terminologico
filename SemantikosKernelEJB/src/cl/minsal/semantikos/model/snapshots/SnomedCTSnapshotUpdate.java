@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model.snomedct;
+package cl.minsal.semantikos.model.snapshots;
 
 import cl.minsal.semantikos.model.users.User;
 
@@ -7,14 +7,14 @@ import java.sql.Timestamp;
 /**
  * @author Andrés Farías on 9/26/16.
  */
-public class SnomedCTSnapshot {
+public class SnomedCTSnapshotUpdate {
 
     /**
-     * Versión del snapshot
+     * Versión del snapshot (moduleId??)
       */
     private String release;
 
-    /** Rutas de los datafiles del snapshot
+    /** Rutas de los datafiles (componentes) del snapshot
      *
      */
     private String conceptSnapshotPath;
@@ -36,7 +36,7 @@ public class SnomedCTSnapshot {
      * @param date: El datafile de conceptos del snapshot
      * @param user: El datafile de conceptos del snapshot
      */
-    public SnomedCTSnapshot(String release, String conceptSnapshot, String descriptionSnapshot, String relationshipSnapshot, Timestamp date, User user) {
+    public SnomedCTSnapshotUpdate(String release, String conceptSnapshot, String descriptionSnapshot, String relationshipSnapshot, Timestamp date, User user) {
         this.release = release;
         this.conceptSnapshotPath = conceptSnapshot;
         this.descriptionSnapshotPath = descriptionSnapshot;

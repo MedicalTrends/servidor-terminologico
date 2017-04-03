@@ -157,6 +157,8 @@ public interface SnomedCTDAO {
      */
     public void deleteSnapshotTransitiveSCT(TransitiveSCT transitiveSCT);
 
+    public DescriptionSCT getDescriptionSCTBy(long idDescriptionSCT);
+
 
     /**
      * Método encargado de verificar si existe el concepto SNOMED CT dado por parámetro
@@ -167,12 +169,5 @@ public interface SnomedCTDAO {
 
     public boolean existDescriptionSCT(DescriptionSCT descriptionSCT);
 
-    public DescriptionSCT getDescriptionSCTBy(long idDescriptionSCT);
-
-    public boolean existsInDB(ISnomedCT iSnomedCT);
-    public void persist(List<ISnomedCT> iSnomedCTs);
-    public void update(List<ISnomedCT> iSnomedCTs);
-
-    public List<ISnomedCT> getRegistersToUpdate(Map<Long, ISnomedCT> map);
 
 }

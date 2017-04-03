@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.model.snomedct;
 
 import cl.minsal.semantikos.model.PersistentEntity;
+import cl.minsal.semantikos.model.snapshots.AuditActionType;
 
 import java.sql.Timestamp;
 
@@ -11,7 +12,7 @@ import java.sql.Timestamp;
  * @version 1.0
  * @created 28-09-2016
  */
-public class DescriptionSCT extends PersistentEntity implements ISnomedCT {
+public class DescriptionSCT extends PersistentEntity implements SnomedCTComponent {
 
     private DescriptionSCTType descriptionType;
     /**
@@ -152,5 +153,22 @@ public class DescriptionSCT extends PersistentEntity implements ISnomedCT {
     @Override
     public String toString() {
         return term;
+    }
+
+    @Override
+    public AuditActionType evaluateChange(SnomedCTComponent snomedCTComponent) {
+
+        DescriptionSCT that = (DescriptionSCT) snomedCTComponent;
+
+        if(this.equals(that))
+            return AuditActionType.SNOMED_CT_UNMODIFYING;
+
+        if(this.isActive() && !that.isActive())
+            return AuditActionType.SNOMED_CT_INVALIDATION;
+
+        if(!this.isActive() && that.isActive())
+            return AuditActionType.SNOMED_CT_RESTORYING;
+
+        return AuditActionType.SNOMED_CT_UNDEFINED;
     }
 }

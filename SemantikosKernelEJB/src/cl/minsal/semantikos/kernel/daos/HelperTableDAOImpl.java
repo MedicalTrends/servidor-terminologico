@@ -317,7 +317,11 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             else
                 call.setBoolean(5,cell.getBooleanValue());
 
-            call.setLong(6, cell.getForeignKeyValue());
+            if(cell.getForeignKeyValue()==null)
+                call.setNull(6, Types.BIGINT);
+            else
+                call.setLong(6, cell.getForeignKeyValue());
+
             call.setLong(7,cell.getRowId());
             call.setLong(8,cell.getColumn().getId());
 

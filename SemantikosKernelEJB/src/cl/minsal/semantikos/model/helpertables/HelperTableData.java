@@ -21,7 +21,7 @@ public class HelperTableData {
     private String stringValue;
     private Date dateValue;
     private Boolean booleanValue;
-    private long foreignKeyValue;
+    private Long foreignKeyValue;
     private long rowId;
     private long columnId;
     private HelperTableRow row;
@@ -87,12 +87,12 @@ public class HelperTableData {
     }
 
     @JsonProperty("foreign_key_value")
-    public long getForeignKeyValue() {
+    public Long getForeignKeyValue() {
         return foreignKeyValue;
     }
 
     @JsonProperty("foreign_key_value")
-    public void setForeignKeyValue(long foreignKeyValue) {
+    public void setForeignKeyValue(Long foreignKeyValue) {
         this.foreignKeyValue = foreignKeyValue;
     }
 

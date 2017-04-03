@@ -84,15 +84,6 @@ public class UsersBroswerBean {
     public void setSelectedUser(User selectedUser) {
 
         this.selectedUser = userManager.getUser(selectedUser.getIdUser());
-
-        ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-
-        try {
-            eContext.redirect(eContext.getRequestContextPath() + "/views/users/userEdit.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     public List<User> getAllUsers(){

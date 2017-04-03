@@ -98,36 +98,6 @@ public class UsersBean {
         }
     }
 
-    public String getOldPass() {
-        return oldPass;
-    }
-
-    public void setOldPass(String oldPass) {
-        if(!oldPass.isEmpty()) {
-            this.oldPass = oldPass;
-        }
-    }
-
-    public String getNewPass2() {
-        return newPass2;
-    }
-
-    public void setNewPass2(String newPass2) {
-        if(!newPass2.isEmpty()) {
-            this.newPass2 = newPass2;
-        }
-    }
-
-    public String getNewPass1() {
-        return newPass1;
-    }
-
-    public void setNewPass1(String newPass1) {
-        if(!newPass1.isEmpty()) {
-                this.newPass1 = newPass1;
-        }
-    }
-
     public User getSelectedUser() {
         return selectedUser;
     }
@@ -312,13 +282,13 @@ public class UsersBean {
 
         try {
 
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+
             if(selectedUser.getIdUser() == -1) {
                 try {
-                    FacesContext facesContext = FacesContext.getCurrentInstance();
                     HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
                     userManager.createUser(selectedUser, request);
                     selectedUser = userManager.getUser(selectedUser.getIdUser());
-                    rContext.execute("PF('editDialog').hide();");
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "1° Usuario creado de manera exitosa!!"));
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "2° Se ha enviado un correo de notificación al usuario para activar esta cuenta."));
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "3° Este usuario permanecerá bloqueado hasta que él active su cuenta"));
@@ -330,9 +300,10 @@ public class UsersBean {
             else {
                 userManager.updateUser(selectedUser);
                 selectedUser = userManager.getUser(selectedUser.getIdUser());
-                rContext.execute("PF('editDialog').hide();");
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario: "+selectedUser.getUsername()+" modificado de manera exitosa!!"));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario: "+selectedUser.getEmail()+" modificado de manera exitosa!!"));
             }
+
+            //facesContext.getExternalContext().redirect(((HttpServletRequest) facesContext.getExternalContext().getRequest()).getRequestURI());
 
         } catch (Exception e){
             logger.error("error al actualizar usuario",e);
@@ -387,11 +358,16 @@ public class UsersBean {
         try {
             userManager.deleteUser(selectedUser);
             selectedUser = userManager.getUser(selectedUser.getIdUser());
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "El usuario ha quedado en estado No Vigente."));
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "El usuario se ha eliminado y queda en estado No Vigente."));
         } catch (Exception e){
             logger.error("error al actualizar usuario",e);
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
         }
+    }
+
+    public void showProfileHistory() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Info", "En construcción"));
     }
 
     public String getUserNameError() {

@@ -177,7 +177,7 @@ public class AccountRecovery {
              */
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
             try {
-                eContext.redirect(eContext.getRequestContextPath() + "/views/activateAccount.xhtml?key=" + user.getVerificationCode());
+                eContext.redirect(eContext.getRequestContextPath() + "/views/users/activateAccount.xhtml?key=" + user.getVerificationCode());
             } catch (IOException e) {
                 e.printStackTrace();
             }

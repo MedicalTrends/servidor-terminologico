@@ -303,7 +303,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.create_language_ref_set_sct(?,?,?,?,?,?,?)}")) {
 
-            call.setString(1, languageRefsetSCT.getId());
+            call.setLong(1, languageRefsetSCT.getId());
             call.setTimestamp(2, languageRefsetSCT.getEffectiveTime());
             call.setBoolean(3, languageRefsetSCT.isActive());
             call.setLong(4, languageRefsetSCT.getModuleId());
@@ -409,7 +409,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.update_language_ref_set_sct(?,?,?,?,?,?,?)}")) {
 
-            call.setString(1, languageRefsetSCT.getId());
+            call.setLong(1, languageRefsetSCT.getId());
             call.setTimestamp(2, languageRefsetSCT.getEffectiveTime());
             call.setBoolean(3, languageRefsetSCT.isActive());
             call.setLong(4, languageRefsetSCT.getModuleId());
@@ -512,169 +512,6 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         return false;
     }
 
-    @Override
-    public DescriptionSCT getDescriptionSCTBy(long idDescriptionSCT) {
-        ConnectionBD connect = new ConnectionBD();
-        DescriptionSCT descriptionSCT = null;
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_description_sct_by_id(?)}")) {
-
-            call.setLong(1, idDescriptionSCT);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-
-            while (rs.next()) {
-                descriptionSCT = createDescriptionSCTFromResultSet(rs);
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            String errorMsg = "Error al buscar Concept Snomed CT";
-            logger.error(errorMsg);
-            throw new EJBException(errorMsg, e);
-        }
-        return descriptionSCT;
-    }
-
-    @Override
-    public boolean existsInDB(ISnomedCT iSnomedCT) {
-
-        boolean existsInDB = false;
-
-        ConnectionBD connect = new ConnectionBD();
-
-        String QUERY = "";
-
-        if (iSnomedCT instanceof ConceptSCT)
-            QUERY = "{call semantikos.get_concepts_sct_by_id(?)}";
-        if (iSnomedCT instanceof DescriptionSCT)
-            QUERY = "{call semantikos.get_description_by_description_query(?,?,?,?,?,?,?,?)}";
-        if (iSnomedCT instanceof RelationshipSCT)
-            QUERY = "{call semantikos.get_description_by_no_valid_query(?,?,?,?,?,?,?)}";
-
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(QUERY)) {
-
-            call.setLong(1, iSnomedCT.getId());
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-
-            if (rs.next()) {
-                existsInDB = true;
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            String errorMsg = "Error al buscar Concept Snomed CT";
-            logger.error(errorMsg);
-            throw new EJBException(errorMsg, e);
-        }
-
-        return existsInDB;
-    }
-
-    @Override
-    public void persist(List<ISnomedCT> iSnomedCTs) {
-
-        ConnectionBD connect = new ConnectionBD();
-
-        FileHandler fh = null;
-
-        String QUERY = "";
-
-        if (!iSnomedCTs.isEmpty() && iSnomedCTs.get(0) instanceof ConceptSCT )
-            QUERY = "{call semantikos.create_concept_sct(?,?,?,?,?)}";
-        if (!iSnomedCTs.isEmpty() && iSnomedCTs.get(0) instanceof DescriptionSCT)
-            QUERY = "{call semantikos.create_description_sct(?,?,?,?,?,?,?,?,?)}";
-        if (!iSnomedCTs.isEmpty() && iSnomedCTs.get(0) instanceof RelationshipSCT)
-            QUERY = "{call semantikos.get_description_by_no_valid_query(?,?,?,?,?,?,?)}";
-
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(QUERY)) {
-            int i = 0;
-
-            if (!iSnomedCTs.isEmpty() && iSnomedCTs.get(0) instanceof ConceptSCT)
-                for (ConceptSCT conceptSCT : (List<ConceptSCT>) (Object) iSnomedCTs) {
-                    call.setLong(1, conceptSCT.getIdSnomedCT());
-                    call.setTimestamp(2, conceptSCT.getEffectiveTime());
-                    call.setBoolean(3, conceptSCT.isActive());
-                    call.setLong(4, conceptSCT.getModuleId());
-                    call.setLong(5, conceptSCT.getDefinitionStatusId());
-                    call.addBatch();
-                }
-            if (!iSnomedCTs.isEmpty() && iSnomedCTs.get(0) instanceof DescriptionSCT)
-                for (DescriptionSCT descriptionSCT : (List<DescriptionSCT>) (Object) iSnomedCTs) {
-                    call.setLong(1, descriptionSCT.getId());
-                    call.setTimestamp(2, descriptionSCT.getEffectiveTime());
-                    call.setBoolean(3, descriptionSCT.isActive());
-                    call.setLong(4, descriptionSCT.getModuleId());
-                    call.setLong(5, descriptionSCT.getConceptId());
-                    call.setString(6, descriptionSCT.getLanguageCode());
-                    call.setLong(7, descriptionSCT.getDescriptionType().getTypeId());
-                    call.setString(8, descriptionSCT.getTerm());
-                    call.setLong(9, descriptionSCT.getCaseSignificanceId());
-                    call.addBatch();
-                }
-
-            call.executeBatch();
-        }
-        catch (SQLException e) {
-            String errorMsg = "Error al persistir Concept Snomed CT";
-            // Aquí se debe registrar el error en el log de salida
-            //SnomedCTSnapshotFactory.logError(errorMsg);
-            logger.error(errorMsg);
-            //throw new EJBException(errorMsg, e);
-
-        }
-
-    }
-
-
-    @Override
-    public void update(List<ISnomedCT> iSnomedCTs) {
-
-    }
-
-    @Override
-    public List<ISnomedCT> getRegistersToUpdate(Map<Long, ISnomedCT> map) {
-
-        ConnectionBD connect = new ConnectionBD();
-
-        String QUERY = "";
-
-        if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof ConceptSCT )
-            QUERY = "{call semantikos.get_existing_concept_sct_ids(?)}";
-        if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof DescriptionSCT)
-            QUERY = "{call semantikos.get_existing_description_sct_ids(?)}";
-        if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof RelationshipSCT)
-            QUERY = "{call semantikos.get_existing_relationship_sct_ids(?)}";
-
-        List<ISnomedCT> registersToUpdate = new ArrayList<>();
-
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(QUERY)) {
-
-            //if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof ConceptSCT)
-            call.setArray(1, connection.createArrayOf("bigint", map.keySet().toArray(new Long[map.size()])));
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-
-            while (rs.next()) {
-                registersToUpdate.add(map.get(rs.getLong(1)));
-            }
-        }
-        catch (SQLException e) {
-            String errorMsg = "Error al persistir Concept Snomed CT";
-            logger.error(errorMsg);
-            throw new EJBException(errorMsg, e);
-        }
-
-        return registersToUpdate;
-    }
 
     @Override
     public ConceptSCT getConceptByID(long conceptID) {
@@ -834,6 +671,31 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public DescriptionSCT getDescriptionSCTBy(long idDescriptionSCT) {
+        ConnectionBD connect = new ConnectionBD();
+        DescriptionSCT descriptionSCT = null;
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.get_description_sct_by_id(?)}")) {
+
+            call.setLong(1, idDescriptionSCT);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+                descriptionSCT = createDescriptionSCTFromResultSet(rs);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al buscar Concept Snomed CT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+        return descriptionSCT;
     }
 
 }

@@ -255,6 +255,7 @@ public class AuthDAOImpl implements AuthDAO {
         u.setDocumentNumber(rs.getString(22));
         u.setVerificationCode(rs.getString(23));
         u.setValid(rs.getBoolean(24));
+        u.setRutDocument(rs.getBoolean(25));
 
         u.setProfiles(getUserProfiles(u.getIdUser()));
 
@@ -308,13 +309,13 @@ public class AuthDAOImpl implements AuthDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, user.getUsername().trim());
-            call.setString(2, user.getName().trim());
-            call.setString(3, user.getLastName().trim());
-            call.setString(4, user.getSecondLastName().trim());
-            call.setString(5, user.getEmail().trim());
-            call.setBoolean(6, false);
-            call.setInt(7, 0);
+            call.setString(1, user.getName().trim());
+            call.setString(2, user.getLastName().trim());
+            call.setString(3, user.getSecondLastName().trim());
+            call.setString(4, user.getEmail().trim());
+            call.setBoolean(5, false);
+            call.setInt(6, 0);
+            call.setBoolean(7, user.isRutDocument());
             call.setString(8, user.isRutDocument()?StringUtils.parseRut(user.getDocumentNumber().trim()):user.getDocumentNumber());
             call.setString(9, user.getPasswordHash());
             call.setString(10, user.getVerificationCode());

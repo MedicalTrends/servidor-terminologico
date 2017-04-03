@@ -24,69 +24,6 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     @EJB
     private ConceptSearchBR conceptSearchBR;
 
-    private Map<Long, ISnomedCT> snapshotBuffer = new HashMap<>();
-
-    private static int BUFFER_SIZE = 100000;
-
-    private List<ISnomedCT> inserts = new ArrayList<>();
-
-    private List<ISnomedCT> updates = new ArrayList<>();
-
-    @Override
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public SnapshotProcessingResult processSnapshot(SnomedCTSnapshot snomedCTSnapshot) {
-
-        // Primero se procesan los conceptos
-        SnomedCTSnapshotFactory.getInstance().initReader(snomedCTSnapshot.getConceptSnapshotPath());
-
-        //Se hace un update de los cambios al buffer de snapshot
-        while(!(snapshotBuffer = (Map<Long, ISnomedCT>) (Object) SnomedCTSnapshotFactory.getInstance().createConceptsSCTFromPath(BUFFER_SIZE)).isEmpty()) {
-            //Se commitean los cambios: Esto es, extraer los elementos a insertar y a actualizar
-            commit();
-            //Se pushean los cambios a la BD
-            push();
-        }
-
-        SnomedCTSnapshotFactory.getInstance().haltReader(snomedCTSnapshot.getConceptSnapshotPath());
-
-        // Luego se procesan las descripciones
-        SnomedCTSnapshotFactory.getInstance().initReader(snomedCTSnapshot.getDescriptionSnapshotPath());
-
-        //Se hace un update de los cambios al buffer de snapshot
-        while(!(snapshotBuffer = (Map<Long, ISnomedCT>) (Object) SnomedCTSnapshotFactory.getInstance().createDescriptionsSCTFromPath(BUFFER_SIZE)).isEmpty()) {
-            //Se commitean los cambios: Esto es, extraer los elementos a insertar y a actualizar
-            commit();
-            //Se pushean los cambios a la BD
-            push();
-        }
-
-        SnomedCTSnapshotFactory.getInstance().haltReader(snomedCTSnapshot.getDescriptionSnapshotPath());
-
-        return new SnapshotProcessingResult();
-    }
-
-    public void commit() {
-
-        //snapshotBuffer.extractReferenceViolations()
-
-        updates = snomedctDAO.getRegistersToUpdate(snapshotBuffer);
-
-        //inserts = (List<ISnomedCT>) (Object) Arrays.asList(snapshotBuffer.values().toArray());
-
-        inserts = new ArrayList<ISnomedCT>((List<ISnomedCT>) (Object) Arrays.asList(snapshotBuffer.values().toArray()));
-
-        inserts.removeAll(updates);
-
-    }
-
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public void push() {
-        snomedctDAO.persist(inserts);
-        snomedctDAO.update(updates);
-        snapshotBuffer.clear();
-        inserts.clear();
-        updates.clear();
-    }
 
     @Override
     public List<RelationshipSCT> getRelationshipsFrom(long idConceptSCT) {

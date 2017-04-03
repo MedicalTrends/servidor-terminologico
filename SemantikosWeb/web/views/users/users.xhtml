@@ -83,38 +83,67 @@
                                             <f:facet name="header">
                                                 Datos Personales
                                             </f:facet>
-                                            <h:outputText value="Id:" style="font-weight: bold"/>
-                                            <h:outputText value="#{usersBrowser.selectedUser.idUser}" />
 
-                                            <h:outputText value="Username" style="font-weight: bold"/>
-                                            <h:outputText value="#{usersBrowser.selectedUser.username}" />
-
-                                            <h:outputText value="Nombre:" style="font-weight: bold"/>
+                                            <h:outputText value="Nombre" style="font-weight: bold"/>
                                             <h:outputText value="#{usersBrowser.selectedUser.name}"/>
 
-                                            <h:outputText value="Apellido Paterno:" style="font-weight: bold"/>
+                                            <h:outputText value="Apellido Paterno" style="font-weight: bold"/>
                                             <h:outputText value="#{usersBrowser.selectedUser.lastName}"/>
 
-                                            <h:outputText value="Apellido Materno:" style="font-weight: bold"/>
+                                            <h:outputText value="Apellido Materno" style="font-weight: bold"/>
                                             <h:outputText value="#{usersBrowser.selectedUser.secondLastName}"/>
 
-                                            <h:outputText value="RUT:" style="font-weight: bold"/>
-                                            <h:outputText value="#{usersBrowser.selectedUser.rut}"/>
+                                            <h:outputText value="Tipo Documento" style="font-weight: bold"/>
+                                            <h:outputText value="#{usersBrowser.selectedUser.rutDocument?'Rut':'Pasaporte'}"/>
+
+                                            <h:outputText value="N° Documento" style="font-weight: bold"/>
+                                            <h:outputText value="#{usersBrowser.selectedUser.documentNumber}"/>
 
                                             <h:outputText value="Email" style="font-weight: bold"/>
                                             <h:outputText value="#{usersBrowser.selectedUser.email}" />
 
                                         </p:panelGrid>
 
-                                        <br />
-                                        <div class="separator" ></div>
-                                        <br />
+                                        <p:dataTable id="profiles"
+                                                     var="profile"
+                                                     value="#{usersBrowser.selectedUser.profiles}"
+                                                     emptyMessage="Usuario no tiene Perfiles asignados"
+                                                     reflow="true">
+                                            <p:columnGroup type="header">
+                                                <p:row>
+                                                    <p:column colspan="2" headerText="Perfiles"/>
+                                                </p:row>
+                                            </p:columnGroup>
+                                            <p:column styleClass="BoldGray FontBold">
+                                                #{profile.name}
+                                            </p:column>
+                                            <p:column>
+                                                #{profile.description}
+                                            </p:column>
+                                        </p:dataTable>
+
+                                        <p:dataTable id="institutions"
+                                                     var="institution"
+                                                     value="#{usersBrowser.selectedUser.institutions}"
+                                                     emptyMessage="Usuario no tiene Establecimientos asignados"
+                                                     reflow="true">
+                                            <p:columnGroup type="header">
+                                                <p:row>
+                                                    <p:column colspan="1" headerText="Establecimientos"/>
+                                                </p:row>
+                                            </p:columnGroup>
+                                            <p:column styleClass="BoldGray FontBold">
+                                                #{institution.name}
+                                            </p:column>
+                                        </p:dataTable>
+
+                                        <p:separator />
 
                                         <p:panelGrid columns="2" styleClass="Wid100" rendered="#{usersBrowser.selectedUser != null}">
                                             <f:facet name="header">
                                                 Datos De acceso
                                             </f:facet>
-                                            <h:outputText value="Fecha Ultimo acceso:" style="font-weight: bold"/>
+                                            <h:outputText value="Fecha Ultimo acceso" style="font-weight: bold"/>
                                             <h:outputText value="#{usersBrowser.selectedUser.lastLogin}">
                                                 <f:convertDateTime type="date" pattern="dd-MM-yyyy hh:mm"/>
                                             </h:outputText>
@@ -124,30 +153,10 @@
                                                 <f:convertDateTime type="date" pattern="dd-MM-yyyy hh:mm"/>
                                             </h:outputText>
 
-                                            <h:outputText value="Bloqueado:" style="font-weight: bold"/>
+                                            <h:outputText value="Bloqueado" style="font-weight: bold"/>
                                             <h:outputText value="#{usersBrowser.selectedUser.locked?'Si':'No'}"/>
 
                                         </p:panelGrid>
-
-                                        <br />
-                                        <div class="separator" ></div>
-                                        <br />
-
-                                        <p:panelGrid columns="2" styleClass="Wid100" rendered="#{usersBrowser.selectedUser != null and not empty usersBrowser.selectedUser.profiles}">
-                                            <f:facet name="header">
-                                                Perfiles
-                                            </f:facet>
-                                            <h:outputText value="Perfil" style="font-weight: bold"/>
-                                            <h:outputText value="Descripcion" style="font-weight: bold"/>
-
-
-                                            <ui:repeat value="#{usersBrowser.selectedUser.profiles}" var="profile2" >
-                                                <h:outputText value="#{profile2.name}" />
-                                                <h:outputText value="#{profile2.description}" />
-                                            </ui:repeat>
-
-                                        </p:panelGrid>
-                                        <h:outputText value="Usuario no tiene Perfiles asignados" rendered="#{usersBrowser.selectedUser != null and empty usersBrowser.selectedUser.profiles}" />
 
                                     </h:panelGroup>
                                 </p:dialog>

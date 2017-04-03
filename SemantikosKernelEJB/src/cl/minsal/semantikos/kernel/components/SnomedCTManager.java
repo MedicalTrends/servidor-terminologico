@@ -12,14 +12,6 @@ import java.util.Map;
 @Local
 public interface SnomedCTManager {
 
-    /**
-     * Este método es responsable de procesar un snapshot de Snomed CT.
-     *
-     * @param snomedCTSnapshot El Snapshot que será procesado.
-     *
-     * @return El resultado del proceso.
-     */
-    public SnapshotProcessingResult processSnapshot(SnomedCTSnapshot snomedCTSnapshot);
 
     /**
      * Este método es responsable de recuperar las relaciones de un concepto SCT.

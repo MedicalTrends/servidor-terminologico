@@ -3,6 +3,7 @@ package cl.minsal.semantikos.model.snomedct;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
+import cl.minsal.semantikos.model.snapshots.AuditActionType;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import static java.util.Collections.emptyList;
  * @version 1.0
  * @created 17-ago-2016 12:52:05
  */
-public class ConceptSCT extends PersistentEntity implements Target, ISnomedCT {
+public class ConceptSCT extends PersistentEntity implements Target, SnomedCTComponent {
 
     public static final long COMPLETELY_DEFINED = 900000000000073002l;
     public static final long PRIMITIVE = 900000000000074008l;
@@ -224,5 +225,22 @@ public class ConceptSCT extends PersistentEntity implements Target, ISnomedCT {
         }
 
         return toString + " - Sin descripción FSN o Preferida";
+    }
+
+    @Override
+    public AuditActionType evaluateChange(SnomedCTComponent snomedCTComponent) {
+
+        ConceptSCT that = (ConceptSCT) snomedCTComponent;
+
+        if(this.equals(that))
+            return AuditActionType.SNOMED_CT_UNMODIFYING;
+
+        if(this.isActive() && !that.isActive())
+            return AuditActionType.SNOMED_CT_INVALIDATION;
+
+        if(!this.isActive() && that.isActive())
+            return AuditActionType.SNOMED_CT_RESTORYING;
+
+        return AuditActionType.SNOMED_CT_UNDEFINED;
     }
 }

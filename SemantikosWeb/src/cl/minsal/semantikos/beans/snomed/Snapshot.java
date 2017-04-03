@@ -8,7 +8,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
-import cl.minsal.semantikos.kernel.components.SnomedCTManager;
+import cl.minsal.semantikos.kernel.components.SnomedCTSnapshotManager;
+import cl.minsal.semantikos.model.snapshots.SnomedCTSnapshotUpdate;
 import cl.minsal.semantikos.model.snomedct.*;
 import org.primefaces.event.FileUploadEvent;
 
@@ -31,7 +32,7 @@ public class Snapshot {
     private List<LanguageRefsetSCT> languageRefsetSCTs;
     private List<TransitiveSCT> transitiveSCTs;
 
-    private SnomedCTSnapshot snomedCTSnapshot;
+    private SnomedCTSnapshotUpdate snomedCTSnapshotUpdate;
     private String conceptSnapshotPath;
     private String descriptionSnapshotPath;
     private String relationshipSnapshotPath;
@@ -40,7 +41,7 @@ public class Snapshot {
     private AuthenticationBean authenticationBean;
 
     @EJB
-    private SnomedCTManager snomedCTManager;
+    private SnomedCTSnapshotManager snomedCTSnapshotManager;
 
     public AuthenticationBean getAuthenticationBean() {
         return authenticationBean;
@@ -351,7 +352,7 @@ public class Snapshot {
                     }
                     String time = affectiveTime.substring(0, 4) + "-" + affectiveTime.substring(4, 6) + "-" + affectiveTime.substring(6, 8) + " 00:00:00";
 
-                    languageRefsetSCTs.add(new LanguageRefsetSCT(id, Timestamp.valueOf(time), active, moduleId, refsetId, referencedComponentId, acceptabilityId));
+                    //languageRefsetSCTs.add(new LanguageRefsetSCT(id, Timestamp.valueOf(time), active, moduleId, refsetId, referencedComponentId, acceptabilityId));
                 } else {
                     first = false;
                 }
@@ -509,7 +510,7 @@ for (ConceptSCT conceptSCT : conceptSCTs) {
         */
 
 
-        snomedCTManager.persistConceptSCT(conceptSCTs);
+        //snomedCTManager.persistConceptSCT(conceptSCTs);
 
 
         // }
@@ -518,8 +519,8 @@ for (ConceptSCT conceptSCT : conceptSCTs) {
     public void processSnapshotSCT() {
         long time_start, time_end;
         time_start = System.currentTimeMillis();
-        snomedCTSnapshot = new SnomedCTSnapshot("1.0",conceptSnapshotPath, descriptionSnapshotPath, relationshipSnapshotPath, new Timestamp(currentTimeMillis()), authenticationBean.getLoggedUser() );
-        snomedCTManager.processSnapshot(snomedCTSnapshot);
+        snomedCTSnapshotUpdate = new SnomedCTSnapshotUpdate("1.0",conceptSnapshotPath, descriptionSnapshotPath, relationshipSnapshotPath, new Timestamp(currentTimeMillis()), authenticationBean.getLoggedUser() );
+        snomedCTSnapshotManager.processSnapshot(snomedCTSnapshotUpdate);
         time_end = System.currentTimeMillis();
         System.out.println("Tiempo: " + ((time_end - time_start) / 1000) + " segundos");
     }
