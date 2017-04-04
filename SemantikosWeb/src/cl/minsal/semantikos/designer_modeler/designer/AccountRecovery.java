@@ -270,6 +270,7 @@ public class AccountRecovery {
             }
 
             authenticationManager.setUserPassword(user.getEmail(),newPassword1);
+            userManager.unlockUser(user.getEmail());
             passwordChanged = true;
 
         } catch (PasswordChangeException e) {

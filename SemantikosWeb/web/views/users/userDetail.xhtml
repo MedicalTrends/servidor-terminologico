@@ -119,20 +119,13 @@
 
                                 <div class="ui-g">
                                     <div style="text-align: right">
-                                        <p:commandButton value="Cambiar Password Usuario" rendered="#{users.selectedUser != null and users.selectedUser.idUser != -1}"
+                                        <p:commandButton value="Cambiar Password" styleClass="ui-priority-primary" rendered="#{users.selectedUser != null and users.selectedUser.idUser != -1}"
                                                          actionListener="#{users.clean}"
-                                                         oncomplete="PF('passwordChangeDialog').show()" update=":form:pcdialog" process="@this" />
+                                                         oncomplete="PF('passwordChangeDialog').show()" update=":mainForm:pcdialog" process="@this" />
                                     </div>
-
-                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
-                                                         icon="ui-icon-check"/>
-                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
-                                                         icon="ui-icon-close"/>
-                                    </p:confirmDialog>
                                 </div>
 
-                                <p:dialog id="pcdialog" height="200" width="600" header="Cambiar Password Usuario" widgetVar="passwordChangeDialog" modal="false" showEffect="fade" hideEffect="fade"
+                                <p:dialog id="pcdialog" height="200" width="600" header="Cambiar Password" widgetVar="passwordChangeDialog" modal="false" showEffect="fade" hideEffect="fade"
                                           resizable="true" visible="#{ not users.oldPasswordError.concat(users.passwordError.concat(users.password2Error)).trim().equals('') }"
                                           responsive="true" >
 
@@ -160,9 +153,9 @@
 
                                     </p:panelGrid>
 
-                                    <p:commandButton process="pcdialog" value="Cambiar Password Usuario"
+                                    <p:commandButton process="pcdialog" value="Cambiar Password"
                                                      rendered="#{users.selectedUser != null}"
-                                                     update="pcdialog,user-edit-dialog,:form,@(.users)"
+                                                     update="mainForm"
                                                      action="#{users.changePass}">
                                         <p:resetInput target="passwordChangeGrid" />
                                     </p:commandButton>
