@@ -176,12 +176,11 @@
                                                 <f:param name="idConcept" value="#{concept.id}" />
                                             </p:link>
 
-                                            <p:commandLink oncomplete="PF('dialogTC2-browser').show()" update="@(.conceptTranslate)" title="Trasladar" style="padding: 5px"
+                                            <p:commandLink rendered="#{concept.modeled}" oncomplete="PF('dialogTC2-browser').show()" update="@(.conceptTranslate)" title="Trasladar" style="padding: 5px"
                                                            >
                                                 <i class="fa fa-exchange fa-lg"/>
                                                 <f:setPropertyActionListener value="#{concept}" target="#{transferConceptBean.conceptSMTKSelected}" />
-                                                <p:confirm header="Confirmación" message="¿Desea realmente trasladar este concepto?"
-                                                           icon="ui-icon-alert"/>
+
                                             </p:commandLink>
 
                                             <p:commandLink action="#{generalBrowserBean.deleteConcept(concept)}"
@@ -216,7 +215,10 @@
                                             <p:inputText value="id concepto: #{transferConceptBean.conceptSMTKSelected.id}" disabled="true" />
 
                                             <p:commandButton value="Trasladar" actionListener="#{transferConceptBean.transferConcept(transferConceptBean.conceptSMTKSelected)}"
-                                                             icon="fa fa-exchange" styleClass="ui-priority-primary" update="msgTransfer" />
+                                                             icon="fa fa-exchange" styleClass="ui-priority-primary" update="msgTransfer" >
+                                                <p:confirm header="Confirmación" message="¿Desea realmente trasladar este concepto?"
+                                                           icon="ui-icon-alert"/>
+                                            </p:commandButton>
                                         </h:panelGrid>
                                     </p:panel>
                                 </p:dialog>

@@ -360,6 +360,7 @@ public class ConceptBean implements Serializable {
             /* Se valida que el término propuesto no exista previamente */
             if (aConcept != null) {
                 messageBean.messageError("La descripción " + favoriteDescription + " ya existe dentro de la categoría " + category.getName() +". Descripción perteneciente a concepto: "+aConcept);
+                return;
             } else {
                 newConcept(category, favoriteDescription);
             }

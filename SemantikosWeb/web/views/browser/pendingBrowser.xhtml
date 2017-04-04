@@ -117,7 +117,7 @@
                                 </p:dataTable>
 
                                 <!-- Trasladar descripciones a conceptos -->
-                                <p:dialog id="dialogTDP" header="Trasladar descripcion" widgetVar="dialogTDP" global="true" width="800px" height="350px"
+                                <p:dialog id="dialogTDP" header="Trasladar descripcion" widgetVar="dialogTDP" global="true" width="900px" height="350px"
                                           showEffect="fade" hideEffect="fade">
                                     <p:panel styleClass="pending-description">
                                         <p:growl id="msgs" showDetail="true"/>
@@ -159,8 +159,8 @@
 
                                         <div class="ui-fluid">
 
-                                            <p:panelGrid columns="2"  style="width: 100%" styleClass="ui-panelgrid-blank"
-                                                         columnClasses="ui-grid-col-6,ui-grid-col-6" >
+                                            <p:panelGrid columns="3"  style="width: 100%" styleClass="ui-panelgrid-blank"
+                                                         columnClasses="ui-grid-col-3,ui-grid-col-6,ui-grid-col-3" >
 
                                                 <p:autoComplete id="inputFindConcept" scrollHeight="200" size="5"
                                                                 style="width: 300px;margin: 10px;"
@@ -190,6 +190,11 @@
                                                         <h:outputText value="#{c.name}"/>
                                                     </p:column>
                                                 </p:selectOneMenu>
+
+                                                <p:commandButton value="Limpiar selección" update="@(.pending-description)">
+                                                    <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
+                                                    <f:setPropertyActionListener value="" target="#{pendingBrowserBean.conceptSelected}"/>
+                                                </p:commandButton>
 
                                             </p:panelGrid>
                                         </div>

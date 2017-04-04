@@ -8,7 +8,10 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.util.Collections.emptyList;
 
@@ -123,16 +126,13 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     public void persistConceptSCT(List<ConceptSCT> conceptSCTs) {
         long time_start, time_end;
         time_start = System.currentTimeMillis();
-
-        /*
-        for (ConceptSCT conceptSCT : conceptSCTs) {
+        /*for (ConceptSCT conceptSCT : conceptSCTs) {
             if (snomedctDAO.existConceptSCT(conceptSCT)) {
 
             } else {
 
             }
-        }
-        */
+        }*/
 
         time_end = System.currentTimeMillis();
         System.out.println("Revision " + ((time_end - time_start) / 1000) + " seconds");
@@ -163,16 +163,63 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
             snomedctDAO.persistSnapshotDescriptionSCT(descriptionSCT);
         }
 
+        Map<Integer, List<DescriptionSCT>> transactionBlocksPersist = transactionBlocks(forPersist);
+        Map<Integer, List<DescriptionSCT>> transactionBlocksUpdate = transactionBlocks(forUpdate);
+
+        int i = 1;
+        while (transactionBlocksPersist.get(i) != null) {
+            persistDescriptionsDAO(transactionBlocksPersist.get(i));
+            i++;
+        }
+        i = 1;
+        while (transactionBlocksUpdate.get(i) != null) {
+            //snomedctDAO.updateSnapshotDescriptionSCT(transactionBlocksUpdate.get(i));
+            i++;
+        }
     }
 
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    private void persistDescriptionsDAO(List<DescriptionSCT> descriptionSCTs) {
+        snomedctDAO.persistSnapshotDescriptionSCT(descriptionSCTs);
+    }
+
+
+
+
     @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public void persistSnapshotRelationshipSCT(List<RelationshipSnapshotSCT> relationshipSnapshotSCT) {
+
+
+        //List<RelationshipSnapshotSCT> forUpdate = new ArrayList<>();
+        //List<RelationshipSnapshotSCT> forPersist = new ArrayList<>();
+
+
+        Map<Integer, List<RelationshipSnapshotSCT>> transactionBlocksPersist = transactionBlocksRelationship(relationshipSnapshotSCT);
+        //Map<Integer, List<DescriptionSCT>> transactionBlocksUpdate = transactionBlocks(forUpdate);
         long time_start, time_end;
         time_start = System.currentTimeMillis();
-        snomedctDAO.persistSnapshotRelationshipSCT(relationshipSnapshotSCT);
+        int i = 1;
+        while (transactionBlocksPersist.get(i) != null) {
+            persistRelationshipDAO(transactionBlocksPersist.get(i));
+            i++;
+        }
+        /*i = 1;
+        while (transactionBlocksUpdate.get(i) != null) {
+            //snomedctDAO.updateSnapshotDescriptionSCT(transactionBlocksUpdate.get(i));
+            i++;
+        }*/
+
         time_end = System.currentTimeMillis();
         System.out.println("the task has taken " + ((time_end - time_start) / 1000) + " seconds");
 
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    private void persistRelationshipDAO(List<RelationshipSnapshotSCT> relationshipSnapshotSCTs) {
+        snomedctDAO.persistSnapshotRelationshipSCT(relationshipSnapshotSCTs);
     }
 
     @Override
@@ -232,6 +279,53 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
         }
 
 
+    }
+
+    private Map<Integer, List<DescriptionSCT>> transactionBlocks(List<DescriptionSCT> list) {
+
+        Map<Integer, List<DescriptionSCT>> transactionBlocks = new HashMap<>();
+        List<DescriptionSCT> listBlock = null;
+        boolean blockSuccesful = false;
+        int i = 1;
+
+        while (!blockSuccesful) {
+
+            if (list.size() >= (500000 * i)) {
+                listBlock = list.subList((500000 * (i - 1)), (500000 * i));
+                transactionBlocks.put(i, listBlock);
+            } else {
+                listBlock = list.subList((500000 * (i - 1)), list.size());
+                transactionBlocks.put(i, listBlock);
+                blockSuccesful = true;
+            }
+            i++;
+        }
+
+        return transactionBlocks;
+    }
+
+    private Map<Integer, List<RelationshipSnapshotSCT>> transactionBlocksRelationship(List<RelationshipSnapshotSCT> list) {
+
+        Map<Integer, List<RelationshipSnapshotSCT>> transactionBlocks = new HashMap<>();
+        List<RelationshipSnapshotSCT> listBlock = null;
+        boolean blockSuccesful = false;
+        int i = 1;
+
+        while (!blockSuccesful) {
+
+            if (list.size() >= (500000 * i)) {
+                listBlock = list.subList((500000 * (i - 1)), (500000 * i));
+                transactionBlocks.put(i, listBlock);
+            } else {
+                listBlock = list.subList((500000 * (i - 1)), list.size());
+                transactionBlocks.put(i, listBlock);
+                blockSuccesful = true;
+
+            }
+            i++;
+        }
+
+        return transactionBlocks;
     }
 
 }
