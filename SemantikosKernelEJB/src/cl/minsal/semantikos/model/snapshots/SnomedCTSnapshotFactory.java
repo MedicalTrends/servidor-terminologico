@@ -227,7 +227,6 @@ public class SnomedCTSnapshotFactory {
         return snapshotPreprocessingRequest;
     }
 
-
     private RelationshipSCT createRelationshipSCTFromString(String string) throws Exception {
 
         String[] tokens = string.split("\\t");
@@ -344,6 +343,57 @@ public class SnomedCTSnapshotFactory {
                 try {
                     LanguageRefsetSCT languageRefsetSCT = createLanguageRefsetSCTFromString(line);
                     snapshotPreprocessingRequest.getRegisters().put(languageRefsetSCT.getId(), languageRefsetSCT);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                ++cont;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return snapshotPreprocessingRequest;
+    }
+
+    private TransitiveSCT createTransitivesSCTFromString(String string) throws Exception {
+
+        String[] tokens = string.split("\\t");
+
+        if (tokens.length != 2)
+            throw new RuntimeException();
+
+        //long id	effectiveTime	active	moduleId	conceptId	languageCode	typeId	term	caseSignificanceId
+
+        long idParent = Long.parseLong(tokens[0]);
+
+        long idChild = Long.parseLong(tokens[1]);
+
+        return new TransitiveSCT(idParent, idChild);
+
+    }
+
+    public SnapshotPreprocessingRequest createTransitivesSnapshotPreprocessingRequest(int streamSize) {
+
+        SnapshotPreprocessingRequest snapshotPreprocessingRequest = new SnapshotPreprocessingRequest();
+
+        try {
+
+            String line;
+            int cont = 0;
+
+            while ((line = reader.readLine()) != null) {
+
+                if(cont >= streamSize) {
+                    break;
+                }
+
+                try {
+                    TransitiveSCT transitiveSCT = createTransitivesSCTFromString(line);
+                    snapshotPreprocessingRequest.getRegisters().put(transitiveSCT.getId(), transitiveSCT);
+                    snapshotPreprocessingRequest.getReferencesFrom().put(transitiveSCT.getId(), transitiveSCT.getIdPartent());
+                    snapshotPreprocessingRequest.getReferencesTo().put(transitiveSCT.getId(), transitiveSCT.getIdChild());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

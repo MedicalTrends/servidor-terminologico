@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.model.snapshots;
 
+import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.users.User;
 
 import java.sql.Timestamp;
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * @author Andrés Farías on 9/26/16.
  */
-public class SnomedCTSnapshotUpdate {
+public class SnomedCTSnapshotUpdate extends PersistentEntity {
 
     /**
      * Versión del snapshot (moduleId??)
@@ -74,11 +75,13 @@ public class SnomedCTSnapshotUpdate {
      * @param date: El datafile de conceptos del snapshot
      * @param user: El datafile de conceptos del snapshot
      */
-    public SnomedCTSnapshotUpdate(String release, String conceptSnapshot, String descriptionSnapshot, String relationshipSnapshot, Timestamp date, User user) {
+    public SnomedCTSnapshotUpdate(String release, String conceptSnapshot, String descriptionSnapshot, String relationshipSnapshot, String refsetSnapshot, String transitiveSnapshot, Timestamp date, User user) {
         this.release = release;
         this.conceptSnapshotPath = conceptSnapshot;
         this.descriptionSnapshotPath = descriptionSnapshot;
         this.relationshipSnapshotPath = relationshipSnapshot;
+        this.refsetSnapshotPath = refsetSnapshot;
+        this.transitiveSnapshotPath = transitiveSnapshot;
         this.date = date;
         this.user = user;
     }

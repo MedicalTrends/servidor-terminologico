@@ -36,6 +36,8 @@ public class Snapshot {
     private String conceptSnapshotPath;
     private String descriptionSnapshotPath;
     private String relationshipSnapshotPath;
+    private String refsetSnapshotPath;
+    private String transitiveSnapshotPath;
 
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
@@ -92,8 +94,8 @@ public class Snapshot {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            String dir = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
-            chargeTransitive(dir);
+            transitiveSnapshotPath = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            //chargeTransitive(dir);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,8 +106,8 @@ public class Snapshot {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            String dir = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
-            chargeLanguajeRefset(dir);
+            refsetSnapshotPath = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            //chargeLanguajeRefset(dir);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -519,7 +521,7 @@ for (ConceptSCT conceptSCT : conceptSCTs) {
     public void processSnapshotSCT() {
         long time_start, time_end;
         time_start = System.currentTimeMillis();
-        snomedCTSnapshotUpdate = new SnomedCTSnapshotUpdate("1.0",conceptSnapshotPath, descriptionSnapshotPath, relationshipSnapshotPath, new Timestamp(currentTimeMillis()), authenticationBean.getLoggedUser() );
+        snomedCTSnapshotUpdate = new SnomedCTSnapshotUpdate("1.0",conceptSnapshotPath, descriptionSnapshotPath, relationshipSnapshotPath, refsetSnapshotPath, transitiveSnapshotPath, new Timestamp(currentTimeMillis()), authenticationBean.getLoggedUser() );
         snomedCTSnapshotManager.updateSnapshot(snomedCTSnapshotUpdate);
         time_end = System.currentTimeMillis();
         System.out.println("Tiempo: " + ((time_end - time_start) / 1000) + " segundos");

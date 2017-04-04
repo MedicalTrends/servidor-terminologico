@@ -6,9 +6,7 @@ import cl.minsal.semantikos.model.snomedct.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.EJB;
-import javax.ejb.EJBException;
-import javax.ejb.Stateless;
+import javax.ejb.*;
 import java.sql.*;
 import java.util.*;
 
@@ -233,6 +231,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public SnapshotProcessingRequest preprocessRequest(SnapshotPreprocessingRequest snapshotPreprocessingRequest) {
 
         List<SnomedCTComponent> errors = new ArrayList<>();
@@ -294,6 +293,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
 
             if (rs.next()) {
                 /* Se recupera el ID del concepto persistido */
+                snomedCTSnapshotUpdate.setId(rs.getLong(1));
             } else {
                 String errorMsg = "La actualización de snapshot SnomedCT no fue creada por una razon desconocida. Alertar al area de desarrollo sobre esto";
                 logger.error(errorMsg);
@@ -308,7 +308,98 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void updateSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
+        ConnectionBD connect = new ConnectionBD();
+        boolean updated = false;
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.update_snapshot_sct_update(?,?,?,?,?,?,?,?)}")) {
+
+            call.setLong(1, snomedCTSnapshotUpdate.getTotal());
+            call.setLong(2, snomedCTSnapshotUpdate.getCreated());
+            call.setLong(3, snomedCTSnapshotUpdate.getRemoved());
+            call.setLong(4, snomedCTSnapshotUpdate.getUnmodified());
+            call.setLong(5, snomedCTSnapshotUpdate.getInvalidated());
+            call.setLong(6, snomedCTSnapshotUpdate.getRestored());
+            call.setLong(7, snomedCTSnapshotUpdate.getFailed());
+            call.setLong(8, snomedCTSnapshotUpdate.getId());
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            if (rs.next()) {
+                /* Se recupera el status de la transacción */
+                updated = rs.getBoolean(1);
+            } else {
+                String errorMsg = "La actualización de snapshot SnomedCT no fue creada por una razon desconocida. Alertar al area de desarrollo sobre esto";
+                logger.error(errorMsg);
+                throw new EJBException(errorMsg);
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al persistir La actualización de snapshot SnomedCT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+        if (updated) {
+            logger.info("Información de actualización de snapshot SnomedCT  actualizada exitosamente.");
+        } else {
+            String errorMsg = "Información de actualización de snapshot SnomedCT  no fue actualizada.";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg);
+        }
+
+        String QUERY = "{call semantikos.create_snapshot_sct_update_detail(?,?,?,?,?,?)}";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(QUERY)) {
+
+            for (SnomedCTSnapshotUpdateDetail snomedCTSnapshotUpdateDetail : snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateDetails()) {
+
+                int[] paramPositions = {1,2,3,4,5};
+
+                if(snomedCTSnapshotUpdateDetail.getSnomedCTComponent() instanceof ConceptSCT)
+                    paramPositions =  new int[]{1,2,3,4,5};
+
+                if(snomedCTSnapshotUpdateDetail.getSnomedCTComponent() instanceof DescriptionSCT)
+                    paramPositions = new int[]{2,1,3,4,5};
+
+                if(snomedCTSnapshotUpdateDetail.getSnomedCTComponent() instanceof RelationshipSCT)
+                    paramPositions = new int[]{3,1,2,4,5};
+
+                if(snomedCTSnapshotUpdateDetail.getSnomedCTComponent() instanceof LanguageRefsetSCT)
+                    paramPositions = new int[]{4,1,2,3,5};
+
+                if(snomedCTSnapshotUpdateDetail.getSnomedCTComponent() instanceof TransitiveSCT)
+                    paramPositions = new int[]{5,1,2,3,4};
+
+                call.setLong(paramPositions[0], snomedCTSnapshotUpdateDetail.getSnomedCTComponent().getId());
+                call.setNull(paramPositions[1], Types.BIGINT);
+                call.setNull(paramPositions[2], Types.BIGINT);
+                call.setNull(paramPositions[3], Types.BIGINT);
+                call.setNull(paramPositions[4], Types.BIGINT);
+                call.setLong(6, snomedCTSnapshotUpdateDetail.getAuditActionType().getId());
+
+                call.addBatch();
+
+            }
+
+            call.executeBatch();
+        }
+        catch (SQLException e) {
+            String errorMsg = "Error al persistir El detalle de actualización de snapshot SnomedCT "+e;
+            // Aquí se debe registrar el error en el log de salida
+            //SnomedCTSnapshotFactory.logError(errorMsg);
+            logger.error(errorMsg);
+            if(e.getNextException()!=null) {
+                logger.error("Detalle: "+e.getNextException().getMessage());
+            }
+            //throw new EJBException(errorMsg, e);
+
+        }
+
 
     }
 
