@@ -13,9 +13,8 @@ public enum AuditActionType {
     SNOMED_CT_INVALIDATION(3, "Cambio vigente a no vigente Componente SnomedCT", AuditActionNature.CHANGE),
     SNOMED_CT_RESTORYING(4, "Cambio no vigente a vigente Componente SnomedCT", AuditActionNature.CHANGE),
     SNOMED_CT_UNMODIFYING(5, "Sin Modificación", AuditActionNature.CHANGE),
-    SNOMED_CT_UNDEFINED(5, "Indefinido", AuditActionNature.UNDEFINED);
-
-
+    SNOMED_CT_ERROR(6, "Error", AuditActionNature.ERROR),
+    SNOMED_CT_UNDEFINED(7, "Indefinido", AuditActionNature.UNDEFINED);
 
     /** Identificador único de la base de datos */
     private long id;
@@ -61,7 +60,6 @@ public enum AuditActionType {
                 return auditActionType;
             }
         }
-
         throw new IllegalArgumentException("No hay un tipo de acción con ID=" + idAuditActionType);
     }
 

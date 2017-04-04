@@ -1,0 +1,165 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/template.xhtml">
+
+    <ui:define name="header">
+        <p:breadCrumb styleClass="breadUpdate">
+            <p:menuitem value="Inicio" url="/views/home.xhtml" />
+            <p:menuitem value="Mis Datos" url="#" />
+        </p:breadCrumb>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:viewParam name="idUser" value="#{users.idUser}" />
+        </f:metadata>
+
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect  ">
+                    <div class="Container100 ">
+                        <div class="ContainerIndent">
+
+                            <h:form id="mainForm">
+
+                                <p:growl id="globalMessage" showDetail="true" showSummary="true" life="10000" />
+
+
+                                <p:growl showDetail="true" showSummary="true"/>
+
+
+                                <div class="ui-fluid">
+
+                                <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+
+                                    <p:panelGrid columns="2" styleClass="Wid100" rendered="#{usersBrowser.selectedUser != null}">
+                                        <f:facet name="header">
+                                            Datos Personales
+                                        </f:facet>
+
+                                        <h:outputText value="Nombre" style="font-weight: bold"/>
+                                        <h:outputText value="#{usersBrowser.selectedUser.name}"/>
+
+                                        <h:outputText value="Apellido Paterno" style="font-weight: bold"/>
+                                        <h:outputText value="#{usersBrowser.selectedUser.lastName}"/>
+
+                                        <h:outputText value="Apellido Materno" style="font-weight: bold"/>
+                                        <h:outputText value="#{usersBrowser.selectedUser.secondLastName}"/>
+
+                                        <h:outputText value="Tipo Documento" style="font-weight: bold"/>
+                                        <h:outputText value="#{usersBrowser.selectedUser.rutDocument?'Rut':'Pasaporte'}"/>
+
+                                        <h:outputText value="N° Documento" style="font-weight: bold"/>
+                                        <h:outputText value="#{usersBrowser.selectedUser.documentNumber}"/>
+
+                                        <h:outputText value="Email" style="font-weight: bold"/>
+                                        <h:outputText value="#{usersBrowser.selectedUser.email}" />
+
+                                    </p:panelGrid>
+
+                                    <p:dataTable id="profiles"
+                                                 var="profile"
+                                                 value="#{usersBrowser.selectedUser.profiles}"
+                                                 emptyMessage="Usuario no tiene Perfiles asignados"
+                                                 reflow="true">
+                                        <p:columnGroup type="header">
+                                            <p:row>
+                                                <p:column colspan="2" headerText="Perfiles"/>
+                                            </p:row>
+                                        </p:columnGroup>
+                                        <p:column styleClass="BoldGray FontBold">
+                                            #{profile.name}
+                                        </p:column>
+                                        <p:column>
+                                            #{profile.description}
+                                        </p:column>
+                                    </p:dataTable>
+
+                                    <p:panelGrid columns="2" styleClass="Wid100" rendered="#{usersBrowser.selectedUser != null}">
+                                        <f:facet name="header">
+                                            Datos De acceso
+                                        </f:facet>
+                                        <h:outputText value="Fecha Ultimo acceso" style="font-weight: bold"/>
+                                        <h:outputText value="#{usersBrowser.selectedUser.lastLogin}">
+                                            <f:convertDateTime type="date" pattern="dd-MM-yyyy hh:mm"/>
+                                        </h:outputText>
+
+                                        <h:outputText value="Fecha Ultimo cambio de contraseña" style="font-weight: bold"/>
+                                        <h:outputText value="#{usersBrowser.selectedUser.lastPasswordChange}">
+                                            <f:convertDateTime type="date" pattern="dd-MM-yyyy hh:mm"/>
+                                        </h:outputText>
+
+                                        <h:outputText value="Bloqueado" style="font-weight: bold"/>
+                                        <h:outputText value="#{usersBrowser.selectedUser.locked?'Si':'No'}"/>
+
+                                    </p:panelGrid>
+
+                                    <p:dataTable id="institutions"
+                                                 var="institution"
+                                                 value="#{usersBrowser.selectedUser.institutions}"
+                                                 emptyMessage="Usuario no tiene Establecimientos asignados"
+                                                 reflow="true">
+                                        <p:columnGroup type="header">
+                                            <p:row>
+                                                <p:column colspan="1" headerText="Establecimientos"/>
+                                            </p:row>
+                                        </p:columnGroup>
+                                        <p:column styleClass="BoldGray FontBold">
+                                            #{institution.name}
+                                        </p:column>
+                                    </p:dataTable>
+
+                                </p:panelGrid>
+
+                                </div>
+
+                                <div class="ui-g">
+                                    <div class="ui-g-12 ui-md-6 ui-lg-6" style="text-align: left">
+                                        <p:commandButton value="Resetear cuenta" icon="fa fa-unlock" action="#{users.unlockUser}" styleClass="ui-priority-primary CyanButton"
+                                                         disabled="#{not users.selectedUser.locked or users.selectedUser.verificationCode != null }"
+                                                         rendered="#{users.selectedUser != null and users.selectedUser.persistent}"
+                                                         update="mainForm, @(.breadUpdate)" />
+
+                                        <p:commandButton value="Eliminar" icon="fa fa-trash" action="#{users.deleteUser}"
+                                                         rendered="#{users.selectedUser != null and users.selectedUser.persistent and users.selectedUser.valid}"
+                                                         styleClass="ui-priority-primary"
+                                                         update="mainForm, @(.breadUpdate)">
+                                            <p:confirm header="Confirmation" message="¿Desea eliminar este usuario?" icon="ui-icon-alert"/>
+                                        </p:commandButton>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-6 ui-lg-6" style="text-align: right">
+                                        <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{users.saveUser}" styleClass="ui-priority-primary" disabled="#{ not users.selectedUser.valid}"
+                                                         update="mainForm, @(.breadUpdate)" />
+
+                                        <p:commandButton value="Cancelar" icon="fa fa-undo" action="#{users.saveUser}" styleClass="ui-priority-primary" disabled="#{ not users.selectedUser.valid}"
+                                                         process="mainForm" update="mainForm, @(.breadUpdate)">
+                                            <p:confirm header="Confirmation" message="¿Desea deshacer los cambios realizados?" icon="ui-icon-alert"/>
+                                        </p:commandButton>
+
+                                        <p:commandButton value="Historial de perfiles" icon="fa fa-history" action="#{users.showProfileHistory}" styleClass="ui-priority-primary"
+                                                         rendered="#{users.selectedUser != null and users.selectedUser.persistent}"
+                                                         process="mainForm" update="mainForm, @(.breadUpdate)" />
+                                    </div>
+
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
+                                                         icon="ui-icon-check"/>
+                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                                                         icon="ui-icon-close"/>
+                                    </p:confirmDialog>
+                                </div>
+
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

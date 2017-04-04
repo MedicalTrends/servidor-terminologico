@@ -1,10 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.model.snapshots.AuditActionType;
-import cl.minsal.semantikos.model.snapshots.SnapshotPreprocessingRequest;
-import cl.minsal.semantikos.model.snapshots.SnapshotProcessingRequest;
-import cl.minsal.semantikos.model.snapshots.SnomedCTSnapshotUpdateDetail;
+import cl.minsal.semantikos.model.snapshots.*;
 import cl.minsal.semantikos.model.snomedct.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +15,7 @@ import java.util.*;
 /**
  * Funciones de base de dato para acceder a los datos de Snomed.
  *
- * @author Andrés Farías on 10/25/16.
+ * @author Diego Soto
  */
 @Stateless
 public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
@@ -28,7 +25,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     @EJB
     private SnomedCTDAO snomedCTDAO;
 
-    public void persist(List<SnomedCTComponent> snomedCTComponents) {
+    public List<SnomedCTSnapshotUpdateDetail> persist(List<SnomedCTComponent> snomedCTComponents) {
 
         List<SnomedCTSnapshotUpdateDetail> snomedCTSnapshotUpdateDetails = new ArrayList<>();
 
@@ -106,9 +103,10 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
 
         }
 
+        return snomedCTSnapshotUpdateDetails;
     }
 
-    public void update(List<SnomedCTComponent> snomedCTComponents) {
+    public List<SnomedCTSnapshotUpdateDetail> update(List<SnomedCTComponent> snomedCTComponents) {
         /**
          * Para el caso de las actualizaciones conviene realizar por cada registro para evaluar los casos posibles
          */
@@ -137,7 +135,20 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
 
         }
 
+        return snomedCTSnapshotUpdateDetails;
+    }
 
+    public List<SnomedCTSnapshotUpdateDetail> log(List<SnomedCTComponent> snomedCTComponents) {
+
+        List<SnomedCTSnapshotUpdateDetail> snomedCTSnapshotUpdateDetails = new ArrayList<>();
+
+        for (SnomedCTComponent snomedCTComponent : snomedCTComponents) {
+
+            snomedCTSnapshotUpdateDetails.add(new SnomedCTSnapshotUpdateDetail(snomedCTComponent, AuditActionType.SNOMED_CT_ERROR));
+
+        }
+
+        return snomedCTSnapshotUpdateDetails;
     }
 
     private List<Long> getErrors(Map<Long, Long> references) {
@@ -176,7 +187,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
                     it.remove(); // avoids a ConcurrentModificationException
                 }
             }
-            return new ArrayList<Long>((List<Long>) (Object) Arrays.asList(references.keySet().toArray()));
+            return new ArrayList<>((List<Long>) (Object) Arrays.asList(references.keySet().toArray()));
         }
 
         return errors;
@@ -221,14 +232,12 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
         return registersToUpdate;
     }
 
-
-
     @Override
     public SnapshotProcessingRequest preprocessRequest(SnapshotPreprocessingRequest snapshotPreprocessingRequest) {
 
         List<SnomedCTComponent> errors = new ArrayList<>();
-        List<SnomedCTComponent> inserts = new ArrayList<>();
-        List<SnomedCTComponent> updates = new ArrayList<>();
+        List<SnomedCTComponent> inserts;
+        List<SnomedCTComponent> updates;
 
         List<Long> errorIds = getErrors(snapshotPreprocessingRequest.getReferencesFrom());
         errorIds.addAll(getErrors(snapshotPreprocessingRequest.getReferencesTo()));
@@ -240,7 +249,9 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
 
         updates = getRegistersToUpdate(snapshotPreprocessingRequest.getRegisters());
 
-        inserts = new ArrayList<SnomedCTComponent>((List<SnomedCTComponent>) (Object) Arrays.asList(snapshotPreprocessingRequest.getRegisters().values().toArray()));
+        inserts = new ArrayList<>((List<SnomedCTComponent>) (Object) Arrays.asList(snapshotPreprocessingRequest.getRegisters().values().toArray()));
+
+        inserts.removeAll(updates);
 
         SnapshotProcessingRequest snapshotProcessingRequest = new SnapshotProcessingRequest();
 
@@ -252,13 +263,67 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     }
 
     @Override
-    public void processRequest(SnapshotProcessingRequest snapshotProcessingRequest) {
+    public List<SnomedCTSnapshotUpdateDetail> processRequest(SnapshotProcessingRequest snapshotProcessingRequest) {
 
-        /**
-         * Log errors
-         */
-        //log(snapshotProcessingRequest.getErrors());
-        persist(snapshotProcessingRequest.getInserts());
-        update(snapshotProcessingRequest.getUpdates());
+        List<SnomedCTSnapshotUpdateDetail> snomedCTSnapshotUpdateDetails = new ArrayList<>();
+
+        List<SnomedCTSnapshotUpdateDetail> createdDetail = persist(snapshotProcessingRequest.getInserts());
+        List<SnomedCTSnapshotUpdateDetail> updatedDetail = update(snapshotProcessingRequest.getUpdates());
+        List<SnomedCTSnapshotUpdateDetail> errorDetail = log(snapshotProcessingRequest.getErrors());
+
+        snomedCTSnapshotUpdateDetails.addAll(createdDetail);
+        snomedCTSnapshotUpdateDetails.addAll(updatedDetail);
+        snomedCTSnapshotUpdateDetails.addAll(errorDetail);
+
+        return snomedCTSnapshotUpdateDetails;
+    }
+
+    @Override
+    public void persistSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
+        ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.create_snapshot_sct_update(?,?,?,?,?)}")) {
+
+            call.setString(1, snomedCTSnapshotUpdate.getRelease());
+            call.setTimestamp(2, snomedCTSnapshotUpdate.getDate());
+            call.setString(3, snomedCTSnapshotUpdate.getUser().getEmail());
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            if (rs.next()) {
+                /* Se recupera el ID del concepto persistido */
+            } else {
+                String errorMsg = "La actualización de snapshot SnomedCT no fue creada por una razon desconocida. Alertar al area de desarrollo sobre esto";
+                logger.error(errorMsg);
+                throw new EJBException(errorMsg);
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al persistir La actualización de snapshot SnomedCT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+    }
+
+    @Override
+    public void updateSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
+
+    }
+
+    @Override
+    public void replaceSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
+
+    }
+
+    @Override
+    public SnomedCTSnapshotUpdate getSnomedCTSnapshotUpdateById(String id) {
+        return null;
+    }
+
+    @Override
+    public List<SnomedCTSnapshotUpdate> getAllSnomedCTSnapshotUpdates() {
+        return null;
     }
 }

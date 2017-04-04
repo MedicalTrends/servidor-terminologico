@@ -18,6 +18,6 @@ public interface SnomedCTSnapshotManager {
      *
      * @return El resultado del proceso.
      */
-    public SnapshotProcessingResult processSnapshot(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate);
+    public void updateSnapshot(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate);
 
 }

@@ -12,7 +12,7 @@ import javax.ejb.TransactionAttributeType;
 import java.util.*;
 
 /**
- * @author Andrés Farías on 9/26/16.
+ * @author Diego Soto
  */
 @Stateless
 public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
@@ -29,29 +29,31 @@ public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
 
     private static int BUFFER_SIZE = 100000;
 
-    private static  int CONCEPT_SNAPSHOT_COMPONENT = 1;
-
-    private static  int DESCRIPTION_SNAPSHOT_COMPONENT = 2;
-
-    private static  int RELATIONSHIP_SNAPSHOT_COMPONENT = 3;
-
-    private List<SnomedCTComponent> inserts = new ArrayList<>();
-
-    private List<SnomedCTComponent> updates = new ArrayList<>();
-
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public SnapshotProcessingResult processSnapshot(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
+    public void updateSnapshot(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
+
+        // Si ya existe esta actualización, se reemplaza
+        if(snomedCTSnapshotDAO.getSnomedCTSnapshotUpdateById(snomedCTSnapshotUpdate.getRelease())!=null) {
+            snomedCTSnapshotDAO.replaceSnomedCTSnapshotUpdate(snomedCTSnapshotUpdate);
+        }
+
+        // Se inicializan los datos de control
+        SnomedCTSnapshotFactory.getInstance().initSnomedCTSnapshotUpdate(snomedCTSnapshotUpdate);
 
         // Primero se procesan los conceptos
         SnomedCTSnapshotFactory.getInstance().initReader(snomedCTSnapshotUpdate.getConceptSnapshotPath());
 
         //Se hace un update de los cambios al buffer de snapshot
         while(!(snapshotPreprocessingRequest = SnomedCTSnapshotFactory.getInstance().createConceptsSnapshotPreprocessingRequest(BUFFER_SIZE)).isEmpty()) {
-            //Se preprocesa los cambios: Esto es, extraer los elementos a insertar y a actualizar
+            //Se preprocesan los cambios: Esto es, extraer los elementos a insertar, a actualizar y errores
             preprocessRequest();
             //Se pushean los cambios a la BD
-            processRequest();
+            snomedCTSnapshotUpdate.setSnomedCTSnapshotUpdateDetails(processRequest());
+            //Se agregan los cambios a la actualizacion del snapshot y se actualizan las estadísticas
+            snomedCTSnapshotUpdate.updateStats();
+            snomedCTSnapshotDAO.updateSnomedCTSnapshotUpdate(snomedCTSnapshotUpdate);
+            snomedCTSnapshotUpdate.setConceptsProcessed(snomedCTSnapshotUpdate.getConceptsProcessed()+BUFFER_SIZE);
             //Se limpia el request
             clearRequest();
         }
@@ -63,10 +65,14 @@ public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
 
         //Se hace un update de los cambios al buffer de snapshot
         while(!(snapshotPreprocessingRequest = SnomedCTSnapshotFactory.getInstance().createDescriptionsSnapshotPreprocessingRequest(BUFFER_SIZE)).isEmpty()) {
-            //Se commitean los cambios: Esto es, extraer los elementos a insertar y a actualizar
+            //Se preprocesan los cambios: Esto es, extraer los elementos a insertar, a actualizar y errores
             preprocessRequest();
             //Se pushean los cambios a la BD
-            processRequest();
+            snomedCTSnapshotUpdate.setSnomedCTSnapshotUpdateDetails(processRequest());
+            //Se agregan los cambios a la actualizacion del snapshot y se actualizan las estadísticas
+            snomedCTSnapshotUpdate.updateStats();
+            snomedCTSnapshotDAO.updateSnomedCTSnapshotUpdate(snomedCTSnapshotUpdate);
+            snomedCTSnapshotUpdate.setDescriptionsProcessed(snomedCTSnapshotUpdate.getDescriptionsProcessed()+snapshotPreprocessingRequest.getRegisters().size());
             //Se limpia el request
             clearRequest();
         }
@@ -78,10 +84,14 @@ public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
 
         //Se hace un update de los cambios al buffer de snapshot
         while(!(snapshotPreprocessingRequest = SnomedCTSnapshotFactory.getInstance().createRelationshipsSnapshotPreprocessingRequest(BUFFER_SIZE)).isEmpty()) {
-            //Se commitean los cambios: Esto es, extraer los elementos a insertar y a actualizar
+            //Se preprocesan los cambios: Esto es, extraer los elementos a insertar, a actualizar y errores
             preprocessRequest();
             //Se pushean los cambios a la BD
-            processRequest();
+            snomedCTSnapshotUpdate.setSnomedCTSnapshotUpdateDetails(processRequest());
+            //Se agregan los cambios a la actualizacion del snapshot y se actualizan las estadísticas
+            snomedCTSnapshotUpdate.updateStats();
+            snomedCTSnapshotDAO.updateSnomedCTSnapshotUpdate(snomedCTSnapshotUpdate);
+            snomedCTSnapshotUpdate.setDescriptionsProcessed(snomedCTSnapshotUpdate.getDescriptionsProcessed()+snapshotPreprocessingRequest.getRegisters().size());
             //Se limpia el request
             clearRequest();
         }
@@ -89,21 +99,42 @@ public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
         SnomedCTSnapshotFactory.getInstance().haltReader();
 
         // Luego se procesan los refsets
-        //SnomedCTSnapshotFactory.getInstance().initReader(snomedCTSnapshotUpdate.());
+        SnomedCTSnapshotFactory.getInstance().initReader(snomedCTSnapshotUpdate.getRefsetSnapshotPath());
 
         //Se hace un update de los cambios al buffer de snapshot
         while(!(snapshotPreprocessingRequest = SnomedCTSnapshotFactory.getInstance().createRelationshipsSnapshotPreprocessingRequest(BUFFER_SIZE)).isEmpty()) {
             //Se commitean los cambios: Esto es, extraer los elementos a insertar y a actualizar
             preprocessRequest();
             //Se pushean los cambios a la BD
-            processRequest();
+            //snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateDetails().addAll(processRequest());
+            snomedCTSnapshotUpdate.setSnomedCTSnapshotUpdateDetails(processRequest());
+            snomedCTSnapshotUpdate.updateStats();
+            snomedCTSnapshotDAO.updateSnomedCTSnapshotUpdate(snomedCTSnapshotUpdate);
+            snomedCTSnapshotUpdate.setDescriptionsProcessed(snomedCTSnapshotUpdate.getDescriptionsProcessed()+snapshotPreprocessingRequest.getRegisters().size());
             //Se limpia el request
             clearRequest();
         }
 
         SnomedCTSnapshotFactory.getInstance().haltReader();
 
-        return new SnapshotProcessingResult();
+        // Luego se procesan los hijos transitivos
+        SnomedCTSnapshotFactory.getInstance().initReader(snomedCTSnapshotUpdate.getTransitiveSnapshotPath());
+
+        //Se hace un update de los cambios al buffer de snapshot
+        while(!(snapshotPreprocessingRequest = SnomedCTSnapshotFactory.getInstance().createRelationshipsSnapshotPreprocessingRequest(BUFFER_SIZE)).isEmpty()) {
+            //Se commitean los cambios: Esto es, extraer los elementos a insertar y a actualizar
+            preprocessRequest();
+            //Se pushean los cambios a la BD
+            //snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateDetails().addAll(processRequest());
+            snomedCTSnapshotUpdate.setSnomedCTSnapshotUpdateDetails(processRequest());
+            snomedCTSnapshotUpdate.updateStats();
+            snomedCTSnapshotDAO.updateSnomedCTSnapshotUpdate(snomedCTSnapshotUpdate);
+            snomedCTSnapshotUpdate.setDescriptionsProcessed(snomedCTSnapshotUpdate.getDescriptionsProcessed()+snapshotPreprocessingRequest.getRegisters().size());
+            //Se limpia el request
+            clearRequest();
+        }
+
+        SnomedCTSnapshotFactory.getInstance().haltReader();
     }
 
 
@@ -112,14 +143,13 @@ public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public void processRequest() {
-        snomedCTSnapshotDAO.processRequest(snapshotProcessingRequest);
+    private List<SnomedCTSnapshotUpdateDetail> processRequest() {
+        return snomedCTSnapshotDAO.processRequest(snapshotProcessingRequest);
     }
 
     private void clearRequest() {
         snapshotPreprocessingRequest.clear();
         snapshotProcessingRequest.clear();
     }
-
 
 }

@@ -55,6 +55,59 @@ public class SnomedCTSnapshotFactory {
 
     }
 
+    public void initSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
+
+        try {
+            this.path = Paths.get(snomedCTSnapshotUpdate.getConceptSnapshotPath());
+            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+
+            int lines = 0;
+            while (reader.readLine() != null) lines++;
+            reader.close();
+
+            snomedCTSnapshotUpdate.setConceptsTotal(lines-1);
+
+            this.path = Paths.get(snomedCTSnapshotUpdate.getDescriptionSnapshotPath());
+            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+
+            lines = 0;
+            while (reader.readLine() != null) lines++;
+            reader.close();
+
+            snomedCTSnapshotUpdate.setDescriptionsTotal(lines-1);
+
+            this.path = Paths.get(snomedCTSnapshotUpdate.getRelationshipSnapshotPath());
+            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+
+            lines = 0;
+            while (reader.readLine() != null) lines++;
+            reader.close();
+
+            snomedCTSnapshotUpdate.setRelationshipsTotal(lines-1);
+
+            this.path = Paths.get(snomedCTSnapshotUpdate.getRefsetSnapshotPath());
+            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+
+            lines = 0;
+            while (reader.readLine() != null) lines++;
+            reader.close();
+
+            snomedCTSnapshotUpdate.setRefsetsTotal(lines-1);
+
+            this.path = Paths.get(snomedCTSnapshotUpdate.getTransitiveSnapshotPath());
+            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+
+            lines = 0;
+            while (reader.readLine() != null) lines++;
+            reader.close();
+
+            snomedCTSnapshotUpdate.setTransitiveTotal(lines-1);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void initReader(String path) {
 
         this.path = Paths.get(path);
