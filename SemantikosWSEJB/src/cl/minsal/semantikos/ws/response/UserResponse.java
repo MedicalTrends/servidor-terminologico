@@ -48,7 +48,7 @@ public class UserResponse implements Serializable {
         this.lastName = creatorUser.getLastName();
         this.secondLastName = creatorUser.getSecondLastName();
         this.email = creatorUser.getEmail();
-        this.rut = creatorUser.getRut();
+        this.rut = creatorUser.getDocumentNumber();
         this.lastLogin = creatorUser.getLastLogin();
         this.lastPasswordChange = creatorUser.getLastPasswordChange();
     }

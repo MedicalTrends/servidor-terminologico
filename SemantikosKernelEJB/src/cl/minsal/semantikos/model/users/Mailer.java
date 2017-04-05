@@ -1,5 +1,8 @@
 package cl.minsal.semantikos.model.users;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -20,6 +23,8 @@ public class Mailer implements Runnable {
 
     private String body = "<b>Bienvenido a Semantikos!</b><br><br>Una cuenta asociada a este correo ha sido creada. <ul><li>Para activar su cuenta, por favor pinche el siguiente link: <br>%link%</li><li>Su contraseña inicial es: %password%</li><li>Cambie su contraseña inicial</li><li>Configure sus preguntas de seguridad</li></ul>El Equipo Semantikos";
 
+    private static final Logger logger = LoggerFactory.getLogger(Mailer.class);
+
 
     protected Mailer(Session session, String to, String password, String link, String link2) {
         mySession = session;
@@ -31,6 +36,9 @@ public class Mailer implements Runnable {
 
     @Override
     public void run() {
+
+        logger.info("Enviando correo a destinatario "+to);
+
         int count = 0;
         int maxTries = 5;
 
@@ -47,7 +55,9 @@ public class Mailer implements Runnable {
                 break;
             } catch (Exception e) {
                 // handle exception
+                logger.info((count+1)+"° intento enviando correo a destinatario "+to+" :"+e.getMessage());
                 if (++count == maxTries) try {
+                    logger.error("Error al enviar correo a destinatario "+to+": "+e.getMessage());
                     throw e;
                 } catch (MessagingException e1) {
                     e1.printStackTrace();

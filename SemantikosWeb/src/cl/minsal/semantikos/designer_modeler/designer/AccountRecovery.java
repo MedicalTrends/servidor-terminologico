@@ -151,7 +151,7 @@ public class AccountRecovery {
             emailError = "";
         }
 
-        if(!isValidEmailAddress(email)) {
+        if(!StringUtils.isValidEmailAddress(email)) {
             emailError = "ui-state-error";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El formato del 'e-mail' no es válido"));
             return;
@@ -177,7 +177,7 @@ public class AccountRecovery {
              */
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
             try {
-                eContext.redirect(eContext.getRequestContextPath() + "/views/activateAccount.xhtml?key=" + user.getVerificationCode());
+                eContext.redirect(eContext.getRequestContextPath() + "/views/users/activateAccount.xhtml?key=" + user.getVerificationCode());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -216,17 +216,6 @@ public class AccountRecovery {
         else {
             correctAnswers = true;
         }
-    }
-
-    public static boolean isValidEmailAddress(String email) {
-        boolean result = true;
-        try {
-            InternetAddress emailAddr = new InternetAddress(email);
-            emailAddr.validate();
-        } catch (AddressException ex) {
-            result = false;
-        }
-        return result;
     }
 
     public boolean maxAttemptsReached() {
@@ -281,6 +270,7 @@ public class AccountRecovery {
             }
 
             authenticationManager.setUserPassword(user.getEmail(),newPassword1);
+            userManager.unlockUser(user.getEmail());
             passwordChanged = true;
 
         } catch (PasswordChangeException e) {

@@ -91,6 +91,27 @@ public class QuestionDAOImpl implements QuestionDAO {
         return question;
     }
 
+    @Override
+    public void deleteUserAnswers(User user) {
+        ConnectionBD connect = new ConnectionBD();
+        String DELETE_USER_ANSWERS = "{call semantikos.delete_user_answers(?)}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(DELETE_USER_ANSWERS)) {
+            call.setLong(1, user.getIdUser());
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+                if(!rs.getBoolean(1)) {
+                    String errorMsg = "Las Answers no fueron eliminadas. Alertar al area de desarrollo sobre esto";
+                    logger.error(errorMsg);
+                    throw new EJBException(errorMsg);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error al eliminar los Answers ", e);
+        }
+    }
+
     private Question createQuestionFromResultSet(ResultSet resultSet) {
         Question question = new Question();
         try {
