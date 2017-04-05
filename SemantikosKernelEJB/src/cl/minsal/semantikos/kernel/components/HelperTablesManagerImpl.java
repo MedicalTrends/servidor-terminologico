@@ -116,6 +116,8 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
         return newRow;
     }
 
+
+
     private HelperTableData createCell(HelperTableColumn column, HelperTableRow row) {
         HelperTableData data = new HelperTableData();
         data.setColumn(column);
@@ -140,6 +142,11 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
         row.setLastEditUsername(username);
 
         return dao.updateRow(row);
+    }
+
+    @Override
+    public List<ConceptSMTK> isRowUsed(HelperTableRow helperTableRow, int size, int page) {
+        return dao.isRowUser(helperTableRow, size,page);
     }
 
     private List<ConceptSMTK> isRowUsed(HelperTableRow row){
