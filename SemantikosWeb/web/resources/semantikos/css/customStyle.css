@@ -75,8 +75,8 @@ form#mainForm .ui-grid-col-1, .ui-grid-col-2, .ui-grid-col-3, .ui-grid-col-4, .u
     float: none !important;
 }
 
-form#mainForm .ui-panelgrid .ui-panelgrid-cell {
-
+form#mainForm .otherDescriptions.ui-panelgrid .ui-panelgrid-cell {
+    padding: 3px 3px;
 }
 /*
 .descriptionFilters .ui-inputfield {

@@ -12,7 +12,7 @@
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
             <meta name="apple-mobile-web-app-capable" content="yes" />
-            <meta name="theme-color" content="#{guestPreferences.themeColors[guestPreferences.theme]}" />
+            <meta name="theme-color" content="#2f8ee5" />
         </f:facet>
         <title><ui:insert name="title">PrimeFaces Poseidon</ui:insert></title>
         <h:outputScript name="js/nanoscroller.js" library="poseidon-layout" />
@@ -29,7 +29,6 @@
                 <p:ajax event="active" listener="#{timeOutSessionBean.redirectSession}"/>
             </p:idleMonitor>
         </h:form>
-
 
         <f:facet name="last">
             <h:outputStylesheet name="semantikos/css/customStyle.css"/>
@@ -66,9 +65,8 @@
         
         <h:outputStylesheet name="css/nanoscroller.css" library="poseidon-layout" />
         <h:outputStylesheet name="css/animate.css" library="poseidon-layout" />
-        <h:outputStylesheet name="css/layout-turquoise.css" library="poseidon-layout" />
+        <h:outputStylesheet name="css/layout-blue.css" library="poseidon-layout" />
         <h:outputStylesheet name="css/grid.css" library="poseidon-layout" />
-
     </h:body>
 
 </html>

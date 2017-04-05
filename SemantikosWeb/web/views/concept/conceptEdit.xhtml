@@ -37,184 +37,207 @@
             <f:viewParam name="pendingTerms" value="#{conceptBean.pendingTerms}" />
         </f:metadata>
 
-        <div class="Container100">
-            <div class="ContainerIndent">
-                <div class="Card ShadowEffect  ">
-                    <div class="Container100">
-                        <div class="ContainerIndent">
 
-                        <p:outputPanel id="createEdit">
-                            <h:form id="mainForm" rendered="#{ not (conceptBean.concept eq null ) }" styleClass="#{conceptBean.editable? '' : 'consult'}">
-                                <smtk:changeMarketed />
-                                <p:outputPanel>
+        <div class="layout-main-content">
 
-                                    <p:growl id="growl" showDetail="true" showSummary="true"/>
-                                    <p:growl id="editMsgs" showDetail="true"/>
+            <p:outputPanel id="createEdit">
 
-                                    <!--p:messages autoUpdate="true"></p:messages-->
+                <h:form id="mainForm" rendered="#{ not (conceptBean.concept eq null ) }" styleClass="#{conceptBean.editable? '' : 'consult'}">
 
-                                    <smtk:title concept="#{conceptBean.concept}" rendered="false" />
+                    <div class="ui-fluid">
 
-                                    <p:separator rendered="false" />
+                    <div class="ui-g">
 
-                                    <p:panel id="conceptHeader" style="border: hidden;" styleClass="conceptHeader">
-                                        <p:growl id="editMsgs2" showDetail="true"/>
-                                        <smtk:conceptHeader concept="#{conceptBean.concept}"/>
-                                    </p:panel>
+                    <div class="ui-g-12">
 
-                                </p:outputPanel>
+                    <div class="card card-w-title">
 
-                                <p:tabView>
+                    <smtk:changeMarketed />
 
-                                    <!-- Otras descripciones -->
-                                    <p:tab title="Otras descripciones">
-                                        <smtk:descriptions descriptions="#{conceptBean.concept.getValidDescriptionsButFSNandFavorite()}"
-                                                           otherTermino="#{conceptBean.otherTermino}"
-                                                           otherSensibilidad="#{conceptBean.otherSensibilidad}"
-                                                           otherDescriptionType="#{conceptBean.otherDescriptionType}"
-                                                           descriptionTypes="#{conceptBean.descriptionTypes}"
-                                                           editable="#{conceptBean.concept.editable}">
-                                        </smtk:descriptions>
-                                    </p:tab>
+                    <p:outputPanel>
 
-                                    <!--Relaciones -->
-                                    <p:tab title="Atributos" rendered="#{not empty conceptBean.orderedSMTKRelationshipDefinitions}">
-                                        <p:outputPanel id="atributos"
-                                                       widgetVar="panelAtributos"
-                                                       styleClass="attributes"
-                                                       rendered="#{ not empty conceptBean.orderedSMTKRelationshipDefinitions}">
+                        <p:growl id="growl" showDetail="true" showSummary="true"/>
+                        <p:growl id="editMsgs" showDetail="true"/>
 
-                                            <h:dataTable style="width: 100%;" value="#{conceptBean.orderedSMTKRelationshipDefinitions}"
-                                                         var="relationshipDefinition">
+                        <!--p:messages autoUpdate="true"></p:messages-->
 
-                                                <h:column>
+                        <smtk:title concept="#{conceptBean.concept}" rendered="false" />
 
-                                                    <p:outputPanel
-                                                            id="panelRelationshipDefiniton"
-                                                            styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}"
-                                                            rendered="#{not relationshipDefinition.targetDefinition.crossMapType}">
+                        <p:separator rendered="false" />
 
-                                                        <p:growl id="growlAttributes" showDetail="true" showSummary="true"/>
+                        <p:outputPanel id="conceptHeader" styleClass="conceptHeader">
+                            <p:growl id="editMsgs2" showDetail="true"/>
+                            <smtk:conceptHeader concept="#{conceptBean.concept}"/>
+                        </p:outputPanel>
 
-                                                        <smtk:smtkType
-                                                                rendered="#{(relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 1) or
-                                                                            (relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 3) or
-                                                                            (relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 2)}"
-                                                                targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                                                relationshipDefinition="#{relationshipDefinition}"
-                                                                concept="#{conceptBean.concept}"/>
+                    </p:outputPanel>
 
-                                                        <smtk:helperTableType
-                                                                rendered="#{relationshipDefinition.targetDefinition.helperTable and relationshipDefinition.compositeID eq 1}"
-                                                                relationshipDefinition="#{relationshipDefinition}"
-                                                                targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                                                concept="#{conceptBean.concept}"/>
+                    <br />
 
-                                                        <smtk:basicType
-                                                                targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                                                relationshipDefinition="#{relationshipDefinition}"
-                                                                concept="#{conceptBean.concept}"
-                                                                rendered="#{relationshipDefinition.targetDefinition.basicType and relationshipDefinition.compositeID eq 1}"/>
+                    <p:tabView>
 
-                                                        <smtk:customType relationshipDefinition="#{relationshipDefinition}"
-                                                                         targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                                                         concept="#{conceptBean.concept}" />
+                        <!-- Otras descripciones -->
+                        <p:tab title="Otras descripciones">
 
-                                                    </p:outputPanel>
+                            <p:panelGrid columns="1" styleClass="ui-panelgrid-blank otherDescriptions" style="padding: 3px 3px">
 
-                                                </h:column>
-                                            </h:dataTable>
+                                <smtk:descriptions descriptions="#{conceptBean.concept.getValidDescriptionsButFSNandFavorite()}"
+                                                   otherTermino="#{conceptBean.otherTermino}"
+                                                   otherSensibilidad="#{conceptBean.otherSensibilidad}"
+                                                   otherDescriptionType="#{conceptBean.otherDescriptionType}"
+                                                   descriptionTypes="#{conceptBean.descriptionTypes}"
+                                                   editable="#{conceptBean.concept.editable}">
+                                </smtk:descriptions>
+
+                            </p:panelGrid>
+
+                        </p:tab>
+
+                        <!--Relaciones -->
+                        <p:tab title="Atributos" rendered="#{not empty conceptBean.orderedSMTKRelationshipDefinitions}">
+                            <p:outputPanel id="atributos"
+                                           widgetVar="panelAtributos"
+                                           styleClass="attributes"
+                                           rendered="#{ not empty conceptBean.orderedSMTKRelationshipDefinitions}">
+
+                                <h:dataTable style="width: 100%;" value="#{conceptBean.orderedSMTKRelationshipDefinitions}"
+                                             var="relationshipDefinition">
+
+                                    <h:column>
+
+                                        <p:outputPanel
+                                                id="panelRelationshipDefiniton"
+                                                styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}"
+                                                rendered="#{not relationshipDefinition.targetDefinition.crossMapType}">
+
+                                            <p:growl id="growlAttributes" showDetail="true" showSummary="true"/>
+
+                                            <smtk:smtkType
+                                                    rendered="#{(relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 1) or
+                                                                (relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 3) or
+                                                                (relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 2)}"
+                                                    targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                                    relationshipDefinition="#{relationshipDefinition}"
+                                                    concept="#{conceptBean.concept}"/>
+
+                                            <smtk:helperTableType
+                                                    rendered="#{relationshipDefinition.targetDefinition.helperTable and relationshipDefinition.compositeID eq 1}"
+                                                    relationshipDefinition="#{relationshipDefinition}"
+                                                    targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                                    concept="#{conceptBean.concept}"/>
+
+                                            <smtk:basicType
+                                                    targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                                    relationshipDefinition="#{relationshipDefinition}"
+                                                    concept="#{conceptBean.concept}"
+                                                    rendered="#{relationshipDefinition.targetDefinition.basicType and relationshipDefinition.compositeID eq 1}"/>
+
+                                            <smtk:customType relationshipDefinition="#{relationshipDefinition}"
+                                                             targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                                             concept="#{conceptBean.concept}" />
+
                                         </p:outputPanel>
-                                    </p:tab>
 
-                                    <!--Relaciones SNOMED -->
-                                    <p:tab title="SNOMED-CT">
-                                        <p:outputPanel id="atributoSCT"
-                                                       widgetVar="panelAtributoSCT"
-                                                       styleClass="attributes"
-                                                       rendered="#{conceptBean.category.hasRelationshipDefinitions}">
+                                    </h:column>
+                                </h:dataTable>
+                            </p:outputPanel>
+                        </p:tab>
 
-                                            <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
-                                                         var="relationshipDefinition">
+                        <!--Relaciones SNOMED -->
+                        <p:tab title="SNOMED-CT">
+                            <p:outputPanel id="atributoSCT"
+                                           widgetVar="panelAtributoSCT"
+                                           styleClass="attributes"
+                                           rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
-                                                <h:column>
+                                <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
+                                             var="relationshipDefinition">
 
-                                                    <p:outputPanel
-                                                            id="panelRelationshipDefinitonSCT"
-                                                            styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}">
+                                    <h:column>
 
-                                                        <smtk:sctType
-                                                                targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                                                relationshipDefinition="#{relationshipDefinition}"
-                                                                concept="#{conceptBean.concept}"
-                                                                rendered="#{relationshipDefinition.targetDefinition.snomedCTType}" />
+                                        <p:outputPanel
+                                                id="panelRelationshipDefinitonSCT"
+                                                styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}">
 
-                                                    </p:outputPanel>
+                                            <smtk:sctType
+                                                    targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                                    relationshipDefinition="#{relationshipDefinition}"
+                                                    concept="#{conceptBean.concept}"
+                                                    rendered="#{relationshipDefinition.targetDefinition.snomedCTType}" />
 
-                                                </h:column>
-                                            </h:dataTable>
                                         </p:outputPanel>
-                                    </p:tab>
 
-                                    <!--Crossmaps -->
-                                    <p:tab title="Crossmaps" rendered="#{ conceptBean.concept.persistent and conceptBean.concept.modeled }">
-                                        <p:panel id="indirectCrossmap"
-                                                 widgetVar="panelIndirectCrossmap"
-                                                 styleClass="attributes"
-                                                 rendered="#{conceptBean.category.hasRelationshipDefinitions}">
+                                    </h:column>
+                                </h:dataTable>
+                            </p:outputPanel>
+                        </p:tab>
 
-                                            <smtk:crossmapIndirect concept="#{conceptBean.concept}"/>
+                        <!--Crossmaps -->
+                        <p:tab title="Crossmaps" rendered="#{ conceptBean.concept.persistent and conceptBean.concept.modeled }">
+                            <p:panel id="indirectCrossmap"
+                                     widgetVar="panelIndirectCrossmap"
+                                     styleClass="attributes"
+                                     rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
-                                        </p:panel>
+                                <smtk:crossmapIndirect concept="#{conceptBean.concept}"/>
 
-                                        <p:panel id="directCrossmap"
-                                                 widgetVar="panelDirectCrossmap"
-                                                 styleClass="attributes"
-                                                 rendered="#{conceptBean.category.hasRelationshipDefinitions}">
+                            </p:panel>
 
-                                            <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
-                                                         var="relationshipDefinition">
+                            <p:panel id="directCrossmap"
+                                     widgetVar="panelDirectCrossmap"
+                                     styleClass="attributes"
+                                     rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
-                                                <h:column>
+                                <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
+                                             var="relationshipDefinition">
 
-                                                    <p:outputPanel
-                                                            id="panelRelationshipDefinitonCrossmap"
-                                                            style="border:0px; margin: 0px; padding: 0px;"
-                                                            styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}">
+                                    <h:column>
 
-                                                        <smtk:crossmapType
-                                                                targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                                                relationshipDefinition="#{relationshipDefinition}"
-                                                                concept="#{conceptBean.concept}"
-                                                                rendered="#{relationshipDefinition.targetDefinition.crossMapType}"/>
+                                        <p:outputPanel
+                                                id="panelRelationshipDefinitonCrossmap"
+                                                style="border:0px; margin: 0px; padding: 0px;"
+                                                styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}">
 
-                                                    </p:outputPanel>
+                                            <smtk:crossmapType
+                                                    targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                                    relationshipDefinition="#{relationshipDefinition}"
+                                                    concept="#{conceptBean.concept}"
+                                                    rendered="#{relationshipDefinition.targetDefinition.crossMapType}"/>
 
-                                                </h:column>
-                                            </h:dataTable>
-                                        </p:panel>
-                                    </p:tab>
+                                        </p:outputPanel>
 
-                                    <!--RefSets -->
-                                    <p:tab title="RefSets" rendered="#{conceptBean.concept.modeled}">
-                                        <smtk:refset/>
-                                    </p:tab>
+                                    </h:column>
+                                </h:dataTable>
+                            </p:panel>
+                        </p:tab>
 
-                                    <!-- Etiquetas -->
-                                    <p:tab title="Etiquetas">
-                                        <smtk:tags editable="#{conceptBean.concept.editable}" tagslist="#{conceptBean.concept.tags}"/>
-                                    </p:tab>
+                        <!--RefSets -->
+                        <p:tab title="RefSets" rendered="#{conceptBean.concept.modeled}">
+                            <smtk:refset/>
+                        </p:tab>
 
-                                    <!-- Historial -->
-                                    <p:tab title="Historial" rendered="#{conceptBean.concept.modeled}">
-                                        <smtk:history/>
-                                    </p:tab>
-                                </p:tabView>
+                        <!-- Etiquetas -->
+                        <p:tab title="Etiquetas">
+                            <smtk:tags editable="#{conceptBean.concept.editable}" tagslist="#{conceptBean.concept.tags}"/>
+                        </p:tab>
 
-                                <!-- botonera acciones -->
+                        <!-- Historial -->
+                        <p:tab title="Historial" rendered="#{conceptBean.concept.modeled}">
+                            <smtk:history/>
+                        </p:tab>
 
-                                <br/>
-                                <div style="text-align: right;">
+                    </p:tabView>
+
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+
+                    <!-- botonera acciones -->
+
+                    <br/>
+
+                    <div style="text-align: right;">
 
                                     <p:commandButton actionListener="#{conceptBean.saveConcept}" icon="fa fa-check"
                                                      styleClass="ui-priority-primary"
@@ -260,17 +283,16 @@
                                     </p:confirmDialog>
                                 </div>
 
-                            </h:form>
+                </h:form>
 
-                            <p:messages id="msg" showDetail="true" showSummary="true">
+                <p:messages id="msg" showDetail="true" showSummary="true">
                                 <p:effect type="pulsate" event="load" delay="0">
                                     <f:param name="mode" value="'show'"/>
                                     <f:param name="times" value="'1'"/>
                                 </p:effect>
                             </p:messages>
 
-
-                            <p:dialog id="dialogNameConcept" widgetVar="dialogNameConcept"
+                <p:dialog id="dialogNameConcept" widgetVar="dialogNameConcept"
                                       showEffect="fade" hideEffect="fade" closable="false"
                                       rendered="#{conceptBean.concept eq null}">
 
@@ -329,20 +351,17 @@
                                 </h:form>
                             </p:dialog>
 
-                            <p:dialog id="dialogISP" styleClass="dialogISP" widgetVar="dialogISP" header="Información de Registro ISP"  width="750px" height="300px">
+                <p:dialog id="dialogISP" styleClass="dialogISP" widgetVar="dialogISP" header="Información de Registro ISP"  width="750px" height="300px">
                                 <p:dataTable value="#{ispbean.ispRecord.cells}" var="cell" rendered="#{not empty ispbean.ispRecord.cells}">
                                     <p:column width="200" styleClass="FontBold Fs13">#{cell.column.description}</p:column>
                                     <p:column width="400">#{cell}</p:column>
                                 </p:dataTable>
                             </p:dialog>
 
-                        </p:outputPanel>
+            </p:outputPanel>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
+
 
 
         <h:outputStylesheet id="customCSS">

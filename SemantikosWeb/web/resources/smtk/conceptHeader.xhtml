@@ -17,13 +17,13 @@
 
 
     <!-- Indicadores -->
-    <div class="ui-fluid">
 
-        <div class="ui-g">
 
-            <div class="ui-g-12">
+                <p:outputPanel>
+                    <h1>Nuevo Concepto Borrador</h1>
+                </p:outputPanel>
 
-                <p:panel header="Información Básica" toggleable="false">
+                <p:fieldset legend="Información General">
 
                     <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
 
@@ -73,14 +73,17 @@
 
                         </p:panelGrid>
 
-                </p:panel>
+                </p:fieldset>
+
+                <br/>
+
                 <!--Descripciones FSN y Preferida -->
                 <smtk:descriptionFSN description="#{cc.attrs.concept.getValidDescriptionFSN()}" editable="#{cc.attrs.concept.editable}" />
+
+                <br/>
+
                 <smtk:descriptionFavorite description="#{cc.attrs.concept.getValidDescriptionFavorite()}" editable="#{cc.attrs.concept.editable}" />
 
-            </div>
-        </div>
-    </div>
 
 </composite:implementation>
 </html>
