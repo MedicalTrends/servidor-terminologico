@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
- * @author Andrés Farías on 9/26/16.
+ * @author Diego Soto
  */
 public class SnomedCTSnapshotUpdate extends PersistentEntity {
 

@@ -455,6 +455,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void updateSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
         ConnectionBD connect = new ConnectionBD();
         boolean updated = false;
