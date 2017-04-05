@@ -16,18 +16,20 @@ import java.util.Map;
 @Local
 public interface SnomedCTSnapshotDAO {
 
-    public void persistSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate);
+    void persistSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate);
 
-    public void updateSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate);
+    void updateSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate);
 
-    public void replaceSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate);
+    void replaceSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate);
 
-    public SnomedCTSnapshotUpdate getSnomedCTSnapshotUpdateById(String id);
+    SnomedCTSnapshotUpdate getSnomedCTSnapshotUpdateById(String id);
 
-    public List<SnomedCTSnapshotUpdate> getAllSnomedCTSnapshotUpdates();
+    List<SnomedCTSnapshotUpdate> getAllSnomedCTSnapshotUpdates();
 
-    public SnapshotProcessingRequest preprocessRequest(SnapshotPreprocessingRequest snapshotPreprocessingRequest);
+    SnapshotProcessingRequest preprocessRequest(SnapshotPreprocessingRequest snapshotPreprocessingRequest);
 
-    public List<SnomedCTSnapshotUpdateDetail> processRequest(SnapshotProcessingRequest snapshotProcessingRequest);
+    List<SnomedCTSnapshotUpdateDetail> processRequest(SnapshotProcessingRequest snapshotProcessingRequest);
+
+    List<SnomedCTSnapshotUpdateDetail> postProcessRequest(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate);
 
 }

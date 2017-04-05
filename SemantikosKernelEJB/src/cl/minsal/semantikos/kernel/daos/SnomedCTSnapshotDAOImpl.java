@@ -43,6 +43,10 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             QUERY = "{call semantikos.create_description_sct(?,?,?,?,?,?,?,?,?)}";
         if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof RelationshipSCT)
             QUERY = "{call semantikos.create_relationship_sct(?,?,?,?,?,?,?,?,?,?)}";
+        if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof LanguageRefsetSCT)
+            QUERY = "{call semantikos.create_language_ref_set_sct(?,?,?,?,?,?,?)}";
+        if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof LanguageRefsetSCT)
+            QUERY = "{call semantikos.create_language_ref_set_sct(?,?,?,?,?,?,?)}";
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(QUERY)) {
@@ -83,6 +87,25 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
                     call.setLong(8, relationshipSCT.getTypeId());
                     call.setLong(9, relationshipSCT.getCharacteristicTypeId());
                     call.setLong(10, relationshipSCT.getModifierId());
+                    call.addBatch();
+                }
+            }
+            if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof LanguageRefsetSCT) {
+                for (LanguageRefsetSCT languageRefsetSCT: (List<LanguageRefsetSCT>) (Object) snomedCTComponents) {
+                    call.setLong(1, languageRefsetSCT.getId());
+                    call.setTimestamp(2, languageRefsetSCT.getEffectiveTime());
+                    call.setBoolean(3, languageRefsetSCT.isActive());
+                    call.setLong(4, languageRefsetSCT.getModuleId());
+                    call.setLong(5, languageRefsetSCT.getRefsetId());
+                    call.setLong(6, languageRefsetSCT.getReferencedComponentId());
+                    call.setLong(7, languageRefsetSCT.getAcceptabilityId());
+                    call.addBatch();
+                }
+            }
+            if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof TransitiveSCT) {
+                for (TransitiveSCT transitiveSCT: (List<TransitiveSCT>) (Object) snomedCTComponents) {
+                    call.setLong(1, transitiveSCT.getIdPartent());
+                    call.setLong(2, transitiveSCT.getIdChild());
                     call.addBatch();
                 }
             }
@@ -136,6 +159,83 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
         return snomedCTSnapshotUpdateDetails;
     }
 
+    public List<SnomedCTSnapshotUpdateDetail> delete(List<SnomedCTComponent> snomedCTComponents) {
+
+        List<SnomedCTSnapshotUpdateDetail> snomedCTSnapshotUpdateDetails = new ArrayList<>();
+
+        for (SnomedCTComponent snomedCTComponent : snomedCTComponents) {
+
+            snomedCTSnapshotUpdateDetails.add(new SnomedCTSnapshotUpdateDetail(snomedCTComponent, AuditActionType.SNOMED_CT_REMOVAL));
+
+        }
+
+        ConnectionBD connect = new ConnectionBD();
+
+        String QUERY = "";
+
+        if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof ConceptSCT )
+            QUERY = "{call semantikos.delete_concept_sct(?)}";
+        if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof DescriptionSCT)
+            QUERY = "{call semantikos.delete_description_sct(?)}";
+        if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof RelationshipSCT)
+            QUERY = "{call semantikos.delete_relationship_sct(?)}";
+        if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof LanguageRefsetSCT)
+            QUERY = "{call semantikos.delete_language_ref_set_sct(?)}";
+        if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof LanguageRefsetSCT)
+            QUERY = "{call semantikos.delete_transitive_sct(?,?)}";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(QUERY)) {
+
+            if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof ConceptSCT) {
+                for (ConceptSCT conceptSCT : (List<ConceptSCT>) (Object) snomedCTComponents) {
+                    call.setLong(1, conceptSCT.getIdSnomedCT());
+                    call.addBatch();
+                }
+            }
+            if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof DescriptionSCT) {
+                for (DescriptionSCT descriptionSCT : (List<DescriptionSCT>) (Object) snomedCTComponents) {
+                    call.setLong(1, descriptionSCT.getId());
+                    call.addBatch();
+                }
+            }
+            if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof RelationshipSCT) {
+                for (RelationshipSCT relationshipSCT : (List<RelationshipSCT>) (Object) snomedCTComponents) {
+                    call.setLong(1, relationshipSCT.getId());
+                    call.addBatch();
+                }
+            }
+            if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof LanguageRefsetSCT) {
+                for (LanguageRefsetSCT languageRefsetSCT: (List<LanguageRefsetSCT>) (Object) snomedCTComponents) {
+                    call.setLong(1, languageRefsetSCT.getId());
+                    call.addBatch();
+                }
+            }
+            if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof TransitiveSCT) {
+                for (TransitiveSCT transitiveSCT: (List<TransitiveSCT>) (Object) snomedCTComponents) {
+                    call.setLong(1, transitiveSCT.getIdPartent());
+                    call.setLong(2, transitiveSCT.getIdChild());
+                    call.addBatch();
+                }
+            }
+
+            call.executeBatch();
+        }
+        catch (SQLException e) {
+            String errorMsg = "SnomedCTSnapshotDAOImpl.persist(): Error al eliminar Objeto ISnomed: "+e;
+            // Aquí se debe registrar el error en el log de salida
+            //SnomedCTSnapshotFactory.logError(errorMsg);
+            logger.error(errorMsg);
+            if(e.getNextException()!=null) {
+                logger.error("Detalle: "+e.getNextException().getMessage());
+            }
+            //throw new EJBException(errorMsg, e);
+
+        }
+
+        return snomedCTSnapshotUpdateDetails;
+    }
+
     public List<SnomedCTSnapshotUpdateDetail> log(List<SnomedCTComponent> snomedCTComponents) {
 
         List<SnomedCTSnapshotUpdateDetail> snomedCTSnapshotUpdateDetails = new ArrayList<>();
@@ -149,11 +249,15 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
         return snomedCTSnapshotUpdateDetails;
     }
 
-    private List<Long> getErrors(Map<Long, Long> references) {
+    private List<Long> getErrors(Map<Long, SnomedCTComponent> registers, Map<Long, Long> references) {
 
         ConnectionBD connect = new ConnectionBD();
 
         String QUERY = "{call semantikos.get_unexisting_concept_sct_ids(?)}";
+
+        if (!registers.isEmpty() && registers.get(0) instanceof TransitiveSCT) {
+            QUERY = "{call semantikos.get_unexisting_relationship_sct_ids(?)}";
+        }
 
         List<Long> errors = new ArrayList<>();
 
@@ -191,7 +295,6 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
         return errors;
     }
 
-
     private List<SnomedCTComponent> getRegistersToUpdate(Map<Long, SnomedCTComponent> map) {
 
         ConnectionBD connect = new ConnectionBD();
@@ -202,6 +305,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             QUERY = "{call semantikos.get_existing_concept_sct_ids(?)}";
         if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof DescriptionSCT)
             QUERY = "{call semantikos.get_existing_description_sct_ids(?)}";
+        if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof RelationshipSCT)
+            QUERY = "{call semantikos.get_existing_relationship_sct_ids(?)}";
         if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof RelationshipSCT)
             QUERY = "{call semantikos.get_existing_relationship_sct_ids(?)}";
 
@@ -230,6 +335,35 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
         return registersToUpdate;
     }
 
+    private List<SnomedCTComponent> getRegistersToDelete() {
+
+        ConnectionBD connect = new ConnectionBD();
+
+        String QUERY = "{call semantikos.get_leftovers_transitive_sct(?)}";
+
+        List<SnomedCTComponent> registersToDelete = new ArrayList<>();
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(QUERY)) {
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+                TransitiveSCT transitiveSCT = new TransitiveSCT(rs.getLong(1), rs.getLong(2));
+                registersToDelete.add(transitiveSCT);
+            }
+        }
+        catch (SQLException e) {
+            String errorMsg = "SnomedCTSnapshotDAOImpl.getRegistersToUpdate(): Error al obtener registros a actualizar: "+e;
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return registersToDelete;
+    }
+
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public SnapshotProcessingRequest preprocessRequest(SnapshotPreprocessingRequest snapshotPreprocessingRequest) {
@@ -238,8 +372,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
         List<SnomedCTComponent> inserts;
         List<SnomedCTComponent> updates;
 
-        List<Long> errorIds = getErrors(snapshotPreprocessingRequest.getReferencesFrom());
-        errorIds.addAll(getErrors(snapshotPreprocessingRequest.getReferencesTo()));
+        List<Long> errorIds = getErrors(snapshotPreprocessingRequest.getRegisters(), snapshotPreprocessingRequest.getReferencesFrom());
+        errorIds.addAll(getErrors(snapshotPreprocessingRequest.getRegisters(), snapshotPreprocessingRequest.getReferencesTo()));
 
         for (Long error : errorIds) {
             errors.add(snapshotPreprocessingRequest.getRegisters().get(error));
@@ -262,6 +396,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public List<SnomedCTSnapshotUpdateDetail> processRequest(SnapshotProcessingRequest snapshotProcessingRequest) {
 
         List<SnomedCTSnapshotUpdateDetail> snomedCTSnapshotUpdateDetails = new ArrayList<>();
@@ -278,10 +413,22 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public List<SnomedCTSnapshotUpdateDetail> postProcessRequest(SnomedCTSnapshotUpdate snomedSCTSnapshotUpdate) {
+
+        List<SnomedCTComponent> deletes = getRegistersToDelete();
+
+        snomedSCTSnapshotUpdate.setRemoved(deletes.size());
+
+        return delete(deletes);
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void persistSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.create_snapshot_sct_update(?,?,?,?,?)}")) {
+             CallableStatement call = connection.prepareCall("{call semantikos.create_snapshot_sct_update(?,?,?)}")) {
 
             call.setString(1, snomedCTSnapshotUpdate.getRelease());
             call.setTimestamp(2, snomedCTSnapshotUpdate.getDate());
@@ -308,7 +455,6 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void updateSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
         ConnectionBD connect = new ConnectionBD();
         boolean updated = false;
@@ -404,11 +550,13 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void replaceSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
 
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public SnomedCTSnapshotUpdate getSnomedCTSnapshotUpdateById(String id) {
         return null;
     }

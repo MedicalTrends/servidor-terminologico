@@ -61,6 +61,7 @@ public class ConceptSCT extends PersistentEntity implements Target, SnomedCTComp
     }
 
     public ConceptSCT(long idSnomedCT, Timestamp effectiveTime, boolean isActive, long moduleId, long definitionStatusId) {
+        super(idSnomedCT);
         this.idSnomedCT = idSnomedCT;
         this.effectiveTime = effectiveTime;
         this.isActive = isActive;
@@ -69,6 +70,7 @@ public class ConceptSCT extends PersistentEntity implements Target, SnomedCTComp
     }
 
     public void setIdSnomedCT(long idSnomedCT) {
+        super.setId(idSnomedCT);
         this.idSnomedCT = idSnomedCT;
     }
 
