@@ -75,17 +75,19 @@
 
                                 <div class="Container">
                                     <div class="Container100">
-                                        El dato esta relacionado con los siguientes conceptos
+                                        El dato está relacionado con los siguientes conceptos
                                     </div>
 
 
                                 </div>
 
-                                <p:dataTable id="conceptRelated" rows="10" value="#{helperTableBean.conceptSMTKs}" paginator="true" var="concept">
+                                <p:dataTable id="conceptRelated" rows="10" value="#{helperTableBean.conceptSMTKs}" paginator="true" var="concept" lazy="true">
                                     <p:column headerText="Concept ID">
                                         <h:outputText value="#{concept.conceptID}"/>
                                     </p:column>
-                                    <p:ajax event="page"  listener="#{helperTableBean.update}" />
+                                    <p:column headerText="Preferido">
+                                        <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                    </p:column>
                                 </p:dataTable>
                             </p:outputPanel>
 
@@ -155,7 +157,7 @@
                                         />
                                     </f:facet>
 
-                                    <p:ajax event="rowEdit" listener="#{helperTableBean.onRowEdit}" update="@(.edit-data-panel)"/>
+                                    <p:ajax event="rowEdit" listener="#{helperTableBean.onRowEdit}" update="@(.edit-data-panel),@(.dialog-concept-related-panel)"/>
                                     <p:ajax event="rowEditCancel" listener="#{helperTableBean.onRowEditCancel}"
                                             oncomplete="onRowEditCancel#{varStatus1.index}()"/>
 

@@ -149,6 +149,11 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
         return dao.isRowUser(helperTableRow, size,page);
     }
 
+    @Override
+    public int countIsRowUsed(HelperTableRow helperTableRow) {
+        return dao.countIsRowUser(helperTableRow);
+    }
+
     private List<ConceptSMTK> isRowUsed(HelperTableRow row){
         return dao.isRowUsed(row);
     }
