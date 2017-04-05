@@ -37,11 +37,17 @@
                             </p:column>
 
                             <p:column headerText="Nombre Tabla">
-                                <h:outputText value="#{helperTable.name}"/>
+                                <div style="text-align: left;">
+                                    <h:outputText value="#{helperTable.name}"/>
+                                </div>
+
                             </p:column>
 
                             <p:column headerText="Descripción">
-                                <h:outputText value="#{helperTable.description}"/>
+                                <div style="text-align: left;">
+                                    <h:outputText value="#{helperTable.description}"/>
+                                </div>
+
                             </p:column>
 
                             <p:column headerText="Acciones" width="150">
@@ -61,6 +67,32 @@
 
                         </p:dataTable>
 
+                        <p:dialog id="dialog-concept-related"
+                                  header="Conceptos relacionados" widgetVar="dialog-concept-related"
+                                  global="true" showEffect="fade" hideEffect="fade" height="400" width="900"
+                                  positionType="absolute">
+                            <p:outputPanel styleClass="dialog-concept-related-panel">
+
+                                <div class="Container">
+                                    <div class="Container100">
+                                        El dato esta relacionado con los siguientes conceptos
+                                    </div>
+                                    <p:dataTable value="#{helperTableBean.conceptSMTKs}" paginator="true" var="concept">
+                                        <p:column headerText="Concept ID">
+                                            <h:outputText value="#{concept.conceptID}"/>
+                                        </p:column>
+                                        <p:ajax event="page"  listener="#{helperTableBean.update}" />
+                                    </p:dataTable>
+
+                                </div>
+
+
+                            </p:outputPanel>
+
+
+                        </p:dialog>
+
+
                         <p:dialog id="edit-data-dialog-var"
                                   header="Editar Datos" widgetVar="edit-data-dialog-var"
                                   global="true" showEffect="fade" hideEffect="fade" height="400" width="900"
@@ -72,14 +104,14 @@
                                         <h3>Filtros:</h3>
                                     </div>
                                     <div class="Container20">
-                                        <p:inputText placeholder="ID" type="number" value="#{helperTableBean.id}" title="Busqueda por ID">
+                                        <p:inputText placeholder="ID" type="number" value="#{helperTableBean.id}" title="Búsqueda por ID">
                                             <p:ajax event="keyup" update="@(.table-data-edit-#{varStatus1.index})"
                                                     process="@this"
                                                     listener="#{helperTableBean.getRecordSearchID(helperTableBean.helperTableSelected,helperTableBean.id)}"/>
                                         </p:inputText>
                                     </div>
                                     <div class="Container30">
-                                        <p:inputText placeholder="Descripcion" value="#{helperTableBean.pattern}" title="Busqueda por descripcion">
+                                        <p:inputText placeholder="Descripción" value="#{helperTableBean.pattern}" title="Busqueda por descripción">
                                             <p:ajax event="keyup" update="@(.table-data-edit-#{varStatus1.index})"
                                                     process="@this"
                                                     listener="#{helperTableBean.getRecordSearchInput(helperTableBean.helperTableSelected,helperTableBean.pattern)}"/>
@@ -87,8 +119,8 @@
                                         </p:inputText>
                                     </div>
                                     <div class="Container20">
-                                        <p:selectOneMenu value="#{helperTableBean.valid}" title="Busqueda por vigencia">
-                                            <f:selectItem itemLabel="Seleccione una opcion" />
+                                        <p:selectOneMenu value="#{helperTableBean.valid}" title="Búsqueda por vigencia">
+                                            <f:selectItem itemLabel="Seleccione una opción" />
                                             <f:selectItem itemLabel="Si" itemValue="si"/>
                                             <f:selectItem itemLabel="No" itemValue="no"/>
                                             <p:ajax event="itemSelect" update="@(.table-data-edit-#{varStatus1.index})"
@@ -131,7 +163,7 @@
                                         <h:outputText value="#{row.id}"/>
                                     </p:column>
 
-                                    <p:column headerText="DESCRIPCION" sortable="true">
+                                    <p:column headerText="Descripción" sortable="true">
                                         <p:cellEditor>
                                             <f:facet name="output">
                                                 <h:outputText value="#{row.description}"/>
@@ -218,7 +250,7 @@
                                     </p:column>
 
 
-                                    <p:column headerText="ULTIMA EDICION" sortable="true" width="60">
+                                    <p:column headerText="ULTIMA EDICIÓN" sortable="true" width="60">
                                         <h:outputText value="#{row.lastEditDate}">
                                             <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
                                         </h:outputText>
@@ -228,7 +260,7 @@
                                     </p:column>
 
 
-                                    <p:column width="50" headerText="Accion">
+                                    <p:column width="50" headerText="Acción">
                                         <p:rowEditor editTitle="Editar" cancelTitle="Cancelar" saveTitle="Guardar"/>
                                     </p:column>
 

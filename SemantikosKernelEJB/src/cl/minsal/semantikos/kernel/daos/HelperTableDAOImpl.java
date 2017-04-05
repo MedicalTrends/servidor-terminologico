@@ -786,4 +786,27 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         return result;
     }
+
+    @Override
+    public List<ConceptSMTK> isRowUser(HelperTableRow row, int size, int page) {
+        ConnectionBD connerctionBD = new ConnectionBD();
+        List<ConceptSMTK> result= new ArrayList<>();
+
+        try(Connection connection = connerctionBD.getConnection();
+            CallableStatement call = connection.prepareCall("{call semantikos.get_concepts_ids_by_helper_table_target(?,?,?)}");){
+            call.setLong(1,row.getId());
+            call.setInt(2, size);
+            call.setInt(3,page);
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                Long conceptId = rs.getLong(1);
+                result.add(conceptDAO.getConceptByID(conceptId));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
