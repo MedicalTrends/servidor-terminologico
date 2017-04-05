@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.beans.helpertables;
 
 import cl.minsal.semantikos.beans.concept.ConceptBean;
+import cl.minsal.semantikos.beans.messages.MessageBean;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.kernel.components.HelperTablesManagerImpl;
@@ -10,6 +11,10 @@ import cl.minsal.semantikos.model.helpertables.*;
 import cl.minsal.semantikos.model.relationships.*;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.data.PageEvent;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortMeta;
+import org.primefaces.model.SortOrder;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -34,6 +39,8 @@ public class HelperTableBean implements Serializable {
 
     List<HelperTable> fullDatabase;
 
+    List<ConceptSMTK> conceptSMTKs;
+
     Map<Long,List<HelperTableRow>> validRow;
 
     HelperTable helperTableSelected;
@@ -46,6 +53,9 @@ public class HelperTableBean implements Serializable {
 
     @ManagedProperty(value = "#{conceptBean}")
     private ConceptBean conceptBean;
+
+    @ManagedProperty(value = "#{messageBean}")
+    private MessageBean messageBean;
 
     public AuthenticationBean getAuthenticationBean() {
         return authenticationBean;
@@ -118,12 +128,25 @@ public class HelperTableBean implements Serializable {
 
     }
 
+    private HelperTableRow rowSelected;
+
     public void onRowEdit(RowEditEvent event) {
         HelperTableRow row = (HelperTableRow) event.getObject();
         try {
             HelperTableRow updatedRow;
             if (row.isPersistent()) {
-                updatedRow = manager.updateRow(row, this.authenticationBean.getEmail());
+
+                if(!manager.isRowUsed(row,10,0).isEmpty()){
+                    rowSelected= row;
+                    messageBean.messageError("Existen conceptos asociados");
+                    RequestContext context = RequestContext.getCurrentInstance();
+                    context.execute("PF('dialog-concept-related').show();");
+                    conceptSMTKs= manager.isRowUsed(row,10,0);
+                    RequestContext.getCurrentInstance().update("@(.dialog-concept-related-panel)");
+                    return;
+                }else{
+                    updatedRow = manager.updateRow(row, this.authenticationBean.getEmail());
+                }
             } else {
                 updatedRow = manager.insertRow(row, this.authenticationBean.getEmail());
             }
@@ -147,6 +170,11 @@ public class HelperTableBean implements Serializable {
 
             FacesContext.getCurrentInstance().validationFailed();
         }
+    }
+
+    public void update(PageEvent event){
+        int page = event.getPage();
+        conceptSMTKs= manager.isRowUsed(rowSelected,10,page);
     }
 
 
@@ -403,5 +431,21 @@ public class HelperTableBean implements Serializable {
 
     public void setValid(String valid) {
         this.valid = valid;
+    }
+
+    public MessageBean getMessageBean() {
+        return messageBean;
+    }
+
+    public void setMessageBean(MessageBean messageBean) {
+        this.messageBean = messageBean;
+    }
+
+    public void setConceptSMTKs(List<ConceptSMTK> conceptSMTKs) {
+        this.conceptSMTKs = conceptSMTKs;
+    }
+
+    public List<ConceptSMTK> getConceptSMTKs() {
+        return conceptSMTKs;
     }
 }

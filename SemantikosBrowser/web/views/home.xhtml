@@ -21,7 +21,7 @@
 
                             <h:form id="browserForm">
 
-                    <p:dataTable id="conceptTable" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
+                                <p:dataTable id="conceptTable" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
                                  rows="15"
                                  sortBy="#{1}"
                                  paginator="true" lazy="true" dynamic="true"
@@ -38,8 +38,7 @@
 
 
                         <p:column headerText="Concept ID" sortBy="#{1}">
-
-                            <h:outputText value="#{conceptSMTK.id}"/>
+                            <h:outputText value="#{conceptSMTK.conceptID}"/>
                         </p:column>
 
                         <p:column headerText="Termino" sortBy="#{2}">
@@ -66,10 +65,9 @@
 
                         </p:column>
 
-                        <p:column exportable="false" style="width:32px;text-align: center">
+                        <p:column exportable="false" style="text-align: center">
 
-                            <p:commandLink update="conceptTable,@(.conceptDetail)" oncomplete="PF('carOP').show('#{component.clientId}')"
-                                           title="Ver Detalle">
+                            <p:commandLink oncomplete="PF('dialogC').show()" update=":browserForm:conceptTable,:browserForm:query-concept-sct" title="Ver Detalle">
                                 <i class="fa fa-search fa-lg" />
                                 <f:setPropertyActionListener value="#{conceptSMTK}" target="#{browserBean.conceptSelected}"/>
                             </p:commandLink>
@@ -78,61 +76,68 @@
 
                     </p:dataTable>
 
-                    </h:form>
+                                <p:dialog id="dialogC" header="Ver Concepto" widgetVar="dialogC" global="true" width="700px" showEffect="fade" hideEffect="fade">
 
+                                    <p:outputPanel id="query-concept-sct">
+                                        <p:panelGrid style="width:100%">
+                                            <f:facet name="header">
+                                                <p:row>
+                                                    <p:column colspan="2">
+                                                        #{browserBean.conceptSelected.descriptionFavorite}
+                                                    </p:column>
+                                                </p:row>
+                                            </f:facet>
+                                            <p:row>
+                                                <p:column styleClass="BoldGray FontBold">ConceptID</p:column>
+                                                <p:column>#{browserBean.conceptSelected.conceptID}</p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="BoldGray FontBold">Categoría</p:column>
+                                                <p:column>#{browserBean.conceptSelected.category}</p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="BoldGray FontBold">FSN</p:column>
+                                                <p:column>#{browserBean.conceptSelected.descriptionFSN}</p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="BoldGray FontBold">Preferida</p:column>
+                                                <p:column>#{browserBean.conceptSelected.descriptionFavorite}</p:column>
+                                            </p:row>
+                                        </p:panelGrid>
+                                        <p:dataTable id="otherDescriptions"
+                                                     var="description"
+                                                     value="#{browserBean.getOtherDescriptions(browserBean.conceptSelected)}"
+                                                     rendered="#{not empty browserBean.getOtherDescriptions(browserBean.conceptSelected)}"
+                                                     editable="true"
+                                                     reflow="true">
+                                            <p:columnGroup type="header">
+
+                                                <p:row>
+                                                    <p:column colspan="2" headerText="Otras Descripciones"/>
+                                                </p:row>
+
+                                            </p:columnGroup>
+                                            <p:column style="width: 25%" styleClass="BoldGray FontBold">
+                                                #{description.descriptionType.name}
+                                            </p:column>
+                                            <p:column>
+                                                #{description.term}
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:outputPanel>
+                                </p:dialog>
+
+                            </h:form>
+
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        </div>
         </div>
 
         <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
             <p:outputPanel styleClass="conceptDetail" style="width: 500px;">
-                <p:panelGrid style="width:100%">
-                    <f:facet name="header">
-                        <p:row>
-                            <p:column colspan="2">
-                                #{browserBean.conceptSelected.descriptionFavorite}
-                            </p:column>
-                        </p:row>
-                    </f:facet>
-                    <p:row>
-                        <p:column styleClass="BoldGray FontBold">ID</p:column>
-                        <p:column>#{browserBean.conceptSelected.id}</p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column styleClass="BoldGray FontBold">Categoría</p:column>
-                        <p:column>#{browserBean.conceptSelected.category}</p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column styleClass="BoldGray FontBold">FSN</p:column>
-                        <p:column>#{browserBean.conceptSelected.descriptionFSN}</p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column styleClass="BoldGray FontBold">Preferida</p:column>
-                        <p:column>#{browserBean.conceptSelected.descriptionFavorite}</p:column>
-                    </p:row>
-                </p:panelGrid>
-                <p:dataTable id="otherDescriptions"
-                             var="description"
-                             value="#{browserBean.getOtherDescriptions(browserBean.conceptSelected)}"
-                             rendered="#{not empty browserBean.getOtherDescriptions(browserBean.conceptSelected)}"
-                             editable="true"
-                             reflow="true">
-                    <p:columnGroup type="header">
 
-                        <p:row>
-                            <p:column colspan="2" headerText="Otras Descripciones"/>
-                        </p:row>
-
-                    </p:columnGroup>
-                    <p:column style="width: 25%" styleClass="BoldGray FontBold">
-                        #{description.descriptionType.name}
-                    </p:column>
-                    <p:column>
-                        #{description.term}
-                    </p:column>
-                </p:dataTable>
             </p:outputPanel>
         </p:overlayPanel>
 
