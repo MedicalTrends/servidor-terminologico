@@ -84,34 +84,17 @@ public class UsersBroswerBean {
     public void setSelectedUser(User selectedUser) {
 
         this.selectedUser = userManager.getUser(selectedUser.getIdUser());
-
-        ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-
-        try {
-            eContext.redirect(eContext.getRequestContextPath() + "/views/users/userEdit.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     public List<User> getAllUsers(){
 
-        //if(allUsers==null) {
+        if(allUsers==null) {
             allUsers = userManager.getAllUsers();
-        //}
+        }
 
         return allUsers;
     }
 
-
-    public void formatRut() {
-
-        if(!selectedUser.getRut().trim().isEmpty()) {
-            selectedUser.setRut(StringUtils.formatRut(selectedUser.getRut()));
-        }
-
-    }
 
     public Profile getProfileById(long profileId){
         return userManager.getProfileById(profileId);

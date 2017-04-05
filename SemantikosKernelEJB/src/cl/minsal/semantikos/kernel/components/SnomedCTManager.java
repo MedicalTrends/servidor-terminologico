@@ -12,14 +12,6 @@ import java.util.Map;
 @Local
 public interface SnomedCTManager {
 
-    /**
-     * Este método es responsable de procesar un snapshot de Snomed CT.
-     *
-     * @param snomedCTSnapshot El Snapshot que será procesado.
-     *
-     * @return El resultado del proceso.
-     */
-    public SnapshotProcessingResult processSnapshot(SnomedCTSnapshot snomedCTSnapshot);
 
     /**
      * Este método es responsable de recuperar las relaciones de un concepto SCT.
@@ -101,21 +93,4 @@ public interface SnomedCTManager {
     public ConceptSCT getConceptByID(long conceptID);
 
 
-    public void chargeSNAPSHOT(List<ConceptSCT> conceptSCTs, List<DescriptionSCT> descriptionSCTs, List<RelationshipSnapshotSCT> relationshipSnapshotSCTs
-            , List<LanguageRefsetSCT> languageRefsetSCTs, List<TransitiveSCT> transitiveSCTs);
-
-    /**
-     * Método encargado de persistir un concepto SNOMED CT
-     * @param conceptSCT
-     */
-    public void persistConceptSCT(List<ConceptSCT> conceptSCTs);
-
-    /**
-     * Método encargado de persistir una descripción SNOMED CT
-     * @param descriptionSCT
-     */
-    public void persistSnapshotDescriptionSCT(DescriptionSCT descriptionSCT);
-    public void persistSnapshotRelationshipSCT(List<RelationshipSnapshotSCT> relationshipSnapshotSCT);
-    public void persistSnapshotTransitiveSCT(TransitiveSCT transitiveSCT);
-    public void persistSnapshotLanguageRefSetSCT(LanguageRefsetSCT languageRefsetSCT);
 }

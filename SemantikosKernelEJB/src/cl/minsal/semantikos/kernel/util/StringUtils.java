@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.kernel.util;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -172,5 +174,16 @@ public class StringUtils {
 
         return password.matches("^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$");
 
+    }
+
+    public static boolean isValidEmailAddress(String email) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
     }
 }

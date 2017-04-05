@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.model.users;
 
 import cl.minsal.semantikos.kernel.util.StringUtils;
+import cl.minsal.semantikos.model.PersistentEntity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +12,7 @@ import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
 /**
  * @author Francisco Mendez
  */
-public class User {
+public class User extends PersistentEntity {
 
     private static User dummyUser = new User(NON_PERSISTED_ID, "dummy", "Usuario de Prueba", true);
 
@@ -21,9 +22,10 @@ public class User {
     private String lastName;
     private String secondLastName = "";
     private String email = "";
+    private String appointment;
 
     private boolean rutDocument = true;
-    private String rut;
+    private String documentNumber;
 
     private String password;
     private String passwordHash;
@@ -33,7 +35,9 @@ public class User {
 
     private Date lastLogin;
     private Date lastPasswordChange;
-    private boolean locked = false;
+    private boolean locked = true;
+    private boolean valid = true;
+
     private int failedLoginAttempts;
     private int failedAnswerAttempts;
 
@@ -198,12 +202,25 @@ public class User {
         this.rutDocument = rutDocument;
     }
 
-    public String getRut() {
-        return StringUtils.formatRut(rut);
+    public String getAppointment() {
+        return appointment;
     }
 
-    public void setRut(String rut) {
-        this.rut = rut;
+    public void setAppointment(String appointment) {
+        this.appointment = appointment;
+    }
+
+    public String getDocumentNumber() {
+        if(isRutDocument()) {
+            return StringUtils.formatRut(documentNumber);
+        }
+        else {
+            return documentNumber;
+        }
+    }
+
+    public void setDocumentNumber(String documentNumber) {
+        this.documentNumber = documentNumber;
     }
 
     public boolean isLocked() {
@@ -212,6 +229,14 @@ public class User {
 
     public void setLocked(boolean locked) {
         this.locked = locked;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 
     public int getFailedLoginAttempts() {

@@ -68,7 +68,7 @@ public class UsersBean {
 
     String lastNameError = "";
 
-    String rutError = "";
+    String documentNumberError = "";
 
     String passwordError = "";
 
@@ -81,39 +81,20 @@ public class UsersBean {
 
     String oldPass = "";
 
+    long idUser;
+
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() throws ParseException {
-        newUser();
+        createOrUpdateUser();
     }
 
-    public String getOldPass() {
-        return oldPass;
-    }
-
-    public void setOldPass(String oldPass) {
-        if(!oldPass.isEmpty()) {
-            this.oldPass = oldPass;
+    public void createOrUpdateUser() {
+        if(idUser == 0 && selectedUser == null) {
+            newUser();
         }
-    }
-
-    public String getNewPass2() {
-        return newPass2;
-    }
-
-    public void setNewPass2(String newPass2) {
-        if(!newPass2.isEmpty()) {
-            this.newPass2 = newPass2;
-        }
-    }
-
-    public String getNewPass1() {
-        return newPass1;
-    }
-
-    public void setNewPass1(String newPass1) {
-        if(!newPass1.isEmpty()) {
-                this.newPass1 = newPass1;
+        if(idUser != 0 && !selectedUser.isPersistent() ) {
+            getUser(idUser);
         }
     }
 
@@ -134,14 +115,6 @@ public class UsersBean {
 
         //se debe actualizar la lista del picklist con las instituciones del usuario
         updateAvailableInsitutions(this.selectedUser);
-
-        ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-
-        try {
-            eContext.redirect(eContext.getRequestContextPath() + "/views/users/userEdit.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -177,20 +150,18 @@ public class UsersBean {
     }
 
 
-    public List<User> getAllUsers(){
-
-        //if(allUsers==null) {
-            allUsers = userManager.getAllUsers();
-        //}
-
-        return allUsers;
-    }
-
-
     public void newUser() {
 
         selectedUser = new User();
         selectedUser.setIdUser(-1);
+        updateAvailableProfiles(selectedUser);
+        updateAvailableInsitutions(selectedUser);
+        clean();
+    }
+
+    public void getUser(long idUser) {
+
+        selectedUser = userManager.getUser(idUser);
         updateAvailableProfiles(selectedUser);
         updateAvailableInsitutions(selectedUser);
         clean();
@@ -212,12 +183,36 @@ public class UsersBean {
         this.oldPasswordError = oldPasswordError;
     }
 
+    public String getOldPass() {
+        return oldPass;
+    }
+
+    public void setOldPass(String oldPass) {
+        this.oldPass = oldPass;
+    }
+
+    public String getNewPass2() {
+        return newPass2;
+    }
+
+    public void setNewPass2(String newPass2) {
+        this.newPass2 = newPass2;
+    }
+
+    public String getNewPass1() {
+        return newPass1;
+    }
+
+    public void setNewPass1(String newPass1) {
+        this.newPass1 = newPass1;
+    }
+
     public void clean() {
         emailError = "";
         userNameError = "";
         nameError = "";
         lastNameError = "";
-        rutError = "";
+        documentNumberError = "";
         passwordError = "";
         password2Error = "";
         oldPasswordError = "";
@@ -228,8 +223,8 @@ public class UsersBean {
 
     public void formatRut() {
 
-        if(!selectedUser.getRut().trim().isEmpty()) {
-            selectedUser.setRut(StringUtils.formatRut(selectedUser.getRut()));
+        if(!selectedUser.getDocumentNumber().trim().isEmpty() && selectedUser.isRutDocument()) {
+            selectedUser.setDocumentNumber(StringUtils.formatRut(selectedUser.getDocumentNumber()));
         }
 
     }
@@ -238,14 +233,6 @@ public class UsersBean {
 
         FacesContext context = FacesContext.getCurrentInstance();
         RequestContext rContext = RequestContext.getCurrentInstance();
-
-        if(selectedUser.getEmail().trim().equals("")) {
-            userNameError = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar 'e-mail'"));
-        }
-        else {
-            userNameError = "";
-        }
 
         if(selectedUser.getName().trim().equals("")) {
             nameError = "ui-state-error";
@@ -263,35 +250,69 @@ public class UsersBean {
             lastNameError = "";
         }
 
-        if(selectedUser.getRut().trim().equals("")) {
-            rutError = "ui-state-error";
+        if(selectedUser.getDocumentNumber().trim().equals("")) {
+            documentNumberError = "ui-state-error";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar RUT"));
         }
-        else if(!StringUtils.validateRutFormat(selectedUser.getRut())) {
-            rutError = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Formato de RUT no es corrrecto'"));
-        }
-        else if(!StringUtils.validateRutVerificationDigit(selectedUser.getRut())) {
-            rutError = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El dígito verificador no es correcto'"));
-        }
         else {
-            rutError = "";
+            documentNumberError = "";
         }
 
-        if(!userNameError.concat(nameError).concat(lastNameError).concat(rutError).concat(passwordError).concat(password2Error).trim().equals("")) {
+        if(selectedUser.isRutDocument()) {
+
+            if(!StringUtils.validateRutFormat(selectedUser.getDocumentNumber())) {
+                documentNumberError = "ui-state-error";
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Formato de RUT no es corrrecto'"));
+            }
+            else if(!StringUtils.validateRutVerificationDigit(selectedUser.getDocumentNumber())) {
+                documentNumberError = "ui-state-error";
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El dígito verificador no es correcto'"));
+            }
+            else {
+                documentNumberError = "";
+            }
+        }
+        else {
+
+        }
+
+        if(selectedUser.getEmail().trim().equals("")) {
+            emailError = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar 'e-mail'"));
+        }
+        else {
+            emailError = "";
+        }
+
+        if(!StringUtils.isValidEmailAddress(selectedUser.getEmail())) {
+            emailError = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El formato del 'e-mail' no es válido"));
+            return;
+        }
+        else {
+            emailError = "";
+        }
+
+        if(!userNameError.concat(nameError).concat(lastNameError).concat(documentNumberError).concat(passwordError).concat(password2Error).trim().equals("")) {
+            return;
+        }
+
+        selectedUser.setProfiles(selectedUserProfileModel.getTarget());
+
+        if(selectedUser.getProfiles().isEmpty()) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe asignar por lo menos 1 perfil"));
             return;
         }
 
         try {
-            selectedUser.setProfiles(selectedUserProfileModel.getTarget());
+
+            FacesContext facesContext = FacesContext.getCurrentInstance();
 
             if(selectedUser.getIdUser() == -1) {
                 try {
-                    FacesContext facesContext = FacesContext.getCurrentInstance();
                     HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
                     userManager.createUser(selectedUser, request);
-                    rContext.execute("PF('editDialog').hide();");
+                    selectedUser = userManager.getUser(selectedUser.getIdUser());
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "1° Usuario creado de manera exitosa!!"));
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "2° Se ha enviado un correo de notificación al usuario para activar esta cuenta."));
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "3° Este usuario permanecerá bloqueado hasta que él active su cuenta"));
@@ -302,12 +323,15 @@ public class UsersBean {
             }
             else {
                 userManager.updateUser(selectedUser);
-                rContext.execute("PF('editDialog').hide();");
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario: "+selectedUser.getUsername()+" modificado de manera exitosa!!"));
+                selectedUser = userManager.getUser(selectedUser.getIdUser());
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario: "+selectedUser.getEmail()+" modificado de manera exitosa!!"));
             }
 
-        }catch (Exception e){
+            //facesContext.getExternalContext().redirect(((HttpServletRequest) facesContext.getExternalContext().getRequest()).getRequestURI());
+
+        } catch (Exception e){
             logger.error("error al actualizar usuario",e);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
         }
     }
 
@@ -333,6 +357,43 @@ public class UsersBean {
         }
     }
 
+    public Profile getProfileById(long profileId){
+        return userManager.getProfileById(profileId);
+
+    }
+
+    public void unlockUser(){
+        //userManager.unlockUser(selectedUser.getUsername());
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+        try {
+            userManager.resetAccount(selectedUser, request);
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "1° Se ha enviado un correo de notificación al usuario para activar esta cuenta."));
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "2° Este usuario permanecerá bloqueado hasta que él active su cuenta"));
+        } catch (Exception e){
+            logger.error("error al actualizar usuario",e);
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+        }
+    }
+
+    public void deleteUser(){
+        //userManager.unlockUser(selectedUser.getUsername());
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        try {
+            userManager.deleteUser(selectedUser);
+            selectedUser = userManager.getUser(selectedUser.getIdUser());
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "El usuario se ha eliminado y queda en estado No Vigente."));
+        } catch (Exception e){
+            logger.error("error al actualizar usuario",e);
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+        }
+    }
+
+    public void showProfileHistory() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Info", "En construcción"));
+    }
+
     public void changePass() {
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -346,6 +407,7 @@ public class UsersBean {
             else {
                 oldPasswordError = "";
             }
+
 
             if(newPass1.trim().equals("")) {
                 passwordError = "ui-state-error";
@@ -367,7 +429,7 @@ public class UsersBean {
                 return;
             }
 
-            if(!authenticationManager.checkPassword(selectedUser, selectedUser.getUsername(), oldPass)) {
+            if(!authenticationManager.checkPassword(selectedUser, selectedUser.getEmail(), oldPass)) {
                 oldPasswordError = "ui-state-error";
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La contraseña actual no es correcta"));
             }
@@ -387,8 +449,8 @@ public class UsersBean {
                 return;
             }
 
-            authenticationManager.setUserPassword(selectedUser.getUsername(),newPass1);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Contraseña de usuario:"+selectedUser.getUsername()+" modificada de manera exitosa!!"));
+            authenticationManager.setUserPassword(selectedUser.getEmail(),newPass1);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Contraseña modificada de manera exitosa!!"));
 
         } catch (PasswordChangeException e) {
             passwordError = "ui-state-error";
@@ -396,15 +458,6 @@ public class UsersBean {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
             e.printStackTrace();
         }
-    }
-
-    public Profile getProfileById(long profileId){
-        return userManager.getProfileById(profileId);
-
-    }
-
-    public void unlockUser(){
-        userManager.unlockUser(selectedUser.getUsername());
     }
 
     public String getUserNameError() {
@@ -423,12 +476,12 @@ public class UsersBean {
         this.nameError = nameError;
     }
 
-    public String getRutError() {
-        return rutError;
+    public String getDocumentNumberError() {
+        return documentNumberError;
     }
 
-    public void setRutError(String rutError) {
-        this.rutError = rutError;
+    public void setDocumentNumberError(String documentNumberError) {
+        this.documentNumberError = documentNumberError;
     }
 
     public String getLastNameError() {
@@ -445,6 +498,23 @@ public class UsersBean {
 
     public void setPasswordError(String passwordError) {
         this.passwordError = passwordError;
+    }
+
+    public String getEmailError() {
+        return emailError;
+    }
+
+    public void setEmailError(String emailError) {
+        this.emailError = emailError;
+    }
+
+    public long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(long idUser) {
+        this.idUser = idUser;
+        createOrUpdateUser();
     }
 
 }

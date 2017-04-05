@@ -3,10 +3,13 @@ package cl.minsal.semantikos.beans.snomed;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import cl.minsal.semantikos.kernel.components.SnomedCTManager;
+import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
+import cl.minsal.semantikos.kernel.components.SnomedCTSnapshotManager;
+import cl.minsal.semantikos.model.snapshots.SnomedCTSnapshotUpdate;
 import cl.minsal.semantikos.model.snomedct.*;
 import org.primefaces.event.FileUploadEvent;
 
@@ -15,12 +18,13 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.System.currentTimeMillis;
+
 @ManagedBean(name = "snapshotBean")
 @ViewScoped
 public class Snapshot {
 
     private String destination = "/home/des01c7/Documentos/temp/";
-
 
     private List<ConceptSCT> conceptSCTs;
     private List<DescriptionSCT> descriptionSCTs;
@@ -28,17 +32,32 @@ public class Snapshot {
     private List<LanguageRefsetSCT> languageRefsetSCTs;
     private List<TransitiveSCT> transitiveSCTs;
 
+    private SnomedCTSnapshotUpdate snomedCTSnapshotUpdate;
+    private String conceptSnapshotPath;
+    private String descriptionSnapshotPath;
+    private String relationshipSnapshotPath;
+
+    @ManagedProperty(value = "#{authenticationBean}")
+    private AuthenticationBean authenticationBean;
 
     @EJB
-    private SnomedCTManager snomedCTManager;
+    private SnomedCTSnapshotManager snomedCTSnapshotManager;
+
+    public AuthenticationBean getAuthenticationBean() {
+        return authenticationBean;
+    }
+
+    public void setAuthenticationBean(AuthenticationBean authenticationBean) {
+        this.authenticationBean = authenticationBean;
+    }
 
     public void uploadFileConcept(FileUploadEvent event) {
         FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            String dir = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
-            chargeConcept(dir);
+            conceptSnapshotPath = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            //chargeConcept(dir);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,8 +68,8 @@ public class Snapshot {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            String dir = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
-            chargeDescription(dir);
+            descriptionSnapshotPath = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            //chargeDescription(dir);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,8 +80,8 @@ public class Snapshot {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            String dir = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
-            chargeRelationship(dir);
+            relationshipSnapshotPath = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            //chargeRelationship(dir);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -333,7 +352,7 @@ public class Snapshot {
                     }
                     String time = affectiveTime.substring(0, 4) + "-" + affectiveTime.substring(4, 6) + "-" + affectiveTime.substring(6, 8) + " 00:00:00";
 
-                    languageRefsetSCTs.add(new LanguageRefsetSCT(id, Timestamp.valueOf(time), active, moduleId, refsetId, referencedComponentId, acceptabilityId));
+                    //languageRefsetSCTs.add(new LanguageRefsetSCT(id, Timestamp.valueOf(time), active, moduleId, refsetId, referencedComponentId, acceptabilityId));
                 } else {
                     first = false;
                 }
@@ -491,10 +510,19 @@ for (ConceptSCT conceptSCT : conceptSCTs) {
         */
 
 
-        snomedCTManager.persistConceptSCT(conceptSCTs);
+        //snomedCTManager.persistConceptSCT(conceptSCTs);
 
 
         // }
+    }
+
+    public void processSnapshotSCT() {
+        long time_start, time_end;
+        time_start = System.currentTimeMillis();
+        snomedCTSnapshotUpdate = new SnomedCTSnapshotUpdate("1.0",conceptSnapshotPath, descriptionSnapshotPath, relationshipSnapshotPath, new Timestamp(currentTimeMillis()), authenticationBean.getLoggedUser() );
+        snomedCTSnapshotManager.updateSnapshot(snomedCTSnapshotUpdate);
+        time_end = System.currentTimeMillis();
+        System.out.println("Tiempo: " + ((time_end - time_start) / 1000) + " segundos");
     }
 
 

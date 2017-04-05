@@ -174,5 +174,12 @@
 
     </p:panel>
 
+    <p:dialog id="dialogISP" styleClass="dialogISP" widgetVar="dialogISP" header="Información de Registro ISP"  width="750px" height="300px">
+        <p:dataTable value="#{ispbean.ispRecord.cells}" var="cell" rendered="#{not empty ispbean.ispRecord.cells}">
+            <p:column width="200" styleClass="FontBold Fs13">#{cell.column.description}</p:column>
+            <p:column width="400">#{cell}</p:column>
+        </p:dataTable>
+    </p:dialog>
+
 </composite:implementation>
 </html>

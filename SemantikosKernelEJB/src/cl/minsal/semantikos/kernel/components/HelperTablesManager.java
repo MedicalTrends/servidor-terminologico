@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.components;
 
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.helpertables.*;
 
@@ -32,6 +33,8 @@ public interface HelperTablesManager {
     actualiza la fila. verifica que si se deja no valida, la fila no sea referencia de otras tablas
      */
     HelperTableRow updateRow(HelperTableRow row, String username) throws HelperTablesManagerImpl.RowInUseException;
+
+    List<ConceptSMTK> isRowUsed(HelperTableRow helperTableRow, int size, int page);
 
     HelperTableRow getRowById(long idRow);
 
@@ -93,5 +96,7 @@ public interface HelperTablesManager {
     inserta una fila no persistida
      */
     HelperTableRow insertRow(HelperTableRow row, String username);
+
+
 
 }

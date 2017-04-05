@@ -12,9 +12,10 @@
             <li>
                 <a class="menulink ripplelink">
                     <i class="icon-round58 Fs40" />
-                    <span class="Fs18"><h:outputText value="#{authenticationBean.loggedUser.fullName}" /><i class="icon-downwards Fright Fs20" /><br /><span class="Fs12 FontRobotoLight"><h:outputText value="#{authenticationBean.loggedUser.rut}" /></span></span>
+                    <span class="Fs18"><h:outputText value="#{authenticationBean.loggedUser.fullName}" /><i class="icon-downwards Fright Fs20" /><br /><span class="Fs12 FontRobotoLight"><h:outputText value="#{authenticationBean.loggedUser.documentNumber}" /></span></span>
                 </a>
                 <ul>
+                    <li><p:link style="color: #455a64" outcome="/views/users/userDetail" styleClass="menulink ripplelink"><i class="icon-account4 Fs16" /> Mis datos<f:param name="idUser" value="#{authenticationBean.loggedUser.idUser}" /></p:link></li>
                     <li><p:commandLink style="color: #455a64" action="#{authenticationBean.logout}" styleClass="menulink ripplelink"><i class="icon-thermostat1 Fs16" /> Logout</p:commandLink></li>
                 </ul>
             </li>

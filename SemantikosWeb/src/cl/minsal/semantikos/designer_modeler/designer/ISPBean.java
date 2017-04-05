@@ -198,7 +198,9 @@ public class ISPBean {
                     cell.setColumn(helperTableColumn);
                     if(helperTableColumn.getDescription().toLowerCase().contains("fecha") ||
                        helperTableColumn.getDescription().toLowerCase().contains("ultima") ) {
-                        cell.setDateValue(new Timestamp(Date.parse(fetchedRecord.get(s))));
+                        if(!fetchedRecord.get(s).trim().isEmpty()) {
+                            cell.setDateValue(new Timestamp(Date.parse(fetchedRecord.get(s))));
+                        }
                     }
                     else {
                         cell.setStringValue(fetchedRecord.get(s));

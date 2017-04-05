@@ -44,7 +44,7 @@ public class UserCreationBR implements UserCreationBRInterface {
     public void preconditions(User IUser) throws BusinessRuleException {
 
         /* Reglas que aplican para todas las categorías */
-        br301UniqueRut(IUser);
+        br301UniqueDocumentNumber(IUser);
         br302UniqueEmail(IUser);
         br303ValidEmail(IUser);
         /* Creación de acuerdo al rol */
@@ -56,12 +56,12 @@ public class UserCreationBR implements UserCreationBRInterface {
      *
      * @param user El usuario
      */
-    public void br301UniqueRut(User user) {
+    public void br301UniqueDocumentNumber(User user) {
 
-        User found = userManager.getUserByRut(user.getRut());
+        User found = userManager.getUserByDocumentNumber(user.getDocumentNumber());
 
-        if(found != null) {
-            throw new BusinessRuleException("BR-301-UniqueRut", "Ya existe un usuario con este RUT en el sistema.");
+        if(found != null && found.isValid()) {
+            throw new BusinessRuleException("BR-301-UniqueDocumentNumber", "Ya existe un usuario con este número de documento en el sistema.");
         }
     }
 
@@ -74,7 +74,7 @@ public class UserCreationBR implements UserCreationBRInterface {
 
         User found = userManager.getUserByEmail(user.getEmail());
 
-        if(found != null) {
+        if(found != null && found.isValid()) {
             throw new BusinessRuleException("BR-302-UniqueEmail", "Ya existe un usuario con este Email en el sistema.");
         }
     }
@@ -205,7 +205,7 @@ public class UserCreationBR implements UserCreationBRInterface {
 
     @Override
     public void verifyPreConditions(User user) throws BusinessRuleException {
-        br301UniqueRut(user);
+        br301UniqueDocumentNumber(user);
         br303ValidEmail(user);
         br302UniqueEmail(user);
     }

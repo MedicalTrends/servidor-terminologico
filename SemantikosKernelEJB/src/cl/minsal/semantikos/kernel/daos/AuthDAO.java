@@ -16,7 +16,7 @@ public interface AuthDAO {
 
     User getUserByEmail(String email);
 
-    User getUserByRut(String rut);
+    User getUserByDocumentNumber(String documentNumber);
 
     User getUserByVerificationCode(String key);
 

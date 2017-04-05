@@ -62,16 +62,16 @@ public class AuthDAOImpl implements AuthDAO {
     }
 
     @Override
-    public User getUserByRut(String rut) {
+    public User getUserByDocumentNumber(String documentNumber) {
 
         ConnectionBD connect = new ConnectionBD();
         User user = null;
 
-        String sql = "{call semantikos.get_user_by_rut(?)}";
+        String sql = "{call semantikos.get_user_by_document_number(?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, rut);
+            call.setString(1, documentNumber);
             call.execute();
 
             ResultSet rs = call.getResultSet();
@@ -226,6 +226,7 @@ public class AuthDAOImpl implements AuthDAO {
         User u = new User();
 
         u.setIdUser(rs.getBigDecimal(1).longValue());
+        u.setId(rs.getBigDecimal(1).longValue());
         u.setUsername(rs.getString(2));
         u.setPasswordHash(rs.getString(3));
         u.setPasswordSalt(rs.getString(4));
@@ -251,8 +252,10 @@ public class AuthDAOImpl implements AuthDAO {
         u.setLastPasswordSalt3(rs.getString(20));
         u.setLastPasswordSalt4(rs.getString(21));
 
-        u.setRut(rs.getString(22));
+        u.setDocumentNumber(rs.getString(22));
         u.setVerificationCode(rs.getString(23));
+        u.setValid(rs.getBoolean(24));
+        u.setRutDocument(rs.getBoolean(25));
 
         u.setProfiles(getUserProfiles(u.getIdUser()));
 
@@ -306,14 +309,14 @@ public class AuthDAOImpl implements AuthDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, user.getUsername().trim());
-            call.setString(2, user.getName().trim());
-            call.setString(3, user.getLastName().trim());
-            call.setString(4, user.getSecondLastName().trim());
-            call.setString(5, user.getEmail().trim());
-            call.setBoolean(6, false);
-            call.setInt(7, 0);
-            call.setString(8, StringUtils.parseRut(user.getRut().trim()));
+            call.setString(1, user.getName().trim());
+            call.setString(2, user.getLastName().trim());
+            call.setString(3, user.getSecondLastName().trim());
+            call.setString(4, user.getEmail().trim());
+            call.setBoolean(5, false);
+            call.setInt(6, 0);
+            call.setBoolean(7, user.isRutDocument());
+            call.setString(8, user.isRutDocument()?StringUtils.parseRut(user.getDocumentNumber().trim()):user.getDocumentNumber());
             call.setString(9, user.getPasswordHash());
             call.setString(10, user.getVerificationCode());
 
@@ -347,7 +350,7 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public void updateUser(User user) {
 
-        String sql = "{call semantikos.update_user(?,?,?,?,?,?,?,?,?)}";
+        String sql = "{call semantikos.update_user(?,?,?,?,?,?,?,?,?,?)}";
         try (Connection connection = (new ConnectionBD()).getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -355,7 +358,7 @@ public class AuthDAOImpl implements AuthDAO {
             call.setString(2, user.getLastName());
             call.setString(3, user.getSecondLastName());
             call.setString(4, user.getEmail());
-            call.setString(5, user.getRut());
+            call.setString(5, user.getDocumentNumber());
             call.setBoolean(6, user.isLocked());
             call.setString(7, user.getPasswordHash());
 
@@ -363,7 +366,10 @@ public class AuthDAOImpl implements AuthDAO {
                 call.setNull(8, Types.VARCHAR);
             else
                 call.setString(8, user.getVerificationCode());
-            call.setLong(9, user.getIdUser());
+
+            call.setBoolean(9, user.isValid());
+
+            call.setLong(10, user.getIdUser());
 
             call.execute();
         } catch (SQLException e) {
