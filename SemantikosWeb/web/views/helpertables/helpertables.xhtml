@@ -77,7 +77,7 @@
                                     <div class="Container100">
                                         El dato esta relacionado con los siguientes conceptos
                                     </div>
-                                    <p:dataTable value="#{helperTableBean.conceptSMTKs}" paginator="true" var="concept">
+                                    <p:dataTable id="conceptRelated" rows="10" value="#{helperTableBean.conceptSMTKs}" paginator="true" var="concept">
                                         <p:column headerText="Concept ID">
                                             <h:outputText value="#{concept.conceptID}"/>
                                         </p:column>
@@ -155,7 +155,7 @@
                                         />
                                     </f:facet>
 
-                                    <p:ajax event="rowEdit" listener="#{helperTableBean.onRowEdit}"/>
+                                    <p:ajax event="rowEdit" listener="#{helperTableBean.onRowEdit}" update="@(.edit-data-panel)"/>
                                     <p:ajax event="rowEditCancel" listener="#{helperTableBean.onRowEditCancel}"
                                             oncomplete="onRowEditCancel#{varStatus1.index}()"/>
 

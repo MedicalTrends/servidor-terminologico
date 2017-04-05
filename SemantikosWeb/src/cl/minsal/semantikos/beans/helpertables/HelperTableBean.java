@@ -142,6 +142,7 @@ public class HelperTableBean implements Serializable {
                     RequestContext context = RequestContext.getCurrentInstance();
                     context.execute("PF('dialog-concept-related').show();");
                     conceptSMTKs= manager.isRowUsed(row,10,0);
+                    RequestContext.getCurrentInstance().update("@(.dialog-concept-related-panel)");
                     return;
                 }else{
                     updatedRow = manager.updateRow(row, this.authenticationBean.getEmail());
