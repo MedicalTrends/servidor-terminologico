@@ -140,9 +140,12 @@ public class HelperTableBean implements Serializable {
                     rowSelected= row;
                     messageBean.messageError("Existen conceptos asociados");
                     RequestContext context = RequestContext.getCurrentInstance();
-                    context.execute("PF('dialog-concept-related').show();");
+
                     conceptSMTKs= manager.isRowUsed(row,10,0);
                     RequestContext.getCurrentInstance().update("@(.dialog-concept-related-panel)");
+
+                    context.update("@(.dialog-concept-related-panel)");
+                    context.execute("PF('dialog-concept-related').show();");
                     return;
                 }else{
                     updatedRow = manager.updateRow(row, this.authenticationBean.getEmail());

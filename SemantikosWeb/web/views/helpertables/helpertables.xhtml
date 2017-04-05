@@ -77,16 +77,16 @@
                                     <div class="Container100">
                                         El dato esta relacionado con los siguientes conceptos
                                     </div>
-                                    <p:dataTable id="conceptRelated" rows="10" value="#{helperTableBean.conceptSMTKs}" paginator="true" var="concept">
-                                        <p:column headerText="Concept ID">
-                                            <h:outputText value="#{concept.conceptID}"/>
-                                        </p:column>
-                                        <p:ajax event="page"  listener="#{helperTableBean.update}" />
-                                    </p:dataTable>
+
 
                                 </div>
 
-
+                                <p:dataTable id="conceptRelated" rows="10" value="#{helperTableBean.conceptSMTKs}" paginator="true" var="concept">
+                                    <p:column headerText="Concept ID">
+                                        <h:outputText value="#{concept.conceptID}"/>
+                                    </p:column>
+                                    <p:ajax event="page"  listener="#{helperTableBean.update}" />
+                                </p:dataTable>
                             </p:outputPanel>
 
 

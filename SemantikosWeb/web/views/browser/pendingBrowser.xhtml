@@ -117,7 +117,7 @@
                                 </p:dataTable>
 
                                 <!-- Trasladar descripciones a conceptos -->
-                                <p:dialog id="dialogTDP" header="Trasladar descripcion" widgetVar="dialogTDP" global="true" width="900px" height="350px"
+                                <p:dialog id="dialogTDP" header="Trasladar descripción" widgetVar="dialogTDP" global="true" width="900px" height="350px"
                                           showEffect="fade" hideEffect="fade">
                                     <p:panel styleClass="pending-description">
                                         <p:growl id="msgs" showDetail="true"/>
@@ -126,7 +126,7 @@
 
                                         <p:outputPanel rendered="#{pendingBrowserBean.termSelected != null and empty pendingBrowserBean.termsSelected}">
 
-                                            <h3>Descripcion a trasladar</h3>
+                                            <h3>Descripción a trasladar</h3>
                                             <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
 
                                                 <p:outputLabel id="transLabel" for="descidTrans" value="DESCID"/>
@@ -145,10 +145,10 @@
 
                                             <h3>Descripciones a trasladar</h3>
                                             <p:dataTable value="#{pendingBrowserBean.termsSelected}" scrollable="true" scrollHeight="150" var="pendingTerm" style="width: 500px">
-                                                <p:column headerText="DESCID">
+                                                <p:column headerText="DESCID: ">
                                                     <h:outputText value="#{pendingTerm.relatedDescription.descriptionId}"/>
                                                 </p:column>
-                                                <p:column headerText="Termino">
+                                                <p:column headerText="Término: ">
                                                     <h:outputText value="#{pendingTerm.relatedDescription.term}"/>
                                                 </p:column>
                                             </p:dataTable>
