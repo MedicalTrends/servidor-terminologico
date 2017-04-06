@@ -8,7 +8,7 @@
 
     <ui:define name="header">
         <div class="Card ShadowEffect TexAlCenter">
-            <h2>Tablas Auxiliares</h2>
+            <h2>Administración de Tablas</h2>
         </div>
     </ui:define>
 
@@ -61,6 +61,10 @@
                                                  oncomplete="PF('edit-data-dialog-var').show()">
                                     <f:setPropertyActionListener value="#{helperTable}"
                                                                  target="#{helperTableBean.helperTableSelected}"/>
+                                    <f:setPropertyActionListener value=""
+                                                                 target="#{helperTableBean.pattern}"/>
+                                    <f:setPropertyActionListener value=""
+                                                                 target="#{helperTableBean.id}"/>
 
                                 </p:commandButton>
                             </p:column>
@@ -98,7 +102,7 @@
                         <p:dialog id="edit-data-dialog-var"
                                   header="Editar Datos" widgetVar="edit-data-dialog-var"
                                   global="true" showEffect="fade" hideEffect="fade" height="400" width="900"
-                                  positionType="absolute">
+                                  positionType="absolute" >
                             <p:outputPanel styleClass="edit-data-panel">
 
                                 <div class="Container">
@@ -136,12 +140,13 @@
 
                                 <p:remoteCommand name="onRowEditCancel#{varStatus1.index}"
                                                  update="@(.table-data-edit-#{varStatus1.index})"/>
-                                <p:dataTable resizableColumns="true"
+                                <p:dataTable
                                              widgetVar="table-data-edit-wvar-#{varStatus1.index}"
                                              id="table-data-edit" styleClass="table-data-edit-#{varStatus1.index}"
                                              var="row"
                                              rowKey="#{row.id}" value="#{helperTableBean.helperTableSelected.rows}"
-                                             editable="true" paginator="true" rows="20">
+                                             editable="true" paginator="true" rows="20"
+                                             scrollable="true" scrollWidth="100%" scrollHeight="200">
                                     <f:facet name="header">
                                         Editor de datos Tabla: #{helperTableBean.helperTableSelected.name}
 
@@ -157,7 +162,7 @@
                                         />
                                     </f:facet>
 
-                                    <p:ajax event="rowEdit" listener="#{helperTableBean.onRowEdit}" update="@(.edit-data-panel),@(.dialog-concept-related-panel)"/>
+                                    <p:ajax event="rowEdit" listener="#{helperTableBean.onRowEdit}" update="@(.dialog-concept-related-panel)"/>
                                     <p:ajax event="rowEditCancel" listener="#{helperTableBean.onRowEditCancel}"
                                             oncomplete="onRowEditCancel#{varStatus1.index}()"/>
 
@@ -165,7 +170,7 @@
                                         <h:outputText value="#{row.id}"/>
                                     </p:column>
 
-                                    <p:column headerText="Descripción" sortable="true">
+                                    <p:column headerText="Descripción" sortable="true" width="200">
                                         <p:cellEditor>
                                             <f:facet name="output">
                                                 <h:outputText value="#{row.description}"/>
@@ -178,7 +183,7 @@
 
                                     <p:columns columnIndexVar="columnIndex" var="column"
                                                value="#{helperTableBean.helperTableSelected.columns}"
-                                               filterable="true" sortable="true" headerText="#{column.description}">
+                                                sortable="true" headerText="#{column.description}" width="250">
                                         <p:cellEditor>
                                             <f:facet name="output">
                                                 <h:outputText value="#{row.cells[columnIndex].stringValue}"
@@ -231,7 +236,7 @@
                                         </p:cellEditor>
                                     </p:columns>
 
-                                    <p:column headerText="ESTADO DE VIGENCIA" sortable="true" width="30px">
+                                    <p:column headerText="ESTADO DE VIGENCIA" sortable="true" width="200">
                                         <f:facet name="filter">
                                             <p:selectOneMenu
                                                     onchange="PF('table-data-edit-wvar-#{varStatus1.index}').filter()">
@@ -251,13 +256,20 @@
                                         </p:cellEditor>
                                     </p:column>
 
-
-                                    <p:column headerText="ULTIMA EDICIÓN" sortable="true" width="60">
+                                    <p:column headerText="CREACIÓN" sortable="true" width="200" >
+                                        <h:outputText value="#{row.creationDate}">
+                                            <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="CREADO POR" sortable="true" width="200" >
+                                        <h:outputText value="#{row.creationUsername}"/>
+                                    </p:column>
+                                    <p:column headerText="ULTIMA EDICIÓN" sortable="true" width="200" >
                                         <h:outputText value="#{row.lastEditDate}">
                                             <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
                                         </h:outputText>
                                     </p:column>
-                                    <p:column headerText="EDITADO POR" sortable="true" width="60">
+                                    <p:column headerText="EDITADO POR" sortable="true" width="200" >
                                         <h:outputText value="#{row.lastEditUsername}"/>
                                     </p:column>
 
