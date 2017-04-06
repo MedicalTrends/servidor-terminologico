@@ -36,6 +36,8 @@ public interface HelperTablesManager {
 
     List<ConceptSMTK> isRowUsed(HelperTableRow helperTableRow, int size, int page);
 
+    int countIsRowUsed(HelperTableRow helperTableRow);
+
     HelperTableRow getRowById(long idRow);
 
     HelperTableRow getRowBy(HelperTable helperTable,long idRow);

@@ -512,6 +512,10 @@ public class ConceptBean implements Serializable {
         }
 
         Relationship relationship = relationshipPlaceholders.get(relationshipDefinition.getId());
+        if(concept.getRelationships().contains(relationship)){
+            messageBean.messageError("No se puede agregar dos veces el mismo registro");
+            return;
+        }
         try{
             relationshipBindingBR.brSCT001(concept, relationship);
         }catch (EJBException e) {
