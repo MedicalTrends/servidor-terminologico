@@ -580,7 +580,13 @@ public class GeneralQuery implements IQuery {
         this.toBeConsulted = null;
         this.toBeReviewed = null;
         this.tags = new ArrayList<>();
-        this.filters = new ArrayList<>();
+        this.user = null;
+        this.creationDateSince = null;
+        this.creationDateTo = null;
+        for (QueryFilter filter : filters) {
+            filter.getTargets().clear();
+        }
+        //this.filters = new ArrayList<>();
         this.query = null;
     }
 

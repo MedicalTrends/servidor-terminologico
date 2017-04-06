@@ -75,49 +75,60 @@
                             </p:password>
 
                         </p:panelGrid>
+                        <div style="text-align: right">
+                            <p:commandButton actionListener="#{accountActivation.checkPassword}"
+                                             styleClass="ui-priority-primary"
+                                             value="Enviar" process="mainForm"
+                                             update="growl, mainForm, @(.headerPanel)">
+                            </p:commandButton>
+                        </div>
                     </p:panel>
+
                     <br />
-                    <p:panel header="Paso 2: Preguntas de seguridad">
 
-                        <f:facet name="footer">
-                            <p:outputPanel>
-                                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                                <h:outputText value="Si usted olvida su contraseña, puede responder 3 preguntas de seguridad para recuperarla" />
-                            </p:outputPanel>
-                        </f:facet>
+                    <p:outputPanel rendered="#{accountActivation.passwordValid}">
+                        <p:panel header="Paso 2: Preguntas de seguridad">
 
-                        <h:dataTable id="questions" styleClass="questions" style="width: 100%;" value="#{accountActivation.questionList}"
-                                     var="question">
+                            <f:facet name="footer">
+                                <p:outputPanel>
+                                    <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                                    <h:outputText value="Si usted olvida su contraseña, puede responder 3 preguntas de seguridad para recuperarla" />
+                                </p:outputPanel>
+                            </f:facet>
 
-                            <h:column>
-                                <p:selectBooleanCheckbox value="#{question.selected}" disabled="#{accountActivation.user.answers.size() >= 3 and not question.selected}">
-                                    <p:ajax listener="#{accountActivation.updateAnswers(question)}" update="@(.questions)" process="@this" />
-                                </p:selectBooleanCheckbox>
-                            </h:column>
+                            <h:dataTable id="questions" styleClass="questions" style="width: 100%;" value="#{accountActivation.questionList}"
+                                         var="question">
 
-                            <h:column>
-                                <p:outputLabel value="#{question.question}" />
-                            </h:column>
+                                <h:column>
+                                    <p:selectBooleanCheckbox value="#{question.selected}" disabled="#{accountActivation.user.answers.size() >= 3 and not question.selected}">
+                                        <p:ajax listener="#{accountActivation.updateAnswers(question)}" update="@(.questions)" process="@this" />
+                                    </p:selectBooleanCheckbox>
+                                </h:column>
 
-                            <h:column>
-                                <ui:repeat value="#{accountActivation.user.getAnswersByQuestion(question)}" var="answer">
-                                    <p:inputText value="#{answer.answer}" autocomplete="off" styleClass="Wid90" >
-                                        <p:ajax process="@this" update="@this" />
-                                    </p:inputText>
-                                </ui:repeat>
-                            </h:column>
+                                <h:column>
+                                    <p:outputLabel value="#{question.question}" />
+                                </h:column>
 
-                        </h:dataTable>
+                                <h:column>
+                                    <ui:repeat value="#{accountActivation.user.getAnswersByQuestion(question)}" var="answer">
+                                        <p:inputText value="#{answer.answer}" autocomplete="off" styleClass="Wid90" >
+                                            <p:ajax process="@this" update="@this" />
+                                        </p:inputText>
+                                    </ui:repeat>
+                                </h:column>
 
-                    </p:panel>
-                    <br />
-                    <div class="Wid100 TextAlCenter" style="text-align: center">
-                        <p:commandButton actionListener="#{accountActivation.activate}"
-                                         styleClass="ui-priority-primary Fs20"
-                                         value="Enviar" type="submit" process="mainForm"
-                                         update="growl, account-activation">
-                        </p:commandButton>
-                    </div>
+                            </h:dataTable>
+
+                            <div style="text-align: right">
+                                <p:commandButton actionListener="#{accountActivation.activate}"
+                                                 styleClass="ui-priority-primary"
+                                                 value="Enviar" process="mainForm"
+                                                 update="growl, account-activation">
+                                </p:commandButton>
+                            </div>
+
+                        </p:panel>
+                    </p:outputPanel>
                     </h:form>
 
                     <p:outputPanel rendered="#{accountActivation.accountActive}">

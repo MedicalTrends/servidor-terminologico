@@ -6,7 +6,7 @@ import cl.minsal.semantikos.model.users.User;
 import java.sql.Timestamp;
 
 /**
- * @author Andrés Farías on 9/26/16.
+ * @author Diego Soto
  */
 public class SnomedCTSnapshotUpdateDetail {
 

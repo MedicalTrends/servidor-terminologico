@@ -310,12 +310,12 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
     /* BR-STK-001 Para agregar una relación a ISP, la dupla ProductoComercual-RegnumRegAño deben ser únicos */
     public void brSTK001(ConceptSMTK concept, Relationship relationship) {
 
-        /* Verificar en un contexto no persistido */
+        /* Verificar en un contexto no persistente */
         if (relationship.getRelationshipDefinition().isISP() && concept.contains(relationship)) {
             throw new BusinessRuleException("BR-STK-001", "Para agregar una relación a ISP, la dupla ProductoComercial-Regnum/RegAño deben ser únicos. Registro referenciado por 'Nuevo Concepto Borrador'");
         }
 
-        /* Verificar en un contexto persistido */
+        /* Verificar en un contexto persistente */
         if (relationship.getRelationshipDefinition().isISP()) {
             for (Relationship relationship2 : relationshipManager.findRelationshipsLike(relationship.getRelationshipDefinition(), relationship.getTarget())) {
                 if(relationship2.getRelationshipDefinition().isISP() && relationship2.getSourceConcept().equals(concept)) {
@@ -328,7 +328,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
     /* BR-STK-002 Para agregar una relación a ISP, la dupla ProductoComercual-RegNumRegAño no debe existir como bioequivalente  */
     public void brSTK002(ConceptSMTK concept, Relationship relationship) {
 
-        /* Verificar en un contexto no persistido */
+        /* Verificar en un contexto no persistente */
         for (Relationship relationship2 : concept.getValidRelationships()) {
             if(relationship2.getRelationshipDefinition().isBioequivalente() && relationship2.getTarget().equals(relationship.getTarget())) {
                 throw new BusinessRuleException("BR-STK-002", "Para agregar una relación a ISP, la dupla ProductoComercual-RegNumRegAño no debe existir como bioequivalente. Registro referenciado por 'Nuevo Concepto Borrador'");
@@ -348,7 +348,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
     /* BR-STK-003 Para agregar una relación a Bioequivalente, la dupla ProductoComercual-RegnumRegAño deben ser únicos */
     public void brSTK003(ConceptSMTK concept, Relationship relationship) {
 
-        /* Verificar en un contexto no persistido */
+        /* Verificar en un contexto no persistente */
         if (relationship.getRelationshipDefinition().isBioequivalente() && concept.contains(relationship)) {
             throw new BusinessRuleException("BR-STK-003", "Para agregar una relación a Bioequivalente, la dupla ProductoComercial-Regnum/RegAño deben ser únicos. Registro referenciado por 'Nuevo Concepto Borrador'");
         }
@@ -369,7 +369,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
         boolean isPairUnique = true;
         ConceptSMTK conceptIssue = null;
 
-        /* Verificar en un contexto no persistido */
+        /* Verificar en un contexto no persistente */
         for (Relationship relationship2 : concept.getValidRelationships()) {
             if(relationship2.getRelationshipDefinition().isISP() && relationship2.getTarget().equals(relationship.getTarget())) {
                 throw new BusinessRuleException("BR-STK-004", "Para agregar una relación a Bioequivalente, la dupla ProductoComercual-RegNumRegAño no debe existir como ISP. Registro referenciado por 'Nuevo Concepto Borrador'");

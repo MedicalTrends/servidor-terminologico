@@ -43,6 +43,7 @@ import java.text.ParseException;
 import java.util.*;
 
 import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN_MAPEO_DE;
+import static org.primefaces.util.Constants.EMPTY_STRING;
 
 /**
  * Created by diego on 26/06/2016.
@@ -407,10 +408,10 @@ public class ConceptBean implements Serializable {
         ConceptSMTKWeb conceptWeb = new ConceptSMTKWeb(concept);
 
         DescriptionWeb fsnDescription = new DescriptionWeb(conceptWeb, term, descriptionManager.getTypeFSN());
-        fsnDescription.setDescriptionId("");
+        fsnDescription.setDescriptionId(EMPTY_STRING);
 
         DescriptionWeb favouriteDescription = new DescriptionWeb(conceptWeb, term, descriptionManager.getTypeFavorite());
-        favouriteDescription.setDescriptionId("");
+        favouriteDescription.setDescriptionId(EMPTY_STRING);
 
         for (DescriptionWeb description : new DescriptionWeb[]{favouriteDescription, fsnDescription})
             conceptWeb.addDescriptionWeb(description);
