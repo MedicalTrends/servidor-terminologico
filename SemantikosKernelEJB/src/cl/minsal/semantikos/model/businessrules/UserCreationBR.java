@@ -156,6 +156,8 @@ public class UserCreationBR implements UserCreationBRInterface {
 
         try {
             user.setLocked(true);
+            user.setFailedLoginAttempts(0);
+            user.setFailedAnswerAttempts(0);
             userManager.updateUser(user);
         } catch (Exception e) {
             e.printStackTrace();

@@ -792,6 +792,33 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
     }
 
     @Override
+    public int countIsRowUser(HelperTableRow row) {
+        ConnectionBD connectionBD = new ConnectionBD();
+        String selectRecord = "{call semantikos.count_concepts_ids_by_helper_table_target(?)}";
+        int result = 0;
+
+        try (Connection connection = connectionBD.getConnection();
+             CallableStatement call = connection.prepareCall(selectRecord)) {
+
+            call.setLong(1,row.getId());
+
+            /* Se prepara y realiza la consulta */
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                result = rs.getInt(1);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Hubo un error al acceder a la base de datos.", e);
+            throw new EJBException(e);
+        }
+
+
+        return result;
+    }
+
+    @Override
     public List<ConceptSMTK> isRowUser(HelperTableRow row, int size, int page) {
         ConnectionBD connerctionBD = new ConnectionBD();
         List<ConceptSMTK> result= new ArrayList<>();

@@ -17,7 +17,6 @@ public class SnapshotPreprocessingRequest {
 
     /**
      * El bloque de registros a pre-procesar
-
      */
     private Map<Long, SnomedCTComponent> registers = new HashMap<>();
 

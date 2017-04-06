@@ -48,4 +48,6 @@ public interface HelperTableDAO {
     List<ConceptSMTK> isRowUsed(HelperTableRow row);
 
     List<ConceptSMTK> isRowUser(HelperTableRow row, int size, int page);
+
+    int countIsRowUser(HelperTableRow row);
 }

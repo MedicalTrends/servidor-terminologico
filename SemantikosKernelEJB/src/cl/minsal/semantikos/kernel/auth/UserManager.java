@@ -22,7 +22,7 @@ import java.util.List;
 @Stateless
 public class UserManager {
 
-    private static final int MAX_FAILED_ANSWER_ATTEMPTS = 2;
+    public static final int MAX_FAILED_ANSWER_ATTEMPTS = 2;
 
     @EJB
     AuthDAO authDAO;
@@ -143,9 +143,10 @@ public class UserManager {
     }
 
     public void resetAccount(User user, HttpServletRequest request) {
-        questionDAO.deleteUserAnswers(user);
         userCreationBR.preActions(user);
         userCreationBR.postActions(user, request);
+        questionDAO.deleteUserAnswers(user);
+        user.setFailedAnswerAttempts(0);
     }
 
     public void deleteUser(User user) {

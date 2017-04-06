@@ -36,10 +36,9 @@ public class HelperTableBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
     List<HelperTable> fullDatabase;
 
-    List<ConceptSMTK> conceptSMTKs;
+    LazyDataModel<ConceptSMTK> conceptSMTKs;
 
     Map<Long,List<HelperTableRow>> validRow;
 
@@ -135,18 +134,29 @@ public class HelperTableBean implements Serializable {
         try {
             HelperTableRow updatedRow;
             if (row.isPersistent()) {
-
-                if(!manager.isRowUsed(row,10,0).isEmpty()){
-                    rowSelected= row;
-                    messageBean.messageError("Existen conceptos asociados");
-                    RequestContext context = RequestContext.getCurrentInstance();
-                    context.execute("PF('dialog-concept-related').show();");
-                    conceptSMTKs= manager.isRowUsed(row,10,0);
-                    RequestContext.getCurrentInstance().update("@(.dialog-concept-related-panel)");
-                    return;
+                if(!row.isValid()){
+                    if(!manager.isRowUsed(row,10,0).isEmpty()){
+                        rowSelected= row;
+                        messageBean.messageError("No se puede cambiar la vigencia, existen conceptos asociados");
+                        RequestContext context = RequestContext.getCurrentInstance();
+                        final HelperTableRow r= row;
+                        conceptSMTKs= new LazyDataModel<ConceptSMTK>() {
+                            @Override
+                            public List<ConceptSMTK> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+                                setRowCount(manager.countIsRowUsed(r));
+                                return manager.isRowUsed(r,pageSize,first);
+                            }
+                        };
+                        context.execute("PF('dialog-concept-related').show();");
+                        context.execute("PF('edit-data-dialog-var').hide();");
+                        return;
+                    }else{
+                        updatedRow = manager.updateRow(row, this.authenticationBean.getEmail());
+                    }
                 }else{
                     updatedRow = manager.updateRow(row, this.authenticationBean.getEmail());
                 }
+
             } else {
                 updatedRow = manager.insertRow(row, this.authenticationBean.getEmail());
             }
@@ -156,25 +166,14 @@ public class HelperTableBean implements Serializable {
             row.setId(updatedRow.getId());
 
 
-        } catch (HelperTablesManagerImpl.RowInUseException e) {
-            String msg = "Conceptos que actualmente usan este registro: <br />";
-
-            for (ConceptSMTK conceptSMTK : e.getConcepts()) {
-                msg += conceptSMTK.getConceptID() + " <br />";
-            }
-
-            //showError("No se pudo guardar registro como no valido",msg);
-
-            FacesContext.getCurrentInstance().addMessage("message-" + row.getHelperTableId(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudo guardar registro como no valido", msg));
-
-
-            FacesContext.getCurrentInstance().validationFailed();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void update(PageEvent event){
         int page = event.getPage();
-        conceptSMTKs= manager.isRowUsed(rowSelected,10,page);
+        //conceptSMTKs= manager.isRowUsed(rowSelected,10,page);
     }
 
 
@@ -413,13 +412,13 @@ public class HelperTableBean implements Serializable {
         this.pattern = pattern;
     }
 
-    private long id;
+    private Long id;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -441,11 +440,11 @@ public class HelperTableBean implements Serializable {
         this.messageBean = messageBean;
     }
 
-    public void setConceptSMTKs(List<ConceptSMTK> conceptSMTKs) {
-        this.conceptSMTKs = conceptSMTKs;
+    public LazyDataModel<ConceptSMTK> getConceptSMTKs() {
+        return conceptSMTKs;
     }
 
-    public List<ConceptSMTK> getConceptSMTKs() {
-        return conceptSMTKs;
+    public void setConceptSMTKs(LazyDataModel<ConceptSMTK> conceptSMTKs) {
+        this.conceptSMTKs = conceptSMTKs;
     }
 }

@@ -55,6 +55,8 @@ public class AccountActivation {
 
     private List<Question> userQuestionList;
 
+    private boolean passwordValid = false;
+
     private User user;
 
     @EJB
@@ -168,6 +170,14 @@ public class AccountActivation {
         this.passwordError = passwordError;
     }
 
+    public boolean isPasswordValid() {
+        return passwordValid;
+    }
+
+    public void setPasswordValid(boolean passwordValid) {
+        this.passwordValid = passwordValid;
+    }
+
     public User getUser() {
         return user;
     }
@@ -192,6 +202,91 @@ public class AccountActivation {
 
     public void setAccountActive(boolean accountActive) {
         this.accountActive = accountActive;
+    }
+
+    public void checkPassword() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        RequestContext rContext = RequestContext.getCurrentInstance();
+
+        if(password.isEmpty()) {
+            passwordError = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar su contraseña actual"));
+        }
+        else {
+            passwordError = "";
+        }
+
+        if(newPassword1.isEmpty()) {
+            newPassword1Error = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar su nueva contraseña"));
+        }
+        else {
+            newPassword1Error = "";
+        }
+
+        if(newPassword2.isEmpty()) {
+            newPassword2Error = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe confirmar su nueva contraseña"));
+        }
+        else {
+            newPassword2Error = "";
+        }
+
+        if(password.length() < 8) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La contraseña debe tener al menos 8 caracteres"));
+            passwordError = "ui-state-error";
+            passwordError = "ui-state-error";
+        }
+        else{
+            passwordError = "";;
+            passwordError = "";
+        }
+
+        if(newPassword1.length() < 8) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La contraseña debe tener al menos 8 caracteres"));
+            newPassword1Error = "ui-state-error";
+            newPassword2Error = "ui-state-error";
+        }
+        else{
+            newPassword1Error = "";;
+            newPassword2Error = "";
+        }
+
+        if(!StringUtils.validatePasswordFormat(newPassword1)) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La contraseña debe contener números y letras"));
+            newPassword1Error = "ui-state-error";
+            newPassword2Error = "ui-state-error";
+        }
+        else{
+            newPassword1Error = "";;
+            newPassword2Error = "";
+        }
+
+        if(!passwordError.concat(newPassword1Error).concat(newPassword2Error).trim().isEmpty()) {
+            return;
+        }
+
+        if(!newPassword1.equals(newPassword2)) {
+            newPassword2Error = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La confirmación de contraseña no coincide con la original"));
+            return;
+        }
+        else {
+            newPassword2Error = "";
+        }
+
+        if(!authenticationManager.checkPassword(user, user.getEmail(), password)) {
+            passwordError = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La contraseña proporcionada no es correcta"));
+            return;
+        }
+        else {
+            passwordError = "";
+        }
+
+        user.setPassword(newPassword1);
+
+        setPasswordValid(true);
     }
 
     public void activate() {

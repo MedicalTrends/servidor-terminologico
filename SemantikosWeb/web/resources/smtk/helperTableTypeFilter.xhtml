@@ -59,6 +59,7 @@
                                 completeMethod="#{helperTableBean.getRecordSearchInput}"
                                 forceSelection="true"
                                 var="record"
+                                minQueryLength="#{helperTableBean.getMinQueryLength(cc.attrs.targetDefinition)}"
                                 placeholder="Buscar..."
                                 converter="helperTableRecordConverter"
                                 value="#{generalBrowserBean.helperTableRecord}"
@@ -70,6 +71,9 @@
                     <!-- Parámetros del validador -->
                     <f:attribute name="helperTableRecord" value="#{generalBrowserBean.helperTableRecord}"  />
                     <!---->
+                    <p:column>
+                        <h:outputText value="#{record.getCellByColumnName('codigo atc')}" />
+                    </p:column>
                     <p:column>
                         <h:outputText value="#{record.description}"/>
                     </p:column>
