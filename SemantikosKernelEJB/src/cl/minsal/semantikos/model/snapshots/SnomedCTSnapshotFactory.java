@@ -108,7 +108,7 @@ public class SnomedCTSnapshotFactory {
         }
     }
 
-    public void initReader(String path) {
+    public void initReader(String path, int fileLine) {
 
         this.path = Paths.get(path);
         try {
@@ -117,6 +117,11 @@ public class SnomedCTSnapshotFactory {
              * skip header line (supposed to include header)
              */
             reader.readLine();
+            int cont = 0;
+
+            if(cont < fileLine) {
+                reader.readLine();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -141,15 +146,15 @@ public class SnomedCTSnapshotFactory {
 
             while ((line = reader.readLine()) != null) {
 
-                if(cont >= streamSize) {
-                    break;
-                }
-
                 ConceptSCT conceptSCT = createConceptSCTFromString(line);
 
                 snapshotPreprocessingRequest.getRegisters().put(conceptSCT.getIdSnomedCT(), conceptSCT);
 
                 ++cont;
+
+                if(cont >= streamSize) {
+                    break;
+                }
             }
 
         } catch (IOException e) {
@@ -205,10 +210,6 @@ public class SnomedCTSnapshotFactory {
 
             while ((line = reader.readLine()) != null) {
 
-                if(cont >= streamSize) {
-                    break;
-                }
-
                 try {
                     DescriptionSCT descriptionSCT = createDescriptionSCTFromString(line);
                     snapshotPreprocessingRequest.getRegisters().put(descriptionSCT.getId(), descriptionSCT);
@@ -218,6 +219,11 @@ public class SnomedCTSnapshotFactory {
                 }
 
                 ++cont;
+
+                if(cont >= streamSize) {
+                    break;
+                }
+
             }
 
         } catch (IOException e) {
@@ -273,10 +279,6 @@ public class SnomedCTSnapshotFactory {
 
             while ((line = reader.readLine()) != null) {
 
-                if(cont >= streamSize) {
-                    break;
-                }
-
                 try {
                     RelationshipSCT relationshipSCT = createRelationshipSCTFromString(line);
                     snapshotPreprocessingRequest.getRegisters().put(relationshipSCT.getId(), relationshipSCT);
@@ -287,6 +289,10 @@ public class SnomedCTSnapshotFactory {
                 }
 
                 ++cont;
+
+                if(cont >= streamSize) {
+                    break;
+                }
             }
 
         } catch (IOException e) {
@@ -336,10 +342,6 @@ public class SnomedCTSnapshotFactory {
 
             while ((line = reader.readLine()) != null) {
 
-                if(cont >= streamSize) {
-                    break;
-                }
-
                 try {
                     LanguageRefsetSCT languageRefsetSCT = createLanguageRefsetSCTFromString(line);
                     snapshotPreprocessingRequest.getRegisters().put(languageRefsetSCT.getId(), languageRefsetSCT);
@@ -348,6 +350,11 @@ public class SnomedCTSnapshotFactory {
                 }
 
                 ++cont;
+
+                if(cont >= streamSize) {
+                    break;
+                }
+
             }
 
         } catch (IOException e) {
@@ -385,10 +392,6 @@ public class SnomedCTSnapshotFactory {
 
             while ((line = reader.readLine()) != null) {
 
-                if(cont >= streamSize) {
-                    break;
-                }
-
                 try {
                     TransitiveSCT transitiveSCT = createTransitivesSCTFromString(line);
                     snapshotPreprocessingRequest.getRegisters().put(transitiveSCT.getId(), transitiveSCT);
@@ -399,6 +402,10 @@ public class SnomedCTSnapshotFactory {
                 }
 
                 ++cont;
+
+                if(cont >= streamSize) {
+                    break;
+                }
             }
 
         } catch (IOException e) {

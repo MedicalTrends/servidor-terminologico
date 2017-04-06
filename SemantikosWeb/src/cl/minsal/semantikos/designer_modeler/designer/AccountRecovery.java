@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
+import static cl.minsal.semantikos.kernel.auth.UserManager.MAX_FAILED_ANSWER_ATTEMPTS;
 import static org.primefaces.util.Constants.EMPTY_STRING;
 
 /**
@@ -223,8 +224,7 @@ public class AccountRecovery {
             return false;
         }
         else {
-            if(user.isLocked()) {
-                findUser();
+            if(user.getFailedAnswerAttempts() >= MAX_FAILED_ANSWER_ATTEMPTS) {
                 return true;
             }
             return false;

@@ -452,6 +452,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             logger.error(errorMsg);
             throw new EJBException(errorMsg, e);
         }
+
+        createSnomedCTSnapshotUpdateState(snomedCTSnapshotUpdate);
     }
 
     @Override
@@ -479,13 +481,13 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
                 /* Se recupera el status de la transacción */
                 updated = rs.getBoolean(1);
             } else {
-                String errorMsg = "La actualización de snapshot SnomedCT no fue creada por una razon desconocida. Alertar al area de desarrollo sobre esto";
+                String errorMsg = "La actualización de snapshot SnomedCT no fue actualizada por una razon desconocida. Alertar al area de desarrollo sobre esto";
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
 
         } catch (SQLException e) {
-            String errorMsg = "Error al persistir La actualización de snapshot SnomedCT";
+            String errorMsg = "Error al actualizar La actualización de snapshot SnomedCT";
             logger.error(errorMsg);
             throw new EJBException(errorMsg, e);
         }
@@ -498,7 +500,110 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             throw new EJBException(errorMsg);
         }
 
-        String QUERY = "{call semantikos.create_snapshot_sct_update_detail(?,?,?,?,?,?)}";
+        updateSnomedCTSnapshotUpdateState(snomedCTSnapshotUpdate);
+        addSnomedCTSnapshotUpdateDetails(snomedCTSnapshotUpdate);
+
+    }
+
+    private void createSnomedCTSnapshotUpdateState(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
+
+        ConnectionBD connect = new ConnectionBD();
+
+        String QUERY = "{call semantikos.create_snapshot_sct_update_state(?,?,?,?,?,?,?,?,?,?,?)}";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(QUERY)) {
+
+            call.setBoolean(1, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().isConceptsProcessed());
+            call.setInt(2, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().getConceptsFileLine());
+            call.setBoolean(3, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().isDescriptionsProcessed());
+            call.setInt(4, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().getDescriptionsFileLine());
+            call.setBoolean(5, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().isRelationshipsProcessed());
+            call.setInt(6, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().getRelationshipsFileLine());
+            call.setBoolean(7, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().isRefsetsProcessed());
+            call.setInt(8, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().getRefsetsFileLine());
+            call.setBoolean(9, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().isTransitivesProcessed());
+            call.setInt(10, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().getTransitivesFileLine());
+            call.setLong(11, snomedCTSnapshotUpdate.getId());
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            if (rs.next()) {
+                /* Se recupera el status de la transacción */
+                snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().setId(rs.getLong(1));
+            } else {
+                String errorMsg = "El estado de la actualización del snapshot SnomedCT no fue creado por una razon desconocida. Alertar al area de desarrollo sobre esto";
+                logger.error(errorMsg);
+                throw new EJBException(errorMsg);
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al crear el estado de La actualización de snapshot SnomedCT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+    }
+
+    private void updateSnomedCTSnapshotUpdateState(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
+
+        ConnectionBD connect = new ConnectionBD();
+
+        String QUERY = "{call semantikos.update_snapshot_sct_update_state(?,?,?,?,?,?,?,?,?,?,?)}";
+
+        boolean updated = false;
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(QUERY)) {
+
+            call.setBoolean(1, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().isConceptsProcessed());
+            call.setInt(2, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().getConceptsFileLine());
+            call.setBoolean(3, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().isDescriptionsProcessed());
+            call.setInt(4, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().getDescriptionsFileLine());
+            call.setBoolean(5, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().isRelationshipsProcessed());
+            call.setInt(6, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().getRelationshipsFileLine());
+            call.setBoolean(7, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().isRefsetsProcessed());
+            call.setInt(8, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().getRefsetsFileLine());
+            call.setBoolean(9, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().isTransitivesProcessed());
+            call.setInt(10, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().getTransitivesFileLine());
+            call.setLong(11, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().getId());
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            if (rs.next()) {
+                /* Se recupera el status de la transacción */
+                updated = rs.getBoolean(1);
+            } else {
+                String errorMsg = "El estado de la actualización del snapshot SnomedCT no fue actualizada por una razon desconocida. Alertar al area de desarrollo sobre esto";
+                logger.error(errorMsg);
+                throw new EJBException(errorMsg);
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al actualizar el estado de La actualización de snapshot SnomedCT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+        if (updated) {
+            logger.info("Información del estado de la actualización de snapshot SnomedCT actualizada exitosamente.");
+        } else {
+            String errorMsg = "Información del estado de la actualización de snapshot SnomedCT no fue actualizada.";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg);
+        }
+
+    }
+
+    private void addSnomedCTSnapshotUpdateDetails(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
+
+        ConnectionBD connect = new ConnectionBD();
+
+        String QUERY = "{call semantikos.create_snapshot_sct_update_detail(?,?,?,?,?,?,?)}";
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(QUERY)) {
@@ -528,6 +633,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
                 call.setNull(paramPositions[3], Types.BIGINT);
                 call.setNull(paramPositions[4], Types.BIGINT);
                 call.setLong(6, snomedCTSnapshotUpdateDetail.getAuditActionType().getId());
+                call.setLong(7, snomedCTSnapshotUpdate.getId());
 
                 call.addBatch();
 
@@ -546,15 +652,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             //throw new EJBException(errorMsg, e);
 
         }
-
-
     }
 
-    @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public void replaceSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
-
-    }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

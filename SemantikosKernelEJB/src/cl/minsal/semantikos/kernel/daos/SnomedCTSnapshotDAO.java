@@ -20,8 +20,6 @@ public interface SnomedCTSnapshotDAO {
 
     void updateSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate);
 
-    void replaceSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate);
-
     SnomedCTSnapshotUpdate getSnomedCTSnapshotUpdateById(String id);
 
     List<SnomedCTSnapshotUpdate> getAllSnomedCTSnapshotUpdates();
