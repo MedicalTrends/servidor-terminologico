@@ -365,7 +365,6 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public SnapshotProcessingRequest preprocessRequest(SnapshotPreprocessingRequest snapshotPreprocessingRequest) {
 
         List<SnomedCTComponent> errors = new ArrayList<>();
