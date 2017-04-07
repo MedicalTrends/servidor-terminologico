@@ -21,9 +21,10 @@
                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                      value="#{conceptBean.auditAction}" paginator="true" rows="10">
             <f:facet name="{Exporters}">
-                <p:commandButton icon="fa fa-file-excel-o" styleClass="ui-priority-primary" ajax="false" value="Exportar">
+                <p:commandLink styleClass="ui-priority-primary" ajax="false" value="Exportar">
+                    <i class="fa fa-file-excel-o" />
                     <p:dataExporter type="xls" target="historyDateTable" fileName="history" />
-                </p:commandButton>
+                </p:commandLink>
             </f:facet>
 
             <p:column  visible="false" >

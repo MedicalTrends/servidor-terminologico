@@ -495,7 +495,7 @@
                         </div>
                         <div class="ui-g">
                             <div class="ui-g-12 ui-md-6 ui-lg-12">
-                                <p:dataTable styleClass="tableConceptSuggest"
+                                <p:dataTable styleClass="tableConceptSuggest" reflow="true"
                                              value="#{conceptBean.conceptSuggestedList}" var="conceptSuggest">
                                     <p:column headerText="Concept ID">
                                         <h:outputText value="#{conceptSuggest.conceptID}"></h:outputText>

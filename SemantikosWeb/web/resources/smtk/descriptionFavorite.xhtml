@@ -31,7 +31,7 @@
             <p:outputLabel value="Sensibilidad" />
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-4">
-            <p:selectOneRadio id="customRadio2" value="#{cc.attrs.description.caseSensitive}" layout="grid" columns="2"
+            <p:selectOneRadio id="customRadio2" value="#{cc.attrs.description.caseSensitive}" layout="responsive" columns="2"
                               disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}">
                 <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
                 <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>

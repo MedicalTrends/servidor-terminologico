@@ -300,7 +300,6 @@ public class HelperTableBean implements Serializable {
                         break;
                     }
                 }
-
             }
         }
         return helperTableRowsFiltered;

@@ -32,6 +32,12 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-2">
 
+                        <p:outputLabel value="Grupo" />
+
+                    </div>
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+
                             <p:inputNumber id="basicTypeValue12"
                                            value="#{sctBean.relationshipGroup}"
                                            placeholder="Grupo..."
@@ -43,6 +49,12 @@
                                            autocomplete="off">
                                 <p:ajax process="@this" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
                             </p:inputNumber>
+
+                    </div>
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                        <p:outputLabel value="Tipo Relación" />
 
                     </div>
 
@@ -70,7 +82,13 @@
                         />
                     </p:repeat>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-5">
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                        <p:outputLabel value="Término" />
+
+                    </div>
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-8">
 
                         <p:outputPanel styleClass="search searchSCT">
 
@@ -84,6 +102,7 @@
                                                 placeholder="#{sctBean.searchOption eq 'term'? 'Ingrese término...': 'Ingrese conceptId...'}"
                                                 converter="conceptSCTConverter"
                                                 var="concept"
+                                                maxResults="1000"
                                                 value="#{conceptBean.conceptSCTSelected}"
                                                 itemLabel="#{concept.descriptionFSN.term}"
                                                 itemValue="#{concept}"
@@ -126,7 +145,6 @@
                                     action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader),@(.crossmapindirect)"
                                     disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept)}"
-                                    style="max-width: 100px"
                                     value="Agregar">
                             </p:commandButton>
 
@@ -144,6 +162,7 @@
 
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
                      id="tableRelationship3"
+                     reflow="true"
                      rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and cc.attrs.concept.editable}"
@@ -185,16 +204,20 @@
             </p:column>
 
             <p:column headerText="Acción">
-                <div style="text-align: center">
-                    <p:commandButton title="Ver" oncomplete="PF('dialogC').show()" process="@this"
-                                   update="@(.query-concept-sct)" icon="fa fa-search">
-                        <f:setPropertyActionListener value="#{rel.target}" target="#{sctBean.conceptSelected}"/>
-                    </p:commandButton>
-                    <p:commandButton rendered="#{profilePermissionsBeans.modeler and cc.attrs.concept.editable}" icon="fa fa-trash" title="Eliminar"
-                                     actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
-                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}), @(.attributes),@(.crossmapindirect)"
-                                     process="@this">
-                    </p:commandButton>
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-6 ui-lg-6">
+                        <p:commandButton title="Ver" oncomplete="PF('dialogC').show()" process="@this"
+                                       update="@(.query-concept-sct)" icon="fa fa-search">
+                            <f:setPropertyActionListener value="#{rel.target}" target="#{sctBean.conceptSelected}"/>
+                        </p:commandButton>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-6">
+                        <p:commandButton rendered="#{profilePermissionsBeans.modeler and cc.attrs.concept.editable}" icon="fa fa-trash" title="Eliminar"
+                                         actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
+                                         update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}), @(.attributes),@(.crossmapindirect)"
+                                         process="@this">
+                        </p:commandButton>
+                    </div>
                 </div>
             </p:column>
         </p:dataTable>

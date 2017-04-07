@@ -67,6 +67,7 @@
 
                         <p:outputPanel id="conceptHeader" styleClass="conceptHeader">
                             <p:growl id="editMsgs2" showDetail="true"/>
+
                             <smtk:conceptHeader concept="#{conceptBean.concept}"/>
                         </p:outputPanel>
 
@@ -79,7 +80,7 @@
                         <!-- Otras descripciones -->
                         <p:tab title="Otras descripciones">
 
-                            <p:panelGrid columns="1" styleClass="ui-panelgrid-blank otherDescriptions" style="padding: 3px 3px">
+                            <h:panelGrid columns="1" styleClass="ui-panelgrid-blank otherDescriptions">
 
                                 <smtk:descriptions descriptions="#{conceptBean.concept.getValidDescriptionsButFSNandFavorite()}"
                                                    otherTermino="#{conceptBean.otherTermino}"
@@ -89,7 +90,7 @@
                                                    editable="#{conceptBean.concept.editable}">
                                 </smtk:descriptions>
 
-                            </p:panelGrid>
+                            </h:panelGrid>
 
                         </p:tab>
 
@@ -174,56 +175,68 @@
 
                         <!--Crossmaps -->
                         <p:tab title="Crossmaps" rendered="#{ conceptBean.concept.persistent and conceptBean.concept.modeled }">
-                            <p:panel id="indirectCrossmap"
-                                     widgetVar="panelIndirectCrossmap"
-                                     styleClass="attributes"
-                                     rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
-                                <smtk:crossmapIndirect concept="#{conceptBean.concept}"/>
+                            <h:panelGrid columns="1" styleClass="ui-panelgrid-blank otherDescriptions" style="width: 100%">
 
-                            </p:panel>
+                                <p:panel id="indirectCrossmap"
+                                         widgetVar="panelIndirectCrossmap"
+                                         styleClass="attributes"
+                                         rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
-                            <p:panel id="directCrossmap"
-                                     widgetVar="panelDirectCrossmap"
-                                     styleClass="attributes"
-                                     rendered="#{conceptBean.category.hasRelationshipDefinitions}">
+                                    <smtk:crossmapIndirect concept="#{conceptBean.concept}"/>
 
-                                <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
-                                             var="relationshipDefinition">
+                                </p:panel>
 
-                                    <h:column>
+                                <p:panel id="directCrossmap"
+                                         widgetVar="panelDirectCrossmap"
+                                         styleClass="attributes"
+                                         rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
-                                        <p:outputPanel
-                                                id="panelRelationshipDefinitonCrossmap"
-                                                style="border:0px; margin: 0px; padding: 0px;"
-                                                styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}">
+                                    <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
+                                                 var="relationshipDefinition">
 
-                                            <smtk:crossmapType
-                                                    targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                                    relationshipDefinition="#{relationshipDefinition}"
-                                                    concept="#{conceptBean.concept}"
-                                                    rendered="#{relationshipDefinition.targetDefinition.crossMapType}"/>
+                                        <h:column>
 
-                                        </p:outputPanel>
+                                            <p:outputPanel
+                                                    id="panelRelationshipDefinitonCrossmap"
+                                                    style="border:0px; margin: 0px; padding: 0px;"
+                                                    styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}">
 
-                                    </h:column>
-                                </h:dataTable>
-                            </p:panel>
+                                                <smtk:crossmapType
+                                                        targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                                        relationshipDefinition="#{relationshipDefinition}"
+                                                        concept="#{conceptBean.concept}"
+                                                        rendered="#{relationshipDefinition.targetDefinition.crossMapType}"/>
+
+                                            </p:outputPanel>
+
+                                        </h:column>
+                                    </h:dataTable>
+                                </p:panel>
+
+                            </h:panelGrid>
+
                         </p:tab>
 
                         <!--RefSets -->
                         <p:tab title="RefSets" rendered="#{conceptBean.concept.modeled}">
-                            <smtk:refset/>
+                            <h:panelGrid columns="1" styleClass="ui-panelgrid-blank otherDescriptions">
+                                <smtk:refset/>
+                            </h:panelGrid>
                         </p:tab>
 
                         <!-- Etiquetas -->
                         <p:tab title="Etiquetas">
-                            <smtk:tags editable="#{conceptBean.concept.editable}" tagslist="#{conceptBean.concept.tags}"/>
+                            <h:panelGrid columns="1" styleClass="ui-panelgrid-blank otherDescriptions">
+                                <smtk:tags editable="#{conceptBean.concept.editable}" tagslist="#{conceptBean.concept.tags}"/>
+                            </h:panelGrid>
                         </p:tab>
 
                         <!-- Historial -->
                         <p:tab title="Historial" rendered="#{conceptBean.concept.modeled}">
-                            <smtk:history/>
+                            <h:panelGrid columns="1" styleClass="ui-panelgrid-blank otherDescriptions">
+                                <smtk:history/>
+                            </h:panelGrid>
                         </p:tab>
 
                     </p:tabView>
