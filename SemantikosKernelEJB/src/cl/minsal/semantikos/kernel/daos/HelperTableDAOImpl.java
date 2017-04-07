@@ -373,8 +373,12 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
                 call.setNull(6, Types.BOOLEAN);
             else
                 call.setBoolean(6,cell.getBooleanValue());
+            if(cell.getForeignKeyValue()==null){
+                call.setNull(7, Types.BIGINT);
+            }else{
+                call.setLong(7, cell.getForeignKeyValue());
+            }
 
-            call.setLong(7, cell.getForeignKeyValue());
 
             call.execute();
 
@@ -681,7 +685,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
              CallableStatement call = connection.prepareCall(selectRecord)) {
 
             call.setLong(1,helperTable.getId());
-            call.setString(2,pattern);
+            call.setString(2,pattern.toLowerCase());
 
             /* Se prepara y realiza la consulta */
             call.execute();
