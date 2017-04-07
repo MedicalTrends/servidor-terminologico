@@ -70,6 +70,9 @@ public class SnomedCTSnapshotUpdate extends PersistentEntity {
     /** Detalle de la actualización */
     List<SnomedCTSnapshotUpdateDetail> snomedCTSnapshotUpdateDetails = new ArrayList<>();
 
+    public SnomedCTSnapshotUpdate() {
+    }
+
     /**
      *
      * @param release: La versión del snapshot
