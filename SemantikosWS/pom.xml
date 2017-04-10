@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>SemantikosWS</artifactId>
-    <version>3.1.1</version>
+    <version>3.1.2</version>
     <packaging>war</packaging>
 
     <properties>
@@ -15,7 +15,7 @@
     <parent>
         <groupId>cl.minsal.semantikos</groupId>
         <artifactId>Semantikos</artifactId>
-        <version>3.1.1</version>
+        <version>3.1.2</version>
     </parent>
 
     <dependencies>
@@ -31,14 +31,14 @@
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosKernelEJB</artifactId>
-            <version>3.1.1</version>
+            <version>3.1.2</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosWSEJB</artifactId>
-            <version>3.1.1</version>
+            <version>3.1.2</version>
             <scope>provided</scope>
         </dependency>
 
