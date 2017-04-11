@@ -113,7 +113,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             call.executeBatch();
         }
         catch (SQLException e) {
-            String errorMsg = "SnomedCTSnapshotDAOImpl.persist(): Error al persistir Objeto ISnomed: "+e;
+            String errorMsg = "SnomedCTSnapshotDAOImpl.persist(): Error al persistir Componente Snomed: "+e;
             // Aquí se debe registrar el error en el log de salida
             //SnomedCTSnapshotFactory.logError(errorMsg);
             logger.error(errorMsg);
@@ -148,9 +148,9 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof RelationshipSCT)
                 //persistedSnomedCTComponent = snomedCTDAO.getRelationshipSCTBy(snomedCTComponent.getId());
 
-            if(persistedSnomedCTComponent.equals(snomedCTComponent)) {
-                snomedCTComponents.remove(snomedCTComponent);
-            }
+                if(persistedSnomedCTComponent.equals(snomedCTComponent)) {
+                    snomedCTComponents.remove(snomedCTComponent);
+                }
 
             snomedCTSnapshotUpdateDetails.add(new SnomedCTSnapshotUpdateDetail(snomedCTComponent, persistedSnomedCTComponent.evaluateChange(snomedCTComponent)));
 
@@ -222,7 +222,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             call.executeBatch();
         }
         catch (SQLException e) {
-            String errorMsg = "SnomedCTSnapshotDAOImpl.persist(): Error al eliminar Objeto ISnomed: "+e;
+            String errorMsg = "SnomedCTSnapshotDAOImpl.persist(): Error al eliminar componente Snomed: "+e;
             // Aquí se debe registrar el error en el log de salida
             //SnomedCTSnapshotFactory.logError(errorMsg);
             logger.error(errorMsg);
@@ -453,6 +453,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             }
 
             rs.close();
+            call.close();
+            connection.close();
 
         } catch (SQLException e) {
             String errorMsg = "Error al persistir La actualización de snapshot SnomedCT";
@@ -494,6 +496,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             }
 
             rs.close();
+            call.close();
+            connection.close();
 
         } catch (SQLException e) {
             String errorMsg = "Error al actualizar La actualización de snapshot SnomedCT";
@@ -549,6 +553,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             }
 
             rs.close();
+            call.close();
+            connection.close();
 
         } catch (SQLException e) {
             String errorMsg = "Error al crear el estado de La actualización de snapshot SnomedCT";
@@ -558,6 +564,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
 
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     private void updateSnomedCTSnapshotUpdateState(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
 
         ConnectionBD connect = new ConnectionBD();
@@ -595,6 +602,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             }
 
             rs.close();
+            call.close();
+            connection.close();
 
         } catch (SQLException e) {
             String errorMsg = "Error al actualizar el estado de La actualización de snapshot SnomedCT";
@@ -612,6 +621,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
 
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     private void addSnomedCTSnapshotUpdateDetails(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
 
         ConnectionBD connect = new ConnectionBD();

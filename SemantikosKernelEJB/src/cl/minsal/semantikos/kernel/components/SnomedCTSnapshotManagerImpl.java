@@ -109,6 +109,7 @@ public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
 
     }
 
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     private void processRequest(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
         //Se preprocesan los cambios: Esto es, extraer los elementos a insertar, a actualizar y errores
         snapshotProcessingRequest = snomedCTSnapshotDAO.preprocessRequest(snapshotPreprocessingRequest);
@@ -122,6 +123,7 @@ public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
         snapshotProcessingRequest.clear();
     }
 
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     private void postProcessRequest(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
         //Se pushean los cambios a la BD
         snomedCTSnapshotUpdate.setSnomedCTSnapshotUpdateDetails(snomedCTSnapshotDAO.postProcessRequest(snomedCTSnapshotUpdate));

@@ -100,7 +100,7 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
      */
     public boolean authenticate(String username, String password) throws AuthenticationException {
 
-        User user = authDAO.getUserByUsername(username);
+        User user = authDAO.getUserByEmail(username);
 
         if (user == null) {
             throw new AuthenticationException("Usuario no existe");

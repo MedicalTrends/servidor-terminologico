@@ -110,7 +110,8 @@
                         </p:column>
 
                         <p:column rendered="#{snapshotBean.snomedCTSnapshotUpdate.started}">
-                            <p:progressBar id="progressBarConcepts" widgetVar="pbConcepts" style="width:300px"/>
+                            <p:progressBar id="progressBarConcepts" widgetVar="pbConcepts" style="width:300px"
+                                           value="#{(snapshotBean.snomedCTSnapshotUpdate.conceptsProcessed/snapshotBean.snomedCTSnapshotUpdate.conceptsTotal)*100}" />
                         </p:column>
 
                         <p:column rendered="#{ not snapshotBean.snomedCTSnapshotUpdate.started}">
@@ -143,7 +144,8 @@
                         </p:column>
 
                         <p:column rendered="#{snapshotBean.snomedCTSnapshotUpdate.started}">
-                            <p:progressBar id="progressBarDescriptions" widgetVar="pbDescriptions" style="width:300px"/>
+                            <p:progressBar id="progressBarDescriptions" widgetVar="pbDescriptions" style="width:300px"
+                                           value="#{(snapshotBean.snomedCTSnapshotUpdate.descriptionsProcessed/snapshotBean.snomedCTSnapshotUpdate.descriptionsTotal)*100}"/>
                         </p:column>
 
                         <p:column rendered="#{not snapshotBean.snomedCTSnapshotUpdate.started}">
@@ -176,7 +178,8 @@
                         </p:column>
 
                         <p:column rendered="#{ snapshotBean.snomedCTSnapshotUpdate.started}">
-                            <p:progressBar id="progressBarRelationships" widgetVar="pbRelationships" style="width:300px"/>
+                            <p:progressBar id="progressBarRelationships" widgetVar="pbRelationships" style="width:300px"
+                                           value="#{(snapshotBean.snomedCTSnapshotUpdate.relationshipsProcessed/snapshotBean.snomedCTSnapshotUpdate.relationshipsTotal)*100}"/>
                         </p:column>
 
                         <p:column rendered="#{ not snapshotBean.snomedCTSnapshotUpdate.started}">
@@ -210,7 +213,8 @@
                         </p:column>
 
                         <p:column rendered="#{snapshotBean.snomedCTSnapshotUpdate.started}">
-                            <p:progressBar id="progressBarRefsets" widgetVar="pbRefsets" style="width:300px"/>
+                            <p:progressBar id="progressBarRefsets" widgetVar="pbRefsets" style="width:300px"
+                                           value="#{(snapshotBean.snomedCTSnapshotUpdate.refsetsProcessed/snapshotBean.snomedCTSnapshotUpdate.refsetsTotal)*100}"/>
                         </p:column>
 
                         <p:column rendered="#{not snapshotBean.snomedCTSnapshotUpdate.started}">
@@ -243,7 +247,8 @@
                         </p:column>
 
                         <p:column rendered="#{snapshotBean.snomedCTSnapshotUpdate.started}">
-                            <p:progressBar id="progressBarTransitives" widgetVar="pbTransitives" style="width:300px"/>
+                            <p:progressBar id="progressBarTransitives" widgetVar="pbTransitives" style="width:300px"
+                                           value="#{(snapshotBean.snomedCTSnapshotUpdate.conceptsProcessed/snapshotBean.snomedCTSnapshotUpdate.conceptsTotal)*100}"/>
                         </p:column>
 
                         <p:column rendered="#{not snapshotBean.snomedCTSnapshotUpdate.started}">
@@ -271,9 +276,9 @@
 
                 <br/>
 
-                <p:commandButton value="Actualizar SNAPSHOT" async="true" styleClass="ui-priority-primary" actionListener="#{snapshotBean.updateSnapshotSCT}" />
+                <p:commandButton value="Actualizar SNAPSHOT" async="true" ajax="false" styleClass="ui-priority-primary" actionListener="#{snapshotBean.updateSnapshotSCT}" />
 
-                <p:poll interval="10" update="snapshotForm" widgetVar="poll" autoStart="false" />
+                <p:poll interval="10" update="snapshotForm" id="poll" widgetVar="poll" autoStart="false" />
 
             </h:form>
 

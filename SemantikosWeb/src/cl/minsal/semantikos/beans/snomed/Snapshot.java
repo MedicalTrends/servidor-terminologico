@@ -548,7 +548,7 @@ for (ConceptSCT conceptSCT : conceptSCTs) {
         time_start = System.currentTimeMillis();
         snomedCTSnapshotUpdate.setDate(new Timestamp(currentTimeMillis()));
         snomedCTSnapshotUpdate.setRelease("1.0");
-        context.execute("PF('poll').start()");
+        context.execute("PF('poll').start();");
         snomedCTSnapshotManager.updateSnapshot(snomedCTSnapshotUpdate);
         time_end = System.currentTimeMillis();
         System.out.println("Tiempo: " + ((time_end - time_start) / 1000) + " segundos");
