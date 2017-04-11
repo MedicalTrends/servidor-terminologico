@@ -204,7 +204,7 @@
                                             <f:facet name="input">
                                                 <p:inputText disabled="#{!row.valid and row.persistent}" value="#{row.cells[columnIndex].stringValue}"
                                                              rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1}"/>
-                                                <p:selectOneMenu disabled="#{!row.valid}" value="#{row.cells[columnIndex].booleanValue}" autoWidth="false"
+                                                <p:selectOneMenu disabled="#{!row.valid and row.persistent}" value="#{row.cells[columnIndex].booleanValue}" autoWidth="false"
                                                                  style="width: 70%"
                                                                  rendered="#{!column.foreignKey and column.helperTableDataTypeId == 2}">
                                                     <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
