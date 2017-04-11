@@ -133,16 +133,30 @@ public class RefSetsBean implements Serializable {
      */
     public void createRefset() {
         if (refSetToCreate.getInstitution() != null && refSetToCreate.getName().length() > 0) {
-            refSetToCreate = refSetManager.createRefSet(refSetToCreate, authenticationBean.getLoggedUser());
-            refSetToCreate = new RefSet(null, new Institution(), null);
-            conceptsToCategory = null;
-            conceptsToDescription = null;
-            refSetList = refSetManager.getAllRefSets();
-            messageBean.messageSuccess("Éxito", "El RefSet a sido guardado exitosamente.");
+            if(!existRefSetsEqualsInstitution(refSetToCreate)){
+                refSetToCreate = refSetManager.createRefSet(refSetToCreate, authenticationBean.getLoggedUser());
+                refSetToCreate = new RefSet(null, new Institution(), null);
+                conceptsToCategory = null;
+                conceptsToDescription = null;
+                refSetList = refSetManager.getAllRefSets();
+                messageBean.messageSuccess("Éxito", "El RefSet a sido guardado exitosamente.");
+            }else{
+                messageBean.messageError("No se pueden crear 2 RefSets con el mismo nombre y en la misma institución");
+            }
+
         } else {
             messageBean.messageError("Falta información para crear el RefSet");
         }
 
+    }
+
+    public boolean existRefSetsEqualsInstitution(RefSet refSet){
+        for (RefSet set : refSetList) {
+            if(set.getName().equals(refSet.getName()) && set.getInstitution().getName().equals(refSet.getInstitution().getName())){
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -215,12 +229,27 @@ public class RefSetsBean implements Serializable {
      * @param refSet      refset que almacenara el concepto
      */
     public void addConcept(RefSet refSet) {
+        ConceptSMTK conceptNoValid = conceptManager.getNoValidConcept();
+        ConceptSMTK conceptPending = conceptManager.getPendingConcept();
         if(!conceptSMTKListSelectedEdit.isEmpty()){
+            for (ConceptSMTK smtk : conceptSMTKListSelectedEdit) {
+                if(smtk.equals(conceptNoValid) || smtk.equals(conceptPending)){
+                    messageBean.messageError("El concepto no válido o pendiente, no se puede agregar a un RefSets");
+                    return;
+                }
+                addConcept(refSet,smtk);
+            }
             for (ConceptSMTK smtk : conceptSMTKListSelectedEdit) {
                 addConcept(refSet,smtk);
             }
         }
         if(!conceptSMTKListSelected.isEmpty()){
+            for (ConceptSMTK smtk : conceptSMTKListSelected) {
+                if(smtk.equals(conceptNoValid) || smtk.equals(conceptPending)){
+                    messageBean.messageError("El concepto no válido o pendiente, no se puede agregar a un RefSets");
+                    return;
+                }
+            }
             for (ConceptSMTK smtk : conceptSMTKListSelected) {
                 addConcept(refSet,smtk);
             }
