@@ -274,6 +274,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             while (rs.next()) {
                 errors.add(rs.getLong(1));
             }
+
+            rs.close();
         }
         catch (SQLException e) {
             String errorMsg = "SnomedCTSnapshotDAOImpl.getErrors(): Error al obtener referencias inexistentes: "+e;
@@ -325,6 +327,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             while (rs.next()) {
                 registersToUpdate.add(map.get(rs.getLong(1)));
             }
+
+            rs.close();
         }
         catch (SQLException e) {
             String errorMsg = "SnomedCTSnapshotDAOImpl.getRegistersToUpdate(): Error al obtener registros a actualizar: "+e;
@@ -354,6 +358,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
                 TransitiveSCT transitiveSCT = new TransitiveSCT(rs.getLong(1), rs.getLong(2));
                 registersToDelete.add(transitiveSCT);
             }
+
+            rs.close();
         }
         catch (SQLException e) {
             String errorMsg = "SnomedCTSnapshotDAOImpl.getRegistersToUpdate(): Error al obtener registros a actualizar: "+e;
@@ -446,6 +452,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
                 throw new EJBException(errorMsg);
             }
 
+            rs.close();
+
         } catch (SQLException e) {
             String errorMsg = "Error al persistir La actualización de snapshot SnomedCT";
             logger.error(errorMsg);
@@ -484,6 +492,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
+
+            rs.close();
 
         } catch (SQLException e) {
             String errorMsg = "Error al actualizar La actualización de snapshot SnomedCT";
@@ -538,6 +548,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
                 throw new EJBException(errorMsg);
             }
 
+            rs.close();
+
         } catch (SQLException e) {
             String errorMsg = "Error al crear el estado de La actualización de snapshot SnomedCT";
             logger.error(errorMsg);
@@ -581,6 +593,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
+
+            rs.close();
 
         } catch (SQLException e) {
             String errorMsg = "Error al actualizar el estado de La actualización de snapshot SnomedCT";

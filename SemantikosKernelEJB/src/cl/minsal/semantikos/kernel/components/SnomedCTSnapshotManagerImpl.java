@@ -41,6 +41,8 @@ public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
         // Se inicializan los datos de control
         SnomedCTSnapshotFactory.getInstance().initSnomedCTSnapshotUpdate(snomedCTSnapshotUpdate);
 
+        snomedCTSnapshotUpdate.setStarted(true);
+
         if(!snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().isConceptsProcessed()) {
             // Primero se procesan los conceptos
             SnomedCTSnapshotFactory.getInstance().initReader(snomedCTSnapshotUpdate.getConceptSnapshotPath(), snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().getConceptsFileLine());

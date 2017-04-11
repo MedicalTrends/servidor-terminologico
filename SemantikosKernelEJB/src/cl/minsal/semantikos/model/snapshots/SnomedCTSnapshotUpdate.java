@@ -24,6 +24,8 @@ public class SnomedCTSnapshotUpdate extends PersistentEntity {
     /** Usuario */
     private User user;
 
+    private boolean started = false;
+
     private boolean finished = false;
 
     private boolean withErrors = false;
@@ -34,6 +36,7 @@ public class SnomedCTSnapshotUpdate extends PersistentEntity {
     /** Rutas de los datafiles (componentes) del snapshot
      *
      */
+
     private String conceptSnapshotPath;
     private String descriptionSnapshotPath;
     private String relationshipSnapshotPath;
@@ -328,6 +331,15 @@ public class SnomedCTSnapshotUpdate extends PersistentEntity {
             this.snomedCTSnapshotUpdateState.setTransitivesProcessed(true);
         }
     }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
+
 
     public boolean isFinished() {
         return finished;
