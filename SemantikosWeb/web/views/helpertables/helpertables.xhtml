@@ -221,7 +221,7 @@
                                                             locale="es" navigator="true" pattern="dd-MM-yyyy"
                                                             mask="true"/>
                                                 <p:outputPanel
-                                                        rendered="#{row.cells[columnIndex].column.foreignKey}">
+                                                        rendered="#{column.foreignKey}">
                                                     <p:selectOneMenu disabled="#{!row.valid and row.persistent}" value="#{row.cells[columnIndex].foreignKeyValue}"
                                                                      rendered="#{column.foreignKey }">
                                                         <f:selectItems
