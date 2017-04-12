@@ -237,7 +237,6 @@ public class RefSetsBean implements Serializable {
                     messageBean.messageError("El concepto no válido o pendiente, no se puede agregar a un RefSets");
                     return;
                 }
-                addConcept(refSet,smtk);
             }
             for (ConceptSMTK smtk : conceptSMTKListSelectedEdit) {
                 addConcept(refSet,smtk);
