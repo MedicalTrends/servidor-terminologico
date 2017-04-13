@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.model.snapshots;
 
 import cl.minsal.semantikos.model.snomedct.*;
-import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -398,7 +397,7 @@ public class SnomedCTSnapshotFactory {
 
                 try {
                     TransitiveSCT transitiveSCT = createTransitivesSCTFromString(line);
-                    snapshotPreprocessingRequest.getRegisters().put(new Pair<>(transitiveSCT.getIdPartent(), transitiveSCT.getIdChild()), transitiveSCT);
+                    snapshotPreprocessingRequest.getRegisters().put(transitiveSCT.getId(), transitiveSCT);
                     snapshotPreprocessingRequest.getReferencesFrom().put(transitiveSCT.getId(), transitiveSCT.getIdPartent());
                     snapshotPreprocessingRequest.getReferencesTo().put(transitiveSCT.getId(), transitiveSCT.getIdChild());
                 } catch (Exception e) {

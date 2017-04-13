@@ -200,3 +200,16 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 .searchSCT.ui-autocomplete-panel {
     width: 50%;
 }
+
+.ui-dialog .ui-dialog-titlebar {
+    background-color: #4270d0;
+    color: white;
+}
+
+.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon-closethick {
+    background-image: url("#{resource['primefaces-rio/images/delete-white.svg']}");;
+}
+
+.ui-datatable table tbody .ui-state-highlight.ui-row-editing > td {
+    color: #108bd5;
+}

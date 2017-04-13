@@ -4,7 +4,6 @@ import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.model.snapshots.*;
 import cl.minsal.semantikos.model.snomedct.*;
-import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -321,7 +320,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
                 call.setArray(1, connection.createArrayOf("text", map.keySet().toArray(new String[map.size()])));
             }
             if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof TransitiveSCT) {
-                call.setArray(1, connection.createArrayOf("bigint", map.keySet().toArray(new Pair[map.size()])));
+                call.setArray(1, connection.createArrayOf("bigint", map.keySet().toArray(new Long[map.size()])));
             }
             else {
                 call.setArray(1, connection.createArrayOf("bigint", map.keySet().toArray(new Long[map.size()])));
