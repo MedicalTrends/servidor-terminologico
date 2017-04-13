@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.model.snapshots.*;
 import cl.minsal.semantikos.model.snomedct.*;
 import org.slf4j.Logger;
@@ -23,7 +24,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     @EJB
     private SnomedCTDAO snomedCTDAO;
 
-    public List<SnomedCTSnapshotUpdateDetail> persist(List<SnomedCTComponent> snomedCTComponents) {
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    private List<SnomedCTSnapshotUpdateDetail> persist(List<SnomedCTComponent> snomedCTComponents) {
 
         List<SnomedCTSnapshotUpdateDetail> snomedCTSnapshotUpdateDetails = new ArrayList<>();
 
@@ -32,8 +34,6 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             snomedCTSnapshotUpdateDetails.add(new SnomedCTSnapshotUpdateDetail(snomedCTComponent, AuditActionType.SNOMED_CT_CREATION));
 
         }
-
-        ConnectionBD connect = new ConnectionBD();
 
         String QUERY = "";
 
@@ -45,10 +45,10 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             QUERY = "{call semantikos.create_relationship_sct(?,?,?,?,?,?,?,?,?,?)}";
         if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof LanguageRefsetSCT)
             QUERY = "{call semantikos.create_language_ref_set_sct(?,?,?,?,?,?,?)}";
-        if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof LanguageRefsetSCT)
+        if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof TransitiveSCT)
             QUERY = "{call semantikos.create_language_ref_set_sct(?,?,?,?,?,?,?)}";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(QUERY)) {
 
             if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof ConceptSCT) {
@@ -92,7 +92,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             }
             if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof LanguageRefsetSCT) {
                 for (LanguageRefsetSCT languageRefsetSCT: (List<LanguageRefsetSCT>) (Object) snomedCTComponents) {
-                    call.setLong(1, languageRefsetSCT.getId());
+                    call.setString(1, languageRefsetSCT.getID());
                     call.setTimestamp(2, languageRefsetSCT.getEffectiveTime());
                     call.setBoolean(3, languageRefsetSCT.isActive());
                     call.setLong(4, languageRefsetSCT.getModuleId());
@@ -127,12 +127,11 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
         return snomedCTSnapshotUpdateDetails;
     }
 
-    public List<SnomedCTSnapshotUpdateDetail> update(List<SnomedCTComponent> snomedCTComponents) {
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    private List<SnomedCTSnapshotUpdateDetail> update(List<SnomedCTComponent> snomedCTComponents) {
         /**
          * Para el caso de las actualizaciones conviene realizar por cada registro para evaluar los casos posibles
          */
-        ConnectionBD connect = new ConnectionBD();
-
         String QUERY = "";
 
         List<SnomedCTSnapshotUpdateDetail> snomedCTSnapshotUpdateDetails = new ArrayList<>();
@@ -159,7 +158,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
         return snomedCTSnapshotUpdateDetails;
     }
 
-    public List<SnomedCTSnapshotUpdateDetail> delete(List<SnomedCTComponent> snomedCTComponents) {
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    private List<SnomedCTSnapshotUpdateDetail> delete(List<SnomedCTComponent> snomedCTComponents) {
 
         List<SnomedCTSnapshotUpdateDetail> snomedCTSnapshotUpdateDetails = new ArrayList<>();
 
@@ -168,8 +168,6 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             snomedCTSnapshotUpdateDetails.add(new SnomedCTSnapshotUpdateDetail(snomedCTComponent, AuditActionType.SNOMED_CT_REMOVAL));
 
         }
-
-        ConnectionBD connect = new ConnectionBD();
 
         String QUERY = "";
 
@@ -184,7 +182,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
         if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof LanguageRefsetSCT)
             QUERY = "{call semantikos.delete_transitive_sct(?,?)}";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(QUERY)) {
 
             if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof ConceptSCT) {
@@ -236,6 +234,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
         return snomedCTSnapshotUpdateDetails;
     }
 
+
     public List<SnomedCTSnapshotUpdateDetail> log(List<SnomedCTComponent> snomedCTComponents) {
 
         List<SnomedCTSnapshotUpdateDetail> snomedCTSnapshotUpdateDetails = new ArrayList<>();
@@ -249,9 +248,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
         return snomedCTSnapshotUpdateDetails;
     }
 
-    private List<Long> getErrors(Map<Long, SnomedCTComponent> registers, Map<Long, Long> references) {
-
-        ConnectionBD connect = new ConnectionBD();
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    private List<Long> getErrors(Map<Object, SnomedCTComponent> registers, Map<Long, Long> references) {
 
         String QUERY = "{call semantikos.get_unexisting_concept_sct_ids(?)}";
 
@@ -261,7 +259,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
 
         List<Long> errors = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(QUERY)) {
 
             //if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof ConceptSCT)
@@ -297,9 +295,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
         return errors;
     }
 
-    private List<SnomedCTComponent> getRegistersToUpdate(Map<Long, SnomedCTComponent> map) {
-
-        ConnectionBD connect = new ConnectionBD();
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    private List<SnomedCTComponent> getRegistersToUpdate(Map<Object, SnomedCTComponent> map) {
 
         String QUERY = "";
 
@@ -309,23 +306,39 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             QUERY = "{call semantikos.get_existing_description_sct_ids(?)}";
         if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof RelationshipSCT)
             QUERY = "{call semantikos.get_existing_relationship_sct_ids(?)}";
-        if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof RelationshipSCT)
-            QUERY = "{call semantikos.get_existing_relationship_sct_ids(?)}";
+        if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof LanguageRefsetSCT)
+            QUERY = "{call semantikos.get_existing_refset_sct_ids(?)}";
+        if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof TransitiveSCT)
+            QUERY = "{call semantikos.get_existing_transitive_sct_ids(?)}";
 
         List<SnomedCTComponent> registersToUpdate = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(QUERY)) {
 
-            //if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof ConceptSCT)
-            call.setArray(1, connection.createArrayOf("bigint", map.keySet().toArray(new Long[map.size()])));
+            if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof LanguageRefsetSCT) {
+                call.setArray(1, connection.createArrayOf("text", map.keySet().toArray(new String[map.size()])));
+            }
+            if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof TransitiveSCT) {
+                call.setArray(1, connection.createArrayOf("bigint", map.keySet().toArray(new Long[map.size()])));
+            }
+            else {
+                call.setArray(1, connection.createArrayOf("bigint", map.keySet().toArray(new Long[map.size()])));
+            }
 
             call.execute();
 
             ResultSet rs = call.getResultSet();
 
-            while (rs.next()) {
-                registersToUpdate.add(map.get(rs.getLong(1)));
+            if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof LanguageRefsetSCT) {
+                while (rs.next()) {
+                    registersToUpdate.add(map.get(rs.getString(1)));
+                }
+            }
+            else {
+                while (rs.next()) {
+                    registersToUpdate.add(map.get(rs.getLong(1)));
+                }
             }
 
             rs.close();
@@ -339,15 +352,14 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
         return registersToUpdate;
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     private List<SnomedCTComponent> getRegistersToDelete() {
-
-        ConnectionBD connect = new ConnectionBD();
 
         String QUERY = "{call semantikos.get_leftovers_transitive_sct(?)}";
 
         List<SnomedCTComponent> registersToDelete = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(QUERY)) {
 
             call.execute();
@@ -371,6 +383,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public SnapshotProcessingRequest preprocessRequest(SnapshotPreprocessingRequest snapshotPreprocessingRequest) {
 
         List<SnomedCTComponent> errors = new ArrayList<>();
@@ -431,8 +444,8 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void persistSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
-        ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = connect.getConnection();
+
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.create_snapshot_sct_update(?,?,?)}")) {
 
             call.setString(1, snomedCTSnapshotUpdate.getRelease());
@@ -468,9 +481,9 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void updateSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
-        ConnectionBD connect = new ConnectionBD();
+
         boolean updated = false;
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.update_snapshot_sct_update(?,?,?,?,?,?,?,?)}")) {
 
             call.setLong(1, snomedCTSnapshotUpdate.getTotal());
@@ -518,13 +531,12 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
 
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     private void createSnomedCTSnapshotUpdateState(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
-
-        ConnectionBD connect = new ConnectionBD();
 
         String QUERY = "{call semantikos.create_snapshot_sct_update_state(?,?,?,?,?,?,?,?,?,?,?)}";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(QUERY)) {
 
             call.setBoolean(1, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().isConceptsProcessed());
@@ -567,13 +579,11 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     private void updateSnomedCTSnapshotUpdateState(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
 
-        ConnectionBD connect = new ConnectionBD();
-
         String QUERY = "{call semantikos.update_snapshot_sct_update_state(?,?,?,?,?,?,?,?,?,?,?)}";
 
         boolean updated = false;
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(QUERY)) {
 
             call.setBoolean(1, snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().isConceptsProcessed());
@@ -624,11 +634,9 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     private void addSnomedCTSnapshotUpdateDetails(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
 
-        ConnectionBD connect = new ConnectionBD();
-
         String QUERY = "{call semantikos.create_snapshot_sct_update_detail(?,?,?,?,?,?,?)}";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(QUERY)) {
 
             for (SnomedCTSnapshotUpdateDetail snomedCTSnapshotUpdateDetail : snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateDetails()) {

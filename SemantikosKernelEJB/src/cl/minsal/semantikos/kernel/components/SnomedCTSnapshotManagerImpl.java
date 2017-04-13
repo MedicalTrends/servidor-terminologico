@@ -92,14 +92,13 @@ public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
             SnomedCTSnapshotFactory.getInstance().haltReader();
         }
 
-        if(!snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().isRefsetsProcessed()) {
+        if(!snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().isTransitivesProcessed()) {
             // Luego se procesan los hijos transitivos
             SnomedCTSnapshotFactory.getInstance().initReader(snomedCTSnapshotUpdate.getTransitiveSnapshotPath(), snomedCTSnapshotUpdate.getSnomedCTSnapshotUpdateState().getTransitivesFileLine());
 
             //Se hace un update de los cambios al buffer de snapshot
             while(!(snapshotPreprocessingRequest = SnomedCTSnapshotFactory.getInstance().createTransitivesSnapshotPreprocessingRequest(BUFFER_SIZE)).isEmpty()) {
                 processRequest(snomedCTSnapshotUpdate);
-                snomedCTSnapshotUpdate.setRefsetsProcessed(snomedCTSnapshotUpdate.getTransitiveProcessed()+snapshotPreprocessingRequest.getRegisters().size());
             }
 
             SnomedCTSnapshotFactory.getInstance().haltReader();
