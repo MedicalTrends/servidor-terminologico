@@ -143,6 +143,7 @@
         </f:facet>
 
         <p:dataTable id="dataTableTag" var="tag" value="#{conceptBean.concept.tags}"
+                     rendered="#{cc.attrs.editable or not empty cc.attrs.tagslist}"
                      reflow="true"
                      emptyMessage="El concepto no tiene etiquetas">
             <p:column headerText="Etiquetas">
