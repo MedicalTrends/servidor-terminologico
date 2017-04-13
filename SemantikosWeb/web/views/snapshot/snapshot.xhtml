@@ -1,8 +1,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-
                 template="/WEB-INF/template/template.xhtml">
 
     <ui:define name="header">
@@ -11,106 +11,199 @@
             <p:menuitem value="Administración de Usuarios" url="#" />
         </p:breadCrumb>
 
-
-
     </ui:define>
 
 
     <ui:define name="content">
         <div class="Container100">
         <div class="ContainerIndent">
-        <div class="Card ShadowEffect TexAlCenter">
+        <div class="Card ShadowEffect">
 
-        <p:panel id="snapshotPanel">
-            <h:form id="snapshotForm">
+        <h:form id="snapshotForm">
 
-                <p:growl id="msg" showDetail="true" autoUpdate="true"></p:growl>
+                <p:growl id="msg" showDetail="true" autoUpdate="true" />
+                <p:growl id="messages1" showDetail="true"/>
 
+                <p:fieldset legend="General">
 
-                <div class="Container100">
-                    <div class="ContainerIndent">
+                    <p:panelGrid columns="4" columnClasses="label, value, label, value" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel value="Release" />
+                        <p:inputText value="#{snapshotBean.snomedCTSnapshotUpdate.release}"  />
 
-                        <h2>Concept</h2>
+                        <p:outputLabel value="Usuario" />
+                        <p:inputText value="#{snapshotBean.snomedCTSnapshotUpdate.user.email}" disabled="true"  />
 
-                        <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileConcept}" mode="advanced"
-                                      dragDropSupport="false"
-                                      multiple="true" update="messages1" sizeLimit="1000000000" fileLimit="1"
-                                      />
+                        <p:outputLabel value="Creado" />
+                        <p:inputText value="#{snapshotBean.snomedCTSnapshotUpdate.date}" disabled="true" />
 
-                        <p:growl id="messages1" showDetail="true"/>
+                        <p:outputLabel value="Última Actualización" />
+                        <p:inputText value="" disabled="true"  />
+                    </p:panelGrid>
 
+                </p:fieldset>
 
-                    </div>
-                </div>
+                <p:panel header="Estado" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent}">
 
-                <div class="Container100">
-                    <div class="ContainerIndent">
+                    <p:panelGrid columns="2" columnClasses="label, value">
+                        <p:outputLabel value="Estado General" />
+                        <p:inputText value="Finalizado" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent and snapshotBean.snomedCTSnapshotUpdate.finished}" disabled="true"  />
+                        <p:inputText value="Interrumpido" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent and not snapshotBean.snomedCTSnapshotUpdate.finished}" disabled="true"  />
 
-                        <h2>Description</h2>
+                        <p:outputLabel value="Tipo Interrupción" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent and not snapshotBean.snomedCTSnapshotUpdate.finished}" />
+                        <p:inputText value="Solicitada por usuario" disabled="true" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent and not snapshotBean.snomedCTSnapshotUpdate.finished}" />
+                        <p:inputText value="Excepción Controlada" disabled="true" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent and not snapshotBean.snomedCTSnapshotUpdate.finished}" />
 
-                        <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileDescription}" mode="advanced"
-                                      dragDropSupport="false"
-                                      multiple="true" update="messages2" sizeLimit="1000000000" fileLimit="1"
-                                      />
+                        <p:outputLabel value="Razón Interrupción"  rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent and not snapshotBean.snomedCTSnapshotUpdate.finished}" />
+                        <p:inputText value="" disabled="true" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent and not snapshotBean.snomedCTSnapshotUpdate.finished}" />
+                    </p:panelGrid>
 
-                        <p:growl id="messages2" showDetail="true"/>
+                </p:panel>
 
+                <br />
 
-                    </div>
-                </div>
+                <p:panelGrid id="snapshotComponents">
 
-                <div class="Container100">
-                    <div class="ContainerIndent">
+                    <f:facet name="header">
+                        <p:row>
+                            <p:column>
+                                Componente SnomedCT
+                            </p:column>
+                            <p:column>
+                                Data File
+                            </p:column>
+                            <p:column>
+                            </p:column>
+                            <p:column rendered="false">
+                                Estado actualización
+                            </p:column>
+                        </p:row>
+                    </f:facet>
 
-                        <h2>Relationship</h2>
+                    <p:row>
+                        <p:column style="font-weight: bold;">Conceptos</p:column>
 
-                        <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileRelationship}" mode="advanced"
-                                      dragDropSupport="false"
-                                      multiple="true" update="messages3" sizeLimit="1000000000" fileLimit="1"
-                                      />
+                        <p:column>
+                            <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileConcept}" mode="advanced" dragDropSupport="false" process="@this"
+                                          update="messages1, snapshotComponents" sizeLimit="1000000000" fileLimit="3" allowTypes="/(\.|\/)(txt|csv)$/" />
+                        </p:column>
 
-                        <p:growl id="messages3" showDetail="true"/>
+                        <p:column>
+                            <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.conceptSnapshotPath != null}">
+                                <i class="fa fa-check-circle fa-lg LeadenGreen" />
+                            </p:outputPanel>
+                            <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.conceptSnapshotPath == null}">
+                                <i class="fa fa-exclamation-triangle fa-lg Orange" />
+                            </p:outputPanel>
+                        </p:column>
 
+                        <p:column rendered="false">
+                            <p:progressBar id="progressBarConcepts" widgetVar="pbConcepts" style="width:300px"/>
+                        </p:column>
 
-                    </div>
-                </div>
+                    </p:row>
 
-                <div class="Container100">
-                    <div class="ContainerIndent">
+                    <p:row>
 
-                        <h2>Language RefSet</h2>
+                        <p:column style="font-weight: bold;">Descripciones</p:column>
 
-                        <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileLanguageRefSet}" mode="advanced"
-                                      dragDropSupport="false"
-                                      multiple="true" update="messages4" sizeLimit="1000000000" fileLimit="1"
-                                      />
+                        <p:column>
+                            <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileDescription}" mode="advanced" dragDropSupport="false"
+                                          update="messages1, snapshotComponents" sizeLimit="1000000000" fileLimit="3" allowTypes="/(\.|\/)(txt|csv)$/" />
+                        </p:column>
 
-                        <p:growl id="messages4" showDetail="true"/>
+                        <p:column>
+                            <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.descriptionSnapshotPath != null}">
+                                <i class="fa fa-check-circle fa-lg LeadenGreen" />
+                            </p:outputPanel>
+                            <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.descriptionSnapshotPath == null}">
+                                <i class="fa fa-exclamation-triangle fa-lg Orange" />
+                            </p:outputPanel>
+                        </p:column>
 
+                        <p:column rendered="false">
+                            <p:progressBar id="progressBarDescriptions" widgetVar="pbDescriptions" style="width:300px"/>
+                        </p:column>
 
-                    </div>
-                </div>
+                    </p:row>
 
-                <div class="Container100">
-                    <div class="ContainerIndent">
+                    <p:row>
 
-                        <h2>Transitive</h2>
+                        <p:column style="font-weight: bold;">Relaciones</p:column>
 
-                        <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileTransitive}" mode="advanced"
-                                      dragDropSupport="false"
-                                      multiple="true" update="messages5" sizeLimit="1000000000" fileLimit="1"
-                                      />
+                        <p:column>
+                            <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileRelationship}" mode="advanced" dragDropSupport="false"
+                                          update="messages1, snapshotComponents" sizeLimit="1000000000" fileLimit="3" allowTypes="/(\.|\/)(txt|csv)$/" />
+                        </p:column>
 
-                        <p:growl id="messages5" showDetail="true"/>
+                        <p:column>
+                            <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.relationshipSnapshotPath != null}">
+                                <i class="fa fa-check-circle fa-lg LeadenGreen" />
+                            </p:outputPanel>
+                            <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.relationshipSnapshotPath == null}">
+                                <i class="fa fa-exclamation-triangle fa-lg Orange" />
+                            </p:outputPanel>
+                        </p:column>
 
+                        <p:column rendered="false">
+                            <p:progressBar id="progressBarRelationships" widgetVar="pbRelationships" style="width:300px"/>
+                        </p:column>
 
-                    </div>
-                </div>
+                    </p:row>
 
-                <p:commandButton value="Cargar SNAPSHOT" actionListener="#{snapshotBean.processSnapshotSCT}"></p:commandButton>
+                    <p:row>
+
+                        <p:column style="font-weight: bold;">RefSets</p:column>
+
+                        <p:column>
+                            <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileLanguageRefSet}" mode="advanced" dragDropSupport="false"
+                                          update="messages1, snapshotComponents" sizeLimit="1000000000" fileLimit="3" allowTypes="/(\.|\/)(txt|csv)$/" />
+                        </p:column>
+
+                        <p:column>
+                            <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.refsetSnapshotPath != null}">
+                                <i class="fa fa-check-circle fa-lg LeadenGreen" />
+                            </p:outputPanel>
+                            <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.refsetSnapshotPath == null}">
+                                <i class="fa fa-exclamation-triangle fa-lg Orange" />
+                            </p:outputPanel>
+                        </p:column>
+
+                        <p:column rendered="false">
+                            <p:progressBar id="progressBarRefsets" widgetVar="pbRefsets" style="width:300px"/>
+                        </p:column>
+
+                    </p:row>
+
+                    <p:row>
+
+                        <p:column style="font-weight: bold;">Hijos Transitivos</p:column>
+
+                        <p:column>
+                            <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileTransitive}" mode="advanced" dragDropSupport="false"
+                                          update="messages1, snapshotComponents" sizeLimit="1000000000" fileLimit="3" allowTypes="/(\.|\/)(txt|csv)$/" />
+                        </p:column>
+
+                        <p:column>
+                            <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.transitiveSnapshotPath != null}">
+                                <i class="fa fa-check-circle fa-lg LeadenGreen" />
+                            </p:outputPanel>
+                            <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.transitiveSnapshotPath == null}">
+                                <i class="fa fa-exclamation-triangle fa-lg Orange" />
+                            </p:outputPanel>
+                        </p:column>
+
+                        <p:column rendered="false">
+                            <p:progressBar id="progressBarTransitives" widgetVar="pbTransitives" style="width:300px"/>
+                        </p:column>
+
+                    </p:row>
+
+                </p:panelGrid>
+
+                <p:commandButton value="Actualizar SNAPSHOT" actionListener="#{snapshotBean.processSnapshotSCT}" />
 
             </h:form>
-        </p:panel>
+
     </div>
     </div>
     </div>

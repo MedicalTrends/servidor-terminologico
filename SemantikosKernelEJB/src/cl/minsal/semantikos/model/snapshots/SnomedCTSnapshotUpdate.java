@@ -70,6 +70,9 @@ public class SnomedCTSnapshotUpdate extends PersistentEntity {
     /** Detalle de la actualización */
     List<SnomedCTSnapshotUpdateDetail> snomedCTSnapshotUpdateDetails = new ArrayList<>();
 
+    public SnomedCTSnapshotUpdate() {
+    }
+
     /**
      *
      * @param release: La versión del snapshot
@@ -280,7 +283,7 @@ public class SnomedCTSnapshotUpdate extends PersistentEntity {
 
     public void setRelationshipsProcessed(int relationshipsProcessed) {
         this.relationshipsProcessed = relationshipsProcessed;
-        this.snomedCTSnapshotUpdateState.setRefsetsFileLine(relationshipsProcessed);
+        this.snomedCTSnapshotUpdateState.setRelationshipsFileLine(relationshipsProcessed);
         if(getRelationshipsProcessed()>=getRelationshipsTotal()) {
             this.snomedCTSnapshotUpdateState.setRelationshipsProcessed(true);
         }

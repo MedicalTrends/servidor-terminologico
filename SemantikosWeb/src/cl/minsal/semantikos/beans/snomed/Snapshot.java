@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.beans.snomed;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -32,6 +33,14 @@ public class Snapshot {
     private List<LanguageRefsetSCT> languageRefsetSCTs;
     private List<TransitiveSCT> transitiveSCTs;
 
+    public SnomedCTSnapshotUpdate getSnomedCTSnapshotUpdate() {
+        return snomedCTSnapshotUpdate;
+    }
+
+    public void setSnomedCTSnapshotUpdate(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
+        this.snomedCTSnapshotUpdate = snomedCTSnapshotUpdate;
+    }
+
     private SnomedCTSnapshotUpdate snomedCTSnapshotUpdate;
     private String conceptSnapshotPath;
     private String descriptionSnapshotPath;
@@ -44,6 +53,13 @@ public class Snapshot {
 
     @EJB
     private SnomedCTSnapshotManager snomedCTSnapshotManager;
+
+    @PostConstruct
+    public void init() {
+        snomedCTSnapshotUpdate = new SnomedCTSnapshotUpdate();
+        snomedCTSnapshotUpdate.setUser(authenticationBean.getLoggedUser());
+
+    }
 
     public AuthenticationBean getAuthenticationBean() {
         return authenticationBean;
@@ -58,7 +74,8 @@ public class Snapshot {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            conceptSnapshotPath = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            //conceptSnapshotPath = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            snomedCTSnapshotUpdate.setConceptSnapshotPath(copyFile(event.getFile().getFileName(), event.getFile().getInputstream()));
             //chargeConcept(dir);
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,7 +87,8 @@ public class Snapshot {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            descriptionSnapshotPath = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            //descriptionSnapshotPath = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            snomedCTSnapshotUpdate.setDescriptionSnapshotPath(copyFile(event.getFile().getFileName(), event.getFile().getInputstream()));
             //chargeDescription(dir);
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,7 +100,8 @@ public class Snapshot {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            relationshipSnapshotPath = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            //relationshipSnapshotPath = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            snomedCTSnapshotUpdate.setRelationshipSnapshotPath(copyFile(event.getFile().getFileName(), event.getFile().getInputstream()));
             //chargeRelationship(dir);
         } catch (IOException e) {
             e.printStackTrace();
@@ -94,7 +113,8 @@ public class Snapshot {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            transitiveSnapshotPath = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            //transitiveSnapshotPath = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            snomedCTSnapshotUpdate.setTransitiveSnapshotPath(copyFile(event.getFile().getFileName(), event.getFile().getInputstream()));
             //chargeTransitive(dir);
         } catch (IOException e) {
             e.printStackTrace();
@@ -106,7 +126,8 @@ public class Snapshot {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         try {
-            refsetSnapshotPath = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            //refsetSnapshotPath = copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            snomedCTSnapshotUpdate.setRefsetSnapshotPath(copyFile(event.getFile().getFileName(), event.getFile().getInputstream()));
             //chargeLanguajeRefset(dir);
         } catch (IOException e) {
             e.printStackTrace();
