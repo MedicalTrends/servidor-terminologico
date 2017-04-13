@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.model.snapshots;
 
 import cl.minsal.semantikos.model.snomedct.*;
+import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -311,7 +312,7 @@ public class SnomedCTSnapshotFactory {
 
         //long id	effectiveTime	active	moduleId	conceptId	languageCode	typeId	term	caseSignificanceId
 
-        long id = Long.parseLong(tokens[0]);
+        String id = tokens[0];
 
         String time = tokens[1].substring(0, 4) + "-" + tokens[1].substring(4, 6) + "-" + tokens[1].substring(6, 8) + " 00:00:00";
 
@@ -344,7 +345,10 @@ public class SnomedCTSnapshotFactory {
 
                 try {
                     LanguageRefsetSCT languageRefsetSCT = createLanguageRefsetSCTFromString(line);
-                    snapshotPreprocessingRequest.getRegisters().put(languageRefsetSCT.getId(), languageRefsetSCT);
+                    if(snapshotPreprocessingRequest.getRegisters().containsKey(languageRefsetSCT.getID())) {
+                        throw new Exception("Llave duplicada para los registros de componente Snomed LanguageRefset");
+                    }
+                    snapshotPreprocessingRequest.getRegisters().put(languageRefsetSCT.getID(), languageRefsetSCT);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -394,7 +398,7 @@ public class SnomedCTSnapshotFactory {
 
                 try {
                     TransitiveSCT transitiveSCT = createTransitivesSCTFromString(line);
-                    snapshotPreprocessingRequest.getRegisters().put(transitiveSCT.getId(), transitiveSCT);
+                    snapshotPreprocessingRequest.getRegisters().put(new Pair<>(transitiveSCT.getIdPartent(), transitiveSCT.getIdChild()), transitiveSCT);
                     snapshotPreprocessingRequest.getReferencesFrom().put(transitiveSCT.getId(), transitiveSCT.getIdPartent());
                     snapshotPreprocessingRequest.getReferencesTo().put(transitiveSCT.getId(), transitiveSCT.getIdChild());
                 } catch (Exception e) {
