@@ -12,6 +12,7 @@ import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.SnomedCTSnapshotManager;
 import cl.minsal.semantikos.model.snapshots.SnomedCTSnapshotUpdate;
 import cl.minsal.semantikos.model.snomedct.*;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
 import java.io.*;
@@ -539,10 +540,15 @@ for (ConceptSCT conceptSCT : conceptSCTs) {
         // }
     }
 
-    public void processSnapshotSCT() {
+    public void updateSnapshotSCT() {
+
+        RequestContext context = RequestContext.getCurrentInstance();
+
         long time_start, time_end;
         time_start = System.currentTimeMillis();
-        snomedCTSnapshotUpdate = new SnomedCTSnapshotUpdate("1.0",conceptSnapshotPath, descriptionSnapshotPath, relationshipSnapshotPath, refsetSnapshotPath, transitiveSnapshotPath, new Timestamp(currentTimeMillis()), authenticationBean.getLoggedUser() );
+        snomedCTSnapshotUpdate.setDate(new Timestamp(currentTimeMillis()));
+        snomedCTSnapshotUpdate.setRelease("1.0");
+        context.execute("PF('poll').start();");
         snomedCTSnapshotManager.updateSnapshot(snomedCTSnapshotUpdate);
         time_end = System.currentTimeMillis();
         System.out.println("Tiempo: " + ((time_end - time_start) / 1000) + " segundos");

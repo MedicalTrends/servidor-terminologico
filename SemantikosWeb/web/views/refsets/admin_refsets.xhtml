@@ -144,20 +144,20 @@
                             <p:column headerText="Acción">
                                 <div style="text-align: center">
                                     <p:commandButton icon="fa fa-edit" update="@(.editRefset)"
-                                                     oncomplete="PF('editRefset').show()">
+                                                     oncomplete="PF('editRefset').show()" title="Editar">
                                         <f:setPropertyActionListener value="#{refset}"
                                                                      target="#{refsetsBean.refSetEdit}"/>
                                     </p:commandButton>
-                                    <p:commandButton icon="fa fa-search" oncomplete="PF('viewRefset').show()"
+                                    <p:commandButton title="Consultar" icon="fa fa-search" oncomplete="PF('viewRefset').show()"
                                                      update="@(.viewRefSet)"
                                                      actionListener="#{refsetsBean.loadHistoryRefset(refset)}">
                                         <f:setPropertyActionListener value="#{refset}"
                                                                      target="#{refsetsBean.refSetSelect}"/>
                                     </p:commandButton>
 
-                                    <p:commandButton icon="fa fa-trash"
+                                    <p:commandButton title="Dejar no vigente" icon="fa fa-trash"
                                                      actionListener="#{refsetsBean.invalidRefset(refset)}"
-                                                     update="@(.listRefSets)">
+                                                     update="@(.listRefSets)" rendered="#{refset.valid}">
                                         <p:confirm header="Confirmation" message="¿Desea invalidar este RefSet?"
                                                    icon="ui-icon-alert"/>
 
@@ -205,6 +205,9 @@
                                     <p:dataTable value="#{refsetsBean.refSetSelect.concepts}" var="concepts"
                                                  emptyMessage="El RefSet no contiene conceptos"
                                                  scrollable="true" scrollHeight="250">
+                                        <p:column headerText="Concepto">
+                                            <h:outputText value="#{concepts.conceptID}"/>
+                                        </p:column>
                                         <p:column headerText="Concepto">
                                             <h:outputText value="#{concepts.descriptionFavorite.term}"/>
                                         </p:column>

@@ -39,7 +39,7 @@
                         <p:column>
                             <h:outputText value="#{i.name}"/>
                         </p:column>
-                        <p:ajax event="itemSelect" listener="#{refsetsBean.reloadRefsetByInstitution}" update="@(.refsetInstitution)"></p:ajax>
+                        <p:ajax event="itemSelect" listener="#{refsetsBean.reloadRefsetByInstitution}" update="@(.refsetInstitution)" />
                     </p:selectOneMenu>
 
                 </div>
@@ -81,7 +81,8 @@
             </p:outputPanel>
         </f:facet>
 
-        <p:dataTable var="refset" value="#{refsetsBean.conceptRefSetList}" rendered="#{conceptBean.editable}">
+        <p:dataTable var="refset" value="#{refsetsBean.conceptRefSetList}"
+                     rendered="#{cc.attrs.editable or not empty refsetsBean.conceptRefSetList}">
             <p:column headerText="ID RefSet">
                 <h:outputText value="#{refset.id}"/>
             </p:column>

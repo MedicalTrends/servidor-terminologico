@@ -24,9 +24,13 @@
                 <p:growl id="msg" showDetail="true" autoUpdate="true" />
                 <p:growl id="messages1" showDetail="true"/>
 
+            <div class="ui-fluid">
+
+            <p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank">
+
                 <p:fieldset legend="General">
 
-                    <p:panelGrid columns="4" columnClasses="label, value, label, value" styleClass="ui-panelgrid-blank">
+                    <p:panelGrid columns="2" columnClasses="label, value" styleClass="ui-panelgrid-blank">
                         <p:outputLabel value="Release" />
                         <p:inputText value="#{snapshotBean.snomedCTSnapshotUpdate.release}"  />
 
@@ -42,7 +46,7 @@
 
                 </p:fieldset>
 
-                <p:panel header="Estado" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent}">
+                <p:fieldset legend="Estado" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent}">
 
                     <p:panelGrid columns="2" columnClasses="label, value">
                         <p:outputLabel value="Estado General" />
@@ -57,7 +61,28 @@
                         <p:inputText value="" disabled="true" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent and not snapshotBean.snomedCTSnapshotUpdate.finished}" />
                     </p:panelGrid>
 
-                </p:panel>
+                </p:fieldset>
+
+                <p:fieldset legend="Estado" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent}">
+
+                    <p:panelGrid columns="2" columnClasses="label, value">
+                        <p:outputLabel value="Estado General" />
+                        <p:inputText value="Finalizado" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent and snapshotBean.snomedCTSnapshotUpdate.finished}" disabled="true"  />
+                        <p:inputText value="Interrumpido" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent and not snapshotBean.snomedCTSnapshotUpdate.finished}" disabled="true"  />
+
+                        <p:outputLabel value="Tipo Interrupción" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent and not snapshotBean.snomedCTSnapshotUpdate.finished}" />
+                        <p:inputText value="Solicitada por usuario" disabled="true" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent and not snapshotBean.snomedCTSnapshotUpdate.finished}" />
+                        <p:inputText value="Excepción Controlada" disabled="true" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent and not snapshotBean.snomedCTSnapshotUpdate.finished}" />
+
+                        <p:outputLabel value="Razón Interrupción"  rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent and not snapshotBean.snomedCTSnapshotUpdate.finished}" />
+                        <p:inputText value="" disabled="true" rendered="#{ snapshotBean.snomedCTSnapshotUpdate.persistent and not snapshotBean.snomedCTSnapshotUpdate.finished}" />
+                    </p:panelGrid>
+
+                </p:fieldset>
+
+            </p:panelGrid>
+
+            </div>
 
                 <br />
 
@@ -73,21 +98,23 @@
                             </p:column>
                             <p:column>
                             </p:column>
-                            <p:column rendered="false">
-                                Estado actualización
-                            </p:column>
                         </p:row>
                     </f:facet>
 
                     <p:row>
                         <p:column style="font-weight: bold;">Conceptos</p:column>
 
-                        <p:column>
+                        <p:column rendered="#{ not snapshotBean.snomedCTSnapshotUpdate.started}">
                             <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileConcept}" mode="advanced" dragDropSupport="false" process="@this"
                                           update="messages1, snapshotComponents" sizeLimit="1000000000" fileLimit="3" allowTypes="/(\.|\/)(txt|csv)$/" />
                         </p:column>
 
-                        <p:column>
+                        <p:column rendered="#{snapshotBean.snomedCTSnapshotUpdate.started}">
+                            <p:progressBar id="progressBarConcepts" widgetVar="pbConcepts" style="width:300px"
+                                           value="#{(snapshotBean.snomedCTSnapshotUpdate.conceptsProcessed/snapshotBean.snomedCTSnapshotUpdate.conceptsTotal)*100}" />
+                        </p:column>
+
+                        <p:column rendered="#{ not snapshotBean.snomedCTSnapshotUpdate.started}">
                             <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.conceptSnapshotPath != null}">
                                 <i class="fa fa-check-circle fa-lg LeadenGreen" />
                             </p:outputPanel>
@@ -96,8 +123,13 @@
                             </p:outputPanel>
                         </p:column>
 
-                        <p:column rendered="false">
-                            <p:progressBar id="progressBarConcepts" widgetVar="pbConcepts" style="width:300px"/>
+                        <p:column rendered="#{snapshotBean.snomedCTSnapshotUpdate.started}">
+                            <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.snomedCTSnapshotUpdateState.conceptsProcessed}">
+                                <i class="fa fa-check-circle fa-lg LeadenGreen" />
+                            </p:outputPanel>
+                            <p:outputPanel rendered="#{ not snapshotBean.snomedCTSnapshotUpdate.snomedCTSnapshotUpdateState.conceptsProcessed}">
+                                <i class="fa fa-exclamation-triangle fa-lg Orange" />
+                            </p:outputPanel>
                         </p:column>
 
                     </p:row>
@@ -106,12 +138,17 @@
 
                         <p:column style="font-weight: bold;">Descripciones</p:column>
 
-                        <p:column>
+                        <p:column rendered="#{not snapshotBean.snomedCTSnapshotUpdate.started}">
                             <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileDescription}" mode="advanced" dragDropSupport="false"
                                           update="messages1, snapshotComponents" sizeLimit="1000000000" fileLimit="3" allowTypes="/(\.|\/)(txt|csv)$/" />
                         </p:column>
 
-                        <p:column>
+                        <p:column rendered="#{snapshotBean.snomedCTSnapshotUpdate.started}">
+                            <p:progressBar id="progressBarDescriptions" widgetVar="pbDescriptions" style="width:300px"
+                                           value="#{(snapshotBean.snomedCTSnapshotUpdate.descriptionsProcessed/snapshotBean.snomedCTSnapshotUpdate.descriptionsTotal)*100}"/>
+                        </p:column>
+
+                        <p:column rendered="#{not snapshotBean.snomedCTSnapshotUpdate.started}">
                             <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.descriptionSnapshotPath != null}">
                                 <i class="fa fa-check-circle fa-lg LeadenGreen" />
                             </p:outputPanel>
@@ -120,8 +157,13 @@
                             </p:outputPanel>
                         </p:column>
 
-                        <p:column rendered="false">
-                            <p:progressBar id="progressBarDescriptions" widgetVar="pbDescriptions" style="width:300px"/>
+                        <p:column rendered="#{snapshotBean.snomedCTSnapshotUpdate.started}">
+                            <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.snomedCTSnapshotUpdateState.descriptionsProcessed}">
+                                <i class="fa fa-check-circle fa-lg LeadenGreen" />
+                            </p:outputPanel>
+                            <p:outputPanel rendered="#{ not snapshotBean.snomedCTSnapshotUpdate.snomedCTSnapshotUpdateState.descriptionsProcessed}">
+                                <i class="fa fa-exclamation-triangle fa-lg Orange" />
+                            </p:outputPanel>
                         </p:column>
 
                     </p:row>
@@ -130,12 +172,17 @@
 
                         <p:column style="font-weight: bold;">Relaciones</p:column>
 
-                        <p:column>
+                        <p:column rendered="#{not snapshotBean.snomedCTSnapshotUpdate.started}">
                             <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileRelationship}" mode="advanced" dragDropSupport="false"
                                           update="messages1, snapshotComponents" sizeLimit="1000000000" fileLimit="3" allowTypes="/(\.|\/)(txt|csv)$/" />
                         </p:column>
 
-                        <p:column>
+                        <p:column rendered="#{ snapshotBean.snomedCTSnapshotUpdate.started}">
+                            <p:progressBar id="progressBarRelationships" widgetVar="pbRelationships" style="width:300px"
+                                           value="#{(snapshotBean.snomedCTSnapshotUpdate.relationshipsProcessed/snapshotBean.snomedCTSnapshotUpdate.relationshipsTotal)*100}"/>
+                        </p:column>
+
+                        <p:column rendered="#{ not snapshotBean.snomedCTSnapshotUpdate.started}">
                             <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.relationshipSnapshotPath != null}">
                                 <i class="fa fa-check-circle fa-lg LeadenGreen" />
                             </p:outputPanel>
@@ -144,9 +191,15 @@
                             </p:outputPanel>
                         </p:column>
 
-                        <p:column rendered="false">
-                            <p:progressBar id="progressBarRelationships" widgetVar="pbRelationships" style="width:300px"/>
+                        <p:column rendered="#{snapshotBean.snomedCTSnapshotUpdate.started}">
+                            <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.snomedCTSnapshotUpdateState.relationshipsProcessed}">
+                                <i class="fa fa-check-circle fa-lg LeadenGreen" />
+                            </p:outputPanel>
+                            <p:outputPanel rendered="#{ not snapshotBean.snomedCTSnapshotUpdate.snomedCTSnapshotUpdateState.relationshipsProcessed}">
+                                <i class="fa fa-exclamation-triangle fa-lg Orange" />
+                            </p:outputPanel>
                         </p:column>
+
 
                     </p:row>
 
@@ -154,12 +207,17 @@
 
                         <p:column style="font-weight: bold;">RefSets</p:column>
 
-                        <p:column>
+                        <p:column rendered="#{not snapshotBean.snomedCTSnapshotUpdate.started}">
                             <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileLanguageRefSet}" mode="advanced" dragDropSupport="false"
                                           update="messages1, snapshotComponents" sizeLimit="1000000000" fileLimit="3" allowTypes="/(\.|\/)(txt|csv)$/" />
                         </p:column>
 
-                        <p:column>
+                        <p:column rendered="#{snapshotBean.snomedCTSnapshotUpdate.started}">
+                            <p:progressBar id="progressBarRefsets" widgetVar="pbRefsets" style="width:300px"
+                                           value="#{(snapshotBean.snomedCTSnapshotUpdate.refsetsProcessed/snapshotBean.snomedCTSnapshotUpdate.refsetsTotal)*100}"/>
+                        </p:column>
+
+                        <p:column rendered="#{not snapshotBean.snomedCTSnapshotUpdate.started}">
                             <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.refsetSnapshotPath != null}">
                                 <i class="fa fa-check-circle fa-lg LeadenGreen" />
                             </p:outputPanel>
@@ -168,8 +226,13 @@
                             </p:outputPanel>
                         </p:column>
 
-                        <p:column rendered="false">
-                            <p:progressBar id="progressBarRefsets" widgetVar="pbRefsets" style="width:300px"/>
+                        <p:column rendered="#{snapshotBean.snomedCTSnapshotUpdate.started}">
+                            <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.snomedCTSnapshotUpdateState.refsetsProcessed}">
+                                <i class="fa fa-check-circle fa-lg LeadenGreen" />
+                            </p:outputPanel>
+                            <p:outputPanel rendered="#{ not snapshotBean.snomedCTSnapshotUpdate.snomedCTSnapshotUpdateState.refsetsProcessed}">
+                                <i class="fa fa-exclamation-triangle fa-lg Orange" />
+                            </p:outputPanel>
                         </p:column>
 
                     </p:row>
@@ -178,12 +241,17 @@
 
                         <p:column style="font-weight: bold;">Hijos Transitivos</p:column>
 
-                        <p:column>
+                        <p:column rendered="#{not snapshotBean.snomedCTSnapshotUpdate.started}">
                             <p:fileUpload fileUploadListener="#{snapshotBean.uploadFileTransitive}" mode="advanced" dragDropSupport="false"
                                           update="messages1, snapshotComponents" sizeLimit="1000000000" fileLimit="3" allowTypes="/(\.|\/)(txt|csv)$/" />
                         </p:column>
 
-                        <p:column>
+                        <p:column rendered="#{snapshotBean.snomedCTSnapshotUpdate.started}">
+                            <p:progressBar id="progressBarTransitives" widgetVar="pbTransitives" style="width:300px"
+                                           value="#{(snapshotBean.snomedCTSnapshotUpdate.conceptsProcessed/snapshotBean.snomedCTSnapshotUpdate.conceptsTotal)*100}"/>
+                        </p:column>
+
+                        <p:column rendered="#{not snapshotBean.snomedCTSnapshotUpdate.started}">
                             <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.transitiveSnapshotPath != null}">
                                 <i class="fa fa-check-circle fa-lg LeadenGreen" />
                             </p:outputPanel>
@@ -192,15 +260,25 @@
                             </p:outputPanel>
                         </p:column>
 
-                        <p:column rendered="false">
-                            <p:progressBar id="progressBarTransitives" widgetVar="pbTransitives" style="width:300px"/>
+                        <p:column rendered="#{snapshotBean.snomedCTSnapshotUpdate.started}">
+                            <p:outputPanel rendered="#{snapshotBean.snomedCTSnapshotUpdate.snomedCTSnapshotUpdateState.transitivesProcessed}">
+                                <i class="fa fa-check-circle fa-lg LeadenGreen" />
+                            </p:outputPanel>
+                            <p:outputPanel rendered="#{ not snapshotBean.snomedCTSnapshotUpdate.snomedCTSnapshotUpdateState.transitivesProcessed}">
+                                <i class="fa fa-exclamation-triangle fa-lg Orange" />
+                            </p:outputPanel>
                         </p:column>
+
 
                     </p:row>
 
                 </p:panelGrid>
 
-                <p:commandButton value="Actualizar SNAPSHOT" actionListener="#{snapshotBean.processSnapshotSCT}" />
+                <br/>
+
+                <p:commandButton value="Actualizar SNAPSHOT" async="true" ajax="false" styleClass="ui-priority-primary" actionListener="#{snapshotBean.updateSnapshotSCT}" />
+
+                <p:poll interval="10" update="snapshotForm" id="poll" widgetVar="poll" autoStart="false" />
 
             </h:form>
 

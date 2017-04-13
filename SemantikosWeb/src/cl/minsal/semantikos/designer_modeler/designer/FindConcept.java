@@ -94,15 +94,13 @@ public class FindConcept implements Serializable{
         if (pattern != null) {
             FacesContext context = FacesContext.getCurrentInstance();
             Category category = (Category) UIComponent.getCurrentComponent(context).getAttributes().get("category");
+            if(category!=null){
+                categoryArrayID= (category==null)? new Long[0]:new Long[] {category.getId()};
+            }
+
 
             if (pattern.trim().length() >= 2) {
                 if(standardizationPattern(pattern).length()<=1)return null;
-
-                if(category!=null){
-
-                    categoryArrayID= new Long[] {category.getId()};
-                }
-
                 int countConcept=conceptManager.countConceptBy(pattern,categoryArrayID,true);
                 findConcepts=conceptManager.findConceptBy(pattern,categoryArrayID,0,countConcept,true);
                 return findConcepts;
