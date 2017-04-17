@@ -26,8 +26,6 @@
             <f:event type="preRenderView" listener="#{generalBrowserBean.executeQuery}" />
         </f:metadata>
 
-        <div class="layout-main-content">
-
             <h:form id="browserForm" prependId="false">
 
                 <div class="ui-g">
@@ -35,8 +33,6 @@
                 <div class="ui-g-12">
 
                 <div class="card card-w-title">
-
-                    <h1>#{generalBrowserBean.category.name}</h1>
 
                     <p:dataTable id="browserTable"
                          styleClass="browserTable"
@@ -243,8 +239,6 @@
                 </div>
 
         </h:form>
-
-        </div>
 
     </ui:define>
 

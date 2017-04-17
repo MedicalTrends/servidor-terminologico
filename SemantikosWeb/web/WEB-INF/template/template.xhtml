@@ -40,7 +40,7 @@
             
             <div class="layout-main">
                 <div class="route-bar">
-                    <i class="fa fa-home"></i> <span>/ </span>
+                    <p:outputLabel outcome="/views/home.xhtml"><i class="fa fa-home" /></p:outputLabel> <span>/ </span>
                     <ui:insert name="viewname" />
                     <!--ui:include src="./right-sidebar.xhtml" /-->
                     <smtk:filters generalQuery="#{generalBrowserBean.generalQuery}" rendered="#{request.requestURI.contains('browser')}"  />
@@ -65,7 +65,7 @@
         
         <h:outputStylesheet name="css/nanoscroller.css" library="poseidon-layout" />
         <h:outputStylesheet name="css/animate.css" library="poseidon-layout" />
-        <h:outputStylesheet name="css/layout-blue.css" library="poseidon-layout" />
+        <h:outputStylesheet name="css/layout-minsal.css" library="poseidon-layout" />
         <h:outputStylesheet name="css/grid.css" library="poseidon-layout" />
     </h:body>
 

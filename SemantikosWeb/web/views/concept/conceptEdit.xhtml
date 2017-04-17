@@ -20,7 +20,7 @@
 
     <ui:define name="viewname">
         <p:link outcome="/views/browser/generalBrowser.xhtml?idCategory=#{conceptBean.category.id}" value="#{conceptBean.category}" />
-        <span>/</span>
+        <span>/ </span>
         <p:outputLabel value="#{conceptBean.concept.descriptionFavorite} (#{conceptBean.concept.conceptID }) [#{conceptBean.concept.modeled?'Modelado':'Borrador'}]"
                        rendered="#{conceptBean.concept.persistent}"/>
         <p:outputLabel value="Nuevo Concepto Borrador" rendered="#{not conceptBean.concept.persistent}"/>
@@ -37,9 +37,6 @@
             <f:viewParam name="pendingTerms" value="#{conceptBean.pendingTerms}" />
         </f:metadata>
 
-
-        <div class="layout-main-content">
-
             <p:outputPanel id="createEdit">
 
                 <h:form id="mainForm" rendered="#{ not (conceptBean.concept eq null ) }" styleClass="#{conceptBean.editable? '' : 'consult'}">
@@ -49,8 +46,6 @@
                     <div class="ui-g">
 
                     <div class="ui-g-12">
-
-                    <div class="card card-w-title">
 
                     <smtk:changeMarketed />
 
@@ -72,8 +67,6 @@
                         </p:outputPanel>
 
                     </p:outputPanel>
-
-                    <br />
 
                     <p:tabView>
 
@@ -244,24 +237,21 @@
                     </div>
                     </div>
                     </div>
-                    </div>
 
                     <!-- botonera acciones -->
 
                     <br/>
 
-                    <div style="text-align: right;">
+                    <div style="text-align:right;">
 
                                     <p:commandButton actionListener="#{conceptBean.saveConcept}" icon="fa fa-check"
-                                                     styleClass="ui-priority-primary"
-                                                     rendered="#{conceptBean.concept.editable}"
+                                                     rendered="#{conceptBean.concept.editable}" style="width: 150px"
                                                      value="Guardar"
                                                      update="growl, mainForm, @(.breadUpdate)">
                                     </p:commandButton>
 
                                     <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"
-                                                     styleClass="ui-priority-primary"
-                                                     value="Eliminar" type="submit" process="mainForm"
+                                                     value="Eliminar" type="submit" process="mainForm" style="width: 150px"
                                                      rendered="#{conceptBean.concept.persistent and not conceptBean.concept.modeled and conceptBean.concept.editable}"
                                                      update="growl, mainForm">
                                         <p:confirm header="Confirmation" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
@@ -271,7 +261,7 @@
                                     <smtk:trasnferConcept rendered="#{conceptBean.concept.modeled and conceptBean.concept.editable}" conceptSMTK="#{conceptBean.concept}"/>
 
                                     <p:commandButton actionListener="#{conceptBean.cancelConcept}" icon="fa fa-undo"
-                                                     styleClass="ui-priority-primary"
+                                                     style="width: 150px"
                                                      value="Deshacer" type="submit" process="mainForm"
                                                      rendered="#{conceptBean.concept.editable}"
                                                      update="growl, mainForm">
@@ -283,7 +273,7 @@
 
                                     <smtk:export-xls rendered="#{conceptBean.concept.modeled}" />
 
-                                    <p:button outcome="conceptEdit" value="Editar Concepto" styleClass="CyanButton ui-priority-primary" style="float: right" rendered="#{ not conceptBean.editable}">
+                                    <p:button outcome="conceptEdit" value="Editar Concepto" style="width: 150px" rendered="#{ not conceptBean.editable}">
                                         <f:param name="editMode" value="#{true}" />
                                         <f:param name="idConcept" value="#{conceptBean.concept.id}" />
                                     </p:button>
@@ -372,9 +362,6 @@
                             </p:dialog>
 
             </p:outputPanel>
-
-        </div>
-
 
 
         <h:outputStylesheet id="customCSS">

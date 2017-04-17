@@ -208,3 +208,33 @@ form#mainForm .otherDescriptions.ui-panelgrid .ui-panelgrid-cell {
 .layout-wrapper .right-sidebar {
     z-index: 999 !important;
 }
+
+.ui-selectonemenu.ui-state-disabled {
+    opacity: .5 !important;
+}
+
+.ui-radiobutton .ui-state-disabled {
+    opacity: .7 !important;
+}
+
+label.ui-state-disabled {
+    opacity: .7 !important;
+}
+
+input.ui-state-disabled {
+    opacity: .8 !important;
+}
+
+textarea.ui-state-disabled {
+    opacity: .8 !important;
+}
+
+/*
+.layout-wrapper .layout-main .route-bar {
+    padding: 5px 20px 5px 25px;
+    background-color: #f0f3f5;
+    width: 82%;
+    position: fixed;
+    z-index: 99;
+}
+*/

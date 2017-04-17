@@ -6,12 +6,10 @@
                 template="/WEB-INF/template/template.xhtml">
 
     <ui:define name="viewname">
-        Administración Usuarios
+        <p:outputLabel url="#" value="Administración Usuarios" />
     </ui:define>
 
     <ui:define name="content">
-
-        <div class="layout-main-content">
 
             <h:form id="form">
 
@@ -22,8 +20,6 @@
                 <div class="ui-g-12">
 
                 <div class="card card-w-title">
-
-                <h1>Administración Usuarios</h1>
 
                 <p:dataTable id="singleDT" var="user" value="#{usersBrowser.allUsers}" rowKey="#{user.idUser}" styleClass="users"
                              rows="30" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
@@ -171,8 +167,6 @@
                 </div>
 
             </h:form>
-
-        </div>
 
 
     </ui:define>
