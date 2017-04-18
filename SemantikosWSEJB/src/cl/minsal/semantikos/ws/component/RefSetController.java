@@ -32,26 +32,34 @@ public class RefSetController {
     @EJB
     private ConceptController conceptController;
 
-    public RefSetSearchResponse findRefSetsByDescriptions(@NotNull String descriptionId, Boolean includeInstitutions, String
+    public List<RefSetSearchResponse> findRefSetsByDescriptions(List<String> descriptionIds, Boolean includeInstitutions, String
             idStablishment) throws NotFoundFault {
 
         /* Se recupera el concepto asociado a la descripción */
-        ConceptSMTK conceptByDescriptionID;
-        try {
-            conceptByDescriptionID = this.conceptManager.getConceptByDescriptionID(descriptionId);
-        } catch (EJBException e) {
-            throw new NotFoundFault("Descripcion no encontrada: " + descriptionId);
+        List<ConceptSMTK> conceptsByDescriptionID = new ArrayList<>();
+
+        for (String descriptionId : descriptionIds) {
+            try {
+                conceptsByDescriptionID.add(this.conceptManager.getConceptByDescriptionID(descriptionId));
+            }
+            catch (EJBException e) {
+                throw new NotFoundFault("Descripcion no encontrada: " + descriptionId);
+            }
         }
 
-        RefSetSearchResponse res = new RefSetSearchResponse();
+        List<RefSetSearchResponse> res = new ArrayList<>();
 
-        List<RefSet> refSets = refSetManager.findByConcept(conceptByDescriptionID);
+        for (ConceptSMTK conceptByDescriptionID : conceptsByDescriptionID) {
+            RefSetSearchResponse refSetSearchResponse = new RefSetSearchResponse();
+            List<RefSet> refSets = refSetManager.findByConcept(conceptByDescriptionID);
+            refSetSearchResponse.setConceptId(conceptByDescriptionID.getConceptID());
+            refSetSearchResponse.setDescriptionId(conceptByDescriptionID.getDescriptionFavorite().getDescriptionId());
+            refSetSearchResponse.setDescription(conceptByDescriptionID.getDescriptionFavorite().getTerm());
+            refSetSearchResponse.setCategory(conceptByDescriptionID.getCategory().getName());
+            refSetSearchResponse.setRefSetsResponse(new RefSetsResponse(refSets));
 
-        res.setConceptId(conceptByDescriptionID.getConceptID());
-        res.setDescriptionId(conceptByDescriptionID.getDescriptionFavorite().getDescriptionId());
-        res.setDescription(conceptByDescriptionID.getDescriptionFavorite().getTerm());
-        res.setCategory(conceptByDescriptionID.getCategory().getName());
-        res.setRefSetsResponse(new RefSetsResponse(refSets));
+            res.add(refSetSearchResponse);
+        }
 
         return res;
     }
