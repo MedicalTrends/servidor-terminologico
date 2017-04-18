@@ -35,7 +35,8 @@
             </p:column>
 
             <p:column headerText="Acción" style="width: 50px;">
-                <p:commandButton icon="fa fa-chain-broken"
+                <p:commandButton icon="fa fa-trash"
+                                 title="Eliminar concepto del RefSets"
                                  ajax="true"
                                  process="@this"
                                  actionListener="#{refsetsBean.removeConcept(cc.attrs.refset,conceptSMTK)}"
