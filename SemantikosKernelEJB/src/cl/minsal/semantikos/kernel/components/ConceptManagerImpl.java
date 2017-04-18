@@ -503,8 +503,8 @@ public class ConceptManagerImpl implements ConceptManager {
             Category conceptCategory = relatedConcept.getCategory();
             List<Category> categoryFilters = Arrays.asList(categories);
 
-            /* Se agrega el concepto si su categoría está dentro de las categorías para filtrar */
-            if (categoryFilters.contains(conceptCategory)) {
+            /* Se agrega el concepto si su categoría está dentro de las categorías para filtrar y si está modelado */
+            if (categoryFilters.contains(conceptCategory) && relatedConcept.isModeled()) {
                 filteredRelatedConcepts.add(relatedConcept);
             }
         }
@@ -516,8 +516,8 @@ public class ConceptManagerImpl implements ConceptManager {
                     ConceptSMTK relatedConcept = (ConceptSMTK) relationship.getTarget();
                     List<Category> categoryFilters = Arrays.asList(categories);
 
-                    /* Se agrega el concepto si su categoría está dentro de las categorías para filtrar */
-                    if (categoryFilters.contains(relatedConcept.getCategory())) {
+                    /* Se agrega el concepto si su categoría está dentro de las categorías para filtrar y si está modelado */
+                    if (categoryFilters.contains(relatedConcept.getCategory()) && relatedConcept.isModeled()) {
                         filteredRelatedConcepts.add(relatedConcept);
                     }
                 }

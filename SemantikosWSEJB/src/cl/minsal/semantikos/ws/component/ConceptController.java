@@ -158,9 +158,9 @@ public class ConceptController {
         }
 
         ConceptSMTK source = null;
-        if (conceptId != null) {
+        if (conceptId != null && !conceptId.isEmpty()) {
             source = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
-        } else if (descriptionId != null) {
+        } else if (descriptionId != null && !descriptionId.isEmpty()) {
             source = this.conceptManager.getConceptByDescriptionID(descriptionId);
         }
 
@@ -585,7 +585,7 @@ public class ConceptController {
         ConceptSMTK conceptSMTK = null;
 
         try {
-            if (descriptionId != null) {
+            if (descriptionId != null && !descriptionId.isEmpty()) {
                 conceptSMTK = this.conceptManager.getConceptByDescriptionID(descriptionId);
             } else {
                 conceptSMTK = this.conceptManager.getConceptByCONCEPT_ID(conceptId);

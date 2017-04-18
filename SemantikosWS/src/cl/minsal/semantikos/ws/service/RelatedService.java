@@ -169,12 +169,12 @@ public class RelatedService {
     // REQ-WS-017 Lite
     @WebResult(name = "respuestaConceptosRelacionados")
     @WebMethod(operationName = "obtenerProductoComercialLite")
-    public RelatedConceptsResponse obtenerProductoComercialLite(
+    public RelatedConceptsLiteResponse obtenerProductoComercialLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Producto Comercial"));
+        return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Producto Comercial"));
     }
 
     // REQ-WS-014
