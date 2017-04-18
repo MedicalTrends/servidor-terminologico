@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 public class LanguageRefsetSCT extends PersistentEntity implements SnomedCTComponent {
 
 
-    private long id;
+    private String id;
     private Timestamp effectiveTime;
     private boolean active;
     private long moduleId;
@@ -19,8 +19,8 @@ public class LanguageRefsetSCT extends PersistentEntity implements SnomedCTCompo
     private long referencedComponentId;
     private long acceptabilityId;
 
-    public LanguageRefsetSCT(long id, Timestamp effectiveTime, boolean active, long moduleId, long refsetId, long referencedComponentId, long acceptabilityId) {
-        super(id);
+    public LanguageRefsetSCT(String id, Timestamp effectiveTime, boolean active, long moduleId, long refsetId, long referencedComponentId, long acceptabilityId) {
+        super(id.hashCode());
         this.id = id;
         this.effectiveTime = effectiveTime;
         this.active = active;
@@ -32,12 +32,16 @@ public class LanguageRefsetSCT extends PersistentEntity implements SnomedCTCompo
 
     @Override
     public long getId() {
-        return id;
+        return super.getId();
+    }
+
+    public String getID() {
+        return this.id;
     }
 
     @Override
     public void setId(long id) {
-        this.id = id;
+        super.setId(id);
     }
 
     @Override

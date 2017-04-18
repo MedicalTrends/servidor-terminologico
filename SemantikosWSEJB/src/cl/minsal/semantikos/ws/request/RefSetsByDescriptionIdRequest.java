@@ -13,7 +13,7 @@ import java.util.List;
 @XmlType(name = "PeticionRefSetsPorIdDescripcion", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class RefSetsByDescriptionIdRequest implements Serializable {
 
-    private String descriptionId;
+    private List<String> descriptionId;
 
     private Boolean includeInstitutions;
 
@@ -28,10 +28,10 @@ public class RefSetsByDescriptionIdRequest implements Serializable {
     }
 
     @XmlElement(required = true, name = "idDescripcion")
-    public String getDescriptionId() {
+    public List<String> getDescriptionId() {
         return descriptionId;
     }
-    public void setDescriptionId(String descriptionId) {
+    public void setDescriptionId(List<String> descriptionId) {
         this.descriptionId = descriptionId;
     }
 

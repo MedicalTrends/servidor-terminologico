@@ -18,23 +18,23 @@ public class SnapshotPreprocessingRequest {
     /**
      * El bloque de registros a pre-procesar
      */
-    private Map<Long, SnomedCTComponent> registers = new HashMap<>();
+    private Map<Object, SnomedCTComponent> registers = new HashMap<>();
 
     /**
-     * Las referencias desde un Concepto SnomedCT del registro indicado por la llave
+     * Las referencias desde un componente SnomedCT del registro indicado por la llave
      */
     private Map<Long, Long> referencesFrom = new HashMap<>();;
 
     /**
-     * Las referencias hacia un Concepto SnomedCT del registro indicado por la llave
+     * Las referencias hacia un componente SnomedCT del registro indicado por la llave
      */
     private Map<Long, Long> referencesTo = new HashMap<>();;
 
-    public Map<Long, SnomedCTComponent> getRegisters() {
+    public Map<Object, SnomedCTComponent> getRegisters() {
         return registers;
     }
 
-    public void setRegisters(Map<Long, SnomedCTComponent> registers) {
+    public void setRegisters(Map<Object, SnomedCTComponent> registers) {
         this.registers = registers;
     }
 

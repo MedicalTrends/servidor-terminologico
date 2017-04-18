@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.*;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
@@ -20,6 +21,7 @@ import javax.ejb.Startup;
 import javax.mail.Session;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.sql.CallableStatement;
@@ -63,6 +65,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         this.refreshTagsSMTK();
         this.refreshColumns();
         try {
+            this.refreshDataSource();
             this.refreshEmail();
         } catch (NamingException e) {
             e.printStackTrace();
@@ -361,5 +364,14 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         EmailFactory.getInstance().setMySession(session);
 
         return EmailFactory.getInstance();
+    }
+
+    @Override
+    public DataSourceFactory refreshDataSource() throws NamingException {
+        InitialContext c = new InitialContext();
+        DataSource dataSource = (DataSource) c.lookup("java:jboss/PostgresDS");
+        DataSourceFactory.getInstance().setDataSource(dataSource);
+
+        return DataSourceFactory.getInstance();
     }
 }

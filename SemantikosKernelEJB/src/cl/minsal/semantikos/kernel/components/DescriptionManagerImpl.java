@@ -369,8 +369,11 @@ public class DescriptionManagerImpl implements DescriptionManager {
         logger.info("DESCRIPTION ID=" + descriptionId + " tiene " + descriptionByDescriptionID.getUses() + " usos.");
 
         /* Se incrementa y se actualiza en la BDD */
-        descriptionByDescriptionID.setUses(descriptionByDescriptionID.getUses() + 1);
-        descriptionDAO.update(descriptionByDescriptionID);
+        if(descriptionByDescriptionID.isModeled()) {
+            descriptionByDescriptionID.setUses(descriptionByDescriptionID.getUses() + 1);
+            descriptionDAO.update(descriptionByDescriptionID);
+        }
+
         logger.info("DESCRIPTION ID=" + descriptionId + " tiene ahora " + descriptionByDescriptionID.getUses() + " usos.");
 
         /* Finalmente se retorna */

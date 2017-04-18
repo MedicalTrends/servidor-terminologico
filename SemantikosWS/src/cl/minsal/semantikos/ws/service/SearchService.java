@@ -249,21 +249,21 @@ public class SearchService {
     // REQ-WS-009
     @WebResult(name = "refsetSearchResponse")
     @WebMethod(operationName = "refSetsPorIdDescripcion")
-    public RefSetSearchResponse refSetsPorIdDescripcion(
+    public List<RefSetSearchResponse> refSetsPorIdDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "peticionRefSetsPorIdDescripcion")
                     RefSetsByDescriptionIdRequest request
     ) throws NotFoundFault, IllegalInputFault {
 
-        String descriptionId = request.getDescriptionId();
+        List<String> descriptionIds = request.getDescriptionId();
         Boolean includeInstitutions = request.getIncludeInstitutions();
         String idStablishment = request.getIdStablishment();
 
-        if (descriptionId == null || descriptionId.isEmpty()) {
+        if (descriptionIds == null || descriptionIds.isEmpty()) {
             throw new IllegalInputFault("Debe ingresar por lo menos un idDescripcion");
         }
-        return this.refSetController.findRefSetsByDescriptions(descriptionId, includeInstitutions,
-                idStablishment);
+
+        return this.refSetController.findRefSetsByDescriptions(descriptionIds, includeInstitutions, idStablishment);
 
     }
 

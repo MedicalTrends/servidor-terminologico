@@ -16,8 +16,8 @@ public class ConnectionBD {
 
     private Connection connection;
 
-
     public ConnectionBD() {
+
         javax.naming.InitialContext ctx;
         javax.sql.DataSource ds;
 

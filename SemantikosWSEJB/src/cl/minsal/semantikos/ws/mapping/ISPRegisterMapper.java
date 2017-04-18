@@ -10,6 +10,8 @@ import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
+
 /**
  * Created by Development on 2016-12-30.
  *
@@ -35,7 +37,7 @@ public class ISPRegisterMapper {
         res.setName(helperTableRecord.getDescription());
         res.setDescription(values.get(helperTableRecord.getDescription()));
         res.setValid(values.get(helperTableRecord.isValid()));
-        res.setValidityUntil(helperTableRecord.getValidityUntil().toString());
+        res.setValidityUntil(helperTableRecord.getValidityUntil()!=null?helperTableRecord.getValidityUntil().toString():EMPTY_STRING);
         res.setEstadoDelRegistro(values.get("ESTADO_REGISTRO"));
         res.setTitular(values.get("TITULAR"));
         res.setEquivalenciaTerapeutica(values.get("EQ_TERAPEUTICA"));
