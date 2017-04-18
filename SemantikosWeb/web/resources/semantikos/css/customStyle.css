@@ -229,6 +229,47 @@ textarea.ui-state-disabled {
     opacity: .8 !important;
 }
 
+.layout-menu-container {
+    background-color: #ffffff !important;
+}
+
+.layout-wrapper .layout-menu li ul {
+    background-color: #ffffff !important;
+}
+
+.layout-wrapper .layout-menu li.active-menuitem > a {
+    color: #3F51B5 !important;
+    background-color: #e0e0e0 !important;
+}
+
+.layout-wrapper .layout-menu li.active-menuitem > i {
+    color: #3F51B5 !important;
+}
+
+.layout-wrapper .layout-menu li a {
+    color: #455a64 !important;
+}
+
+.layout-wrapper .layout-menu li i {
+    color: #455a64 !important;
+}
+
+.layout-menu li a:hover {
+     background-color: #e0e0e0 !important;
+ }
+
+.layout-wrapper .layout-menu > li.active-menuitem > a {
+    color: #3F51B5  !important;
+}
+
+.layout-wrapper .layout-menu-container > .nano .nano-pane .nano-slider {
+    background-color: #656565 !important
+}
+
+.layout-wrapper .layout-menu-container > .nano > .nano-content > ul:last-child {
+    margin-top: 0 !important;
+}
+
 /*
 .layout-wrapper .layout-main .route-bar {
     padding: 5px 20px 5px 25px;
