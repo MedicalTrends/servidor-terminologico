@@ -13,14 +13,18 @@
                     <h:outputText value="${persistenceTestMBean.test}" rendered="false" />
 
                     <!-- section -->
-                    <div class="Container100">
-                        <div class="Container50 Responsive100">
-
-                        </div>
-
-                        <div class="Container50 Responsive100">
-
-                        </div>
+                    <div class="ui-fluid">
+                    <p:panelGrid layout="grid" columns="2">
+                        <p:menu toggleable="true" model="#{mainMenuBean.categoryMenuModel}" />
+                        <p:menu toggleable="true">
+                            <p:submenu label="Otros">
+                                <p:menuitem value="Descripciones" icon="ui-icon-disk fa fa-edit Fs15" url="descriptionBrowser.xhtml" />
+                                <p:menuitem value="Fármacos" icon="ui-icon-disk fa fa-medkit Fs15" url="drugsBrowser.xhtml" />
+                                <p:menuitem value="Pendientes" icon="ui-icon-disk fa fa-exclamation-triangle  Fs15" url="pendingBrowser.xhtml" />
+                                <p:menuitem value="No Válidos" icon="ui-icon-disk fa fa-ban Fs15" url="noValidBrowser.xhtml" />
+                            </p:submenu>
+                        </p:menu>
+                    </p:panelGrid>
                     </div>
                 </div>
             </div>
