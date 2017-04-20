@@ -19,6 +19,10 @@ public class IndirectCrossMapSearchResponse {
     @XmlElement(name = "indirectCrossmap")
     private List<IndirectCrossMapResponse> indirectCrossMapResponses;
 
+    @XmlElement(name = "cantidadRegistros")
+    private int quantity;
+
+
     public IndirectCrossMapSearchResponse() {
         this.indirectCrossMapResponses = new ArrayList<>();
     }
@@ -35,6 +39,8 @@ public class IndirectCrossMapSearchResponse {
         for (IndirectCrossmap indirectCrossmap : indirectCrossmaps) {
             this.indirectCrossMapResponses.add(new IndirectCrossMapResponse(indirectCrossmap));
         }
+
+        this.quantity = indirectCrossmaps.size();
     }
 
     public List<IndirectCrossMapResponse> getIndirectCrossMapResponses() {
@@ -43,5 +49,13 @@ public class IndirectCrossMapSearchResponse {
 
     public void setIndirectCrossMapResponses(List<IndirectCrossMapResponse> indirectCrossMapResponses) {
         this.indirectCrossMapResponses = indirectCrossMapResponses;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

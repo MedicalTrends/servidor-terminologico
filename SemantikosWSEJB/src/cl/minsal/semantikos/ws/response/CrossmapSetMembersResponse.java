@@ -21,6 +21,9 @@ public class CrossmapSetMembersResponse {
     @XmlElement(name = "crossmapSetMember")
     private List<CrossmapSetMemberResponse> crossmapSetMemberResponses;
 
+    @XmlElement(name = "cantidadRegistros")
+    private int quantity;
+
     public CrossmapSetMembersResponse() {
         this.crossmapSetMemberResponses = new ArrayList<>();
     }
@@ -41,6 +44,8 @@ public class CrossmapSetMembersResponse {
         for (CrossmapSetMember crossmapSetMember : crossmapSetMembers) {
             this.crossmapSetMemberResponses.add(new CrossmapSetMemberResponse(crossmapSetMember));
         }
+
+        this.quantity = crossmapSetMembers.size();
     }
 
     public List<CrossmapSetMemberResponse> getCrossmapSetMemberResponses() {
@@ -49,5 +54,13 @@ public class CrossmapSetMembersResponse {
 
     public void setCrossmapSetMemberResponses(List<CrossmapSetMemberResponse> crossmapSetMemberResponses) {
         this.crossmapSetMemberResponses = crossmapSetMemberResponses;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
