@@ -248,7 +248,7 @@ public class RelatedService {
     // REQ-WS-020
     @WebResult(name = "registroISP")
     @WebMethod(operationName = "obtenerRegistroISP")
-    public List<ISPRegisterResponse> obtenerRegistroISP(
+    public ISPRegisterSearchResponse obtenerRegistroISP(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request
@@ -259,7 +259,7 @@ public class RelatedService {
     // REQ-WS-021
     @WebResult(name = "registroBioequivalente")
     @WebMethod(operationName = "obtenerBioequivalentes")
-    public List<ISPRegisterResponse> obtenerBioequivalentes(
+    public ISPRegisterSearchResponse obtenerBioequivalentes(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request

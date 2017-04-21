@@ -6,15 +6,14 @@
                 xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
                 template="/WEB-INF/template/template.xhtml">
 
+    <ui:define name="header">
+        <p:breadCrumb>
+            <p:menuitem value="Inicio" url="/views/home.xhtml" />
+            <p:menuitem value="Administración RefSets" url="#" />
+        </p:breadCrumb>
+    </ui:define>
 
     <ui:define name="content">
-
-        <p:panel>
-            <div style="text-align: center">
-                <h2>Administrador de RefSets</h2>
-            </div>
-        </p:panel>
-
 
         <p:panel id="refsetsAdmin">
             <h:form id="formRefset">
@@ -174,7 +173,6 @@
 
                 <!-- Consultar conceptos de  un RefSet -->
 
-
                 <p:dialog widgetVar="viewRefset"  showEffect="fade"
                           hideEffect="fade" resizable="true" style="margin:40px;"
                           header="Consultar RefSet">
@@ -185,7 +183,7 @@
                                 <div class="Card ShadowEffect ui-fluid">
                                     <div class="Container33 Responsive50">
                                         <div class="ContainerIndent">
-                                            <h3>Nombre RefSet:#{refsetsBean.refSetSelect.name}</h3>
+                                            <h3>RefSet: #{refsetsBean.refSetSelect.name}</h3>
                                         </div>
                                     </div>
                                     <div class="Container33 Responsive50">
@@ -196,15 +194,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="Container100">
+                        <div class="Container">
                             <div class="ContainerIndent">
                                 <div class="Card ShadowEffect ui-fluid">
 
                                     <h3>Conceptos:</h3>
                                     <br/>
-                                    <p:dataTable value="#{refsetsBean.refSetSelect.concepts}" var="concepts"
-                                                 emptyMessage="El RefSet no contiene conceptos"
-                                                 scrollable="true" scrollHeight="250">
+                                    <p:dataTable value="#{refsetsBean.refSetSelect.concepts}" var="concepts" reflow="true"
+                                                 emptyMessage="El RefSet no contiene conceptos" style="width: 900px"
+                                                 scrollable="true" scrollHeight="150">
                                         <p:column headerText="Concepto">
                                             <h:outputText value="#{concepts.conceptID}"/>
                                         </p:column>
@@ -234,17 +232,17 @@
                         <div class="Container100">
                             <div class="ContainerIndent">
                                 <div class="Card ShadowEffect ui-fluid">
-                                    <div class="Container33 Responsive50">
+                                    <div class="Container33 Responsive">
                                         <div class="ContainerIndent">
-                                            <h3>Nombre RefSet:#{refsetsBean.refSetEdit.name}</h3>
+                                            <h3>RefSet: #{refsetsBean.refSetEdit.name}</h3>
                                         </div>
                                     </div>
-                                    <div class="Container33 Responsive50">
+                                    <div class="Container33 Responsive">
                                         <div class="ContainerIndent">
                                             <h3>Total Conceptos:#{refsetsBean.refSetEdit.getCountConcepts()}</h3>
                                         </div>
                                     </div>
-                                    <div class="Container20 Responsive50">
+                                    <div class="Container33 Responsive">
                                         <div class="ContainerIndent">
                                             <p:commandButton value="Agregar Conceptos"
                                                              oncomplete="PF('selectConcept').show()"
@@ -270,11 +268,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="Container100">
+                        <div class="Container">
                         <div class="ContainerIndent">
-
-                        <smtk:conceptRefset scroll="true" refset="#{refsetsBean.refSetEdit}"/>
-</div>
+                            <div class="Container100 Responsive">
+                                <smtk:conceptRefset scroll="true" refset="#{refsetsBean.refSetEdit}"/>
+                            </div>
+                        </div>
                         </div>
                         <br/>
                         <div style="text-align: right">

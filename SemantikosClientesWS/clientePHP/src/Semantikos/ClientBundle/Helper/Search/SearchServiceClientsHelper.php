@@ -205,7 +205,7 @@ class SearchServiceClientsHelper {
     public function callWS025($params_array = null){                                               
         
         try {
-            $result = $this->soapClient->crossmapSetMembersDeCrossmapSet($params_array['nombreAbreviadoCrossmapSet']);                    
+            $result = $this->soapClient->crossmapSetMembersDeCrossmapSet(array('nombreAbreviadoCrossmapSet' => $params_array['nombreAbreviadoCrossmapSet']));
         } catch (\SoapFault $soapFault) {
             return json_encode($soapFault);
         }

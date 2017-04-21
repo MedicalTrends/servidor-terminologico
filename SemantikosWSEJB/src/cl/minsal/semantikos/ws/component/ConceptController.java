@@ -541,7 +541,7 @@ public class ConceptController {
         return res;
     }
 
-    public List<ISPRegisterResponse> getBioequivalentes(String conceptId, String descriptionId) throws
+    public ISPRegisterSearchResponse getBioequivalentes(String conceptId, String descriptionId) throws
             IllegalInputFault, NotFoundFault {
         if ((conceptId == null || "".equals(conceptId))
                 && (descriptionId == null || "".equals(descriptionId))) {
@@ -550,18 +550,24 @@ public class ConceptController {
 
         ConceptSMTK conceptSMTK = getConcept(conceptId, descriptionId);
         this.conceptManager.loadRelationships(conceptSMTK);
-        List<ISPRegisterResponse> res = new ArrayList<>(conceptSMTK.getRelationships().size());
+        ISPRegisterSearchResponse res = new ISPRegisterSearchResponse();
+
+        res.setConceptId(conceptSMTK.getConceptID());
+        res.setDescription(conceptSMTK.getDescriptionFavorite().getTerm());
+        res.setDescriptionId(conceptSMTK.getDescriptionFavorite().getDescriptionId());
+        res.setCategory(conceptSMTK.getCategory().getName());
+
 
         for (Relationship relationship : conceptSMTK.getRelationships()) {
             if (relationship.getRelationshipDefinition().isBioequivalente()) {
-                res.add(ISPRegisterMapper.map(relationship));
+                res.getIspRegistersResponse().add(ISPRegisterMapper.map(relationship));
             }
         }
 
         return res;
     }
 
-    public List<ISPRegisterResponse> getRegistrosISP(String conceptId, String descriptionId) throws
+    public ISPRegisterSearchResponse getRegistrosISP(String conceptId, String descriptionId) throws
             IllegalInputFault, NotFoundFault {
         if ((conceptId == null || "".equals(conceptId))
                 && (descriptionId == null || "".equals(descriptionId))) {
@@ -570,11 +576,16 @@ public class ConceptController {
 
         ConceptSMTK conceptSMTK = getConcept(conceptId, descriptionId);
         this.conceptManager.loadRelationships(conceptSMTK);
-        List<ISPRegisterResponse> res = new ArrayList<>(conceptSMTK.getRelationships().size());
+        ISPRegisterSearchResponse res = new ISPRegisterSearchResponse();
+
+        res.setConceptId(conceptSMTK.getConceptID());
+        res.setDescription(conceptSMTK.getDescriptionFavorite().getTerm());
+        res.setDescriptionId(conceptSMTK.getDescriptionFavorite().getDescriptionId());
+        res.setCategory(conceptSMTK.getCategory().getName());
 
         for (Relationship relationship : conceptSMTK.getRelationships()) {
             if (relationship.getRelationshipDefinition().isISP()) {
-                res.add(ISPRegisterMapper.map(relationship));
+                res.getIspRegistersResponse().add(ISPRegisterMapper.map(relationship));
             }
         }
 

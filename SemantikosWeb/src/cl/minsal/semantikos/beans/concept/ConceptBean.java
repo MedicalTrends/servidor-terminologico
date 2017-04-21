@@ -861,7 +861,7 @@ public class ConceptBean implements Serializable {
                     }
                 }
             }
-            context.addMessage(null, new FacesMessage("Successful", "Concepto guardado "));
+            context.addMessage(null, new FacesMessage("Acción Exitosa", "Concepto guardado "));
             // Se resetea el concepto, como el concepto está persistido, se le pasa su id
             getConceptById(concept.getId());
         } catch (BusinessRuleException bre) {
@@ -886,7 +886,7 @@ public class ConceptBean implements Serializable {
         if (changes == 0)
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "No se ha realizado ningún cambio al concepto!!"));
         else {
-            context.addMessage(null, new FacesMessage("Successful", "Se han registrado " + changes + " cambios en el concepto."));
+            context.addMessage(null, new FacesMessage("Acción Exitosa", "Se han registrado " + changes + " cambios en el concepto."));
             // Se restablece el concepto, como el concepto está persistido, se le pasa su id
             getConceptById(concept.getId());
         }
