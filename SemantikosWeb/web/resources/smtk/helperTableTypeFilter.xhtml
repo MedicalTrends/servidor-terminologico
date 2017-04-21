@@ -76,7 +76,7 @@
                         <h:outputText value="#{record.getCellByColumnName('codigo atc')}" />
                     </p:column>
                     <p:column>
-                        <h:outputText value="#{record.description}"/>
+                        <h:outputText value="#{record.getCellByColumnName('descripcion completa')}"/>
                     </p:column>
 
                     <p:ajax event="itemSelect"

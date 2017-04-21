@@ -142,8 +142,12 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     float: left;
 }
 
-#mainMenu .ui-menu .ui-menuitem .ui-menuitem-link {
+.mainMenu .ui-menu .ui-menuitem .ui-menuitem-link {
     padding: 6px 0px;
+}
+
+.mainMenu .ui-menu .ui-widget-header  {
+    display: none;
 }
 
 .browserLayout .ui-widget-content {
@@ -202,7 +206,7 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 }
 
 .ui-dialog .ui-dialog-titlebar {
-    background-color: #4270d0;
+    background-color: #5c6bc0;
     color: white;
 }
 
