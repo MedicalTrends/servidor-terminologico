@@ -3,6 +3,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
@@ -11,7 +12,7 @@
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
             <meta name="apple-mobile-web-app-capable" content="yes" />
-            <meta name="theme-color" content="#{guestPreferences.themeColors[guestPreferences.theme]}" />
+            <meta name="theme-color" content="#2f8ee5" />
         </f:facet>
         <title><ui:insert name="title">PrimeFaces Poseidon</ui:insert></title>
         <h:outputScript name="js/nanoscroller.js" library="poseidon-layout" />
@@ -21,17 +22,20 @@
     </h:head>
 
     <h:body styleClass="main-body">
+
+        <f:facet name="last">
+            <h:outputStylesheet name="semantikos/css/customStyle.css"/>
+        </f:facet>
         
-        <div class="layout-wrapper #{guestPreferences.menuLayout}">
+        <div class="layout-wrapper static">
             <ui:include src="./topbar.xhtml" />
-            <ui:include src="./menu.xhtml" />
+            <!--ui:include src="./menu.xhtml" /-->
             
             <div class="layout-main">
                 <div class="route-bar">
-                    <!--i class="fa fa-home"></i> <span>/ </span-->
+                    <p:outputLabel outcome="/views/home.xhtml"><i class="fa fa-home" /></p:outputLabel> <span>/ </span>
                     <ui:insert name="viewname" />
-                    
-                    <ui:include src="./right-sidebar.xhtml" />
+                    <!--ui:include src="./right-sidebar.xhtml" /-->
                 </div>
                 <div class="layout-main-content">
                     <ui:insert name="content"/>
@@ -41,19 +45,29 @@
             </div>
         </div>
         
-        <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+        <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px;z-index: 999999">
            <f:facet name="start">
-               <i class="fa fa-circle-o-notch fa-spin ajax-loader" aria-hidden="true"></i>
+               <i class="fa fa-circle-o-notch fa-spin ajax-loader" aria-hidden="true" />
            </f:facet>
 
            <f:facet name="complete">
                <h:outputText value="" />
            </f:facet>
        </p:ajaxStatus>
+
+        <script type="text/javascript">
+            /*
+            PF('rm_home').clearMenuState();
+            PF('rm_categories').clearMenuState();
+            PF('rm_others').clearMenuState();
+            PF('rm_managers').clearMenuState();
+            */
+        </script>
         
         <h:outputStylesheet name="css/nanoscroller.css" library="poseidon-layout" />
         <h:outputStylesheet name="css/animate.css" library="poseidon-layout" />
-        <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="poseidon-layout" />
+        <h:outputStylesheet name="css/layout-minsal.css" library="poseidon-layout" />
+        <h:outputStylesheet name="css/grid.css" library="poseidon-layout" />
     </h:body>
 
 </html>
