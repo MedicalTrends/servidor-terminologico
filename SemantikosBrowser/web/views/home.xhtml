@@ -36,42 +36,28 @@
                             </p:commandButton>
                         </f:facet>
 
-
-                        <p:column headerText="Concept ID" sortBy="#{1}">
-                            <h:outputText value="#{conceptSMTK.conceptID}"/>
-                        </p:column>
-
                         <p:column headerText="Termino Preferido" sortBy="#{2}">
-                            <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
-                        </p:column>
+                            <div style="margin-bottom: 28px;">
+                                <p:commandLink value="#{conceptSMTK.descriptionFavorite.term}" oncomplete="PF('dialogC').show()" update=":browserForm:conceptTable,:browserForm:query-concept-sct"
+                                style="color:#1a0dab; font-size: 18px">
+                                    <f:setPropertyActionListener value="#{conceptSMTK}" target="#{browserBean.conceptSelected}"/>
+                                </p:commandLink>
+                                <br/>
+                                <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: small; color: #006621" />
+                                <br/>
+                                <h:outputText value="#{conceptSMTK.category.name}" style="font-size: small; color:##545454;" />
+                                <p:repeat
+                                        offset="0"
+                                        size="#{conceptSMTK.tags.size()}"
+                                        step="1"
+                                        varStatus="var"
+                                        value="#{conceptSMTK.tags}"
+                                        var="tag">
 
-                        <p:column headerText="Categoría">
-                            <h:outputText value="#{conceptSMTK.category.name}"/>
-                        </p:column>
+                                    <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
 
-                        <p:column headerText="Etiquetas" styleClass="tags" exportable="false">
-
-                            <p:repeat
-                                    offset="0"
-                                    size="#{conceptSMTK.tags.size()}"
-                                    step="1"
-                                    varStatus="var"
-                                    value="#{conceptSMTK.tags}"
-                                    var="tag">
-
-                                <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
-
-                            </p:repeat>
-
-                        </p:column>
-
-                        <p:column exportable="false" style="text-align: center">
-
-                            <p:commandLink oncomplete="PF('dialogC').show()" update=":browserForm:conceptTable,:browserForm:query-concept-sct" title="Ver Detalle">
-                                <i class="fa fa-search fa-lg" />
-                                <f:setPropertyActionListener value="#{conceptSMTK}" target="#{browserBean.conceptSelected}"/>
-                            </p:commandLink>
-
+                                </p:repeat>
+                            </div>
                         </p:column>
 
                     </p:dataTable>

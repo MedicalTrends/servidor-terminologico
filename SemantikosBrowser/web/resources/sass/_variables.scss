@@ -1,5 +1,3 @@
-$primaryColor: #2f8ee5;
-
 /* Common */
 $fontSize:14px;
 $textColor:#5f666c;
@@ -13,7 +11,7 @@ $iconHeight:16px;
 $headerPadding:8px 14px;
 $headerBgColor:#3F51B5;
 $headerTextColor:#ffffff;
-$headerHoverBgColor:#165286;
+$headerHoverBgColor: #165286;
 
 /* Contents */
 $contentPadding:8px 14px;
@@ -44,12 +42,12 @@ $fatalMessageTextColor:#ffffff;
 $hmenuBGColor: #f0f3f5;
 
 /* Predefined Colors */
-$green:#00acac;
+$turquoise:#00acac;
 $blue:#2f8ee5;
 $orange:#efa64c;
 $purple:#6c76af;
 $pink:#f16383;
 $lightBlue:#63c9f1;
+$green:#57c279;
+$deepPurple:#7e57c2;
 $black:#2d353c;
-
-@import '../../sass/layout/_layout';
