@@ -257,9 +257,9 @@ public class RelatedService {
     }
 
     // REQ-WS-021
-    @WebResult(name = "registroBioequivalente")
+    @WebResult(name = "bioequivalente")
     @WebMethod(operationName = "obtenerBioequivalentes")
-    public ISPRegisterSearchResponse obtenerBioequivalentes(
+    public BioequivalentSearchResponse obtenerBioequivalentes(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request

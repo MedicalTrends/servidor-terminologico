@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
+import cl.minsal.semantikos.ws.mapping.BioequivalentMapper;
 import cl.minsal.semantikos.ws.mapping.ConceptMapper;
 import cl.minsal.semantikos.ws.mapping.ISPRegisterMapper;
 import cl.minsal.semantikos.ws.request.DescriptionIDorConceptIDRequest;
@@ -541,7 +542,7 @@ public class ConceptController {
         return res;
     }
 
-    public ISPRegisterSearchResponse getBioequivalentes(String conceptId, String descriptionId) throws
+    public BioequivalentSearchResponse getBioequivalentes(String conceptId, String descriptionId) throws
             IllegalInputFault, NotFoundFault {
         if ((conceptId == null || "".equals(conceptId))
                 && (descriptionId == null || "".equals(descriptionId))) {
@@ -550,17 +551,16 @@ public class ConceptController {
 
         ConceptSMTK conceptSMTK = getConcept(conceptId, descriptionId);
         this.conceptManager.loadRelationships(conceptSMTK);
-        ISPRegisterSearchResponse res = new ISPRegisterSearchResponse();
+        BioequivalentSearchResponse res = new BioequivalentSearchResponse();
 
         res.setConceptId(conceptSMTK.getConceptID());
         res.setDescription(conceptSMTK.getDescriptionFavorite().getTerm());
         res.setDescriptionId(conceptSMTK.getDescriptionFavorite().getDescriptionId());
         res.setCategory(conceptSMTK.getCategory().getName());
 
-
         for (Relationship relationship : conceptSMTK.getRelationships()) {
             if (relationship.getRelationshipDefinition().isBioequivalente()) {
-                res.getIspRegistersResponse().add(ISPRegisterMapper.map(relationship));
+                res.getBioequivalentsResponse().add(BioequivalentMapper.map(relationship, relationshipManager.findRelationshipsLike(relationship)));
             }
         }
 
