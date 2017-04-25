@@ -9,9 +9,9 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "respuestaBuscarRegistroISP", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "RespuestaBuscarRegistroISP", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class ISPRegisterSearchResponse implements Serializable {
+@XmlRootElement(name = "respuestaBuscarBioequivalente", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "RespuestaBuscarBioequivalente", namespace = "http://service.ws.semantikos.minsal.cl/")
+public class BioequivalentSearchResponse implements Serializable {
 
     @XmlElement(name="idConcepto")
     private String conceptId;
@@ -22,8 +22,8 @@ public class ISPRegisterSearchResponse implements Serializable {
     @XmlElement(name="nombreCategoria")
     private String category;
 
-    @XmlElement(name="ispRegisters")
-    private List<ISPRegisterResponse> ispRegistersResponse = new ArrayList<>();
+    @XmlElement(name="bioequivalentes")
+    private List<BioequivalentResponse> bioequivalentsResponse = new ArrayList<>();
 
     public String getConceptId() {
         return conceptId;
@@ -57,11 +57,11 @@ public class ISPRegisterSearchResponse implements Serializable {
         this.description = description;
     }
 
-    public List<ISPRegisterResponse> getIspRegistersResponse() {
-        return ispRegistersResponse;
+    public List<BioequivalentResponse> getBioequivalentsResponse() {
+        return bioequivalentsResponse;
     }
 
-    public void setIspRegistersResponse(List<ISPRegisterResponse> ispRegistersResponse) {
-        this.ispRegistersResponse = ispRegistersResponse;
+    public void setBioequivalentsResponse(List<BioequivalentResponse> bioequivalentsResponse) {
+        this.bioequivalentsResponse = bioequivalentsResponse;
     }
 }
