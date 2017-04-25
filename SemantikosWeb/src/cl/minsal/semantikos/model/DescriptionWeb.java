@@ -1,9 +1,10 @@
 package cl.minsal.semantikos.model;
 
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
-public class DescriptionWeb extends Description {
+public class DescriptionWeb extends Description implements Serializable {
 
     public boolean hasBeenModified;
 

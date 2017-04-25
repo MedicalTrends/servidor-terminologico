@@ -2,13 +2,14 @@ package cl.minsal.semantikos.model.users;
 
 import cl.minsal.semantikos.model.PersistentEntity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Diego Soto
  */
-public class Question extends PersistentEntity {
+public class Question extends PersistentEntity implements Serializable {
 
     public static final Question DUMMY_QUESTION = new Question();
 

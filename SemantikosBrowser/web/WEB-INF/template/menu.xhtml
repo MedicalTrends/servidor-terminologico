@@ -19,48 +19,6 @@
                         <p:menuitem id="rm_inicio" value="Inicio" icon="fa fa-home" outcome="/views/home.xhtml" />
                     </pp:menu>
 
-                    <pp:menu id="rm_categories" model="#{mainMenuBean.categoryMenuModel}" widgetVar="rm_categories"
-                             rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}" />
-
-                    <pp:menu id="rm_others" widgetVar="rm_others" rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}">
-                        <p:submenu id="rm_others_sm" label="Otros" icon="fa fa-plus-square">
-                            <p:menuitem id="rm_descriptions" value="Descripciones" icon="fa fa-edit Fs15" url="/views/browser/descriptionBrowser.xhtml" />
-                            <p:menuitem id="rm_drugs" value="Fármacos" icon="fa fa-medkit Fs15" url="/views/browser/drugsBrowser.xhtml" />
-                            <p:menuitem id="rm_pendings" value="Pendientes" icon="fa fa-exclamation-triangle  Fs15" url="/views/browser/pendingBrowser.xhtml" />
-                            <p:menuitem id="rm_no_valids" value="No Válidos" icon="fa fa-ban Fs15" url="/views/browser/noValidBrowser.xhtml" />
-                        </p:submenu>
-                    </pp:menu>
-
-                    <pp:menu id="rm_managers" widgetVar="rm_managers">
-
-                        <p:submenu id="rm_managers_sm" label="Administración" icon="fa fa-plus-square">
-
-                            <p:menuitem id="rm_users_web" value="Usuarios" icon="fa fa-user" outcome="/views/users/users.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
-
-                            <p:menuitem id="rm_admin_refsets" value="RefSets" icon="fa fa-dropbox" outcome="/views/refsets/admin_refsets.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
-
-                            <p:menuitem id="rm_admin_helper_tables" value="Manager Helper Tables" icon="fa fa-dropbox" outcome="/views/helper_tables/helperTableManteiner.xhtml" rendered="false"/>
-
-                            <p:menuitem id="rm_helpertables" value="Tablas Auxiliares" icon="fa fa-list-alt" outcome="/views/helpertables/helpertables.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
-
-                            <p:submenu id="rm_administracion" label="Administración" icon="icon-planet29" rendered="#{profilePermissionsBeans.modeler}">
-                                <p:menuitem id="rm_configuraciones" value="Configuaciones" icon="icon-planet29" outcome="/views/configuraciones.xhtml" update="" rendered="#{profilePermissionsBeans.modeler}" />
-                            </p:submenu>
-                        </p:submenu>
-
-                        <p:separator />
-                    </pp:menu>
-
-                    <!--div class="layout-menu-footer">
-                        <span class="layout-menu-footer-title">Tasks Overview</span>
-
-                        <p:progressBar value="50" labelTemplate="" displayOnly="true"/>
-                        Today
-
-                        <p:progressBar value="80" labelTemplate=""  displayOnly="true"/>
-                        Overall
-                    </div-->
-
                 </div>
             </div>
         </div>

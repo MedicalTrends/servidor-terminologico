@@ -5,12 +5,13 @@ import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * @author Andrés Farías on 11/3/16.
  */
-public class IndirectCrossmap extends Crossmap {
+public class IndirectCrossmap extends Crossmap implements Serializable {
 
     private int mapGroup;
 

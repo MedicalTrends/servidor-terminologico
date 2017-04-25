@@ -3,12 +3,13 @@ package cl.minsal.semantikos.model.users;
 import cl.minsal.semantikos.model.Permission;
 import cl.minsal.semantikos.model.PersistentEntity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author Francisco Mendez.
  */
-public class Profile extends PersistentEntity {
+public class Profile extends PersistentEntity implements Serializable {
 
     /** Nombre del perfil */
     String name;

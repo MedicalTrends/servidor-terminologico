@@ -516,4 +516,11 @@ public class ConceptSMTKWeb extends ConceptSMTK {
         return this.getValidRelationshipsWebByRelationDefinition(relationshipDefinition).size()>=relationshipDefinition.getMultiplicity().getLowerBoundary();
     }
 
+
+    public ConceptSMTK getConceptSMTK() {
+        ConceptSMTK conceptSMTK =  new ConceptSMTK(this.getConceptID(), this.getCategory(), this.isToBeReviewed(), this.isToBeConsulted(), this.isModeled(), this.isFullyDefined(), this.isInherited(), this.isPublished(), this.getObservation(), this.getTagSMTK());
+        conceptSMTK.setRelationships(this.getRelationships());
+        return conceptSMTK;
+    }
+
 }

@@ -1,9 +1,11 @@
 package cl.minsal.semantikos.model;
 
+import java.io.Serializable;
+
 /**
  * Esta clase representa una multiplicidad a lo UML: [1-2] [0-100] [0-*]
  */
-public class Multiplicity {
+public class Multiplicity implements Serializable {
 
     /** Limite inferior */
     private int lowerBoundary;

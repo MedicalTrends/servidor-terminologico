@@ -6,12 +6,13 @@ import org.omg.CORBA.INTERNAL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  *
  */
-public class BasicTypeValue<T extends Comparable> implements Target {
+public class BasicTypeValue<T extends Comparable> implements Target, Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(BasicTypeValue.class);
 

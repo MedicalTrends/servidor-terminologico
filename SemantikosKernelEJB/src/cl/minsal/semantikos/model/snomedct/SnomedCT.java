@@ -5,6 +5,7 @@ import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 import cl.minsal.semantikos.model.relationships.TargetType;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import static cl.minsal.semantikos.model.relationships.TargetType.SnomedCT;
  *
  * @author Andrés Farías
  */
-public class SnomedCT extends PersistentEntity implements TargetDefinition{
+public class SnomedCT extends PersistentEntity implements TargetDefinition, Serializable {
 
     /** Descripción del concepto */
     private String version;

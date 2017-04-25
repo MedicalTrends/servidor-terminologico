@@ -4,12 +4,13 @@ import cl.minsal.semantikos.model.PersistentEntity;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import java.io.Serializable;
 
 /**
  * Created by root on 08-07-16.
  */
 // TODO: Normalizar esta clase
-public class RelationshipAttribute {
+public class RelationshipAttribute implements Serializable {
 
     private Long idRelationshipAttribute;
     private RelationshipAttributeDefinition relationAttributeDefinition;

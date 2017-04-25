@@ -4,12 +4,13 @@ import cl.minsal.semantikos.model.Multiplicity;
 import cl.minsal.semantikos.model.businessrules.HelperTableSearchBR;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author Diego Soto on 27-05-16.
  */
-public class RelationshipDefinition {
+public class RelationshipDefinition implements Serializable {
 
     /** ID en la base de datos */
     private long id;

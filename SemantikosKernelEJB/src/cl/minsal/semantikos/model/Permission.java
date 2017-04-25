@@ -1,12 +1,13 @@
 package cl.minsal.semantikos.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by BluePrints Developer on 19-05-2016.
  */
-public class Permission {
+public class Permission implements Serializable {
 
     Long idPermission;
     String name;

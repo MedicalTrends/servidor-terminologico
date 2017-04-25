@@ -3,12 +3,13 @@ package cl.minsal.semantikos.model.snomedct;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.snapshots.AuditActionType;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * @author Andrés Farías on 9/26/16.
  */
-public class RelationshipSCT extends PersistentEntity implements SnomedCTComponent {
+public class RelationshipSCT extends PersistentEntity implements SnomedCTComponent, Serializable {
 
     /** Identificador único y numérico (de negocio) de la relación */
     private long idRelationship;

@@ -4,6 +4,7 @@ import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.relationships.BasicTypeType;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * Esta clase representa un dominio de valores básicos.
  * La única restricción, por ahora para el tipo básica
  */
-public class BasicTypeDefinition<T extends Comparable> extends PersistentEntity implements TargetDefinition {
+public class BasicTypeDefinition<T extends Comparable> extends PersistentEntity implements TargetDefinition, Serializable {
 
     /** Nombre del tipo */
     private String name;

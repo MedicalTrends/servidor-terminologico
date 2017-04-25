@@ -2,13 +2,14 @@ package cl.minsal.semantikos.model.users;
 
 import cl.minsal.semantikos.model.PersistentEntity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Andrés Farías on 9/20/16.
  */
-public class Institution extends PersistentEntity {
+public class Institution extends PersistentEntity implements Serializable {
 
     public static final Institution DUMMY_INSTITUTION = new Institution();
 

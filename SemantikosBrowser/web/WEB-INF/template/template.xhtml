@@ -14,7 +14,7 @@
             <meta name="apple-mobile-web-app-capable" content="yes" />
             <meta name="theme-color" content="#2f8ee5" />
         </f:facet>
-        <title><ui:insert name="title">PrimeFaces Poseidon</ui:insert></title>
+        <title><ui:insert name="title">Semantikos - Navegador</ui:insert></title>
         <h:outputScript name="js/nanoscroller.js" library="poseidon-layout" />
         <h:outputScript name="js/layout.js" library="poseidon-layout" />
         <h:outputScript name="js/swipe.js" library="poseidon-layout" />
@@ -27,16 +27,11 @@
             <h:outputStylesheet name="semantikos/css/customStyle.css"/>
         </f:facet>
         
-        <div class="layout-wrapper static">
+        <div class="layout-wrapper menu-layout-overlay">
             <ui:include src="./topbar.xhtml" />
             <!--ui:include src="./menu.xhtml" /-->
             
             <div class="layout-main">
-                <div class="route-bar">
-                    <p:outputLabel outcome="/views/home.xhtml"><i class="fa fa-home" /></p:outputLabel> <span>/ </span>
-                    <ui:insert name="viewname" />
-                    <!--ui:include src="./right-sidebar.xhtml" /-->
-                </div>
                 <div class="layout-main-content">
                     <ui:insert name="content"/>
                 </div>
@@ -54,15 +49,6 @@
                <h:outputText value="" />
            </f:facet>
        </p:ajaxStatus>
-
-        <script type="text/javascript">
-            /*
-            PF('rm_home').clearMenuState();
-            PF('rm_categories').clearMenuState();
-            PF('rm_others').clearMenuState();
-            PF('rm_managers').clearMenuState();
-            */
-        </script>
         
         <h:outputStylesheet name="css/nanoscroller.css" library="poseidon-layout" />
         <h:outputStylesheet name="css/animate.css" library="poseidon-layout" />

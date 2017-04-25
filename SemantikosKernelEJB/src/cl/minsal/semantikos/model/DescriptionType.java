@@ -1,9 +1,11 @@
 package cl.minsal.semantikos.model;
 
+import java.io.Serializable;
+
 /**
  * @author Diego Soto.
  */
-public class DescriptionType {
+public class DescriptionType implements Serializable {
 
     /** Descripción tipo General */
     public static final DescriptionType FSN = new DescriptionType(1, "FSN", "Descripción de tipo Full Specified Name");

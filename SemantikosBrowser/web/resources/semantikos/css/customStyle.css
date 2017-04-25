@@ -85,6 +85,10 @@
     border-bottom: 0;
 }
 
+#browserForm #conceptTable #conceptTable_head {
+    display: none !important;
+}
+
 
 
 /*

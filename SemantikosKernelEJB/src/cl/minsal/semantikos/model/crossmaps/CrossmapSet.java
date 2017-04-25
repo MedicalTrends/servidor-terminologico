@@ -3,11 +3,13 @@ package cl.minsal.semantikos.model.crossmaps;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
+import java.io.Serializable;
+
 /**
  * Esta clase implementa el concepto de terminología externa
  * @author Andrés Farías on 11/3/16.
  */
-public class CrossmapSet extends PersistentEntity implements TargetDefinition {
+public class CrossmapSet extends PersistentEntity implements TargetDefinition, Serializable {
 
     /** Identificador de negocio */
     //private long idCrossmapSet;

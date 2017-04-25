@@ -10,6 +10,7 @@ import cl.minsal.semantikos.model.relationships.*;
 
 import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +21,7 @@ import java.util.List;
  *
  * @author Diego Soto.
  */
-public class ConceptSMTK extends PersistentEntity implements Target, AuditableEntity {
+public class ConceptSMTK extends PersistentEntity implements Target, AuditableEntity, Serializable {
 
     /** El valor que posee un CONCEPT_ID que no ha sido definido */
     public static final String CONCEPT_ID_UNDEFINED = "-1";

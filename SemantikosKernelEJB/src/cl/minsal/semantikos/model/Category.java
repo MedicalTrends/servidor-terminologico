@@ -4,13 +4,14 @@ import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Una categoría puede ser el sujeto de una acción de auditoría.
  */
 
-public class Category extends PersistentEntity implements TargetDefinition, AuditableEntity {
+public class Category extends PersistentEntity implements TargetDefinition, AuditableEntity, Serializable {
 
     /** Nombre de la categoría */
     private String name;

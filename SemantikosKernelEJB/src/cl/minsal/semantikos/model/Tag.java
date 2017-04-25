@@ -2,13 +2,14 @@ package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.kernel.daos.DAO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Gustavo Punucura
  */
-public class Tag extends PersistentEntity {
+public class Tag extends PersistentEntity implements Serializable {
 
     private String name;
     private String colorBackground;

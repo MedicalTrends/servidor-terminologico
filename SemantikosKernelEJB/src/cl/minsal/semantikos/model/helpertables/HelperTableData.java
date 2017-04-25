@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.daos.DAO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,7 +14,7 @@ import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
  * Created by BluePrints Developer on 14-12-2016.
  */
 
-public class HelperTableData {
+public class HelperTableData implements Serializable {
 
     private long id;
     private Long intValue;

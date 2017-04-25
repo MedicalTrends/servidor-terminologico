@@ -1,9 +1,11 @@
 package cl.minsal.semantikos.model;
 
+import java.io.Serializable;
+
 /**
  * @author Andrés Farías
  */
-public class Label {
+public class Label implements Serializable {
 
     /** El nombre de la etiqueta */
     private String name;

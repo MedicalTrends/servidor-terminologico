@@ -35,6 +35,7 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
         var $this = this;
         
         this.menuButton.on('click', function(e) {
+            
             $this.menuButton.toggleClass('menu-button-rotate');
             $this.topbarItems.removeClass('topbar-items-visible');
             
@@ -74,6 +75,7 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
             }
             e.stopPropagation();
             e.stopImmediatePropagation();
+            
             e.preventDefault();
         });
         

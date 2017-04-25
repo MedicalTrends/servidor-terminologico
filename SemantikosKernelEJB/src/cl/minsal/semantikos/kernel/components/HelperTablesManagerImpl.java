@@ -214,7 +214,7 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
     }
 
     @Override
-    public HelperTableImportReport loadFromFile(HelperTable helperTable, LoadMode loadModeSelected, Reader in, User loggedUser) {
+    public HelperTableImportReport loadFromFile(HelperTable helperTable, LoadMode loadModeSelected, User loggedUser) {
         throw new NotImplementedException();
     }
 

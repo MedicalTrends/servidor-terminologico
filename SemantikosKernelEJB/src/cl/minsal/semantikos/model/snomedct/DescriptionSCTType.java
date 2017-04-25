@@ -1,9 +1,11 @@
 package cl.minsal.semantikos.model.snomedct;
 
+import java.io.Serializable;
+
 /**
  * @author Andrés Farías on 10/26/16.
  */
-public enum DescriptionSCTType {
+public enum DescriptionSCTType implements Serializable {
 
     SYNONYM(900000000000013009L,"Sinónimo"), FSN(900000000000003001L,"FSN"), PREFERRED(900000000000548007L,"Preferida"), ACCEPTABLE(900000000000549004L,"Aceptable");
 

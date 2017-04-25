@@ -2,12 +2,13 @@ package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author Andrés Farías
  */
-public enum BasicTypeType {
+public enum BasicTypeType implements Serializable {
 
     STRING_TYPE(1, "string"),
     BOOLEAN_TYPE(2, "boolean"),

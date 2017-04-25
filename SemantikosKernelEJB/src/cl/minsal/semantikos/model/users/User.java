@@ -3,6 +3,7 @@ package cl.minsal.semantikos.model.users;
 import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.PersistentEntity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +13,7 @@ import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
 /**
  * @author Francisco Mendez
  */
-public class User extends PersistentEntity {
+public class User extends PersistentEntity implements Serializable {
 
     private static User dummyUser = new User(NON_PERSISTED_ID, "dummy", "Usuario de Prueba", true);
 

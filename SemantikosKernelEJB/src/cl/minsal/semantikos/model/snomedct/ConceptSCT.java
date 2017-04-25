@@ -5,6 +5,7 @@ import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
 import cl.minsal.semantikos.model.snapshots.AuditActionType;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import static java.util.Collections.emptyList;
  * @version 1.0
  * @created 17-ago-2016 12:52:05
  */
-public class ConceptSCT extends PersistentEntity implements Target, SnomedCTComponent {
+public class ConceptSCT extends PersistentEntity implements Target, SnomedCTComponent, Serializable {
 
     public static final long COMPLETELY_DEFINED = 900000000000073002l;
     public static final long PRIMITIVE = 900000000000074008l;

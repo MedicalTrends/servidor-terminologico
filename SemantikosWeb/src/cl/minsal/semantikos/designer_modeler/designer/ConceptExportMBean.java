@@ -3,6 +3,7 @@ package cl.minsal.semantikos.designer_modeler.designer;
 import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.kernel.components.AuditManager;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.ConceptSMTKWeb;
 import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
@@ -118,7 +119,7 @@ public class ConceptExportMBean extends UINamingContainer {
     public void setConceptSMTK(ConceptSMTKWeb conceptSMTK) {
 
         this.conceptSMTK = conceptSMTK;
-        auditAction = auditManager.getConceptAuditActions(conceptSMTK, true);
+        auditAction = auditManager.getConceptAuditActions(conceptSMTK.getConceptSMTK(), true);
     }
 
     /**

@@ -5,12 +5,13 @@ import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * @author Diego Soto on 07-06-16.
  */
-@Local
+@Remote
 public interface DescriptionManager {
 
     /**

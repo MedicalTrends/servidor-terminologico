@@ -5,12 +5,13 @@ import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.crossmaps.*;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * @author Andrés Farías on 8/30/16.
  */
-@Local
+@Remote
 public interface CrossmapsManager {
 
     /**

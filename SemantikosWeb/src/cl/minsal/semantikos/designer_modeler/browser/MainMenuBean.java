@@ -48,7 +48,6 @@ public class MainMenuBean implements Serializable {
     @EJB
     private CategoryManager categoryManager;
 
-
     @PostConstruct
     public void init() {
 

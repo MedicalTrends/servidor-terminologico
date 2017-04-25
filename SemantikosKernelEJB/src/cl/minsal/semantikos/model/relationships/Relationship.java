@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.List;
  *
  * @author Andrés Farías
  */
-public class Relationship extends PersistentEntity implements AuditableEntity {
+public class Relationship extends PersistentEntity implements AuditableEntity, Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(Relationship.class);
 
