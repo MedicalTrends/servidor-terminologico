@@ -2,10 +2,12 @@ package cl.minsal.semantikos.model.browser;
 
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 
+import java.io.Serializable;
+
 /**
  * Created by root on 21-03-17.
  */
-public class RelationshipAttributeDTO {
+public class RelationshipAttributeDTO implements Serializable {
 
     /**
      * Filtros estáticos

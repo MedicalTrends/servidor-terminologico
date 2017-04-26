@@ -2,10 +2,12 @@ package cl.minsal.semantikos.model.browser;
 
 import cl.minsal.semantikos.model.relationships.Target;
 
+import java.io.Serializable;
+
 /**
  * Created by root on 21-03-17.
  */
-public class TargetDTO {
+public class TargetDTO implements Serializable {
 
     /**
      * Filtros estáticos

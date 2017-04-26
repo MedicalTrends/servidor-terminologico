@@ -19,11 +19,11 @@
     <!-- Indicadores -->
     <div class="ui-g dashboard">
 
-        <div class="ui-g-12 ui-md-4">
-            <div class="card">
+        <div class="ui-g-12 ui-md-12 ui-lg-12">
+
             <p:panel header="Información General">
                 <div class="ui-fluid">
-                <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
 
                 <p:outputLabel for="toBeReviewedCheck" value="Indicadores" />
 
@@ -36,7 +36,7 @@
 
                 <p:outputLabel for="toBeReviewedCheck" value="Grado de Definición"  />
 
-                <p:selectOneRadio id="city" value="#{conceptBean.fullyDefined}" layout="responsive" columns="1"
+                <p:selectOneRadio id="city" value="#{conceptBean.fullyDefined}" layout="grid" columns="2"
                                   disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept) or not conceptBean.editable}">
                     <f:selectItem itemValue="#{false}" itemLabel="Primitivo" />
                     <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>
@@ -72,17 +72,20 @@
             </p:panelGrid>
                 </div>
             </p:panel>
-            </div>
+
         </div>
 
-        <div class="ui-g-12 ui-md-8">
-            <div class="card">
+        <div class="ui-g-12 ui-md-12 ui-lg-12">
             <!--Descripciones FSN y Preferida -->
             <div class="ui-fluid">
                 <smtk:descriptionFSN description="#{cc.attrs.concept.getValidDescriptionFSN()}" editable="#{cc.attrs.concept.editable}" />
-                <br/>
-                <smtk:descriptionFavorite description="#{cc.attrs.concept.getValidDescriptionFavorite()}" editable="#{cc.attrs.concept.editable}" />
             </div>
+        </div>
+
+        <div class="ui-g-12 ui-md-12 ui-lg-12">
+            <!--Descripciones FSN y Preferida -->
+            <div class="ui-fluid">
+                <smtk:descriptionFavorite description="#{cc.attrs.concept.getValidDescriptionFavorite()}" editable="#{cc.attrs.concept.editable}" />
             </div>
         </div>
     </div>

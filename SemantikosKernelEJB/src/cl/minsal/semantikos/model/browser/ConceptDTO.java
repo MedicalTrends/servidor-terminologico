@@ -4,13 +4,14 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by root on 21-03-17.
  */
-public class ConceptDTO extends ConceptSMTK {
+public class ConceptDTO extends ConceptSMTK implements Serializable {
 
     private List<RelationshipDTO> relationshipsDTO = new ArrayList<>();
 

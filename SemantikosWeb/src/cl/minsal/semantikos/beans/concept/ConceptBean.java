@@ -484,7 +484,7 @@ public class ConceptBean implements Serializable {
 
         fullyDefined=concept.isFullyDefined();
         concept.setEditable(editable);
-        auditAction = auditManager.getConceptAuditActions(concept, true);
+        auditAction = auditManager.getConceptAuditActions(concept.getConceptSMTK(), true);
         category = concept.getCategory();
         conceptBeanExport.setConceptSMTK(concept);
         conceptBeanExport.loadConcept();

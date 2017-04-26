@@ -4,13 +4,14 @@ import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by root on 21-03-17.
  */
-public class RelationshipDTO {
+public class RelationshipDTO implements Serializable {
 
     /**
      * Filtros estáticos
