@@ -119,7 +119,7 @@
                                                          rendered="#{users.selectedUser != null and users.selectedUser.persistent and users.selectedUser.valid}"
                                                          styleClass="ui-priority-primary"
                                                          update="mainForm, @(.breadUpdate)">
-                                            <p:confirm header="Confirmation" message="¿Desea eliminar este usuario?" icon="ui-icon-alert"/>
+                                            <p:confirm header="Confirmar Acción" message="¿Desea eliminar este usuario?" icon="ui-icon-alert"/>
                                         </p:commandButton>
                                     </div>
                                     <div class="ui-g-12 ui-md-6 ui-lg-6" style="text-align: right">
@@ -128,7 +128,7 @@
 
                                         <p:commandButton value="Cancelar" icon="fa fa-undo" action="#{users.saveUser}" styleClass="ui-priority-primary" disabled="#{ not users.selectedUser.valid}"
                                                          process="mainForm" update="mainForm, @(.breadUpdate)">
-                                            <p:confirm header="Confirmation" message="¿Desea deshacer los cambios realizados?" icon="ui-icon-alert"/>
+                                            <p:confirm header="Confirmar Acción" message="¿Desea deshacer los cambios realizados?" icon="ui-icon-alert"/>
                                         </p:commandButton>
 
                                         <p:commandButton value="Historial de perfiles" icon="fa fa-history" action="#{users.showProfileHistory}" styleClass="ui-priority-primary"

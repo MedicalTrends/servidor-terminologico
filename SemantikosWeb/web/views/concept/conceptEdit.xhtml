@@ -223,7 +223,7 @@
                                                      value="Eliminar" type="submit" process="mainForm"
                                                      rendered="#{conceptBean.concept.persistent and not conceptBean.concept.modeled and conceptBean.concept.editable}"
                                                      update="growl, mainForm">
-                                        <p:confirm header="Confirmation" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
+                                        <p:confirm header="Confirmar Acción" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
                                     </p:commandButton>
 
                                     <!-- Botón para Trasladar el concepto modelado -->
@@ -234,7 +234,7 @@
                                                      value="Deshacer" type="submit" process="mainForm"
                                                      rendered="#{conceptBean.concept.editable}"
                                                      update="growl, mainForm">
-                                        <p:confirm header="Confirmation"
+                                        <p:confirm header="Confirmar Acción"
                                                    message="¿Desea deshacer los cambios realizados en esta sesión?"
                                                    icon="ui-icon-alert"/>
                                     </p:commandButton>

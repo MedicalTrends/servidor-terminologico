@@ -133,7 +133,7 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
     public HelperTableRow updateRow(HelperTableRow row, String username) throws RowInUseException {
 
         if(!row.isValid()){
-            List<ConceptSMTK> cons = isRowUsed(row);
+            List<ConceptSMTK> cons = isRowUsed(row, 100, 10);
             if(cons.size()>0)
                 throw new RowInUseException(cons);
         }
