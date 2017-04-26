@@ -203,10 +203,10 @@
                                     <p:dataTable value="#{refsetsBean.refSetSelect.concepts}" var="concepts" reflow="true"
                                                  emptyMessage="El RefSet no contiene conceptos" style="width: 900px"
                                                  scrollable="true" scrollHeight="150">
-                                        <p:column headerText="Concepto">
+                                        <p:column headerText="ConceptID">
                                             <h:outputText value="#{concepts.conceptID}"/>
                                         </p:column>
-                                        <p:column headerText="Concepto">
+                                        <p:column headerText="Termino Preferida">
                                             <h:outputText value="#{concepts.descriptionFavorite.term}"/>
                                         </p:column>
                                         <p:column headerText="Categoría">
