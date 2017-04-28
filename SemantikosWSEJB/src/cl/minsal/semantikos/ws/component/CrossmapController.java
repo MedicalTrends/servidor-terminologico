@@ -6,6 +6,7 @@ import cl.minsal.semantikos.kernel.components.CrossmapsManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.ws.request.DescriptionIDorConceptIDRequest;
@@ -47,19 +48,35 @@ public class CrossmapController {
      * @return La respuesta XML con la lista de los crossmaps indirectos asociados al concepto de la descripción
      * indicada.
      */
-    public IndirectCrossMapSearchResponse getIndirectCrossmapsByDescriptionID(DescriptionIDorConceptIDRequest
-                                                                                      descriptionIDorConceptIDRequest) {
+    public IndirectCrossMapSearchResponse getIndirectCrossmapsByDescriptionID(DescriptionIDorConceptIDRequest descriptionIDorConceptIDRequest) {
 
-        /* Se recupera la descripción a partir de su identificador de negocio, y luego el concepto en la que se
-        encuentra */
-        Description theDescription = descriptionManager.getDescriptionByDescriptionID(descriptionIDorConceptIDRequest
-                .getDescriptionId());
-        ConceptSMTK conceptSMTK = theDescription.getConceptSMTK();
 
-        /* Luego se recuperan los crossmaps indirectos del concepto */
+        ConceptSMTK conceptSMTK;
+
+        /* Primero se recupera el concepto, ya sea por su CONCEPT_ID o por su DESCRIPTION_ID */
+        String conceptId = descriptionIDorConceptIDRequest.getConceptId();
+        if (conceptId != null && !conceptId.isEmpty()) {
+            conceptSMTK = conceptManager.getConceptByCONCEPT_ID(conceptId);
+        }
+
+        /* Sino, se recupera el concepto a partir del DESCRIPTION_ID */
+        else {
+            Description theDescription = descriptionManager.getDescriptionByDescriptionID(descriptionIDorConceptIDRequest.getDescriptionId());
+            conceptSMTK = theDescription.getConceptSMTK();
+
+        }
+
+        /* Luego se recuperan los crossmapSetMembers directos del concepto */
         List<IndirectCrossmap> indirectCrossmaps = crossmapManager.getIndirectCrossmaps(conceptSMTK);
 
-        return new IndirectCrossMapSearchResponse(indirectCrossmaps);
+        IndirectCrossMapSearchResponse res = new IndirectCrossMapSearchResponse(indirectCrossmaps);
+
+        res.setConceptId(conceptSMTK.getConceptID());
+        res.setCategory(conceptSMTK.getCategory().getName());
+        res.setDescriptionId(conceptSMTK.getDescriptionFavorite().getDescriptionId());
+        res.setDescription(conceptSMTK.getDescriptionFavorite().getTerm());
+
+        return res;
     }
 
     /**
@@ -72,12 +89,11 @@ public class CrossmapController {
      */
     public CrossmapSetMembersResponse getDirectCrossmapsSetMembersByDescriptionID(DescriptionIDorConceptIDRequest
                                                                                           desOrConReq) {
-
         ConceptSMTK conceptSMTK;
 
         /* Primero se recupera el concepto, ya sea por su CONCEPT_ID o por su DESCRIPTION_ID */
         String conceptId = desOrConReq.getConceptId();
-        if (conceptId != null) {
+        if (conceptId != null && !conceptId.isEmpty()) {
             conceptSMTK = conceptManager.getConceptByCONCEPT_ID(conceptId);
         }
 
@@ -89,10 +105,16 @@ public class CrossmapController {
         }
 
         /* Luego se recuperan los crossmapSetMembers directos del concepto */
-        List<CrossmapSetMember> directCrossmapsSetMembersOf = crossmapManager.getDirectCrossmapsSetMembersOf
-                (conceptSMTK);
+        List<CrossmapSetMember> directCrossmapsSetMembersOf = crossmapManager.getDirectCrossmapsSetMembersOf(conceptSMTK);
 
-        return new CrossmapSetMembersResponse(directCrossmapsSetMembersOf);
+        CrossmapSetMembersResponse res = new CrossmapSetMembersResponse(directCrossmapsSetMembersOf);
+
+        res.setConceptId(conceptSMTK.getConceptID());
+        res.setCategory(conceptSMTK.getCategory().getName());
+        res.setDescriptionId(conceptSMTK.getDescriptionFavorite().getDescriptionId());
+        res.setDescription(conceptSMTK.getDescriptionFavorite().getTerm());
+
+        return res;
     }
 
     /**
@@ -103,11 +125,20 @@ public class CrossmapController {
      */
     public CrossmapSetMembersResponse getCrossmapSetMembersByCrossmapSetAbbreviatedName(String crossmapSetAbbreviatedName) {
 
-        List<CrossmapSetMember> crossmapSetByAbbreviatedName = crossmapManager.getCrossmapSetByAbbreviatedName
-                (crossmapSetAbbreviatedName);
+        List<CrossmapSetMember> crossmapSetByAbbreviatedName = crossmapManager.getCrossmapSetByAbbreviatedName(crossmapSetAbbreviatedName);
         logger.debug("CrossmapController.getCrossmapSetMembersByCrossmapSetAbbreviatedName:: " +
                 "crossmapSetByAbbreviatedName=" + crossmapSetByAbbreviatedName);
-        return new CrossmapSetMembersResponse(crossmapSetByAbbreviatedName);
+
+        CrossmapSetMembersResponse res = new CrossmapSetMembersResponse(crossmapSetByAbbreviatedName);
+
+        if(!crossmapSetByAbbreviatedName.isEmpty()) {
+            CrossmapSet crossmapSet = crossmapSetByAbbreviatedName.get(0).getCrossmapSet();
+            res.setAbbreviatedName(crossmapSet.getAbbreviatedName());
+            res.setName(crossmapSet.getName());
+            res.setVersion(crossmapSet.getVersion());
+        }
+
+        return res;
     }
 
     /**

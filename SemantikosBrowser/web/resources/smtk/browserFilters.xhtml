@@ -32,9 +32,8 @@
                         <div class="Container100">
                             <div class="ContainerIndent BoldGray FontBold">
                                 <h:outputText value="Patrón" />
-                                <p:inputText value="#{browserBean.browserQuery.query}"
-                                             placeholder="Buscar...">
-                                    <p:ajax event="keyup" update="@(.conceptTable)" listener="#{browserBean.setFilterChanged(true)}" />
+                                <p:inputText value="#{browserBean.browserQuery.query}" placeholder="Buscar..." onkeyup="return (this.value.length >= 3 || this.value.length ==0)">
+                                    <p:ajax event="keyup" delay="500" update="@(.conceptTable)" listener="#{browserBean.setFilterChanged(true)}" />
                                 </p:inputText>
                             </div>
                         </div>

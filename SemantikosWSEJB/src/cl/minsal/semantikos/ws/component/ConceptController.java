@@ -159,10 +159,11 @@ public class ConceptController {
         }
 
         ConceptSMTK source = null;
-        if (conceptId != null && !conceptId.isEmpty()) {
-            source = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
-        } else if (descriptionId != null && !descriptionId.isEmpty()) {
+
+        if (descriptionId != null && !descriptionId.isEmpty()) {
             source = this.conceptManager.getConceptByDescriptionID(descriptionId);
+        } else if (conceptId != null && !conceptId.isEmpty()) {
+            source = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
         }
 
         if (source != null) {

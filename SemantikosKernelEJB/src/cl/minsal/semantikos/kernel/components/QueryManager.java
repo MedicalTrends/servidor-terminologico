@@ -88,44 +88,12 @@ public interface QueryManager {
     public List<ConceptSMTK> executeQuery(BrowserQuery query);
 
     /**
-     * Este método es responsable de contabilizar los resultados de una consulta en el navegador de categorías,
-     * Dado el objeto de consulta correspondiente
+     * Este método es responsable de contabilizar los resultados de una consulta
+     * Dado el objeto de consulta
      *
-     * @param query El objeto de consulta para el navegador de categorías
+     * @param query El objeto de consulta
      */
-    public int countQueryResults(GeneralQuery query);
-
-    /**
-     * Este método es responsable de contabilizar los resultados de una consulta en el navegador de descripciones,
-     * Dado el objeto de consulta correspondiente
-     *
-     * @param query El objeto de consulta para el navegador de descripciones
-     */
-    public int countQueryResults(DescriptionQuery query);
-
-    /**
-     * Este método es responsable de contabilizar los resultados de una consulta en el navegador de no válidos,
-     * Dado el objeto de consulta correspondiente
-     *
-     * @param query El objeto de consulta para el navegador de no válidos
-     */
-    public int countQueryResults(NoValidQuery query);
-
-    /**
-     * Este método es responsable de contabilizar los resultados de una consulta en el navegador de pendientes,
-     * Dado el objeto de consulta correspondiente
-     *
-     * @param query El objeto de consulta para el navegador de pendientes
-     */
-    public int countQueryResults(PendingQuery query);
-
-    /**
-     * Este método es responsable de contabilizar los resultados de una consulta en el browser,
-     * Dado el objeto de consulta correspondiente
-     *
-     * @param query El objeto de consulta para el browser
-     */
-    public int countQueryResults(BrowserQuery query);
+    public int countQueryResults(Query query);
 
     /**
      * Este método es responsable de obtener los atributos filtrables de una categoría para el navegador de categorias,

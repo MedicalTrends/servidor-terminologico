@@ -12,6 +12,8 @@ import java.sql.Timestamp;
  */
 public class IndirectCrossmap extends Crossmap {
 
+    private long idSnomedCT;
+
     private int mapGroup;
 
     private int mapPriority;
@@ -39,6 +41,14 @@ public class IndirectCrossmap extends Crossmap {
     @Override
     public boolean is(CrossMapType indirect) {
         return indirect.equals(CrossMapType.INDIRECT);
+    }
+
+    public long getIdSnomedCT() {
+        return idSnomedCT;
+    }
+
+    public void setIdSnomedCT(long idSnomedCT) {
+        this.idSnomedCT = idSnomedCT;
     }
 
     public int getMapGroup() {

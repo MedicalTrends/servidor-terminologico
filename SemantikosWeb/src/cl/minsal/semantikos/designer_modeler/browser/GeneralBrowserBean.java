@@ -126,6 +126,7 @@ public class GeneralBrowserBean implements Serializable {
             return;
         }
 
+
         /**
          * Si el objeto de consulta no está inicializado, inicializarlo
          */
@@ -142,20 +143,24 @@ public class GeneralBrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
 
-                if(isFilterChanged)
+                if(isFilterChanged) {
                     generalQuery.setPageNumber(0);
-                else
+                }
+                else {
                     generalQuery.setPageNumber(first);
+                }
 
                 isFilterChanged = false;
 
                 generalQuery.setPageSize(pageSize);
                 generalQuery.setOrder(new Integer(sortField));
 
-                if(sortOrder.name().substring(0,3).toLowerCase().equals("asc"))
+                if(sortOrder.name().substring(0,3).toLowerCase().equals("asc")) {
                     generalQuery.setAsc(sortOrder.name().substring(0,3).toLowerCase());
-                else
+                }
+                else {
                     generalQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
+                }
 
                 List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(generalQuery);
                 this.setRowCount(queryManager.countQueryResults(generalQuery));
@@ -175,21 +180,6 @@ public class GeneralBrowserBean implements Serializable {
     public void setIdCategory(int idCategory) {
         this.idCategory = idCategory;
         this.category = categoryManager.getCategoryById(idCategory);
-    }
-
-    public List<Tag> getRecordSearchInput(String patron) {
-
-        FacesContext context = FacesContext.getCurrentInstance();
-
-
-        List<Tag> someTags = new ArrayList<Tag>();
-
-        for (Tag tag : getTags()) {
-            if(tag.getName().toLowerCase().contains(patron.trim().toLowerCase()))
-                someTags.add(tag);
-        }
-
-        return someTags;
     }
 
     public LazyDataModel<ConceptSMTK> getConcepts() {

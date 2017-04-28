@@ -27,8 +27,8 @@
                                     Patrón
                                 </span>
                                 <p:outputPanel styleClass="search">
-                                    <p:inputText value="#{cc.attrs.noValidQuery.query}" placeholder="Buscar...">
-                                        <p:ajax event="keyup" update="@(.browserTable)" listener="#{noValidBrowserBean.setFilterChanged(true)}" process="@this" />
+                                    <p:inputText value="#{cc.attrs.noValidQuery.query}" placeholder="Buscar..." onkeyup="return (this.value.length >= 3 || this.value.length ==0)">
+                                        <p:ajax event="keyup" delay="500" update="@(.browserTable)" listener="#{noValidBrowserBean.setFilterChanged(true)}" process="@this" />
                                     </p:inputText>
                                     <i class="fa fa-search fa-lg" />
                                 </p:outputPanel>

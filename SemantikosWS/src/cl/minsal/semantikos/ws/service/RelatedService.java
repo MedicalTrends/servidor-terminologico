@@ -83,8 +83,7 @@ public class RelatedService {
     ) throws IllegalInputFault, NotFoundFault {
 
         /* Validación de parámetros */
-        if ((request.getConceptId() == null || "".equals(request.getConceptId()))
-                && (request.getDescriptionId() == null || "".equals(request.getDescriptionId()))) {
+        if ((request.getConceptId() == null || "".equals(request.getConceptId())) && (request.getDescriptionId() == null || "".equals(request.getDescriptionId()))) {
             throw new IllegalInputFault("Debe ingresar un idConcepto o idDescripcion");
         }
 

@@ -16,6 +16,24 @@ import java.util.List;
 @XmlType(name = "CrossmapSetMembersResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class CrossmapSetMembersResponse {
 
+    @XmlElement(name="idConcepto")
+    private String conceptId;
+    @XmlElement(name="idDescripcionPreferida")
+    private String descriptionId;
+    @XmlElement(name="descripcionPreferida")
+    private String description;
+    @XmlElement(name="nombreCategoria")
+    private String category;
+
+    @XmlElement(name="abbreviatedName")
+    private String abbreviatedName;
+
+    @XmlElement(name="name")
+    private String name;
+
+    @XmlElement(name="version")
+    private int version;
+
     /** La lista de crossmaps indirectos (response) */
     @XmlElementWrapper(name = "crossmapSetMembers")
     @XmlElement(name = "crossmapSetMember")
@@ -46,6 +64,62 @@ public class CrossmapSetMembersResponse {
         }
 
         this.quantity = crossmapSetMembers.size();
+    }
+
+    public String getConceptId() {
+        return conceptId;
+    }
+
+    public void setConceptId(String conceptId) {
+        this.conceptId = conceptId;
+    }
+
+    public String getDescriptionId() {
+        return descriptionId;
+    }
+
+    public void setDescriptionId(String descriptionId) {
+        this.descriptionId = descriptionId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getAbbreviatedName() {
+        return abbreviatedName;
+    }
+
+    public void setAbbreviatedName(String abbreviatedName) {
+        this.abbreviatedName = abbreviatedName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     public List<CrossmapSetMemberResponse> getCrossmapSetMemberResponses() {
