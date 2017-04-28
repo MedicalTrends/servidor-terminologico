@@ -157,7 +157,7 @@
                                     <p:commandButton title="Dejar no vigente" icon="fa fa-trash"
                                                      actionListener="#{refsetsBean.invalidRefset(refset)}"
                                                      update="@(.listRefSets)" rendered="#{refset.valid}">
-                                        <p:confirm header="Confirmation" message="¿Desea invalidar este RefSet?"
+                                        <p:confirm header="Confirmar Acción" message="¿Desea invalidar este RefSet?"
                                                    icon="ui-icon-alert"/>
 
                                     </p:commandButton>
@@ -281,7 +281,7 @@
                                              value="Pasar a vigente"
                                              actionListener="#{refsetsBean.validRefset(refsetsBean.refSetEdit)}"
                                              update="formRefset">
-                                <p:confirm header="Confirmation" message="¿Desea validar este RefSet?"
+                                <p:confirm header="Confirmar Acción" message="¿Desea validar este RefSet?"
                                            icon="ui-icon-alert"/>
                             </p:commandButton>
                         </div>

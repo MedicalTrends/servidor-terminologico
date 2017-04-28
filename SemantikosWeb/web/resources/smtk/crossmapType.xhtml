@@ -43,11 +43,13 @@
                     <div class="Container20 White Responsive">
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
-                            <p:selectOneMenu value="#{crossmapBean.typeSearch}" autoWidth="false" >
+
+                            <p:selectOneRadio value="#{crossmapBean.typeSearch}" autoWidth="false" layout="grid" columns="2" style="padding-top: 0.5em"
+                                              >
                                 <f:selectItem itemLabel="Búsqueda por descripción" itemValue="0"></f:selectItem>
                                 <f:selectItem itemLabel="Búsqueda por Cod-1 Crossmapset" itemValue="1"></f:selectItem>
-                                <p:ajax event="itemSelect"  />
-                            </p:selectOneMenu>
+                                <p:ajax  />
+                            </p:selectOneRadio>
 
                         </div>
                     </div>
@@ -184,7 +186,7 @@
                         actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
                         styleClass="relationships"
                 >
-                    <p:confirm header="Confirmation" message="¿Está seguro de eliminar este Crossmaps Directo?"
+                    <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar este Crossmaps Directo?"
                                icon="ui-icon-alert"/>
                 </p:commandButton>
             </p:column>
