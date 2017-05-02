@@ -543,6 +543,32 @@ public class ConceptController {
         return res;
     }
 
+    /**
+     * Este método es responsable de recuperar todos los conceptos de un RefSet.
+     *
+     * @param refSetName El RefSet cuyos conceptos se desea recuperar.
+     * @return Una lista de conceptos que pertenecen al refset <code>refSetName</code>.
+     * @throws NotFoundFault Arrojada si...
+     */
+    public RefSetLightResponse conceptsLightByRefset(String refSetName) throws NotFoundFault {
+        RefSet refSet = this.refSetManager.getRefsetByName(refSetName);
+        RefSetLightResponse res = new RefSetLightResponse();
+
+        res.setName(refSet.getName());
+        res.setInstitution(refSet.getInstitution().getName());
+        res.setCreationDate(refSet.getCreationDate());
+        res.setValid(refSet.getValidityUntil()==null);
+        res.setValidityUntil(refSet.getValidityUntil());
+
+        for (ConceptSMTK conceptSMTK : refSet.getConcepts()) {
+            res.getConcepts().add(new ConceptLightResponse(conceptSMTK));
+        }
+
+        res.setQuantity(res.getConcepts().size());
+
+        return res;
+    }
+
     public BioequivalentSearchResponse getBioequivalentes(String conceptId, String descriptionId) throws
             IllegalInputFault, NotFoundFault {
         if ((conceptId == null || "".equals(conceptId))
@@ -745,7 +771,7 @@ public class ConceptController {
 
             for (Relationship relationship : relationshipManager.findRelationshipsLike(theRelationshipDefinition, requestable)) {
 
-                if(relationship.getSourceConcept().getCategory().equals(aCategory)) {
+                if(relationship.getSourceConcept().getCategory().equals(aCategory) && relationship.getSourceConcept().isModeled()) {
                     allRequestableConcepts.add(relationship.getSourceConcept());
                 }
             }

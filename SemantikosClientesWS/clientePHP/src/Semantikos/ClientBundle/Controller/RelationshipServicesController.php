@@ -94,6 +94,9 @@ class RelationshipServicesController extends Controller
             case 'ws021':
                 $response = $this->container->get('client.helper.relationship_clients')->callWS021($ws_params);
                 break;
+            case 'ws022':
+                $response = $this->container->get('client.helper.relationship_clients')->callWS021($ws_params);
+                break;
         }                        
         
         return new Response($response);
