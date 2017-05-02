@@ -37,6 +37,9 @@ public class RefSetResponse implements Serializable {
     @XmlElement(name="concepto")
     private List<ConceptResponse> concepts;
 
+    @XmlElement(name = "cantidadRegistros")
+    private int quantity;
+
     public RefSetResponse() {
         concepts = new ArrayList<>();
     }
@@ -101,5 +104,13 @@ public class RefSetResponse implements Serializable {
 
     public void setConcepts(List<ConceptResponse> concepts) {
         this.concepts = concepts;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

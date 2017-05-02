@@ -176,7 +176,7 @@ public class SearchService {
      */
     @WebResult(name = "respuestaBuscarTermino")
     @WebMethod(operationName = "obtenerTerminosPedibles")
-    public TermSearchResponse obtenerTerminosPedibles(
+    public TermSearchesResponse obtenerTerminosPedibles(
             @XmlElement(required = true)
             @WebParam(name = "peticionObtenerTerminosPedibles")
                     RequestableConceptsRequest request
