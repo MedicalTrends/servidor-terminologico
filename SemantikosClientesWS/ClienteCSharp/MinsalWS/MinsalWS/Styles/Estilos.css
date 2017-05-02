@@ -1,0 +1,15 @@
+﻿
+.Boton          {background-color:#1A78BE;color: white;width:100px;height: 25px; border: none; cursor:pointer; }
+.TextBoxNumerico{background-color: rgb(232, 232, 232);border-style: solid; border-width: 1px;  border-color: #1A78BE; height: 20px; width: 250px; font-size: 0.9em; color: #1A78BE; text-align: right;}
+.TextBoxTexto   {background-color: rgb(232, 232, 232);border-style: solid; border-width: 1px;  border-color: #1A78BE; height: 20px; width: 250px; font-size: 0.9em; color: #1A78BE; text-align: left;}
+.ComboBox       {background-color: rgb(232, 232, 232);border-style: solid; border-width: 1px;  border-color: #1A78BE; height: 25px; width: 254px; font-size: 0.9em; color: #1A78BE;}
+.Label          {font-size: 0.9em; color: #1A78BE; font-weight: bold}
+.Error          {color: red;}
+
+
+/*GRILLA*/
+.Grilla             {border-color: #1A78BE; }
+.GrillaHeader       {font-size:10px;height:30px;color: white;background-color:#1A78BE;border-spacing: 10px;}
+.GrillaRow          {font-size:11px;color:#1A78BE;background-color: white;}
+.GrillaRowAlternate {font-size:11px;color:#1A78BE;background-color:rgb(239, 239, 239); }
+/*---------*/

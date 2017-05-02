@@ -1,0 +1,93 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Servicios.master.cs" Inherits="MinsalWS.Servicios" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link id="Link1" href="~/Styles/Site.css" runat="server" rel="stylesheet" type="text/css" />
+      <link id="Link2" href="~/Styles/Estilos.css" runat="server" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body> 
+    <form runat="server"> 
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager> 
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>
+                    SERVICIOS MINSAL
+                </h1>
+            </div>
+            <div class="loginDisplay">
+                <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+                    <AnonymousTemplate>
+                        [ <a href="~/Account/Login.aspx" ID="HeadLoginStatus" runat="server">Iniciar sesión</a> ]
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        Pantalla de bienvenida <span class="bold"><asp:LoginName ID="HeadLoginName" runat="server" /></span>!
+                        [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Cerrar sesión" LogoutPageUrl="~/"/> ]
+                    </LoggedInTemplate>
+                </asp:LoginView>
+            </div>
+            <div class="clear hideSkiplink">
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">                    
+                    <Items>
+                        <asp:MenuItem NavigateUrl="~/Pages/Servicio1.aspx" Text="INGRESO" Value="1">
+                            <asp:MenuItem Text="Codificación" Value="New" NavigateUrl="~/Pages/Servicio1/CodificacionNuevoTermino.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Incrementar" Value="New" NavigateUrl="~/Pages/Servicio1/IncrementarContadorDescripcion.aspx"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/Pages/Servicio1.aspx" Text="BUSQUEDA" Value="1">
+                            <asp:MenuItem Text="Buscar descripción" Value="New" NavigateUrl="~/Pages/Servicio2/BuscarDescripcionExacta.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Buscar termino" Value="New" NavigateUrl="~/Pages/Servicio2/BuscarTermino.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Buscar truncate" Value="New" NavigateUrl="~/Pages/Servicio2/BuscarTruncatePerfect.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Concepto categoría" Value="New" NavigateUrl="~/Pages/Servicio2/ConceptoPorCategoria.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Concepto descripción" Value="New" NavigateUrl="~/Pages/Servicio2/ConceptoPorIdDescripcion.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Concepto refSet" Value="New" NavigateUrl="~/Pages/Servicio2/ConceptoPorRefSet.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Crossmap descripción" Value="New" NavigateUrl="~/Pages/Servicio2/CrossMapsDirectorsPorIdDescripcion.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Crossmap members" Value="New" NavigateUrl="~/Pages/Servicio2/CrossMapSetMembersDeCrossmapSet.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Crossmap Indirectos" Value="New" NavigateUrl="~/Pages/Servicio2/CrossMapsIndiectosPorIdDescripcion.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Descripción preferidas" Value="New" NavigateUrl="~/Pages/Servicio2/DescripcionesPreferidasPorRefSet.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="GetCrossmap" Value="New" NavigateUrl="~/Pages/Servicio2/GetCrossmapSets.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Lista categorías" Value="New" NavigateUrl="~/Pages/Servicio2/ListaCategorias.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Lista refSet" Value="New" NavigateUrl="~/Pages/Servicio2/ListaRefSet.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Obtener terminos pedibles" Value="New" NavigateUrl="~/Pages/Servicio2/ObtenerTerminosPedibles.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="RefSet descripción" Value="New" NavigateUrl="~/Pages/Servicio2/RefSetsPorIdDescripcion.aspx"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/Pages/Servicio1.aspx" Text="RELACIONADOS" Value="1">
+                            <asp:MenuItem Text="Conceptos relacionados" Value="New" NavigateUrl="~/Pages/Servicio3/ConceptosRelacionados.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Conceptos relacionados lite" Value="New" NavigateUrl="~/Pages/Servicio3/ConceptosRelacionadosLite.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Obtener bioequivalentes" Value="New" NavigateUrl="~/Pages/Servicio3/ObtenerBioequivalentes.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Obtener familia producto" Value="New" NavigateUrl="~/Pages/Servicio3/ObtenerFamiliaProducto.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Obtener medicamento básico" Value="New" NavigateUrl="~/Pages/Servicio3/ObtenerMedicamentoBasico.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Obtener medicamento básico lite" Value="New" NavigateUrl="~/Pages/Servicio3/ObtenerMedicamentoBasicoLite.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Obtener medicamento clínico " Value="New" NavigateUrl="~/Pages/Servicio3/ObtenerMedicamentoClinico.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Obtener medicamento clínico con envase" Value="New" NavigateUrl="~/Pages/Servicio3/ObtenerMedicamentoClinicoConEnvase.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Obtener medicamento clínico con envase lite" Value="New" NavigateUrl="~/Pages/Servicio3/ObtenerMedicamentoClinicoConEnvaseLite.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Obtener medicamento clínico lite" Value="New" NavigateUrl="~/Pages/Servicio3/ObtenerMedicamentoClinicoLite.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Obtener producto comercial" Value="New" NavigateUrl="~/Pages/Servicio3/ObtenerProductoComercial.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Obtener producto comercial con envase" Value="New" NavigateUrl="~/Pages/Servicio3/ObtenerProductoComercialConEnvase.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Obtener producto comercial con envase lite" Value="New" NavigateUrl="~/Pages/Servicio3/ObtenerProductoComercialConEnvaseLite.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Obtener producto comercial lite" Value="New" NavigateUrl="~/Pages/Servicio3/ObtenerProductoComercialLite.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Obtener producto registro ISP" Value="New" NavigateUrl="~/Pages/Servicio3/ObtenerRegistroISP.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Obtener sustancia" Value="New" NavigateUrl="~/Pages/Servicio3/ObtenerSustancia.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Sugerencias descripciones" Value="New" NavigateUrl="~/Pages/Servicio3/SugerenciasDeDescripciones.aspx"></asp:MenuItem>
+                        </asp:MenuItem>
+                    </Items>
+                </asp:Menu>
+            </div>
+        </div>
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="footer">
+        
+    </div>
+    </form>
+</body>
+</html>

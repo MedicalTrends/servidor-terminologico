@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinsalWS", "MinsalWS\MinsalWS.csproj", "{F9B15F04-E0A8-4B8A-B6DC-DCF0F1EA01EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConexionServiciosWS", "ConexionServiciosWS\ConexionServiciosWS.csproj", "{1FFBD02F-2A98-4C4A-ADE8-B614624BE493}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccesoServiciosWS", "AccesoServiciosWS\AccesoServiciosWS.csproj", "{4C35F0CC-050C-44E2-93D3-37CF17DD395C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9B15F04-E0A8-4B8A-B6DC-DCF0F1EA01EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9B15F04-E0A8-4B8A-B6DC-DCF0F1EA01EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9B15F04-E0A8-4B8A-B6DC-DCF0F1EA01EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9B15F04-E0A8-4B8A-B6DC-DCF0F1EA01EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FFBD02F-2A98-4C4A-ADE8-B614624BE493}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FFBD02F-2A98-4C4A-ADE8-B614624BE493}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FFBD02F-2A98-4C4A-ADE8-B614624BE493}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FFBD02F-2A98-4C4A-ADE8-B614624BE493}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C35F0CC-050C-44E2-93D3-37CF17DD395C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C35F0CC-050C-44E2-93D3-37CF17DD395C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C35F0CC-050C-44E2-93D3-37CF17DD395C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C35F0CC-050C-44E2-93D3-37CF17DD395C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
