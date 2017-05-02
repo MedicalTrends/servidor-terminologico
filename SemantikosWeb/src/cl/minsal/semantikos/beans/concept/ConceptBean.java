@@ -371,35 +371,8 @@ public class ConceptBean implements Serializable {
         }
 
         // Una vez que se ha inicializado el concepto, inicializar los placeholders para las relaciones
-        for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
-            RelationshipDefinitionWeb relationshipDefinitionWeb = viewAugmenter.augmentRelationshipDefinition(category, relationshipDefinition);
+        viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
 
-            if (!concept.isPersistent() && relationshipDefinitionWeb.hasDefaultValue())
-                concept.initRelationship(relationshipDefinitionWeb);
-
-            if (!relationshipDefinition.getRelationshipAttributeDefinitions().isEmpty()) {
-                relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null));
-
-                // Si esta definición de relación es de tipo CROSSMAP, Se agrega el atributo tipo de relacion = "ES_UN_MAPEO_DE" (por defecto)
-                if (relationshipDefinition.getTargetDefinition().isCrossMapType()) {
-                    for (RelationshipAttributeDefinition attDef : relationshipDefinition.getRelationshipAttributeDefinitions()) {
-                        if (attDef.isRelationshipTypeAttribute()) {
-                            Relationship r = relationshipPlaceholders.get(relationshipDefinition.getId());
-                            HelperTable helperTable = (HelperTable) attDef.getTargetDefinition();
-
-                            List<HelperTableRow> relationshipTypes = helperTablesManager.searchRows(helperTable, ES_UN_MAPEO_DE);
-                            RelationshipAttribute ra;
-                            if (relationshipTypes.size() == 0) {
-                                logger.error("No hay datos en la tabla de TIPOS DE RELACIONES.");
-                            }
-
-                            ra = new RelationshipAttribute(attDef, r, relationshipTypes.get(0));
-                            r.getRelationshipAttributes().add(ra);
-                        }
-                    }
-                }
-            }
-        }
         changeMCSpecial();
     }
 
@@ -537,7 +510,7 @@ public class ConceptBean implements Serializable {
         // Validar placeholders de targets de relacion
         if (relationship.getTarget() == null) {
             messageBean.messageError("Debe seleccionar un valor para el atributo " + relationshipDefinition.getName());
-            relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
+            viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
             resetPlaceHolders();
             return;
         }
@@ -557,7 +530,7 @@ public class ConceptBean implements Serializable {
         for (RelationshipAttributeDefinition attributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
             if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) || changeIndirectMultiplicity(relationship, relationshipDefinition, attributeDefinition)) {
                 messageBean.messageError("Información incompleta para agregar " + relationshipDefinition.getName());
-                relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
+                viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
                 resetPlaceHolders();
                 return;
             }
@@ -570,7 +543,7 @@ public class ConceptBean implements Serializable {
         if(!isMCSpecialThisConcept() && !relationshipDefinition.isSNOMEDCT())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
         // Resetear placeholder relacion
-        relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
+        viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
         // Resetear placeholder targets
         resetPlaceHolders();
     }
@@ -582,13 +555,6 @@ public class ConceptBean implements Serializable {
         conceptSCTSelected = null;
         crossmapSetMemberSelected = null;
         conceptSMTKAttributeSelected=null;
-    }
-
-    public Relationship resetRelationship(Relationship r) {
-        if (r.getRelationshipDefinition().getTargetDefinition().isCrossMapType())
-            return new Relationship(r.getSourceConcept(), null, r.getRelationshipDefinition(), r.getRelationshipAttributes(), null);
-        else
-            return new Relationship(r.getSourceConcept(), null, r.getRelationshipDefinition(), new ArrayList<RelationshipAttribute>(), null);
     }
 
     /**

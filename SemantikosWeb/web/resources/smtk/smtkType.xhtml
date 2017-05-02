@@ -89,11 +89,11 @@
                      value="#{conceptBean.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      var="rel">
 
-            <p:column headerText="ID">
+            <p:column headerText="ConceptID">
                 <h:outputText value="#{rel.target.id}"/>
             </p:column>
 
-            <p:column headerText="Descripción">
+            <p:column headerText="Término Preferida">
                 <h:outputText value="#{rel.target.descriptionFavorite.term}"/>
             </p:column>
 
@@ -214,8 +214,8 @@
             </p:ajax>
             <f:attribute name="relationshipDefinitionRowEdit" value="#{cc.attrs.relationshipDefinition}" />
 
-            <p:column headerText="ID">
-                <h:outputText value="#{rel.target.id}"/>
+            <p:column headerText="ConceptID">
+                <h:outputText value="#{rel.target.conceptID}"/>
             </p:column>
 
             <p:column headerText="Descripción">

@@ -14,6 +14,9 @@ public class RelationshipAttributeDefinitionWeb extends RelationshipAttributeDef
     /** Establece el orden o posición */
     private int order;
 
+    /** Establece el valor por defecto para esta definición */
+    private Target defaultValue;
+
     private RelationshipAttributeDefinition relationshipAttributeDefinition;
 
     public RelationshipAttributeDefinitionWeb(long id, TargetDefinition target, String name, Multiplicity multiplicity, long compositeID, int order, RelationshipAttributeDefinition relationshipAttributeDefinition) {
@@ -45,6 +48,14 @@ public class RelationshipAttributeDefinitionWeb extends RelationshipAttributeDef
 
     public void setRelationshipAttributeDefinition(RelationshipAttributeDefinition relationshipAttributeDefinition) {
         this.relationshipAttributeDefinition = relationshipAttributeDefinition;
+    }
+
+    public Target getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(Target defaultValue) {
+        this.defaultValue = defaultValue;
     }
 
     @Override

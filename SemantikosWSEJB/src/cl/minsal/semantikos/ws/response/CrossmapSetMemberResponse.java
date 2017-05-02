@@ -4,6 +4,8 @@ import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 
 import javax.xml.bind.annotation.*;
 
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
+
 /**
  * @author Andrés Farías on 12/15/16.
  */
@@ -17,11 +19,13 @@ public class CrossmapSetMemberResponse {
     private long idCrossmapSetMember;
 
     /** Terminología a la que pertenece */
+    /*
     @XmlElement(name = "crossmapSet")
     private CrossmapSetResponse crossmapSet;
+    */
 
-    @XmlElement(name = "code")
-    private String code;
+    @XmlElement(name = "code1")
+    private String code1;
 
     @XmlElement(name = "gloss")
     private String gloss;
@@ -33,8 +37,8 @@ public class CrossmapSetMemberResponse {
         this();
 
         this.idCrossmapSetMember = crossmapSetMember.getIdCrossmapSetMember();
-        this.crossmapSet = new CrossmapSetResponse(crossmapSetMember.getCrossmapSet());
-        this.code = crossmapSetMember.getCode1();
+        //this.crossmapSet = new CrossmapSetResponse(crossmapSetMember.getCrossmapSet());
+        this.code1 = crossmapSetMember.getCode()!=null?crossmapSetMember.getCode():EMPTY_STRING;
         this.gloss = crossmapSetMember.getGloss();
     }
 
@@ -46,6 +50,7 @@ public class CrossmapSetMemberResponse {
         this.idCrossmapSetMember = idCrossmapSetMember;
     }
 
+    /*
     public CrossmapSetResponse getCrossmapSet() {
         return crossmapSet;
     }
@@ -53,13 +58,14 @@ public class CrossmapSetMemberResponse {
     public void setCrossmapSet(CrossmapSetResponse crossmapSet) {
         this.crossmapSet = crossmapSet;
     }
+    */
 
-    public String getCode() {
-        return code;
+    public String getCode1() {
+        return code1;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCode(String code1) {
+        this.code1 = code1;
     }
 
     public String getGloss() {

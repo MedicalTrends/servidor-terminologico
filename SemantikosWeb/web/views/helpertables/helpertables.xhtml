@@ -172,14 +172,17 @@
                                     </p:column>
 
                                     <p:column headerText="Descripción" sortable="true" width="200">
-                                        <p:cellEditor>
-                                            <f:facet name="output">
-                                                <h:outputText value="#{row.description}"/>
-                                            </f:facet>
-                                            <f:facet name="input">
-                                                <p:inputText disabled="#{!row.valid and row.persistent}" value="#{row.description}"/>
-                                            </f:facet>
-                                        </p:cellEditor>
+                                        <div style="text-align: left">
+                                            <p:cellEditor>
+                                                <f:facet name="output">
+                                                    <h:outputText value="#{row.description}"/>
+                                                </f:facet>
+                                                <f:facet name="input">
+                                                    <p:inputText disabled="#{!row.valid and row.persistent}" value="#{row.description}"/>
+                                                </f:facet>
+                                            </p:cellEditor>
+                                        </div>
+
                                     </p:column>
 
                                     <p:columns columnIndexVar="columnIndex" var="column"
@@ -204,7 +207,7 @@
                                             </f:facet>
                                             <f:facet name="input">
                                                 <p:inputText disabled="#{!row.valid and row.persistent}" value="#{row.cells[columnIndex].stringValue}"
-                                                             rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1}"/>
+                                                             rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1 }"/>
                                                 <p:selectOneMenu disabled="#{!row.valid and row.persistent}" value="#{row.cells[columnIndex].booleanValue}" autoWidth="false"
                                                                  style="width: 70%"
                                                                  rendered="#{!column.foreignKey and column.helperTableDataTypeId == 2}">
@@ -213,7 +216,7 @@
                                                     <f:selectItem itemLabel="true" itemValue="true"/>
                                                 </p:selectOneMenu>
                                                 <p:inputNumber disabled="#{!row.valid and row.persistent}" value="#{row.cells[columnIndex].intValue}"
-                                                               rendered="#{!column.foreignKey and column.helperTableDataTypeId == 3}"
+                                                               rendered="#{!column.foreignKey and column.helperTableDataTypeId == 3 }"
                                                                decimalPlaces="0"/>
                                                 <p:inputNumber disabled="#{!row.valid and row.persistent}" value="#{row.cells[columnIndex].floatValue}"
                                                                rendered="#{!column.foreignKey and column.helperTableDataTypeId == 4}"/>

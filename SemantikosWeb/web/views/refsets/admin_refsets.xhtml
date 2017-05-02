@@ -157,7 +157,7 @@
                                     <p:commandButton title="Dejar no vigente" icon="fa fa-trash"
                                                      actionListener="#{refsetsBean.invalidRefset(refset)}"
                                                      update="@(.listRefSets)" rendered="#{refset.valid}">
-                                        <p:confirm header="Confirmation" message="¿Desea invalidar este RefSet?"
+                                        <p:confirm header="Confirmar Acción" message="¿Desea invalidar este RefSet?"
                                                    icon="ui-icon-alert"/>
 
                                     </p:commandButton>
@@ -203,10 +203,10 @@
                                     <p:dataTable value="#{refsetsBean.refSetSelect.concepts}" var="concepts" reflow="true"
                                                  emptyMessage="El RefSet no contiene conceptos" style="width: 900px"
                                                  scrollable="true" scrollHeight="150">
-                                        <p:column headerText="Concepto">
+                                        <p:column headerText="ConceptID">
                                             <h:outputText value="#{concepts.conceptID}"/>
                                         </p:column>
-                                        <p:column headerText="Concepto">
+                                        <p:column headerText="Termino Preferida">
                                             <h:outputText value="#{concepts.descriptionFavorite.term}"/>
                                         </p:column>
                                         <p:column headerText="Categoría">
@@ -281,7 +281,7 @@
                                              value="Pasar a vigente"
                                              actionListener="#{refsetsBean.validRefset(refsetsBean.refSetEdit)}"
                                              update="formRefset">
-                                <p:confirm header="Confirmation" message="¿Desea validar este RefSet?"
+                                <p:confirm header="Confirmar Acción" message="¿Desea validar este RefSet?"
                                            icon="ui-icon-alert"/>
                             </p:commandButton>
                         </div>

@@ -13,6 +13,8 @@ import java.sql.Timestamp;
  */
 public class IndirectCrossmap extends Crossmap implements Serializable {
 
+    private long idSnomedCT;
+
     private int mapGroup;
 
     private int mapPriority;
@@ -40,6 +42,14 @@ public class IndirectCrossmap extends Crossmap implements Serializable {
     @Override
     public boolean is(CrossMapType indirect) {
         return indirect.equals(CrossMapType.INDIRECT);
+    }
+
+    public long getIdSnomedCT() {
+        return idSnomedCT;
+    }
+
+    public void setIdSnomedCT(long idSnomedCT) {
+        this.idSnomedCT = idSnomedCT;
     }
 
     public int getMapGroup() {

@@ -48,15 +48,15 @@ public class QueryDAOImpl implements QueryDAO {
         String QUERY = "";
 
         if(  query instanceof  GeneralQuery )
-            QUERY = "{call semantikos.get_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            QUERY = "{call semantikos.get_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         if(  query instanceof  DescriptionQuery )
-            QUERY = "{call semantikos.get_description_by_description_query(?,?,?,?,?,?,?,?)}";
+            QUERY = "{call semantikos.get_description_by_description_query(?,?,?,?,?,?,?,?,?)}";
         if(  query instanceof  NoValidQuery )
-            QUERY = "{call semantikos.get_description_by_no_valid_query(?,?,?,?,?,?,?)}";
+            QUERY = "{call semantikos.get_description_by_no_valid_query(?,?,?,?,?,?,?,?)}";
         if(  query instanceof  PendingQuery )
-            QUERY = "{call semantikos.get_pending_term_by_pending_query(?,?,?,?,?,?)}";
+            QUERY = "{call semantikos.get_pending_term_by_pending_query(?,?,?,?,?,?,?)}";
         if(  query instanceof  BrowserQuery )
-            QUERY = "{call semantikos.get_concept_by_browser_query(?,?,?,?,?,?,?)}";
+            QUERY = "{call semantikos.get_concept_by_browser_query(?,?,?,?,?,?,?,?)}";
 
         try (Connection connection = connect.getConnection();
 
@@ -69,7 +69,7 @@ public class QueryDAOImpl implements QueryDAO {
                 paramNumber++;
             }
 
-                call.execute();
+            call.execute();
 
             ResultSet rs = call.getResultSet();
 
@@ -116,15 +116,15 @@ public class QueryDAOImpl implements QueryDAO {
         String QUERY = "";
 
         if(  query instanceof  GeneralQuery )
-            QUERY = "{call semantikos.count_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            QUERY = "{call semantikos.count_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         if(  query instanceof  DescriptionQuery )
-            QUERY = "{call semantikos.count_description_by_description_query(?,?,?,?,?,?,?,?)}";
+            QUERY = "{call semantikos.count_description_by_description_query(?,?,?,?,?,?,?,?,?)}";
         if(  query instanceof  NoValidQuery )
             QUERY = "{call semantikos.count_description_by_no_valid_query(?,?,?,?,?,?,?,?)}";
         if(  query instanceof  PendingQuery )
-            QUERY = "{call semantikos.count_pending_term_by_no_pending_query(?,?,?,?,?,?)}";
+            QUERY = "{call semantikos.count_pending_term_by_no_pending_query(?,?,?,?,?,?,?)}";
         if(  query instanceof  BrowserQuery )
-            QUERY = "{call semantikos.count_concept_by_browser_query(?,?,?,?,?,?,?)}";
+            QUERY = "{call semantikos.count_concept_by_browser_query(?,?,?,?,?,?,?,?)}";
 
         try (Connection connection = connect.getConnection();
 

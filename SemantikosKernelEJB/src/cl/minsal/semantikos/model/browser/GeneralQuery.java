@@ -16,22 +16,18 @@ import java.util.*;
  *
  * @author Diego Soto.
  */
-public class GeneralQuery implements IQuery {
+public class GeneralQuery extends Query implements IQuery {
 
     /**
      * Filtros estáticos
      */
     private List<Category> categories;
 
-    private String query;
-
     private Boolean toBeReviewed;
 
     private Boolean toBeConsulted;
 
-
     private Boolean modeled;
-
 
     private List<Tag> tags = new ArrayList<>();
 
@@ -65,26 +61,6 @@ public class GeneralQuery implements IQuery {
     private Date creationDateSince;
     private Date creationDateTo;
     private User user;
-
-    /**
-     * Orden
-     */
-    private int order;
-    private String asc;
-
-    /**
-     * Paginación
-     */
-    private int pageSize;
-    private int pageNumber;
-
-    public String getQuery() {
-        return query;
-    }
-
-    public void setQuery(String query) {
-        this.query = query;
-    }
 
     public List<QueryFilter> getFilters() {
         return filters;
@@ -152,38 +128,6 @@ public class GeneralQuery implements IQuery {
 
     public void setCreationDateTo(Date creationDateTo) {
         this.creationDateTo = creationDateTo;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getPageNumber() {
-        return pageNumber;
-    }
-
-    public void setPageNumber(int pageNumber) {
-        this.pageNumber = pageNumber;
-    }
-
-    public int getOrder() {
-        return order;
-    }
-
-    public void setOrder(int order) {
-        this.order = order;
-    }
-
-    public String getAsc() {
-        return asc;
-    }
-
-    public void setAsc(String asc) {
-        this.asc = asc;
     }
 
     public List<Category> getCategories() {
@@ -575,7 +519,7 @@ public class GeneralQuery implements IQuery {
             return getUser().getIdUser();
     }
 
-    public void resetFilters() {
+    public void resetQuery() {
         this.modeled = null;
         this.toBeConsulted = null;
         this.toBeReviewed = null;
@@ -587,7 +531,8 @@ public class GeneralQuery implements IQuery {
             filter.getTargets().clear();
         }
         //this.filters = new ArrayList<>();
-        this.query = null;
+        super.setQuery(null);;
+        super.setTruncateMatch(false);
     }
 
     /**
@@ -604,6 +549,7 @@ public class GeneralQuery implements IQuery {
 
         queryParameters.add(new QueryParameter(Long.class, getCategoryValues(), true)); /** ids categorias **/
         queryParameters.add(new QueryParameter(String.class, getQuery(), false)); /** patrón de búsqueda **/
+        queryParameters.add(new QueryParameter(Boolean.class, getTruncateMatch(), false)); /** tipo de búsqueda **/
         queryParameters.add(new QueryParameter(Boolean.class, getModeled(), false)); /** está modelado? **/
         queryParameters.add(new QueryParameter(Boolean.class, getToBeReviewed(), false)); /** para revisar? **/
         queryParameters.add(new QueryParameter(Boolean.class, getToBeConsulted(), false)); /** para consultar? **/
@@ -629,4 +575,5 @@ public class GeneralQuery implements IQuery {
 
         return queryParameters;
     }
+
 }

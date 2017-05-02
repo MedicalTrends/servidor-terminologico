@@ -51,7 +51,17 @@ public class RelationshipDefinitionWeb extends RelationshipDefinition implements
     }
 
     public boolean hasDefaultValue(){
-        return getDefaultValue()!=null;
+        if(getDefaultValue()!=null) {
+            return true;
+        }
+        /*
+        for (RelationshipAttributeDefinitionWeb relationshipAttributeDefinitionWeb : relationshipAttributeDefinitionWebs) {
+            if(relationshipAttributeDefinitionWeb.getDefaultValue()!=null) {
+                return true;
+            }
+        }
+        */
+        return false;
     }
 
     public boolean isMultiplicitySatisfied() {

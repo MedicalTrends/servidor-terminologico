@@ -54,7 +54,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
                 idComposite = rs.getLong(2);
                 idTarget = rs.getLong(3);
                 if(idTarget!=0)
-                    defaultValue = targetDAO.getDefaultTargetByID(rs.getLong(3));
+                    defaultValue = targetDAO.getDefaultTargetByID(idTarget);
             } else {
                 return ExtendedRelationshipDefinitionInfo.DEFAULT_CONFIGURATION;
             }
@@ -73,6 +73,8 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
         String sql = "{call semantikos.get_view_info_by_relationship_attribute_definition(?,?)}";
         long idComposite;
         int order;
+        long idTarget;
+        Target defaultValue = null;
 
         try (Connection connection = connect.getConnection();
 
@@ -85,16 +87,20 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
             if (rs.next()) {
                 order = rs.getInt("order_view");
                 idComposite = rs.getLong("composite");
+                idTarget = rs.getLong("id_default_target");
+                if(idTarget!=0)
+                    defaultValue = targetDAO.getDefaultTargetByID(idTarget);
             } else {
                 return ExtendedRelationshipAttributeDefinitionInfo.DEFAULT_CONFIGURATION;
             }
+
         } catch (SQLException e) {
             String errorMsg = "Error al recuperar viewInfo de la BDD.";
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }
 
-        return new ExtendedRelationshipAttributeDefinitionInfo(idComposite, order);
+        return new ExtendedRelationshipAttributeDefinitionInfo(idComposite, order, defaultValue);
     }
 
     @Override
