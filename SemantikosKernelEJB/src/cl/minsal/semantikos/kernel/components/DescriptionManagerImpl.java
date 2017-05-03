@@ -11,8 +11,11 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.InvocationContext;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.System.currentTimeMillis;
@@ -40,6 +43,22 @@ public class DescriptionManagerImpl implements DescriptionManager {
     /* El conjunto de reglas de negocio para validar creación de descripciones */
     private DescriptionCreationBR descriptionCreationBR = new DescriptionCreationBR();
 
+    @AroundInvoke
+    public Object postActions(InvocationContext ic) throws Exception {
+        try {
+            return ic.proceed();
+        } finally {
+            if(Arrays.asList(new String[]{"createDescription", "bindDescriptionToConcept", "updateDescription"}).contains(ic.getMethod().getName())) {
+                for (Object o : ic.getParameters()) {
+                    if(o instanceof Description) {
+                        descriptionDAO.updateSearchIndexes((Description)o);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public void createDescription(Description description, boolean editionMode, User user) {
 
@@ -49,6 +68,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         descriptionCreationBR1.validatePreConditions(conceptSMTK, description, categoryManager, editionMode);
 
         descriptionCreationBR1.applyRules(conceptSMTK, description.getTerm(), description.getDescriptionType(), user, categoryManager);
+
         if (!description.isPersistent()) {
             descriptionDAO.persist(description, user);
             description.setDescriptionId(generateDescriptionId(description.getId()));

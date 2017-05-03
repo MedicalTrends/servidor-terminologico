@@ -30,4 +30,6 @@ public interface PendingTermDAO {
     public List<PendingTerm> getAllPendingTerms();
 
     public PendingTerm getPendingTermById(long id);
+
+    void updateSearchIndexes(PendingTerm pendingTerm);
 }

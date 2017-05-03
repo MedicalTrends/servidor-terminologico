@@ -541,6 +541,35 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         return descriptions;
     }
 
+    @Override
+    public void updateSearchIndexes(Description description) {
+
+        ConnectionBD connect = new ConnectionBD();
+        String sql = "{call semantikos.update_description_search_indexes(?)}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setLong(1, description.getId());
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+                if (!rs.getBoolean(1)) {
+                    throw new EJBException("Los índices de búsqueda de la descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fueron actualizados.");
+                }
+            } else {
+                String errorMsg = "Los índices de búsqueda de la descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fueron actualizados.";
+                logger.error(errorMsg);
+                throw new EJBException(errorMsg);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Los índices de búsqueda de la descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fueron actualizados.", e);
+            throw new EJBException("Los índices de búsqueda de la descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fueron actualizados.", e);
+        }
+    }
+
     private Long[] convertListPersistentToListID(PersistentEntity[] entities) {
 
         List<Long> listIDs = new ArrayList<>();
