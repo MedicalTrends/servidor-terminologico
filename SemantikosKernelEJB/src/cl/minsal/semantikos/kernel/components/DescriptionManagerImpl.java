@@ -5,6 +5,7 @@ import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.kernel.util.IDGenerator;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.*;
+import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -392,6 +393,9 @@ public class DescriptionManagerImpl implements DescriptionManager {
         if(descriptionByDescriptionID.isModeled()) {
             descriptionByDescriptionID.setUses(descriptionByDescriptionID.getUses() + 1);
             descriptionDAO.update(descriptionByDescriptionID);
+        }
+        else {
+            throw new BusinessRuleException("BR-DESC-003", "Para incrementar el contador de usos la descripción debe estar modelada.", descriptionByDescriptionID.getConceptSMTK());
         }
 
         logger.info("DESCRIPTION ID=" + descriptionId + " tiene ahora " + descriptionByDescriptionID.getUses() + " usos.");
