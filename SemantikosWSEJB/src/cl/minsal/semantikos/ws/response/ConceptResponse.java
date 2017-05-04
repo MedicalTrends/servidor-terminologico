@@ -20,7 +20,7 @@ import java.util.List;
 @XmlType(name = "Concepto", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class ConceptResponse implements Serializable {
 
-    @XmlElement(name = "id")
+    @XmlElement(name = "conceptID")
     private String conceptId;
     @XmlElement(name = "aSerRevisado")
     private Boolean toBeReviewed;

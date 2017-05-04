@@ -188,6 +188,28 @@ public class SearchService {
         return conceptController.searchRequestableDescriptions(request.getCategoryNames(), new BasicTypeValue(request.getRequestable()));
     }
 
+    // REQ-WS-006
+    @WebResult(name = "respuestaBuscarTermino")
+    @WebMethod(operationName = "sugerenciasDeDescripciones")
+    public SuggestedDescriptionsResponse sugerenciasDeDescripciones(
+            @XmlElement(required = true)
+            @WebParam(name = "peticionSugerenciasDeDescripciones")
+                    DescriptionsSuggestionsRequest request
+    ) throws IllegalInputFault, NotFoundFault {
+        if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())) {
+            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría");
+        }
+        if (request.getTerm() == null || "".equals(request.getTerm())) {
+            throw new IllegalInputFault("Debe ingresar un Termino a buscar");
+        }
+        if ( request.getTerm().length() < 3 ) {
+            throw new IllegalInputFault("El termino a buscar debe tener minimo 3 caracteres de largo");
+        }
+
+        return this.conceptController.searchSuggestedDescriptions(request.getTerm(), request.getCategoryNames());
+        //return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames());
+    }
+
     /**
      * Este método es responsable de realizar la validación de los parámetros de entrada del servicio REQ-WS-005.
      *

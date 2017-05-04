@@ -11,23 +11,23 @@ import java.io.Serializable;
  * @author Andrés Farías on 12/13/16.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "descripcionPerfectMatch", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "DescripcionPerfectMatch", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "descripcionSugerida", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "DescripcionSugerida", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class SuggestedDescriptionResponse implements Serializable {
 
-    @XmlElement(name="idConcepto")
+    @XmlElement(name="conceptID")
     private String conceptId;
-    @XmlElement(name="idDescripcion")
+    @XmlElement(name="descriptionIDEncontrada")
     private String descriptionId;
-    @XmlElement(name="termino")
+    @XmlElement(name="nombreCategoria")
+    private String categoryName;
+    @XmlElement(name="terminoEncontrado")
     private String term;
     @XmlElement(name="tipoDescripcion")
     private String descriptionType;
-    @XmlElement(name="nombreCategoria")
-    private String categoryName;
-    @XmlElement(name="terminoPreferido")
+    @XmlElement(name="descriptionPreferida")
     private String preferredTerm;
-    @XmlElement(name="idTerminoPreferido")
+    @XmlElement(name="descriptionIDPreferida")
     private String preferredTermId;
     @XmlElement(name="validez")
     private boolean valid;

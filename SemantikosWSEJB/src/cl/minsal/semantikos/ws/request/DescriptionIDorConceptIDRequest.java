@@ -12,13 +12,13 @@ import java.io.Serializable;
 @XmlType(name = "descriptionIDorConceptIDRequest", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class DescriptionIDorConceptIDRequest implements Serializable {
 
-    @XmlElement(required = true, name = "description_id")
+    @XmlElement(required = true, name = "descriptionID")
     private String descriptionId;
 
-    @XmlElement(required = true, name = "concept_id")
+    @XmlElement(required = true, name = "conceptID")
     private String conceptId;
 
-    @XmlElement(required = true, name = "stablishment_id")
+    @XmlElement(required = true, name = "idEstablecimiento")
     private String idStablishment;
 
     public String getDescriptionId() {

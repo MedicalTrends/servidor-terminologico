@@ -5,6 +5,7 @@ import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.component.DescriptionController;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
+import cl.minsal.semantikos.ws.request.DescriptionHitRequest;
 import cl.minsal.semantikos.ws.request.NewTermRequest;
 import cl.minsal.semantikos.ws.response.DescriptionResponse;
 import cl.minsal.semantikos.ws.response.NewTermResponse;
@@ -82,7 +83,7 @@ public class UpdateService {
     /**
      * REQ-WS-030: El sistema Semantikos debe disponer un servicio que permita aumentar el hit de una Descripción.
      *
-     * @param descriptionId El valor de negocio DESCRIPTION_ID de una descripción.
+     * @param descriptionHitRequest El valor de negocio DESCRIPTION_ID de una descripción.
      * @return
      */
     @WebResult(name = "descripcionCounter")
@@ -90,9 +91,9 @@ public class UpdateService {
     public DescriptionResponse incrementarContadorDescripcionConsumida(
             @XmlElement(required = true)
             @WebParam(name = "descriptionID")
-                    String descriptionId
+                    DescriptionHitRequest descriptionHitRequest
     ) {
-        return descriptionController.incrementDescriptionHits(descriptionId);
+        return descriptionController.incrementDescriptionHits(descriptionHitRequest.getDescriptionID());
     }
 
 }

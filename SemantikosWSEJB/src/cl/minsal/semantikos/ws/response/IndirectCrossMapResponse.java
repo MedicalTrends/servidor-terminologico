@@ -49,7 +49,7 @@ public class IndirectCrossMapResponse {
     @XmlElement(name = "cod1CrossmapSetMembers")
     private String cod1CrossmapSetMembers;
 
-    @XmlElement(name = "description")
+    @XmlElement(name = "descriptionCrossmapSetMembers")
     private String description;
 
     /*

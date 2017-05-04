@@ -21,7 +21,7 @@ public class SimpleSearchTermRequest implements Serializable {
 
     private String idStablishment;
 
-    @XmlElement(required = true, name = "termino")
+    @XmlElement(required = true, name = "terminoBuscar")
     public String getTerm() {
         return term;
     }

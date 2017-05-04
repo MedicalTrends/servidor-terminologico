@@ -60,6 +60,7 @@ public class Mailer implements Runnable {
                     logger.error("Error al enviar correo a destinatario "+to+": "+e.getMessage());
                     throw e;
                 } catch (MessagingException e1) {
+                    logger.error("Error: "+e1.getMessage());
                     e1.printStackTrace();
                 }
             }

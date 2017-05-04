@@ -760,7 +760,7 @@ public class ConceptController {
 
         /* Se realiza la solicitud */
         Description description = pendingTermManager.addPendingTerm(pendingTerm, user);
-        return new NewTermResponse(description.getDescriptionId());
+        return new NewTermResponse(description.getDescriptionId(), description.getTerm());
     }
 
     /**

@@ -16,13 +16,13 @@ import java.util.Date;
 @XmlType(name = "Descripcion", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class DescriptionResponse implements Serializable, Comparable<DescriptionResponse> {
 
-    @XmlElement(name="id")
+    @XmlElement(name="descriptionID")
     private String descriptionID;
 
-    @XmlElement(name="tipo")
+    @XmlElement(name="tipoDescripcion")
     private String type;
 
-    @XmlElement(name="termino")
+    @XmlElement(name="description")
     private String term;
 
     @XmlElement(name="valida")
