@@ -12,6 +12,9 @@ import java.util.List;
 @XmlType(name = "RespuestaBuscarTerminoGenerica", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class GenericTermSearchResponse implements Serializable {
 
+    @XmlElement(name="terminoBuscado")
+    private String pattern;
+
     @XmlElement(name="descripcionesPerfectMatch")
     private PerfectMatchDescriptionsResponse perfectMatchDescriptions;
 
@@ -20,6 +23,14 @@ public class GenericTermSearchResponse implements Serializable {
 
     @XmlElement(name="descripcionesPendientes")
     private PendingDescriptionsResponse pendingDescriptions;
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
 
     public PerfectMatchDescriptionsResponse getPerfectMatchDescriptions() {
         return perfectMatchDescriptions;

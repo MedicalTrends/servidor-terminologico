@@ -23,7 +23,9 @@ public class ConceptMapper {
             List<AttributeResponse> attributeResponses = new ArrayList<>();
 
             for ( Relationship relationship : conceptSMTK.getRelationships() ) {
-                attributeResponses.add(AttributeMapper.map(relationship));
+                if(!relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType() && !relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
+                    attributeResponses.add(AttributeMapper.map(relationship));
+                }
             }
 
             return attributeResponses;

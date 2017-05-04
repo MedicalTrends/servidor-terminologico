@@ -16,6 +16,12 @@ import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 @XmlType(name = "IndirectCrossmap", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class IndirectCrossMapResponse {
 
+    @XmlElement(name = "idCrossmapSet")
+    private long idCrossmapSet;
+
+    @XmlElement(name = "NombreCortoCrossmapSet")
+    private String shortNameCrossmapSet;
+
     @XmlElement(name = "idSnomedCT")
     private long idSnomedCT;
 
@@ -46,8 +52,10 @@ public class IndirectCrossMapResponse {
     @XmlElement(name = "description")
     private String description;
 
+    /*
     @XmlElement(name = "state")
     private boolean state;
+    */
 
     public IndirectCrossMapResponse() {
     }
@@ -58,17 +66,35 @@ public class IndirectCrossMapResponse {
         this.mapGroup = indirectCrossmap.getMapGroup();
         this.mapPriority = indirectCrossmap.getMapPriority();
         this.mapRule = indirectCrossmap.getMapRule();
+        this.idCrossmapSet = indirectCrossmap.getIdCrossmapSet();
         this.idSnomedCT = indirectCrossmap.getIdSnomedCT();
         this.mapAdvice = indirectCrossmap.getMapAdvice();
         this.mapTarget = indirectCrossmap.getMapTarget();
         this.correlation = indirectCrossmap.getCorrelation();
         this.idCrossmapCategory = indirectCrossmap.getIdCrossmapCategory();
-        this.state = indirectCrossmap.isState();
+        //this.state = indirectCrossmap.isState();
 
         CrossmapSetMember crossmapSetMember = (CrossmapSetMember)indirectCrossmap.getTarget();
 
         this.cod1CrossmapSetMembers = crossmapSetMember.getCode()!=null?crossmapSetMember.getCode():EMPTY_STRING;
         this.description = crossmapSetMember.getGloss();
+        this.shortNameCrossmapSet = crossmapSetMember.getCrossmapSet().getAbbreviatedName();
+    }
+
+    public long getIdCrossmapSet() {
+        return idCrossmapSet;
+    }
+
+    public void setIdCrossmapSet(long idCrossmapSet) {
+        this.idCrossmapSet = idCrossmapSet;
+    }
+
+    public String getShortNameCrossmapSet() {
+        return shortNameCrossmapSet;
+    }
+
+    public void setShortNameCrossmapSet(String shortNameCrossmapSet) {
+        this.shortNameCrossmapSet = shortNameCrossmapSet;
     }
 
     public long getIdSnomedCT() {
@@ -152,6 +178,7 @@ public class IndirectCrossMapResponse {
         this.idCrossmapCategory = idCrossmapCategory;
     }
 
+    /*
     public boolean isState() {
         return state;
     }
@@ -159,4 +186,5 @@ public class IndirectCrossMapResponse {
     public void setState(boolean state) {
         this.state = state;
     }
+    */
 }

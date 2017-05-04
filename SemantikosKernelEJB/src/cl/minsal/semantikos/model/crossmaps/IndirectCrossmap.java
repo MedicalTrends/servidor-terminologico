@@ -14,6 +14,8 @@ public class IndirectCrossmap extends Crossmap {
 
     private long idSnomedCT;
 
+    private long idCrossmapSet;
+
     private int mapGroup;
 
     private int mapPriority;
@@ -42,6 +44,15 @@ public class IndirectCrossmap extends Crossmap {
     public boolean is(CrossMapType indirect) {
         return indirect.equals(CrossMapType.INDIRECT);
     }
+
+    public long getIdCrossmapSet() {
+        return idCrossmapSet;
+    }
+
+    public void setIdCrossmapSet(long idCrossmapSet) {
+        this.idCrossmapSet = idCrossmapSet;
+    }
+
 
     public long getIdSnomedCT() {
         return idSnomedCT;

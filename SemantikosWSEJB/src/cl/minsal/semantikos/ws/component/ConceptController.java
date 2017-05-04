@@ -255,6 +255,8 @@ public class ConceptController {
         pendingDescriptionsResponse.setPendingDescriptionsResponse(pendingDescriptions);
         pendingDescriptionsResponse.setQuantity(pendingDescriptions.size());
 
+        res.setPattern(term);
+
         res.setPerfectMatchDescriptions(perfectMatchDescriptionsResponse);
         res.setNoValidDescriptions(noValidDescriptionsResponse);
         res.setPendingDescriptions(pendingDescriptionsResponse);
@@ -315,6 +317,8 @@ public class ConceptController {
                 perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
             }
         }
+
+        res.setPattern(term);
 
         PerfectMatchDescriptionsResponse perfectMatchDescriptionsResponse = new PerfectMatchDescriptionsResponse();
         perfectMatchDescriptionsResponse.setPerfectMatchDescriptionsResponse(perfectMatchDescriptions);
@@ -508,11 +512,12 @@ public class ConceptController {
             conceptResponse.setForREQWS002();
             this.loadAttributes(conceptResponse, source);
             this.loadSnomedCTRelationships(conceptResponse, source);
-
+            conceptResponse.setCategory(null);
             conceptResponses.add(conceptResponse);
         }
 
         ConceptsResponse res = new ConceptsResponse();
+        res.setCategory(categoryName);
         res.setConceptResponses(conceptResponses);
         res.setQuantity(conceptResponses.size());
 
