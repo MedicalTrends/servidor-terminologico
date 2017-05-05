@@ -8,8 +8,8 @@ import java.util.List;
  * @author Alfonso Cornejo on 2016-11-23.
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlRootElement(name = "conceptosPedibles", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "PeticionConceptosPedibles", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "peticionObtenerTerminosPedibles", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "PeticionObtenerTerminosPedibles", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class RequestableConceptsRequest implements Serializable {
 
     private boolean requestable;

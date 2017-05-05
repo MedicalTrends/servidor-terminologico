@@ -8,20 +8,20 @@ import java.util.List;
  * Created by Development on 2016-11-23.
  *
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlRootElement(name = "peticionSugerenciasDeDescripciones", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "PeticionSugerenciasDeDescripciones", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class DescriptionsSuggestionsRequest implements Serializable {
 
-    @XmlElement(required = true, name = "termino")
     private String term;
-    @XmlElement(required = false, name = "nombreCategoria")
+
     private List<String> categoryNames;
     //@XmlElement(required = false, name = "nombreRefSet")
     //private List<String> refSetNames;
-    @XmlElement(required = true, defaultValue = "1", name = "idEstablecimiento")
+
     private String idStablishment;
 
+    @XmlElement(required = true, name = "termino")
     public String getTerm() {
         return term;
     }
@@ -30,6 +30,8 @@ public class DescriptionsSuggestionsRequest implements Serializable {
         this.term = term;
     }
 
+
+    @XmlElement(required = false, name = "nombreCategoria")
     public List<String> getCategoryNames() {
         return categoryNames;
     }
@@ -48,6 +50,7 @@ public class DescriptionsSuggestionsRequest implements Serializable {
     }
     */
 
+    @XmlElement(required = true, defaultValue = "1", name = "idEstablecimiento")
     public String getIdStablishment() {
         return idStablishment;
     }

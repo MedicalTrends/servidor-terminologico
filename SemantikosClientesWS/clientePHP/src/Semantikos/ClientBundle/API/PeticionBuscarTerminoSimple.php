@@ -8,7 +8,7 @@ class PeticionBuscarTerminoSimple
     /**
      * @var string $termino
      */
-    protected $termino = null;
+    protected $terminoBuscar = null;
 
     /**
      * @var string[] $nombreCategoria
@@ -37,7 +37,7 @@ class PeticionBuscarTerminoSimple
      */
     public function getTermino()
     {
-      return $this->termino;
+      return $this->terminoBuscar;
     }
 
     /**
@@ -46,7 +46,7 @@ class PeticionBuscarTerminoSimple
      */
     public function setTermino($termino)
     {
-      $this->termino = $termino;
+      $this->terminoBuscar = $termino;
       return $this;
     }
 

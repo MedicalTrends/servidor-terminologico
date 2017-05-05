@@ -9,8 +9,8 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlRootElement(name = "peticionBuscarTerminoSimple", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "PeticionBuscarTerminoSimple", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "peticionBuscarTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "PeticionBuscarTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class SimpleSearchTermRequest implements Serializable {
 
     private String term;

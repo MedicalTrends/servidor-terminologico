@@ -17,6 +17,7 @@ public class CrossmapSetMemberResponse {
     @XmlElement(name = "NombreCortoCrossmapSet")
     private String shortNameCrossmapSet;
 
+
     /** ID de negocio */
     @XmlElement(name = "idCrossmapSetMember")
     private long idCrossmapSetMember;
@@ -92,4 +93,5 @@ public class CrossmapSetMemberResponse {
     public void setCode1(String code1) {
         this.code1 = code1;
     }
+
 }

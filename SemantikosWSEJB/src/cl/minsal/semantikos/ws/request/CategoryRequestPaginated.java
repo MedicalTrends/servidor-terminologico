@@ -9,8 +9,8 @@ import java.io.Serializable;
  * @author Alonso Cornejo
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "peticionPorCategoriaPaginada", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "PeticionPorCategoriaPaginada", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "peticionPorCategoriaPaginados", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "PeticionPorCategoriaPaginados", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class CategoryRequestPaginated implements Serializable {
 
     @XmlElement(required = true, name = "nombreCategoria")

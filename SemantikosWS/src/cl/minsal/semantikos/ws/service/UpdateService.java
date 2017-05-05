@@ -68,9 +68,9 @@ public class UpdateService {
     @WebResult(name = "respuestaCodificacionDeNuevoTermino")
     @WebMethod
     public NewTermResponse codificacionDeNuevoTermino(
-            @XmlElement(required = true)
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionCodificacionDeNuevoTermino")
-                    NewTermRequest termRequest) throws IllegalInputFault {
+                    NewTermRequest termRequest) throws IllegalInputFault, NotFoundFault {
 
         NewTermResponse newTermResponse = conceptController.requestTermCreation(termRequest);
         logger.info("codificacionDeNuevoTermino response: " + newTermResponse);
@@ -89,10 +89,10 @@ public class UpdateService {
     @WebResult(name = "descripcionCounter")
     @WebMethod
     public DescriptionResponse incrementarContadorDescripcionConsumida(
-            @XmlElement(required = true)
-            @WebParam(name = "descriptionID")
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionHitDescripcion")
                     DescriptionHitRequest descriptionHitRequest
-    ) {
+    ) throws IllegalInputFault, NotFoundFault  {
         return descriptionController.incrementDescriptionHits(descriptionHitRequest.getDescriptionID());
     }
 
