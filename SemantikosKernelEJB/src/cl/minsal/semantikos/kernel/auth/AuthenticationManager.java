@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.kernel.auth;
 
+import cl.minsal.semantikos.kernel.components.InstitutionManager;
+import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
 import org.apache.commons.codec.binary.Base64;
 import org.jboss.ejb3.annotation.SecurityDomain;
@@ -9,11 +11,18 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.interceptor.InvocationContext;
+import javax.jws.WebParam;
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.ws.handler.MessageContext;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map;
+
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 
 /**
  * @author Francisco Méndez on 19-05-2016.
@@ -30,6 +39,9 @@ public class AuthenticationManager {
 
     @EJB(name = "JbossSecurityDomainAuthenticationEJB")
     JbossSecurityDomainAuthenticationBean jbossSecurityDomainAuthenticationBean;
+
+    @EJB
+    InstitutionManager institutionManager;
 
 
     @PermitAll
@@ -73,6 +85,27 @@ public class AuthenticationManager {
         }
         catch (AuthenticationException e) {
             throw new Exception(e.getMessage());
+        }
+    }
+
+    @PermitAll
+    public void validateInstitution(String idInstitution) throws Exception {
+
+        if(idInstitution.isEmpty()) {
+            throw new Exception("No se ha especificado idEstablemciento como parámetro de esta operación");
+        }
+
+        Institution institution = null;
+
+        try {
+            institution = institutionManager.getInstitutionById(Long.parseLong(idInstitution));
+        }
+        catch (Exception e) {
+            throw new Exception("El parámetro idEstablecimiento debe ser un valor numérico");
+        }
+
+        if(institution == null) {
+            throw new Exception("No existe un establecimiento con el idEstablecimiento proporcionado");
         }
     }
 

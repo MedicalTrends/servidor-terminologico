@@ -15,6 +15,9 @@ import java.util.List;
 @XmlType(name = "RespuestaBuscarTerminos", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class TermSearchesResponse implements Serializable {
 
+    @XmlElement(name = "pedible")
+    private boolean requestable;
+
     @XmlElementWrapper(name = "categorias")
     @XmlElement(name = "categoria")
     private List<TermSearchResponse> termSearchResponses = new ArrayList<>();
@@ -28,6 +31,14 @@ public class TermSearchesResponse implements Serializable {
 
     public void setTermSearchResponses(List<TermSearchResponse> termSearchResponses) {
         this.termSearchResponses = termSearchResponses;
+    }
+
+    public boolean isRequestable() {
+        return requestable;
+    }
+
+    public void setRequestable(boolean requestable) {
+        this.requestable = requestable;
     }
 
     public int getQuantity() {

@@ -17,7 +17,7 @@ import java.util.List;
 @XmlType(name = "RefSetLight", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class RefSetLightResponse implements Serializable {
 
-    @XmlElement(name="nombre")
+    @XmlElement(name="nombreRefSet")
     private String name;
 
     @XmlElement(name="valido")
@@ -26,10 +26,10 @@ public class RefSetLightResponse implements Serializable {
     @XmlElement(name="validoHasta")
     private Date validityUntil;
 
-    @XmlElement(name="creadoEn")
+    @XmlElement(name="fechaCreacionRefSet")
     private Date creationDate;
 
-    @XmlElement(name="institucion")
+    @XmlElement(name="duenoRefSet")
     private String institution;
 
     @XmlElementWrapper(name = "conceptos")

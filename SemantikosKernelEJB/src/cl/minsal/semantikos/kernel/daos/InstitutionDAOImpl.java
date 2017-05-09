@@ -68,6 +68,26 @@ public class InstitutionDAOImpl implements InstitutionDAO {
     }
 
     @Override
+    public Institution getInstitutionById(long id) {
+        ConnectionBD connect = new ConnectionBD();
+        String GET_INSTITUTION_BY_ID = "{call semantikos.get_institution_by_id(?)}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(GET_INSTITUTION_BY_ID)) {
+            call.setLong(1, id);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+                return createInstitutionFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            logger.error("Error al al obtener los RefSets ", e);
+        }
+
+        return null;
+    }
+
+    @Override
     public List<Institution> getAllInstitution() {
         ConnectionBD connect = new ConnectionBD();
         String GET_ALL_INSTITUTION = "{call semantikos.get_all_institution()}";

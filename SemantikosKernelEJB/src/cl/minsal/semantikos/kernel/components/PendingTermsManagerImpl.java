@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.InvocationContext;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -29,6 +32,22 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
     DescriptionManager descriptionManager;
 
     private final static Logger logger = LoggerFactory.getLogger(PendingTermsManagerImpl.class);
+
+    @AroundInvoke
+    public Object postActions(InvocationContext ic) throws Exception {
+        try {
+            return ic.proceed();
+        } finally {
+            if(Arrays.asList(new String[]{"addPendingTerm"}).contains(ic.getMethod().getName())) {
+                for (Object o : ic.getParameters()) {
+                    if(o instanceof PendingTerm) {
+                        pendingTermDAO.updateSearchIndexes((PendingTerm)o);
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
     @Override
     public Description addPendingTerm(PendingTerm pendingTerm, User loggedUser) {

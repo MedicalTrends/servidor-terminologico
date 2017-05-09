@@ -367,6 +367,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         RelationshipDefinition relationshipDefinition = new RelationshipDefinition("Indirect Crossmap", "Un crossmap Indirecto", MultiplicityFactory.ONE_TO_ONE, crossmapSetMemberById.getCrossmapSet());
 
         long idSnomedCT = rs.getLong("id_snomed_ct");
+        long idCrossmapSet = rs.getLong("id_cross_map_set");
         int mapGroup = rs.getInt("map_group");
         int mapPriority = rs.getInt("map_priority");
         String mapRule = rs.getString("map_rule");
@@ -378,6 +379,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         boolean state = rs.getBoolean("state");
 
         IndirectCrossmap indirectCrossmap = new IndirectCrossmap(id, sourceConcept, crossmapSetMemberById, relationshipDefinition, null);
+        indirectCrossmap.setIdCrossmapSet(idCrossmapSet);
         indirectCrossmap.setIdSnomedCT(idSnomedCT);
         indirectCrossmap.setCorrelation(idCorrelation);
         indirectCrossmap.setIdCrossmapCategory(idCrossmapCategory);

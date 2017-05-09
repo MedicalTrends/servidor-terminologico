@@ -1,9 +1,12 @@
 package cl.minsal.semantikos.model.businessrules;
 
 import cl.minsal.semantikos.kernel.components.ConceptManager;
+import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
+import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.Relationship;
@@ -31,6 +34,8 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
     private ConceptManager conceptManager;
     @EJB
     private ConceptDAO conceptDAO;
+    @EJB
+    private DescriptionDAO descriptionDAO;
 
     /**
      * Este método es responsabled de realizar las validaciones de reglas de negocio.
@@ -410,6 +415,11 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
             sourceConcept.setModeled(true);
             conceptManager.publish(sourceConcept, user);
             conceptDAO.update(sourceConcept);
+            /* Se modela cada una de las descripciones del concepto */
+            for (Description description : sourceConcept.getDescriptions()) {
+                description.setModeled(true);
+                descriptionDAO.update(description);
+            }
         }
     }
 

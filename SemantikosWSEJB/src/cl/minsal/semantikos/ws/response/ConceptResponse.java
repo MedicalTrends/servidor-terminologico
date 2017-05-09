@@ -2,6 +2,7 @@ package cl.minsal.semantikos.ws.response;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.audit.AuditAction;
 import cl.minsal.semantikos.model.relationships.Relationship;
 
 import javax.validation.constraints.NotNull;
@@ -20,11 +21,11 @@ import java.util.List;
 @XmlType(name = "Concepto", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class ConceptResponse implements Serializable {
 
-    @XmlElement(name = "id")
+    @XmlElement(name = "conceptID")
     private String conceptId;
-    @XmlElement(name = "aSerRevisado")
+    @XmlElement(name = "revisar")
     private Boolean toBeReviewed;
-    @XmlElement(name = "aSerConsultado")
+    @XmlElement(name = "consultar")
     private Boolean toBeConsulted;
     @XmlElement(name = "modelado")
     private Boolean modeled;
@@ -40,19 +41,25 @@ public class ConceptResponse implements Serializable {
     @XmlElement(name = "validoHasta")
     private Date validUntil;
 
+    @XmlElement(name="fechaCreacion")
+    private Date creationDate;
+
+    @XmlElement(name="fechaPublicacion")
+    private Date publishingDate;
+
     @XmlElement(name = "observacion")
     private String observation;
 
     @XmlElement(name = "categoria")
     private CategoryResponse category;
 
-    @XmlElementWrapper(name = "refSets")
-    @XmlElement(name = "refSet")
-    private List<RefSetResponse> refsets;
-
     @XmlElementWrapper(name = "descripciones")
     @XmlElement(name = "descripcion")
     private List<DescriptionResponse> descriptions;
+
+    @XmlElementWrapper(name = "refSets")
+    @XmlElement(name = "refSet")
+    private List<RefSetResponse> refsets;
 
     @XmlElementWrapper(name = "atributos")
     @XmlElement(name = "atributo")
@@ -96,8 +103,8 @@ public class ConceptResponse implements Serializable {
         this.toBeReviewed = conceptSMTK.isToBeReviewed();
 
         Timestamp theValidityUntil = conceptSMTK.getValidUntil();
-        this.validUntil = new Date(theValidityUntil==null ? System.currentTimeMillis() : theValidityUntil.getTime());
-        this.isValid = this.validUntil.after(new Date());
+        this.validUntil = conceptSMTK.getValidUntil(); // new Date(theValidityUntil==null ? System.currentTimeMillis() : theValidityUntil.getTime());
+        this.isValid = conceptSMTK.isValid(); //this.validUntil.after(new Date());
 
         /* Se cargan las otras propiedades del concepto */
         loadDescriptions(conceptSMTK);
@@ -153,11 +160,11 @@ public class ConceptResponse implements Serializable {
      * Elimina de la respuesta los campos que no son necesarios retornar en le respuesta del WS-028.
      */
     public void setForREQWS028() {
-        this.toBeReviewed = null;
-        this.toBeConsulted = null;
-        this.modeled = null;
-        this.fullyDefined = null;
-        this.isPublished = null;
+        //this.toBeReviewed = null;
+        //this.toBeConsulted = null;
+        //this.modeled = null;
+        //this.fullyDefined = null;
+        //this.isPublished = null;
         this.relationships = null;
 
         for ( DescriptionResponse descriptionResponse : this.descriptions ) {
@@ -315,4 +322,21 @@ public class ConceptResponse implements Serializable {
     public int hashCode() {
         return getConceptId() != null ? getConceptId().hashCode() : 0;
     }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Date getPublishingDate() {
+        return publishingDate;
+    }
+
+    public void setPublishingDate(Date publishingDate) {
+        this.publishingDate = publishingDate;
+    }
+
 }

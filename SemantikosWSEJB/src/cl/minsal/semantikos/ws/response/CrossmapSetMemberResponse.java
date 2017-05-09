@@ -14,6 +14,10 @@ import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 @XmlType(name = "CrossmapSetMember", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class CrossmapSetMemberResponse {
 
+    @XmlElement(name = "NombreCortoCrossmapSet")
+    private String shortNameCrossmapSet;
+
+
     /** ID de negocio */
     @XmlElement(name = "idCrossmapSetMember")
     private long idCrossmapSetMember;
@@ -24,11 +28,12 @@ public class CrossmapSetMemberResponse {
     private CrossmapSetResponse crossmapSet;
     */
 
-    @XmlElement(name = "code1")
+    @XmlElement(name = "cod1CrossmapSetMember")
     private String code1;
 
-    @XmlElement(name = "gloss")
+    @XmlElement(name = "descripcionCrossmapSetMember")
     private String gloss;
+
 
     public CrossmapSetMemberResponse() {
     }
@@ -40,6 +45,8 @@ public class CrossmapSetMemberResponse {
         //this.crossmapSet = new CrossmapSetResponse(crossmapSetMember.getCrossmapSet());
         this.code1 = crossmapSetMember.getCode()!=null?crossmapSetMember.getCode():EMPTY_STRING;
         this.gloss = crossmapSetMember.getGloss();
+
+        this.shortNameCrossmapSet = crossmapSetMember.getCrossmapSet().getAbbreviatedName();
     }
 
     public long getIdCrossmapSetMember() {
@@ -75,4 +82,17 @@ public class CrossmapSetMemberResponse {
     public void setGloss(String gloss) {
         this.gloss = gloss;
     }
+
+    public String getShortNameCrossmapSet() {
+        return shortNameCrossmapSet;
+    }
+
+    public void setShortNameCrossmapSet(String shortNameCrossmapSet) {
+        this.shortNameCrossmapSet = shortNameCrossmapSet;
+    }
+
+    public void setCode1(String code1) {
+        this.code1 = code1;
+    }
+
 }

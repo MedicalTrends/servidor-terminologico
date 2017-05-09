@@ -5,7 +5,9 @@ import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.component.DescriptionController;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
+import cl.minsal.semantikos.ws.request.DescriptionHitRequest;
 import cl.minsal.semantikos.ws.request.NewTermRequest;
+import cl.minsal.semantikos.ws.request.Request;
 import cl.minsal.semantikos.ws.response.DescriptionResponse;
 import cl.minsal.semantikos.ws.response.NewTermResponse;
 import org.slf4j.Logger;
@@ -51,6 +53,8 @@ public class UpdateService {
 
         try {
             authenticationManager.authenticate(wsctx.getMessageContext());
+            Request request = (Request)ctx.getParameters()[0];
+            authenticationManager.validateInstitution(request.getIdStablishment());
         }
         catch (Exception e) {
             throw new NotFoundFault(e.getMessage());
@@ -67,9 +71,9 @@ public class UpdateService {
     @WebResult(name = "respuestaCodificacionDeNuevoTermino")
     @WebMethod
     public NewTermResponse codificacionDeNuevoTermino(
-            @XmlElement(required = true)
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionCodificacionDeNuevoTermino")
-                    NewTermRequest termRequest) throws IllegalInputFault {
+                    NewTermRequest termRequest) throws IllegalInputFault, NotFoundFault {
 
         NewTermResponse newTermResponse = conceptController.requestTermCreation(termRequest);
         logger.info("codificacionDeNuevoTermino response: " + newTermResponse);
@@ -82,17 +86,17 @@ public class UpdateService {
     /**
      * REQ-WS-030: El sistema Semantikos debe disponer un servicio que permita aumentar el hit de una Descripción.
      *
-     * @param descriptionId El valor de negocio DESCRIPTION_ID de una descripción.
+     * @param descriptionHitRequest El valor de negocio DESCRIPTION_ID de una descripción.
      * @return
      */
     @WebResult(name = "descripcionCounter")
     @WebMethod
     public DescriptionResponse incrementarContadorDescripcionConsumida(
-            @XmlElement(required = true)
-            @WebParam(name = "descriptionID")
-                    String descriptionId
-    ) {
-        return descriptionController.incrementDescriptionHits(descriptionId);
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionHitDescripcion")
+                    DescriptionHitRequest descriptionHitRequest
+    ) throws IllegalInputFault, NotFoundFault  {
+        return descriptionController.incrementDescriptionHits(descriptionHitRequest.getDescriptionID());
     }
 
 }

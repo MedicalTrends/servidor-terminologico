@@ -14,9 +14,9 @@ public class SnomedCTRelationshipResponse implements Serializable {
 
     @XmlElement(name = "tipoRelacion")
     private String type;
-    @XmlElement(name = "idConceptoSnomedCT")
+    @XmlElement(name = "idSnomedCT")
     private String id;
-    @XmlElement(name = "descripcion")
+    @XmlElement(name = "descripcionSNM")
     private String description;
     @XmlElement(name = "grupo")
     private String group;

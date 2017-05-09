@@ -135,7 +135,6 @@ public class CrossmapController {
             CrossmapSet crossmapSet = crossmapSetByAbbreviatedName.get(0).getCrossmapSet();
             res.setAbbreviatedName(crossmapSet.getAbbreviatedName());
             res.setName(crossmapSet.getName());
-            res.setVersion(crossmapSet.getVersion());
         }
 
         return res;

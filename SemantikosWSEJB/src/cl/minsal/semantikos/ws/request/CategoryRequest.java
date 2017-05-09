@@ -11,13 +11,10 @@ import java.io.Serializable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "peticionPorCategoria", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "PeticionPorCategoria", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class CategoryRequest implements Serializable {
+public class CategoryRequest extends Request implements Serializable {
 
     @XmlElement(required = true, name = "nombreCategoria")
     private String categoryName;
-
-    @XmlElement(required = true, defaultValue = "1", name = "idEstablecimiento")
-    private String idStablishment;
 
     public String getCategoryName() {
         return categoryName;
@@ -27,11 +24,4 @@ public class CategoryRequest implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public String getIdStablishment() {
-        return idStablishment;
-    }
-
-    public void setIdStablishment(String idStablishment) {
-        this.idStablishment = idStablishment;
-    }
 }

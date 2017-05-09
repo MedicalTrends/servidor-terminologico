@@ -2,6 +2,7 @@ package cl.minsal.semantikos.ws.service;
 
 import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
+import cl.minsal.semantikos.kernel.components.InstitutionManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.ws.component.CategoryController;
@@ -24,8 +25,10 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.*;
 import javax.xml.ws.WebServiceContext;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,7 +39,6 @@ import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
  * Created by Development on 2016-11-18.
  */
 @WebService(serviceName = "ServicioDeBusqueda")
-
 public class SearchService {
 
     @EJB
@@ -57,6 +59,9 @@ public class SearchService {
     @EJB
     private AuthenticationManager authenticationManager;
 
+    @EJB
+    private InstitutionManager institutionManager;
+
     @Resource
     WebServiceContext wsctx;
 
@@ -69,6 +74,8 @@ public class SearchService {
 
         try {
             authenticationManager.authenticate(wsctx.getMessageContext());
+            Request request = (Request)ctx.getParameters()[0];
+            authenticationManager.validateInstitution(request.getIdStablishment());
         }
         catch (Exception e) {
             throw new NotFoundFault(e.getMessage());
@@ -80,7 +87,7 @@ public class SearchService {
     @WebResult(name = "respuestaBuscarTerminoPerfectMatch")
     @WebMethod(operationName = "buscarTerminoPerfectMatch")
     public GenericTermSearchResponse buscarTermino(
-            @XmlElement(required = true)
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionBuscarTermino")
                     SimpleSearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault {
@@ -98,7 +105,7 @@ public class SearchService {
     @WebResult(name = "respuestaConceptos")
     @WebMethod(operationName = "conceptosPorCategoria")
     public ConceptsResponse conceptosPorCategoria(
-            @XmlElement(required = true)
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionConceptosPorCategoria")
                     CategoryRequest request
     ) throws NotFoundFault {
@@ -109,8 +116,8 @@ public class SearchService {
     @WebResult(name = "respuestaConceptos")
     @WebMethod(operationName = "conceptosPorCategoriaPaginados")
     public ConceptsResponse conceptosPorCategoriaPaginados(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosPorCategoria")
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionConceptosPorCategoriaPaginados")
                     CategoryRequestPaginated request
     ) throws NotFoundFault {
         return this.conceptController.findConceptsByCategoryPaginated(request.getCategoryName(), request.getIdStablishment(),
@@ -154,7 +161,7 @@ public class SearchService {
     @WebResult(name = "respuestaBuscarTerminoTruncatePerfect")
     @WebMethod(operationName = "buscarTerminoTruncatePerfect")
     public GenericTermSearchResponse buscarTruncatePerfect(
-            @XmlElement(required = true)
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionBuscarTermino")
                     SimpleSearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault {
@@ -177,15 +184,37 @@ public class SearchService {
     @WebResult(name = "respuestaBuscarTermino")
     @WebMethod(operationName = "obtenerTerminosPedibles")
     public TermSearchesResponse obtenerTerminosPedibles(
-            @XmlElement(required = true)
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionObtenerTerminosPedibles")
                     RequestableConceptsRequest request
-    ) throws IllegalInputFault {
+    ) throws IllegalInputFault, NotFoundFault {
 
         /* Se hace una validación de los parámetros */
         obtenerTerminosPediblesParamValidation(request);
 
-        return conceptController.searchRequestableDescriptions(request.getCategoryNames(), new BasicTypeValue(request.getRequestable()));
+        return conceptController.searchRequestableDescriptions(request.getCategoryNames(), request.getRequestable());
+    }
+
+    // REQ-WS-006
+    @WebResult(name = "respuestaBuscarTermino")
+    @WebMethod(operationName = "sugerenciasDeDescripciones")
+    public SuggestedDescriptionsResponse sugerenciasDeDescripciones(
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionSugerenciasDeDescripciones")
+                    DescriptionsSuggestionsRequest request
+    ) throws IllegalInputFault, NotFoundFault {
+        if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())) {
+            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría");
+        }
+        if (request.getTerm() == null || "".equals(request.getTerm())) {
+            throw new IllegalInputFault("Debe ingresar un Termino a buscar");
+        }
+        if ( request.getTerm().length() < 3 ) {
+            throw new IllegalInputFault("El termino a buscar debe tener minimo 3 caracteres de largo");
+        }
+
+        return this.conceptController.searchSuggestedDescriptions(request.getTerm(), request.getCategoryNames());
+        //return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames());
     }
 
     /**
@@ -250,7 +279,7 @@ public class SearchService {
     @WebResult(name = "refsetSearchResponse")
     @WebMethod(operationName = "refSetsPorIdDescripcion")
     public List<RefSetSearchResponse> refSetsPorIdDescripcion(
-            @XmlElement(required = true)
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionRefSetsPorIdDescripcion")
                     RefSetsByDescriptionIdRequest request
     ) throws NotFoundFault, IllegalInputFault {
@@ -271,21 +300,18 @@ public class SearchService {
     @WebResult(name = "refsetResponse")
     @WebMethod(operationName = "listaRefSet")
     public RefSetsResponse listaRefSet(
-            @XmlElement(required = false, defaultValue = "true")
-            @WebParam(name = "incluyeEstablecimientos")
-                    Boolean includeInstitutions,
-            @XmlElement(required = true)
-            @WebParam(name = "idStablishment")
-                    String idStablishment
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionRefSets")
+                    RefSetsRequest request
     ) throws NotFoundFault {
-        return this.refSetController.refSetList(includeInstitutions);
+        return this.refSetController.refSetList(request.getIncludeInstitutions(), request.getIdStablishment());
     }
 
     // REQ-WS-022
     @WebResult(name = "respuestaDescripcionesPreferidasPorRefSet")
     @WebMethod(operationName = "descripcionesPreferidasPorRefSet")
     public RefSetLightResponse descripcionesPreferidasPorRefSet(
-            @XmlElement(required = true)
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionConceptosPorRefSet")
                     ConceptsByRefsetRequest request
     ) throws NotFoundFault {
@@ -296,7 +322,7 @@ public class SearchService {
     @WebResult(name = "respuestaConceptosPorRefSet")
     @WebMethod(operationName = "conceptosPorRefSet")
     public RefSetResponse conceptosPorRefSet(
-            @XmlElement(required = true)
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionConceptosPorRefSet")
                     ConceptsByRefsetRequest request
     ) throws NotFoundFault {
@@ -307,34 +333,34 @@ public class SearchService {
      * REQ-WS-024: El sistema Semantikos debe disponer un servicio que permita obtener una lista de todos los
      * CrossMapsets (sets/vocabularios Mapeos) Ej.: CIE9; CIE10; CIEO.
      *
-     * @param idInstitution Identificador de la institución.
+     * @param request El objeto base para el request
      * @return Una lista de los crossmapSets existentes.
      */
     @WebResult(name = "crossmapSetResponse")
     @WebMethod(operationName = "getCrossmapSets")
     public CrossmapSetsResponse getCrossmapSets(
-            @XmlElement(required = true)
-            @WebParam(name = "idInstitucion")
-                    String idInstitution
-    ) {
-        return this.crossmapsController.getCrossmapSets(idInstitution);
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionCrossmapSets")
+                    Request request
+    ) throws NotFoundFault {
+        return this.crossmapsController.getCrossmapSets(request.getIdStablishment());
     }
 
     /**
      * REQ-WS-025: El sistema Semantikos debe disponer un servicio que permita obtener los CrossMapsetsMembers a partir
      * de un CrossMapset.
      *
-     * @param crossmapSetAbbreviatedName El valor nombre abreviado de un crossmapSet.
+     * @param request La peticion de crossmapSetMembers
      * @return Una lista de los crossmapSetMembers del crossmapSet dado como parámetro.
      */
     @WebResult(name = "crossmapSetMember")
     @WebMethod(operationName = "crossmapSetMembersDeCrossmapSet")
     public CrossmapSetMembersResponse crossmapSetMembersDeCrossmapSet(
-            @XmlElement(required = true)
-            @WebParam(name = "nombreAbreviadoCrossmapSet")
-                    String crossmapSetAbbreviatedName
-    ) {
-        return this.crossmapsController.getCrossmapSetMembersByCrossmapSetAbbreviatedName(crossmapSetAbbreviatedName);
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionCrosmapSetMembers")
+                    CrossmapSetMembersRequest request
+    ) throws NotFoundFault {
+        return this.crossmapsController.getCrossmapSetMembersByCrossmapSetAbbreviatedName(request.getCrossmapSetAbbreviatedName());
     }
 
     /**
@@ -354,7 +380,7 @@ public class SearchService {
     @WebResult(name = "indirectCrossmaps")
     @WebMethod(operationName = "crossMapsIndirectosPorDescripcionIDorConceptID")
     public IndirectCrossMapSearchResponse crossMapsIndirectosPorDescriptionIDoConceptID(
-            @XmlElement(required = true)
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "descripcionIDorConceptIDRequest")
                     DescriptionIDorConceptIDRequest descripcionIDorConceptIDRequest
     ) throws NotFoundFault {
@@ -377,7 +403,7 @@ public class SearchService {
     @WebResult(name = "crossmapSetMember")
     @WebMethod(operationName = "crossMapsDirectosPorIDDescripcion")
     public CrossmapSetMembersResponse crossmapSetMembersDirectosPorIDDescripcion(
-            @XmlElement(required = true)
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "DescripcionID")
                     DescriptionIDorConceptIDRequest request
     ) throws NotFoundFault {
@@ -388,11 +414,11 @@ public class SearchService {
     @WebResult(name = "concepto")
     @WebMethod(operationName = "conceptoPorIdDescripcion")
     public ConceptResponse conceptoPorIdDescripcion(
-            @XmlElement(required = true)
-            @WebParam(name = "idDescripcion")
-                    String descriptionId
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionConceptoPorDescriptionID")
+                    ConceptByDescriptionIDRequest request
     ) throws NotFoundFault {
-        return this.conceptController.conceptByDescriptionId(descriptionId);
+        return this.conceptController.conceptByDescriptionId(request.getDescriptionID());
     }
 
 }

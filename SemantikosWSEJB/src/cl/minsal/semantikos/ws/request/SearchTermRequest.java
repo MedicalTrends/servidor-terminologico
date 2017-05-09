@@ -11,15 +11,13 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlRootElement(name = "peticionBuscarTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "PeticionBuscarTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class SearchTermRequest implements Serializable {
+public class SearchTermRequest extends Request implements Serializable {
 
     private String term;
 
     private List<String> categoryNames;
 
     private List<String> refSetNames;
-
-    private String idStablishment;
 
     @XmlElement(required = true, name = "termino")
     public String getTerm() {
@@ -43,13 +41,5 @@ public class SearchTermRequest implements Serializable {
     }
     public void setRefSetNames(List<String> refSetNames) {
         this.refSetNames = refSetNames;
-    }
-
-    @XmlElement(required = true, name="idEstablecimiento")
-    public String getIdStablishment() {
-        return idStablishment;
-    }
-    public void setIdStablishment(String idStablishment) {
-        this.idStablishment = idStablishment;
     }
 }

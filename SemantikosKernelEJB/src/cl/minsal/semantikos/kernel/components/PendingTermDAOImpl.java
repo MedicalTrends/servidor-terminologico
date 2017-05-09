@@ -172,6 +172,35 @@ public class PendingTermDAOImpl implements PendingTermDAO {
         return pendingTerm;
     }
 
+    @Override
+    public void updateSearchIndexes(PendingTerm pendingTerm) {
+
+        ConnectionBD connect = new ConnectionBD();
+        String sql = "{call semantikos.update_pending_term_search_indexes(?)}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setLong(1, pendingTerm.getId());
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+                if (!rs.getBoolean(1)) {
+                    throw new EJBException("Los índices de búsqueda del término con id=" + pendingTerm.getId() + " no fueron actualizados.");
+                }
+            } else {
+                String errorMsg = "Los índices de búsqueda del término con id=" + pendingTerm.getId() + " no fueron actualizados.";
+                logger.error(errorMsg);
+                throw new EJBException(errorMsg);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Los índices de búsqueda del término con id=" + pendingTerm.getId() + " no fueron actualizados.", e);
+            throw new EJBException("Los índices de búsqueda del término con id=" + pendingTerm.getId() + " no fueron actualizados.", e);
+        }
+    }
+
     private PendingTerm createPendingTermFromResultSet(ResultSet resultSet) throws SQLException {
 
         long id = resultSet.getLong("id");

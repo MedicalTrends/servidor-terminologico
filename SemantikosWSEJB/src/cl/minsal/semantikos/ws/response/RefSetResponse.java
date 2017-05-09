@@ -18,7 +18,7 @@ import java.util.List;
 @XmlType(name = "RefSet", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class RefSetResponse implements Serializable {
 
-    @XmlElement(name="nombre")
+    @XmlElement(name="nombreRefSet")
     private String name;
 
     @XmlElement(name="valido")
@@ -27,10 +27,10 @@ public class RefSetResponse implements Serializable {
     @XmlElement(name="validoHasta")
     private Date validityUntil;
 
-    @XmlElement(name="creadoEn")
+    @XmlElement(name="fechaCreacionRefSet")
     private Date creationDate;
 
-    @XmlElement(name="institucion")
+    @XmlElement(name="duenoRefSet")
     private String institution;
 
     @XmlElementWrapper(name = "conceptos")
@@ -38,7 +38,7 @@ public class RefSetResponse implements Serializable {
     private List<ConceptResponse> concepts;
 
     @XmlElement(name = "cantidadRegistros")
-    private int quantity;
+    private Integer quantity;
 
     public RefSetResponse() {
         concepts = new ArrayList<>();
@@ -50,7 +50,9 @@ public class RefSetResponse implements Serializable {
         this.validityUntil = refSet.getValidityUntil();
         this.creationDate = refSet.getCreationDate();
         this.institution = refSet.getInstitution().getName();
-        this.concepts = new ArrayList<>();
+        //this.concepts = new ArrayList<>();
+        this.concepts = null;
+        this.quantity = null;
         /*
         for (ConceptSMTK conceptSMTK : refSet.getConcepts()) {
             this.concepts.add(new ConceptResponse(conceptSMTK));

@@ -16,19 +16,19 @@ import java.util.List;
 @XmlType(name = "CrossmapSetMembersResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class CrossmapSetMembersResponse {
 
-    @XmlElement(name="idConcepto")
+    @XmlElement(name="conceptID")
     private String conceptId;
-    @XmlElement(name="idDescripcionPreferida")
+    @XmlElement(name="descriptionIDPreferida")
     private String descriptionId;
-    @XmlElement(name="descripcionPreferida")
+    @XmlElement(name="descriptionPreferida")
     private String description;
     @XmlElement(name="nombreCategoria")
     private String category;
 
-    @XmlElement(name="abbreviatedName")
+    @XmlElement(name="nombreCortoCrossmapSet")
     private String abbreviatedName;
 
-    @XmlElement(name="name")
+    @XmlElement(name="nombreCrossmapSet")
     private String name;
 
     @XmlElement(name="version")

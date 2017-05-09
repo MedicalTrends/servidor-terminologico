@@ -15,11 +15,11 @@ import java.io.Serializable;
 @XmlType(name = "DescripcionSimplificada", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class SimplifiedDescriptionResponse implements Serializable {
 
-    @XmlElement(name="idConcepto")
+    @XmlElement(name="conceptID")
     private String conceptId;
-    @XmlElement(name="idDescripcion")
+    @XmlElement(name="descriptionID")
     private String descriptionId;
-    @XmlElement(name="termino")
+    @XmlElement(name="descriptionEncontrada")
     private String term;
     @XmlElement(name="tipoDescripcion")
     private String descriptionType;

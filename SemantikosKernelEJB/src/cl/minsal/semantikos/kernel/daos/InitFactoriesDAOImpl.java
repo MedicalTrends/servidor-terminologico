@@ -361,6 +361,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     public EmailFactory refreshEmail() throws NamingException {
         InitialContext c = new InitialContext();
         Session session = (Session)c.lookup("java:jboss/mail/Default");
+        //Session session = (Session)c.lookup("java:/Mail");
         EmailFactory.getInstance().setMySession(session);
 
         return EmailFactory.getInstance();

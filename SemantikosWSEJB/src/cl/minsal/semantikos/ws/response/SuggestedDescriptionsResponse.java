@@ -11,11 +11,11 @@ import java.util.List;
  * @author Alfonso Cornejo on 2016-10-11.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "respuestaDescripcionesPerfectMatch", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "RespuestaDescripcionesPerfectMatch", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "respuestaDescripcionesSugeridas", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "RespuestaDescripcionesSugeridas", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class SuggestedDescriptionsResponse implements Serializable {
 
-    @XmlElement(name = "terminoBuscado")
+    @XmlElement(name = "terminoBuscar")
     private String pattern;
 
     @XmlElementWrapper(name = "descripcionesSugeridas")

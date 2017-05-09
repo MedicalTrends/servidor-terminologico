@@ -12,18 +12,14 @@ import java.io.Serializable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "peticionCodificacionDeNuevoTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "PeticionCodificacionDeNuevoTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class NewTermRequest implements Serializable {
-
-    /** Identificador de negocio de una institución asociada al usuario que realiza la solicitud de creación */
-    @XmlElement(required = true, name = "establecimiento")
-    private String idInstitution;
+public class NewTermRequest extends Request implements Serializable {
 
     /*
     @XmlElement(required = true, name = "idConcepto")
     private String conceptId;
     */
 
-    @XmlElement(required = true, name = "termino")
+    @XmlElement(required = true, name = "terminoPropuesto")
     private String term;
 
     @XmlElement(required = false, defaultValue = "Preferida", name = "tipoDescripcion")
@@ -38,7 +34,7 @@ public class NewTermRequest implements Serializable {
     @XmlElement(required = false, name = "observacion")
     private String observation;
 
-    @XmlElement(required = false, name = "profesional")
+    @XmlElement(required = false, name = "nombreApellidoSolicitante")
     private String professional;
 
     @XmlElement(required = false, name = "profesion")
@@ -50,16 +46,8 @@ public class NewTermRequest implements Serializable {
     @XmlElement(required = true, name = "subespecialidad")
     private String subSpecialty;
 
-    @XmlElement(required = true, name = "categoria")
+    @XmlElement(required = true, name = "nombreCategoria")
     private String category;
-
-    public String getIdInstitution() {
-        return idInstitution;
-    }
-
-    public void setIdInstitution(String idInstitution) {
-        this.idInstitution = idInstitution;
-    }
 
     /*
     public String getConceptId() {

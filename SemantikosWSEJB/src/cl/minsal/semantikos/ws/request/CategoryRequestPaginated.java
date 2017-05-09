@@ -9,9 +9,9 @@ import java.io.Serializable;
  * @author Alonso Cornejo
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "peticionPorCategoriaPaginada", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "PeticionPorCategoriaPaginada", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class CategoryRequestPaginated implements Serializable {
+@XmlRootElement(name = "peticionPorCategoriaPaginados", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "PeticionPorCategoriaPaginados", namespace = "http://service.ws.semantikos.minsal.cl/")
+public class CategoryRequestPaginated extends Request implements Serializable {
 
     @XmlElement(required = true, name = "nombreCategoria")
     private String categoryName;
@@ -21,9 +21,6 @@ public class CategoryRequestPaginated implements Serializable {
 
     @XmlElement(required = true, defaultValue = "30", name = "tamanoPagina")
     private int pageSize;
-
-    @XmlElement(required = true, defaultValue = "1", name = "idEstablecimiento")
-    private String idStablishment;
 
     public int getPageNumber() {
         return pageNumber;
@@ -49,11 +46,4 @@ public class CategoryRequestPaginated implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public String getIdStablishment() {
-        return idStablishment;
-    }
-
-    public void setIdStablishment(String idStablishment) {
-        this.idStablishment = idStablishment;
-    }
 }

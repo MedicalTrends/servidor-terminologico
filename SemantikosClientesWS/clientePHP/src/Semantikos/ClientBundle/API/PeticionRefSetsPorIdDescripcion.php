@@ -8,7 +8,7 @@ class PeticionRefSetsPorIdDescripcion
     /**
      * @var string $idDescripcion
      */
-    protected $idDescripcion = null;
+    protected $descriptionID = null;
 
     /**
      * @var boolean $incluyeEstablecimientos
@@ -18,7 +18,7 @@ class PeticionRefSetsPorIdDescripcion
     /**
      * @var string $idStablishment
      */
-    protected $idStablishment = null;
+    protected $idEstablecimiento = null;
 
     /**
      * @param string $idDescripcion
@@ -31,18 +31,18 @@ class PeticionRefSetsPorIdDescripcion
     /**
      * @return string
      */
-    public function getIdDescripcion()
+    public function getDescriptionID()
     {
-      return $this->idDescripcion;
+      return $this->descriptionID;
     }
 
     /**
      * @param string $idDescripcion
      * @return PeticionRefSetsPorIdDescripcion
      */
-    public function setIdDescripcion($idDescripcion)
+    public function setDescriptionID($descriptionID)
     {
-      $this->idDescripcion = $idDescripcion;
+      $this->descriptionID = $descriptionID;
       return $this;
     }
 
@@ -67,18 +67,18 @@ class PeticionRefSetsPorIdDescripcion
     /**
      * @return string
      */
-    public function getIdStablishment()
+    public function getIdEstablecimiento()
     {
-      return $this->idStablishment;
+      return $this->idEstablecimiento;
     }
 
     /**
      * @param string $idStablishment
      * @return PeticionRefSetsPorIdDescripcion
      */
-    public function setIdStablishment($idStablishment)
+    public function setIdEstablecimiento($idEstablecimiento)
     {
-      $this->idStablishment = $idStablishment;
+      $this->idEstablecimiento = $idEstablecimiento;
       return $this;
     }
 

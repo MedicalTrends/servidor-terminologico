@@ -10,16 +10,13 @@ import java.io.Serializable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "descriptionIDorConceptIDRequest", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "descriptionIDorConceptIDRequest", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class DescriptionIDorConceptIDRequest implements Serializable {
+public class DescriptionIDorConceptIDRequest extends Request implements Serializable {
 
-    @XmlElement(required = true, name = "description_id")
+    @XmlElement(required = true, name = "descriptionID")
     private String descriptionId;
 
-    @XmlElement(required = true, name = "concept_id")
+    @XmlElement(required = true, name = "conceptID")
     private String conceptId;
-
-    @XmlElement(required = true, name = "stablishment_id")
-    private String idStablishment;
 
     public String getDescriptionId() {
         return descriptionId;
@@ -27,14 +24,6 @@ public class DescriptionIDorConceptIDRequest implements Serializable {
 
     public void setDescriptionId(String descriptionId) {
         this.descriptionId = descriptionId;
-    }
-
-    public String getIdStablishment() {
-        return idStablishment;
-    }
-
-    public void setIdStablishment(String idStablishment) {
-        this.idStablishment = idStablishment;
     }
 
     public String getConceptId() {

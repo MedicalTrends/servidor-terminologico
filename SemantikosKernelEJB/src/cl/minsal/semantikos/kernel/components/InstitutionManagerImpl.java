@@ -23,6 +23,11 @@ public class InstitutionManagerImpl implements InstitutionManager {
     }
 
     @Override
+    public Institution getInstitutionById(long id) {
+        return institutionDAO.getInstitutionById(id);
+    }
+
+    @Override
     public List<Institution> getAllInstitution() {
         return institutionDAO.getAllInstitution();
     }

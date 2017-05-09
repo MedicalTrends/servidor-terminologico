@@ -15,19 +15,19 @@ import java.io.Serializable;
 @XmlType(name = "DescripcionPerfectMatch", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class PerfectMatchDescriptionResponse implements Serializable {
 
-    @XmlElement(name="idConcepto")
+    @XmlElement(name="conceptID")
     private String conceptId;
-    @XmlElement(name="idDescripcion")
+    @XmlElement(name="descriptionID")
     private String descriptionId;
-    @XmlElement(name="termino")
+    @XmlElement(name="descriptionEncontrada")
     private String term;
     @XmlElement(name="tipoDescripcion")
     private String descriptionType;
     @XmlElement(name="nombreCategoria")
     private String categoryName;
-    @XmlElement(name="terminoPreferido")
+    @XmlElement(name="descriptionPreferida")
     private String preferredTerm;
-    @XmlElement(name="idTerminoPreferido")
+    @XmlElement(name="descriptionIDPreferida")
     private String preferredTermId;
 
     public PerfectMatchDescriptionResponse() { }

@@ -5,14 +5,18 @@ import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.kernel.util.IDGenerator;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.*;
+import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.InvocationContext;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.System.currentTimeMillis;
@@ -40,6 +44,22 @@ public class DescriptionManagerImpl implements DescriptionManager {
     /* El conjunto de reglas de negocio para validar creación de descripciones */
     private DescriptionCreationBR descriptionCreationBR = new DescriptionCreationBR();
 
+    @AroundInvoke
+    public Object postActions(InvocationContext ic) throws Exception {
+        try {
+            return ic.proceed();
+        } finally {
+            if(Arrays.asList(new String[]{"createDescription", "bindDescriptionToConcept", "updateDescription"}).contains(ic.getMethod().getName())) {
+                for (Object o : ic.getParameters()) {
+                    if(o instanceof Description) {
+                        descriptionDAO.updateSearchIndexes((Description)o);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public void createDescription(Description description, boolean editionMode, User user) {
 
@@ -49,6 +69,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         descriptionCreationBR1.validatePreConditions(conceptSMTK, description, categoryManager, editionMode);
 
         descriptionCreationBR1.applyRules(conceptSMTK, description.getTerm(), description.getDescriptionType(), user, categoryManager);
+
         if (!description.isPersistent()) {
             descriptionDAO.persist(description, user);
             description.setDescriptionId(generateDescriptionId(description.getId()));
@@ -372,6 +393,9 @@ public class DescriptionManagerImpl implements DescriptionManager {
         if(descriptionByDescriptionID.isModeled()) {
             descriptionByDescriptionID.setUses(descriptionByDescriptionID.getUses() + 1);
             descriptionDAO.update(descriptionByDescriptionID);
+        }
+        else {
+            throw new BusinessRuleException("BR-DESC-003", "Para incrementar el contador de usos la descripción debe estar modelada.", descriptionByDescriptionID.getConceptSMTK());
         }
 
         logger.info("DESCRIPTION ID=" + descriptionId + " tiene ahora " + descriptionByDescriptionID.getUses() + " usos.");

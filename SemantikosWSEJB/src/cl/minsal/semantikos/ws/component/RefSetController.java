@@ -1,9 +1,11 @@
 package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.kernel.components.ConceptManager;
+import cl.minsal.semantikos.kernel.components.InstitutionManager;
 import cl.minsal.semantikos.kernel.components.RefSetManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.RefSet;
+import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.RefSetMapper;
 import cl.minsal.semantikos.ws.response.*;
@@ -29,11 +31,14 @@ public class RefSetController {
 
     @EJB
     private ConceptManager conceptManager;
+
+    @EJB
+    private InstitutionManager institutionManager;
+
     @EJB
     private ConceptController conceptController;
 
-    public List<RefSetSearchResponse> findRefSetsByDescriptions(List<String> descriptionIds, Boolean includeInstitutions, String
-            idStablishment) throws NotFoundFault {
+    public List<RefSetSearchResponse> findRefSetsByDescriptions(List<String> descriptionIds, Boolean includeInstitutions, String idStablishment) throws NotFoundFault {
 
         /* Se recupera el concepto asociado a la descripción */
         List<ConceptSMTK> conceptsByDescriptionID = new ArrayList<>();
@@ -47,11 +52,48 @@ public class RefSetController {
             }
         }
 
+        Institution connectionInstitution = institutionManager.getInstitutionById(Long.parseLong(idStablishment));
+
         List<RefSetSearchResponse> res = new ArrayList<>();
 
         for (ConceptSMTK conceptByDescriptionID : conceptsByDescriptionID) {
             RefSetSearchResponse refSetSearchResponse = new RefSetSearchResponse();
             List<RefSet> refSets = refSetManager.findByConcept(conceptByDescriptionID);
+
+            Iterator<RefSet> it = refSets.iterator();
+
+            while (it.hasNext()) {
+                RefSet refSet = it.next();
+                if(!refSet.isValid()) {
+                    it.remove();
+                }
+            }
+
+            List<String> validInstitutions = new ArrayList<>();
+
+            if(!connectionInstitution.getName().equals("MINSAL") && includeInstitutions ) {
+                validInstitutions = Arrays.asList(new String[]{"MINSAL", connectionInstitution.getName()});
+            }
+
+            if(!connectionInstitution.getName().equals("MINSAL") && !includeInstitutions ) {
+                validInstitutions = Arrays.asList(new String[]{connectionInstitution.getName()});
+            }
+
+            if(connectionInstitution.getName().equals("MINSAL") && !includeInstitutions ) {
+                validInstitutions = Arrays.asList(new String[]{"MINSAL"});
+            }
+
+            it = refSets.iterator();
+
+            if(!validInstitutions.isEmpty()) {
+                while (it.hasNext()) {
+                    RefSet refSet = it.next();
+                    if(!validInstitutions.contains(refSet.getInstitution().getName())) {
+                        it.remove();
+                    }
+                }
+            }
+
             refSetSearchResponse.setConceptId(conceptByDescriptionID.getConceptID());
             refSetSearchResponse.setDescriptionId(conceptByDescriptionID.getDescriptionFavorite().getDescriptionId());
             refSetSearchResponse.setDescription(conceptByDescriptionID.getDescriptionFavorite().getTerm());
@@ -92,12 +134,51 @@ public class RefSetController {
     /**
      * TODO: Claramente este método no fue implementado correctamente.
      *
-     * @param includeAllInstitutions El parametro no considerado
+     * @param includeInstitutions El parametro no considerado
      * @return La lista de RefSets encapsulada.
      * @throws NotFoundFault Arrojada si no ... ???
      */
-    public RefSetsResponse refSetList(Boolean includeAllInstitutions) throws NotFoundFault {
-        return new RefSetsResponse(this.refSetManager.getAllRefSets());
+    public RefSetsResponse refSetList(Boolean includeInstitutions, String idStablishment) throws NotFoundFault {
+
+        Institution connectionInstitution = institutionManager.getInstitutionById(Long.parseLong(idStablishment));
+
+        List<RefSet> refSets = this.refSetManager.getAllRefSets();
+
+        Iterator<RefSet> it = refSets.iterator();
+
+        while (it.hasNext()) {
+            RefSet refSet = it.next();
+            if(!refSet.isValid()) {
+                it.remove();
+            }
+        }
+
+        List<String> validInstitutions = new ArrayList<>();
+
+        if(!connectionInstitution.getName().equals("MINSAL") && includeInstitutions ) {
+            validInstitutions = Arrays.asList(new String[]{"MINSAL", connectionInstitution.getName()});
+        }
+
+        if(!connectionInstitution.getName().equals("MINSAL") && !includeInstitutions ) {
+            validInstitutions = Arrays.asList(new String[]{connectionInstitution.getName()});
+        }
+
+        if(connectionInstitution.getName().equals("MINSAL") && !includeInstitutions ) {
+            validInstitutions = Arrays.asList(new String[]{"MINSAL"});
+        }
+
+        it = refSets.iterator();
+
+        if(!validInstitutions.isEmpty()) {
+            while (it.hasNext()) {
+                RefSet refSet = it.next();
+                if(!validInstitutions.contains(refSet.getInstitution().getName())) {
+                    it.remove();
+                }
+            }
+        }
+
+        return new RefSetsResponse(refSets);
     }
 
     public RefSetResponse getResponse(RefSet refSet) throws NotFoundFault {
