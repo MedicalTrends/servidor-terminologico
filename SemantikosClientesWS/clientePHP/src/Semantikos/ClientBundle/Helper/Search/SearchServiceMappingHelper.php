@@ -80,9 +80,9 @@ class SearchServiceMappingHelper {
         
         $peticionRefSetsPorIdDescripcion = new PeticionRefSetsPorIdDescripcion();
         
-        $peticionRefSetsPorIdDescripcion->setIdDescripcion($parameters['descriptionId']);                
+        $peticionRefSetsPorIdDescripcion->setDescriptionID($parameters['descriptionId']);
         $peticionRefSetsPorIdDescripcion->setIncluyeEstablecimientos($parameters['incluyeEstablecimiento']);
-        $peticionRefSetsPorIdDescripcion->setIdStablishment($parameters['idEstablecimiento']);        
+        $peticionRefSetsPorIdDescripcion->setIdEstablecimiento($parameters['idEstablecimiento']);
         
         return array( 'peticionRefSetsPorIdDescripcion' => $peticionRefSetsPorIdDescripcion );
     }
@@ -128,7 +128,8 @@ class SearchServiceMappingHelper {
     
     public function mapWS028Parameters($parameters = null){                                      
         
-        return array( 'idDescripcion' => $parameters['descriptionId'] );
+        return array( 'idDescripcion' => $parameters['descriptionId'],
+                      'idEstablecimiento' => $parameters['idEstablecimiento']);
     }
         
 }                

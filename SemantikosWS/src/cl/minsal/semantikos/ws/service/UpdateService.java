@@ -7,6 +7,7 @@ import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.request.DescriptionHitRequest;
 import cl.minsal.semantikos.ws.request.NewTermRequest;
+import cl.minsal.semantikos.ws.request.Request;
 import cl.minsal.semantikos.ws.response.DescriptionResponse;
 import cl.minsal.semantikos.ws.response.NewTermResponse;
 import org.slf4j.Logger;
@@ -52,6 +53,8 @@ public class UpdateService {
 
         try {
             authenticationManager.authenticate(wsctx.getMessageContext());
+            Request request = (Request)ctx.getParameters()[0];
+            authenticationManager.validateInstitution(request.getIdStablishment());
         }
         catch (Exception e) {
             throw new NotFoundFault(e.getMessage());

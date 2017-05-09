@@ -247,6 +247,26 @@ public class AuditManagerImpl implements AuditManager {
         return auditDAO.getConceptAuditActions(conceptSMTK.getId(), changes);
     }
 
+    @Override
+    public ConceptAuditAction getConceptCreationAuditAction(ConceptSMTK conceptSMTK, boolean changes) {
+        for (ConceptAuditAction conceptAuditAction : auditDAO.getConceptAuditActions(conceptSMTK.getId(), changes)) {
+            if(conceptAuditAction.getAuditActionType().equals(AuditActionType.CONCEPT_CREATION)) {
+                return conceptAuditAction;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public ConceptAuditAction getConceptPublicationAuditAction(ConceptSMTK conceptSMTK, boolean changes) {
+        for (ConceptAuditAction conceptAuditAction : auditDAO.getConceptAuditActions(conceptSMTK.getId(), changes)) {
+            if(conceptAuditAction.getAuditActionType().equals(AuditActionType.CONCEPT_PUBLICATION)) {
+                return conceptAuditAction;
+            }
+        }
+        return null;
+    }
+
     private Timestamp now() {
         return new Timestamp(System.currentTimeMillis());
     }

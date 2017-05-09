@@ -12,11 +12,7 @@ import java.io.Serializable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "peticionCodificacionDeNuevoTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "PeticionCodificacionDeNuevoTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class NewTermRequest implements Serializable {
-
-    /** Identificador de negocio de una institución asociada al usuario que realiza la solicitud de creación */
-    @XmlElement(required = true, name = "idEstablecimiento")
-    private String idInstitution;
+public class NewTermRequest extends Request implements Serializable {
 
     /*
     @XmlElement(required = true, name = "idConcepto")
@@ -52,14 +48,6 @@ public class NewTermRequest implements Serializable {
 
     @XmlElement(required = true, name = "nombreCategoria")
     private String category;
-
-    public String getIdInstitution() {
-        return idInstitution;
-    }
-
-    public void setIdInstitution(String idInstitution) {
-        this.idInstitution = idInstitution;
-    }
 
     /*
     public String getConceptId() {

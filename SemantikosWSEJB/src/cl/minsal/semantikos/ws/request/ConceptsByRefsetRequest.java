@@ -10,13 +10,10 @@ import java.io.Serializable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "peticionConceptosPorRefSet", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "PeticionConceptosPorRefSet", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class ConceptsByRefsetRequest implements Serializable {
+public class ConceptsByRefsetRequest extends Request implements Serializable {
 
     @XmlElement(required = true, name = "nombreRefSet")
     private String refSetName;
-
-    @XmlElement(required = true, name = "idEstablecimiento")
-    private String idStablishment;
 
     public String getRefSetName() {
         return refSetName;
@@ -26,11 +23,4 @@ public class ConceptsByRefsetRequest implements Serializable {
         this.refSetName = refSetName;
     }
 
-    public String getIdStablishment() {
-        return idStablishment;
-    }
-
-    public void setIdStablishment(String idStablishment) {
-        this.idStablishment = idStablishment;
-    }
 }

@@ -23,17 +23,19 @@ public class ConceptLightResponse implements Serializable {
     private String conceptId;
 
     /** <em>DESCRIPTION_ID</em> de la descripción preferida */
-    @XmlElement(name = "idDescripcionPreferida")
+    @XmlElement(name = "descriptionIDPreferida")
     private String favouriteDescriptionID;
 
-    @XmlElement(name = "descripcionPreferida")
+    @XmlElement(name = "descriptionPreferida")
     private String favouriteDescription;
 
-    @XmlElement(name = "categoria")
+    @XmlElement(name = "nombreCategoria")
     private String categoryName;
 
+    /*
     @XmlElement(name = "esValido")
     private Boolean valid;
+    */
 
     public ConceptLightResponse() {
     }
@@ -72,6 +74,7 @@ public class ConceptLightResponse implements Serializable {
         this.favouriteDescription = favouriteDescription;
     }
 
+
     public String getCategoryName() {
         return categoryName;
     }
@@ -79,7 +82,7 @@ public class ConceptLightResponse implements Serializable {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
-
+    /*
     public Boolean getValid() {
         return valid;
     }
@@ -87,6 +90,7 @@ public class ConceptLightResponse implements Serializable {
     public void setValid(Boolean valid) {
         this.valid = valid;
     }
+    */
 
     @Override
     public boolean equals(Object o) {

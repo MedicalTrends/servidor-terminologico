@@ -197,4 +197,28 @@ public interface AuditManager {
      * <code>conceptSMTK</code>
      */
     public List<ConceptAuditAction> getConceptAuditActions(ConceptSMTK conceptSMTK,  boolean changes);
+
+    /**
+     * Este método es responsable de recuperar y retornar en una lista los últimos <code>numberOfChanges</code> cambios
+     * que ha tenido un concepto.
+     *
+     * @param conceptSMTK     El concepto cuyos cambios se desean recuperar.
+     * @param changes         Indica si se desean las acciones auditables registradas que son cambios
+     *
+     * @return Una lista con los últimos <code>numberOfChanges</code> realizados sobre el concepto
+     * <code>conceptSMTK</code>
+     */
+    public ConceptAuditAction getConceptCreationAuditAction(ConceptSMTK conceptSMTK,  boolean changes);
+
+    /**
+     * Este método es responsable de recuperar y retornar en una lista los últimos <code>numberOfChanges</code> cambios
+     * que ha tenido un concepto.
+     *
+     * @param conceptSMTK     El concepto cuyos cambios se desean recuperar.
+     * @param changes         Indica si se desean las acciones auditables registradas que son cambios
+     *
+     * @return Una lista con los últimos <code>numberOfChanges</code> realizados sobre el concepto
+     * <code>conceptSMTK</code>
+     */
+    public ConceptAuditAction getConceptPublicationAuditAction(ConceptSMTK conceptSMTK,  boolean changes);
 }

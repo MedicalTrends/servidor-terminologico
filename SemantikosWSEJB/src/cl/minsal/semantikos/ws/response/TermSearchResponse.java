@@ -15,7 +15,7 @@ import java.util.List;
 @XmlType(name = "RespuestaBuscarTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class TermSearchResponse implements Serializable {
 
-    @XmlElement(name = "categoria")
+    @XmlElement(name = "nombreCategoria")
     private String category;
 
     @XmlElementWrapper(name = "conceptos")

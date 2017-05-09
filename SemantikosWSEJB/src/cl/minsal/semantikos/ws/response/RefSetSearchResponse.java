@@ -11,14 +11,14 @@ import java.io.Serializable;
 @XmlType(name = "RespuestaBuscarRefSet", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class RefSetSearchResponse implements Serializable {
 
-    @XmlElement(name="idConcepto")
-    private String conceptId;
-    @XmlElement(name="idDescripcionPreferida")
-    private String descriptionId;
-    @XmlElement(name="descripcionPreferida")
-    private String description;
     @XmlElement(name="nombreCategoria")
     private String category;
+    @XmlElement(name="conceptID")
+    private String conceptId;
+    @XmlElement(name="descriptionIDPreferida")
+    private String descriptionId;
+    @XmlElement(name="descriptionPreferida")
+    private String description;
 
     @XmlElement(name="refsets")
     private RefSetsResponse refSetsResponse;

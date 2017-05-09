@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.lang.System.currentTimeMillis;
+
 /**
  * Esta clase representa al Concepto Semantikos.
  *
@@ -766,6 +768,15 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
     public void setInherited(boolean inherited) {
         this.inherited = inherited;
+    }
+
+    /**
+     * Este método es responsable de determinar si esta descripción es válida
+     *
+     * @return <code>true</code> si es válida y <code>false</code> si no lo es.
+     */
+    public boolean isValid() {
+        return (getValidUntil() == null || getValidUntil().after(new Timestamp(currentTimeMillis())));
     }
 
     @Override

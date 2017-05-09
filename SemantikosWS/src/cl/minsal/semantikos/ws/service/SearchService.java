@@ -2,6 +2,7 @@ package cl.minsal.semantikos.ws.service;
 
 import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
+import cl.minsal.semantikos.kernel.components.InstitutionManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.ws.component.CategoryController;
@@ -26,6 +27,8 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.*;
 import javax.xml.ws.WebServiceContext;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,6 +59,9 @@ public class SearchService {
     @EJB
     private AuthenticationManager authenticationManager;
 
+    @EJB
+    private InstitutionManager institutionManager;
+
     @Resource
     WebServiceContext wsctx;
 
@@ -68,6 +74,8 @@ public class SearchService {
 
         try {
             authenticationManager.authenticate(wsctx.getMessageContext());
+            Request request = (Request)ctx.getParameters()[0];
+            authenticationManager.validateInstitution(request.getIdStablishment());
         }
         catch (Exception e) {
             throw new NotFoundFault(e.getMessage());
@@ -184,7 +192,7 @@ public class SearchService {
         /* Se hace una validación de los parámetros */
         obtenerTerminosPediblesParamValidation(request);
 
-        return conceptController.searchRequestableDescriptions(request.getCategoryNames(), new BasicTypeValue(request.getRequestable()));
+        return conceptController.searchRequestableDescriptions(request.getCategoryNames(), request.getRequestable());
     }
 
     // REQ-WS-006
@@ -292,14 +300,11 @@ public class SearchService {
     @WebResult(name = "refsetResponse")
     @WebMethod(operationName = "listaRefSet")
     public RefSetsResponse listaRefSet(
-            @XmlElement(required = false, defaultValue = "true")
-            @WebParam(name = "incluyeEstablecimientos")
-                    Boolean includeInstitutions,
-            @XmlElement(required = true)
-            @WebParam(name = "idStablishment")
-                    String idStablishment
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionRefSets")
+                    RefSetsRequest request
     ) throws NotFoundFault {
-        return this.refSetController.refSetList(includeInstitutions);
+        return this.refSetController.refSetList(request.getIncludeInstitutions(), request.getIdStablishment());
     }
 
     // REQ-WS-022
@@ -328,34 +333,34 @@ public class SearchService {
      * REQ-WS-024: El sistema Semantikos debe disponer un servicio que permita obtener una lista de todos los
      * CrossMapsets (sets/vocabularios Mapeos) Ej.: CIE9; CIE10; CIEO.
      *
-     * @param idInstitution Identificador de la institución.
+     * @param request El objeto base para el request
      * @return Una lista de los crossmapSets existentes.
      */
     @WebResult(name = "crossmapSetResponse")
     @WebMethod(operationName = "getCrossmapSets")
     public CrossmapSetsResponse getCrossmapSets(
-            @XmlElement(required = true)
-            @WebParam(name = "idInstitucion")
-                    String idInstitution
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionCrossmapSets")
+                    Request request
     ) throws NotFoundFault {
-        return this.crossmapsController.getCrossmapSets(idInstitution);
+        return this.crossmapsController.getCrossmapSets(request.getIdStablishment());
     }
 
     /**
      * REQ-WS-025: El sistema Semantikos debe disponer un servicio que permita obtener los CrossMapsetsMembers a partir
      * de un CrossMapset.
      *
-     * @param crossmapSetAbbreviatedName El valor nombre abreviado de un crossmapSet.
+     * @param request La peticion de crossmapSetMembers
      * @return Una lista de los crossmapSetMembers del crossmapSet dado como parámetro.
      */
     @WebResult(name = "crossmapSetMember")
     @WebMethod(operationName = "crossmapSetMembersDeCrossmapSet")
     public CrossmapSetMembersResponse crossmapSetMembersDeCrossmapSet(
-            @XmlElement(required = true)
-            @WebParam(name = "nombreAbreviadoCrossmapSet")
-                    String crossmapSetAbbreviatedName
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionCrosmapSetMembers")
+                    CrossmapSetMembersRequest request
     ) throws NotFoundFault {
-        return this.crossmapsController.getCrossmapSetMembersByCrossmapSetAbbreviatedName(crossmapSetAbbreviatedName);
+        return this.crossmapsController.getCrossmapSetMembersByCrossmapSetAbbreviatedName(request.getCrossmapSetAbbreviatedName());
     }
 
     /**
@@ -409,11 +414,11 @@ public class SearchService {
     @WebResult(name = "concepto")
     @WebMethod(operationName = "conceptoPorIdDescripcion")
     public ConceptResponse conceptoPorIdDescripcion(
-            @XmlElement(required = true)
-            @WebParam(name = "idDescripcion")
-                    String descriptionId
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionConceptoPorDescriptionID")
+                    ConceptByDescriptionIDRequest request
     ) throws NotFoundFault {
-        return this.conceptController.conceptByDescriptionId(descriptionId);
+        return this.conceptController.conceptByDescriptionId(request.getDescriptionID());
     }
 
 }

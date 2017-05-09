@@ -28,11 +28,12 @@ public class CrossmapSetMemberResponse {
     private CrossmapSetResponse crossmapSet;
     */
 
-    @XmlElement(name = "code1")
+    @XmlElement(name = "cod1CrossmapSetMember")
     private String code1;
 
-    @XmlElement(name = "gloss")
+    @XmlElement(name = "descripcionCrossmapSetMember")
     private String gloss;
+
 
     public CrossmapSetMemberResponse() {
     }

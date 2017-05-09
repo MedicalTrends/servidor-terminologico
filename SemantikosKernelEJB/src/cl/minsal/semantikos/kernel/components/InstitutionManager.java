@@ -19,6 +19,8 @@ public interface InstitutionManager {
      */
     public List<Institution> getInstitutionsBy(User user);
 
+    public Institution getInstitutionById(long id);
+
 
     /**
      * Método encargado de obtener una lista con todas las instituciones

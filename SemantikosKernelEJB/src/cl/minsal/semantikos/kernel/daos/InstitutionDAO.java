@@ -26,6 +26,8 @@ public interface InstitutionDAO {
      */
     public List<Institution> getInstitutionBy(User user);
 
+    public Institution getInstitutionById(long id);
+
     /**
      * Método encargado de obtener una lista con todas las instituciones
      * @return Lista de instituciones

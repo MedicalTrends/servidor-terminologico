@@ -10,13 +10,26 @@ import java.util.List;
 /**
  * @author Andrés Farías on 12/13/16.
  */
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "crossmapSetsResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "CrossmapSetsResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class CrossmapSetsResponse {
 
     /** La lista de crossmaps indirectos (response) */
+    @XmlElementWrapper(name = "crossmapSets")
+    @XmlElement(name = "crossmapSet")
     private List<CrossmapSetResponse> crossmapSetResponses;
+
+    @XmlElement(name = "cantidadRegistros")
+    public int quantity;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public CrossmapSetsResponse() {
         this.crossmapSetResponses = new ArrayList<>();
@@ -34,20 +47,17 @@ public class CrossmapSetsResponse {
         for (CrossmapSet crossmapSet : crossmapSets) {
             this.crossmapSetResponses.add(new CrossmapSetResponse(crossmapSet));
         }
+
+        this.quantity = crossmapSetResponses.size();
     }
 
-    @XmlElementWrapper(name = "crossmapSets")
-    @XmlElement(name = "crossmapSet")
     public List<CrossmapSetResponse> getCrossmapSetResponses() {
         return crossmapSetResponses;
     }
 
     public void setCrossmapSetResponses(List<CrossmapSetResponse> crossmapSetResponses) {
         this.crossmapSetResponses = crossmapSetResponses;
+        this.quantity = crossmapSetResponses.size();
     }
 
-    @XmlElement(name = "cantidadRegistros")
-    public int getCantidadRegistros(){
-        return this.crossmapSetResponses.size();
-    }
 }
