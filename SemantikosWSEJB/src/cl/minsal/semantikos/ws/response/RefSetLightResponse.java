@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.ws.response;
 
-import cl.minsal.semantikos.model.RefSet;
+import cl.minsal.semantikos.model.refsets.RefSet;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;

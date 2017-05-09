@@ -1,7 +1,5 @@
 package cl.minsal.semantikos.model.relationships;
 
-import cl.minsal.semantikos.model.Multiplicity;
-
 /**
  * @author Andrés Farías
  */

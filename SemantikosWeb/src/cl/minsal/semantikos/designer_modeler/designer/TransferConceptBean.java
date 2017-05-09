@@ -4,9 +4,9 @@ import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.beans.messages.MessageBean;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
-import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.descriptions.Description;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

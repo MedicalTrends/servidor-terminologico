@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.util.Hashtable;
 
-import static cl.minsal.semantikos.model.ProfileFactory.MODELER_PROFILE;
+import static cl.minsal.semantikos.model.users.ProfileFactory.MODELER_PROFILE;
 
 /**
  * Este componente es responsable de almacenar las reglas de negocio relacionadas a la persistencia de usuarios.

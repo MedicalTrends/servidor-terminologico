@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.model.businessrules;
 
-import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.users.User;
 
 /**

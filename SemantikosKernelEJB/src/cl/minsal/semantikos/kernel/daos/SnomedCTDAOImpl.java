@@ -1,18 +1,14 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.snomedct.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.jdbc.odbc.JdbcOdbcBatchUpdateException;
 
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.logging.FileHandler;
 
 /**
  * Funciones de base de dato para acceder a los datos de Snomed.

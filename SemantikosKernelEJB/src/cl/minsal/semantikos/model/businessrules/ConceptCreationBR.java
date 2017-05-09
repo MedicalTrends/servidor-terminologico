@@ -1,8 +1,8 @@
 package cl.minsal.semantikos.model.businessrules;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.TagSMTK;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.tagsSMTK.TagSMTK;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import org.slf4j.Logger;
@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
 
-import static cl.minsal.semantikos.model.ProfileFactory.MODELER_PROFILE;
+import static cl.minsal.semantikos.model.users.ProfileFactory.MODELER_PROFILE;
 
 /**
  * Este componente es responsable de almacenar las reglas de negocio relacionadas a la persistencia de conceptos.

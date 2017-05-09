@@ -3,17 +3,16 @@ package cl.minsal.semantikos.beans.description;
 import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.beans.messages.MessageBean;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
+import cl.minsal.semantikos.model.descriptions.NoValidDescription;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.AjaxBehaviorEvent;
 import java.util.ArrayList;
 
 /**

@@ -2,12 +2,14 @@ package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.audit.AuditAction;
-import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.descriptions.NoValidDescription;
+import cl.minsal.semantikos.model.descriptions.PendingTerm;
+import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;

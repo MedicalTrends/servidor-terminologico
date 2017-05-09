@@ -3,10 +3,10 @@ package cl.minsal.semantikos.model.businessrules;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
-import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.PendingTerm;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.descriptions.PendingTerm;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 
 import javax.ejb.EJB;

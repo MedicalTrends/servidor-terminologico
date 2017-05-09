@@ -1,8 +1,5 @@
 package cl.minsal.semantikos.model.relationships;
 
-import cl.minsal.semantikos.model.Multiplicity;
-import cl.minsal.semantikos.model.RelationshipWeb;
-
 /**
  * Created by des01c7 on 04-01-17.
  */

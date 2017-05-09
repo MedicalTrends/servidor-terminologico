@@ -1,17 +1,14 @@
 package cl.minsal.semantikos.model.businessrules;
 
-import cl.minsal.semantikos.model.HelperTableColumnFactory;
+import cl.minsal.semantikos.model.helpertables.HelperTableColumnFactory;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecordFactory;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-
 
 
 /**

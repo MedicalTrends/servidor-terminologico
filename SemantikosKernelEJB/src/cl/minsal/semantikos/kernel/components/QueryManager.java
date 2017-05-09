@@ -1,8 +1,11 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.browser.*;
-import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.queries.*;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.descriptions.NoValidDescription;
+import cl.minsal.semantikos.model.descriptions.PendingTerm;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.ejb.Local;

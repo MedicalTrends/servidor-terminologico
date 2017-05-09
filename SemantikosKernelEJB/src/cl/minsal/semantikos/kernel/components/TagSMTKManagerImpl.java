@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.TagSMTKDAO;
-import cl.minsal.semantikos.model.TagSMTK;
+import cl.minsal.semantikos.model.tagsSMTK.TagSMTK;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

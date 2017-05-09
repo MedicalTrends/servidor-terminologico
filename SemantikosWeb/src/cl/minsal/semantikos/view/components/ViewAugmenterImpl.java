@@ -1,8 +1,7 @@
 package cl.minsal.semantikos.view.components;
 
 import cl.minsal.semantikos.kernel.components.HelperTablesManager;
-import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTKWeb;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
@@ -10,7 +9,6 @@ import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.view.daos.ExtendedRelationshipAttributeDefinitionInfo;
 import cl.minsal.semantikos.view.daos.ExtendedRelationshipDefinitionInfo;
 import cl.minsal.semantikos.view.daos.SemantikosWebDAO;
-import cl.minsal.semantikos.view.daos.SemantikosWebDAOImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

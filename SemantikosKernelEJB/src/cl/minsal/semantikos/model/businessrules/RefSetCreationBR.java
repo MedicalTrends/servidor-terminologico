@@ -4,7 +4,7 @@ import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 
-import static cl.minsal.semantikos.model.ProfileFactory.ADMINISTRATOR_PROFILE;
+import static cl.minsal.semantikos.model.users.ProfileFactory.ADMINISTRATOR_PROFILE;
 
 
 /**

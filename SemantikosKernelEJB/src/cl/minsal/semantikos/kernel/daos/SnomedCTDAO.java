@@ -1,6 +1,5 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.model.snomedct.*;
 
 import javax.ejb.Local;

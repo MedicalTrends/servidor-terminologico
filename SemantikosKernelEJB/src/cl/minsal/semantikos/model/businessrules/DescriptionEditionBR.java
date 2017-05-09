@@ -1,10 +1,10 @@
 package cl.minsal.semantikos.model.businessrules;
 
-import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 
-import static cl.minsal.semantikos.model.DescriptionType.FSN;
-import static cl.minsal.semantikos.model.DescriptionType.PREFERIDA;
+import static cl.minsal.semantikos.model.descriptions.DescriptionType.FSN;
+import static cl.minsal.semantikos.model.descriptions.DescriptionType.PREFERIDA;
 
 /**
  * @author Andrés Farías on 8/25/16.

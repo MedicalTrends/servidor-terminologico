@@ -2,6 +2,9 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.descriptions.*;
+import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;

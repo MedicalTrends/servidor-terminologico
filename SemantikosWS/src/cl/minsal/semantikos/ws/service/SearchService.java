@@ -3,8 +3,7 @@ package cl.minsal.semantikos.ws.service;
 import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.InstitutionManager;
-import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.ws.component.CategoryController;
 import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.component.CrossmapController;
@@ -27,8 +26,6 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.*;
 import javax.xml.ws.WebServiceContext;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 

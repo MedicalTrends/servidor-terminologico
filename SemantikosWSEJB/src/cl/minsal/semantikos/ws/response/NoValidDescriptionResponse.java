@@ -1,8 +1,7 @@
 package cl.minsal.semantikos.ws.response;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.NoValidDescription;
+import cl.minsal.semantikos.model.descriptions.NoValidDescription;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;

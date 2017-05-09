@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.ws.mapping;
 
-import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.ws.response.DescriptionResponse;
 
 /**

@@ -1,8 +1,8 @@
 package cl.minsal.semantikos.model.audit;
 
-import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;

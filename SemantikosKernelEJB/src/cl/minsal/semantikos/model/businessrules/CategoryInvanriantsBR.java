@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.model.businessrules;
 
-import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.categories.Category;
 
 /**
  * @author Andrés Farías on 9/13/16.

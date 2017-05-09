@@ -1,8 +1,7 @@
 package cl.minsal.semantikos.ws.response;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.audit.AuditAction;
+import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.relationships.Relationship;
 
 import javax.validation.constraints.NotNull;

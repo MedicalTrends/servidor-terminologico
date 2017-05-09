@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.model.snomedct;
 
-import cl.minsal.semantikos.model.MultiplicityFactory;
+import cl.minsal.semantikos.model.relationships.MultiplicityFactory;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 /**

@@ -1,9 +1,5 @@
 package cl.minsal.semantikos.designer_modeler.converters;
 
-import cl.minsal.semantikos.designer_modeler.designer.TagBean;
-import cl.minsal.semantikos.model.Tag;
-
-import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

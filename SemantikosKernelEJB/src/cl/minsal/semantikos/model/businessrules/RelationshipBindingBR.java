@@ -1,12 +1,11 @@
 package cl.minsal.semantikos.model.businessrules;
 
 import cl.minsal.semantikos.kernel.components.ConceptManager;
-import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.Relationship;
@@ -16,7 +15,7 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import java.util.List;
 
-import static cl.minsal.semantikos.model.ProfileFactory.MODELER_PROFILE;
+import static cl.minsal.semantikos.model.users.ProfileFactory.MODELER_PROFILE;
 import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN_MAPEO_DE;
 import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.isSnomedCTRelationship;
 

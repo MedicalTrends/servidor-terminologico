@@ -1,11 +1,8 @@
 package cl.minsal.semantikos.designer_modeler.designer;
 
-import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
-import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -15,10 +12,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Gustavo Punucura

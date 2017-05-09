@@ -1,9 +1,5 @@
 package cl.minsal.semantikos.model.relationships;
 
-import cl.minsal.semantikos.model.Multiplicity;
-import cl.minsal.semantikos.model.businessrules.HelperTableSearchBR;
-import cl.minsal.semantikos.model.helpertables.HelperTable;
-
 import java.util.List;
 
 /**

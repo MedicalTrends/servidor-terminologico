@@ -1,9 +1,9 @@
 package cl.minsal.semantikos.beans.session;
 
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
-import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.users.Profile;
-import cl.minsal.semantikos.model.ProfileFactory;
+import cl.minsal.semantikos.model.users.ProfileFactory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;

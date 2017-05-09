@@ -2,15 +2,13 @@ package cl.minsal.semantikos.model.businessrules;
 
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
-import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.users.User;
 
-import javax.validation.constraints.NotNull;
-import java.util.Collections;
-import java.util.List;
-
-import static cl.minsal.semantikos.model.DescriptionType.*;
+import static cl.minsal.semantikos.model.descriptions.DescriptionType.*;
 
 /**
  * @author Andrés Farías on 8/29/16.
