@@ -6,9 +6,11 @@ import cl.minsal.semantikos.kernel.components.CrossmapsManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
+import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.request.DescriptionIDorConceptIDRequest;
 import cl.minsal.semantikos.ws.response.CrossmapSetMembersResponse;
 import cl.minsal.semantikos.ws.response.CrossmapSetsResponse;
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -123,7 +126,20 @@ public class CrossmapController {
      * @param crossmapSetAbbreviatedName El nombre abreviado del crossmapSet que se quiere recuperar.
      * @return El response de un conjunto de crossmapsetMembers del crossmapSet <code>crossmapSetAbbreviatedName</code>.
      */
-    public CrossmapSetMembersResponse getCrossmapSetMembersByCrossmapSetAbbreviatedName(String crossmapSetAbbreviatedName) {
+    public CrossmapSetMembersResponse getCrossmapSetMembersByCrossmapSetAbbreviatedName(String crossmapSetAbbreviatedName) throws NotFoundFault {
+
+        List<CrossmapSet> crossmapSets = crossmapManager.getCrossmapSets();
+        CrossmapSet theCrossmapSet = null;
+
+        for (CrossmapSet crossmapSet : crossmapSets) {
+            if(crossmapSet.getAbbreviatedName().equals(crossmapSetAbbreviatedName)) {
+                theCrossmapSet = crossmapSet;
+            }
+        }
+
+        if(!theCrossmapSet.isState()) {
+            throw new NotFoundFault("Este CrossmapSet no está vigente");
+        }
 
         List<CrossmapSetMember> crossmapSetByAbbreviatedName = crossmapManager.getCrossmapSetByAbbreviatedName(crossmapSetAbbreviatedName);
         logger.debug("CrossmapController.getCrossmapSetMembersByCrossmapSetAbbreviatedName:: " +
@@ -131,10 +147,10 @@ public class CrossmapController {
 
         CrossmapSetMembersResponse res = new CrossmapSetMembersResponse(crossmapSetByAbbreviatedName);
 
-        if(!crossmapSetByAbbreviatedName.isEmpty()) {
-            CrossmapSet crossmapSet = crossmapSetByAbbreviatedName.get(0).getCrossmapSet();
-            res.setAbbreviatedName(crossmapSet.getAbbreviatedName());
-            res.setName(crossmapSet.getName());
+        if(theCrossmapSet != null) {
+            res.setAbbreviatedName(theCrossmapSet.getAbbreviatedName());
+            res.setName(theCrossmapSet.getName());
+            res.setVersion(theCrossmapSet.getVersion());
         }
 
         return res;
@@ -150,6 +166,17 @@ public class CrossmapController {
 
         /* Se realiza la validación de seguridad */
         verifyInstitution(idInstitution);
+
+        List<CrossmapSet> crossmapSets = crossmapManager.getCrossmapSets();
+
+        Iterator<CrossmapSet> it = crossmapSets.iterator();
+
+        while (it.hasNext()) {
+            CrossmapSet crossmapSet = it.next();
+            if(!crossmapSet.isState()) {
+                it.remove();
+            }
+        }
 
         /* Se retornan los crossmapSets */
         return new CrossmapSetsResponse(crossmapManager.getCrossmapSets());

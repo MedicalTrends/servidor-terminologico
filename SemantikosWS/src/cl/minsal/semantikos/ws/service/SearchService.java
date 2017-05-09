@@ -353,7 +353,7 @@ public class SearchService {
      * @param request La peticion de crossmapSetMembers
      * @return Una lista de los crossmapSetMembers del crossmapSet dado como parámetro.
      */
-    @WebResult(name = "crossmapSetMember")
+    @WebResult(name = "crossmapSetMembersResponse")
     @WebMethod(operationName = "crossmapSetMembersDeCrossmapSet")
     public CrossmapSetMembersResponse crossmapSetMembersDeCrossmapSet(
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
