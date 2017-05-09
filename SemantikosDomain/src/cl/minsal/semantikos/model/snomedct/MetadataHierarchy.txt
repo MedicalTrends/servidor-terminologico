@@ -1,0 +1,37 @@
+As the release file formats contain a number of concept enumerations, it is necessary to define sets of concepts that represent the allowed values.
+As well as the enumerated values, other metadata supporting the extensibility mechanism and the concept model is required.
+
+The concept | SNOMED CT Model Component (metadata) | is a subtype of the root concept ( | SNOMED CT Concept |), and contains the metadata, supporting
+the release.
+
+138875005 | SNOMED CT Concept |
+    ... (content hierarchies) ...
+    900000000000441003 | SNOMED CT Model Component |
+        106237007 | linkage concept |
+            246061005 | attribute |...
+            416698001 | link assertion |...
+        370136006 | namespace concept |...
+        900000000000442005 | core metadata concept |
+            900000000000443000 | module |
+                900000000000445007 | IHTSDO maintained module |...
+            900000000000444006 | definition status |
+                900000000000073002 | defined |
+                900000000000074008 | primitive |
+            900000000000446008 | description type |
+                900000000000003001 | fully specified name |
+                900000000000013009 | synonym |
+                900000000000550004 | definition |
+            900000000000447004 | case significance |
+                900000000000017005 | case sensitive |
+                900000000000020002 | only initial character case insensitive |
+                900000000000448009 | case insensitive |
+            900000000000449001 | characteristic type |
+                900000000000006009 | defining relationship |...
+                900000000000225001 | qualifying relationship |
+                900000000000227009 | additional relationship |
+            900000000000450001 | modifier |
+                900000000000451002 | some |
+                900000000000452009 | all |
+            900000000000453004 | identifier scheme |
+                900000000000002006 | SNOMED CT UUID |
+                900000000000294009 | SNOMED CT integer identifier |
