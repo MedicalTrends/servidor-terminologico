@@ -15,9 +15,15 @@ import java.util.List;
 @XmlType(name = "RespuestaBuscarTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class TermSearchResponse implements Serializable {
 
+    @XmlElement(name = "categoria")
+    private String category;
+
     @XmlElementWrapper(name = "conceptos")
     @XmlElement(name = "concepto")
     private List<ConceptLightResponse> concepts = new ArrayList<>();
+
+    @XmlElement(name = "cantidadRegistros")
+    private int quantity;
 
     public TermSearchResponse() {
         this.concepts = new ArrayList<>();
@@ -34,11 +40,27 @@ public class TermSearchResponse implements Serializable {
         }
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public List<ConceptLightResponse> getConcepts() {
         return concepts;
     }
 
     public void setConcepts(List<ConceptLightResponse> concepts) {
         this.concepts = concepts;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

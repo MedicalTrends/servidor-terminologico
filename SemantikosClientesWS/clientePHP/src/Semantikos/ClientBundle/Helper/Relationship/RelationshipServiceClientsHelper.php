@@ -315,4 +315,18 @@ class RelationshipServiceClientsHelper {
 
         return json_encode($result);
     }
+
+    public function callWS022($params_array = null){
+
+        $peticion = $this->container->get('client.helper.relationship_mapping')->mapWS021Parameters($params_array);
+
+        try {
+            //$result = $this->soapClient->conceptosRelacionadosChildren($peticion);
+            $result = $this->soapClient->obtenerBioequivalentes($peticion);
+        } catch (\SoapFault $soapFault) {
+            return json_encode($soapFault);
+        }
+
+        return json_encode($result);
+    }
 }                

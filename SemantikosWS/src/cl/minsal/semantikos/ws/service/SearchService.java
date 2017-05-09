@@ -176,7 +176,7 @@ public class SearchService {
      */
     @WebResult(name = "respuestaBuscarTermino")
     @WebMethod(operationName = "obtenerTerminosPedibles")
-    public TermSearchResponse obtenerTerminosPedibles(
+    public TermSearchesResponse obtenerTerminosPedibles(
             @XmlElement(required = true)
             @WebParam(name = "peticionObtenerTerminosPedibles")
                     RequestableConceptsRequest request
@@ -282,14 +282,14 @@ public class SearchService {
     }
 
     // REQ-WS-022
-    @WebResult(name = "respuestaConceptosPorRefSet")
+    @WebResult(name = "respuestaDescripcionesPreferidasPorRefSet")
     @WebMethod(operationName = "descripcionesPreferidasPorRefSet")
-    public RefSetResponse descripcionesPreferidasPorRefSet(
+    public RefSetLightResponse descripcionesPreferidasPorRefSet(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosPorRefSet")
                     ConceptsByRefsetRequest request
     ) throws NotFoundFault {
-        return this.conceptController.conceptsByRefset(request.getRefSetName());
+        return this.conceptController.conceptsLightByRefset(request.getRefSetName());
     }
 
     // REQ-WS-023

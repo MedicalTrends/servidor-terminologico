@@ -1,0 +1,7 @@
+C:\BP2017\Proyecto Farias\MinsalWS\AccesoServiciosWS\bin\Debug\AccesoServiciosWS.dll
+C:\BP2017\Proyecto Farias\MinsalWS\AccesoServiciosWS\bin\Debug\AccesoServiciosWS.pdb
+C:\BP2017\Proyecto Farias\MinsalWS\AccesoServiciosWS\bin\Debug\ConexionServiciosWS.dll
+C:\BP2017\Proyecto Farias\MinsalWS\AccesoServiciosWS\bin\Debug\ConexionServiciosWS.pdb
+C:\BP2017\Proyecto Farias\MinsalWS\AccesoServiciosWS\obj\Debug\AccesoServiciosWS.csprojResolveAssemblyReference.cache
+C:\BP2017\Proyecto Farias\MinsalWS\AccesoServiciosWS\obj\Debug\AccesoServiciosWS.dll
+C:\BP2017\Proyecto Farias\MinsalWS\AccesoServiciosWS\obj\Debug\AccesoServiciosWS.pdb
