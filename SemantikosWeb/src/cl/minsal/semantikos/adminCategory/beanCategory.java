@@ -6,7 +6,7 @@ import cl.minsal.semantikos.kernel.components.TagSMTKManager;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.relationships.Multiplicity;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model.tagsSMTK.TagSMTK;
+import cl.minsal.semantikos.model.tags.TagSMTK;
 import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;

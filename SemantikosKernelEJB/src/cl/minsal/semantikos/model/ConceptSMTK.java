@@ -14,7 +14,7 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.tags.Label;
 import cl.minsal.semantikos.model.tags.Tag;
-import cl.minsal.semantikos.model.tagsSMTK.TagSMTK;
+import cl.minsal.semantikos.model.tags.TagSMTK;
 
 import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;

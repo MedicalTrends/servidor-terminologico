@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model.tagsSMTK;
+package cl.minsal.semantikos.model.tags;
 
 import cl.minsal.semantikos.kernel.daos.DAO;
 import cl.minsal.semantikos.model.PersistentEntity;

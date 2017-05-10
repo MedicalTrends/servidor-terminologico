@@ -3,7 +3,7 @@ package cl.minsal.semantikos.model.businessrules;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
-import cl.minsal.semantikos.model.tagsSMTK.TagSMTK;
+import cl.minsal.semantikos.model.tags.TagSMTK;
 
 /**
  * @author Andrés Farías on 9/13/16.

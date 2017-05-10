@@ -3,7 +3,7 @@ package cl.minsal.semantikos.model.descriptions;
 import cl.minsal.semantikos.kernel.daos.DAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.PersistentEntity;
-import cl.minsal.semantikos.model.tagsSMTK.TagSMTKFactory;
+import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.users.User;
 

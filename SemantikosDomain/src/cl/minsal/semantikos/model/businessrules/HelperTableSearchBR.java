@@ -28,7 +28,7 @@ public class HelperTableSearchBR {
      * @param columnName  El nombre de la columna en la que se desea realizar la búsqueda.
      * @param pattern     El patrón de búsqueda.
      *
-     * @throws BusinessRuleException Si alguna regla de negocio no se cumple.
+     * @throws cl.minsal.semantikos.model.exceptions.BusinessRuleException Si alguna regla de negocio no se cumple.
      */
     public void validatePreConditions(HelperTable helperTable, String columnName, String pattern) {
 

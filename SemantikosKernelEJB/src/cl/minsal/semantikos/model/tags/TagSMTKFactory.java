@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model.tagsSMTK;
+package cl.minsal.semantikos.model.tags;
 
 import java.util.ArrayList;
 import java.util.HashMap;
