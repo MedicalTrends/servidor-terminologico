@@ -36,7 +36,7 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public GeneralQuery getDefaultGeneralQuery(Category category) {
         GeneralQuery query = QueryFactory.getInstance().findQueryByCategory(category);
-        query.resetFilters();
+        query.resetQuery();
         return query;
     }
 
@@ -185,28 +185,10 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
-    public int countQueryResults(GeneralQuery query) {
-        return (int)queryDAO.countByQuery(query);
-    }
-
-    @Override
-    public int countQueryResults(DescriptionQuery query) {
-        return (int)queryDAO.countByQuery(query);
-    }
-
-    @Override
-    public int countQueryResults(NoValidQuery query) {
-        return (int)queryDAO.countByQuery(query);
-    }
-
-    @Override
-    public int countQueryResults(PendingQuery query) {
-        return (int)queryDAO.countByQuery(query);
-    }
-
-    @Override
-    public int countQueryResults(BrowserQuery query) {
-        return (int)queryDAO.countByQuery(query);
+    public int countQueryResults(Query query) {
+        int quantity = (int)queryDAO.countByQuery(query);
+        query.setTruncateMatch(false);
+        return quantity;
     }
 
     @Override
