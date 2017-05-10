@@ -7,6 +7,7 @@ import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.request.DescriptionsSuggestionsRequest;
 import cl.minsal.semantikos.ws.request.RelatedConceptsByCategoryRequest;
 import cl.minsal.semantikos.ws.request.RelatedConceptsRequest;
+import cl.minsal.semantikos.ws.request.Request;
 import cl.minsal.semantikos.ws.response.*;
 
 import javax.annotation.Resource;
@@ -44,6 +45,8 @@ public class RelatedService {
 
         try {
             authenticationManager.authenticate(wsctx.getMessageContext());
+            Request request = (Request)ctx.getParameters()[0];
+            authenticationManager.validateInstitution(request.getIdStablishment());
         }
         catch (Exception e) {
             throw new NotFoundFault(e.getMessage());
