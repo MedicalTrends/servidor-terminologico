@@ -5,6 +5,7 @@ import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.NoValidQuery;
 import cl.minsal.semantikos.model.businessrules.DescriptionTranslationBR;
+import cl.minsal.semantikos.model.descriptions.*;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.users.User;
 import org.primefaces.model.LazyDataModel;

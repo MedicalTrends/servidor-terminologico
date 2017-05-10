@@ -1,8 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.*;
-import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 

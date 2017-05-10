@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.ws.mapping;
 
-import cl.minsal.semantikos.model.Multiplicity;
+import cl.minsal.semantikos.model.relationships.Multiplicity;
 import cl.minsal.semantikos.ws.response.MultiplicityResponse;
 
 /**

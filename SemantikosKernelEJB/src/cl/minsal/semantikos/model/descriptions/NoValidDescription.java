@@ -1,4 +1,6 @@
-package cl.minsal.semantikos.model;
+package cl.minsal.semantikos.model.descriptions;
+
+import cl.minsal.semantikos.model.ConceptSMTK;
 
 import java.util.ArrayList;
 import java.util.List;

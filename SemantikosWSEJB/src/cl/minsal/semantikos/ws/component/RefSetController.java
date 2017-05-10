@@ -4,7 +4,7 @@ import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.InstitutionManager;
 import cl.minsal.semantikos.kernel.components.RefSetManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.RefSet;
+import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.RefSetMapper;
@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import javax.validation.constraints.NotNull;
 import java.util.*;
 
 /**

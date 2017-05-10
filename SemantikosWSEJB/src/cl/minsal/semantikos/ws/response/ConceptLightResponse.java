@@ -1,14 +1,10 @@
 package cl.minsal.semantikos.ws.response;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.descriptions.Description;
 
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author Alfonso Cornejo on 2016-10-11.

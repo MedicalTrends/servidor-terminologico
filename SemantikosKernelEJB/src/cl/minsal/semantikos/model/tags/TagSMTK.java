@@ -1,6 +1,7 @@
-package cl.minsal.semantikos.model;
+package cl.minsal.semantikos.model.tags;
 
 import cl.minsal.semantikos.kernel.daos.DAO;
+import cl.minsal.semantikos.model.PersistentEntity;
 
 /**
  * @author Andrés Farías on 9/4/16.

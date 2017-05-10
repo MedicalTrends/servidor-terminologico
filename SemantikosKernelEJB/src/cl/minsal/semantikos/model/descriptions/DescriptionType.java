@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model;
+package cl.minsal.semantikos.model.descriptions;
 
 /**
  * @author Diego Soto.

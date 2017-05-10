@@ -1,6 +1,12 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.descriptions.DescriptionType;
+import cl.minsal.semantikos.model.descriptions.NoValidDescription;
+import cl.minsal.semantikos.model.descriptions.ObservationNoValid;
+import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;

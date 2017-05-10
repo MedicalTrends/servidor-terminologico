@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.model.browser;
 
-import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.TagSMTK;
+import cl.minsal.semantikos.model.categories.Category;
 
 import java.util.ArrayList;
 import java.util.HashMap;

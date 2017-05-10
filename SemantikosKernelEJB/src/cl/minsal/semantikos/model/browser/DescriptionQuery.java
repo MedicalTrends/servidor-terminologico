@@ -1,11 +1,10 @@
 package cl.minsal.semantikos.model.browser;
 
-import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.descriptions.DescriptionType;
+import cl.minsal.semantikos.model.refsets.RefSet;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

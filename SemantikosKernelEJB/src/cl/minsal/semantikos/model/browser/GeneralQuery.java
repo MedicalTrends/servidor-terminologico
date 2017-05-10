@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.model.browser;
 
-import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.Tag;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 

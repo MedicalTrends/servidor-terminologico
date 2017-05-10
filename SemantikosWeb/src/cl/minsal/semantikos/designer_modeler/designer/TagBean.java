@@ -2,7 +2,7 @@ package cl.minsal.semantikos.designer_modeler.designer;
 
 import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.kernel.components.TagManager;
-import cl.minsal.semantikos.model.Tag;
+import cl.minsal.semantikos.model.tags.Tag;
 import org.primefaces.event.CellEditEvent;
 
 import javax.annotation.PostConstruct;

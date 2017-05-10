@@ -7,6 +7,8 @@ import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.components.PendingTermsManager;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.descriptions.PendingTerm;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.annotation.PostConstruct;

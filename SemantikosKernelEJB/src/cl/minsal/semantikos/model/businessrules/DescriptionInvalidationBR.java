@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.model.businessrules;
 
-import cl.minsal.semantikos.model.NoValidDescription;
+import cl.minsal.semantikos.model.descriptions.NoValidDescription;
 
 /**
  * @author Andrés Farías on 10/24/16.

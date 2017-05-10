@@ -2,7 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.users.Institution;
-import cl.minsal.semantikos.model.RefSet;
+import cl.minsal.semantikos.model.refsets.RefSet;
 
 import javax.ejb.Local;
 import java.util.List;

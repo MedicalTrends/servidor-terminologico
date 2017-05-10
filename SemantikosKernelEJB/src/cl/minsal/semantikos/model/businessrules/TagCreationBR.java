@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.model.businessrules;
 
-import cl.minsal.semantikos.model.Tag;
+import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 
 /**

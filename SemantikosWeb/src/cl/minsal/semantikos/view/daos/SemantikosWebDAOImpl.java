@@ -2,8 +2,7 @@ package cl.minsal.semantikos.view.daos;
 
 import cl.minsal.semantikos.kernel.daos.TargetDAO;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTKWeb;
 import cl.minsal.semantikos.model.DescriptionWeb;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;

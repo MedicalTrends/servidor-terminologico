@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.kernel.components;
 
-import cl.minsal.semantikos.model.TagSMTK;
+import cl.minsal.semantikos.model.tags.TagSMTK;
 
 import javax.ejb.Local;
 import javax.validation.constraints.NotNull;

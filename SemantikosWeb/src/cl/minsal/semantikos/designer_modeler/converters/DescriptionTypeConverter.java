@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.designer_modeler.converters;
 
 import cl.minsal.semantikos.beans.concept.ConceptBean;
-import cl.minsal.semantikos.model.DescriptionType;
+import cl.minsal.semantikos.model.descriptions.DescriptionType;
 
 import javax.el.ELContext;
 import javax.faces.application.FacesMessage;

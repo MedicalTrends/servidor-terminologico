@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model;
+package cl.minsal.semantikos.model.categories;
 
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 

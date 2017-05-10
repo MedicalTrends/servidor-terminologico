@@ -1,9 +1,9 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
-import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.MultiplicityFactory;
+import cl.minsal.semantikos.model.relationships.MultiplicityFactory;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;

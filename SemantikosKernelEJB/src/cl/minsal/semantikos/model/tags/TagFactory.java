@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model;
+package cl.minsal.semantikos.model.tags;
 
 import cl.minsal.semantikos.kernel.daos.TagDAO;
 import com.fasterxml.jackson.databind.ObjectMapper;

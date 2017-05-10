@@ -6,9 +6,13 @@ import cl.minsal.semantikos.kernel.components.PendingTermsManager;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.*;
-import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.descriptions.NoValidDescription;
+import cl.minsal.semantikos.model.descriptions.PendingTerm;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

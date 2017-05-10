@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.kernel.components.CategoryManager;
-import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.response.CategoriesResponse;
 import cl.minsal.semantikos.ws.response.CategoryResponse;
@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

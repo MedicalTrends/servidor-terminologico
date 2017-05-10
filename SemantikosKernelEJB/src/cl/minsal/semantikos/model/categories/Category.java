@@ -1,5 +1,7 @@
-package cl.minsal.semantikos.model;
+package cl.minsal.semantikos.model.categories;
 
+import cl.minsal.semantikos.model.PersistentEntity;
+import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;

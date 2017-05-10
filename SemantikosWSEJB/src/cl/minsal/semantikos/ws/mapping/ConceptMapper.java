@@ -1,9 +1,9 @@
 package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.DescriptionType;
-import cl.minsal.semantikos.model.RefSet;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.descriptions.DescriptionType;
+import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.ws.response.*;

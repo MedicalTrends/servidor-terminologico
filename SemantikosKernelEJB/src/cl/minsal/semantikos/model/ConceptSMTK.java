@@ -1,12 +1,20 @@
 package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.model.audit.AuditableEntity;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.CrossMapType;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.descriptions.DescriptionType;
+import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
+import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.*;
+import cl.minsal.semantikos.model.tags.Label;
+import cl.minsal.semantikos.model.tags.Tag;
+import cl.minsal.semantikos.model.tags.TagSMTK;
 
 import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;

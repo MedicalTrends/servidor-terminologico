@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.kernel.components;
 
-import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;

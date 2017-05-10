@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.kernel.components.*;
-import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.ws.response.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

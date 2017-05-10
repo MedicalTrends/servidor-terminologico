@@ -4,7 +4,7 @@ import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.kernel.daos.TargetDAO;
-import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.businessrules.*;

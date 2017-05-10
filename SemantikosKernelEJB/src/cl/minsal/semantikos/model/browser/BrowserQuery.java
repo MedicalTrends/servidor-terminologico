@@ -1,9 +1,7 @@
 package cl.minsal.semantikos.model.browser;
 
-import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.DescriptionType;
-import cl.minsal.semantikos.model.RefSet;
-import cl.minsal.semantikos.model.Tag;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.tags.Tag;
 
 import java.util.ArrayList;
 import java.util.List;

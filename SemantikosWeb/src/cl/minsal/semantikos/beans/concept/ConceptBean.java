@@ -14,12 +14,14 @@ import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
 import cl.minsal.semantikos.model.businessrules.RelationshipBindingBRInterface;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
+import cl.minsal.semantikos.model.descriptions.*;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
-import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.util.Pair;
 import cl.minsal.semantikos.view.components.ViewAugmenter;
@@ -42,7 +44,6 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.*;
 
-import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN_MAPEO_DE;
 import static org.primefaces.util.Constants.EMPTY_STRING;
 
 /**

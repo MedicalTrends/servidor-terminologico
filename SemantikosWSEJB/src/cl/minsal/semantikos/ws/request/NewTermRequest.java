@@ -1,7 +1,5 @@
 package cl.minsal.semantikos.ws.request;
 
-import cl.minsal.semantikos.model.Category;
-
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 

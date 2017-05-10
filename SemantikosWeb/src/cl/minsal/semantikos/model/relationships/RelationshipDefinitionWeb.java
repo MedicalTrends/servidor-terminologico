@@ -1,7 +1,5 @@
 package cl.minsal.semantikos.model.relationships;
 
-import cl.minsal.semantikos.model.Multiplicity;
-
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;

@@ -6,7 +6,10 @@ import cl.minsal.semantikos.model.audit.AuditActionType;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.audit.RefSetAuditAction;
 import cl.minsal.semantikos.model.businessrules.HistoryRecordBL;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.users.User;
 
@@ -16,7 +19,7 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
-import static cl.minsal.semantikos.model.DescriptionType.PREFERIDA;
+import static cl.minsal.semantikos.model.descriptions.DescriptionType.PREFERIDA;
 import static cl.minsal.semantikos.model.audit.AuditActionType.*;
 
 /**

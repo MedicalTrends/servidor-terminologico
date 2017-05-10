@@ -1,9 +1,7 @@
-package cl.minsal.semantikos.model;
+package cl.minsal.semantikos.model.relationships;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.security.InvalidParameterException;
 
 /**
  * @author Andrés Farías

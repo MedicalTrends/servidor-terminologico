@@ -1,8 +1,12 @@
 package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.descriptions.DescriptionType;
+import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.*;
+import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.util.Pair;
 
 import java.util.ArrayList;

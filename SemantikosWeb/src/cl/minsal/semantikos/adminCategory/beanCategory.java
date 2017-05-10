@@ -2,10 +2,11 @@ package cl.minsal.semantikos.adminCategory;
 
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
-import cl.minsal.semantikos.kernel.components.TagManager;
 import cl.minsal.semantikos.kernel.components.TagSMTKManager;
-import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.relationships.Multiplicity;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.tags.TagSMTK;
 import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
@@ -15,8 +16,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.util.ArrayList;
 import java.util.List;
-
-import static cl.minsal.semantikos.model.ProfileFactory.DESIGNER_PROFILE;
 
 /**
  * Created by des01c7 on 31-08-16.

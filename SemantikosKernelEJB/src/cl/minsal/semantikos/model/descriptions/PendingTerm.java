@@ -1,4 +1,8 @@
-package cl.minsal.semantikos.model;
+package cl.minsal.semantikos.model.descriptions;
+
+import cl.minsal.semantikos.model.PersistentEntity;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.descriptions.Description;
 
 import java.sql.Timestamp;
 import java.util.Date;

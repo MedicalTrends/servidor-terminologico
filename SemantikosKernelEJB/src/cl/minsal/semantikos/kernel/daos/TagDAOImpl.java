@@ -2,8 +2,8 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Tag;
-import cl.minsal.semantikos.model.TagFactory;
+import cl.minsal.semantikos.model.tags.Tag;
+import cl.minsal.semantikos.model.tags.TagFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

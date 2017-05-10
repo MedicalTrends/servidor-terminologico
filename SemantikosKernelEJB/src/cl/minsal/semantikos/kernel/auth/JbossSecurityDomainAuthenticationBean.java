@@ -2,7 +2,7 @@ package cl.minsal.semantikos.kernel.auth;
 
 import cl.minsal.semantikos.kernel.daos.AuthDAO;
 import cl.minsal.semantikos.model.users.Profile;
-import cl.minsal.semantikos.model.ProfileFactory;
+import cl.minsal.semantikos.model.users.ProfileFactory;
 import cl.minsal.semantikos.model.users.User;
 
 import org.slf4j.Logger;
@@ -18,9 +18,9 @@ import java.security.MessageDigest;
 import java.util.Date;
 import java.util.List;
 
-import static cl.minsal.semantikos.model.ProfileFactory.ADMINISTRATOR_PROFILE;
-import static cl.minsal.semantikos.model.ProfileFactory.DESIGNER_PROFILE;
-import static cl.minsal.semantikos.model.ProfileFactory.MODELER_PROFILE;
+import static cl.minsal.semantikos.model.users.ProfileFactory.ADMINISTRATOR_PROFILE;
+import static cl.minsal.semantikos.model.users.ProfileFactory.DESIGNER_PROFILE;
+import static cl.minsal.semantikos.model.users.ProfileFactory.MODELER_PROFILE;
 
 
 /**

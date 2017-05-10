@@ -3,7 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.TagDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Tag;
+import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.businessrules.TagCreationBR;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

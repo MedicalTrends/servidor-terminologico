@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.ws.response;
 
-import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.descriptions.Description;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;

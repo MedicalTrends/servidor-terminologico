@@ -1,8 +1,8 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.model.TagSMTK;
-import cl.minsal.semantikos.model.TagSMTKFactory;
+import cl.minsal.semantikos.model.tags.TagSMTK;
+import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,9 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
-import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;

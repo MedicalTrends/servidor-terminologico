@@ -1,15 +1,8 @@
 package cl.minsal.semantikos.designer_modeler.browser;
 
-import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.*;
-import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.Tag;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.categories.Category;
 import org.primefaces.event.MenuActionEvent;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
 import org.primefaces.model.menu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,18 +10,13 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 /**

@@ -4,6 +4,8 @@ import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.PendingQuery;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.descriptions.PendingTerm;
 import cl.minsal.semantikos.model.users.User;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;

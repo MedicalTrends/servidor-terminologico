@@ -2,13 +2,13 @@ package cl.minsal.semantikos.model.businessrules;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.users.Profile;
-import cl.minsal.semantikos.model.ProfileFactory;
+import cl.minsal.semantikos.model.users.ProfileFactory;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 
 import java.util.List;
 
-import static cl.minsal.semantikos.model.ProfileFactory.DESIGNER_PROFILE;
+import static cl.minsal.semantikos.model.users.ProfileFactory.DESIGNER_PROFILE;
 /**
  * @author Andrés Farías on 9/14/16.
  */

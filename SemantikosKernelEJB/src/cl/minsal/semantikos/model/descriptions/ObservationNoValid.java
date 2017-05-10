@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model;
+package cl.minsal.semantikos.model.descriptions;
 
 /**
  * Created by des01c7 on 24-10-16.

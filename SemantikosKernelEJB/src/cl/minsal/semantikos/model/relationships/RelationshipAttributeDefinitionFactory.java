@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.kernel.daos.TargetDefinitionDAO;
-import cl.minsal.semantikos.model.Multiplicity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

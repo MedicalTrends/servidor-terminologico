@@ -2,14 +2,13 @@ package cl.minsal.semantikos.designer_modeler.designer;
 
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
-import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

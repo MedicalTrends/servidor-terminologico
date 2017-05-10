@@ -1,8 +1,8 @@
 package cl.minsal.semantikos.model.businessrules;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.TagSMTK;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 
 /**

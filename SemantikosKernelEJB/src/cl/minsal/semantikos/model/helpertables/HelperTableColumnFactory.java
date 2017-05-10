@@ -1,6 +1,4 @@
-package cl.minsal.semantikos.model;
-
-import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
+package cl.minsal.semantikos.model.helpertables;
 
 import java.util.ArrayList;
 import java.util.HashMap;

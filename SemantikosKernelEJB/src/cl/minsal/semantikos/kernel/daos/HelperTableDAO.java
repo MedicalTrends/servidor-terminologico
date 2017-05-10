@@ -1,9 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.HelperTableColumnFactory;
 import cl.minsal.semantikos.model.helpertables.*;
-import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
 import java.util.List;
 

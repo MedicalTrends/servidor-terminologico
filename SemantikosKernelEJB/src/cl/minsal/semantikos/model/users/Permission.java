@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model;
+package cl.minsal.semantikos.model.users;
 
 import java.util.ArrayList;
 import java.util.List;

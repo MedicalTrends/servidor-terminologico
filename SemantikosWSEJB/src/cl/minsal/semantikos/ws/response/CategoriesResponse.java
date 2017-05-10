@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.ws.response;
 
-import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -3,7 +3,10 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.audit.AuditActionType;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.users.User;
 

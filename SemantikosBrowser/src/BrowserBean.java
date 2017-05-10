@@ -1,6 +1,10 @@
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.BrowserQuery;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
+import cl.minsal.semantikos.model.tags.Tag;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;

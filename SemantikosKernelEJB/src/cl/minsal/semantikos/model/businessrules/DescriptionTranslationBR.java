@@ -3,18 +3,14 @@ package cl.minsal.semantikos.model.businessrules;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.EJB;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.ejb.Stateless;
 import java.util.List;
 
-import static cl.minsal.semantikos.model.DescriptionType.*;
+import static cl.minsal.semantikos.model.descriptions.DescriptionType.*;
 
 /**
  * @author Andrés Farías on 8/26/16.
