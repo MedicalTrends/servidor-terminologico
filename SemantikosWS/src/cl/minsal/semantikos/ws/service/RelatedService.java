@@ -58,8 +58,8 @@ public class RelatedService {
     @WebResult(name = "respuestaConceptosRelacionados")
     @WebMethod(operationName = "conceptosRelacionados")
     public RelatedConceptsResponse conceptosRelacionados(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsByCategoryRequest request
     ) throws IllegalInputFault, NotFoundFault {
 
@@ -73,11 +73,11 @@ public class RelatedService {
     }
 
     // REQ-WS-010...021 Lite
-    @WebResult(name = "respuestaConceptosRelacionados")
+    @WebResult(name = "respuestaConceptosRelacionadosLite")
     @WebMethod(operationName = "conceptosRelacionadosLite")
     public RelatedConceptsLiteResponse conceptosRelacionadosLite(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsByCategoryRequest request
     ) throws IllegalInputFault, NotFoundFault {
         if ((request.getConceptId() == null || "".equals(request.getConceptId()))
@@ -87,174 +87,26 @@ public class RelatedService {
         return this.conceptController.findRelatedLite(request.getConceptId(), request.getDescriptionId(), request.getRelatedCategoryName());
     }
 
-    // REQ-WS-010
-    // REQ-WS-011
-    @WebResult(name = "respuestaConceptosRelacionados")
-    @WebMethod(operationName = "obtenerMedicamentoClinico")
-    public RelatedConceptsResponse obtenerMedicamentoClinico(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
-            RelatedConceptsRequest request
-    ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Medicamento Clínico"));
-    }
-
-    // REQ-WS-010 Lite
-    // REQ-WS-011 Lite
-    @WebResult(name = "respuestaConceptosRelacionados")
-    @WebMethod(operationName = "obtenerMedicamentoClinicoLite")
-    public RelatedConceptsLiteResponse obtenerMedicamentoClinicoLite(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
-            RelatedConceptsRequest request
-    ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Medicamento Clínico"));
-    }
-
-    // REQ-WS-012
-    @WebResult(name = "respuestaConceptosRelacionados")
-    @WebMethod(operationName = "obtenerMedicamentoBasico")
-    public RelatedConceptsResponse obtenerMedicamentoBasico(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
-            RelatedConceptsRequest request
-    ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Medicamento Básico"));
-    }
-
-    // REQ-WS-012.1-Lite
-    @WebResult(name = "respuestaConceptosRelacionados")
-    @WebMethod(operationName = "obtenerMedicamentoBasicoLite")
-    public RelatedConceptsLiteResponse obtenerMedicamentoBasicoLite(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
-            RelatedConceptsRequest request
-    ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Medicamento Básico"));
-    }
-
-    // REQ-WS-013
-    // REQ-WS-017
-    @WebResult(name = "respuestaConceptosRelacionados")
-    @WebMethod(operationName = "obtenerProductoComercial")
-    public RelatedConceptsResponse obtenerProductoComercial(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
-            RelatedConceptsRequest request
-    ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Producto Comercial"));
-    }
-
-    // REQ-WS-013 Lite
-    // REQ-WS-017 Lite
-    @WebResult(name = "respuestaConceptosRelacionados")
-    @WebMethod(operationName = "obtenerProductoComercialLite")
-    public RelatedConceptsLiteResponse obtenerProductoComercialLite(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
-            RelatedConceptsRequest request
-    ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Producto Comercial"));
-    }
-
-    // REQ-WS-014
-    @WebResult(name = "respuestaConceptosRelacionados")
-    @WebMethod(operationName = "obtenerMedicamentoClinicoConEnvase")
-    public RelatedConceptsResponse obtenerMedicamentoClinicoConEnvase(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
-            RelatedConceptsRequest request
-    ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Medicamento Clínico con Envase"));
-    }
-
-    // REQ-WS-014 Lite
-    @WebResult(name = "respuestaConceptosRelacionados")
-    @WebMethod(operationName = "obtenerMedicamentoClinicoConEnvaseLite")
-    public RelatedConceptsLiteResponse obtenerMedicamentoClinicoConEnvaseLite(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
-            RelatedConceptsRequest request
-    ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Medicamento Clínico con Envase"));
-    }
-
-    // REQ-WS-015
-    // REQ-WS-018
-    @WebResult(name = "respuestaConceptosRelacionados")
-    @WebMethod(operationName = "obtenerProductoComercialConEnvase")
-    public RelatedConceptsResponse obtenerProductoComercialConEnvase(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
-            RelatedConceptsRequest request
-    ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Producto Comercial con Envase"));
-    }
-
-    // REQ-WS-015 Lite
-    // REQ-WS-018 Lite
-    @WebResult(name = "respuestaConceptosRelacionados")
-    @WebMethod(operationName = "obtenerProductoComercialConEnvaseLite")
-    public RelatedConceptsLiteResponse obtenerProductoComercialConEnvaseLite(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
-            RelatedConceptsRequest request
-    ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionadosLite(makeRequest(request, "Fármacos - Producto Comercial con Envase"));
-    }
-
-    // REQ-WS-016
-    @WebResult(name = "respuestaConceptosRelacionados")
-    @WebMethod(operationName = "obtenerFamiliaProducto")
-    public RelatedConceptsResponse obtenerFamiliaProducto(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
-            RelatedConceptsRequest request
-    ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Familia de Productos"));
-    }
-
-    // REQ-WS-019
-    @WebResult(name = "respuestaConceptosRelacionados")
-    @WebMethod(operationName = "obtenerSustancia")
-    public RelatedConceptsResponse obtenerSustancia(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
-            RelatedConceptsRequest request
-    ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptosRelacionados(makeRequest(request, "Fármacos - Sustancia"));
-    }
-
     // REQ-WS-020
-    @WebResult(name = "registroISP")
+    @WebResult(name = "respuestaObtenerRegistroISP")
     @WebMethod(operationName = "obtenerRegistroISP")
     public ISPRegisterSearchResponse obtenerRegistroISP(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionObtenerRegistroISP")
             RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptController.getRegistrosISP(request.getConceptId(), request.getDescriptionId());
     }
 
     // REQ-WS-021
-    @WebResult(name = "bioequivalente")
+    @WebResult(name = "respuestaObtenerBioequivalentes")
     @WebMethod(operationName = "obtenerBioequivalentes")
     public BioequivalentSearchResponse obtenerBioequivalentes(
-            @XmlElement(required = true)
-            @WebParam(name = "peticionConceptosRelacionados")
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionObtenerBioequivalentes")
             RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
         return this.conceptController.getBioequivalentes(request.getConceptId(), request.getDescriptionId());
-    }
-
-    private static RelatedConceptsByCategoryRequest makeRequest(RelatedConceptsRequest source, String category) {
-        RelatedConceptsByCategoryRequest res = new RelatedConceptsByCategoryRequest();
-
-        res.setConceptId(source.getConceptId());
-        res.setDescriptionId(source.getDescriptionId());
-        res.setRelatedCategoryName(category);
-
-        return res;
     }
 
 }

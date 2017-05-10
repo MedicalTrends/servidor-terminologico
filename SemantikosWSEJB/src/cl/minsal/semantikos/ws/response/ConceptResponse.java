@@ -20,8 +20,12 @@ import java.util.List;
 @XmlType(name = "Concepto", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class ConceptResponse implements Serializable {
 
+    @XmlElement(name = "categoria")
+    private CategoryResponse category;
+
     @XmlElement(name = "conceptID")
     private String conceptId;
+
     @XmlElement(name = "revisar")
     private Boolean toBeReviewed;
     @XmlElement(name = "consultar")
@@ -49,16 +53,9 @@ public class ConceptResponse implements Serializable {
     @XmlElement(name = "observacion")
     private String observation;
 
-    @XmlElement(name = "categoria")
-    private CategoryResponse category;
-
     @XmlElementWrapper(name = "descripciones")
     @XmlElement(name = "descripcion")
     private List<DescriptionResponse> descriptions;
-
-    @XmlElementWrapper(name = "refSets")
-    @XmlElement(name = "refSet")
-    private List<RefSetResponse> refsets;
 
     @XmlElementWrapper(name = "atributos")
     @XmlElement(name = "atributo")
@@ -79,6 +76,10 @@ public class ConceptResponse implements Serializable {
     @XmlElementWrapper(name = "crossmapsDirectos")
     @XmlElement(name = "crossmapDirecto")
     private List<CrossmapSetMemberResponse> crossmapSetMember;
+
+    @XmlElementWrapper(name = "refSets")
+    @XmlElement(name = "refSet")
+    private List<RefSetResponse> refsets;
 
     public ConceptResponse() {
         this.relationships = new ArrayList<>();
@@ -110,6 +111,7 @@ public class ConceptResponse implements Serializable {
         if(conceptSMTK.isRelationshipsLoaded()) {
             loadAttributes(conceptSMTK);
         }
+
         this.setCategory(new CategoryResponse(conceptSMTK.getCategory()));
     }
 

@@ -8,13 +8,13 @@ import java.io.Serializable;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "peticionConceptosRelacionadosPorCategoria", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "PeticionConceptosRelacionadosPorCategoria", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "peticionConceptosRelacionados", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "PeticionConceptosRelacionados", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class RelatedConceptsByCategoryRequest extends Request implements Serializable {
 
-    @XmlElement(required = false, name = "idConcepto")
+    @XmlElement(required = false, name = "conceptID")
     private String conceptId;
-    @XmlElement(required = false, name = "idDescripcion")
+    @XmlElement(required = false, name = "descriptionID")
     private String descriptionId;
     @XmlElement(required = true, name = "categoriaRelacion")
     private String relatedCategoryName;

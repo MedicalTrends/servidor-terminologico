@@ -13,11 +13,11 @@ import java.util.List;
 @XmlType(name = "RespuestaBuscarBioequivalente", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class BioequivalentSearchResponse implements Serializable {
 
-    @XmlElement(name="idConcepto")
+    @XmlElement(name="conceptID")
     private String conceptId;
-    @XmlElement(name="idDescripcionPreferida")
+    @XmlElement(name="descriptionIDPreferida")
     private String descriptionId;
-    @XmlElement(name="descripcionPreferida")
+    @XmlElement(name="descriptionPreferida")
     private String description;
     @XmlElement(name="nombreCategoria")
     private String category;

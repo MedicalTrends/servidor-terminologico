@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
+
 /**
  * Created by BluePrints Developer on 14-12-2016.
  */
@@ -304,10 +306,14 @@ public class HelperTableRow implements Target {
                 if (column.getHelperTableDataTypeId()==4)
                     return ""+cell.getFloatValue();
 
-                if (column.getHelperTableDataTypeId()==5)
-                    return ""+   new SimpleDateFormat("dd/MM/yyyy").format(cell.getDateValue());
-
-
+                if (column.getHelperTableDataTypeId()==5) {
+                    if(cell.getDateValue()==null) {
+                        return EMPTY_STRING;
+                    }
+                    else {
+                        return new SimpleDateFormat("dd/MM/yyyy").format(cell.getDateValue());
+                    }
+                }
 
             }
 
