@@ -668,6 +668,8 @@ public class ConceptController {
             }
         }
 
+        res.setQuantity(res.getBioequivalentsResponse().size());
+
         return res;
     }
 
@@ -692,6 +694,8 @@ public class ConceptController {
                 res.getIspRegistersResponse().add(ISPRegisterMapper.map(relationship));
             }
         }
+
+        res.setQuantity(res.getIspRegistersResponse().size());
 
         return res;
     }

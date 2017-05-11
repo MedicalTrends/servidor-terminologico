@@ -25,6 +25,9 @@ public class BioequivalentSearchResponse implements Serializable {
     @XmlElement(name="bioequivalentes")
     private List<BioequivalentResponse> bioequivalentsResponse = new ArrayList<>();
 
+    @XmlElement(name = "cantidadRegistros")
+    private int quantity;
+
     public String getConceptId() {
         return conceptId;
     }
@@ -63,5 +66,13 @@ public class BioequivalentSearchResponse implements Serializable {
 
     public void setBioequivalentsResponse(List<BioequivalentResponse> bioequivalentsResponse) {
         this.bioequivalentsResponse = bioequivalentsResponse;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
