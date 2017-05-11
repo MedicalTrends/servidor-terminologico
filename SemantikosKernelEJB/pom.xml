@@ -21,6 +21,13 @@
     <dependencies>
 
         <dependency>
+            <groupId>cl.minsal.semantikos</groupId>
+            <artifactId>SemantikosDomain</artifactId>
+            <version>4.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.21</version>

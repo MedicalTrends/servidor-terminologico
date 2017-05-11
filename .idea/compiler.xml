@@ -25,9 +25,12 @@
         <processorPath useClasspath="true" />
         <module name="ClienteJava" />
         <module name="SemantikosBrowser" />
+        <module name="SemantikosBusinessEAR" />
         <module name="SemantikosCentralEAR" />
+        <module name="SemantikosDomain" />
         <module name="SemantikosKernelEJB" />
         <module name="SemantikosWeb" />
+        <module name="SemantikosWebEAR" />
         <module name="SemantikosWS" />
         <module name="SemantikosWSEJB" />
       </profile>
@@ -36,9 +39,12 @@
       <module name="ClienteJava" target="1.7" />
       <module name="Semantikos" target="1.7" />
       <module name="SemantikosBrowser" target="1.7" />
+      <module name="SemantikosBusinessEAR" target="1.7" />
       <module name="SemantikosCentralEAR" target="1.7" />
+      <module name="SemantikosDomain" target="1.7" />
       <module name="SemantikosKernelEJB" target="1.7" />
       <module name="SemantikosWeb" target="1.7" />
+      <module name="SemantikosWebEAR" target="1.7" />
       <module name="SemantikosWS" target="1.7" />
       <module name="SemantikosWSEJB" target="1.7" />
     </bytecodeTargetLevel>

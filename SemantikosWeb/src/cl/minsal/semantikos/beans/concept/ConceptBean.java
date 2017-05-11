@@ -9,6 +9,7 @@ import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.designer_modeler.browser.PendingBrowserBean;
 import cl.minsal.semantikos.designer_modeler.designer.*;
 import cl.minsal.semantikos.kernel.components.*;
+import cl.minsal.semantikos.kernel.components_web.ViewAugmenter;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
@@ -78,7 +79,7 @@ public class ConceptBean implements Serializable {
     AuditManager auditManager;
 
     @EJB
-    private ViewAugmenter viewAugmenter;
+    ViewAugmenter viewAugmenter;
 
     @EJB
     private RelationshipBindingBRInterface relationshipBindingBR;
@@ -1353,7 +1354,8 @@ public class ConceptBean implements Serializable {
     public List<RelationshipDefinitionWeb> getOrderedRelationshipDefinitions() {
         if (orderedRelationshipDefinitionsList.isEmpty()) {
             for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
-                RelationshipDefinitionWeb relationshipDefinitionWeb = viewAugmenter.augmentRelationshipDefinition(category, relationshipDefinition);
+                RelationshipDefinitionWeb relationshipDefinitionWeb =
+                        viewAugmenter.augmentRelationshipDefinition(category, relationshipDefinition);
                 orderedRelationshipDefinitionsList.add(relationshipDefinitionWeb);
             }
             Collections.sort(orderedRelationshipDefinitionsList);

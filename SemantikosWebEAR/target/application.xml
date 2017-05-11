@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE application PUBLIC
+	"-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN"
+	"http://java.sun.com/dtd/application_1_3.dtd">
+<application>
+  <display-name>SemantikosWebEAR</display-name>
+  <module>
+    <web>
+      <web-uri>SemantikosWeb-4.0.0.war</web-uri>
+      <context-root>designer</context-root>
+    </web>
+  </module>
+  <module>
+    <web>
+      <web-uri>SemantikosBrowser-4.0.0.war</web-uri>
+      <context-root>browser</context-root>
+    </web>
+  </module>
+  <module>
+    <web>
+      <web-uri>SemantikosWS-4.0.0.war</web-uri>
+      <context-root>ws</context-root>
+    </web>
+  </module>
+</application>

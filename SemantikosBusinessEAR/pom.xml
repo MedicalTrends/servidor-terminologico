@@ -4,13 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>SemantikosWSEJB</artifactId>
-    <version>4.0.0</version>
-    <packaging>ejb</packaging>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <groupId>cl.minsal.semantikos</groupId>
+    <artifactId>SemantikosBusinessEAR</artifactId>
+    <version>4.0.0</version>
+    <packaging>ear</packaging>
+
+    <name>SemantikosBusinessEAR</name>
 
     <parent>
         <groupId>cl.minsal.semantikos</groupId>
@@ -19,7 +22,6 @@
     </parent>
 
     <dependencies>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
@@ -27,29 +29,37 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.ejb</groupId>
-            <artifactId>javax.ejb-api</artifactId>
-            <version>3.2</version>
-            <scope>provided</scope>
+            <groupId>cl.minsal.semantikos</groupId>
+            <artifactId>SemantikosKernelEJB</artifactId>
+            <version>4.0.0</version>
+            <type>ejb</type>
         </dependency>
 
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
-            <artifactId>SemantikosKernelEJB</artifactId>
+            <artifactId>SemantikosWSEJB</artifactId>
             <version>4.0.0</version>
-            <scope>provided</scope>
+            <type>ejb</type>
         </dependency>
 
+        <!-- Clases para validaciones básicas tipo @NotNull -->
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>1.0.0.GA</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
+
     </dependencies>
 
     <build>
-        <sourceDirectory>src</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -62,31 +72,20 @@
             </plugin>
 
             <plugin>
-                <artifactId>maven-ejb-plugin</artifactId>
-                <version>2.5</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.6</version>
+
                 <configuration>
-                    <ejbVersion>3.2</ejbVersion>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                        </manifest>
-                    </archive>
+                    <resourcesDir>src/main/resources</resourcesDir>
+                    <filtering>true</filtering>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <earSourceDirectory>src/main/java</earSourceDirectory>
+                    <modules>
 
+                    </modules>
                 </configuration>
-
-                <executions>
-                    <execution>
-                        <id>default-ejb</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>ejb</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
-
-
         </plugins>
     </build>
-
 </project>

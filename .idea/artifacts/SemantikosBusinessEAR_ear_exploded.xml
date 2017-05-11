@@ -1,0 +1,36 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ear" name="SemantikosBusinessEAR:ear exploded">
+    <output-path>$PROJECT_DIR$/SemantikosBusinessEAR/target/SemantikosBusinessEAR-4.0.0</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="SemantikosBusinessEAR/javaeeApplication/JavaEE" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/SemantikosBusinessEAR/target/SemantikosBusinessEAR-4.0.0/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="dir-copy" path="src/main/java" />
+      <element id="directory" name="lib">
+        <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.7.21" />
+        <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.21" />
+        <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
+        <element id="library" level="project" name="Maven: org.apache.axis:axis:1.4" />
+        <element id="library" level="project" name="Maven: org.apache.commons:commons-collections4:4.0" />
+        <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.2" />
+        <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.6" />
+        <element id="library" level="project" name="Maven: javax.cache:cache-api:1.0.0" />
+        <element id="library" level="project" name="Maven: org.ehcache:ehcache:3.1.2" />
+        <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.0" />
+        <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
+        <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.0" />
+        <element id="library" level="project" name="Maven: postgresql:postgresql:9.1-901-1.jdbc4" />
+        <element id="library" level="project" name="Maven: org.apache.commons:commons-csv:1.3" />
+        <element id="library" level="project" name="Maven: org.jsoup:jsoup:1.10.1" />
+        <element id="library" level="project" name="Maven: javax.validation:validation-api:1.0.0.GA" />
+      </element>
+      <element id="archive" name="SemantikosKernelEJB-4.0.0.jar">
+        <element id="artifact" artifact-name="SemantikosKernelEJB:ejb exploded" />
+      </element>
+      <element id="archive" name="SemantikosWSEJB-4.0.0.jar">
+        <element id="artifact" artifact-name="SemantikosWSEJB:ejb exploded" />
+      </element>
+    </root>
+  </artifact>
+</component>

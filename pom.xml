@@ -10,12 +10,15 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>SemantikosDomain</module>
         <module>SemantikosWeb</module>
-        <module>SemantikosKernelEJB</module>
-        <module>SemantikosCentralEAR</module>
-        <module>SemantikosWSEJB</module>
         <module>SemantikosWS</module>
         <module>SemantikosBrowser</module>
+        <module>SemantikosKernelEJB</module>
+        <module>SemantikosWSEJB</module>
+        <!--module>SemantikosCentralEAR</module-->
+        <module>SemantikosBusinessEAR</module>
+        <module>SemantikosWebEAR</module>
     </modules>
 
     <build>

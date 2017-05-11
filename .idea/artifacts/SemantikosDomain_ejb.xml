@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="ejb-jar" name="SemantikosDomain:ejb">
+    <output-path>$PROJECT_DIR$/SemantikosDomain/target</output-path>
+    <root id="archive" name="SemantikosDomain-4.0.0.jar">
+      <element id="artifact" artifact-name="SemantikosDomain:ejb exploded" />
+    </root>
+  </artifact>
+</component>

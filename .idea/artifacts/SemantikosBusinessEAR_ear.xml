@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="ear" name="SemantikosBusinessEAR:ear">
+    <output-path>$PROJECT_DIR$/SemantikosBusinessEAR/target</output-path>
+    <root id="archive" name="SemantikosBusinessEAR-4.0.0.ear">
+      <element id="artifact" artifact-name="SemantikosBusinessEAR:ear exploded" />
+    </root>
+  </artifact>
+</component>

@@ -7,6 +7,7 @@
           <element id="module-output" name="SemantikosWeb" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: javax.faces:javax.faces-api:2.2" />
           <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.2" />
           <element id="library" level="project" name="Maven: net.bull.javamelody:javamelody-core:1.59.0" />
           <element id="library" level="project" name="Maven: org.jrobin:jrobin:1.5.9" />

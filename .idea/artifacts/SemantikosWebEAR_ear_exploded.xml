@@ -1,0 +1,27 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ear" name="SemantikosWebEAR:ear exploded">
+    <output-path>$PROJECT_DIR$/SemantikosWebEAR/target/SemantikosWebEAR-4.0.0</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="SemantikosWebEAR/javaeeApplication/JavaEE" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/SemantikosWebEAR/target/SemantikosWebEAR-4.0.0/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="dir-copy" path="src/main/java" />
+      <element id="directory" name="lib">
+        <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.7.21" />
+        <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.21" />
+        <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
+        <element id="library" level="project" name="Maven: javax.validation:validation-api:1.0.0.GA" />
+      </element>
+      <element id="archive" name="SemantikosWeb-4.0.0.war">
+        <element id="artifact" artifact-name="SemantikosWeb:war exploded" />
+      </element>
+      <element id="archive" name="SemantikosBrowser-4.0.0.war">
+        <element id="artifact" artifact-name="SemantikosBrowser:war exploded" />
+      </element>
+      <element id="archive" name="SemantikosWS-4.0.0.war">
+        <element id="artifact" artifact-name="SemantikosWS:war exploded" />
+      </element>
+    </root>
+  </artifact>
+</component>

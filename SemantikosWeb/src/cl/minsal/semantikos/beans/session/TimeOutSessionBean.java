@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.beans.session;
 
 
-import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.view.components.TimeOutWeb;
 
 import javax.annotation.PostConstruct;
