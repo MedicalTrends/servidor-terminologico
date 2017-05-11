@@ -6,6 +6,8 @@ import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.helpertables.HelperTableData;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
+import cl.minsal.semantikos.model_web.ConceptSMTKWeb;
+import cl.minsal.semantikos.model_web.RelationshipWeb;
 import org.primefaces.event.ReorderEvent;
 
 import javax.ejb.EJB;

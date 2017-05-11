@@ -1,6 +1,10 @@
 package cl.minsal.semantikos.model_web;
 
 
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.descriptions.DescriptionType;
+import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
+
 import java.text.SimpleDateFormat;
 
 public class DescriptionWeb extends Description {

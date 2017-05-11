@@ -2,16 +2,12 @@ package cl.minsal.semantikos.designer_modeler.designer;
 
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.ConceptSMTKWeb;
-import cl.minsal.semantikos.model.RelationshipWeb;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
-import cl.minsal.semantikos.model.relationships.*;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.management.relation.Relation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

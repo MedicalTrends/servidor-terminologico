@@ -2,12 +2,12 @@ package cl.minsal.semantikos.designer_modeler.designer;
 
 import cl.minsal.semantikos.kernel.components.AuditManager;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
-import cl.minsal.semantikos.model.ConceptSMTKWeb;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import cl.minsal.semantikos.model_web.ConceptSMTKWeb;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;

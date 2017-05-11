@@ -1,15 +1,14 @@
 package cl.minsal.semantikos.beans.snomed;
 
 import cl.minsal.semantikos.beans.messages.MessageBean;
-import cl.minsal.semantikos.model.ConceptSMTKWeb;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model_web.ConceptSMTKWeb;
 
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;

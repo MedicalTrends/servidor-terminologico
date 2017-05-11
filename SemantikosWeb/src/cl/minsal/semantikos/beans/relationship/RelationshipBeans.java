@@ -2,9 +2,7 @@ package cl.minsal.semantikos.beans.relationship;
 
 import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.RelationshipWeb;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.relationships.*;
 import org.primefaces.event.RowEditEvent;
 
 import javax.faces.bean.ManagedBean;

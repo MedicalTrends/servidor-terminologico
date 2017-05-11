@@ -24,6 +24,10 @@ import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.model_web.ConceptSMTKWeb;
+import cl.minsal.semantikos.model_web.DescriptionWeb;
+import cl.minsal.semantikos.model_web.RelationshipDefinitionWeb;
+import cl.minsal.semantikos.model_web.RelationshipWeb;
 import cl.minsal.semantikos.util.Pair;
 import cl.minsal.semantikos.view.components.ViewAugmenter;
 import org.primefaces.event.ReorderEvent;
@@ -388,8 +392,9 @@ public class ConceptBean implements Serializable {
         DescriptionWeb favouriteDescription = new DescriptionWeb(conceptWeb, term, descriptionManager.getTypeFavorite());
         favouriteDescription.setDescriptionId(EMPTY_STRING);
 
-        for (DescriptionWeb description : new DescriptionWeb[]{favouriteDescription, fsnDescription})
+        for (DescriptionWeb description : new DescriptionWeb[]{favouriteDescription, fsnDescription}) {
             conceptWeb.addDescriptionWeb(description);
+        }
 
         fullyDefined = concept.isFullyDefined();
 
@@ -537,7 +542,6 @@ public class ConceptBean implements Serializable {
                 return;
             }
         }
-
 
         if(!isMCSpecialThisConcept() && concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0 && !relationshipDefinition.isSNOMEDCT())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
        // Se utiliza el constructor mínimo (sin id)

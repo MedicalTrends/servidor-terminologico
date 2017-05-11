@@ -1,10 +1,11 @@
 package cl.minsal.semantikos.kernel.components_web;
 
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.categories.Category;
-import cl.minsal.semantikos.model.ConceptSMTKWeb;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinitionWeb;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model_web.ConceptSMTKWeb;
+import cl.minsal.semantikos.model_web.RelationshipDefinitionWeb;
 
 import javax.ejb.Local;
 import java.util.Map;
