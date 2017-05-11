@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.model_web;
 
-import cl.minsal.semantikos.model.Multiplicity;
+import cl.minsal.semantikos.model.relationships.Multiplicity;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;

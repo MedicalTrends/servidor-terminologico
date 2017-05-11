@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.util;
+package cl.minsal.semantikos.model_web;
 
 /**
  * Created by root on 29-08-16.

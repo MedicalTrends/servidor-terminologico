@@ -1,9 +1,9 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.categories.Category;
-import cl.minsal.semantikos.model.ConceptSMTKWeb;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model_web.ConceptSMTKWeb;
 
 import javax.ejb.Local;
 

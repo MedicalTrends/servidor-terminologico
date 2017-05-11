@@ -1,14 +1,16 @@
 package cl.minsal.semantikos.kernel.components_web;
 
 import cl.minsal.semantikos.kernel.components.HelperTablesManager;
+import cl.minsal.semantikos.kernel.daos.ExtendedRelationshipAttributeDefinitionInfo;
+import cl.minsal.semantikos.kernel.daos.ExtendedRelationshipDefinitionInfo;
+import cl.minsal.semantikos.kernel.daos.SemantikosWebDAO;
 import cl.minsal.semantikos.model.categories.Category;
-import cl.minsal.semantikos.model.ConceptSMTKWeb;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
-import cl.minsal.semantikos.view.daos.ExtendedRelationshipAttributeDefinitionInfo;
-import cl.minsal.semantikos.view.daos.ExtendedRelationshipDefinitionInfo;
-import cl.minsal.semantikos.view.daos.SemantikosWebDAO;
+import cl.minsal.semantikos.model_web.ConceptSMTKWeb;
+import cl.minsal.semantikos.model_web.RelationshipAttributeDefinitionWeb;
+import cl.minsal.semantikos.model_web.RelationshipDefinitionWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,13 +44,14 @@ public class ViewAugmenterImpl implements ViewAugmenter {
     public RelationshipDefinitionWeb augmentRelationshipDefinition(Category category, RelationshipDefinition relDef) {
 
         ExtendedRelationshipDefinitionInfo extendedRelationshipDefinitionInfo = semantikosWebDAO.getCompositeOf(category, relDef);
-        RelationshipDefinitionWeb relationshipDefinitionWeb = new RelationshipDefinitionWeb(relDef.getId(), relDef.getName(), relDef.getDescription(), relDef.getTargetDefinition(), relDef.getMultiplicity(), extendedRelationshipDefinitionInfo.getIdComposite(), extendedRelationshipDefinitionInfo.getOrder());
+        RelationshipDefinitionWeb relationshipDefinitionWeb =
+                new RelationshipDefinitionWeb(relDef.getId(), relDef.getName(), relDef.getDescription(), relDef.getTargetDefinition(), relDef.getMultiplicity(), extendedRelationshipDefinitionInfo.getIdComposite(), extendedRelationshipDefinitionInfo.getOrder());
         relationshipDefinitionWeb.setRelationshipAttributeDefinitions(relDef.getRelationshipAttributeDefinitions());
         relationshipDefinitionWeb.setDefaultValue(extendedRelationshipDefinitionInfo.getDefaultValue());
         List<RelationshipAttributeDefinitionWeb> attributeDefinitionWebs = new ArrayList<>();
 
         for (RelationshipAttributeDefinition relationshipAttributeDefinition : relDef.getRelationshipAttributeDefinitions()) {
-            ExtendedRelationshipAttributeDefinitionInfo extendedAttributeDefinitionInfo =semantikosWebDAO.getCompositeOf(category,relationshipAttributeDefinition);
+            ExtendedRelationshipAttributeDefinitionInfo extendedAttributeDefinitionInfo = semantikosWebDAO.getCompositeOf(category,relationshipAttributeDefinition);
             RelationshipAttributeDefinitionWeb relationshipAttributeDefinitionWeb = new RelationshipAttributeDefinitionWeb(relationshipAttributeDefinition.getId(),relationshipAttributeDefinition.getTargetDefinition(),relationshipAttributeDefinition.getName(),relationshipAttributeDefinition.getMultiplicity(),extendedAttributeDefinitionInfo.getIdComposite(),extendedAttributeDefinitionInfo.getOrder(),relationshipAttributeDefinition);
             relationshipAttributeDefinitionWeb.setDefaultValue(extendedAttributeDefinitionInfo.getDefaultValue());
             attributeDefinitionWebs.add(relationshipAttributeDefinitionWeb);

@@ -2,12 +2,16 @@ package cl.minsal.semantikos.model_web;
 
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.descriptions.DescriptionType;
+import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.util.Pair;
+import cl.minsal.semantikos.model.tags.Tag;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
