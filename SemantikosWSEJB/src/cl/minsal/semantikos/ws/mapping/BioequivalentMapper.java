@@ -40,7 +40,7 @@ public class BioequivalentMapper {
         }
 
         res.setRegistro(values.get("REGISTRO"));
-        res.setName(helperTableRecord.getDescription());
+        res.setName(values.get("NOMBRE"));
         res.setDescription(values.get(helperTableRecord.getDescription()));
         res.setValid(values.get(helperTableRecord.isValid()));
         res.setValidityUntil(helperTableRecord.getValidityUntil()!=null?helperTableRecord.getValidityUntil().toString():EMPTY_STRING);
