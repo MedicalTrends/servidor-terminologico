@@ -1,11 +1,11 @@
 package cl.minsal.semantikos.kernel.components;
 
+import cl.minsal.semantikos.kernel.businessrules.*;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.kernel.util.IDGenerator;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
@@ -26,7 +26,7 @@ import java.sql.Timestamp;
 import java.text.Normalizer;
 import java.util.*;
 
-import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
+import static cl.minsal.semantikos.model.DAO.NON_PERSISTED_ID;
 import static cl.minsal.semantikos.model.PersistentEntity.getIdArray;
 
 /**

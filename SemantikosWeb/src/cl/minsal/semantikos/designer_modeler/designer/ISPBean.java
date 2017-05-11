@@ -8,6 +8,7 @@ import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.kernel.components.HelperTablesManagerImpl;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.components.ispfetcher.ISPFetcher;
+import cl.minsal.semantikos.kernel.factories.HelperTableRecordFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
@@ -23,8 +24,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**

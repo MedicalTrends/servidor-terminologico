@@ -2,15 +2,12 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.relationships.Target;
-import cl.minsal.semantikos.model.relationships.TargetFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import javax.persistence.metamodel.BasicType;
 import java.io.IOException;
 import java.sql.*;
 

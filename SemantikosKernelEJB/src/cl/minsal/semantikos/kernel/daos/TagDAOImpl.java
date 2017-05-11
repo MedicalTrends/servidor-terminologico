@@ -3,7 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.tags.Tag;
-import cl.minsal.semantikos.model.tags.TagFactory;
+import cl.minsal.semantikos.kernel.factories.TagFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +13,7 @@ import javax.ejb.Stateless;
 import java.sql.*;
 import java.util.List;
 
-import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
+import static cl.minsal.semantikos.model.DAO.NON_PERSISTED_ID;
 import static java.sql.Types.BIGINT;
 
 /**

@@ -1,10 +1,10 @@
 package cl.minsal.semantikos.kernel.components;
 
 
+import cl.minsal.semantikos.kernel.businessrules.*;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.kernel.util.IDGenerator;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.*;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;

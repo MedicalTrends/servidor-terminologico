@@ -4,20 +4,18 @@ import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.beans.messages.MessageBean;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.HelperTablesManager;
-import cl.minsal.semantikos.kernel.components.HelperTablesManagerImpl;
+import cl.minsal.semantikos.kernel.factories.HelperTableRecordFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.businessrules.HelperTableSearchBR;
+import cl.minsal.semantikos.kernel.businessrules.HelperTableSearchBR;
 import cl.minsal.semantikos.model.helpertables.*;
 import cl.minsal.semantikos.model.relationships.*;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.data.PageEvent;
 import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortMeta;
 import org.primefaces.model.SortOrder;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -230,7 +228,7 @@ public class HelperTableBean implements Serializable {
 
         switch ((int)relationshipAttributeDefinition.getId()) {
 
-            case (int)HelperTableRecordFactory.U_VOLUMEN_ID:
+            case (int) HelperTableRecordFactory.U_VOLUMEN_ID:
                 helperTableRowsFiltered = getValidTableRowsUnit(helperTableRows,HelperTableRecordFactory.COLUMN_U_VOL);
                 if(helperTableRows.size()!=0){
                     return helperTableRowsFiltered;

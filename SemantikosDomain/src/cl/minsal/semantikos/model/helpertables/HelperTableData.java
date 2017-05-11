@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
+import static cl.minsal.semantikos.model.DAO.NON_PERSISTED_ID;
 
 /**
  * Created by BluePrints Developer on 14-12-2016.

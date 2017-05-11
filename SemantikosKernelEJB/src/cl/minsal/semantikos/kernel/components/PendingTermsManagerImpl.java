@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.businessrules.PendingTermAddingBR;
+import cl.minsal.semantikos.kernel.businessrules.PendingTermAddingBR;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;

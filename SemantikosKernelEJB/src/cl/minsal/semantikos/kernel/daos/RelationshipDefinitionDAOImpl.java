@@ -1,6 +1,8 @@
 package cl.minsal.semantikos.kernel.daos;
 
 
+import cl.minsal.semantikos.kernel.factories.RelationshipAttributeDefinitionFactory;
+import cl.minsal.semantikos.kernel.factories.RelationshipDefinitionFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.relationships.*;
 import org.slf4j.Logger;

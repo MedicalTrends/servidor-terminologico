@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.factories.TargetFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
@@ -11,8 +12,6 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import java.sql.*;
-import java.sql.Date;
-import java.util.*;
 
 import static cl.minsal.semantikos.model.relationships.TargetType.*;
 import static java.sql.Types.*;

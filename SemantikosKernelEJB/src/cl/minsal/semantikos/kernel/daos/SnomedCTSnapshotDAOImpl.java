@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.kernel.util.DataSourceFactory;
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.snapshots.*;
 import cl.minsal.semantikos.model.snomedct.*;
 import org.slf4j.Logger;

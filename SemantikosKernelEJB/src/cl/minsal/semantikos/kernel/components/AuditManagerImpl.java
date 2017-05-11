@@ -5,7 +5,7 @@ import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.audit.AuditActionType;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.audit.RefSetAuditAction;
-import cl.minsal.semantikos.model.businessrules.HistoryRecordBL;
+import cl.minsal.semantikos.kernel.businessrules.HistoryRecordBL;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.descriptions.Description;

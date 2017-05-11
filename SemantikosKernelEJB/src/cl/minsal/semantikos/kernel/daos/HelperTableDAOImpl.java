@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 
+import cl.minsal.semantikos.kernel.factories.HelperTableRecordFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.*;

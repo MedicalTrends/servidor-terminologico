@@ -4,7 +4,7 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.categories.Category;
-import cl.minsal.semantikos.model.categories.CategoryFactory;
+import cl.minsal.semantikos.kernel.factories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;

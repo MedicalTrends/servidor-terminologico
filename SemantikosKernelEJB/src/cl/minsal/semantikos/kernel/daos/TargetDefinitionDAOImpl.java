@@ -2,7 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
-import cl.minsal.semantikos.model.relationships.TargetDefinitionFactory;
+import cl.minsal.semantikos.kernel.factories.TargetDefinitionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

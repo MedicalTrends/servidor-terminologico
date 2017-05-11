@@ -1,5 +1,9 @@
 package cl.minsal.semantikos.kernel.components;
 
+import cl.minsal.semantikos.kernel.businessrules.ConceptCreationBR;
+import cl.minsal.semantikos.kernel.businessrules.RelationshipBindingBRInterface;
+import cl.minsal.semantikos.kernel.businessrules.RelationshipEditionBR;
+import cl.minsal.semantikos.kernel.businessrules.RelationshipRemovalBR;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
@@ -7,7 +11,6 @@ import cl.minsal.semantikos.kernel.daos.TargetDAO;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;

@@ -1,11 +1,11 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.factories.RelationshipFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
-import cl.minsal.semantikos.model.snomedct.ConceptSCTFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -7,7 +7,7 @@ import cl.minsal.semantikos.model.users.Answer;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.Question;
 import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.model.businessrules.UserCreationBRInterface;
+import cl.minsal.semantikos.kernel.businessrules.UserCreationBRInterface;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 
 import javax.ejb.EJB;

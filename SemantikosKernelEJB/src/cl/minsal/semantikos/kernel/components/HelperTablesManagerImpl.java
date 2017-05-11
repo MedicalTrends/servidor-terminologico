@@ -4,7 +4,7 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.model.businessrules.HelperTableSearchBR;
+import cl.minsal.semantikos.kernel.businessrules.HelperTableSearchBR;
 import cl.minsal.semantikos.model.helpertables.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

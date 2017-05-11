@@ -1,8 +1,8 @@
 package cl.minsal.semantikos.model.users;
 
-import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.PersistentEntity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -210,7 +210,7 @@ public class User extends PersistentEntity {
 
     public String getDocumentNumber() {
         if(isRutDocument()) {
-            return StringUtils.formatRut(documentNumber);
+            return formatRut(documentNumber);
         }
         else {
             return documentNumber;
@@ -393,5 +393,37 @@ public class User extends PersistentEntity {
      */
     public static User getDummyUser() {
         return dummyUser;
+    }
+
+    public String formatRut(String rut) {
+
+        if(rut == null || rut.trim().isEmpty() || rut.trim().length() < 2) {
+            return rut;
+        }
+
+        rut = rut.trim();
+        rut = rut.replace("-","");
+        rut = rut.replace(".","");
+
+        long num = 0L;
+
+        try {
+            num = Long.parseLong(rut.substring(0,rut.length()-1));
+        }
+        catch (NumberFormatException e) {
+            return rut;
+        }
+
+        DecimalFormat df = new DecimalFormat("###,###,###,###");
+
+        //String fRut = String.format(new Locale("es-CL"),"%d", num);
+
+        String fRut = df.format(num);
+
+        fRut = fRut.concat("-");
+
+        fRut = fRut.concat(rut.substring(rut.length()-1));
+
+        return fRut;
     }
 }

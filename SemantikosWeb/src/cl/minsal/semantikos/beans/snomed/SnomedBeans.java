@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.beans.snomed;
 
 import cl.minsal.semantikos.beans.messages.MessageBean;
-import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
+import cl.minsal.semantikos.kernel.businessrules.ConceptDefinitionalGradeBRInterface;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;

@@ -4,7 +4,7 @@ import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.queries.NoValidQuery;
-import cl.minsal.semantikos.model.businessrules.DescriptionTranslationBR;
+import cl.minsal.semantikos.kernel.businessrules.DescriptionTranslationBR;
 import cl.minsal.semantikos.model.descriptions.*;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.users.User;

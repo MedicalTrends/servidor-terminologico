@@ -1,15 +1,13 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.SnomedCTSnapshotDAO;
-import cl.minsal.semantikos.model.businessrules.ConceptSearchBR;
+import cl.minsal.semantikos.kernel.businessrules.ConceptSearchBR;
 import cl.minsal.semantikos.model.snapshots.*;
-import cl.minsal.semantikos.model.snomedct.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import java.util.*;
 
 /**
  * @author Diego Soto

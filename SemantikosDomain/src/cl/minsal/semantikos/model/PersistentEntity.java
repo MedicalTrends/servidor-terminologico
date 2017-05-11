@@ -1,6 +1,5 @@
 package cl.minsal.semantikos.model;
 
-import cl.minsal.semantikos.kernel.daos.DAO;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;

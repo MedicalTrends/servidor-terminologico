@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.model.descriptions;
 
-import cl.minsal.semantikos.kernel.daos.DAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.DAO;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
@@ -124,7 +124,7 @@ public class Description extends PersistentEntity implements AuditableEntity {
             Matcher m = Pattern.compile("\\((.*?)\\)").matcher(term);
 
             while(m.find()) {
-                if(TagSMTKFactory.getInstance().findTagSMTKByName(m.group(1))!=null) {
+                if(TagSMTKFactory.getInstance().findTagSMTKByName(m.group(1)) != null) {
                     this.term = this.term.replace("("+m.group(1)+")","").trim();
                 }
             }

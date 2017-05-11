@@ -3,7 +3,7 @@ package cl.minsal.semantikos.designer_modeler.designer;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
+import cl.minsal.semantikos.kernel.businessrules.ConceptDefinitionalGradeBRInterface;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;

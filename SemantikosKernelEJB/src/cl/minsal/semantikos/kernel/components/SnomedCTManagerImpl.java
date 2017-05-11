@@ -1,15 +1,12 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.SnomedCTDAO;
-import cl.minsal.semantikos.model.businessrules.ConceptSearchBR;
+import cl.minsal.semantikos.kernel.businessrules.ConceptSearchBR;
 import cl.minsal.semantikos.model.snomedct.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
