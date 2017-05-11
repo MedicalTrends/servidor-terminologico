@@ -55,6 +55,8 @@ public class ConceptController {
     @EJB
     private RefSetManager refSetManager;
     @EJB
+    private TagManager tagManager;
+    @EJB
     private CategoryManager categoryManager;
     @EJB
     private AuditManager auditManager;
@@ -119,6 +121,7 @@ public class ConceptController {
             }
 
             this.loadRefSets(conceptResponse, related);
+            this.loadTags(conceptResponse, related);
 
             relatedResponses.add(conceptResponse);
         }
@@ -761,6 +764,16 @@ public class ConceptController {
                 refSetManager.loadConceptRefSets(source);
             }
             ConceptMapper.appendRefSets(conceptResponse, source);
+        }
+        return conceptResponse;
+    }
+
+    public ConceptResponse loadTags(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) {
+        if (conceptResponse.getTags() == null || conceptResponse.getTags().isEmpty()) {
+            if (source.getRefsets() == null || source.getRefsets().isEmpty()) {
+                refSetManager.loadConceptRefSets(source);
+            }
+            ConceptMapper.appendTags(conceptResponse, source);
         }
         return conceptResponse;
     }

@@ -5,6 +5,8 @@ import cl.minsal.semantikos.model.relationships.Relationship;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Development on 2016-10-20.
@@ -21,6 +23,10 @@ public class AttributeResponse implements Serializable {
     private String name;
     @XmlElement(name="valor")
     private String value;
+
+    @XmlElementWrapper(name = "detalleAtributos")
+    @XmlElement(name = "detalleAtributo")
+    private List<AttributeResponse> attributeResponses = new ArrayList<>();
 
     public AttributeResponse() {
     }
@@ -52,5 +58,13 @@ public class AttributeResponse implements Serializable {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public List<AttributeResponse> getAttributeResponses() {
+        return attributeResponses;
+    }
+
+    public void setAttributeResponses(List<AttributeResponse> attributeResponses) {
+        this.attributeResponses = attributeResponses;
     }
 }

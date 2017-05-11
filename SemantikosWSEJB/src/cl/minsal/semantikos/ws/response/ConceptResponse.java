@@ -81,6 +81,10 @@ public class ConceptResponse implements Serializable {
     @XmlElement(name = "refSet")
     private List<RefSetResponse> refsets;
 
+    @XmlElementWrapper(name = "tags")
+    @XmlElement(name = "tags")
+    private List<TagResponse> tags;
+
     public ConceptResponse() {
         this.relationships = new ArrayList<>();
         this.attributes = new ArrayList<>();
@@ -251,6 +255,14 @@ public class ConceptResponse implements Serializable {
 
     public void setRefsets(List<RefSetResponse> refsets) {
         this.refsets = refsets;
+    }
+
+    public List<TagResponse> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<TagResponse> tags) {
+        this.tags = tags;
     }
 
     public CategoryResponse getCategory() {
