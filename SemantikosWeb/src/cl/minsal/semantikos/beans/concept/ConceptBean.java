@@ -22,6 +22,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.tags.TagSMTK;
+import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.util.Pair;
 import cl.minsal.semantikos.view.components.ViewAugmenter;
@@ -39,6 +40,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
@@ -765,6 +767,31 @@ public class ConceptBean implements Serializable {
         return true;
     }
 
+    /**
+     * Este metodo revisa que las relaciones cumplan el lower_boundary del
+     * relationship definition, en caso de no cumplir la condicion se retorna falso.
+     *
+     * @return
+     */
+    public boolean validateDescriptions() {
+        for (DescriptionWeb descriptionWeb : concept.getDescriptionsWeb()) {
+            if(descriptionWeb.getDescriptionType().equals(DescriptionType.FSN) &&
+                TagSMTKFactory.getInstance().findTagSMTKByName(descriptionWeb.getTerm().trim()) != null) {
+                descriptionWeb.setUiValid(false);
+                messageBean.messageError("Debe especificar una descripción FSN");
+                return false;
+            }
+
+            if(descriptionWeb.getDescriptionType().equals(DescriptionType.PREFERIDA) &&
+                descriptionWeb.getTerm().trim().isEmpty()) {
+                descriptionWeb.setUiValid(false);
+                messageBean.messageError("Debe especificar una descripción Preferida");
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean containDescription(DescriptionWeb descriptionWeb) {
         for (DescriptionWeb description : concept.getDescriptionsWeb()) {
             if (description.getTerm().trim().equals(descriptionWeb.getTerm().trim())) {
@@ -781,7 +808,7 @@ public class ConceptBean implements Serializable {
             messageBean.messageError("Cuando se crea un concepto desde pendientes, este puede ser guardado, sólo si cumple las condiciones para ser un concepto Modelado.");
             return;
         }
-        if (validateRelationships()) {
+        if (validateRelationships() && validateDescriptions()) {
             try{
                 if (concept.isModeled())relationshipBindingBR.brSCT005(concept);
             }catch (EJBException e) {

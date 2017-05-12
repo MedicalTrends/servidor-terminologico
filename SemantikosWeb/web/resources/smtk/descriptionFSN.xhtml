@@ -20,7 +20,7 @@
 
             <div class="Container20 White Responsive" >
                 <div class="ContainerIndent">
-                    <p:outputLabel for="FSN">
+                    <p:outputLabel for="FSN" styleClass="#{cc.attrs.description.uiValid?'':'ui-state-error'}">
                         <span class="">
                             FSN *
                         </span>
@@ -31,7 +31,7 @@
             <div class="Container30 White Responsive">
                 <div class="ContainerIndentRight">
                     <p:inputTextarea id="FSN"
-                                     styleClass="terms FSN"
+                                     styleClass="terms FSN #{cc.attrs.description.uiValid?'':'ui-state-error'}"
                                      name="description"
                                      rows="1"
                                      validator="#{validatorBean.validateRequiredInput}"

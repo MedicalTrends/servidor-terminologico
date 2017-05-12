@@ -119,19 +119,6 @@ public class Description extends PersistentEntity implements AuditableEntity {
 
     public void setTerm(String term) {
         this.term = term;
-        if (this.getDescriptionType().equals(DescriptionType.FSN)) {
-
-            Matcher m = Pattern.compile("\\((.*?)\\)").matcher(term);
-
-            while(m.find()) {
-                if(TagSMTKFactory.getInstance().findTagSMTKByName(m.group(1))!=null) {
-                    this.term = this.term.replace("("+m.group(1)+")","").trim();
-                }
-            }
-
-            this.term = this.term + " (" + conceptSMTK.getTagSMTK() + ")";
-
-        }
     }
 
     public boolean isCaseSensitive() {

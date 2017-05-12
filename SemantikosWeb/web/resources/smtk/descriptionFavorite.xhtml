@@ -21,7 +21,7 @@
 
             <div class="Container20 White Responsive" >
                 <div class="ContainerIndent">
-                    <p:outputLabel for="favorite">
+                    <p:outputLabel for="favorite" styleClass="#{cc.attrs.description.uiValid?'':'ui-state-error'}">
                         <span class="">
                             Preferida *
                         </span>
@@ -32,10 +32,9 @@
             <div class="Container30 White Responsive">
                 <div class="ContainerIndentRight">
                     <p:inputTextarea id="favorite"
-                                 styleClass="terms"
+                                 styleClass="terms #{cc.attrs.description.uiValid?'':'ui-state-error'}"
                                  name="description"
                                  rows="1"
-                                 validator="#{validatorBean.validateRequiredInput}"
                                  value="#{cc.attrs.description.term}"
                                  disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
                                  autocomplete="off">

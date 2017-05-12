@@ -2,6 +2,7 @@ package cl.minsal.semantikos.designer_modeler.browser;
 
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import org.primefaces.event.MenuActionEvent;
 import org.primefaces.model.menu.*;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
@@ -24,7 +26,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "mainMenuBean")
-@ViewScoped
+@ApplicationScoped
 public class MainMenuBean implements Serializable {
 
     static final Logger logger = LoggerFactory.getLogger(MainMenuBean.class);
@@ -36,6 +38,7 @@ public class MainMenuBean implements Serializable {
     @EJB
     private CategoryManager categoryManager;
 
+    private TagSMTKFactory tagSMTKFactory;
 
     @PostConstruct
     public void init() {
@@ -64,6 +67,14 @@ public class MainMenuBean implements Serializable {
 
         categoryMenuModel.addElement(categorySubmenu);
 
+    }
+
+    public TagSMTKFactory getTagSMTKFactory() {
+        return tagSMTKFactory;
+    }
+
+    public void setTagSMTKFactory(TagSMTKFactory tagSMTKFactory) {
+        this.tagSMTKFactory = tagSMTKFactory;
     }
 
     public void redirect(ActionEvent event) throws IOException {

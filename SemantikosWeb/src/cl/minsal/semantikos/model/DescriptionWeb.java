@@ -14,6 +14,9 @@ public class DescriptionWeb extends Description {
     /** Este atributo corresponde al valor de la descripción en la vista */
     public String representation;
 
+    /** Establece el estilo para el estado de error */
+    private boolean uiValid = true;
+
     public DescriptionWeb(){
         super(null,"", DescriptionTypeFactory.TYPELESS_DESCRIPTION_TYPE);
         this.representation = "";
@@ -68,7 +71,13 @@ public class DescriptionWeb extends Description {
 
     @Override
     public void setTerm(String term) {
-        super.setTerm(term.trim());
+
+        if(this.getDescriptionType().equals(DescriptionType.FSN)) {
+            super.setTerm(term.trim()+ " (" + this.getConceptSMTK().getTagSMTK() + ")");
+        }
+        else {
+            super.setTerm(term);
+        }
     }
 
     @Override
@@ -131,7 +140,7 @@ public class DescriptionWeb extends Description {
 
     public void setRepresentation(String representation) {
         //super.setTerm(representation.trim().replaceAll("\\(.+?\\)","").trim());
-        super.setTerm(representation.trim().replaceAll("\\("+getConceptSMTK().getTagSMTK()+"\\)","").trim());
+        //super.setTerm(representation.trim().replaceAll("\\("+getConceptSMTK().getTagSMTK()+"\\)","").trim());
         //super.setTerm(representation.trim());
         this.representation = representation;
     }
@@ -139,5 +148,13 @@ public class DescriptionWeb extends Description {
     public String getDateCreationFormat() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(this.getCreationDate());
+    }
+
+    public boolean isUiValid() {
+        return uiValid;
+    }
+
+    public void setUiValid(boolean uiValid) {
+        this.uiValid = uiValid;
     }
 }

@@ -2,6 +2,7 @@ package cl.minsal.semantikos.beans.description;
 
 import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.beans.messages.MessageBean;
+import cl.minsal.semantikos.designer_modeler.browser.MainMenuBean;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
@@ -14,6 +15,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Gustavo Punucura
@@ -28,6 +31,9 @@ public class DescriptionBeans {
 
     @ManagedProperty(value = "#{messageBean}")
     MessageBean messageBean;
+
+    @ManagedProperty(value = "#{mainMenuBean}")
+    MainMenuBean mainMenuBean;
 
     DescriptionTypeFactory descriptionTypeFactory = DescriptionTypeFactory.getInstance();
 
@@ -167,11 +173,29 @@ public class DescriptionBeans {
 
     public void updateFSNFromFavourite(DescriptionWeb description) {
 
-        description.getConceptSMTK().getDescriptionFSN().setTerm(description.getTerm().trim().replaceAll("\\(" + description.getConceptSMTK().getTagSMTK() + "\\)", "").trim());
+        Matcher m = Pattern.compile("\\((.*?)\\)").matcher(description.getTerm());
+
+        while(m.find()) {
+            if(mainMenuBean.getTagSMTKFactory().getInstance().findTagSMTKByName(m.group(1))!=null) {
+                description.getConceptSMTK().getDescriptionFSN().setTerm(description.getTerm().replace("("+m.group(1)+")","").trim());
+                return;
+            }
+        }
+
+        description.getConceptSMTK().getDescriptionFSN().setTerm(description.getTerm());
 
     }
 
     public void updateFSNFromTagSMTK(ConceptSMTK conceptSMTK) {
+
+        Matcher m = Pattern.compile("\\((.*?)\\)").matcher(conceptSMTK.getDescriptionFSN().getTerm());
+
+        while(m.find()) {
+            if(mainMenuBean.getTagSMTKFactory().getInstance().findTagSMTKByName(m.group(1))!=null) {
+                conceptSMTK.getDescriptionFSN().getConceptSMTK().getDescriptionFSN().setTerm(conceptSMTK.getDescriptionFSN().getTerm().replace("("+m.group(1)+")","").trim());
+                return;
+            }
+        }
 
         conceptSMTK.getDescriptionFSN().setTerm(conceptSMTK.getDescriptionFSN().getTerm());
 
@@ -207,5 +231,13 @@ public class DescriptionBeans {
 
     public void setError(String error) {
         this.error = error;
+    }
+
+    public MainMenuBean getMainMenuBean() {
+        return mainMenuBean;
+    }
+
+    public void setMainMenuBean(MainMenuBean mainMenuBean) {
+        this.mainMenuBean = mainMenuBean;
     }
 }
