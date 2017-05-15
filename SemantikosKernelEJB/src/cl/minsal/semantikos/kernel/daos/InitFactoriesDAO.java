@@ -2,10 +2,10 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.factories.QueryFactory;
-import cl.minsal.semantikos.kernel.factories.CategoryFactory;
+import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumnFactory;
-import cl.minsal.semantikos.kernel.factories.TagSMTKFactory;
+import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.EmailFactory;
 
 import javax.ejb.Local;

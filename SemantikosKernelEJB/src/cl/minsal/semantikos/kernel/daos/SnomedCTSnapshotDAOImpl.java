@@ -182,6 +182,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
             QUERY = "{call semantikos.delete_transitive_sct(?,?)}";
 
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
+
              CallableStatement call = connection.prepareCall(QUERY)) {
 
             if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof ConceptSCT) {

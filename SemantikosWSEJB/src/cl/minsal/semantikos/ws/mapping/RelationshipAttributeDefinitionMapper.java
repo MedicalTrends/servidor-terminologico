@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
-import cl.minsal.semantikos.ws.response.RelationshipAttributeDefinitionResponse;
+import cl.minsal.semantikos.modelws.response.RelationshipAttributeDefinitionResponse;
 
 /**
  * Created by Development on 2016-10-14.

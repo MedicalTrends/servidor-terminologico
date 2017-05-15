@@ -7,7 +7,7 @@ import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
-import cl.minsal.semantikos.model_web.ConceptSMTKWeb;
+import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;

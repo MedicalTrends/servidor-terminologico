@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.ws.component;
 
-import cl.minsal.semantikos.ws.response.PaginationResponse;
+import cl.minsal.semantikos.modelws.response.PaginationResponse;
 
 import javax.ejb.Stateless;
 

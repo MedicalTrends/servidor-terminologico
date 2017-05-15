@@ -6,7 +6,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model_web.ConceptSMTKWeb;
+import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;

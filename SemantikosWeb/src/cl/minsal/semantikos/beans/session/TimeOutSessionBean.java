@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.beans.session;
 
 
-import cl.minsal.semantikos.view.components.TimeOutWeb;
+import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;

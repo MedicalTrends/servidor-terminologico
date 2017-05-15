@@ -8,9 +8,9 @@ import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
-import cl.minsal.semantikos.model_web.ConceptSMTKWeb;
-import cl.minsal.semantikos.model_web.RelationshipAttributeDefinitionWeb;
-import cl.minsal.semantikos.model_web.RelationshipDefinitionWeb;
+import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
+import cl.minsal.semantikos.modelweb.RelationshipAttributeDefinitionWeb;
+import cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

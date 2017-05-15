@@ -10,6 +10,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.modelweb.DescriptionWeb;
 import org.primefaces.context.RequestContext;
 
 import javax.ejb.EJB;

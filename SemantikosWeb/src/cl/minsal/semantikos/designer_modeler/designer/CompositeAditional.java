@@ -3,6 +3,11 @@ package cl.minsal.semantikos.designer_modeler.designer;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
+import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.relationships.Target;
+import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
+import cl.minsal.semantikos.modelweb.RelationshipWeb;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;

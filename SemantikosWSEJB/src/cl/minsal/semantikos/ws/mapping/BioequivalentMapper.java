@@ -4,8 +4,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
 import cl.minsal.semantikos.model.helpertables.HelperTableData;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.ws.response.BioequivalentResponse;
-import cl.minsal.semantikos.ws.response.ISPRegisterResponse;
+import cl.minsal.semantikos.modelws.response.BioequivalentResponse;
 
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
@@ -40,7 +39,7 @@ public class BioequivalentMapper {
         }
 
         res.setRegistro(values.get("REGISTRO"));
-        res.setName(helperTableRecord.getDescription());
+        res.setName(values.get("NOMBRE"));
         res.setDescription(values.get(helperTableRecord.getDescription()));
         res.setValid(values.get(helperTableRecord.isValid()));
         res.setValidityUntil(helperTableRecord.getValidityUntil()!=null?helperTableRecord.getValidityUntil().toString():EMPTY_STRING);

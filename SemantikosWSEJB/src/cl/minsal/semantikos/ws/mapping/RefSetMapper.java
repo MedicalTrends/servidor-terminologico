@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.refsets.RefSet;
-import cl.minsal.semantikos.ws.response.RefSetResponse;
+import cl.minsal.semantikos.modelws.response.RefSetResponse;
 
 import java.sql.Timestamp;
 import java.util.Date;

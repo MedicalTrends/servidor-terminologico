@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.basictypes.Interval;
-import cl.minsal.semantikos.ws.response.IntervalResponse;
+import cl.minsal.semantikos.modelws.response.IntervalResponse;
 
 /**
  * Created by Development on 2016-10-14.

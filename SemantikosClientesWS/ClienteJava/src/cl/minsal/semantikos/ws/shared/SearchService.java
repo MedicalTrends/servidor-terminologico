@@ -1,6 +1,8 @@
 
 package cl.minsal.semantikos.ws.shared;
 
+import cl.minsal.semantikos.modelws.request.DescriptionIDorConceptIDRequest;
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -202,7 +204,7 @@ public interface SearchService {
     @ResponseWrapper(localName = "crossMapsIndirectosPorDescripcionIDorConceptIDResponse", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.CrossMapsIndirectosPorDescripcionIDorConceptIDResponse")
     public IndirectCrossmapsSearch crossMapsIndirectosPorDescripcionIDorConceptID(
         @WebParam(name = "descripcionIDorConceptIDRequest", targetNamespace = "")
-        DescriptionIDorConceptIDRequest descripcionIDorConceptIDRequest)
+                DescriptionIDorConceptIDRequest descripcionIDorConceptIDRequest)
         throws NotFoundFault_Exception
     ;
 

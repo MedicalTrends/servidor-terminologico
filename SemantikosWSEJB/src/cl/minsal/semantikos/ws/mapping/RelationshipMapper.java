@@ -4,11 +4,9 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
-import cl.minsal.semantikos.ws.response.RelationshipAttributeResponse;
-import cl.minsal.semantikos.ws.response.RelationshipResponse;
+import cl.minsal.semantikos.modelws.response.RelationshipAttributeResponse;
+import cl.minsal.semantikos.modelws.response.RelationshipResponse;
 
-import javax.ejb.EJB;
-import javax.ejb.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 

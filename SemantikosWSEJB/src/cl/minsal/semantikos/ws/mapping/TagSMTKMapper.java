@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.tags.TagSMTK;
-import cl.minsal.semantikos.ws.response.TagSMTKResponse;
+import cl.minsal.semantikos.modelws.response.TagSMTKResponse;
 
 /**
  * Created by Development on 2016-10-11.

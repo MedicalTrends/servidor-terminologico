@@ -6,7 +6,7 @@ import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.kernel.businessrules.CategoryCreationBR;
 import cl.minsal.semantikos.model.categories.Category;
-import cl.minsal.semantikos.kernel.factories.CategoryFactory;
+import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.users.User;

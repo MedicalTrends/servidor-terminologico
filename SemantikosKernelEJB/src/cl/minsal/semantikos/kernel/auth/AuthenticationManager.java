@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.auth;
 
 import cl.minsal.semantikos.kernel.components.InstitutionManager;
+import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
 import org.apache.commons.codec.binary.Base64;
@@ -11,18 +12,11 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.interceptor.InvocationContext;
-import javax.jws.WebParam;
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.ws.handler.MessageContext;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map;
-
-import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 
 /**
  * @author Francisco Méndez on 19-05-2016.

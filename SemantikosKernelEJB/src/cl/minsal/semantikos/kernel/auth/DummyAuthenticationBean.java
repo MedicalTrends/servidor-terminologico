@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.auth;
 
+import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
 import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

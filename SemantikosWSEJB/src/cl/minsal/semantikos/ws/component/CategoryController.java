@@ -2,9 +2,9 @@ package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.model.categories.Category;
-import cl.minsal.semantikos.ws.fault.NotFoundFault;
-import cl.minsal.semantikos.ws.response.CategoriesResponse;
-import cl.minsal.semantikos.ws.response.CategoryResponse;
+import cl.minsal.semantikos.modelws.response.CategoriesResponse;
+import cl.minsal.semantikos.modelws.response.CategoryResponse;
+import cl.minsal.semantikos.modelws.fault.NotFoundFault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

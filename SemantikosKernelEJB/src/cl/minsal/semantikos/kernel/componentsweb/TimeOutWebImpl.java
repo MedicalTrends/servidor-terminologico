@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.kernel.componentsweb;
 
-import cl.minsal.semantikos.view.daos.TimeOutWebDAO;
+import cl.minsal.semantikos.kernel.daos.TimeOutWebDAO;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

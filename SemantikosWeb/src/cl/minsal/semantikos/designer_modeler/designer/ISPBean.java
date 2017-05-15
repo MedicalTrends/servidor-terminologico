@@ -10,6 +10,7 @@ import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.components.ispfetcher.ISPFetcher;
 import cl.minsal.semantikos.kernel.factories.HelperTableRecordFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.exceptions.RowInUseException;
 import cl.minsal.semantikos.model.helpertables.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -276,7 +277,7 @@ public class ISPBean {
             HelperTableRow updated = null;
             try {
                 updated = helperTablesManager.updateRow(ispRecord,authenticationBean.getEmail());
-            } catch (HelperTablesManagerImpl.RowInUseException e) {
+            } catch (RowInUseException e) {
                 e.printStackTrace();
             }
             ispRecord = updated;

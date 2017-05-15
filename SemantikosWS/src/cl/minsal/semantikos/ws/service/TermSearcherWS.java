@@ -1,8 +1,8 @@
 package cl.minsal.semantikos.ws.service;
 
+import cl.minsal.semantikos.modelws.response.GenericTermSearchResponse;
 import cl.minsal.semantikos.ws.component.ConceptController;
-import cl.minsal.semantikos.ws.fault.NotFoundFault;
-import cl.minsal.semantikos.ws.response.GenericTermSearchResponse;
+import cl.minsal.semantikos.modelws.fault.NotFoundFault;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;

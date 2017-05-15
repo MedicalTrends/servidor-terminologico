@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.exceptions.RowInUseException;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.kernel.businessrules.HelperTableSearchBR;
 import cl.minsal.semantikos.model.helpertables.*;
@@ -238,23 +239,6 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
     public List<HelperTable> getLiteDatabase() {
         List<HelperTable> tables= dao.getAllTables();
         return tables;
-    }
-
-    public class RowInUseException extends Exception{
-
-        private List<ConceptSMTK> concepts;
-
-        public RowInUseException(List<ConceptSMTK> concepts) {
-            this.concepts = concepts;
-        }
-
-        public List<ConceptSMTK> getConcepts() {
-            return concepts;
-        }
-
-        public void setConcepts(List<ConceptSMTK> concepts) {
-            this.concepts = concepts;
-        }
     }
 
 }

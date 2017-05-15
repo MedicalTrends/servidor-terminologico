@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.auth;
 
 
+import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.naming.AuthenticationException;

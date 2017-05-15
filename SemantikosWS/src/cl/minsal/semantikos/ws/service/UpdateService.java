@@ -1,15 +1,15 @@
 package cl.minsal.semantikos.ws.service;
 
 import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
+import cl.minsal.semantikos.modelws.request.DescriptionHitRequest;
+import cl.minsal.semantikos.modelws.request.NewTermRequest;
+import cl.minsal.semantikos.modelws.request.Request;
+import cl.minsal.semantikos.modelws.response.DescriptionResponse;
+import cl.minsal.semantikos.modelws.response.NewTermResponse;
 import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.component.DescriptionController;
-import cl.minsal.semantikos.ws.fault.IllegalInputFault;
-import cl.minsal.semantikos.ws.fault.NotFoundFault;
-import cl.minsal.semantikos.ws.request.DescriptionHitRequest;
-import cl.minsal.semantikos.ws.request.NewTermRequest;
-import cl.minsal.semantikos.ws.request.Request;
-import cl.minsal.semantikos.ws.response.DescriptionResponse;
-import cl.minsal.semantikos.ws.response.NewTermResponse;
+import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
+import cl.minsal.semantikos.modelws.fault.NotFoundFault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

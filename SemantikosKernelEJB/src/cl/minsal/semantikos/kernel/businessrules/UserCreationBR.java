@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.kernel.businessrules;
 
 import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
-import cl.minsal.semantikos.kernel.auth.PasswordChangeException;
+import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
 import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;

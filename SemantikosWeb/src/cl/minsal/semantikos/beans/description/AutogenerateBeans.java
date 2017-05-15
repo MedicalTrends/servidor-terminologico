@@ -1,13 +1,12 @@
 package cl.minsal.semantikos.beans.description;
 
-import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.helpertables.HelperTableData;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
-import cl.minsal.semantikos.model_web.ConceptSMTKWeb;
-import cl.minsal.semantikos.model_web.RelationshipWeb;
+import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
+import cl.minsal.semantikos.modelweb.RelationshipWeb;
 import org.primefaces.event.ReorderEvent;
 
 import javax.ejb.EJB;

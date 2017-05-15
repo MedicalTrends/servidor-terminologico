@@ -2,8 +2,8 @@ package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.ws.response.RelationshipAttributeDefinitionResponse;
-import cl.minsal.semantikos.ws.response.RelationshipDefinitionResponse;
+import cl.minsal.semantikos.modelws.response.RelationshipAttributeDefinitionResponse;
+import cl.minsal.semantikos.modelws.response.RelationshipDefinitionResponse;
 
 import java.util.ArrayList;
 import java.util.List;

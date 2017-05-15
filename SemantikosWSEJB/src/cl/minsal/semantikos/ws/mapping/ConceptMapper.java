@@ -6,7 +6,8 @@ import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
-import cl.minsal.semantikos.ws.response.*;
+import cl.minsal.semantikos.model.tags.Tag;
+import cl.minsal.semantikos.modelws.response.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -115,9 +116,30 @@ public class ConceptMapper {
         return null;
     }
 
+    public static List<TagResponse> getTags(ConceptSMTK conceptSMTK) {
+        if ( conceptSMTK != null ) {
+            List<Tag> tags = conceptSMTK.getTags();
+            if ( tags != null ) {
+                List<TagResponse> res = new ArrayList<>(tags.size());
+                for ( Tag tag : tags ) {
+                    res.add(TagMapper.map(tag));
+                }
+                return res;
+            }
+        }
+        return null;
+    }
+
     public static ConceptResponse appendRefSets(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
         if ( conceptResponse != null ) {
             conceptResponse.setRefsets(getRefSets(conceptSMTK));
+        }
+        return conceptResponse;
+    }
+
+    public static ConceptResponse appendTags(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
+        if ( conceptResponse != null ) {
+            conceptResponse.setTags(getTags(conceptSMTK));
         }
         return conceptResponse;
     }

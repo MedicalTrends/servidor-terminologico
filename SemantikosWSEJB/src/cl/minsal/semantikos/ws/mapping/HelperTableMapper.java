@@ -2,8 +2,8 @@ package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
-import cl.minsal.semantikos.ws.response.HelperTableColumnResponse;
-import cl.minsal.semantikos.ws.response.HelperTableResponse;
+import cl.minsal.semantikos.modelws.response.HelperTableColumnResponse;
+import cl.minsal.semantikos.modelws.response.HelperTableResponse;
 
 import java.util.ArrayList;
 import java.util.List;

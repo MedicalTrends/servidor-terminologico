@@ -26,7 +26,6 @@
         <module name="ClienteJava" />
         <module name="SemantikosBrowser" />
         <module name="SemantikosBusinessEAR" />
-        <module name="SemantikosCentralEAR" />
         <module name="SemantikosDomain" />
         <module name="SemantikosKernelEJB" />
         <module name="SemantikosWeb" />

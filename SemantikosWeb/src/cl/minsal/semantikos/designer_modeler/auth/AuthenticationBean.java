@@ -2,8 +2,8 @@ package cl.minsal.semantikos.designer_modeler.auth;
 
 import cl.minsal.semantikos.designer_modeler.Constants;
 import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
+import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
 import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.view.components.TimeOutWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

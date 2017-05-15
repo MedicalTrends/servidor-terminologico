@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.designer_modeler.auth;
 
 import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
-import cl.minsal.semantikos.kernel.auth.PasswordChangeException;
+import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
 import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.components.InstitutionManager;
 import cl.minsal.semantikos.kernel.util.StringUtils;

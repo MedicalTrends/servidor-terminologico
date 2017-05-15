@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.ws.shared;
 
+import cl.minsal.semantikos.modelws.request.DescriptionIDorConceptIDRequest;
+
 import java.util.List;
 
 /**
@@ -208,7 +210,7 @@ public class Stringer {
 
     public static String toString(DescriptionIDorConceptIDRequest request) {
         return "[DESCRIPTION_ID=" + request.getDescriptionId() + ", CONCEPT_ID=" + request.getConceptId() + ", " +
-                "Stablishment ID=" + request.getStablishmentId() + "]";
+                "Stablishment ID=" + request.getIdStablishment() + "]";
     }
 
     public static String toString(RespuestaCategorias response) {

@@ -1,28 +1,21 @@
 package cl.minsal.semantikos.designer_modeler.designer;
 
-import cl.minsal.semantikos.designer_modeler.Constants;
 import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
-import cl.minsal.semantikos.kernel.auth.PasswordChangeException;
+import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
 import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.users.Answer;
-import cl.minsal.semantikos.model.users.Question;
 import cl.minsal.semantikos.model.users.User;
-import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.List;
 
 import static cl.minsal.semantikos.kernel.auth.UserManager.MAX_FAILED_ANSWER_ATTEMPTS;
 import static org.primefaces.util.Constants.EMPTY_STRING;

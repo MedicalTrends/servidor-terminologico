@@ -2,7 +2,7 @@ package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
-import cl.minsal.semantikos.ws.response.SnomedCTRelationshipResponse;
+import cl.minsal.semantikos.modelws.response.SnomedCTRelationshipResponse;
 
 /**
  * Created by Development on 2016-12-28.

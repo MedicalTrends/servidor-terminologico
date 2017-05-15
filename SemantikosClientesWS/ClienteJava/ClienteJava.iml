@@ -38,5 +38,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="SemantikosDomain" />
   </component>
 </module>

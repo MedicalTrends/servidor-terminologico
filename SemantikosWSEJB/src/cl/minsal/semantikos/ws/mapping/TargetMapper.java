@@ -1,6 +1,5 @@
 package cl.minsal.semantikos.ws.mapping;
 
-import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
@@ -11,11 +10,9 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
-import cl.minsal.semantikos.ws.response.ConceptResponse;
-import cl.minsal.semantikos.ws.response.TargetResponse;
+import cl.minsal.semantikos.modelws.response.ConceptResponse;
+import cl.minsal.semantikos.modelws.response.TargetResponse;
 
-import javax.ejb.EJB;
-import javax.ejb.Singleton;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.HashMap;

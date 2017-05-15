@@ -42,6 +42,7 @@
             <type>ejb</type>
         </dependency>
 
+
         <!-- Clases para validaciones básicas tipo @NotNull -->
         <dependency>
             <groupId>javax.validation</groupId>
