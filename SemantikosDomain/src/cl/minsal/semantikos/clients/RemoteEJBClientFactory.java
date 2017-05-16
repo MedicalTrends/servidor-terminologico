@@ -2,10 +2,6 @@ package cl.minsal.semantikos.clients; /**
  * Created by root on 15-05-17.
  */
 
-
-import cl.minsal.semantikos.model.categories.Category;
-import cl.minsal.semantikos.model.categories.CategoryFactory;
-
 import javax.naming.*;
 
 import java.lang.reflect.Type;
@@ -59,14 +55,6 @@ public class RemoteEJBClientFactory {
 
     public static RemoteEJBClientFactory getInstance() {
         return instance;
-    }
-
-    public Map<String, Object> getManagersByName() {
-        return managersByName;
-    }
-
-    public void setManagersByName(Map<String, Object> managersByName) {
-        this.managersByName = managersByName;
     }
 
     /**

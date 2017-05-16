@@ -49,7 +49,6 @@ public class BrowserBean implements Serializable {
     //@EJB
     TagManager tagManager;
 
-
     /**
      * Objeto de consulta: contiene todos los filtros y columnas necesarios para el despliegue de los resultados en el navegador
      */
@@ -65,13 +64,11 @@ public class BrowserBean implements Serializable {
      */
     private List<Tag> tags = new ArrayList<Tag>();
 
-
     /**
      * Lista de conceptos para el despliegue del resultado de la consulta
      */
     private LazyDataModel<ConceptSMTK> concepts;
     private ConceptSMTK conceptSelected;
-
 
     /**
      * Indica si cambió algún filtro. Se utiliza para resetear la páginación al comienzo si se ha filtrado
@@ -83,7 +80,6 @@ public class BrowserBean implements Serializable {
 
     //@EJB
     private ConceptManager conceptManager;
-
 
     @PostConstruct
     protected void initialize() {
