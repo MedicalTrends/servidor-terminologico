@@ -89,8 +89,14 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
-    public Category getCategoryByName(String name) {
-        return CategoryFactory.getInstance().findCategoryByName(name);
+    public Category getCategoryByName(String name) throws IllegalArgumentException {
+        Category category= CategoryFactory.getInstance().findCategoryByName(name);
+        if(category!=null) {
+            return category;
+        }
+        else {
+            throw new IllegalArgumentException("No existe una categoría de nombre: "+name);
+        }
         //return this.categoryDAO.getCategoryByName(name);
     }
 

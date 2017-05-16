@@ -533,7 +533,7 @@ public class ConceptController {
         Category category;
         try {
             category = this.categoryManager.getCategoryByName(categoryName);
-        } catch (IllegalArgumentException iae) {
+        } catch (Exception e) {
             throw new NotFoundFault("No se encontró una categoría de nombre '" + categoryName + "'");
         }
 

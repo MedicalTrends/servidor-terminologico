@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.ws.busqueda;
 
 import cl.minsal.semantikos.ws.ParameterValidator;
+import cl.minsal.semantikos.ws.request.DescriptionIDorConceptIDRequest;
 import cl.minsal.semantikos.ws.shared.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +61,7 @@ public class WebServiceReq026Servlet extends HttpServlet {
         DescriptionIDorConceptIDRequest request = new DescriptionIDorConceptIDRequest();
         request.setDescriptionId(description_id);
         request.setConceptId(concept_id);
-        request.setStablishmentId(stablishment_id);
+        request.setIdStablishment(stablishment_id);
 
         logger.debug(this.getClass().getName() + ".doPost(): Params: " + Stringer.toString(request));
 

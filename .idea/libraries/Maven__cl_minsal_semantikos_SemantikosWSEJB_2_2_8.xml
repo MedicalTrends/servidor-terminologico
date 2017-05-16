@@ -1,8 +1,6 @@
 <component name="libraryTable">
   <library name="Maven: cl.minsal.semantikos:SemantikosWSEJB:2.2.8">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/cl/minsal/semantikos/SemantikosWSEJB/2.2.8/SemantikosWSEJB-2.2.8.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/SemantikosWSEJB/SemantikosWSEJB-2.2.8-javadoc.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/cl/minsal/semantikos/SemantikosWSEJB/2.2.8/SemantikosWSEJB-2.2.8-javadoc.jar!/" />

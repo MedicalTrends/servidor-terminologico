@@ -267,9 +267,10 @@ public class SearchService {
         }
     }
 
-    public boolean isEmpty(List<String> list) {
+    private boolean isEmpty(List<String> list) {
         return list.isEmpty() || (list.size() == 1 && list.contains(EMPTY_STRING));
     }
+
 
     // REQ-WS-007
     // REQ-WS-009

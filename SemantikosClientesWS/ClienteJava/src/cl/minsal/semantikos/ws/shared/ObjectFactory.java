@@ -1,6 +1,8 @@
 
 package cl.minsal.semantikos.ws.shared;
 
+import cl.minsal.semantikos.ws.request.DescriptionIDorConceptIDRequest;
+
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
@@ -304,11 +306,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link CrossMapsIndirectosPorDescripcionIDorConceptID }
+     * Create an instance of {@link CrossMapsIndirectosPorIDDescripcionResponse }
      * 
      */
-    public CrossMapsIndirectosPorDescripcionIDorConceptID createCrossMapsIndirectosPorDescripcionIDorConceptID() {
-        return new CrossMapsIndirectosPorDescripcionIDorConceptID();
+    public CrossMapsIndirectosPorIDDescripcionResponse createCrossMapsIndirectosPorDescripcionIDorConceptID() {
+        return new CrossMapsIndirectosPorIDDescripcionResponse();
     }
 
     /**
@@ -551,13 +553,16 @@ public class ObjectFactory {
         return new NotFoundFault();
     }
 
+
     /**
-     * Create an instance of {@link CrossMapsIndirectosPorDescripcionIDorConceptIDResponse }
+     * Create an instance of {@link  }
      * 
      */
+    /*
     public CrossMapsIndirectosPorDescripcionIDorConceptIDResponse createCrossMapsIndirectosPorDescripcionIDorConceptIDResponse() {
         return new CrossMapsIndirectosPorDescripcionIDorConceptIDResponse();
     }
+    */
 
     /**
      * Create an instance of {@link DefinicionObjetivo }
@@ -1000,10 +1005,12 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link CrossMapsIndirectosPorDescripcionIDorConceptID }{@code >}}
      * 
      */
+    /*
     @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "crossMapsIndirectosPorDescripcionIDorConceptID")
     public JAXBElement<CrossMapsIndirectosPorDescripcionIDorConceptID> createCrossMapsIndirectosPorDescripcionIDorConceptID(CrossMapsIndirectosPorDescripcionIDorConceptID value) {
         return new JAXBElement<CrossMapsIndirectosPorDescripcionIDorConceptID>(_CrossMapsIndirectosPorDescripcionIDorConceptID_QNAME, CrossMapsIndirectosPorDescripcionIDorConceptID.class, null, value);
     }
+    */
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link DescripcionesPreferidasPorRefSet }{@code >}}
@@ -1330,13 +1337,15 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CrossMapsIndirectosPorDescripcionIDorConceptIDResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link /*CrossMapsIndirectosPorDescripcionIDorConceptIDResponse }{@code >}}
      * 
      */
+    /*
     @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "crossMapsIndirectosPorDescripcionIDorConceptIDResponse")
     public JAXBElement<CrossMapsIndirectosPorDescripcionIDorConceptIDResponse> createCrossMapsIndirectosPorDescripcionIDorConceptIDResponse(CrossMapsIndirectosPorDescripcionIDorConceptIDResponse value) {
         return new JAXBElement<CrossMapsIndirectosPorDescripcionIDorConceptIDResponse>(_CrossMapsIndirectosPorDescripcionIDorConceptIDResponse_QNAME, CrossMapsIndirectosPorDescripcionIDorConceptIDResponse.class, null, value);
     }
+    */
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link RespuestaRefSets }{@code >}}
