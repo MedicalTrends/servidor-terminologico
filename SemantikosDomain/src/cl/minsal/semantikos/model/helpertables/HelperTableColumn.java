@@ -2,10 +2,12 @@ package cl.minsal.semantikos.model.helpertables;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+
 /**
  * Created by BluePrints Developer on 14-12-2016.
  */
-public class HelperTableColumn {
+public class HelperTableColumn implements Serializable {
     private long id;
     private String name;
     private long helperTableId;

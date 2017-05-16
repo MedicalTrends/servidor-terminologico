@@ -1,12 +1,14 @@
 package cl.minsal.semantikos.model.audit;
 
+import java.io.Serializable;
+
 import static cl.minsal.semantikos.model.audit.AuditActionNature.CHANGE;
 import static cl.minsal.semantikos.model.audit.AuditActionNature.CREATION;
 
 /**
  * @author Andrés Farías on 8/23/16.
  */
-public enum AuditActionType {
+public enum AuditActionType implements Serializable {
 
     CONCEPT_CREATION(1, "Creación de Concepto", CREATION),
     CONCEPT_PUBLICATION(2, "Publicación de Concepto", AuditActionNature.CHANGE),

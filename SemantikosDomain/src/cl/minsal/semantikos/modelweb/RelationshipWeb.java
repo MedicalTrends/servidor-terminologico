@@ -6,12 +6,13 @@ import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RelationshipWeb extends Relationship implements Comparable<RelationshipWeb> {
+public class RelationshipWeb extends Relationship implements Comparable<RelationshipWeb>, Serializable {
 
     public boolean hasBeenModified;
 

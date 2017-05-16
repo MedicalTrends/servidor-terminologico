@@ -5,9 +5,10 @@ import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
-public class DescriptionWeb extends Description {
+public class DescriptionWeb extends Description implements Serializable {
 
     public boolean hasBeenModified;
 

@@ -3,10 +3,12 @@ package cl.minsal.semantikos.model.relationships;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
+
 /**
  * @author Andrés Farías
  */
-public class MultiplicityFactory {
+public class MultiplicityFactory implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(MultiplicityFactory.class);
 

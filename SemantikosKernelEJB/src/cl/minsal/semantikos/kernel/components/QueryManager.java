@@ -9,12 +9,13 @@ import cl.minsal.semantikos.model.descriptions.PendingTerm;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * Created by BluePrints Developer on 21-09-2016.
  */
-@Local
+@Remote
 public interface QueryManager {
 
     /**

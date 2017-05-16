@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model.helpertables;
+package cl.minsal.semantikos.model.exceptions;
 
 import java.io.IOException;
 import java.util.List;

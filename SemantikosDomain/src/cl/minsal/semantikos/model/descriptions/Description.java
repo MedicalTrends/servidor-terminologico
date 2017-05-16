@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,7 +17,7 @@ import static java.lang.System.currentTimeMillis;
 /**
  * @author Andrés Farías on 08-07-16.
  */
-public class Description extends PersistentEntity implements AuditableEntity {
+public class Description extends PersistentEntity implements AuditableEntity, Serializable {
 
     /** El término que representa esta descripción */
     private String term;

@@ -2,6 +2,7 @@ package cl.minsal.semantikos.model.snapshots;
 
 import cl.minsal.semantikos.model.snomedct.SnomedCTComponent;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * Esta clase representa una petición de procesamiento de un bloque de registros de un componente del snapshot
  * SnomedCT
  */
-public class SnapshotProcessingRequest {
+public class SnapshotProcessingRequest implements Serializable {
 
     /**
      * Los registros que violan restricciones de llave foranea

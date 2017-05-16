@@ -4,6 +4,7 @@ import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.snomedct.*;
 import cl.minsal.semantikos.model.users.User;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * @author Diego Soto
  */
-public class SnomedCTSnapshotUpdate extends PersistentEntity {
+public class SnomedCTSnapshotUpdate extends PersistentEntity implements Serializable {
 
     /**
      * Versión del snapshot (moduleId??)

@@ -2,13 +2,14 @@ package cl.minsal.semantikos.model.audit;
 
 import cl.minsal.semantikos.model.users.User;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 /**
  * @author Andrés Farías on 9/20/16.
  */
-public abstract class AuditAction {
+public abstract class AuditAction implements Serializable {
 
     /** El tipo de acción que se registra */
     private AuditActionType auditActionType;

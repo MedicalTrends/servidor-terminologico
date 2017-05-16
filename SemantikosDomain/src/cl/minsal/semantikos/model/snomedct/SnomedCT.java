@@ -3,12 +3,14 @@ package cl.minsal.semantikos.model.snomedct;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
+import java.io.Serializable;
+
 /**
  * Esta clase, representa la terminología internacional estándar SNOMED CT.
  *
  * @author Andrés Farías
  */
-public class SnomedCT extends PersistentEntity implements TargetDefinition{
+public class SnomedCT extends PersistentEntity implements TargetDefinition, Serializable {
 
     /** Descripción del concepto */
     private String version;

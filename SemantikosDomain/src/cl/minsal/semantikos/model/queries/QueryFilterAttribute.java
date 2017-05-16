@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
  *
  * @author Diego Soto.
  */
-public class QueryFilterAttribute {
+public class QueryFilterAttribute implements Serializable {
 
     /**
      * La definición de este filtro

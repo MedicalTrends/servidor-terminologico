@@ -1,11 +1,12 @@
 package cl.minsal.semantikos.model.queries;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by root on 27-04-17.
  */
-public class Query implements IQuery {
+public class Query implements IQuery, Serializable {
 
     private String query;
 

@@ -6,12 +6,13 @@ import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * @author Andrés Farías on 9/20/16.
  */
-@Local
+@Remote
 public interface RefSetManager {
 
     /**

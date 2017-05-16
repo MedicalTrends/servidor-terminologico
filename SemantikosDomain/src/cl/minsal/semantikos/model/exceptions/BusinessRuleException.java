@@ -3,10 +3,12 @@ package cl.minsal.semantikos.model.exceptions;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 
+import java.io.Serializable;
+
 /**
  * @author Andrés Farias
  */
-public class BusinessRuleException extends RuntimeException {
+public class BusinessRuleException extends RuntimeException implements Serializable {
 
     /** El código de la regla de negocio violada */
     private String code;

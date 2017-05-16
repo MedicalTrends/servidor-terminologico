@@ -1,12 +1,13 @@
 package cl.minsal.semantikos.model.users;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by BluePrints Developer on 19-05-2016.
  */
-public class Group {
+public class Group implements Serializable {
 
     String idGroup;
     String name;

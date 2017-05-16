@@ -4,12 +4,13 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.User;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * @author Andrés Farías on 9/20/16.
  */
-public class RefSetAuditAction extends AuditAction{
+public class RefSetAuditAction extends AuditAction implements Serializable {
 
     private final RefSet refSet;
 

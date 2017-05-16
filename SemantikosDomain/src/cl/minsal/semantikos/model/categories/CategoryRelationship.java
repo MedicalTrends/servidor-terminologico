@@ -2,10 +2,12 @@ package cl.minsal.semantikos.model.categories;
 
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
+import java.io.Serializable;
+
 /**
  * Created by root on 08-07-16.
  */
-public class CategoryRelationship {
+public class CategoryRelationship implements Serializable {
     private long idAtributteCategory;
     private long idCategoria;
     private long idAtributteCategoryDefinition;

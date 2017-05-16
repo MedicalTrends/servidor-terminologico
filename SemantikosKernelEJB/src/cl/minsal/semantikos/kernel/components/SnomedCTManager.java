@@ -3,13 +3,14 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.model.snomedct.*;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author Andrés Farías on 9/26/16.
  */
-@Local
+@Remote
 public interface SnomedCTManager {
 
 

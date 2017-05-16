@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.components;
 
+import cl.minsal.semantikos.kernel.daos.PendingTermDAO;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.kernel.businessrules.PendingTermAddingBR;
 import cl.minsal.semantikos.model.descriptions.Description;

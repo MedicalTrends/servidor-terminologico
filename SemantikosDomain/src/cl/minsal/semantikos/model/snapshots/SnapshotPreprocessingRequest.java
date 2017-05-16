@@ -2,6 +2,7 @@ package cl.minsal.semantikos.model.snapshots;
 
 import cl.minsal.semantikos.model.snomedct.SnomedCTComponent;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import java.util.Map;
  * Esta clase representa una petición de preprocesamiento de un bloque de registros de un componente del snapshot
  * SnomedCT
  */
-public class SnapshotPreprocessingRequest {
+public class SnapshotPreprocessingRequest implements Serializable {
 
     /**
      * El bloque de registros a pre-procesar

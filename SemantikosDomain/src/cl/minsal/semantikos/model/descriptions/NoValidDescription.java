@@ -2,13 +2,14 @@ package cl.minsal.semantikos.model.descriptions;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Andrés Farías on 10/24/16.
  */
-public class NoValidDescription {
+public class NoValidDescription implements Serializable {
 
     /** La descripción que no es válida */
     private Description noValidDescription;

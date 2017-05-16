@@ -3,10 +3,12 @@ package cl.minsal.semantikos.model.tags;
 import cl.minsal.semantikos.model.DAO;
 import cl.minsal.semantikos.model.PersistentEntity;
 
+import java.io.Serializable;
+
 /**
  * @author Andrés Farías on 9/4/16.
  */
-public class TagSMTK extends PersistentEntity {
+public class TagSMTK extends PersistentEntity implements Serializable {
 
     /** El nombre del Tag Semantikos */
     private String name;

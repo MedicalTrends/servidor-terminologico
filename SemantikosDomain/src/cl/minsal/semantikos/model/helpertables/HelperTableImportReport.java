@@ -2,6 +2,7 @@ package cl.minsal.semantikos.model.helpertables;
 
 import cl.minsal.semantikos.model.users.User;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * @author Andrés Farías on 11/14/16.
  */
-public class HelperTableImportReport {
+public class HelperTableImportReport implements Serializable {
 
     private final Timestamp startTime;
 

@@ -2,6 +2,7 @@ package cl.minsal.semantikos.model.users;
 
 import cl.minsal.semantikos.model.PersistentEntity;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * @author Francisco Mendez
  */
-public class User extends PersistentEntity {
+public class User extends PersistentEntity implements Serializable {
 
     private static User dummyUser = new User(NON_PERSISTED_ID, "dummy", "Usuario de Prueba", true);
 

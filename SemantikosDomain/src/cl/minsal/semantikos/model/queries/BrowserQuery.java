@@ -3,13 +3,14 @@ package cl.minsal.semantikos.model.queries;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.tags.Tag;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by BluePrints Developer on 21-09-2016.
  */
-public class BrowserQuery extends Query implements IQuery {
+public class BrowserQuery extends Query implements IQuery, Serializable {
 
     /**
      * Static filters

@@ -5,12 +5,13 @@ import cl.minsal.semantikos.model.descriptions.PendingTerm;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * @author Andrés Farías on 11/22/16.
  */
-@Local
+@Remote
 public interface PendingTermsManager {
 
     /**

@@ -1,10 +1,12 @@
 package cl.minsal.semantikos.model.relationships;
 
+import java.io.Serializable;
+
 /**
  * Created by root on 08-07-16.
  */
 // TODO: Normalizar esta clase
-public class RelationshipAttribute {
+public class RelationshipAttribute implements Serializable {
 
     private Long idRelationshipAttribute;
     private RelationshipAttributeDefinition relationAttributeDefinition;

@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  *
  * @author Andrés Farías
  */
-public abstract class Crossmap extends Relationship {
+public abstract class Crossmap extends Relationship implements Serializable {
 
     public Crossmap(ConceptSMTK sourceConcept, CrossmapSetMember target, RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
         super(sourceConcept, target, relationshipDefinition,new ArrayList<RelationshipAttribute>(), validityUntil);

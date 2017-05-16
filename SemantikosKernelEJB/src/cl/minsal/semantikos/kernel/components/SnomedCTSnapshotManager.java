@@ -4,11 +4,12 @@ import cl.minsal.semantikos.model.snapshots.SnapshotProcessingResult;
 import cl.minsal.semantikos.model.snapshots.SnomedCTSnapshotUpdate;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  * @author Andrés Farías on 9/26/16.
  */
-@Local
+@Remote
 public interface SnomedCTSnapshotManager {
 
     /**

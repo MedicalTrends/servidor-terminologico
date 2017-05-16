@@ -1,9 +1,11 @@
 package cl.minsal.semantikos.model.descriptions;
 
+import java.io.Serializable;
+
 /**
  * Created by des01c7 on 24-10-16.
  */
-public class ObservationNoValid {
+public class ObservationNoValid implements Serializable {
 
     private Long id;
     private String description;

@@ -56,9 +56,6 @@ public class SearchService {
     @EJB
     private AuthenticationManager authenticationManager;
 
-    @EJB
-    private InstitutionManager institutionManager;
-
     @Resource
     WebServiceContext wsctx;
 

@@ -1,11 +1,12 @@
 package cl.minsal.semantikos.model.basictypes;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * Esta clase representa un intervalo de elementos comparables.
  */
-public abstract class Interval<T extends Comparable> {
+public abstract class Interval<T extends Comparable> implements Serializable {
 
     /** Limite inferior del intervalo */
     protected T lowerBoundary;

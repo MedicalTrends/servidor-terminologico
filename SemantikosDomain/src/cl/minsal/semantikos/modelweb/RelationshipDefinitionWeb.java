@@ -4,6 +4,7 @@ import cl.minsal.semantikos.model.relationships.Multiplicity;
 import cl.minsal.semantikos.model.relationships.*;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * @author Andrés Farías on 10/5/16.
  */
-public class RelationshipDefinitionWeb extends RelationshipDefinition implements Comparable<RelationshipDefinitionWeb> {
+public class RelationshipDefinitionWeb extends RelationshipDefinition implements Comparable<RelationshipDefinitionWeb>, Serializable {
 
     /** El identificador del composite que se quiere usar en las vistas */
     private long compositeID;

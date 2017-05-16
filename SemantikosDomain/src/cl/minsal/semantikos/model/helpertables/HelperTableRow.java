@@ -5,6 +5,7 @@ import cl.minsal.semantikos.model.relationships.TargetType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
  * Created by BluePrints Developer on 14-12-2016.
  */
 
-public class HelperTableRow implements Target {
+public class HelperTableRow implements Target, Serializable {
 
     private long id;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss", timezone="America/Buenos_Aires")

@@ -1,15 +1,16 @@
-package cl.minsal.semantikos.kernel.components;
+package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * @author Andrés Farías on 11/22/16.
  */
-@Local
+@Remote
 public interface PendingTermDAO {
 
     /**

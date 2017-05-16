@@ -1,11 +1,12 @@
 package cl.minsal.semantikos.model.snomedct;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * Created by des01c7 on 20-03-17.
  */
-public class RelationshipSnapshotSCT {
+public class RelationshipSnapshotSCT implements Serializable {
 
 
     private long id;

@@ -5,6 +5,7 @@ import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.users.User;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +20,7 @@ import java.util.List;
  *
  * @author Diego Soto.
  */
-public class GeneralQuery extends Query implements IQuery {
+public class GeneralQuery extends Query implements IQuery, Serializable {
 
     /**
      * Filtros estáticos

@@ -3,13 +3,14 @@ package cl.minsal.semantikos.model.descriptions;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.categories.Category;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
 /**
  * @author Andrés Farías on 11/22/16.
  */
-public class PendingTerm extends PersistentEntity {
+public class PendingTerm extends PersistentEntity implements Serializable {
 
     private String term;
 

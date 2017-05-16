@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.kernel.components.ispfetcher;
+package cl.minsal.semantikos.kernel.components;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

@@ -1,9 +1,11 @@
 package cl.minsal.semantikos.model.snapshots;
 
+import java.io.Serializable;
+
 /**
  * @author Andrés Farías on 8/23/16.
  */
-public enum AuditActionType {
+public enum AuditActionType implements Serializable {
 
     SNOMED_CT_CREATION(1, "Creación Registro Componente SnomedCT", AuditActionNature.CREATION),
     SNOMED_CT_REMOVAL(2, "Eliminación Registro Componente SnomedCT", AuditActionNature.REMOVAL),

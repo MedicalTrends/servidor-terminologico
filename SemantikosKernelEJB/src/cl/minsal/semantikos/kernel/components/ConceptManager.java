@@ -10,13 +10,14 @@ import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
  * @author Andrés Farías
  */
-@Local
+@Remote
 public interface ConceptManager {
 
     /**

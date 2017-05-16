@@ -13,14 +13,8 @@
         <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
         <element id="library" level="project" name="Maven: javax.validation:validation-api:1.0.0.GA" />
       </element>
-      <element id="archive" name="SemantikosWeb-4.0.0.war">
-        <element id="artifact" artifact-name="SemantikosWeb:war exploded" />
-      </element>
       <element id="archive" name="SemantikosBrowser-4.0.0.war">
         <element id="artifact" artifact-name="SemantikosBrowser:war exploded" />
-      </element>
-      <element id="archive" name="SemantikosWS-4.0.0.war">
-        <element id="artifact" artifact-name="SemantikosWS:war exploded" />
       </element>
     </root>
   </artifact>

@@ -7,12 +7,13 @@ import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
 import cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.Map;
 
 /**
  * @author Andrés Farías on 10/5/16.
  */
-@Local
+@Remote
 public interface ViewAugmenter {
 
     /**

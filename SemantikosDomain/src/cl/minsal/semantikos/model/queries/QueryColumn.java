@@ -2,10 +2,12 @@ package cl.minsal.semantikos.model.queries;
 
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
+import java.io.Serializable;
+
 /**
  * Created by root on 25-10-16.
  */
-public class QueryColumn {
+public class QueryColumn implements Serializable {
 
     String columnName;
     Sort sort;

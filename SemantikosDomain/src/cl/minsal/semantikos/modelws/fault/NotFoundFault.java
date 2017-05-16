@@ -1,10 +1,12 @@
 package cl.minsal.semantikos.modelws.fault;
 
+import java.io.Serializable;
+
 /**
  * Created by Development on 2016-10-13.
  *
  */
-public class NotFoundFault extends Exception {
+public class NotFoundFault extends Exception implements Serializable {
     public NotFoundFault() {
     }
 

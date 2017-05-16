@@ -1,9 +1,11 @@
 package cl.minsal.semantikos.model.queries;
 
+import java.io.Serializable;
+
 /**
  * Created by root on 25-10-16.
  */
-public class Sort {
+public class Sort implements Serializable {
 
     Boolean sort;
     boolean asc;

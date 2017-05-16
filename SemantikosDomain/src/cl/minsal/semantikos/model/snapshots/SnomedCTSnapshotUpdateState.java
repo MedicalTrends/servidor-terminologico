@@ -2,10 +2,12 @@ package cl.minsal.semantikos.model.snapshots;
 
 import cl.minsal.semantikos.model.PersistentEntity;
 
+import java.io.Serializable;
+
 /**
  * @author Diego Soto
  */
-public class SnomedCTSnapshotUpdateState extends PersistentEntity {
+public class SnomedCTSnapshotUpdateState extends PersistentEntity implements Serializable {
 
     private boolean conceptsProcessed = false;
 

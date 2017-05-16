@@ -3,13 +3,14 @@ package cl.minsal.semantikos.model.queries;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.ObservationNoValid;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by BluePrints Developer on 21-09-2016.
  */
-public class NoValidQuery extends Query implements IQuery {
+public class NoValidQuery extends Query implements IQuery, Serializable {
 
     /**
      * Static filters

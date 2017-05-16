@@ -11,12 +11,13 @@ import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * @author Andrés Farías
  */
-@Local
+@Remote
 public interface AuditManager {
 
 

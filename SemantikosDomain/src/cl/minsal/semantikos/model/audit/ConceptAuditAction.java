@@ -7,12 +7,13 @@ import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.users.User;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * @author Andrés Farías on 8/23/16.
  */
-public class ConceptAuditAction extends AuditAction {
+public class ConceptAuditAction extends AuditAction implements Serializable {
 
     public ConceptAuditAction(ConceptSMTK subjectConcept, AuditActionType auditActionType, Timestamp actionDate, User user, AuditableEntity auditableEntity) {
         super(auditActionType, actionDate, user, auditableEntity, subjectConcept);

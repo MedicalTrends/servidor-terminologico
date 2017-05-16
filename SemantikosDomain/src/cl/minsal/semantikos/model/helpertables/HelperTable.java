@@ -2,6 +2,7 @@ package cl.minsal.semantikos.model.helpertables;
 
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by BluePrints Developer on 14-12-2016.
  */
 
-public class HelperTable implements TargetDefinition{
+public class HelperTable implements TargetDefinition, Serializable {
     private long id;
     private String name;
     private String description;

@@ -2,12 +2,13 @@ package cl.minsal.semantikos.model.exceptions;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by root on 12-05-17.
  */
-public class RowInUseException extends Exception{
+public class RowInUseException extends Exception implements Serializable {
 
     private List<ConceptSMTK> concepts;
 

@@ -5,12 +5,15 @@ import cl.minsal.semantikos.model.exceptions.RowInUseException;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.helpertables.*;
 
+import javax.ejb.Local;
+import javax.ejb.Remote;
 import java.io.Reader;
 import java.util.List;
 
 /**
  * Created by BluePrints Developer on 09-01-2017.
  */
+@Remote
 public interface HelperTablesManager {
     HelperTable getById(long id);
 
@@ -28,7 +31,6 @@ public interface HelperTablesManager {
     crea una nueva fila con campos por defecto para la tabla proporcionada
      */
     HelperTableRow createEmptyRow(Long tableId, String username);
-
 
     /*
     actualiza la fila. verifica que si se deja no valida, la fila no sea referencia de otras tablas
@@ -86,7 +88,7 @@ public interface HelperTablesManager {
     List<HelperTableRow> searchRows(HelperTable helperTable, String pattern, List<String> columnNames);
 
 
-    HelperTableImportReport loadFromFile(HelperTable helperTable, LoadMode loadModeSelected, Reader in, User loggedUser);
+    HelperTableImportReport loadFromFile(HelperTable helperTable, LoadMode loadModeSelected, User loggedUser);
 
 
     List<HelperTableRow> getValidTableRows(long id);

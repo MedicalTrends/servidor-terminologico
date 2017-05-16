@@ -2,12 +2,13 @@ package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author Andrés Farías
  */
-public enum TargetType {
+public enum TargetType implements Serializable {
 
     BasicType(1, "SCT", "Snomed CT"),
     SMTK(2, "SCT", "Snomed CT"),

@@ -3,13 +3,14 @@ package cl.minsal.semantikos.kernel.businessrules;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * TODO: Eliminar esta interfaz, no es necesaria.
  */
 
-@Local
+@Remote
 public interface UserCreationBRInterface {
 
     public void br301UniqueDocumentNumber(User user);

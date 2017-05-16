@@ -5,12 +5,13 @@ import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  * TODO: Eliminar esta interfaz, no es necesaria.
  */
 
-@Local
+@Remote
 public interface RelationshipBindingBRInterface {
 
     public void verifyPreConditions(ConceptSMTK concept, Relationship relationship, User user);

@@ -11,6 +11,7 @@ import cl.minsal.semantikos.model.queries.*;
 import cl.minsal.semantikos.model.relationships.*;
 
 import javax.ejb.EJB;
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +21,7 @@ import java.util.List;
  * Created by BluePrints Developer on 21-09-2016.
  */
 @Stateless
+@Remote(QueryManager.class)
 public class QueryManagerImpl implements QueryManager {
 
 

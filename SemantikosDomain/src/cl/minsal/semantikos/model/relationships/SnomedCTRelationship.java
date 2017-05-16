@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  *
  * @author Andrés Farías created on 9/27/16.
  */
-public class SnomedCTRelationship extends Relationship {
+public class SnomedCTRelationship extends Relationship implements Serializable {
 
     public static final String ES_UN_MAPEO_DE = "es un mapeo";
     public static final String ES_UN = "es un[a]";

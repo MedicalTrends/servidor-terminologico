@@ -2,10 +2,12 @@ package cl.minsal.semantikos.model.snapshots;
 
 import cl.minsal.semantikos.model.snomedct.SnomedCTComponent;
 
+import java.io.Serializable;
+
 /**
  * @author Diego Soto
  */
-public class SnomedCTSnapshotUpdateDetail {
+public class SnomedCTSnapshotUpdateDetail implements Serializable {
 
     private SnomedCTComponent snomedCTComponent;
 

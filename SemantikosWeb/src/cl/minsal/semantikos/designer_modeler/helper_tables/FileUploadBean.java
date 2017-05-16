@@ -136,7 +136,7 @@ public class FileUploadBean {
             }
 
             /* Se invoca la función de negocio para cargar el archivo */
-            HelperTableImportReport helperTableImportReport = helperTablesManager.loadFromFile(helperTable, loadModeSelected, in, authenticationBean.getLoggedUser());
+            HelperTableImportReport helperTableImportReport = helperTablesManager.loadFromFile(helperTable, loadModeSelected, authenticationBean.getLoggedUser());
             if (helperTableImportReport.getStatus().equals(LoadStatus.CANCELED)){
                 FacesMessage msg = new FacesMessage("Carga cancelada! " + helperTableImportReport.getExceptions());
                 FacesContext.getCurrentInstance().addMessage(null, msg);

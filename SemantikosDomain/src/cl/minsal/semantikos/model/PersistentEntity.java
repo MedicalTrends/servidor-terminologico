@@ -3,6 +3,7 @@ package cl.minsal.semantikos.model;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * @author Andrés Farías on 8/29/16.
  */
-public abstract class PersistentEntity implements IPersistentEntity {
+public abstract class PersistentEntity implements IPersistentEntity, Serializable {
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(PersistentEntity.class);
 

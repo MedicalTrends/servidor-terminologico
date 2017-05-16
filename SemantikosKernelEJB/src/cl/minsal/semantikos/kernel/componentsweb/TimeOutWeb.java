@@ -1,12 +1,13 @@
 package cl.minsal.semantikos.kernel.componentsweb;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  * Created by des01c7 on 09-01-17.
  */
 
-@Local
+@Remote
 public interface TimeOutWeb {
 
     /**

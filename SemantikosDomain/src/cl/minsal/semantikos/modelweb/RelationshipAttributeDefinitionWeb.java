@@ -5,10 +5,12 @@ import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
+import java.io.Serializable;
+
 /**
  * Created by des01c7 on 04-01-17.
  */
-public class RelationshipAttributeDefinitionWeb extends RelationshipAttributeDefinition implements Comparable<RelationshipAttributeDefinitionWeb> {
+public class RelationshipAttributeDefinitionWeb extends RelationshipAttributeDefinition implements Comparable<RelationshipAttributeDefinitionWeb>, Serializable {
 
     /** El identificador del composite que se quiere usar en las vistas */
     private long compositeID;

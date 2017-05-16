@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.model.tags;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Map;
 /**
  * @author Andrés Farías
  */
-public class TagSMTKFactory {
+public class TagSMTKFactory implements Serializable {
 
     private static final TagSMTKFactory instance = new TagSMTKFactory();
 

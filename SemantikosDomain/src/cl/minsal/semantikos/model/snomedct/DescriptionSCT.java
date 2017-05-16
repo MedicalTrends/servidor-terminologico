@@ -3,6 +3,7 @@ package cl.minsal.semantikos.model.snomedct;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.snapshots.AuditActionType;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -12,7 +13,7 @@ import java.sql.Timestamp;
  * @version 1.0
  * @created 28-09-2016
  */
-public class DescriptionSCT extends PersistentEntity implements SnomedCTComponent {
+public class DescriptionSCT extends PersistentEntity implements SnomedCTComponent, Serializable {
 
     private DescriptionSCTType descriptionType;
     /**

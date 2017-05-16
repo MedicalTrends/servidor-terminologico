@@ -1,3 +1,5 @@
+
+import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.categories.Category;
@@ -12,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -42,10 +43,10 @@ public class BrowserBean implements Serializable {
      */
     static final Logger logger = LoggerFactory.getLogger(BrowserBean.class);
 
-    @EJB
+    //@EJB
     QueryManager queryManager;
 
-    @EJB
+    //@EJB
     TagManager tagManager;
 
 
@@ -69,7 +70,6 @@ public class BrowserBean implements Serializable {
      * Lista de conceptos para el despliegue del resultado de la consulta
      */
     private LazyDataModel<ConceptSMTK> concepts;
-
     private ConceptSMTK conceptSelected;
 
 
@@ -78,20 +78,23 @@ public class BrowserBean implements Serializable {
      */
     private boolean isFilterChanged;
 
-
-    @EJB
+    //@EJB
     private CategoryManager categoryManager;
 
-    @EJB
+    //@EJB
     private ConceptManager conceptManager;
 
 
     @PostConstruct
     protected void initialize() {
 
+        queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
+        tagManager = (TagManager) RemoteEJBClientFactory.getInstance().getManager(TagManager.class);
+        categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
+        conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+
         tags = tagManager.getAllTags();
         categories = categoryManager.getCategories();
-
 
         // 1. set options for first layout  
         layoutOptionsOne = new LayoutOptions();

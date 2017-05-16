@@ -2,10 +2,12 @@ package cl.minsal.semantikos.model.users;
 
 import cl.minsal.semantikos.model.PersistentEntity;
 
+import java.io.Serializable;
+
 /**
  * @author Diego Soto
  */
-public class Answer extends PersistentEntity {
+public class Answer extends PersistentEntity implements Serializable {
 
 
     private long id;

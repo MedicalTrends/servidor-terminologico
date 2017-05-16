@@ -5,6 +5,7 @@ import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.users.Institution;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * @author Andrés Farías on 9/7/16.
  */
-public class RefSet extends PersistentEntity implements AuditableEntity {
+public class RefSet extends PersistentEntity implements AuditableEntity, Serializable {
 
     /**
      * Nombre del RefSet. Nombre corto y descriptivo de su contenido, para identificación por humanos

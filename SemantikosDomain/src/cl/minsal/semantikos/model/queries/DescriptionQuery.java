@@ -4,13 +4,14 @@ import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.refsets.RefSet;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by BluePrints Developer on 21-09-2016.
  */
-public class DescriptionQuery extends Query implements IQuery {
+public class DescriptionQuery extends Query implements IQuery, Serializable {
 
     /**
      * Static filters

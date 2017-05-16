@@ -13,6 +13,7 @@ import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.Tag;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -21,7 +22,7 @@ import java.util.List;
 /**
  * @author Diego Soto
  */
-public class ConceptSMTKWeb extends ConceptSMTK {
+public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
 
     //Atributos básicos del concepto que son pasados a la vista
 

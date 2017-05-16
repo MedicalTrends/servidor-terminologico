@@ -3,10 +3,12 @@ package cl.minsal.semantikos.model.snomedct;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.snapshots.AuditActionType;
 
+import java.io.Serializable;
+
 /**
  * Created by des01c7 on 20-03-17.
  */
-public class TransitiveSCT extends PersistentEntity implements SnomedCTComponent {
+public class TransitiveSCT extends PersistentEntity implements SnomedCTComponent, Serializable {
 
     private long idPartent;
     private long idChild;

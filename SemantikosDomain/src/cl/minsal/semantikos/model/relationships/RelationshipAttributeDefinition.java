@@ -1,9 +1,11 @@
 package cl.minsal.semantikos.model.relationships;
 
+import java.io.Serializable;
+
 /**
  * @author Andrés Farías
  */
-public class RelationshipAttributeDefinition {
+public class RelationshipAttributeDefinition implements Serializable {
 
     /** Identificador único de la entidad */
     private long id;

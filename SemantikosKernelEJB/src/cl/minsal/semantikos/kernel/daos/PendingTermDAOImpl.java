@@ -1,8 +1,5 @@
-package cl.minsal.semantikos.kernel.components;
+package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.daos.CategoryDAO;
-import cl.minsal.semantikos.kernel.daos.ConceptDAO;
-import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;

@@ -6,12 +6,13 @@ import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * @author Andrés Farías on 11/3/16.
  */
-public class DirectCrossmap extends Crossmap implements Target {
+public class DirectCrossmap extends Crossmap implements Target, Serializable {
 
 
     public DirectCrossmap(ConceptSMTK sourceConcept, CrossmapSetMember target, RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {

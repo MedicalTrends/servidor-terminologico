@@ -1,11 +1,12 @@
 package cl.minsal.semantikos.model.queries;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 
 /**
  * Created by root on 29-09-16.
  */
-public class QueryParameter {
+public class QueryParameter implements Serializable {
 
     Type type;
     Object value;
