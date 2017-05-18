@@ -2,7 +2,6 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.tags.TagSMTK;
 
-import javax.ejb.Remote;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import java.util.List;
  *
  * @author Andrés Farías on 9/4/16.
  */
-@Remote
 public interface TagSMTKManager {
 
     /**

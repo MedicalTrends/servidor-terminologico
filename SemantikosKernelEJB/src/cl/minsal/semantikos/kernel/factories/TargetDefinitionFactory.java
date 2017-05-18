@@ -12,7 +12,7 @@ import javax.ejb.EJBException;
 import javax.ejb.Singleton;
 import java.io.IOException;
 
-import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
+import static cl.minsal.semantikos.util.StringUtils.underScoreToCamelCaseJSON;
 
 @Singleton
 public class TargetDefinitionFactory {

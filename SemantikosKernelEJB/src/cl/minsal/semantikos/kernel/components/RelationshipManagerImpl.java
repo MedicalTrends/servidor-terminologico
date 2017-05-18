@@ -53,7 +53,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
     private RelationshipBindingBRInterface relationshipBindingBR;
 
     @Override
-    public Relationship bindRelationshipToConcept(ConceptSMTK concept, Relationship relationship, User user) {
+    public Relationship bindRelationshipToConcept(ConceptSMTK concept, Relationship relationship, User user) throws Exception {
 
         /* Primero se validan las reglas de negocio asociadas a la eliminación de un concepto */
         relationshipBindingBR.verifyPreConditions(concept, relationship, user);
@@ -118,7 +118,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
-    public Relationship removeRelationship(ConceptSMTK conceptSMTK,Relationship relationship, User user) {
+    public Relationship removeRelationship(ConceptSMTK conceptSMTK,Relationship relationship, User user) throws Exception {
 
         /* Primero se validan las reglas de negocio asociadas a la eliminación de un concepto */
         new RelationshipRemovalBR().applyRules(conceptSMTK, relationship, user);
@@ -147,7 +147,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
-    public List<ConceptSMTK> getTargetConceptsByCategory(ConceptSMTK conceptSMTK, Category category) {
+    public List<ConceptSMTK> getTargetConceptsByCategory(ConceptSMTK conceptSMTK, Category category) throws Exception {
 
         /* Se espera, por defecto, que el concepto no traiga sus relaciones cargadas, pero se verificará */
         if (conceptSMTK.getRelationships().isEmpty()) {
@@ -160,7 +160,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
-    public void updateRelationship(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship originalRelationship, @NotNull Relationship editedRelationship, @NotNull User user) {
+    public void updateRelationship(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship originalRelationship, @NotNull Relationship editedRelationship, @NotNull User user) throws Exception {
 
         /* Se aplican las reglas de negocio */
         new RelationshipEditionBR().applyRules(originalRelationship, editedRelationship);

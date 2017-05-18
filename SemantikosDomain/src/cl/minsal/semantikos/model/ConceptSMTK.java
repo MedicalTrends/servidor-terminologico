@@ -16,7 +16,6 @@ import cl.minsal.semantikos.model.tags.Label;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 
-import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -237,10 +236,10 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      *
      * @return Una lista con las relaciones del concepto.
      */
-    public List<Relationship> getRelationships() {
+    public List<Relationship> getRelationships() throws Exception {
 
         if (!relationshipsLoaded) {
-            throw new EJBException("Las relaciones de este concepto no han sido cargadas aun.");
+            throw new Exception("Las relaciones de este concepto no han sido cargadas aun.");
         }
 
         return relationships;
@@ -372,7 +371,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      *
      * @return Una <code>java.util.List</code> de relaciones que son del tipo Atributo.
      */
-    public List<Relationship> getAttributes() {
+    public List<Relationship> getAttributes() throws Exception {
         List<Relationship> someRelationships = new ArrayList<>();
         for (Relationship relationship : relationships) {
             if (relationship.isAttribute()) {
@@ -587,7 +586,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      *
      * @param relationship La relación que es removida.
      */
-    public void removeRelationship(Relationship relationship) {
+    public void removeRelationship(Relationship relationship) throws Exception {
         this.getRelationships().remove(relationship);
     }
 
@@ -713,7 +712,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      *
      * @return <code>true</code> si el concepto contiene estas relaciones y <code>false</code> sino.
      */
-    public boolean contains(Relationship[] relationships) {
+    public boolean contains(Relationship[] relationships) throws Exception {
 
         for (Relationship relationship : relationships) {
             if (!this.contains(relationship)) {
@@ -733,7 +732,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      *
      * @return <code>true</code> si contiene una relación asi y <code>false</code> sino.
      */
-    public boolean contains(Relationship relationship) {
+    public boolean contains(Relationship relationship) throws Exception {
         return this.getRelationships().contains(relationship);
     }
 
@@ -832,7 +831,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         return conceptSMTK;
     }
 
-    public boolean contains(String snomedRelationshipType) {
+    public boolean contains(String snomedRelationshipType) throws Exception {
         for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
             if (snomedCTRelationship.getSnomedCTRelationshipType().equalsIgnoreCase(snomedRelationshipType)) {
                 return true;
@@ -868,7 +867,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      *
      * @return <code>true</code> si el concepto posee una relación de tipo ES UN MAPEO y <code>false</code> sino.
      */
-    public boolean hasES_UN_MAPEO() {
+    public boolean hasES_UN_MAPEO() throws Exception {
 
         for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
             if (snomedCTRelationship.isES_UN_MAPEO()) return true;

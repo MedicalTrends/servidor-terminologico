@@ -28,6 +28,7 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Implementación JSF provista por EAP -->
         <!--dependency>
             <groupId>javax.faces</groupId>
             <artifactId>javax.faces-api</artifactId>
@@ -35,12 +36,14 @@
             <scope>provided</scope>
         </dependency-->
 
+        <!-- Implementación JSF provista por TOMCAT -->
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.faces</artifactId>
             <version>2.2.4</version>
         </dependency>
 
+        <!-- Soporte para CDI en Servelts (TOMCAT) -->
         <dependency>
             <groupId>org.jboss.weld.servlet</groupId>
             <artifactId>weld-servlet</artifactId>
@@ -78,7 +81,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.21</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -110,11 +113,12 @@
             <artifactId>omnifaces</artifactId>
             <version>2.4</version>
         </dependency>
-        <dependency>
+
+        <!--dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosDomain</artifactId>
             <version>4.0.0</version>
-        </dependency>
+        </dependency-->
 
     </dependencies>
 
@@ -157,4 +161,5 @@
         </plugins>
 
     </build>
+
 </project>

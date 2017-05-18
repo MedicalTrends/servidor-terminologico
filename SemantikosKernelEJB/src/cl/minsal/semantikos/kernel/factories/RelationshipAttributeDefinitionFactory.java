@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
+import static cl.minsal.semantikos.util.StringUtils.underScoreToCamelCaseJSON;
 import static java.util.Collections.emptyList;
 
 /**

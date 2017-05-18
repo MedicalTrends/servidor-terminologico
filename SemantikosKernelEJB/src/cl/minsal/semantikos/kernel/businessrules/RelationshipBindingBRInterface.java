@@ -14,19 +14,19 @@ import javax.ejb.Remote;
 @Remote
 public interface RelationshipBindingBRInterface {
 
-    public void verifyPreConditions(ConceptSMTK concept, Relationship relationship, User user);
+    public void verifyPreConditions(ConceptSMTK concept, Relationship relationship, User user) throws Exception;
 
-    public void postActions(Relationship relationship, User user);
+    public void postActions(Relationship relationship, User user) throws Exception;
 
-    public void brSCT005(ConceptSMTK concept);
+    public void brSCT005(ConceptSMTK concept) throws Exception;
 
-    public void brSCT001(ConceptSMTK concept, Relationship relationship);
+    public void brSCT001(ConceptSMTK concept, Relationship relationship) throws Exception;
 
-    public void brSTK001(ConceptSMTK concept, Relationship relationship);
+    public void brSTK001(ConceptSMTK concept, Relationship relationship) throws Exception;
 
     public void brSTK002(ConceptSMTK concept, Relationship relationship);
 
-    public void brSTK003(ConceptSMTK concept, Relationship relationship);
+    public void brSTK003(ConceptSMTK concept, Relationship relationship) throws Exception;
 
     public void brSTK004(ConceptSMTK concept, Relationship relationship);
 

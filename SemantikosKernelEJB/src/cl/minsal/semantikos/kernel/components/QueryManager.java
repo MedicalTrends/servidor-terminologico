@@ -57,7 +57,7 @@ public interface QueryManager {
      *
      * @param query El objeto de consulta para el navegador de categorías
      */
-    public List<ConceptSMTK> executeQuery(GeneralQuery query);
+    public List<ConceptSMTK> executeQuery(GeneralQuery query) throws Exception;
 
     /**
      * Este método es responsable de ejecutar una consulta en el navegador de descripciones,
@@ -65,7 +65,7 @@ public interface QueryManager {
      *
      * @param query El objeto de consulta para el navegador de descripciones
      */
-    public List<Description> executeQuery(DescriptionQuery query);
+    public List<Description> executeQuery(DescriptionQuery query) throws Exception;
 
     /**
      * Este método es responsable de ejecutar una consulta en el navegador de no válidos,

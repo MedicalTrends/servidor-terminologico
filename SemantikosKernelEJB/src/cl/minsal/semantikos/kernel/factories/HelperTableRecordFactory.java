@@ -23,27 +23,6 @@ public class HelperTableRecordFactory {
 
     private ObjectMapper mapper = new ObjectMapper();
 
-    public static final long U_VOLUMEN_ID = 12L;
-    public static final long COLUMN_U_VOL = 12L;
-
-    public static final long U_POTENCIA_ID = 9L;
-    public static final long COLUMN_U_POTENCIA = 13L;
-
-    public static final long U_UNIDAD_CANTIDAD_ID = 15L;
-    public static final long COLUMN_U_UNIDAD_CANTIDAD = 15L;
-
-    public static final long U_PACK_MULTI_ID = 16L;
-    public static final long COLUMN_U_PACK_MULTI = 14L;
-
-    public static final long U_VOLUMEN_TOT_ID = 17L;
-    public static final long COLUMN_U_VOLUMEN_TOT = 12L;
-
-    public static final long U_PP_ID = 11L;
-    //public static final long COLUMN_U_PP = ?L;
-
-    public static final long U_ASIST_ID = 61L;
-    public static final long COLUMN_U_ASIST = 11L;
-
     public HelperTableRecordFactory() {
     }
 

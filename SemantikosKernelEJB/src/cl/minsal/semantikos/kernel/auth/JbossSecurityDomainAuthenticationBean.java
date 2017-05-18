@@ -99,7 +99,7 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
      * @return
      * @throws AuthenticationException
      */
-    public boolean authenticate(String username, String password) throws AuthenticationException {
+    public boolean authenticateWS(String username, String password) throws AuthenticationException {
 
         User user = authDAO.getUserByEmail(username);
 
@@ -130,6 +130,48 @@ public class JbossSecurityDomainAuthenticationBean extends AuthenticationMethod 
         }
 
         throw new AuthenticationException("No posee los perfiles suficientes para realizar esta acción");
+
+    }
+
+    /**
+     * Autenticación utilizada al invocar un WS. La autenticación básica únicamente provee un username y un password
+     * @param username
+     * @param password
+     * @return
+     * @throws AuthenticationException
+     */
+    public boolean authenticateWeb(String username, String password) throws AuthenticationException {
+
+        User user = authDAO.getUserByEmail(username);
+
+        if (user == null) {
+            throw new AuthenticationException("Usuario no existe");
+        }
+
+        if (user.isLocked()) {
+            throw new AuthenticationException("Usuario bloqueado. Contacte al administrador");
+        }
+
+        String passwordHash = createPasswordHash("MD5", BASE64_ENCODING, null, null, password);
+
+        if (!user.getPasswordHash().equals(passwordHash)) {
+            //aumenta en 1 los intentos fallidos y si son mas que el maximo bloquea a usuario
+            failLogin(user);
+            throw new AuthenticationException("Nombre de usuario o contraseña no es correcta");
+        }
+
+        /**
+         * Validar perfiles
+         */
+        if( user.getProfiles().contains(ADMINISTRATOR_PROFILE) ||
+                user.getProfiles().contains(DESIGNER_PROFILE) ||
+                user.getProfiles().contains(MODELER_PROFILE) ) {
+            authDAO.markLogin(username);
+            return true;
+        }
+        else {
+            throw new AuthenticationException("No posee los perfiles suficientes para realizar esta acción");
+        }
 
     }
 

@@ -4,14 +4,12 @@ import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.snomedct.DescriptionSCT;
 import cl.minsal.semantikos.model.snomedct.RelationshipSCT;
 
-import javax.ejb.Remote;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author Andrés Farías on 9/26/16.
  */
-@Remote
 public interface SnomedCTManager {
 
 

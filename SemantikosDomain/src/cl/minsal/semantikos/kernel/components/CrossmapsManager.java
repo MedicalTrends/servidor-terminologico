@@ -4,13 +4,11 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.users.User;
 
-import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * @author Andrés Farías on 8/30/16.
  */
-@Remote
 public interface CrossmapsManager {
 
     /**

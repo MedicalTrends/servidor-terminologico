@@ -1,9 +1,6 @@
 package cl.minsal.semantikos.ws.component;
 
-import cl.minsal.semantikos.kernel.auth.UserManager;
-import cl.minsal.semantikos.kernel.components.ConceptManager;
-import cl.minsal.semantikos.kernel.components.CrossmapsManager;
-import cl.minsal.semantikos.kernel.components.DescriptionManager;
+import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
@@ -18,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
-import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import java.util.Iterator;
 import java.util.List;
@@ -51,7 +47,7 @@ public class CrossmapController {
      * @return La respuesta XML con la lista de los crossmaps indirectos asociados al concepto de la descripción
      * indicada.
      */
-    public IndirectCrossMapSearchResponse getIndirectCrossmapsByDescriptionID(DescriptionIDorConceptIDRequest descriptionIDorConceptIDRequest) {
+    public IndirectCrossMapSearchResponse getIndirectCrossmapsByDescriptionID(DescriptionIDorConceptIDRequest descriptionIDorConceptIDRequest) throws Exception {
 
 
         ConceptSMTK conceptSMTK;

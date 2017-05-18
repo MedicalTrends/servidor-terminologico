@@ -9,7 +9,6 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -222,7 +221,7 @@ public class Relationship extends PersistentEntity implements AuditableEntity, S
      *
      * @return <code>true</code> si es de atributo y <code>false</code>.
      */
-    public boolean isAttribute() {
+    public boolean isAttribute() throws Exception {
 
         /* Si es de tipo Snomed, hay que ver el valor de su atributo */
         if (SnomedCTRelationship.isSnomedCTRelationship(this)) {
@@ -289,7 +288,7 @@ public class Relationship extends PersistentEntity implements AuditableEntity, S
         return this.sourceConcept + " --" +  relationshipDefinition.getName() + "--> " + this.getTarget();
     }
 
-    public Crossmap toCrossMap() {
+    public Crossmap toCrossMap() throws Exception {
 
         if (!this.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
             throw new IllegalArgumentException("Esta relación no puede ser transformada a una Relación SnomedCT");
@@ -305,7 +304,7 @@ public class Relationship extends PersistentEntity implements AuditableEntity, S
             return new DirectCrossmap(getId(), this.sourceConcept, (CrossmapSetMember) this.target, this.relationshipDefinition, this.validityUntil);
         }
 
-        throw new EJBException("UN CASO NO CONTEMPLADO");
+        throw new Exception("UN CASO NO CONTEMPLADO");
     }
 
     @Override

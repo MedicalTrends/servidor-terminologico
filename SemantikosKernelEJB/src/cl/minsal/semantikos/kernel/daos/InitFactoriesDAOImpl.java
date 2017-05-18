@@ -16,7 +16,7 @@ import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
-import cl.minsal.semantikos.model.users.EmailFactory;
+import cl.minsal.semantikos.kernel.factories.EmailFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +39,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
+import static cl.minsal.semantikos.util.StringUtils.underScoreToCamelCaseJSON;
 
 /**
  * @author Diego Soto on 9/5/16.

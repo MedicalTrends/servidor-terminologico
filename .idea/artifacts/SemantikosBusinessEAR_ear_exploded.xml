@@ -24,7 +24,7 @@
         <element id="library" level="project" name="Maven: org.apache.commons:commons-csv:1.3" />
         <element id="library" level="project" name="Maven: org.jsoup:jsoup:1.10.1" />
         <element id="archive" name="SemantikosDomain-4.0.0.jar">
-          <element id="artifact" artifact-name="SemantikosDomain:ejb exploded" />
+          <element id="module-output" name="SemantikosDomain" />
         </element>
         <element id="library" level="project" name="Maven: javax.validation:validation-api:1.0.0.GA" />
       </element>

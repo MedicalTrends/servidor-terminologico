@@ -73,7 +73,7 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
-    public List<ConceptSMTK> executeQuery(GeneralQuery query) {
+    public List<ConceptSMTK> executeQuery(GeneralQuery query) throws Exception {
 
         List<ConceptSMTK> conceptSMTKs = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
 
@@ -132,7 +132,7 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
-    public List<Description> executeQuery(DescriptionQuery query) {
+    public List<Description> executeQuery(DescriptionQuery query) throws Exception {
 
         List<Description> descriptions = (List<Description>) (Object) queryDAO.executeQuery(query);
 

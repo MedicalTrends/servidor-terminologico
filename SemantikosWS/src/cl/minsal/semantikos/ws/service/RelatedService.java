@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.ws.service;
 
-import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
+import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
 import cl.minsal.semantikos.modelws.request.RelatedConceptsByCategoryRequest;
 import cl.minsal.semantikos.modelws.request.RelatedConceptsRequest;
 import cl.minsal.semantikos.modelws.request.Request;
@@ -34,7 +34,7 @@ public class RelatedService {
     private ConceptController conceptController;
 
     @EJB
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManagerImpl authenticationManager;
 
     @Resource
     WebServiceContext wsctx;
@@ -70,7 +70,12 @@ public class RelatedService {
         }
 
         /* Se realiza la búsqueda */
-        return this.conceptController.findRelated(request.getDescriptionId(), request.getConceptId(), request.getRelatedCategoryName());
+        try {
+            return this.conceptController.findRelated(request.getDescriptionId(), request.getConceptId(), request.getRelatedCategoryName());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalInputFault("Debe ingresar un idConcepto o idDescripcion");
+        }
     }
 
     // REQ-WS-010...021 Lite
@@ -96,7 +101,11 @@ public class RelatedService {
             @WebParam(name = "peticionObtenerRegistroISP")
                     RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptController.getRegistrosISP(request.getConceptId(), request.getDescriptionId());
+        try {
+            return this.conceptController.getRegistrosISP(request.getConceptId(), request.getDescriptionId());
+        } catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
     }
 
     // REQ-WS-021
@@ -107,7 +116,11 @@ public class RelatedService {
             @WebParam(name = "peticionObtenerBioequivalentes")
             RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        return this.conceptController.getBioequivalentes(request.getConceptId(), request.getDescriptionId());
+        try {
+            return this.conceptController.getBioequivalentes(request.getConceptId(), request.getDescriptionId());
+        } catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
     }
 
 }

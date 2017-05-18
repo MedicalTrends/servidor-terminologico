@@ -280,7 +280,7 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
      *
      * @param relationship La relación que es removida.
      */
-    public void removeRelationshipWeb(Relationship relationship) {
+    public void removeRelationshipWeb(Relationship relationship) throws Exception {
         this.getRelationships().remove(relationship);
         this.relationshipsWeb.remove(relationship);
     }
@@ -435,7 +435,7 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
 
     }
 
-    public void restore(ConceptSMTKWeb _concept){
+    public void restore(ConceptSMTKWeb _concept) throws Exception {
 
         super.setToBeReviewed(_concept.isToBeReviewed());
         super.setToBeConsulted(_concept.isToBeConsulted());

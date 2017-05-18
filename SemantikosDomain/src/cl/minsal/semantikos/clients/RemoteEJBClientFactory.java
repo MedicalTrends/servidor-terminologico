@@ -11,7 +11,7 @@ import java.util.*;
 public class RemoteEJBClientFactory {
 
     private static final RemoteEJBClientFactory instance = new RemoteEJBClientFactory();
-    private static Context context;
+    private Context context;
 
     /** Mapa de interfaces por su nombre. */
     private Map<String, Object> managersByName;
@@ -36,8 +36,13 @@ public class RemoteEJBClientFactory {
         // the remote view fully qualified class name
         final String viewClassName = getViewClassName(type);
         // let's do the lookup (notice the ?stateful string as the last part of the jndi name for stateful bean lookup)
-        this.managersByName.put(getBeanName(type), context.lookup("ejb:" + appName + moduleName + beanName + "!" + viewClassName));
+        String jndiname = "ejb:" + appName + moduleName + beanName + "!" + viewClassName;
+
+        Object remoteEjb = context.lookup(jndiname);
+
+        this.managersByName.put(getBeanName(type), remoteEjb);
     }
+
 
     /**
      * Constructor privado para el Singleton del Factory.
@@ -45,10 +50,21 @@ public class RemoteEJBClientFactory {
     private RemoteEJBClientFactory() {
         final Hashtable<String, String> jndiProperties = new Hashtable<>();
         jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+
+        Properties properties = new Properties();
+        properties.put(Context.URL_PKG_PREFIXES,"org.jboss.ejb.client.naming");
+        properties.put(Context.INITIAL_CONTEXT_FACTORY,"org.jboss.naming.remote.client.InitialContextFactory");
+        properties.put(Context.PROVIDER_URL,"remote://localhost:4447");
+        //properties.put(Context.SECURITY_PRINCIPAL,"ejb");
+        //properties.put(Context.SECURITY_CREDENTIALS,"ejbtest1!");
+        properties.put("jboss.naming.client.ejb.context",true);
+
         try {
             context = new InitialContext(jndiProperties);
+            //context = new InitialContext(properties);
         } catch (NamingException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
         this.managersByName = new HashMap<>();
     }

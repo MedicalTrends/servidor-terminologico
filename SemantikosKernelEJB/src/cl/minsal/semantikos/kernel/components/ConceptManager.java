@@ -27,7 +27,7 @@ public interface ConceptManager {
      * @param conceptSMTK El concepto a persistir.
      * @param user        El usuario que persiste el concepto.
      */
-    public void persist(@NotNull ConceptSMTK conceptSMTK, User user);
+    public void persist(@NotNull ConceptSMTK conceptSMTK, User user) throws Exception;
 
     /**
      * Este método es responsable de actualizar los campos (para no decir atributos que es un caso particular de las
@@ -79,7 +79,7 @@ public interface ConceptManager {
      * @param relationship La relación que se agrega.
      * @param user         El usuario que realiza la operación.
      */
-    public void bindRelationshipToConcept(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship relationship, @NotNull User user);
+    public void bindRelationshipToConcept(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship relationship, @NotNull User user) throws Exception;
 
     /**
      * Este método es responsable de cambiar el concepto de una categoría a otra.
@@ -231,7 +231,7 @@ public interface ConceptManager {
      * @param concept El concepto cuyas relaciones son actualizadas.
      * @return La lista de relaciones actualizadas (que ya están asociadas al objeto <code>concepto</code>.
      */
-    public List<Relationship> loadRelationships(ConceptSMTK concept);
+    public List<Relationship> loadRelationships(ConceptSMTK concept) throws Exception;
 
     /**
      * Este método es responsable de obtener las relaciones del concepto.
@@ -284,7 +284,7 @@ public interface ConceptManager {
      * @param category    La categoría a la cual se desea trasladar el concepto.
      * @return El concepto con su categoría actualizada. Esto es necesario para cuando las llamadas al EJB sean remotas.
      */
-    public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category, User user);
+    public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category, User user) throws Exception;
 
 
     /**

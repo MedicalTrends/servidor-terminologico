@@ -19,7 +19,7 @@ public class RelationshipRemovalBR {
      * @param relationship La relación que se desea dejar novigente.
      * @param user         El usuaario que realiza la operación.
      */
-    public void applyRules(ConceptSMTK conceptSMTK, Relationship relationship, User user) {
+    public void applyRules(ConceptSMTK conceptSMTK, Relationship relationship, User user) throws Exception {
 
         /* Siempre debe haber una relación SNOMED definitoria en conceptos modelados */
         brRelationshipRemoval001(conceptSMTK,relationship);
@@ -29,7 +29,7 @@ public class RelationshipRemovalBR {
      * BR-REL-001: Se puede borrar una relación de un concepto modelado, siempre y cuando éste posea al menos una
      * relación Snomed de tipo “ES UN” o “ES UN MAPEO DE”.
      */
-    private void brRelationshipRemoval001(ConceptSMTK conceptSMTK, Relationship relationship) {
+    private void brRelationshipRemoval001(ConceptSMTK conceptSMTK, Relationship relationship) throws Exception {
         ConceptSMTK sourceConcept = conceptSMTK;
 
         /* Esta regla sólo aplica a conceptos modelados */

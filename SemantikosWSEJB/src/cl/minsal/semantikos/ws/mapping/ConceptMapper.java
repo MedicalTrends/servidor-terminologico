@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class ConceptMapper {
 
-    public static List<AttributeResponse> getAttributes(ConceptSMTK conceptSMTK) {
+    public static List<AttributeResponse> getAttributes(ConceptSMTK conceptSMTK) throws Exception {
         if ( conceptSMTK != null ) {
             List<AttributeResponse> attributeResponses = new ArrayList<>();
 
@@ -34,7 +34,7 @@ public class ConceptMapper {
         return null;
     }
 
-    public static ConceptResponse appendAttributes(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
+    public static ConceptResponse appendAttributes(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) throws Exception {
         if ( conceptResponse != null ) {
             conceptResponse.setAttributes(getAttributes(conceptSMTK));
         }
@@ -144,7 +144,7 @@ public class ConceptMapper {
         return conceptResponse;
     }
 
-    public static List<SnomedCTRelationshipResponse> getSnomedCTRelationships(ConceptSMTK source) {
+    public static List<SnomedCTRelationshipResponse> getSnomedCTRelationships(ConceptSMTK source) throws Exception {
         if (source != null) {
             List<SnomedCTRelationship> relationships = source.getRelationshipsSnomedCT();
             if ( relationships != null ) {
@@ -158,7 +158,7 @@ public class ConceptMapper {
         return null;
     }
 
-    public static ConceptResponse appendSnomedCTRelationships(ConceptResponse conceptResponse, ConceptSMTK source) {
+    public static ConceptResponse appendSnomedCTRelationships(ConceptResponse conceptResponse, ConceptSMTK source) throws Exception {
         if ( conceptResponse != null ) {
             conceptResponse.setSnomedCTRelationshipResponses(getSnomedCTRelationships(source));
         }

@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.view.tests.descriptions;
 
-import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
+import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.users.User;

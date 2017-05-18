@@ -3,13 +3,11 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
 
-import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * Created by des01c7 on 16-12-16.
  */
-@Remote
 public interface InstitutionManager {
 
     /**

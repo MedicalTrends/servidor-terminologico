@@ -49,7 +49,7 @@ public interface CrossmapsManager {
      *
      * @return La lista de Crossmaps asociados al concepto <code>conceptSMTK</code>.
      */
-    public List<Crossmap> getCrossmaps(ConceptSMTK conceptSMTK);
+    public List<Crossmap> getCrossmaps(ConceptSMTK conceptSMTK) throws Exception;
 
     /**
      * Este método es responsable de recuperar los crossmaps de un concepto y actualizarle su lista de crossmaps. Si el
@@ -81,7 +81,7 @@ public interface CrossmapsManager {
      *
      * @return La lista de Crossmaps asociados al concepto <code>conceptSMTK</code>.
      */
-    public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSMTK conceptSMTK);
+    public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSMTK conceptSMTK) throws Exception;
 
     /**
      * Este método es responsable de recuperar un crossmapSetMember dado su

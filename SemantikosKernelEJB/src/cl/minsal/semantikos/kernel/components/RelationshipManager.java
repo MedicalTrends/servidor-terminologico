@@ -47,7 +47,7 @@ public interface RelationshipManager {
      *
      * @return La descripción creada a partir del término dado.
      */
-    public Relationship bindRelationshipToConcept(ConceptSMTK concept, Relationship relationship, User user);
+    public Relationship bindRelationshipToConcept(ConceptSMTK concept, Relationship relationship, User user) throws Exception;
 
     /**
      * Este método es responsable de eliminar lógicamente una relación, dejándola no vigente, no desasociándola del
@@ -58,7 +58,7 @@ public interface RelationshipManager {
      *
      * @return La relación eliminada, con sus campos de vigencia actualizados.
      */
-    public Relationship removeRelationship(ConceptSMTK conceptSMTK, Relationship relationship, User user);
+    public Relationship removeRelationship(ConceptSMTK conceptSMTK, Relationship relationship, User user) throws Exception;
 
     /**
      * Este método es responsable de recuperar todas las relaciones que tienen como
@@ -86,7 +86,7 @@ public interface RelationshipManager {
      *
      * @return Una lista de todos los conceptos destino que pertenecen a la categoría <code>category</code>.
      */
-    public List<ConceptSMTK> getTargetConceptsByCategory(ConceptSMTK conceptSMTK, Category category);
+    public List<ConceptSMTK> getTargetConceptsByCategory(ConceptSMTK conceptSMTK, Category category) throws Exception;
 
     /**
      * Este método es responsable de actualizar el valor de una relación, actualizando
@@ -107,7 +107,7 @@ public interface RelationshipManager {
      * @param editedRelationship   La relación actualizada.
      * @param user                 El usuario que realiza la operación.
      */
-    void updateRelationship(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship originalRelationship, @NotNull Relationship editedRelationship, @NotNull User user);
+    void updateRelationship(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship originalRelationship, @NotNull Relationship editedRelationship, @NotNull User user) throws Exception;
 
     /**
      * Este método es responsable de dejar no vigente la relación a partir de este momento.

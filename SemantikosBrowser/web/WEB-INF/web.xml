@@ -60,7 +60,7 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>/views/home.xhtml</welcome-file>
+        <welcome-file>views/home.xhtml</welcome-file>
     </welcome-file-list>
 
     <error-page>

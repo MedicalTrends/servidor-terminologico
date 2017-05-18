@@ -39,7 +39,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
     /**
      * Este método es responsabled de realizar las validaciones de reglas de negocio.
      */
-    public void verifyPreConditions(ConceptSMTK concept, Relationship relationship, User user) {
+    public void verifyPreConditions(ConceptSMTK concept, Relationship relationship, User user) throws Exception {
 
         /* Privilegios del usuario */
         brRelationshipBinding001(relationship, user);
@@ -65,7 +65,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
      * @param relationship La relación que se asoció.
      */
     @Override
-    public void postActions(Relationship relationship, User user) {
+    public void postActions(Relationship relationship, User user) throws Exception {
         publishConceptBySCT(relationship, user);
     }
 
@@ -90,7 +90,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
      * @param concept      El concepto al cual se desea agregar la relación.
      * @param relationship La relación que se desea agregar.
      */
-    public void brSCT001(ConceptSMTK concept, Relationship relationship) {
+    public void brSCT001(ConceptSMTK concept, Relationship relationship) throws Exception {
 
         /* Esta regla de negocio aplica sólo a relaciones de tipo SnomedCT */
         if (!isSnomedCTRelationship(relationship)) {
@@ -142,7 +142,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
      * @param concept      El concepto al cual se quiere asociar la relación.
      * @param relationship La relación que se quiere asociar al concepto.
      */
-    private void brSCT002(ConceptSMTK concept, Relationship relationship) {
+    private void brSCT002(ConceptSMTK concept, Relationship relationship) throws Exception {
 
         /* Esta regla de negocio aplica sólo a relaciones de tipo SnomedCT */
         if (!isSnomedCTRelationship(relationship)) {
@@ -187,7 +187,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
      * @param concept      El concepto al que se le desea agregar la relación.
      * @param relationship La relación que se desea agregar.
      */
-    private void brSCT003(ConceptSMTK concept, Relationship relationship) {
+    private void brSCT003(ConceptSMTK concept, Relationship relationship) throws Exception {
 
         /* Esta regla de negocio solo aplica a relaciones de tipo SnomedCT */
         if (!isSnomedCTRelationship(relationship) || !concept.hasES_UN_MAPEO()) {
@@ -218,7 +218,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
      * @param concept         El concepto cuyas relaciones están cambiando.
      * @param theRelationship La relacion que se agrega, que quizas ya esta.
      */
-    private void brSCT004(ConceptSMTK concept, Relationship theRelationship) {
+    private void brSCT004(ConceptSMTK concept, Relationship theRelationship) throws Exception {
 
         /*
          * Esta arregla aplica sólo a conceptos a los que se les quiere agregar una relación SCT de tipo ES UN MAPEO a
@@ -294,7 +294,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
     }
 
      /* BR-SCT-005 Para que un Concepto Semantiko pueda ser publicado para su uso, deberá estar Modelado con al menos un tipo de relación “Es un” ó “Es un Mapeo” */
-    public void brSCT005(ConceptSMTK concept) {
+    public void brSCT005(ConceptSMTK concept) throws Exception {
 
         int countRelationshipSCT=0;
 
@@ -312,7 +312,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
     }
 
     /* BR-STK-001 Para agregar una relación a ISP, la dupla ProductoComercual-RegnumRegAño deben ser únicos */
-    public void brSTK001(ConceptSMTK concept, Relationship relationship) {
+    public void brSTK001(ConceptSMTK concept, Relationship relationship) throws Exception {
 
         /* Verificar en un contexto no persistente */
         if (relationship.getRelationshipDefinition().isISP() && concept.contains(relationship)) {
@@ -350,7 +350,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
     }
 
     /* BR-STK-003 Para agregar una relación a Bioequivalente, la dupla ProductoComercual-RegnumRegAño deben ser únicos */
-    public void brSTK003(ConceptSMTK concept, Relationship relationship) {
+    public void brSTK003(ConceptSMTK concept, Relationship relationship) throws Exception {
 
         /* Verificar en un contexto no persistente */
         if (relationship.getRelationshipDefinition().isBioequivalente() && concept.contains(relationship)) {
@@ -396,7 +396,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
      *
      * @param relationship La relación que se agregó al concepto.
      */
-    private void publishConceptBySCT(Relationship relationship, User user) {
+    private void publishConceptBySCT(Relationship relationship, User user) throws Exception {
 
         ConceptSMTK sourceConcept = relationship.getSourceConcept();
         boolean isSnomedCTType = relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType();

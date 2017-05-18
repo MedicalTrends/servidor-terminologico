@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.ws.service;
 
-import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
+import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
 import cl.minsal.semantikos.modelws.request.DescriptionHitRequest;
 import cl.minsal.semantikos.modelws.request.NewTermRequest;
 import cl.minsal.semantikos.modelws.request.Request;
@@ -44,7 +44,7 @@ public class UpdateService {
     WebServiceContext wsctx;
 
     @EJB
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManagerImpl authenticationManager;
 
     //Inicializacion del Bean
     //@PostConstruct

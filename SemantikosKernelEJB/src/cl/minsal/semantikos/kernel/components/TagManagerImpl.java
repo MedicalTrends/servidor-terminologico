@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.StringTokenizer;
  * @author Andrés Farías on 8/26/16.
  */
 @Stateless
+@Remote(TagManager.class)
 public class TagManagerImpl implements TagManager {
 
     /**

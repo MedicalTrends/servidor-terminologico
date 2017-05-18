@@ -31,28 +31,32 @@ public class AutogeneratePCCE {
     public void autogeratePCCE(ConceptSMTK conceptSMTK){
         setCVP();
 
-        for (Relationship relationship: conceptSMTK.getRelationships()) {
-            if(relationship.getRelationshipDefinition().getId()==92){
-                for (RelationshipAttribute attribute: relationship.getRelationshipAttributes()) {
-                    if(attribute.getRelationAttributeDefinition().getId()==15){
-                        cantidad = relationship.getTarget().toString()+" "+(((HelperTableRow)attribute.getTarget()).getDescription());
+        try {
+            for (Relationship relationship: conceptSMTK.getRelationships()) {
+                if(relationship.getRelationshipDefinition().getId()==92){
+                    for (RelationshipAttribute attribute: relationship.getRelationshipAttributes()) {
+                        if(attribute.getRelationAttributeDefinition().getId()==15){
+                            cantidad = relationship.getTarget().toString()+" "+(((HelperTableRow)attribute.getTarget()).getDescription());
+                        }
+                    }
+                }
+                if(relationship.getRelationshipDefinition().getId()==77){
+                    for (RelationshipAttribute attribute: relationship.getRelationshipAttributes()) {
+                        if(attribute.getRelationAttributeDefinition().getId()==16){
+                            pack = relationship.getTarget().toString()+" "+(((HelperTableRow)attribute.getTarget()).getDescription());
+                        }
+                    }
+                }
+                if(relationship.getRelationshipDefinition().getId()==93){
+                    for (RelationshipAttribute attribute: relationship.getRelationshipAttributes()) {
+                        if(attribute.getRelationAttributeDefinition().getId()==17){
+                            vol = relationship.getTarget().toString()+" "+(((HelperTableRow)attribute.getTarget()).getDescription());
+                        }
                     }
                 }
             }
-            if(relationship.getRelationshipDefinition().getId()==77){
-                for (RelationshipAttribute attribute: relationship.getRelationshipAttributes()) {
-                    if(attribute.getRelationAttributeDefinition().getId()==16){
-                        pack = relationship.getTarget().toString()+" "+(((HelperTableRow)attribute.getTarget()).getDescription());
-                    }
-                }
-            }
-            if(relationship.getRelationshipDefinition().getId()==93){
-                for (RelationshipAttribute attribute: relationship.getRelationshipAttributes()) {
-                    if(attribute.getRelationAttributeDefinition().getId()==17){
-                        vol = relationship.getTarget().toString()+" "+(((HelperTableRow)attribute.getTarget()).getDescription());
-                    }
-                }
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         autogeneratePCCE= cantidad+" "+pack+ " "+vol;

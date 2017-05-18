@@ -86,7 +86,7 @@ public class ConceptController {
      * @throws NotFoundFault Arrojada si no se encuentran resultados.
      */
     public RelatedConceptsResponse findRelated(String descriptionId, String conceptId, @NotNull String categoryName)
-            throws NotFoundFault {
+            throws Exception {
 
         /* Lo primero consiste en recuperar el concepto cuyos conceptos relacionados se quiere recuperar. */
         ConceptSMTK sourceConcept;
@@ -436,7 +436,7 @@ public class ConceptController {
     }
 
     public ConceptResponse conceptByDescriptionId(String descriptionId)
-            throws NotFoundFault {
+            throws Exception {
         ConceptSMTK conceptSMTK;
         try {
             conceptSMTK = this.conceptManager.getConceptByDescriptionID(descriptionId);
@@ -478,7 +478,7 @@ public class ConceptController {
     public ConceptsResponse findConceptsByCategory(
             String categoryName,
             String idEstablecimiento
-    ) throws NotFoundFault {
+    ) throws Exception {
 
         /* Logging de invocación del servicio */
         logger.info("SearchService:findConceptsByCategory(" + categoryName + ", " + idEstablecimiento + ")");
@@ -524,7 +524,7 @@ public class ConceptController {
             String idEstablecimiento,
             int pageNumber,
             int pageSize
-    ) throws NotFoundFault {
+    ) throws Exception {
 
         /* Logging de invocación del servicio */
         logger.info("SearchService:findConceptsByCategory(" + categoryName + ", " + idEstablecimiento + ")");
@@ -650,7 +650,7 @@ public class ConceptController {
     }
 
     public BioequivalentSearchResponse getBioequivalentes(String conceptId, String descriptionId) throws
-            IllegalInputFault, NotFoundFault {
+            Exception {
         if ((conceptId == null || "".equals(conceptId))
                 && (descriptionId == null || "".equals(descriptionId))) {
             throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
@@ -677,7 +677,7 @@ public class ConceptController {
     }
 
     public ISPRegisterSearchResponse getRegistrosISP(String conceptId, String descriptionId) throws
-            IllegalInputFault, NotFoundFault {
+            Exception {
         if ((conceptId == null || "".equals(conceptId))
                 && (descriptionId == null || "".equals(descriptionId))) {
             throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
@@ -725,7 +725,7 @@ public class ConceptController {
         return conceptSMTK;
     }
 
-    public ConceptResponse loadAttributes(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) {
+    public ConceptResponse loadAttributes(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) throws Exception {
         if (conceptResponse.getAttributes() == null || conceptResponse.getAttributes().isEmpty()) {
             if (!source.isRelationshipsLoaded()) {
                 conceptManager.loadRelationships(source);
@@ -735,7 +735,7 @@ public class ConceptController {
         return conceptResponse;
     }
 
-    public ConceptResponse loadRelationships(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) {
+    public ConceptResponse loadRelationships(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) throws Exception {
         if (conceptResponse.getRelationships() == null || conceptResponse.getRelationships().isEmpty()) {
             if (!source.isRelationshipsLoaded()) {
                 conceptManager.loadRelationships(source);
@@ -746,7 +746,7 @@ public class ConceptController {
     }
 
     public ConceptResponse loadSnomedCTRelationships(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK
-            source) {
+            source) throws Exception {
         if (conceptResponse.getSnomedCTRelationshipResponses() == null || conceptResponse
                 .getSnomedCTRelationshipResponses().isEmpty()) {
             if (!source.isRelationshipsLoaded()) {
@@ -778,7 +778,7 @@ public class ConceptController {
         return conceptResponse;
     }
 
-    public ConceptResponse loadIndirectCrossmaps(@NotNull ConceptResponse res, @NotNull ConceptSMTK conceptSMTK) {
+    public ConceptResponse loadIndirectCrossmaps(@NotNull ConceptResponse res, @NotNull ConceptSMTK conceptSMTK) throws Exception {
         if (res.getIndirectCrossMaps() == null || res.getIndirectCrossMaps().isEmpty()) {
 
             DescriptionIDorConceptIDRequest request = new DescriptionIDorConceptIDRequest();

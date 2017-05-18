@@ -6,7 +6,7 @@ import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumnFactory;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
-import cl.minsal.semantikos.model.users.EmailFactory;
+import cl.minsal.semantikos.kernel.factories.EmailFactory;
 
 import javax.ejb.Local;
 import javax.naming.NamingException;

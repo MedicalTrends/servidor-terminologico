@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class AuthenticationMethod {
 
     public abstract boolean authenticate(String email, String password, HttpServletRequest request) throws AuthenticationException;
-    public abstract boolean authenticate(String email, String password) throws AuthenticationException;
+    public abstract boolean authenticateWeb(String email, String password) throws AuthenticationException;
+    public abstract boolean authenticateWS(String email, String password) throws AuthenticationException;
     public abstract void setUserPassword(String email, String password) throws PasswordChangeException;
     public abstract String createUserPassword(String email, String password);
 

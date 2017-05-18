@@ -25,7 +25,12 @@ public class DummyAuthenticationBean extends AuthenticationMethod {
     }
 
     @Override
-    public boolean authenticate(String username, String password) throws AuthenticationException {
+    public boolean authenticateWeb(String email, String password) throws AuthenticationException {
+        return false;
+    }
+
+    @Override
+    public boolean authenticateWS(String email, String password) throws AuthenticationException {
         return false;
     }
 

@@ -22,7 +22,7 @@ import javax.ejb.Singleton;
 import java.io.IOException;
 import java.sql.Timestamp;
 
-import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
+import static cl.minsal.semantikos.util.StringUtils.underScoreToCamelCaseJSON;
 
 /**
  * @author Andrés Farías
@@ -120,8 +120,6 @@ public class TargetFactory {
 
         return target;
     }
-
-
 
     public Target createPlaceholderTargetFromTargetDefinition(TargetDefinition definition){
 

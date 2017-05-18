@@ -14,7 +14,6 @@
         <param-value>Production</param-value>
     </context-param>
 
-
     <context-param>
         <param-name>org.apache.myfaces.SERIALIZE_STATE_IN_SESSION</param-name>
         <param-value>false</param-value>
@@ -51,12 +50,9 @@
         <listener-class>net.bull.javamelody.SessionListener</listener-class>
     </listener>
 
-
-
-
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
-        <filter-class>cl.minsal.semantikos.designer_modeler.auth.AuthenticationFilter</filter-class>
+        <filter-class>cl.minsal.semantikos.users.AuthenticationFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>
@@ -102,7 +98,7 @@
 
 
     <welcome-file-list>
-        <welcome-file>/views/login.xhtml</welcome-file>
+        <welcome-file>views/login.xhtml</welcome-file>
     </welcome-file-list>
 
     <error-page>

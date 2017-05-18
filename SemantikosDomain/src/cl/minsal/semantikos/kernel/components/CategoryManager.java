@@ -5,7 +5,6 @@ import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.users.User;
 
-import javax.ejb.Remote;
 import java.util.List;
 
 /**
@@ -13,7 +12,6 @@ import java.util.List;
  *
  * @author Andrés Farías
  */
-@Remote
 public interface CategoryManager {
 
     /**

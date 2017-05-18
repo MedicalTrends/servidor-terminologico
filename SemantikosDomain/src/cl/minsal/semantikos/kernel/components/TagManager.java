@@ -3,13 +3,11 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.tags.Tag;
 
-import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * @author Andrés Farías on 8/26/16.
  */
-@Remote
 public interface TagManager {
 
     public List<Tag> getAllTags();

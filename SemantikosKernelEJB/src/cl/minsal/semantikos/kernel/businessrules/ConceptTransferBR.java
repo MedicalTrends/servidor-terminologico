@@ -25,7 +25,7 @@ public class ConceptTransferBR {
      *
      * @param conceptSMTK El concepto que se desea trasladar y sobre el cual se validan las pre-condiciones.
      */
-    public void validatePreConditions(ConceptSMTK conceptSMTK) {
+    public void validatePreConditions(ConceptSMTK conceptSMTK) throws Exception {
 
         /* Antes de validar las pre-condiciones se actualizan las relaciones del concepto en caso que no las tenga actualizadas */
         conceptManager.loadRelationships(conceptSMTK);

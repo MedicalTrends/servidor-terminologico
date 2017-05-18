@@ -20,7 +20,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
+import static cl.minsal.semantikos.util.StringUtils.underScoreToCamelCaseJSON;
 
 /**
  * @author Andrés Farías on 8/24/16.

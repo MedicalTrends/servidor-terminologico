@@ -11,7 +11,7 @@ import javax.ejb.Stateless;
 import java.io.IOException;
 import java.sql.*;
 
-import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
+import static cl.minsal.semantikos.util.StringUtils.underScoreToCamelCaseJSON;
 
 /**
  * @author Andrés Farías

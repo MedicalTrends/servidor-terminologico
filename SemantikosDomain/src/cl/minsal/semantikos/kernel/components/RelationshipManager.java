@@ -9,7 +9,6 @@ import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.users.User;
 
-import javax.ejb.Remote;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,6 @@ import java.util.Map;
  * @version 1.0
  * @created 17-ago-2016 12:23:53
  */
-@Remote
 public interface RelationshipManager {
 
     /**

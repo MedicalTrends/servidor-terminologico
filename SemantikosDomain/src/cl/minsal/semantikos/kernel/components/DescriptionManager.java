@@ -10,13 +10,11 @@ import cl.minsal.semantikos.model.descriptions.ObservationNoValid;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.User;
 
-import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * @author Diego Soto on 07-06-16.
  */
-@Remote
 public interface DescriptionManager {
 
     /**

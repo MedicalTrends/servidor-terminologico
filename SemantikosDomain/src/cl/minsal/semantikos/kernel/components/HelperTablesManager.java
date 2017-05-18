@@ -5,13 +5,11 @@ import cl.minsal.semantikos.model.exceptions.RowInUseException;
 import cl.minsal.semantikos.model.helpertables.*;
 import cl.minsal.semantikos.model.users.User;
 
-import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * Created by BluePrints Developer on 09-01-2017.
  */
-@Remote
 public interface HelperTablesManager {
     HelperTable getById(long id);
 

@@ -10,13 +10,11 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.users.User;
 
-import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * @author Andrés Farías
  */
-@Remote
 public interface AuditManager {
 
 

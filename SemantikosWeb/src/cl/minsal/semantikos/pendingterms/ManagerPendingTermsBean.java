@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.pendingterms;
 
-import cl.minsal.semantikos.beans.messages.MessageBean;
-import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
+import cl.minsal.semantikos.messages.MessageBean;
+import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;

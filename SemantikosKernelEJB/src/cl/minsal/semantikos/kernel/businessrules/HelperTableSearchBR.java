@@ -5,6 +5,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumnFactory;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 
+import javax.ejb.Singleton;
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,7 +15,8 @@ import java.util.List;
 /**
  * @author Andrés Farías on 11/11/16.
  */
-public class HelperTableSearchBR {
+@Singleton
+public class HelperTableSearchBR implements HelperTableSearchBRInterface {
 
     /** Mínima cantidad de caracteres en el patrón de búsqueda en tablas auxiliares */
     public static final short ATC_MINIMUM_PATTERN_LENGTH = 3;
@@ -92,7 +94,7 @@ public class HelperTableSearchBR {
         }
     }
 
-    public static int getMinQueryLength(HelperTable helperTable) {
+    public int getMinQueryLength(HelperTable helperTable) {
 
         if(helperTable.getId() == HT_ATC_ID) {
             return ATC_MINIMUM_PATTERN_LENGTH;

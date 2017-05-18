@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ejb.Stateless;
 import java.util.List;
 
 import static cl.minsal.semantikos.model.descriptions.DescriptionType.*;
@@ -15,7 +16,8 @@ import static cl.minsal.semantikos.model.descriptions.DescriptionType.*;
 /**
  * @author Andrés Farías on 8/26/16.
  */
-public class DescriptionTranslationBR {
+@Stateless
+public class DescriptionTranslationBR implements DescriptionTranslationBRInterface {
 
     private static final Logger logger = LoggerFactory.getLogger(DescriptionTranslationBR.class);
 

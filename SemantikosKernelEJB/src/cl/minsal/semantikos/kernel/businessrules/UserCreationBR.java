@@ -1,11 +1,13 @@
 package cl.minsal.semantikos.kernel.businessrules;
 
-import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
+import cl.minsal.semantikos.kernel.components.AuthenticationManager;
+import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
+import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
-import cl.minsal.semantikos.kernel.auth.UserManager;
+import cl.minsal.semantikos.kernel.components.UserManagerImpl;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
-import cl.minsal.semantikos.model.users.EmailFactory;
+import cl.minsal.semantikos.kernel.factories.EmailFactory;
 import cl.minsal.semantikos.model.users.User;
 import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
@@ -239,4 +241,6 @@ public class UserCreationBR implements UserCreationBRInterface {
             }
         }
     }
+
+
 }

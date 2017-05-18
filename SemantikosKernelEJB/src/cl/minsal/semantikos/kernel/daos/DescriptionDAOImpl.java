@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static cl.minsal.semantikos.model.DAO.NON_PERSISTED_ID;
-import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
+import static cl.minsal.semantikos.util.StringUtils.underScoreToCamelCaseJSON;
 import static java.lang.System.currentTimeMillis;
 import static java.sql.Types.TIMESTAMP;
 

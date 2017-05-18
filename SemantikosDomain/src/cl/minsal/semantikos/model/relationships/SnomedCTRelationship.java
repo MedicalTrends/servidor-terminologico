@@ -6,7 +6,6 @@ import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
-import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -67,15 +66,15 @@ public class SnomedCTRelationship extends Relationship implements Serializable {
      *
      * @return <code>true</code> si es definitoria, y <code>false</code> sino.
      */
-    public boolean isDefinitional() {
+    public boolean isDefinitional() throws Exception {
         return this.isES_UN() || this.isES_UN_MAPEO();
     }
 
-    public boolean isES_UN() {
+    public boolean isES_UN() throws Exception {
         return getSnomedCTRelationshipType().equalsIgnoreCase(ES_UN);
     }
 
-    public boolean isES_UN_MAPEO() {
+    public boolean isES_UN_MAPEO() throws Exception {
         return getSnomedCTRelationshipType().equalsIgnoreCase(ES_UN_MAPEO_DE);
     }
 
@@ -86,7 +85,7 @@ public class SnomedCTRelationship extends Relationship implements Serializable {
      *
      * @return <code>true</code> si la relación es una relación Snomed CT
      */
-    public static boolean isES_UN_MAPEO(Relationship relationship) {
+    public static boolean isES_UN_MAPEO(Relationship relationship) throws Exception {
 
         /* Se valida que la relación sea de tipo Snomed CT, sino la validación está clara */
         if (!relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType()) {
@@ -98,7 +97,7 @@ public class SnomedCTRelationship extends Relationship implements Serializable {
         return snomedCTRelationship.isES_UN_MAPEO();
     }
 
-    public String getSnomedCTRelationshipType() {
+    public String getSnomedCTRelationshipType() throws Exception {
 
         /* Se obtienen los atributos de la relación y se itera por ellos para buscar las del tipo que sirve*/
         List<RelationshipAttribute> relationshipAttributes = this.getRelationshipAttributes();
@@ -116,7 +115,7 @@ public class SnomedCTRelationship extends Relationship implements Serializable {
             }
         }
 
-        throw new EJBException("Esta relación no posee un tipo de relación Snomed-CT");
+        throw new Exception("Esta relación no posee un tipo de relación Snomed-CT");
     }
 
     /**
@@ -158,7 +157,11 @@ public class SnomedCTRelationship extends Relationship implements Serializable {
 
     @Override
     public String toString() {
-        return this.getSourceConcept() + " --SCT[" + getSnomedCTRelationshipType() + "]--> " + getTarget();
-
+        try {
+            return this.getSourceConcept() + " --SCT[" + getSnomedCTRelationshipType() + "]--> " + getTarget();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

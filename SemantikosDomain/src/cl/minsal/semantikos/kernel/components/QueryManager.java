@@ -8,13 +8,11 @@ import cl.minsal.semantikos.model.descriptions.PendingTerm;
 import cl.minsal.semantikos.model.queries.*;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
-import javax.ejb.Remote;
 import java.util.List;
 
 /**
  * Created by BluePrints Developer on 21-09-2016.
  */
-@Remote
 public interface QueryManager {
 
     /**

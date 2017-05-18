@@ -84,7 +84,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
-    public List<Crossmap> getCrossmaps(ConceptSMTK conceptSMTK) {
+    public List<Crossmap> getCrossmaps(ConceptSMTK conceptSMTK) throws Exception {
 
         List<Crossmap> allCrossmaps = new ArrayList<>();
         allCrossmaps.addAll(this.getDirectCrossmaps(conceptSMTK));
@@ -160,7 +160,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
-    public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSMTK conceptSMTK) {
+    public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSMTK conceptSMTK) throws Exception {
 
         /* Se valida si el concepto tiene cargada sus relaciones */
         if (!conceptSMTK.isRelationshipsLoaded()) {

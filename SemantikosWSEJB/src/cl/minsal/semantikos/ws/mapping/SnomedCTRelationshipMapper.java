@@ -10,7 +10,7 @@ import cl.minsal.semantikos.modelws.response.SnomedCTRelationshipResponse;
  */
 public class SnomedCTRelationshipMapper {
 
-   public static SnomedCTRelationshipResponse map(SnomedCTRelationship relationship) {
+   public static SnomedCTRelationshipResponse map(SnomedCTRelationship relationship) throws Exception {
        if ( relationship != null && relationship.getTarget() != null ) {
            SnomedCTRelationshipResponse res = new SnomedCTRelationshipResponse();
 

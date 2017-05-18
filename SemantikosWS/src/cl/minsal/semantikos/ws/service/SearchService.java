@@ -1,8 +1,7 @@
 package cl.minsal.semantikos.ws.service;
 
-import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
+import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
-import cl.minsal.semantikos.kernel.components.InstitutionManager;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.modelws.request.*;
 import cl.minsal.semantikos.modelws.response.*;
@@ -54,7 +53,7 @@ public class SearchService {
     private CategoryManager categoryManager;
 
     @EJB
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManagerImpl authenticationManager;
 
     @Resource
     WebServiceContext wsctx;
@@ -103,7 +102,11 @@ public class SearchService {
             @WebParam(name = "peticionConceptosPorCategoria")
                     CategoryRequest request
     ) throws NotFoundFault {
-        return this.conceptController.findConceptsByCategory(request.getCategoryName(), request.getIdStablishment());
+        try {
+            return this.conceptController.findConceptsByCategory(request.getCategoryName(), request.getIdStablishment());
+        } catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
     }
 
     // REQ-WS-002 Paginados
@@ -114,8 +117,12 @@ public class SearchService {
             @WebParam(name = "peticionConceptosPorCategoriaPaginados")
                     CategoryRequestPaginated request
     ) throws NotFoundFault {
-        return this.conceptController.findConceptsByCategoryPaginated(request.getCategoryName(), request.getIdStablishment(),
-                                                                      request.getPageNumber(), request.getPageSize());
+        try {
+            return this.conceptController.findConceptsByCategoryPaginated(request.getCategoryName(), request.getIdStablishment(),
+                                                                          request.getPageNumber(), request.getPageSize());
+        } catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
     }
 
     @WebResult(name = "respuestaCategorias")
@@ -378,7 +385,11 @@ public class SearchService {
             @WebParam(name = "descripcionIDorConceptIDRequest")
                     DescriptionIDorConceptIDRequest descripcionIDorConceptIDRequest
     ) throws NotFoundFault {
-        return this.crossmapsController.getIndirectCrossmapsByDescriptionID(descripcionIDorConceptIDRequest);
+        try {
+            return this.crossmapsController.getIndirectCrossmapsByDescriptionID(descripcionIDorConceptIDRequest);
+        } catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
     }
 
     /**
@@ -412,7 +423,11 @@ public class SearchService {
             @WebParam(name = "peticionConceptoPorIdDescripcion")
                     ConceptByDescriptionIDRequest request
     ) throws NotFoundFault {
-        return this.conceptController.conceptByDescriptionId(request.getDescriptionID());
+        try {
+            return this.conceptController.conceptByDescriptionId(request.getDescriptionID());
+        } catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
     }
 
 }

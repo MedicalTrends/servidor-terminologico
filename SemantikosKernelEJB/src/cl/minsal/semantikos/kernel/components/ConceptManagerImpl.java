@@ -275,7 +275,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public void persist(@NotNull ConceptSMTK conceptSMTK, User user) {
+    public void persist(@NotNull ConceptSMTK conceptSMTK, User user) throws Exception {
         logger.debug("El concepto " + conceptSMTK + " será persistido.");
 
         /* Pre-condición técnica: el concepto no debe estar persistido */
@@ -392,7 +392,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public void bindRelationshipToConcept(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship relationship, @NotNull User user) {
+    public void bindRelationshipToConcept(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship relationship, @NotNull User user) throws Exception {
         relationshipManager.bindRelationshipToConcept(conceptSMTK, relationship, user);
     }
 
@@ -436,7 +436,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public List<Relationship> loadRelationships(ConceptSMTK concept) {
+    public List<Relationship> loadRelationships(ConceptSMTK concept) throws Exception {
         List<Relationship> relationships = relationshipDAO.getRelationshipsBySourceConcept(concept.getId());
         /* Se agregan las relaciones al componente */
         concept.setRelationships(relationships);
@@ -464,7 +464,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category, User user) {
+    public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category, User user) throws Exception {
 
         /* Validacion de pre-condiciones */
         conceptTransferBR.validatePreConditions(conceptSMTK);
