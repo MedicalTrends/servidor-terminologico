@@ -393,7 +393,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
         logger.info("DESCRIPTION ID=" + descriptionId + " tiene " + descriptionByDescriptionID.getUses() + " usos.");
 
         /* Se incrementa y se actualiza en la BDD */
-        if(descriptionByDescriptionID.isModeled()) {
+        /* Se pregunta por el concepto, para soportar el incremento del uso de términos pendientes y no válidos */
+        if(descriptionByDescriptionID.getConceptSMTK().isModeled()) {
             descriptionByDescriptionID.setUses(descriptionByDescriptionID.getUses() + 1);
             descriptionDAO.update(descriptionByDescriptionID);
         }

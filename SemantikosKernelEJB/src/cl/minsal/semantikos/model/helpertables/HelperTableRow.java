@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -92,6 +93,18 @@ public class HelperTableRow implements Target {
 
         return copy;
 
+    }
+
+    public List<HelperTableData> getCellsByColumn(HelperTableColumn column) {
+
+        List<HelperTableData> someCells = new ArrayList<>();
+
+        for (HelperTableData cell : cells) {
+            if(cell.getColumn().equals(column)) {
+                return Arrays.asList(cell);
+            }
+        }
+        return someCells;
     }
 
     public HelperTableData getCellByColumnName(String columnName) {
@@ -289,24 +302,33 @@ public class HelperTableRow implements Target {
 
         for (HelperTableData cell: getCells()) {
 
-            if(cell.getColumnId()==column.getId()){
+            if(cell.getColumnId()==column.getId()) {
 
-                if(column.isForeignKey())
-                    return cell.getForeignKeyValue()+"";
-
-                if (column.getHelperTableDataTypeId()==1)
+                if(column.isForeignKey()) {
+                    if (cell.getForeignKeyValue() == null) {
+                        return EMPTY_STRING;
+                    }
+                    else {
+                        return cell.getForeignKeyValue()+"";
+                    }
+                }
+                if (column.getHelperTableDataTypeId()==1) //String
                     return cell.getStringValue();
 
-                if (column.getHelperTableDataTypeId()==2)
+                if (column.getHelperTableDataTypeId()==2) //Boolean
                     return ""+cell.getBooleanValue();
 
-                if (column.getHelperTableDataTypeId()==3)
+                if (column.getHelperTableDataTypeId()==3) //int
                     return ""+cell.getIntValue();
 
-                if (column.getHelperTableDataTypeId()==4)
-                    return ""+cell.getFloatValue();
-
-                if (column.getHelperTableDataTypeId()==5) {
+                if (column.getHelperTableDataTypeId()==4) { //Float
+                    if (cell.getFloatValue() == null) {
+                        return EMPTY_STRING;
+                    } else {
+                        return "" + cell.getFloatValue();
+                    }
+                }
+                if (column.getHelperTableDataTypeId()==5) { //Date
                     if(cell.getDateValue()==null) {
                         return EMPTY_STRING;
                     }
