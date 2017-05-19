@@ -162,7 +162,7 @@ public class ConceptBean implements Serializable {
 
     private List<TagSMTK> tagSMTKs = new ArrayList<TagSMTK>();
 
-    private List<RelationshipDefinitionWeb> orderedRelationshipDefinitionsList;
+    private List<RelationshipDefinitionWeb> orderedRelationshipDefinitionsList = new ArrayList<>();
 
     private List<ConceptAuditAction> auditAction;
 
@@ -375,6 +375,7 @@ public class ConceptBean implements Serializable {
      * invoca al getConceptByID.
      */
     public void createConcept() {
+
         if (idConcept == 0) {
             setCategory(categoryManager.getCategoryById(idCategory));
             if (category.getId() == 34) changeMultiplicityToRequiredRelationshipDefinitionMC();
@@ -1228,8 +1229,9 @@ public class ConceptBean implements Serializable {
 
     public void setFavoriteDescription(String favoriteDescription) {
         this.favoriteDescription = favoriteDescription;
-        if(concept==null)
+        if(concept==null) {
             createConcept();
+        }
     }
 
     public HelperTablesManager getHelperTablesManager() {
