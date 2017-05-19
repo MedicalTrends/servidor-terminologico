@@ -58,15 +58,13 @@ public class AccountActivation {
     private User user;
 
     //@EJB
-    UserManager userManager;
+    UserManager userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
 
     //@EJB
-    AuthenticationManager authenticationManager;
+    AuthenticationManager authenticationManager = (AuthenticationManager) RemoteEJBClientFactory.getInstance().getManager(AuthenticationManager.class);
 
     @PostConstruct
     public void init() {
-        userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
-        authenticationManager = (AuthenticationManager) RemoteEJBClientFactory.getInstance().getManager(AuthenticationManager.class);
 
         key = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("key");
         questionList = userManager.getAllQuestions();

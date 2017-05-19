@@ -35,7 +35,6 @@ import static java.lang.System.currentTimeMillis;
 @ViewScoped
 public class RefSetsBean implements Serializable {
 
-
     private RefSet refSetToCreate;
 
     private List<RefSet> refSetList;
@@ -72,18 +71,6 @@ public class RefSetsBean implements Serializable {
 
     private List<ConceptSMTK> conceptSMTKListSelectedEdit;
 
-    //@EJB
-    AuditManager auditManager;
-
-    //@EJB
-    private CategoryManager categoryManager;
-
-    //@EJB
-    private ConceptManager conceptManager;
-
-    //@EJB
-    private RefSetManager refSetManager;
-
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
 
@@ -93,11 +80,21 @@ public class RefSetsBean implements Serializable {
     @ManagedProperty(value = "#{messageBean}")
     private MessageBean messageBean;
 
+    //@EJB
+    AuditManager auditManager = (AuditManager) RemoteEJBClientFactory.getInstance().getManager(AuditManager.class);
+
+    //@EJB
+    CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
+
+    //@EJB
+    ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+
+    //@EJB
+    RefSetManager refSetManager = (RefSetManager) RemoteEJBClientFactory.getInstance().getManager(RefSetManager.class);
+
 
     @PostConstruct
     public void init() {
-        categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
-        conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
 
         categories = categoryManager.getCategories();
         refSetList = refSetManager.getAllRefSets();

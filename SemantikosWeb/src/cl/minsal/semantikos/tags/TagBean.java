@@ -1,7 +1,9 @@
 package cl.minsal.semantikos.tags;
 
+import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
 import cl.minsal.semantikos.concept.ConceptBean;
 import cl.minsal.semantikos.kernel.components.TagManager;
+import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.model.tags.Tag;
 import org.primefaces.event.CellEditEvent;
 
@@ -62,8 +64,8 @@ public class TagBean implements Serializable{
     private String colorBackground;
 
 
-    @EJB
-    private TagManager tagManager;
+    //@EJB
+    private TagManager tagManager = (TagManager) RemoteEJBClientFactory.getInstance().getManager(TagManager.class);
 
     @ManagedProperty(value="#{conceptBean}")
     private ConceptBean conceptBean;

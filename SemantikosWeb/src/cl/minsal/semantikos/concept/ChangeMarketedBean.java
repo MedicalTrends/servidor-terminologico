@@ -43,16 +43,13 @@ public class ChangeMarketedBean {
     private Target targetSelected;
 
     //@EJB
-    private ConceptManager conceptManager;
+    private ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
 
     //@EJB
-    private RelationshipManager relationshipManager;
+    private RelationshipManager relationshipManager = (RelationshipManager) RemoteEJBClientFactory.getInstance().getManager(RelationshipManager.class);
 
     @PostConstruct
     public void init() {
-        conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
-        relationshipManager = (RelationshipManager) RemoteEJBClientFactory.getInstance().getManager(RelationshipManager.class);
-
         conceptSMTKList = new ArrayList<>();
         user = authenticationBean.getLoggedUser();
     }

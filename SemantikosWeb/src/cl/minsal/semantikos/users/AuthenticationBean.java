@@ -46,10 +46,10 @@ public class AuthenticationBean {
     private User loggedUser;
 
     //@EJB(name = "AuthenticationManagerEJB")
-    AuthenticationManager authenticationManager;
+    AuthenticationManager authenticationManager = (AuthenticationManager) RemoteEJBClientFactory.getInstance().getManager(AuthenticationManager.class);
 
     //@EJB
-    TimeOutWeb timeOutWeb;
+    TimeOutWeb timeOutWeb = (TimeOutWeb) RemoteEJBClientFactory.getInstance().getManager(TimeOutWeb.class);
 
 
     public boolean isLoggedIn() {
@@ -61,8 +61,6 @@ public class AuthenticationBean {
     }
 
     public void login() {
-        authenticationManager = (AuthenticationManager) RemoteEJBClientFactory.getInstance().getManager(AuthenticationManager.class);
-        timeOutWeb = (TimeOutWeb) RemoteEJBClientFactory.getInstance().getManager(TimeOutWeb.class);
 
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();

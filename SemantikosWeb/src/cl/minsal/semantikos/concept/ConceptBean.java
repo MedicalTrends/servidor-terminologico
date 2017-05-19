@@ -92,7 +92,7 @@ public class ConceptBean implements Serializable {
     RelationshipBindingBRInterface relationshipBindingBR = (RelationshipBindingBRInterface) RemoteEJBClientFactory.getInstance().getManager(RelationshipBindingBRInterface.class);
 
     //@EJB
-    private ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR = (ConceptDefinitionalGradeBRInterface) RemoteEJBClientFactory.getInstance().getManager(ConceptDefinitionalGradeBRInterface.class);
+    ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR = (ConceptDefinitionalGradeBRInterface) RemoteEJBClientFactory.getInstance().getManager(ConceptDefinitionalGradeBRInterface.class);
 
     @ManagedProperty(value = "#{smtkBean}")
     private SMTKTypeBean smtkTypeBean;
@@ -333,17 +333,6 @@ public class ConceptBean implements Serializable {
     @PostConstruct
     protected void initialize() throws ParseException {
 
-        conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
-        descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
-        relationshipManager = (RelationshipManager) RemoteEJBClientFactory.getInstance().getManager(RelationshipManager.class);
-        categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
-        helperTablesManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
-        tagSMTKManager = (TagSMTKManager) RemoteEJBClientFactory.getInstance().getManager(TagSMTKManager.class);
-        auditManager = (AuditManager) RemoteEJBClientFactory.getInstance().getManager(AuditManager.class);
-        viewAugmenter = (ViewAugmenter) RemoteEJBClientFactory.getInstance().getManager(ViewAugmenter.class);
-        relationshipBindingBR = (RelationshipBindingBRInterface) RemoteEJBClientFactory.getInstance().getManager(RelationshipBindingBRInterface.class);
-        conceptDefinitionalGradeBR = (ConceptDefinitionalGradeBRInterface) RemoteEJBClientFactory.getInstance().getManager(ConceptDefinitionalGradeBRInterface.class);
-
         // TODO: Terminar esto o cambiar en el futuro
         user = authenticationBean.getLoggedUser();
         autogenerateMCCE = new AutogenerateMCCE();
@@ -395,7 +384,7 @@ public class ConceptBean implements Serializable {
         }
 
         // Una vez que se ha inicializado el concepto, inicializar los placeholders para las relaciones
-        viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
+        relationshipPlaceholders = viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
 
         changeMCSpecial();
     }
@@ -549,7 +538,7 @@ public class ConceptBean implements Serializable {
         // Validar placeholders de targets de relacion
         if (relationship.getTarget() == null) {
             messageBean.messageError("Debe seleccionar un valor para el atributo " + relationshipDefinition.getName());
-            viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
+            relationshipPlaceholders = viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
             resetPlaceHolders();
             return;
         }
@@ -569,7 +558,7 @@ public class ConceptBean implements Serializable {
         for (RelationshipAttributeDefinition attributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
             if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) || changeIndirectMultiplicity(relationship, relationshipDefinition, attributeDefinition)) {
                 messageBean.messageError("Información incompleta para agregar " + relationshipDefinition.getName());
-                viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
+                relationshipPlaceholders = viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
                 resetPlaceHolders();
                 return;
             }
@@ -581,7 +570,7 @@ public class ConceptBean implements Serializable {
         if(!isMCSpecialThisConcept() && !relationshipDefinition.isSNOMEDCT())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
         // Resetear placeholder relacion
-        viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
+        relationshipPlaceholders = viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
         // Resetear placeholder targets
         resetPlaceHolders();
     }
@@ -1589,7 +1578,9 @@ public class ConceptBean implements Serializable {
     public void changeFullyDefined(ConceptSMTKWeb concept) {
         try {
             concept.setFullyDefined((fullyDefined) ? true : false);
-            if (concept.isFullyDefined()) conceptDefinitionalGradeBR.apply(concept);
+            if (concept.isFullyDefined()) {
+                conceptDefinitionalGradeBR.apply(concept);
+            }
         } catch (EJBException e) {
             concept.setFullyDefined(false);
             fullyDefined=false;

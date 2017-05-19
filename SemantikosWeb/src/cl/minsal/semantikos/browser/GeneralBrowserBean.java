@@ -93,32 +93,25 @@ public class GeneralBrowserBean implements Serializable {
     private AuthenticationBean authenticationBean;
 
     //@EJB
-    QueryManager queryManager;
+    QueryManager queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
 
     //@EJB
-    TagManager tagManager;
+    TagManager tagManager = (TagManager) RemoteEJBClientFactory.getInstance().getManager(TagManager.class);
 
     //@EJB
-    HelperTablesManager helperTablesManager;
+    HelperTablesManager helperTablesManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
 
     //@EJB
-    UserManager userManager;
+    UserManager userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
 
     //@EJB
-    private CategoryManager categoryManager;
+    CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
 
     //@EJB
-    private ConceptManager conceptManager;
+    ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
 
     @PostConstruct
     public void init() {
-        categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
-        conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
-        queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
-        helperTablesManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
-        userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
-        tagManager = (TagManager) RemoteEJBClientFactory.getInstance().getManager(TagManager.class);
-
         tags = tagManager.getAllTags();
         users = userManager.getAllUsers();
         generalQuery = null;

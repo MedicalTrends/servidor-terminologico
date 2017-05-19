@@ -40,13 +40,11 @@ public class CrossmapBean implements Serializable {
     private String typeSearch;
 
     //@EJB
-    private CrossmapsManager crossmapsManager;
+    private CrossmapsManager crossmapsManager = (CrossmapsManager) RemoteEJBClientFactory.getInstance().getManager(CrossmapsManager.class);
 
 
     @PostConstruct
     public void init() {
-        crossmapsManager = (CrossmapsManager) RemoteEJBClientFactory.getInstance().getManager(CrossmapsManager.class);
-
         crossmapSets = crossmapsManager.getCrossmapSets();
         indirectCrossmaps=new ArrayList<>();
         typeSearch="0";

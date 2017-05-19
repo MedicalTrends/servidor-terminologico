@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.concept;
 
+import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
 import cl.minsal.semantikos.kernel.components.AuditManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
@@ -19,11 +20,11 @@ import java.util.List;
 @ViewScoped
 public class HistoryConceptBean {
 
-    @EJB
-    AuditManager auditManager;
+    //@EJB
+    AuditManager auditManager = (AuditManager) RemoteEJBClientFactory.getInstance().getManager(AuditManager.class);
 
-    @EJB
-    ConceptManager conceptManager;
+    //@EJB
+    ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
 
     private List<ConceptAuditAction> auditAction;
 

@@ -1,7 +1,7 @@
-package cl.minsal.semantikos.users;
+package cl.minsal.semantikos;
 
-import cl.minsal.semantikos.Constants;
 import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.users.AuthenticationBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

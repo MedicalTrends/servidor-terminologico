@@ -42,16 +42,13 @@ public class FindConcept implements Serializable{
     private String pattern;
 
     //@EJB
-    private ConceptManager conceptManager;
+    private ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
 
     //@EJB
-    private CategoryManager categoryManager;
+    private CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
 
     @PostConstruct
     public void init() {
-        conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
-        categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
-
         findConcepts = new ArrayList<>();
         categoryList = categoryManager.getCategories();
     }

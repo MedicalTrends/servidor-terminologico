@@ -52,15 +52,13 @@ public class AccountRecovery {
     private boolean passwordChanged = false;
 
     //@EJB
-    UserManager userManager;
+    UserManager userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
 
     //@EJB
-    AuthenticationManager authenticationManager;
+    AuthenticationManager authenticationManager = (AuthenticationManager) RemoteEJBClientFactory.getInstance().getManager(AuthenticationManager.class);
 
     @PostConstruct
     public void init() {
-        userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
-        authenticationManager = (AuthenticationManager) RemoteEJBClientFactory.getInstance().getManager(AuthenticationManager.class);
     }
 
     public String getEmail() {

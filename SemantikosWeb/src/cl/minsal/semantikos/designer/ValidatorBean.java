@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.designer;
 
+import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.kernel.components.CrossmapsManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.model.*;
@@ -30,14 +32,14 @@ import java.util.List;
 @ViewScoped
 public class ValidatorBean {
 
-    @EJB
-    private ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR;
+    //@EJB
+    private ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR = (ConceptDefinitionalGradeBRInterface) RemoteEJBClientFactory.getInstance().getManager(ConceptDefinitionalGradeBRInterface.class);
 
-    @EJB
-    private RelationshipManager relationshipManager;
+    //@EJB
+    private RelationshipManager relationshipManager = (RelationshipManager) RemoteEJBClientFactory.getInstance().getManager(RelationshipManager.class);
 
-    @EJB
-    private SnomedCTManager snomedCTManager;
+    //@EJB
+    private SnomedCTManager snomedCTManager = (SnomedCTManager) RemoteEJBClientFactory.getInstance().getManager(SnomedCTManager.class);
 
     /**
      * Este metodo revisa que las relaciones cumplan el lower_boundary del

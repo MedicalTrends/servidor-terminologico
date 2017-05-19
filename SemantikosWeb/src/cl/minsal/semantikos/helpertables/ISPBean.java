@@ -63,13 +63,13 @@ public class ISPBean {
     private ConceptBean conceptBean;
 
     //@EJB
-    ISPFetcher ispFetcher;
+    ISPFetcher ispFetcher = (ISPFetcher) RemoteEJBClientFactory.getInstance().getManager(ISPFetcher.class);
 
     //@EJB
-    HelperTablesManager helperTablesManager;
+    HelperTablesManager helperTablesManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
 
     //@EJB
-    UserManager userManager;
+    UserManager userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
 
     //@EJB
     RelationshipManager relationshipManager;
@@ -77,9 +77,6 @@ public class ISPBean {
 
     @PostConstruct
     public void init() {
-        ispFetcher = (ISPFetcher) RemoteEJBClientFactory.getInstance().getManager(ISPFetcher.class);
-        helperTablesManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
-        userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
 
         // Se setea en duro la opcionalidad de la relación, esta debería ser opcional.
         for (RelationshipDefinition rd : conceptBean.getCategory().getRelationshipDefinitions()) {

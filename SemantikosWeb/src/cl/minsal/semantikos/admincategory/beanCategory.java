@@ -52,19 +52,16 @@ public class beanCategory {
     private int lowerBoundary;
 
     //@EJB
-    private CategoryManager categoryManager;
+    CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
 
     //@EJB
-    private TagSMTKManager tagSMTKManager;
+    TagSMTKManager tagSMTKManager = (TagSMTKManager) RemoteEJBClientFactory.getInstance().getManager(TagSMTKManager.class);
 
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
 
     @PostConstruct
     public void init(){
-
-        categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
-        tagSMTKManager = (TagSMTKManager) RemoteEJBClientFactory.getInstance().getManager(TagSMTKManager.class);
 
         category= new Category();
         categories= categoryManager.getCategories();

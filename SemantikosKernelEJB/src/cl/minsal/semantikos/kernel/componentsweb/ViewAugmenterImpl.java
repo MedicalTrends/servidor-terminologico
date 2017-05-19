@@ -38,7 +38,7 @@ public class ViewAugmenterImpl implements ViewAugmenter {
 
     private static final Logger logger = LoggerFactory.getLogger(ViewAugmenterImpl.class);
 
-    private Map<RelationshipDefinition, RelationshipDefinitionWeb> relationshipDefinitiosnWeb = new HashMap<>();
+    private Map<Long, RelationshipDefinitionWeb> relationshipDefinitiosnWeb = new HashMap<>();
 
     @Override
     public RelationshipDefinitionWeb augmentRelationshipDefinition(Category category, RelationshipDefinition relDef) {
@@ -68,11 +68,11 @@ public class ViewAugmenterImpl implements ViewAugmenter {
 
         for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
 
-            if(!relationshipDefinitiosnWeb.containsKey(relationshipDefinition)) {
-                relationshipDefinitiosnWeb.put(relationshipDefinition, augmentRelationshipDefinition(category, relationshipDefinition));
+            if(!relationshipDefinitiosnWeb.containsKey(relationshipDefinition.getId())) {
+                relationshipDefinitiosnWeb.put(relationshipDefinition.getId(), augmentRelationshipDefinition(category, relationshipDefinition));
             }
 
-            RelationshipDefinitionWeb relationshipDefinitionWeb = relationshipDefinitiosnWeb.get(relationshipDefinition);
+            RelationshipDefinitionWeb relationshipDefinitionWeb = relationshipDefinitiosnWeb.get(relationshipDefinition.getId());
 
             if (!concept.isPersistent() && relationshipDefinitionWeb.hasDefaultValue()) {
                 concept.initRelationship(relationshipDefinitionWeb);
@@ -84,17 +84,17 @@ public class ViewAugmenterImpl implements ViewAugmenter {
     }
 
     @Override
-    public void augmentRelationships(Category category, ConceptSMTKWeb concept, Map<Long, Relationship> relationshipPlaceholders) {
+    public Map<Long, Relationship> augmentRelationships(Category category, ConceptSMTKWeb concept, Map<Long, Relationship> relationshipPlaceholders) {
 
         for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
 
             if (!relationshipDefinition.getRelationshipAttributeDefinitions().isEmpty() && relationshipDefinition.getMultiplicity().isCollection()) {
 
-                if(!relationshipDefinitiosnWeb.containsKey(relationshipDefinition)) {
-                    relationshipDefinitiosnWeb.put(relationshipDefinition, augmentRelationshipDefinition(category, relationshipDefinition));
+                if(!relationshipDefinitiosnWeb.containsKey(relationshipDefinition.getId())) {
+                    relationshipDefinitiosnWeb.put(relationshipDefinition.getId(), augmentRelationshipDefinition(category, relationshipDefinition));
                 }
 
-                RelationshipDefinitionWeb relationshipDefinitionWeb = relationshipDefinitiosnWeb.get(relationshipDefinition);
+                RelationshipDefinitionWeb relationshipDefinitionWeb = relationshipDefinitiosnWeb.get(relationshipDefinition.getId());
 
                 Relationship r = new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
 
@@ -129,5 +129,7 @@ public class ViewAugmenterImpl implements ViewAugmenter {
                 }
             }
         }
+
+        return relationshipPlaceholders;
     }
 }

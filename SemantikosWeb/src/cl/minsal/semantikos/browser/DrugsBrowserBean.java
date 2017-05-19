@@ -49,24 +49,16 @@ public class DrugsBrowserBean implements Serializable {
     private TreeNode root;
 
     //@EJB
-    DrugsManager drugsManager;
+    DrugsManager drugsManager = (DrugsManager) RemoteEJBClientFactory.getInstance().getManager(DrugsManager.class);
 
     //@EJB
-    private QueryManager queryManager;
+    CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
 
     //@EJB
-    private CategoryManager categoryManager;
-
-    //@EJB
-    private ConceptManager conceptManager;
+    ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
 
     @PostConstruct
     public void init(){
-        drugsManager = (DrugsManager) RemoteEJBClientFactory.getInstance().getManager(DrugsManager.class);
-        conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
-        queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
-        categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
-
         root = new DefaultTreeNode(new ConceptSMTK(categoryManager.getCategoryById(39)), null);
         drugsCategories = getCategoryValues(drugsManager.getDrugsCategories());
     }

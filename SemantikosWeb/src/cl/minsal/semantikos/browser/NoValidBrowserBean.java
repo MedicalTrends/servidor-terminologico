@@ -79,29 +79,21 @@ public class NoValidBrowserBean implements Serializable {
     private AuthenticationBean authenticationBean;
 
     //@EJB
-    private DescriptionManager descriptionManager;
+    DescriptionManager descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
 
     //@EJB
-    private ConceptManager conceptManager;
+    ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
 
     //@EJB
-    private CategoryManager categoryManager;
+    CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
 
     //@EJB
-    QueryManager queryManager;
+    QueryManager queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
 
-    //@EJB
-    RefSetManager refSetManager;
-
-    DescriptionTranslationBRInterface descriptionTranslationBR;
+    DescriptionTranslationBRInterface descriptionTranslationBR = (DescriptionTranslationBRInterface) RemoteEJBClientFactory.getInstance().getManager(DescriptionTranslationBRInterface.class);
 
     @PostConstruct
     public void init() {
-        categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
-        conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
-        queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
-        descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
-        refSetManager = (RefSetManager) RemoteEJBClientFactory.getInstance().getManager(RefSetManager.class);
 
         descriptionTypes = DescriptionTypeFactory.getInstance().getDescriptionTypes();
         observationTypes = descriptionManager.getObservationsNoValid();

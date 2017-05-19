@@ -1,6 +1,7 @@
-package cl.minsal.semantikos.users;
+package cl.minsal.semantikos.converters;
 
 import cl.minsal.semantikos.model.users.Profile;
+import cl.minsal.semantikos.users.UsersBean;
 
 import javax.el.ELContext;
 import javax.faces.application.FacesMessage;

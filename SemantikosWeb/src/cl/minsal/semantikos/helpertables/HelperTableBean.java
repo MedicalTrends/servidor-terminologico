@@ -54,14 +54,12 @@ public class HelperTableBean implements Serializable {
     private MessageBean messageBean;
 
     //@EJB
-    HelperTablesManager manager;
+    HelperTablesManager manager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
 
-    HelperTableSearchBRInterface helperTableSearchBR;
+    HelperTableSearchBRInterface helperTableSearchBR = (HelperTableSearchBRInterface) RemoteEJBClientFactory.getInstance().getManager(HelperTableSearchBRInterface.class);
 
     @PostConstruct
     protected void initialize() throws ParseException {
-        manager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
-        helperTableSearchBR = (HelperTableSearchBRInterface) RemoteEJBClientFactory.getInstance().getManager(HelperTableSearchBRInterface.class);
     }
 
     public AuthenticationBean getAuthenticationBean() {

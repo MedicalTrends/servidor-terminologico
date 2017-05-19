@@ -39,22 +39,16 @@ public class DescriptionsBrowserBean implements Serializable {
     static final Logger logger = LoggerFactory.getLogger(DescriptionsBrowserBean.class);
 
     //@EJB
-    QueryManager queryManager;
+    QueryManager queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
 
     //@EJB
-    RefSetManager refSetManager;
+    RefSetManager refSetManager = (RefSetManager) RemoteEJBClientFactory.getInstance().getManager(RefSetManager.class);
 
     //@EJB
-    HelperTablesManager helperTablesManager;
+    private CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
 
     //@EJB
-    UserManager userManager;
-
-    //@EJB
-    private CategoryManager categoryManager;
-
-    //@EJB
-    private ConceptManager conceptManager;
+    private ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
 
     /**
      * Objeto de consulta: contiene todos los filtros y columnas necesarios para el despliegue de los resultados en el navegador
@@ -95,17 +89,9 @@ public class DescriptionsBrowserBean implements Serializable {
 
     @PostConstruct
     public void init(){
-        categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
-        conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
-        queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
-        refSetManager = (RefSetManager) RemoteEJBClientFactory.getInstance().getManager(RefSetManager.class);
-        helperTablesManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
-        userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
-
         categories = categoryManager.getCategories();
         descriptionTypes = DescriptionTypeFactory.getInstance().getDescriptionTypes();
         refSets = refSetManager.getValidRefSets();
-
     }
 
     /**

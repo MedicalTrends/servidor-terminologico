@@ -22,14 +22,12 @@ import java.io.IOException;
 public class TimeOutSessionBean {
 
     //@EJB
-    private TimeOutWeb timeOutWeb;
+    private TimeOutWeb timeOutWeb= (TimeOutWeb) RemoteEJBClientFactory.getInstance().getManager(TimeOutWeb.class);
 
     private static int timeOut;
 
     @PostConstruct
     public void init() {
-        timeOutWeb = (TimeOutWeb) RemoteEJBClientFactory.getInstance().getManager(TimeOutWeb.class);
-
         timeOut=timeOutWeb.getTimeOut();
     }
 

@@ -35,16 +35,14 @@ public class MainMenuBean implements Serializable {
     private MenuModel categoryMenuModel;
 
     //@EJB
-    private CategoryManager categoryManager;
+    private CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
 
     private TagSMTKFactory tagSMTKFactory;
 
     @PostConstruct
     public void init() {
 
-        categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
-
-        categories = categoryManager.getCategories();
+        categories =  categoryManager.getCategories();
 
         categoryMenuModel = new DefaultMenuModel();
 

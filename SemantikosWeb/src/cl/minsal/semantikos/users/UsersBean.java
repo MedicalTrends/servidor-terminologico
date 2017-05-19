@@ -41,16 +41,13 @@ public class UsersBean {
     static private final Logger logger = LoggerFactory.getLogger(UsersBean.class);
 
     //@EJB
-    UserManager userManager;
+    UserManager userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
 
     //@EJB
-    InstitutionManager institutionManager;
+    InstitutionManager institutionManager = (InstitutionManager) RemoteEJBClientFactory.getInstance().getManager(InstitutionManager.class);
 
     //@EJB
-    AuthenticationManager authenticationManager;
-
-    //@EJB
-    UserCreationBRInterface userCreationBR;
+    AuthenticationManager authenticationManager = (AuthenticationManager) RemoteEJBClientFactory.getInstance().getManager(AuthenticationManager.class);
 
     User selectedUser;
 
@@ -88,10 +85,6 @@ public class UsersBean {
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() throws ParseException {
-        userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
-        institutionManager = (InstitutionManager) RemoteEJBClientFactory.getInstance().getManager(InstitutionManager.class);
-        authenticationManager = (AuthenticationManager) RemoteEJBClientFactory.getInstance().getManager(AuthenticationManager.class);
-
         createOrUpdateUser();
     }
 

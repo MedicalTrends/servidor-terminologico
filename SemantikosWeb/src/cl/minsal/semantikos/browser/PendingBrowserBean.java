@@ -79,27 +79,19 @@ public class PendingBrowserBean implements Serializable {
     private AuthenticationBean authenticationBean;
 
     //@EJB
-    private DescriptionManager descriptionManager;
+    DescriptionManager descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
 
     //@EJB
-    private ConceptManager conceptManager;
+    ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
 
     //@EJB
-    private CategoryManager categoryManager;
+    CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
 
     //@EJB
-    private QueryManager queryManager;
-
-    //@EJB
-    private PendingTermsManager pendingTermsManager;
+    QueryManager queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
 
     @PostConstruct
     public void init() {
-        categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
-        conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
-        queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
-        descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
-        pendingTermsManager = (PendingTermsManager) RemoteEJBClientFactory.getInstance().getManager(PendingTermsManager.class);
 
         conceptPending = conceptManager.getPendingConcept();
 
