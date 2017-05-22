@@ -28,7 +28,7 @@ import java.text.ParseException;
 /**
  * Created by Francisco Mendez on 19-05-2016.
  */
-@ManagedBean(name = "authenticationBean")
+@ManagedBean(name = "authenticationBean", eager = true)
 @SessionScoped
 public class AuthenticationBean {
 

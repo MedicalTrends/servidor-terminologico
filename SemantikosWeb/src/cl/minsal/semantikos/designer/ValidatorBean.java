@@ -1,11 +1,10 @@
 package cl.minsal.semantikos.designer;
 
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
-import cl.minsal.semantikos.kernel.components.CrossmapsManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.kernel.businessrules.ConceptDefinitionalGradeBRInterface;
+import cl.minsal.semantikos.kernel.businessrules.ConceptDefinitionalGradeBR;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
@@ -15,7 +14,6 @@ import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.modelweb.DescriptionWeb;
 import org.primefaces.context.RequestContext;
 
-import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -33,7 +31,7 @@ import java.util.List;
 public class ValidatorBean {
 
     //@EJB
-    private ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR = (ConceptDefinitionalGradeBRInterface) RemoteEJBClientFactory.getInstance().getManager(ConceptDefinitionalGradeBRInterface.class);
+    private ConceptDefinitionalGradeBR conceptDefinitionalGradeBR = (ConceptDefinitionalGradeBR) RemoteEJBClientFactory.getInstance().getManager(ConceptDefinitionalGradeBR.class);
 
     //@EJB
     private RelationshipManager relationshipManager = (RelationshipManager) RemoteEJBClientFactory.getInstance().getManager(RelationshipManager.class);

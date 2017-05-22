@@ -71,7 +71,7 @@ public class ConceptManagerImpl implements ConceptManager {
     private ConceptTransferBR conceptTransferBR;
 
     @EJB
-    private RelationshipBindingBRInterface relationshipBindingBR;
+    private RelationshipBindingBR relationshipBindingBR;
 
     @Override
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptId) {

@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.SnomedCTSnapshotManager;
 import cl.minsal.semantikos.model.snapshots.SnomedCTSnapshotUpdate;
@@ -52,8 +54,8 @@ public class Snapshot {
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
 
-    @EJB
-    private SnomedCTSnapshotManager snomedCTSnapshotManager;
+    //@EJB
+    private SnomedCTSnapshotManager snomedCTSnapshotManager = (SnomedCTSnapshotManager) RemoteEJBClientFactory.getInstance().getManager(SnomedCTSnapshotManager.class);
 
     @PostConstruct
     public void init() {

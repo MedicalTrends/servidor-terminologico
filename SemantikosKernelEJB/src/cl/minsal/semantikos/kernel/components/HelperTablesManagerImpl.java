@@ -5,7 +5,7 @@ import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.exceptions.RowInUseException;
 import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.kernel.businessrules.HelperTableSearchBR;
+import cl.minsal.semantikos.kernel.businessrules.HelperTableSearchBRImpl;
 import cl.minsal.semantikos.model.helpertables.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,6 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.io.Reader;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -191,13 +190,13 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
 
     public List<HelperTableRow> searchRows(HelperTable helperTable, String pattern, String columnName) {
         /* Se validan las pre-condiciones de búsqueda */
-        new HelperTableSearchBR().validatePreConditions(helperTable, columnName, pattern);
+        new HelperTableSearchBRImpl().validatePreConditions(helperTable, columnName, pattern);
 
         /* Se delega la búsqueda al DAO, ya que pasaron las pre-condiciones */
         List<HelperTableRow> foundRows = dao.searchRecords(helperTable, pattern, columnName);
 
         /* Se aplican reglas de negocio sobre los resultados retornados */
-        new HelperTableSearchBR().applyPostActions(foundRows);
+        new HelperTableSearchBRImpl().applyPostActions(foundRows);
 
         return foundRows;
     }

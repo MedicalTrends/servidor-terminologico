@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.businessrules.ConceptCreationBR;
-import cl.minsal.semantikos.kernel.businessrules.RelationshipBindingBRInterface;
+import cl.minsal.semantikos.kernel.businessrules.RelationshipBindingBR;
 import cl.minsal.semantikos.kernel.businessrules.RelationshipEditionBR;
 import cl.minsal.semantikos.kernel.businessrules.RelationshipRemovalBR;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
@@ -50,7 +50,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
     private RelationshipAttributeDAO relationshipAttributeDAO;
 
     @EJB
-    private RelationshipBindingBRInterface relationshipBindingBR;
+    private RelationshipBindingBR relationshipBindingBR;
 
     @Override
     public Relationship bindRelationshipToConcept(ConceptSMTK concept, Relationship relationship, User user) throws Exception {

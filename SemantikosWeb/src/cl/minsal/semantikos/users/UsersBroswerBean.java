@@ -1,9 +1,6 @@
 package cl.minsal.semantikos.users;
 
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
-import cl.minsal.semantikos.kernel.components.AuthenticationManager;
-import cl.minsal.semantikos.kernel.components.InstitutionManager;
-import cl.minsal.semantikos.kernel.businessrules.UserCreationBRInterface;
 import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
@@ -11,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;

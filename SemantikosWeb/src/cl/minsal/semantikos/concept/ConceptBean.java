@@ -17,8 +17,8 @@ import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.kernel.businessrules.ConceptDefinitionalGradeBRInterface;
-import cl.minsal.semantikos.kernel.businessrules.RelationshipBindingBRInterface;
+import cl.minsal.semantikos.kernel.businessrules.ConceptDefinitionalGradeBR;
+import cl.minsal.semantikos.kernel.businessrules.RelationshipBindingBR;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.descriptions.*;
@@ -38,7 +38,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -58,7 +57,7 @@ import static org.primefaces.util.Constants.EMPTY_STRING;
  * Created by diego on 26/06/2016.
  */
 
-@ManagedBean(name = "conceptBean")
+@ManagedBean(name = "conceptBean",eager = true)
 @ViewScoped
 public class ConceptBean implements Serializable {
 
@@ -89,10 +88,10 @@ public class ConceptBean implements Serializable {
     ViewAugmenter viewAugmenter = (ViewAugmenter) RemoteEJBClientFactory.getInstance().getManager(ViewAugmenter.class);
 
     //@EJB
-    RelationshipBindingBRInterface relationshipBindingBR = (RelationshipBindingBRInterface) RemoteEJBClientFactory.getInstance().getManager(RelationshipBindingBRInterface.class);
+    RelationshipBindingBR relationshipBindingBR = (RelationshipBindingBR) RemoteEJBClientFactory.getInstance().getManager(RelationshipBindingBR.class);
 
     //@EJB
-    ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR = (ConceptDefinitionalGradeBRInterface) RemoteEJBClientFactory.getInstance().getManager(ConceptDefinitionalGradeBRInterface.class);
+    ConceptDefinitionalGradeBR conceptDefinitionalGradeBR = (ConceptDefinitionalGradeBR) RemoteEJBClientFactory.getInstance().getManager(ConceptDefinitionalGradeBR.class);
 
     @ManagedProperty(value = "#{smtkBean}")
     private SMTKTypeBean smtkTypeBean;
@@ -261,7 +260,7 @@ public class ConceptBean implements Serializable {
         this.descriptionPending = descriptionPending;
     }
 
-    private AutogenerateMCCE autogenerateMCCE;
+    private AutogenerateMCCE autogenerateMCCE = new AutogenerateMCCE();
 
     private AutogenerateMC autogenerateMC;
 
@@ -331,9 +330,7 @@ public class ConceptBean implements Serializable {
 
     //Inicializacion del Bean
     @PostConstruct
-    protected void initialize() throws ParseException {
-
-        // TODO: Terminar esto o cambiar en el futuro
+    public void initialize() throws ParseException {
         user = authenticationBean.getLoggedUser();
         autogenerateMCCE = new AutogenerateMCCE();
         autogenerateMC = new AutogenerateMC();
@@ -745,11 +742,13 @@ public class ConceptBean implements Serializable {
      * Este método es el encargado de remover una relación específica del concepto.
      */
     public void removeRelationship(RelationshipDefinition rd, Relationship r) {
+        FacesContext context = FacesContext.getCurrentInstance();
         try {
             concept.removeRelationshipWeb(r);
             concept.removeRelationship(r);
         } catch (Exception e) {
             e.printStackTrace();
+            context.addMessage(null, new FacesMessage("Error", e.getMessage()));
         }
 
         if (rd.getOrderAttributeDefinition() != null) {
@@ -852,6 +851,7 @@ public class ConceptBean implements Serializable {
                 return;
             } catch (Exception e) {
                 e.printStackTrace();
+                context.addMessage(null, new FacesMessage("Error", e.getMessage()));
             }
             // Si el concepto está persistido, actualizarlo. Si no, persistirlo
             if (concept.isPersistent()) {
@@ -900,6 +900,7 @@ public class ConceptBean implements Serializable {
             context.addMessage(null, new FacesMessage("Error", bre.getMessage()));
         } catch (Exception e) {
             e.printStackTrace();
+            context.addMessage(null, new FacesMessage("Error", e.getMessage()));
         }
     }
 

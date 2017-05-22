@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.description;
 
+import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.helpertables.HelperTableData;
@@ -24,8 +26,8 @@ import java.util.Map;
 @ViewScoped
 public class AutogenerateBeans {
 
-    @EJB
-    private RelationshipManager relationshipManager;
+    //@EJB
+    private RelationshipManager relationshipManager = (RelationshipManager) RemoteEJBClientFactory.getInstance().getManager(RelationshipManager.class);;
 
     public String autogenerate(List<String> autoGenerateList) {
         String autogenerateString = "";

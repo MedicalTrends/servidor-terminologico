@@ -2,7 +2,6 @@ package cl.minsal.semantikos.helpertables;
 
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
 import cl.minsal.semantikos.concept.ConceptBean;
-import cl.minsal.semantikos.kernel.businessrules.HelperTableSearchBRInterface;
 import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.HelperTablesManager;
@@ -18,7 +17,6 @@ import cl.minsal.semantikos.model.relationships.Target;
 import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;

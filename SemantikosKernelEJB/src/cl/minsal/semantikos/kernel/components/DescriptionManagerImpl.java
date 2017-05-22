@@ -212,8 +212,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
         ConceptSMTK targetConcept = description.getConceptSMTK();
 
         /* Se aplican las reglas de negocio para el traslado */
-        DescriptionTranslationBR descriptionTranslationBR = new DescriptionTranslationBR();
-        descriptionTranslationBR.validatePreConditions(sourceConcept,description, targetConcept, conceptManager, categoryManager);
+        DescriptionTranslationBRImpl descriptionTranslationBRImpl = new DescriptionTranslationBRImpl();
+        descriptionTranslationBRImpl.validatePreConditions(sourceConcept,description, targetConcept, conceptManager, categoryManager);
 
         /* Se realiza la actualización a nivel del modelo lógico */
 
@@ -228,7 +228,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         description.setConceptSMTK(targetConcept);
 
         /* Se aplican las reglas de negocio asociadas al movimiento de un concepto */
-        descriptionTranslationBR.apply(sourceConcept, targetConcept, description, conceptManager, categoryManager);
+        descriptionTranslationBRImpl.apply(sourceConcept, targetConcept, description, conceptManager, categoryManager);
 
         /*Se cambia el estado de la descripción segun el concepto*/
 
@@ -405,5 +405,10 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
         /* Finalmente se retorna */
         return descriptionByDescriptionID;
+    }
+
+    @Override
+    public DescriptionTypeFactory getDescriptionTypeFactory() {
+        return DescriptionTypeFactory.getInstance();
     }
 }

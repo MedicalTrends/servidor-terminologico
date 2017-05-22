@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static javax.ws.rs.core.HttpHeaders.CACHE_CONTROL;
 import static javax.ws.rs.core.HttpHeaders.EXPIRES;
 
 
@@ -31,8 +32,8 @@ public class AuthenticationFilter implements Filter {
             hasPermission(req)) {
             if(req.getRequestURI().contains(Constants.LOGIN_PAGE) || req.getRequestURI().contains(Constants.ACCOUNT_ACTIVATION_PAGE) ||
                 req.getRequestURI().contains(Constants.FORGOT_PASSWORD_PAGE)) {
-                //((HttpServletResponse) response).setHeader(HEADER_CACHE_CONTROL, "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-                //((HttpServletResponse) response).addHeader(HEADER_PRAGMA, "no-cache"); // HTTP 1.0.
+                ((HttpServletResponse) response).setHeader(CACHE_CONTROL, "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+                //((HttpServletResponse) response).addHeader(HEADER, "no-cache"); // HTTP 1.0.
                 ((HttpServletResponse) response).addHeader(EXPIRES, "0"); // Proxies.
             }
             logger.debug("Request válido, se deja continuar: " + req);

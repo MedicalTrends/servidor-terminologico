@@ -19,12 +19,29 @@ public class TagSMTKFactory implements Serializable {
     /** Mapa de tagSMTK por su nombre. */
     private Map<String, TagSMTK> tagsSMTKByName;
 
+    public List<TagSMTK> getTagsSMTK() {
+        return tagsSMTK;
+    }
+
+    public Map<String, TagSMTK> getTagsSMTKByName() {
+        return tagsSMTKByName;
+    }
+
+    public void setTagsSMTKByName(Map<String, TagSMTK> tagsSMTKByName) {
+        this.tagsSMTKByName = tagsSMTKByName;
+    }
+
     /**
      * Constructor privado para el Singleton del Factory.
      */
     private TagSMTKFactory() {
         this.tagsSMTK = new ArrayList<>();
         this.tagsSMTKByName = new HashMap<>();
+    }
+
+    public TagSMTKFactory(List<TagSMTK> tagsSMTK, Map<String, TagSMTK> tagsSMTKByName) {
+        this.tagsSMTK = tagsSMTK;
+        this.tagsSMTKByName = tagsSMTKByName;
     }
 
     public static TagSMTKFactory getInstance() {

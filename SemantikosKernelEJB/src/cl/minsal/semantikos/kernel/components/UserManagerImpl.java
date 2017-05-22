@@ -8,7 +8,7 @@ import cl.minsal.semantikos.model.users.Answer;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.Question;
 import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.kernel.businessrules.UserCreationBRInterface;
+import cl.minsal.semantikos.kernel.businessrules.UserCreationBR;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 
 import javax.ejb.EJB;
@@ -16,7 +16,6 @@ import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static cl.minsal.semantikos.kernel.components.AuthenticationManager.MAX_FAILED_ANSWER_ATTEMPTS;
 import static cl.minsal.semantikos.kernel.components.AuthenticationManager.MAX_FAILED_ANSWER_ATTEMPTS;
 
 /**
@@ -36,7 +35,7 @@ public class UserManagerImpl implements UserManager {
     AuthenticationManager authenticationManager;
 
     @EJB
-    UserCreationBRInterface userCreationBR;
+    UserCreationBR userCreationBR;
 
 
     public List<User> getAllUsers() {
@@ -71,8 +70,6 @@ public class UserManagerImpl implements UserManager {
     public void createUser(User user, HttpServletRequest request) throws BusinessRuleException {
 
         /* Se validan las pre-condiciones para crear un usuario */
-        //UserCreationBR userCreationBR = new UserCreationBR();
-        //userCreationBR.preconditions(user);
         try {
             userCreationBR.verifyPreConditions(user);
             userCreationBR.preActions(user);
@@ -88,8 +85,6 @@ public class UserManagerImpl implements UserManager {
     public void activateAccount(User user) {
 
         /* Se validan las pre-condiciones para crear un usuario */
-        //UserCreationBR userCreationBR = new UserCreationBR();
-        //userCreationBR.preconditions(user);
         try {
             authenticationManager.createUserPassword(user,user.getEmail(),user.getPassword());
         } catch (PasswordChangeException e) {
@@ -104,8 +99,6 @@ public class UserManagerImpl implements UserManager {
     public boolean checkActivationCode(String key) {
 
         /* Se validan las pre-condiciones para crear un usuario */
-        //UserCreationBR userCreationBR = new UserCreationBR();
-        //userCreationBR.preconditions(user);
         User user = userCreationBR.br307verificationCodeExists(key);
 
         if(user!=null) {

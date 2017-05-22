@@ -1,9 +1,7 @@
 package cl.minsal.semantikos.users;
 
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
-import cl.minsal.semantikos.kernel.businessrules.UserCreationBRInterface;
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
-import cl.minsal.semantikos.kernel.components.DrugsManager;
 import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
 import cl.minsal.semantikos.kernel.components.InstitutionManager;
@@ -19,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;

@@ -4,7 +4,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTable;
 
 
 
-public interface HelperTableSearchBRInterface {
+public interface HelperTableSearchBR {
 
     public int getMinQueryLength(HelperTable helperTable);
 

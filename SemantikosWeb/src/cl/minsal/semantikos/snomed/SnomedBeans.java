@@ -1,7 +1,9 @@
 package cl.minsal.semantikos.snomed;
 
+import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.kernel.components.AuthenticationManager;
 import cl.minsal.semantikos.messages.MessageBean;
-import cl.minsal.semantikos.kernel.businessrules.ConceptDefinitionalGradeBRInterface;
+import cl.minsal.semantikos.kernel.businessrules.ConceptDefinitionalGradeBR;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
@@ -37,8 +39,8 @@ public class SnomedBeans {
         this.messageBean = messageBean;
     }
 
-    @EJB
-    private ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR;
+    //@EJB
+    private ConceptDefinitionalGradeBR conceptDefinitionalGradeBR = (ConceptDefinitionalGradeBR) RemoteEJBClientFactory.getInstance().getManager(ConceptDefinitionalGradeBR.class);;
 
 
     /**

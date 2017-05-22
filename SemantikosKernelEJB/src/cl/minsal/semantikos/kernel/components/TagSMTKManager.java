@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.tags.TagSMTK;
+import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 
 import javax.ejb.Local;
 import javax.ejb.Remote;
@@ -34,4 +35,6 @@ public interface TagSMTKManager {
      * @return El Tag Semántikos a retornar.
      */
     public TagSMTK findTagSTMKByID(@NotNull long idTag);
+
+    public TagSMTKFactory getTagSMTKFactory();
 }

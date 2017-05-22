@@ -15,6 +15,8 @@
  */
 package cl.minsal.semantikos.helpertables;
 
+import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.kernel.components.SnomedCTSnapshotManager;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
@@ -44,8 +46,8 @@ public class FileUploadBean {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUploadBean.class);
 
-    @EJB
-    private HelperTablesManager helperTablesManager;
+    //@EJB
+    private HelperTablesManager helperTablesManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
 
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;

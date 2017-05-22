@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.browser;
 
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
-import cl.minsal.semantikos.kernel.businessrules.DescriptionTranslationBRInterface;
+import cl.minsal.semantikos.kernel.businessrules.DescriptionTranslationBR;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -90,7 +89,7 @@ public class NoValidBrowserBean implements Serializable {
     //@EJB
     QueryManager queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
 
-    DescriptionTranslationBRInterface descriptionTranslationBR = (DescriptionTranslationBRInterface) RemoteEJBClientFactory.getInstance().getManager(DescriptionTranslationBRInterface.class);
+    DescriptionTranslationBR descriptionTranslationBR = (DescriptionTranslationBR) RemoteEJBClientFactory.getInstance().getManager(DescriptionTranslationBR.class);
 
     @PostConstruct
     public void init() {

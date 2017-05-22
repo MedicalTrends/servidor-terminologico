@@ -94,7 +94,7 @@
                                 update="@(.FSN)"
                                 process="@this" />
                         <f:selectItem itemLabel="Seleccione tipo" itemValue=""/>
-                        <f:selectItems value="#{conceptBean.tagSMTKs}" var="tag"
+                        <f:selectItems value="#{mainMenuBean.tagSMTKFactory.tagsSMTK}" var="tag"
                                        itemValue="#{tag}"/>
                     </p:selectOneMenu>
                 </div>

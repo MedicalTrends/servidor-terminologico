@@ -2,6 +2,7 @@ package cl.minsal.semantikos;
 
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
 import cl.minsal.semantikos.kernel.components.*;
+import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.categories.Category;
 import org.primefaces.event.MenuActionEvent;
@@ -37,12 +38,27 @@ public class MainMenuBean implements Serializable {
     //@EJB
     private CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
 
+    private TagSMTKManager tagSMTKManager = (TagSMTKManager) RemoteEJBClientFactory.getInstance().getManager(TagSMTKManager.class);
+
+    private DescriptionManager descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
+
     private TagSMTKFactory tagSMTKFactory;
+
+    private DescriptionTypeFactory descriptionTypeFactory;
 
     @PostConstruct
     public void init() {
 
         categories =  categoryManager.getCategories();
+
+        tagSMTKFactory = tagSMTKManager.getTagSMTKFactory();
+
+        descriptionTypeFactory = descriptionManager.getDescriptionTypeFactory();
+
+        TagSMTKFactory.getInstance().setTagsSMTK(tagSMTKFactory.getTagsSMTK());
+        TagSMTKFactory.getInstance().setTagsSMTKByName(tagSMTKFactory.getTagsSMTKByName());
+
+        DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypeFactory.getDescriptionTypes());
 
         categoryMenuModel = new DefaultMenuModel();
 

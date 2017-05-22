@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.TagSMTKDAO;
 import cl.minsal.semantikos.model.tags.TagSMTK;
+import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -25,5 +26,10 @@ public class TagSMTKManagerImpl implements TagSMTKManager {
     @Override
     public TagSMTK findTagSTMKByID(@NotNull long idTag) {
         return tagSMTKDAO.findTagSMTKByID(idTag);
+    }
+
+    @Override
+    public TagSMTKFactory getTagSMTKFactory() {
+        return TagSMTKFactory.getInstance();
     }
 }

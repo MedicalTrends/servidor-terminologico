@@ -2,7 +2,7 @@ package cl.minsal.semantikos.helpertables;
 
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
 import cl.minsal.semantikos.concept.ConceptBean;
-import cl.minsal.semantikos.kernel.businessrules.HelperTableSearchBRInterface;
+import cl.minsal.semantikos.kernel.businessrules.HelperTableSearchBR;
 import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.HelperTablesManager;
@@ -16,7 +16,6 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -56,7 +55,7 @@ public class HelperTableBean implements Serializable {
     //@EJB
     HelperTablesManager manager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
 
-    HelperTableSearchBRInterface helperTableSearchBR = (HelperTableSearchBRInterface) RemoteEJBClientFactory.getInstance().getManager(HelperTableSearchBRInterface.class);
+    HelperTableSearchBR helperTableSearchBR = (HelperTableSearchBR) RemoteEJBClientFactory.getInstance().getManager(HelperTableSearchBR.class);
 
     @PostConstruct
     protected void initialize() throws ParseException {
