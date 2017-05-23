@@ -23,23 +23,33 @@ public class AuthenticationFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+
+        ((HttpServletResponse) response).setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        ((HttpServletResponse) response).setHeader("Pragma", "no-cache"); // HTTP 1.0.
+        ((HttpServletResponse) response).setHeader("Expires", "0");
+
+        /* Inició sesión e intenta volver atrás */
+        if(isLoggedIn(req) && req.getRequestURI().contains(Constants.LOGIN_PAGE)) {
+            logger.debug("Intento de acceso sin sesión: " + req);
+            res.sendRedirect(req.getContextPath() + Constants.HOME_PAGE);
+        }
 
         if (req.getRequestURI().contains(Constants.LOGIN_PAGE) || req.getRequestURI().contains(Constants.ERRORS_FOLDER) ||
             req.getRequestURI().contains(Constants.ACCOUNT_ACTIVATION_PAGE) || req.getRequestURI().contains(Constants.FORGOT_PASSWORD_PAGE) ||
             hasPermission(req)) {
+            /*
             if(req.getRequestURI().contains(Constants.LOGIN_PAGE) || req.getRequestURI().contains(Constants.ACCOUNT_ACTIVATION_PAGE) ||
                 req.getRequestURI().contains(Constants.FORGOT_PASSWORD_PAGE)) {
                 ((HttpServletResponse) response).setHeader(CACHE_CONTROL, "no-cache, no-store, must-revalidate"); // HTTP 1.1.
                 //((HttpServletResponse) response).addHeader(HEADER, "no-cache"); // HTTP 1.0.
                 ((HttpServletResponse) response).addHeader(EXPIRES, "0"); // Proxies.
             }
+            */
             logger.debug("Request válido, se deja continuar: " + req);
             chain.doFilter(request, response);
         }
-
         /* Perdió la sesión o está tratando de conectarse sin haberse logueado */
         else if (!isLoggedIn(req)) {
             logger.debug("Intento de acceso sin sesión: " + req);

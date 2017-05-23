@@ -275,7 +275,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public void persist(@NotNull ConceptSMTK conceptSMTK, User user) throws Exception {
+    public long persist(@NotNull ConceptSMTK conceptSMTK, User user) throws Exception {
         logger.debug("El concepto " + conceptSMTK + " será persistido.");
 
         /* Pre-condición técnica: el concepto no debe estar persistido */
@@ -299,7 +299,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         /* Y sus relaciones */
         for (Relationship relationship : conceptSMTK.getRelationships()) {
-            relationshipManager.createRelationship(relationship);
+            relationship = relationshipManager.createRelationship(relationship);
             /* Se realizan las acciones asociadas a la asociación */
             relationshipBindingBR.postActions(relationship, user);
         }
@@ -317,6 +317,8 @@ public class ConceptManagerImpl implements ConceptManager {
         auditManager.recordNewConcept(conceptSMTK, user);
 
         logger.debug("El concepto " + conceptSMTK + " fue persistido.");
+
+        return conceptSMTK.getId();
     }
 
     @Override

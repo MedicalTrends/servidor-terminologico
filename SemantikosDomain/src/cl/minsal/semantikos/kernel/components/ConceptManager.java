@@ -24,7 +24,7 @@ public interface ConceptManager {
      * @param conceptSMTK El concepto a persistir.
      * @param user        El usuario que persiste el concepto.
      */
-    public void persist(@NotNull ConceptSMTK conceptSMTK, User user);
+    public long persist(@NotNull ConceptSMTK conceptSMTK, User user);
 
     /**
      * Este método es responsable de actualizar los campos (para no decir atributos que es un caso particular de las

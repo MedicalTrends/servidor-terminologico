@@ -24,5 +24,5 @@ public interface ViewAugmenter {
 
     public ConceptSMTKWeb augmentConcept(Category category, ConceptSMTKWeb concept);
 
-    public Map<Long, Relationship> augmentRelationships(Category category, ConceptSMTKWeb concept, Map<Long, Relationship> relationships);
+    public Map<Long, Relationship> augmentRelationships(Category category, Map<Long, Relationship> relationships);
 }

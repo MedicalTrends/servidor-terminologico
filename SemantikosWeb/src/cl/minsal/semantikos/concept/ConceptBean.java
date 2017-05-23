@@ -1,9 +1,11 @@
 package cl.minsal.semantikos.concept;
 
+import cl.minsal.semantikos.MainMenuBean;
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
 import cl.minsal.semantikos.description.AutogenerateBeans;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.messages.MessageBean;
+import cl.minsal.semantikos.relationship.RelationshipBeans;
 import cl.minsal.semantikos.session.ProfilePermissionsBeans;
 import cl.minsal.semantikos.snomed.SCTTypeBean;
 import cl.minsal.semantikos.snomed.SnomedBeans;
@@ -128,6 +130,9 @@ public class ConceptBean implements Serializable {
 
     @ManagedProperty( value = "#{pendingBrowserBean}")
     private PendingBrowserBean pendingBrowserBean;
+
+    @ManagedProperty( value="#{mainMenuBean}")
+    MainMenuBean mainMenuBean;
 
     public void setPendingBrowserBean(PendingBrowserBean pendingBrowserBean) {
         this.pendingBrowserBean = pendingBrowserBean;
@@ -356,6 +361,14 @@ public class ConceptBean implements Serializable {
         conceptSuggestedList.remove(conceptSMTKSuggestSel);
     }
 
+    public MainMenuBean getMainMenuBean() {
+        return mainMenuBean;
+    }
+
+    public void setMainMenuBean(MainMenuBean mainMenuBean) {
+        this.mainMenuBean = mainMenuBean;
+    }
+
     /**
      * Este método se encarga de inicializar un concepto si es que se va a crear un concepto nuevo. Y si se va a editar
      * invoca al getConceptByID.
@@ -381,9 +394,10 @@ public class ConceptBean implements Serializable {
         }
 
         // Una vez que se ha inicializado el concepto, inicializar los placeholders para las relaciones
-        relationshipPlaceholders = viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
+        mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
 
         changeMCSpecial();
+
     }
 
     //Este método es responsable de a partir de un concepto SMTK y un término, devolver un concepto WEB con su FSN y su Preferida
@@ -500,6 +514,7 @@ public class ConceptBean implements Serializable {
         }
 
         Relationship relationship = relationshipPlaceholders.get(relationshipDefinition.getId());
+
         try {
             if(concept.getRelationships().contains(relationship)){
                 messageBean.messageError("No se puede agregar dos veces el mismo registro");
@@ -535,7 +550,7 @@ public class ConceptBean implements Serializable {
         // Validar placeholders de targets de relacion
         if (relationship.getTarget() == null) {
             messageBean.messageError("Debe seleccionar un valor para el atributo " + relationshipDefinition.getName());
-            relationshipPlaceholders = viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
+            mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
             resetPlaceHolders();
             return;
         }
@@ -555,7 +570,7 @@ public class ConceptBean implements Serializable {
         for (RelationshipAttributeDefinition attributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
             if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) || changeIndirectMultiplicity(relationship, relationshipDefinition, attributeDefinition)) {
                 messageBean.messageError("Información incompleta para agregar " + relationshipDefinition.getName());
-                relationshipPlaceholders = viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
+                mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
                 resetPlaceHolders();
                 return;
             }
@@ -564,10 +579,12 @@ public class ConceptBean implements Serializable {
         if(!isMCSpecialThisConcept() && concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0 && !relationshipDefinition.isSNOMEDCT())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
        // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
-        if(!isMCSpecialThisConcept() && !relationshipDefinition.isSNOMEDCT())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+        if(!isMCSpecialThisConcept() && !relationshipDefinition.isSNOMEDCT()) {
+            autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+        }
 
         // Resetear placeholder relacion
-        relationshipPlaceholders = viewAugmenter.augmentRelationships(category, concept, relationshipPlaceholders);
+        mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
         // Resetear placeholder targets
         resetPlaceHolders();
     }
@@ -882,8 +899,11 @@ public class ConceptBean implements Serializable {
     }
 
     private void persistConcept(FacesContext context) {
+
+        long id;
+
         try {
-            conceptManager.persist(concept, user);
+            id = conceptManager.persist(concept, user);
             if (pendingTerms) {
                 for (DescriptionWeb descriptionWeb : concept.getDescriptionsWeb()) {
                     if(descriptionWeb.getConceptSMTK().equals(conceptManager.getPendingConcept())){
@@ -895,7 +915,7 @@ public class ConceptBean implements Serializable {
             }
             context.addMessage(null, new FacesMessage("Acción Exitosa", "Concepto guardado "));
             // Se resetea el concepto, como el concepto está persistido, se le pasa su id
-            getConceptById(concept.getId());
+            getConceptById(id);
         } catch (BusinessRuleException bre) {
             context.addMessage(null, new FacesMessage("Error", bre.getMessage()));
         } catch (Exception e) {

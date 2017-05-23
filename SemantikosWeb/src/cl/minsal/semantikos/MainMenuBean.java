@@ -2,9 +2,19 @@ package cl.minsal.semantikos;
 
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
 import cl.minsal.semantikos.kernel.components.*;
+import cl.minsal.semantikos.kernel.componentsweb.ViewAugmenter;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
+import cl.minsal.semantikos.model.helpertables.HelperTable;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
+import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
+import cl.minsal.semantikos.modelweb.RelationshipAttributeDefinitionWeb;
+import cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb;
 import org.primefaces.event.MenuActionEvent;
 import org.primefaces.model.menu.*;
 import org.slf4j.Logger;
@@ -18,7 +28,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN_MAPEO_DE;
 
 
 /**
@@ -42,9 +57,15 @@ public class MainMenuBean implements Serializable {
 
     private DescriptionManager descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
 
+    HelperTablesManager helperTablesManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
+
+    ViewAugmenter viewAugmenter = (ViewAugmenter) RemoteEJBClientFactory.getInstance().getManager(ViewAugmenter.class);
+
     private TagSMTKFactory tagSMTKFactory;
 
     private DescriptionTypeFactory descriptionTypeFactory;
+
+    private Map<Long, RelationshipDefinitionWeb> relationshipDefinitiosnWeb = new HashMap<>();
 
     @PostConstruct
     public void init() {
@@ -116,6 +137,55 @@ public class MainMenuBean implements Serializable {
 
     public MenuModel getCategoryMenuModel() {
         return categoryMenuModel;
+    }
+
+    public void augmentRelationshipPlaceholders(Category category, ConceptSMTKWeb concept, Map<Long, Relationship> relationshipPlaceholders) {
+
+        for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
+
+            if (!relationshipDefinition.getRelationshipAttributeDefinitions().isEmpty() && relationshipDefinition.getMultiplicity().isCollection()) {
+
+                if(!relationshipDefinitiosnWeb.containsKey(relationshipDefinition.getId())) {
+                    relationshipDefinitiosnWeb.put(relationshipDefinition.getId(), viewAugmenter.augmentRelationshipDefinition(category, relationshipDefinition));
+                }
+
+                RelationshipDefinitionWeb relationshipDefinitionWeb = relationshipDefinitiosnWeb.get(relationshipDefinition.getId());
+
+                Relationship r;
+
+                r = new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                relationshipPlaceholders.put(relationshipDefinition.getId(), r);
+
+                for (RelationshipAttributeDefinitionWeb relAttrDefWeb : relationshipDefinitionWeb.getRelationshipAttributeDefinitionWebs()) {
+                    if(relAttrDefWeb.getDefaultValue()!=null) {
+                        RelationshipAttribute ra = new RelationshipAttribute(relAttrDefWeb.getRelationshipAttributeDefinition(), r, relAttrDefWeb.getDefaultValue());
+                        r.getRelationshipAttributes().add(ra);
+                    }
+                }
+
+                // Si esta definición de relación es de tipo CROSSMAP, Se agrega el atributo tipo de relacion = "ES_UN_MAPEO_DE" (por defecto)
+                if (relationshipDefinition.getTargetDefinition().isCrossMapType()) {
+                    for (RelationshipAttributeDefinition attDef : relationshipDefinition.getRelationshipAttributeDefinitions()) {
+                        if (attDef.isRelationshipTypeAttribute()) {
+                            Relationship rel = relationshipPlaceholders.get(relationshipDefinition.getId());
+                            HelperTable helperTable = (HelperTable) attDef.getTargetDefinition();
+
+                            List<HelperTableRow> relationshipTypes = helperTablesManager.searchRows(helperTable, ES_UN_MAPEO_DE);
+
+                            RelationshipAttribute ra;
+
+                            if (relationshipTypes.size() == 0) {
+                                logger.error("No hay datos en la tabla de TIPOS DE RELACIONES.");
+                            }
+
+                            ra = new RelationshipAttribute(attDef, rel, relationshipTypes.get(0));
+                            rel.getRelationshipAttributes().add(ra);
+                        }
+                    }
+                }
+            }
+        }
+        //return relationshipPlaceholders;
     }
 }
 

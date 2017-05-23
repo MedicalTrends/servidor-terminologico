@@ -84,7 +84,7 @@ public class ViewAugmenterImpl implements ViewAugmenter {
     }
 
     @Override
-    public Map<Long, Relationship> augmentRelationships(Category category, ConceptSMTKWeb concept, Map<Long, Relationship> relationshipPlaceholders) {
+    public Map<Long, Relationship> augmentRelationships(Category category, Map<Long, Relationship> relationshipPlaceholders) {
 
         for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
 
@@ -96,7 +96,8 @@ public class ViewAugmenterImpl implements ViewAugmenter {
 
                 RelationshipDefinitionWeb relationshipDefinitionWeb = relationshipDefinitiosnWeb.get(relationshipDefinition.getId());
 
-                Relationship r = new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship r = relationshipPlaceholders.get(relationshipDefinition.getId());
+
 
                 for (RelationshipAttributeDefinitionWeb relAttrDefWeb : relationshipDefinitionWeb.getRelationshipAttributeDefinitionWebs()) {
                     if(relAttrDefWeb.getDefaultValue()!=null) {
@@ -105,28 +106,8 @@ public class ViewAugmenterImpl implements ViewAugmenter {
                     }
                 }
 
-                relationshipPlaceholders.put(relationshipDefinition.getId(), r);
+                //relationshipPlaceholders.put(relationshipDefinition.getId(), r);
 
-                // Si esta definición de relación es de tipo CROSSMAP, Se agrega el atributo tipo de relacion = "ES_UN_MAPEO_DE" (por defecto)
-                if (relationshipDefinition.getTargetDefinition().isCrossMapType()) {
-                    for (RelationshipAttributeDefinition attDef : relationshipDefinition.getRelationshipAttributeDefinitions()) {
-                        if (attDef.isRelationshipTypeAttribute()) {
-                            Relationship rel = relationshipPlaceholders.get(relationshipDefinition.getId());
-                            HelperTable helperTable = (HelperTable) attDef.getTargetDefinition();
-
-                            List<HelperTableRow> relationshipTypes = helperTablesManager.searchRows(helperTable, ES_UN_MAPEO_DE);
-
-                            RelationshipAttribute ra;
-
-                            if (relationshipTypes.size() == 0) {
-                                logger.error("No hay datos en la tabla de TIPOS DE RELACIONES.");
-                            }
-
-                            ra = new RelationshipAttribute(attDef, rel, relationshipTypes.get(0));
-                            rel.getRelationshipAttributes().add(ra);
-                        }
-                    }
-                }
             }
         }
 
