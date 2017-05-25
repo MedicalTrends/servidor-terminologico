@@ -51,9 +51,6 @@
         <listener-class>net.bull.javamelody.SessionListener</listener-class>
     </listener>
 
-
-
-
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>cl.minsal.semantikos.designer_modeler.auth.AuthenticationFilter</filter-class>
@@ -71,8 +68,6 @@
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <servlet-name>Faces Servlet</servlet-name>
     </filter-mapping>
-
-
 
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
@@ -125,8 +120,6 @@
         <location>/views/errors/error.xhtml</location>
     </error-page>
 
-
-
     <mime-mapping>
         <extension>eot</extension>
         <mime-type>application/x-font-eot</mime-type>
@@ -137,24 +130,19 @@
         <mime-type>application/x-font-ttf</mime-type>
     </mime-mapping>
 
-
     <mime-mapping>
         <extension>woff</extension>
         <mime-type>application/x-font-woff</mime-type>
     </mime-mapping>
-
 
     <mime-mapping>
         <extension>woff2</extension>
         <mime-type>application/x-font-woff2</mime-type>
     </mime-mapping>
 
-
     <mime-mapping>
         <extension>ico</extension>
         <mime-type>image/x-icon</mime-type>
     </mime-mapping>
-
-
 
 </web-app>
