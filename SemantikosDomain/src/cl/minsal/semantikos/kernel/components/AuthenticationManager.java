@@ -3,7 +3,6 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
 import cl.minsal.semantikos.model.users.User;
 
-import javax.ejb.Remote;
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.ws.handler.MessageContext;

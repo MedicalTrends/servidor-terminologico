@@ -163,6 +163,7 @@
                 <version>2.5</version>
                 <configuration>
                     <ejbVersion>3.2</ejbVersion>
+                    <generateClient>true</generateClient>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>

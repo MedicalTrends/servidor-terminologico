@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ejb" name="SemantikosKernelEJB:ejb-client">
+    <output-path>$PROJECT_DIR$/SemantikosKernelEJB/target/SemantikosKernelEJB-4.0.0-client.jar</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="SemantikosKernelEJB/ejb/EJB" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/SemantikosKernelEJB/target/SemantikosKernelEJB-4.0.0/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="SemantikosKernelEJB" />
+    </root>
+  </artifact>
+</component>

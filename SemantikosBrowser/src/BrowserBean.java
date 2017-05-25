@@ -1,6 +1,4 @@
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
-
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.QueryManager;
@@ -11,6 +9,7 @@ import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.queries.BrowserQuery;
 import cl.minsal.semantikos.model.tags.Tag;
+import clients.RemoteEJBClientFactory;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;

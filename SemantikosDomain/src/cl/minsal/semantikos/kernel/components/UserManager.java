@@ -4,14 +4,12 @@ import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.Question;
 import cl.minsal.semantikos.model.users.User;
 
-import javax.ejb.Remote;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
  * @author Andrés Farías
  */
-@Remote
 public interface UserManager {
 
     List<User> getAllUsers();

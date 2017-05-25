@@ -2,6 +2,12 @@ package cl.minsal.semantikos.clients; /**
  * Created by root on 15-05-17.
  */
 
+import org.jboss.ejb.client.ContextSelector;
+import org.jboss.ejb.client.EJBClientConfiguration;
+import org.jboss.ejb.client.EJBClientContext;
+import org.jboss.ejb.client.PropertiesBasedEJBClientConfiguration;
+import org.jboss.ejb.client.remoting.ConfigBasedEJBClientContextSelector;
+
 import javax.naming.*;
 
 import java.lang.reflect.Type;
@@ -48,19 +54,30 @@ public class RemoteEJBClientFactory {
      * Constructor privado para el Singleton del Factory.
      */
     private RemoteEJBClientFactory() {
-        final Hashtable<String, String> jndiProperties = new Hashtable<>();
-        jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 
-        Properties properties = new Properties();
-        properties.put(Context.URL_PKG_PREFIXES,"org.jboss.ejb.client.naming");
-        properties.put(Context.INITIAL_CONTEXT_FACTORY,"org.jboss.naming.remote.client.InitialContextFactory");
-        properties.put(Context.PROVIDER_URL,"remote://localhost:4447");
-        //properties.put(Context.SECURITY_PRINCIPAL,"ejb");
-        //properties.put(Context.SECURITY_CREDENTIALS,"ejbtest1!");
-        properties.put("jboss.naming.client.ejb.context",true);
+        /*
+        Properties clientProp = new Properties();
+
+        clientProp.put("remote.connectionprovider.create.options.org.xnio.Options.SSL_ENABLED", "false");
+        clientProp.put("remote.connections", "default");
+        clientProp.put("remote.connection.default.port", "4447");
+        clientProp.put("remote.connection.default.host", "192.168.0.226");
+        //clientProp.put("remote.connection.default.username", "semantikosweb");
+        //clientProp.put("remote.connection.default.password", "semantikos-1");
+        clientProp.put("remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOANONYMOUS", "false");
+
+        EJBClientConfiguration cc = new PropertiesBasedEJBClientConfiguration(clientProp);
+
+        ContextSelector<EJBClientContext> selector = new ConfigBasedEJBClientContextSelector(cc);
+
+        EJBClientContext.setSelector(selector);
+        */
+
+        Properties props = new Properties();
+        props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 
         try {
-            context = new InitialContext(jndiProperties);
+            context = new InitialContext(props);
             //context = new InitialContext(properties);
         } catch (NamingException e) {
             e.printStackTrace();
