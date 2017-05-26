@@ -18,7 +18,35 @@
         <version>4.0.0</version>
     </parent>
 
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.jboss.as</groupId>
+                <artifactId>jboss-as-ejb-client-bom</artifactId>
+                <version>LATEST</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.as</groupId>
+                <artifactId>jboss-as-jms-client-bom</artifactId>
+                <version>LATEST</version>
+                <type>pom</type>
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
+
     <dependencies>
+
+        <dependency>
+            <groupId>org.jboss.as</groupId>
+            <artifactId>jboss-as-ejb-client-bom</artifactId>
+            <version>LATEST</version>
+            <type>pom</type>
+        </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>

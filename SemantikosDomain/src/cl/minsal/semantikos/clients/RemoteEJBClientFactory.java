@@ -55,24 +55,6 @@ public class RemoteEJBClientFactory {
      */
     private RemoteEJBClientFactory() {
 
-        /*
-        Properties clientProp = new Properties();
-
-        clientProp.put("remote.connectionprovider.create.options.org.xnio.Options.SSL_ENABLED", "false");
-        clientProp.put("remote.connections", "default");
-        clientProp.put("remote.connection.default.port", "4447");
-        clientProp.put("remote.connection.default.host", "192.168.0.226");
-        //clientProp.put("remote.connection.default.username", "semantikosweb");
-        //clientProp.put("remote.connection.default.password", "semantikos-1");
-        clientProp.put("remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOANONYMOUS", "false");
-
-        EJBClientConfiguration cc = new PropertiesBasedEJBClientConfiguration(clientProp);
-
-        ContextSelector<EJBClientContext> selector = new ConfigBasedEJBClientContextSelector(cc);
-
-        EJBClientContext.setSelector(selector);
-        */
-
         Properties props = new Properties();
         props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 

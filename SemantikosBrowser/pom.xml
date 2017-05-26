@@ -29,26 +29,26 @@
         </dependency>
 
         <!-- Implementación JSF provista por EAP -->
-        <!--dependency>
+        <dependency>
             <groupId>javax.faces</groupId>
             <artifactId>javax.faces-api</artifactId>
             <version>2.2</version>
             <scope>provided</scope>
-        </dependency-->
+        </dependency>
 
         <!-- Implementación JSF provista por TOMCAT -->
-        <dependency>
+        <!--dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.faces</artifactId>
             <version>2.2.4</version>
-        </dependency>
+        </dependency-->
 
         <!-- Soporte para CDI en Servelts (TOMCAT) -->
-        <dependency>
+        <!--dependency>
             <groupId>org.jboss.weld.servlet</groupId>
             <artifactId>weld-servlet</artifactId>
             <version>2.3.5.Final</version>
-        </dependency>
+        </dependency-->
 
         <!--dependency>
             <groupId>cl.minsal.semantikos</groupId>
@@ -111,7 +111,8 @@
         <dependency>
             <groupId>org.omnifaces</groupId>
             <artifactId>omnifaces</artifactId>
-            <version>2.4</version>
+            <!--version>2.4</version--><!--Version soportoe para weld (TOMCAT)-->
+            <version>2.1</version><!--EAP-->
         </dependency>
 
         <!--dependency>
