@@ -2,6 +2,8 @@ package cl.minsal.semantikos.model.descriptions;
 
 import java.io.Serializable;
 
+import java.io.Serializable;
+
 /**
  * @author Diego Soto.
  */

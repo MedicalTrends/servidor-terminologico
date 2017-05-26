@@ -17,12 +17,11 @@
 <composite:implementation>
 
 
-    <div class="Container100">
-        <div class="ContainerIndent BoldGray FontBold">
+    <div class="ui-g-12">
 
-            <h:outputText value="#{cc.attrs.relationshipDefinition.name}" />
+        <h:outputText value="#{cc.attrs.relationshipDefinition.name}" />
 
-            <p:selectOneMenu id="findHTRecords1" scrollHeight="200"
+        <p:selectOneMenu id="findHTRecords1" scrollHeight="200"
                              forceSelection="true"
                              autoWidth="false"
                              value="#{generalBrowserBean.helperTableRecord}"
@@ -54,7 +53,7 @@
                 <!---->
             </p:selectOneMenu>
 
-            <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() and cc.attrs.relationshipDefinition.ATC }" styleClass="search">
+        <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() and cc.attrs.relationshipDefinition.ATC }" styleClass="search">
 
                 <p:autoComplete id="findHTRecords2" scrollHeight="200"
                                 completeMethod="#{helperTableBean.getRecordSearchInput}"
@@ -91,9 +90,8 @@
 
             </p:outputPanel>
 
-                        <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() }" styleClass="search">
-
-                <p:repeat  value="#{cc.attrs.targets}"
+        <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() }" styleClass="search">
+        <p:repeat  value="#{cc.attrs.targets}"
                            offset="0"
                            size="#{cc.attrs.targets.size()}"
                            step="1"
@@ -108,9 +106,8 @@
                         <i class="fa fa-close fa-lg"  />
                     </p:commandLink>
                 </p:repeat>
-            </p:outputPanel>
+        </p:outputPanel>
 
-        </div>
     </div>
 
 </composite:implementation>

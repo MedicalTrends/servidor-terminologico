@@ -26,20 +26,19 @@
 
         <div class="ui-fluid">
 
-            <div class="Container">
+            <div class="ui-g">
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-                        <p:outputLabel for="basicTypeValue11" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
-                                       value="#{cc.attrs.relationshipDefinition.name}"/>
-                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
-                    </div>
+                    <p:outputLabel for="basicTypeValue11" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
+                                   value="#{cc.attrs.relationshipDefinition.name}"/>
+                    <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+
                 </div>
 
-                <div class="Container30 White Responsive">
-                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-                        <p:inputNumber id="basicTypeValue11"
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+
+                    <p:inputNumber id="basicTypeValue11"
                                        value="#{conceptBean.basicTypeValue.value}"
                                        var="value"
                                        minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
@@ -55,7 +54,7 @@
                             <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
                         </p:inputNumber>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -117,39 +116,37 @@
 
         <div class="ui-fluid">
 
-            <div class="Container">
+            <div class="ui-g">
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
 
                         <p:outputLabel for="basicTypeValue19"
                                        value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"/>
                         <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
-                    </div>
                 </div>
 
-                <div class="Container30 White Responsive">
-                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-                        <p:inputNumber id="basicTypeValue19"
-                                       value="#{conceptBean.basicTypeValue.value}"
-                                       var="value"
-                                       minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
-                                       maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
-                                       decimalPlaces="0"
-                                       autocomplete="off"
-                                       decimalSeparator=","
-                                       thousandSeparator="."
-                                       disabled="#{not cc.attrs.concept.editable}"
-                                       rendered="#{cc.attrs.targetDefinition.type.typeName=='int' and not cc.attrs.targetDefinition.discreteDomain}"
-                                       styleClass="relationships">
-                            <f:attribute name="concept" value="#{cc.attrs.concept}"  />
-                            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                            <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}" event="blur"
-                                    update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)" />
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
 
-                        </p:inputNumber>
-                    </div>
+                    <p:inputNumber id="basicTypeValue19"
+                                   value="#{conceptBean.basicTypeValue.value}"
+                                   var="value"
+                                   minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
+                                   maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
+                                   decimalPlaces="0"
+                                   autocomplete="off"
+                                   decimalSeparator=","
+                                   thousandSeparator="."
+                                   disabled="#{not cc.attrs.concept.editable}"
+                                   rendered="#{cc.attrs.targetDefinition.type.typeName=='int' and not cc.attrs.targetDefinition.discreteDomain}"
+                                   styleClass="relationships">
+                        <f:attribute name="concept" value="#{cc.attrs.concept}"  />
+                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                        <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}" event="blur"
+                                update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)" />
+
+                    </p:inputNumber>
+
                 </div>
                 <!-- Atributos de relación -->
                 <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
@@ -173,26 +170,26 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
-                            <p:outputLabel for="basicTypeValue2" value="#{cc.attrs.relationshipDefinition.name}"/>
-                            <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
-                        </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                        <p:outputLabel for="basicTypeValue2" value="#{cc.attrs.relationshipDefinition.name}"/>
+                        <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+
                     </div>
 
-                    <div class="Container30 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-                            <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" />
-                                <p:commandLink process="@this"
-                                               update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                               action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
-                                    <i class="fa fa-close fa-lg"  />
-                                </p:commandLink>
-                            </p:outputPanel>
-                        </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+
+                        <p:outputPanel styleClass="search">
+                            <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" />
+                            <p:commandLink process="@this"
+                                           update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                                           action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                                <i class="fa fa-close fa-lg"  />
+                            </p:commandLink>
+                        </p:outputPanel>
+
                     </div>
 
                     <!-- Atributos de relación -->

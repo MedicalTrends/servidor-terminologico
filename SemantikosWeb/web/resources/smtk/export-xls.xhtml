@@ -153,7 +153,7 @@
     </p:panel>
 
 
-    <p:commandButton  icon="fa fa-file-excel-o" styleClass="ui-priority-primary" ajax="false" value="Exportar"  rendered="#{conceptBean.concept.modeled}">
+    <p:commandButton  icon="fa fa-file-excel-o" style="width: 150px" ajax="false" value="Exportar"  rendered="#{conceptBean.concept.modeled}">
         <p:dataExporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,crossMapsDirectosTable,crossMapsInDirectosTable,refsetsTable"  type="xls" fileName="concepto" />
     </p:commandButton>
 </composite:implementation>

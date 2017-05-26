@@ -2,6 +2,8 @@ package cl.minsal.semantikos.model.tags;
 
 import java.io.Serializable;
 
+import java.io.Serializable;
+
 /**
  * @author Andrés Farías
  */

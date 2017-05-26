@@ -75,8 +75,8 @@ form#mainForm .ui-grid-col-1, .ui-grid-col-2, .ui-grid-col-3, .ui-grid-col-4, .u
     float: none !important;
 }
 
-form#mainForm .ui-panelgrid .ui-panelgrid-cell {
-
+form#mainForm .otherDescriptions.ui-panelgrid .ui-panelgrid-cell {
+    padding: 3px 3px;
 }
 /*
 .descriptionFilters .ui-inputfield {
@@ -138,16 +138,16 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     left: 10px;
 }
 
+.fa-lg {
+    line-height: .5em !important;
+}
+
 .conceptFilters .ui-menubar .ui-menubar-options {
     float: left;
 }
 
-.mainMenu .ui-menu .ui-menuitem .ui-menuitem-link {
+#mainMenu .ui-menu .ui-menuitem .ui-menuitem-link {
     padding: 6px 0px;
-}
-
-.mainMenu .ui-menu .ui-widget-header  {
-    display: none;
 }
 
 .browserLayout .ui-widget-content {
@@ -205,15 +205,77 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     width: 50%;
 }
 
-.ui-dialog .ui-dialog-titlebar {
-    background-color: #5c6bc0;
-    color: white;
+.layout-wrapper .right-sidebar {
+    z-index: 999 !important;
 }
 
-.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon-closethick {
-    background-image: url("#{resource['primefaces-rio/images/delete-white.svg']}");;
+.ui-selectonemenu.ui-state-disabled {
+    opacity: .5 !important;
 }
 
-.ui-datatable table tbody .ui-state-highlight.ui-row-editing > td {
-    color: #108bd5;
+.ui-radiobutton .ui-state-disabled {
+    opacity: .7 !important;
 }
+
+label.ui-state-disabled {
+    opacity: .7 !important;
+}
+
+input.ui-state-disabled {
+    opacity: .8 !important;
+}
+
+textarea.ui-state-disabled {
+    opacity: .8 !important;
+}
+
+.layout-menu-container {
+    background-color: #ffffff !important;
+}
+
+.layout-wrapper .layout-menu li ul {
+    background-color: #ffffff !important;
+}
+
+.layout-wrapper .layout-menu li.active-menuitem > a {
+    color: #3F51B5 !important;
+    background-color: #e0e0e0 !important;
+}
+
+.layout-wrapper .layout-menu li.active-menuitem > i {
+    color: #3F51B5 !important;
+}
+
+.layout-wrapper .layout-menu li a {
+    color: #455a64 !important;
+}
+
+.layout-wrapper .layout-menu li i {
+    color: #455a64 !important;
+}
+
+.layout-menu li a:hover {
+     background-color: #e0e0e0 !important;
+ }
+
+.layout-wrapper .layout-menu > li.active-menuitem > a {
+    color: #3F51B5  !important;
+}
+
+.layout-wrapper .layout-menu-container > .nano .nano-pane .nano-slider {
+    background-color: #656565 !important
+}
+
+.layout-wrapper .layout-menu-container > .nano > .nano-content > ul:last-child {
+    margin-top: 0 !important;
+}
+
+/*
+.layout-wrapper .layout-main .route-bar {
+    padding: 5px 20px 5px 25px;
+    background-color: #f0f3f5;
+    width: 82%;
+    position: fixed;
+    z-index: 99;
+}
+*/

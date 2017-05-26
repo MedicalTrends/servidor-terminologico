@@ -5,6 +5,8 @@ import cl.minsal.semantikos.model.PersistentEntity;
 
 import java.io.Serializable;
 
+import java.io.Serializable;
+
 /**
  * @author Andrés Farías on 9/4/16.
  */

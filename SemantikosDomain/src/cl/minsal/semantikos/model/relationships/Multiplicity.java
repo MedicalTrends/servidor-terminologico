@@ -2,6 +2,8 @@ package cl.minsal.semantikos.model.relationships;
 
 import java.io.Serializable;
 
+import java.io.Serializable;
+
 /**
  * Esta clase representa una multiplicidad a lo UML: [1-2] [0-100] [0-*]
  */

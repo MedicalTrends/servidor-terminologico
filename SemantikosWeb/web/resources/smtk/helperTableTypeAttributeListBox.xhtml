@@ -20,106 +20,102 @@
 <composite:implementation>
 
 
-    <div class="Container20 White Responsive">
+    <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+        <p:outputPanel id="helperTableTypeAttributeNew"
+                       rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes }"
+                       styleClass="search">
 
-            <p:outputPanel id="helperTableTypeAttributeNew"
-                           rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes }"
-                           styleClass="search">
+            <p:selectOneMenu id="helperTableTypeAttributeSimple" scrollHeight="200"
+                             forceSelection="true"
+                             value="#{conceptBean.selectedHelperTableRecord}"
+                             disabled="#{ cc.attrs.relationship eq null }"
+                             var="r"
+                             autoWidth="false"
+                             filter="true"
+                             converter="omnifaces.SelectItemsConverter">
 
-                <p:selectOneMenu id="helperTableTypeAttributeSimple" scrollHeight="200"
-                                 forceSelection="true"
-                                 value="#{conceptBean.selectedHelperTableRecord}"
-                                 disabled="#{ cc.attrs.relationship eq null }"
-                                 var="r"
-                                 autoWidth="false"
-                                 filter="true"
-                                 converter="omnifaces.SelectItemsConverter">
+                <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
+                <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition,cc.attrs.relationshipAttributeDefinition)}"
+                               var="record"
+                               itemLabel="#{record.description}"
+                               itemValue="#{record}"/>
+                <p:column>
+                    <h:outputText value="#{r.description}"/>
+                </p:column>
 
-                    <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
-                    <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition,cc.attrs.relationshipAttributeDefinition)}"
-                                   var="record"
-                                   itemLabel="#{record.description}"
-                                   itemValue="#{record}"/>
-                    <p:column>
-                        <h:outputText value="#{r.description}"/>
-                    </p:column>
+                <p:ajax event="itemSelect"
+                        update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                        listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.selectedHelperTableRecord)}"
+                        process="@this"/>
 
-                    <p:ajax event="itemSelect"
-                            update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                            listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.selectedHelperTableRecord)}"
-                            process="@this"/>
-
-                    <!-- Parámetros del buscador -->
-                    <f:attribute name="helperTable" value="#{cc.attrs.relationshipAttributeDefinition.targetDefinition}"  />
-                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                    <!-- Parámetros del validador -->
-                    <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
-                </p:selectOneMenu>
+                <!-- Parámetros del buscador -->
+                <f:attribute name="helperTable" value="#{cc.attrs.relationshipAttributeDefinition.targetDefinition}"  />
+                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                <!-- Parámetros del validador -->
+                <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
+            </p:selectOneMenu>
 
 
-            </p:outputPanel>
+        </p:outputPanel>
 
-            <p:outputPanel id="helperTableTypeAttribute" rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.relationship.relationshipAttributes }">
+        <p:outputPanel id="helperTableTypeAttribute" rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.relationship.relationshipAttributes }">
 
-                <p:repeat
-                        offset="0"
-                        size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
-                        step="1"
-                        varStatus="var"
-                        value="#{cc.attrs.relationship.relationshipAttributes}"
-                        var="relationshipAttribute">
+            <p:repeat
+                    offset="0"
+                    size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
+                    step="1"
+                    varStatus="var"
+                    value="#{cc.attrs.relationship.relationshipAttributes}"
+                    var="relationshipAttribute">
 
-                    <p:outputPanel styleClass="search">
+                <p:outputPanel styleClass="search">
 
-                        <p:inputText disabled="true" id="helperTableRecord" value="#{relationshipAttribute.target.description}" />
-                        <p:commandLink process="@this"
-                                       update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                       action="#{conceptBean.removeRelationshipAttribute(cc.attrs.relationship,relationshipAttribute)}">
-                            <i class="fa fa-close fa-lg"  />
-                        </p:commandLink>
+                    <p:inputText disabled="true" id="helperTableRecord" value="#{relationshipAttribute.target.description}" />
+                    <p:commandLink process="@this"
+                                   update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                                   action="#{conceptBean.removeRelationshipAttribute(cc.attrs.relationship,relationshipAttribute)}">
+                        <i class="fa fa-close fa-lg"  />
+                    </p:commandLink>
 
-                    </p:outputPanel>
+                </p:outputPanel>
 
-                </p:repeat>
+            </p:repeat>
 
-            </p:outputPanel>
+        </p:outputPanel>
 
-            <p:outputPanel rendered="#{ cc.attrs.relationshipDefinition.multiplicity.collection and not cc.attrs.relationshipAttributeDefinition.multiplicity.collection }" styleClass="search">
+        <p:outputPanel rendered="#{ cc.attrs.relationshipDefinition.multiplicity.collection and not cc.attrs.relationshipAttributeDefinition.multiplicity.collection }" styleClass="search">
 
 
-                <p:selectOneMenu id="helperTableTypeAttributeCollection" scrollHeight="200"
-                                 forceSelection="true"
-                                 value="#{conceptBean.selectedHelperTableRecord}"
-                                 var="r"
-                                 autoWidth="false"
-                                 filter="true"
-                                 converter="omnifaces.SelectItemsConverter">
+            <p:selectOneMenu id="helperTableTypeAttributeCollection" scrollHeight="200"
+                             forceSelection="true"
+                             value="#{conceptBean.selectedHelperTableRecord}"
+                             var="r"
+                             autoWidth="false"
+                             filter="true"
+                             converter="omnifaces.SelectItemsConverter">
 
-                    <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
-                    <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition,cc.attrs.relationshipAttributeDefinition)}"
-                                   var="record"
-                                   itemLabel="#{record.description}"
-                                   itemValue="#{record}"/>
-                    <p:column>
-                        <h:outputText value="#{r.description}"/>
-                    </p:column>
-                    <p:ajax event="itemSelect"
-                            listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.selectedHelperTableRecord)}"
-                            process="@this"/>
+                <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
+                <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition,cc.attrs.relationshipAttributeDefinition)}"
+                               var="record"
+                               itemLabel="#{record.description}"
+                               itemValue="#{record}"/>
+                <p:column>
+                    <h:outputText value="#{r.description}"/>
+                </p:column>
+                <p:ajax event="itemSelect"
+                        listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.selectedHelperTableRecord)}"
+                        process="@this"/>
 
-                    <!-- Parámetros del buscador -->
-                    <f:attribute name="helperTable" value="#{cc.attrs.relationshipAttributeDefinition.targetDefinition}"  />
-                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                    <!-- Parámetros del validador -->
-                    <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
-                    <!---->
-                </p:selectOneMenu>
+                <!-- Parámetros del buscador -->
+                <f:attribute name="helperTable" value="#{cc.attrs.relationshipAttributeDefinition.targetDefinition}"  />
+                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                <!-- Parámetros del validador -->
+                <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
+                <!---->
+            </p:selectOneMenu>
 
-            </p:outputPanel>
-
-        </div>
+        </p:outputPanel>
 
     </div>
 

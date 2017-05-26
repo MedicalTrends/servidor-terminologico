@@ -18,10 +18,9 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container#{cc.attrs.targetDefinition.type.typeName eq 'boolean'?'10':'20'} White Responsive" style="text-align: center">
+    <div class="ui-g-12 ui-md-6 ui-lg-#{cc.attrs.targetDefinition.type.typeName eq 'boolean'?'1':'2'}" style="text-align: center">
 
-        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes}">
+        <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes}">
 
 
                 <p:selectOneMenu id="basicTypeValue1"
@@ -48,7 +47,6 @@
                                          value="#{conceptBean.basicTypeValue.value}"
                                          itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}"
                                          disabled="#{not cc.attrs.concept.editable}"
-                                         style="padding-top: 0.6em"
                                          rendered="#{cc.attrs.targetDefinition.type.typeName=='boolean'}">
                     <p:ajax event="change"
                             listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}"
@@ -131,8 +129,7 @@
 
             </p:outputPanel>
 
-
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.relationship.relationshipAttributes}">
+        <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.relationship.relationshipAttributes}">
 
                 <p:repeat
                         offset="0"
@@ -157,7 +154,7 @@
 
             </p:outputPanel>
 
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection}">
+        <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection}">
 
                 <p:selectOneMenu id="basicTypeValue11"
                                  value="#{conceptBean.basicTypeValue.value}"
@@ -182,7 +179,6 @@
                 <p:selectBooleanCheckbox id="basicTypeValue17"
                                          value="#{conceptBean.basicTypeValue.value}"
                                          itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}"
-                                         style="padding-top: 0.6em; padding-bottom: 0.6em"
                                          disabled="#{not cc.attrs.concept.editable}"
                                          rendered="#{cc.attrs.targetDefinition.type.typeName=='boolean'}">
                     <p:ajax event="change"
@@ -255,7 +251,7 @@
                     <p:ajax event="blur" listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}" />
                 </p:calendar>
             </p:outputPanel>
-        </div>
+
     </div>
 
     <h:outputStylesheet id="customCSS">

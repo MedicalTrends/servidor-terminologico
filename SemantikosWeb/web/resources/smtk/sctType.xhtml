@@ -28,11 +28,15 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                        <p:outputLabel value="Grupo" />
+
+                    </div>
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
 
                             <p:inputNumber id="basicTypeValue12"
                                            value="#{sctBean.relationshipGroup}"
@@ -46,21 +50,11 @@
                                 <p:ajax process="@this" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
                             </p:inputNumber>
 
-                        </div>
-
                     </div>
 
-                    <div class="Container30 White Responsive">
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-                            <p:selectOneRadio value="#{sctBean.searchOption}" style="width:100%">
-                                <f:selectItem itemLabel="Buscar por Término" itemValue="term" />
-                                <f:selectItem itemLabel="Buscar por ConceptId" itemValue="conceptId" />
-                                <p:ajax update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
-                            </p:selectOneRadio>
-
-                        </div>
+                        <p:outputLabel value="Tipo Relación" />
 
                     </div>
 
@@ -71,6 +65,7 @@
                             varStatus="var"
                             value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
                             var="relationshipAttributeDefinition">
+
                         <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                                  concept="#{cc.attrs.concept}"
                                                  relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
@@ -78,6 +73,7 @@
                                                  rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()
                                                              and not relationshipAttributeDefinition.groupSCT}"
                         />
+
                         <smtk:helperTableTypeAttributeSCT relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                                           concept="#{cc.attrs.concept}"
                                                           relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
@@ -86,11 +82,15 @@
                         />
                     </p:repeat>
 
-                    <div class="Container20 White Responsive">
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                        <p:outputLabel value="Término" />
 
-                            <p:outputPanel styleClass="search searchSCT">
+                    </div>
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-8">
+
+                        <p:outputPanel styleClass="search searchSCT">
 
                                 <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
                                                 forceSelection="true"
@@ -102,6 +102,7 @@
                                                 placeholder="#{sctBean.searchOption eq 'term'? 'Ingrese término...': 'Ingrese conceptId...'}"
                                                 converter="conceptSCTConverter"
                                                 var="concept"
+                                                maxResults="1000"
                                                 value="#{conceptBean.conceptSCTSelected}"
                                                 itemLabel="#{concept.descriptionFSN.term}"
                                                 itemValue="#{concept}"
@@ -134,23 +135,18 @@
                                 </p:autoComplete>
                                 <i class="fa fa-search fa-lg"  />
                             </p:outputPanel>
-                        </div>
+
                     </div>
 
-                    <div class="Container10 White Responsive">
-
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
 
                             <p:commandButton
                                     process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                     action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader),@(.crossmapindirect)"
                                     disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept)}"
-                                    style="max-width: 100px"
                                     value="Agregar">
                             </p:commandButton>
-
-                        </div>
 
                     </div>
                 </div>
@@ -166,9 +162,11 @@
 
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
                      id="tableRelationship3"
+                     reflow="true"
                      rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
-                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and cc.attrs.concept.editable}" style="margin: 10px;"
+                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and cc.attrs.concept.editable}"
+                     style="margin: 10px;"
                      value="#{conceptBean.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      var="rel">
 
@@ -206,18 +204,20 @@
             </p:column>
 
             <p:column headerText="Acción">
-                <div style="text-align: center">
-                    <p:commandButton title="Ver" oncomplete="PF('dialogC').show()" process="@this"
-                                   update="@(.query-concept-sct)" icon="fa fa-search">
-                        <f:setPropertyActionListener value="#{rel.target}" target="#{sctBean.conceptSelected}"/>
-                    </p:commandButton>
-                    <p:commandButton rendered="#{profilePermissionsBeans.modeler and cc.attrs.concept.editable}" icon="fa fa-trash" title="Eliminar"
-                                     actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
-                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}), @(.attributes),@(.crossmapindirect)"
-                                     process="@this">
-                        <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar esta relación?"
-                                   icon="ui-icon-alert"/>
-                    </p:commandButton>
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-6 ui-lg-6">
+                        <p:commandButton title="Ver" oncomplete="PF('dialogC').show()" process="@this"
+                                       update="@(.query-concept-sct)" icon="fa fa-search">
+                            <f:setPropertyActionListener value="#{rel.target}" target="#{sctBean.conceptSelected}"/>
+                        </p:commandButton>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-6">
+                        <p:commandButton rendered="#{profilePermissionsBeans.modeler and cc.attrs.concept.editable}" icon="fa fa-trash" title="Eliminar"
+                                         actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
+                                         update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}), @(.attributes),@(.crossmapindirect)"
+                                         process="@this">
+                        </p:commandButton>
+                    </div>
                 </div>
             </p:column>
         </p:dataTable>

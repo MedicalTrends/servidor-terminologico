@@ -20,11 +20,10 @@
 
 <composite:implementation>
 
-    <div class="Container20 White Responsive">
+    <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+        <p:outputPanel id="smtkTypeAttributeNew"  styleClass="search">
 
-            <p:outputPanel id="smtkTypeAttributeNew"  styleClass="search">
                 <p:autoComplete id="smtkTypeAttributeSimple" scrollHeight="200"
 
                                 completeMethod="#{findConceptBean.getConceptSearchInputCategoryContext}"
@@ -43,16 +42,15 @@
                     <p:column>
                         <h:outputText value="#{smtk.descriptionFavorite.term}"/>
                     </p:column>
+                    <p:ajax />
                     <p:ajax event="itemSelect"
                             listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.conceptSMTKAttributeSelected)}"
-                            process="@this" >
-                    </p:ajax>
+                            process="@this" />
 
                 </p:autoComplete>
                 <i class="fa fa-search fa-lg"  />
             </p:outputPanel>
 
-        </div>
     </div>
 
     <h:outputStylesheet id="customCSS">

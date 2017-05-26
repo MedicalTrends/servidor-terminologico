@@ -37,10 +37,9 @@
 
         <div class="ui-fluid">
 
-            <div class="Container">
+            <div class="ui-g">
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
 
                         <p:outputPanel styleClass="search" >
 
@@ -77,7 +76,6 @@
 
                         </p:outputPanel>
 
-                    </div>
                 </div>
             </div>
         </div>
@@ -114,7 +112,7 @@
 
     </p:panel>
 
-    <p:panel id="multiplicityN_with_attributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}"  toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
+    <p:panel id="multiplicityN_with_attributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
@@ -134,13 +132,11 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
 
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-                            <p:outputPanel styleClass="search">
+                        <p:outputPanel styleClass="search">
 
                                 <p:autoComplete id="findConceptSMTK3" scrollHeight="200"
                                                 completeMethod="#{smtkBean.getConceptSearchInput}"
@@ -173,23 +169,20 @@
                                 <i class="fa fa-search fa-lg"  />
                             </p:outputPanel>
 
-                        </div>
-
                     </div>
                     <!-- Atributos de relación -->
                     <smtk:attributes concept="#{cc.attrs.concept}"
                                      relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                      />
-                    <div class="Container20 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+
                             <p:commandButton
                                     process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                     action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                    style="max-width: 100px"
                                     value="Agregar">
                             </p:commandButton>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -262,20 +255,16 @@
 
                 <div class="ui-fluid">
 
-                    <div class="Container">
+                    <div class="ui-g">
 
-                        <div class="Container20 White Responsive">
-                            <div class="ContainerIndent">
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
 
                                 <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"  value="#{cc.attrs.relationshipDefinition.name} " for="findConceptSMTK"/>
                                 <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" value="#{cc.attrs.relationshipDefinition.name} *" for="findConceptSMTK"/>
 
-                            </div>
                         </div>
 
-                        <div class="Container30 White Responsive">
-
-                            <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
 
                                 <p:outputPanel styleClass="search">
 
@@ -312,7 +301,6 @@
                                     <i class="fa fa-search fa-lg"  />
                                 </p:outputPanel>
 
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -327,21 +315,18 @@
 
                         <div class="ui-fluid">
 
-                            <div class="Container">
+                            <div class="ui-g">
 
-                                <div class="Container20 White Responsive">
-                                    <div class="ContainerIndent">
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
 
                                         <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
                                                        value="#{cc.attrs.relationshipDefinition.name}: " for="itemSelected"/>
                                         <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}"
                                                        value="#{cc.attrs.relationshipDefinition.name} *" for="itemSelected"/>
-                                    </div>
+
                                 </div>
 
-                                <div class="Container30 White Responsive">
-
-                                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                                <div class="ui-g-12 ui-md-6 ui-lg-3">
 
                                         <p:outputPanel styleClass="search">
                                             <p:inputText disabled="true" id="itemSelected" value="#{relationship.target.descriptionFavorite.term}" />
@@ -354,21 +339,17 @@
                                             </p:commandLink>
                                         </p:outputPanel>
 
-                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                                    <h:outputText value="Concept ID"/>
 
                                 </div>
 
-                                <div class="Container20 Responsive">
-                                    <div class="ContainerIndent">
-                                        <h:outputText value="Concept ID"/>
-                                    </div>
-                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-3">
 
-                                <div class="Container30 White Responsive">
-
-                                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-                                        <p:inputText value="#{relationship.target.conceptID}" disabled="true" />
-                                    </div>
+                                    <p:inputText value="#{relationship.target.conceptID}" disabled="true" />
 
                                 </div>
                             </div>

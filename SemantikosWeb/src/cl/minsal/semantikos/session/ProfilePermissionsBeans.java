@@ -61,6 +61,9 @@ public class ProfilePermissionsBeans {
     }
 
     public boolean permissionsBy(Category category){
+        if(category == null) {
+            return false;
+        }
         if(!category.isRestriction() && isDesigner() ){
             return true;
         }

@@ -28,9 +28,16 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                        <p:outputLabel value="CrossmapSet" />
+
+                    </div>
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
                                 <p:selectOneMenu value="#{cc.attrs.targetDefinition}" autoWidth="false" converter="omnifaces.SelectItemsConverter">
@@ -38,59 +45,58 @@
                                     <p:ajax event="itemSelect" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
                                 </p:selectOneMenu>
 
-                            </div>
                         </div>
-                    <div class="Container20 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
-
-                            <p:selectOneRadio value="#{crossmapBean.typeSearch}" autoWidth="false" layout="grid" columns="2" style="padding-top: 0.5em"
-                                              >
-                                <f:selectItem itemLabel="Búsqueda por descripción" itemValue="0"></f:selectItem>
-                                <f:selectItem itemLabel="Búsqueda por Cod-1 Crossmapset" itemValue="1"></f:selectItem>
-                                <p:ajax  />
-                            </p:selectOneRadio>
-
-                        </div>
                     </div>
 
-                    <div class="Container20 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <p:selectOneMenu value="#{crossmapBean.typeSearch}" rendered="false" autoWidth="false" >
+                        <f:selectItem itemLabel="Búsqueda por descripción" itemValue="0" />
+                        <f:selectItem itemLabel="Búsqueda por Cod-1 Crossmapset" itemValue="1" />
+                        <p:ajax event="itemSelect"  />
+                    </p:selectOneMenu>
 
-                            <p:outputPanel styleClass="search">
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-                                <p:autoComplete id="findCSM6" scrollHeight="200"
-                                                completeMethod="#{crossmapBean.getCrossmapSearchInput}"
-                                                forceSelection="true"
-                                                var="crossmap"
-                                                placeholder="#{cc.attrs.targetDefinition.abbreviatedName}"
-                                                converter="crossmapSetMemberConverter"
-                                                rendered="#{cc.attrs.concept.editable}"
-                                                disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
-                                                value="#{conceptBean.crossmapSetMemberSelected}"
-                                                itemLabel="#{crossmap.gloss}"
-                                                itemValue="#{crossmap}">
+                        <p:outputLabel value="CrossmapSet Member" />
 
-                                    <!-- Parámetros del buscador -->
-                                    <f:attribute name="crossmapSet" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
-                                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                                    <!-- Parámetros del validador -->
-                                    <f:attribute name="crossmap" value="#{conceptBean.crossmapSetMemberSelected}"  />
-                                    <!---->
-                                    <p:column style="width: 500px">
-                                        <h:outputText value="#{crossmap.gloss}"/>
-                                    </p:column>
+                    </div>
 
-                                    <p:ajax event="itemSelect"
-                                            listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.crossmapSetMemberSelected)}"
-                                            process="@this"/>
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
 
-                                    <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
+                        <p:outputPanel styleClass="search">
 
-                                </p:autoComplete>
-                                <i class="fa fa-search fa-lg"  />
-                            </p:outputPanel>
-                        </div>
+                            <p:autoComplete id="findCSM6" scrollHeight="200"
+                                            completeMethod="#{crossmapBean.getCrossmapSearchInput}"
+                                            forceSelection="true"
+                                            var="crossmap"
+                                            placeholder="#{cc.attrs.targetDefinition.abbreviatedName}"
+                                            converter="crossmapSetMemberConverter"
+                                            rendered="#{cc.attrs.concept.editable}"
+                                            disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
+                                            value="#{conceptBean.crossmapSetMemberSelected}"
+                                            itemLabel="#{crossmap.gloss}"
+                                            itemValue="#{crossmap}">
+
+                                <!-- Parámetros del buscador -->
+                                <f:attribute name="crossmapSet" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                                <!-- Parámetros del validador -->
+                                <f:attribute name="crossmap" value="#{conceptBean.crossmapSetMemberSelected}"  />
+                                <!---->
+                                <p:column style="width: 500px">
+                                    <h:outputText value="#{crossmap.gloss}"/>
+                                </p:column>
+
+                                <p:ajax event="itemSelect"
+                                        listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.crossmapSetMemberSelected)}"
+                                        process="@this"/>
+
+                                <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
+
+                            </p:autoComplete>
+                            <i class="fa fa-search fa-lg"  />
+                        </p:outputPanel>
+
                     </div>
 
                     <!-- Atributos de relación -->
@@ -118,16 +124,14 @@
                         />
                     </p:repeat>
 
-                    <div class="Container20 Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-                            <p:commandButton
-                                    process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
-                                    action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
-                                    update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                    style="max-width: 100px"
-                                    value="Agregar">
-                            </p:commandButton>
-                        </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:commandButton
+                                process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                                action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
+                                update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                                style="max-width: 100px"
+                                value="Agregar">
+                        </p:commandButton>
                     </div>
                 </div>
             </div>
@@ -186,7 +190,7 @@
                         actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
                         styleClass="relationships"
                 >
-                    <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar este Crossmaps Directo?"
+                    <p:confirm header="Confirmation" message="¿Está seguro de eliminar este Crossmaps Directo?"
                                icon="ui-icon-alert"/>
                 </p:commandButton>
             </p:column>
