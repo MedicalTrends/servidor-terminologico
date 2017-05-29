@@ -206,14 +206,16 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public List<ConceptSMTK> executeQuery(BrowserQuery query) {
 
-        query.setQuery(conceptManager.standardizationPattern(query.getQuery()));
+        //query.setQuery(conceptManager.standardizationPattern(query.getQuery()));
 
         List<ConceptSMTK> concepts = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
 
+        /*
         if(concepts.isEmpty()) {
             query.setTruncateMatch(true);
             concepts = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
         }
+        */
 
         return concepts;
     }

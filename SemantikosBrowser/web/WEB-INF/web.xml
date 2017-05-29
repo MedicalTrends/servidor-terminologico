@@ -27,14 +27,13 @@
 
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>poseidon-blue</param-value>
+        <param-value>poseidon-minsal</param-value>
     </context-param>
 
     <context-param>
         <param-name>primefaces.FONT_AWESOME</param-name>
         <param-value>true</param-value>
     </context-param>
-
 
     <!-- melody -->
     <filter>
@@ -65,7 +64,7 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>/views/home.xhtml</welcome-file>
+        <welcome-file>views/home.xhtml</welcome-file>
     </welcome-file-list>
 
     <error-page>

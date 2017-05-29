@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.model.queries.ConceptDTO;
+import cl.minsal.semantikos.model.queries.RelationshipDTO;
 import cl.minsal.semantikos.model.queries.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;

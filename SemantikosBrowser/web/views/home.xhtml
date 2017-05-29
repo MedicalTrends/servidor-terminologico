@@ -11,7 +11,6 @@
             <f:event type="preRenderView" listener="#{browserBean.executeQuery}" />
         </f:metadata>
 
-
         <div class="ui-g">
 
             <div class="ui-g-0 ui-md-0 ui-lg-2"></div>
@@ -20,180 +19,218 @@
 
                 <div class="card card-w-title">
 
-                            <h:form id="browserForm">
+                    <h:form id="browserForm">
 
-                                <p:outputPanel>
+                            <p:outputPanel>
 
-                                    <div class="ui-fluid">
+                                <div class="ui-fluid">
 
-                                        <div class="ui-g">
+                                    <div class="ui-g">
 
-                                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                        <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-                                                <p:outputLabel value="Categorías" />
-
-                                            </div>
-
-                                            <div class="ui-g-12 ui-md-6 ui-lg-4">
-
-                                                <p:selectCheckboxMenu id="menu"
-                                                                      converter="omnifaces.SelectItemsConverter"
-                                                                      value="#{browserBean.browserQuery.categories}"
-                                                                      label="Seleccione..."
-                                                                      filter="true" filterMatchMode="startsWith">
-                                                    <f:selectItems value="#{browserBean.categories}" var="category"
-                                                                   itemLabel="#{category.name}" itemValue="#{category}"/>
-                                                    <p:ajax event="toggleSelect" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
-                                                    <p:ajax update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
-                                                </p:selectCheckboxMenu>
-
-                                            </div>
-
-                                            <div class="ui-g-12 ui-md-6 ui-lg-2">
-
-                                                <p:outputLabel value="Etiquetas" />
-
-                                            </div>
-
-                                            <div class="ui-g-12 ui-md-6 ui-lg-4">
-
-                                                <p:selectCheckboxMenu id="tags"
-                                                                      value="#{browserBean.browserQuery.tags}"
-                                                                      converter="omnifaces.SelectItemsConverter"
-                                                                      label="Seleccione..."
-                                                                      autoWidth="false"
-                                                                      filter="true"
-                                                                      filterMatchMode="startsWith">
-                                                    <p:ajax event="change" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
-                                                    <p:ajax event="toggleSelect" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
-
-                                                    <f:selectItems value="#{browserBean.tags}" var="tag"
-                                                                   itemLabel="#{tag.name}" itemValue="#{tag}"/>
-                                                </p:selectCheckboxMenu>
-
-                                            </div>
-
-                                            <div class="ui-g-12 ui-md-6 ui-lg-2">
-
-                                                <p:outputLabel value="Patrón" />
-
-                                            </div>
-
-                                            <div class="ui-g-12 ui-md-6 ui-lg-8">
-                                                <p:inputText value="#{browserBean.browserQuery.query}"
-                                                             placeholder="Buscar...">
-                                                    <p:ajax event="keyup" update="@(.conceptTable)" listener="#{browserBean.setFilterChanged(true)}" />
-                                                </p:inputText>
-                                            </div>
-
-                                            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                                                <p:commandButton value="Buscar" id="btn"
-                                                                 process="@(.otherDescriptionsPanel)"
-                                                                 update="@(.otherDescriptionsPanel)"/>
-                                            </div>
+                                            <p:outputLabel value="Categorías" />
 
                                         </div>
-                                    </div>
-                                </p:outputPanel>
 
-                                <br/>
+                                        <div class="ui-g-12 ui-md-6 ui-lg-4">
 
-                                <p:dataTable id="conceptTable" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
-                                 rows="15"
-                                 sortBy="#{1}"
-                                 paginator="true" lazy="true" dynamic="true"
-                                 reflow="true"
-                                 paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                 emptyMessage="No se han encontrado conceptos con los criterios utilizados">
-                        <f:facet name="{Exporters}">
-                            <p:commandButton ajax="false" value="Exportar a Excel" process="@this" update="@this"
-                                             icon="fa fa-file-excel-o">
-                                <p:dataExporter type="xls" target="conceptTable"
-                                                fileName="conceptos"/>
-                            </p:commandButton>
-                        </f:facet>
+                                            <p:selectCheckboxMenu id="menu"
+                                                                  converter="omnifaces.SelectItemsConverter"
+                                                                  value="#{browserBean.browserQuery.categories}"
+                                                                  label="Seleccione..."
+                                                                  filter="true" filterMatchMode="startsWith">
+                                                <f:selectItems value="#{browserBean.categories}" var="category"
+                                                               itemLabel="#{category.name}" itemValue="#{category}"/>
+                                                <p:ajax event="toggleSelect" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+                                                <p:ajax update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+                                            </p:selectCheckboxMenu>
 
-                        <p:column headerText="Termino Preferido" sortBy="#{2}">
-                            <div style="margin-bottom: 28px;">
-                                <p:commandLink value="#{conceptSMTK.descriptionFavorite.term}" oncomplete="PF('dialogC').show()" update=":browserForm:conceptTable,:browserForm:query-concept-sct"
-                                style="color:#1a0dab; font-size: 18px">
-                                    <f:setPropertyActionListener value="#{conceptSMTK}" target="#{browserBean.conceptSelected}"/>
-                                </p:commandLink>
-                                <br/>
-                                <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: small; color: #006621" />
-                                <br/>
-                                <h:outputText value="#{conceptSMTK.category.name}" style="font-size: small; color:#545454;" />
-                                <p:repeat
-                                        offset="0"
-                                        size="#{conceptSMTK.tags.size()}"
-                                        step="1"
-                                        varStatus="var"
-                                        value="#{conceptSMTK.tags}"
-                                        var="tag">
+                                        </div>
 
-                                    <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+                                        <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-                                </p:repeat>
-                            </div>
-                        </p:column>
+                                            <p:outputLabel value="Etiquetas" />
 
-                    </p:dataTable>
+                                        </div>
 
-                                <p:dialog id="dialogC" header="Ver Concepto" widgetVar="dialogC" global="true" width="700px" showEffect="fade" hideEffect="fade">
+                                        <div class="ui-g-12 ui-md-6 ui-lg-4">
 
-                                    <p:outputPanel id="query-concept-sct">
-                                        <p:panelGrid style="width:100%">
-                                            <f:facet name="header">
-                                                <p:row>
-                                                    <p:column colspan="2">
-                                                        #{browserBean.conceptSelected.descriptionFavorite}
+                                            <p:selectCheckboxMenu id="tags"
+                                                                  value="#{browserBean.browserQuery.tags}"
+                                                                  converter="omnifaces.SelectItemsConverter"
+                                                                  label="Seleccione..."
+                                                                  autoWidth="false"
+                                                                  filter="true"
+                                                                  filterMatchMode="startsWith">
+                                                <p:ajax event="change" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+                                                <p:ajax event="toggleSelect" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+
+                                                <f:selectItems value="#{browserBean.tags}" var="tag"
+                                                               itemLabel="#{tag.name}" itemValue="#{tag}"/>
+                                            </p:selectCheckboxMenu>
+
+                                        </div>
+
+                                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                                            <p:outputLabel value="Patrón" />
+
+                                        </div>
+
+                                        <div class="ui-g-12 ui-md-6 ui-lg-8">
+                                            <!--p:inputText value="#{browserBean.browserQuery.query}"
+                                                         placeholder="Buscar...">
+                                                <p:ajax event="keyup" update="@(.conceptTable)" listener="#{browserBean.setFilterChanged(true)}" />
+                                            </p:inputText-->
+
+                                            <p:outputPanel styleClass="search">
+                                                <p:autoComplete minQueryLength="3"
+                                                                emptyMessage="No se encontraron conceptos"
+                                                                forceSelection="false"
+                                                                scrollHeight="200" size="5"
+                                                                completeMethod="#{browserBean.searchSuggestedDescriptions}"
+                                                                placeholder="Buscar..."
+                                                                converter="DescriptionConverter"
+                                                                var="description"
+                                                                value="#{browserBean.descriptionSelected}"
+                                                                itemLabel="#{description.term}"
+                                                                itemValue="#{description}">
+
+                                                    <!--p:column>
+                                                        <h:outputText value="#{description.descriptionId}" />
+                                                    </p:column-->
+
+                                                    <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
+                                                        <h:outputText value="#{description.term}" />
                                                     </p:column>
-                                                </p:row>
-                                            </f:facet>
-                                            <p:row>
-                                                <p:column styleClass="BoldGray FontBold">ConceptID</p:column>
-                                                <p:column>#{browserBean.conceptSelected.conceptID}</p:column>
-                                            </p:row>
-                                            <p:row>
-                                                <p:column styleClass="BoldGray FontBold">Categoría</p:column>
-                                                <p:column>#{browserBean.conceptSelected.category}</p:column>
-                                            </p:row>
-                                            <p:row>
-                                                <p:column styleClass="BoldGray FontBold">FSN</p:column>
-                                                <p:column>#{browserBean.conceptSelected.descriptionFSN}</p:column>
-                                            </p:row>
-                                            <p:row>
-                                                <p:column styleClass="BoldGray FontBold">Preferida</p:column>
-                                                <p:column>#{browserBean.conceptSelected.descriptionFavorite}</p:column>
-                                            </p:row>
-                                        </p:panelGrid>
-                                        <p:dataTable id="otherDescriptions"
-                                                     var="description"
-                                                     value="#{browserBean.getOtherDescriptions(browserBean.conceptSelected)}"
-                                                     rendered="#{not empty browserBean.getOtherDescriptions(browserBean.conceptSelected)}"
-                                                     editable="true"
-                                                     reflow="true">
-                                            <p:columnGroup type="header">
 
-                                                <p:row>
-                                                    <p:column colspan="2" headerText="Otras Descripciones"/>
-                                                </p:row>
+                                                    <p:ajax event="itemSelect"
+                                                            listener="#{browserBean.test()}"
+                                                            update="@(.conceptPanel),@(.search)"
+                                                            process="@this"/>
 
-                                            </p:columnGroup>
-                                            <p:column style="width: 25%" styleClass="BoldGray FontBold">
-                                                #{description.descriptionType.name}
-                                            </p:column>
-                                            <p:column>
-                                                #{description.term}
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:outputPanel>
-                                </p:dialog>
 
-                            </h:form>
+                                                </p:autoComplete>
+                                                <i class="fa fa-search fa-lg"  />
+                                            </p:outputPanel>
 
-                        </div>
-                    </div>
+                                        </div>
+
+                                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                            <p:commandButton value="Buscar" id="btn"
+                                                             process="@(.otherDescriptionsPanel)"
+                                                             update="@(.otherDescriptionsPanel)"/>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </p:outputPanel>
+
+                            <br/>
+
+                            <p:outputPanel styleClass="conceptPanel">
+
+                            <p:dataTable id="conceptTable" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
+                             rendered="#{not empty browserBean.concepts}"
+                             rows="15"
+                             sortBy="#{1}"
+                             paginator="true" lazy="true" dynamic="true"
+                             reflow="true"
+                             paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                             emptyMessage="No se han encontrado conceptos con los criterios utilizados">
+
+                                <f:facet name="{Exporters}">
+                                    <p:commandButton ajax="false" value="Exportar a Excel" process="@this" update="@this"
+                                                     icon="fa fa-file-excel-o">
+                                        <p:dataExporter type="xls" target="conceptTable"
+                                                        fileName="conceptos"/>
+                                    </p:commandButton>
+                                </f:facet>
+
+                                <p:column headerText="Termino Preferido" sortBy="#{2}">
+                                    <div style="margin-bottom: 28px;">
+                                        <p:commandLink value="#{conceptSMTK.descriptionFavorite.term}" oncomplete="PF('dialogC').show()" update=":browserForm:conceptTable,:browserForm:query-concept-sct"
+                                        style="color:#1a0dab; font-size: 18px">
+                                            <f:setPropertyActionListener value="#{conceptSMTK}" target="#{browserBean.conceptSelected}"/>
+                                        </p:commandLink>
+                                        <br/>
+                                        <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: small; color: #006621" />
+                                        <br/>
+                                        <h:outputText value="#{conceptSMTK.category.name}" style="font-size: small; color:#545454;" />
+                                        <p:repeat
+                                                offset="0"
+                                                size="#{conceptSMTK.tags.size()}"
+                                                step="1"
+                                                varStatus="var"
+                                                value="#{conceptSMTK.tags}"
+                                                var="tag">
+
+                                            <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+
+                                        </p:repeat>
+                                    </div>
+                                </p:column>
+
+                            </p:dataTable>
+
+                            </p:outputPanel>
+
+                            <p:dialog id="dialogC" header="Ver Concepto" widgetVar="dialogC" global="true" width="700px" showEffect="fade" hideEffect="fade">
+
+                                <p:outputPanel id="query-concept-sct">
+                                    <p:panelGrid style="width:100%">
+                                        <f:facet name="header">
+                                            <p:row>
+                                                <p:column colspan="2">
+                                                    #{browserBean.conceptSelected.descriptionFavorite}
+                                                </p:column>
+                                            </p:row>
+                                        </f:facet>
+                                        <p:row>
+                                            <p:column styleClass="BoldGray FontBold">ConceptID</p:column>
+                                            <p:column>#{browserBean.conceptSelected.conceptID}</p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column styleClass="BoldGray FontBold">Categoría</p:column>
+                                            <p:column>#{browserBean.conceptSelected.category}</p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column styleClass="BoldGray FontBold">FSN</p:column>
+                                            <p:column>#{browserBean.conceptSelected.descriptionFSN}</p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column styleClass="BoldGray FontBold">Preferida</p:column>
+                                            <p:column>#{browserBean.conceptSelected.descriptionFavorite}</p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                    <p:dataTable id="otherDescriptions"
+                                                 var="description"
+                                                 value="#{browserBean.getOtherDescriptions(browserBean.conceptSelected)}"
+                                                 rendered="#{not empty browserBean.getOtherDescriptions(browserBean.conceptSelected)}"
+                                                 editable="true"
+                                                 reflow="true">
+                                        <p:columnGroup type="header">
+
+                                            <p:row>
+                                                <p:column colspan="2" headerText="Otras Descripciones"/>
+                                            </p:row>
+
+                                        </p:columnGroup>
+                                        <p:column style="width: 25%" styleClass="BoldGray FontBold">
+                                            #{description.descriptionType.name}
+                                        </p:column>
+                                        <p:column>
+                                            #{description.term}
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:outputPanel>
+                            </p:dialog>
+
+                        </h:form>
+
+                </div>
+            </div>
 
             <div class="ui-g-0 ui-md-0 ui-lg-2"></div>
 

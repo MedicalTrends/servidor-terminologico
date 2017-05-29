@@ -530,14 +530,4 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
         return this.getValidRelationshipsWebByRelationDefinition(relationshipDefinition).size()>=relationshipDefinition.getMultiplicity().getLowerBoundary();
     }
 
-
-    public ConceptSMTK getConceptSMTK() {
-        ConceptSMTK conceptSMTK =  new ConceptSMTK(this.getId(), this.getConceptID(), this.getCategory(), this.isToBeReviewed(), this.isToBeConsulted(), this.isModeled(), this.isFullyDefined(), this.isInherited(), this.isPublished(), this.getObservation(), this.getTagSMTK());
-        conceptSMTK.setDescriptions(super.getDescriptions());
-        conceptSMTK.setRelationships(super.getRelationships());
-        conceptSMTK.setRefsets(this.getRefsets());
-        conceptSMTK.setTags(this.getTags());
-        return conceptSMTK;
-    }
-
 }

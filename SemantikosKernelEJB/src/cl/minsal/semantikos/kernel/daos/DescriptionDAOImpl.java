@@ -545,6 +545,42 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     }
 
     @Override
+    public List<Description> searchDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets) {
+        /* Se registra el tiempo de inicio */
+        long init = currentTimeMillis();
+
+        ConnectionBD connect = new ConnectionBD();
+        List<Description> descriptions = new ArrayList<>();
+
+        String sql = "{call semantikos.search_descriptions_suggested_alt(?,?,?)}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setString(1, term.toLowerCase());
+            Category[] entities = categories.toArray(new Category[categories.size()]);
+            RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
+            call.setArray(2, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
+            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                Description description = createDescriptionFromResultSet(rs, null);
+                descriptions.add(description);
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar descripciones de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        return descriptions;
+    }
+
+    @Override
     public void updateSearchIndexes(Description description) {
 
         ConnectionBD connect = new ConnectionBD();

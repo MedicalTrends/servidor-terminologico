@@ -91,50 +91,49 @@
                     <div class="ui-g-12 ui-md-6 ui-lg-8">
 
                         <p:outputPanel styleClass="search searchSCT">
+                            <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
+                                            forceSelection="true"
+                                            id="findConceptSCT"
+                                            widgetVar="findConceptSCT"
+                                            queryDelay="500"
+                                            scrollHeight="200" size="5"
+                                            completeMethod="#{sctBean.getConceptSearchInput}"
+                                            placeholder="#{sctBean.searchOption eq 'term'? 'Ingrese término...': 'Ingrese conceptId...'}"
+                                            converter="conceptSCTConverter"
+                                            var="concept"
+                                            maxResults="1000"
+                                            value="#{conceptBean.conceptSCTSelected}"
+                                            itemLabel="#{concept.descriptionFSN.term}"
+                                            itemValue="#{concept}"
+                                            disabled="#{not cc.attrs.concept.editable}">
 
-                                <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
-                                                forceSelection="true"
-                                                id="findConceptSCT"
-                                                widgetVar="findConceptSCT"
-                                                queryDelay="500"
-                                                scrollHeight="200" size="5"
-                                                completeMethod="#{sctBean.getConceptSearchInput}"
-                                                placeholder="#{sctBean.searchOption eq 'term'? 'Ingrese término...': 'Ingrese conceptId...'}"
-                                                converter="conceptSCTConverter"
-                                                var="concept"
-                                                maxResults="1000"
-                                                value="#{conceptBean.conceptSCTSelected}"
-                                                itemLabel="#{concept.descriptionFSN.term}"
-                                                itemValue="#{concept}"
-                                                disabled="#{not cc.attrs.concept.editable}">
+                                <!-- Parámetros del validador -->
+                                <f:attribute name="concept" value="#{cc.attrs.concept}"  />
+                                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
 
-                                    <!-- Parámetros del validador -->
-                                    <f:attribute name="concept" value="#{cc.attrs.concept}"  />
-                                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                                <f:attribute name="searchOption" value="#{sctBean.searchOption}"  />
+                                <f:attribute name="relationshipGroup" value="#{sctBean.relationshipGroup}"  />
+                                <!---->
 
-                                    <f:attribute name="searchOption" value="#{sctBean.searchOption}"  />
-                                    <f:attribute name="relationshipGroup" value="#{sctBean.relationshipGroup}"  />
-                                    <!---->
+                                <p:column>
+                                    <h:outputText value="#{concept.idSnomedCT}" />
+                                </p:column>
 
-                                    <p:column>
-                                        <h:outputText value="#{concept.idSnomedCT}" />
-                                    </p:column>
+                                <p:column style="width: 500px">
+                                    <h:outputText value="#{concept.descriptionFSN.term}" />
+                                </p:column>
 
-                                    <p:column style="width: 500px">
-                                        <h:outputText value="#{concept.descriptionFSN.term}" />
-                                    </p:column>
+                                <p:ajax event="query" update="findConceptSCT" />
 
-                                    <p:ajax event="query" update="findConceptSCT" />
+                                <p:ajax event="itemSelect"
+                                        listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.conceptSCTSelected)}"
+                                        process="@this"/>
 
-                                    <p:ajax event="itemSelect"
-                                            listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.conceptSCTSelected)}"
-                                            process="@this"/>
+                                <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
 
-                                    <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
-
-                                </p:autoComplete>
-                                <i class="fa fa-search fa-lg"  />
-                            </p:outputPanel>
+                            </p:autoComplete>
+                            <i class="fa fa-search fa-lg"  />
+                        </p:outputPanel>
 
                     </div>
 

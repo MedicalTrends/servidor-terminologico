@@ -342,6 +342,15 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    public List<Description> searchDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets) {
+        long init = currentTimeMillis();
+        List<Description> descriptions = descriptionDAO.searchDescriptionsSuggested(term, categories, refSets);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        return descriptions;
+    }
+
+    @Override
     public void invalidateDescription(ConceptSMTK conceptSMTK, NoValidDescription noValidDescription, User user) {
 
         /* Se aplican las reglas de negocio para el traslado */

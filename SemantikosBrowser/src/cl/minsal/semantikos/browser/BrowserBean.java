@@ -1,15 +1,14 @@
+package cl.minsal.semantikos.browser;
 
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
-import cl.minsal.semantikos.kernel.components.CategoryManager;
-import cl.minsal.semantikos.kernel.components.ConceptManager;
-import cl.minsal.semantikos.kernel.components.QueryManager;
-import cl.minsal.semantikos.kernel.components.TagManager;
+import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.queries.BrowserQuery;
 import cl.minsal.semantikos.model.tags.Tag;
+import org.omnifaces.util.Ajax;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -24,6 +23,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static java.util.Collections.EMPTY_LIST;
+import static org.primefaces.util.Constants.EMPTY_STRING;
 
 @ManagedBean
 @ViewScoped
@@ -46,12 +48,6 @@ public class BrowserBean implements Serializable {
      */
     static final Logger logger = LoggerFactory.getLogger(BrowserBean.class);
 
-    //@EJB
-    QueryManager queryManager;
-
-    //@EJB
-    TagManager tagManager;
-
     /**
      * Objeto de consulta: contiene todos los filtros y columnas necesarios para el despliegue de los resultados en el navegador
      */
@@ -73,24 +69,38 @@ public class BrowserBean implements Serializable {
     private LazyDataModel<ConceptSMTK> concepts;
     private ConceptSMTK conceptSelected;
 
+    private Description descriptionSelected;
+
     /**
      * Indica si cambió algún filtro. Se utiliza para resetear la páginación al comienzo si se ha filtrado
      */
     private boolean isFilterChanged;
 
-    //@EJB
-    private CategoryManager categoryManager;
+    /**
+     * Indica si se debe realizar una búsqueda
+     */
+    private boolean performSearch = false;
 
     //@EJB
-    private ConceptManager conceptManager;
+    QueryManager queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
+
+    //@EJB
+    TagManager tagManager = (TagManager) RemoteEJBClientFactory.getInstance().getManager(TagManager.class);
+
+    //@EJB
+    private CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
+
+    //@EJB
+    private ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+
+    //@EJB
+    private DescriptionManager descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
+
 
     @PostConstruct
     protected void initialize() {
 
-        queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
-        tagManager = (TagManager) RemoteEJBClientFactory.getInstance().getManager(TagManager.class);
-        categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
-        conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+        browserQuery = queryManager.getDefaultBrowserQuery();
 
         tags = tagManager.getAllTags();
         categories = categoryManager.getCategories();
@@ -145,8 +155,16 @@ public class BrowserBean implements Serializable {
         /**
          * Si el objeto de consulta no está inicializado, inicializarlo
          */
-        if(browserQuery == null)
+        if(browserQuery == null) {
             browserQuery = queryManager.getDefaultBrowserQuery();
+        }
+
+        if(!performSearch) {
+            return;
+        }
+        else {
+            performSearch = false;
+        }
 
         /**
          * Ejecutar la consulta
@@ -157,22 +175,32 @@ public class BrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptsBy(category, first, pageSize);
 
-                if(isFilterChanged)
+                if(isFilterChanged) {
                     browserQuery.setPageNumber(0);
-                else
+                }
+                else {
                     browserQuery.setPageNumber(first);
+                }
 
                 isFilterChanged = false;
 
                 browserQuery.setPageSize(pageSize);
                 browserQuery.setOrder(new Integer(sortField));
 
-                if(sortOrder.name().substring(0,3).toLowerCase().equals("asc"))
-                    browserQuery.setAsc(sortOrder.name().substring(0,3).toLowerCase());
-                else
-                    browserQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
+                if(sortOrder.name().substring(0,3).toLowerCase().equals("asc")) {
+                    browserQuery.setAsc(sortOrder.name().substring(0, 3).toLowerCase());
+                }
+                else {
+                    browserQuery.setAsc(sortOrder.name().substring(0, 4).toLowerCase());
+                }
 
                 List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(browserQuery);
+
+                if(conceptSMTKs.isEmpty()) {
+                    browserQuery.setTruncateMatch(true);
+                    conceptSMTKs = queryManager.executeQuery(browserQuery);;
+                }
+
                 this.setRowCount(queryManager.countQueryResults(browserQuery));
 
                 return conceptSMTKs;
@@ -180,6 +208,29 @@ public class BrowserBean implements Serializable {
 
         };
 
+    }
+
+    public List<Description> searchSuggestedDescriptions(String term) {
+        browserQuery.setQuery(term);
+        List<Description> suggestedDescriptions = new ArrayList<>();
+        DescriptionTypeFactory.DUMMY_DESCRIPTION.setTerm(EMPTY_STRING);
+        suggestedDescriptions.add(DescriptionTypeFactory.DUMMY_DESCRIPTION);
+        suggestedDescriptions.addAll(descriptionManager.searchDescriptionsSuggested(term, categories, EMPTY_LIST));
+        return suggestedDescriptions;
+    }
+
+    public void test() {
+        performSearch = true;
+        /**
+         * Si no se ha seleccionado ninguna descripción sugerida,
+         */
+        if(descriptionSelected.equals(DescriptionTypeFactory.DUMMY_DESCRIPTION)) {
+            descriptionSelected.setTerm(browserQuery.getQuery());
+        }
+        else {
+            //browserQuery.setQuery(descriptionSelected.getTerm());
+            browserQuery.setQuery(descriptionSelected.getConceptSMTK().getConceptID());
+        }
     }
 
     public LazyDataModel<ConceptSMTK> getConcepts() {
@@ -288,6 +339,23 @@ public class BrowserBean implements Serializable {
 
     public void setFilterChanged(boolean filterChanged) {
         isFilterChanged = filterChanged;
+    }
+
+
+    public Description getDescriptionSelected() {
+        return descriptionSelected;
+    }
+
+    public void setDescriptionSelected(Description descriptionSelected) {
+        this.descriptionSelected = descriptionSelected;
+    }
+
+    public DescriptionManager getDescriptionManager() {
+        return descriptionManager;
+    }
+
+    public void setDescriptionManager(DescriptionManager descriptionManager) {
+        this.descriptionManager = descriptionManager;
     }
 
     public List<Description> getOtherDescriptions(ConceptSMTK concept){
