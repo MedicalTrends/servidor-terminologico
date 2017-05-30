@@ -1,16 +1,16 @@
 package cl.minsal.semantikos.ws.service;
 
-import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
+import cl.minsal.semantikos.kernel.components.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.model.categories.Category;
-import cl.minsal.semantikos.modelws.request.*;
-import cl.minsal.semantikos.modelws.response.*;
+import cl.minsal.semantikos.ws.modelws.request.*;
+import cl.minsal.semantikos.ws.modelws.response.*;
 import cl.minsal.semantikos.ws.component.CategoryController;
 import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.component.CrossmapController;
 import cl.minsal.semantikos.ws.component.RefSetController;
-import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
-import cl.minsal.semantikos.modelws.fault.NotFoundFault;
+import cl.minsal.semantikos.ws.modelws.fault.IllegalInputFault;
+import cl.minsal.semantikos.ws.modelws.fault.NotFoundFault;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +53,7 @@ public class SearchService {
     private CategoryManager categoryManager;
 
     @EJB
-    private AuthenticationManagerImpl authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Resource
     WebServiceContext wsctx;
@@ -180,7 +180,7 @@ public class SearchService {
      * generales e indicaciones de laboratorio.
      *
      * @return Los términos solicitados
-     * @throws cl.minsal.semantikos.modelws.fault.IllegalInputFault
+     * @throws cl.minsal.semantikos.ws.modelws.fault.IllegalInputFault
      */
     @WebResult(name = "respuestaObtenerTerminosPedibles")
     @WebMethod(operationName = "obtenerTerminosPedibles")
@@ -222,7 +222,7 @@ public class SearchService {
      * Este método es responsable de realizar la validación de los parámetros de entrada del servicio REQ-WS-005.
      *
      * @param request La petición con los parámetros de entrada.
-     * @throws cl.minsal.semantikos.modelws.fault.IllegalInputFault Arrojado si se solicitan cateogorías distintas a las
+     * @throws cl.minsal.semantikos.ws.modelws.fault.IllegalInputFault Arrojado si se solicitan cateogorías distintas a las
      * objetivo de la búsqueda o que
      *                                                         simplemente no existen. También se arroja si existen
      */
@@ -254,7 +254,7 @@ public class SearchService {
      * Este método es responsable de validar que una petición posea al menos una categoría o un refset.
      *
      * @param request La petición enviada.
-     * @throws cl.minsal.semantikos.modelws.fault.IllegalInputFault Se arroja si se viola la condición.
+     * @throws cl.minsal.semantikos.ws.modelws.fault.IllegalInputFault Se arroja si se viola la condición.
      */
     private void validateAtLeastOneCategory(RequestableConceptsRequest request) throws IllegalInputFault {
         if (isEmpty(request.getCategoryNames())) {
@@ -374,7 +374,7 @@ public class SearchService {
      * @return Una lista de crossmaps <em>indirectos</em> del concepto asociado a la descripción encapsulada en un
      * objeto mapeado
      * a un elemento XML.
-     * @throws cl.minsal.semantikos.modelws.fault.NotFoundFault Arrojada si no existe una descripción con
+     * @throws cl.minsal.semantikos.ws.modelws.fault.NotFoundFault Arrojada si no existe una descripción con
      * <em>DESCRIPTION_ID</em> igual al indicado por el
      *                                                     parámetro <code>descriptionId</code>.
      */
@@ -401,7 +401,7 @@ public class SearchService {
      * @return Una lista de crossmaps <em>directos</em> del concepto asociado a la descripción encapsulada en un objeto
      * mapeado
      * a un elemento XML.
-     * @throws cl.minsal.semantikos.modelws.fault.NotFoundFault Arrojada si no existe una descripción con
+     * @throws cl.minsal.semantikos.ws.modelws.fault.NotFoundFault Arrojada si no existe una descripción con
      * <em>DESCRIPTION_ID</em> igual al indicado por el
      *                                                     parámetro <code>descriptionId</code>.
      */

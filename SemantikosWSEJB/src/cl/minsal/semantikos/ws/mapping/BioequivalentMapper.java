@@ -4,7 +4,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
 import cl.minsal.semantikos.model.helpertables.HelperTableData;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.modelws.response.BioequivalentResponse;
+import cl.minsal.semantikos.ws.modelws.response.BioequivalentResponse;
 
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;

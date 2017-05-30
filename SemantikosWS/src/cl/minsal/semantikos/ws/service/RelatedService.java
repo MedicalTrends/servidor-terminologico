@@ -1,16 +1,16 @@
 package cl.minsal.semantikos.ws.service;
 
-import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
-import cl.minsal.semantikos.modelws.request.RelatedConceptsByCategoryRequest;
-import cl.minsal.semantikos.modelws.request.RelatedConceptsRequest;
-import cl.minsal.semantikos.modelws.request.Request;
-import cl.minsal.semantikos.modelws.response.BioequivalentSearchResponse;
-import cl.minsal.semantikos.modelws.response.ISPRegisterSearchResponse;
-import cl.minsal.semantikos.modelws.response.RelatedConceptsLiteResponse;
-import cl.minsal.semantikos.modelws.response.RelatedConceptsResponse;
+import cl.minsal.semantikos.kernel.components.AuthenticationManager;
+import cl.minsal.semantikos.ws.modelws.request.RelatedConceptsByCategoryRequest;
+import cl.minsal.semantikos.ws.modelws.request.RelatedConceptsRequest;
+import cl.minsal.semantikos.ws.modelws.request.Request;
+import cl.minsal.semantikos.ws.modelws.response.BioequivalentSearchResponse;
+import cl.minsal.semantikos.ws.modelws.response.ISPRegisterSearchResponse;
+import cl.minsal.semantikos.ws.modelws.response.RelatedConceptsLiteResponse;
+import cl.minsal.semantikos.ws.modelws.response.RelatedConceptsResponse;
 import cl.minsal.semantikos.ws.component.ConceptController;
-import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
-import cl.minsal.semantikos.modelws.fault.NotFoundFault;
+import cl.minsal.semantikos.ws.modelws.fault.IllegalInputFault;
+import cl.minsal.semantikos.ws.modelws.fault.NotFoundFault;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -34,7 +34,7 @@ public class RelatedService {
     private ConceptController conceptController;
 
     @EJB
-    private AuthenticationManagerImpl authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Resource
     WebServiceContext wsctx;

@@ -4,8 +4,8 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
-import cl.minsal.semantikos.modelws.response.RelationshipAttributeResponse;
-import cl.minsal.semantikos.modelws.response.RelationshipResponse;
+import cl.minsal.semantikos.ws.modelws.response.RelationshipAttributeResponse;
+import cl.minsal.semantikos.ws.modelws.response.RelationshipResponse;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -11,11 +11,11 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.modelws.request.DescriptionIDorConceptIDRequest;
-import cl.minsal.semantikos.modelws.request.NewTermRequest;
-import cl.minsal.semantikos.modelws.response.*;
-import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
-import cl.minsal.semantikos.modelws.fault.NotFoundFault;
+import cl.minsal.semantikos.ws.modelws.request.DescriptionIDorConceptIDRequest;
+import cl.minsal.semantikos.ws.modelws.request.NewTermRequest;
+import cl.minsal.semantikos.ws.modelws.response.*;
+import cl.minsal.semantikos.ws.modelws.fault.IllegalInputFault;
+import cl.minsal.semantikos.ws.modelws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.BioequivalentMapper;
 import cl.minsal.semantikos.ws.mapping.ConceptMapper;
 import cl.minsal.semantikos.ws.mapping.ISPRegisterMapper;
@@ -381,7 +381,9 @@ public class ConceptController {
 
         List<SuggestedDescriptionResponse> suggestedDescriptions = new ArrayList<>();
 
-        List<Description> descriptions = this.descriptionManager.searchDescriptionsTruncateMatch(term, categories, EMPTY_LIST);
+        //List<Description> descriptions = this.descriptionManager.searchDescriptionsTruncateMatch(term, categories, EMPTY_LIST);
+
+        List<Description> descriptions = this.descriptionManager.searchDescriptionsSuggested(term, categories, EMPTY_LIST);
 
         logger.debug("ws-req-006. descripciones encontradas: " + descriptions);
 

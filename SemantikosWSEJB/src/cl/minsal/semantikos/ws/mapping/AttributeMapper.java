@@ -7,7 +7,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
-import cl.minsal.semantikos.modelws.response.AttributeResponse;
+import cl.minsal.semantikos.ws.modelws.response.AttributeResponse;
 
 /**
  * Created by Development on 2016-10-20.

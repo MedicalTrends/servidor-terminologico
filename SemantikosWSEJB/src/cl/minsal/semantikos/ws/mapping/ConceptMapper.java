@@ -7,7 +7,7 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.model.tags.Tag;
-import cl.minsal.semantikos.modelws.response.*;
+import cl.minsal.semantikos.ws.modelws.response.*;
 
 import java.util.ArrayList;
 import java.util.Collections;

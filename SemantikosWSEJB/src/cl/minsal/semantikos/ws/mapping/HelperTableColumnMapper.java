@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
-import cl.minsal.semantikos.modelws.response.HelperTableColumnResponse;
+import cl.minsal.semantikos.ws.modelws.response.HelperTableColumnResponse;
 
 /**
  * Created by Development on 2016-10-19.

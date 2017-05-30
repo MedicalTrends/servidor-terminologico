@@ -3,9 +3,9 @@ package cl.minsal.semantikos.ws.mapping;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 import cl.minsal.semantikos.model.relationships.TargetType;
-import cl.minsal.semantikos.modelws.response.BasicTypeDefinitionResponse;
-import cl.minsal.semantikos.modelws.response.TargetDefinitionResponse;
-import cl.minsal.semantikos.modelws.response.TargetTypeResponse;
+import cl.minsal.semantikos.ws.modelws.response.BasicTypeDefinitionResponse;
+import cl.minsal.semantikos.ws.modelws.response.TargetDefinitionResponse;
+import cl.minsal.semantikos.ws.modelws.response.TargetTypeResponse;
 
 import java.util.ArrayList;
 import java.util.List;

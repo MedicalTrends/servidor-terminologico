@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
-import cl.minsal.semantikos.modelws.response.BasicTypeDefinitionResponse;
+import cl.minsal.semantikos.ws.modelws.response.BasicTypeDefinitionResponse;
 
 import java.util.ArrayList;
 import java.util.List;

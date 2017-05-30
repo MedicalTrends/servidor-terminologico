@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
-import cl.minsal.semantikos.modelws.response.TargetDefinitionResponse;
+import cl.minsal.semantikos.ws.modelws.response.TargetDefinitionResponse;
 
 /**
  * Created by Development on 2016-10-14.

@@ -2,7 +2,7 @@ package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
-import cl.minsal.semantikos.modelws.response.RelationshipAttributeResponse;
+import cl.minsal.semantikos.ws.modelws.response.RelationshipAttributeResponse;
 
 /**
  * Created by Development on 2016-10-14.

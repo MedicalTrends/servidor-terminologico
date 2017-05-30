@@ -10,8 +10,8 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
-import cl.minsal.semantikos.modelws.response.ConceptResponse;
-import cl.minsal.semantikos.modelws.response.TargetResponse;
+import cl.minsal.semantikos.ws.modelws.response.ConceptResponse;
+import cl.minsal.semantikos.ws.modelws.response.TargetResponse;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;

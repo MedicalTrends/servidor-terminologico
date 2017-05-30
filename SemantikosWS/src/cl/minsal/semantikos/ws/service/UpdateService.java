@@ -1,15 +1,15 @@
 package cl.minsal.semantikos.ws.service;
 
-import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
-import cl.minsal.semantikos.modelws.request.DescriptionHitRequest;
-import cl.minsal.semantikos.modelws.request.NewTermRequest;
-import cl.minsal.semantikos.modelws.request.Request;
-import cl.minsal.semantikos.modelws.response.DescriptionResponse;
-import cl.minsal.semantikos.modelws.response.NewTermResponse;
+import cl.minsal.semantikos.kernel.components.AuthenticationManager;
+import cl.minsal.semantikos.ws.modelws.request.DescriptionHitRequest;
+import cl.minsal.semantikos.ws.modelws.request.NewTermRequest;
+import cl.minsal.semantikos.ws.modelws.request.Request;
+import cl.minsal.semantikos.ws.modelws.response.DescriptionResponse;
+import cl.minsal.semantikos.ws.modelws.response.NewTermResponse;
 import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.component.DescriptionController;
-import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
-import cl.minsal.semantikos.modelws.fault.NotFoundFault;
+import cl.minsal.semantikos.ws.modelws.fault.IllegalInputFault;
+import cl.minsal.semantikos.ws.modelws.fault.NotFoundFault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +44,7 @@ public class UpdateService {
     WebServiceContext wsctx;
 
     @EJB
-    private AuthenticationManagerImpl authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     //Inicializacion del Bean
     //@PostConstruct

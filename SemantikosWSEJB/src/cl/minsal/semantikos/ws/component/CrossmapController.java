@@ -6,11 +6,11 @@ import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
-import cl.minsal.semantikos.modelws.request.DescriptionIDorConceptIDRequest;
-import cl.minsal.semantikos.modelws.response.CrossmapSetMembersResponse;
-import cl.minsal.semantikos.modelws.response.CrossmapSetsResponse;
-import cl.minsal.semantikos.modelws.response.IndirectCrossMapSearchResponse;
-import cl.minsal.semantikos.modelws.fault.NotFoundFault;
+import cl.minsal.semantikos.ws.modelws.request.DescriptionIDorConceptIDRequest;
+import cl.minsal.semantikos.ws.modelws.response.CrossmapSetMembersResponse;
+import cl.minsal.semantikos.ws.modelws.response.CrossmapSetsResponse;
+import cl.minsal.semantikos.ws.modelws.response.IndirectCrossMapSearchResponse;
+import cl.minsal.semantikos.ws.modelws.fault.NotFoundFault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

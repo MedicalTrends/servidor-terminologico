@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.ws.shared;
 
-import cl.minsal.semantikos.modelws.request.DescriptionIDorConceptIDRequest;
+import cl.minsal.semantikos.ws.modelws.request.DescriptionIDorConceptIDRequest;
 
 import java.util.List;
 

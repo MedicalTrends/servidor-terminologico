@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.modelws.response.UserResponse;
+import cl.minsal.semantikos.ws.modelws.response.UserResponse;
 
 /**
  * Created by Development on 2016-10-13.
