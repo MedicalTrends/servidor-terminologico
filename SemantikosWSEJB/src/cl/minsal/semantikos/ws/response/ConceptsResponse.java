@@ -13,8 +13,8 @@ import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
  * @author Alfonso Cornejo on 2016-10-11.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "respuestaConceptosPorCategoria", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "RespuestaConceptosPorCategoria", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "respuestaConceptosPorCategoriaPaginados", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "RespuestaConceptosPorCategoriaPaginados", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class ConceptsResponse implements Serializable {
 
     @XmlElement(name = "nombreCategoria")

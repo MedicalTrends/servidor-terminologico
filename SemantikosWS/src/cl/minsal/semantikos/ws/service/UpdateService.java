@@ -89,11 +89,11 @@ public class UpdateService {
      * @param descriptionHitRequest El valor de negocio DESCRIPTION_ID de una descripción.
      * @return
      */
-    @WebResult(name = "descripcionCounter")
-    @WebMethod
+    @WebResult(name = "descripcion")
+    @WebMethod(operationName = "contarDescripcionConsumida")
     public DescriptionResponse incrementarContadorDescripcionConsumida(
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
-            @WebParam(name = "peticionHitDescripcion")
+            @WebParam(name = "peticionContarDescripcionConsumida")
                     DescriptionHitRequest descriptionHitRequest
     ) throws IllegalInputFault, NotFoundFault  {
         return descriptionController.incrementDescriptionHits(descriptionHitRequest.getDescriptionID());

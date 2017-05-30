@@ -8,8 +8,8 @@ import java.io.Serializable;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "descriptionIDorConceptIDRequest", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "descriptionIDorConceptIDRequest", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "peticionObtenerCrossmaps", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "PeticionObtenerCrossmaps", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class DescriptionIDorConceptIDRequest extends Request implements Serializable {
 
     @XmlElement(required = true, name = "descriptionID")

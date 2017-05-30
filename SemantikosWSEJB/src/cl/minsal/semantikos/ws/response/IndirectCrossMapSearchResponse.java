@@ -10,8 +10,8 @@ import java.util.List;
  * @author Andrés Farías on 12/13/16.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "indirectCrossmapsSearch", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "IndirectCrossmapsSearch", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "respuestaObtenerCrossmapsIndirectos", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "RespuestaObtenerCrossmapsIndirectos", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class IndirectCrossMapSearchResponse {
 
     @XmlElement(name="conceptID")

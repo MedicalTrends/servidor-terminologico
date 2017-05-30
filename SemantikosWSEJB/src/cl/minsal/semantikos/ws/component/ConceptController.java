@@ -381,7 +381,10 @@ public class ConceptController {
 
         List<SuggestedDescriptionResponse> suggestedDescriptions = new ArrayList<>();
 
-        List<Description> descriptions = this.descriptionManager.searchDescriptionsTruncateMatch(term, categories, EMPTY_LIST);
+        //List<Description> descriptions = this.descriptionManager.searchDescriptionsTruncateMatch(term, categories, EMPTY_LIST);
+
+        List<Description> descriptions = this.descriptionManager.searchDescriptionsSuggested(term, categories, EMPTY_LIST);
+        int count = this.descriptionManager.countDescriptionsSuggested(term, categories, EMPTY_LIST);
 
         logger.debug("ws-req-006. descripciones encontradas: " + descriptions);
 
@@ -402,7 +405,7 @@ public class ConceptController {
 
         res.setPattern(term);
         res.setSuggestedDescriptionResponses(suggestedDescriptions);
-        res.setQuantity(descriptions.size());
+        res.setQuantity(count);
 
         return res;
     }
@@ -458,6 +461,11 @@ public class ConceptController {
             descriptionResponse.setValidityUntil(null);
             descriptionResponse.setCreationDate(null);
         }
+
+        for (RefSetResponse refSetResponse : res.getRefsets()) {
+            refSetResponse.setConcepts(null);
+        }
+
         /*
         if(res.getPublished()) {
             res.setPublishingDate(auditManager.getConceptPublicationAuditAction(conceptSMTK, true).getActionDate());

@@ -81,7 +81,7 @@ public class SearchService {
     }
 
     // REQ-WS-001
-    @WebResult(name = "respuestaBuscarTerminoPerfectMatch")
+    @WebResult(name = "respuestaBuscarTermino")
     @WebMethod(operationName = "buscarTerminoPerfectMatch")
     public GenericTermSearchResponse buscarTermino(
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
@@ -110,7 +110,7 @@ public class SearchService {
     }
 
     // REQ-WS-002 Paginados
-    @WebResult(name = "respuestaConceptos")
+    @WebResult(name = "respuestaConceptosPorCategoriaPaginados")
     @WebMethod(operationName = "conceptosPorCategoriaPaginados")
     public ConceptsResponse conceptosPorCategoriaPaginados(
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
@@ -155,7 +155,7 @@ public class SearchService {
     }
     */
     // REQ-WS-004
-    @WebResult(name = "respuestaBuscarTerminoTruncatePerfect")
+    @WebResult(name = "respuestaBuscarTermino")
     @WebMethod(operationName = "buscarTerminoTruncatePerfect")
     public GenericTermSearchResponse buscarTruncatePerfect(
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
@@ -193,7 +193,7 @@ public class SearchService {
     }
 
     // REQ-WS-006
-    @WebResult(name = "respuestaBuscarTermino")
+    @WebResult(name = "respuestaSugerenciasDeDescripciones")
     @WebMethod(operationName = "sugerenciasDeDescripciones")
     public SuggestedDescriptionsResponse sugerenciasDeDescripciones(
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
@@ -259,8 +259,9 @@ public class SearchService {
     }
 
     private void validateAtLeastOneCategoryOrOneRefSet(SimpleSearchTermRequest request) throws IllegalInputFault {
-        if (isEmpty(request.getCategoryNames()) && isEmpty(request.getRefSetNames())) {
-            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet.");
+        if (isEmpty(request.getCategoryNames()) /*&& isEmpty(request.getRefSetNames())*/) {
+            //throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet.");
+            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría.");
         }
         if (request.getTerm() == null || request.getTerm().trim().isEmpty()) {
             throw new IllegalInputFault("Debe ingresar un Termino a buscar");
@@ -375,11 +376,11 @@ public class SearchService {
      * <em>DESCRIPTION_ID</em> igual al indicado por el
      *                                                     parámetro <code>descriptionId</code>.
      */
-    @WebResult(name = "indirectCrossmaps")
-    @WebMethod(operationName = "crossMapsIndirectosPorDescripcionIDorConceptID")
+    @WebResult(name = "respuestaObtenerCrossmapsIndirectos")
+    @WebMethod(operationName = "obtenerCrossmapsIndirectos")
     public IndirectCrossMapSearchResponse crossMapsIndirectosPorDescriptionIDoConceptID(
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
-            @WebParam(name = "descripcionIDorConceptIDRequest")
+            @WebParam(name = "peticionObtenerCrossmaps")
                     DescriptionIDorConceptIDRequest descripcionIDorConceptIDRequest
     ) throws NotFoundFault {
         return this.crossmapsController.getIndirectCrossmapsByDescriptionID(descripcionIDorConceptIDRequest);
@@ -398,11 +399,11 @@ public class SearchService {
      * <em>DESCRIPTION_ID</em> igual al indicado por el
      *                                                     parámetro <code>descriptionId</code>.
      */
-    @WebResult(name = "crossmapSetMember")
-    @WebMethod(operationName = "crossMapsDirectosPorIDDescripcion")
+    @WebResult(name = "respuestaObtenerCrossmapsDirectos")
+    @WebMethod(operationName = "obtenerCrossmapsDirectos")
     public CrossmapSetMembersResponse crossmapSetMembersDirectosPorIDDescripcion(
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
-            @WebParam(name = "DescripcionID")
+            @WebParam(name = "peticionObtenerCrossmaps")
                     DescriptionIDorConceptIDRequest request
     ) throws NotFoundFault {
         return this.crossmapsController.getDirectCrossmapsSetMembersByDescriptionID(request);

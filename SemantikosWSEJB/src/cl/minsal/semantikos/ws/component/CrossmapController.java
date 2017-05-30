@@ -115,6 +115,7 @@ public class CrossmapController {
         res.setCategory(conceptSMTK.getCategory().getName());
         res.setDescriptionId(conceptSMTK.getDescriptionFavorite().getDescriptionId());
         res.setDescription(conceptSMTK.getDescriptionFavorite().getTerm());
+        res.setVersion(null);
 
         return res;
     }
