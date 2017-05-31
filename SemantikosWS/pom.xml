@@ -62,11 +62,11 @@
             <version>1.7.21</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosKernelEJB</artifactId>
             <version>4.0.0</version>
-        </dependency>
+        </dependency-->
 
     </dependencies>
 

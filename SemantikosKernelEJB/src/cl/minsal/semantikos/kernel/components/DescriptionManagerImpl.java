@@ -345,6 +345,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     public List<Description> searchDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
         List<Description> descriptions = descriptionDAO.searchDescriptionsSuggested(term, categories, refSets);
+        new DescriptionSearchBR().applyPostActions(descriptions);
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;

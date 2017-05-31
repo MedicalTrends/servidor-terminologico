@@ -49,6 +49,9 @@
       <element id="archive" name="SemantikosWSEJB-4.0.0.jar">
         <element id="artifact" artifact-name="SemantikosWSEJB:ejb exploded" />
       </element>
+      <element id="archive" name="SemantikosWS-4.0.0.war">
+        <element id="artifact" artifact-name="SemantikosWS:war exploded" />
+      </element>
     </root>
   </artifact>
 </component>
