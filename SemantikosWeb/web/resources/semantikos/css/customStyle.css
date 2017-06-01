@@ -238,7 +238,8 @@ textarea.ui-state-disabled {
 }
 
 .layout-wrapper .layout-menu li.active-menuitem > a {
-    color: #3F51B5 !important;
+    /*color: #3F51B5 !important;*/
+    font-weight: bold !important;
     background-color: #e0e0e0 !important;
 }
 
@@ -259,7 +260,8 @@ textarea.ui-state-disabled {
  }
 
 .layout-wrapper .layout-menu > li.active-menuitem > a {
-    color: #3F51B5  !important;
+    /*color: #3F51B5  !important;*/
+    font-weight: bold !important;
 }
 
 .layout-wrapper .layout-menu-container > .nano .nano-pane .nano-slider {
@@ -268,6 +270,10 @@ textarea.ui-state-disabled {
 
 .layout-wrapper .layout-menu-container > .nano > .nano-content > ul:last-child {
     margin-top: 0 !important;
+}
+
+.layout-menu-container {
+    box-shadow: 3px 0 6px rgba(0, 0, 0, 0.3) !important;
 }
 
 /*
@@ -279,3 +285,22 @@ textarea.ui-state-disabled {
     z-index: 99;
 }
 */
+
+.Separator {
+    border-bottom: solid 1px #e0e0e0;
+    width: 100%;
+    overflow: hidden;
+    height: 0px;
+    margin: 10px 0px;
+    clear: both;
+}
+
+.ui-tabs.ui-tabs-top .ui-tabs-nav li.ui-state-active {
+    background-color: #eff3f5 !important;
+    border: solid 1px #c6d6df !important;
+}
+
+.ui-tabs.ui-tabs-top .ui-tabs-nav li.ui-state-active a {
+    color: #26a69a !important;
+    font-weight: bold;
+}

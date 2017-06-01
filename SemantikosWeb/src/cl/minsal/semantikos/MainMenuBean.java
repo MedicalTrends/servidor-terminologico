@@ -40,7 +40,7 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
  * Created by diego on 26/06/2016.
  */
 
-@ManagedBean(name = "mainMenuBean")
+@ManagedBean(name = "mainMenuBean", eager = true)
 @ApplicationScoped
 public class MainMenuBean implements Serializable {
 

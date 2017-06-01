@@ -4,11 +4,23 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
+
     
     <div class="footer">
         <div class="card clearfix">
-            <span class="footer-text-left">PrimeFaces POSEIDON</span>
-            <span class="footer-text-right"><span class="ui-icon ui-icon-copyright"></span>  <span>All Rights Reserved</span></span>
+            <span class="footer-text-left">
+                <span class="DispInlBlock FontSourceSansLight BoldGray Fs12 Fleft HoverEffect TexAlRight FloatNoneOnMobile">
+                    <i class="fa fa-copyright" />2016 <a class="BoldGray" href="" style="color: #5f666c">Ministerio de Salud</a>
+                </span>
+                <br/>
+                <span class="DispInlBlock FontSourceSansLight BoldGray Fs12 Fleft HoverEffect TexAlRight FloatNoneOnMobile">Version: <h:outputText value="${bpversion['version']} ${bpversion['build.date']}" />
+                </span>
+            </span>
+
+            <span class="footer-text-right">
+                <span class="ui-icon ui-icon-copyright" />
+                <h:graphicImage alt="Semantikos" name="images/logo180-180.png" styleClass="" library="blueprints" style="height:37px;"/>
+            </span>
         </div>
     </div>
 </ui:composition>

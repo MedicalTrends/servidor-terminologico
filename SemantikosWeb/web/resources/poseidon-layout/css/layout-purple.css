@@ -396,8 +396,7 @@ body.exception-body.notfound-page {
       vertical-align: middle;
       width: 175px;
       height: 49px;
-      /*background: url("#{resource['poseidon-layout:images/logo-white.png']}") top left no-repeat;*/
-      background: url("#{resource['semantikos/images/logo-1.png']}") top left no-repeat;
+      background: url("#{resource['poseidon-layout:images/logo-white.png']}") top left no-repeat;
       background-size: 175px 49px; }
     .landing-wrapper #header .header-top #menu {
       float: right;
@@ -659,10 +658,10 @@ body {
   body.main-body {
     background-color: #D9E0E7; }
   body a {
-    color: #00acac;
+    color: #6c76af;
     text-decoration: none; }
     body a:hover {
-      color: #00c6c6; }
+      color: #7d85b8; }
 
 .layout-mask {
   position: fixed;
@@ -687,15 +686,14 @@ body {
     vertical-align: middle;
     width: 175px;
     height: 49px;
-    /*background: url("#{resource['poseidon-layout:images/logo-white.png']}") top left no-repeat;*/
-    background: url("#{resource['semantikos/images/logo-1.png']}") top left no-repeat;
+    background: url("#{resource['poseidon-layout:images/logo-white.png']}") top left no-repeat;
     background-size: 175px 49px; }
   .layout-wrapper .topbar .topbar-left {
     box-sizing: border-box;
     padding: 12px 20px 0px 35px;
     height: 75px;
     width: 250px;
-    background-color: #00acac;
+    background-color: #6c76af;
     float: left;
     -moz-transition: background-color 0.3s;
     -o-transition: background-color 0.3s;
@@ -794,7 +792,7 @@ body {
         color: #a8acb1; }
       .layout-wrapper .layout-menu-container .search-input input:focus {
         outline: 0 none;
-        border: 1px solid #00acac;
+        border: 1px solid #6c76af;
         -webkit-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
         -moz-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
         box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2); }
@@ -828,7 +826,7 @@ body {
   z-index: 999999999;
   margin-left: 0px; }
 .layout-wrapper.menu-layout-overlay.layout-menu-overlay-active .topbar .topbar-left {
-  background-color: #00acac; }
+  background-color: #6c76af; }
   .layout-wrapper.menu-layout-overlay.layout-menu-overlay-active .topbar .topbar-left .logo {
     background-image: url("#{resource['poseidon-layout:images/logo-white.png']}"); }
 .layout-wrapper.menu-layout-overlay .topbar {
@@ -900,9 +898,9 @@ body {
     .layout-wrapper .layout-menu li a:hover {
       background-color: #444d56; }
   .layout-wrapper .layout-menu li.active-menuitem > a {
-    color: #00acac; }
+    color: #6c76af; }
     .layout-wrapper .layout-menu li.active-menuitem > a i {
-      color: #00acac; }
+      color: #6c76af; }
       .layout-wrapper .layout-menu li.active-menuitem > a i:last-child {
         -webkit-transform: rotate(-180deg);
         -moz-transform: rotate(-180deg);
@@ -916,7 +914,7 @@ body {
     margin: 0;
     list-style: none; }
   .layout-wrapper .layout-menu > li.active-menuitem > a {
-    background-color: #00acac;
+    background-color: #6c76af;
     color: #ffffff; }
     .layout-wrapper .layout-menu > li.active-menuitem > a i {
       color: #ffffff; }
@@ -1073,8 +1071,7 @@ body {
 
 .ajax-loader {
   font-size: 32px;
-  z-index: 9999;
-  color: #00acac; }
+  color: #6c76af; }
 
 @media (min-width: 1025px) {
   .layout-wrapper .topbar-items {
@@ -1096,7 +1093,7 @@ body {
           position: absolute;
           right: -5px;
           top: -5px;
-          background-color: #00acac;
+          background-color: #6c76af;
           color: #ffffff;
           -moz-border-radius: 50%;
           -webkit-border-radius: 50%;
@@ -1112,7 +1109,7 @@ body {
         -webkit-transition: color 0.3s;
         transition: color 0.3s; }
         .layout-wrapper .topbar-items > li .topbar-icon:hover {
-          color: #00acac; }
+          color: #6c76af; }
       .layout-wrapper .topbar-items > li.profile-item .profile-image {
         width: 36px;
         height: 36px;
@@ -1251,10 +1248,10 @@ body {
           position: static;
           background-color: #f0f3f5; }
         .layout-wrapper.menu-layout-horizontal .layout-menu-container .layout-menu > li > ul li.active-menuitem > a {
-          color: #00acac;
+          color: #6c76af;
           background-color: #e8e8e8; }
       .layout-wrapper.menu-layout-horizontal .layout-menu-container .layout-menu > li.active-menuitem > a {
-        background-color: #00acac;
+        background-color: #6c76af;
         color: #ffffff; }
         .layout-wrapper.menu-layout-horizontal .layout-menu-container .layout-menu > li.active-menuitem > a i {
           color: #ffffff; }
@@ -1369,7 +1366,7 @@ body {
           -webkit-transition: background-color 0.3s;
           transition: background-color 0.3s; }
     .layout-wrapper .topbar .topbar-right .topbar-items > li.active-top-menu > a {
-      background-color: #00acac;
+      background-color: #6c76af;
       color: #ffffff; }
     .layout-wrapper .topbar .topbar-right .topbar-items > li.active-top-menu > ul {
       display: block; }

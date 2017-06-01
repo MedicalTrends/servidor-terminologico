@@ -1,5 +1,5 @@
 .topbar-left {
-    background-color: #2f8ee5;
+    background-color: #2f8ee5 !important;
 }
 
 .search {
@@ -116,7 +116,21 @@
     display: none !important;
 }
 
+.ui-paginator .ui-paginator-pages .ui-paginator-page {
+    color: #2f8ee5 !important;
+}
 
+.ui-paginator .ui-paginator-pages .ui-paginator-page .ui-state-active {
+    color: #FFFFFF !important;
+}
+
+.ui-widget-header {
+    background: rgba(56, 73, 162, 0) !important;
+}
+
+body .ui-paginator .ui-paginator-first, body .ui-paginator .ui-paginator-prev, body .ui-paginator .ui-paginator-next, body .ui-paginator .ui-paginator-last {
+    color: #2f8ee5 !important;
+}
 
 /*
 .ui-widget, .ui-widget .ui-widget

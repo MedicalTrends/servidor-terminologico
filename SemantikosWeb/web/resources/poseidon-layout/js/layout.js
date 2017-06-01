@@ -33,7 +33,7 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
     
     _bindEvents: function() {
         var $this = this;
-        
+
         this.menuButton.on('click', function(e) {
             
             $this.menuButton.toggleClass('menu-button-rotate');
@@ -73,8 +73,6 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
                     }
                 }
             }
-            e.stopPropagation();
-            e.stopImmediatePropagation();
             
             e.preventDefault();
         });
@@ -194,7 +192,7 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
         });
         
         this.topbarLinks.on('click', function(e) {
-            
+
             var link = $(this),
             item = link.parent(),
             submenu = link.next();
@@ -212,12 +210,11 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
                 if(submenu.length) {
                     if(item.hasClass('active-top-menu')) {
                         submenu.addClass('fadeOutUp');
-
+                        
                         setTimeout(function() {
                             item.removeClass('active-top-menu'),
                             submenu.removeClass('fadeOutUp');
                         },500);
-
                     }
                     else {
                         item.addClass('active-top-menu');
@@ -231,9 +228,6 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
             }   
             
             $this.closeRightSidebarMenu();
-
-            e.stopPropagation();
-            e.stopImmediatePropagation();
             
             e.preventDefault();         
         });
