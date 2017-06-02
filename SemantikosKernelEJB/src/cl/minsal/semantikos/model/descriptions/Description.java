@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model.descriptions;
+    package cl.minsal.semantikos.model.descriptions;
 
 import cl.minsal.semantikos.kernel.daos.DAO;
 import cl.minsal.semantikos.model.ConceptSMTK;

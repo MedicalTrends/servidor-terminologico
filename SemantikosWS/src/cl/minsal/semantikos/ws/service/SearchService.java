@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
+import static java.lang.System.currentTimeMillis;
 
 
 /**
@@ -89,11 +90,16 @@ public class SearchService {
                     SimpleSearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault {
 
+        long init = currentTimeMillis();
+
         /* Se hace una validación de los parámetros */
         validateAtLeastOneCategoryOrOneRefSet(request);
 
         logger.debug("ws-req-001: " + request.getTerm() + ", " + request.getCategoryNames() + " " + request
                 .getRefSetNames());
+
+        logger.info("ws-req-001: {}s", String.format("%.2f", (currentTimeMillis() - init)/1.0));
+
         return this.conceptController.searchTermGeneric(request.getTerm(), request.getCategoryNames(), request
                 .getRefSetNames());
     }
