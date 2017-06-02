@@ -112,7 +112,7 @@
                         <webModule>
                             <groupId>cl.minsal.semantikos</groupId>
                             <artifactId>SemantikosBrowser</artifactId>
-                            <contextRoot>browser</contextRoot>
+                            <contextRoot>/</contextRoot>
                         </webModule>
 
                         <!-- Modulos para WS SOAP -->
