@@ -238,8 +238,8 @@ textarea.ui-state-disabled {
 }
 
 .layout-wrapper .layout-menu li.active-menuitem > a {
-    /*color: #3F51B5 !important;*/
-    font-weight: bold !important;
+    /*color: #03A9F4 !important;*/
+    /*font-weight: bold !important;*/
     background-color: #e0e0e0 !important;
 }
 
@@ -261,7 +261,7 @@ textarea.ui-state-disabled {
 
 .layout-wrapper .layout-menu > li.active-menuitem > a {
     /*color: #3F51B5  !important;*/
-    font-weight: bold !important;
+    /*font-weight: bold !important;*/
 }
 
 .layout-wrapper .layout-menu-container > .nano .nano-pane .nano-slider {
@@ -295,12 +295,29 @@ textarea.ui-state-disabled {
     clear: both;
 }
 
+/*
 .ui-tabs.ui-tabs-top .ui-tabs-nav li.ui-state-active {
     background-color: #eff3f5 !important;
     border: solid 1px #c6d6df !important;
 }
 
 .ui-tabs.ui-tabs-top .ui-tabs-nav li.ui-state-active a {
-    color: #26a69a !important;
-    font-weight: bold;
+    color: #FB8C00 !important;
 }
+
+.ui-paginator .ui-paginator-pages .ui-paginator-page {
+    color: #2f8ee5 !important;
+}
+
+.ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+    color: #FFFFFF !important;
+}
+
+.browserTable .ui-widget-header {
+    background: rgba(56, 73, 162, 0) !important;
+}
+
+.ui-paginator .ui-paginator-first, body .ui-paginator .ui-paginator-prev, body .ui-paginator .ui-paginator-next, body .ui-paginator .ui-paginator-last {
+    color: #2f8ee5 !important;
+}
+*/

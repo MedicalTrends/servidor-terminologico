@@ -73,7 +73,9 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
                     }
                 }
             }
-            
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+
             e.preventDefault();
         });
         
@@ -228,7 +230,10 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
             }   
             
             $this.closeRightSidebarMenu();
-            
+
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+
             e.preventDefault();         
         });
         
@@ -345,6 +350,7 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
     },
     
     clearMenuState: function() {
+        alert("clearMenuState");
         $.removeCookie('poseidon_expandeditems', {path: '/'});
     },
     

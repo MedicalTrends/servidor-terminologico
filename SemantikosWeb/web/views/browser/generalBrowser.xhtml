@@ -39,7 +39,6 @@
                          value="#{generalBrowserBean.concepts}"
                          var="concept"
                          rows="30"
-                         scrollable="true" scrollHeight="450"
                          sortBy="#{1}"
                          expandedRow="true"
                          paginator="true" lazy="true" dynamic="true" reflow="true"
@@ -49,6 +48,10 @@
                 <p:growl id="growl" showDetail="true" showSummary="true"/>
 
                 <p:ajax event="rowToggle" listener="#{generalBrowserBean.onRowToggle}" />
+
+                <f:facet name="header">
+                    #{generalBrowserBean.category.name}
+                </f:facet>
 
                 <f:facet name="{Exporters}">
                     <p:commandButton actionListener="#{generalBrowserBean.createConcept}" icon="fa fa-plus"
