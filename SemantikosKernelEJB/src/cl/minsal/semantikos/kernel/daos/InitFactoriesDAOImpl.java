@@ -16,6 +16,9 @@ import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.EmailFactory;
+import cl.minsal.semantikos.model.users.Profile;
+import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.model.users.UserFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,19 +67,29 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     @EJB
     private CategoryDAO categoryDAO;
 
+    @EJB
+    private InstitutionDAO institutionDAO;
+
+    @EJB
+    private QuestionDAO questionDAO;
+
+    @EJB
+    private AuthDAO authDAO;
+
     @PostConstruct
     private void init() {
-        this.refreshCategories();
-        this.refreshQueries();
-        this.refreshDescriptionTypes();
-        this.refreshTagsSMTK();
-        this.refreshColumns();
         try {
             this.refreshDataSource();
             this.refreshEmail();
         } catch (NamingException e) {
             e.printStackTrace();
         }
+        this.refreshCategories();
+        this.refreshQueries();
+        this.refreshDescriptionTypes();
+        this.refreshTagsSMTK();
+        this.refreshColumns();
+        this.refreshUsers();
     }
 
     /**
@@ -108,6 +121,50 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         return new Category(idCategory, nameCategory, nameAbbreviated, restriction, color, tagSMTKByID);
     }
 
+    private User makeUserFromResult(ResultSet rs) throws SQLException {
+
+        User u = new User();
+
+        u.setId(rs.getBigDecimal(1).longValue());
+        u.setUsername(rs.getString(2));
+        u.setPasswordHash(rs.getString(3));
+        u.setPasswordSalt(rs.getString(4));
+        u.setName(rs.getString(5));
+        u.setLastName(rs.getString(6));
+        u.setSecondLastName(rs.getString(7));
+        u.setEmail(rs.getString(8));
+
+        u.setLocked(rs.getBoolean(9));
+        u.setFailedLoginAttempts(rs.getInt(10));
+        u.setFailedAnswerAttempts(rs.getInt(11));
+
+        u.setLastLogin(rs.getTimestamp(12));
+        u.setLastPasswordChange(rs.getTimestamp(13));
+
+        u.setLastPasswordHash1(rs.getString(14));
+        u.setLastPasswordHash2(rs.getString(15));
+        u.setLastPasswordHash3(rs.getString(16));
+        u.setLastPasswordHash4(rs.getString(17));
+
+        u.setLastPasswordSalt1(rs.getString(18));
+        u.setLastPasswordSalt2(rs.getString(19));
+        u.setLastPasswordSalt3(rs.getString(20));
+        u.setLastPasswordSalt4(rs.getString(21));
+
+        u.setDocumentNumber(rs.getString(22));
+        u.setVerificationCode(rs.getString(23));
+        u.setValid(rs.getBoolean(24));
+        u.setDocumentRut(rs.getBoolean(25));
+
+        u.setProfiles(authDAO.getUserProfiles(u.getId()));
+
+        u.setInstitutions(institutionDAO.getInstitutionBy(u));
+
+        u.setAnswers(questionDAO.getAnswersByUser(u));
+
+        return u;
+    }
+
 
     public List<RelationshipDefinition> getCategoryMetaData(long idCategory) {
         return relationshipDefinitionDAO.getRelationshipDefinitionsByCategory(idCategory);
@@ -116,10 +173,9 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     @Override
     public CategoryFactory refreshCategories() {
 
-        ConnectionBD connect = new ConnectionBD();
         List<Category> categories = new ArrayList<>();
         ;
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall("SELECT * FROM semantikos.get_all_categories()")) {
             call.execute();
 
@@ -248,13 +304,11 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     @Override
     public TagSMTKFactory refreshTagsSMTK() {
 
-        ConnectionBD connect = new ConnectionBD();
-
         List<TagSMTK> tagsSMTK = new ArrayList<>();
 
         String sql = "{call semantikos.get_all_tag_smtks()}";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.execute();
@@ -319,6 +373,38 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         }
 
         return DescriptionTypeFactory.getInstance();
+    }
+
+    //@Override
+    public UserFactory refreshUsers() {
+
+        ArrayList<User> users = new ArrayList<>();
+
+        ConnectionBD connect = new ConnectionBD();
+        User user = null;
+
+        String sql = "{call semantikos.get_all_users()}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.execute();
+
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                user = makeUserFromResult(rs);
+                users.add(user);
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar usuario de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        UserFactory.getInstance().setUsers(users);
+
+        return UserFactory.getInstance();
     }
 
     @Override

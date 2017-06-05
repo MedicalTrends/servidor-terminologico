@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.tags.TagFactory;
@@ -252,10 +253,10 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public List<Tag> getTagsByConcept(long idConcept) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String json;
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.semantikos.get_tags_by_concept_id(?)}")) {
 
             call.setLong(1, idConcept);

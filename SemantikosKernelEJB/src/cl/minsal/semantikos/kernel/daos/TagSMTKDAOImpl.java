@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import org.slf4j.Logger;
@@ -58,10 +59,10 @@ public class TagSMTKDAOImpl implements TagSMTKDAO {
 
     @Override
     public TagSMTK findTagSMTKByID(long idTag) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         TagSMTK tagSMTK;
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.get_tag_smtks_by_id(?)}")) {
 
             call.setLong(1, idTag);

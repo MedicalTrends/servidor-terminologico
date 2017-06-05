@@ -18,12 +18,16 @@ public class TagSMTKFactory {
     /** Mapa de tagSMTK por su nombre. */
     private Map<String, TagSMTK> tagsSMTKByName;
 
+    /** Mapa de tagSMTK por su nombre. */
+    private Map<Long, TagSMTK> tagsSMTKById;
+
     /**
      * Constructor privado para el Singleton del Factory.
      */
     private TagSMTKFactory() {
         this.tagsSMTK = new ArrayList<>();
         this.tagsSMTKByName = new HashMap<>();
+        this.tagsSMTKById = new HashMap<>();
     }
 
     public static TagSMTKFactory getInstance() {
@@ -45,6 +49,20 @@ public class TagSMTKFactory {
     }
 
     /**
+     * Este método es responsable de retornar el tipo de descripción llamado FSN.
+     *
+     * @return Retorna una instancia de FSN.
+     */
+    public TagSMTK findTagSMTKById(long id) {
+
+        if (tagsSMTKById.containsKey(id)) {
+            return this.tagsSMTKById.get(id);
+        }
+
+        return null;
+    }
+
+    /**
      * Este método es responsable de asignar un nuevo conjunto de tagsSMTJ. Al hacerlo, es necesario actualizar
      * los mapas.
      */
@@ -57,6 +75,7 @@ public class TagSMTKFactory {
         this.tagsSMTKByName.clear();
         for (TagSMTK tagSMTK : tagsSMTK) {
             this.tagsSMTKByName.put(tagSMTK.getName(), tagSMTK);
+            this.tagsSMTKById.put(tagSMTK.getId(), tagSMTK);
         }
     }
 

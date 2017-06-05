@@ -51,6 +51,9 @@ public class Description extends PersistentEntity implements AuditableEntity {
     /** El concepto al cuál está asociada la descripción */
     private ConceptSMTK conceptSMTK;
 
+    public Description() {
+    }
+
     /**
      * @param id              Identificador único de la base de datos.
      * @param descriptionID   El valor del DESCRIPTION_ID.
@@ -221,7 +224,10 @@ public class Description extends PersistentEntity implements AuditableEntity {
     public String toString() {
 
         if (this.getDescriptionType().equals(DescriptionType.FSN)) {
-            String tagSMTKParenthesis = "(" + conceptSMTK.getTagSMTK().getName().toLowerCase() + ")";
+            String tagSMTKParenthesis = "";
+            if(getConceptSMTK() != null) {
+                tagSMTKParenthesis = "(" + conceptSMTK.getTagSMTK().getName().toLowerCase() + ")";
+            }
             String descTerm = term.toLowerCase();
             if (!descTerm.endsWith(tagSMTKParenthesis)) {
                 return this.term + (conceptSMTK == null ? "" : " (" + conceptSMTK.getTagSMTK() + ")");

@@ -16,7 +16,6 @@ public class User extends PersistentEntity {
 
     private static User dummyUser = new User(NON_PERSISTED_ID, "dummy", "Usuario de Prueba", true);
 
-    private long idUser;
     private String username = "";
     private String name;
     private String lastName;
@@ -24,14 +23,14 @@ public class User extends PersistentEntity {
     private String email = "";
     private String appointment;
 
-    private boolean rutDocument = true;
+    private boolean documentRut = true;
     private String documentNumber;
 
     private String password;
     private String passwordHash;
     private String passwordSalt;
 
-    private List<Profile> profiles;
+    private List<Profile> profiles = new ArrayList<>();
 
     private Date lastLogin;
     private Date lastPasswordChange;
@@ -54,22 +53,15 @@ public class User extends PersistentEntity {
 
     // TODO: Francisco. Actualizar esto en el modelo de datos.
     /** BR-RefSet-004: La institución en la que trabaja el usuario */
-    private List<Institution> institutions;
+    private List<Institution> institutions = new ArrayList<>();
 
-    private List<Answer> answers;
+    private List<Answer> answers = new ArrayList<>();
 
-    /**
-     * Constructor base para inicializar los objetos que lo requieren.
-     */
     public User() {
-        this.profiles = new ArrayList<>();
-        this.institutions = new ArrayList<>();
-        this.answers = new ArrayList<>();
     }
 
     private User(long idUser, String username, String name, boolean locked) {
-        this();
-        this.idUser = idUser;
+        super(idUser);
         this.username = username;
         this.name = name;
         this.locked = locked;
@@ -87,14 +79,6 @@ public class User extends PersistentEntity {
     public User(long idUser, String username, String name, String password, boolean locked) {
         this(idUser, username, name, locked);
         this.setPassword(password);
-    }
-
-    public long getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(long idUser) {
-        this.idUser = idUser;
     }
 
     public String getUsername() {
@@ -194,12 +178,12 @@ public class User extends PersistentEntity {
         this.lastPasswordChange = lastPasswordChange;
     }
 
-    public boolean isRutDocument() {
-        return rutDocument;
+    public boolean isDocumentRut() {
+        return documentRut;
     }
 
-    public void setRutDocument(boolean rutDocument) {
-        this.rutDocument = rutDocument;
+    public void setDocumentRut(boolean rutDocument) {
+        this.documentRut = rutDocument;
     }
 
     public String getAppointment() {
@@ -211,7 +195,7 @@ public class User extends PersistentEntity {
     }
 
     public String getDocumentNumber() {
-        if(isRutDocument()) {
+        if(isDocumentRut()) {
             return StringUtils.formatRut(documentNumber);
         }
         else {
@@ -329,15 +313,15 @@ public class User extends PersistentEntity {
 
     @Override
     public boolean equals(Object other) {
-        return (other instanceof User) && (String.valueOf(idUser) != null)
-                ? String.valueOf(idUser).equals(String.valueOf(((User) other).idUser))
+        return (other instanceof User) && (String.valueOf(this.getId()) != null)
+                ? String.valueOf(this.getId()).equals(String.valueOf(((User) other).getId()))
                 : (other == this);
     }
 
     @Override
     public int hashCode() {
-        return (String.valueOf(idUser) != null)
-                ? (this.getClass().hashCode() + String.valueOf(idUser).hashCode())
+        return (String.valueOf(this.getId()) != null)
+                ? (this.getClass().hashCode() + String.valueOf(this.getId()).hashCode())
                 : super.hashCode();
     }
 

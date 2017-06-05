@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.users.Answer;
 import cl.minsal.semantikos.model.users.Profile;
@@ -34,11 +35,11 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public User getUserById(long id) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         User user = null;
 
         String sql = "{call semantikos.get_user_by_id(?)}";
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, id);
@@ -178,11 +179,11 @@ public class AuthDAOImpl implements AuthDAO {
 
         List<Profile> profiles = new ArrayList<Profile>();
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         Profile profile = null;
 
         String sql = "{call semantikos.get_profiles_by_user_id(?)}";
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, userId);
@@ -225,7 +226,6 @@ public class AuthDAOImpl implements AuthDAO {
 
         User u = new User();
 
-        u.setIdUser(rs.getBigDecimal(1).longValue());
         u.setId(rs.getBigDecimal(1).longValue());
         u.setUsername(rs.getString(2));
         u.setPasswordHash(rs.getString(3));
@@ -255,9 +255,9 @@ public class AuthDAOImpl implements AuthDAO {
         u.setDocumentNumber(rs.getString(22));
         u.setVerificationCode(rs.getString(23));
         u.setValid(rs.getBoolean(24));
-        u.setRutDocument(rs.getBoolean(25));
+        u.setDocumentRut(rs.getBoolean(25));
 
-        u.setProfiles(getUserProfiles(u.getIdUser()));
+        u.setProfiles(getUserProfiles(u.getId()));
 
         u.setInstitutions(institutionDAO.getInstitutionBy(u));
 
@@ -271,7 +271,6 @@ public class AuthDAOImpl implements AuthDAO {
     public List<User> getAllUsers() {
 
         ArrayList<User> users = new ArrayList<>();
-
 
         ConnectionBD connect = new ConnectionBD();
         User user = null;
@@ -315,8 +314,8 @@ public class AuthDAOImpl implements AuthDAO {
             call.setString(4, user.getEmail().trim());
             call.setBoolean(5, false);
             call.setInt(6, 0);
-            call.setBoolean(7, user.isRutDocument());
-            call.setString(8, user.isRutDocument()?StringUtils.parseRut(user.getDocumentNumber().trim()):user.getDocumentNumber());
+            call.setBoolean(7, user.isDocumentRut());
+            call.setString(8, user.isDocumentRut()?StringUtils.parseRut(user.getDocumentNumber().trim()):user.getDocumentNumber());
             call.setString(9, user.getPasswordHash());
             call.setString(10, user.getVerificationCode());
 
@@ -325,7 +324,7 @@ public class AuthDAOImpl implements AuthDAO {
             ResultSet rs = call.getResultSet();
 
             if (rs.next()) {
-                user.setIdUser(rs.getLong(1));
+                user.setId(rs.getLong(1));
             } else {
                 String errorMsg = "El usuario no fué creado. Esta es una situación imposible. Contactar a Desarrollo";
                 logger.error(errorMsg);
@@ -371,7 +370,7 @@ public class AuthDAOImpl implements AuthDAO {
             call.setInt(10, user.getFailedLoginAttempts());
             call.setInt(11, user.getFailedAnswerAttempts());
 
-            call.setLong(12, user.getIdUser());
+            call.setLong(12, user.getId());
 
             call.execute();
         } catch (SQLException e) {
@@ -384,7 +383,7 @@ public class AuthDAOImpl implements AuthDAO {
         try (Connection connection = (new ConnectionBD()).getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, user.getIdUser());
+            call.setLong(1, user.getId());
             call.execute();
         } catch (SQLException e) {
             String errorMsg = "Error al eliminar perfiles de la BDD.";
@@ -400,7 +399,7 @@ public class AuthDAOImpl implements AuthDAO {
         try (Connection connection = (new ConnectionBD()).getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, user.getIdUser());
+            call.setLong(1, user.getId());
             call.execute();
         } catch (SQLException e) {
             String errorMsg = "Error al eliminar perfiles de la BDD.";
@@ -422,7 +421,7 @@ public class AuthDAOImpl implements AuthDAO {
              CallableStatement call = connection.prepareCall(sql)) {
 
 
-            call.setLong(1, user.getIdUser());
+            call.setLong(1, user.getId());
             call.setLong(2,  p.getId());
 
             call.execute();
@@ -444,7 +443,7 @@ public class AuthDAOImpl implements AuthDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, user.getIdUser());
+            call.setLong(1, user.getId());
             call.setLong(2,  a.getQuestion().getId());
             call.setString(3, a.getAnswer());
 
@@ -509,7 +508,7 @@ public class AuthDAOImpl implements AuthDAO {
             call.setString(9, user.getLastPasswordSalt2());
             call.setString(10, user.getLastPasswordSalt3());
             call.setString(11, user.getLastPasswordSalt4());
-            call.setLong(12, user.getIdUser());
+            call.setLong(12, user.getId());
 
 
             call.execute();
@@ -535,9 +534,9 @@ public class AuthDAOImpl implements AuthDAO {
 
 
         if (updated) {
-            logger.info("Información de usuario (USER_ID=" + user.getIdUser() + ") actualizada exitosamente.");
+            logger.info("Información de usuario (USER_ID=" + user.getId() + ") actualizada exitosamente.");
         } else {
-            String errorMsg = "Información de usuario (USER_ID=" + user.getIdUser() + ") no fue actualizada.";
+            String errorMsg = "Información de usuario (USER_ID=" + user.getId() + ") no fue actualizada.";
             logger.error(errorMsg);
             throw new EJBException(errorMsg);
         }

@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.audit.RefSetAuditAction;
 import cl.minsal.semantikos.model.users.Answer;
@@ -52,12 +53,12 @@ public class QuestionDAOImpl implements QuestionDAO {
     @Override
     public List<Answer> getAnswersByUser(User user) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         String GET_ANSWERS_BY_USERS = "{call semantikos.get_answers_by_user(?)}";
         List<Answer> answers= new ArrayList<>();
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(GET_ANSWERS_BY_USERS)) {
-            call.setLong(1, user.getIdUser());
+            call.setLong(1, user.getId());
             call.execute();
             ResultSet rs = call.getResultSet();
             while (rs.next()) {
@@ -97,7 +98,7 @@ public class QuestionDAOImpl implements QuestionDAO {
         String DELETE_USER_ANSWERS = "{call semantikos.delete_user_answers(?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(DELETE_USER_ANSWERS)) {
-            call.setLong(1, user.getIdUser());
+            call.setLong(1, user.getId());
             call.execute();
             ResultSet rs = call.getResultSet();
             if (rs.next()) {

@@ -18,10 +18,14 @@ public class Profile extends PersistentEntity {
     /** Permisos asociados al perfil */
     List<Permission> permissions;
 
+    public Profile() {
+    }
+
     /**
      * Este es el constructor único y mínimo para un Profile.
      *
      * @param id          Identificador único del Profile.
+
      * @param name        Nombre del Profile.
      * @param description Descripción del Perfil.
      */
