@@ -15,7 +15,7 @@ public class GenericTermSearchResponse implements Serializable {
     @XmlElement(name="terminoBuscar")
     private String pattern;
 
-    @XmlElement(name="descripcionesPerfectMatch")
+    @XmlElement(name="descripcionesEncontradas")
     private PerfectMatchDescriptionsResponse perfectMatchDescriptions;
 
     @XmlElement(name="descripcionesNoValidas")

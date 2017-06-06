@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.*;
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.InvocationContext;
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
@@ -40,6 +42,12 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     public static List<String> NO_VALID_TERMS = Arrays.asList(new String[]{"Concepto no válido", "Concepto no válido (concepto especial)"});
 
     private Map<Long, ConceptSMTK> conceptSMTKMap = new HashMap<>();
+
+    @AroundInvoke
+    public Object preConditions(InvocationContext ic) throws Exception {
+        conceptSMTKMap = new HashMap<>();
+        return ic.proceed();
+    }
 
     @Override
     public List<DescriptionType> getDescriptionTypes() {
@@ -100,6 +108,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @Override
     public Description getDescriptionBy(long id) {
+
         ConnectionBD connect = new ConnectionBD();
         Description description = null;
 
@@ -611,8 +620,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             ResultSet rs = call.getResultSet();
             while (rs.next()) {
-                Description description = createDescriptionFromResultSet(rs, null);
-                descriptions.add(description);
+                //Description description = createDescriptionFromResultSet(rs, null);
+                descriptions.add(getDescriptionBy(rs.getLong(1)));
             }
 
         } catch (SQLException e) {

@@ -380,11 +380,10 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
         ArrayList<User> users = new ArrayList<>();
 
-        ConnectionBD connect = new ConnectionBD();
         User user = null;
 
         String sql = "{call semantikos.get_all_users()}";
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.execute();

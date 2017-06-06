@@ -105,6 +105,7 @@ public class SearchService {
     }
 
     // REQ-WS-002
+    /*
     @WebResult(name = "respuestaConceptos")
     @WebMethod(operationName = "conceptosPorCategoria")
     public ConceptsResponse conceptosPorCategoria(
@@ -114,6 +115,7 @@ public class SearchService {
     ) throws NotFoundFault {
         return this.conceptController.findConceptsByCategory(request.getCategoryName(), request.getIdStablishment());
     }
+    */
 
     // REQ-WS-002 Paginados
     @WebResult(name = "respuestaConceptosPorCategoriaPaginados")

@@ -822,15 +822,14 @@ public class ConceptController {
 
         User user = new User(1, "demo", "Demo User", "demo", false);
 
+        if (termRequest.getTerm() == null || termRequest.getTerm().isEmpty()) {
+            throw new IllegalInputFault("Debe ingresar un término propuesto");
+        }
 
         Category category = categoryManager.getCategoryByName(termRequest.getCategory());
 
         if (category == null) {
             throw new IllegalInputFault("Categoria no encontrada: " + termRequest.getCategory());
-        }
-
-        if (termRequest.getTerm() == null || termRequest.getTerm().isEmpty()) {
-            throw new IllegalInputFault("Debe ingresar un término propuesto");
         }
 
         PendingTerm pendingTerm = new PendingTerm(

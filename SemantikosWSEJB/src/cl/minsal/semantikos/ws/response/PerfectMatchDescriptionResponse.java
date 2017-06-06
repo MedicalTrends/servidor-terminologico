@@ -11,8 +11,8 @@ import java.io.Serializable;
  * @author Andrés Farías on 12/13/16.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "descripcionPerfectMatch", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "DescripcionPerfectMatch", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "descripcionEncontrada", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "DescripcionEncontrada", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class PerfectMatchDescriptionResponse implements Serializable {
 
     @XmlElement(name="conceptID")
