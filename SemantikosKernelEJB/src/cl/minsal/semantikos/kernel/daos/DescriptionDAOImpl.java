@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.*;
 import javax.interceptor.AroundInvoke;
+import javax.interceptor.Interceptors;
 import javax.interceptor.InvocationContext;
 import java.io.IOException;
 import java.sql.*;
@@ -28,6 +29,7 @@ import static java.sql.Types.TIMESTAMP;
  * @author Andres Farias.
  */
 @Stateless
+@Interceptors(value={net.bull.javamelody.MonitoringInterceptor.class})
 public class DescriptionDAOImpl implements DescriptionDAO {
 
     /** El logger para esta clase */
@@ -39,7 +41,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     @EJB
     private AuthDAO authDAO;
 
-    public static List<String> NO_VALID_TERMS = Arrays.asList(new String[]{"Concepto no válido", "Concepto no válido (concepto especial)"});
+    public static List<String> NO_VALID_TERMS = Arrays.asList(new String[] {"Concepto no válido", "Concepto no válido (concepto especial)"});
 
     private Map<Long, ConceptSMTK> conceptSMTKMap = new HashMap<>();
 

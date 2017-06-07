@@ -23,6 +23,8 @@
         <element id="library" level="project" name="Maven: postgresql:postgresql:9.1-901-1.jdbc4" />
         <element id="library" level="project" name="Maven: org.apache.commons:commons-csv:1.3" />
         <element id="library" level="project" name="Maven: org.jsoup:jsoup:1.10.1" />
+        <element id="library" level="project" name="Maven: net.bull.javamelody:javamelody-core:1.59.0" />
+        <element id="library" level="project" name="Maven: org.jrobin:jrobin:1.5.9" />
         <element id="library" level="project" name="Maven: javax.validation:validation-api:1.0.0.GA" />
       </element>
       <element id="archive" name="SemantikosWeb-4.0.0.war">

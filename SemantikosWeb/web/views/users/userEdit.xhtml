@@ -48,7 +48,7 @@
 
                                             <p:outputLabel for="input-user-document-type" value="Tipo documento" style="font-weight: bold" styleClass="Wid20" />
 
-                                            <p:selectOneRadio id="input-user-document-type" value="#{users.selectedUser.rutDocument}" layout="grid" columns="2"
+                                            <p:selectOneRadio id="input-user-document-type" value="#{users.selectedUser.documentRut}" layout="grid" columns="2"
                                                               disabled="#{ not users.selectedUser.valid or users.selectedUser.persistent}">
                                                 <f:selectItem itemValue="#{true}" itemLabel="Cédula de identidad" />
                                                 <f:selectItem itemValue="#{false}" itemLabel="Pasaporte"/>

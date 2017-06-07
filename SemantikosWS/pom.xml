@@ -42,13 +42,11 @@
             <scope>provided</scope>
         </dependency>
 
-
         <dependency>
             <groupId>net.bull.javamelody</groupId>
             <artifactId>javamelody-core</artifactId>
             <version>1.59.0</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -56,9 +54,6 @@
             <version>1.7.21</version>
             <scope>provided</scope>
         </dependency>
-
-
-
 
     </dependencies>
 

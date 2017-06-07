@@ -10,6 +10,7 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
+import javax.interceptor.Interceptors;
 import java.util.List;
 
 

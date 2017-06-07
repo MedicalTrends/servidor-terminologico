@@ -136,6 +136,13 @@
             <artifactId>jsoup</artifactId>
             <version>1.10.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>net.bull.javamelody</groupId>
+            <artifactId>javamelody-core</artifactId>
+            <version>1.59.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
