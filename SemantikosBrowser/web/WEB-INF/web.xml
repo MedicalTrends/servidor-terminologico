@@ -14,7 +14,6 @@
         <param-value>Development</param-value>
     </context-param>
 
-
     <context-param>
         <param-name>org.apache.myfaces.SERIALIZE_STATE_IN_SESSION</param-name>
         <param-value>false</param-value>
@@ -58,7 +57,7 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>/views/home.xhtml</welcome-file>
+        <welcome-file>views/home.xhtml</welcome-file>
     </welcome-file-list>
 
     <error-page>

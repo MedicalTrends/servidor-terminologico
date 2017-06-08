@@ -54,6 +54,20 @@ public class DescriptionTypeFactory implements Serializable {
     }
 
     /**
+     * Este método es responsable de retornar el tipo de descripción llamado Sinónimo.
+     *
+     * @return Retorna una instancia de Sinónimo.
+     */
+    public DescriptionType getSynonymDescriptionType() {
+
+        if (descriptionTypesByName.containsKey("sinónimo")) {
+            return this.descriptionTypesByName.get("sinónimo");
+        }
+
+        return new DescriptionType(-1, "sinónimo", "Sinónimo");
+    }
+
+    /**
      * Este método retorna la descripción preferida, si existe. De no existir crea una y la retorna
      *
      * @return El tipo de Descripción llamado Preferida.

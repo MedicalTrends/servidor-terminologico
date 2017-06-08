@@ -1,13 +1,11 @@
 package cl.minsal.semantikos.model.helpertables;
 
-import cl.minsal.semantikos.kernel.daos.DAO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
+import static cl.minsal.semantikos.model.DAO.NON_PERSISTED_ID;
 import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 
 /**

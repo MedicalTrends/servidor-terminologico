@@ -15,6 +15,7 @@
         <module>SemantikosWSEJB</module>
         <module>SemantikosWeb</module>
         <module>SemantikosBrowser</module>
+        <module>SemantikosLoader</module>
         <!--module>SemantikosWS</module-->
         <module>SemantikosBusinessEAR</module>
         <module>SemantikosWebEAR</module>

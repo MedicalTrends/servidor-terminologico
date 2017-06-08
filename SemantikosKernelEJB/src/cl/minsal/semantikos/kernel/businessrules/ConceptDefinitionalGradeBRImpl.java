@@ -42,11 +42,8 @@ public class ConceptDefinitionalGradeBRImpl implements ConceptDefinitionalGradeB
         /* Se recuperan todas las relaciones con RelationshipType que tengan destino un concepto SNOMED CT. */
         List<Relationship> sctRelationships = conceptSMTK.getRelationshipsTo(SnomedCT);
 
-
-
         /* Para cada relación a SCT, se verifica si existe un concepto SMTK que tenga las mismas relaciones */
         for (Relationship sctRelationship : sctRelationships) {
-
 
             /* Se recuperan todas las relaciones del mismo tipo de relación y que se dirigen al mismo concepto SCT */
             List<Relationship> relationshipsLike = relationshipManager.getRelationshipsLike(sctRelationship.getRelationshipDefinition(), sctRelationship.getTarget());

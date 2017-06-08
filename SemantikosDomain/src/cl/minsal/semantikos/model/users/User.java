@@ -1,13 +1,11 @@
 package cl.minsal.semantikos.model.users;
 
-import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.PersistentEntity;
+import cl.minsal.semantikos.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
 
 /**
  * @author Francisco Mendez

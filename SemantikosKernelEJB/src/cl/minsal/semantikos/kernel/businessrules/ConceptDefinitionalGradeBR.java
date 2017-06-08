@@ -10,6 +10,7 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface ConceptDefinitionalGradeBR {
+
     public void apply(ConceptSMTK conceptSMTK);
 
 }

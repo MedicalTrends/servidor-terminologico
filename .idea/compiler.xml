@@ -28,6 +28,7 @@
         <module name="SemantikosBusinessEAR" />
         <module name="SemantikosDomain" />
         <module name="SemantikosKernelEJB" />
+        <module name="SemantikosLoader" />
         <module name="SemantikosWeb" />
         <module name="SemantikosWebEAR" />
         <module name="SemantikosWS" />
@@ -42,6 +43,7 @@
       <module name="SemantikosCentralEAR" target="1.7" />
       <module name="SemantikosDomain" target="1.7" />
       <module name="SemantikosKernelEJB" target="1.7" />
+      <module name="SemantikosLoader" target="1.7" />
       <module name="SemantikosWeb" target="1.7" />
       <module name="SemantikosWebEAR" target="1.7" />
       <module name="SemantikosWS" target="1.7" />

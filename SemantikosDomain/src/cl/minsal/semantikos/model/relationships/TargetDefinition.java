@@ -22,6 +22,8 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String PEDIBLE = "Pedible";
 
+    public static final String SNOMED_CT = "SNOMED CT";
+
     /**
      * Este metodo es responsable de determinar si el target type es de tipo básico es o no.
      *

@@ -15,6 +15,23 @@ public class TagSMTKFactory {
     /** La lista de tagSMTK */
     private List<TagSMTK> tagsSMTK;
 
+    public Map<String, TagSMTK> getTagsSMTKByName() {
+        return tagsSMTKByName;
+    }
+
+    public List<TagSMTK> getTagsSMTK() {
+
+        return tagsSMTK;
+    }
+
+    public void setTagsSMTKByName(Map<String, TagSMTK> tagsSMTKByName) {
+        this.tagsSMTKByName = tagsSMTKByName;
+    }
+
+    public void setTagsSMTKById(Map<Long, TagSMTK> tagsSMTKById) {
+        this.tagsSMTKById = tagsSMTKById;
+    }
+
     /** Mapa de tagSMTK por su nombre. */
     private Map<String, TagSMTK> tagsSMTKByName;
 

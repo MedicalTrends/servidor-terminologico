@@ -4,9 +4,8 @@ import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
 import cl.minsal.semantikos.model.helpertables.HelperTableData;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.ws.response.BioequivalentResponse;
-import cl.minsal.semantikos.ws.response.ConceptLightResponse;
-import cl.minsal.semantikos.ws.response.ISPRegisterResponse;
+import cl.minsal.semantikos.modelws.response.BioequivalentResponse;
+import cl.minsal.semantikos.modelws.response.ConceptLightResponse;
 
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;

@@ -2,8 +2,8 @@ package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.descriptions.Description;
-import cl.minsal.semantikos.ws.fault.IllegalInputFault;
-import cl.minsal.semantikos.ws.response.*;
+import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
+import cl.minsal.semantikos.modelws.response.DescriptionResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
