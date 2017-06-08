@@ -112,24 +112,48 @@ public class RefSetController {
         logger.debug("RefSetController.findRefsets(" + refSetsNames + ")");
 
         /* Validacion de parámetros */
-        List<RefSet> refSets;
+        List<RefSet> refSets = this.refSetManager.getAllRefSets();
+        List<RefSet> someRefsets = new ArrayList<>();
+        Map<String, RefSet> refSetsMap = new HashMap<>();
+
+        Iterator<String> it = refSetsNames.iterator();
+
+        while (it.hasNext()) {
+            String refSetName = it.next();
+            if(refSetName.isEmpty()) {
+                it.remove();
+            }
+        }
+
         if (refSetsNames == null || refSetsNames.isEmpty()) {
-            refSets = this.refSetManager.getAllRefSets();
             logger.debug("RefSetController.findRefsets(" + refSetsNames + ") --> " + refSets.size() + " refsets " +
                     "retornados.");
             return Collections.emptyList();
         }
 
+        for (RefSet refSet : refSets) {
+            refSetsMap.put(refSet.getName(), refSet);
+        }
+
         /* Se recuperan los refsets solicitados */
         try {
-            refSets = this.refSetManager.findRefSetsByName(refSetsNames);
+            //refSets = this.refSetManager.findRefSetsByName(refSetsNames);
+            for (String refSetName : refSetsNames) {
+                if(refSetsMap.containsKey(refSetName)) {
+                    someRefsets.add(refSetsMap.get(refSetName));
+                }
+                else {
+                    throw new NotFoundFault("No existe un RefSet de nombre: "+refSetName);
+                }
+            }
+
             logger.debug("RefSetController.findRefsets(" + refSetsNames + ") --> " + refSets.size() + " refsets " +
                     "retornados.");
         } catch (Exception e) {
             throw new NotFoundFault(e.getMessage());
         }
 
-        return refSets;
+        return someRefsets;
     }
 
     /**

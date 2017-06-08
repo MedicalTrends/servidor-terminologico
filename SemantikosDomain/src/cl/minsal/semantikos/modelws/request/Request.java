@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "Request", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class Request {
 
-    @XmlElement(required = true, defaultValue = "1", name = "idEstablecimiento")
+    @XmlElement(required = true/*, defaultValue = "1"*/ , name = "idEstablecimiento")
     private String idStablishment;
 
     public String getIdStablishment() {

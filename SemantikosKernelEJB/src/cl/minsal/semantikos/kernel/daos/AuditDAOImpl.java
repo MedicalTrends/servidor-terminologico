@@ -91,7 +91,7 @@ public class AuditDAOImpl implements AuditDAO {
             AuditableEntity auditableEntity = conceptAuditAction.getAuditableEntity();
 
             call.setTimestamp(1, actionDate);
-            call.setLong(2, user.getIdUser());
+            call.setLong(2, user.getId());
             call.setLong(3, subjectConcept.getId());
             call.setLong(4, auditActionType.getId());
             call.setLong(5, auditableEntity.getId());
@@ -127,7 +127,7 @@ public class AuditDAOImpl implements AuditDAO {
             AuditableEntity subjectConcept = refSetAuditAction.getBaseEntity();
 
             call.setTimestamp(1, actionDate);
-            call.setLong(2, user.getIdUser());
+            call.setLong(2, user.getId());
             call.setLong(3, subjectConcept.getId());
             call.setLong(4, auditActionType.getId());
             call.setLong(5, auditableEntity.getId());

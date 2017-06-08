@@ -6,11 +6,14 @@ import cl.minsal.semantikos.kernel.businessrules.PendingTermAddingBR;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;
+import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Stateless;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
@@ -37,16 +40,21 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
 
     private final static Logger logger = LoggerFactory.getLogger(PendingTermsManagerImpl.class);
 
+    private boolean exceptions = false;
+
     @AroundInvoke
     public Object postActions(InvocationContext ic) throws Exception {
         try {
             return ic.proceed();
-        } finally {
-            if(Arrays.asList(new String[]{"addPendingTerm"}).contains(ic.getMethod().getName())) {
-                for (Object o : ic.getParameters()) {
-                    if(o instanceof PendingTerm) {
-                        pendingTermDAO.updateSearchIndexes((PendingTerm)o);
-                        break;
+        }
+        finally {
+            if(!exceptions) {
+                if(Arrays.asList(new String[]{"addPendingTerm"}).contains(ic.getMethod().getName())) {
+                    for (Object o : ic.getParameters()) {
+                        if(o instanceof PendingTerm) {
+                            pendingTermDAO.updateSearchIndexes((PendingTerm)o);
+                            break;
+                        }
                     }
                 }
             }
@@ -54,29 +62,35 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
     }
 
     @Override
-    public Description addPendingTerm(PendingTerm pendingTerm, User loggedUser) {
+    public Description addPendingTerm(PendingTerm pendingTerm, User loggedUser) throws EJBTransactionRolledbackException {
 
-        /* Validación de pre-condiciones */
-        pendingTermAddingBR.validatePreConditions(pendingTerm);
+        try {
+            /* Validación de pre-condiciones */
+            pendingTermAddingBR.validatePreConditions(pendingTerm);
 
         /* Acciones de negocio a continuación */
 
         /* 1. Persistir el término pendiente */
-        pendingTermDAO.persist(pendingTerm);
-        logger.info("Pending term persited: " + pendingTerm);
+            pendingTermDAO.persist(pendingTerm);
+            logger.info("Pending term persited: " + pendingTerm);
 
         /* 2. Agregarlo al concepto especial 'Pendientes' */
-        ConceptSMTK pendingTermsConcept = conceptManager.getPendingConcept();
-        Description description = descriptionManager.bindDescriptionToConcept(pendingTermsConcept, pendingTerm.getTerm(), pendingTerm.isSensibility(), DescriptionType.SYNONYMOUS, loggedUser);
-        logger.info("Description from pending term created: " + description.fullToString());
+            ConceptSMTK pendingTermsConcept = conceptManager.getPendingConcept();
+            Description description = descriptionManager.bindDescriptionToConcept(pendingTermsConcept, pendingTerm.getTerm(), pendingTerm.isSensibility(), DescriptionType.SYNONYMOUS, loggedUser);
+            logger.info("Description from pending term created: " + description.fullToString());
 
-        pendingTerm.setRelatedDescription(description);
-        pendingTermDAO.bindTerm2Description(pendingTerm, description);
+            pendingTerm.setRelatedDescription(description);
+            pendingTermDAO.bindTerm2Description(pendingTerm, description);
 
         /* Validación de post-condiciones */
-        pendingTermAddingBR.validatePostConditions(pendingTerm);
+            pendingTermAddingBR.validatePostConditions(pendingTerm);
 
-        return description;
+            return description;
+        }
+        catch (EJBException e) {
+            exceptions = true;
+            throw e;
+        }
     }
 
     @Override

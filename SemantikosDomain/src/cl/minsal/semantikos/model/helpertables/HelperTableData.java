@@ -1,18 +1,20 @@
 package cl.minsal.semantikos.model.helpertables;
 
+import cl.minsal.semantikos.kernel.daos.DAO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
+import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static cl.minsal.semantikos.model.DAO.NON_PERSISTED_ID;
+import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 
 /**
  * Created by BluePrints Developer on 14-12-2016.
  */
 
-public class HelperTableData implements Serializable {
+public class HelperTableData {
 
     private long id;
     private Long intValue;
@@ -186,6 +188,9 @@ public class HelperTableData implements Serializable {
         if(intValue != null) {
             return String.valueOf(intValue);
         }
+        if(booleanValue != null) {
+            return String.valueOf(booleanValue);
+        }
         else if(floatValue != null) {
             return String.valueOf(floatValue);
         }
@@ -196,8 +201,12 @@ public class HelperTableData implements Serializable {
             SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
             return outputFormat.format(dateValue);
         }
+        else if(foreignKeyValue != null) {
+            return String.valueOf(foreignKeyValue);
+        }
         else {
-            return String.valueOf(id);
+            return EMPTY_STRING;
+            //return String.valueOf(id);
         }
 
     }

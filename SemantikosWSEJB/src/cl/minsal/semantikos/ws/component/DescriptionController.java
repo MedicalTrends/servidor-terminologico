@@ -2,7 +2,8 @@ package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.descriptions.Description;
-import cl.minsal.semantikos.modelws.response.DescriptionResponse;
+import cl.minsal.semantikos.ws.fault.IllegalInputFault;
+import cl.minsal.semantikos.ws.response.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +33,11 @@ public class DescriptionController {
      * @param descriptionId El valor de negocio <em>DESCRIPTION_ID</em> de la descripción.
      * @return La descripción, con su contador de uso actualizado.
      */
-    public DescriptionResponse incrementDescriptionHits(String descriptionId) {
+    public DescriptionResponse incrementDescriptionHits(String descriptionId) throws IllegalInputFault {
+
+        if (descriptionId == null || descriptionId.isEmpty()) {
+            throw new IllegalInputFault("Debe ingresar un descriptionID");
+        }
 
         /* Se incrementa la descripción */
         logger.debug("Por incrementar el contador de usos de la descripcion con DESCRIPCION_ID=" + descriptionId);

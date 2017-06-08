@@ -1,6 +1,5 @@
 package cl.minsal.semantikos.model.tags;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.Map;
 /**
  * @author Andrés Farías
  */
-public class TagSMTKFactory implements Serializable {
+public class TagSMTKFactory {
 
     private static final TagSMTKFactory instance = new TagSMTKFactory();
 
@@ -19,17 +18,8 @@ public class TagSMTKFactory implements Serializable {
     /** Mapa de tagSMTK por su nombre. */
     private Map<String, TagSMTK> tagsSMTKByName;
 
-    public List<TagSMTK> getTagsSMTK() {
-        return tagsSMTK;
-    }
-
-    public Map<String, TagSMTK> getTagsSMTKByName() {
-        return tagsSMTKByName;
-    }
-
-    public void setTagsSMTKByName(Map<String, TagSMTK> tagsSMTKByName) {
-        this.tagsSMTKByName = tagsSMTKByName;
-    }
+    /** Mapa de tagSMTK por su nombre. */
+    private Map<Long, TagSMTK> tagsSMTKById;
 
     /**
      * Constructor privado para el Singleton del Factory.
@@ -37,11 +27,7 @@ public class TagSMTKFactory implements Serializable {
     private TagSMTKFactory() {
         this.tagsSMTK = new ArrayList<>();
         this.tagsSMTKByName = new HashMap<>();
-    }
-
-    public TagSMTKFactory(List<TagSMTK> tagsSMTK, Map<String, TagSMTK> tagsSMTKByName) {
-        this.tagsSMTK = tagsSMTK;
-        this.tagsSMTKByName = tagsSMTKByName;
+        this.tagsSMTKById = new HashMap<>();
     }
 
     public static TagSMTKFactory getInstance() {
@@ -63,6 +49,20 @@ public class TagSMTKFactory implements Serializable {
     }
 
     /**
+     * Este método es responsable de retornar el tipo de descripción llamado FSN.
+     *
+     * @return Retorna una instancia de FSN.
+     */
+    public TagSMTK findTagSMTKById(long id) {
+
+        if (tagsSMTKById.containsKey(id)) {
+            return this.tagsSMTKById.get(id);
+        }
+
+        return null;
+    }
+
+    /**
      * Este método es responsable de asignar un nuevo conjunto de tagsSMTJ. Al hacerlo, es necesario actualizar
      * los mapas.
      */
@@ -75,6 +75,7 @@ public class TagSMTKFactory implements Serializable {
         this.tagsSMTKByName.clear();
         for (TagSMTK tagSMTK : tagsSMTK) {
             this.tagsSMTKByName.put(tagSMTK.getName(), tagSMTK);
+            this.tagsSMTKById.put(tagSMTK.getId(), tagSMTK);
         }
     }
 

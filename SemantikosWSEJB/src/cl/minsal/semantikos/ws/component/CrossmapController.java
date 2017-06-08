@@ -112,6 +112,7 @@ public class CrossmapController {
         res.setCategory(conceptSMTK.getCategory().getName());
         res.setDescriptionId(conceptSMTK.getDescriptionFavorite().getDescriptionId());
         res.setDescription(conceptSMTK.getDescriptionFavorite().getTerm());
+        res.setVersion(null);
 
         return res;
     }
@@ -133,6 +134,10 @@ public class CrossmapController {
             }
         }
 
+        if(theCrossmapSet == null) {
+            throw new NotFoundFault("No se encontró un CrossmapSet de nombre abreviado: "+crossmapSetAbbreviatedName);
+        }
+
         if(!theCrossmapSet.isState()) {
             throw new NotFoundFault("Este CrossmapSet no está vigente");
         }
@@ -143,11 +148,9 @@ public class CrossmapController {
 
         CrossmapSetMembersResponse res = new CrossmapSetMembersResponse(crossmapSetByAbbreviatedName);
 
-        if(theCrossmapSet != null) {
-            res.setAbbreviatedName(theCrossmapSet.getAbbreviatedName());
-            res.setName(theCrossmapSet.getName());
-            res.setVersion(theCrossmapSet.getVersion());
-        }
+        res.setAbbreviatedName(theCrossmapSet.getAbbreviatedName());
+        res.setName(theCrossmapSet.getName());
+        res.setVersion(theCrossmapSet.getVersion());
 
         return res;
     }

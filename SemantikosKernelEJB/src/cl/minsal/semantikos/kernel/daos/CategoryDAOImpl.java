@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -72,10 +73,10 @@ public class CategoryDAOImpl implements CategoryDAO {
      */
     private Category getCategoryByIdFromDB(long idCategory) {
         Category category;
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         String GET_CATEGORY_BY_ID = "{call semantikos.get_category_by_id(?)}";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(GET_CATEGORY_BY_ID)) {
 
             call.setLong(1, idCategory);

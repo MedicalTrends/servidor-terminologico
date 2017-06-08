@@ -53,7 +53,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
             call.setLong(1, directCrossmap.getSourceConcept().getId());
             call.setLong(2, directCrossmap.getTarget().getId());
             call.setTimestamp(3, new Timestamp(currentTimeMillis()));
-            call.setLong(4, user.getIdUser());
+            call.setLong(4, user.getId());
             call.execute();
 
             ResultSet rs = call.getResultSet();

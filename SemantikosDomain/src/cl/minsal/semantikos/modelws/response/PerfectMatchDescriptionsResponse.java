@@ -15,8 +15,8 @@ import java.util.List;
 @XmlType(name = "RespuestaDescripcionesPerfectMatch", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class PerfectMatchDescriptionsResponse implements Serializable {
 
-    @XmlElementWrapper(name = "descripcionesPerfectMatch")
-    @XmlElement(name = "descripcionPerfectMatch")
+    @XmlElementWrapper(name = "descripcionesEncontradas")
+    @XmlElement(name = "DescripcionEncontrada")
     private List<PerfectMatchDescriptionResponse> perfectMatchDescriptionsResponse;
 
     @XmlElement(name = "cantidadRegistros")

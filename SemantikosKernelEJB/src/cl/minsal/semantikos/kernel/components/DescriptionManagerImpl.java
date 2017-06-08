@@ -342,6 +342,24 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    public List<Description> searchDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets) {
+        long init = currentTimeMillis();
+        List<Description> descriptions = descriptionDAO.searchDescriptionsSuggested(term, categories, refSets);
+        logger.info("searchDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
+        logger.info("searchDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        return descriptions;
+    }
+
+    @Override
+    public int countDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets) {
+        long init = currentTimeMillis();
+        int count = descriptionDAO.countDescriptionsSuggested(term, categories, refSets);
+        logger.info("countDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): " + count);
+        logger.info("countDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        return count;
+    }
+
+    @Override
     public void invalidateDescription(ConceptSMTK conceptSMTK, NoValidDescription noValidDescription, User user) {
 
         /* Se aplican las reglas de negocio para el traslado */
@@ -393,7 +411,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
         logger.info("DESCRIPTION ID=" + descriptionId + " tiene " + descriptionByDescriptionID.getUses() + " usos.");
 
         /* Se incrementa y se actualiza en la BDD */
-        if(descriptionByDescriptionID.isModeled()) {
+        /* Se pregunta por el concepto, para soportar el incremento del uso de términos pendientes y no válidos */
+        if(descriptionByDescriptionID.getConceptSMTK().isModeled()) {
             descriptionByDescriptionID.setUses(descriptionByDescriptionID.getUses() + 1);
             descriptionDAO.update(descriptionByDescriptionID);
         }

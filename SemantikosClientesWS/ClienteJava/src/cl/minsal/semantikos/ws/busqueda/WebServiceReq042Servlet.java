@@ -2,6 +2,7 @@ package cl.minsal.semantikos.ws.busqueda;
 
 import cl.minsal.semantikos.modelws.request.DescriptionIDorConceptIDRequest;
 import cl.minsal.semantikos.ws.ParameterValidator;
+import cl.minsal.semantikos.ws.request.DescriptionIDorConceptIDRequest;
 import cl.minsal.semantikos.ws.shared.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

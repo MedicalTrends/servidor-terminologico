@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
@@ -48,12 +49,12 @@ public class InstitutionDAOImpl implements InstitutionDAO {
 
     @Override
     public List<Institution> getInstitutionBy(User user) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         String GET_INSTITUTION_BY_USER = "{call semantikos.get_institution_by_user(?)}";
         List<Institution> institutions= new ArrayList<>();
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(GET_INSTITUTION_BY_USER)) {
-            call.setLong(1, user.getIdUser());
+            call.setLong(1, user.getId());
             call.execute();
 
             ResultSet rs = call.getResultSet();

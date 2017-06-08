@@ -10,8 +10,8 @@ import java.util.List;
  * @author Andrés Farías on 12/13/16.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "crossmapSetMembersResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "CrossmapSetMembersResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "respuestaObtenerCrossmapsDirectos", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "RespuestaObtenerCrossmapsDirectos", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class CrossmapSetMembersResponse {
 
     @XmlElement(name="conceptID")
@@ -30,7 +30,7 @@ public class CrossmapSetMembersResponse {
     private String name;
 
     @XmlElement(name="version")
-    private int version;
+    private Integer version;
 
     /** La lista de crossmaps indirectos (response) */
     @XmlElementWrapper(name = "crossmapSetMembers")
@@ -116,7 +116,7 @@ public class CrossmapSetMembersResponse {
         return version;
     }
 
-    public void setVersion(int version) {
+    public void setVersion(Integer version) {
         this.version = version;
     }
 

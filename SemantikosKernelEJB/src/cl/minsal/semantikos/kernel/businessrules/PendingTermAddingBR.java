@@ -70,7 +70,7 @@ public class PendingTermAddingBR {
 
             /* Y se compara el término con el que se desea agregar */
             if (description.getTerm().equals(termToAdd)) {
-                throw new BusinessRuleException("BR-PEND-002", "El sistema deberá guarda sólo un formulario por Término Pendiente.");
+                throw new BusinessRuleException("BR-PEND-002", "Término propuesto ya existe en Pendiente");
             }
         }
     }

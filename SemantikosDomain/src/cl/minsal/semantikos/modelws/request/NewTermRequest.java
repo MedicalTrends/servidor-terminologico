@@ -20,11 +20,13 @@ public class NewTermRequest extends Request implements Serializable {
     @XmlElement(required = true, name = "terminoPropuesto")
     private String term;
 
+    /*
     @XmlElement(required = false, defaultValue = "Preferida", name = "tipoDescripcion")
     private String descriptionTypeName;
 
     @XmlElement(required = false, defaultValue = "false", name = "esSensibleAMayusculas")
     private Boolean isCaseSensitive;
+    */
 
     @XmlElement(required = false, name = "email")
     private String email;
@@ -65,6 +67,7 @@ public class NewTermRequest extends Request implements Serializable {
         this.term = term;
     }
 
+    /*
     public String getDescriptionTypeName() {
         return descriptionTypeName;
     }
@@ -72,7 +75,9 @@ public class NewTermRequest extends Request implements Serializable {
     public void setDescriptionTypeName(String descriptionTypeName) {
         this.descriptionTypeName = descriptionTypeName;
     }
+    */
 
+    /*
     public Boolean getCaseSensitive() {
         return isCaseSensitive;
     }
@@ -80,6 +85,7 @@ public class NewTermRequest extends Request implements Serializable {
     public void setCaseSensitive(Boolean caseSensitive) {
         isCaseSensitive = caseSensitive;
     }
+    */
 
     public String getEmail() {
         return email;

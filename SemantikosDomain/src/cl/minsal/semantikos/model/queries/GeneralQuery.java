@@ -520,7 +520,7 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
         if(getUser()==null)
             return null;
         else
-            return getUser().getIdUser();
+            return getUser().getId();
     }
 
     public void resetQuery() {

@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.NoValidDescription;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;
+import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -23,10 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
-import javax.ejb.EJB;
-import javax.ejb.EJBException;
-import javax.ejb.SessionContext;
-import javax.ejb.Stateless;
+import javax.ejb.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
@@ -381,7 +379,10 @@ public class ConceptController {
 
         List<SuggestedDescriptionResponse> suggestedDescriptions = new ArrayList<>();
 
-        List<Description> descriptions = this.descriptionManager.searchDescriptionsTruncateMatch(term, categories, EMPTY_LIST);
+        //List<Description> descriptions = this.descriptionManager.searchDescriptionsTruncateMatch(term, categories, EMPTY_LIST);
+
+        List<Description> descriptions = this.descriptionManager.searchDescriptionsSuggested(term, categories, EMPTY_LIST);
+        int count = this.descriptionManager.countDescriptionsSuggested(term, categories, EMPTY_LIST);
 
         logger.debug("ws-req-006. descripciones encontradas: " + descriptions);
 
@@ -402,7 +403,7 @@ public class ConceptController {
 
         res.setPattern(term);
         res.setSuggestedDescriptionResponses(suggestedDescriptions);
-        res.setQuantity(descriptions.size());
+        res.setQuantity(count);
 
         return res;
     }
@@ -458,6 +459,11 @@ public class ConceptController {
             descriptionResponse.setValidityUntil(null);
             descriptionResponse.setCreationDate(null);
         }
+
+        for (RefSetResponse refSetResponse : res.getRefsets()) {
+            refSetResponse.setConcepts(null);
+        }
+
         /*
         if(res.getPublished()) {
             res.setPublishingDate(auditManager.getConceptPublicationAuditAction(conceptSMTK, true).getActionDate());
@@ -533,7 +539,7 @@ public class ConceptController {
         Category category;
         try {
             category = this.categoryManager.getCategoryByName(categoryName);
-        } catch (IllegalArgumentException iae) {
+        } catch (Exception e) {
             throw new NotFoundFault("No se encontró una categoría de nombre '" + categoryName + "'");
         }
 
@@ -812,12 +818,16 @@ public class ConceptController {
      * @param termRequest La solicitud de creación de término.
      * @return La respuesta respecto a la descripción creada.
      */
-    public NewTermResponse requestTermCreation(NewTermRequest termRequest) throws IllegalInputFault {
+    public NewTermResponse requestTermCreation(NewTermRequest termRequest) throws IllegalInputFault, NotFoundFault {
 
         User user = new User(1, "demo", "Demo User", "demo", false);
 
+        if (termRequest.getTerm() == null || termRequest.getTerm().isEmpty()) {
+            throw new IllegalInputFault("Debe ingresar un término propuesto");
+        }
 
         Category category = categoryManager.getCategoryByName(termRequest.getCategory());
+
         if (category == null) {
             throw new IllegalInputFault("Categoria no encontrada: " + termRequest.getCategory());
         }
@@ -825,7 +835,7 @@ public class ConceptController {
         PendingTerm pendingTerm = new PendingTerm(
                 termRequest.getTerm(),
                 new Date(),
-                termRequest.getCaseSensitive(),
+                false, /*Por defecto un término pendiente es insensible a mayúscula*/
                 category,
                 termRequest.getProfessional(),
                 termRequest.getProfesion(),
@@ -836,7 +846,15 @@ public class ConceptController {
                 termRequest.getIdStablishment());
 
         /* Se realiza la solicitud */
-        Description description = pendingTermManager.addPendingTerm(pendingTerm, user);
+        Description description;
+
+        try {
+            description = pendingTermManager.addPendingTerm(pendingTerm, user);
+        }
+        catch (EJBException e) {
+            throw new NotFoundFault(e.getMessage());
+        }
+
         return new NewTermResponse(description.getDescriptionId(), description.getTerm());
     }
 

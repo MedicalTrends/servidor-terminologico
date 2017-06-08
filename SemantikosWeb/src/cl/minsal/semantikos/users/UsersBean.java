@@ -104,7 +104,7 @@ public class UsersBean {
         newPass1 = "";
         newPass2 = "";
 
-        this.selectedUser = userManager.getUser(selectedUser.getIdUser());
+        this.selectedUser = userManager.getUser(selectedUser.getId());
 
         //se debe actualizar la lista del picklist con los perfiles del usuario
         updateAvailableProfiles(this.selectedUser);
@@ -149,7 +149,7 @@ public class UsersBean {
     public void newUser() {
 
         selectedUser = new User();
-        selectedUser.setIdUser(-1);
+        selectedUser.setId(-1);
         updateAvailableProfiles(selectedUser);
         updateAvailableInsitutions(selectedUser);
         clean();
@@ -219,7 +219,7 @@ public class UsersBean {
 
     public void formatRut() {
 
-        if(!selectedUser.getDocumentNumber().trim().isEmpty() && selectedUser.isRutDocument()) {
+        if(!selectedUser.getDocumentNumber().trim().isEmpty() && selectedUser.isDocumentRut()) {
             selectedUser.setDocumentNumber(StringUtils.formatRut(selectedUser.getDocumentNumber()));
         }
 
@@ -254,7 +254,7 @@ public class UsersBean {
             documentNumberError = "";
         }
 
-        if(selectedUser.isRutDocument()) {
+        if(selectedUser.isDocumentRut()) {
 
             if(!StringUtils.validateRutFormat(selectedUser.getDocumentNumber())) {
                 documentNumberError = "ui-state-error";
@@ -304,12 +304,12 @@ public class UsersBean {
 
             FacesContext facesContext = FacesContext.getCurrentInstance();
 
-            if(selectedUser.getIdUser() == -1) {
+            if(selectedUser.getId() == -1) {
                 try {
                     HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
 
                     userManager.createUser(selectedUser, request);
-                    selectedUser = userManager.getUser(selectedUser.getIdUser());
+                    selectedUser = userManager.getUser(selectedUser.getId());
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "1° Usuario creado de manera exitosa!!"));
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "2° Se ha enviado un correo de notificación al usuario para activar esta cuenta."));
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "3° Este usuario permanecerá bloqueado hasta que él active su cuenta"));
@@ -320,7 +320,7 @@ public class UsersBean {
             }
             else {
                 userManager.updateUser(selectedUser);
-                selectedUser = userManager.getUser(selectedUser.getIdUser());
+                selectedUser = userManager.getUser(selectedUser.getId());
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario: "+selectedUser.getEmail()+" modificado de manera exitosa!!"));
             }
 
@@ -382,7 +382,7 @@ public class UsersBean {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         try {
             userManager.deleteUser(selectedUser);
-            selectedUser = userManager.getUser(selectedUser.getIdUser());
+            selectedUser = userManager.getUser(selectedUser.getId());
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "El usuario se ha eliminado y queda en estado No Vigente."));
         } catch (Exception e){
             logger.error("error al actualizar usuario",e);

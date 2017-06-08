@@ -1,7 +1,7 @@
 
 package cl.minsal.semantikos.ws.shared;
 
-import cl.minsal.semantikos.modelws.request.DescriptionIDorConceptIDRequest;
+import cl.minsal.semantikos.ws.request.DescriptionIDorConceptIDRequest;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

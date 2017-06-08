@@ -187,55 +187,53 @@
 
                                     <p:columns columnIndexVar="columnIndex" var="column"
                                                value="#{helperTableBean.helperTableSelected.columns}"
-                                                sortable="true" headerText="#{column.description}" width="250">
+                                               sortable="true" width="250">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{column.description}" />
+                                        </f:facet>
                                         <p:cellEditor>
                                             <f:facet name="output">
-                                                <h:outputText value="#{row.cells[columnIndex].stringValue}"
-                                                              rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1}"/>
-                                                <h:outputText value="#{row.cells[columnIndex].booleanValue}"
-                                                              rendered="#{!column.foreignKey and column.helperTableDataTypeId == 2}"/>
-                                                <h:outputText value="#{row.cells[columnIndex].intValue}"
-                                                              rendered="#{!column.foreignKey and column.helperTableDataTypeId == 3}"/>
-                                                <h:outputText value="#{row.cells[columnIndex].floatValue}"
-                                                              rendered="#{!column.foreignKey and column.helperTableDataTypeId == 4}"/>
-                                                <h:outputText value="#{row.cells[columnIndex].dateValue}"
-                                                              rendered="#{!column.foreignKey and column.helperTableDataTypeId == 5}"/>
-                                                <h:outputText value="#{helperTableBean.getRow(row.cells[columnIndex].foreignKeyValue).description}"
-                                                              rendered="#{column.foreignKey }"/>
-                                                <h:outputText value="Sin clave foránea"
-                                                              rendered="#{column.foreignKey and helperTableBean.getRow(row.cells[columnIndex].foreignKeyValue) eq null}"/>
+                                                <h:outputText value="#{row.getColumnValue(column)}" rendered="#{not column.foreignKey}" />
+                                                <h:outputText value="#{helperTableBean.getRow(row.getColumnValue(column)).description}"
+                                                              rendered="#{column.foreignKey}"/>
                                             </f:facet>
                                             <f:facet name="input">
-                                                <p:inputText disabled="#{!row.valid and row.persistent}" value="#{row.cells[columnIndex].stringValue}"
-                                                             rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1 }"/>
-                                                <p:selectOneMenu disabled="#{!row.valid and row.persistent}" value="#{row.cells[columnIndex].booleanValue}" autoWidth="false"
-                                                                 style="width: 70%"
-                                                                 rendered="#{!column.foreignKey and column.helperTableDataTypeId == 2}">
-                                                    <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
-                                                    <f:selectItem itemLabel="false" itemValue="false"/>
-                                                    <f:selectItem itemLabel="true" itemValue="true"/>
-                                                </p:selectOneMenu>
-                                                <p:inputNumber disabled="#{!row.valid and row.persistent}" value="#{row.cells[columnIndex].intValue}"
-                                                               rendered="#{!column.foreignKey and column.helperTableDataTypeId == 3 }"
-                                                               decimalPlaces="0"/>
-                                                <p:inputNumber disabled="#{!row.valid and row.persistent}" value="#{row.cells[columnIndex].floatValue}"
-                                                               rendered="#{!column.foreignKey and column.helperTableDataTypeId == 4}"/>
-                                                <p:calendar disabled="#{!row.valid and row.persistent}" value="#{row.cells[columnIndex].dateValue}"
-                                                            rendered="#{!column.foreignKey and column.helperTableDataTypeId == 5}"
-                                                            locale="es" navigator="true" pattern="dd-MM-yyyy"
-                                                            mask="true"/>
-                                                <p:outputPanel
-                                                        rendered="#{column.foreignKey}">
-                                                    <p:selectOneMenu disabled="#{!row.valid and row.persistent}" value="#{row.cells[columnIndex].foreignKeyValue}"
-                                                                     rendered="#{column.foreignKey }">
-                                                        <f:selectItems
-                                                                value="#{helperTableBean.getReferencedTableRows(column.foreignKeyHelperTableId)}"
-                                                                var="fkTableRow" itemValue="#{fkTableRow.id}"
-                                                                itemLabel="#{fkTableRow.description}">
-                                                        </f:selectItems>
-                                                    </p:selectOneMenu>
-                                                </p:outputPanel>
+                                                <ui:repeat value="#{row.getCellsByColumn(column)}" var="cell">
+                                                    <p:inputText disabled="#{!row.valid and row.persistent}" value="#{cell.stringValue}"
+                                                                 rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1 }"/>
 
+                                                    <p:selectOneMenu disabled="#{!row.valid and row.persistent}" value="#{cell.booleanValue}" autoWidth="false"
+                                                                     style="width: 70%"
+                                                                     rendered="#{!column.foreignKey and column.helperTableDataTypeId == 2}">
+                                                        <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                                        <f:selectItem itemLabel="false" itemValue="false"/>
+                                                        <f:selectItem itemLabel="true" itemValue="true"/>
+                                                    </p:selectOneMenu>
+
+                                                    <p:inputNumber disabled="#{!row.valid and row.persistent}" value="#{cell.intValue}"
+                                                                   rendered="#{!column.foreignKey and column.helperTableDataTypeId == 3 }"
+                                                                   decimalPlaces="0"/>
+
+                                                    <p:inputNumber disabled="#{!row.valid and row.persistent}" value="#{cell.floatValue}"
+                                                                   rendered="#{!column.foreignKey and column.helperTableDataTypeId == 4}"/>
+
+                                                    <p:calendar disabled="#{!row.valid and row.persistent}" value="#{cell.dateValue}"
+                                                                rendered="#{!column.foreignKey and column.helperTableDataTypeId == 5}"
+                                                                locale="es" navigator="true" pattern="dd-MM-yyyy"
+                                                                mask="true"/>
+
+                                                    <p:outputPanel rendered="#{column.foreignKey}">
+                                                        <p:selectOneMenu disabled="#{!row.valid and row.persistent}" value="#{cell.foreignKeyValue}"
+                                                                         rendered="#{column.foreignKey }">
+                                                            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                                            <f:selectItems
+                                                                    value="#{helperTableBean.getReferencedTableRows(column.foreignKeyHelperTableId)}"
+                                                                    var="fkTableRow" itemValue="#{fkTableRow.id}"
+                                                                    itemLabel="#{fkTableRow.description}">
+                                                            </f:selectItems>
+                                                        </p:selectOneMenu>
+                                                    </p:outputPanel>
+                                                </ui:repeat>
                                             </f:facet>
                                         </p:cellEditor>
                                     </p:columns>

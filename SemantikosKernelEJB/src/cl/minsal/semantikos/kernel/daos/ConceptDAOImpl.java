@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
@@ -10,6 +11,7 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.tags.TagSMTK;
+import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -562,17 +564,18 @@ public class ConceptDAOImpl implements ConceptDAO {
 
     @Override
     public ConceptSMTK getConceptByID(long id) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "{call semantikos.get_concept_by_id(?)}";
         ConceptSMTK conceptSMTK;
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, id);
             call.execute();
 
             ResultSet rs = call.getResultSet();
+
             if (rs.next()) {
                 conceptSMTK = createConceptSMTKFromResultSet(rs);
             } else {
@@ -645,7 +648,8 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         /* Se recupera la categoría como objeto de negocio */
         idCategory = Long.valueOf(resultSet.getString("id_category"));
-        objectCategory = categoryDAO.getCategoryById(idCategory);
+        //objectCategory = categoryDAO.getCategoryById(idCategory);
+        objectCategory = CategoryFactory.getInstance().findCategoryById(idCategory);
 
         check = resultSet.getBoolean("is_to_be_reviewed");
         consult = resultSet.getBoolean("is_to_be_consultated");
@@ -670,12 +674,15 @@ public class ConceptDAOImpl implements ConceptDAO {
 
 
         /* Se recupera su Tag Semántikos */
-        TagSMTK tagSMTKByID = tagSMTKDAO.findTagSMTKByID(idTagSMTK);
+        //TagSMTK tagSMTKByID = tagSMTKDAO.findTagSMTKByID(idTagSMTK);
+        TagSMTK tagSMTKByID = TagSMTKFactory.getInstance().findTagSMTKById(idTagSMTK);
+
         ConceptSMTK conceptSMTK = new ConceptSMTK(id, conceptId, objectCategory, check, consult, modeled,
                 completelyDefined, heritable, published, observation, tagSMTKByID);
 
         /* Se recuperan las descripciones del concepto */
         List<Description> descriptions = descriptionDAO.getDescriptionsByConcept(conceptSMTK);
+
         conceptSMTK.setDescriptions(descriptions);
 
         /* Se recuperan sus Etiquetas */

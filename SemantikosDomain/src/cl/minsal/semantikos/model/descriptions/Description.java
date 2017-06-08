@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model.descriptions;
+    package cl.minsal.semantikos.model.descriptions;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.DAO;
@@ -51,6 +51,9 @@ public class Description extends PersistentEntity implements AuditableEntity, Se
 
     /** El concepto al cuál está asociada la descripción */
     private ConceptSMTK conceptSMTK;
+
+    public Description() {
+    }
 
     /**
      * @param id              Identificador único de la base de datos.
@@ -235,7 +238,10 @@ public class Description extends PersistentEntity implements AuditableEntity, Se
     public String toString() {
 
         if (this.getDescriptionType().equals(DescriptionType.FSN)) {
-            String tagSMTKParenthesis = "(" + conceptSMTK.getTagSMTK().getName().toLowerCase() + ")";
+            String tagSMTKParenthesis = "";
+            if(getConceptSMTK() != null) {
+                tagSMTKParenthesis = "(" + conceptSMTK.getTagSMTK().getName().toLowerCase() + ")";
+            }
             String descTerm = term.toLowerCase();
             if (!descTerm.endsWith(tagSMTKParenthesis)) {
                 return this.term + (conceptSMTK == null ? "" : " (" + conceptSMTK.getTagSMTK() + ")");

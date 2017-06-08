@@ -396,10 +396,12 @@ public class HelperTableBean implements Serializable {
         return someRow;
     }
 
-    public HelperTableRow getRow( long id) {
+    public HelperTableRow getRow(String id) {
 
-        HelperTableRow someRow;
-        someRow = manager.getRowById(id);
+        HelperTableRow someRow = null;
+        if(!id.isEmpty()) {
+            someRow = manager.getRowById(Long.parseLong(id));
+        }
         return someRow;
     }
 

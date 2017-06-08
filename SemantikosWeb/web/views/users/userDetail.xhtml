@@ -119,7 +119,7 @@
 
                                 <div class="ui-g">
                                     <div style="text-align: right">
-                                        <p:commandButton value="Cambiar Password" styleClass="ui-priority-primary" rendered="#{users.selectedUser != null and users.selectedUser.idUser != -1}"
+                                        <p:commandButton value="Cambiar Password" styleClass="ui-priority-primary" rendered="#{users.selectedUser != null and users.selectedUser.id != -1}"
                                                          actionListener="#{users.clean}"
                                                          oncomplete="PF('passwordChangeDialog').show()" update=":mainForm:pcdialog" process="@this" />
                                     </div>

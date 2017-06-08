@@ -17,7 +17,7 @@ public class Mailer implements Runnable {
 
     private String to;
 
-    private String from = "semantikos.minsal@gmail.com";
+    private String from = "sistemas@minsal.cl";//"semantikos.minsal@gmail.com";
 
     private String subject = "Confirmación Cuenta Semantikos";
 

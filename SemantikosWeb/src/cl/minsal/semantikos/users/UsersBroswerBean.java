@@ -43,7 +43,7 @@ public class UsersBroswerBean {
     public void newUser() {
 
         selectedUser = new User();
-        selectedUser.setIdUser(-1);
+        selectedUser.setId(-1);
 
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
 
@@ -61,7 +61,7 @@ public class UsersBroswerBean {
 
     public void setSelectedUser(User selectedUser) {
 
-        this.selectedUser = userManager.getUser(selectedUser.getIdUser());
+        this.selectedUser = userManager.getUser(selectedUser.getId());
     }
 
     public List<User> getAllUsers(){

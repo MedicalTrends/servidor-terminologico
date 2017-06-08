@@ -7,14 +7,14 @@ import java.io.Serializable;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "respuestaBuscarTerminoGenerica", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "RespuestaBuscarTerminoGenerica", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "respuestaBuscarTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "RespuestaBuscarTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class GenericTermSearchResponse implements Serializable {
 
     @XmlElement(name="terminoBuscar")
     private String pattern;
 
-    @XmlElement(name="descripcionesPerfectMatch")
+    @XmlElement(name="descripcionesEncontradas")
     private PerfectMatchDescriptionsResponse perfectMatchDescriptions;
 
     @XmlElement(name="descripcionesNoValidas")

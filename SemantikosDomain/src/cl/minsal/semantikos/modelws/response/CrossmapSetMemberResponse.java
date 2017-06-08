@@ -17,6 +17,8 @@ public class CrossmapSetMemberResponse {
     @XmlElement(name = "NombreCortoCrossmapSet")
     private String shortNameCrossmapSet;
 
+    @XmlElement(name = "VersionCrossmapSet")
+    private int versionCrossmapSet;
 
     /** ID de negocio */
     @XmlElement(name = "idCrossmapSetMember")
@@ -47,6 +49,7 @@ public class CrossmapSetMemberResponse {
         this.gloss = crossmapSetMember.getGloss();
 
         this.shortNameCrossmapSet = crossmapSetMember.getCrossmapSet().getAbbreviatedName();
+        this.versionCrossmapSet = crossmapSetMember.getCrossmapSet().getVersion();
     }
 
     public long getIdCrossmapSetMember() {
@@ -55,6 +58,14 @@ public class CrossmapSetMemberResponse {
 
     public void setIdCrossmapSetMember(long idCrossmapSetMember) {
         this.idCrossmapSetMember = idCrossmapSetMember;
+    }
+
+    public int getVersionCrossmapSet() {
+        return versionCrossmapSet;
+    }
+
+    public void setVersionCrossmapSet(int versionCrossmapSet) {
+        this.versionCrossmapSet = versionCrossmapSet;
     }
 
     /*

@@ -1,7 +1,7 @@
 
 package cl.minsal.semantikos.ws.shared;
 
-import cl.minsal.semantikos.modelws.request.DescriptionIDorConceptIDRequest;
+import cl.minsal.semantikos.ws.request.DescriptionIDorConceptIDRequest;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
@@ -305,7 +305,13 @@ public class ObjectFactory {
         return new Paginacion();
     }
 
-
+    /**
+     * Create an instance of {@link CrossMapsIndirectosPorIDDescripcionResponse }
+     * 
+     */
+    public CrossMapsIndirectosPorIDDescripcionResponse createCrossMapsIndirectosPorDescripcionIDorConceptID() {
+        return new CrossMapsIndirectosPorIDDescripcionResponse();
+    }
 
     /**
      * Create an instance of {@link DescripcionesPreferidasPorRefSet }
@@ -547,6 +553,16 @@ public class ObjectFactory {
         return new NotFoundFault();
     }
 
+
+    /**
+     * Create an instance of {@link  }
+     * 
+     */
+    /*
+    public CrossMapsIndirectosPorDescripcionIDorConceptIDResponse createCrossMapsIndirectosPorDescripcionIDorConceptIDResponse() {
+        return new CrossMapsIndirectosPorDescripcionIDorConceptIDResponse();
+    }
+    */
 
     /**
      * Create an instance of {@link DefinicionObjetivo }
@@ -985,6 +1001,16 @@ public class ObjectFactory {
         return new JAXBElement<Paginacion>(_Paginacion_QNAME, Paginacion.class, null, value);
     }
 
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CrossMapsIndirectosPorDescripcionIDorConceptID }{@code >}}
+     * 
+     */
+    /*
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "crossMapsIndirectosPorDescripcionIDorConceptID")
+    public JAXBElement<CrossMapsIndirectosPorDescripcionIDorConceptID> createCrossMapsIndirectosPorDescripcionIDorConceptID(CrossMapsIndirectosPorDescripcionIDorConceptID value) {
+        return new JAXBElement<CrossMapsIndirectosPorDescripcionIDorConceptID>(_CrossMapsIndirectosPorDescripcionIDorConceptID_QNAME, CrossMapsIndirectosPorDescripcionIDorConceptID.class, null, value);
+    }
+    */
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link DescripcionesPreferidasPorRefSet }{@code >}}
@@ -1309,6 +1335,17 @@ public class ObjectFactory {
     public JAXBElement<DefinicionObjetivo> createDefinicionObjetivo(DefinicionObjetivo value) {
         return new JAXBElement<DefinicionObjetivo>(_DefinicionObjetivo_QNAME, DefinicionObjetivo.class, null, value);
     }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link /*CrossMapsIndirectosPorDescripcionIDorConceptIDResponse }{@code >}}
+     * 
+     */
+    /*
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "crossMapsIndirectosPorDescripcionIDorConceptIDResponse")
+    public JAXBElement<CrossMapsIndirectosPorDescripcionIDorConceptIDResponse> createCrossMapsIndirectosPorDescripcionIDorConceptIDResponse(CrossMapsIndirectosPorDescripcionIDorConceptIDResponse value) {
+        return new JAXBElement<CrossMapsIndirectosPorDescripcionIDorConceptIDResponse>(_CrossMapsIndirectosPorDescripcionIDorConceptIDResponse_QNAME, CrossMapsIndirectosPorDescripcionIDorConceptIDResponse.class, null, value);
+    }
+    */
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link RespuestaRefSets }{@code >}}
