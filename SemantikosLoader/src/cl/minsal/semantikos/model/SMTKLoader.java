@@ -16,25 +16,11 @@ public class SMTKLoader {
 
     private static final Logger logger = LoggerFactory.getLogger(SMTKLoader.class);
 
-    /**
-     * Versión del snapshot (moduleId??)
-
-     */
-    private String release;
-
     /** Fecha */
     private Timestamp date;
 
     /** Usuario */
     private User user;
-
-    private boolean started = false;
-
-    private boolean finished = false;
-
-    private boolean withErrors = false;
-
-    private boolean userRequestedHalt = false;
 
 
     /** Rutas de los datafiles (componentes) del snapshot
@@ -54,15 +40,8 @@ public class SMTKLoader {
      *
      * Errores
      */
-    private List<LoadException> errors = new ArrayList<>();
+    private List<LoadLog> logs = new ArrayList<>();
 
-    public String getRelease() {
-        return release;
-    }
-
-    public void setRelease(String release) {
-        this.release = release;
-    }
 
     public Timestamp getDate() {
         return date;
@@ -78,38 +57,6 @@ public class SMTKLoader {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public boolean isStarted() {
-        return started;
-    }
-
-    public void setStarted(boolean started) {
-        this.started = started;
-    }
-
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public void setFinished(boolean finished) {
-        this.finished = finished;
-    }
-
-    public boolean isWithErrors() {
-        return withErrors;
-    }
-
-    public void setWithErrors(boolean withErrors) {
-        this.withErrors = withErrors;
-    }
-
-    public boolean isUserRequestedHalt() {
-        return userRequestedHalt;
-    }
-
-    public void setUserRequestedHalt(boolean userRequestedHalt) {
-        this.userRequestedHalt = userRequestedHalt;
     }
 
     public String getBasicConceptPath() {
@@ -152,16 +99,16 @@ public class SMTKLoader {
         this.conceptsProcessed = conceptsProcessed;
     }
 
-    public List<LoadException> getErrors() {
-        return errors;
+    public List<LoadLog> getLogs() {
+        return logs;
     }
 
-    public void setErrors(List<LoadException> errors) {
-        this.errors = errors;
+    public void setLogs(List<LoadLog> logs) {
+        this.logs = logs;
     }
 
-    public void logError(LoadException e) {
+
+    public void log(LoadLog e) {
         logger.error(e.toString());
-        getErrors().add(e);
     }
 }

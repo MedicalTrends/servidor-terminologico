@@ -253,10 +253,10 @@ public class BasicConceptLoader extends EntityLoader {
             haltReader();
 
         } catch (Exception e) {
-            smtkLoader.logError(new LoadException(path.toString(), null, e.getMessage()));
+            smtkLoader.log(new LoadException(path.toString(), null, e.getMessage()));
             e.printStackTrace();
         } catch (LoadException e) {
-            smtkLoader.logError(e);
+            smtkLoader.log(e);
             e.printStackTrace();
         }
     }
@@ -273,7 +273,7 @@ public class BasicConceptLoader extends EntityLoader {
                 conceptManager.persist((ConceptSMTK)pair.getValue(), smtkLoader.getUser());
             }
             catch (Exception e) {
-                smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage()));
+                smtkLoader.log(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage()));
                 e.printStackTrace();
             }
 

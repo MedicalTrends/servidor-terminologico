@@ -3,17 +3,15 @@ package cl.minsal.semantikos.model;
 /**
  * Created by root on 09-06-17.
  */
-public class LoadException extends Throwable {
+public class LoadException extends LoadLog {
 
     String dataFilePath;
     Long idConcept;
-    String errorMessage;
 
     public LoadException(String dataFilePath, Long idConcept, String errorMessage) {
-
+        super(errorMessage);
         this.dataFilePath = dataFilePath;
         this.idConcept = idConcept;
-        this.errorMessage = errorMessage;
     }
 
     public String getDataFilePath() {
@@ -32,20 +30,11 @@ public class LoadException extends Throwable {
         this.idConcept = idConcept;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
     @Override
     public String toString() {
-        return "LoadError{" +
+        return "LoadException{" +
                 "dataFilePath='" + dataFilePath + '\'' +
                 ", idConcept=" + idConcept +
-                ", errorMessage='" + errorMessage + '\'' +
                 '}';
     }
 }

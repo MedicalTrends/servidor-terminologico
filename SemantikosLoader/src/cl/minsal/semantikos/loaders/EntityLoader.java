@@ -25,7 +25,6 @@ public class EntityLoader {
 
     String separator;
 
-
     /** El logger para esta clase */
     private static final Logger logger = LoggerFactory.getLogger(EntityLoader.class);
 
