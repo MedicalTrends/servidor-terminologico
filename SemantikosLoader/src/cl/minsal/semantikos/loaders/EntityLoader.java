@@ -9,6 +9,10 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.IllegalFormatException;
+import java.util.List;
 
 /**
  * Created by root on 08-06-17.
@@ -20,6 +24,7 @@ public class EntityLoader {
     BufferedReader reader;
 
     String separator;
+
 
     /** El logger para esta clase */
     private static final Logger logger = LoggerFactory.getLogger(EntityLoader.class);
@@ -45,15 +50,19 @@ public class EntityLoader {
         this.separator = separator;
     }
 
-    public void initReader(String path) {
+    public void initReader(String path, List<String> fields) {
 
         this.path = Paths.get(path);
         try {
             reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
             /**
-             * skip header line (supposed to include header)
+             * Recuperar el header del archivo
              */
-            reader.readLine();
+            String header = reader.readLine();
+
+            if(!assertHeader(fields, Arrays.asList(header.split(separator)))) {
+                throw new IllegalArgumentException("El encabezado del archivo no es válido");
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -66,5 +75,9 @@ public class EntityLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean assertHeader(List<String> fields, List<String> header) {
+        return fields.containsAll(header);
     }
 }

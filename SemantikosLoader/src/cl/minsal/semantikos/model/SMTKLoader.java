@@ -1,13 +1,60 @@
 package cl.minsal.semantikos.model;
 
+import cl.minsal.semantikos.loaders.BasicConceptLoader;
 import cl.minsal.semantikos.model.users.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by root on 08-06-17.
  */
 public class SMTKLoader {
+
+    private static final Logger logger = LoggerFactory.getLogger(SMTKLoader.class);
+
+    /**
+     * Versión del snapshot (moduleId??)
+
+     */
+    private String release;
+
+    /** Fecha */
+    private Timestamp date;
+
+    /** Usuario */
+    private User user;
+
+    private boolean started = false;
+
+    private boolean finished = false;
+
+    private boolean withErrors = false;
+
+    private boolean userRequestedHalt = false;
+
+
+    /** Rutas de los datafiles (componentes) del snapshot
+     *
+     */
+    private String basicConceptPath;
+    private String basicDescriptionPath;
+    private String basicRelationshipPath;
+
+    /**
+     * Datos de control del proceso de carga
+     */
+    private int conceptsTotal;
+    private int conceptsProcessed;
+
+    /**
+     *
+     * Errores
+     */
+    private List<LoadException> errors = new ArrayList<>();
 
     public String getRelease() {
         return release;
@@ -105,114 +152,16 @@ public class SMTKLoader {
         this.conceptsProcessed = conceptsProcessed;
     }
 
-    public int getDescriptionsTotal() {
-        return descriptionsTotal;
+    public List<LoadException> getErrors() {
+        return errors;
     }
 
-    public void setDescriptionsTotal(int descriptionsTotal) {
-        this.descriptionsTotal = descriptionsTotal;
+    public void setErrors(List<LoadException> errors) {
+        this.errors = errors;
     }
 
-    public int getTotal() {
-        return total;
+    public void logError(LoadException e) {
+        logger.error(e.toString());
+        getErrors().add(e);
     }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
-    public int getCreated() {
-        return created;
-    }
-
-    public void setCreated(int created) {
-        this.created = created;
-    }
-
-    public int getRemoved() {
-        return removed;
-    }
-
-    public void setRemoved(int removed) {
-        this.removed = removed;
-    }
-
-    public int getUnmodified() {
-        return unmodified;
-    }
-
-    public void setUnmodified(int unmodified) {
-        this.unmodified = unmodified;
-    }
-
-    public int getInvalidated() {
-        return invalidated;
-    }
-
-    public void setInvalidated(int invalidated) {
-        this.invalidated = invalidated;
-    }
-
-    public int getRestored() {
-        return restored;
-    }
-
-    public void setRestored(int restored) {
-        this.restored = restored;
-    }
-
-    public int getFailed() {
-        return failed;
-    }
-
-    public void setFailed(int failed) {
-        this.failed = failed;
-    }
-
-    /**
-     * Versión del snapshot (moduleId??)
-
-     */
-    private String release;
-
-    /** Fecha */
-    private Timestamp date;
-
-    /** Usuario */
-    private User user;
-
-    private boolean started = false;
-
-    private boolean finished = false;
-
-    private boolean withErrors = false;
-
-    private boolean userRequestedHalt = false;
-
-
-    /** Rutas de los datafiles (componentes) del snapshot
-     *
-     */
-    private String basicConceptPath;
-    private String basicDescriptionPath;
-    private String basicRelationshipPath;
-
-
-    /**
-     * Datos de control del proceso de actualización
-     */
-    private int conceptsTotal;
-    private int conceptsProcessed;
-    private int descriptionsTotal;
-
-    /**
-     * Estadísticas de la actualización
-     */
-    private int total;
-    private int created;
-    private int removed;
-    private int unmodified;
-    private int invalidated;
-    private int restored;
-    private int failed;
 }

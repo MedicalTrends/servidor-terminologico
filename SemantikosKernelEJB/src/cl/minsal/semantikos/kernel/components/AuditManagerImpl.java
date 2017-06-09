@@ -37,7 +37,6 @@ public class AuditManagerImpl implements AuditManager {
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
         ConceptAuditAction conceptAuditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_CREATION, now(), user, conceptSMTK);
 
-
         auditDAO.recordAuditAction(conceptAuditAction);
     }
 
