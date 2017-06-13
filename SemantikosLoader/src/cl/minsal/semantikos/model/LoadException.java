@@ -7,11 +7,20 @@ public class LoadException extends LoadLog {
 
     String dataFilePath;
     Long idConcept;
+    boolean severe = false;
 
-    public LoadException(String dataFilePath, Long idConcept, String errorMessage) {
-        super(errorMessage);
+    public LoadException(String dataFilePath, Long idConcept, String errorMessage, String type) {
+        super(errorMessage, type);
         this.dataFilePath = dataFilePath;
         this.idConcept = idConcept;
+    }
+
+    public LoadException(String dataFilePath, Long idConcept, String errorMessage, String type, boolean severe) {
+        super(errorMessage, type);
+        this.dataFilePath = dataFilePath;
+        this.idConcept = idConcept;
+        this.severe = severe;
+
     }
 
     public String getDataFilePath() {
@@ -30,11 +39,16 @@ public class LoadException extends LoadLog {
         this.idConcept = idConcept;
     }
 
+    public boolean isSevere() {
+        return severe;
+    }
+
+    public void setSevere(boolean severe) {
+        this.severe = severe;
+    }
+
     @Override
     public String toString() {
-        return "LoadException{" +
-                "dataFilePath='" + dataFilePath + '\'' +
-                ", idConcept=" + idConcept +
-                '}';
+        return super.toString()+"("+dataFilePath+":"+idConcept+")";
     }
 }

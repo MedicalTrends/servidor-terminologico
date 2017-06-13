@@ -1,20 +1,32 @@
 package cl.minsal.semantikos.model;
 
+import cl.minsal.semantikos.LoaderView;
 import cl.minsal.semantikos.loaders.BasicConceptLoader;
+import cl.minsal.semantikos.loaders.Initializer;
 import cl.minsal.semantikos.model.users.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by root on 08-06-17.
  */
-public class SMTKLoader {
+public class SMTKLoader extends SwingWorker<Void, String> {
 
-    private static final Logger logger = LoggerFactory.getLogger(SMTKLoader.class);
+    public static final String PATH_PREFIX =  Paths.get(".").toAbsolutePath().normalize().toString().concat("/SemantikosLoader/resources/");
+
+    public static final String BASIC_CONCEPTS_PATH=PATH_PREFIX.concat("datafiles/basic/Conceptos_VIG_SMTK.txt");
+    public static final String BASIC_DESCRIPTIONS_PATH=PATH_PREFIX.concat("datafiles/basic/Descripciones_VIG_STK.txt");
+    public static final String BASIC_RELATIONSHIPS_PATH=PATH_PREFIX.concat("datafiles/basic/Relaciones_Conceptos_VIG_STK.txt");
+
+    private static final Logger logger = java.util.logging.Logger.getLogger(SMTKLoader.class.getName() );
+
+    private JTextArea logsComponent;
 
     /** Fecha */
     private Timestamp date;
@@ -26,15 +38,15 @@ public class SMTKLoader {
     /** Rutas de los datafiles (componentes) del snapshot
      *
      */
-    private String basicConceptPath;
-    private String basicDescriptionPath;
-    private String basicRelationshipPath;
+    private String basicConceptPath = BASIC_CONCEPTS_PATH;
+    private String basicDescriptionPath = BASIC_DESCRIPTIONS_PATH;
+    private String basicRelationshipPath = BASIC_RELATIONSHIPS_PATH;
 
     /**
      * Datos de control del proceso de carga
      */
-    private int conceptsTotal;
-    private int conceptsProcessed;
+    private JTextField conceptsTotal;
+    private JTextField conceptsProcessed;
 
     /**
      *
@@ -83,20 +95,28 @@ public class SMTKLoader {
         this.basicRelationshipPath = basicRelationshipPath;
     }
 
-    public int getConceptsTotal() {
+    public JTextField getConceptsTotal() {
         return conceptsTotal;
     }
 
-    public void setConceptsTotal(int conceptsTotal) {
+    public void setConceptsTotal(JTextField conceptsTotal) {
         this.conceptsTotal = conceptsTotal;
     }
 
-    public int getConceptsProcessed() {
+    public void setConceptsTotal(int conceptsTotal) {
+        this.getConceptsTotal().setText(String.valueOf(conceptsTotal));
+    }
+
+    public JTextField getConceptsProcessed() {
         return conceptsProcessed;
     }
 
-    public void setConceptsProcessed(int conceptsProcessed) {
+    public void setConceptsProcessed(JTextField conceptsProcessed) {
         this.conceptsProcessed = conceptsProcessed;
+    }
+
+    public void setConceptsProcessed(int conceptsProcessed) {
+        this.getConceptsProcessed().setText(String.valueOf(conceptsProcessed));
     }
 
     public List<LoadLog> getLogs() {
@@ -107,8 +127,46 @@ public class SMTKLoader {
         this.logs = logs;
     }
 
-
-    public void log(LoadLog e) {
-        logger.error(e.toString());
+    public JTextArea getLogsComponent() {
+        return logsComponent;
     }
+
+    public void setLogsComponent(JTextArea logsComponent) {
+        this.logsComponent = logsComponent;
+    }
+
+    public void log(LoadLog log) {
+
+        System.out.println(log.toString());
+        logger.info(log.toString());
+        logsComponent.append(log.toString());
+        logsComponent.append("\n");
+        //refreshConsole(log.toString());
+        //LoaderView.refreshConsole("HOLA");
+    }
+
+    @Override
+    protected Void doInBackground() throws Exception {
+        try {
+            Initializer initializer = new Initializer();
+            BasicConceptLoader basicConceptLoader = new BasicConceptLoader();
+
+            initializer.checkDataFiles(this);
+            basicConceptLoader.processConcepts(this);
+        } catch (LoadException e1) {
+            JOptionPane.showMessageDialog(null, e1.getMessage());
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    protected void process(List<String> chunks) {
+        logsComponent.append(chunks.get(0));
+    }
+
+
+
 }

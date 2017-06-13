@@ -14,7 +14,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
-import org.slf4j.Logger;
+import java.util.logging.*;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
 
+import static cl.minsal.semantikos.model.LoadLog.ERROR;
 import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN_MAPEO_DE;
 
 /**
@@ -29,18 +30,14 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
  */
 public class BasicConceptLoader extends EntityLoader {
 
-    private static final Logger logger = LoggerFactory.getLogger(BasicConceptLoader.class);
+    private static final Logger logger = Logger.getLogger(BasicConceptLoader.class.getName() );
 
     ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
     DescriptionManager descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
     SnomedCTManager snomedCTManager = (SnomedCTManager) RemoteEJBClientFactory.getInstance().getManager(SnomedCTManager.class);
     HelperTablesManager helperTableManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
 
-    public BasicConceptLoader(Path path, BufferedReader reader) {
-        super(path, reader);
-    }
-
-    private static final Map<String, Integer> basicConceptFields;
+    public static final Map<String, Integer> basicConceptFields;
     static
     {
         basicConceptFields = new HashMap<String, Integer>();
@@ -60,7 +57,7 @@ public class BasicConceptLoader extends EntityLoader {
         basicConceptFields.put("USUARIO_REGISTRO", 13);
     }
 
-    private static final Map<String, Integer> basicDescriptionFields;
+    public static final Map<String, Integer> basicDescriptionFields;
     static
     {
         basicDescriptionFields = new HashMap<String, Integer>();
@@ -78,7 +75,7 @@ public class BasicConceptLoader extends EntityLoader {
         basicDescriptionFields.put("USOS", 11);
     }
 
-    private static final Map<String, Integer> basicRelationshipFields;
+    public static final Map<String, Integer> basicRelationshipFields;
     static
     {
         basicRelationshipFields = new HashMap<String, Integer>();
@@ -86,10 +83,10 @@ public class BasicConceptLoader extends EntityLoader {
         basicRelationshipFields.put("FECHA", 1);
         basicRelationshipFields.put("ESTADO", 2);
         basicRelationshipFields.put("STK_CONCEPTOORIGEN", 3);
-        basicRelationshipFields.put("ID_TIPO_RELACION", 4);
+        basicRelationshipFields.put("DSC_TIPO_RELACION", 4);
         basicRelationshipFields.put("ID_SCT_DESTINO", 5);
         basicRelationshipFields.put("RELATIONSHIPGROUP", 6);
-        basicRelationshipFields.put("FECHA_REGISTRO", 7);
+        //basicRelationshipFields.put("FECHA_REGISTRO", 7);
         basicRelationshipFields.put("USUARIO_REGISTRO", 8);
         basicRelationshipFields.put("MODELADO", 9);
     }
@@ -108,7 +105,7 @@ public class BasicConceptLoader extends EntityLoader {
         Category category = CategoryFactory.getInstance().findCategoryByName(categoryName);
 
         if(category == null) {
-            throw new LoadException(path.toString(), id, "No existe una categoría de nombre: "+categoryName);
+            throw new LoadException(path.toString(), id, "No existe una categoría de nombre: "+categoryName, ERROR);
         }
 
         ConceptSMTK conceptSMTK = new ConceptSMTK(category);
@@ -143,13 +140,13 @@ public class BasicConceptLoader extends EntityLoader {
                 descriptionType = DescriptionTypeFactory.getInstance().getFSNDescriptionType();
                 break;
             default:
-                throw new LoadException(path.toString(), id, "Tipo de descripción desconocido: "+idDescriptionType);
+                throw new LoadException(path.toString(), id, "Tipo de descripción desconocido: "+idDescriptionType, ERROR);
         }
 
         ConceptSMTK conceptSMTK = conceptSMTKMap.get(idConcept);
 
         if(conceptSMTK == null) {
-            throw new LoadException(path.toString(), idConcept, "Descripción referencia a concepto inexistente");
+            throw new LoadException(path.toString(), idConcept, "Descripción referencia a concepto inexistente", ERROR);
         }
 
         Description description = new Description(conceptSMTK, term, descriptionType);
@@ -173,11 +170,11 @@ public class BasicConceptLoader extends EntityLoader {
         ConceptSCT conceptSCT = snomedCTManager.getConceptByID(idConceptSCT);
 
         if(conceptSMTK == null) {
-            throw new LoadException(path.toString(), idConceptSMTK, "Relación referencia a concepto SMTK inexistente");
+            throw new LoadException(path.toString(), idConceptSMTK, "Relación referencia a concepto SMTK inexistente", ERROR);
         }
 
         if(conceptSCT == null) {
-            throw new LoadException(path.toString(), idConceptSMTK, "Relación referencia a concepto SCT inexistente");
+            throw new LoadException(path.toString(), idConceptSMTK, "Relación referencia a concepto SCT inexistente", ERROR);
         }
 
         /**Se obtiene la definición de relacion SNOMED CT**/
@@ -196,7 +193,7 @@ public class BasicConceptLoader extends EntityLoader {
                 RelationshipAttribute ra;
 
                 if (relationshipTypes.size() == 0) {
-                    throw new LoadException(path.toString(), idConceptSMTK, "No existe un tipo de relación de nombre: "+relationshipType);
+                    throw new LoadException(path.toString(), idConceptSMTK, "No existe un tipo de relación de nombre: "+relationshipType, ERROR);
                 }
 
                 ra = new RelationshipAttribute(attDef, relationship, relationshipTypes.get(0));
@@ -211,10 +208,7 @@ public class BasicConceptLoader extends EntityLoader {
 
         try {
 
-            /**
-             * Abrir archivo de conceptos y validar estructura
-             */
-            initReader(smtkLoader.getBasicConceptPath(), (List<String>) (Object) Arrays.asList(basicConceptFields.keySet().toArray()));
+            initReader(smtkLoader.getBasicConceptPath());
 
             String line;
 
@@ -222,29 +216,17 @@ public class BasicConceptLoader extends EntityLoader {
                 loadConceptFromFileLine(line);
             }
 
-            /**
-             * Cerrar archivo
-             */
             haltReader();
 
-            /**
-             * Abrir archivo de descripciones y validar estructura
-             */
-            initReader(smtkLoader.getBasicDescriptionPath(), (List<String>) (Object) Arrays.asList(basicDescriptionFields.keySet().toArray()));
+            initReader(smtkLoader.getBasicDescriptionPath());
 
             while ((line = reader.readLine()) != null) {
                 loadDescriptionFromFileLine(line);
             }
 
-            /**
-             * Cerrar archivo
-             */
             haltReader();
 
-            /**
-             * Abrir archivo de relaciones y validar estructura
-             */
-            initReader(smtkLoader.getBasicRelationshipPath(), (List<String>) (Object) Arrays.asList(basicRelationshipFields.keySet().toArray()));
+            initReader(smtkLoader.getBasicRelationshipPath());
 
             while ((line = reader.readLine()) != null) {
                 loadRelationshipFromFileLine(line);
@@ -253,7 +235,7 @@ public class BasicConceptLoader extends EntityLoader {
             haltReader();
 
         } catch (Exception e) {
-            smtkLoader.log(new LoadException(path.toString(), null, e.getMessage()));
+            smtkLoader.log(new LoadException(path.toString(), null, e.getMessage(), ERROR));
             e.printStackTrace();
         } catch (LoadException e) {
             smtkLoader.log(e);
@@ -273,12 +255,16 @@ public class BasicConceptLoader extends EntityLoader {
                 conceptManager.persist((ConceptSMTK)pair.getValue(), smtkLoader.getUser());
             }
             catch (Exception e) {
-                smtkLoader.log(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage()));
+                smtkLoader.log(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
                 e.printStackTrace();
             }
 
             it.remove(); // avoids a ConcurrentModificationException
         }
+    }
 
+    public void processConcepts(SMTKLoader smtkLoader) {
+        loadAllConcepts(smtkLoader);
+        persistAllConcepts(smtkLoader);
     }
 }

@@ -1,0 +1,88 @@
+package cl.minsal.semantikos.loaders;
+
+import cl.minsal.semantikos.model.LoadException;
+import cl.minsal.semantikos.model.LoadLog;
+import cl.minsal.semantikos.model.SMTKLoader;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+
+import static cl.minsal.semantikos.model.LoadLog.ERROR;
+import static cl.minsal.semantikos.model.LoadLog.INFO;
+
+/**
+ * Created by root on 12-06-17.
+ */
+public class Initializer extends EntityLoader {
+
+    public void checkDataFiles(SMTKLoader smtkLoader) throws LoadException, IOException {
+        try {
+
+            smtkLoader.log(new LoadLog("Comprobando DataFiles", INFO));
+
+            this.path = Paths.get(smtkLoader.BASIC_CONCEPTS_PATH);
+            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+
+            int lines = 1;
+
+            /**
+             * Recuperar el header del archivo
+             */
+            String header = reader.readLine();
+
+            if(!assertHeader((List<String>) (Object) Arrays.asList(BasicConceptLoader.basicConceptFields.keySet().toArray()),
+                    Arrays.asList(header.split(separator)))) {
+                throw new LoadException(smtkLoader.BASIC_CONCEPTS_PATH, null, "El encabezado del archivo no es válido", ERROR);
+            }
+
+            while (reader.readLine() != null) lines++;
+            reader.close();
+
+            this.path = Paths.get(smtkLoader.BASIC_DESCRIPTIONS_PATH);
+            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+
+            /**
+             * Recuperar el header del archivo
+             */
+            header = reader.readLine();
+
+            if(!assertHeader((List<String>) (Object) Arrays.asList(BasicConceptLoader.basicDescriptionFields.keySet().toArray()),
+                    Arrays.asList(header.split(separator)))) {
+                throw new LoadException(smtkLoader.BASIC_DESCRIPTIONS_PATH, null, "El encabezado del archivo no es válido", ERROR);
+            }
+
+            this.path = Paths.get(smtkLoader.BASIC_RELATIONSHIPS_PATH);
+            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+
+            /**
+             * Recuperar el header del archivo
+             */
+            header = reader.readLine();
+
+            if(!assertHeader((List<String>) (Object) Arrays.asList(BasicConceptLoader.basicRelationshipFields.keySet().toArray()),
+                    Arrays.asList(header.split(separator)))) {
+                throw new LoadException(smtkLoader.BASIC_RELATIONSHIPS_PATH, null, "El encabezado del archivo no es válido", ERROR);
+            }
+
+            smtkLoader.setConceptsTotal(lines-1);
+            smtkLoader.setConceptsProcessed(0);
+
+            smtkLoader.log(new LoadLog("DataFiles OK", INFO));
+
+        } catch (IOException e) {
+            throw e;
+        } catch (LoadException e) {
+            if(e.isSevere()) {
+                throw e;
+            }
+            else {
+                smtkLoader.log(e);
+            }
+        }
+    }
+
+}

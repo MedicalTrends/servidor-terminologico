@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.model;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by root on 09-06-17.
@@ -9,17 +10,29 @@ public class LoadLog extends Throwable {
 
     Timestamp timestamp;
     String message;
+    String type;
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public LoadLog(String message) {
+    public static final String ERROR = "ERROR";
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public static final String INFO = "INFO";
+
+    public LoadLog(String message, String type) {
         this.timestamp = new Timestamp(System.currentTimeMillis());
         this.message = message;
+        this.type = type;
     }
 
     @Override
     public String toString() {
-        return "LoadLog{" +
-                "timestamp=" + timestamp +
-                ", message='" + message + '\'' +
-                '}';
+        return "["+format.format(timestamp)+"]"+type+": "+message;
     }
 }

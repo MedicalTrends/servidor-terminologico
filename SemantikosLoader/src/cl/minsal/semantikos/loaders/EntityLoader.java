@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.loaders;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import cl.minsal.semantikos.model.LoadException;
+import cl.minsal.semantikos.model.SMTKLoader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,25 +13,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.IllegalFormatException;
 import java.util.List;
+import java.util.logging.Logger;
+
+import static cl.minsal.semantikos.model.LoadLog.ERROR;
 
 /**
  * Created by root on 08-06-17.
  */
 public class EntityLoader {
 
+    private static final Logger logger = java.util.logging.Logger.getLogger(EntityLoader.class.getName() );
+
     Path path;
 
     BufferedReader reader;
 
-    String separator;
-
-    /** El logger para esta clase */
-    private static final Logger logger = LoggerFactory.getLogger(EntityLoader.class);
-
-    public EntityLoader(Path path, BufferedReader reader) {
-        this.path = path;
-        this.reader = reader;
-    }
+    String separator = ";";
 
     public Path getPath() {
         return path;
@@ -49,19 +46,15 @@ public class EntityLoader {
         this.separator = separator;
     }
 
-    public void initReader(String path, List<String> fields) {
+    public void initReader(String path) {
 
         this.path = Paths.get(path);
         try {
             reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
             /**
-             * Recuperar el header del archivo
+             * Descartar header
              */
-            String header = reader.readLine();
-
-            if(!assertHeader(fields, Arrays.asList(header.split(separator)))) {
-                throw new IllegalArgumentException("El encabezado del archivo no es válido");
-            }
+            reader.readLine();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,6 +70,13 @@ public class EntityLoader {
     }
 
     public boolean assertHeader(List<String> fields, List<String> header) {
-        return fields.containsAll(header);
+        for (String field : fields) {
+            if(!header.contains(field)) {
+                return false;
+            }
+
+        }
+        return true;
     }
+
 }

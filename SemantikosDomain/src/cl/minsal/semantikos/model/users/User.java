@@ -58,8 +58,14 @@ public class User extends PersistentEntity {
     public User() {
     }
 
-    private User(long idUser, String username, String name, boolean locked) {
-        super(idUser);
+    private User(String username, String name, boolean locked) {
+        this.username = username;
+        this.name = name;
+        this.locked = locked;
+    }
+
+    private User(long id, String username, String name, boolean locked) {
+        super(id);
         this.username = username;
         this.name = name;
         this.locked = locked;
@@ -68,14 +74,14 @@ public class User extends PersistentEntity {
     /**
      * Constructor extendido para crear una instancia de usuario básica real.
      *
-     * @param idUser   Identificador único del Usuario.
+     * @param id   Identificador único del Usuario.
      * @param username Nombre de Usuario
      * @param name     Nombre del Usuario
      * @param password Contraseña
      * @param locked   Bloqueado?
      */
-    public User(long idUser, String username, String name, String password, boolean locked) {
-        this(idUser, username, name, locked);
+    public User(long id, String username, String name, String password, boolean locked) {
+        this(id, username, name, locked);
         this.setPassword(password);
     }
 
