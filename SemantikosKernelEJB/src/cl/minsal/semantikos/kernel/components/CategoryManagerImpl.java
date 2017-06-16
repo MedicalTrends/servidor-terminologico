@@ -69,13 +69,13 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
-    public ConceptSMTK categoryContains(Category category, String term) {
+    public ConceptSMTK categoryContains(Category category, String term, boolean caseSensitive) {
 
-        List<Description> descriptions = descriptionManager.searchDescriptionsByTerm(term, Arrays.asList(category));
+        List<Description> descriptions = descriptionManager.searchDescriptionsByTerm(term, Arrays.asList(category), caseSensitive);
 
         /* Si la búsqueda resultó con al menos un término vigente, entonces si contiene */
         for (Description description : descriptions) {
-            if (description.isValid()){
+            if (description.isValid()) {
                 return description.getConceptSMTK();
             }
         }
@@ -138,6 +138,11 @@ public class CategoryManagerImpl implements CategoryManager {
         }
 
         return res;
+    }
+
+    @Override
+    public CategoryFactory getCategoryFactory() {
+        return CategoryFactory.getInstance();
     }
 
 }

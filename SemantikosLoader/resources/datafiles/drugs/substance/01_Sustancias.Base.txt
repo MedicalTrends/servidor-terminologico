@@ -1,0 +1,1159 @@
+CONCEPTO_ID;DESCRIPCION;DESC_ABREVIADA;SENSIBLE_MAYUSCULA;CREAC_NOMBRE;ESTADO;REVISADO;CONSULTAR;OBSERVACION;SINONIMO;SCT_ID;SCT_TERMINO;DCI_DID;DCI_TERMINO;GRUPOS_JERARQUICOS;RIESGO_TERATOGENICO
+4588932;abacavir;;Insensible;Manual;Vigente;Si;;abacavir;;387005008;abacavir;7544;abacavir;;C
+4588936;abatacept;;Insensible;Manual;Vigente;Si;;abatacept;;421777009;abatacept;8495;abatacept;;C
+4757586;abciximab;;Insensible;Manual;Vigente;Si;;abciximab;;386951001;abciximab;7200;abciximab;;C
+4839786;abiraterona;;Insensible;Manual;Vigente;Si;;abiraterona;;699678007;abiraterona;7375;abiraterona;;X
+5202050;abobotulinumtoxina A;;Insensible;Manual;Vigente;;;;;;;;;;
+7640974;aceglutamida;;Insensible;Manual;Vigente;;;;;;;;;;
+4840070;aceite de hígado de bacalao;;Insensible;Manual;Vigente;Si;;aceite de hígado de bacalao;;126082008;aceite de hígado de bacalao;;;;
+4840230;acenocumarol;;Insensible;Manual;Vigente;Si;;acenocumarol;;387457003;acenocumarol;503;acenocumarol;;D
+6434407;acetato de betametasona;;Insensible;Manual;Vigente;Si;;acetato de betametasona;;116572001;acetato de betametasona;;;;
+4840292;acetato de calcio;;Insensible;Manual;Vigente;Si;;acetato cálcico;"• 6399670 - calcio acetato
+• 6384471 - acetato cálcico";387019008;acetato cálcico;;;;
+4840414;acetato de sodio;;Insensible;Manual;Vigente;Si;;acetato de sodio;;108951007;acetato de sodio;;;;
+7502706;acetato de zinc;;Insensible;Manual;Vigente;;;;;;;;;;
+4840556;acetazolamida;;Insensible;Manual;Vigente;Si;;acetazolamida;;372709008;acetazolamida;481;acetazolamida;;C
+4840615;acetilcisteína;;Insensible;Manual;Vigente;Si;;acetilcisteína;;387440002;acetilcisteína;1535;acetilcisteína;;
+4840898;acetónido de fluocinolona;;Insensible;Manual;Vigente;Si;;acetonida de fluocinolona;;396059004;acetonida de fluocinolona;1046;acetónido de fluocinolona;;C
+4841356;aciclovir;;Insensible;Manual;Vigente;Si;;aciclovir;;372729009;aciclovir;4435;aciclovir;;B
+4844504;ácido acetilsalicílico;;Insensible;Manual;Vigente;Si;;aspirina;• 6399613 - acetilsalicílico ácido;387458008;aspirina;;;;
+4844663;ácido alendrónico;;Insensible;Manual;Vigente;Si;;ácido alendrónico;;391730008;ácido alendrónico;6462;ácido alendrónico;;
+4846670;ácido ascórbico;;Insensible;Manual;Vigente;;;ácido ascórbico;• 6391975 - vitamina C;43706004;ácido ascórbico;372;ácido ascórbico;;A
+4846744;ácido bórico;;Insensible;Manual;Vigente;No;;ácido bórico;;21611007;ácido bórico;;;;
+4847221;ácido cítrico;;Insensible;Manual;Vigente;No;;ácido cítrico;;75399008;ácido cítrico;;;;
+4847344;ácido clavulánico;;Insensible;Manual;Vigente;Si;;ácido clavulánico;;395939008;ácido clavulánico;4948;ácido clavulánico;;B
+6398327;ácido cromoglícico;;Insensible;Manual;Vigente;Si;;;;;;;;;
+4847437;ácido dehidrocólico;;Insensible;Manual;Vigente;Si;;ácido dehidrocólico;;387285003;ácido dehidrocólico;157;ácido dehidrocólico;;
+4847639;ácido docosahexaenoico;;Insensible;Manual;Vigente;Si;;ácido docosahexanoico;;226368001;ácido docosahexanoico;;;;
+4930258;ácido eicosapentaenoico;;Insensible;Manual;Vigente;Si;;ácido eicosapentanoico;;226367006;ácido eicosapentanoico;;;;
+4847883;ácido fólico;;Insensible;Manual;Vigente;Si;;ácido fólico;• 6412313 - vitamina B9;63718003;ácido fólico;68;ácido fólico;;A
+4849436;ácido fusídico;;Insensible;Manual;Vigente;Si;;ácido fusídico;;387530003;ácido fusídico;1431;ácido fusídico;;B
+7679293;ácido gadotérico;;Insensible;Manual;Vigente;;;;;;;;;;
+4849554;ácido gamma amino beta hidroxibutírico;;Insensible;Manual;Vigente;Si;;;;;;;;;
+4930292;ácido gamma aminobutírico;;Insensible;Manual;Vigente;Si;;ácido gamma-aminobutírico;;259100002;ácido gamma-aminobutírico;;;;
+6399530;ácido glutámico;;Insensible;Manual;Vigente;Si;;ácido glutámico;;85214009;ácido glutámico;66;ácido glutámico;;
+4850398;ácido hialurónico;;Insensible;Manual;Vigente;Si;;ácido hialurónico;;38218009;ácido hialurónico;;;;
+4850508;ácido ibandrónico;;Insensible;Manual;Vigente;;;ácido ibandrónico;;420936009;ácido ibandrónico;7189;ácido ibandrónico;;C
+4850581;ácido láctico;;Insensible;Manual;Vigente;Si;;ácido láctico;;77370004;ácido láctico;;;;
+4850677;ácido mefenámico;;Insensible;Manual;Vigente;Si;;ácido mefenámico;;387185008;ácido mefenámico;1494;ácido mefenámico;;C
+4850758;ácido micofenólico;;Insensible;Manual;Vigente;Si;;ácido micofenólico;;409330005;ácido micofenólico;2950;ácido micofenólico;;D
+4850930;ácido nicotínico;;Insensible;Manual;Vigente;Si;;ácido nicotínico;;273943001;ácido nicotínico;373;ácido nicotínico;;
+4930349;ácido pamidrónico;;Insensible;Manual;Vigente;Si;;ácido pamidrónico;;420442001;ácido pamidrónico;6305;ácido pamidrónico;;
+4930382;ácido para aminobenzoico;;Insensible;Manual;Vigente;Si;;;• 6399885 - paraaminobenzoico ácido;;;;;;
+4852185;ácido pipemídico;;Insensible;Manual;Vigente;Si;;ácido pipemídico;;96079005;ácido pipemídico;3694;ácido pipemídico;;
+4854729;ácido risedrónico;;Insensible;Manual;Vigente;Si;;;;;;6522;ácido risedrónico;;
+4854760;ácido salicílico;;Insensible;Manual;Vigente;Si;;ácido salicílico;;387253001;ácido salicílico;;;;
+4854811;ácido tranexámico;;Insensible;Manual;Vigente;Si;;ácido tranexámico;;386960009;ácido tranexámico;2060;ácido tranexámico;;B
+6403019;ácido undecilénico;;Insensible;Manual;Vigente;Si;;ácido undecilénico;;386990002;ácido undecilénico;;;;
+4854881;ácido ursodeoxicólico;;Insensible;Manual;Vigente;Si;;ácido ursodesoxicólico;;41143004;ácido ursodesoxicólico;4920;ácido ursodeoxicólico;;B
+4854948;ácido valproico;;Insensible;Manual;Vigente;Si;;ácido valproico;;387080000;ácido valproico;3300;ácido valproico;;D
+4855042;ácido zoledrónico;;Insensible;Manual;Vigente;Si;;ácido zoledrónico;;395926009;ácido zoledrónico;7254;ácido zoledrónico;;D
+4842161;ácido 5 - aminolevulínico;;Insensible;Manual;Vigente;Si;;ácido 5-aminolevulínico;;259496005;ácido 5-aminolevulínico;;;;
+4855333;acipimox;;Insensible;Manual;Vigente;Si;;acipimox;;391711008;acipimox;3809;acipimox;;
+4855394;acitretina;;Insensible;Manual;Vigente;Si;;acitretina;;386938006;acitretina;5530;acitretina;;X
+4855443;adalimumab;;Insensible;Manual;Vigente;Si;;adalimumab;;407317001;adalimumab;7860;adalimumab;;
+4855576;adapaleno;;Insensible;Manual;Vigente;Si;;adapaleno;;386934008;adapaleno;6675;adapaleno;;C
+4932200;adenosina;;Insensible;Manual;Vigente;Si;;adenosina;;35431001;adenosina;335;fosfato de adenosina;;C
+4855653;adifenina;;Insensible;Manual;Vigente;Si;;adifenina;;21394008;adifenina;2715;adifenina;;
+7224398;afatinib;;Insensible;Manual;Vigente;;;;;;;;;;D
+6397723;aflibercept;;Insensible;Manual;Vigente;Si;;;;;;;;;C
+6397729;agalsidasa beta;;Insensible;Manual;Vigente;Si;;;;;;;;;
+4855711;agomelatina;;Insensible;Manual;Vigente;;;agomelatina;;698012009;agomelatina;7392;agomelatina;;
+4855740;agua bidestilada;;Insensible;Manual;Vigente;;;;;;;;;;
+4855893;agua oxigenada;;Insensible;Manual;Vigente;;;agua oxigenada O^15^;;129505000;agua oxigenada O^15^;;;;
+4856016;alantoína;;Insensible;Manual;Vigente;;;alantoína;"• 6426297 - 5 - ureidohidantonína
+• 6391863 - glioxildiureida";395933009;alantoína;;;;
+4856065;albendazol;;Insensible;Manual;Vigente;Si;;albendazol;;387558006;albendazol;3967;albendazol;;C
+4856115;albúmina humana;;Insensible;Manual;Vigente;Si;;albúmina;;52454007;albúmina;;;;C
+6397731;alcaftadina;;Insensible;Manual;Vigente;Si;;alcaftadina;;447208001;alcaftadina;8707;alcaftadina;;B
+4856182;alcanfor;;Insensible;Manual;Vigente;Si;;alcanfor;;111136003;alcanfor;;;;
+6397738;alcohol bencílico;;Insensible;Manual;Vigente;Si;;alcohol bencílico;;55902002;alcohol bencílico;923;alcohol bencílico;;
+4856627;alfa tocoferol;;Insensible;Manual;Vigente;Si;;alfa - tocoferol;"• 6399618 - alfa tocoferol
+• 6412294 - vitamina E";259666007;alfa - tocoferol;;;;
+7431203;alfatradiol;;Insensible;Manual;Vigente;;;;;;;;;;
+4930387;alfentanilo;;Insensible;Manual;Vigente;Si;;alfentanilo;;387560008;alfentanilo;4818;alfentanilo;;C
+4930413;alfuzosina;;Insensible;Manual;Vigente;Si;;alfuzosina;;395954002;alfuzosina;5357;alfuzosina;;B
+4930474;alginato de sodio;;Insensible;Manual;Vigente;Si;;alginato de sodio;;75876003;alginato de sodio;;;;
+4930505;aliskireno;;Insensible;Manual;Vigente;Si;;aliskireno;• 6399619 - aliskiren;426725002;aliskireno;7992;aliskireno;;D
+4930552;alopurinol;;Insensible;Manual;Vigente;Si;;alopurinol;;387135004;alopurinol;1731;alopurinol;;C
+4930583;alprazolam;;Insensible;Manual;Vigente;Si;;alprazolam;;386983007;alprazolam;3426;alprazolam;;D
+4930599;alprostadil;;Insensible;Manual;Vigente;Si;;alprostadil;• 6426755 - prostaglandina E1;48988008;alprostadil;4425;alprostadil;;
+6398230;alquitrán de hulla;;Insensible;Manual;Vigente;Si;;Coal tar;"• 6421226 - coáltar
+• 6398231 - COAL TAR";53034005;Coal tar;;;;
+6397715;alteplasa;;Insensible;Manual;Vigente;Si;;alteplasa;"• 6415218 - activador tisular del plasminógeno recombinante
+• 6397716 - activador del plasminógeno tisular";387152000;alteplasa;5975;alteplasa;;C
+4930672;amantadina;;Insensible;Manual;Vigente;Si;;amantadina;;372763006;amantadina;1816;amantadina;;C
+7424111;ambrisentán;;Insensible;Manual;Vigente;;;;;428159003;ambrisentán;;;;X
+6397799;ambroxol;;Insensible;Manual;Vigente;;;ambroxol;;698024002;ambroxol;3692;ambroxol;;C
+4931116;amikacina;;Insensible;Manual;Vigente;Si;;amikacina;;387266001;amikacina;3492;amikacina;;C
+4931149;amilorida;;Insensible;Manual;Vigente;Si;;amilorida;;387503008;amilorida;2352;amilorida;;B
+4931278;aminofilina;;Insensible;Manual;Vigente;Si;;aminofilina;;373508009;aminofilina;376;aminofilina;;C
+6401813;aminolevulinato de metilo;;Insensible;Manual;Vigente;Si;;aminolevulinato de metilo;;409397005;aminolevulinato de metilo;;;;
+4931302;amiodarona;;Insensible;Manual;Vigente;Si;;amiodarona;;372821002;amiodarona;2012;amiodarona;;D
+4931427;amisulprida;;Insensible;Manual;Vigente;Si;;amisulprida;;391761004;amisulprida;4960;amisulprida;;
+4931600;amitriptilina;;Insensible;Manual;Vigente;Si;;amitriptilina;;372726002;amitriptilina;976;amitriptilina;;D
+4931639;amlodipino;;Insensible;Manual;Vigente;Si;;amlodipino;• 6397818 - AMLODIPINA;386864001;amlodipino;5729;amlodipino;;C
+4931648;amorolfina;;Insensible;Manual;Vigente;Si;;amorolfina;;391769002;amorolfina;5855;amorolfina;;
+4931668;amoxicilina;;Insensible;Manual;Vigente;Si;;amoxicilina;;372687004;amoxicilina;3230;amoxicilina;;B
+4931725;ampicilina;;Insensible;Manual;Vigente;Si;;ampicilina;;387170002;ampicilina;1339;ampicilina;;B
+4931743;anastrozol;;Insensible;Manual;Vigente;Si;;anastrozol;;386910003;anastrozol;7274;anastrozol;;X
+4931833;anfetamina;;Insensible;Manual;Vigente;Si;;anfetamina;• 6426753 - 2-amino-1-fenilpropano;703842006;anfetamina;377;anfetamina;;
+4930766;anfotericina B;;Sensible;Manual;Vigente;Si;;amfotericina B;• 6384149 - anfotericina B;77703004;amfotericina B;869;amfotericina B;;B
+6416979;anfotericina B liposomal;;Insensible;Manual;Vigente;;;anfotericina B liposómica;;412088006;anfotericina B liposómica;;;;B
+4932059;anidulafungina;;Insensible;Manual;Vigente;Si;;anidulafungina;;422157006;anidulafungina;7795;anidulafungina;;B
+4932104;antazolina;;Insensible;Manual;Vigente;Si;;antazolina;;373544004;antazolina;1142;antazolina;;C
+4932156;antitrombina III humana;;Sensible;Manual;Vigente;Si;;antitrombina III humana;;412564003;antitrombina III humana;6368;antitrombina III;;
+6397852;apixabán;;Insensible;Manual;Vigente;Si;;apixabán;;698090000;apixabán;8626;apixabán;;B
+4932166;apomorfina;;Insensible;Manual;Vigente;Si;;apomorfina;;387375001;apomorfina;;;;C
+4932198;aprepitant;;Insensible;Manual;Vigente;Si;;aprepitant;;409205009;aprepitant;8050;aprepitant;;B
+4932216;aprotinina bovina;;Insensible;Manual;Vigente;Si;;aprotinina;;386961008;aprotinina;2481;aprotinina;;B
+5150842;aripiprazol;;Insensible;Manual;Vigente;Si;;aripiprazol;;406784005;aripiprazol;7477;aripiprazol;;
+6397869;armodafinilo;;Insensible;Manual;Vigente;Si;;armodafinilo;;428694009;armodafinilo;;;;
+5150847;árnica;;Insensible;Manual;Vigente;Si;;;;;;;;;
+7470553;articaína;;Insensible;Manual;Vigente;;;;;;;;;;
+6397881;asenapina;;Insensible;Manual;Vigente;Si;;asenapina;;443375003;asenapina;;;;
+5150865;atapulgita activada;;Insensible;Manual;Vigente;Si;;atapulgita activada;;17917000;atapulgita activada;;;;
+5150900;atazanavir;;Insensible;Manual;Vigente;Si;;atazanavir;;413592000;atazanavir;8181;atazanavir;;
+5150905;atenolol;;Insensible;Manual;Vigente;Si;;atenolol;;387506000;atenolol;3801;atenolol;;D
+5150913;atomoxetina;;Insensible;Manual;Vigente;Si;;atomoxetina;;407037005;atomoxetina;5354;atomoxetina;;
+5150917;atorvastatina;;Insensible;Manual;Vigente;Si;;atorvastatina;;373444002;atorvastatina;7259;atorvastatina;;X
+5150923;atosiban;;Insensible;Manual;Vigente;Si;;atosiban;;391792002;atosiban;6392;atosiban;;
+5150927;atovacuona;;Insensible;Manual;Vigente;Si;;atovacuona;;386899002;atovacuona;6914;atovacuona;;
+5153715;atracurio besilato;;Insensible;Manual;Vigente;Si;;besilato de atracurio;;72752006;besilato de atracurio;4734;besilato de atracurio;;C
+5153681;atropa belladona extracto estandarizado;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5150938;atropina sulfato;;Insensible;Manual;Vigente;Si;;sulfato de atropina;;74237004;sulfato de atropina;;;;C
+6397900;axitinib;;Insensible;Manual;Vigente;Si;;Axitinib;;427882000;Axitinib;;;;
+5152862;azacitidina;;Insensible;Manual;Vigente;Si;;azacitidina;;412328000;azacitidina;4520;azacitidina;;D
+5152867;azatioprina;;Insensible;Manual;Vigente;Si;;azatioprina;;372574004;azatioprina;1291;azatioprina;;D
+5153622;azelastina;;Insensible;Manual;Vigente;Si;;azelastina;;372520005;azelastina;4074;azelastina;;C
+5153626;azitromicina;;Insensible;Manual;Vigente;Si;;azitromicina;;387531004;azitromicina;6197;azitromicina;;B
+5153633;aztreonam;;Insensible;Manual;Vigente;Si;;aztreonam;;387386004;aztreonam;5159;aztreonam;;B
+5153635;azufre;;Insensible;Manual;Vigente;Si;;azufre;;43735007;azufre;;;;
+5153641;azul de metileno;;Insensible;Manual;Vigente;Si;;azul de metileno, colorante;• 6424119 - cloruro de metiltioninio;6725000;azul de metileno, colorante;;;;C
+5153645;azul patente;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5153655;bacitracina;;Insensible;Manual;Vigente;Si;;bacitracina;;5220000;bacitracina;1167;bacitracina;;
+5153659;baclofeno;;Insensible;Manual;Vigente;Si;;baclofeno;;387342009;baclofeno;2956;baclofeno;;C
+5153663;basiliximab;;Insensible;Manual;Vigente;Si;;basilixmab;;386978004;basilixmab;7578;basiliximab;;B
+5153679;beclometasona;;Insensible;Manual;Vigente;Si;;beclometasona;;116574000;beclometasona;2307;beclometasona;;C
+6397919;belimumab;;Insensible;Manual;Vigente;Si;;belimumab;;449043000;belimumab;8381;belimumab;;C
+7103709;bencilpenicilina benzatina;;Insensible;Manual;Vigente;Si;;;;;;;;;B
+5153694;bencilpenicilina sódica;;Insensible;Manual;Vigente;Si;;bencilpenicilina;;387246005;bencilpenicilina;58;bencilpenicilina;;B
+5153700;bendamustina;;Insensible;Manual;Vigente;Si;;bendamustina;;428012008;bendamustina;5228;bendamustina;;D
+5153702;benserazida;;Insensible;Manual;Vigente;Si;;benserazida;;391821005;benserazida;3026;benserazida;;
+5153711;benzocaína;;Insensible;Manual;Vigente;Si;;benzocaína;;387357002;benzocaína;3953;benzocaína;;C
+5153725;betahistina;;Insensible;Manual;Vigente;Si;;betahistina;;418067008;betahistina;1502;betahistina;;
+6397943;betaína;;Insensible;Manual;Vigente;Si;;betaína;;43356007;betaína;;;;
+5153732;betametasona;;Insensible;Manual;Vigente;Si;;betametasona;;116571008;betametasona;1045;betametasona;;C
+5153737;betametasona dipropionato;;Insensible;Manual;Vigente;Si;;dipropionato de betametasona;;88736007;dipropionato de betametasona;;;;C
+5153754;betametasona fosfato sódico;;Insensible;Manual;Vigente;Si;;fosfato sódico de betametasona;;116573006;fosfato sódico de betametasona;;;;C
+7229764;betametasona valerato;;Insensible;Manual;Vigente;;;;;;;;;;
+5153757;betaxolol;;Insensible;Manual;Vigente;Si;;betaxolol;;409276006;betaxolol;4530;betaxolol;;C
+5153765;bevacizumab;;Insensible;Manual;Vigente;Si;;bevacizumab;;409406007;bevacizumab;8017;bevacizumab;;C
+6397949;bexaroteno;;Insensible;Manual;Vigente;Si;;bexaroteno;;387023000;bexaroteno;;;;
+5153836;bezafibrato;;Insensible;Manual;Vigente;Si;;bezafibrato;;396025003;bezafibrato;3968;bezafibrato;;
+5153841;bicalutamida;;Insensible;Manual;Vigente;Si;;bicalutamida;;386908000;bicalutamida;7021;bicalutamida;;X
+5153844;bicarbonato de sodio;;Insensible;Manual;Vigente;Si;;bicarbonato de sodio;;387319002;bicarbonato de sodio;;;;
+5153850;bifonazol;;Insensible;Manual;Vigente;Si;;bifonazol;;396036005;bifonazol;4887;bifonazol;;C
+7624363;bifosfato de potasio;;Insensible;Manual;Vigente;;;;;;;;;;
+5153856;bifosfato de sodio;;Insensible;Manual;Vigente;Si;;;;;;;;;
+6347339;bilastina;;Insensible;Manual;Vigente;Si;;bilastina;;697973006;bilastina;7905;bilastina;;
+6573102;bilis desecada;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5153861;bimatoprost;;Insensible;Manual;Vigente;Si;;bimatoprost;;129492005;bimatoprost;8035;bimatoprost;;C
+5162533;bis glicinato ferroso;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5153875;bisacodilo;;Insensible;Manual;Vigente;Si;;bisacodilo;;387075009;bisacodilo;824;bisacodilo;;
+5153885;bisoprolol;;Insensible;Manual;Vigente;Si;;bisoprolol;;386868003;bisoprolol;5225;bisoprolol;;C
+5153890;bivalirudina;;Insensible;Manual;Vigente;Si;;bivalirudina;;129498009;bivalirudina;7282;bivalirudina;;
+5153894;bleomicina;;Insensible;Manual;Vigente;Si;;bleomicina;;372843005;bleomicina;2721;bleomicina;;D
+7677091;Bordetella pertussis (acelular);;Insensible;Manual;Vigente;;;;;;;;;;
+5153909;bortezomib;;Insensible;Manual;Vigente;Si;;bortezomib;;407097007;bortezomib;8331;bortezomib;;D
+6397977;bosentán;;Insensible;Manual;Vigente;Si;;bosentán;• 6397978 - BOSENTAN;385559004;bosentán;7195;bosentán;;X
+5668509;brimonidina;;Insensible;Manual;Vigente;Si;;brimonidina;;372547000;brimonidina;6863;brimonidina;;B
+5153915;brinzolamida;;Insensible;Manual;Vigente;Si;;brinzolamida;;386925003;brinzolamida;7532;brinzolamida;;
+5153934;bromazepam;;Insensible;Manual;Vigente;Si;;bromazepam;;387571009;bromazepam;2692;bromazepam;;
+5153945;bromhexina;;Insensible;Manual;Vigente;;;clorhidrato de bromhexina;;412102008;clorhidrato de bromhexina;2584;bromhexina;;
+5153948;bromhidrato de glutamato de magnesio;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5153951;bromocriptina;;Insensible;Manual;Vigente;;;bromocriptina;;387039007;bromocriptina;3365;bromocriptina;;B
+5153960;bromuro de ipratropio;;Insensible;Manual;Vigente;;;bromuro de ipratropio;;386881005;bromuro de ipratropio;3263;bromuro de ipratropio;;B
+5154003;bromuro de pinaverio;;Insensible;Manual;Vigente;Si;;;;;;3696;bromuro de pinaverio;;
+5154034;bromuro de piridostigmina;;Insensible;Manual;Vigente;;;bromuro de piridostigmina;;34915005;bromuro de piridostigmina;278;bromuro de piridostigmina;;C
+5154037;bromuro de rocuronio;;Insensible;Manual;Vigente;;;bromuro de rocuronio;;108450002;bromuro de rocuronio;6864;bromuro de rocuronio;;B
+5154042;bromuro de tiotropio;;Insensible;Manual;Vigente;Si;;bromuro de tiotropio;;425812008;bromuro de tiotropio;6965;bromuro de tiotropio;;
+5154044;bromuro de vecuronio;;Insensible;Manual;Vigente;;;bromuro de vecuronio;;87472002;bromuro de vecuronio;5100;bromuro de vecuronio;;C
+5154051;brotizolam;;Insensible;Manual;Vigente;Si;;;;;;4549;brotizolam;;
+5154054;budesonida;;Insensible;Manual;Vigente;;;budesonida;;395726003;budesonida;4145;budesónida;;C
+5154064;bupivacaína;;Insensible;Manual;Vigente;Si;;bupivacaína;;387150008;bupivacaína;2279;bupivacaína;;
+5154071;buprenorfina;;Insensible;Manual;Vigente;;;buprenorfina;;387173000;buprenorfina;3403;buprenorfina;;C
+5154076;bupropión;;Insensible;Manual;Vigente;;;bupropión;;387564004;bupropión;3562;bupropión;;B
+5154081;buspirona;;Insensible;Manual;Vigente;;;buspirona;;387523009;buspirona;3456;buspirona;;B
+5154100;busulfano;;Insensible;Manual;Vigente;;;busulfano;;387138002;busulfano;564;busulfano;;D
+5154102;butilescopolamina bromuro;;Insensible;Manual;Vigente;;;;"• 7126066 - butilbromuro de escopolamina
+• 7117572 - butilbromuro de hioscina";;;;;;C
+5154114;cabazitaxel;;Insensible;Manual;Vigente;Si;;cabazitaxel;;446706007;cabazitaxel;8967;cabazitaxel;;D
+5154128;cabergolina;;Insensible;Manual;Vigente;;;cabergolina;;386979007;cabergolina;5860;cabergolina;;B
+5154129;cafeína;;Insensible;Manual;Vigente;;;cafeína;;255641001;cafeína;;;;
+6398041;calamina;;Insensible;Manual;Vigente;;;calamina;;387082008;calamina;;;;
+5154135;calcio;;Insensible;Manual;Vigente;Si;;calcio;;5540006;calcio;;;;
+5154152;calcipotriol;;Insensible;Manual;Vigente;Si;;calcipotriol;;395766004;calcipotriol;6376;calcipotriol;;
+5154162;calcitriol;;Insensible;Manual;Vigente;Si;;Calcitriol;"• 6412270 - 1 , 25 OH vitamina D3
+• 6412271 - 1, 25 - dihidroxivitamina D3";259333003;Calcitriol;4393;calcitriol;;C
+6398066;canagliflozina;;Insensible;Manual;Vigente;Si;;;;;;9225;canagliflozina;;C
+5154217;candesartán;;Insensible;Manual;Vigente;;;candesartán;;372512008;candesartán;7239;candesartán;;D
+5154222;capecitabina;;Insensible;Manual;Vigente;Si;;capecitabina;;386906001;capecitabina;7317;capecitabina;;D
+5154227;capsaicina;;Insensible;Manual;Vigente;Si;;capsaicina;;95995002;capsaicina;;;;
+5154238;captopril;;Insensible;Manual;Vigente;Si;;captopril;;387160004;captopril;4373;captopril;;D
+5154247;carbamazepina;;Insensible;Manual;Vigente;Si;;carbamazepina;;387222003;carbamazepina;1836;carbamazepina;;D
+5154254;carbetocina;;Insensible;Manual;Vigente;Si;;carbetocina;;425003007;carbetocina;5014;carbetocina;;
+5154256;carbidopa;;Insensible;Manual;Vigente;Si;;carbidopa;;73579000;carbidopa;3258;carbidopa;;C
+5154263;carbinoxamina;;Insensible;Manual;Vigente;Si;;;;;;359;carbinoxamina;;C
+5154265;carbocisteína;;Insensible;Manual;Vigente;Si;;carbocisteína;;395842001;carbocisteína;2884;carbocisteína;;
+6176149;carbomer;;Insensible;Manual;Vigente;;;;;;;2599;carbómero;;
+5154287;carbón activado;;Insensible;Manual;Vigente;Si;;carbón activado;;32519007;carbón activado;;;;
+5154289;carbonato de calcio;;Insensible;Manual;Vigente;Si;;carbonato de calcio;;387307005;carbonato de calcio;;;;
+5154294;carbonato de litio;;Insensible;Manual;Vigente;Si;;carbonato de litio;;387095003;carbonato de litio;;;;D
+7412451;carbonato de magnesio;;Insensible;Manual;Vigente;;;;;;;;;;
+7469532;carbonato de sodio;;Insensible;Manual;Vigente;;;;;;;;;;
+5154300;carboplatino;;Insensible;Manual;Vigente;Si;;carboplatino;;386905002;carboplatino;5231;carboplatino;;
+6572177;carboximaltosa férrica;;Insensible;Manual;Vigente;Si;;carboximaltosa férrica;;430077004;carboximaltosa férrica;8853;carboximaltosa férrica;;C
+5154303;carboximetilcelulosa;;Insensible;Manual;Vigente;Si;;carboximetilcelulosa;;419432008;carboximetilcelulosa;;;;
+5154332;carvedilol;;Insensible;Manual;Vigente;Si;;carvedilol;;386870007;carvedilol;5333;carvedilol;;C
+5154350;caspofungina;;Insensible;Manual;Vigente;Si;;caspofungina;• 6398086 - CASPOFUNGIN;413770001;caspofungina;7778;caspofungina;;C
+5154354;cassia angustifolia extracto estandarizado;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5154370;cefadroxilo;;Insensible;Manual;Vigente;Si;;cefadroxilo;;372651006;cefadroxilo;3719;cefadroxilo;;B
+5154376;cefalexina;;Insensible;Manual;Vigente;Si;;cefalexina;;387304003;cefalexina;2400;cefalexina;;B
+5154386;cefazolina;;Insensible;Manual;Vigente;;;cefazolina;;387470007;cefazolina;2991;cefazolina;;B
+5154392;cefepima;;Insensible;Manual;Vigente;Si;;cefepima;• 6450878 - cefepima;96048006;cefepima;6092;cefepima;;
+5154428;cefixima;;Insensible;Manual;Vigente;;;cefixima;;387536009;cefixima;5678;cefixima;;B
+5154442;cefoperazona;;Insensible;Manual;Vigente;Si;;cefoperazona;;372743004;cefoperazona;4742;cefoperazona;;B
+5163094;cefotaxima;;Insensible;Manual;Vigente;;;cefotaxima;;372704003;cefotaxima;4504;cefotaxima;;B
+5163130;cefpodoxima;;Insensible;Manual;Vigente;;;cefpodoxima;;387534007;cefpodoxima;6123;cefpodoxima;;B
+5163141;cefradina;;Insensible;Manual;Vigente;;;cefradina;;387091007;cefradina;3119;cefradina;;B
+5163151;ceftazidima;;Insensible;Manual;Vigente;;;ceftazidima;;387200005;ceftazidima;4886;ceftazidima;;B
+6398127;ceftriaxona;;Insensible;Manual;Vigente;;;ceftriaxona;;372670001;ceftriaxona;4923;ceftriaxona;;B
+5163157;cefuroxima;;Insensible;Manual;Vigente;;;cefuroxima;;372833007;cefuroxima;3902;cefuroxima;;B
+5163177;celecoxib;;Insensible;Manual;Vigente;;;Celecoxib;;116081000;Celecoxib;7767;celecoxib;;D
+5163196;centella asiática;;Insensible;Manual;Vigente;Si;;;;;;;;;
+6398265;cerebrolysin;;Insensible;Manual;Vigente;Si;;;;;;;;;
+7221937;ceritinib;;Insensible;Manual;Vigente;;;ceritinib;;703146007;ceritinib;9817;ceritinib;;D
+5163331;cetirizina;;Insensible;Manual;Vigente;;;cetirizina;;372523007;cetirizina;5520;cetirizina;;B
+5163357;cetrorelix;;Insensible;Manual;Vigente;Si;;cetrorelix;;395906005;cetrorelix;6661;cetrorelix;;X
+5163407;cetuximab;;Insensible;Manual;Vigente;;;cetuximab;;409400001;cetuximab;7906;cetuximab;;C
+5198521;cianocobalamina;;Insensible;Manual;Vigente;;;cianocobalamina;• 6412305 - vitamina B12;419382002;cianocobalamina;1369;cianocobalamina;;A
+5163672;ciclesonida;;Insensible;Manual;Vigente;Si;;ciclesonida;;417420004;ciclesonida;6546;ciclesonida;;C
+5163695;ciclobenzaprina;;Insensible;Manual;Vigente;;;ciclobenzaprina;;373779004;ciclobenzaprina;791;ciclobenzaprina;;B
+5163713;ciclofosfamida;;Insensible;Manual;Vigente;;;ciclofosfamida;;387420009;ciclofosfamida;878;ciclofosfamida;;D
+5163720;ciclopentolato;;Insensible;Manual;Vigente;;;ciclopentolato;;372869004;ciclopentolato;266;ciclopentolato;;C
+5163722;ciclopirox;;Insensible;Manual;Vigente;Si;;ciclopirox;;372854000;ciclopirox;3101;ciclopirox;;
+5163770;ciclosporina;;Insensible;Manual;Vigente;;;ciclosporina;;387467008;ciclosporina;5086;ciclosporina;;C
+5163790;cilastatina;;Insensible;Manual;Vigente;;;cilastatina;;96058005;cilastatina;5457;cilastatina;;C
+6398181;cilazapril;;Insensible;Manual;Vigente;Si;;cilazapril;;395947008;cilazapril;5675;cilazapril;;
+5163906;cilostazol;;Insensible;Manual;Vigente;Si;;cilostazol;;116087001;cilostazol;5680;cilostazol;;
+6398183;cimetidina;;Insensible;Manual;Vigente;Si;;cimetidina;;373541007;cimetidina;;;;
+5163907;cinacalcet;;Insensible;Manual;Vigente;Si;;cinacalcet;;409392004;cinacalcet;8287;cinacalcet;;C
+5163924;cinarizina;;Insensible;Manual;Vigente;;;cinarizina;;395955001;cinarizina;1021;cinarizina;;
+5197883;ciprofibrato;;Insensible;Manual;Vigente;Si;;ciprofibrato;;395957009;ciprofibrato;4057;ciprofibrato;;
+5197886;ciprofloxacino;;Insensible;Manual;Vigente;;;ciprofloxacino;• 6399714 - ciprofloxacina;372840008;ciprofloxacino;5446;ciprofloxacino;;C
+5197926;ciproterona;;Insensible;Manual;Vigente;Si;;ciproterona;;126119006;ciproterona;2050;ciproterona;;
+5197931;cisaprida;;Insensible;Manual;Vigente;;;cisaprida;• 6399718 - cisapride;387164008;cisaprida;5338;cisaprida;;C
+6399882;cisatracurio besilato;;Insensible;Manual;Vigente;Si;;cisatracurio;;108453000;cisatracurio;7389;besilato de cisatracurio;;B
+5198423;cisplatino;;Insensible;Manual;Vigente;;;cisplatino;;387318005;cisplatino;4426;cisplatino;;D
+5198496;citalopram;;Insensible;Manual;Vigente;;;citalopram;;372596005;citalopram;4138;citalopram;;C
+5198522;citarabina;;Insensible;Manual;Vigente;;;citarabina;;387511003;citarabina;1709;citarabina;;D
+6398193;citidina 5 - monofosfato;;Insensible;Manual;Vigente;Si;;;• 6414824 - CMP;;;;;;
+7118743;citrato;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5198685;citrato de calcio;;Insensible;Manual;Vigente;Si;;citrato de calcio;;52209008;citrato de calcio;;;;
+5198690;citrato de potasio;;Insensible;Manual;Vigente;Si;;citrato de potasio;;387450001;citrato de potasio;;;;
+5198687;citrato de sodio;;Insensible;Manual;Vigente;Si;;citrato de sodio;;412546005;citrato de sodio;;;;
+5198705;cladribina;;Insensible;Manual;Vigente;Si;;cladribina (sustancia);;386916009;cladribina (sustancia);6997;cladribina;;D
+5198721;claritromicina;;Insensible;Manual;Vigente;Si;;claritromicina;;387487009;claritromicina;6252;claritromicina;;C
+5153955;clidinio bromuro;;Insensible;Manual;Vigente;;;bromuro de clidinio;;87283008;bromuro de clidinio;463;bromuro de clidinio;;C
+5198768;clindamicina;;Insensible;Manual;Vigente;Si;;fosfato de clindamicina;;372786004;fosfato de clindamicina;2550;clindamicina;;B
+5198778;clioquinol;;Insensible;Manual;Vigente;Si;;clioquinol;;387291001;clioquinol;2116;clioquinol;;
+5198869;clobazam;;Insensible;Manual;Vigente;Si;;clobazam;;387572002;clobazam;3055;clobazam;;
+5198884;clobetasol;;Insensible;Manual;Vigente;Si;;clobetasol;;419129004;clobetasol;3154;clobetasol;;C
+5198949;clobutinol;;Insensible;Manual;Vigente;Si;;;;;;2462;clobutinol;;
+5198957;clofarabina;;Insensible;Manual;Vigente;Si;;clofarabina;;413873006;clofarabina;8422;clofarabina;;D
+6398200;clofedianol;;Insensible;Manual;Vigente;Si;;clofedianol;;61398007;clofedianol;;;;
+5199019;clomifeno;;Insensible;Manual;Vigente;Si;;clomifeno;;387166005;clomifeno;1309;clomifeno;;X
+5199068;clomipramina;;Insensible;Manual;Vigente;Si;;clomipramina;;372903001;clomipramina;2238;clomipramina;;C
+5199149;clonazepam;;Insensible;Manual;Vigente;Si;;clonazepam;;387383007;clonazepam;2765;clonazepam;;D
+5199174;clonidina;;Insensible;Manual;Vigente;Si;;clonidina;;372805007;clonidina;2624;clonidina;;C
+5199306;clonixinato de lisina;;Insensible;Manual;Vigente;Si;;;;;;;;;
+6398201;clopamida;;Insensible;Manual;Vigente;Si;;clopamida;;395940005;clopamida;;;;
+5199327;clopidogrel;;Insensible;Manual;Vigente;Si;;clopidogrel;;386952008;clopidogrel;5908;clopidogrel;;B
+5199348;clorambucilo;;Insensible;Manual;Vigente;Si;;clorambucilo;;387249003;clorambucilo;603;clorambucilo;;D
+5199438;cloranfenicol;;Insensible;Manual;Vigente;Si;;cloranfenicol;;372777009;cloranfenicol;977;cloranfenicol;;C
+6413192;clorazepato dipotásico;;Insensible;Manual;Vigente;Si;;;;39815009;clorazepato;2224;clorazepato de dipotasio;;
+5199574;clordiazepóxido;;Insensible;Manual;Vigente;Si;;clordiazepóxido;;372866006;clordiazepóxido;1049;clordiazepóxido;;D
+5199623;clorfenamina;;Insensible;Manual;Vigente;Si;;clorfeniramina;• 6469988 - clorfeniramina;372914003;clorfeniramina;104;clorfenamina;;B
+5199631;clorhexidina;;Insensible;Manual;Vigente;;;clorhexidina;;373568007;clorhexidina;500;clorhexidina;;B
+6398209;clormadinona;;Insensible;Manual;Vigente;;;;;;;1210;clormadinona;;
+5199654;clormezanona;;Insensible;Manual;Vigente;;;clormezanona;;387400008;clormezanona;782;clormezanona;;
+5199682;clorobutanol;;Insensible;Manual;Vigente;Si;;clorobutanol;;9234005;clorobutanol;440;clorobutanol;;
+5199722;clorocarvacol;;Insensible;Manual;Vigente;Si;;;;;;;;;
+7428262;clorocresol;;Insensible;Manual;Vigente;;;;;255884003;clorocresol;;;;
+5199742;cloroquina;;Insensible;Manual;Vigente;Si;;cloroquina;;373468005;cloroquina;386;cloroquina;;C
+5199768;clorpromazina;;Insensible;Manual;Vigente;;;clorpromazina;;387258005;clorpromazina;183;clorpromazina;;C
+5199877;clorpropamida;;Insensible;Manual;Vigente;Si;;clorpropamida;;386991003;clorpropamida;790;clorpropamida;;C
+5199986;clortalidona;;Insensible;Manual;Vigente;Si;;;;387324004;;1125;clortalidona;;
+5926346;cloruro;;Insensible;Manual;Vigente;Si;;cloro (sustancia);;29276003;cloro (sustancia);;;;
+5200587;cloruro de calcio;;Insensible;Manual;Vigente;Si;;cloruro de calcio;;387377009;cloruro de calcio;;;;
+5200592;cloruro de cetilpiridinio;;Insensible;Manual;Vigente;Si;;cloruro de cetilpiridinio;;395927000;cloruro de cetilpiridinio;1298;cloruro de cetilpiridinio;;
+6800392;cloruro de cobre;;Insensible;Manual;Vigente;;;;;;;;;;
+6800384;cloruro de cromo;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5201517;cloruro de etilo;;Insensible;Manual;Vigente;Si;;;;;;;;;
+6800386;cloruro de manganeso;;Insensible;Manual;Vigente;;;;;;;;;;
+5201695;cloruro de potasio;;Insensible;Manual;Vigente;Si;;cloruro de potasio;;8631001;cloruro de potasio;;;;A
+5201728;cloruro de sodio;;Insensible;Manual;Vigente;Si;;cloruro de sodio;;387390002;cloruro de sodio;;;;
+5201787;cloruro de trospio;;Insensible;Manual;Vigente;Si;;cloruro de trospio;;326557004;cloruro de trospio;3001;cloruro de trospio;;
+6800382;cloruro de zinc;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5201816;clorzoxazona;;Insensible;Manual;Vigente;Si;;clorzoxazona;;44908000;clorzoxazona;748;clorzoxazona;;C
+7643499;clostridium botulinum toxina tipo A;;Insensible;Manual;Vigente;;;;;;;;;;
+5200374;clotiazepam;;Insensible;Manual;Vigente;Si;;;;;;3496;clotiazepam;;
+5200169;clotrimazol;;Insensible;Manual;Vigente;Si;;clotrimazol;;387325003;clotrimazol;2912;clotrimazol;;B
+5200171;cloxacilina;;Insensible;Manual;Vigente;Si;;cloxacilina;;373276005;cloxacilina;1533;cloxacilina;;B
+5200173;clozapina;;Insensible;Manual;Vigente;Si;;clozapina;;387568001;clozapina;2612;clozapina;;B
+7332640;cobicistat;;Insensible;Manual;Vigente;;;;;;;9266;cobicistat;;
+7666109;cobimetinib;;Insensible;Manual;Vigente;;;;;;;9645;cobimetinib;;
+5200402;codeína;;Insensible;Manual;Vigente;Si;;codeína;;387494007;codeína;;;;C
+7427022;colágeno hidrolizado;;Insensible;Manual;Vigente;;;;;;;;;;
+5201975;colchicina;;Insensible;Manual;Vigente;Si;;colchicina;;387413002;colchicina;;;;C
+5201981;colecalciferol;;Insensible;Manual;Vigente;Si;;colecalciferol;• 6412252 - vitamina D3;18414002;colecalciferol;1497;colecalciferol;;
+5202082;condroitina;;Insensible;Manual;Vigente;Si;;;;;;;;;
+7470411;corbadrina;;Insensible;Manual;Vigente;;;;;;;;;;
+6398293;corifolitropina alfa;;Insensible;Manual;Vigente;Si;;;;703830001;;7738;corifolitropina alfa;;
+6398295;coriogonadotropina alfa;;Insensible;Manual;Vigente;Si;;coriogonadotropina alfa;• 6425323 - coriogonadotrofina alfa;129494006;coriogonadotropina alfa;7473;coriogonadotropina alfa;;
+5202126;corticotropina;;Insensible;Manual;Vigente;Si;;;;40789008;;1366;corticotropina;;C
+6398324;crizotinib;;Insensible;Manual;Vigente;Si;;;;703637000;;;;;D
+5202305;crotamitón;;Insensible;Manual;Vigente;Si;;crotamitón;;387515007;crotamitón;673;crotamitón;;C
+5230758;dabigatrán etexilato;;Insensible;Manual;Vigente;Si;;dabigatrán etexilato;;700029008;dabigatrán etexilato;8028;dabigatrán etexilato;;C
+6398359;dabrafenib;;Insensible;Manual;Vigente;Si;;dabrafenib;;703641001;dabrafenib;9458;dabrafenib;;
+5230769;dacarbazina;;Insensible;Manual;Vigente;Si;;dacarbazina;;387441003;dacarbazina;3232;dacarbazina;;
+5230811;dactinomicina;;Insensible;Manual;Vigente;Si;;;;387353003;;1155;dactinomicina;;C
+5230815;dalteparina de sodio;;Insensible;Manual;Vigente;Si;;dalteparina sódica;;108987000;dalteparina sódica;5688;dalteparina de sodio;;B
+5230863;dantroleno;;Insensible;Manual;Vigente;Si;;dantroleno;;372819007;dantroleno;2317;dantroleno;;C
+6398365;dapagliflozina;;Insensible;Manual;Vigente;Si;;;;703674001;dapagliflozina (sustancia);8886;dapagliflozina;;C
+5353742;dapsona;;Insensible;Manual;Vigente;Si;;;;387096002;;1676;dapsona;;
+5353852;daptomicina;;Insensible;Manual;Vigente;Si;;daptomicina;;406439009;daptomicina;6127;daptomicina;;B
+6398373;darifenacina;;Insensible;Manual;Vigente;Si;;darifenacina;;416140008;darifenacina;;;;
+5353853;darunavir;;Insensible;Manual;Vigente;Si;;darunavir;;423888002;darunavir;8305;darunavir;;C
+5353856;dasatinib;;Insensible;Manual;Vigente;Si;;dasatinib;;423658008;dasatinib;8712;dasatinib;;D
+5356348;daunorubicina;;Insensible;Manual;Vigente;Si;;daunorubicina;• 7085897 - DAUNORRUBICINA;372715008;daunorubicina;2257;daunorubicina;;
+5354018;decitabina;;Insensible;Manual;Vigente;Si;;decitabina;;420759005;decitabina;6374;decitabina;;
+5354023;deferasirox;;Insensible;Manual;Vigente;Si;;deferasirox;;419985007;deferasirox;8193;deferasirox;;
+5354056;deferoxamina;;Insensible;Manual;Vigente;Si;;;;372825006;;1682;deferoxamina;;C
+5354068;deflazacort;;Insensible;Manual;Vigente;Si;;deflazacort;;396012006;deflazacort;4323;deflazacort;;
+7620077;degarelix;;Insensible;Manual;Vigente;;;;;;;;;;
+5354069;deltametrina;;Insensible;Manual;Vigente;Si;;;;90670002;;;;;
+5354074;denosumab;;Insensible;Manual;Vigente;Si;;denosumab;;446321003;denosumab;8653;denosumab;;D
+5354084;desflurano;;Insensible;Manual;Vigente;Si;;desflurano;;386841003;desflurano;6505;desflurano;;B
+5354103;desipramina;;Insensible;Manual;Vigente;Si;;desipramina;;372705002;desipramina;1500;desipramina;;
+5354104;desloratadina;;Insensible;Manual;Vigente;Si;;desloratadina;;396015008;desloratadina;7817;desloratadina;;C
+5354107;desmopresina;;Insensible;Manual;Vigente;Si;;desmopresina;;126189002;desmopresina;3799;desmopresina;;B
+5354134;desogestrel;;Insensible;Manual;Vigente;Si;;desogestrel;;126108008;desogestrel;4384;desogestrel;;X
+5354146;desonida;;Insensible;Manual;Vigente;Si;;desonida;;412363005;desonida;2889;desonida;;C
+6398392;desoxirribonucleasa;;Insensible;Manual;Vigente;Si;;desoxirribonucleasa;;416394007;desoxirribonucleasa;;;;
+5354203;desvenlafaxina;;Insensible;Manual;Vigente;Si;;desvenlafaxina;;430267008;desvenlafaxina;8361;desvenlafaxina;;C
+5354227;dexametasona;;Insensible;Manual;Vigente;Si;;dexametasona;;372584003;dexametasona;816;dexametasona;;C
+5354243;dexclorfeniramina;;Insensible;Manual;Vigente;Si;;dexclorfeniramina;;372663001;dexclorfeniramina;;;;C
+6398402;dexibuprofeno;;Insensible;Manual;Vigente;Si;;dexibuprofeno;;418868002;dexibuprofeno;6426;dexibuprofeno;;
+5354336;dexmedetomidina;;Insensible;Manual;Vigente;Si;;Dexmedetomidina (sustancia);;437750002;Dexmedetomidina (sustancia);6277;dexmedetomidina;;C
+6398404;dexmetilfenidato;;Insensible;Manual;Vigente;Si;;;;;;;;;
+7503523;dexpantenol;;Insensible;Manual;Vigente;;;;;;;;;;
+5354382;dexrazoxano;;Insensible;Manual;Vigente;Si;;dexrazoxano;;108825009;dexrazoxano;6544;dexrazoxano;;
+6398406;dextrán;;Insensible;Manual;Vigente;Si;;dextran;;372650007;dextran;;;;
+5354397;dextrometorfano;;Insensible;Manual;Vigente;Si;;dextrometorfano;;387114001;dextrometorfano;166;dextrometorfano;;C
+5918298;dextrosa monohidrato;;Insensible;Manual;Vigente;Si;;dextrosa;;67079006;dextrosa;;;;
+5354426;diacereína;;Insensible;Manual;Vigente;Si;;;;702835000;diacereína;5371;diacereína;;
+6573100;diastasa;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5354451;diatrizoato sódico;;Insensible;Manual;Vigente;Si;;;;395875009;;;;;
+5354463;diazepam;;Insensible;Manual;Vigente;Si;;diazepam;;387264003;diazepam;1295;diazepam;;D
+7403065;dicicloverina;;Insensible;Manual;Vigente;;;clorhidrato de dicicloverina;;71043005;clorhidrato de dicicloverina;619;dicicloverina;;
+7669179;diclofenaco;;Insensible;Manual;Vigente;;;;;;;3270;diclofenaco;;C
+6398424;diclofenaco colestiramina;;Insensible;Manual;Vigente;Si;;;;;;;;;
+6398425;diclofenaco dietilamina;;Insensible;Manual;Vigente;Si;;;;;;;;;
+7260718;diclofenaco epolamina;;Insensible;Manual;Vigente;;;;;;;;;;
+5679147;diclofenaco potásico;;Insensible;Manual;Vigente;Si;;diclofenaco potásico;;108515008;diclofenaco potásico;;;;
+6398428;diclofenaco sódico;;Insensible;Manual;Vigente;Si;;diclofenaco sódico;;62039007;diclofenaco sódico;;;;D
+5354517;didanosina;;Insensible;Manual;Vigente;Si;;didanosina;;387105006;didanosina;6664;didanosina;;B
+5354518;didrogesterona;;Insensible;Manual;Vigente;Si;;didrogesterona;;126093005;didrogesterona;970;didrogesterona;;
+5354520;dienogest;;Insensible;Manual;Vigente;Si;;;;;;5286;dienogest;;X
+6398446;dietiltoluamida;;Insensible;Manual;Vigente;Si;;dietiltoluamida;;16968005;dietiltoluamida;6685;dietiltoluamida;;
+6398452;difenhidramina;;Insensible;Manual;Vigente;Si;;difenhidramina;;372682005;difenhidramina;;;;
+4822177;difenidol;;Insensible;Manual;Vigente;Si;;difenidol;;63779001;difenidol;1433;difenidol;;
+4829021;digoxina;;Insensible;Manual;Vigente;Si;;digoxina;;387461009;digoxina;389;digoxina;;C
+4823595;dihexazin;;Insensible;Manual;Vigente;Si;;;;;;;;;
+4849324;dihidroergotamina;;Insensible;Manual;Vigente;Si;;dihidroergotamina;;387267005;dihidroergotamina;2022;dihidroergotamina;;X
+7473395;diiodohidroxiquinoleína;;Insensible;Manual;Vigente;;;;;;;;;;
+4829072;diltiazem;;Insensible;Manual;Vigente;Si;;diltiazem;;372793000;diltiazem;3433;diltiazem;;C
+6398464;dimenhidrinato;;Insensible;Manual;Vigente;Si;;dimenhidrinato;;387469006;dimenhidrinato;;;;
+4824071;dimeticona;;Insensible;Manual;Vigente;Si;;dimeticona;;396031000;dimeticona;2898;dimeticona;;
+7403453;dimetil sulfóxido;;Insensible;Manual;Vigente;;;dimetilsulfóxido;;115535002;dimetilsulfóxido;2023;dimetil sulfóxido;;
+7620147;dinoprostona;;Insensible;Manual;Vigente;;;;;;;;;;
+4824114;diosmina;;Insensible;Manual;Vigente;Si;;diosmina;;8143001;diosmina;4370;diosmina;;
+4828155;dipiridamol;;Insensible;Manual;Vigente;Si;;dipiridamol;;387371005;dipiridamol;1545;dipiridamol;;B
+4842839;disulfiram;;Insensible;Manual;Vigente;Si;;disulfiram;;387212009;disulfiram;1781;disulfiram;;D
+4824215;dobesilato de calcio;;Insensible;Manual;Vigente;Si;;dobesilato de calcio;;83438009;dobesilato de calcio;2617;dobesilato de calcio;;
+4824276;dobutamina;;Insensible;Manual;Vigente;Si;;dobutamina;;387145002;dobutamina;3340;dobutamina;;
+4824366;docetaxel;;Insensible;Manual;Vigente;Si;;docetaxel;;386918005;docetaxel;6621;docetaxel;;D
+7034499;dolutegravir;;Insensible;Manual;Vigente;Si;;;;;;9261;dolutegravir;;B
+4828210;domperidona;;Insensible;Manual;Vigente;Si;;domperidona;;387181004;domperidona;4110;domperidona;;B
+4824690;donepezilo;;Insensible;Manual;Vigente;Si;;donepezilo;• 6399727 - donepecilo;386855006;donepezilo;7517;donepezilo;;C
+4828274;dopamina;;Insensible;Manual;Vigente;Si;;dopamina;;412383006;dopamina;2417;dopamina;;B
+4824955;dorzolamida;;Insensible;Manual;Vigente;Si;;dorzolamida;;373447009;dorzolamida;6960;dorzolamida;;
+4829162;doxazosina;;Insensible;Manual;Vigente;Si;;doxazosina;• 6399728 - doxazosín;372508002;doxazosina;5143;doxazosina;;C
+4842911;doxiciclina;;Insensible;Manual;Vigente;Si;;doxiciclina;;372478003;doxiciclina;2125;doxiciclina;;D
+4825030;doxilamina;;Insensible;Manual;Vigente;Si;;doxilamina;;44068004;doxilamina;1782;doxilamina;;
+4843018;doxorubicina;;Insensible;Manual;Vigente;Si;;doxorubicina;;372817009;doxorubicina;3005;doxorubicina;;D
+7289410;doxorubicina liposomal pegilada;;Insensible;Manual;Vigente;;;;;;;;;;D
+4843399;droperidol;;Insensible;Manual;Vigente;Si;;droperidol;;387146001;droperidol;1609;droperidol;;D
+4849335;drospirenona;;Insensible;Manual;Vigente;Si;;drospirenona;;410919000;drospirenona;6519;drospirenona;;
+4829186;duloxetina;;Insensible;Manual;Vigente;Si;;duloxetina;;407032004;duloxetina;7012;duloxetina;;C
+4825088;dutasterida;;Insensible;Manual;Vigente;Si;;dutasterida;;385572003;dutasterida;7586;dutasterida;;X
+5163609;ebucrilato;;Insensible;Manual;Vigente;Si;;;;;;;;;
+4829239;econazol;;Insensible;Manual;Vigente;Si;;econazol;;373471002;econazol;3189;econazol;;C
+4825089;efavirenz;;Insensible;Manual;Vigente;Si;;efavirenz;;387001004;efavirenz;7718;efavirenz;;
+4849970;efedrina;;Insensible;Manual;Vigente;Si;;efedrina;;387358007;efedrina;;;;X
+4825149;eletriptán;;Insensible;Manual;Vigente;Si;;eletriptán;;410843003;eletriptán;7426;eletriptán;;
+7332650;elvitegravir;;Insensible;Manual;Vigente;;;;;;;8871;elvitegravir;;B
+4825243;emtricitabina;;Insensible;Manual;Vigente;Si;;emtricitabina;;404856006;emtricitabina;7822;emtricitabina;;B
+4842079;enalapril;;Insensible;Manual;Vigente;Si;;enalapril;;372658000;enalapril;5117;enalapril;;D
+4825248;enbucrilato;;Insensible;Manual;Vigente;Si;;enbucrilato;;409102000;enbucrilato;3796;enbucrilato;;
+6398504;enfuvirtida;;Insensible;Manual;Vigente;Si;;enfuvirtida;;409127007;enfuvirtida;8063;enfuvirtida;;B
+5677389;enoxaparina de sodio;;Insensible;Manual;Vigente;Si;;enoxaparina sódica;;108983001;enoxaparina sódica;5452;enoxaparina de sodio;;
+4825447;entacapona;;Insensible;Manual;Vigente;Si;;entacapona;;387018000;entacapona;6812;entacapona;;
+4825486;entecavir;;Insensible;Manual;Vigente;Si;;entecavir;;416644000;entecavir;7904;entecavir;;C
+6398510;enzalutamida;;Insensible;Manual;Vigente;Si;;;;703125003;;;;;X
+4825545;epinastina;;Insensible;Manual;Vigente;Si;;epinastina;;407068009;epinastina;5953;epinastina;;C
+6000288;epinefrina;;Insensible;Manual;Vigente;Si;;epinefrina;• 6391813 - adrenalina;387362001;epinefrina;2142;epinefrina;;C
+4825558;epirubicina;;Insensible;Manual;Vigente;Si;;epirubicina;• 6399738 - epirrubicina;417916005;epirubicina;5171;epirubicina;;D
+7630779;eplerenona;;Insensible;Manual;Vigente;;;;;;;;;;B
+6738116;epoetina alfa;;Insensible;Manual;Vigente;Si;;epoetina alfa;;386947003;epoetina alfa;6384;epoetina alfa;;C
+7361174;epoetina beta;;Insensible;Manual;Vigente;;;epoetina beta;;396043004;epoetina beta;6566;epoetina beta;;C
+6398513;eptacog alfa (activado);;Insensible;Manual;Vigente;Si;;Eptacog alfa activated;;116066006;Eptacog alfa activated;6931;eptacog alfa (activado);;C
+4829881;ergocalciferol;;Insensible;Manual;Vigente;Si;;ergocalciferol;• 6391464 - vitamina D2;23433006;ergocalciferol;382;ergocalciferol;;C
+4825579;ergometrina;;Insensible;Manual;Vigente;Si;;;;;;390;ergometrina;;
+4850744;ergotamina;;Insensible;Manual;Vigente;Si;;ergotamina;;395975005;ergotamina;391;ergotamina;;X
+4828526;eritromicina;;Insensible;Manual;Vigente;Si;;eritromicina;;372694001;eritromicina;39;eritromicina;;B
+4826595;erlotinib;;Insensible;Manual;Vigente;Si;;erlotinib;;414123001;erlotinib;8133;erlotinib;;D
+4826639;ertapenem;;Insensible;Manual;Vigente;Si;;ertapenem;;396346003;ertapenem;8049;ertapenem;;B
+4840982;escitalopram;;Insensible;Manual;Vigente;Si;;escitalopram;;400447003;escitalopram;7953;escitalopram;;C
+4828570;esomeprazol;;Insensible;Manual;Vigente;Si;;esomeprazol;;396047003;esomeprazol;7766;esomeprazol;;C
+4841241;espironolactona;;Insensible;Manual;Vigente;Si;;espironolactona;;387078006;espironolactona;987;espironolactona;;C
+4850784;estradiol;;Insensible;Manual;Vigente;;;estradiol;;126172005;estradiol;406;estradiol;;X
+5205716;estradiol valerato;;Insensible;Manual;Vigente;;;;;96350008;;3921;valerato de estradiol;;X
+4827022;estramustina;;Insensible;Manual;Vigente;Si;;estramustina;;386909008;estramustina;2877;estramustina;;
+4849205;estreptomicina;;Insensible;Manual;Vigente;;;estreptomicina;;387223008;estreptomicina;3685;estreptomicina;;D
+4841337;estreptoquinasa;;Insensible;Manual;Vigente;;;estreptoquinasa;;395889004;estreptoquinasa;623;estreptoquinasa;;C
+6398552;estriol;;Insensible;Manual;Vigente;Si;;estriol;;73723004;estriol;;;;
+4851335;estrógenos conjugados;;Insensible;Manual;Vigente;;;estrógeno conjugado;;126098001;estrógeno conjugado;;;;X
+4827042;eszopiclona;;Insensible;Manual;Vigente;Si;;eszopiclona;;409420000;eszopiclona;8258;eszopiclona;;C
+4828589;etambutol;;Insensible;Manual;Vigente;;;etambutol;;387129004;etambutol;1074;etambutol;;C
+4827083;etamsilato;;Insensible;Manual;Vigente;Si;;etamsilato;;396048008;etamsilato;1903;etamsilato;;
+4827172;etanercept;;Insensible;Manual;Vigente;Si;;etanercept;;387045004;etanercept;7783;etanercept;;B
+4856239;etanol;;Insensible;Manual;Vigente;Si;;etanol;;419442005;etanol;;;;
+4827199;etifoxina;;Insensible;Manual;Vigente;Si;;;;;;2846;etifoxina;;
+4827236;etilmorfina;;Insensible;Manual;Vigente;Si;;etil morfina;;74905005;etil morfina;;;;
+4851391;etinilestradiol;;Insensible;Manual;Vigente;;;etinilestradiol;;126097006;etinilestradiol;437;etinilestradiol;;X
+4827265;etofenamato;;Insensible;Manual;Vigente;Si;;;;;;3359;etofenamato;;
+4827292;etomidato;;Insensible;Manual;Vigente;Si;;etomidato;;387218008;etomidato;1926;etomidato;;
+4827308;etonogestrel;;Insensible;Manual;Vigente;Si;;etonogestrel;;396050000;etonogestrel;6832;etonogestrel;;
+4849251;etopósido;;Insensible;Manual;Vigente;Si;;etopósido;;387316009;etopósido;3835;etopósido;;D
+4827341;etoricoxib;;Insensible;Manual;Vigente;Si;;etoricoxib;;409134009;etoricoxib;8082;etoricoxib;;
+4827490;etravirina;;Insensible;Manual;Vigente;Si;;etravirina;;432121008;etravirina;8303;etravirina;;B
+6399378;eucaliptol;;Insensible;Manual;Vigente;;;eucaliptol;• 6425300 - cineola;259119007;eucaliptol;;;;
+6399381;eugenol;;Insensible;Manual;Vigente;Si;;eugenol;;255924000;eugenol;;;;
+4827501;everolimus;;Insensible;Manual;Vigente;Si;;everolimus;;428698007;everolimus;7863;everolimus;;D
+4827510;exemestano;;Insensible;Manual;Vigente;Si;;exemestano;;387017005;exemestano;6770;exemestano;;X
+4841707;exenatida;;Insensible;Manual;Vigente;Si;;exenatida;;416859008;exenatida;8219;exenatida;;C
+4827676;ezetimiba;;Insensible;Manual;Vigente;Si;;ezetimibe;• 6390485 - ezetimibe;409149001;ezetimibe;8010;ezetimiba;;C
+5917737;factor II de la coagulación humana;;Sensible;Manual;Vigente;Si;;factor II de la coagulación;• 6395586 - protrombina;7348004;factor II de la coagulación;;;;
+4853538;factor IX de la coagulación humana;;Sensible;Manual;Vigente;Si;;factor IX de la coagulación;;54378000;factor IX de la coagulación;;;;
+4854378;factor VII de la coagulación humana;;Sensible;Manual;Vigente;Si;;factor VII;;30804005;factor VII;;;;
+4854443;factor VIII de la coagulación humana;;Sensible;Manual;Vigente;Si;;factor VIII;;278910002;factor VIII;;;;
+5917788;factor X de la coagulación humana;;Sensible;Manual;Vigente;Si;;factor X de la coagulación;;81444003;factor X de la coagulación;;;;
+4854779;factor XIII de la coagulación humana;;Sensible;Manual;Vigente;Si;;factor XIII de la coagulación;;51161000;factor XIII de la coagulación;;;;
+4828624;famotidina;;Insensible;Manual;Vigente;Si;;famotidina;;387211002;famotidina;5217;famotidina;;B
+4827786;febuxostat;;Insensible;Manual;Vigente;Si;;febuxostat;;441743008;febuxostat;8140;febuxostat;;C
+4827804;felodipino;;Insensible;Manual;Vigente;Si;;felodipino;;386863007;felodipino;4877;felodipino;;C
+7298643;fenazona;;Insensible;Manual;Vigente;;;antipirina;;55486005;antipirina;413;fenazona;;
+4827884;fenazopiridina;;Insensible;Manual;Vigente;Si;;fenazopiridina;;15785009;fenazopiridina;357;fenazopiridina;;
+4849269;fenilbutazona;;Insensible;Manual;Vigente;;;fenilbutazona;;273951003;fenilbutazona;4;fenilbutazona;;D
+4931375;fenilefrina;;Insensible;Manual;Vigente;Si;;fenilefrina;;372771005;fenilefrina;4174;fenilefrina;;C
+7473222;fenilpropanolamina;;Insensible;Manual;Vigente;;;;;;;;;;
+7473210;feniltoxolamina;;Insensible;Manual;Vigente;;;;;387215006;feniltoloxamina;;;;
+4931400;feniramina;;Insensible;Manual;Vigente;Si;;feniramina;;373500002;feniramina;105;feniramina;;C
+4932592;fenitoína;;Insensible;Manual;Vigente;Si;;fenitoína;;387220006;fenitoína;416;fenitoína;;D
+4932638;fenobarbital;;Insensible;Manual;Vigente;Si;;fenobarbital;;373505007;fenobarbital;414;fenobarbital;;D
+4931570;fenofibrato;;Insensible;Manual;Vigente;Si;;fenofibrato;;386879008;fenofibrato;3996;fenofibrato;;C
+4907321;fenol;;Insensible;Manual;Vigente;Si;;fenol;;116613007;fenol;;;;
+4918274;fenoterol;;Insensible;Manual;Vigente;;;fenoterol;;395976006;fenoterol;3073;fenoterol;;
+4931304;fenoximetilpenicilina;;Insensible;Manual;Vigente;Si;;fenoximetilpenicilina;;372725003;fenoximetilpenicilina;518;fenoximetilpenicilina;;B
+6399429;fenproporex;;Insensible;Manual;Vigente;Si;;fenproporex;;96242001;fenproporex;;;;
+4918414;fentanilo;;Insensible;Manual;Vigente;Si;;fentanilo;;373492002;fentanilo;1608;fentanilo;;C
+6399431;fentermina;;Insensible;Manual;Vigente;Si;;fentermina;;373343009;fentermina;1064;fentermina;;X
+4918428;fexofenadina;;Insensible;Manual;Vigente;Si;;fexofenadina;;372522002;fexofenadina;7469;fexofenadina;;
+7691860;fibrinógeno humano;;Insensible;Manual;Vigente;;;;;;;4639;fibrinógeno (125I);;C
+4927697;filgrastim;;Insensible;Manual;Vigente;Si;;filgrastim;;386948008;filgrastim;6739;filgrastim;;C
+4932658;finasteride;;Insensible;Manual;Vigente;Si;;finasterida;• 6399760 - finasteride;386963006;finasterida;6539;finasterida;;X
+4927717;fingolimod;;Insensible;Manual;Vigente;Si;;fingolimod;;449000008;fingolimod;8341;fingolimod;;C
+4931597;fitomenadiona;;Insensible;Manual;Vigente;Si;;;;;;177;fitomenadiona;;C
+4927746;flavoxato;;Insensible;Manual;Vigente;Si;;flavoxato;;372768002;flavoxato;1929;flavoxato;;
+6399451;flecainida;;Insensible;Manual;Vigente;Si;;flecainida;;372751001;flecainida;4096;flecainida;;C
+4927821;flucloxacilina;;Insensible;Manual;Vigente;Si;;flucloxacilina;;387544009;flucloxacilina;2308;flucloxacilina;;B
+4932534;fluconazol;;Insensible;Manual;Vigente;Si;;fluconazol;;387174006;fluconazol;5851;fluconazol;;D
+4927835;fludarabina;;Insensible;Manual;Vigente;Si;;fludarabina;;386907005;fludarabina;5214;fludarabina;;D
+4927842;fludrocortisona;;Insensible;Manual;Vigente;Si;;fludrocortisona;;116586002;fludrocortisona;460;fludrocortisona;;C
+4931610;flufenazina;;Insensible;Manual;Vigente;Si;;flufenazina;;372730004;flufenazina;946;flufenazina;;C
+4931647;flumazenil;;Insensible;Manual;Vigente;Si;;flumazenil;;387575000;flumazenil;5311;flumazenil;;C
+4931678;flunarizina;;Insensible;Manual;Vigente;Si;;flunarizina;;418221001;flunarizina;2686;flunarizina;;
+4932639;flunitrazepam;;Insensible;Manual;Vigente;Si;;flunitrazepam;;387573007;flunitrazepam;2951;flunitrazepam;;D
+4927900;fluoresceína;;Insensible;Manual;Vigente;Si;;;;;;8369;fluoresceina lisicol;;C
+7439572;fluorfosfato de sodio;;Insensible;Manual;Vigente;;;;;;;;;;
+4927916;fluorometolona;;Insensible;Manual;Vigente;Si;;fluorometolona;;2925007;fluorometolona;803;fluorometolona;;C
+4927938;fluorouracilo;;Insensible;Manual;Vigente;Si;;fluorouracilo;• 6395611 - 5 fluorouracilo;387172005;fluorouracilo;1421;fluorouracilo;;D
+4928847;fluoruro sódico;;Insensible;Manual;Vigente;Si;;fluoruro de sodio;;6910009;fluoruro de sodio;;;;
+4932103;fluoxetina;;Insensible;Manual;Vigente;Si;;fluoxetina;;372767007;fluoxetina;3883;fluoxetina;;C
+6399460;flupentixol;;Insensible;Manual;Vigente;Si;;flupentixol;;387567006;flupentixol;1745;flupentixol;;
+7573509;flupentixol decanoato;;Insensible;Manual;Vigente;;;;;;;;;;
+4928871;flurbiprofeno;;Insensible;Manual;Vigente;Si;;flurbiprofeno;;373506008;flurbiprofeno;3220;flurbiprofeno;;C
+4932646;flutamida;;Insensible;Manual;Vigente;Si;;flutamida;;387587007;flutamida;3483;flutamida;;D
+5677273;fluticasona furoato;;Insensible;Manual;Vigente;Si;;furoato de fluticasona;;426409006;furoato de fluticasona;8521;furoato de fluticasona;;C
+4932112;fluticasona propionato;;Insensible;Manual;Vigente;;;propionato de fluticasona;;396064000;propionato de fluticasona;5636;fluticasona;;C
+4928911;fluvoxamina;;Insensible;Manual;Vigente;Si;;fluvoxamina;;372905008;fluvoxamina;3879;fluvoxamina;;
+7479796;folinato de calcio;;Insensible;Manual;Vigente;;;;;;;;;;
+4928937;fondaparinux sódico;;Insensible;Manual;Vigente;Si;;;;;;7653;fondaparinux de sodio;;
+4928977;formoterol;;Insensible;Manual;Vigente;Si;;formoterol;;414289007;formoterol;4935;formoterol;;C
+4929018;fosamprenavir;;Insensible;Manual;Vigente;Si;;fosamprenavir;;407017006;fosamprenavir;8011;fosamprenavir;;C
+7677357;fosfato de aluminio;;Insensible;Manual;Vigente;;;;;;;;;;
+6398048;fosfato de calcio;;Insensible;Manual;Vigente;Si;;fosfato de calcio;;44044007;fosfato de calcio;;;;
+4929778;fosfato de sodio;;Insensible;Manual;Vigente;Si;;;;;;;;;
+4929354;fosfato de sodio dibásico;;Insensible;Manual;Vigente;Si;;fosfato dibásico de sodio anhidro;;116123002;fosfato dibásico de sodio anhidro;;;;
+4929779;fosfato de sodio monobásico;;Insensible;Manual;Vigente;Si;;fosfato monobásico de sodio;;116124008;fosfato monobásico de sodio;;;;
+4930021;frovatriptán;;Insensible;Manual;Vigente;Si;;frovatriptan;;411990007;frovatriptan;7661;frovatriptán;;C
+4930023;ftalilsulfatiazol;;Insensible;Manual;Vigente;Si;;ftalilsulfatiazol;;16359004;ftalilsulfatiazol;4175;ftalilsulfatiazol;;
+4930135;fulvestrant;;Insensible;Manual;Vigente;Si;;fulvestrant;;385519002;fulvestrant;7712;fulvestrant;;
+4930164;fumarato ferroso;;Insensible;Manual;Vigente;Si;;fumarato ferroso;;387289009;fumarato ferroso;;;;
+4932249;furazolidona;;Insensible;Manual;Vigente;Si;;furazolidona;;91314000;furazolidona;273;furazolidona;;C
+4932286;furosemida;;Insensible;Manual;Vigente;Si;;furosemida;;387475002;furosemida;1584;furosemida;;C
+4932290;gabapentina;;Insensible;Manual;Vigente;Si;;gabapentina;;386845007;gabapentina;5094;gabapentina;;C
+7594264;gadobutrol;;Insensible;Manual;Vigente;;;;;;;6882;gadobutrol;;C
+4930204;gadodiamida;;Insensible;Manual;Vigente;Si;;gadodiamida;;396067007;gadodiamida;6636;gadodiamida;;C
+7600206;gadopentetato de dimeglumina;;Insensible;Manual;Vigente;;;;;;;5396;ácido gadopentético;;C
+4930226;galantamina;;Insensible;Manual;Vigente;Si;;galantamina;;395727007;galantamina;1392;galantamina;;C
+4932313;ganciclovir;;Insensible;Manual;Vigente;Si;;ganciclovir;;372848001;ganciclovir;6023;ganciclovir;;C
+4930323;ganirelix;;Insensible;Manual;Vigente;Si;;ganirelix;;395728002;ganirelix;6830;ganirelix;;X
+4930358;gatifloxacino;;Insensible;Manual;Vigente;Si;;gatifloxacino;• 6395658 - gatifloxacina;116349004;gatifloxacino;7423;gatifloxacino;;C
+4930374;gefitinib;;Insensible;Manual;Vigente;Si;;gefitinib;;407100002;gefitinib;8204;gefitinib;;D
+6399501;gelatina succinilada;;Insensible;Manual;Vigente;;;gelatina;;373531009;gelatina;;;;
+4930383;gemcitabina;;Insensible;Manual;Vigente;Si;;gemcitabina;;386920008;gemcitabina;6515;gemcitabina;;D
+4932328;gemfibrozilo;;Insensible;Manual;Vigente;Si;;gemfibrozilo;• 6399774 - gemfibrozil;387189002;gemfibrozilo;3899;gemfibrozilo;;C
+4932357;gentamicina;;Insensible;Manual;Vigente;Si;;gentamicina;;387321007;gentamicina;1617;gentamicina;;C
+4930385;gestodeno;;Insensible;Manual;Vigente;Si;;gestodeno;;395945000;gestodeno;4244;gestodeno;;
+4930400;ginkgo biloba extracto estandarizado;;Insensible;Manual;Vigente;Si;;Ginkgo biloba;;420733007;Ginkgo biloba;;;;
+7403583;glatiramer;;Insensible;Manual;Vigente;;;glatiramer;;372535006;glatiramer;;;;B
+4931343;glibenclamida;;Insensible;Manual;Vigente;Si;;glibenclamida;;384978002;glibenclamida;2386;glibenclamida;;C
+4930434;glicerol;;Insensible;Manual;Vigente;Si;;glicerol;• 7056022 - glicerina;80582002;glicerol;444;glicerol;;
+4930490;glicina;;Insensible;Manual;Vigente;Si;;glicina;;15331006;glicina;630;glicina;;
+4932392;gliclazida;;Insensible;Manual;Vigente;Si;;gliclazida;;395731001;gliclazida;3056;gliclazida;;C
+6399526;glicopirronio;;Insensible;Manual;Vigente;Si;;glicopirrolato;;387122008;glicopirrolato;1038;bromuro de glicopirronio;;C
+4932427;glimepirida;;Insensible;Manual;Vigente;Si;;glimepirida;;386966003;glimepirida;5718;glimepirida;;C
+4932454;glipizida;;Insensible;Manual;Vigente;Si;;glipizida;;387143009;glipizida;3090;glipizida;;C
+4931348;glucagón;;Insensible;Manual;Vigente;Si;;glucagón;;66603002;glucagón;933;glucagón;;B
+4933162;gluconato de calcio;;Insensible;Manual;Vigente;Si;;gluconato de calcio;;387292008;gluconato de calcio;;;;
+4931220;gluconato de potasio;;Insensible;Manual;Vigente;Si;;gluconato de potasio;;89219006;gluconato de potasio;;;;A
+4930767;glucosa;;Insensible;Manual;Vigente;Si;;glucosa;• 6426737 - dextrosa;67079006;glucosa;;;;
+4930829;glucosamina;;Insensible;Manual;Vigente;Si;;glucosamina;;70237008;glucosamina;3120;glucosamina;;
+6402287;glutamato de sodio;;Insensible;Manual;Vigente;Si;;;;;;;;;
+6399534;golimumab;;Insensible;Manual;Vigente;Si;;golimumab;;442435002;golimumab;8497;golimumab;;B
+7672200;gonadotrofina coriónica;;Insensible;Manual;Vigente;;;;;;;1972;gonadotrofina coriónica;;
+4930901;goserelina;;Insensible;Manual;Vigente;Si;;goserelina;• 6399798 - goserelín;108771008;goserelina;5943;goserelina;;
+4930911;gramicidina;;Insensible;Manual;Vigente;Si;;gramicidina;;387524003;gramicidina;2025;gramicidina;;
+4930976;granisetrón;;Insensible;Manual;Vigente;Si;;granisetrón;;372489005;granisetrón;6230;granisetrón;;
+4932480;griseofulvina;;Insensible;Manual;Vigente;Si;;griseofulvina;;372807004;griseofulvina;875;griseofulvina;;C
+5163078;Haemophilus influenzae polisacárido tipo B conjugado proteína tétano;;Insensible;Manual;Vigente;Si;;;;;;;;;
+4933375;haloperidol;;Insensible;Manual;Vigente;;;haloperidol;;386837002;haloperidol;918;haloperidol;;C
+4933432;hedera helix extracto estandarizado;;Insensible;Manual;Vigente;Si;;;;;;;;;
+4933444;hematoporfirina;;Insensible;Manual;Vigente;;;hematoporfirina;;51462002;hematoporfirina;;;;
+6399550;heparina sódica;;Insensible;Manual;Vigente;Si;;heparina;;372877000;heparina;392;heparina de sodio;;C
+4934447;hesperidina;;Insensible;Manual;Vigente;Si;;hespiridina;;412203006;hespiridina;;;;
+4934509;hialuronato de sodio;;Insensible;Manual;Vigente;Si;;hialuronato de sodio;;387578003;hialuronato de sodio;;;;
+7613799;hialuronidasa;;Insensible;Manual;Vigente;;;;;;;;;;
+6399569;hidralazina;;Insensible;Manual;Vigente;;;hidralazina;;387125005;hidralazina;;;;C
+5153300;hidrato de cloral;;Insensible;Manual;Vigente;Si;;hidrato de cloral;;273948005;hidrato de cloral;;;;
+5531867;hidroclorotiazida;;Insensible;Manual;Vigente;;;hidroclorotiazida;;387525002;hidroclorotiazida;841;hidroclorotiazida;;B
+7246470;hidrocortisona;;Insensible;Manual;Vigente;Si;;hidrocortisona;;396458002;hidrocortisona;38;hidrocortisona;;
+5499555;hidrocortisona aceponato;;Insensible;Manual;Vigente;;;hidrocortisona;;396458002;hidrocortisona;38;hidrocortisona;;C
+7230568;hidrocortisona acetato;;Insensible;Manual;Vigente;Si;;;;;;;;;
+7246457;hidrocortisona succinato sódico;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5679156;hidroquinona;;Insensible;Manual;Vigente;Si;;hidroquinona;;387422001;hidroquinona;;;;
+5153389;hidroxicloroquina;;Insensible;Manual;Vigente;Si;;hidroxicloroquina;;373540008;hidroxicloroquina;796;hidroxicloroquina;;
+5679151;hidróxido de aluminio;;Insensible;Manual;Vigente;;;hidróxido de aluminio;;273944007;hidróxido de aluminio;;;;A
+5679155;hidróxido de magnesio;;Insensible;Manual;Vigente;Si;;hidróxido de magnesio;;387337001;hidróxido de magnesio;;;;
+5161850;hidroxietilalmidón;;Insensible;Manual;Vigente;;;almidón hidroxietílico;• 6399802 - hidroxietil almidón;418938005;almidón hidroxietílico;;;;
+5162447;hidroxiurea;;Insensible;Manual;Vigente;Si;;hidroxiurea;;387314007;hidroxiurea;;;;
+5153381;hidroxizina;;Insensible;Manual;Vigente;Si;;hidroxicina;• 6426721 - hidroxizina;372856003;hidroxicina;599;hidroxizina;;
+6399580;hidroxocobalamina;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5153394;hipromelosa;;Insensible;Manual;Vigente;Si;;hipromelosa;• 6669340 - hidroxipropilmetilcelulosa;412410003;hipromelosa;2412;hipromelosa;;
+5162815;ibritumomab tiuxetán;;Insensible;Manual;Vigente;Si;;ibritumomab tiuxetano;;385548008;ibritumomab tiuxetano;7873;ibritumomab tiuxetán;;D
+5354319;ibuprofeno;;Insensible;Manual;Vigente;Si;;ibuprofeno;;387207008;ibuprofeno;2118;ibuprofeno;;C
+6176009;ibuprofeno lisinato;;Insensible;Manual;Vigente;Si;;;;;;;;;
+7253904;idarubicina;;Insensible;Manual;Vigente;;;;;;;;;;D
+6399614;ifosfamida;;Insensible;Manual;Vigente;Si;;ifosfamida;;386904003;ifosfamida;;;;D
+5161985;iloprost;;Insensible;Manual;Vigente;Si;;iloprost;;395740002;iloprost;4972;iloprost;;C
+5162906;imatinib;;Insensible;Manual;Vigente;Si;;imatinib;;414460008;imatinib;8031;imatinib;;D
+6399621;imiglucerasa;;Insensible;Manual;Vigente;Si;;imiglucerasa;;386968002;imiglucerasa;;;;
+5162922;imipenem;;Insensible;Manual;Vigente;Si;;imipenem;;46558003;imipenem;5181;imipenem;;
+6399636;imipramina;;Insensible;Manual;Vigente;Si;;imipramina;;372718005;imipramina;;;;D
+5162938;imiquimod;;Insensible;Manual;Vigente;Si;;imiquimod;;386941002;imiquimod;6911;imiquimod;;C
+5162966;indacaterol;;Insensible;Manual;Vigente;Si;;;;;;8457;indacaterol;;C
+5162977;indapamida;;Insensible;Manual;Vigente;Si;;indapamida;;387419003;indapamida;3333;indapamida;;B
+6399667;indometacina;;Insensible;Manual;Vigente;Si;;indometacina;;373513008;indometacina;;;;
+5163023;infliximab;;Insensible;Manual;Vigente;Si;;infliximab;;386891004;infliximab;7602;infliximab;;B
+6592391;inmunoglobulina G humana;;Insensible;Manual;Vigente;Si;;inmunoglobulina IgG;;29246005;inmunoglobulina IgG;;;;
+5163098;inmunoglobulina humana anti citomegalovirus;;Insensible;Manual;Vigente;Si;;;;;;;;;
+7618048;inmunoglobulina humana anti hepatitis B;;Insensible;Manual;Vigente;;;;;;;;;;
+5163129;inmunoglobulina humana anti Rho (D);;Sensible;Manual;Vigente;Si;;anticuerpo anti - inmunoglobulina D;• 6396054 - inmunoglobulina anti D;;anticuerpo anti - inmunoglobulina D;;;;
+5163142;inmunoglobulina humana anti tetánica;;Insensible;Manual;Vigente;Si;;inmunoglobulina antitetánica;;425682001;inmunoglobulina antitetánica;;;;
+5163152;inmunoglobulina humana anti varicela - zoster;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5163147;inmunoglobulina lagomorfa anti timocitos humanos;;Insensible;Manual;Vigente;Si;;;;;;;;;
+6399720;insulina asparta;;Insensible;Manual;Vigente;Si;;insulina asparta;;325072002;insulina asparta;7541;insulina asparta;;B
+7367513;insulina asparta protamina;;Insensible;Manual;Vigente;;;insulina asparta protamina;;427292001;insulina asparta protamina;;;;B
+7355664;insulina degludec;;Insensible;Manual;Vigente;Si;;;;;;9170;insulina degludec;;C
+6399721;insulina detemir;;Insensible;Manual;Vigente;Si;;insulina detemir;;414515005;insulina detemir;7735;insulina detemir;;B
+6399725;insulina glargina;;Insensible;Manual;Vigente;Si;;insulina glargina;;411529005;insulina glargina;7548;insulina glargina;;C
+6399729;insulina glulisina;;Insensible;Manual;Vigente;Si;;insulina glulisina;;411530000;insulina glulisina;8044;insulina glulisina;;C
+7137361;insulina humana NPH;;Insensible;Manual;Vigente;Si;;insulina isofánica humana;;421367005;insulina isofánica humana;;;;B
+7014976;insulina humana soluble;;Insensible;Manual;Vigente;Si;;insulina humana soluble;;420609005;insulina humana soluble;5186;insulina humana;;B
+7332082;insulina lispro;;Insensible;Manual;Vigente;Si;;insulina lispro;;412210000;insulina lispro;7278;insulina lispro;;B
+5163158;insulina lispro protamina;;Insensible;Manual;Vigente;Si;;insulina lispro protamina;;426313003;insulina lispro protamina;;;;B
+7388959;interferón alfa 2a;;Insensible;Manual;Vigente;;;interferón alfa - 2a;;386914007;interferón alfa - 2a;;;;
+6399742;interferón alfa 2b;;Insensible;Manual;Vigente;Si;;interferón alfa - 2b;;386915008;interferón alfa - 2b;;;;C
+7388935;interferón beta 1a;;Insensible;Manual;Vigente;;;interferón beta - 1a;;386902004;interferón beta - 1a;;;;C
+7388937;interferón beta 1b;;Insensible;Manual;Vigente;;;interferón beta - 1b;;386903009;interferón beta - 1b;;;;C
+5164435;iodixanol;;Insensible;Manual;Vigente;Si;;iodixanol;;395750001;iodixanol;5692;iodixanol;;B
+5164475;iohexol;;Insensible;Manual;Vigente;Si;No;Iohexol;• 6426712 - yohexol;395751002;Iohexol;4848;iohexol;;B
+7376157;iopromida;;Insensible;Manual;Vigente;Si;;iopromida;;395756007;iopromida;4919;iopromida;;B
+5164479;ioxaglato sódico;;Insensible;Manual;Vigente;Si;;;;412230001;;;;;
+7612175;ioxitalamato sódico;;Insensible;Manual;Vigente;;;;;;;;;;
+5164490;ipilimumab;;Insensible;Manual;Vigente;Si;;;;;;8568;ipilimumab;;C
+5164552;irbesartán;;Insensible;Manual;Vigente;Si;;irbesartán;;386877005;irbesartán;7229;irbesartán;;D
+5164560;irinotecán;;Insensible;Manual;Vigente;Si;;irinotecán;• 6399815 - irinotecán;372538008;irinotecán;6694;irinotecán;;D
+5164566;isoflurano;;Insensible;Manual;Vigente;Si;;isoflurano;;387368002;isoflurano;3286;isoflurano;;C
+5667985;isoniazida;;Insensible;Manual;Vigente;Si;;isoniazida;;387472004;isoniazida;4188;isoniazida;;C
+5164581;isoproterenol;;Insensible;Manual;Vigente;Si;;isoproterenol;• 7057990 - isoprenalina;372781009;isoproterenol;4201;isoprenalina;;
+4829096;isosorbida dinitrato;;Insensible;Manual;Vigente;Si;;dinitrato de isosorbida;• 6399821 - isosorbide dinitrato;387332007;dinitrato de isosorbida;996;dinitrato de isosorbida;;C
+5153764;isosorbida mononitrato;;Insensible;Manual;Vigente;Si;;mononitrato de isosorbida;;386854005;mononitrato de isosorbida;5177;mononitrato de isosorbida;;C
+5667986;isotretinoína;;Insensible;Manual;Vigente;Si;;isotretinoína;;387208003;isotretinoína;4617;isotretinoína;;X
+5667992;itraconazol;;Insensible;Manual;Vigente;Si;;itraconazol;;387532006;itraconazol;5387;itraconazol;;C
+5164624;ivabradina;;Insensible;Manual;Vigente;Si;;ivabradina;;421228002;ivabradina;7523;ivabradina;;
+6399789;ivermectina;;Insensible;Manual;Vigente;Si;;ivermectina;;387559003;ivermectina;;;;
+5164673;ixabepilona;;Insensible;Manual;Vigente;Si;;ixabepilona;• 6391864 - IXABEPILONE;428282007;ixabepilona;8390;ixabepilona;;D
+5164700;ketamina;;Insensible;Manual;Vigente;Si;;ketamina;;373464007;ketamina;2156;ketamina;;
+5667994;ketazolam;;Insensible;Manual;Vigente;Si;;ketazolam;;419657007;ketazolam;3107;ketazolam;;
+5667996;ketoconazol;;Insensible;Manual;Vigente;Si;;ketoconazol;;387216007;ketoconazol;4594;ketoconazol;;C
+5668003;ketoprofeno;;Insensible;Manual;Vigente;Si;;ketoprofeno;;386832008;ketoprofeno;3284;ketoprofeno;;D
+5164720;ketorolaco;;Insensible;Manual;Vigente;Si;;ketorolaco;;372501008;ketorolaco;5558;ketorolaco;;C
+5164773;ketotifeno;;Insensible;Manual;Vigente;Si;;ketotifeno;;372642003;ketotifeno;3993;ketotifeno;;C
+4855982;L - alanina;;Insensible;Manual;Vigente;;;;;;;6161;alanina;;
+5150858;L - asparaginasa;;Insensible;Manual;Vigente;Si;;L-asparaginasa;;371014004;L-asparaginasa;;;;C
+4930872;L - glutamina;;Insensible;Manual;Vigente;Si;;;;;;1413;glutamina;;
+5199520;labetalol;;Insensible;Manual;Vigente;Si;;labetalol;;372750000;labetalol;3941;labetalol;;
+5199573;lacosamida;;Insensible;Manual;Vigente;Si;;lacosamida;;441647003;lacosamida;8094;lacosamida;;C
+5199575;lactasa;;Insensible;Manual;Vigente;;;lactasa;;28530008;lactasa;;;;
+5926352;lactato;;Insensible;Manual;Vigente;Si;;lactato (sustancia);;83036002;lactato (sustancia);;;;
+5354533;lactato de magnesio;;Insensible;Manual;Vigente;Si;;lactato de magnesio;;116129003;lactato de magnesio;;;;
+5918400;lactato de sodio;;Insensible;Manual;Vigente;Si;;lactato de sodio;;387306001;lactato de sodio;;;;
+7146685;lactato de zinc;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5165760;lactulosa;;Insensible;Manual;Vigente;Si;;lactulosa;;273945008;lactulosa;2137;lactulosa;;B
+4757770;lamivudina;;Insensible;Manual;Vigente;Si;;lamivudina;;386897000;lamivudina;6908;lamivudina;;C
+5166081;lamotrigina;;Insensible;Manual;Vigente;Si;;lamotrigina;;387562000;lamotrigina;5638;lamotrigina;;C
+5199920;lanatósido C;;Sensible;Manual;Vigente;Si;;lanatósido C;;387338006;lanatósido C;393;lanatósido C;;
+5199946;lanolina;;Insensible;Manual;Vigente;Si;;lanolina;;42416001;lanolina;;;;
+5199954;lanreotida acetato;;Insensible;Manual;Vigente;Si;;acetato de lanreotida;;429611006;acetato de lanreotida;6649;lanreotida;;C
+5166144;lansoprazol;;Insensible;Manual;Vigente;Si;;lansoprazol;;386888004;lansoprazol;6397;lansoprazol;;B
+5199987;lapatinib;;Insensible;Manual;Vigente;Si;;lapatinib;;425820005;lapatinib;8378;lapatinib;;D
+6399844;laronidasa;;Insensible;Manual;Vigente;Si;;laronidasa;;409264006;laronidasa;;;;
+5203233;latanoprost;;Insensible;Manual;Vigente;Si;;latanoprost;;386926002;latanoprost;6980;latanoprost;;C
+7525817;lecitina de soya;;Insensible;Manual;Vigente;;;;;;;;;;
+5162015;leflunomida;;Insensible;Manual;Vigente;Si;;leflunomida;;386981009;leflunomida;5079;leflunomida;;X
+5205097;lenalidomida;;Insensible;Manual;Vigente;Si;;lenalidomida;;421471009;lenalidomida;8505;lenalidomida;;X
+5205113;letrozol;;Insensible;Manual;Vigente;Si;;letrozol;;386911004;letrozol;7118;letrozol;;X
+6401695;leucovorina;;Insensible;Manual;Vigente;Si;;leucovorina cálcica;"• 6415132 - ácido folínico cálcico
+• 6415156 - folinato de calcio";126223008;leucovorina cálcica;690;folinato cálcico;;C
+5205115;leuprorelina;;Insensible;Manual;Vigente;Si;;;;397198002;;5025;leuprorelina;;X
+5205326;levetiracetam;;Insensible;Manual;Vigente;Si;;levetiracetam;;387000003;levetiracetam;6450;levetiracetam;;C
+6401705;levobunolol;;Insensible;Manual;Vigente;Si;;levobunolol;;418934007;levobunolol;4706;levobunolol;;C
+5205360;levobupivacaína;;Insensible;Manual;Vigente;Si;;levobupivacaína;;387011006;levobupivacaína;7465;levobupivacaina;;
+5205391;levocetirizina;;Insensible;Manual;Vigente;Si;;levocetirizina;;421889003;levocetirizina;7700;levocetirizina;;B
+5167815;levodopa;;Insensible;Manual;Vigente;Si;;levodopa;;387086006;levodopa;2651;levodopa;;C
+5205751;levodropropizina;;Insensible;Manual;Vigente;Si;;;;697999004;levodropropizina;6200;levodropropizina;;
+5168002;levofloxacino;;Insensible;Manual;Vigente;Si;;levofloxacino;• 6392018 - LEVOFLOXACINA;387552007;levofloxacino;6708;levofloxacino;;C
+6398059;levomefolato cálcico;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5668005;levomepromazina;;Insensible;Manual;Vigente;Si;;levomepromazina;;387509007;levomepromazina;705;levomepromazina;;
+5164813;levonorgestrel;;Insensible;Manual;Vigente;Si;;levonorgestrel;;126109000;levonorgestrel;3475;levonorgestrel;;X
+5206060;levosimendán;;Insensible;Manual;Vigente;Si;;levosimendán;• 6399827 - levosimendan;442795003;levosimendán;7020;levosimendán;;
+5206068;levosulpirida;;Insensible;Manual;Vigente;Si;;;;702795007;;6593;levosulpirida;;
+5238720;levotiroxina;;Insensible;Manual;Vigente;Si;;levotiroxina sódica;;126202002;levotiroxina sódica;453;levotiroxina de sodio;;A
+6401715;lidocaína;;Insensible;Manual;Vigente;Si;;lidocaína;;387480006;lidocaína;;;;B
+5238747;limeciclina;;Insensible;Manual;Vigente;Si;;limeciclina;;387548007;limeciclina;1679;limeciclina;;
+6401717;linagliptina;;Insensible;Manual;Vigente;Si;;;;702798009;;;;;
+5168056;lincomicina;;Insensible;Manual;Vigente;Si;;lincomicina;;372677003;lincomicina;1419;lincomicina;;C
+5238830;linestrenol;;Insensible;Manual;Vigente;Si;;linestrenol;;419504002;linestrenol;1222;linestrenol;;
+5240236;linezolid;;Insensible;Manual;Vigente;;;linezolid;;387056004;linezolid;7584;linezolid;;C
+5168105;liotironina;;Insensible;Manual;Vigente;Si;;liotironina;"• 6426702 - triyodotironina
+• 6646725 - triiodotironina";61275002;liotironina;653;liotironina;;A
+7270953;lipegfilgrastim;;Insensible;Manual;Vigente;Si;;;;;;;;;
+6401728;liraglutida;;Insensible;Manual;Vigente;Si;;liraglutida;;444828003;liraglutida;;;;
+6401730;lisdexanfetamina;;Insensible;Manual;Vigente;Si;;lisdexanfetamina;;425597005;lisdexanfetamina;8690;lisdexanfetamina;;C
+5168126;lisinopril;;Insensible;Manual;Vigente;Si;;lisinopril;;386873009;lisinopril;5425;lisinopril;;D
+7579158;lixisenatida;;Insensible;Manual;Vigente;;;;;;;8970;lixisenatida;;
+5677332;lomifilina;;Insensible;Manual;Vigente;Si;;;;;;4220;lomifilina;;
+6401741;loperamida;;Insensible;Manual;Vigente;No;;loperamida;;387040009;loperamida;;;;C
+5668020;lopinavir;;Insensible;Manual;Vigente;Si;;lopinavir;;387067003;lopinavir;7798;lopinavir;;
+5168356;loratadina;;Insensible;Manual;Vigente;Si;;loratadina;;386884002;loratadina;5864;loratadina;;
+5169454;lorazepam;;Insensible;Manual;Vigente;Si;;lorazepam;;387106007;lorazepam;2809;lorazepam;;D
+7637065;lorcaserina;;Insensible;Manual;Vigente;;;;;;;;;;
+5198303;losartán;;Insensible;Manual;Vigente;;;losartán;;373567002;losartán;6913;losartán;;D
+5668021;loteprednol;;Insensible;Manual;Vigente;Si;;loteprednol;;419711001;loteprednol;6654;loteprednol;;
+5198367;lovastatina;;Insensible;Manual;Vigente;Si;;lovastatina;• 6399830 - lovastatín;96303004;lovastatina;6074;lovastatina;;X
+6401763;lutropina alfa;;Insensible;Manual;Vigente;Si;;;;103029004;;;;;
+5354383;magaldrato;;Insensible;Manual;Vigente;Si;;magaldrato;;387240004;magaldrato;4416;magaldrato;;
+5206067;magnesio;;Insensible;Manual;Vigente;Si;;magnesio;;72717003;magnesio;;;;
+6716560;malato de calcio;;Insensible;Manual;Vigente;Si;;;;;;;;;
+7051450;manitol;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5354604;maraviroc;;Insensible;Manual;Vigente;Si;;maraviroc;;429603001;maraviroc;8450;maraviroc;;B
+5198596;mebendazol;;Insensible;Manual;Vigente;Si;;mebendazol;;387311004;mebendazol;2942;mebendazol;;C
+5354676;mebeverina;;Insensible;Manual;Vigente;Si;;mebeverina;;419830007;mebeverina;1191;mebeverina;;
+5198966;medroxiprogesterona;;Insensible;Manual;Vigente;Si;;medroxiprogesterona;;126113007;medroxiprogesterona;853;medroxiprogesterona;;X
+5199455;mefloquina;;Insensible;Manual;Vigente;Si;;mefloquina;;387505001;mefloquina;3777;mefloquina;;C
+5354782;meglumina diatrizoato;;Insensible;Manual;Vigente;Si;;;;47192000;;;;;
+5354797;meglumina iotalamato;;Insensible;Manual;Vigente;Si;;;;395757003;;;;;
+7679380;meglumina ioxaglato;;Insensible;Manual;Vigente;;;;;;;;;;
+5354816;meglumina ioxitalamato;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5354831;melatonina;;Insensible;Manual;Vigente;Si;;;;41199001;melatonina;;;;
+5354988;melfalán;;Insensible;Manual;Vigente;Si;;melfalán;;387297002;melfalán;745;melfalán;;D
+5199179;meloxicam;;Insensible;Manual;Vigente;Si;;meloxicam;;387055000;meloxicam;5615;meloxicam;;C
+5355000;memantina;;Insensible;Manual;Vigente;;;memantina;;406458000;memantina;3952;memantina;;B
+5355092;menotropina;;Insensible;Manual;Vigente;Si;;;;;;;;;X
+6401777;mentol;;Insensible;Manual;Vigente;Si;;mentol;;387414008;mentol;;;;
+6401780;mepiramina;;Insensible;Manual;Vigente;Si;;;;;;;;;
+7045538;mepivacaína;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5199239;mercaptopurina;;Insensible;Manual;Vigente;Si;;mercaptopurina;;386835005;mercaptopurina;587;mercaptopurina;;D
+5355141;meropenem;;Insensible;Manual;Vigente;Si;;meropenem;;387540000;meropenem;6396;meropenem;;B
+5355147;mesalazina;;Insensible;Manual;Vigente;Si;;mesalazina;;387501005;mesalazina;5444;mesalazina;;B
+5355150;mesna;;Insensible;Manual;Vigente;;;mesna;;386922000;mesna;2813;mesna;;B
+5355163;metadona;;Insensible;Manual;Vigente;Si;;metadona;;387286002;metadona;788;metadona;;C
+7402961;metamizol magnésico;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5199305;metamizol sódico;;Insensible;Manual;Vigente;Si;;Metamizole sodium;• 6448746 - dipirona;22165008;Metamizole sodium;477;metamizol de sodio;;D
+5199335;metformina;;Insensible;Manual;Vigente;Si;;metformina;;372567009;metformina;965;metformina;;B
+5355243;metilbromuro de homatropina;;Insensible;Manual;Vigente;Si;;homatropina;;372864009;homatropina;131;metilbromuro de homatropina;;
+5355300;metildopa;;Insensible;Manual;Vigente;Si;;metildopa;;373542000;metildopa;1110;metildopa;;B
+5355301;metilfenidato;;Insensible;Manual;Vigente;Si;;metilfenidato;;373337007;metilfenidato;485;metilfenidato;;C
+7394878;metilprednisolona;;Insensible;Manual;Vigente;Si;;;;;;;;;
+7246318;metilprednisolona acetato;;Insensible;Manual;Vigente;Si;;;;;;;;;
+6401857;metilsulfato de neostigmina;;Insensible;Manual;Vigente;Si;;neostigmina;;373346001;neostigmina;;;;C
+5199432;metoclopramida;;Insensible;Manual;Vigente;Si;;metoclopramida;;372776000;metoclopramida;1740;metoclopramida;;B
+4934950;metolazona;;Insensible;Manual;Vigente;Si;;metolazona;;387123003;metolazona;2627;metolazona;;
+4934972;metoprolol;;Insensible;Manual;Vigente;Si;;metoprolol;;372826007;metoprolol;3471;metoprolol;;C
+5152627;metotrexato;;Insensible;Manual;Vigente;Si;;metotrexato;;387381009;metotrexato;926;metotrexato;;X
+6401821;metoxipolietilenglicol epoetina beta;;Insensible;Manual;Vigente;Si;;metoxipolietilenglicol-epoetina beta;;425913002;metoxipolietilenglicol-epoetina beta;;;;C
+5152628;metronidazol;;Insensible;Manual;Vigente;Si;;metronidazol;;372602008;metronidazol;1032;metronidazol;;B
+4934974;mianserina;;Insensible;Manual;Vigente;Si;;mianserina;;387565003;mianserina;2543;mianserina;;
+5152634;micofenolato mofetilo;;Insensible;Manual;Vigente;Si;;micofenolato de mofetilo;;386976000;micofenolato de mofetilo;2950;ácido micofenólico;;D
+5153747;miconazol;;Insensible;Manual;Vigente;Si;;miconazol;;372738006;miconazol;2728;miconazol;;C
+5153845;midazolam;;Insensible;Manual;Vigente;Si;;midazolam;;373476007;midazolam;4497;midazolam;;D
+4934978;midodrina;;Insensible;Manual;Vigente;Si;;midodrina;;372504000;midodrina;3186;midodrina;;
+4935030;miglustat;;Insensible;Manual;Vigente;Si;;miglustat;;412296005;miglustat;8138;miglustat;;
+4935052;milnaciprán;;Insensible;Manual;Vigente;Si;;milnaciprán;;441641002;milnaciprán;5701;milnaciprán;;C
+4935058;milrinona;;Insensible;Manual;Vigente;Si;;milrinona;;373441005;milrinona;5383;milrinona;;C
+5153849;minociclina;;Insensible;Manual;Vigente;Si;;minociclina;;372653009;minociclina;1646;minociclina;;D
+5153749;minoxidil;;Insensible;Manual;Vigente;Si;;minoxidil;;387272001;minoxidil;2987;minoxidil;;C
+4935063;mirtazapina;;Insensible;Manual;Vigente;Si;;mirtazapina;;386847004;mirtazapina;6481;mirtazapina;;
+5153868;misoprostol;;Insensible;Manual;Vigente;Si;;misoprostol;;387242007;misoprostol;5154;misoprostol;;X
+4935077;mitomicina;;Insensible;Manual;Vigente;Si;;mitomicina;;387331000;mitomicina;3043;mitomicina;;X
+7253974;mitotano;;Insensible;Manual;Vigente;Si;;mitotano;;26288002;mitotano;2597;mitotano;;C
+5107811;mitoxantrona;;Insensible;Manual;Vigente;Si;;mitoxantrona;;386913001;mitoxantrona;4922;mitoxantrona;;
+5201645;mivacurio;;Insensible;Manual;Vigente;Si;;cloruro de mivacurio;;108447000;cloruro de mivacurio;6226;cloruro de mivacurio;;C
+5107839;moclobemida;;Insensible;Manual;Vigente;Si;;moclobemida;;395800003;moclobemida;4914;moclobemida;;
+5153756;modafinilo;;Insensible;Manual;Vigente;Si;;modafinilo;• 6392313 - MODAFINIL;387004007;modafinilo;6055;modafinilo;;C
+6401838;mometasona;;Insensible;Manual;Vigente;Si;;mometasona;;395990009;mometasona;6030;mometasona;;
+5153774;montelukast;;Insensible;Manual;Vigente;Si;;montelukast;;373728005;montelukast;7388;montelukast;;C
+5153775;morfina;;Insensible;Manual;Vigente;Si;;morfina;;373529000;morfina;;;;C
+5153777;moxifloxacino;;Insensible;Manual;Vigente;Si;;moxifloxacino;• 6392331 - MOXIFLOXACINA;412439003;moxifloxacino;7659;moxifloxacino;;C
+7679942;MPL;;Insensible;Manual;Vigente;;;;• 7679972 - 3 - O - desacil - 4’ - monofosforil lípido A;;;;;;
+5152644;mupirocina;;Insensible;Manual;Vigente;Si;;mupirocina;;387397004;mupirocina;;;;B
+5153785;nafazolina;;Insensible;Manual;Vigente;Si;;nafazolina;;372803000;nafazolina;4153;nafazolina;;C
+5108064;naloxona;;Insensible;Manual;Vigente;Si;;naloxona;;372890007;naloxona;1526;naloxona;;
+5153792;naltrexona;;Insensible;Manual;Vigente;Si;;naltrexona;;373546002;naltrexona;3368;naltrexona;;C
+5153870;nandrolona;;Insensible;Manual;Vigente;Si;;nandrolona;;126171003;nandrolona;295;nandrolona;;X
+5153884;naproxeno;;Insensible;Manual;Vigente;Si;;naproxeno;;372588000;naproxeno;2979;naproxeno;;D
+5109059;naratriptán;;Insensible;Manual;Vigente;Si;;naratriptán;• 6399859 - naratriptán;363571003;naratriptán;7097;naratriptán;;C
+5109144;natalizumab;;Insensible;Manual;Vigente;Si;;Natalizumab;;414805007;Natalizumab;7716;natalizumab;;C
+5109164;nateglinida;;Insensible;Manual;Vigente;Si;;nateglinida;;387070004;nateglinida;7594;nateglinida;;C
+5109196;nebivolol;;Insensible;Manual;Vigente;Si;;nebivolol;;395808005;nebivolol;5969;nebivolol;;
+7683485;Neisseria meningitidis polisacárido tipo A conjugado proteína difteria;;Insensible;Manual;Vigente;;;;;;;;;;
+7683017;Neisseria meningitidis polisacárido tipo A conjugado proteína tétano;;Insensible;Manual;Vigente;;;;;;;;;;
+7683487;Neisseria meningitidis polisacárido tipo C conjugado proteína difteria;;Insensible;Manual;Vigente;;;;;;;;;;
+7683018;Neisseria meningitidis polisacárido tipo C conjugado proteína tétano;;Insensible;Manual;Vigente;;;;;;;;;;
+7683488;Neisseria meningitidis polisacárido tipo W - 135 conjugado proteína difteria;;Insensible;Manual;Vigente;;;;;;;;;;
+7683019;Neisseria meningitidis polisacárido tipo W - 135 conjugado proteína tétano;;Insensible;Manual;Vigente;;;;;;;;;;
+7683490;Neisseria meningitidis polisacárido tipo Y conjugado proteína difteria;;Insensible;Manual;Vigente;;;;;;;;;;
+7683023;Neisseria meningitidis polisacárido tipo Y conjugado proteína tétano;;Insensible;Manual;Vigente;;;;;;;;;;
+5153794;neomicina;;Insensible;Manual;Vigente;Si;;neomicina;;373528008;neomicina;232;neomicina;;C
+5109501;nepafenaco;;Insensible;Manual;Vigente;Si;;nepafenac;• 6392398 - NEPAFENAC;419460005;nepafenac;7685;nepafenaco;;
+5109526;nevirapina;;Insensible;Manual;Vigente;Si;;nevirapina;;386898005;nevirapina;6815;nevirapina;;
+5109672;nicergolina;;Insensible;Manual;Vigente;Si;;nicergolina;;698197004;nicergolina;3088;nicergolina;;
+6401860;nicotina;;Insensible;Manual;Vigente;;;nicotina;;68540007;nicotina;;;;
+5153803;nifedipino;;Insensible;Manual;Vigente;Si;;nifedipino;• 6399861 - nifedipina;387490003;nifedipino;3222;nifedipino;;C
+5109926;nifuroxazida;;Insensible;Manual;Vigente;Si;;;;;;1578;nifuroxazida;;
+5109951;nifurtimox;;Insensible;Manual;Vigente;Si;;nifurtimox;;24869004;nifurtimox;2615;nifurtimox;;
+5109978;nilotinib;;Insensible;Manual;Vigente;Si;;nilotinib;;427941004;nilotinib;8654;nilotinib;;D
+5110054;nimesulida;;Insensible;Manual;Vigente;;;nimesulida;;703479000;nimesulida;4885;nimesulida;;
+5153804;nimodipino;;Insensible;Manual;Vigente;Si;;nimodipino;• 6399866 - nimodipina;387502003;nimodipino;4528;nimodipino;;C
+6401861;niquetamida;;Insensible;Manual;Vigente;Si;;niquetamida;;387591002;niquetamida;;;;
+5152647;nistatina;;Insensible;Manual;Vigente;;;nistatina;;387048002;nistatina;539;nistatina;;B
+5152600;nitrato de plata;;Insensible;Manual;Vigente;Si;;nitrato de plata;;373483000;nitrato de plata;;;;
+6402040;nitrato potásico;;Insensible;Manual;Vigente;Si;;nitrato de potasio;;77431009;nitrato de potasio;;;;
+5153807;nitrendipino;;Insensible;Manual;Vigente;Si;;nitrendipino;• 6399867 - nitrendipina;444757009;nitrendipino;4739;nitrendipino;;
+5152648;nitrofurantoína;;Insensible;Manual;Vigente;;;nitrofurantoína;;373543005;nitrofurantoína;488;nitrofurantoína;;B
+6401865;nitrofurazona;;Insensible;Manual;Vigente;Si;;nitrofurazona;;87097009;nitrofurazona;;;;
+5153818;nitroglicerina;;Insensible;Manual;Vigente;;;nitroglicerina;;387404004;nitroglicerina;;;;C
+5153820;nitroprusiato;;Insensible;Manual;Vigente;;;;;;;;;;C
+7290114;nivolumab;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5153879;nomegestrol;;Insensible;Manual;Vigente;Si;;;;;;5359;nomegestrol;;X
+6401871;norelgestromina;;Insensible;Manual;Vigente;Si;;norelgestromina;;385578004;norelgestromina;7939;norelgestromina;;
+5110198;norepinefrina;;Insensible;Manual;Vigente;Si;;norepinefrina;• 6399134 - noradrenalina;45555007;norepinefrina;33;norepinefrina;;
+5112823;noretisterona;;Insensible;Manual;Vigente;Si;;;;126102009;noretindrona;687;noretisterona;;X
+5153821;norfloxacino;;Insensible;Manual;Vigente;Si;;norfloxacino;;387271008;norfloxacino;5105;norfloxacino;;C
+5112882;noscapina;;Insensible;Manual;Vigente;Si;;noscapina;;387437002;noscapina;632;noscapina;;
+5201660;obidoxima;;Insensible;Manual;Vigente;Si;;;• 6399870 - obidoxima cloruro;;;2138;cloruro de obidoxima;;
+7289723;obinutuzumab;;Insensible;Manual;Vigente;Si;;;;;;;;;
+6401907;octatropina;;Insensible;Manual;Vigente;Si;;;• 7634510 - anisotropina;;;;;;
+5112973;octreotida;;Insensible;Manual;Vigente;Si;;octreotida;;109053000;octreotida;5656;octreotida;;B
+5153823;ofloxacino;;Insensible;Manual;Vigente;Si;;ofloxacino;• 6392513 - OFLOXACINA;387551000;ofloxacino;5322;ofloxacino;;C
+5153830;olanzapina;;Insensible;Manual;Vigente;Si;;olanzapina;;386849001;olanzapina;6956;olanzapina;;C
+5153855;olmesartán;;Insensible;Manual;Vigente;Si;;;;;;8612;olmesartán;;D
+5112987;olopatadina;;Insensible;Manual;Vigente;Si;;olopatadina;;372550002;olopatadina;7257;olopatadina;;
+5112990;omalizumab;;Insensible;Manual;Vigente;Si;;omalizumab;;406443008;omalizumab;8039;omalizumab;;B
+5153834;omeprazol;;Insensible;Manual;Vigente;Si;;omeprazol;;387137007;omeprazol;5081;omeprazol;;C
+5152607;onabotulinumtoxin A;;Insensible;Manual;Vigente;;;onabotulinumtoxin A;• 6399164 - onabotulinumtoxin A;444627005;onabotulinumtoxin A;;;;C
+5152652;ondansetrón;;Insensible;Manual;Vigente;Si;;ondansetrón;;372487007;ondansetrón;5965;ondansetrón;;B
+5113104;orciprenalina;;Insensible;Manual;Vigente;Si;;orciprenalina;• 6426685 - metaproterenol;372797004;orciprenalina;1586;orciprenalina;;
+5113118;orlistat;;Insensible;Manual;Vigente;Si;;orlistat;;387007000;orlistat;6318;orlistat;;
+5153839;oseltamivir;;Insensible;Manual;Vigente;Si;;oseltamivir;;412261005;oseltamivir;7793;oseltamivir;;C
+6401911;otilonio bromuro;;Insensible;Manual;Vigente;Si;;;;703515001;;;;;
+5113119;oxaliplatino;;Insensible;Manual;Vigente;Si;;oxaliplatino;;395814003;oxaliplatino;6012;oxaliplatino;;D
+5113182;oxcarbazepina;;Insensible;Manual;Vigente;Si;;oxcarbazepina;;387025007;oxcarbazepina;4585;oxcarbazepina;;
+5152655;oxibutinina;;Insensible;Manual;Vigente;Si;;oxibutinina;;372717000;oxibutinina;8379;esoxibutinina;;B
+5152660;oxicodona;;Insensible;Manual;Vigente;Si;;oxicodona;;55452001;oxicodona;1701;oxicodona;;B
+7392107;óxido amarillo de mercurio;;Insensible;Manual;Vigente;Si;;;;;;;;;
+6448117;óxido de magnesio;;Insensible;Manual;Vigente;Si;;óxido de magnesio;;66389008;óxido de magnesio;;;;
+6398192;óxido de zinc;;Insensible;Manual;Vigente;Si;;óxido de cinc;• 6410975 - óxido cinc;42841002;óxido de cinc;;;;
+5158970;oximetazolina;;Insensible;Manual;Vigente;Si;;oximetazolina;;387158001;oximetazolina;1400;oximetazolina;;
+5158982;oxipolietoxidodecano;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5158987;oxitocina;;Insensible;Manual;Vigente;Si;;oxitocina;;112115002;oxitocina;1480;oxitocina;;
+6401916;oxolamina;;Insensible;Manual;Vigente;Si;;oxolamina;;703553006;oxolamina;1453;oxolamina;;
+5159013;paclitaxel;;Insensible;Manual;Vigente;Si;;paclitaxel;;387374002;paclitaxel;7052;paclitaxel;;D
+7236449;paclitaxel unido a albúmina;;Insensible;Manual;Vigente;Si;;paclitaxel unido a albúmina;;426653008;paclitaxel unido a albúmina;;;;D
+6802164;palbociclib;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5159016;palivizumab;;Insensible;Manual;Vigente;Si;;palivizumab;;386900007;palivizumab;7753;palivizumab;;C
+5159017;palonosetrón;;Insensible;Manual;Vigente;Si;;palonosetrón;;404852008;palonosetrón;7407;palonosetrón;;B
+5159018;pamabrom;;Insensible;Manual;Vigente;Si;;pamabrom;;116552006;pamabrom;;;;
+4930414;panax ginseng extracto estandarizado;;Insensible;Manual;Vigente;Si;;extracto de ginseng;;412395006;extracto de ginseng;;;;
+5159035;pancreatina;;Insensible;Manual;Vigente;Si;;pancreatina;;387049005;pancreatina;;;;
+7447777;pancreatina 6 NF;;Insensible;Manual;Vigente;;;;;;;;;;
+5159036;panitumumab;;Insensible;Manual;Vigente;Si;;panitumumab;;423259008;panitumumab;8499;panitumumab;;C
+5166985;pantoprazol;;Insensible;Manual;Vigente;Si;;pantoprazol;;395821003;pantoprazol;6548;pantoprazol;;B
+5159048;papaína;;Insensible;Manual;Vigente;Si;;papaína;;5007006;papaína;;;;
+5167052;papaverina;;Insensible;Manual;Vigente;Si;;papaverina;;372784001;papaverina;;;;C
+5166991;paracetamol;;Insensible;Manual;Vigente;Si;;paracetamol o derivado;;;paracetamol o derivado;626;paracetamol;;C
+5159124;parecoxib;;Insensible;Manual;Vigente;Si;;parecoxib;;409135005;parecoxib;7816;parecoxib;;
+7028615;pargeverina;;Insensible;Manual;Vigente;Si;;;;;;4389;pargeverina;;
+5159145;paricalcitol;;Insensible;Manual;Vigente;Si;;paricalcitol;;108946001;paricalcitol;7688;paricalcitol;;C
+5167571;paroxetina;;Insensible;Manual;Vigente;Si;;paroxetina;;372595009;paroxetina;4327;paroxetina;;D
+5159183;pazopanib;;Insensible;Manual;Vigente;Si;;pazopanib;;443763005;pazopanib;8681;pazopanib;;D
+7292681;pegaspargasa;;Insensible;Manual;Vigente;Si;;pegaspargasa;;108814000;pegaspargasa;6665;pegaspargasa;;C
+5159186;pegfilgrastim;;Insensible;Manual;Vigente;Si;;pegfilgrastim;;385544005;pegfilgrastim;8114;pegfilgrastim;;C
+6401953;peginterferón alfa 2a;;Insensible;Manual;Vigente;Si;;peginterferón alfa-2a;;421559001;peginterferón alfa-2a;7871;peginterferón alfa-2a;;C
+6401954;peginterferón alfa 2b;;Insensible;Manual;Vigente;Si;;peginterferón alfa - 2b;;395823000;peginterferón alfa - 2b;7909;peginterferón alfa-2b;;C
+6401957;pelargonium sidoides extracto estandarizado;;Insensible;Manual;Vigente;Si;;;;;;;;;
+7222224;pembrolizumab;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5167376;pemetrexed;;Insensible;Manual;Vigente;Si;;pemetrexed;;409159000;pemetrexed;7675;pemetrexed;;D
+5167572;penicilamina;;Insensible;Manual;Vigente;Si;;;;387235007;;1121;penicilamina;;D
+5167377;pentoxifilina;;Insensible;Manual;Vigente;Si;;pentoxifilina;;387522004;pentoxifilina;3309;pentoxifilina;;C
+6573099;pepsina;;Insensible;Manual;Vigente;Si;;pepsina;;48517003;pepsina;;;;
+5159213;perindopril;;Insensible;Manual;Vigente;Si;;perindopril;;372916001;perindopril;5754;perindopril;;
+5167003;permetrina;;Insensible;Manual;Vigente;Si;;permetrina;;410457007;permetrina;5510;permetrina;;B
+5167437;peróxido de benzoílo;;Insensible;Manual;Vigente;Si;;peróxido de benzoilo;;91598004;peróxido de benzoilo;;;;C
+6401964;pertuzumab;;Insensible;Manual;Vigente;Si;;;;704226002;;;;;D
+5159240;petidina;;Insensible;Manual;Vigente;Si;;;• 7038275 - meperidina;;;411;petidina;;
+5159242;petrolato blanco;;Insensible;Manual;Vigente;;;;;;;;;;
+5159269;picosulfato de sodio;;Insensible;Manual;Vigente;Si;;picosulfato de sodio;;395881001;picosulfato de sodio;2265;picosulfato de sodio;;
+5167438;pilocarpina;;Insensible;Manual;Vigente;Si;;;;387035001;;;;;C
+5159308;pimecrolimús;;Insensible;Manual;Vigente;Si;;pimecrolimús;• 6399889 - pimecrolimús;385580005;pimecrolimús;7632;pimecrolimús;;C
+5159314;pimozida;;Insensible;Manual;Vigente;Si;;pimozida;;386848009;pimozida;2330;pimozida;;
+6401979;pindolol;;Insensible;Manual;Vigente;Si;;pindolol;;387102009;pindolol;;;;
+5159315;pioglitazona;;Insensible;Manual;Vigente;Si;;pioglitazona;;395828009;pioglitazona;6343;pioglitazona;;
+5154027;pipenzolato de bromuro;;Insensible;Manual;Vigente;Si;;pipenzolato;• 6399200 - pipenzolato bromuro;387425004;pipenzolato;652;bromuro de pipenzolato;;
+5159358;piperacilina;;Insensible;Manual;Vigente;Si;;piperacilina;;372836004;piperacilina;4296;piperacilina;;
+5154111;piperonil butóxido;;Insensible;Manual;Vigente;Si;;butóxido de piperonilo;;32340007;butóxido de piperonilo;;;;
+7402955;pipetanato;;Insensible;Manual;Vigente;Si;;pipetanato;;83704002;pipetanato;930;pipetanato;;
+5159362;pipotiazina;;Insensible;Manual;Vigente;Si;;pipotiazina;;395995004;pipotiazina;3046;pipotiazina;;
+5160077;piracetam;;Insensible;Manual;Vigente;Si;;piracetam;;395833008;piracetam;2687;piracetam;;
+7341655;pirazinamida;;Insensible;Manual;Vigente;Si;;pirazinamida;;387076005;pirazinamida;786;pirazinamida;;C
+7569961;pirfenidona;;Insensible;Manual;Vigente;;;;;;;3825;pirfenidona;;C
+5166963;piridoxina;;Insensible;Manual;Vigente;Si;;piridoxina;• 6412304 - vitamina B6;430469009;piridoxina;2216;piridoxina;;A
+5160091;pirilamina;;Insensible;Manual;Vigente;Si;;;;387087002;;;;;
+5167450;pirimetamina;;Insensible;Manual;Vigente;Si;;pirimetamina;;373769001;pirimetamina;2215;pirimetamina;;C
+5167655;piroxicam;;Insensible;Manual;Vigente;Si;;piroxicam;;387153005;piroxicam;3713;piroxicam;;D
+6402001;pitavastatina;;Insensible;Manual;Vigente;Si;;pitavastatina;;443586000;pitavastatina;7730;pitavastatina;;X
+6402008;plantago ovata extracto;;Insensible;Manual;Vigente;Si;;;;;;;;;
+7254474;plerixafor;;Insensible;Manual;Vigente;Si;;;;;;;;;D
+5160186;polietilenglicol;;Insensible;Manual;Vigente;Si;;polietilenglicol;;8030004;polietilenglicol;;;;
+5160191;poligelina;;Insensible;Manual;Vigente;Si;;;;395836000;;1934;poligelina;;
+5162564;polimaltosa férrica;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5167482;polimixina B;;Insensible;Manual;Vigente;Si;;polimixina B;;372824005;polimixina B;490;polimixina B;;C
+6402026;polisorbato;;Insensible;Manual;Vigente;Si;;polisorbato;;412166009;polisorbato;;;;
+7223316;pomalidomida;;Insensible;Manual;Vigente;Si;;;;;;;;;X
+5166672;posaconazol;;Insensible;Manual;Vigente;Si;;posaconazol;;421747003;posaconazol;7713;posaconazol;;C
+5166673;potasio;;Insensible;Manual;Vigente;Si;;potasio;;88480006;potasio;;;;
+5166686;povidona yodada;;Insensible;Manual;Vigente;Si;;;;;;2549;povidona;;
+7246202;pralatrexato;;Insensible;Manual;Vigente;Si;;pralatrexato;;428598004;pralatrexato;8560;pralatrexato;;D
+5166687;pramipexol;;Insensible;Manual;Vigente;Si;;pramipexol;;386852009;pramipexol;6227;pramipexol;;C
+5166735;prasugrel;;Insensible;Manual;Vigente;Si;;;;443129001;;8503;prasugrel;;
+5167631;pravastatina;;Insensible;Manual;Vigente;Si;;;;373566006;;6070;pravastatina;;X
+5166752;prednisolona acetato;;Insensible;Manual;Vigente;Si;;acetato de prednisolona;;96334000;acetato de prednisolona;535;prednisolona;;C
+5167500;prednisona;;Insensible;Manual;Vigente;Si;;prednisona;;116602009;prednisona;536;prednisona;;C
+5167521;pregabalina;;Insensible;Manual;Vigente;Si;;pregabalina;;415160008;pregabalina;7643;pregabalina;;C
+5167034;prilocaína;;Insensible;Manual;Vigente;Si;;prilocaína;;387107003;prilocaína;1641;prilocaína;;B
+5167581;primidona;;Insensible;Manual;Vigente;Si;;primidona;;387256009;primidona;248;primidona;;
+5167538;procaína;;Insensible;Manual;Vigente;Si;;procaína;;387238009;procaína;975;procaína;;C
+5167632;progesterona;;Insensible;Manual;Vigente;Si;;progesterona;;16683002;progesterona;417;progesterona;;X
+5166782;proguanil;;Insensible;Manual;Vigente;Si;;;• 6400019 - proguanilo;;;418;proguanil;;
+6894267;promestrieno;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5166805;promolato;;Insensible;Manual;Vigente;Si;;;;;;2607;promolato;;
+5166808;propafenona;;Insensible;Manual;Vigente;Si;;propafenona;;372910007;propafenona;3312;propafenona;;C
+5166811;proparacaína;;Insensible;Manual;Vigente;;;clorhidrato de proparacaína;;30424002;clorhidrato de proparacaína;;;;
+5166813;propericiazina;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5166814;propifenazona;;Insensible;Manual;Vigente;Si;;;;;;2848;propifenazona;;
+5166819;propilenglicol;;Insensible;Manual;Vigente;;;propilenglicol;;13668001;propilenglicol;;;;
+5167595;propiltiouracilo;;Insensible;Manual;Vigente;Si;;propiltiouracilo;;387203007;propiltiouracilo;4184;propiltiouracilo;;D
+5166894;propofol;;Insensible;Manual;Vigente;Si;;propofol;;387423006;propofol;5073;propofol;;B
+5167624;propranolol;;Insensible;Manual;Vigente;Si;;;;372772003;;1940;propranolol;;C
+5170783;protamina sulfato;;Insensible;Manual;Vigente;Si;;;;64520006;;717;sulfato de protamina;;
+5917776;proteína C;;Sensible;Manual;Vigente;Si;;;;25525005;;;;;
+5917777;proteína S;;Sensible;Manual;Vigente;Si;;;;56898001;;;;;
+5162569;proteinsuccinilato férrico;;Insensible;Manual;Vigente;Si;;;;;;;;;
+6402088;prucaloprida;;Insensible;Manual;Vigente;Si;;;;699273008;;;;;
+5975242;pseudoefedrina clorhidrato;;Insensible;Manual;Vigente;Si;;clorhidrato de pseudoefedrina (sustancia);;12177002;clorhidrato de pseudoefedrina (sustancia);;;;
+5167561;pseudoefedrina sulfato;;Insensible;Manual;Vigente;Si;;sulfato de pseudoefedrina;;10595003;sulfato de pseudoefedrina;1061;pseudoefedrina;;C
+6504775;purite;;Insensible;Manual;Vigente;Si;;;;;;;;;
+7486947;quassia amara extracto estandarizado;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5167568;quetiapina;;Insensible;Manual;Vigente;Si;;quetiapina;;386850001;quetiapina;7467;quetiapina;;C
+5167681;quinapril;;Insensible;Manual;Vigente;Si;;quinapril;;386874003;quinapril;5780;quinapril;;D
+5166950;rabeprazol;;Insensible;Manual;Vigente;Si;;rabeprazol;;422225001;rabeprazol;7112;rabeprazol;;
+5170057;racecadotrilo;;Insensible;Manual;Vigente;Si;;;;;;7378;racecadotrilo;;
+5170084;racepinefrina;;Insensible;Manual;Vigente;Si;;racepinefrina;;415227003;racepinefrina;4553;racepinefrina;;
+5170085;raloxifeno;;Insensible;Manual;Vigente;Si;;raloxifeno;;109029006;raloxifeno;5388;raloxifeno;;
+5170088;raltegravir;;Insensible;Manual;Vigente;Si;;raltegravir;;429707008;raltegravir;8842;raltegravir;;C
+5201383;ramipril;;Insensible;Manual;Vigente;Si;;ramipril;;386872004;ramipril;5561;ramipril;;D
+5170089;ranibizumab;;Insensible;Manual;Vigente;Si;;ranibizumab;;422456007;ranibizumab;8313;ranibizumab;;C
+5200591;ranitidina;;Insensible;Manual;Vigente;Si;;ranitidina;;372755005;ranitidina;4660;ranitidina;;B
+5170096;rasagilina;;Insensible;Manual;Vigente;Si;;rasagilina;;418734001;rasagilina;7151;rasagilina;;C
+6402109;reboxetina;;Insensible;Manual;Vigente;Si;;reboxetina;;395859006;reboxetina;5858;reboxetina;;
+6402111;regorafenib;;Insensible;Manual;Vigente;Si;;;;702804006;;;;;D
+5170117;remifentanilo;;Insensible;Manual;Vigente;Si;;remifentanilo;;386839004;remifentanilo;6924;remifentanilo;;C
+5170124;repaglinida;;Insensible;Manual;Vigente;Si;;repaglinida;;386964000;repaglinida;6818;repaglinida;;C
+5201382;retinol;;Insensible;Manual;Vigente;Si;;retinol;• 6412247 - vitamina A;82622003;retinol;2243;retinol;;X
+5200823;ribavirina;;Insensible;Manual;Vigente;Si;;ribavirina;;387188005;ribavirina;3543;ribavirina;;X
+5200671;rifampicina;;Insensible;Manual;Vigente;Si;;rifampicina;;387159009;rifampicina;2323;rifampicina;;C
+5200676;rifaximina;;Insensible;Manual;Vigente;Si;;rifaximina;;412553001;rifaximina;5244;rifaximina;;C
+7332570;rilpivirina;;Insensible;Manual;Vigente;Si;;rilpivirina;;703123005;rilpivirina;8469;rilpivirina;;B
+5170325;riluzol;;Insensible;Manual;Vigente;Si;;riluzol;;386980005;riluzol;5912;riluzol;;C
+6402136;riociguat;;Insensible;Manual;Vigente;Si;;;;;;8857;riociguat;;X
+5200677;risperidona;;Insensible;Manual;Vigente;Si;;risperidona;;386840002;risperidona;6085;risperidona;;C
+5170336;ritonavir;;Insensible;Manual;Vigente;Si;;ritonavir;;386896009;ritonavir;7449;ritonavir;;
+5170350;rituximab;;Insensible;Manual;Vigente;Si;;rituximab;;386919002;rituximab;7609;rituximab;;C
+5170355;rivaroxabán;;Insensible;Manual;Vigente;Si;;rivaroxabán;;442031002;rivaroxabán;8428;rivaroxabán;;C
+5170391;rivastigmina;;Insensible;Manual;Vigente;Si;;rivastigmina;;395868008;rivastigmina;7562;rivastigmina;;B
+5170411;rizatriptán;;Insensible;Manual;Vigente;Si;;rizatriptán;;363573000;rizatriptán;7474;rizatriptán;;C
+5170428;romiplostim;;Insensible;Manual;Vigente;Si;;romiplostim;;439122000;romiplostim;8587;romiplostim;;C
+5170444;ropinirol;;Insensible;Manual;Vigente;Si;;ropinirol;;372499000;ropinirol;6436;ropinirol;;C
+5170445;rosuvastatina;;Insensible;Manual;Vigente;Si;;rosuvastatina;;700067006;rosuvastatina;8021;rosuvastatina;;X
+6402148;rotigotina;;Insensible;Manual;Vigente;Si;;rotigotina;;421924006;rotigotina;7897;rotigotina;;C
+5170464;roxitromicina;;Insensible;Manual;Vigente;Si;;roxitromicina;;96037004;roxitromicina;5815;roxitromicina;;
+5170467;rupatadina;;Insensible;Manual;Vigente;Si;;rupatadina;;699252008;rupatadina;7443;rupatadina;;
+6402165;ruxolitinib;;Insensible;Manual;Vigente;Si;;ruxolitinib;;702806008;ruxolitinib;9287;ruxolitinib;;C
+6399585;sacarato férrico;;Insensible;Manual;Vigente;Si;;;;129497004;sacarosa férrica;;;;B
+6402167;saccharomyces boulardii;;Insensible;Manual;Vigente;Si;;Saccharomyces boulardii (sustancia);;700441006;Saccharomyces boulardii (sustancia);;;;
+5200721;salbutamol;;Insensible;Manual;Vigente;Si;;;;;;2585;salbutamol;;C
+6401814;salicilato de metilo;;Insensible;Manual;Vigente;Si;;Dentalone - salicilato de metilo;;256592006;Dentalone - salicilato de metilo;;;;
+5200742;salmeterol;;Insensible;Manual;Vigente;Si;;salmeterol;;372515005;salmeterol;5578;salmeterol;;C
+7679083;Salmonella typhi polisacárido Vi cepa Ty2;;Insensible;Manual;Vigente;;;;;;;;;;C
+5208363;saquinavir;;Insensible;Manual;Vigente;Si;;saquinavir;;372530001;saquinavir;7098;saquinavir;;B
+5170483;saxagliptina;;Insensible;Manual;Vigente;Si;;saxagliptina;;443087004;saxagliptina;8577;saxagliptina;;B
+5170486;selegilina;;Insensible;Manual;Vigente;Si;;selegilina;;372497003;selegilina;4436;selegilina;;C
+6402199;selenio;;Insensible;Manual;Vigente;Si;;selenio;;22038003;selenio;;;;
+5208385;sen de alejandría extracto estandarizado;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5170549;serrapeptasa;;Insensible;Manual;Vigente;Si;;;;;;3528;serrapeptasa;;
+5170551;sertaconazol;;Insensible;Manual;Vigente;Si;;;;409280001;sertaconazol (sustancia);6008;sertaconazol;;C
+5200777;sertralina;;Insensible;Manual;Vigente;Si;;sertralina;;372594008;sertralina;5277;sertralina;;C
+5170552;sevelamer;;Insensible;Manual;Vigente;Si;;sevelámero (sustancia);;395871000;sevelámero (sustancia);7620;sevelámero;;C
+5170558;sevoflurano;;Insensible;Manual;Vigente;Si;;sevoflurano;;386842005;sevoflurano;3028;sevoflurano;;
+5170581;sildenafil;;Insensible;Manual;Vigente;Si;;sildenafil;;372572000;sildenafil;7374;sildenafilo;;
+5170584;simeticona;;Insensible;Manual;Vigente;Si;;simeticona;;387442005;simeticona;1489;simeticona;;
+5200961;simvastatina;;Insensible;Manual;Vigente;Si;;simvastatina;• 6400044 - simvastatín;387584000;simvastatina;6147;simvastatina;;X
+5170587;sirolimús;;Insensible;Manual;Vigente;Si;;sirolimús;;387014003;sirolimús;7104;sirolimús;;C
+5170591;sitagliptina;;Insensible;Manual;Vigente;Si;;sitagliptina;;423307000;sitagliptina;8692;sitagliptina;;
+5170603;sodio;;Insensible;Manual;Vigente;;;sodio;;39972003;sodio;;;;
+7333999;sofosbuvir;;Insensible;Manual;Vigente;Si;;;;;;9665;sofosbuvir;;B
+5170608;solifenacina;;Insensible;Manual;Vigente;Si;;solifenacina;;407030007;solifenacina;8155;solifenacina;;
+5200802;somatropina;;Insensible;Manual;Vigente;Si;;;;395883003;somatropina;239;somatropina;;B
+5170609;sorafenib;;Insensible;Manual;Vigente;Si;;sorafenib;;422042001;sorafenib;8234;sorafenib;;D
+5170642;sotalol;;Insensible;Manual;Vigente;Si;;sotalol;;372911006;sotalol;2350;sotalol;;B
+7682918;Streptococcus pneumoniae polisacárido 23 serotipos;;Insensible;Manual;Vigente;;;;;;;;;;C
+6402857;succinilcolina;;Insensible;Manual;Vigente;Si;;succinilcolina;• 7081177 - suxametonio;372724004;succinilcolina;;;;
+5200634;sucralfato;;Insensible;Manual;Vigente;Si;;sucralfato;;387387008;sucralfato;2723;sucralfato;;B
+5170707;sufentanilo;;Insensible;Manual;Vigente;Si;;sufentanilo;;49998007;sufentanilo;4048;sufentanilo;;
+5170723;sugammadex;;Insensible;Manual;Vigente;Si;;sugammadex;;442340006;sugammadex;8528;sugammadex;;
+5170727;sulbactam;;Insensible;Manual;Vigente;Si;;sulbactam;;96008003;sulbactam;4845;sulbactam;;
+5170732;sulbutiamina;;Insensible;Manual;Vigente;Si;;;;;;4827;sulbutiamina;;
+5679150;sulfadiazina de plata;;Insensible;Manual;Vigente;Si;;;;387112002;;;;;
+6402858;sulfaguanidina;;Insensible;Manual;Vigente;Si;;sulfaguanidina;;387500006;sulfaguanidina;;;;
+5170763;sulfametoxazol;;Insensible;Manual;Vigente;Si;;sulfametoxazol;;363528007;sulfametoxazol;1386;sulfametoxazol;;D
+5200653;sulfasalazina;;Insensible;Manual;Vigente;Si;;sulfasalazina (sustancia);;387248006;sulfasalazina (sustancia);2210;sulfasalazina;;B
+5915629;sulfatiazol sódico;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5200565;sulfato de magnesio;;Insensible;Manual;Vigente;Si;;sulfato de magnesio;;387202002;sulfato de magnesio;;;;A
+6455690;sulfato de zinc;;Insensible;Manual;Vigente;Si;;sulfato de zinc;;387367007;sulfato de zinc;;;;
+5162570;sulfato ferroso;;Insensible;Manual;Vigente;Si;;sulfato ferroso;;387402000;sulfato ferroso;;;;
+5170812;sulpirida;;Insensible;Manual;Vigente;Si;;sulpirida;;395891007;sulpirida;2359;sulpirida;;D
+6402869;sultamicilina;;Insensible;Manual;Vigente;Si;;;;;;5151;sultamicilina;;
+5200822;sumatriptán;;Insensible;Manual;Vigente;Si;;sumatriptano;• 6394815 - sumatriptano;96215002;sumatriptano;6125;sumatriptán;;C
+5170822;sunitinib;;Insensible;Manual;Vigente;Si;;sunitinib;;421192001;sunitinib;8646;sunitinib;;D
+7524170;sustancia especial;;Insensible;Manual;Vigente;;;;;;;;;;
+5170907;tacalcitol;;Insensible;Manual;Vigente;Si;;tacalcitol;;395893005;tacalcitol;6822;tacalcitol;;
+5170880;tacrolimús;;Insensible;Manual;Vigente;Si;;tacrolimus;;386975001;tacrolimus;6878;tacrolimús;;
+5170843;tadalafil;;Insensible;Manual;Vigente;Si;;tadalafil;• 6394827 - tadalafil;407111005;tadalafil;8136;tadalafilo;;
+5200962;talidomida;;Insensible;Manual;Vigente;Si;;talidomida;;78702007;talidomida;762;talidomida;;X
+6402887;taliglucerasa alfa;;Insensible;Manual;Vigente;Si;;;;;;9082;taliglucerasa alfa;;B
+5205584;tamoxifeno;;Insensible;Manual;Vigente;Si;;tamoxifeno;;373345002;tamoxifeno;3299;tamoxifeno;;D
+5201624;tamsulosina;;Insensible;Manual;Vigente;Si;;tamsulosina;;372509005;tamsulosina;6750;tamsulosina;;B
+6402889;tapentadol;;Insensible;Manual;Vigente;Si;;tapentadol;;441757005;tapentadol;;;;C
+5201654;tazobactam;;Insensible;Manual;Vigente;Si;;tazobactam;;96007008;tazobactam;6340;tazobactam;;
+5201684;teicoplanina;;Insensible;Manual;Vigente;Si;;teicoplanina;;387529008;teicoplanina;5155;teicoplanina;;
+5205589;telmisartán;;Insensible;Manual;Vigente;Si;;telmisartán;;387069000;telmisartán;7144;telmisartán;;D
+5201696;temozolomida;;Insensible;Manual;Vigente;Si;;temozolomida;;387009002;temozolomida;6027;temozolomida;;D
+5201715;temsirolimus;;Insensible;Manual;Vigente;Si;;temsirolimus;;427153004;temsirolimus;8212;temsirolimus;;D
+5201722;tenecteplasa;;Insensible;Manual;Vigente;Si;;tenecteplasa;;387066007;tenecteplasa;7769;tenecteplasa;;C
+5201757;tenofovir disoproxil fumarato;;Insensible;Manual;Vigente;Si;;disoproxilfumarato de tenofovir;;385556006;disoproxilfumarato de tenofovir;7913;tenofovir;;B
+6402921;teofilina;;Insensible;Manual;Vigente;Si;;teofilina;;372810006;teofilina;;;;C
+5205131;terbinafina;;Insensible;Manual;Vigente;Si;;terbinafina;;373450007;terbinafina;5657;terbinafina;;B
+5201814;terlipresina;;Insensible;Manual;Vigente;Si;;;;395899009;;5114;terlipresina;;
+5205670;testosterona;;Insensible;Manual;Vigente;Si;;testosterona;;43688007;testosterona;1900;testosterona;;X
+5913364;testosterona enantato;;Insensible;Manual;Vigente;Si;;;;116071004;;;;;
+6627180;testosterona undecanoato;;Insensible;Manual;Vigente;Si;;decanoato de testosterona;;427471003;decanoato de testosterona;;;;
+6402925;tetrabenazina;;Insensible;Manual;Vigente;Si;;tetrabenazina;;363581004;tetrabenazina;1056;tetrabenazina;;C
+5205627;tetraciclina;;Insensible;Manual;Vigente;Si;;tetraciclina;;372809001;tetraciclina;298;tetraciclina;;D
+5205239;tetrahidrozolina;;Insensible;Manual;Vigente;Si;;tetrahidrozolina;;372673004;tetrahidrozolina;;;;C
+7418703;tetrizolina;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5201822;tiamazol;;Insensible;Manual;Vigente;Si;;metimazol;• 6436453 - metimazol;37656002;metimazol;4198;tiamazol;;D
+5205114;tiamina;;Insensible;Manual;Vigente;Si;;tiamina;• 6412319 - vitamina B1;259659006;tiamina;432;tiamina;;A
+5201853;tiaprida;;Insensible;Manual;Vigente;Si;;;;699180000;tiaprida;3289;tiaprida;;
+5201883;tibolona;;Insensible;Manual;Vigente;Si;;tibolona;;395903002;tibolona;2777;tibolona;;
+5201886;ticagrelor;;Insensible;Manual;Vigente;Si;;ticagrelor;;698805004;ticagrelor;8772;ticagrelor;;
+5205141;ticlopidina;;Insensible;Manual;Vigente;Si;;ticlopidina;;386950000;ticlopidina;3908;ticlopidina;;B
+5201887;tietilperazina;;Insensible;Manual;Vigente;Si;;;;;;1034;tietilperazina;;
+5201890;tigeciclina;;Insensible;Manual;Vigente;Si;;tigeciclina;;418313005;tigeciclina;8115;tigeciclina;;
+5205240;timolol;;Insensible;Manual;Vigente;Si;;timolol;;372880004;timolol;3415;timolol;;C
+5205245;tinidazol;;Insensible;Manual;Vigente;Si;;tinidazol;;395907001;tinidazol;2653;tinidazol;;C
+5201936;tiocolchicósido;;Insensible;Manual;Vigente;;;;;;;671;tiocolchicósido;;
+5205261;tioconazol;;Insensible;Manual;Vigente;Si;;tioconazol;;395909003;tioconazol;4572;tioconazol;;C
+5205644;tioguanina;;Insensible;Manual;Vigente;Si;;tioguanina;;387407006;tioguanina;1998;tioguanina;;D
+5205296;tiopental sódico;;Insensible;Manual;Vigente;Si;;;;;;433;tiopental de sodio;;C
+5205297;tioridazina;;Insensible;Manual;Vigente;Si;;tioridazina;;372706001;tioridazina;818;tioridazina;;C
+5201955;tirofibán;;Insensible;Manual;Vigente;Si;;;;386953003;;7345;tirofibán;;
+5201962;tirotropina alfa;;Insensible;Manual;Vigente;Si;;;;;;7668;tirotropina alfa;;
+5201965;tizanidina;;Insensible;Manual;Vigente;Si;;tizanidina;;373440006;tizanidina;4697;tizanidina;;
+5205717;tobramicina;;Insensible;Manual;Vigente;Si;;tobramicina;;373548001;tobramicina;2990;tobramicina;;D
+5201972;tocilizumab;;Insensible;Manual;Vigente;Si;;tocilizumab;;444648007;tocilizumab;8394;tocilizumab;;C
+6402957;tofacitinib;;Insensible;Manual;Vigente;Si;;;;;;9298;tofacitinib;;C
+5201977;tolbutamida;;Insensible;Manual;Vigente;Si;;tolbutamida;;373481003;tolbutamida;602;tolbutamida;;D
+6402960;tolnaftato;;Insensible;Manual;Vigente;Si;;tolnaftato;;387204001;tolnaftato;;;;
+5201983;tolterodina;;Insensible;Manual;Vigente;Si;;tolterodina;;372570008;tolterodina;6768;tolterodina;;C
+4827654;tolú extracto;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5202016;topiramato;;Insensible;Manual;Vigente;Si;;topiramato;;386844006;topiramato;6099;topiramato;;D
+5202036;topotecán;;Insensible;Manual;Vigente;Si;;topotecán;;372536007;topotecán;6783;topotecán;;
+5202059;toxoide difteria;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5202077;toxoide tétano;;Insensible;Manual;Vigente;;;;;;;;;;
+5202087;trabectedina;;Insensible;Manual;Vigente;Si;;trabectedina;;433127001;trabectedina;8206;trabectedina;;
+5205298;tramadol;;Insensible;Manual;Vigente;Si;;tramadol;;386858008;tramadol;2722;tramadol;;C
+7225203;trametinib;;Insensible;Manual;Vigente;Si;;;;;;;;;D
+5202108;trastuzumab;;Insensible;Manual;Vigente;Si;;trastuzumab;;387003001;trastuzumab;7637;trastuzumab;;
+7238150;trastuzumab emtansina;;Insensible;Manual;Vigente;Si;;trastuzumab emtansina;;702836004;trastuzumab emtansina;9295;trastuzumab emtansina;;
+5202131;travoprost;;Insensible;Manual;Vigente;Si;;travoprost;;129493000;travoprost;7775;travoprost;;
+5205302;trazodona;;Insensible;Manual;Vigente;Si;;trazodona;;372829000;trazodona;2878;trazodona;;C
+5202133;tretinoína;;Insensible;Manual;Vigente;Si;;tretinoína;;387305002;tretinoína;2875;tretinoína;;D
+5202147;triamcinolona hexacetónido;;Insensible;Manual;Vigente;Si;;triamcinolona;;116594009;triamcinolona;755;triamcinolona;;
+5202511;triamtereno;;Insensible;Manual;Vigente;Si;;triamtereno;;387053007;triamtereno;1266;triamtereno;;
+5205704;triazolam;;Insensible;Manual;Vigente;Si;;triazolam;;386984001;triazolam;3409;triazolam;;X
+5202513;tribenósido;;Insensible;Manual;Vigente;Si;;;;;;2463;tribenósido;;
+6402985;triclosán;;Insensible;Manual;Vigente;Si;;triclosán;;387054001;triclosán;2988;triclosán;;
+5202615;trihexifenidilo;;Insensible;Manual;Vigente;Si;;trihexifenidilo;;387120000;trihexifenidilo;1318;trihexifenidilo;;
+5202725;trimebutino;;Insensible;Manual;Vigente;Si;;trimebutina;;698184001;trimebutina;2773;trimebutina;;
+5202726;trimegestona;;Insensible;Manual;Vigente;Si;;;;;;6897;trimegestona;;
+5202734;trimetazidina;;Insensible;Manual;Vigente;Si;;;;;;1544;trimetazidina;;
+5205558;trimetoprima;;Insensible;Manual;Vigente;Si;;trimetoprima;;387179001;trimetoprima;1047;trimetoprima;;C
+7297287;trióxido de arsénico;;Insensible;Manual;Vigente;Si;;trióxido de arsénico;;72251000;trióxido de arsénico;;;;D
+5202770;triptorelina;;Insensible;Manual;Vigente;Si;;triptorelina;;395915003;triptorelina;5711;triptorelina;;
+5202785;trolamina;;Insensible;Manual;Vigente;Si;;trolamina;• 6426398 - salicilato de trolamina;72808007;trolamina;561;trolamina;;
+5202806;trombina humana;;Insensible;Manual;Vigente;Si;;;;36176003;;6387;trombina;;C
+5202836;tropicamida;;Insensible;Manual;Vigente;Si;;tropicamida;;387526001;tropicamida;1059;tropicamida;;
+7500654;ubidecarenona;;Insensible;Manual;Vigente;Si;;;;;;;;;
+6403012;umeclidinio bromuro;;Insensible;Manual;Vigente;Si;;;;;;;;;C
+7582004;urapidil;;Insensible;Manual;Vigente;;;;;;;;;;
+6403023;uridina 5 - trifosfato;;Insensible;Manual;Vigente;Si;;uridina trifosfato;• 6414820 - UTP;22604005;uridina trifosfato;;;;
+5202908;ustekinumab;;Insensible;Manual;Vigente;Si;;ustekinumab;;443465002;ustekinumab;8954;ustekinumab;;B
+5205148;valaciclovir;;Insensible;Manual;Vigente;Si;;valaciclovir;;96098007;valaciclovir;7106;valaciclovir;;B
+5202909;valganciclovir;;Insensible;Manual;Vigente;Si;;valganciclovir;;129476000;valganciclovir;7650;valganciclovir;;C
+5205648;valsartán;;Insensible;Manual;Vigente;Si;;valsartán;;386876001;valsartán;7016;valsartán;;D
+5205569;vancomicina;;Insensible;Manual;Vigente;Si;;vancomicina;;372735009;vancomicina;680;vancomicina;;C
+5202927;vardenafil;;Insensible;Manual;Vigente;;;vardenafil;;404858007;vardenafil;7950;vardenafil;;
+5202940;vareniclina;;Insensible;Manual;Vigente;Si;;vareniclina;;421772003;vareniclina;8366;vareniclina;;C
+5202944;vaselina;;Insensible;Manual;Vigente;Si;;vaselina;;25307002;vaselina;;;;
+5203145;vemurafenib;;Insensible;Manual;Vigente;Si;;;;;;9286;vemurafenib;;D
+5205576;venlafaxina;;Insensible;Manual;Vigente;Si;;venlafaxina;;372490001;venlafaxina;6358;venlafaxina;;C
+5205583;verapamilo;;Insensible;Manual;Vigente;Si;;verapamilo;;372754009;verapamilo;2122;verapamilo;;C
+5203165;vigabatrina;;Insensible;Manual;Vigente;Si;;;;310283001;;5581;vigabatrina;;C
+6403042;vilanterol;;Insensible;Manual;Vigente;Si;;;;702408004;vilanterol;;;;
+5203200;vildagliptina;;Insensible;Manual;Vigente;Si;;vildagliptina;;428611002;vildagliptina;8399;vildagliptina;;
+5203205;vinblastina;;Insensible;Manual;Vigente;Si;;vinblastina;;387051009;vinblastina;1101;vinblastina;;
+5203208;vincristina;;Insensible;Manual;Vigente;Si;;vincristina;;387126006;vincristina;1440;vincristina;;D
+5203214;vinorelbina;;Insensible;Manual;Vigente;Si;;vinorelbina;;372541004;vinorelbina;6054;vinorelbina;;D
+7203372;virus de la rabia cepa PM WI 38 1503 3M (inactivado, cultivado en células Vero);;Insensible;Manual;Vigente;Si;;;;;;;;;
+4933459;virus hepatitis A cepa GMB (inactivado, cultivado en células MRC-5);;Sensible;Manual;Vigente;Si;;;;;;;;;
+4934423;virus hepatitis B antígeno superficie (recombinante, cultivado en Saccharomyces cerevisiae);;Sensible;Manual;Vigente;Si;;;;;;;;;
+7679960;virus papiloma humano proteína L1 tipo 16;;Insensible;Manual;Vigente;;;;;;;;;;
+7679961;virus papiloma humano proteína L1 tipo 18;;Insensible;Manual;Vigente;;;;;;;;;;
+7686888;virus parotiditis cepa Leningrad - Zagreb (vivo atenuado, cultivado en fibroblastos embrión gallinácea huevo SPF);;Insensible;Manual;Vigente;;;;;;;;;;
+7686285;virus rubéola cepa Wistar RA 27 / 3 (vivo atenuado, cultivado en células CDH);;Insensible;Manual;Vigente;;;;;;;;;;
+7686281;virus sarampión cepa Edmonston - Zagreb (vivo atenuado, cultivado en células CDH);;Insensible;Manual;Vigente;;;;;;;;;;
+7679805;virus varicela - zóster cepa Oka / Merck (vivo atenuado, cultivado en células MRC-5);;Insensible;Manual;Vigente;;;;;;;;;;
+6000539;virus varicela - zóster cepa Oka (vivo atenuado, cultivado en células MRC-5);;Sensible;Manual;Vigente;Si;;;;;;;;;
+7543136;vismodegib;;Insensible;Manual;Vigente;Si;;;;;;9311;vismodegib;;D
+7501693;vitis vinífera extracto;;Insensible;Manual;Vigente;Si;;;;;;;;;
+5208068;voriconazol;;Insensible;Manual;Vigente;Si;;voriconazol;;385469007;voriconazol;7269;voriconazol;;D
+5208094;vorinostat;;Insensible;Manual;Vigente;Si;;vorinostat;;422505001;vorinostat;8661;vorinostat;;
+6365288;vortioxetina;;Insensible;Manual;Vigente;Si;;;;;;9279;vortioxetina;;C
+5208120;warfarina;;Insensible;Manual;Vigente;Si;;warfarina;;372756006;warfarina;341;warfarina;;X
+6403052;xilitol;;Insensible;Manual;Vigente;Si;;xilitol;;395951005;xilitol;;;;
+5208164;xilometazolina;;Insensible;Manual;Vigente;Si;;;;372841007;;809;xilometazolina;;
+7474077;xysmalobium undulatum;;Insensible;Manual;Vigente;;;;;;;;;;
+5208211;zanamivir;;Insensible;Manual;Vigente;Si;;zanamivir;;387010007;zanamivir;7272;zanamivir;;C
+5208215;zidovudina;;Insensible;Manual;Vigente;Si;;zidovudina;;387151007;zidovudina;6118;zidovudina;;C
+6398187;zinc;;Insensible;Manual;Vigente;Si;;cinc;• 6410973 - cinc;86739005;cinc;;;;
+5208239;ziprasidona;;Insensible;Manual;Vigente;Si;;ziprasidona (sustancia);;409356003;ziprasidona (sustancia);7155;ziprasidona;;C
+5208243;zolpidem;;Insensible;Manual;Vigente;Si;;;;387569009;;5741;zolpidem;;C
+5208245;zopiclona;;Insensible;Manual;Vigente;Si;;;;395929002;;4462;zopiclona;;
+5208246;zuclopentixol;;Insensible;Manual;Vigente;Si;Si;;;387566002;;5443;zuclopentixol;;
+7573616;zuclopentixol acetato;;Insensible;Manual;Vigente;;;;;;;;;;
+7573626;zuclopentixol decanoato;;Insensible;Manual;Vigente;;;;;;;;;;

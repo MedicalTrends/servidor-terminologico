@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.users.User;
+import sun.security.krb5.internal.crypto.Des;
 
 import static cl.minsal.semantikos.model.descriptions.DescriptionType.*;
 
@@ -40,7 +41,7 @@ public class DescriptionCreationBR {
      */
     public void validatePreConditions(ConceptSMTK concept, Description description, CategoryManager categoryManager, boolean edition) {
 
-        brDescriptionCreation001(concept, description.getTerm(), categoryManager);
+        brDescriptionCreation001(concept, description, categoryManager);
         brDescriptionCreation003(concept, description.getDescriptionType());
 
         /* Reglas para modo edición */
@@ -54,14 +55,14 @@ public class DescriptionCreationBR {
      * categoría.
      *
      * @param concept         El concepto al cual se asocia la descripción.
-     * @param term            El término que contiene la descripción a crear.
+     * @param description     La descripción a crear.
      * @param categoryManager El Manager para realizar la verificación a nivel de la BDD.
      */
-    private void brDescriptionCreation001(ConceptSMTK concept, String term, CategoryManager categoryManager) {
+    private void brDescriptionCreation001(ConceptSMTK concept, Description description, CategoryManager categoryManager) {
         Category category = concept.getCategory();
-        ConceptSMTK aConcept = categoryManager.categoryContains(category, term);
+        ConceptSMTK aConcept = categoryManager.categoryContains(category, description.getTerm(), description.isCaseSensitive());
 
-        if (aConcept != null) {
+        if (aConcept != null && !aConcept.equals(concept)) {
             throw new BusinessRuleException("BR-UNK", "Un término sólo puede existir una vez en una categoría. Descripción perteneciente a concepto: "+aConcept);
         }
     }

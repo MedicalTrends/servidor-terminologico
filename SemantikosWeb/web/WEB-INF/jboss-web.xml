@@ -3,5 +3,7 @@
     "http://www.jboss.org/j2ee/dtd/jboss-web_5_0.dtd">
 <jboss-web>
     <!--virtual-host>default-host</virtual-host-->
-    <security-domain>java:/jaas/semantikos</security-domain>
+    <!--security-domain>java:/jaas/semantikos</security-domain-->
+    <context-root>designer</context-root>
+    <!--virtual-host>default-host</virtual-host-->
 </jboss-web>

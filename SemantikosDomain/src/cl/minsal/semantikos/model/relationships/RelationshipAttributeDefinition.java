@@ -72,6 +72,8 @@ public class RelationshipAttributeDefinition implements Serializable {
         return this.getName().equalsIgnoreCase(RELATIONSHIP_TYPE_ATTRIBUTE);
     }
 
+
+
     public boolean isGroupSCT(){
         return this.id==GRUOUP_SCT;
     }

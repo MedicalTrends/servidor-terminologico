@@ -694,11 +694,10 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public void persistConceptAttributes(ConceptSMTK conceptSMTK, User user) {
 
-        ConnectionBD connect = new ConnectionBD();
         long id;
         String sql = "{call semantikos.create_concept(?,?,?,?,?,?,?,?,?,?)}";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setString(1, conceptSMTK.getConceptID());
@@ -738,11 +737,11 @@ public class ConceptDAOImpl implements ConceptDAO {
     public void update(ConceptSMTK conceptSMTK) {
 
         logger.info("Actualizando información básica de concepto: " + conceptSMTK.toString());
-        ConnectionBD connect = new ConnectionBD();
+
         long updated;
         String sql = "{call semantikos.update_concept(?,?,?,?,?,?,?,?,?,?,?)}";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, conceptSMTK.getId());

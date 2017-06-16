@@ -1,14 +1,17 @@
 package cl.minsal.semantikos.model.tags;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Andrés Farías
  */
-public class TagSMTKFactory {
+public class TagSMTKFactory implements Serializable {
 
     private static final TagSMTKFactory instance = new TagSMTKFactory();
 
@@ -58,8 +61,8 @@ public class TagSMTKFactory {
      */
     public TagSMTK findTagSMTKByName(String name) {
 
-        if (tagsSMTKByName.containsKey(name)) {
-            return this.tagsSMTKByName.get(name);
+        if (tagsSMTKByName.containsKey(name.toLowerCase())) {
+            return this.tagsSMTKByName.get(name.toLowerCase());
         }
 
         return null;
@@ -91,9 +94,24 @@ public class TagSMTKFactory {
         /* Se actualiza el mapa por nombres */
         this.tagsSMTKByName.clear();
         for (TagSMTK tagSMTK : tagsSMTK) {
-            this.tagsSMTKByName.put(tagSMTK.getName(), tagSMTK);
+            this.tagsSMTKByName.put(tagSMTK.getName().toLowerCase(), tagSMTK);
             this.tagsSMTKById.put(tagSMTK.getId(), tagSMTK);
         }
+    }
+
+    public TagSMTK assertTagSMTK(String term) {
+
+        Matcher m = Pattern.compile("\\((.*?)\\)").matcher(term);
+
+        TagSMTK tagSMTK = null;
+
+        while(m.find()) {
+            if(findTagSMTKByName(m.group(1))!=null) {
+                tagSMTK = findTagSMTKByName(m.group(1));
+            }
+        }
+
+        return tagSMTK;
     }
 
 }

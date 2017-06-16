@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.relationships.TargetDefinition;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -107,6 +108,17 @@ public class Category extends PersistentEntity implements TargetDefinition, Audi
         return true;
     }
 
+    public List<RelationshipDefinition> findRelationshipDefinitionsByName(String name) {
+        List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
+
+        for (RelationshipDefinition relationshipDefinition : getRelationshipDefinitions()) {
+            if(relationshipDefinition.getName().equals(name)) {
+                someRelationshipDefinitions.add(relationshipDefinition);
+            }
+        }
+
+        return someRelationshipDefinitions;
+    }
 
     @Override
     public String toString() {

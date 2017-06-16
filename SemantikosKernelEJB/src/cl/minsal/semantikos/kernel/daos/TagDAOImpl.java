@@ -31,10 +31,9 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public Tag persist(Tag tag) {
-        ConnectionBD connect = new ConnectionBD();
 
         long idTag;
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.create_tag(?,?,?,?)}")) {
 
             call.setString(1, tag.getName());
@@ -315,10 +314,9 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public void assignTag(ConceptSMTK conceptSMTK, Tag tag) {
-        ConnectionBD connect = new ConnectionBD();
 
         logger.debug("Asociando el tag " + tag + " al concepto " + conceptSMTK);
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.assign_concept_to_tag(?,?)}")) {
 
             call.setLong(1, conceptSMTK.getId());

@@ -29,6 +29,8 @@
           <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.6" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
+          <element id="library" level="project" name="Maven: org.glassfish:javax.faces:2.2.8-02" />
+          <element id="library" level="project" name="Maven: org.jboss.weld.servlet:weld-servlet:2.3.5.Final" />
           <element id="library" level="project" name="Maven: net.bull.javamelody:javamelody-core:1.59.0" />
           <element id="library" level="project" name="Maven: org.jrobin:jrobin:1.5.9" />
           <element id="library" level="project" name="Maven: org.primefaces:primefaces:6.0" />
@@ -36,7 +38,7 @@
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.7.21" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.21" />
           <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
-          <element id="library" level="project" name="Maven: org.omnifaces:omnifaces:2.1" />
+          <element id="library" level="project" name="Maven: org.omnifaces:omnifaces:2.4" />
           <element id="library" level="project" name="Maven: org.primefaces.extensions:primefaces-extensions:6.0.0" />
           <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.2.4" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.1" />

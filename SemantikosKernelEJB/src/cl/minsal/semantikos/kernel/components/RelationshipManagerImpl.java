@@ -10,11 +10,9 @@ import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.kernel.daos.TargetDAO;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.relationships.*;
+import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.EJB;
@@ -94,7 +92,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
      * @param relationship La relación.
      * @param user         El usuario que realiza la operación.
      */
-    private void assurePersistence(ConceptSMTK concept, Relationship relationship, User user) {
+    private void assurePersistence(ConceptSMTK concept, Relationship relationship, User user) throws Exception {
         if (!relationship.isPersistent()) {
 
             /* Se validan las reglas de negocio */
@@ -302,5 +300,10 @@ public class RelationshipManagerImpl implements RelationshipManager {
             conceptIds.add(conceptSMTK.getId());
         }
         return relationshipDAO.getRelationshipsBySourceConcepts(conceptIds);
+    }
+
+    @Override
+    public RelationshipDefinitionFactory getRelationshipDefinitionFactory() {
+        return RelationshipDefinitionFactory.getInstance();
     }
 }

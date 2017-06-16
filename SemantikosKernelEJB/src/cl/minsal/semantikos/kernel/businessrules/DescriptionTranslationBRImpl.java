@@ -108,7 +108,7 @@ public class DescriptionTranslationBRImpl implements DescriptionTranslationBR {
     private void brDescriptionTranslate012(ConceptSMTK targetConcept, Description description,
                                            ConceptManager conceptManager, CategoryManager categoryManager) {
 
-        ConceptSMTK aConcept = categoryManager.categoryContains(targetConcept.getCategory(), description.getTerm());
+        ConceptSMTK aConcept = categoryManager.categoryContains(targetConcept.getCategory(), description.getTerm(), description.isCaseSensitive());
         if (aConcept != null) {
             if(aConcept.getId() == conceptManager.getNoValidConcept().getId()){
                 return;

@@ -1,5 +1,8 @@
 package cl.minsal.semantikos.util;
 
+import cl.minsal.semantikos.model.tags.TagSMTK;
+import cl.minsal.semantikos.model.tags.TagSMTKFactory;
+
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import java.text.DecimalFormat;
@@ -185,6 +188,15 @@ public class StringUtils {
             result = false;
         }
         return result;
+    }
+
+    public static String normalizeSpaces(String term) {
+        return term.replaceAll("\\s+", " ");
+    }
+
+    public static boolean isEmpty(String term) {
+        term = term.replaceAll("\\s+", " ");
+        return (term.equals("0") || term.isEmpty());
     }
 
 }

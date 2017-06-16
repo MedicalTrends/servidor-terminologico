@@ -1,0 +1,1832 @@
+CONCEPTO_ID;DESCRIPCION;DESC_ABREVIADA;ESTADO;SENSIBLE_MAYUSCULA;CREAC_NOMBRE;REVISADO;CONSULTAR;SCT ID;SCT TERMINO;DCI DID;DCI TERMINO;SINONIMO;GRUPOS_JERARQUICOS;SUSTANCIAS
+4757744;abacavir;;Vigente;Insensible;Manual;Si;;116084008;abacavir;;;;;• 4588932 ¦ abacavir ¦ 1 ¦ Vigente
+7034517;abacavir + dolutegravir + lamivudina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4588932 ¦ abacavir ¦ 1 ¦ Vigente
+• 7034499 ¦ dolutegravir ¦ 2 ¦ Vigente
+• 4757770 ¦ lamivudina ¦ 3 ¦ Vigente"
+4757824;abacavir + lamivudina;;Vigente;Insensible;Autogenerado;Si;;413381000;abacavir + lamivudina;;;;;"• 4588932 ¦ abacavir ¦ 1 ¦ Vigente
+• 4757770 ¦ lamivudina ¦ 2 ¦ Vigente"
+5402396;abacavir + lamivudina + zidovudina;;Vigente;Insensible;Autogenerado;Si;;134571004;abacavir+lamivudina+zidovudina;;;;;"• 5208215 ¦ zidovudina ¦ 3 ¦ Vigente
+• 4757770 ¦ lamivudina ¦ 2 ¦ Vigente
+• 4588932 ¦ abacavir ¦ 1 ¦ Vigente"
+5402442;abatacept;;Vigente;Insensible;Autogenerado;Si;;421412005;abatacept;;;;;• 4588936 ¦ abatacept ¦ 1 ¦ Vigente
+5402748;abciximab;;Vigente;Insensible;Autogenerado;Si;;108974006;abciximab;;;;;• 4757586 ¦ abciximab ¦ 1 ¦ Vigente
+6622330;abiraterona;;Vigente;Insensible;Autogenerado;Si;;abira;;;;;;• 4839786 ¦ abiraterona ¦ 1 ¦ Vigente
+5674202;abobotulinumtoxina A;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5202050 ¦ abobotulinumtoxina A ¦ 1 ¦ Vigente
+7640997;aceglutamida + ácido gamma amino beta hidroxibutírico + ácido gamma aminobutírico + piridoxina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4930292 ¦ ácido gamma aminobutírico ¦ 3 ¦ Vigente
+• 7640974 ¦ aceglutamida ¦ 1 ¦ Vigente
+• 5166963 ¦ piridoxina ¦ 4 ¦ Vigente
+• 4849554 ¦ ácido gamma amino beta hidroxibutírico ¦ 2 ¦ Vigente"
+5494896;aceite de hígado de bacalao + clorocarvacol + oxipolitoxidodecano;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5158982 ¦ oxipolietoxidodecano ¦ 3 ¦ Vigente
+• 5199722 ¦ clorocarvacol ¦ 2 ¦ Vigente
+• 4840070 ¦ aceite de hígado de bacalao ¦ 1 ¦ Vigente"
+5406762;acenocumarol;;Vigente;Insensible;Autogenerado;Si;;79356008;acenocumarol;;;;;• 4840230 ¦ acenocumarol ¦ 1 ¦ Vigente
+5531671;acetato de betametasona + betametasona fosfato sódico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5153754 ¦ betametasona fosfato sódico ¦ 2 ¦ Vigente
+• 6434407 ¦ acetato de betametasona ¦ 1 ¦ Vigente"
+5406848;acetato de calcio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4840292 ¦ acetato de calcio ¦ 1 ¦ Vigente
+5407217;acetato de sodio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4840414 ¦ acetato de sodio ¦ 1 ¦ Vigente
+7502709;acetato de zinc + eritromicina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 7502706 ¦ acetato de zinc ¦ 1 ¦ Vigente
+• 4828526 ¦ eritromicina ¦ 2 ¦ Vigente"
+5407466;acetazolamida;;Vigente;Insensible;Autogenerado;Si;;33664007;acetazolamida;;;;;• 4840556 ¦ acetazolamida ¦ 1 ¦ Vigente
+5409283;acetilcisteína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4840615 ¦ acetilcisteína ¦ 1 ¦ Vigente
+5915414;acetónido de fluocinolona + ciprofloxacino;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4840898 ¦ acetónido de fluocinolona ¦ 1 ¦ Vigente
+• 5197886 ¦ ciprofloxacino ¦ 2 ¦ Vigente"
+5679174;acetónido de fluocinolona + hidroquinona + tretinoína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5202133 ¦ tretinoína ¦ 3 ¦ Vigente
+• 5679156 ¦ hidroquinona ¦ 2 ¦ Vigente
+• 4840898 ¦ acetónido de fluocinolona ¦ 1 ¦ Vigente"
+7523192;acetónido de fluocinolona + lidocaína + neomicina + polimixina B;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4840898 ¦ acetónido de fluocinolona ¦ 1 ¦ Vigente
+• 6401715 ¦ lidocaína ¦ 2 ¦ Vigente
+• 5153794 ¦ neomicina ¦ 3 ¦ Vigente
+• 5167482 ¦ polimixina B ¦ 4 ¦ Vigente"
+5407601;aciclovir;;Vigente;Insensible;Autogenerado;Si;;41193000;aciclovir;;;;;• 4841356 ¦ aciclovir ¦ 1 ¦ Vigente
+5408557;ácido acetilsalicílico;;Vigente;Insensible;Autogenerado;Si;;7947003;ácido acetilsalicílico;;;;• 7552959 - Observatorio de precios;• 4844504 ¦ ácido acetilsalicílico ¦ 1 ¦ Vigente
+7377317;ácido acetilsalicílico + ácido ascórbico;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4846670 ¦ ácido ascórbico ¦ 2 ¦ Vigente
+• 4844504 ¦ ácido acetilsalicílico ¦ 1 ¦ Vigente"
+7413069;ácido acetilsalicílico + ácido cítrico + bicarbonato de sodio;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4844504 ¦ ácido acetilsalicílico ¦ 1 ¦ Vigente
+• 5153844 ¦ bicarbonato de sodio ¦ 3 ¦ Vigente
+• 4847221 ¦ ácido cítrico ¦ 2 ¦ Vigente"
+5408572;ácido acetilsalicílico + cafeína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5154129 ¦ cafeína ¦ 2 ¦ Vigente
+• 4844504 ¦ ácido acetilsalicílico ¦ 1 ¦ Vigente"
+7299133;ácido acetilsalicílico + cafeína + clorfenamina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4844504 ¦ ácido acetilsalicílico ¦ 1 ¦ Vigente
+• 5154129 ¦ cafeína ¦ 2 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 3 ¦ Vigente"
+5408745;ácido acetilsalicílico + cafeína + paracetamol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5166991 ¦ paracetamol ¦ 3 ¦ Vigente
+• 5154129 ¦ cafeína ¦ 2 ¦ Vigente
+• 4844504 ¦ ácido acetilsalicílico ¦ 1 ¦ Vigente"
+5494400;ácido acetilsalicílico + clopidogrel;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5199327 ¦ clopidogrel ¦ 2 ¦ Vigente
+• 4844504 ¦ ácido acetilsalicílico ¦ 1 ¦ Vigente"
+5409379;ácido alendrónico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4844663 ¦ ácido alendrónico ¦ 1 ¦ Vigente
+5408453;ácido alendrónico + carbonato de calcio + colecalciferol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5201981 ¦ colecalciferol ¦ 3 ¦ Vigente
+• 5154289 ¦ carbonato de calcio ¦ 2 ¦ Vigente
+• 4844663 ¦ ácido alendrónico ¦ 1 ¦ Vigente"
+5408496;ácido alendrónico + colecalciferol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5201981 ¦ colecalciferol ¦ 2 ¦ Vigente
+• 4844663 ¦ ácido alendrónico ¦ 1 ¦ Vigente"
+5408523;ácido ascórbico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4846670 ¦ ácido ascórbico ¦ 1 ¦ Vigente
+5409839;ácido ascórbico + ácido fólico + cianocobalamina + fumarato ferroso;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4930164 ¦ fumarato ferroso ¦ 4 ¦ Vigente
+• 5198521 ¦ cianocobalamina ¦ 3 ¦ Vigente
+• 4847883 ¦ ácido fólico ¦ 2 ¦ Vigente
+• 4846670 ¦ ácido ascórbico ¦ 1 ¦ Vigente"
+6908931;ácido ascórbico + ácido fólico + cianocobalamina + sulfato ferroso;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4846670 ¦ ácido ascórbico ¦ 1 ¦ Vigente
+• 4847883 ¦ ácido fólico ¦ 2 ¦ Vigente
+• 5198521 ¦ cianocobalamina ¦ 3 ¦ Vigente
+• 5162570 ¦ sulfato ferroso ¦ 4 ¦ Vigente"
+7495476;ácido ascórbico + alfa tocoferol + retinol + zinc;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4846670 ¦ ácido ascórbico ¦ 1 ¦ Vigente
+• 4856627 ¦ alfa tocoferol ¦ 2 ¦ Vigente
+• 5201382 ¦ retinol ¦ 3 ¦ Vigente
+• 6398187 ¦ zinc ¦ 4 ¦ Vigente"
+7353840;ácido ascórbico + cafeína + clorfenamina + noscapina + paracetamol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4846670 ¦ ácido ascórbico ¦ 1 ¦ Vigente
+• 5154129 ¦ cafeína ¦ 2 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 3 ¦ Vigente
+• 5112882 ¦ noscapina ¦ 4 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 5 ¦ Vigente"
+7353921;ácido ascórbico + cafeína + noscapina + paracetamol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4846670 ¦ ácido ascórbico ¦ 1 ¦ Vigente
+• 5154129 ¦ cafeína ¦ 2 ¦ Vigente
+• 5112882 ¦ noscapina ¦ 3 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 4 ¦ Vigente"
+5409938;ácido ascórbico + calcio + magnesio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5206067 ¦ magnesio ¦ 3 ¦ Vigente
+• 5154135 ¦ calcio ¦ 2 ¦ Vigente
+• 4846670 ¦ ácido ascórbico ¦ 1 ¦ Vigente"
+7495218;ácido ascórbico + carbonato de calcio + colecalciferol + fosfato de calcio;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4846670 ¦ ácido ascórbico ¦ 1 ¦ Vigente
+• 5154289 ¦ carbonato de calcio ¦ 2 ¦ Vigente
+• 5201981 ¦ colecalciferol ¦ 3 ¦ Vigente
+• 6398048 ¦ fosfato de calcio ¦ 4 ¦ Vigente"
+5409784;ácido ascórbico + colecalciferol + retinol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5201382 ¦ retinol ¦ 3 ¦ Vigente
+• 5201981 ¦ colecalciferol ¦ 2 ¦ Vigente
+• 4846670 ¦ ácido ascórbico ¦ 1 ¦ Vigente"
+7388830;ácido ascórbico + ergocalciferol + retinol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5201382 ¦ retinol ¦ 3 ¦ Vigente
+• 4829881 ¦ ergocalciferol ¦ 2 ¦ Vigente
+• 4846670 ¦ ácido ascórbico ¦ 1 ¦ Vigente"
+5410023;ácido ascórbico + magnesio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5206067 ¦ magnesio ¦ 2 ¦ Vigente
+• 4846670 ¦ ácido ascórbico ¦ 1 ¦ Vigente"
+5410177;ácido ascórbico + noscapina + paracetamol + pseudoefedrina clorhidrato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5975242 ¦ pseudoefedrina clorhidrato ¦ 4 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 3 ¦ Vigente
+• 5112882 ¦ noscapina ¦ 2 ¦ Vigente
+• 4846670 ¦ ácido ascórbico ¦ 1 ¦ Vigente"
+5503594;ácido ascórbico + zinc;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6398187 ¦ zinc ¦ 2 ¦ Vigente
+• 4846670 ¦ ácido ascórbico ¦ 1 ¦ Vigente"
+5410209;ácido bórico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4846744 ¦ ácido bórico ¦ 1 ¦ Vigente
+7428272;ácido bórico + clorocresol + óxido de zinc;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4846744 ¦ ácido bórico ¦ 1 ¦ Vigente
+• 7428262 ¦ clorocresol ¦ 2 ¦ Vigente
+• 6398192 ¦ óxido de zinc ¦ 3 ¦ Vigente"
+7469538;ácido cítrico + bicarbonato de sodio + carbonato de sodio;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4847221 ¦ ácido cítrico ¦ 1 ¦ Vigente
+• 5153844 ¦ bicarbonato de sodio ¦ 2 ¦ Vigente
+• 7469532 ¦ carbonato de sodio ¦ 3 ¦ Vigente"
+7610602;ácido cítrico + citrato de potasio;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4847221 ¦ ácido cítrico ¦ 1 ¦ Vigente
+• 5198690 ¦ citrato de potasio ¦ 2 ¦ Vigente"
+5494918;ácido cítrico + citrato de potasio + citrato de sodio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5198690 ¦ citrato de potasio ¦ 2 ¦ Vigente
+• 5198687 ¦ citrato de sodio ¦ 3 ¦ Vigente
+• 4847221 ¦ ácido cítrico ¦ 1 ¦ Vigente"
+7616842;ácido cítrico + óxido de magnesio + picosulfato de sodio;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4847221 ¦ ácido cítrico ¦ 1 ¦ Vigente
+• 6448117 ¦ óxido de magnesio ¦ 2 ¦ Vigente
+• 5159269 ¦ picosulfato de sodio ¦ 3 ¦ Vigente"
+7332613;ácido cromoglícico;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6398327 ¦ ácido cromoglícico ¦ 1 ¦ Vigente
+5410626;ácido dehidrocólico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4847437 ¦ ácido dehidrocólico ¦ 1 ¦ Vigente
+5494403;ácido docosahexaenoico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4847639 ¦ ácido docosahexaenoico ¦ 1 ¦ Vigente
+5494437;ácido docosahexaenoico + ácido eicosapentaenoico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4930258 ¦ ácido eicosapentaenoico ¦ 2 ¦ Vigente
+• 4847639 ¦ ácido docosahexaenoico ¦ 1 ¦ Vigente"
+7500614;ácido docosahexaenoico + ácido fólico;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4847639 ¦ ácido docosahexaenoico ¦ 1 ¦ Vigente
+• 4847883 ¦ ácido fólico ¦ 2 ¦ Vigente"
+5494438;ácido fólico;;Vigente;Insensible;Autogenerado;Si;;6247001;ácido fólico;;;;;• 4847883 ¦ ácido fólico ¦ 1 ¦ Vigente
+6455903;ácido fólico + bis glicinato ferroso;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5162533 ¦ bis glicinato ferroso ¦ 2 ¦ Vigente
+• 4847883 ¦ ácido fólico ¦ 1 ¦ Vigente"
+7491739;ácido fólico + cianocobalamina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4847883 ¦ ácido fólico ¦ 1 ¦ Vigente
+• 5198521 ¦ cianocobalamina ¦ 2 ¦ Vigente"
+5494939;ácido fólico + cianocobalamina + polimaltosa férrica;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5162564 ¦ polimaltosa férrica ¦ 3 ¦ Vigente
+• 5198521 ¦ cianocobalamina ¦ 2 ¦ Vigente
+• 4847883 ¦ ácido fólico ¦ 1 ¦ Vigente"
+5494452;ácido fólico + sulfato ferroso;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5162570 ¦ sulfato ferroso ¦ 2 ¦ Vigente
+• 4847883 ¦ ácido fólico ¦ 1 ¦ Vigente"
+5494461;ácido fusídico;;Vigente;Insensible;Autogenerado;Si;;96015006;ácido fusídico;;;;• 7436222 - Antibiótico;• 4849436 ¦ ácido fusídico ¦ 1 ¦ Vigente
+5494463;ácido fusídico + betametasona valerato;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7436222 - Antibiótico;"• 7229764 ¦ betametasona valerato ¦ 2 ¦ Vigente
+• 4849436 ¦ ácido fusídico ¦ 1 ¦ Vigente"
+5499967;ácido fusídico + hidrocortisona acetato;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7436222 - Antibiótico;"• 7230568 ¦ hidrocortisona acetato ¦ 2 ¦ Vigente
+• 4849436 ¦ ácido fusídico ¦ 1 ¦ Vigente"
+7679298;ácido gadotérico;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7679293 ¦ ácido gadotérico ¦ 1 ¦ Vigente
+5494491;ácido gamma amino beta hidroxibutírico + ácido gamma aminobutírico + bromhidrato de glutamato de magnesio + piridoxina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5166963 ¦ piridoxina ¦ 4 ¦ Vigente
+• 5153948 ¦ bromhidrato de glutamato de magnesio ¦ 3 ¦ Vigente
+• 4930292 ¦ ácido gamma aminobutírico ¦ 2 ¦ Vigente
+• 4849554 ¦ ácido gamma amino beta hidroxibutírico ¦ 1 ¦ Vigente"
+5500066;ácido gamma aminobutírico + hematoporfirina + procaína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5167538 ¦ procaína ¦ 3 ¦ Vigente
+• 4933444 ¦ hematoporfirina ¦ 2 ¦ Vigente
+• 4930292 ¦ ácido gamma aminobutírico ¦ 1 ¦ Vigente"
+7523698;ácido glutámico + glutamato de sodio + piridoxina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 6399530 ¦ ácido glutámico ¦ 1 ¦ Vigente
+• 6402287 ¦ glutamato de sodio ¦ 2 ¦ Vigente
+• 5166963 ¦ piridoxina ¦ 3 ¦ Vigente"
+7438694;ácido glutámico + piridoxina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 6399530 ¦ ácido glutámico ¦ 1 ¦ Vigente
+• 5166963 ¦ piridoxina ¦ 2 ¦ Vigente"
+5494512;ácido hialurónico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4850398 ¦ ácido hialurónico ¦ 1 ¦ Vigente
+5494519;ácido ibandrónico;;Vigente;Insensible;Autogenerado;Si;;395271007;ácido ibandrónico;;;;;• 4850508 ¦ ácido ibandrónico ¦ 1 ¦ Vigente
+7464776;ácido ibandrónico y carbonato de calcio + colecalciferol;;Vigente;Insensible;Manual;;;;;;;;;"• 4850508 ¦ ácido ibandrónico ¦ 1 ¦ Vigente
+• 5154289 ¦ carbonato de calcio ¦ 2 ¦ Vigente
+• 5201981 ¦ colecalciferol ¦ 3 ¦ Vigente"
+5494525;ácido láctico + ácido salicílico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4854760 ¦ ácido salicílico ¦ 2 ¦ Vigente
+• 4850581 ¦ ácido láctico ¦ 1 ¦ Vigente"
+5494529;ácido mefenámico;;Vigente;Insensible;Autogenerado;Si;;34364009;ácido mefenámico;;;;;• 4850677 ¦ ácido mefenámico ¦ 1 ¦ Vigente
+5494530;ácido micofenólico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4850758 ¦ ácido micofenólico ¦ 1 ¦ Vigente
+5494539;ácido nicotínico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4850930 ¦ ácido nicotínico ¦ 1 ¦ Vigente
+5535396;ácido pamidrónico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4930349 ¦ ácido pamidrónico ¦ 1 ¦ Vigente
+5494541;ácido para aminobenzoico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4930382 ¦ ácido para aminobenzoico ¦ 1 ¦ Vigente
+5494548;ácido pipemídico;;Vigente;Insensible;Autogenerado;Si;;702807004;ácido pipemídico;;;;• 7436222 - Antibiótico;• 4852185 ¦ ácido pipemídico ¦ 1 ¦ Vigente
+5667786;ácido risedrónico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4854729 ¦ ácido risedrónico ¦ 1 ¦ Vigente
+5494550;ácido salicílico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4854760 ¦ ácido salicílico ¦ 1 ¦ Vigente
+7431128;ácido salicílico + alquitrán de hulla;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4854760 ¦ ácido salicílico ¦ 1 ¦ Vigente
+• 6398230 ¦ alquitrán de hulla ¦ 2 ¦ Vigente"
+5494559;ácido salicílico + betametasona dipropionato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5153737 ¦ betametasona dipropionato ¦ 2 ¦ Vigente
+• 4854760 ¦ ácido salicílico ¦ 1 ¦ Vigente"
+5494560;ácido tranexámico;;Vigente;Insensible;Autogenerado;Si;;109006003;ácido tranexámico;;;;;• 4854811 ¦ ácido tranexámico ¦ 1 ¦ Vigente
+7405939;ácido undecilénico;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6403019 ¦ ácido undecilénico ¦ 1 ¦ Vigente
+5494563;ácido ursodeoxicólico;;Vigente;Insensible;Autogenerado;Si;;108669000;ursodiol;;;;;• 4854881 ¦ ácido ursodeoxicólico ¦ 1 ¦ Vigente
+5494564;ácido valproico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4854948 ¦ ácido valproico ¦ 1 ¦ Vigente
+5494566;ácido zoledrónico;;Vigente;Insensible;Autogenerado;Si;;134600006;ácido zoledrónico;;;;;• 4855042 ¦ ácido zoledrónico ¦ 1 ¦ Vigente
+7297718;ácido 5 - aminolevulínico;;Vigente;Insensible;Autogenerado;;;409398000;ácido 5-aminolevulínico;;;;;• 4842161 ¦ ácido 5 - aminolevulínico ¦ 1 ¦ Vigente
+5494596;acipimox;;Vigente;Insensible;Autogenerado;Si;;319982006;acipimox;;;;;• 4855333 ¦ acipimox ¦ 1 ¦ Vigente
+5494600;acitretina;;Vigente;Insensible;Autogenerado;Si;;108914001;acitretina;;;;;• 4855394 ¦ acitretina ¦ 1 ¦ Vigente
+5494612;adalimumab;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4855443 ¦ adalimumab ¦ 1 ¦ Vigente
+5494613;adapaleno;;Vigente;Insensible;Autogenerado;Si;;108903004;adapaleno;;;;;• 4855576 ¦ adapaleno ¦ 1 ¦ Vigente
+6432629;adenosina;;Vigente;Insensible;Autogenerado;Si;;108502004;adenosina;;;;;• 4932200 ¦ adenosina ¦ 1 ¦ Vigente
+5494576;adifenina + propifenazona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4855653 ¦ adifenina ¦ 1 ¦ Vigente
+• 5166814 ¦ propifenazona ¦ 2 ¦ Vigente"
+7224400;afatinib;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7224398 ¦ afatinib ¦ 1 ¦ Vigente
+7239963;aflibercept;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6397723 ¦ aflibercept ¦ 1 ¦ Vigente
+7289558;agalsidasa beta;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6397729 ¦ agalsidasa beta ¦ 1 ¦ Vigente
+5494625;agomelatina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4855711 ¦ agomelatina ¦ 1 ¦ Vigente
+5494631;agua bidestilada;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4855740 ¦ agua bidestilada ¦ 1 ¦ Vigente
+5494637;agua oxigenada;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4855893 ¦ agua oxigenada ¦ 1 ¦ Vigente
+7146744;alantoína + betaína + fluoruro sódico + xilitol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6403052 ¦ xilitol ¦ 4 ¦ Vigente
+• 4928847 ¦ fluoruro sódico ¦ 3 ¦ Vigente
+• 6397943 ¦ betaína ¦ 2 ¦ Vigente
+• 4856016 ¦ alantoína ¦ 1 ¦ Vigente"
+5494767;alantoína + cloruro de cetilpiridinio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5200592 ¦ cloruro de cetilpiridinio ¦ 2 ¦ Vigente
+• 4856016 ¦ alantoína ¦ 1 ¦ Vigente"
+5494800;alantoína + cloruro de cetilpiridinio + noscapina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5112882 ¦ noscapina ¦ 3 ¦ Vigente
+• 5200592 ¦ cloruro de cetilpiridinio ¦ 2 ¦ Vigente
+• 4856016 ¦ alantoína ¦ 1 ¦ Vigente"
+5494804;albendazol;;Vigente;Insensible;Autogenerado;Si;;96119002;albendazol;;;;;• 4856065 ¦ albendazol ¦ 1 ¦ Vigente
+5494810;albúmina humana;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4856115 ¦ albúmina humana ¦ 1 ¦ Vigente
+6507739;alcaftadina;;Vigente;Insensible;Manual;Si;No;447209009;alcaftadina;;;;;• 6397731 ¦ alcaftadina ¦ 1 ¦ Vigente
+7591896;alcanfor;;Vigente;Insensible;Autogenerado;;;;;;;;;• 4856182 ¦ alcanfor ¦ 1 ¦ Vigente
+7403749;alcanfor + benzocaína + mentol + triclosán;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4856182 ¦ alcanfor ¦ 1 ¦ Vigente
+• 5153711 ¦ benzocaína ¦ 2 ¦ Vigente
+• 6401777 ¦ mentol ¦ 3 ¦ Vigente
+• 6402985 ¦ triclosán ¦ 4 ¦ Vigente"
+7373059;alcanfor + eucaliptol + mentol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4856182 ¦ alcanfor ¦ 1 ¦ Vigente
+• 6401777 ¦ mentol ¦ 3 ¦ Vigente
+• 6399378 ¦ eucaliptol ¦ 2 ¦ Vigente"
+5494817;alcanfor + fenol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4907321 ¦ fenol ¦ 2 ¦ Vigente
+• 4856182 ¦ alcanfor ¦ 1 ¦ Vigente"
+7405641;alcanfor + mentol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4856182 ¦ alcanfor ¦ 1 ¦ Vigente
+• 6401777 ¦ mentol ¦ 2 ¦ Vigente"
+7526785;alcanfor + mentol + salicilato de metilo;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4856182 ¦ alcanfor ¦ 1 ¦ Vigente
+• 6401777 ¦ mentol ¦ 2 ¦ Vigente
+• 6401814 ¦ salicilato de metilo ¦ 3 ¦ Vigente"
+7356314;alcohol bencílico + benzocaína;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 6397738 ¦ alcohol bencílico ¦ 1 ¦ Vigente
+• 5153711 ¦ benzocaína ¦ 2 ¦ Vigente"
+5494834;alfa tocoferol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4856627 ¦ alfa tocoferol ¦ 1 ¦ Vigente
+7500879;alfa tocoferol + piridoxina + retinol + ubidecarenona;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4856627 ¦ alfa tocoferol ¦ 1 ¦ Vigente
+• 5166963 ¦ piridoxina ¦ 2 ¦ Vigente
+• 5201382 ¦ retinol ¦ 3 ¦ Vigente
+• 7500654 ¦ ubidecarenona ¦ 4 ¦ Vigente"
+7431214;alfatradiol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7431203 ¦ alfatradiol ¦ 1 ¦ Vigente
+5494845;alfentanilo;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4930387 ¦ alfentanilo ¦ 1 ¦ Vigente
+5494847;alfuzosina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4930413 ¦ alfuzosina ¦ 1 ¦ Vigente
+5494860;alginato de sodio + bicarbonato de sodio + carbonato de calcio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5154289 ¦ carbonato de calcio ¦ 3 ¦ Vigente
+• 5153844 ¦ bicarbonato de sodio ¦ 2 ¦ Vigente
+• 4930474 ¦ alginato de sodio ¦ 1 ¦ Vigente"
+7125838;alginato de sodio + carboximetilcelulosa;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5154303 ¦ carboximetilcelulosa ¦ 2 ¦ Vigente
+• 4930474 ¦ alginato de sodio ¦ 1 ¦ Vigente"
+5494864;aliskireno;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4930505 ¦ aliskireno ¦ 1 ¦ Vigente
+5531984;aliskireno + hidroclorotiazida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5531867 ¦ hidroclorotiazida ¦ 2 ¦ Vigente
+• 4930505 ¦ aliskireno ¦ 1 ¦ Vigente"
+5500592;alopurinol;;Vigente;Insensible;Autogenerado;Si;;25246002;alopurinol;;;;;• 4930552 ¦ alopurinol ¦ 1 ¦ Vigente
+5500613;alprazolam;;Vigente;Insensible;Autogenerado;Si;;111127002;alprazolam;;;;;• 4930583 ¦ alprazolam ¦ 1 ¦ Vigente
+5500633;alprostadil;;Vigente;Insensible;Autogenerado;Si;;109119001;alprostadil;;;;;• 4930599 ¦ alprostadil ¦ 1 ¦ Vigente
+5500664;alteplasa;;Vigente;Insensible;Autogenerado;Si;;27638005;alteplasa;;;;;• 6397715 ¦ alteplasa ¦ 1 ¦ Vigente
+5500682;amantadina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4930672 ¦ amantadina ¦ 1 ¦ Vigente
+7424116;ambrisentán;;Vigente;Insensible;Autogenerado;;;427735003;ambrisentán;;;;;• 7424111 ¦ ambrisentán ¦ 1 ¦ Vigente
+6407379;ambroxol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6397799 ¦ ambroxol ¦ 1 ¦ Vigente
+5500711;amikacina;;Vigente;Insensible;Autogenerado;Si;;48836000;amikacina;;;;• 7436222 - Antibiótico;• 4931116 ¦ amikacina ¦ 1 ¦ Vigente
+5677303;amilorida + furosemida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4932286 ¦ furosemida ¦ 2 ¦ Vigente
+• 4931149 ¦ amilorida ¦ 1 ¦ Vigente"
+5500732;aminofilina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4931278 ¦ aminofilina ¦ 1 ¦ Vigente
+5500146;aminolevulinato de metilo;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6401813 ¦ aminolevulinato de metilo ¦ 1 ¦ Vigente
+5500764;amiodarona;;Vigente;Insensible;Autogenerado;Si;;69236009;amiodarona;;;;;• 4931302 ¦ amiodarona ¦ 1 ¦ Vigente
+5500765;amisulprida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4931427 ¦ amisulprida ¦ 1 ¦ Vigente
+5500805;amitriptilina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4931600 ¦ amitriptilina ¦ 1 ¦ Vigente
+5500840;amitriptilina + clordiazepóxido;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5199574 ¦ clordiazepóxido ¦ 2 ¦ Vigente
+• 4931600 ¦ amitriptilina ¦ 1 ¦ Vigente"
+5500959;amlodipino;;Vigente;Insensible;Autogenerado;Si;;108537001;amlodipino;;;;;• 4931639 ¦ amlodipino ¦ 1 ¦ Vigente
+5500995;amlodipino + atorvastatina;;Vigente;Insensible;Autogenerado;Si;;409411009;amlodipino + atorvastatina;;;;;"• 5150917 ¦ atorvastatina ¦ 2 ¦ Vigente
+• 4931639 ¦ amlodipino ¦ 1 ¦ Vigente"
+6573371;amlodipino + hidroclorotiazida + olmesartán;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5153855 ¦ olmesartán ¦ 3 ¦ Vigente
+• 4931639 ¦ amlodipino ¦ 1 ¦ Vigente
+• 5531867 ¦ hidroclorotiazida ¦ 2 ¦ Vigente"
+5533035;amlodipino + hidroclorotiazida + valsartán;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5205648 ¦ valsartán ¦ 3 ¦ Vigente
+• 5531867 ¦ hidroclorotiazida ¦ 2 ¦ Vigente
+• 4931639 ¦ amlodipino ¦ 1 ¦ Vigente"
+7579100;amlodipino + irbesartán;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5164552 ¦ irbesartán ¦ 2 ¦ Vigente
+• 4931639 ¦ amlodipino ¦ 1 ¦ Vigente"
+6455900;amlodipino + olmesartán;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5153855 ¦ olmesartán ¦ 2 ¦ Vigente
+• 4931639 ¦ amlodipino ¦ 1 ¦ Vigente"
+5501053;amlodipino + telmisartán;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5205589 ¦ telmisartán ¦ 2 ¦ Vigente
+• 4931639 ¦ amlodipino ¦ 1 ¦ Vigente"
+5501092;amlodipino + valsartán;;Vigente;Insensible;Autogenerado;;;;;;;;• 7552959 - Observatorio de precios;"• 5205648 ¦ valsartán ¦ 2 ¦ Vigente
+• 4931639 ¦ amlodipino ¦ 1 ¦ Vigente"
+5501093;amorolfina;;Vigente;Insensible;Autogenerado;Si;;332998007;amorolfina;;;;;• 4931648 ¦ amorolfina ¦ 1 ¦ Vigente
+5501095;amoxicilina;;Vigente;Insensible;Autogenerado;Si;;27658006;amoxicilina;;;;• 7436222 - Antibiótico;• 4931668 ¦ amoxicilina ¦ 1 ¦ Vigente
+5503309;amoxicilina - ácido clavulánico;;Vigente;Insensible;Manual;Si;;;;;;;• 7436222 - Antibiótico;"• 4847344 ¦ ácido clavulánico ¦ 2 ¦ Vigente
+• 4931668 ¦ amoxicilina ¦ 1 ¦ Vigente"
+5503337;amoxicilina - sulbactam;;Vigente;Insensible;Manual;Si;;;;;;;• 7436222 - Antibiótico;"• 5170727 ¦ sulbactam ¦ 2 ¦ Vigente
+• 4931668 ¦ amoxicilina ¦ 1 ¦ Vigente"
+6424943;amoxicilina y claritromicina y esomeprazol;;Vigente;Insensible;Manual;Si;;;;;;;• 7436222 - Antibiótico;"• 5153834 ¦ omeprazol ¦ 3 ¦ Vigente
+• 5198721 ¦ claritromicina ¦ 2 ¦ Vigente
+• 4931668 ¦ amoxicilina ¦ 1 ¦ Vigente"
+5503355;ampicilina;;Vigente;Insensible;Autogenerado;Si;;31087008;ampicilina;;;;• 7436222 - Antibiótico;• 4931725 ¦ ampicilina ¦ 1 ¦ Vigente
+5503395;ampicilina - sulbactam;;Vigente;Insensible;Manual;Si;;398786001;ampicilina + sulbactam;;;;;"• 5170727 ¦ sulbactam ¦ 2 ¦ Vigente
+• 4931725 ¦ ampicilina ¦ 1 ¦ Vigente"
+5503435;anastrozol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4931743 ¦ anastrozol ¦ 1 ¦ Vigente
+5503730;anfetamina;;Vigente;Insensible;Autogenerado;Si;;22672005;anfetamina;;;;;• 4931833 ¦ anfetamina ¦ 1 ¦ Vigente
+5533223;anfotericina B;;Vigente;Sensible;Autogenerado;;;;;;;;;• 4930766 ¦ anfotericina B ¦ 1 ¦ Vigente
+6416981;anfotericina B liposomal;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6416979 ¦ anfotericina B liposomal ¦ 1 ¦ Vigente
+5503764;anidulafungina;;Vigente;Insensible;Autogenerado;Si;;421904007;anidulafungina;;;;;• 4932059 ¦ anidulafungina ¦ 1 ¦ Vigente
+5503791;antazolina + bacitracina + neomicina + xilometazolina;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7436222 - Antibiótico;"• 5208164 ¦ xilometazolina ¦ 4 ¦ Vigente
+• 5153794 ¦ neomicina ¦ 3 ¦ Vigente
+• 5153655 ¦ bacitracina ¦ 2 ¦ Vigente
+• 4932104 ¦ antazolina ¦ 1 ¦ Vigente"
+5503823;antazolina + nafazolina;;Vigente;Insensible;Autogenerado;Si;;400601002;fosfato de antazolina + clorhidrato de nafazolina;;;;;"• 5153785 ¦ nafazolina ¦ 2 ¦ Vigente
+• 4932104 ¦ antazolina ¦ 1 ¦ Vigente"
+5503831;antitrombina III humana;;Vigente;Sensible;Autogenerado;Si;;;;;;;;• 4932156 ¦ antitrombina III humana ¦ 1 ¦ Vigente
+6409722;apixabán;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6397852 ¦ apixabán ¦ 1 ¦ Vigente
+5503838;apomorfina;;Vigente;Insensible;Autogenerado;Si;;67939000;apomorfina;;;;;• 4932166 ¦ apomorfina ¦ 1 ¦ Vigente
+5503856;aprepitant;;Vigente;Insensible;Autogenerado;Si;;398690007;aprepitant;;;;;• 4932198 ¦ aprepitant ¦ 1 ¦ Vigente
+5503868;aprotinina bovina y factor XIII de la coagulación humana + fibrinógeno humano y trombina humana;;Vigente;Insensible;Manual;Si;;;;;;;;"• 5202806 ¦ trombina humana ¦ 4 ¦ Vigente
+• 4854779 ¦ factor XIII de la coagulación humana ¦ 2 ¦ Vigente
+• 4932216 ¦ aprotinina bovina ¦ 1 ¦ Vigente
+• 7691860 ¦ fibrinógeno humano ¦ 3 ¦ Vigente"
+5503887;aripiprazol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5150842 ¦ aripiprazol ¦ 1 ¦ Vigente
+6409764;armodafinilo;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6397869 ¦ armodafinilo ¦ 1 ¦ Vigente
+5503986;árnica;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5150847 ¦ árnica ¦ 1 ¦ Vigente
+7470555;articaína + epinefrina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 7470553 ¦ articaína ¦ 1 ¦ Vigente
+• 6000288 ¦ epinefrina ¦ 2 ¦ Vigente"
+6410419;asenapina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6397881 ¦ asenapina ¦ 1 ¦ Vigente
+5504388;atapulgita activada + nifuroxazida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5109926 ¦ nifuroxazida ¦ 2 ¦ Vigente
+• 5150865 ¦ atapulgita activada ¦ 1 ¦ Vigente"
+5504396;atazanavir;;Vigente;Insensible;Autogenerado;Si;;413591007;atazanavir;;;;;• 5150900 ¦ atazanavir ¦ 1 ¦ Vigente
+5504403;atenolol;;Vigente;Insensible;Autogenerado;Si;;87652004;atenolol;;;;;• 5150905 ¦ atenolol ¦ 1 ¦ Vigente
+5504424;atomoxetina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5150913 ¦ atomoxetina ¦ 1 ¦ Vigente
+5504432;atorvastatina;;Vigente;Insensible;Autogenerado;Si;;108600003;atorvastatina;;;;• 7552959 - Observatorio de precios;• 5150917 ¦ atorvastatina ¦ 1 ¦ Vigente
+5504442;atosiban;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5150923 ¦ atosiban ¦ 1 ¦ Vigente
+5504451;atovacuona + proguanil;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5166782 ¦ proguanil ¦ 2 ¦ Vigente
+• 5150927 ¦ atovacuona ¦ 1 ¦ Vigente"
+6434183;atracurio besilato;;Vigente;Insensible;Manual;Si;;74074008;atracurio;;;;;• 5153715 ¦ atracurio besilato ¦ 1 ¦ Vigente
+7729778;atropa belladona extracto estandarizado + codeína + efedrina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5153681 ¦ atropa belladona extracto estandarizado ¦ 1 ¦ Vigente
+• 5200402 ¦ codeína ¦ 2 ¦ Vigente
+• 4849970 ¦ efedrina ¦ 3 ¦ Vigente"
+5504489;atropina sulfato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5150938 ¦ atropina sulfato ¦ 1 ¦ Vigente
+7297844;atropina sulfato + papaverina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5150938 ¦ atropina sulfato ¦ 1 ¦ Vigente
+• 5167052 ¦ papaverina ¦ 2 ¦ Vigente"
+7224933;axitinib;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6397900 ¦ axitinib ¦ 1 ¦ Vigente
+5504503;azacitidina;;Vigente;Insensible;Autogenerado;Si;;412329008;azacitidina;;;;;• 5152862 ¦ azacitidina ¦ 1 ¦ Vigente
+5504507;azatioprina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5152867 ¦ azatioprina ¦ 1 ¦ Vigente
+5504534;azelastina;;Vigente;Insensible;Autogenerado;Si;;108644000;azelastina;;;;;• 5153622 ¦ azelastina ¦ 1 ¦ Vigente
+5504539;azitromicina;;Vigente;Insensible;Autogenerado;Si;;96034006;azitromicina;;;;• 7436222 - Antibiótico;• 5153626 ¦ azitromicina ¦ 1 ¦ Vigente
+5504544;aztreonam;;Vigente;Insensible;Autogenerado;Si;;69918003;aztreonam;;;;• 7436222 - Antibiótico;• 5153633 ¦ aztreonam ¦ 1 ¦ Vigente
+7591997;azufre;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153635 ¦ azufre ¦ 1 ¦ Vigente
+5504570;azul de metileno;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5153641 ¦ azul de metileno ¦ 1 ¦ Vigente
+5504604;azul patente;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5153645 ¦ azul patente ¦ 1 ¦ Vigente
+6455874;bacitracina + neomicina;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7436222 - Antibiótico;"• 5153655 ¦ bacitracina ¦ 1 ¦ Vigente
+• 5153794 ¦ neomicina ¦ 2 ¦ Vigente"
+5504630;bacitracina + neomicina + polimixina B;;Vigente;Sensible;Autogenerado;Si;;;;;;;• 7436222 - Antibiótico;"• 5167482 ¦ polimixina B ¦ 3 ¦ Vigente
+• 5153794 ¦ neomicina ¦ 2 ¦ Vigente
+• 5153655 ¦ bacitracina ¦ 1 ¦ Vigente"
+5504647;bacitracina + polimixina B;;Vigente;Sensible;Autogenerado;Si;;420815008;bacitracina + polimixina B;;;;• 7436222 - Antibiótico;"• 5167482 ¦ polimixina B ¦ 2 ¦ Vigente
+• 5153655 ¦ bacitracina ¦ 1 ¦ Vigente"
+5504667;baclofeno;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5153659 ¦ baclofeno ¦ 1 ¦ Vigente
+5504688;basiliximab;;Vigente;Insensible;Autogenerado;Si;;109135008;basilixmab;;;;;• 5153663 ¦ basiliximab ¦ 1 ¦ Vigente
+5504732;beclometasona;;Vigente;Insensible;Autogenerado;Si;;1389007;beclometasona;;;;;• 5153679 ¦ beclometasona ¦ 1 ¦ Vigente
+6350206;beclometasona + salbutamol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5200721 ¦ salbutamol ¦ 2 ¦ Vigente
+• 5153679 ¦ beclometasona ¦ 1 ¦ Vigente"
+7353169;belimumab;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6397919 ¦ belimumab ¦ 1 ¦ Vigente
+7103713;bencilpenicilina benzatina;;Vigente;Insensible;Manual;Si;;;;;;;• 7436222 - Antibiótico;• 7103709 ¦ bencilpenicilina benzatina ¦ 1 ¦ Vigente
+5504798;bencilpenicilina sódica;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7436222 - Antibiótico;• 5153694 ¦ bencilpenicilina sódica ¦ 1 ¦ Vigente
+5504849;bendamustina;;Vigente;Insensible;Autogenerado;Si;;427812009;bendamustina;;;;;• 5153700 ¦ bendamustina ¦ 1 ¦ Vigente
+5504911;benzocaína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5153711 ¦ benzocaína ¦ 1 ¦ Vigente
+7418427;benzocaína + cloruro de cetilpiridinio;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5153711 ¦ benzocaína ¦ 1 ¦ Vigente
+• 5200592 ¦ cloruro de cetilpiridinio ¦ 2 ¦ Vigente"
+5504943;betahistina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5153725 ¦ betahistina ¦ 1 ¦ Vigente
+5504971;betametasona;;Vigente;Insensible;Autogenerado;Si;;29896003;betametasona;;;;;• 5153732 ¦ betametasona ¦ 1 ¦ Vigente
+5504989;betametasona + clioquinol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5198778 ¦ clioquinol ¦ 2 ¦ Vigente
+• 5153732 ¦ betametasona ¦ 1 ¦ Vigente"
+5531619;betametasona + clorfenamina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5199623 ¦ clorfenamina ¦ 2 ¦ Vigente
+• 5153732 ¦ betametasona ¦ 1 ¦ Vigente"
+5531635;betametasona + dexclorfeniramina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5354243 ¦ dexclorfeniramina ¦ 2 ¦ Vigente
+• 5153732 ¦ betametasona ¦ 1 ¦ Vigente"
+5531664;betametasona + gentamicina;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7436222 - Antibiótico;"• 4932357 ¦ gentamicina ¦ 2 ¦ Vigente
+• 5153732 ¦ betametasona ¦ 1 ¦ Vigente"
+5531667;betametasona + lidocaína + neomicina + polimixina B;;Vigente;Sensible;Autogenerado;Si;;;;;;;• 7436222 - Antibiótico;"• 5167482 ¦ polimixina B ¦ 4 ¦ Vigente
+• 5153794 ¦ neomicina ¦ 3 ¦ Vigente
+• 6401715 ¦ lidocaína ¦ 2 ¦ Vigente
+• 5153732 ¦ betametasona ¦ 1 ¦ Vigente"
+5531674;betametasona dipropionato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5153737 ¦ betametasona dipropionato ¦ 1 ¦ Vigente
+5531690;betametasona dipropionato + betametasona fosfato sódico;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5153754 ¦ betametasona fosfato sódico ¦ 2 ¦ Vigente
+• 5153737 ¦ betametasona dipropionato ¦ 1 ¦ Vigente"
+7567342;betametasona dipropionato + calcipotriol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5153737 ¦ betametasona dipropionato ¦ 1 ¦ Vigente
+• 5154152 ¦ calcipotriol ¦ 2 ¦ Vigente"
+5531694;betametasona dipropionato + clotrimazol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5200169 ¦ clotrimazol ¦ 2 ¦ Vigente
+• 5153737 ¦ betametasona dipropionato ¦ 1 ¦ Vigente"
+5531710;betametasona dipropionato + lidocaína + óxido de zinc;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6398192 ¦ óxido de zinc ¦ 3 ¦ Vigente
+• 6401715 ¦ lidocaína ¦ 2 ¦ Vigente
+• 5153737 ¦ betametasona dipropionato ¦ 1 ¦ Vigente"
+6865753;betametasona fosfato sódico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5153754 ¦ betametasona fosfato sódico ¦ 1 ¦ Vigente
+7332183;betametasona fosfato sódico + neomicina;;Vigente;Insensible;Autogenerado;;;;;;;;• 7436222 - Antibiótico;"• 5153754 ¦ betametasona fosfato sódico ¦ 1 ¦ Vigente
+• 5153794 ¦ neomicina ¦ 2 ¦ Vigente"
+5533271;betaxolol;;Vigente;Insensible;Autogenerado;Si;;349900007;betaxolol;;;;;• 5153757 ¦ betaxolol ¦ 1 ¦ Vigente
+5533273;bevacizumab;;Vigente;Insensible;Autogenerado;;;409405006;bevacizumab;;;;;• 5153765 ¦ bevacizumab ¦ 1 ¦ Vigente
+7738154;bexaroteno;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6397949 ¦ bexaroteno ¦ 1 ¦ Vigente
+5533312;bezafibrato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153836 ¦ bezafibrato ¦ 1 ¦ Vigente
+5533321;bicalutamida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153841 ¦ bicalutamida ¦ 1 ¦ Vigente
+5533422;bicarbonato de sodio;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153844 ¦ bicarbonato de sodio ¦ 1 ¦ Vigente
+5533459;bicarbonato de sodio + cloruro de potasio + cloruro de sodio + polietilenglicol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5160186 ¦ polietilenglicol ¦ 4 ¦ Vigente
+• 5201695 ¦ cloruro de potasio ¦ 2 ¦ Vigente
+• 5201728 ¦ cloruro de sodio ¦ 3 ¦ Vigente
+• 5153844 ¦ bicarbonato de sodio ¦ 1 ¦ Vigente"
+5533480;bifonazol;;Vigente;Insensible;Autogenerado;;;136216003;bifonazol;;;;;• 5153850 ¦ bifonazol ¦ 1 ¦ Vigente
+7624366;bifosfato de potasio;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7624363 ¦ bifosfato de potasio ¦ 1 ¦ Vigente
+5533489;bifosfato de sodio + fosfato de sodio;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4929778 ¦ fosfato de sodio ¦ 2 ¦ Vigente
+• 5153856 ¦ bifosfato de sodio ¦ 1 ¦ Vigente"
+6347341;bilastina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6347339 ¦ bilastina ¦ 1 ¦ Vigente
+5533508;bimatoprost;;Vigente;Insensible;Autogenerado;;;395300006;bimatoprost;;;;;• 5153861 ¦ bimatoprost ¦ 1 ¦ Vigente
+6500999;bimatoprost + timolol;;Vigente;Insensible;Autogenerado;;;424310002;bimatoprost + timolol;;;;;"• 5205240 ¦ timolol ¦ 2 ¦ Vigente
+• 5153861 ¦ bimatoprost ¦ 1 ¦ Vigente"
+5410269;bis glicinato ferroso;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5162533 ¦ bis glicinato ferroso ¦ 1 ¦ Vigente
+5533557;bisacodilo;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153875 ¦ bisacodilo ¦ 1 ¦ Vigente
+5533622;bisoprolol;;Vigente;Insensible;Autogenerado;;;;;;;;• 7552959 - Observatorio de precios;• 5153885 ¦ bisoprolol ¦ 1 ¦ Vigente
+5533655;bisoprolol + hidroclorotiazida;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5531867 ¦ hidroclorotiazida ¦ 2 ¦ Vigente
+• 5153885 ¦ bisoprolol ¦ 1 ¦ Vigente"
+5533676;bivalirudina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153890 ¦ bivalirudina ¦ 1 ¦ Vigente
+5533708;bleomicina;;Vigente;Insensible;Autogenerado;;;;;;;;• 7436222 - Antibiótico;• 5153894 ¦ bleomicina ¦ 1 ¦ Vigente
+5533774;bortezomib;;Vigente;Insensible;Autogenerado;;;398907002;bortezomib;;;;;• 5153909 ¦ bortezomib ¦ 1 ¦ Vigente
+7376934;bosentán;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6397977 ¦ bosentán ¦ 1 ¦ Vigente
+5668516;brimonidina;;Vigente;Insensible;Autogenerado;;;108827001;brimonidina;;;;;• 5668509 ¦ brimonidina ¦ 1 ¦ Vigente
+6628497;brimonidina + brinzolamida;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5153915 ¦ brinzolamida ¦ 2 ¦ Vigente
+• 5668509 ¦ brimonidina ¦ 1 ¦ Vigente"
+6455923;brimonidina + timolol;;Vigente;Insensible;Autogenerado;;;417111004;brimonidina + timolol;;;;;"• 5668509 ¦ brimonidina ¦ 1 ¦ Vigente
+• 5205240 ¦ timolol ¦ 2 ¦ Vigente"
+5533782;brinzolamida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153915 ¦ brinzolamida ¦ 1 ¦ Vigente
+5533794;brinzolamida + timolol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5205240 ¦ timolol ¦ 2 ¦ Vigente
+• 5153915 ¦ brinzolamida ¦ 1 ¦ Vigente"
+5533820;bromazepam;;Vigente;Insensible;Autogenerado;;;96234002;bromazepam;;;;;• 5153934 ¦ bromazepam ¦ 1 ¦ Vigente
+5533826;bromhexina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153945 ¦ bromhexina ¦ 1 ¦ Vigente
+6455898;bromhexina + clofedianol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6398200 ¦ clofedianol ¦ 2 ¦ Vigente
+• 5153945 ¦ bromhexina ¦ 1 ¦ Vigente"
+5533828;bromocriptina;;Vigente;Insensible;Autogenerado;;;116656002;bromocriptina;;;;;• 5153951 ¦ bromocriptina ¦ 1 ¦ Vigente
+5533831;bromuro de ipratropio;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153960 ¦ bromuro de ipratropio ¦ 1 ¦ Vigente
+5533836;bromuro de ipratropio + fenoterol;;Vigente;Insensible;Autogenerado;;;423164002;fenoterol+ipratropio;;;;;"• 4918274 ¦ fenoterol ¦ 2 ¦ Vigente
+• 5153960 ¦ bromuro de ipratropio ¦ 1 ¦ Vigente"
+7564959;bromuro de ipratropio + salbutamol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5153960 ¦ bromuro de ipratropio ¦ 1 ¦ Vigente
+• 5200721 ¦ salbutamol ¦ 2 ¦ Vigente"
+5536904;bromuro de pinaverio;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5154003 ¦ bromuro de pinaverio ¦ 1 ¦ Vigente
+5537240;bromuro de piridostigmina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5154034 ¦ bromuro de piridostigmina ¦ 1 ¦ Vigente
+5533845;bromuro de rocuronio;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5154037 ¦ bromuro de rocuronio ¦ 1 ¦ Vigente
+5533875;bromuro de tiotropio;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5154042 ¦ bromuro de tiotropio ¦ 1 ¦ Vigente
+5534401;bromuro de vecuronio;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5154044 ¦ bromuro de vecuronio ¦ 1 ¦ Vigente
+5534909;brotizolam;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5154051 ¦ brotizolam ¦ 1 ¦ Vigente
+5534914;budesonida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5154054 ¦ budesonida ¦ 1 ¦ Vigente
+5534917;budesonida + formoterol;;Vigente;Insensible;Autogenerado;;;413717007;budesonida + formoterol;;;;;"• 4928977 ¦ formoterol ¦ 2 ¦ Vigente
+• 5154054 ¦ budesonida ¦ 1 ¦ Vigente"
+5534924;bupivacaína;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5154064 ¦ bupivacaína ¦ 1 ¦ Vigente
+5534948;bupivacaína + dextrosa monohidrato;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5154064 ¦ bupivacaína ¦ 1 ¦ Vigente
+• 5918298 ¦ dextrosa monohidrato ¦ 2 ¦ Vigente"
+5534985;buprenorfina;;Vigente;Insensible;Autogenerado;;;31684002;buprenorfina;;;;;• 5154071 ¦ buprenorfina ¦ 1 ¦ Vigente
+5535038;bupropión;;Vigente;Insensible;Autogenerado;;;;;;;;• 7552959 - Observatorio de precios;• 5154076 ¦ bupropión ¦ 1 ¦ Vigente
+5535041;buspirona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5154081 ¦ buspirona ¦ 1 ¦ Vigente
+5535075;busulfano;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5154100 ¦ busulfano ¦ 1 ¦ Vigente
+5535089;butilescopolamina bromuro;;Vigente;Insensible;Autogenerado;;;;;;;"• 7126068 - butilbromuro de escopolamina
+• 7117575 - butilbromuro de hioscina";;• 5154102 ¦ butilescopolamina bromuro ¦ 1 ¦ Vigente
+7418295;butilescopolamina bromuro + metamizol magnésico;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 7402961 ¦ metamizol magnésico ¦ 2 ¦ Vigente
+• 5154102 ¦ butilescopolamina bromuro ¦ 1 ¦ Vigente"
+6455891;butilescopolamina bromuro + metamizol sódico;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5154102 ¦ butilescopolamina bromuro ¦ 1 ¦ Vigente
+• 5199305 ¦ metamizol sódico ¦ 2 ¦ Vigente"
+6455907;butilescopolamina bromuro + paracetamol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5154102 ¦ butilescopolamina bromuro ¦ 1 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 2 ¦ Vigente"
+5535131;cabazitaxel;;Vigente;Insensible;Autogenerado;;;447182009;cabazitaxel;;;;;• 5154114 ¦ cabazitaxel ¦ 1 ¦ Vigente
+5535142;cabergolina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5154128 ¦ cabergolina ¦ 1 ¦ Vigente
+5535200;cafeína + clorfenamina + ergotamina + metamizol sódico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5199305 ¦ metamizol sódico ¦ 4 ¦ Vigente
+• 4850744 ¦ ergotamina ¦ 3 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 2 ¦ Vigente
+• 5154129 ¦ cafeína ¦ 1 ¦ Vigente"
+5535217;cafeína + clorfenamina + metamizol sódico;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5199305 ¦ metamizol sódico ¦ 3 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 2 ¦ Vigente
+• 5154129 ¦ cafeína ¦ 1 ¦ Vigente"
+7344084;cafeína + clorfenamina + paracetamol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5154129 ¦ cafeína ¦ 1 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 2 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 3 ¦ Vigente"
+7390296;cafeína + dihidroergotamina + paracetamol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4849324 ¦ dihidroergotamina ¦ 2 ¦ Vigente
+• 5154129 ¦ cafeína ¦ 1 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 3 ¦ Vigente"
+5535234;cafeína + ergotamina + metamizol sódico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5199305 ¦ metamizol sódico ¦ 3 ¦ Vigente
+• 4850744 ¦ ergotamina ¦ 2 ¦ Vigente
+• 5154129 ¦ cafeína ¦ 1 ¦ Vigente"
+5535254;cafeína + paracetamol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5166991 ¦ paracetamol ¦ 2 ¦ Vigente
+• 5154129 ¦ cafeína ¦ 1 ¦ Vigente"
+7431923;calamina + difenhidramina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 6398041 ¦ calamina ¦ 1 ¦ Vigente
+• 6398452 ¦ difenhidramina ¦ 2 ¦ Vigente"
+7704013;calcio + dextrosa monohidrato + lactato + magnesio;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5154135 ¦ calcio ¦ 1 ¦ Vigente
+• 5926352 ¦ lactato ¦ 3 ¦ Vigente
+• 5918298 ¦ dextrosa monohidrato ¦ 2 ¦ Vigente
+• 5206067 ¦ magnesio ¦ 4 ¦ Vigente"
+7676816;calcio + potasio;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5154135 ¦ calcio ¦ 1 ¦ Vigente
+• 5166673 ¦ potasio ¦ 2 ¦ Vigente"
+5535525;calcipotriol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5154152 ¦ calcipotriol ¦ 1 ¦ Vigente
+5535577;calcitriol;;Vigente;Insensible;Autogenerado;Si;;68206008;calcitriol;;;;;• 5154162 ¦ calcitriol ¦ 1 ¦ Vigente
+6412090;canagliflozina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6398066 ¦ canagliflozina ¦ 1 ¦ Vigente
+5535602;candesartán;;Vigente;Insensible;Autogenerado;Si;;108587008;candesartán;;;;;• 5154217 ¦ candesartán ¦ 1 ¦ Vigente
+5535620;candesartán + hidroclorotiazida;;Vigente;Insensible;Autogenerado;Si;;398759001;candesartán cilexetilo + hidroclorotiazida;;;;;"• 5531867 ¦ hidroclorotiazida ¦ 2 ¦ Vigente
+• 5154217 ¦ candesartán ¦ 1 ¦ Vigente"
+5535641;capecitabina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5154222 ¦ capecitabina ¦ 1 ¦ Vigente
+5535701;capsaicina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5154227 ¦ capsaicina ¦ 1 ¦ Vigente
+5535702;captopril;;Vigente;Insensible;Autogenerado;Si;;29439004;captopril;;;;;• 5154238 ¦ captopril ¦ 1 ¦ Vigente
+5535725;carbamazepina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5154247 ¦ carbamazepina ¦ 1 ¦ Vigente
+5668527;carbetocina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5154254 ¦ carbetocina ¦ 1 ¦ Vigente
+7473225;carbinoxamina + fenilefrina + fenilpropanolamina + feniltoxolamina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 7473210 ¦ feniltoxolamina ¦ 4 ¦ Vigente
+• 7473222 ¦ fenilpropanolamina ¦ 3 ¦ Vigente
+• 4931375 ¦ fenilefrina ¦ 2 ¦ Vigente
+• 5154263 ¦ carbinoxamina ¦ 1 ¦ Vigente"
+5535817;carbocisteína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5154265 ¦ carbocisteína ¦ 1 ¦ Vigente
+5535818;carbomer;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6176149 ¦ carbomer ¦ 1 ¦ Vigente
+5410673;carbomer + hipromelosa;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 6176149 ¦ carbomer ¦ 1 ¦ Vigente
+• 5153394 ¦ hipromelosa ¦ 2 ¦ Vigente"
+7674800;carbomer + manitol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 7051450 ¦ manitol ¦ 2 ¦ Vigente
+• 6176149 ¦ carbomer ¦ 1 ¦ Vigente"
+5535978;carbón activado;;Vigente;Insensible;Autogenerado;Si;;398628008;carbón activado;;;;;• 5154287 ¦ carbón activado ¦ 1 ¦ Vigente
+7591725;carbón activado + sulfaguanidina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5154287 ¦ carbón activado ¦ 1 ¦ Vigente
+• 6402858 ¦ sulfaguanidina ¦ 2 ¦ Vigente"
+5535989;carbonato de calcio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5154289 ¦ carbonato de calcio ¦ 1 ¦ Vigente
+6455921;carbonato de calcio + carbonato de magnesio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5154289 ¦ carbonato de calcio ¦ 1 ¦ Vigente
+• 7412451 ¦ carbonato de magnesio ¦ 2 ¦ Vigente"
+5535308;carbonato de calcio + colecalciferol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5201981 ¦ colecalciferol ¦ 2 ¦ Vigente
+• 5154289 ¦ carbonato de calcio ¦ 1 ¦ Vigente"
+7458667;carbonato de calcio + colecalciferol + óxido de zinc;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5154289 ¦ carbonato de calcio ¦ 1 ¦ Vigente
+• 5201981 ¦ colecalciferol ¦ 2 ¦ Vigente
+• 6398192 ¦ óxido de zinc ¦ 3 ¦ Vigente"
+7458603;carbonato de calcio + colecalciferol + sulfato de zinc;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5154289 ¦ carbonato de calcio ¦ 1 ¦ Vigente
+• 5201981 ¦ colecalciferol ¦ 2 ¦ Vigente
+• 6455690 ¦ sulfato de zinc ¦ 3 ¦ Vigente"
+6669297;carbonato de calcio + hidróxido de aluminio + hidróxido de magnesio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5679155 ¦ hidróxido de magnesio ¦ 3 ¦ Vigente
+• 5679151 ¦ hidróxido de aluminio ¦ 2 ¦ Vigente
+• 5154289 ¦ carbonato de calcio ¦ 1 ¦ Vigente"
+5536024;carbonato de litio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5154294 ¦ carbonato de litio ¦ 1 ¦ Vigente
+5536031;carboplatino;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5154300 ¦ carboplatino ¦ 1 ¦ Vigente
+6572179;carboximaltosa férrica;;Vigente;Insensible;Autogenerado;Si;;430819007;carboximaltosa férrica;;;;;• 6572177 ¦ carboximaltosa férrica ¦ 1 ¦ Vigente
+6348407;carboximetilcelulosa + glicerol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4930434 ¦ glicerol ¦ 2 ¦ Vigente
+• 5154303 ¦ carboximetilcelulosa ¦ 1 ¦ Vigente"
+6504725;carboximetilcelulosa + glicerol + polisorbato;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 6402026 ¦ polisorbato ¦ 3 ¦ Vigente
+• 5154303 ¦ carboximetilcelulosa ¦ 1 ¦ Vigente
+• 4930434 ¦ glicerol ¦ 2 ¦ Vigente"
+6504776;carboximetilcelulosa + purite;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 6504775 ¦ purite ¦ 2 ¦ Vigente
+• 5154303 ¦ carboximetilcelulosa ¦ 1 ¦ Vigente"
+5536608;carvedilol;;Vigente;Insensible;Autogenerado;Si;;108551001;carvedilol;;;;• 7552959 - Observatorio de precios;• 5154332 ¦ carvedilol ¦ 1 ¦ Vigente
+5536644;caspofungina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5154350 ¦ caspofungina ¦ 1 ¦ Vigente
+7472566;cassia angustifolia extracto estandarizado;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5154354 ¦ cassia angustifolia extracto estandarizado ¦ 1 ¦ Vigente
+7475606;cassia angustifolia extracto estandarizado + plantago ovata extracto;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5154354 ¦ cassia angustifolia extracto estandarizado ¦ 1 ¦ Vigente
+• 6402008 ¦ plantago ovata extracto ¦ 2 ¦ Vigente"
+7678997;cassia angustifolia extracto estandarizado + sen de alejandría extracto estandarizado;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5154354 ¦ cassia angustifolia extracto estandarizado ¦ 1 ¦ Vigente
+• 5208385 ¦ sen de alejandría extracto estandarizado ¦ 2 ¦ Vigente"
+5537113;cefadroxilo;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7436222 - Antibiótico;• 5154370 ¦ cefadroxilo ¦ 1 ¦ Vigente
+5537120;cefalexina;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7436222 - Antibiótico;• 5154376 ¦ cefalexina ¦ 1 ¦ Vigente
+5537165;cefazolina;;Vigente;Insensible;Autogenerado;Si;;81088002;cefazolina;;;;• 7436222 - Antibiótico;• 5154386 ¦ cefazolina ¦ 1 ¦ Vigente
+5669840;cefepima;;Vigente;Insensible;Autogenerado;Si;;370371004;cefepima;;;;• 7436222 - Antibiótico;• 5154392 ¦ cefepima ¦ 1 ¦ Vigente
+5537236;cefixima;;Vigente;Insensible;Autogenerado;Si;;96052006;cefixima;;;;• 7436222 - Antibiótico;• 5154428 ¦ cefixima ¦ 1 ¦ Vigente
+5537242;cefoperazona - sulbactam;;Vigente;Insensible;Manual;Si;;443044002;cefoperazona + sulbactam;;;;• 7436222 - Antibiótico;"• 5170727 ¦ sulbactam ¦ 2 ¦ Vigente
+• 5154442 ¦ cefoperazona ¦ 1 ¦ Vigente"
+5537253;cefotaxima;;Vigente;Insensible;Autogenerado;Si;;3334000;cefotaxima;;;;• 7436222 - Antibiótico;• 5163094 ¦ cefotaxima ¦ 1 ¦ Vigente
+5537268;cefpodoxima;;Vigente;Insensible;Autogenerado;Si;;96049003;cefpodoxima;;;;• 7436222 - Antibiótico;• 5163130 ¦ cefpodoxima ¦ 1 ¦ Vigente
+5537278;cefradina;;Vigente;Insensible;Autogenerado;Si;;16791000;cefradina;;;;• 7436222 - Antibiótico;• 5163141 ¦ cefradina ¦ 1 ¦ Vigente
+5537279;ceftazidima;;Vigente;Insensible;Autogenerado;Si;;36893000;ceftazidima;;;;• 7436222 - Antibiótico;• 5163151 ¦ ceftazidima ¦ 1 ¦ Vigente
+5537282;ceftriaxona;;Vigente;Insensible;Autogenerado;Si;;19841008;ceftriaxona;;;;• 7436222 - Antibiótico;• 6398127 ¦ ceftriaxona ¦ 1 ¦ Vigente
+7010104;ceftriaxona + lidocaína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6401715 ¦ lidocaína ¦ 2 ¦ Vigente
+• 6398127 ¦ ceftriaxona ¦ 1 ¦ Vigente"
+5537287;cefuroxima;;Vigente;Insensible;Autogenerado;Si;;73986003;cefuroxima;;;;• 7436222 - Antibiótico;• 5163157 ¦ cefuroxima ¦ 1 ¦ Vigente
+5537300;celecoxib;;Vigente;Insensible;Autogenerado;Si;;370187009;celecoxib;;;;• 7552959 - Observatorio de precios;• 5163177 ¦ celecoxib ¦ 1 ¦ Vigente
+5537318;centella asiática;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5163196 ¦ centella asiática ¦ 1 ¦ Vigente
+7403955;centella asiática + neomicina;;Vigente;Insensible;Autogenerado;;;;;;;;• 7436222 - Antibiótico;"• 5163196 ¦ centella asiática ¦ 1 ¦ Vigente
+• 5153794 ¦ neomicina ¦ 2 ¦ Vigente"
+6470473;cerebrolysin;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6398265 ¦ cerebrolysin ¦ 1 ¦ Vigente
+7221940;ceritinib;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7221937 ¦ ceritinib ¦ 1 ¦ Vigente
+5537820;cetirizina;;Vigente;Insensible;Autogenerado;Si;;108655000;cetirizina;;;;;• 5163331 ¦ cetirizina ¦ 1 ¦ Vigente
+5537891;cetirizina + pseudoefedrina clorhidrato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5975242 ¦ pseudoefedrina clorhidrato ¦ 2 ¦ Vigente
+• 5163331 ¦ cetirizina ¦ 1 ¦ Vigente"
+6002915;cetirizina + pseudoefedrina sulfato;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5167561 ¦ pseudoefedrina sulfato ¦ 2 ¦ Vigente
+• 5163331 ¦ cetirizina ¦ 1 ¦ Vigente"
+5537912;cetrorelix;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5163357 ¦ cetrorelix ¦ 1 ¦ Vigente
+5537921;cetuximab;;Vigente;Insensible;Autogenerado;Si;;409401002;cetuximab;;;;;• 5163407 ¦ cetuximab ¦ 1 ¦ Vigente
+5537933;cianocobalamina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5198521 ¦ cianocobalamina ¦ 1 ¦ Vigente
+5537947;cianocobalamina + clonixinato de lisina + piridoxina + tiamina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5205114 ¦ tiamina ¦ 4 ¦ Vigente
+• 5166963 ¦ piridoxina ¦ 3 ¦ Vigente
+• 5199306 ¦ clonixinato de lisina ¦ 2 ¦ Vigente
+• 5198521 ¦ cianocobalamina ¦ 1 ¦ Vigente"
+6259603;cianocobalamina + diclofenaco sódico + tiamina + piridoxina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5198521 ¦ cianocobalamina ¦ 1 ¦ Vigente
+• 5166963 ¦ piridoxina ¦ 4 ¦ Vigente
+• 6398428 ¦ diclofenaco sódico ¦ 2 ¦ Vigente
+• 5205114 ¦ tiamina ¦ 3 ¦ Vigente"
+7394532;cianocobalamina + lidocaína + piridoxina + tiamina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5198521 ¦ cianocobalamina ¦ 1 ¦ Vigente
+• 6401715 ¦ lidocaína ¦ 2 ¦ Vigente
+• 5166963 ¦ piridoxina ¦ 3 ¦ Vigente
+• 5205114 ¦ tiamina ¦ 4 ¦ Vigente"
+5537994;cianocobalamina + piridoxina + tiamina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5205114 ¦ tiamina ¦ 3 ¦ Vigente
+• 5166963 ¦ piridoxina ¦ 2 ¦ Vigente
+• 5198521 ¦ cianocobalamina ¦ 1 ¦ Vigente"
+7489809;cianocobalamina y piridoxina + tiamina;;Vigente;Insensible;Manual;;;;;;;;;"• 5205114 ¦ tiamina ¦ 3 ¦ Vigente
+• 5166963 ¦ piridoxina ¦ 2 ¦ Vigente
+• 5198521 ¦ cianocobalamina ¦ 1 ¦ Vigente"
+5538071;ciclesonida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5163672 ¦ ciclesonida ¦ 1 ¦ Vigente
+5538074;ciclobenzaprina;;Vigente;Insensible;Autogenerado;Si;;80802008;ciclobenzaprina;;;;;• 5163695 ¦ ciclobenzaprina ¦ 1 ¦ Vigente
+5538075;ciclofosfamida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5163713 ¦ ciclofosfamida ¦ 1 ¦ Vigente
+5538088;ciclopentolato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5163720 ¦ ciclopentolato ¦ 1 ¦ Vigente
+5538119;ciclopirox;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5163722 ¦ ciclopirox ¦ 1 ¦ Vigente
+5538122;ciclosporina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5163770 ¦ ciclosporina ¦ 1 ¦ Vigente
+6412407;cilazapril;;Vigente;Insensible;Autogenerado;Si;;318913001;cilazapril;;;;;• 6398181 ¦ cilazapril ¦ 1 ¦ Vigente
+7352137;cilazapril + hidroclorotiazida;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5531867 ¦ hidroclorotiazida ¦ 2 ¦ Vigente
+• 6398181 ¦ cilazapril ¦ 1 ¦ Vigente"
+5538160;cilostazol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5163906 ¦ cilostazol ¦ 1 ¦ Vigente
+6455670;cimetidina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6398183 ¦ cimetidina ¦ 1 ¦ Vigente
+5538187;cinacalcet;;Vigente;Insensible;Autogenerado;Si;;409391006;cinacalcet;;;;;• 5163907 ¦ cinacalcet ¦ 1 ¦ Vigente
+5541131;cinarizina;;Vigente;Insensible;Autogenerado;Si;;349958007;cinarizina;;;;;• 5163924 ¦ cinarizina ¦ 1 ¦ Vigente
+5541168;ciprofibrato;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;• 5197883 ¦ ciprofibrato ¦ 1 ¦ Vigente
+5667980;ciprofloxacino;;Vigente;Insensible;Autogenerado;Si;;7577004;ciprofloxacino;;;;• 7436222 - Antibiótico;• 5197886 ¦ ciprofloxacino ¦ 1 ¦ Vigente
+5667981;ciprofloxacino + dexametasona;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7436222 - Antibiótico;"• 5354227 ¦ dexametasona ¦ 2 ¦ Vigente
+• 5197886 ¦ ciprofloxacino ¦ 1 ¦ Vigente"
+5667987;ciprofloxacino + hidrocortisona;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7436222 - Antibiótico;"• 7246470 ¦ hidrocortisona ¦ 2 ¦ Vigente
+• 5197886 ¦ ciprofloxacino ¦ 1 ¦ Vigente"
+7582210;ciproterona + estradiol valerato y estradiol valerato;;Vigente;Insensible;Manual;;;;;;;;;"• 5197926 ¦ ciproterona ¦ 1 ¦ Vigente
+• 5205716 ¦ estradiol valerato ¦ 2 ¦ Vigente"
+5667995;ciproterona + etinilestradiol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4851391 ¦ etinilestradiol ¦ 2 ¦ Vigente
+• 5197926 ¦ ciproterona ¦ 1 ¦ Vigente"
+5667997;cisaprida;;Vigente;Insensible;Autogenerado;Si;;30317002;cisaprida;;;;;• 5197931 ¦ cisaprida ¦ 1 ¦ Vigente
+6455739;cisatracurio besilato;;Vigente;Insensible;Autogenerado;Si;;108452005;cisatracurio;;;;;• 6399882 ¦ cisatracurio besilato ¦ 1 ¦ Vigente
+5667999;cisplatino;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5198423 ¦ cisplatino ¦ 1 ¦ Vigente
+5668000;citalopram;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5198496 ¦ citalopram ¦ 1 ¦ Vigente
+5668001;citarabina;;Vigente;Insensible;Autogenerado;Si;;89265009;citarabina;;;;;• 5198522 ¦ citarabina ¦ 1 ¦ Vigente
+6414790;citidina 5 - monofosfato + hidroxocobalamina + uridina 5 - trifosfato;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 6403023 ¦ uridina 5 - trifosfato ¦ 3 ¦ Vigente
+• 6398193 ¦ citidina 5 - monofosfato ¦ 1 ¦ Vigente
+• 6399580 ¦ hidroxocobalamina ¦ 2 ¦ Vigente"
+7718751;citrato + cloruro + glucosa + potasio + sodio;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5170603 ¦ sodio ¦ 5 ¦ Vigente
+• 5166673 ¦ potasio ¦ 4 ¦ Vigente
+• 4930767 ¦ glucosa ¦ 3 ¦ Vigente
+• 5926346 ¦ cloruro ¦ 2 ¦ Vigente
+• 7118743 ¦ citrato ¦ 1 ¦ Vigente"
+5668013;citrato de calcio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5198685 ¦ citrato de calcio ¦ 1 ¦ Vigente
+6455880;citrato de calcio + colecalciferol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5198685 ¦ citrato de calcio ¦ 1 ¦ Vigente
+• 5201981 ¦ colecalciferol ¦ 2 ¦ Vigente"
+5668053;citrato de potasio + citrato de sodio + cloruro de sodio + glucosa;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4930767 ¦ glucosa ¦ 4 ¦ Vigente
+• 5201728 ¦ cloruro de sodio ¦ 3 ¦ Vigente
+• 5198687 ¦ citrato de sodio ¦ 2 ¦ Vigente
+• 5198690 ¦ citrato de potasio ¦ 1 ¦ Vigente"
+5668056;cladribina;;Vigente;Insensible;Autogenerado;Si;;108800000;cladribina;;;;;• 5198705 ¦ cladribina ¦ 1 ¦ Vigente
+5668065;claritromicina;;Vigente;Insensible;Autogenerado;Si;;83999008;claritromicina;;;;• 7436222 - Antibiótico;• 5198721 ¦ claritromicina ¦ 1 ¦ Vigente
+5668206;clidinio bromuro + clordiazepóxido;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5153955 ¦ clidinio bromuro ¦ 1 ¦ Vigente
+• 5199574 ¦ clordiazepóxido ¦ 2 ¦ Vigente"
+5668068;clindamicina;;Vigente;Insensible;Autogenerado;Si;;58883005;clindamicina;;;;• 7436222 - Antibiótico;• 5198768 ¦ clindamicina ¦ 1 ¦ Vigente
+6390512;clindamicina + peróxido de benzoílo;;Vigente;Insensible;Autogenerado;;;421613006;peróxido de benzoilo + clindamicina;;;;• 7436222 - Antibiótico;"• 5167437 ¦ peróxido de benzoílo ¦ 2 ¦ Vigente
+• 5198768 ¦ clindamicina ¦ 1 ¦ Vigente"
+5668107;clobazam;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5198869 ¦ clobazam ¦ 1 ¦ Vigente
+5668131;clobetasol;;Vigente;Insensible;Autogenerado;Si;;48614001;clobetasol;;;;;• 5198884 ¦ clobetasol ¦ 1 ¦ Vigente
+5668137;clobutinol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5198949 ¦ clobutinol ¦ 1 ¦ Vigente
+5668142;clobutinol + orciprenalina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5113104 ¦ orciprenalina ¦ 2 ¦ Vigente
+• 5198949 ¦ clobutinol ¦ 1 ¦ Vigente"
+5668143;clofarabina;;Vigente;Insensible;Autogenerado;Si;;417601005;clofarabina;;;;;• 5198957 ¦ clofarabina ¦ 1 ¦ Vigente
+7640872;clofedianol + clorfenamina + fenilefrina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 6398200 ¦ clofedianol ¦ 1 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 2 ¦ Vigente
+• 4931375 ¦ fenilefrina ¦ 3 ¦ Vigente"
+5668152;clomifeno;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199019 ¦ clomifeno ¦ 1 ¦ Vigente
+5668153;clomipramina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199068 ¦ clomipramina ¦ 1 ¦ Vigente
+5668155;clonazepam;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;• 5199149 ¦ clonazepam ¦ 1 ¦ Vigente
+5668158;clonidina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199174 ¦ clonidina ¦ 1 ¦ Vigente
+5668159;clonixinato de lisina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199306 ¦ clonixinato de lisina ¦ 1 ¦ Vigente
+5668163;clonixinato de lisina + ergotamina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4850744 ¦ ergotamina ¦ 2 ¦ Vigente
+• 5199306 ¦ clonixinato de lisina ¦ 1 ¦ Vigente"
+6669633;clopamida + pindolol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 6398201 ¦ clopamida ¦ 1 ¦ Vigente
+• 6401979 ¦ pindolol ¦ 2 ¦ Vigente"
+5668164;clopidogrel;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;• 5199327 ¦ clopidogrel ¦ 1 ¦ Vigente
+5668167;clorambucilo;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199348 ¦ clorambucilo ¦ 1 ¦ Vigente
+5668173;cloranfenicol;;Vigente;Insensible;Autogenerado;Si;;57191001;cloranfenicol;;;;• 7436222 - Antibiótico;• 5199438 ¦ cloranfenicol ¦ 1 ¦ Vigente
+6512140;cloranfenicol + prednisolona acetato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5199438 ¦ cloranfenicol ¦ 1 ¦ Vigente
+• 5166752 ¦ prednisolona acetato ¦ 2 ¦ Vigente"
+5668182;clorazepato dipotásico;;Vigente;Insensible;Autogenerado;Si;;79157008;clorazepato dipotásico;;;;;• 6413192 ¦ clorazepato dipotásico ¦ 1 ¦ Vigente
+5668199;clordiazepóxido;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199574 ¦ clordiazepóxido ¦ 1 ¦ Vigente
+7403067;clordiazepóxido + dicicloverina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5199574 ¦ clordiazepóxido ¦ 1 ¦ Vigente
+• 7403065 ¦ dicicloverina ¦ 2 ¦ Vigente"
+5668220;clordiazepóxido + metoclopramida + simeticona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5170584 ¦ simeticona ¦ 3 ¦ Vigente
+• 5199432 ¦ metoclopramida ¦ 2 ¦ Vigente
+• 5199574 ¦ clordiazepóxido ¦ 1 ¦ Vigente"
+5668222;clorfenamina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199623 ¦ clorfenamina ¦ 1 ¦ Vigente
+7259652;clorfenamina + codeína + pseudoefedrina clorhidrato;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5199623 ¦ clorfenamina ¦ 1 ¦ Vigente
+• 5200402 ¦ codeína ¦ 2 ¦ Vigente
+• 5975242 ¦ pseudoefedrina clorhidrato ¦ 3 ¦ Vigente"
+5668229;clorfenamina + codeína + pseudoefedrina clorhidrato + tolú extracto;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5975242 ¦ pseudoefedrina clorhidrato ¦ 3 ¦ Vigente
+• 4827654 ¦ tolú extracto ¦ 4 ¦ Vigente
+• 5200402 ¦ codeína ¦ 2 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 1 ¦ Vigente"
+7428410;clorfenamina + fenilefrina + paracetamol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5199623 ¦ clorfenamina ¦ 1 ¦ Vigente
+• 4931375 ¦ fenilefrina ¦ 2 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 3 ¦ Vigente"
+7637625;clorfenamina + ibuprofeno;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5354319 ¦ ibuprofeno ¦ 2 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 1 ¦ Vigente"
+7336401;clorfenamina + ibuprofeno + pseudoefedrina clorhidrato;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5199623 ¦ clorfenamina ¦ 1 ¦ Vigente
+• 5354319 ¦ ibuprofeno ¦ 2 ¦ Vigente
+• 5975242 ¦ pseudoefedrina clorhidrato ¦ 3 ¦ Vigente"
+6655474;clorfenamina + metamizol sódico;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5199305 ¦ metamizol sódico ¦ 2 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 1 ¦ Vigente"
+5668237;clorfenamina + paracetamol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5166991 ¦ paracetamol ¦ 2 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 1 ¦ Vigente"
+5668246;clorfenamina + paracetamol + pseudoefedrina clorhidrato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5975242 ¦ pseudoefedrina clorhidrato ¦ 3 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 2 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 1 ¦ Vigente"
+7719784;clorfenamina + paracetamol + pseudoefedrina sulfato;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5167561 ¦ pseudoefedrina sulfato ¦ 3 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 2 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 1 ¦ Vigente"
+7734735;clorfenamina + pseudoefedrina clorhidrato;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5975242 ¦ pseudoefedrina clorhidrato ¦ 2 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 1 ¦ Vigente"
+5668247;clorfenamina + pseudoefedrina sulfato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5167561 ¦ pseudoefedrina sulfato ¦ 2 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 1 ¦ Vigente"
+5668419;clorhexidina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199631 ¦ clorhexidina ¦ 1 ¦ Vigente
+5668425;clorhexidina + cloruro de cetilpiridinio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5200592 ¦ cloruro de cetilpiridinio ¦ 2 ¦ Vigente
+• 5199631 ¦ clorhexidina ¦ 1 ¦ Vigente"
+7146689;clorhexidina + cloruro de cetilpiridinio + lactato de zinc;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 7146685 ¦ lactato de zinc ¦ 3 ¦ Vigente
+• 5200592 ¦ cloruro de cetilpiridinio ¦ 2 ¦ Vigente
+• 5199631 ¦ clorhexidina ¦ 1 ¦ Vigente"
+7049330;clorhexidina + etanol;;Vigente;Insensible;Autogenerado;Si;;409103005;clorhexidina+alcohol etílico;;;;;"• 4856239 ¦ etanol ¦ 2 ¦ Vigente
+• 5199631 ¦ clorhexidina ¦ 1 ¦ Vigente"
+5672478;clorhexidina + fluoruro sódico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4928847 ¦ fluoruro sódico ¦ 2 ¦ Vigente
+• 5199631 ¦ clorhexidina ¦ 1 ¦ Vigente"
+5668426;clorhexidina + lidocaína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6401715 ¦ lidocaína ¦ 2 ¦ Vigente
+• 5199631 ¦ clorhexidina ¦ 1 ¦ Vigente"
+5672475;clorhexidina + noscapina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5112882 ¦ noscapina ¦ 2 ¦ Vigente
+• 5199631 ¦ clorhexidina ¦ 1 ¦ Vigente"
+6455905;clormadinona + etinilestradiol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6398209 ¦ clormadinona ¦ 1 ¦ Vigente
+• 4851391 ¦ etinilestradiol ¦ 2 ¦ Vigente"
+5672479;clormezanona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199654 ¦ clormezanona ¦ 1 ¦ Vigente
+5672483;clormezanona + diazepam;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5354463 ¦ diazepam ¦ 2 ¦ Vigente
+• 5199654 ¦ clormezanona ¦ 1 ¦ Vigente"
+7353465;clormezanona + ibuprofeno + metamizol sódico;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5199654 ¦ clormezanona ¦ 1 ¦ Vigente
+• 5354319 ¦ ibuprofeno ¦ 2 ¦ Vigente
+• 5199305 ¦ metamizol sódico ¦ 3 ¦ Vigente"
+6669223;clormezanona + paracetamol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5199654 ¦ clormezanona ¦ 1 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 2 ¦ Vigente"
+5408869;clorobutanol + lanolina + petrolato blanco + vaselina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5159242 ¦ petrolato blanco ¦ 3 ¦ Vigente
+• 5199946 ¦ lanolina ¦ 2 ¦ Vigente
+• 5199682 ¦ clorobutanol ¦ 1 ¦ Vigente
+• 5202944 ¦ vaselina ¦ 4 ¦ Vigente"
+5677473;cloroquina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199742 ¦ cloroquina ¦ 1 ¦ Vigente
+5672487;clorpromazina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199768 ¦ clorpromazina ¦ 1 ¦ Vigente
+5672488;clorpropamida;;Vigente;Insensible;Autogenerado;Si;;111154004;clorpropamida;;;;;• 5199877 ¦ clorpropamida ¦ 1 ¦ Vigente
+5672496;clortalidona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199986 ¦ clortalidona ¦ 1 ¦ Vigente
+5926267;cloruro + dextrosa monohidrato + potasio + sodio + zinc;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6398187 ¦ zinc ¦ 6 ¦ Vigente
+• 5166673 ¦ potasio ¦ 3 ¦ Vigente
+• 5926346 ¦ cloruro ¦ 1 ¦ Vigente
+• 5918298 ¦ dextrosa monohidrato ¦ 2 ¦ Vigente
+• 5170603 ¦ sodio ¦ 4 ¦ Vigente"
+5672503;cloruro de calcio;;Vigente;Insensible;Autogenerado;Si;;68395000;cloruro de calcio;;;;;• 5200587 ¦ cloruro de calcio ¦ 1 ¦ Vigente
+7074667;cloruro de calcio + cloruro de potasio + cloruro de sodio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5200587 ¦ cloruro de calcio ¦ 1 ¦ Vigente
+• 5201695 ¦ cloruro de potasio ¦ 2 ¦ Vigente
+• 5201728 ¦ cloruro de sodio ¦ 3 ¦ Vigente"
+6622537;cloruro de cetilpiridinio;;Vigente;Insensible;Autogenerado;Si;;11719000;cetilpiridinio;;;;;• 5200592 ¦ cloruro de cetilpiridinio ¦ 1 ¦ Vigente
+7551669;cloruro de cobre + cloruro de cromo + cloruro de manganeso + cloruro de zinc;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 6800384 ¦ cloruro de cromo ¦ 2 ¦ Vigente
+• 6800392 ¦ cloruro de cobre ¦ 1 ¦ Vigente
+• 6800386 ¦ cloruro de manganeso ¦ 3 ¦ Vigente
+• 6800382 ¦ cloruro de zinc ¦ 4 ¦ Vigente"
+5672504;cloruro de etilo;;Vigente;Insensible;Autogenerado;Si;;391873006;cloruro de etilo;;;;;• 5201517 ¦ cloruro de etilo ¦ 1 ¦ Vigente
+5672512;cloruro de potasio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5201695 ¦ cloruro de potasio ¦ 1 ¦ Vigente
+5672523;cloruro de potasio + cloruro de sodio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5201728 ¦ cloruro de sodio ¦ 2 ¦ Vigente
+• 5201695 ¦ cloruro de potasio ¦ 1 ¦ Vigente"
+5672534;cloruro de potasio + cloruro de sodio + dextrosa monohidrato;;Vigente;Insensible;Autogenerado;Si;;419981003;dextrosa + cloruro de potasio + cloruro de sodio;;;;;"• 5918298 ¦ dextrosa monohidrato ¦ 3 ¦ Vigente
+• 5201695 ¦ cloruro de potasio ¦ 1 ¦ Vigente
+• 5201728 ¦ cloruro de sodio ¦ 2 ¦ Vigente"
+7620759;cloruro de potasio + cloruro de sodio + dextrosa monohidrato y sulfato de magnesio;;Vigente;Insensible;Manual;;;;;;;;;"• 5200565 ¦ sulfato de magnesio ¦ 4 ¦ Vigente
+• 5918298 ¦ dextrosa monohidrato ¦ 3 ¦ Vigente
+• 5201728 ¦ cloruro de sodio ¦ 2 ¦ Vigente
+• 5201695 ¦ cloruro de potasio ¦ 1 ¦ Vigente"
+7616696;cloruro de potasio + cloruro de sodio y sulfato de magnesio;;Vigente;Insensible;Manual;;;;;;;;;"• 5200565 ¦ sulfato de magnesio ¦ 3 ¦ Vigente
+• 5201728 ¦ cloruro de sodio ¦ 2 ¦ Vigente
+• 5201695 ¦ cloruro de potasio ¦ 1 ¦ Vigente"
+7232745;cloruro de potasio y cloruro de sodio;;Vigente;Insensible;Manual;Si;;;;;;;;"• 5201728 ¦ cloruro de sodio ¦ 2 ¦ Vigente
+• 5201695 ¦ cloruro de potasio ¦ 1 ¦ Vigente"
+7620916;cloruro de potasio y cloruro de sodio y dextrosa monohidrato;;Vigente;Insensible;Manual;;;;;;;;;"• 5918298 ¦ dextrosa monohidrato ¦ 3 ¦ Vigente
+• 5201728 ¦ cloruro de sodio ¦ 2 ¦ Vigente
+• 5201695 ¦ cloruro de potasio ¦ 1 ¦ Vigente"
+7620040;cloruro de potasio y cloruro de sodio y sulfato de magnesio;;Vigente;Insensible;Manual;;;;;;;;;"• 5200565 ¦ sulfato de magnesio ¦ 3 ¦ Vigente
+• 5201728 ¦ cloruro de sodio ¦ 2 ¦ Vigente
+• 5201695 ¦ cloruro de potasio ¦ 1 ¦ Vigente"
+5672524;cloruro de sodio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5201728 ¦ cloruro de sodio ¦ 1 ¦ Vigente
+5672539;cloruro de sodio + dextrosa monohidrato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5918298 ¦ dextrosa monohidrato ¦ 2 ¦ Vigente
+• 5201728 ¦ cloruro de sodio ¦ 1 ¦ Vigente"
+5672527;cloruro de sodio + hidroxietilalmidón;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5161850 ¦ hidroxietilalmidón ¦ 2 ¦ Vigente
+• 5201728 ¦ cloruro de sodio ¦ 1 ¦ Vigente"
+7233043;cloruro de sodio y cloruro de sodio;;Vigente;Insensible;Manual;Si;;;;;;;;"• 5201728 ¦ cloruro de sodio ¦ 1 ¦ Vigente
+• 5201728 ¦ cloruro de sodio ¦ 2 ¦ Vigente"
+7621214;cloruro de sodio y dextrosa monohidrato;;Vigente;Insensible;Manual;;;;;;;;;"• 5918298 ¦ dextrosa monohidrato ¦ 2 ¦ Vigente
+• 5201728 ¦ cloruro de sodio ¦ 1 ¦ Vigente"
+5672541;cloruro de trospio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5201787 ¦ cloruro de trospio ¦ 1 ¦ Vigente
+5672548;clorzoxazona + paracetamol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5166991 ¦ paracetamol ¦ 2 ¦ Vigente
+• 5201816 ¦ clorzoxazona ¦ 1 ¦ Vigente"
+7643505;clostridium botulinum toxina tipo A;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7643499 ¦ clostridium botulinum toxina tipo A ¦ 1 ¦ Vigente
+5672550;clotiazepam;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5200374 ¦ clotiazepam ¦ 1 ¦ Vigente
+5672551;clotrimazol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5200169 ¦ clotrimazol ¦ 1 ¦ Vigente
+5672556;clotrimazol + dexametasona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5354227 ¦ dexametasona ¦ 2 ¦ Vigente
+• 5200169 ¦ clotrimazol ¦ 1 ¦ Vigente"
+5672558;clotrimazol + óxido de zinc;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6398192 ¦ óxido de zinc ¦ 2 ¦ Vigente
+• 5200169 ¦ clotrimazol ¦ 1 ¦ Vigente"
+5672563;cloxacilina;;Vigente;Insensible;Autogenerado;Si;;68422006;cloxacilina;;;;• 7436222 - Antibiótico;• 5200171 ¦ cloxacilina ¦ 1 ¦ Vigente
+5672565;clozapina;;Vigente;Insensible;Autogenerado;Si;;96221003;clozapina;;;;;• 5200173 ¦ clozapina ¦ 1 ¦ Vigente
+7332888;cobicistat + elvitegravir + emtricitabina + tenofovir disoproxil fumarato;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5201757 ¦ tenofovir disoproxil fumarato ¦ 4 ¦ Vigente
+• 4825243 ¦ emtricitabina ¦ 3 ¦ Vigente
+• 7332640 ¦ cobicistat ¦ 1 ¦ Vigente
+• 7332650 ¦ elvitegravir ¦ 2 ¦ Vigente"
+7666111;cobimetinib;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7666109 ¦ cobimetinib ¦ 1 ¦ Vigente
+7452042;codeína;;Vigente;Insensible;Autogenerado;;;85990009;codeína;;;;;• 5200402 ¦ codeína ¦ 1 ¦ Vigente
+5672566;codeína + etilmorfina + metilbromuro de homatropina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5355243 ¦ metilbromuro de homatropina ¦ 3 ¦ Vigente
+• 4827236 ¦ etilmorfina ¦ 2 ¦ Vigente
+• 5200402 ¦ codeína ¦ 1 ¦ Vigente"
+7451880;codeína + paracetamol;;Vigente;Insensible;Autogenerado;;;412556009;paracetamol + codeína;;;;;"• 5200402 ¦ codeína ¦ 1 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 2 ¦ Vigente"
+7427025;colágeno hidrolizado;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7427022 ¦ colágeno hidrolizado ¦ 1 ¦ Vigente
+5672578;colchicina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5201975 ¦ colchicina ¦ 1 ¦ Vigente
+5672579;colecalciferol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5201981 ¦ colecalciferol ¦ 1 ¦ Vigente
+7495160;colecalciferol + fosfato de calcio;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5201981 ¦ colecalciferol ¦ 1 ¦ Vigente
+• 6398048 ¦ fosfato de calcio ¦ 2 ¦ Vigente"
+6716568;colecalciferol + malato de calcio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6716560 ¦ malato de calcio ¦ 2 ¦ Vigente
+• 5201981 ¦ colecalciferol ¦ 1 ¦ Vigente"
+5673793;colecalciferol + óxido de zinc + retinol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6398192 ¦ óxido de zinc ¦ 2 ¦ Vigente
+• 5201382 ¦ retinol ¦ 3 ¦ Vigente
+• 5201981 ¦ colecalciferol ¦ 1 ¦ Vigente"
+5672600;condroitina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5202082 ¦ condroitina ¦ 1 ¦ Vigente
+5672609;condroitina + glucosamina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4930829 ¦ glucosamina ¦ 2 ¦ Vigente
+• 5202082 ¦ condroitina ¦ 1 ¦ Vigente"
+7470427;corbadrina + mepivacaína;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 7470411 ¦ corbadrina ¦ 1 ¦ Vigente
+• 7045538 ¦ mepivacaína ¦ 2 ¦ Vigente"
+6470591;corifolitropina alfa;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6398293 ¦ corifolitropina alfa ¦ 1 ¦ Vigente
+6470983;coriogonadotropina alfa;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6398295 ¦ coriogonadotropina alfa ¦ 1 ¦ Vigente
+5672610;corticotropina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5202126 ¦ corticotropina ¦ 1 ¦ Vigente
+6622316;crizotinib;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6398324 ¦ crizotinib ¦ 1 ¦ Vigente
+7057980;crotamitón;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5202305 ¦ crotamitón ¦ 1 ¦ Vigente
+5672613;dabigatrán etexilato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5230758 ¦ dabigatrán etexilato ¦ 1 ¦ Vigente
+6622311;dabrafenib;;Vigente;Insensible;Autogenerado;Si;;703646006;dabrafenib;;;;;• 6398359 ¦ dabrafenib ¦ 1 ¦ Vigente
+5672614;dacarbazina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5230769 ¦ dacarbazina ¦ 1 ¦ Vigente
+5672617;dactinomicina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5230811 ¦ dactinomicina ¦ 1 ¦ Vigente
+5672621;dalteparina de sodio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5230815 ¦ dalteparina de sodio ¦ 1 ¦ Vigente
+5672622;dantroleno;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5230863 ¦ dantroleno ¦ 1 ¦ Vigente
+6413589;dapagliflozina;;Vigente;Insensible;Autogenerado;Si;;703678003;dapagliflozina;;;;;• 6398365 ¦ dapagliflozina ¦ 1 ¦ Vigente
+5672629;dapsona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5353742 ¦ dapsona ¦ 1 ¦ Vigente
+5672630;daptomicina;;Vigente;Insensible;Autogenerado;Si;;406438001;daptomicina;;;;• 7436222 - Antibiótico;• 5353852 ¦ daptomicina ¦ 1 ¦ Vigente
+7641986;darifenacina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6398373 ¦ darifenacina ¦ 1 ¦ Vigente
+5672631;darunavir;;Vigente;Insensible;Autogenerado;Si;;424096001;darunavir;;;;;• 5353853 ¦ darunavir ¦ 1 ¦ Vigente
+5672637;dasatinib;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5353856 ¦ dasatinib ¦ 1 ¦ Vigente
+5672638;daunorubicina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5356348 ¦ daunorubicina ¦ 1 ¦ Vigente
+5672640;decitabina;;Vigente;Insensible;Autogenerado;Si;;420517007;decitabina;;;;;• 5354018 ¦ decitabina ¦ 1 ¦ Vigente
+5672701;deferasirox;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5354023 ¦ deferasirox ¦ 1 ¦ Vigente
+5672713;deferoxamina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5354056 ¦ deferoxamina ¦ 1 ¦ Vigente
+5672719;deflazacort;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5354068 ¦ deflazacort ¦ 1 ¦ Vigente
+7620078;degarelix;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7620077 ¦ degarelix ¦ 1 ¦ Vigente
+5677500;deltametrina + piperonil butóxido;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5154111 ¦ piperonil butóxido ¦ 2 ¦ Vigente
+• 5354069 ¦ deltametrina ¦ 1 ¦ Vigente"
+5672728;denosumab;;Vigente;Insensible;Autogenerado;Si;;446457007;denosumab;;;;;• 5354074 ¦ denosumab ¦ 1 ¦ Vigente
+5672830;desflurano;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5354084 ¦ desflurano ¦ 1 ¦ Vigente
+5672831;desipramina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5354103 ¦ desipramina ¦ 1 ¦ Vigente
+5672837;desloratadina;;Vigente;Insensible;Autogenerado;Si;;134506008;desloratadina;;;;• 7552959 - Observatorio de precios;• 5354104 ¦ desloratadina ¦ 1 ¦ Vigente
+5677504;desloratadina + pseudoefedrina sulfato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5167561 ¦ pseudoefedrina sulfato ¦ 2 ¦ Vigente
+• 5354104 ¦ desloratadina ¦ 1 ¦ Vigente"
+5672846;desmopresina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5354107 ¦ desmopresina ¦ 1 ¦ Vigente
+5672851;desogestrel;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5354134 ¦ desogestrel ¦ 1 ¦ Vigente
+5672875;desogestrel + etinilestradiol;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;"• 4851391 ¦ etinilestradiol ¦ 2 ¦ Vigente
+• 5354134 ¦ desogestrel ¦ 1 ¦ Vigente"
+7430323;desonida;;Vigente;Insensible;Autogenerado;;;52215008;desonida;;;;;• 5354146 ¦ desonida ¦ 1 ¦ Vigente
+6476329;desoxirribonucleasa;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6398392 ¦ desoxirribonucleasa ¦ 1 ¦ Vigente
+5672877;desvenlafaxina;;Vigente;Insensible;Autogenerado;Si;;430271006;desvenlafaxina;;;;• 7552959 - Observatorio de precios;• 5354203 ¦ desvenlafaxina ¦ 1 ¦ Vigente
+5672896;dexametasona;;Vigente;Insensible;Autogenerado;Si;;7561000;dexametasona;;;;;• 5354227 ¦ dexametasona ¦ 1 ¦ Vigente
+7473400;dexametasona + diiodohidroxiquinoleína;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 7473395 ¦ diiodohidroxiquinoleína ¦ 2 ¦ Vigente
+• 5354227 ¦ dexametasona ¦ 1 ¦ Vigente"
+5672911;dexametasona + tobramicina;;Vigente;Insensible;Autogenerado;Si;;;;;;;"• 7436222 - Antibiótico
+• 7552959 - Observatorio de precios";"• 5205717 ¦ tobramicina ¦ 2 ¦ Vigente
+• 5354227 ¦ dexametasona ¦ 1 ¦ Vigente"
+5672912;dexibuprofeno;;Vigente;Insensible;Manual;Si;;;;;;;;• 6398402 ¦ dexibuprofeno ¦ 1 ¦ Vigente
+5672915;dexmedetomidina;;Vigente;Insensible;Manual;Si;;438079000;dexmedetomidina;;;;;• 5354336 ¦ dexmedetomidina ¦ 1 ¦ Vigente
+6416544;dexmetilfenidato;;Vigente;Insensible;Autogenerado;Si;;;clorhidrato de dexmetilfenidato, 10 mg, comprimido;;;;;• 6398404 ¦ dexmetilfenidato ¦ 1 ¦ Vigente
+7503524;dexpantenol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7503523 ¦ dexpantenol ¦ 1 ¦ Vigente
+5672931;dexrazoxano;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5354382 ¦ dexrazoxano ¦ 1 ¦ Vigente
+6669360;dextrán + hipromelosa;;Vigente;Insensible;Autogenerado;;;;;;;;• 7552959 - Observatorio de precios;"• 5153394 ¦ hipromelosa ¦ 2 ¦ Vigente
+• 6398406 ¦ dextrán ¦ 1 ¦ Vigente"
+7501271;dextrán + hipromelosa + nafazolina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 6398406 ¦ dextrán ¦ 1 ¦ Vigente
+• 5153394 ¦ hipromelosa ¦ 2 ¦ Vigente
+• 5153785 ¦ nafazolina ¦ 3 ¦ Vigente"
+5672932;dextrometorfano;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5354397 ¦ dextrometorfano ¦ 1 ¦ Vigente
+5672937;dextrosa monohidrato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5918298 ¦ dextrosa monohidrato ¦ 1 ¦ Vigente
+5534986;dextrosa monohidrato + nitroglicerina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5918298 ¦ dextrosa monohidrato ¦ 1 ¦ Vigente
+• 5153818 ¦ nitroglicerina ¦ 2 ¦ Vigente"
+5672938;diacereína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5354426 ¦ diacereína ¦ 1 ¦ Vigente
+5503889;diatrizoato sódico + meglumina diatrizoato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5354451 ¦ diatrizoato sódico ¦ 1 ¦ Vigente
+• 5354782 ¦ meglumina diatrizoato ¦ 2 ¦ Vigente"
+5672939;diazepam;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5354463 ¦ diazepam ¦ 1 ¦ Vigente
+7669181;diclofenaco;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7669179 ¦ diclofenaco ¦ 1 ¦ Vigente
+5677509;diclofenaco colestiramina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6398424 ¦ diclofenaco colestiramina ¦ 1 ¦ Vigente
+7260724;diclofenaco dietilamina;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;• 6398425 ¦ diclofenaco dietilamina ¦ 1 ¦ Vigente
+7260725;diclofenaco epolamina;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;• 7260718 ¦ diclofenaco epolamina ¦ 1 ¦ Vigente
+5679162;diclofenaco potásico;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;• 5679147 ¦ diclofenaco potásico ¦ 1 ¦ Vigente
+7060821;diclofenaco sódico;;Vigente;Insensible;Autogenerado;Si;;419143009;diclofenaco sódico;;;;• 7552959 - Observatorio de precios;• 6398428 ¦ diclofenaco sódico ¦ 1 ¦ Vigente
+5672947;didanosina;;Vigente;Insensible;Autogenerado;Si;;19194001;didanosina;;;;;• 5354517 ¦ didanosina ¦ 1 ¦ Vigente
+5672952;didrogesterona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5354518 ¦ didrogesterona ¦ 1 ¦ Vigente
+6455860;didrogesterona + estradiol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4850784 ¦ estradiol ¦ 2 ¦ Vigente
+• 5354518 ¦ didrogesterona ¦ 1 ¦ Vigente"
+5672954;dienogest;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5354520 ¦ dienogest ¦ 1 ¦ Vigente
+6699808;dienogest + estradiol valerato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5354520 ¦ dienogest ¦ 1 ¦ Vigente
+• 5205716 ¦ estradiol valerato ¦ 2 ¦ Vigente"
+5672957;dienogest + etinilestradiol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4851391 ¦ etinilestradiol ¦ 2 ¦ Vigente
+• 5354520 ¦ dienogest ¦ 1 ¦ Vigente"
+7403118;dietiltoluamida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6398446 ¦ dietiltoluamida ¦ 1 ¦ Vigente
+6416627;difenhidramina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6398452 ¦ difenhidramina ¦ 1 ¦ Vigente
+5672958;difenidol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4822177 ¦ difenidol ¦ 1 ¦ Vigente
+5672964;digoxina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4829021 ¦ digoxina ¦ 1 ¦ Vigente
+5672965;dihexazin;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4823595 ¦ dihexazin ¦ 1 ¦ Vigente
+5677350;dihidroergotamina + lomifilina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5677332 ¦ lomifilina ¦ 2 ¦ Vigente
+• 4849324 ¦ dihidroergotamina ¦ 1 ¦ Vigente"
+7323411;dihidroergotamina + paracetamol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4849324 ¦ dihidroergotamina ¦ 1 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 2 ¦ Vigente"
+5672968;diltiazem;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4829072 ¦ diltiazem ¦ 1 ¦ Vigente
+6416668;dimenhidrinato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6398464 ¦ dimenhidrinato ¦ 1 ¦ Vigente
+5679171;dimeticona + hidróxido de aluminio + hidróxido de magnesio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5679155 ¦ hidróxido de magnesio ¦ 3 ¦ Vigente
+• 5679151 ¦ hidróxido de aluminio ¦ 2 ¦ Vigente
+• 4824071 ¦ dimeticona ¦ 1 ¦ Vigente"
+5672978;dimeticona + óxido de zinc;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6398192 ¦ óxido de zinc ¦ 2 ¦ Vigente
+• 4824071 ¦ dimeticona ¦ 1 ¦ Vigente"
+7403471;dimetil sulfóxido + fenilbutazona + mentol + salicilato de metilo;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 7403453 ¦ dimetil sulfóxido ¦ 1 ¦ Vigente
+• 4849269 ¦ fenilbutazona ¦ 2 ¦ Vigente
+• 6401777 ¦ mentol ¦ 3 ¦ Vigente
+• 6401814 ¦ salicilato de metilo ¦ 4 ¦ Vigente"
+7620149;dinoprostona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7620147 ¦ dinoprostona ¦ 1 ¦ Vigente
+5672981;diosmina + hesperidina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4934447 ¦ hesperidina ¦ 2 ¦ Vigente
+• 4824114 ¦ diosmina ¦ 1 ¦ Vigente"
+5672982;dipiridamol;;Vigente;Insensible;Autogenerado;Si;;66859009;dipiridamol;;;;;• 4828155 ¦ dipiridamol ¦ 1 ¦ Vigente
+5672991;disulfiram;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4842839 ¦ disulfiram ¦ 1 ¦ Vigente
+5677379;dobesilato de calcio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4824215 ¦ dobesilato de calcio ¦ 1 ¦ Vigente
+5672993;dobutamina;;Vigente;Insensible;Autogenerado;Si;;26523005;dobutamina;;;;;• 4824276 ¦ dobutamina ¦ 1 ¦ Vigente
+5673001;docetaxel;;Vigente;Insensible;Autogenerado;Si;;108806006;docetaxel;;;;;• 4824366 ¦ docetaxel ¦ 1 ¦ Vigente
+7034572;dolutegravir;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 7034499 ¦ dolutegravir ¦ 1 ¦ Vigente
+5673587;domperidona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 4828210 ¦ domperidona ¦ 1 ¦ Vigente
+6455882;domperidona + pseudoefedrina sulfato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4828210 ¦ domperidona ¦ 1 ¦ Vigente
+• 5167561 ¦ pseudoefedrina sulfato ¦ 2 ¦ Vigente"
+5673615;donepezilo;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4824690 ¦ donepezilo ¦ 1 ¦ Vigente
+5673619;dopamina;;Vigente;Insensible;Autogenerado;Si;;59187003;dopamina;;;;;• 4828274 ¦ dopamina ¦ 1 ¦ Vigente
+5673620;dorzolamida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4824955 ¦ dorzolamida ¦ 1 ¦ Vigente
+5673621;dorzolamida + timolol;;Vigente;Insensible;Autogenerado;Si;;330733003;dorzolamida+timolol;;;;• 7552959 - Observatorio de precios;"• 5205240 ¦ timolol ¦ 2 ¦ Vigente
+• 4824955 ¦ dorzolamida ¦ 1 ¦ Vigente"
+5673624;doxazosina;;Vigente;Insensible;Autogenerado;Si;;108556006;doxazosina;;;;;• 4829162 ¦ doxazosina ¦ 1 ¦ Vigente
+5673628;doxiciclina;;Vigente;Insensible;Autogenerado;Si;;10504007;doxiciclina;;;;• 7436222 - Antibiótico;• 4842911 ¦ doxiciclina ¦ 1 ¦ Vigente
+5673630;doxilamina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4825030 ¦ doxilamina ¦ 1 ¦ Vigente
+5673640;doxilamina + piridoxina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5166963 ¦ piridoxina ¦ 2 ¦ Vigente
+• 4825030 ¦ doxilamina ¦ 1 ¦ Vigente"
+5673645;doxorubicina;;Vigente;Insensible;Autogenerado;Si;;68444001;doxorubicina;;;;;• 4843018 ¦ doxorubicina ¦ 1 ¦ Vigente
+7289412;doxorubicina liposomal pegilada;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 7289410 ¦ doxorubicina liposomal pegilada ¦ 1 ¦ Vigente
+5673650;droperidol;;Vigente;Insensible;Autogenerado;Si;;26574002;droperidol;;;;;• 4843399 ¦ droperidol ¦ 1 ¦ Vigente
+5673657;drospirenona + estradiol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4850784 ¦ estradiol ¦ 2 ¦ Vigente
+• 4849335 ¦ drospirenona ¦ 1 ¦ Vigente"
+5673659;drospirenona + etinilestradiol;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;"• 4851391 ¦ etinilestradiol ¦ 2 ¦ Vigente
+• 4849335 ¦ drospirenona ¦ 1 ¦ Vigente"
+7582342;drospirenona + etinilestradiol + levomefolato cálcico y levomefolato cálcico;;Vigente;Insensible;Manual;;;;;;;;;"• 4851391 ¦ etinilestradiol ¦ 2 ¦ Vigente
+• 4849335 ¦ drospirenona ¦ 1 ¦ Vigente
+• 6398059 ¦ levomefolato cálcico ¦ 3 ¦ Vigente"
+5673666;duloxetina;;Vigente;Insensible;Autogenerado;;;407033009;duloxetina;;;;;• 4829186 ¦ duloxetina ¦ 1 ¦ Vigente
+5673673;dutasterida;;Vigente;Insensible;Autogenerado;Si;;385570006;dutasterida;;;;;• 4825088 ¦ dutasterida ¦ 1 ¦ Vigente
+5673694;dutasterida + tamsulosina;;Vigente;Insensible;Autogenerado;Si;;447091005;dutasterida + clorhidrato de tamsulosina;;;;;"• 5201624 ¦ tamsulosina ¦ 2 ¦ Vigente
+• 4825088 ¦ dutasterida ¦ 1 ¦ Vigente"
+7739891;ebucrilato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5163609 ¦ ebucrilato ¦ 1 ¦ Vigente
+5673702;econazol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4829239 ¦ econazol ¦ 1 ¦ Vigente
+5673703;efavirenz;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4825089 ¦ efavirenz ¦ 1 ¦ Vigente
+6428582;efavirenz + emtricitabina + tenofovir disoproxil fumarato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5201757 ¦ tenofovir disoproxil fumarato ¦ 3 ¦ Vigente
+• 4825243 ¦ emtricitabina ¦ 2 ¦ Vigente
+• 4825089 ¦ efavirenz ¦ 1 ¦ Vigente"
+5673705;efedrina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4849970 ¦ efedrina ¦ 1 ¦ Vigente
+5673720;eletriptán;;Vigente;Insensible;Autogenerado;Si;;395255007;eletriptán;;;;;• 4825149 ¦ eletriptán ¦ 1 ¦ Vigente
+7332591;emtricitabina + rilpivirina + tenofovir disoproxil fumarato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 7332570 ¦ rilpivirina ¦ 2 ¦ Vigente
+• 4825243 ¦ emtricitabina ¦ 1 ¦ Vigente
+• 5201757 ¦ tenofovir disoproxil fumarato ¦ 3 ¦ Vigente"
+5673728;emtricitabina + tenofovir disoproxil fumarato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5201757 ¦ tenofovir disoproxil fumarato ¦ 2 ¦ Vigente
+• 4825243 ¦ emtricitabina ¦ 1 ¦ Vigente"
+5673731;enalapril;;Vigente;Insensible;Autogenerado;Si;;15222008;enalapril;;;;;• 4842079 ¦ enalapril ¦ 1 ¦ Vigente
+5673737;enalapril + hidroclorotiazida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5531867 ¦ hidroclorotiazida ¦ 2 ¦ Vigente
+• 4842079 ¦ enalapril ¦ 1 ¦ Vigente"
+5673738;enbucrilato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4825248 ¦ enbucrilato ¦ 1 ¦ Vigente
+7340050;enfuvirtida;;Vigente;Insensible;Autogenerado;Si;;398902008;enfuvirtida;;;;;• 6398504 ¦ enfuvirtida ¦ 1 ¦ Vigente
+5677398;enoxaparina de sodio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5677389 ¦ enoxaparina de sodio ¦ 1 ¦ Vigente
+5673740;entecavir;;Vigente;Insensible;Autogenerado;Si;;416248007;entecavir;;;;;• 4825486 ¦ entecavir ¦ 1 ¦ Vigente
+6417049;enzalutamida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6398510 ¦ enzalutamida ¦ 1 ¦ Vigente
+6573107;enzimas + simeticona;;Vigente;Insensible;Manual;;;;;;;;;"• 5170584 ¦ simeticona ¦ 5 ¦ Vigente
+• 6573099 ¦ pepsina ¦ 4 ¦ Vigente
+• 6573100 ¦ diastasa ¦ 2 ¦ Vigente
+• 6573102 ¦ bilis desecada ¦ 1 ¦ Vigente
+• 5159035 ¦ pancreatina ¦ 3 ¦ Vigente"
+5673743;epinastina;;Vigente;Insensible;Autogenerado;Si;;407069001;epinastina;;;;;• 4825545 ¦ epinastina ¦ 1 ¦ Vigente
+6000290;epinefrina;;Vigente;Insensible;Autogenerado;Si;;;;;;• 6617161 - adrenalina;;• 6000288 ¦ epinefrina ¦ 1 ¦ Vigente
+5495075;epinefrina + lidocaína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6000288 ¦ epinefrina ¦ 1 ¦ Vigente
+• 6401715 ¦ lidocaína ¦ 2 ¦ Vigente"
+7470479;epinefrina + mepivacaína;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 6000288 ¦ epinefrina ¦ 1 ¦ Vigente
+• 7045538 ¦ mepivacaína ¦ 2 ¦ Vigente"
+5673750;epirubicina;;Vigente;Insensible;Autogenerado;Si;;349848009;epirubicina;;;;;• 4825558 ¦ epirubicina ¦ 1 ¦ Vigente
+7630781;eplerenona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7630779 ¦ eplerenona ¦ 1 ¦ Vigente
+7363036;epoetina alfa;;Vigente;Insensible;Autogenerado;Si;;108964008;epoetina alfa;;;;;• 6738116 ¦ epoetina alfa ¦ 1 ¦ Vigente
+5673810;epoetina beta;;Vigente;Insensible;Autogenerado;Si;;327623006;epoetina beta;;;;;• 7361174 ¦ epoetina beta ¦ 1 ¦ Vigente
+7676245;eptacog alfa (activado);;Vigente;Insensible;Autogenerado;;;;;;;;;• 6398513 ¦ eptacog alfa (activado) ¦ 1 ¦ Vigente
+5673755;ergocalciferol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4829881 ¦ ergocalciferol ¦ 1 ¦ Vigente
+5679166;ergocalciferol + lidocaína + retinol + sulfadiazina de plata;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5679150 ¦ sulfadiazina de plata ¦ 4 ¦ Vigente
+• 6401715 ¦ lidocaína ¦ 2 ¦ Vigente
+• 4829881 ¦ ergocalciferol ¦ 1 ¦ Vigente
+• 5201382 ¦ retinol ¦ 3 ¦ Vigente"
+7670956;ergocalciferol + nistatina + óxido de zinc + retinol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5201382 ¦ retinol ¦ 4 ¦ Vigente
+• 6398192 ¦ óxido de zinc ¦ 3 ¦ Vigente
+• 4829881 ¦ ergocalciferol ¦ 1 ¦ Vigente
+• 5152647 ¦ nistatina ¦ 2 ¦ Vigente"
+5673800;ergometrina;;Vigente;Insensible;Autogenerado;Si;;54541002;ergometrina;;;;;• 4825579 ¦ ergometrina ¦ 1 ¦ Vigente
+5673802;eritromicina;;Vigente;Insensible;Autogenerado;Si;;30427009;eritromicina;;;;• 7436222 - Antibiótico;• 4828526 ¦ eritromicina ¦ 1 ¦ Vigente
+6455870;eritromicina + tretinoína;;Vigente;Insensible;Autogenerado;Si;;398788000;eritromicina + tretinoína;;;;;"• 4828526 ¦ eritromicina ¦ 1 ¦ Vigente
+• 5202133 ¦ tretinoína ¦ 2 ¦ Vigente"
+5673814;erlotinib;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4826595 ¦ erlotinib ¦ 1 ¦ Vigente
+5673816;ertapenem;;Vigente;Insensible;Autogenerado;Si;;385574002;ertapenem;;;;• 7436222 - Antibiótico;• 4826639 ¦ ertapenem ¦ 1 ¦ Vigente
+5673817;escitalopram;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;• 4840982 ¦ escitalopram ¦ 1 ¦ Vigente
+5673827;esomeprazol;;Vigente;Insensible;Autogenerado;Si;;317331009;esomeprazol;;;;;• 4828570 ¦ esomeprazol ¦ 1 ¦ Vigente
+5673828;esomeprazol + naproxeno;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5153884 ¦ naproxeno ¦ 2 ¦ Vigente
+• 4828570 ¦ esomeprazol ¦ 1 ¦ Vigente"
+5673829;espironolactona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4841241 ¦ espironolactona ¦ 1 ¦ Vigente
+5673868;estradiol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4850784 ¦ estradiol ¦ 1 ¦ Vigente
+5673873;estradiol + medroxiprogesterona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5198966 ¦ medroxiprogesterona ¦ 2 ¦ Vigente
+• 4850784 ¦ estradiol ¦ 1 ¦ Vigente"
+6455916;estradiol + nomegestrol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5153879 ¦ nomegestrol ¦ 2 ¦ Vigente
+• 4850784 ¦ estradiol ¦ 1 ¦ Vigente"
+5673882;estradiol + noretisterona;;Vigente;Insensible;Autogenerado;Si;;424349004;estradiol + noretindrona;;;;;"• 5112823 ¦ noretisterona ¦ 2 ¦ Vigente
+• 4850784 ¦ estradiol ¦ 1 ¦ Vigente"
+5673886;estradiol + trimegestona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5202726 ¦ trimegestona ¦ 2 ¦ Vigente
+• 4850784 ¦ estradiol ¦ 1 ¦ Vigente"
+7114684;estradiol valerato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5205716 ¦ estradiol valerato ¦ 1 ¦ Vigente
+7719622;estradiol y estadiol + levonorgestrel;;Vigente;Insensible;Manual;;;;;;;;;"• 5164813 ¦ levonorgestrel ¦ 2 ¦ Vigente
+• 4850784 ¦ estradiol ¦ 1 ¦ Vigente"
+5673891;estramustina;;Vigente;Insensible;Autogenerado;Si;;108768000;estramustina;;;;;• 4827022 ¦ estramustina ¦ 1 ¦ Vigente
+5673897;estreptomicina;;Vigente;Insensible;Autogenerado;Si;;40877002;estreptomicina;;;;• 7436222 - Antibiótico;• 4849205 ¦ estreptomicina ¦ 1 ¦ Vigente
+5673898;estreptoquinasa;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4841337 ¦ estreptoquinasa ¦ 1 ¦ Vigente
+6894681;estriol;;Vigente;Insensible;Autogenerado;Si;;354050008;estriol;;;;;• 6398552 ¦ estriol ¦ 1 ¦ Vigente
+5673907;estrógenos conjugados;;Vigente;Insensible;Autogenerado;Si;;16832004;estrógenos conjugados;;;;;• 4851335 ¦ estrógenos conjugados ¦ 1 ¦ Vigente
+5673903;estrógenos conjugados + medroxiprogesterona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5198966 ¦ medroxiprogesterona ¦ 2 ¦ Vigente
+• 4851335 ¦ estrógenos conjugados ¦ 1 ¦ Vigente"
+5673908;eszopiclona;;Vigente;Insensible;Autogenerado;Si;;409421001;eszopiclona;;;;;• 4827042 ¦ eszopiclona ¦ 1 ¦ Vigente
+5673909;etambutol;;Vigente;Insensible;Autogenerado;Si;;24450004;etambutol;;;;;• 4828589 ¦ etambutol ¦ 1 ¦ Vigente
+5673913;etamsilato;;Vigente;Insensible;Autogenerado;Si;;319848004;etamsilato;;;;;• 4827083 ¦ etamsilato ¦ 1 ¦ Vigente
+5673914;etanercept;;Vigente;Insensible;Autogenerado;Si;;118259007;etanercept;;;;;• 4827172 ¦ etanercept ¦ 1 ¦ Vigente
+5494819;etanol;;Vigente;Insensible;Autogenerado;Si;;398624005;etanol;;;;;• 4856239 ¦ etanol ¦ 1 ¦ Vigente
+5673915;etifoxina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4827199 ¦ etifoxina ¦ 1 ¦ Vigente
+7090846;etinilestradiol;;Vigente;Insensible;Manual;Si;;;;;;;;• 4851391 ¦ etinilestradiol ¦ 1 ¦ Vigente
+6476491;etinilestradiol + etonogestrel;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4827308 ¦ etonogestrel ¦ 2 ¦ Vigente
+• 4851391 ¦ etinilestradiol ¦ 1 ¦ Vigente"
+5673919;etinilestradiol + gestodeno;;Vigente;Insensible;Autogenerado;Si;;418031001;etinilestradiol + gestodeno;;;;• 7552959 - Observatorio de precios;"• 4930385 ¦ gestodeno ¦ 2 ¦ Vigente
+• 4851391 ¦ etinilestradiol ¦ 1 ¦ Vigente"
+5673920;etinilestradiol + levonorgestrel;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;"• 5164813 ¦ levonorgestrel ¦ 2 ¦ Vigente
+• 4851391 ¦ etinilestradiol ¦ 1 ¦ Vigente"
+6510409;etinilestradiol + norelgestromina;;Vigente;Insensible;Autogenerado;;;408088005;etinil estradiol+norelgestromina;;;;;"• 6401871 ¦ norelgestromina ¦ 2 ¦ Vigente
+• 4851391 ¦ etinilestradiol ¦ 1 ¦ Vigente"
+7502923;etinilestradiol y etinilestradiol + levonorgestrel;;Vigente;Insensible;Manual;;;;;;;;• 7552959 - Observatorio de precios;"• 4851391 ¦ etinilestradiol ¦ 1 ¦ Vigente
+• 5164813 ¦ levonorgestrel ¦ 3 ¦ Vigente
+• 4851391 ¦ etinilestradiol ¦ 2 ¦ Vigente"
+5673925;etofenamato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4827265 ¦ etofenamato ¦ 1 ¦ Vigente
+5673926;etomidato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4827292 ¦ etomidato ¦ 1 ¦ Vigente
+5673927;etonogestrel;;Vigente;Insensible;Autogenerado;Si;;326451000;etonogestrel;;;;;• 4827308 ¦ etonogestrel ¦ 1 ¦ Vigente
+5673934;etopósido;;Vigente;Insensible;Autogenerado;Si;;56928005;etopósido;;;;;• 4849251 ¦ etopósido ¦ 1 ¦ Vigente
+5673935;etoricoxib;;Vigente;Insensible;Autogenerado;Si;;395292007;etoricoxib;;;;;• 4827341 ¦ etoricoxib ¦ 1 ¦ Vigente
+5673939;etravirina;;Vigente;Insensible;Autogenerado;Si;;432221004;etravirina;;;;;• 4827490 ¦ etravirina ¦ 1 ¦ Vigente
+7738034;eugenol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6399381 ¦ eugenol ¦ 1 ¦ Vigente
+5673941;everolimus;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4827501 ¦ everolimus ¦ 1 ¦ Vigente
+5673942;exemestano;;Vigente;Insensible;Autogenerado;Si;;116115004;exemestano;;;;;• 4827510 ¦ exemestano ¦ 1 ¦ Vigente
+5674074;exenatida;;Vigente;Insensible;Autogenerado;Si;;417734003;exenatida;;;;;• 4841707 ¦ exenatida ¦ 1 ¦ Vigente
+5674295;ezetimiba;;Vigente;Insensible;Autogenerado;Si;;408041006;ezetimibe;;;;;• 4827676 ¦ ezetimiba ¦ 1 ¦ Vigente
+5674302;ezetimiba + simvastatina;;Vigente;Insensible;Autogenerado;Si;;414175005;ezetimibe + simvastatina;;;;;"• 5200961 ¦ simvastatina ¦ 2 ¦ Vigente
+• 4827676 ¦ ezetimiba ¦ 1 ¦ Vigente"
+5917796;factor II de la coagulación humana + factor VII de la coagulación humana + factor IX de la coagulación humana + factor X de la coagulación humana + proteína C + proteína S;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5917737 ¦ factor II de la coagulación humana ¦ 1 ¦ Vigente
+• 4854378 ¦ factor VII de la coagulación humana ¦ 2 ¦ Vigente
+• 5917788 ¦ factor X de la coagulación humana ¦ 4 ¦ Vigente
+• 5917777 ¦ proteína S ¦ 6 ¦ Vigente
+• 5917776 ¦ proteína C ¦ 5 ¦ Vigente
+• 4853538 ¦ factor IX de la coagulación humana ¦ 3 ¦ Vigente"
+7676038;factor IX de la coagulación humana;;Vigente;Insensible;Autogenerado;;;;;;;;;• 4853538 ¦ factor IX de la coagulación humana ¦ 1 ¦ Vigente
+7691518;factor VIII de la coagulación humana;;Vigente;Insensible;Autogenerado;;;;;;;;;• 4854443 ¦ factor VIII de la coagulación humana ¦ 1 ¦ Vigente
+5674324;famotidina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4828624 ¦ famotidina ¦ 1 ¦ Vigente
+5674325;febuxostat;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4827786 ¦ febuxostat ¦ 1 ¦ Vigente
+5674326;felodipino;;Vigente;Insensible;Autogenerado;Si;;108535009;felodipino;;;;;• 4827804 ¦ felodipino ¦ 1 ¦ Vigente
+7298663;fenazona + lidocaína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6401715 ¦ lidocaína ¦ 2 ¦ Vigente
+• 7298643 ¦ fenazona ¦ 1 ¦ Vigente"
+5674330;fenazopiridina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4827884 ¦ fenazopiridina ¦ 1 ¦ Vigente
+6418578;fenilbutazona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4849269 ¦ fenilbutazona ¦ 1 ¦ Vigente
+5674341;fenilefrina;;Vigente;Insensible;Autogenerado;Si;;54765002;fenilefrina;;;;;• 4931375 ¦ fenilefrina ¦ 1 ¦ Vigente
+5674356;feniramina + nafazolina;;Vigente;Insensible;Autogenerado;Si;;417320000;feniramina + nafazolina;;;;;"• 5153785 ¦ nafazolina ¦ 2 ¦ Vigente
+• 4931400 ¦ feniramina ¦ 1 ¦ Vigente"
+5677226;fenitoína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4932592 ¦ fenitoína ¦ 1 ¦ Vigente
+5674358;fenobarbital;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4932638 ¦ fenobarbital ¦ 1 ¦ Vigente
+6669603;fenobarbital + octatropina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4932638 ¦ fenobarbital ¦ 1 ¦ Vigente
+• 6401907 ¦ octatropina ¦ 2 ¦ Vigente"
+6669227;fenobarbital + pipenzolato de bromuro;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5154027 ¦ pipenzolato de bromuro ¦ 2 ¦ Vigente
+• 4932638 ¦ fenobarbital ¦ 1 ¦ Vigente"
+5674364;fenofibrato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4931570 ¦ fenofibrato ¦ 1 ¦ Vigente
+7727280;fenofibrato + pravastatina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5167631 ¦ pravastatina ¦ 2 ¦ Vigente
+• 4931570 ¦ fenofibrato ¦ 1 ¦ Vigente"
+5674367;fenoterol;;Vigente;Insensible;Autogenerado;Si;;349924004;fenoterol;;;;;• 4918274 ¦ fenoterol ¦ 1 ¦ Vigente
+7388578;fenoximetilpenicilina;;Vigente;Insensible;Autogenerado;Si;;39359008;fenoximetilpenicilina;;;;• 7436222 - Antibiótico;• 4931304 ¦ fenoximetilpenicilina ¦ 1 ¦ Vigente
+6418601;fenproporex;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6399429 ¦ fenproporex ¦ 1 ¦ Vigente
+5674370;fentanilo;;Vigente;Insensible;Autogenerado;Si;;40648001;fentanilo;;;;;• 4918414 ¦ fentanilo ¦ 1 ¦ Vigente
+6607031;fentermina;;Vigente;Insensible;Autogenerado;Si;;53480001;fentermina;;;;;• 6399431 ¦ fentermina ¦ 1 ¦ Vigente
+5674372;fexofenadina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4918428 ¦ fexofenadina ¦ 1 ¦ Vigente
+7719579;fexofenadina + pseudoefedrina clorhidrato;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4918428 ¦ fexofenadina ¦ 1 ¦ Vigente
+• 5975242 ¦ pseudoefedrina clorhidrato ¦ 2 ¦ Vigente"
+5674388;fexofenadina + pseudoefedrina sulfato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5167561 ¦ pseudoefedrina sulfato ¦ 2 ¦ Vigente
+• 4918428 ¦ fexofenadina ¦ 1 ¦ Vigente"
+5674396;filgrastim;;Vigente;Insensible;Autogenerado;Si;;108965009;filgrastim;;;;;• 4927697 ¦ filgrastim ¦ 1 ¦ Vigente
+5674399;finasteride;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4932658 ¦ finasteride ¦ 1 ¦ Vigente
+5674408;fingolimod;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4927717 ¦ fingolimod ¦ 1 ¦ Vigente
+5674410;fitomenadiona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4931597 ¦ fitomenadiona ¦ 1 ¦ Vigente
+5674424;flavoxato;;Vigente;Insensible;Autogenerado;Si;;53641000;flavoxato;;;;;• 4927746 ¦ flavoxato ¦ 1 ¦ Vigente
+6418657;flecainida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6399451 ¦ flecainida ¦ 1 ¦ Vigente
+5674433;flucloxacilina;;Vigente;Insensible;Autogenerado;Si;;96067005;flucloxacilina;;;;• 7436222 - Antibiótico;• 4927821 ¦ flucloxacilina ¦ 1 ¦ Vigente
+5674446;fluconazol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4932534 ¦ fluconazol ¦ 1 ¦ Vigente
+5674448;fludarabina;;Vigente;Insensible;Autogenerado;Si;;108763009;fludarabina;;;;;• 4927835 ¦ fludarabina ¦ 1 ¦ Vigente
+5674450;fludrocortisona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4927842 ¦ fludrocortisona ¦ 1 ¦ Vigente
+5674453;flufenazina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4931610 ¦ flufenazina ¦ 1 ¦ Vigente
+5674455;flumazenil;;Vigente;Insensible;Autogenerado;Si;;96247007;flumazenil;;;;;• 4931647 ¦ flumazenil ¦ 1 ¦ Vigente
+5674458;flunarizina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4931678 ¦ flunarizina ¦ 1 ¦ Vigente
+5674462;flunitrazepam;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4932639 ¦ flunitrazepam ¦ 1 ¦ Vigente
+5677266;fluoresceína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4927900 ¦ fluoresceína ¦ 1 ¦ Vigente
+7470013;fluorfosfato de sodio + fluoruro sódico;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 4928847 ¦ fluoruro sódico ¦ 2 ¦ Vigente
+• 7439572 ¦ fluorfosfato de sodio ¦ 1 ¦ Vigente"
+7470134;fluorfosfato de sodio + nitrato potásico;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 7439572 ¦ fluorfosfato de sodio ¦ 1 ¦ Vigente
+• 6402040 ¦ nitrato potásico ¦ 2 ¦ Vigente"
+5674469;fluorometolona;;Vigente;Insensible;Autogenerado;Si;;108851006;fluorometolona;;;;;• 4927916 ¦ fluorometolona ¦ 1 ¦ Vigente
+5674470;fluorouracilo;;Vigente;Insensible;Autogenerado;Si;;3127006;fluorouracilo;;;;;• 4927938 ¦ fluorouracilo ¦ 1 ¦ Vigente
+5674471;fluoruro sódico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4928847 ¦ fluoruro sódico ¦ 1 ¦ Vigente
+7144795;fluoruro sódico + nitrato potásico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6402040 ¦ nitrato potásico ¦ 2 ¦ Vigente
+• 4928847 ¦ fluoruro sódico ¦ 1 ¦ Vigente"
+5674472;fluoxetina;;Vigente;Insensible;Autogenerado;Si;;53640004;fluoxetina;;;;;• 4932103 ¦ fluoxetina ¦ 1 ¦ Vigente
+6418708;flupentixol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6399460 ¦ flupentixol ¦ 1 ¦ Vigente
+7573510;flupentixol decanoato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7573509 ¦ flupentixol decanoato ¦ 1 ¦ Vigente
+5674484;flurbiprofeno;;Vigente;Insensible;Autogenerado;Si;;54344006;flurbiprofeno;;;;;• 4928871 ¦ flurbiprofeno ¦ 1 ¦ Vigente
+5674485;flutamida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 4932646 ¦ flutamida ¦ 1 ¦ Vigente
+5677285;fluticasona furoato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5677273 ¦ fluticasona furoato ¦ 1 ¦ Vigente
+7438311;fluticasona furoato + vilanterol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6403042 ¦ vilanterol ¦ 2 ¦ Vigente
+• 5677273 ¦ fluticasona furoato ¦ 1 ¦ Vigente"
+5674486;fluticasona propionato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4932112 ¦ fluticasona propionato ¦ 1 ¦ Vigente
+5674496;fluticasona propionato + salmeterol;;Vigente;Insensible;Autogenerado;Si;;411106009;fluticasona + salmeterol;;;;;"• 5200742 ¦ salmeterol ¦ 2 ¦ Vigente
+• 4932112 ¦ fluticasona propionato ¦ 1 ¦ Vigente"
+5674503;fluvoxamina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4928911 ¦ fluvoxamina ¦ 1 ¦ Vigente
+7479797;folinato de calcio + proteinsuccinilato férrico;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 7479796 ¦ folinato de calcio ¦ 1 ¦ Vigente
+• 5162569 ¦ proteinsuccinilato férrico ¦ 2 ¦ Vigente"
+5677291;fondaparinux sódico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4928937 ¦ fondaparinux sódico ¦ 1 ¦ Vigente
+7569624;formoterol + mometasona;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 6401838 ¦ mometasona ¦ 2 ¦ Vigente
+• 4928977 ¦ formoterol ¦ 1 ¦ Vigente"
+5674510;fosamprenavir;;Vigente;Insensible;Autogenerado;Si;;407018001;fosamprenavir;;;;;• 4929018 ¦ fosamprenavir ¦ 1 ¦ Vigente
+5674513;fosfato de sodio dibásico + fosfato de sodio monobásico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4929779 ¦ fosfato de sodio monobásico ¦ 2 ¦ Vigente
+• 4929354 ¦ fosfato de sodio dibásico ¦ 1 ¦ Vigente"
+5674522;frovatriptán;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4930021 ¦ frovatriptán ¦ 1 ¦ Vigente
+5674526;ftalilsulfatiazol + nifuroxazida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5109926 ¦ nifuroxazida ¦ 2 ¦ Vigente
+• 4930023 ¦ ftalilsulfatiazol ¦ 1 ¦ Vigente"
+5674531;fulvestrant;;Vigente;Insensible;Autogenerado;Si;;404845006;fulvestrant;;;;;• 4930135 ¦ fulvestrant ¦ 1 ¦ Vigente
+5674534;furazolidona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4932249 ¦ furazolidona ¦ 1 ¦ Vigente
+5674546;furosemida;;Vigente;Insensible;Autogenerado;Si;;81609008;furosemida;;;;;• 4932286 ¦ furosemida ¦ 1 ¦ Vigente
+5674552;gabapentina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4932290 ¦ gabapentina ¦ 1 ¦ Vigente
+7594266;gadobutrol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7594264 ¦ gadobutrol ¦ 1 ¦ Vigente
+5674559;gadodiamida;;Vigente;Insensible;Autogenerado;Si;;354088005;gadodiamida;;;;;• 4930204 ¦ gadodiamida ¦ 1 ¦ Vigente
+7600208;gadopentetato de dimeglumina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7600206 ¦ gadopentetato de dimeglumina ¦ 1 ¦ Vigente
+5674571;galantamina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4930226 ¦ galantamina ¦ 1 ¦ Vigente
+5674572;ganciclovir;;Vigente;Insensible;Autogenerado;Si;;78025001;ganciclovir;;;;;• 4932313 ¦ ganciclovir ¦ 1 ¦ Vigente
+5674579;ganirelix;;Vigente;Insensible;Autogenerado;Si;;326088005;ganirelix;;;;;• 4930323 ¦ ganirelix ¦ 1 ¦ Vigente
+6349254;gatifloxacino;;Vigente;Insensible;Autogenerado;Si;;371238005;gatifloxacino;;;;• 7436222 - Antibiótico;• 4930358 ¦ gatifloxacino ¦ 1 ¦ Vigente
+5674582;gatifloxacino + prednisolona acetato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4930358 ¦ gatifloxacino ¦ 1 ¦ Vigente
+• 5166752 ¦ prednisolona acetato ¦ 2 ¦ Vigente"
+5674594;gefitinib;;Vigente;Insensible;Autogenerado;Si;;398685009;gefitinib;;;;;• 4930374 ¦ gefitinib ¦ 1 ¦ Vigente
+7692286;gelatina succinilada;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6399501 ¦ gelatina succinilada ¦ 1 ¦ Vigente
+5674597;gemcitabina;;Vigente;Insensible;Autogenerado;Si;;108811008;gemcitabina;;;;;• 4930383 ¦ gemcitabina ¦ 1 ¦ Vigente
+5674602;gemfibrozilo;;Vigente;Insensible;Autogenerado;Si;;35282000;gemfibrozilo;;;;;• 4932328 ¦ gemfibrozilo ¦ 1 ¦ Vigente
+5674644;gentamicina;;Vigente;Insensible;Autogenerado;Si;;108811008;gemcitabina;;;;"• 7436222 - Antibiótico
+• 7552959 - Observatorio de precios";• 4932357 ¦ gentamicina ¦ 1 ¦ Vigente
+7717400;ginkgo biloba extracto estandarizado;;Vigente;Insensible;Autogenerado;;;;;;;;;• 4930400 ¦ ginkgo biloba extracto estandarizado ¦ 1 ¦ Vigente
+7323352;ginkgo biloba extracto estandarizado + panax ginseng extracto estandarizado;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4930400 ¦ ginkgo biloba extracto estandarizado ¦ 1 ¦ Vigente
+• 4930414 ¦ panax ginseng extracto estandarizado ¦ 2 ¦ Vigente"
+7403586;glatiramer;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 7403583 ¦ glatiramer ¦ 1 ¦ Vigente
+5676442;glibenclamida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4931343 ¦ glibenclamida ¦ 1 ¦ Vigente
+5676443;glibenclamida + metformina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5199335 ¦ metformina ¦ 2 ¦ Vigente
+• 4931343 ¦ glibenclamida ¦ 1 ¦ Vigente"
+5676445;glicerol;;Vigente;Insensible;Autogenerado;Si;;404833002;glicerol;;;;;• 4930434 ¦ glicerol ¦ 1 ¦ Vigente
+6504912;glicerol + polisorbato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4930434 ¦ glicerol ¦ 1 ¦ Vigente
+• 6402026 ¦ polisorbato ¦ 2 ¦ Vigente"
+5676447;glicina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4930490 ¦ glicina ¦ 1 ¦ Vigente
+5676450;gliclazida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4932392 ¦ gliclazida ¦ 1 ¦ Vigente
+7551687;glicopirronio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6399526 ¦ glicopirronio ¦ 1 ¦ Vigente
+7551724;glicopirronio + indacaterol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5162966 ¦ indacaterol ¦ 2 ¦ Vigente
+• 6399526 ¦ glicopirronio ¦ 1 ¦ Vigente"
+5676451;glimepirida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4932427 ¦ glimepirida ¦ 1 ¦ Vigente
+7572666;glimepirida + metformina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4932427 ¦ glimepirida ¦ 1 ¦ Vigente
+• 5199335 ¦ metformina ¦ 2 ¦ Vigente"
+5676456;glipizida;;Vigente;Insensible;Autogenerado;Si;;26124005;glipizida;;;;;• 4932454 ¦ glipizida ¦ 1 ¦ Vigente
+5676457;glucagón;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4931348 ¦ glucagón ¦ 1 ¦ Vigente
+5676461;gluconato de calcio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4933162 ¦ gluconato de calcio ¦ 1 ¦ Vigente
+5676465;gluconato de potasio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4931220 ¦ gluconato de potasio ¦ 1 ¦ Vigente
+5408408;glucosamina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4930829 ¦ glucosamina ¦ 1 ¦ Vigente
+7253860;golimumab;;Vigente;Insensible;Autogenerado;Si;;442318002;golimumab;;;;;• 6399534 ¦ golimumab ¦ 1 ¦ Vigente
+7672222;gonadotrofina coriónica;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7672200 ¦ gonadotrofina coriónica ¦ 1 ¦ Vigente
+7251192;goserelina;;Vigente;Insensible;Autogenerado;Si;;126138002;goserelina;;;;;• 4930901 ¦ goserelina ¦ 1 ¦ Vigente
+7501421;gramicidina + neomicina + polimixina B;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4930911 ¦ gramicidina ¦ 1 ¦ Vigente
+• 5153794 ¦ neomicina ¦ 2 ¦ Vigente
+• 5167482 ¦ polimixina B ¦ 3 ¦ Vigente"
+6419738;granisetrón;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4930976 ¦ granisetrón ¦ 1 ¦ Vigente
+5408994;griseofulvina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4932480 ¦ griseofulvina ¦ 1 ¦ Vigente
+5409032;haloperidol;;Vigente;Insensible;Autogenerado;Si;;10756001;haloperidol;;;;;• 4933375 ¦ haloperidol ¦ 1 ¦ Vigente
+5409194;hedera helix extracto estandarizado;;Vigente;Insensible;Autogenerado;;;;;;;;;• 4933432 ¦ hedera helix extracto estandarizado ¦ 1 ¦ Vigente
+6745455;heparina sódica;;Vigente;Insensible;Autogenerado;Si;;84812008;heparina;;;;;• 6399550 ¦ heparina sódica ¦ 1 ¦ Vigente
+5409303;hialuronato de sodio;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;• 4934509 ¦ hialuronato de sodio ¦ 1 ¦ Vigente
+7613800;hialuronidasa;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7613799 ¦ hialuronidasa ¦ 1 ¦ Vigente
+6419960;hidralazina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6399569 ¦ hidralazina ¦ 1 ¦ Vigente
+5409348;hidrato de cloral;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5153300 ¦ hidrato de cloral ¦ 1 ¦ Vigente
+6420052;hidroclorotiazida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5531867 ¦ hidroclorotiazida ¦ 1 ¦ Vigente
+6450804;hidroclorotiazida + irbesartán;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5164552 ¦ irbesartán ¦ 2 ¦ Vigente
+• 5531867 ¦ hidroclorotiazida ¦ 1 ¦ Vigente"
+6450803;hidroclorotiazida + lisinopril;;Vigente;Insensible;Autogenerado;Si;;398858004;hidroclorotiazida + lisinopril;;;;;"• 5168126 ¦ lisinopril ¦ 2 ¦ Vigente
+• 5531867 ¦ hidroclorotiazida ¦ 1 ¦ Vigente"
+6455863;hidroclorotiazida + losartán;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;"• 5198303 ¦ losartán ¦ 2 ¦ Vigente
+• 5531867 ¦ hidroclorotiazida ¦ 1 ¦ Vigente"
+6455906;hidroclorotiazida + olmesartán;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5153855 ¦ olmesartán ¦ 2 ¦ Vigente
+• 5531867 ¦ hidroclorotiazida ¦ 1 ¦ Vigente"
+6450811;hidroclorotiazida + quinapril;;Vigente;Insensible;Autogenerado;Si;;421852001;hidroclorotiazida + quinapril;;;;;"• 5167681 ¦ quinapril ¦ 2 ¦ Vigente
+• 5531867 ¦ hidroclorotiazida ¦ 1 ¦ Vigente"
+6450805;hidroclorotiazida + telmisartán;;Vigente;Insensible;Autogenerado;Si;;398727008;hidroclorotiazida + telmisartán;;;;;"• 5205589 ¦ telmisartán ¦ 2 ¦ Vigente
+• 5531867 ¦ hidroclorotiazida ¦ 1 ¦ Vigente"
+6450821;hidroclorotiazida + triamtereno;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5202511 ¦ triamtereno ¦ 2 ¦ Vigente
+• 5531867 ¦ hidroclorotiazida ¦ 1 ¦ Vigente"
+6450817;hidroclorotiazida + valsartán;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;"• 5205648 ¦ valsartán ¦ 2 ¦ Vigente
+• 5531867 ¦ hidroclorotiazida ¦ 1 ¦ Vigente"
+7246473;hidrocortisona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 7246470 ¦ hidrocortisona ¦ 1 ¦ Vigente
+7430418;hidrocortisona aceponato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5499555 ¦ hidrocortisona aceponato ¦ 1 ¦ Vigente
+7246432;hidrocortisona acetato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 7230568 ¦ hidrocortisona acetato ¦ 1 ¦ Vigente
+6000231;hidrocortisona succinato sódico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 7246457 ¦ hidrocortisona succinato sódico ¦ 1 ¦ Vigente
+5409437;hidroxicloroquina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5153389 ¦ hidroxicloroquina ¦ 1 ¦ Vigente
+7057984;hidróxido de aluminio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5679151 ¦ hidróxido de aluminio ¦ 1 ¦ Vigente
+7412466;hidróxido de aluminio + hidróxido de magnesio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5679151 ¦ hidróxido de aluminio ¦ 1 ¦ Vigente
+• 5679155 ¦ hidróxido de magnesio ¦ 2 ¦ Vigente"
+7418797;hidróxido de aluminio + hidróxido de magnesio + simeticona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5679151 ¦ hidróxido de aluminio ¦ 1 ¦ Vigente
+• 5679155 ¦ hidróxido de magnesio ¦ 2 ¦ Vigente
+• 5170584 ¦ simeticona ¦ 3 ¦ Vigente"
+6630950;hidróxido de magnesio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5679155 ¦ hidróxido de magnesio ¦ 1 ¦ Vigente
+5409723;hidroxiurea;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5162447 ¦ hidroxiurea ¦ 1 ¦ Vigente
+6420225;hidroxizina;;Vigente;Insensible;Manual;Si;;;;;;;;• 5153381 ¦ hidroxizina ¦ 1 ¦ Vigente
+5410522;hipromelosa;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5153394 ¦ hipromelosa ¦ 1 ¦ Vigente
+7263920;ibritumomab tiuxetán;;Vigente;Insensible;Autogenerado;Si;;385546007;ibritumomab;;;;;• 5162815 ¦ ibritumomab tiuxetán ¦ 1 ¦ Vigente
+6420589;ibuprofeno;;Vigente;Insensible;Autogenerado;Si;;38268001;ibuprofeno;;;;;• 5354319 ¦ ibuprofeno ¦ 1 ¦ Vigente
+6455911;ibuprofeno + fenilefrina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5354319 ¦ ibuprofeno ¦ 1 ¦ Vigente
+• 4931375 ¦ fenilefrina ¦ 2 ¦ Vigente"
+7366370;ibuprofeno + paracetamol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5354319 ¦ ibuprofeno ¦ 1 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 2 ¦ Vigente"
+5975247;ibuprofeno + pseudoefedrina clorhidrato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5354319 ¦ ibuprofeno ¦ 1 ¦ Vigente
+• 5975242 ¦ pseudoefedrina clorhidrato ¦ 2 ¦ Vigente"
+6176010;ibuprofeno lisinato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6176009 ¦ ibuprofeno lisinato ¦ 1 ¦ Vigente
+7253905;idarubicina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 7253904 ¦ idarubicina ¦ 1 ¦ Vigente
+7240512;ifosfamida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6399614 ¦ ifosfamida ¦ 1 ¦ Vigente
+5455533;iloprost;;Vigente;Insensible;Autogenerado;Si;;319452005;iloprost;;;;;• 5161985 ¦ iloprost ¦ 1 ¦ Vigente
+5455586;imatinib;;Vigente;Insensible;Autogenerado;Si;;391634008;imatinib;;;;;• 5162906 ¦ imatinib ¦ 1 ¦ Vigente
+7738229;imiglucerasa;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6399621 ¦ imiglucerasa ¦ 1 ¦ Vigente
+5455623;imipenem - cilastatina;;Vigente;Insensible;Manual;Si;;;;;;;• 7436222 - Antibiótico;"• 5163790 ¦ cilastatina ¦ 2 ¦ Vigente
+• 5162922 ¦ imipenem ¦ 1 ¦ Vigente"
+7083373;imipramina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6399636 ¦ imipramina ¦ 1 ¦ Vigente
+5455786;imiquimod;;Vigente;Insensible;Autogenerado;Si;;108939005;imiquimod;;;;;• 5162938 ¦ imiquimod ¦ 1 ¦ Vigente
+5455801;indacaterol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5162966 ¦ indacaterol ¦ 1 ¦ Vigente
+5455804;indapamida;;Vigente;Insensible;Autogenerado;Si;;74213004;indapamida;;;;;• 5162977 ¦ indapamida ¦ 1 ¦ Vigente
+6421820;indometacina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6399667 ¦ indometacina ¦ 1 ¦ Vigente
+5457252;infliximab;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5163023 ¦ infliximab ¦ 1 ¦ Vigente
+6592400;inmunoglobulina G humana;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6592391 ¦ inmunoglobulina G humana ¦ 1 ¦ Vigente
+5457392;inmunoglobulina humana anti citomegalovirus;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5163098 ¦ inmunoglobulina humana anti citomegalovirus ¦ 1 ¦ Vigente
+5457854;inmunoglobulina humana anti hepatitis B;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 7618048 ¦ inmunoglobulina humana anti hepatitis B ¦ 1 ¦ Vigente
+5457424;inmunoglobulina humana anti Rho (D);;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5163129 ¦ inmunoglobulina humana anti Rho (D) ¦ 1 ¦ Vigente
+7204761;inmunoglobulina humana anti tetánica;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5163142 ¦ inmunoglobulina humana anti tetánica  ¦ 1 ¦ Vigente
+5457767;inmunoglobulina humana anti varicela - zoster;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5163152 ¦ inmunoglobulina humana anti varicela - zoster ¦ 1 ¦ Vigente
+5457717;inmunoglobulina lagomorfa anti timocitos humanos;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5163147 ¦ inmunoglobulina lagomorfa anti timocitos humanos ¦ 1 ¦ Vigente
+7355425;insulina asparta;;Vigente;Insensible;Autogenerado;Si;;388452006;insulina asparta;;;;• 7552959 - Observatorio de precios;• 6399720 ¦ insulina asparta ¦ 1 ¦ Vigente
+7367518;insulina asparta + insulina asparta protamina;;Vigente;Insensible;Autogenerado;Si;;395273005;insulina asparta bifásica;;;;• 7552959 - Observatorio de precios;"• 7367513 ¦ insulina asparta protamina ¦ 2 ¦ Vigente
+• 6399720 ¦ insulina asparta ¦ 1 ¦ Vigente"
+7355684;insulina degludec;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;• 7355664 ¦ insulina degludec ¦ 1 ¦ Vigente
+7342738;insulina detemir;;Vigente;Insensible;Autogenerado;Si;;414518007;insulina detemir;;;;• 7552959 - Observatorio de precios;• 6399721 ¦ insulina detemir ¦ 1 ¦ Vigente
+7342597;insulina glargina;;Vigente;Insensible;Autogenerado;Si;;126212009;insulina glargina;;;;• 7552959 - Observatorio de precios;• 6399725 ¦ insulina glargina ¦ 1 ¦ Vigente
+7355687;insulina glulisina;;Vigente;Insensible;Autogenerado;Si;;411532008;insulina glulisina;;;;• 7552959 - Observatorio de precios;• 6399729 ¦ insulina glulisina ¦ 1 ¦ Vigente
+7137368;insulina humana NPH;;Vigente;Insensible;Autogenerado;Si;;416089000;insulina isofánica humana;;;;• 7552959 - Observatorio de precios;• 7137361 ¦ insulina humana NPH ¦ 1 ¦ Vigente
+7369544;insulina humana NPH + insulina humana soluble;;Vigente;Insensible;Autogenerado;Si;;417535000;insulina isófana humana bifásica;;;;• 7552959 - Observatorio de precios;"• 7137361 ¦ insulina humana NPH ¦ 1 ¦ Vigente
+• 7014976 ¦ insulina humana soluble ¦ 2 ¦ Vigente"
+7014986;insulina humana soluble;;Vigente;Insensible;Autogenerado;Si;;417423002;insulina soluble humana;;;;• 7552959 - Observatorio de precios;• 7014976 ¦ insulina humana soluble ¦ 1 ¦ Vigente
+7332083;insulina lispro;;Vigente;Insensible;Autogenerado;Si;;388454007;insulina lispro;;;;• 7552959 - Observatorio de precios;• 7332082 ¦ insulina lispro ¦ 1 ¦ Vigente
+5458161;insulina lispro + insulina lispro protamina;;Vigente;Insensible;Autogenerado;Si;;412211001;insulina lispro + insulina lispro protamina;;;;• 7552959 - Observatorio de precios;"• 7332082 ¦ insulina lispro ¦ 1 ¦ Vigente
+• 5163158 ¦ insulina lispro protamina ¦ 2 ¦ Vigente"
+7388967;interferón alfa 2a;;Vigente;Insensible;Autogenerado;Si;;108796006;interferón alfa-2a;;;;;• 7388959 ¦ interferón alfa 2a ¦ 1 ¦ Vigente
+5668030;interferón alfa 2b;;Vigente;Insensible;Autogenerado;Si;;108797002;interferón alfa-2b;;;;;• 6399742 ¦ interferón alfa 2b ¦ 1 ¦ Vigente
+7388969;interferón beta 1a;;Vigente;Insensible;Autogenerado;Si;;108749003;interferón beta-1a;;;;;• 7388935 ¦ interferón beta 1a ¦ 1 ¦ Vigente
+7388970;interferón beta 1b;;Vigente;Insensible;Autogenerado;Si;;108751004;interferón beta-1b;;;;;• 7388937 ¦ interferón beta 1b ¦ 1 ¦ Vigente
+5409024;iodixanol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5164435 ¦ iodixanol ¦ 1 ¦ Vigente
+5668038;iohexol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5164475 ¦ iohexol ¦ 1 ¦ Vigente
+7376159;iopromida;;Vigente;Insensible;Autogenerado;Si;;353903006;iopromida;;;;;• 7376157 ¦ iopromida ¦ 1 ¦ Vigente
+7679397;ioxaglato sódico + meglumina ioxaglato;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5164479 ¦ ioxaglato sódico ¦ 1 ¦ Vigente
+• 7679380 ¦ meglumina ioxaglato ¦ 2 ¦ Vigente"
+7612177;ioxitalamato sódico + meglumina ioxitalamato;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 7612175 ¦ ioxitalamato sódico ¦ 1 ¦ Vigente
+• 5354816 ¦ meglumina ioxitalamato ¦ 2 ¦ Vigente"
+5409230;ipilimumab;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5164490 ¦ ipilimumab ¦ 1 ¦ Vigente
+5409302;irbesartán;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5164552 ¦ irbesartán ¦ 1 ¦ Vigente
+5409308;irinotecán;;Vigente;Insensible;Autogenerado;Si;;108783005;irinotecán;;;;;• 5164560 ¦ irinotecán ¦ 1 ¦ Vigente
+5409329;isoflurano;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5164566 ¦ isoflurano ¦ 1 ¦ Vigente
+5668041;isoniazida;;Vigente;Insensible;Autogenerado;Si;;81335000;isoniazida;;;;;• 5667985 ¦ isoniazida ¦ 1 ¦ Vigente
+5470549;isoproterenol;;Vigente;Insensible;Autogenerado;Si;;57845006;isoproterenol;;;• 7058000 - isoprenalina;;• 5164581 ¦ isoproterenol ¦ 1 ¦ Vigente
+5470639;isosorbida dinitrato;;Vigente;Insensible;Autogenerado;Si;;5924003;dinitrato de isosorbida;;;;;• 4829096 ¦ isosorbida dinitrato ¦ 1 ¦ Vigente
+5470713;isosorbida mononitrato;;Vigente;Insensible;Autogenerado;Si;;108484003;mononitrato de isosorbida;;;;;• 5153764 ¦ isosorbida mononitrato ¦ 1 ¦ Vigente
+5668044;isotretinoína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5667986 ¦ isotretinoína ¦ 1 ¦ Vigente
+5668045;itraconazol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5667992 ¦ itraconazol ¦ 1 ¦ Vigente
+5470832;ivabradina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5164624 ¦ ivabradina ¦ 1 ¦ Vigente
+7431290;ivermectina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6399789 ¦ ivermectina ¦ 1 ¦ Vigente
+7222034;ixabepilona;;Vigente;Insensible;Autogenerado;Si;;429022006;ixabepilona;;;;;• 5164673 ¦ ixabepilona ¦ 1 ¦ Vigente
+5470947;ketamina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5164700 ¦ ketamina ¦ 1 ¦ Vigente
+5668048;ketazolam;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5667994 ¦ ketazolam ¦ 1 ¦ Vigente
+5668051;ketoconazol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5667996 ¦ ketoconazol ¦ 1 ¦ Vigente
+5668052;ketoprofeno;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5668003 ¦ ketoprofeno ¦ 1 ¦ Vigente
+5471273;ketorolaco;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5164720 ¦ ketorolaco ¦ 1 ¦ Vigente
+5471474;ketotifeno;;Vigente;Insensible;Autogenerado;Si;;354038002;ketotifeno;;;;;• 5164773 ¦ ketotifeno ¦ 1 ¦ Vigente
+5471497;L - acetilcarnitina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199489 ¦ L - acetilcarnitina 500 mg comprimido ¦ 1 ¦ Vigente
+5408470;L - alanina + L - glutamina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 4855982 ¦ L - alanina ¦ 1 ¦ Vigente
+• 4930872 ¦ L - glutamina ¦ 2 ¦ Vigente"
+5504081;L - asparaginasa;;Vigente;Insensible;Autogenerado;Si;;18811003;L-asparaginasa;;;;;• 5150858 ¦ L - asparaginasa ¦ 1 ¦ Vigente
+5471567;labetalol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199520 ¦ labetalol ¦ 1 ¦ Vigente
+5471595;lacosamida;;Vigente;Insensible;Autogenerado;Si;;441532003;lacosamida;;;;;• 5199573 ¦ lacosamida ¦ 1 ¦ Vigente
+5471600;lactasa;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199575 ¦ lactasa ¦ 1 ¦ Vigente
+5503733;lactato de magnesio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5354533 ¦ lactato de magnesio ¦ 1 ¦ Vigente
+5471929;lactulosa;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5165760 ¦ lactulosa ¦ 1 ¦ Vigente
+5471977;lamivudina;;Vigente;Insensible;Autogenerado;Si;;108698001;lamivudina;;;;;• 4757770 ¦ lamivudina ¦ 1 ¦ Vigente
+5472034;lamivudina + zidovudina;;Vigente;Insensible;Autogenerado;Si;;324859007;lamivudina+zidovudina;;;;;"• 5208215 ¦ zidovudina ¦ 2 ¦ Vigente
+• 4757770 ¦ lamivudina ¦ 1 ¦ Vigente"
+5472069;lamotrigina;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;• 5166081 ¦ lamotrigina ¦ 1 ¦ Vigente
+5472214;lanatósido C;;Vigente;Sensible;Autogenerado;Si;;;;;;;;• 5199920 ¦ lanatósido C ¦ 1 ¦ Vigente
+5472251;lanolina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199946 ¦ lanolina ¦ 1 ¦ Vigente
+5472325;lanolina + vaselina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5202944 ¦ vaselina ¦ 2 ¦ Vigente
+• 5199946 ¦ lanolina ¦ 1 ¦ Vigente"
+5472438;lanreotida acetato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199954 ¦ lanreotida acetato ¦ 1 ¦ Vigente
+5472477;lansoprazol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5166144 ¦ lansoprazol ¦ 1 ¦ Vigente
+5472517;lapatinib;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199987 ¦ lapatinib ¦ 1 ¦ Vigente
+6416577;laronidasa;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6399844 ¦ laronidasa ¦ 1 ¦ Vigente
+5479812;latanoprost;;Vigente;Insensible;Autogenerado;Si;;108838001;latanoprost;;;;• 7552959 - Observatorio de precios;• 5203233 ¦ latanoprost ¦ 1 ¦ Vigente
+5479850;latanoprost + timolol;;Vigente;Insensible;Autogenerado;Si;;391662001;latanoprost + timolol;;;;• 7552959 - Observatorio de precios;"• 5205240 ¦ timolol ¦ 2 ¦ Vigente
+• 5203233 ¦ latanoprost ¦ 1 ¦ Vigente"
+7525820;lecitina de soya;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 7525817 ¦ lecitina de soya ¦ 1 ¦ Vigente
+5479951;leflunomida;;Vigente;Insensible;Autogenerado;Si;;109143003;leflunomida;;;;;• 5162015 ¦ leflunomida ¦ 1 ¦ Vigente
+5479954;lenalidomida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5205097 ¦ lenalidomida ¦ 1 ¦ Vigente
+5479986;letrozol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5205113 ¦ letrozol ¦ 1 ¦ Vigente
+6416456;leucovorina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6401695 ¦ leucovorina ¦ 1 ¦ Vigente
+5480017;leuprorelina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5205115 ¦ leuprorelina ¦ 1 ¦ Vigente
+5480103;levetiracetam;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5205326 ¦ levetiracetam ¦ 1 ¦ Vigente
+6504622;levobunolol;;Vigente;Insensible;Autogenerado;Si;;349903009;levobunolol;;;;;• 6401705 ¦ levobunolol ¦ 1 ¦ Vigente
+5480160;levobupivacaína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5205360 ¦ levobupivacaína ¦ 1 ¦ Vigente
+5480196;levocetirizina;;Vigente;Insensible;Autogenerado;Si;;391595003;levocetirizina;;;;• 7552959 - Observatorio de precios;• 5205391 ¦ levocetirizina ¦ 1 ¦ Vigente
+5494944;levodopa - benserazida;;Vigente;Insensible;Manual;Si;;;;;;;;"• 5153702 ¦ benserazida ¦ 2 ¦ Vigente
+• 5167815 ¦ levodopa ¦ 1 ¦ Vigente"
+5535768;levodopa - carbidopa;;Vigente;Insensible;Manual;Si;;;;;;;;"• 5167815 ¦ levodopa ¦ 1 ¦ Vigente
+• 5154256 ¦ carbidopa ¦ 2 ¦ Vigente"
+5668539;levodopa - carbidopa - entacapona;;Vigente;Insensible;Manual;Si;;;;;;;;"• 5167815 ¦ levodopa ¦ 1 ¦ Vigente
+• 4825447 ¦ entacapona ¦ 3 ¦ Vigente
+• 5154256 ¦ carbidopa ¦ 2 ¦ Vigente"
+5495040;levodropropizina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5205751 ¦ levodropropizina ¦ 1 ¦ Vigente
+5495045;levofloxacino;;Vigente;Insensible;Autogenerado;Si;;96087006;levofloxacino;;;;• 7436222 - Antibiótico;• 5168002 ¦ levofloxacino ¦ 1 ¦ Vigente
+5668061;levomepromazina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5668005 ¦ levomepromazina ¦ 1 ¦ Vigente
+5495051;levonorgestrel;;Vigente;Insensible;Autogenerado;Si;;109032009;levonorgestrel;;;;;• 5164813 ¦ levonorgestrel ¦ 1 ¦ Vigente
+5495058;levosimendán;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5206060 ¦ levosimendán ¦ 1 ¦ Vigente
+5495059;levosulpirida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5206068 ¦ levosulpirida ¦ 1 ¦ Vigente
+5495066;levotiroxina;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;• 5238720 ¦ levotiroxina ¦ 1 ¦ Vigente
+5495063;levotiroxina + liotironina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5168105 ¦ liotironina ¦ 2 ¦ Vigente
+• 5238720 ¦ levotiroxina ¦ 1 ¦ Vigente"
+5495072;lidocaína;;Vigente;Insensible;Manual;Si;;411305004;clorhidrato de lidocaína;;;;;• 6401715 ¦ lidocaína ¦ 1 ¦ Vigente
+5495200;lidocaína + prilocaína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5167034 ¦ prilocaína ¦ 2 ¦ Vigente
+• 6401715 ¦ lidocaína ¦ 1 ¦ Vigente"
+5915632;lidocaína + sulfatiazol sódico;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5915629 ¦ sulfatiazol sódico ¦ 2 ¦ Vigente
+• 6401715 ¦ lidocaína ¦ 1 ¦ Vigente"
+5495242;lidocaína + tribenósido;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5202513 ¦ tribenósido ¦ 2 ¦ Vigente
+• 6401715 ¦ lidocaína ¦ 1 ¦ Vigente"
+5503175;limeciclina;;Vigente;Insensible;Autogenerado;Si;;96077007;limeciclina;;;;• 7436222 - Antibiótico;• 5238747 ¦ limeciclina ¦ 1 ¦ Vigente
+6422633;linagliptina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6401717 ¦ linagliptina ¦ 1 ¦ Vigente
+5503182;lincomicina;;Vigente;Insensible;Autogenerado;Si;;2596005;lincomicina;;;;• 7436222 - Antibiótico;• 5168056 ¦ lincomicina ¦ 1 ¦ Vigente
+5503205;linestrenol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5238830 ¦ linestrenol ¦ 1 ¦ Vigente
+5503241;linezolid;;Vigente;Insensible;Autogenerado;Si;;125695009;linezolid;;;;• 7436222 - Antibiótico;• 5240236 ¦ linezolid ¦ 1 ¦ Vigente
+7270956;lipegfilgrastim;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 7270953 ¦ lipegfilgrastim ¦ 1 ¦ Vigente
+7738307;liraglutida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6401728 ¦ liraglutida ¦ 1 ¦ Vigente
+6422673;lisdexanfetamina;;Vigente;Insensible;Autogenerado;Si;;426249000;lisdexanfetamina;;;;;• 6401730 ¦ lisdexanfetamina ¦ 1 ¦ Vigente
+5503245;lisinopril;;Vigente;Insensible;Autogenerado;Si;;108575001;lisinopril;;;;;• 5168126 ¦ lisinopril ¦ 1 ¦ Vigente
+7579159;lixisenatida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7579158 ¦ lixisenatida ¦ 1 ¦ Vigente
+5503288;loperamida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6401741 ¦ loperamida ¦ 1 ¦ Vigente
+5668071;lopinavir + ritonavir;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5170336 ¦ ritonavir ¦ 2 ¦ Vigente
+• 5668020 ¦ lopinavir ¦ 1 ¦ Vigente"
+5503328;loratadina;;Vigente;Insensible;Autogenerado;Si;;108652002;loratadina;;;;• 7552959 - Observatorio de precios;• 5168356 ¦ loratadina ¦ 1 ¦ Vigente
+5503354;loratadina + pseudoefedrina sulfato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5167561 ¦ pseudoefedrina sulfato ¦ 2 ¦ Vigente
+• 5168356 ¦ loratadina ¦ 1 ¦ Vigente"
+5503384;lorazepam;;Vigente;Insensible;Autogenerado;Si;;19225000;lorazepam;;;;;• 5169454 ¦ lorazepam ¦ 1 ¦ Vigente
+7637067;lorcaserina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7637065 ¦ lorcaserina ¦ 1 ¦ Vigente
+5503432;losartán;;Vigente;Insensible;Autogenerado;Si;;96309000;losartán;;;;• 7552959 - Observatorio de precios;• 5198303 ¦ losartán ¦ 1 ¦ Vigente
+5668076;loteprednol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5668021 ¦ loteprednol ¦ 1 ¦ Vigente
+6512788;loteprednol + tobramicina;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7436222 - Antibiótico;"• 5668021 ¦ loteprednol ¦ 1 ¦ Vigente
+• 5205717 ¦ tobramicina ¦ 2 ¦ Vigente"
+5503459;lovastatina;;Vigente;Insensible;Autogenerado;Si;;386024001;lovastatina;;;;;• 5198367 ¦ lovastatina ¦ 1 ¦ Vigente
+7612335;lutropina alfa;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 6401763 ¦ lutropina alfa ¦ 1 ¦ Vigente
+5503648;magaldrato + simeticona;;Vigente;Insensible;Autogenerado;Si;;412240003;magaldrato + simeticona;;;;;"• 5170584 ¦ simeticona ¦ 2 ¦ Vigente
+• 5354383 ¦ magaldrato ¦ 1 ¦ Vigente"
+5503708;magnesio;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5206067 ¦ magnesio ¦ 1 ¦ Vigente
+5668106;manitol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 7051450 ¦ manitol ¦ 1 ¦ Vigente
+5503826;maraviroc;;Vigente;Insensible;Autogenerado;Si;;427805000;maraviroc;;;;;• 5354604 ¦ maraviroc ¦ 1 ¦ Vigente
+5503830;mebendazol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5198596 ¦ mebendazol ¦ 1 ¦ Vigente
+5503836;mebeverina;;Vigente;Insensible;Autogenerado;Si;;349819003;mebeverina;;;;;• 5354676 ¦ mebeverina ¦ 1 ¦ Vigente
+7524182;medicamento básico especial;;Vigente;Insensible;Manual;;Si;;;;;;;• 7524170 ¦ sustancia especial ¦ 1 ¦ Vigente
+5503855;medroxiprogesterona;;Vigente;Insensible;Autogenerado;Si;;36621009;medroxiprogesterona;;;;;• 5198966 ¦ medroxiprogesterona ¦ 1 ¦ Vigente
+5503867;mefloquina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199455 ¦ mefloquina ¦ 1 ¦ Vigente
+7679459;meglumina iotalamato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5354797 ¦ meglumina iotalamato ¦ 1 ¦ Vigente
+5503938;meglumina ioxitalamato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5354816 ¦ meglumina ioxitalamato ¦ 1 ¦ Vigente
+5503971;melatonina;;Vigente;Insensible;Autogenerado;Si;;116523008;melatonina;;;;;• 5354831 ¦ melatonina ¦ 1 ¦ Vigente
+5503987;melfalán;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5354988 ¦ melfalán ¦ 1 ¦ Vigente
+5504020;meloxicam;;Vigente;Insensible;Autogenerado;Si;;125694008;meloxicam;;;;;• 5199179 ¦ meloxicam ¦ 1 ¦ Vigente
+5504038;memantina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5355000 ¦ memantina ¦ 1 ¦ Vigente
+5504058;menotropina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5355092 ¦ menotropina ¦ 1 ¦ Vigente
+7355494;mentol + salicilato de metilo;;Vigente;Insensible;Autogenerado;Si;;412430004;salicilato de metilo + mentol;;;;;"• 6401777 ¦ mentol ¦ 1 ¦ Vigente
+• 6401814 ¦ salicilato de metilo ¦ 2 ¦ Vigente"
+7376869;mepiramina + pamabrom + paracetamol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 6401780 ¦ mepiramina ¦ 1 ¦ Vigente
+• 5159018 ¦ pamabrom ¦ 2 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 3 ¦ Vigente"
+7045547;mepivacaína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 7045538 ¦ mepivacaína ¦ 1 ¦ Vigente
+5504084;mercaptopurina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199239 ¦ mercaptopurina ¦ 1 ¦ Vigente
+5504111;meropenem;;Vigente;Insensible;Autogenerado;Si;;96062004;meropenem;;;;• 7436222 - Antibiótico;• 5355141 ¦ meropenem ¦ 1 ¦ Vigente
+5504139;mesalazina;;Vigente;Insensible;Autogenerado;Si;;86977007;mesalazina;;;;;• 5355147 ¦ mesalazina ¦ 1 ¦ Vigente
+5504167;mesna;;Vigente;Insensible;Autogenerado;Si;;108821000;mesna;;;;;• 5355150 ¦ mesna ¦ 1 ¦ Vigente
+5504180;metadona;;Vigente;Insensible;Autogenerado;Si;;51758009;metadona;;;;;• 5355163 ¦ metadona ¦ 1 ¦ Vigente
+7418303;metamizol magnésico + pargeverina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 7402961 ¦ metamizol magnésico ¦ 1 ¦ Vigente
+• 7028615 ¦ pargeverina ¦ 2 ¦ Vigente"
+7402965;metamizol magnésico + pipetanato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 7402961 ¦ metamizol magnésico ¦ 1 ¦ Vigente
+• 7402955 ¦ pipetanato ¦ 2 ¦ Vigente"
+7721408;metamizol magnésico y pargeverina;;Vigente;Insensible;Manual;;;;;;;;;"• 7028615 ¦ pargeverina ¦ 2 ¦ Vigente
+• 7402961 ¦ metamizol magnésico ¦ 1 ¦ Vigente"
+5504187;metamizol sódico;;Vigente;Insensible;Autogenerado;Si;;451019009;metamizol sódico;;;• 7083405 - dipirona;;• 5199305 ¦ metamizol sódico ¦ 1 ¦ Vigente
+5504253;metamizol sódico + pargeverina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 7028615 ¦ pargeverina ¦ 2 ¦ Vigente
+• 5199305 ¦ metamizol sódico ¦ 1 ¦ Vigente"
+5504444;metformina;;Vigente;Insensible;Autogenerado;Si;;;;;;;• 7552959 - Observatorio de precios;• 5199335 ¦ metformina ¦ 1 ¦ Vigente
+5504538;metformina + pioglitazona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5159315 ¦ pioglitazona ¦ 2 ¦ Vigente
+• 5199335 ¦ metformina ¦ 1 ¦ Vigente"
+7443428;metformina + saxagliptina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5199335 ¦ metformina ¦ 1 ¦ Vigente
+• 5170483 ¦ saxagliptina ¦ 2 ¦ Vigente"
+5504605;metformina + sitagliptina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5170591 ¦ sitagliptina ¦ 2 ¦ Vigente
+• 5199335 ¦ metformina ¦ 1 ¦ Vigente"
+5504629;metformina + vildagliptina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5203200 ¦ vildagliptina ¦ 2 ¦ Vigente
+• 5199335 ¦ metformina ¦ 1 ¦ Vigente"
+5504632;metildopa;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5355300 ¦ metildopa ¦ 1 ¦ Vigente
+5504645;metilfenidato;;Vigente;Insensible;Autogenerado;Si;;18548003;metilfenidato;;;;;• 5355301 ¦ metilfenidato ¦ 1 ¦ Vigente
+7394883;metilprednisolona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7394878 ¦ metilprednisolona ¦ 1 ¦ Vigente
+7246326;metilprednisolona acetato;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 7246318 ¦ metilprednisolona acetato ¦ 1 ¦ Vigente
+5533586;metilsulfato de neostigmina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6401857 ¦ metilsulfato de neostigmina ¦ 1 ¦ Vigente
+5504769;metoclopramida;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5199432 ¦ metoclopramida ¦ 1 ¦ Vigente
+5504788;metolazona;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4934950 ¦ metolazona ¦ 1 ¦ Vigente
+5504790;metoprolol;;Vigente;Insensible;Autogenerado;Si;;7092007;metoprolol;;;;;• 4934972 ¦ metoprolol ¦ 1 ¦ Vigente
+5504815;metotrexato;;Vigente;Insensible;Autogenerado;Si;;68887009;metotrexato;;;;;• 5152627 ¦ metotrexato ¦ 1 ¦ Vigente
+7361696;metoxipolietilenglicol epoetina beta;;Vigente;Insensible;Autogenerado;Si;;426360006;metoxipolietilenglicol-epoetina beta;;;;;• 6401821 ¦ metoxipolietilenglicol epoetina beta ¦ 1 ¦ Vigente
+5504840;metronidazol;;Vigente;Insensible;Autogenerado;Si;;1222004;metronidazol;;;;• 7436222 - Antibiótico;• 5152628 ¦ metronidazol ¦ 1 ¦ Vigente
+5504870;metronidazol + nistatina;;Vigente;Insensible;Autogenerado;Si;;12096000;nistatina;;;;• 7436222 - Antibiótico;"• 5152647 ¦ nistatina ¦ 2 ¦ Vigente
+• 5152628 ¦ metronidazol ¦ 1 ¦ Vigente"
+5504888;mianserina;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 4934974 ¦ mianserina ¦ 1 ¦ Vigente
+5504908;micofenolato mofetilo;;Vigente;Insensible;Autogenerado;Si;;109131004;micofenolato mofetilo;;;;;• 5152634 ¦ micofenolato mofetilo ¦ 1 ¦ Vigente
+5504928;miconazol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5153747 ¦ miconazol ¦ 1 ¦ Vigente
+5504990;miconazol + tinidazol;;Vigente;Insensible;Autogenerado;Si;;;;;;;;"• 5205245 ¦ tinidazol ¦ 2 ¦ Vigente
+• 5153747 ¦ miconazol ¦ 1 ¦ Vigente"
+7489811;miconazol + tinidazol y miconazol + tinidazol;;Vigente;Insensible;Manual;Si;Si;;;;;;;"• 5153747 ¦ miconazol ¦ 1 ¦ Vigente
+• 5205245 ¦ tinidazol ¦ 2 ¦ Vigente"
+5505048;midazolam;;Vigente;Insensible;Autogenerado;;;26800000;midazolam;;;;;• 5153845 ¦ midazolam ¦ 1 ¦ Vigente
+5505076;midodrina;;Vigente;Insensible;Autogenerado;;;108539003;midodrina;;;;;• 4934978 ¦ midodrina ¦ 1 ¦ Vigente
+5505091;miglustat;;Vigente;Insensible;Autogenerado;;;;;;;;;• 4935030 ¦ miglustat ¦ 1 ¦ Vigente
+5505095;milnaciprán;;Vigente;Insensible;Autogenerado;;;;;;;;;• 4935052 ¦ milnaciprán ¦ 1 ¦ Vigente
+5505116;milrinona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 4935058 ¦ milrinona ¦ 1 ¦ Vigente
+5505145;minociclina;;Vigente;Insensible;Autogenerado;;;13512003;minociclina;;;;• 7436222 - Antibiótico;• 5153849 ¦ minociclina ¦ 1 ¦ Vigente
+5505147;minoxidil;;Vigente;Insensible;Autogenerado;;;49577002;minoxidil;;;;;• 5153749 ¦ minoxidil ¦ 1 ¦ Vigente
+5505148;mirtazapina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 4935063 ¦ mirtazapina ¦ 1 ¦ Vigente
+5505175;misoprostol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153868 ¦ misoprostol ¦ 1 ¦ Vigente
+5505187;mitomicina;;Vigente;Insensible;Autogenerado;;;59240002;mitomicina;;;;• 7436222 - Antibiótico;• 4935077 ¦ mitomicina ¦ 1 ¦ Vigente
+7253975;mitotano;;Vigente;Insensible;Autogenerado;;;404865004;mitotano;;;;;• 7253974 ¦ mitotano ¦ 1 ¦ Vigente
+5505217;mitoxantrona;;Vigente;Insensible;Autogenerado;;;108791001;mitoxantrona;;;;;• 5107811 ¦ mitoxantrona ¦ 1 ¦ Vigente
+5505240;mivacurio;;Vigente;Insensible;Manual;;;108446009;mivacurio;;;;;• 5201645 ¦ mivacurio ¦ 1 ¦ Vigente
+5505286;moclobemida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5107839 ¦ moclobemida ¦ 1 ¦ Vigente
+5505297;modafinilo;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153756 ¦ modafinilo ¦ 1 ¦ Vigente
+5505300;mometasona;;Vigente;Insensible;Autogenerado;;;75203002;mometasona;;;;;• 6401838 ¦ mometasona ¦ 1 ¦ Vigente
+5533267;montelukast;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153774 ¦ montelukast ¦ 1 ¦ Vigente
+5533270;morfina;;Vigente;Insensible;Autogenerado;;;73572009;morfina;;;;;• 5153775 ¦ morfina ¦ 1 ¦ Vigente
+5533272;moxifloxacino;;Vigente;Insensible;Autogenerado;;;371296007;moxifloxacino;;;;• 7436222 - Antibiótico;• 5153777 ¦ moxifloxacino ¦ 1 ¦ Vigente
+5533310;mupirocina;;Vigente;Insensible;Autogenerado;;;71453003;mupirocina;;;;• 7436222 - Antibiótico;• 5152644 ¦ mupirocina ¦ 1 ¦ Vigente
+5533330;nafazolina;;Vigente;Insensible;Autogenerado;;;6232005;nafazolina;;;;• 7552959 - Observatorio de precios;• 5153785 ¦ nafazolina ¦ 1 ¦ Vigente
+5533359;naloxona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5108064 ¦ naloxona ¦ 1 ¦ Vigente
+5533370;naltrexona;;Vigente;Insensible;Autogenerado;;;87617007;naltrexona;;;;;• 5153792 ¦ naltrexona ¦ 1 ¦ Vigente
+5533372;nandrolona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153870 ¦ nandrolona ¦ 1 ¦ Vigente
+5533396;naproxeno;;Vigente;Insensible;Autogenerado;;;11847009;naproxeno;;;;;• 5153884 ¦ naproxeno ¦ 1 ¦ Vigente
+5533466;naratriptán;;Vigente;Insensible;Autogenerado;;;108408002;naratriptán;;;;;• 5109059 ¦ naratriptán ¦ 1 ¦ Vigente
+5533484;natalizumab;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5109144 ¦ natalizumab ¦ 1 ¦ Vigente
+5533485;nateglinida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5109164 ¦ nateglinida ¦ 1 ¦ Vigente
+5533503;nebivolol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5109196 ¦ nebivolol ¦ 1 ¦ Vigente
+5533512;neomicina;;Vigente;Insensible;Autogenerado;;;73093001;neomicina;;;;• 7436222 - Antibiótico;• 5153794 ¦ neomicina ¦ 1 ¦ Vigente
+5533649;nepafenaco;;Vigente;Insensible;Autogenerado;;;419829002;nepafenac;;;;;• 5109501 ¦ nepafenaco ¦ 1 ¦ Vigente
+5533672;nevirapina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5109526 ¦ nevirapina ¦ 1 ¦ Vigente
+5533719;nicergolina;;Vigente;Insensible;Autogenerado;;;703417007;nicergolina;;;;;• 5109672 ¦ nicergolina ¦ 1 ¦ Vigente
+7494765;nicotina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6401860 ¦ nicotina ¦ 1 ¦ Vigente
+5533781;nifedipino;;Vigente;Insensible;Autogenerado;;;85272000;nifedipino;;;;;• 5153803 ¦ nifedipino ¦ 1 ¦ Vigente
+5533787;nifurtimox;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5109951 ¦ nifurtimox ¦ 1 ¦ Vigente
+5533797;nilotinib;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5109978 ¦ nilotinib ¦ 1 ¦ Vigente
+5533825;nimesulida;;Vigente;Insensible;Autogenerado;;;703480002;nimesulida;;;;;• 5110054 ¦ nimesulida ¦ 1 ¦ Vigente
+5533827;nimodipino;;Vigente;Insensible;Autogenerado;;;87285001;nimodipino;;;;;• 5153804 ¦ nimodipino ¦ 1 ¦ Vigente
+7738070;niquetamida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6401861 ¦ niquetamida ¦ 1 ¦ Vigente
+5533829;nistatina;;Vigente;Insensible;Autogenerado;;;12096000;nistatina;;;;• 7436222 - Antibiótico;• 5152647 ¦ nistatina ¦ 1 ¦ Vigente
+5533835;nitrato de plata;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5152600 ¦ nitrato de plata ¦ 1 ¦ Vigente
+5533842;nitrendipino;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153807 ¦ nitrendipino ¦ 1 ¦ Vigente
+5534936;nitrofurantoína;;Vigente;Insensible;Autogenerado;;;85343003;nitrofurantoína;;;;• 7436222 - Antibiótico;• 5152648 ¦ nitrofurantoína ¦ 1 ¦ Vigente
+7422596;nitrofurazona;;Vigente;Insensible;Autogenerado;;;332799007;nitrofurazona;;;;;• 6401865 ¦ nitrofurazona ¦ 1 ¦ Vigente
+5534945;nitroglicerina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153818 ¦ nitroglicerina ¦ 1 ¦ Vigente
+5535007;nitroprusiato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153820 ¦ nitroprusiato ¦ 1 ¦ Vigente
+7290115;nivolumab;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7290114 ¦ nivolumab ¦ 1 ¦ Vigente
+5535031;nomegestrol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153879 ¦ nomegestrol ¦ 1 ¦ Vigente
+5668216;norepinefrina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5110198 ¦ norepinefrina ¦ 1 ¦ Vigente
+5535033;norfloxacino;;Vigente;Insensible;Autogenerado;;;49485009;norfloxacino, 400 mg, comprimido;;;;• 7436222 - Antibiótico;• 5153821 ¦ norfloxacino ¦ 1 ¦ Vigente
+6668775;noscapina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5112882 ¦ noscapina ¦ 1 ¦ Vigente
+5535037;obidoxima;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5201660 ¦ obidoxima ¦ 1 ¦ Vigente
+7289725;obinutuzumab;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7289723 ¦ obinutuzumab ¦ 1 ¦ Vigente
+5535051;octreotida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5112973 ¦ octreotida ¦ 1 ¦ Vigente
+5535064;ofloxacino;;Vigente;Insensible;Autogenerado;;;96086002;ofloxacino;;;;• 7436222 - Antibiótico;• 5153823 ¦ ofloxacino ¦ 1 ¦ Vigente
+5535086;olanzapina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153830 ¦ olanzapina ¦ 1 ¦ Vigente
+5535092;olmesartán;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5153855 ¦ olmesartán ¦ 1 ¦ Vigente
+5535099;olopatadina;;Vigente;Insensible;Autogenerado;;;108845001;olopatadina;;;;• 7552959 - Observatorio de precios;• 5112987 ¦ olopatadina ¦ 1 ¦ Vigente
+5535121;omalizumab;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5112990 ¦ omalizumab ¦ 1 ¦ Vigente
+5535133;omeprazol;;Vigente;Insensible;Autogenerado;;;25673006;omeprazol;;;;;• 5153834 ¦ omeprazol ¦ 1 ¦ Vigente
+5535158;onabotulinumtoxin A;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5152607 ¦ onabotulinumtoxin A ¦ 1 ¦ Vigente
+5535166;ondansetrón;;Vigente;Insensible;Autogenerado;;;108418007;ondansetrón;;;;;• 5152652 ¦ ondansetrón ¦ 1 ¦ Vigente
+5535168;orlistat;;Vigente;Insensible;Autogenerado;;;116093009;orlistat;;;;;• 5113118 ¦ orlistat ¦ 1 ¦ Vigente
+5535201;oseltamivir;;Vigente;Insensible;Autogenerado;;;386142008;oseltamivir;;;;;• 5153839 ¦ oseltamivir ¦ 1 ¦ Vigente
+6573196;otilonio bromuro;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6401911 ¦ otilonio bromuro ¦ 1 ¦ Vigente
+5535216;oxaliplatino;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5113119 ¦ oxaliplatino ¦ 1 ¦ Vigente
+5535253;oxcarbazepina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5113182 ¦ oxcarbazepina ¦ 1 ¦ Vigente
+5535272;oxibutinina;;Vigente;Insensible;Autogenerado;;;35768004;oxibutinina;;;;;• 5152655 ¦ oxibutinina ¦ 1 ¦ Vigente
+5535275;oxicodona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5152660 ¦ oxicodona ¦ 1 ¦ Vigente
+7392111;óxido amarillo de mercurio;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7392107 ¦ óxido amarillo de mercurio ¦ 1 ¦ Vigente
+5535277;oximetazolina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5158970 ¦ oximetazolina ¦ 1 ¦ Vigente
+5535288;oxitocina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5158987 ¦ oxitocina ¦ 1 ¦ Vigente
+6646090;oxolamina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6401916 ¦ oxolamina ¦ 1 ¦ Vigente
+5535307;paclitaxel;;Vigente;Insensible;Autogenerado;;;67735003;paclitaxel;;;;;• 5159013 ¦ paclitaxel ¦ 1 ¦ Vigente
+7236465;paclitaxel unido a albúmina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7236449 ¦ paclitaxel unido a albúmina ¦ 1 ¦ Vigente
+6802168;palbociclib;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6802164 ¦ palbociclib ¦ 1 ¦ Vigente
+5535313;palivizumab;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5159016 ¦ palivizumab ¦ 1 ¦ Vigente
+5535335;palonosetrón;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5159017 ¦ palonosetrón ¦ 1 ¦ Vigente
+5535370;pamabrom + paracetamol + pirilamina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5160091 ¦ pirilamina ¦ 3 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 2 ¦ Vigente
+• 5159018 ¦ pamabrom ¦ 1 ¦ Vigente"
+5535404;pancreatina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5159035 ¦ pancreatina ¦ 1 ¦ Vigente
+7447789;pancreatina 6 NF + simeticona;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 7447777 ¦ pancreatina 6 NF ¦ 1 ¦ Vigente
+• 5170584 ¦ simeticona ¦ 2 ¦ Vigente"
+5535419;panitumumab;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5159036 ¦ panitumumab ¦ 1 ¦ Vigente
+5535455;pantoprazol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5166985 ¦ pantoprazol ¦ 1 ¦ Vigente
+5535457;papaína;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5159048 ¦ papaína ¦ 1 ¦ Vigente
+5535473;papaverina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5167052 ¦ papaverina ¦ 1 ¦ Vigente
+5535510;paracetamol;;Vigente;Insensible;Autogenerado;;;;;;;;• 7552959 - Observatorio de precios;• 5166991 ¦ paracetamol ¦ 1 ¦ Vigente
+7720032;paracetamol + pseudoefedrina clorhidrato y clorfenamina + paracetamol + pseudoefedrina clorhidrato;;Vigente;Insensible;Manual;;;;;;;;;"• 5975242 ¦ pseudoefedrina clorhidrato ¦ 3 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 2 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 1 ¦ Vigente"
+7720025;paracetamol + pseudoefedrina sulfato y clorfenamina + paracetamol + pseudoefedrina sulfato;;Vigente;Insensible;Manual;;;;;;;;;"• 5167561 ¦ pseudoefedrina sulfato ¦ 3 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 2 ¦ Vigente
+• 5199623 ¦ clorfenamina ¦ 1 ¦ Vigente"
+5535512;paracetamol + tramadol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5205298 ¦ tramadol ¦ 2 ¦ Vigente
+• 5166991 ¦ paracetamol ¦ 1 ¦ Vigente"
+5535515;parecoxib;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5159124 ¦ parecoxib ¦ 1 ¦ Vigente
+7028626;pargeverina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7028615 ¦ pargeverina ¦ 1 ¦ Vigente
+5535545;paricalcitol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5159145 ¦ paricalcitol ¦ 1 ¦ Vigente
+5535575;paroxetina;;Vigente;Insensible;Autogenerado;;;321963000;paroxetina;;;;• 7552959 - Observatorio de precios;• 5167571 ¦ paroxetina ¦ 1 ¦ Vigente
+5536032;pazopanib;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5159183 ¦ pazopanib ¦ 1 ¦ Vigente
+7292699;pegaspargasa;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7292681 ¦ pegaspargasa ¦ 1 ¦ Vigente
+5536056;pegfilgrastim;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5159186 ¦ pegfilgrastim ¦ 1 ¦ Vigente
+7394976;peginterferón alfa 2a;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6401953 ¦ peginterferón alfa 2a ¦ 1 ¦ Vigente
+7278517;peginterferón alfa 2b;;Vigente;Insensible;Autogenerado;;;129477009;peginterferón alfa-2b;;;;;• 6401954 ¦ peginterferón alfa 2b ¦ 1 ¦ Vigente
+7472662;pelargonium sidoides extracto estandarizado;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6401957 ¦ pelargonium sidoides extracto estandarizado ¦ 1 ¦ Vigente
+7222231;pembrolizumab;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7222224 ¦ pembrolizumab ¦ 1 ¦ Vigente
+5536088;pemetrexed;;Vigente;Insensible;Autogenerado;;;411089001;pemetrexed;;;;;• 5167376 ¦ pemetrexed ¦ 1 ¦ Vigente
+5536091;penicilamina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5167572 ¦ penicilamina ¦ 1 ¦ Vigente
+5536101;pentoxifilina;;Vigente;Insensible;Autogenerado;;;91376007;pentoxifilina;;;;;• 5167377 ¦ pentoxifilina ¦ 1 ¦ Vigente
+5536143;perindopril;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5159213 ¦ perindopril ¦ 1 ¦ Vigente
+7114823;permetrina;;Vigente;Insensible;Manual;;;;;;;;;• 5167003 ¦ permetrina ¦ 1 ¦ Vigente
+5536174;peróxido de benzoílo;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5167437 ¦ peróxido de benzoílo ¦ 1 ¦ Vigente
+7223435;pertuzumab;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6401964 ¦ pertuzumab ¦ 1 ¦ Vigente
+5504065;petidina;;Vigente;Insensible;Autogenerado;;;54544005;petidina;;;;;• 5159240 ¦ petidina ¦ 1 ¦ Vigente
+7614836;petrolato blanco + vaselina;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 5202944 ¦ vaselina ¦ 2 ¦ Vigente
+• 5159242 ¦ petrolato blanco ¦ 1 ¦ Vigente"
+5536830;picosulfato de sodio;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5159269 ¦ picosulfato de sodio ¦ 1 ¦ Vigente
+5536851;pilocarpina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5167438 ¦ pilocarpina ¦ 1 ¦ Vigente
+5536853;pimecrolimús;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5159308 ¦ pimecrolimús ¦ 1 ¦ Vigente
+5536872;pimozida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5159314 ¦ pimozida ¦ 1 ¦ Vigente
+5536905;pioglitazona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5159315 ¦ pioglitazona ¦ 1 ¦ Vigente
+5668188;piperacilina - tazobactam;;Vigente;Insensible;Manual;;;346628003;piperacilina+tazobactam;;;;• 7436222 - Antibiótico;"• 5201654 ¦ tazobactam ¦ 2 ¦ Vigente
+• 5159358 ¦ piperacilina ¦ 1 ¦ Vigente"
+7403017;pipetanato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7402955 ¦ pipetanato ¦ 1 ¦ Vigente
+5537119;pipotiazina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5159362 ¦ pipotiazina ¦ 1 ¦ Vigente
+5537186;piracetam;;Vigente;Insensible;Autogenerado;;;322998004;piracetam;;;;;• 5160077 ¦ piracetam ¦ 1 ¦ Vigente
+7341662;pirazinamida;;Vigente;Insensible;Autogenerado;;;13592004;pirazinamida;;;;;• 7341655 ¦ pirazinamida ¦ 1 ¦ Vigente
+7569967;pirfenidona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7569961 ¦ pirfenidona ¦ 1 ¦ Vigente
+6799233;piridoxina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5166963 ¦ piridoxina ¦ 1 ¦ Vigente
+5537245;pirimetamina;;Vigente;Insensible;Autogenerado;;;59589008;pirimetamina;;;;;• 5167450 ¦ pirimetamina ¦ 1 ¦ Vigente
+5537256;piroxicam;;Vigente;Insensible;Autogenerado;;;27754002;piroxicam;;;;;• 5167655 ¦ piroxicam ¦ 1 ¦ Vigente
+6611324;pitavastatina;;Vigente;Insensible;Autogenerado;;;443585001;pitavastatina;;;;;• 6402001 ¦ pitavastatina ¦ 1 ¦ Vigente
+7473924;plantago ovata extracto;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6402008 ¦ plantago ovata extracto ¦ 1 ¦ Vigente
+7254475;plerixafor;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7254474 ¦ plerixafor ¦ 1 ¦ Vigente
+5537306;polietilenglicol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5160186 ¦ polietilenglicol ¦ 1 ¦ Vigente
+5537323;polietilenglicol + propilenglicol;;Vigente;Insensible;Autogenerado;;;;;;;;• 7552959 - Observatorio de precios;"• 5166819 ¦ propilenglicol ¦ 2 ¦ Vigente
+• 5160186 ¦ polietilenglicol ¦ 1 ¦ Vigente"
+5537367;poligelina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5160191 ¦ poligelina ¦ 1 ¦ Vigente
+5672592;polimaltosa férrica;;Vigente;Sensible;Autogenerado;;;;;;;;;• 5162564 ¦ polimaltosa férrica ¦ 1 ¦ Vigente
+7223320;pomalidomida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7223316 ¦ pomalidomida ¦ 1 ¦ Vigente
+5537484;posaconazol;;Vigente;Insensible;Autogenerado;;;420282006;posaconazol;;;;;• 5166672 ¦ posaconazol ¦ 1 ¦ Vigente
+5537485;povidona yodada;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5166686 ¦ povidona yodada ¦ 1 ¦ Vigente
+7246214;pralatrexato;;Vigente;Insensible;Autogenerado;;;429320009;pralatrexato;;;;;• 7246202 ¦ pralatrexato ¦ 1 ¦ Vigente
+5667633;pramipexol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5166687 ¦ pramipexol ¦ 1 ¦ Vigente
+5667637;prasugrel;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5166735 ¦ prasugrel ¦ 1 ¦ Vigente
+5667649;prednisolona acetato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5166752 ¦ prednisolona acetato ¦ 1 ¦ Vigente
+5667663;prednisona;;Vigente;Insensible;Autogenerado;;;10312003;prednisona;;;;;• 5167500 ¦ prednisona ¦ 1 ¦ Vigente
+5667669;pregabalina;;Vigente;Insensible;Autogenerado;;;415159003;pregabalina;;;;• 7552959 - Observatorio de precios;• 5167521 ¦ pregabalina ¦ 1 ¦ Vigente
+5667675;primidona;;Vigente;Insensible;Autogenerado;;;47120002;primidona;;;;;• 5167581 ¦ primidona ¦ 1 ¦ Vigente
+5667682;progesterona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5167632 ¦ progesterona ¦ 1 ¦ Vigente
+6894276;promestrieno;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6894267 ¦ promestrieno ¦ 1 ¦ Vigente
+5667683;promolato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5166805 ¦ promolato ¦ 1 ¦ Vigente
+5667687;propafenona;;Vigente;Insensible;Autogenerado;;;96300001;propafenona;;;;;• 5166808 ¦ propafenona ¦ 1 ¦ Vigente
+5667699;proparacaína;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5166811 ¦ proparacaína ¦ 1 ¦ Vigente
+5667700;propericiazina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5166813 ¦ propericiazina ¦ 1 ¦ Vigente
+6347457;propilenglicol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5166819 ¦ propilenglicol ¦ 1 ¦ Vigente
+5667704;propiltiouracilo;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5167595 ¦ propiltiouracilo ¦ 1 ¦ Vigente
+5667705;propofol;;Vigente;Insensible;Autogenerado;;;74674007;propofol;;;;;• 5166894 ¦ propofol ¦ 1 ¦ Vigente
+5667718;propranolol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5167624 ¦ propranolol ¦ 1 ¦ Vigente
+5667729;protamina sulfato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170783 ¦ protamina sulfato ¦ 1 ¦ Vigente
+5410364;proteinsuccinilato férrico;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5162569 ¦ proteinsuccinilato férrico ¦ 1 ¦ Vigente
+6611315;prucaloprida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6402088 ¦ prucaloprida ¦ 1 ¦ Vigente
+7615214;pseudoefedrina clorhidrato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5975242 ¦ pseudoefedrina clorhidrato ¦ 1 ¦ Vigente
+7486949;quassia amara extracto estandarizado;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7486947 ¦ quassia amara extracto estandarizado ¦ 1 ¦ Vigente
+5667733;quetiapina;;Vigente;Insensible;Autogenerado;;;108443001;quetiapina;;;;• 7552959 - Observatorio de precios;• 5167568 ¦ quetiapina ¦ 1 ¦ Vigente
+5667735;quinapril;;Vigente;Insensible;Autogenerado;;;108578004;quinapril;;;;;• 5167681 ¦ quinapril ¦ 1 ¦ Vigente
+5667739;rabeprazol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5166950 ¦ rabeprazol ¦ 1 ¦ Vigente
+5667742;racecadotrilo;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170057 ¦ racecadotrilo ¦ 1 ¦ Vigente
+7056572;racepinefrina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170084 ¦ racepinefrina ¦ 1 ¦ Vigente
+5667743;raloxifeno;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170085 ¦ raloxifeno ¦ 1 ¦ Vigente
+5667754;raltegravir;;Vigente;Insensible;Autogenerado;;;429368003;raltegravir;;;;;• 5170088 ¦ raltegravir ¦ 1 ¦ Vigente
+5667759;ramipril;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5201383 ¦ ramipril ¦ 1 ¦ Vigente
+5667762;ranibizumab;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170089 ¦ ranibizumab ¦ 1 ¦ Vigente
+5667767;ranitidina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5200591 ¦ ranitidina ¦ 1 ¦ Vigente
+5667768;rasagilina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170096 ¦ rasagilina ¦ 1 ¦ Vigente
+6634604;reboxetina;;Vigente;Insensible;Autogenerado;;;321995004;reboxetina;;;;;• 6402109 ¦ reboxetina ¦ 1 ¦ Vigente
+7228828;regorafenib;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6402111 ¦ regorafenib ¦ 1 ¦ Vigente
+5667772;remifentanilo;;Vigente;Insensible;Autogenerado;;;108379008;remifentanilo;;;;;• 5170117 ¦ remifentanilo ¦ 1 ¦ Vigente
+5667773;repaglinida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170124 ¦ repaglinida ¦ 1 ¦ Vigente
+5667781;ribavirina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5200823 ¦ ribavirina ¦ 1 ¦ Vigente
+5667782;rifampicina;;Vigente;Insensible;Autogenerado;;;29175007;rifampicina;;;;;• 5200671 ¦ rifampicina ¦ 1 ¦ Vigente
+5667784;rifaximina;;Vigente;Insensible;Autogenerado;;;;;;;;• 7436222 - Antibiótico;• 5200676 ¦ rifaximina ¦ 1 ¦ Vigente
+5667785;riluzol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170325 ¦ riluzol ¦ 1 ¦ Vigente
+6000616;ringer lactato;;Vigente;Insensible;Manual;Si;;;;;;;;"• 5918400 ¦ lactato de sodio ¦ 4 ¦ Vigente
+• 5201728 ¦ cloruro de sodio ¦ 3 ¦ Vigente
+• 5201695 ¦ cloruro de potasio ¦ 2 ¦ Vigente
+• 5200587 ¦ cloruro de calcio ¦ 1 ¦ Vigente"
+6592643;riociguat;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6402136 ¦ riociguat ¦ 1 ¦ Vigente
+5667789;risperidona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5200677 ¦ risperidona ¦ 1 ¦ Vigente
+5667801;ritonavir;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170336 ¦ ritonavir ¦ 1 ¦ Vigente
+5667802;rituximab;;Vigente;Insensible;Autogenerado;;;108809004;rituximab;;;;;• 5170350 ¦ rituximab ¦ 1 ¦ Vigente
+5667806;rivaroxabán;;Vigente;Insensible;Autogenerado;;;442539005;rivaroxabán;;;;;• 5170355 ¦ rivaroxabán ¦ 1 ¦ Vigente
+5667807;rivastigmina;;Vigente;Insensible;Autogenerado;;;323368009;rivastigmina;;;;;• 5170391 ¦ rivastigmina ¦ 1 ¦ Vigente
+5667810;rizatriptán;;Vigente;Insensible;Autogenerado;;;108411001;rizatriptán;;;;;• 5170411 ¦ rizatriptán ¦ 1 ¦ Vigente
+5667820;romiplostim;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170428 ¦ romiplostim ¦ 1 ¦ Vigente
+5667821;ropinirol;;Vigente;Insensible;Autogenerado;;;108473005;ropinirol;;;;;• 5170444 ¦ ropinirol ¦ 1 ¦ Vigente
+5667829;rosuvastatina;;Vigente;Insensible;Autogenerado;;;406436002;rosuvastatina;;;;• 7552959 - Observatorio de precios;• 5170445 ¦ rosuvastatina ¦ 1 ¦ Vigente
+7488669;rotigotina;;Vigente;Insensible;Autogenerado;;;421915002;rotigotina;;;;;• 6402148 ¦ rotigotina ¦ 1 ¦ Vigente
+5667831;roxitromicina;;Vigente;Insensible;Autogenerado;;;;;;;;• 7436222 - Antibiótico;• 5170464 ¦ roxitromicina ¦ 1 ¦ Vigente
+5667832;rupatadina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170467 ¦ rupatadina ¦ 1 ¦ Vigente
+6622265;ruxolitinib;;Vigente;Insensible;Autogenerado;;;703779004;ruxolitinib;;;;;• 6402165 ¦ ruxolitinib ¦ 1 ¦ Vigente
+7478582;sacarato férrico;;Vigente;Insensible;Autogenerado;;;421953007;hierro sacarato;;;;;• 6399585 ¦ sacarato férrico ¦ 1 ¦ Vigente
+7298749;saccharomyces boulardii;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6402167 ¦ saccharomyces boulardii ¦ 1 ¦ Vigente
+5667843;salbutamol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5200721 ¦ salbutamol ¦ 1 ¦ Vigente
+7591812;salicilato de metilo;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6401814 ¦ salicilato de metilo ¦ 1 ¦ Vigente
+5667849;salmeterol;;Vigente;Insensible;Autogenerado;;;108605008;salmeterol;;;;;• 5200742 ¦ salmeterol ¦ 1 ¦ Vigente
+5667856;saquinavir;;Vigente;Insensible;Autogenerado;;;108700005;saquinavir;;;;;• 5208363 ¦ saquinavir ¦ 1 ¦ Vigente
+5667857;saxagliptina;;Vigente;Insensible;Autogenerado;;;443066009;saxagliptina;;;;;• 5170483 ¦ saxagliptina ¦ 1 ¦ Vigente
+5667913;selegilina;;Vigente;Insensible;Autogenerado;;;108466000;selegilina;;;;;• 5170486 ¦ selegilina ¦ 1 ¦ Vigente
+7230292;selenio;;Vigente;Insensible;Autogenerado;;;350057002;selenio;;;;;• 6402199 ¦ selenio ¦ 1 ¦ Vigente
+5667916;serrapeptasa;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170549 ¦ serrapeptasa ¦ 1 ¦ Vigente
+5667917;sertaconazol;;Vigente;Insensible;Autogenerado;;;409281002;sertaconazol;;;;;• 5170551 ¦ sertaconazol ¦ 1 ¦ Vigente
+5667929;sertralina;;Vigente;Insensible;Autogenerado;;;321958004;sertralina;;;;• 7552959 - Observatorio de precios;• 5200777 ¦ sertralina ¦ 1 ¦ Vigente
+5667933;sevelamer;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170552 ¦ sevelamer ¦ 1 ¦ Vigente
+5667935;sevoflurano;;Vigente;Insensible;Autogenerado;;;108395008;sevoflurano;;;;;• 5170558 ¦ sevoflurano ¦ 1 ¦ Vigente
+5667944;sildenafil;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170581 ¦ sildenafil ¦ 1 ¦ Vigente
+5667947;simeticona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170584 ¦ simeticona ¦ 1 ¦ Vigente
+5667952;simvastatina;;Vigente;Insensible;Autogenerado;;;96304005;simvastatina;;;;;• 5200961 ¦ simvastatina ¦ 1 ¦ Vigente
+5667953;sirolimús;;Vigente;Insensible;Autogenerado;;;116109004;sirolimús;;;;;• 5170587 ¦ sirolimús ¦ 1 ¦ Vigente
+5667958;sitagliptina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170591 ¦ sitagliptina ¦ 1 ¦ Vigente
+7334002;sofosbuvir;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7333999 ¦ sofosbuvir ¦ 1 ¦ Vigente
+5667959;solifenacina;;Vigente;Insensible;Autogenerado;;;407031006;solifenacina;;;;;• 5170608 ¦ solifenacina ¦ 1 ¦ Vigente
+7461164;somatropina;;Vigente;Insensible;Autogenerado;;;129495007;somatropina;;;;;• 5200802 ¦ somatropina ¦ 1 ¦ Vigente
+5669674;sorafenib;;Vigente;Insensible;Autogenerado;;;420681006;sorafenib;;;;;• 5170609 ¦ sorafenib ¦ 1 ¦ Vigente
+5669679;sotalol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170642 ¦ sotalol ¦ 1 ¦ Vigente
+7081190;succinilcolina;;Vigente;Insensible;Autogenerado;;;3822002;succinilcolina;;;;;• 6402857 ¦ succinilcolina ¦ 1 ¦ Vigente
+5669684;sucralfato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5200634 ¦ sucralfato ¦ 1 ¦ Vigente
+5669821;sufentanilo;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170707 ¦ sufentanilo ¦ 1 ¦ Vigente
+5669828;sugammadex;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170723 ¦ sugammadex ¦ 1 ¦ Vigente
+5669837;sulbutiamina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170732 ¦ sulbutiamina ¦ 1 ¦ Vigente
+7051319;sulfadiazina de plata;;Vigente;Insensible;Autogenerado;;;;;;;;• 7436222 - Antibiótico;• 5679150 ¦ sulfadiazina de plata ¦ 1 ¦ Vigente
+5674270;sulfametoxazol + trimetoprima;;Vigente;Insensible;Manual;;;;;;;;• 7436222 - Antibiótico;"• 5170763 ¦ sulfametoxazol ¦ 1 ¦ Vigente
+• 5205558 ¦ trimetoprima ¦ 2 ¦ Vigente"
+5669851;sulfasalazina;;Vigente;Insensible;Autogenerado;;;45844004;sulfasalazina;;;;;• 5200653 ¦ sulfasalazina ¦ 1 ¦ Vigente
+5669861;sulfato de magnesio;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5200565 ¦ sulfato de magnesio ¦ 1 ¦ Vigente
+6455691;sulfato de zinc;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6455690 ¦ sulfato de zinc ¦ 1 ¦ Vigente
+5410425;sulfato ferroso;;Vigente;Insensible;Autogenerado;Si;;;;;;;;• 5162570 ¦ sulfato ferroso ¦ 1 ¦ Vigente
+5669879;sulpirida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170812 ¦ sulpirida ¦ 1 ¦ Vigente
+7411846;sultamicilina;;Vigente;Insensible;Autogenerado;;;;;;;;• 7436222 - Antibiótico;• 6402869 ¦ sultamicilina ¦ 1 ¦ Vigente
+5669892;sumatriptán;;Vigente;Insensible;Autogenerado;;;322822007;sumatriptán;;;;;• 5200822 ¦ sumatriptán ¦ 1 ¦ Vigente
+5669917;sunitinib;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170822 ¦ sunitinib ¦ 1 ¦ Vigente
+5669953;tacalcitol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170907 ¦ tacalcitol ¦ 1 ¦ Vigente
+5669992;tacrolimús;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170880 ¦ tacrolimús ¦ 1 ¦ Vigente
+5670005;tadalafil;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5170843 ¦ tadalafil ¦ 1 ¦ Vigente
+5670009;talidomida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5200962 ¦ talidomida ¦ 1 ¦ Vigente
+7411903;taliglucerasa alfa;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6402887 ¦ taliglucerasa alfa ¦ 1 ¦ Vigente
+5670010;tamoxifeno;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5205584 ¦ tamoxifeno ¦ 1 ¦ Vigente
+5670018;tamsulosina;;Vigente;Insensible;Autogenerado;;;108559004;tamsulosina;;;;;• 5201624 ¦ tamsulosina ¦ 1 ¦ Vigente
+6611313;tapentadol;;Vigente;Insensible;Autogenerado;;;442004000;tapentadol;;;;;• 6402889 ¦ tapentadol ¦ 1 ¦ Vigente
+5670027;teicoplanina;;Vigente;Insensible;Autogenerado;;;96014005;teicoplanina;;;;• 7436222 - Antibiótico;• 5201684 ¦ teicoplanina ¦ 1 ¦ Vigente
+5670030;telmisartán;;Vigente;Insensible;Autogenerado;;;129487008;telmisartán;;;;;• 5205589 ¦ telmisartán ¦ 1 ¦ Vigente
+5670157;temozolomida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5201696 ¦ temozolomida ¦ 1 ¦ Vigente
+5670164;temsirolimus;;Vigente;Insensible;Autogenerado;;;427299005;temsirolimus;;;;;• 5201715 ¦ temsirolimus ¦ 1 ¦ Vigente
+5670165;tenecteplasa;;Vigente;Insensible;Autogenerado;;;127967007;tenecteplasa;;;;;• 5201722 ¦ tenecteplasa ¦ 1 ¦ Vigente
+7333738;tenofovir disoproxil fumarato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5201757 ¦ tenofovir disoproxil fumarato ¦ 1 ¦ Vigente
+5670169;teofilina;;Vigente;Insensible;Autogenerado;;;66493003;teofilina;;;;;• 6402921 ¦ teofilina ¦ 1 ¦ Vigente
+5670174;terbinafina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5205131 ¦ terbinafina ¦ 1 ¦ Vigente
+5670183;terlipresina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5201814 ¦ terlipresina ¦ 1 ¦ Vigente
+5670191;testosterona;;Vigente;Insensible;Autogenerado;;;109033004;testosterona;;;;;• 5205670 ¦ testosterona ¦ 1 ¦ Vigente
+5913384;testosterona enantato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5913364 ¦ testosterona enantato ¦ 1 ¦ Vigente
+6627183;testosterona undecanoato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6627180 ¦ testosterona undecanoato ¦ 1 ¦ Vigente
+6611325;tetrabenazina;;Vigente;Insensible;Autogenerado;;;323260004;tetrabenazina;;;;;• 6402925 ¦ tetrabenazina ¦ 1 ¦ Vigente
+5670193;tetraciclina;;Vigente;Insensible;Autogenerado;;;;;;;;• 7436222 - Antibiótico;• 5205627 ¦ tetraciclina ¦ 1 ¦ Vigente
+5670204;tetrahidrozolina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5205239 ¦ tetrahidrozolina ¦ 1 ¦ Vigente
+7418706;tetrizolina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7418703 ¦ tetrizolina ¦ 1 ¦ Vigente
+5670208;tiamazol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5201822 ¦ tiamazol ¦ 1 ¦ Vigente
+5670212;tiamina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5205114 ¦ tiamina ¦ 1 ¦ Vigente
+5674083;tiaprida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5201853 ¦ tiaprida ¦ 1 ¦ Vigente
+5674090;tibolona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5201883 ¦ tibolona ¦ 1 ¦ Vigente
+5674093;ticagrelor;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5201886 ¦ ticagrelor ¦ 1 ¦ Vigente
+5674103;ticlopidina;;Vigente;Insensible;Autogenerado;;;108971003;ticlopidina;;;;;• 5205141 ¦ ticlopidina ¦ 1 ¦ Vigente
+5674110;tietilperazina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5201887 ¦ tietilperazina ¦ 1 ¦ Vigente
+5674115;tigeciclina;;Vigente;Insensible;Autogenerado;;;418631002;tigeciclina;;;;• 7436222 - Antibiótico;• 5201890 ¦ tigeciclina ¦ 1 ¦ Vigente
+5674119;timolol;;Vigente;Insensible;Autogenerado;;;331322007;timol;;;;;• 5205240 ¦ timolol ¦ 1 ¦ Vigente
+5674244;timolol + travoprost;;Vigente;Insensible;Autogenerado;;;424258009;timolol + travoprost;;;;;"• 5205240 ¦ timolol ¦ 1 ¦ Vigente
+• 5202131 ¦ travoprost ¦ 2 ¦ Vigente"
+5674120;tinidazol;;Vigente;Insensible;Autogenerado;;;324550004;tinidazol;;;;;• 5205245 ¦ tinidazol ¦ 1 ¦ Vigente
+5674132;tiocolchicósido;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5201936 ¦ tiocolchicósido ¦ 1 ¦ Vigente
+5674135;tioconazol;;Vigente;Insensible;Autogenerado;;;332967005;tioconazol;;;;;• 5205261 ¦ tioconazol ¦ 1 ¦ Vigente
+5674136;tioguanina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5205644 ¦ tioguanina ¦ 1 ¦ Vigente
+5674139;tiopental sódico;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5205296 ¦ tiopental sódico ¦ 1 ¦ Vigente
+5674156;tioridazina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5205297 ¦ tioridazina ¦ 1 ¦ Vigente
+5674163;tirofibán;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5201955 ¦ tirofibán ¦ 1 ¦ Vigente
+5674168;tirotropina alfa;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5201962 ¦ tirotropina alfa ¦ 1 ¦ Vigente
+5674173;tizanidina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5201965 ¦ tizanidina ¦ 1 ¦ Vigente
+5674183;tobramicina;;Vigente;Insensible;Autogenerado;;;;;;;;• 7436222 - Antibiótico;• 5205717 ¦ tobramicina ¦ 1 ¦ Vigente
+5674186;tocilizumab;;Vigente;Insensible;Autogenerado;;;444649004;tocilizumab;;;;;• 5201972 ¦ tocilizumab ¦ 1 ¦ Vigente
+7412279;tofacitinib;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6402957 ¦ tofacitinib ¦ 1 ¦ Vigente
+5674191;tolbutamida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5201977 ¦ tolbutamida ¦ 1 ¦ Vigente
+6669520;tolnaftato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6402960 ¦ tolnaftato ¦ 1 ¦ Vigente
+5679178;tolterodina;;Vigente;Insensible;Autogenerado;;;109113000;tolterodina;;;;;• 5201983 ¦ tolterodina ¦ 1 ¦ Vigente
+5674195;topiramato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5202016 ¦ topiramato ¦ 1 ¦ Vigente
+5674200;topotecán;;Vigente;Insensible;Autogenerado;;;108779005;topotecán;;;;;• 5202036 ¦ topotecán ¦ 1 ¦ Vigente
+5674211;trabectedina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5202087 ¦ trabectedina ¦ 1 ¦ Vigente
+5674212;tramadol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5205298 ¦ tramadol ¦ 1 ¦ Vigente
+7225206;trametinib;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7225203 ¦ trametinib ¦ 1 ¦ Vigente
+5674219;trastuzumab;;Vigente;Insensible;Autogenerado;;;327397006;trastuzumab;;;;;• 5202108 ¦ trastuzumab ¦ 1 ¦ Vigente
+7238157;trastuzumab emtansina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7238150 ¦ trastuzumab emtansina ¦ 1 ¦ Vigente
+5674231;travoprost;;Vigente;Insensible;Autogenerado;;;;;;;;• 7552959 - Observatorio de precios;• 5202131 ¦ travoprost ¦ 1 ¦ Vigente
+5674245;trazodona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5205302 ¦ trazodona ¦ 1 ¦ Vigente
+5674250;tretinoína;;Vigente;Insensible;Autogenerado;;;54972005;tretinoína;;;;;• 5202133 ¦ tretinoína ¦ 1 ¦ Vigente
+5674253;triamcinolona hexacetónido;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5202147 ¦ triamcinolona hexacetónido ¦ 1 ¦ Vigente
+5674254;triazolam;;Vigente;Insensible;Autogenerado;;;111128007;triazolam;;;;;• 5205704 ¦ triazolam ¦ 1 ¦ Vigente
+7398039;triclosán;;Vigente;Insensible;Autogenerado;;;125577003;triclosán;;;;;• 6402985 ¦ triclosán ¦ 1 ¦ Vigente
+5674257;trihexifenidilo;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5202615 ¦ trihexifenidilo ¦ 1 ¦ Vigente
+5674259;trimebutino;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5202725 ¦ trimebutino ¦ 1 ¦ Vigente
+5674262;trimetazidina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5202734 ¦ trimetazidina ¦ 1 ¦ Vigente
+7297296;trióxido de arsénico;;Vigente;Insensible;Autogenerado;;;400907001;trióxido de arsénico;;;;;• 7297287 ¦ trióxido de arsénico ¦ 1 ¦ Vigente
+5674284;triptorelina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5202770 ¦ triptorelina ¦ 1 ¦ Vigente
+5674285;trolamina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5202785 ¦ trolamina ¦ 1 ¦ Vigente
+5674286;tropicamida;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5202836 ¦ tropicamida ¦ 1 ¦ Vigente
+7438678;umeclidinio bromuro;;Vigente;Insensible;Manual;;;;;;;;;• 6403012 ¦ umeclidinio bromuro ¦ 1 ¦ Vigente
+7438747;umeclidinio bromuro + vilanterol;;Vigente;Insensible;Autogenerado;;;;;;;;;"• 6403042 ¦ vilanterol ¦ 2 ¦ Vigente
+• 6403012 ¦ umeclidinio bromuro ¦ 1 ¦ Vigente"
+7582007;urapidil;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7582004 ¦ urapidil ¦ 1 ¦ Vigente
+5670228;ustekinumab;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5202908 ¦ ustekinumab ¦ 1 ¦ Vigente
+7677104;vacuna Bordetella pertussis (acelular) + toxoide difteria + toxoide tétano + fosfato de aluminio (adyuvante);;Vigente;Insensible;Manual;;;;;;;;;"• 7677357 ¦ fosfato de aluminio ¦ 4 ¦ Vigente
+• 5202077 ¦ toxoide tétano ¦ 3 ¦ Vigente
+• 5202059 ¦ toxoide difteria ¦ 2 ¦ Vigente
+• 7677091 ¦ Bordetella pertussis (acelular) ¦ 1 ¦ Vigente"
+7677383;vacuna Bordetella pertussis (acelular) + toxoide difteria + toxoide tétano + fosfato de aluminio (adyuvante) + hidróxido de aluminio (adyuvante);;Vigente;Insensible;Manual;;;;;;;;;"• 5679151 ¦ hidróxido de aluminio ¦ 5 ¦ Vigente
+• 7677357 ¦ fosfato de aluminio ¦ 4 ¦ Vigente
+• 5202077 ¦ toxoide tétano ¦ 3 ¦ Vigente
+• 5202059 ¦ toxoide difteria ¦ 2 ¦ Vigente
+• 7677091 ¦ Bordetella pertussis (acelular) ¦ 1 ¦ Vigente"
+7680241;vacuna Haemophilus influenzae polisacárido tipo B conjugado proteína tétano;;Vigente;Insensible;Manual;;;;;;;;;• 5163078 ¦ Haemophilus influenzae polisacárido tipo B conjugado proteína tétano ¦ 1 ¦ Vigente
+7680411;vacuna Haemophilus influenzae polisacárido tipo B conjugado proteína tétano y Bordetella pertussis (acelular) + toxoide difteria + toxoide tétano + fosfato de aluminio (adyuvante);;Vigente;Insensible;Manual;;;;;;;;;"• 7677357 ¦ fosfato de aluminio ¦ 5 ¦ Vigente
+• 5202059 ¦ toxoide difteria ¦ 3 ¦ Vigente
+• 5202077 ¦ toxoide tétano ¦ 4 ¦ Vigente
+• 7677091 ¦ Bordetella pertussis (acelular) ¦ 2 ¦ Vigente
+• 5163078 ¦ Haemophilus influenzae polisacárido tipo B conjugado proteína tétano ¦ 1 ¦ Vigente"
+7683496;vacuna Neisseria meningitidis polisacárido tipo A, C, W - 135, Y conjugado proteína difteria;;Vigente;Insensible;Manual;;;;;;;;;"• 7683490 ¦ Neisseria meningitidis polisacárido tipo Y conjugado proteína difteria ¦ 4 ¦ Vigente
+• 7683488 ¦ Neisseria meningitidis polisacárido tipo W - 135 conjugado proteína difteria ¦ 3 ¦ Vigente
+• 7683487 ¦ Neisseria meningitidis polisacárido tipo C conjugado proteína difteria ¦ 2 ¦ Vigente
+• 7683485 ¦ Neisseria meningitidis polisacárido tipo A conjugado proteína difteria ¦ 1 ¦ Vigente"
+7683041;vacuna Neisseria meningitidis polisacárido tipo A, C, W - 135, Y conjugado proteína tétano;;Vigente;Insensible;Manual;;;;;;;;;"• 7683023 ¦ Neisseria meningitidis polisacárido tipo Y conjugado proteína tétano ¦ 4 ¦ Vigente
+• 7683019 ¦ Neisseria meningitidis polisacárido tipo W - 135 conjugado proteína tétano ¦ 3 ¦ Vigente
+• 7683018 ¦ Neisseria meningitidis polisacárido tipo C conjugado proteína tétano ¦ 2 ¦ Vigente
+• 7683017 ¦ Neisseria meningitidis polisacárido tipo A conjugado proteína tétano ¦ 1 ¦ Vigente"
+7683566;vacuna Neisseria meningitidis polisacárido tipo C conjugado proteína tétano + hidróxido de aluminio (adyuvante);;Vigente;Insensible;Manual;;;;;;;;;"• 5679151 ¦ hidróxido de aluminio ¦ 2 ¦ Vigente
+• 7683018 ¦ Neisseria meningitidis polisacárido tipo C conjugado proteína tétano ¦ 1 ¦ Vigente"
+7679086;vacuna Salmonella typhi polisacárido Vi cepa Ty2;;Vigente;Insensible;Manual;;;;;;;;;• 7679083 ¦ Salmonella typhi polisacárido Vi cepa Ty2 ¦ 1 ¦ Vigente
+7682923;vacuna Streptococcus pneumoniae polisacárido 23 serotipos;;Vigente;Insensible;Manual;;;;;;;;;• 7682918 ¦ Streptococcus pneumoniae polisacárido 23 serotipos ¦ 1 ¦ Vigente
+7205009;vacuna toxoide difteria + toxoide tétano + hidróxido de aluminio (adyuvante);;Vigente;Insensible;Manual;;;;;;;;;"• 5202077 ¦ toxoide tétano ¦ 2 ¦ Vigente
+• 5202059 ¦ toxoide difteria ¦ 1 ¦ Vigente
+• 5679151 ¦ hidróxido de aluminio ¦ 3 ¦ Vigente"
+5674204;vacuna toxoide tétano + hidróxido de aluminio (adyuvante);;Vigente;Insensible;Manual;;;;;;;;;"• 5202077 ¦ toxoide tétano ¦ 1 ¦ Vigente
+• 5679151 ¦ hidróxido de aluminio ¦ 2 ¦ Vigente"
+7203514;vacuna virus de la rabia cepa PM WI 38 1503 3M (inactivado, cultivado en células Vero);;Vigente;Insensible;Manual;;;;;;;;;• 7203372 ¦ virus de la rabia cepa PM WI 38 1503 3M (inactivado, cultivado en células Vero)  ¦ 1 ¦ Vigente
+7677266;vacuna virus hepatitis A cepa GMB (inactivado, cultivado en células MRC-5) + hidróxido de aluminio (adyuvante);;Vigente;Insensible;Manual;;;;;;;;;"• 5679151 ¦ hidróxido de aluminio ¦ 2 ¦ Vigente
+• 4933459 ¦ virus hepatitis A cepa GMB (inactivado, cultivado en células MRC-5) ¦ 1 ¦ Vigente"
+7685782;vacuna virus hepatitis B antígeno superficie (recombinante, cultivado en Saccharomyces cerevisiae) + hidróxido de aluminio (adyuvante);;Vigente;Insensible;Manual;;;;;;;;;"• 5679151 ¦ hidróxido de aluminio ¦ 2 ¦ Vigente
+• 4934423 ¦ virus hepatitis B antígeno superficie (recombinante, cultivado en Saccharomyces cerevisiae) ¦ 1 ¦ Vigente"
+7680006;vacuna virus papiloma humano proteína L1 tipo 16, 18 (recombinante) + hidróxido de aluminio (adyuvante) + MPL (adyuvante);;Vigente;Insensible;Manual;;;;;;;;;"• 7679942 ¦ MPL ¦ 4 ¦ Vigente
+• 5679151 ¦ hidróxido de aluminio ¦ 3 ¦ Vigente
+• 7679961 ¦ virus papiloma humano proteína L1 tipo 18 ¦ 2 ¦ Vigente
+• 7679960 ¦ virus papiloma humano proteína L1 tipo 16 ¦ 1 ¦ Vigente"
+7686892;vacuna virus parotiditis cepa Leningrad - Zagreb (vivo atenuado, cultivado en fibroblastos embrión gallinácea huevo SPF) + virus rubéola cepa Wistar RA 27 / 3 (vivo atenuado, cultivado en células CDH) + virus sarampión cepa Edmonston - Zagreb (vivo atenuado, cultivado en células CDH);;Vigente;Insensible;Manual;;;;;;;;;"• 7686281 ¦ virus sarampión cepa Edmonston - Zagreb (vivo atenuado, cultivado en células CDH) ¦ 3 ¦ Vigente
+• 7686285 ¦ virus rubéola cepa Wistar RA 27 / 3 (vivo atenuado, cultivado en células CDH) ¦ 2 ¦ Vigente
+• 7686888 ¦ virus parotiditis cepa Leningrad - Zagreb (vivo atenuado, cultivado en fibroblastos embrión gallinácea huevo SPF) ¦ 1 ¦ Vigente"
+7679856;vacuna virus varicela - zóster cepa Oka / Merck (vivo atenuado, cultivado en células MRC-5);;Vigente;Insensible;Manual;;;;;;;;;• 7679805 ¦ virus varicela - zóster cepa Oka / Merck (vivo atenuado, cultivado en células MRC-5) ¦ 1 ¦ Vigente
+6000543;vacuna virus varicela - zóster cepa Oka (vivo atenuado, cultivado en células MRC-5);;Vigente;Insensible;Manual;;;;;;;;;• 6000539 ¦ virus varicela - zóster cepa Oka (vivo atenuado, cultivado en células MRC-5) ¦ 1 ¦ Vigente
+5670118;valaciclovir;;Vigente;Insensible;Autogenerado;;;324820003;valaciclovir;;;;;• 5205148 ¦ valaciclovir ¦ 1 ¦ Vigente
+5670116;valganciclovir;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5202909 ¦ valganciclovir ¦ 1 ¦ Vigente
+5670109;valsartán;;Vigente;Insensible;Autogenerado;;;108581009;valsartán;;;;• 7552959 - Observatorio de precios;• 5205648 ¦ valsartán ¦ 1 ¦ Vigente
+5670102;vancomicina;;Vigente;Insensible;Autogenerado;;;42082003;vancomicina;;;;• 7436222 - Antibiótico;• 5205569 ¦ vancomicina ¦ 1 ¦ Vigente
+5670101;vardenafil;;Vigente;Insensible;Autogenerado;;;407979001;vardenafil;;;;;• 5202927 ¦ vardenafil ¦ 1 ¦ Vigente
+5670100;vareniclina;;Vigente;Insensible;Autogenerado;;;420507002;vareniclina;;;;• 7552959 - Observatorio de precios;• 5202940 ¦ vareniclina ¦ 1 ¦ Vigente
+5670096;vaselina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5202944 ¦ vaselina ¦ 1 ¦ Vigente
+5670082;vemurafenib;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5203145 ¦ vemurafenib ¦ 1 ¦ Vigente
+5670081;venlafaxina;;Vigente;Insensible;Autogenerado;;;;;;;;• 7552959 - Observatorio de precios;• 5205576 ¦ venlafaxina ¦ 1 ¦ Vigente
+5670080;verapamilo;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5205583 ¦ verapamilo ¦ 1 ¦ Vigente
+5670078;vigabatrina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5203165 ¦ vigabatrina ¦ 1 ¦ Vigente
+5670075;vildagliptina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5203200 ¦ vildagliptina ¦ 1 ¦ Vigente
+5670074;vinblastina;;Vigente;Insensible;Autogenerado;;;12436009;vinblastina;;;;;• 5203205 ¦ vinblastina ¦ 1 ¦ Vigente
+5670070;vincristina;;Vigente;Insensible;Autogenerado;;;23079006;vincristina;;;;;• 5203208 ¦ vincristina ¦ 1 ¦ Vigente
+5670069;vinorelbina;;Vigente;Insensible;Autogenerado;;;108792008;vinorelbina;;;;;• 5203214 ¦ vinorelbina ¦ 1 ¦ Vigente
+7543140;vismodegib;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7543136 ¦ vismodegib ¦ 1 ¦ Vigente
+7501700;vitis vinífera extracto;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7501693 ¦ vitis vinífera extracto ¦ 1 ¦ Vigente
+5670068;voriconazol;;Vigente;Insensible;Autogenerado;;;386116008;voriconazol;;;;;• 5208068 ¦ voriconazol ¦ 1 ¦ Vigente
+5670067;vorinostat;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5208094 ¦ vorinostat ¦ 1 ¦ Vigente
+6365289;vortioxetina;;Vigente;Insensible;Autogenerado;;;;;;;;;• 6365288 ¦ vortioxetina ¦ 1 ¦ Vigente
+5670064;warfarina;;Vigente;Insensible;Autogenerado;;;48603004;warfarina;;;;;• 5208120 ¦ warfarina ¦ 1 ¦ Vigente
+7474078;xysmalobium undulatum;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7474077 ¦ xysmalobium undulatum ¦ 1 ¦ Vigente
+5670056;zanamivir;;Vigente;Insensible;Autogenerado;;;116100000;zanamivir;;;;;• 5208211 ¦ zanamivir ¦ 1 ¦ Vigente
+5670047;zidovudina;;Vigente;Insensible;Autogenerado;;;27479000;zidovudina;;;;;• 5208215 ¦ zidovudina ¦ 1 ¦ Vigente
+5670046;ziprasidona;;Vigente;Insensible;Autogenerado;;;373389002;ziprasidona;;;;;• 5208239 ¦ ziprasidona ¦ 1 ¦ Vigente
+5670041;zolpidem;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5208243 ¦ zolpidem ¦ 1 ¦ Vigente
+5670040;zopiclona;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5208245 ¦ zopiclona ¦ 1 ¦ Vigente
+5670034;zuclopentixol;;Vigente;Insensible;Autogenerado;;;;;;;;;• 5208246 ¦ zuclopentixol ¦ 1 ¦ Vigente
+7573617;zuclopentixol acetato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7573616 ¦ zuclopentixol acetato ¦ 1 ¦ Vigente
+7573627;zuclopentixol decanoato;;Vigente;Insensible;Autogenerado;;;;;;;;;• 7573626 ¦ zuclopentixol decanoato ¦ 1 ¦ Vigente

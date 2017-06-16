@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
@@ -24,7 +25,7 @@ public interface CategoryManager {
      * @param term     El término que se busca en la categoría.
      * @return <code>true</code> si la categoría contiene el término <code>term</code> y <code>false</code> sino.
      */
-    public ConceptSMTK categoryContains(Category category, String term);
+    public ConceptSMTK categoryContains(Category category, String term, boolean caseSensitive);
 
     /**
      * Este método es responsable de recuperar una Categoría completa, con sus propiedades básicas y todos sus
@@ -80,4 +81,6 @@ public interface CategoryManager {
      * @return La lista de cada una de las categorías solicitadas.
      */
     public List<Category> findCategories(List<String> categoriesNames);
+
+    public CategoryFactory getCategoryFactory();
 }

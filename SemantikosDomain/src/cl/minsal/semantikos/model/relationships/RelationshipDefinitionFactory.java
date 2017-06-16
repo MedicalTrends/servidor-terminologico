@@ -2,6 +2,7 @@ package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.model.tags.TagSMTK;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,15 +11,20 @@ import java.util.Map;
 /**
  * @author Andrés Farías
  */
-public class RelationshipDefinitionFactory {
+public class RelationshipDefinitionFactory implements Serializable {
 
     private static final RelationshipDefinitionFactory instance = new RelationshipDefinitionFactory();
 
     /** La lista de tagSMTK */
+
     private List<RelationshipDefinition> relationshipDefinitions;
 
     public Map<String, RelationshipDefinition> getRelationshipDefinitionByName() {
         return relationshipDefinitionByName;
+    }
+
+    public void setRelationshipDefinitionByName(Map<String, RelationshipDefinition> relationshipDefinitionByName) {
+        this.relationshipDefinitionByName = relationshipDefinitionByName;
     }
 
     public List<RelationshipDefinition> getRelationshipDefinitions() {

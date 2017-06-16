@@ -20,9 +20,10 @@ import static cl.minsal.semantikos.model.LoadLog.INFO;
 public class Initializer extends EntityLoader {
 
     public void checkDataFiles(SMTKLoader smtkLoader) throws LoadException, IOException {
+
         try {
 
-            smtkLoader.log(new LoadLog("Comprobando DataFiles", INFO));
+            smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles ", INFO));
 
             this.path = Paths.get(smtkLoader.BASIC_CONCEPTS_PATH);
             reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
@@ -71,7 +72,7 @@ public class Initializer extends EntityLoader {
             smtkLoader.setConceptsTotal(lines-1);
             smtkLoader.setConceptsProcessed(0);
 
-            smtkLoader.log(new LoadLog("DataFiles OK", INFO));
+            smtkLoader.logTick();
 
         } catch (IOException e) {
             throw e;
@@ -80,9 +81,8 @@ public class Initializer extends EntityLoader {
                 throw e;
             }
             else {
-                smtkLoader.log(e);
+                smtkLoader.logError(e);
             }
         }
     }
-
 }

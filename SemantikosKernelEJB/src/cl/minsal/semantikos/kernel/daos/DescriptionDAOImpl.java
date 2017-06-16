@@ -235,7 +235,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     @Override
     public Description persist(Description description, User user) {
 
-        ConnectionBD connect = new ConnectionBD();
         /*
          * param1: ID
          * param 2: DesType ID
@@ -249,7 +248,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
          * param 10: id concepto
          */
         String sql = "{call semantikos.create_description(?,?,?,?,?,?,?,?,?,?,?)}";
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setString(1, description.getDescriptionId());
@@ -314,9 +313,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     @Override
     public void update(Description description) {
 
-        ConnectionBD connect = new ConnectionBD();
         String sql = "{call semantikos.update_description(?,?,?,?,?,?,?,?,?,?,?,?)}";
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, description.getId());
@@ -456,17 +454,18 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     }
 
     @Override
-    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories) {
+    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, boolean caseSensitive) {
         ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
 
-        String sql = "{call semantikos.search_descriptions_by_term_and_categories(?,?)}";
+        String sql = "{call semantikos.search_descriptions_by_term_and_categories(?,?,?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setString(1, term.toLowerCase());
             Category[] entities = categories.toArray(new Category[categories.size()]);
             call.setArray(2, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
+            call.setBoolean(3, caseSensitive);
             call.execute();
 
             logger.debug("Búsqueda exacta descripciones con término =" + term);

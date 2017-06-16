@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
@@ -43,11 +44,9 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
         long idRelationShipAttribute;
         long idTarget = targetDAO.persist(relationshipAttribute.getTarget(), relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition());
 
-        ConnectionBD connect = new ConnectionBD();
-
         String sql = "{call semantikos.create_relationship_attribute(?,?,?)}";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, relationshipAttribute.getRelationAttributeDefinition().getId());

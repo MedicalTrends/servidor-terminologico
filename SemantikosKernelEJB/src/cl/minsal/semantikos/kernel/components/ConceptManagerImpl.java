@@ -18,9 +18,7 @@ import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.EJB;
-import javax.ejb.EJBException;
-import javax.ejb.Stateless;
+import javax.ejb.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.text.Normalizer;
@@ -313,12 +311,19 @@ public class ConceptManagerImpl implements ConceptManager {
         }
 
         /* Se deja registro en la auditoría sólo para conceptos modelados */
-
         auditManager.recordNewConcept(conceptSMTK, user);
 
         logger.debug("El concepto " + conceptSMTK + " fue persistido.");
 
         return conceptSMTK.getId();
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void persist(List<ConceptSMTK> conceptsSMTK, User user) throws Exception {
+        for (ConceptSMTK conceptSMTK : conceptsSMTK) {
+            persist(conceptSMTK, user);
+        }
     }
 
     @Override

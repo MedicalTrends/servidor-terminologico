@@ -27,6 +27,15 @@ public interface ConceptManager {
     public long persist(@NotNull ConceptSMTK conceptSMTK, User user);
 
     /**
+     * Este método es responsable de persistir un concepto que no se encuentra persistido. Esta acción, de
+     * persistencia, queda registrado como una actividad de auditoría.
+     *
+     * @param conceptSMTK El concepto a persistir.
+     * @param user        El usuario que persiste el concepto.
+     */
+    public void persist(List<ConceptSMTK> conceptSMTK, User user) throws Exception;
+
+    /**
      * Este método es responsable de actualizar los campos (para no decir atributos que es un caso particular de las
      * relaciones).
      *

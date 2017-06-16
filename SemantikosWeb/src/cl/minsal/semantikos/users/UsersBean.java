@@ -86,10 +86,10 @@ public class UsersBean {
     }
 
     public void createOrUpdateUser() {
-        if(idUser == 0 && selectedUser == null) {
+        if(idUser == 0 /*&& selectedUser == null*/) {
             newUser();
         }
-        if(idUser != 0 && !selectedUser.isPersistent() ) {
+        if(idUser != 0 /*&& !selectedUser.isPersistent()*/ ) {
             getUser(idUser);
         }
     }

@@ -23,7 +23,7 @@ public class Tag extends PersistentEntity implements Serializable {
 
     /*Constructor vacío, utilizado como fix para el comportamiento de jsf-primefaces al actualizar el form en ui-state-error*/
     @Deprecated
-    public Tag(){
+    public Tag() {
         super(DAO.NON_PERSISTED_ID);
         this.name = "";
         this.colorBackground = "";

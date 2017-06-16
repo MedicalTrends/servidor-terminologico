@@ -3,6 +3,11 @@ package cl.minsal.semantikos.kernel.businessrules;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
+import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinitionFactory;
+import cl.minsal.semantikos.model.relationships.TargetDefinition;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
@@ -21,15 +26,15 @@ public class ConceptCreationBR implements BusinessRulesContainer {
 
     private static final Logger logger = LoggerFactory.getLogger(ConceptCreationBR.class);
 
-    public void apply(@NotNull ConceptSMTK conceptSMTK, User IUser) throws BusinessRuleException {
+    public void apply(@NotNull ConceptSMTK conceptSMTK, User IUser) throws Exception {
 
         /* Reglas que aplican para todas las categorías */
         br101HasFSN(conceptSMTK);
         br102NonEmptyDescriptions(conceptSMTK);
         brTagSMTK001(conceptSMTK);
-
         /* Creación de acuerdo al rol */
         br001creationRights(conceptSMTK, IUser);
+        br103DefinitionalGrade(conceptSMTK);
     }
 
     /**
@@ -93,6 +98,34 @@ public class ConceptCreationBR implements BusinessRulesContainer {
 
         if (descriptionFSN == null) {
             throw new BusinessRuleException("BR-UNK", "Todo concepto debe tener una descripción FSN");
+        }
+    }
+
+    public void br103DefinitionalGrade(ConceptSMTK conceptSMTK) throws Exception {
+
+        if(conceptSMTK.isFullyDefined()!=null)
+            return;
+
+        if(!conceptSMTK.isRelationshipsLoaded()) {
+            throw new BusinessRuleException("BR-UNK","Intento de cálculo de grado de definición para concepto sin relaciones cargadas",conceptSMTK);
+        }
+
+        /**Se obtiene la definición de relacion SNOMED CT**/
+        RelationshipDefinition relationshipDefinition = RelationshipDefinitionFactory.getInstance().findRelationshipDefinitionByName(TargetDefinition.SNOMED_CT);
+
+        /**
+         * Si alguna de las relaciones es de tipo snomed es posible determinar el grado de definición
+         */
+        for (Relationship relationship : conceptSMTK.getRelationships()) {
+            if(relationship.getRelationshipDefinition().equals(relationshipDefinition)) {
+                ConceptSCT conceptSCT = (ConceptSCT) relationship.getTarget();
+                conceptSMTK.setFullyDefined((conceptSCT.isCompletelyDefined()) ? true : false);
+                conceptSMTK.setInherited(true);
+                return;
+            } else {
+                conceptSMTK.setInherited(false);
+                return;
+            }
         }
     }
 }

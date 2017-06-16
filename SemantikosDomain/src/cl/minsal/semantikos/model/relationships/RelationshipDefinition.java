@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.model.relationships;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -184,6 +185,18 @@ public class RelationshipDefinition implements Serializable {
             }
         }
         return null;
+    }
+
+    public List<RelationshipAttributeDefinition> findRelationshipAttributeDefinitionsByName(String name) {
+        List<RelationshipAttributeDefinition> someRelationshipAttributeDefinitions = new ArrayList<>();
+
+        for (RelationshipAttributeDefinition relationshipAttributeDefinition : getRelationshipAttributeDefinitions()) {
+            if(relationshipAttributeDefinition.getName().equals(name)) {
+                someRelationshipAttributeDefinitions.add(relationshipAttributeDefinition);
+            }
+        }
+
+        return someRelationshipAttributeDefinitions;
     }
 
     public boolean isRequired() {

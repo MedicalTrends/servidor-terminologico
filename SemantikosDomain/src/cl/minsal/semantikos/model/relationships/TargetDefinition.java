@@ -7,7 +7,6 @@ import cl.minsal.semantikos.model.IPersistentEntity;
  */
 public interface TargetDefinition extends IPersistentEntity {
 
-
     public static final String COMERCIALIZADO = "Comercializado";
 
     public static final String ATC = "ATC";
@@ -23,6 +22,8 @@ public interface TargetDefinition extends IPersistentEntity {
     public static final String PEDIBLE = "Pedible";
 
     public static final String SNOMED_CT = "SNOMED CT";
+
+    public static final String SUSTANCIA = "Sustancia";
 
     /**
      * Este metodo es responsable de determinar si el target type es de tipo básico es o no.

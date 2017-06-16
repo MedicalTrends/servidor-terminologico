@@ -3,6 +3,8 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinitionFactory;
+import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -165,4 +167,6 @@ public interface RelationshipManager {
      * @return Una lista de relaciones asociadas al concepto.
      */
     Map<Long, ArrayList<Relationship>> getRelationshipsBySourceConcepts(List<ConceptSMTK> concept);
+
+    public RelationshipDefinitionFactory getRelationshipDefinitionFactory();
 }

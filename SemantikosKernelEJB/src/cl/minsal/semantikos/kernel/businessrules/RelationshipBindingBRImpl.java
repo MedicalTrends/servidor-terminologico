@@ -415,10 +415,12 @@ public class RelationshipBindingBRImpl implements RelationshipBindingBR {
             conceptManager.publish(sourceConcept, user);
             conceptDAO.update(sourceConcept);
             /* Se modela cada una de las descripciones del concepto */
+            /*
             for (Description description : sourceConcept.getDescriptions()) {
                 description.setModeled(true);
                 descriptionDAO.update(description);
             }
+            */
         }
     }
 

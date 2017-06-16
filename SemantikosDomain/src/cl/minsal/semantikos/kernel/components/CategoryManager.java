@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.users.User;
 
@@ -77,4 +78,6 @@ public interface CategoryManager {
      * @return La lista de cada una de las categorías solicitadas.
      */
     public List<Category> findCategories(List<String> categoriesNames);
+
+    public CategoryFactory getCategoryFactory();
 }

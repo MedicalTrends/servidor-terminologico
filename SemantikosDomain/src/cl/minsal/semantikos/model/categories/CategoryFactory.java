@@ -59,8 +59,8 @@ public class CategoryFactory implements Serializable {
      */
     public Category findCategoryByName(String name) {
 
-        if (categoriesByName.containsKey(name)) {
-            return this.categoriesByName.get(name);
+        if (categoriesByName.containsKey(name.toLowerCase())) {
+            return this.categoriesByName.get(name.toLowerCase());
         }
         return null;
     }
@@ -80,8 +80,15 @@ public class CategoryFactory implements Serializable {
 
         for (Category category : categories) {
             this.categoriesById.put(category.getId(), category);
-            this.categoriesByName.put(category.getName(), category);
+            this.categoriesByName.put(category.getName().toLowerCase(), category);
         }
     }
 
+    public Map<String, Category> getCategoriesByName() {
+        return categoriesByName;
+    }
+
+    public void setCategoriesByName(Map<String, Category> categoriesByName) {
+        this.categoriesByName = categoriesByName;
+    }
 }

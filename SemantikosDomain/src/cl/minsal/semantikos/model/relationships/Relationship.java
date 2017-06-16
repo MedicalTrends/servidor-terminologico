@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

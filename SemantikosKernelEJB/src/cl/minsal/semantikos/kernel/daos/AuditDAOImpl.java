@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.factories.ConceptAuditActionFactory;
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.audit.*;
@@ -71,7 +72,6 @@ public class AuditDAOImpl implements AuditDAO {
     public void recordAuditAction(ConceptAuditAction conceptAuditAction) {
 
         logger.debug("Registrando información de Auditoría: " + conceptAuditAction);
-        ConnectionBD connect = new ConnectionBD();
         /*
          * param 1: La fecha en que se realiza (Timestamp).
          * param 2: El usuario que realiza la acción (id_user).
@@ -80,7 +80,7 @@ public class AuditDAOImpl implements AuditDAO {
          * param 5: La entidad en la que se realizó la acción..
          */
         String sqlQuery = "{call semantikos.create_concept_audit_actions(?,?,?,?,?)}";
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sqlQuery)) {
 
             /* Se invoca la consulta para recuperar las relaciones */
