@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.sun.org.apache.xerces.internal.util.XMLSymbols.EMPTY_STRING;
 import static java.lang.System.currentTimeMillis;
 
 /**
@@ -481,7 +482,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     }
 
     public String getObservation() {
-        return observation;
+        return observation==null?"":observation;
     }
 
     public void setObservation(String observation) {

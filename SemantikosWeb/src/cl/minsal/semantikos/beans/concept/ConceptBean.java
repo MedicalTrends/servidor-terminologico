@@ -143,7 +143,7 @@ public class ConceptBean implements Serializable {
 
     private List<Category> categoryList;
 
-    private List<DescriptionWeb> descriptionsToTraslate;
+    private List<DescriptionWeb> descriptionsToTraslate = new ArrayList<>();
 
     private List<DescriptionType> descriptionTypes = new ArrayList<>();
 
@@ -159,7 +159,7 @@ public class ConceptBean implements Serializable {
 
     private List<String> autoGenerateList = new ArrayList<>();
 
-    private List<NoValidDescription> noValidDescriptions;
+    private List<NoValidDescription> noValidDescriptions = new ArrayList<>();
 
     private List<ConceptSMTK> conceptSuggestedList;
 
