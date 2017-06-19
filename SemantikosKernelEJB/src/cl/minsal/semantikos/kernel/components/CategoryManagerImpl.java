@@ -69,9 +69,9 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
-    public ConceptSMTK categoryContains(Category category, String term, boolean caseSensitive) {
+    public ConceptSMTK categoryContains(Category category, String term) {
 
-        List<Description> descriptions = descriptionManager.searchDescriptionsByTerm(term, Arrays.asList(category), caseSensitive);
+        List<Description> descriptions = descriptionManager.searchDescriptionsByTerm(term, Arrays.asList(category));
 
         /* Si la búsqueda resultó con al menos un término vigente, entonces si contiene */
         for (Description description : descriptions) {

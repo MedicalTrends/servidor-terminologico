@@ -340,8 +340,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
-    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, boolean caseSensitive) {
-        return descriptionDAO.searchDescriptionsByTerm(term, categories, caseSensitive);
+    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories) {
+        return descriptionDAO.searchDescriptionsByTerm(term, categories);
     }
 
     @Override

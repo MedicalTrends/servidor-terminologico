@@ -41,7 +41,7 @@ public class DescriptionCreationBR {
      */
     public void validatePreConditions(ConceptSMTK concept, Description description, CategoryManager categoryManager, boolean edition) {
 
-        brDescriptionCreation001(concept, description, categoryManager);
+        brDescriptionCreation001(concept, description.getTerm(), categoryManager);
         brDescriptionCreation003(concept, description.getDescriptionType());
 
         /* Reglas para modo edición */
@@ -55,14 +55,14 @@ public class DescriptionCreationBR {
      * categoría.
      *
      * @param concept         El concepto al cual se asocia la descripción.
-     * @param description     La descripción a crear.
+     * @param term            El término que contiene la descripción a crear.
      * @param categoryManager El Manager para realizar la verificación a nivel de la BDD.
      */
-    private void brDescriptionCreation001(ConceptSMTK concept, Description description, CategoryManager categoryManager) {
+    private void brDescriptionCreation001(ConceptSMTK concept, String term, CategoryManager categoryManager) {
         Category category = concept.getCategory();
-        ConceptSMTK aConcept = categoryManager.categoryContains(category, description.getTerm(), description.isCaseSensitive());
+        ConceptSMTK aConcept = categoryManager.categoryContains(category, term);
 
-        if (aConcept != null && !aConcept.equals(concept)) {
+        if (aConcept != null) {
             throw new BusinessRuleException("BR-UNK", "Un término sólo puede existir una vez en una categoría. Descripción perteneciente a concepto: "+aConcept);
         }
     }

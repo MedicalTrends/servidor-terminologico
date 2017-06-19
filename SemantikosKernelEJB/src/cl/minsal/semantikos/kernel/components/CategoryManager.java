@@ -25,7 +25,7 @@ public interface CategoryManager {
      * @param term     El término que se busca en la categoría.
      * @return <code>true</code> si la categoría contiene el término <code>term</code> y <code>false</code> sino.
      */
-    public ConceptSMTK categoryContains(Category category, String term, boolean caseSensitive);
+    public ConceptSMTK categoryContains(Category category, String term);
 
     /**
      * Este método es responsable de recuperar una Categoría completa, con sus propiedades básicas y todos sus

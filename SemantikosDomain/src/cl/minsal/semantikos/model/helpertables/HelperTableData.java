@@ -2,6 +2,7 @@ package cl.minsal.semantikos.model.helpertables;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -12,7 +13,7 @@ import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
  * Created by BluePrints Developer on 14-12-2016.
  */
 
-public class HelperTableData {
+public class HelperTableData implements Serializable {
 
     private long id;
     private Long intValue;

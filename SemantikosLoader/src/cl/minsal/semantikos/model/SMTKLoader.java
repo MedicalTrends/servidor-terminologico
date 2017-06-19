@@ -30,8 +30,8 @@ public class SMTKLoader extends SwingWorker<Void, String> {
     public static final String PATH_PREFIX =  Paths.get(".").toAbsolutePath().normalize().toString().concat("/SemantikosLoader/resources/");
 
     private static final String ROOT = "datafiles/";
-    //private static final String ENV = "test/";
-    private static final String ENV = "basic/";
+    private static final String ENV = "test/";
+    //private static final String ENV = "basic/";
 
     public static final String BASIC_CONCEPTS_PATH=PATH_PREFIX+ROOT+ENV+"Conceptos_VIG_SMTK.txt";
     public static final String BASIC_DESCRIPTIONS_PATH=PATH_PREFIX+ROOT+ENV+"Descripciones_VIG_STK.txt";

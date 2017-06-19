@@ -69,7 +69,7 @@ public interface DescriptionDAO {
      *
      * @return Todas las descripciones que poseen exactamente el término <code>term</code>.
      */
-    List<Description> searchDescriptionsByTerm(String term, List<Category> categories, boolean caseSensitive);
+    List<Description> searchDescriptionsByTerm(String term, List<Category> categories);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como

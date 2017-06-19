@@ -125,7 +125,7 @@ public interface DescriptionManager {
      * @param categories Las categorías en donde se realiza la búsqueda.
      * @return Todas las descripciones que poseen exactamente el término <code>term</code>.
      */
-    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, boolean caseSensitive);
+    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como

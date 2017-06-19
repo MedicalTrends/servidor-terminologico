@@ -236,6 +236,8 @@ public class MCConceptLoader extends EntityLoader {
 
             Relationship relationshipSubstance = new Relationship(conceptSMTK, substanceList.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
 
+            conceptSMTK.addRelationship(relationshipSubstance);
+
             // Obteniendo Orden
             BasicTypeValue order = new BasicTypeValue(Integer.parseInt(substanceTokens[2]));
 
@@ -278,6 +280,7 @@ public class MCConceptLoader extends EntityLoader {
 
                 String[] partidoPorTokens = substanceTokens[2].split(" ");
 
+                // Cantidad
                 BasicTypeValue cantidadPartidoPor = new BasicTypeValue(Integer.parseInt(partidoPorTokens[0]));
 
                 attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Cantidad Partido Por").get(0);
@@ -414,11 +417,17 @@ public class MCConceptLoader extends EntityLoader {
 
         /*Recuperando Volumen Total*/
 
-        String volumeName = tokens[mcConceptFields.get("FRM_FARMA_AGRP_DESC")];
+        String volumeName = tokens[mcConceptFields.get("VOLUMEN_TOTAL_CANTIDAD")];
 
-        if(!StringUtils.isEmpty(ffaName)) {
+        if(!volumeName.isEmpty()) {
 
-            relationshipDefinition = category.findRelationshipDefinitionsByName("FFA").get(0);
+            relationshipDefinition = category.findRelationshipDefinitionsByName("Volumen Total Cantidad").get(0);
+
+            basicTypeValue = new BasicTypeValue(new Integer(volumeName.replace(",",".")));
+
+            Relationship relationshipVolume = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+
+            conceptSMTK.addRelationship(relationshipVolume);
 
             helperTable = (HelperTable) relationshipDefinition.getTargetDefinition();
 
