@@ -27,15 +27,29 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-    public static final String PATH_PREFIX =  Paths.get(".").toAbsolutePath().normalize().toString().concat("/SemantikosLoader/resources/");
+    public static final String PATH_PREFIX = Paths.get(".").toAbsolutePath().normalize().toString().concat("/SemantikosLoader/resources/");
 
     private static final String ROOT = "datafiles/";
-    private static final String ENV = "test/";
-    //private static final String ENV = "basic/";
+    //private static final String ENV = "test/";
+    private static final String ENV = "basic/";
+    private static final String ENV_DRUGS = "drugs/";
+    private static final String SUBSTANCE = "substance/";
+    private static final String MB = "MB/";
+    private static final String MC = "MC/";
 
+    /*Datafiles conceptos básicos*/
     public static final String BASIC_CONCEPTS_PATH=PATH_PREFIX+ROOT+ENV+"Conceptos_VIG_SMTK.txt";
     public static final String BASIC_DESCRIPTIONS_PATH=PATH_PREFIX+ROOT+ENV+"Descripciones_VIG_STK.txt";
     public static final String BASIC_RELATIONSHIPS_PATH=PATH_PREFIX+ROOT+ENV+"Relaciones_Conceptos_VIG_STK.txt";
+
+    /*Datafiles Sustancias*/
+    public static final String SUBSTANCE_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+SUBSTANCE+"01_Sustancias.Base.txt";
+    /*Datafiles MB*/
+    public static final String MB_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+MB+"02_Medicamento_Basico.Base.txt";
+    /*Datafiles MC*/
+    public static final String MC_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+MC+"03_Medicamento_Clinico.Base.txt";
+    public static final String MC_VIAS_ADM_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+MC+"03_Medicamento_Clinico.Via_Administracion.txt";
+
 
     private CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
     private TagSMTKManager tagSMTKManager = (TagSMTKManager) RemoteEJBClientFactory.getInstance().getManager(TagSMTKManager.class);

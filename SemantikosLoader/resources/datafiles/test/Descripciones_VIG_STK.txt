@@ -1,17 +1,5 @@
 STK_DESCRIPCION;STK_CONCEPTO;TERMINO;tipo;SENS_MAYUSC;CREAC_NOMBRE;ESTADO;FECHA_REGISTRO;USUARIO_REGISTRO;MODELADO;forma;USOS
-423074;254;angioqueratoma corporis difuso universal;2;0;;;;;;AOK;
-423073;254;deficiencia de alfa - galactosidasa A;2;0;;;;;;AOK;
-423070;254;deficiencia de ceramida trihexosidasa;2;0;;;;;;AOK;
-423075;254;deficiencia de GLA;2;0;;;;;;AOK;
-942;254;emfermedad de fabry anderson;1;0;;;;;;AOK;
-941;254;emfermedad de fabry anderson (hallazgo);3;0;;;;;;AOK;
-423072;254;enfermedad de Anderson - Fabry;2;0;;;;;;AOK;
-423079;254;enfermedad de Anderson Fabry;2;0;;;;;;AOK;
-423067;254;enfermedad de Fabry;2;0;;;;;;AOK;
-423080;254;enfermedad de Sweeley - Klionsky;2;0;;;;;;AOK;
-423071;254;lactosil ceramidosis;2;0;;;;;;AOK;
-423068;254;lipoidosis distópica hereditaria;2;0;;;;;;AOK;
-423077;254;síndrome cariovasorrenal;2;0;;;;;;AOK;
-423078;254;síndrome de Ruiter - Pompen;2;0;;;;;;AOK;
-423076;254;tesaurismosis hereditaria;2;0;;;;;;AOK;
-423069;254;tesaurismosis lipoidica;2;0;;;;;;AOK;
+415;88;síndrome  de bernheim;1;0;;;;;;AOK;
+414;88;síndrome  de bernheim (hallazgo);3;0;;;;;;AOK;
+426137;88;síndrome de Bernheim;2;0;;;;;;AOK;
+426138;88;síndrome de insuficiencia - obstrucción ventricular derecha;2;0;;;;;;AOK;

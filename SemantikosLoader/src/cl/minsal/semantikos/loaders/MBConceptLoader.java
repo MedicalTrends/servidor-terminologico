@@ -234,7 +234,7 @@ public class MBConceptLoader extends EntityLoader {
 
         try {
 
-            initReader(smtkLoader.getBasicConceptPath());
+            initReader(smtkLoader.MB_PATH);
 
             String line;
 

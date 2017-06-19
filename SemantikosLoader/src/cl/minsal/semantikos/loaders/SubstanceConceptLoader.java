@@ -181,7 +181,7 @@ public class SubstanceConceptLoader extends EntityLoader {
 
         try {
 
-            initReader(smtkLoader.getBasicConceptPath());
+            initReader(smtkLoader.SUBSTANCE_PATH);
 
             String line;
 
