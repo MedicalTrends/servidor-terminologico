@@ -2,8 +2,7 @@ package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
 import cl.minsal.semantikos.kernel.components.*;
-import cl.minsal.semantikos.loaders.BasicConceptLoader;
-import cl.minsal.semantikos.loaders.Initializer;
+import cl.minsal.semantikos.loaders.*;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinitionFactory;
@@ -49,7 +48,6 @@ public class SMTKLoader extends SwingWorker<Void, String> {
     /*Datafiles MC*/
     public static final String MC_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+MC+"03_Medicamento_Clinico.Base.txt";
     public static final String MC_VIAS_ADM_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+MC+"03_Medicamento_Clinico.Via_Administracion.txt";
-
 
     private CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
     private TagSMTKManager tagSMTKManager = (TagSMTKManager) RemoteEJBClientFactory.getInstance().getManager(TagSMTKManager.class);
@@ -260,11 +258,31 @@ public class SMTKLoader extends SwingWorker<Void, String> {
     @Override
     protected Void doInBackground() throws Exception {
         try {
+
             Initializer initializer = new Initializer();
             BasicConceptLoader basicConceptLoader = new BasicConceptLoader();
+            SubstanceConceptLoader substanceConceptLoader = new SubstanceConceptLoader();
+            MBConceptLoader mbConceptLoader = new MBConceptLoader();
+            MCConceptLoader mcConceptLoader = new MCConceptLoader();
 
-            initializer.checkDataFiles(this);
+            /*
+            initializer.checkBasicConceptsDataFiles(this);
             basicConceptLoader.processConcepts(this);
+            */
+
+            /*
+            initializer.checkSubstanceDataFiles(this);
+            substanceConceptLoader.processConcepts(this);
+            */
+
+            /*
+            initializer.checkMBDataFiles(this);
+            mbConceptLoader.processConcepts(this);
+            */
+
+            initializer.checkMCDataFiles(this);
+            mcConceptLoader.processConcepts(this);
+
             JOptionPane.showMessageDialog(null, "Carga de conceptos finalizada!");
         } catch (LoadException e1) {
             JOptionPane.showMessageDialog(null, e1.getMessage());

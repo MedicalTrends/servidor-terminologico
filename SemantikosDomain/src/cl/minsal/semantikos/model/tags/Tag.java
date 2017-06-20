@@ -17,7 +17,7 @@ public class Tag extends PersistentEntity implements Serializable {
     private String colorLetter;
 
     /** Las etiquetas hijos */
-    private List<Tag> son;
+    private List<Tag> son = new ArrayList<>();
 
     private Tag parentTag;
 

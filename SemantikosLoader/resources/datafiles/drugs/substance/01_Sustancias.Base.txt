@@ -8,8 +8,7 @@ CONCEPTO_ID;DESCRIPCION;DESC_ABREVIADA;SENSIBLE_MAYUSCULA;CREAC_NOMBRE;ESTADO;RE
 4840070;aceite de hígado de bacalao;;Insensible;Manual;Vigente;Si;;aceite de hígado de bacalao;;126082008;aceite de hígado de bacalao;;;;
 4840230;acenocumarol;;Insensible;Manual;Vigente;Si;;acenocumarol;;387457003;acenocumarol;503;acenocumarol;;D
 6434407;acetato de betametasona;;Insensible;Manual;Vigente;Si;;acetato de betametasona;;116572001;acetato de betametasona;;;;
-4840292;acetato de calcio;;Insensible;Manual;Vigente;Si;;acetato cálcico;"• 6399670 - calcio acetato
-• 6384471 - acetato cálcico";387019008;acetato cálcico;;;;
+4840292;acetato de calcio;;Insensible;Manual;Vigente;Si;;acetato cálcico;"• 6399670 - calcio acetato• 6384471 - acetato cálcico";387019008;acetato cálcico;;;;
 4840414;acetato de sodio;;Insensible;Manual;Vigente;Si;;acetato de sodio;;108951007;acetato de sodio;;;;
 7502706;acetato de zinc;;Insensible;Manual;Vigente;;;;;;;;;;
 4840556;acetazolamida;;Insensible;Manual;Vigente;Si;;acetazolamida;;372709008;acetazolamida;481;acetazolamida;;C
@@ -61,15 +60,13 @@ CONCEPTO_ID;DESCRIPCION;DESC_ABREVIADA;SENSIBLE_MAYUSCULA;CREAC_NOMBRE;ESTADO;RE
 4855711;agomelatina;;Insensible;Manual;Vigente;;;agomelatina;;698012009;agomelatina;7392;agomelatina;;
 4855740;agua bidestilada;;Insensible;Manual;Vigente;;;;;;;;;;
 4855893;agua oxigenada;;Insensible;Manual;Vigente;;;agua oxigenada O^15^;;129505000;agua oxigenada O^15^;;;;
-4856016;alantoína;;Insensible;Manual;Vigente;;;alantoína;"• 6426297 - 5 - ureidohidantonína
-• 6391863 - glioxildiureida";395933009;alantoína;;;;
+4856016;alantoína;;Insensible;Manual;Vigente;;;alantoína;"• 6426297 - 5 - ureidohidantonína• 6391863 - glioxildiureida";395933009;alantoína;;;;
 4856065;albendazol;;Insensible;Manual;Vigente;Si;;albendazol;;387558006;albendazol;3967;albendazol;;C
 4856115;albúmina humana;;Insensible;Manual;Vigente;Si;;albúmina;;52454007;albúmina;;;;C
 6397731;alcaftadina;;Insensible;Manual;Vigente;Si;;alcaftadina;;447208001;alcaftadina;8707;alcaftadina;;B
 4856182;alcanfor;;Insensible;Manual;Vigente;Si;;alcanfor;;111136003;alcanfor;;;;
 6397738;alcohol bencílico;;Insensible;Manual;Vigente;Si;;alcohol bencílico;;55902002;alcohol bencílico;923;alcohol bencílico;;
-4856627;alfa tocoferol;;Insensible;Manual;Vigente;Si;;alfa - tocoferol;"• 6399618 - alfa tocoferol
-• 6412294 - vitamina E";259666007;alfa - tocoferol;;;;
+4856627;alfa tocoferol;;Insensible;Manual;Vigente;Si;;alfa - tocoferol;"• 6399618 - alfa tocoferol• 6412294 - vitamina E";259666007;alfa - tocoferol;;;;
 7431203;alfatradiol;;Insensible;Manual;Vigente;;;;;;;;;;
 4930387;alfentanilo;;Insensible;Manual;Vigente;Si;;alfentanilo;;387560008;alfentanilo;4818;alfentanilo;;C
 4930413;alfuzosina;;Insensible;Manual;Vigente;Si;;alfuzosina;;395954002;alfuzosina;5357;alfuzosina;;B
@@ -78,10 +75,8 @@ CONCEPTO_ID;DESCRIPCION;DESC_ABREVIADA;SENSIBLE_MAYUSCULA;CREAC_NOMBRE;ESTADO;RE
 4930552;alopurinol;;Insensible;Manual;Vigente;Si;;alopurinol;;387135004;alopurinol;1731;alopurinol;;C
 4930583;alprazolam;;Insensible;Manual;Vigente;Si;;alprazolam;;386983007;alprazolam;3426;alprazolam;;D
 4930599;alprostadil;;Insensible;Manual;Vigente;Si;;alprostadil;• 6426755 - prostaglandina E1;48988008;alprostadil;4425;alprostadil;;
-6398230;alquitrán de hulla;;Insensible;Manual;Vigente;Si;;Coal tar;"• 6421226 - coáltar
-• 6398231 - COAL TAR";53034005;Coal tar;;;;
-6397715;alteplasa;;Insensible;Manual;Vigente;Si;;alteplasa;"• 6415218 - activador tisular del plasminógeno recombinante
-• 6397716 - activador del plasminógeno tisular";387152000;alteplasa;5975;alteplasa;;C
+6398230;alquitrán de hulla;;Insensible;Manual;Vigente;Si;;Coal tar;"• 6421226 - coáltar• 6398231 - COAL TAR";53034005;Coal tar;;;;
+6397715;alteplasa;;Insensible;Manual;Vigente;Si;;alteplasa;"• 6415218 - activador tisular del plasminógeno recombinante• 6397716 - activador del plasminógeno tisular";387152000;alteplasa;5975;alteplasa;;C
 4930672;amantadina;;Insensible;Manual;Vigente;Si;;amantadina;;372763006;amantadina;1816;amantadina;;C
 7424111;ambrisentán;;Insensible;Manual;Vigente;;;;;428159003;ambrisentán;;;;X
 6397799;ambroxol;;Insensible;Manual;Vigente;;;ambroxol;;698024002;ambroxol;3692;ambroxol;;C
@@ -186,16 +181,14 @@ CONCEPTO_ID;DESCRIPCION;DESC_ABREVIADA;SENSIBLE_MAYUSCULA;CREAC_NOMBRE;ESTADO;RE
 5154076;bupropión;;Insensible;Manual;Vigente;;;bupropión;;387564004;bupropión;3562;bupropión;;B
 5154081;buspirona;;Insensible;Manual;Vigente;;;buspirona;;387523009;buspirona;3456;buspirona;;B
 5154100;busulfano;;Insensible;Manual;Vigente;;;busulfano;;387138002;busulfano;564;busulfano;;D
-5154102;butilescopolamina bromuro;;Insensible;Manual;Vigente;;;;"• 7126066 - butilbromuro de escopolamina
-• 7117572 - butilbromuro de hioscina";;;;;;C
+5154102;butilescopolamina bromuro;;Insensible;Manual;Vigente;;;;"• 7126066 - butilbromuro de escopolamina• 7117572 - butilbromuro de hioscina";;;;;;C
 5154114;cabazitaxel;;Insensible;Manual;Vigente;Si;;cabazitaxel;;446706007;cabazitaxel;8967;cabazitaxel;;D
 5154128;cabergolina;;Insensible;Manual;Vigente;;;cabergolina;;386979007;cabergolina;5860;cabergolina;;B
 5154129;cafeína;;Insensible;Manual;Vigente;;;cafeína;;255641001;cafeína;;;;
 6398041;calamina;;Insensible;Manual;Vigente;;;calamina;;387082008;calamina;;;;
 5154135;calcio;;Insensible;Manual;Vigente;Si;;calcio;;5540006;calcio;;;;
 5154152;calcipotriol;;Insensible;Manual;Vigente;Si;;calcipotriol;;395766004;calcipotriol;6376;calcipotriol;;
-5154162;calcitriol;;Insensible;Manual;Vigente;Si;;Calcitriol;"• 6412270 - 1 , 25 OH vitamina D3
-• 6412271 - 1, 25 - dihidroxivitamina D3";259333003;Calcitriol;4393;calcitriol;;C
+5154162;calcitriol;;Insensible;Manual;Vigente;Si;;Calcitriol;"• 6412270 - 1 , 25 OH vitamina D3• 6412271 - 1, 25 - dihidroxivitamina D3";259333003;Calcitriol;4393;calcitriol;;C
 6398066;canagliflozina;;Insensible;Manual;Vigente;Si;;;;;;9225;canagliflozina;;C
 5154217;candesartán;;Insensible;Manual;Vigente;;;candesartán;;372512008;candesartán;7239;candesartán;;D
 5154222;capecitabina;;Insensible;Manual;Vigente;Si;;capecitabina;;386906001;capecitabina;7317;capecitabina;;D
@@ -678,8 +671,7 @@ CONCEPTO_ID;DESCRIPCION;DESC_ABREVIADA;SENSIBLE_MAYUSCULA;CREAC_NOMBRE;ESTADO;RE
 5162015;leflunomida;;Insensible;Manual;Vigente;Si;;leflunomida;;386981009;leflunomida;5079;leflunomida;;X
 5205097;lenalidomida;;Insensible;Manual;Vigente;Si;;lenalidomida;;421471009;lenalidomida;8505;lenalidomida;;X
 5205113;letrozol;;Insensible;Manual;Vigente;Si;;letrozol;;386911004;letrozol;7118;letrozol;;X
-6401695;leucovorina;;Insensible;Manual;Vigente;Si;;leucovorina cálcica;"• 6415132 - ácido folínico cálcico
-• 6415156 - folinato de calcio";126223008;leucovorina cálcica;690;folinato cálcico;;C
+6401695;leucovorina;;Insensible;Manual;Vigente;Si;;leucovorina cálcica;"• 6415132 - ácido folínico cálcico• 6415156 - folinato de calcio";126223008;leucovorina cálcica;690;folinato cálcico;;C
 5205115;leuprorelina;;Insensible;Manual;Vigente;Si;;;;397198002;;5025;leuprorelina;;X
 5205326;levetiracetam;;Insensible;Manual;Vigente;Si;;levetiracetam;;387000003;levetiracetam;6450;levetiracetam;;C
 6401705;levobunolol;;Insensible;Manual;Vigente;Si;;levobunolol;;418934007;levobunolol;4706;levobunolol;;C
@@ -700,8 +692,7 @@ CONCEPTO_ID;DESCRIPCION;DESC_ABREVIADA;SENSIBLE_MAYUSCULA;CREAC_NOMBRE;ESTADO;RE
 5168056;lincomicina;;Insensible;Manual;Vigente;Si;;lincomicina;;372677003;lincomicina;1419;lincomicina;;C
 5238830;linestrenol;;Insensible;Manual;Vigente;Si;;linestrenol;;419504002;linestrenol;1222;linestrenol;;
 5240236;linezolid;;Insensible;Manual;Vigente;;;linezolid;;387056004;linezolid;7584;linezolid;;C
-5168105;liotironina;;Insensible;Manual;Vigente;Si;;liotironina;"• 6426702 - triyodotironina
-• 6646725 - triiodotironina";61275002;liotironina;653;liotironina;;A
+5168105;liotironina;;Insensible;Manual;Vigente;Si;;liotironina;"• 6426702 - triyodotironina• 6646725 - triiodotironina";61275002;liotironina;653;liotironina;;A
 7270953;lipegfilgrastim;;Insensible;Manual;Vigente;Si;;;;;;;;;
 6401728;liraglutida;;Insensible;Manual;Vigente;Si;;liraglutida;;444828003;liraglutida;;;;
 6401730;lisdexanfetamina;;Insensible;Manual;Vigente;Si;;lisdexanfetamina;;425597005;lisdexanfetamina;8690;lisdexanfetamina;;C

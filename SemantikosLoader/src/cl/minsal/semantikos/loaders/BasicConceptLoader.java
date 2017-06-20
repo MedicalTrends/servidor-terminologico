@@ -107,7 +107,7 @@ public class BasicConceptLoader extends EntityLoader {
 
     public void loadConceptFromFileLine(String line) throws LoadException {
 
-        String[] tokens = line.split(separator);
+        String[] tokens = line.split(separator,-1);
 
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
         long id = Long.parseLong(tokens[basicConceptFields.get("STK_CONCEPTO")]);
@@ -130,7 +130,7 @@ public class BasicConceptLoader extends EntityLoader {
 
     public void loadDescriptionFromFileLine(String line, User user) throws LoadException {
 
-        String[] tokens = line.split(separator);
+        String[] tokens = line.split(separator,-1);
 
             /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
         long id = Long.parseLong(tokens[basicDescriptionFields.get("STK_DESCRIPCION")]);
@@ -190,7 +190,7 @@ public class BasicConceptLoader extends EntityLoader {
 
     public void loadRelationshipFromFileLine(String line) throws LoadException {
 
-        String[] tokens = line.split(separator);
+        String[] tokens = line.split(separator,-1);
 
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
         long id = Long.parseLong(tokens[basicRelationshipFields.get("ID_RELACION")]);

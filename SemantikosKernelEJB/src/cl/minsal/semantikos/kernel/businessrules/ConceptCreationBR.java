@@ -110,6 +110,12 @@ public class ConceptCreationBR implements BusinessRulesContainer {
             throw new BusinessRuleException("BR-UNK","Intento de cálculo de grado de definición para concepto sin relaciones cargadas",conceptSMTK);
         }
 
+        /*Si el concepto está en borrador se deja como primitivo */
+        if(!conceptSMTK.isModeled()) {
+            conceptSMTK.setFullyDefined(false);
+            return;
+        }
+
         /**Se obtiene la definición de relacion SNOMED CT**/
         RelationshipDefinition relationshipDefinition = RelationshipDefinitionFactory.getInstance().findRelationshipDefinitionByName(TargetDefinition.SNOMED_CT);
 
@@ -127,5 +133,7 @@ public class ConceptCreationBR implements BusinessRulesContainer {
                 return;
             }
         }
+
+
     }
 }

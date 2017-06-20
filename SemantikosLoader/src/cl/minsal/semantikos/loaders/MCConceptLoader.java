@@ -1,10 +1,7 @@
 package cl.minsal.semantikos.loaders;
 
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
-import cl.minsal.semantikos.kernel.components.ConceptManager;
-import cl.minsal.semantikos.kernel.components.HelperTablesManager;
-import cl.minsal.semantikos.kernel.components.SnomedCTManager;
-import cl.minsal.semantikos.kernel.components.TagManager;
+import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.LoadException;
 import cl.minsal.semantikos.model.LoadLog;
@@ -29,6 +26,7 @@ import java.util.*;
 import static cl.minsal.semantikos.model.LoadLog.ERROR;
 import static cl.minsal.semantikos.model.LoadLog.INFO;
 import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN;
+import static java.util.Collections.EMPTY_LIST;
 
 /**
  * Created by root on 15-06-17.
@@ -36,6 +34,7 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
 public class MCConceptLoader extends EntityLoader {
 
     ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+    DescriptionManager descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
     TagManager tagManager = (TagManager) RemoteEJBClientFactory.getInstance().getManager(TagManager.class);
     SnomedCTManager snomedCTManager = (SnomedCTManager) RemoteEJBClientFactory.getInstance().getManager(SnomedCTManager.class);
     HelperTablesManager helperTableManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
@@ -56,33 +55,32 @@ public class MCConceptLoader extends EntityLoader {
         mcConceptFields.put("SCT_TERMINO", 9);
         mcConceptFields.put("SINONIMO", 10);
         mcConceptFields.put("GRUPOS_JERARQUICOS", 11);
-        mcConceptFields.put("SUSTANCIAS", 12);
-        mcConceptFields.put("PRESC_FK", 13);
-        mcConceptFields.put("PRESC_DESC", 14);
-        mcConceptFields.put("MEDICAMENTO_BASICO_FK", 15);
-        mcConceptFields.put("MEDICAMENTO_BASICO_DESC", 16);
-        mcConceptFields.put("FRM_FARMA_AGRP_FK", 17);
-        mcConceptFields.put("FRM_FARMA_AGRP_DESC", 18);
-        mcConceptFields.put("CONDICION_VENTA_FK", 19);
-        mcConceptFields.put("CONDICION_VENTA_DESC", 20);
-        mcConceptFields.put("ESTADO_PRESCRIPCION_FK", 21);
-        mcConceptFields.put("ESTADO_PRESCRIPCION_DESC", 22);
-        mcConceptFields.put("TIPO_FORMA_AGRP_FK", 23);
-        mcConceptFields.put("TIPO_FORMA_AGRP_DESC", 24);
-        mcConceptFields.put("UNIDOSIS_LOGISTICA_CANT", 25);
-        mcConceptFields.put("UNIDOSIS_LOGISTICA_UNIDAD_FK", 26);
-        mcConceptFields.put("UNIDOSIS_LOGISTICA_UNIDAD_DESC", 27);
-        mcConceptFields.put("UNIDOSIS_ASISTENCIAL_CANT", 28);
-        mcConceptFields.put("UNI_ASISTENCIAL_UNIDAD_FK", 29);
-        mcConceptFields.put("UNI_ASISTENCIAL_UNIDAD_DESC", 30);
-        mcConceptFields.put("VOLUMEN_TOTAL_CANTIDAD", 31);
-        mcConceptFields.put("VOLUMEN_TOTAL_UNIDAD_FK", 32);
-        mcConceptFields.put("VOLUMEN_TOTAL_UNIDAD_DESC", 33);
-        mcConceptFields.put("ATC_DESCRIPCION_FK", 34);
-        mcConceptFields.put("ATC_DESCRIPCION_DESC", 35);
-        mcConceptFields.put("URL_MEDLINE_PLUS", 36);
-        mcConceptFields.put("VIAS_ADMINISTRACION", 37);
-        mcConceptFields.put("MC_SUST", 38);
+        mcConceptFields.put("PRESC_FK", 12);
+        mcConceptFields.put("PRESC_DESC", 13);
+        mcConceptFields.put("MEDICAMENTO_BASICO_FK", 14);
+        mcConceptFields.put("MEDICAMENTO_BASICO_DESC", 15);
+        mcConceptFields.put("FRM_FARMA_AGRP_FK", 16);
+        mcConceptFields.put("FRM_FARMA_AGRP_DESC", 17);
+        mcConceptFields.put("CONDICION_VENTA_FK", 18);
+        mcConceptFields.put("CONDICION_VENTA_DESC", 19);
+        mcConceptFields.put("ESTADO_PRESCRIPCION_FK", 20);
+        mcConceptFields.put("ESTADO_PRESCRIPCION_DESC", 21);
+        mcConceptFields.put("TIPO_FORMA_AGRP_FK", 22);
+        mcConceptFields.put("TIPO_FORMA_AGRP_DESC", 23);
+        mcConceptFields.put("UNIDOSIS_LOGISTICA_CANT", 24);
+        mcConceptFields.put("UNIDOSIS_LOGISTICA_UNIDAD_FK", 25);
+        mcConceptFields.put("UNIDOSIS_LOGISTICA_UNIDAD_DESC", 26);
+        mcConceptFields.put("UNIDOSIS_ASISTENCIAL_CANT", 27);
+        mcConceptFields.put("UNI_ASISTENCIAL_UNIDAD_FK", 28);
+        mcConceptFields.put("UNI_ASISTENCIAL_UNIDAD_DESC", 29);
+        mcConceptFields.put("VOLUMEN_TOTAL_CANTIDAD", 30);
+        mcConceptFields.put("VOLUMEN_TOTAL_UNIDAD_FK", 31);
+        mcConceptFields.put("VOLUMEN_TOTAL_UNIDAD_DESC", 32);
+        mcConceptFields.put("ATC_DESCRIPCION_FK", 33);
+        mcConceptFields.put("ATC_DESCRIPCION_DESC", 34);
+        mcConceptFields.put("URL_MEDLINE_PLUS", 35);
+        mcConceptFields.put("VIAS_ADMINISTRACION", 36);
+        mcConceptFields.put("MC_SUST", 37);
     }
 
     public static final Map<String, Integer> admViasFields;
@@ -113,7 +111,7 @@ public class MCConceptLoader extends EntityLoader {
             /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
             boolean toBeReviewed = tokens[mcConceptFields.get("REVISADO")].equals("Si");
             boolean toBeConsulted = tokens[mcConceptFields.get("CONSULTAR")].equals("Si");
-            boolean autogenerated = tokens[mcConceptFields.get("CREAC_NOM")].equals("Autogenerado");
+            boolean autogenerated = tokens[mcConceptFields.get("CREAC_NOMBRE")].equals("Autogenerado");
 
             Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico");
             TagSMTK tagSMTK = TagSMTKFactory.getInstance().findTagSMTKByName("producto");
@@ -167,9 +165,14 @@ public class MCConceptLoader extends EntityLoader {
             String synonyms = tokens[mcConceptFields.get("SINONIMO")];
             descriptionType = DescriptionType.SYNONYMOUS;
 
-            String[] synonymsTokens = synonyms.split("\n");
+            String[] synonymsTokens = synonyms.split("•");
 
             for (String synonymsToken : synonymsTokens) {
+
+                if(synonymsToken.isEmpty() || synonymsToken.equals("\"")) {
+                    continue;
+                }
+
                 term = StringUtils.normalizeSpaces(synonymsToken.split("-")[1]);
 
                 Description description = new Description(conceptSMTK, term, descriptionType);
@@ -237,32 +240,42 @@ public class MCConceptLoader extends EntityLoader {
 
             conceptSMTK.addRelationship(relationshipMarketed);
 
+            boolean mcSpecialValue = true;
+
             /*Recuperando Sustancias*/
             relationshipDefinition = category.findRelationshipDefinitionsByName("Sustancia").get(0);
 
             String substances = tokens[mcConceptFields.get("MC_SUST")];
 
-            String[] substancesTokens = substances.split("\n");
+            String[] substancesTokens = substances.split("•");
 
             for (String substanceToken : substancesTokens) {
+
+                if(substanceToken.isEmpty() || substanceToken.equals("\"")) {
+                    continue;
+                }
 
                 String[] substanceTokens = substanceToken.split("¦");
 
                 // Obteniendo Sustancia
-                String termFavourite = StringUtils.normalizeSpaces(substanceTokens[0]);
+                String termFavourite = StringUtils.normalizeSpaces(substanceTokens[0]).trim();
 
-                List<ConceptSMTK> substanceList = conceptManager.findConceptsBy(termFavourite);
+                List<Description> substanceList = descriptionManager.searchDescriptionsPerfectMatch(termFavourite, Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia")}), EMPTY_LIST);
 
                 if(substanceList.isEmpty()) {
                     throw new LoadException(path.toString(), id, "No existe una sustancia con preferida: "+termFavourite, ERROR);
                 }
 
-                Relationship relationshipSubstance = new Relationship(conceptSMTK, substanceList.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                if(!substanceList.get(0).getConceptSMTK().isModeled()) {
+                    throw new LoadException(path.toString(), id, "La sustancia: "+termFavourite+" no está modelada, se descarta este MC", ERROR);
+                }
+
+                Relationship relationshipSubstance = new Relationship(conceptSMTK, substanceList.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
 
                 conceptSMTK.addRelationship(relationshipSubstance);
 
                 // Obteniendo Orden
-                BasicTypeValue order = new BasicTypeValue(Integer.parseInt(substanceTokens[2]));
+                BasicTypeValue order = new BasicTypeValue(Integer.parseInt(substanceTokens[3].trim()));
 
                 /**Para esta definición, se obtiente el atributo orden**/
                 for (RelationshipAttributeDefinition attDef1 : relationshipDefinition.getRelationshipAttributeDefinitions()) {
@@ -279,7 +292,7 @@ public class MCConceptLoader extends EntityLoader {
                     String[] potenciaTokens = substanceTokens[1].split(" ");
 
                     // Cantidad
-                    BasicTypeValue cantidadPotencia = new BasicTypeValue(Integer.parseInt(potenciaTokens[0]));
+                    BasicTypeValue cantidadPotencia = new BasicTypeValue(Integer.parseInt(potenciaTokens[0].trim()));
 
                     attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Cantidad de Potencia").get(0);
 
@@ -291,7 +304,7 @@ public class MCConceptLoader extends EntityLoader {
 
                     helperTable = (HelperTable) attDef.getTargetDefinition();
 
-                    List<HelperTableRow> unidadPotencia = helperTableManager.searchRows(helperTable, potenciaTokens[1]);
+                    List<HelperTableRow> unidadPotencia = helperTableManager.searchRows(helperTable, potenciaTokens[1].trim());
 
                     ra = new RelationshipAttribute(attDef, relationshipSubstance, unidadPotencia.get(0));
                     relationshipSubstance.getRelationshipAttributes().add(ra);
@@ -304,7 +317,7 @@ public class MCConceptLoader extends EntityLoader {
                     String[] partidoPorTokens = substanceTokens[2].split(" ");
 
                     // Cantidad
-                    BasicTypeValue cantidadPartidoPor = new BasicTypeValue(Integer.parseInt(partidoPorTokens[0]));
+                    BasicTypeValue cantidadPartidoPor = new BasicTypeValue(Integer.parseInt(partidoPorTokens[0].trim()));
 
                     attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Cantidad Partido Por").get(0);
 
@@ -316,12 +329,24 @@ public class MCConceptLoader extends EntityLoader {
 
                     helperTable = (HelperTable) attDef.getTargetDefinition();
 
-                    List<HelperTableRow> unidadPartidoPor = helperTableManager.searchRows(helperTable, partidoPorTokens[1]);
+                    List<HelperTableRow> unidadPartidoPor = helperTableManager.searchRows(helperTable, partidoPorTokens[1].trim());
 
                     ra = new RelationshipAttribute(attDef, relationshipSubstance, unidadPartidoPor.get(0));
                     relationshipSubstance.getRelationshipAttributes().add(ra);
                 }
+
+                mcSpecialValue = false;
             }
+
+            /*Generando MC Especial*/
+
+            basicTypeValue = new BasicTypeValue(mcSpecialValue);
+
+            relationshipDefinition = category.findRelationshipDefinitionsByName("Medicamento clínico especial").get(0);
+
+            Relationship relationshipMCSpecial = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+
+            conceptSMTK.addRelationship(relationshipMCSpecial);
 
             /*Recuperando Estado Prescripción*/
 
@@ -350,15 +375,19 @@ public class MCConceptLoader extends EntityLoader {
 
             if(!StringUtils.isEmpty(mbName)) {
 
-                relationshipDefinition = category.findRelationshipDefinitionsByName("Estado Prescripción").get(0);
+                relationshipDefinition = category.findRelationshipDefinitionsByName("Medicamento Básico").get(0);
 
-                List<ConceptSMTK> mb = conceptManager.findConceptsBy(mbName);
+                List<Description> mb = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mbName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Básico")}), EMPTY_LIST);
 
                 if(mb.isEmpty()) {
                     throw new LoadException(path.toString(), id, "No existe un Medicamento Básico con preferida: "+mbName, ERROR);
                 }
 
-                Relationship relationshipMB = new Relationship(conceptSMTK, mb.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                if(!mb.get(0).getConceptSMTK().isModeled()) {
+                    throw new LoadException(path.toString(), id, "EL MB: "+mbName+" no está modelado, se descarta este MC", ERROR);
+                }
+
+                Relationship relationshipMB = new Relationship(conceptSMTK, mb.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
 
                 conceptSMTK.addRelationship(relationshipMB);
             }
@@ -638,6 +667,7 @@ public class MCConceptLoader extends EntityLoader {
 
             try {
                 conceptManager.persist((ConceptSMTK)pair.getValue(), smtkLoader.getUser());
+                smtkLoader.incrementConceptsProcessed(1);
             }
             catch (Exception e) {
                 smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
