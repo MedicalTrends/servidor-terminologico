@@ -323,6 +323,8 @@ public class BasicConceptLoader extends EntityLoader {
 
             it.remove(); // avoids a ConcurrentModificationException
         }
+
+        smtkLoader.logTick();
     }
 
     /*

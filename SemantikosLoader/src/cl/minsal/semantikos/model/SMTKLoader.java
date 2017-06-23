@@ -32,15 +32,20 @@ public class SMTKLoader extends SwingWorker<Void, String> {
     //private static final String ENV = "test/";
     private static final String ENV = "basic/";
     private static final String ENV_DRUGS = "drugs/";
+
     private static final String SUBSTANCE = "substance/";
     private static final String MB = "MB/";
     private static final String MC = "MC/";
+    private static final String MCCE = "MCCE/";
+    private static final String GFP = "GFP/";
+    private static final String FP = "FP/";
+    private static final String PC = "PC/";
+    private static final String PCCE = "PCCE/";
 
     /*Datafiles conceptos básicos*/
     public static final String BASIC_CONCEPTS_PATH=PATH_PREFIX+ROOT+ENV+"Conceptos_VIG_SMTK.txt";
     public static final String BASIC_DESCRIPTIONS_PATH=PATH_PREFIX+ROOT+ENV+"Descripciones_VIG_STK.txt";
     public static final String BASIC_RELATIONSHIPS_PATH=PATH_PREFIX+ROOT+ENV+"Relaciones_Conceptos_VIG_STK.txt";
-
     /*Datafiles Sustancias*/
     public static final String SUBSTANCE_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+SUBSTANCE+"01_Sustancias.Base.txt";
     /*Datafiles MB*/
@@ -48,6 +53,16 @@ public class SMTKLoader extends SwingWorker<Void, String> {
     /*Datafiles MC*/
     public static final String MC_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+MC+"03_Medicamento_Clinico.Base.txt";
     public static final String MC_VIAS_ADM_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+MC+"03_Medicamento_Clinico.Via_Administracion.txt";
+    /*Datafiles MCCE*/
+    public static final String MCCE_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+MCCE+"04_Medicamento_Clinico_Con_Envase.Base.txt";
+    /*Datafiles GFP*/
+    public static final String GFP_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+GFP+"05_Grupo_Familia_Producto.Base.txt";
+    /*Datafiles FP*/
+    public static final String FP_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+FP+"06_Familia_Producto.Base.txt";
+    /*Datafiles PC*/
+    public static final String PC_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+PC+"07_Producto_Comercial.Base.txt";
+    /*Datafiles PCCE*/
+    public static final String PCCE_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+PCCE+"08_Producto_Comercial_Con_Envase.Base.txt";
 
     private CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
     private TagSMTKManager tagSMTKManager = (TagSMTKManager) RemoteEJBClientFactory.getInstance().getManager(TagSMTKManager.class);
@@ -63,9 +78,9 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
     private static final Logger logger = java.util.logging.Logger.getLogger(SMTKLoader.class.getName() );
 
-    private JTextArea infoLogs;
+    private static JTextArea infoLogs;
 
-    private JTextArea errorLogs;
+    private static JTextArea errorLogs;
 
     /** Fecha */
     private Timestamp date;
@@ -239,17 +254,23 @@ public class SMTKLoader extends SwingWorker<Void, String> {
         this.errorLogs = errorLogs;
     }
 
-    public void logInfo(LoadLog log) {
+    public static void logInfo(LoadLog log) {
         logger.info(log.toString());
         infoLogs.append(log.toString());
     }
 
-    public void logTick() {
+    public static void logTick() {
         infoLogs.append(ExtendedAscii.printChar(10004));
         infoLogs.append("\n");
     }
 
-    public void logError(LoadLog log) {
+    public static void logError(LoadLog log) {
+        logger.info(log.toString());
+        errorLogs.append(log.toString());
+        errorLogs.append("\n");
+    }
+
+    public static void logWarning(LoadLog log) {
         logger.info(log.toString());
         errorLogs.append(log.toString());
         errorLogs.append("\n");
@@ -264,6 +285,11 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             SubstanceConceptLoader substanceConceptLoader = new SubstanceConceptLoader();
             MBConceptLoader mbConceptLoader = new MBConceptLoader();
             MCConceptLoader mcConceptLoader = new MCConceptLoader();
+            MCCEConceptLoader mcceConceptLoader = new MCCEConceptLoader();
+            GFPConceptLoader gfpConceptLoader = new GFPConceptLoader();
+            FPConceptLoader fpConceptLoader = new FPConceptLoader();
+            PCConceptLoader pcConceptLoader = new PCConceptLoader();
+            PCCEConceptLoader pcceConceptLoader = new PCCEConceptLoader();
 
             /*
             initializer.checkBasicConceptsDataFiles(this);
@@ -280,8 +306,31 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             mbConceptLoader.processConcepts(this);
             */
 
+            /*
             initializer.checkMCDataFiles(this);
             mcConceptLoader.processConcepts(this);
+
+            initializer.checkMCCEDataFiles(this);
+            mcceConceptLoader.processConcepts(this);
+            */
+
+            /*
+            initializer.checkGFPDataFiles(this);
+            gfpConceptLoader.processConcepts(this);
+            */
+
+            /*
+            initializer.checkFPDataFiles(this);
+            fpConceptLoader.processConcepts(this);
+            */
+
+            initializer.checkPCDataFiles(this);
+            pcConceptLoader.processConcepts(this);
+
+            /*
+            initializer.checkPCCEDataFiles(this);
+            pcceConceptLoader.processConcepts(this);
+            */
 
             JOptionPane.showMessageDialog(null, "Carga de conceptos finalizada!");
         } catch (LoadException e1) {

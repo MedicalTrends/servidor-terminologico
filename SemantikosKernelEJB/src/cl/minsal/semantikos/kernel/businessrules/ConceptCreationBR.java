@@ -3,10 +3,7 @@ package cl.minsal.semantikos.kernel.businessrules;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
-import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinitionFactory;
-import cl.minsal.semantikos.model.relationships.TargetDefinition;
+import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.users.User;
@@ -14,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
+
+import java.util.List;
 
 import static cl.minsal.semantikos.model.users.ProfileFactory.MODELER_PROFILE;
 
@@ -35,6 +34,7 @@ public class ConceptCreationBR implements BusinessRulesContainer {
         /* Creación de acuerdo al rol */
         br001creationRights(conceptSMTK, IUser);
         br103DefinitionalGrade(conceptSMTK);
+        br104AttributesMultiplicity(conceptSMTK);
     }
 
     /**
@@ -134,6 +134,32 @@ public class ConceptCreationBR implements BusinessRulesContainer {
             }
         }
 
+    }
 
+    /**
+     * REGLA DE NEGOCIO por definir. Cada concepto debe tener un FSN
+     *
+     * @param conceptSMTK El concepto que se valida.
+     */
+    private void br104AttributesMultiplicity(ConceptSMTK conceptSMTK) {
+
+        for (RelationshipDefinition relationshipDefinition : conceptSMTK.getCategory().getRelationshipDefinitions()) {
+
+            List<Relationship> relationships = conceptSMTK.getValidRelationshipsByRelationDefinition(relationshipDefinition);
+
+            //Primero se chequean las multiplicidades de las relaciones
+            if(relationships.size()<relationshipDefinition.getMultiplicity().getLowerBoundary()) {
+                throw new BusinessRuleException("BR-UNK", "El concepto "+conceptSMTK.toString()+" viola la multiplicidad para la definición "+relationshipDefinition.toString());
+            }
+
+            //Para cada relación se chequean las multiplicidades de sus atributos
+            for (RelationshipAttributeDefinition attributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
+                for (Relationship relationship : relationships) {
+                    if (!relationship.isMultiplicitySatisfied(attributeDefinition)) {
+                        throw new BusinessRuleException("BR-UNK", "La relación "+relationship.toString()+" perteneciente al concepto "+conceptSMTK.toString()+" viola la multiplicidad para la definición "+attributeDefinition.toString());
+                    }
+                }
+            }
+        }
     }
 }

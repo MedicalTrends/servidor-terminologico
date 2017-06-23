@@ -221,4 +221,209 @@ public class Initializer extends EntityLoader {
             }
         }
     }
+
+    public void checkMCCEDataFiles(SMTKLoader smtkLoader) throws LoadException, IOException {
+
+        try {
+
+            smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles MCCE", INFO));
+
+            this.path = Paths.get(smtkLoader.MCCE_PATH);
+            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+
+            int lines = 1;
+
+            /**
+             * Recuperar el header del archivo
+             */
+            String header = reader.readLine();
+
+            if(!assertHeader((List<String>) (Object) Arrays.asList(MCCEConceptLoader.mcceConceptFields.keySet().toArray()),
+                    Arrays.asList(header.split(separator)))) {
+                throw new LoadException(smtkLoader.MCCE_PATH, null, "El encabezado del archivo no es válido", ERROR);
+            }
+
+            while (reader.readLine() != null) lines++;
+            reader.close();
+
+            smtkLoader.setConceptsTotal(lines-1);
+            smtkLoader.setConceptsProcessed(0);
+
+            smtkLoader.logTick();
+
+        } catch (IOException e) {
+            throw e;
+        } catch (LoadException e) {
+            if(e.isSevere()) {
+                throw e;
+            }
+            else {
+                smtkLoader.logError(e);
+            }
+        }
+    }
+
+    public void checkGFPDataFiles(SMTKLoader smtkLoader) throws LoadException, IOException {
+
+        try {
+
+            smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles GFP", INFO));
+
+            this.path = Paths.get(smtkLoader.GFP_PATH);
+            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+
+            int lines = 1;
+
+            /**
+             * Recuperar el header del archivo
+             */
+            String header = reader.readLine();
+
+            if(!assertHeader((List<String>) (Object) Arrays.asList(GFPConceptLoader.gfpConceptFields.keySet().toArray()),
+                    Arrays.asList(header.split(separator)))) {
+                throw new LoadException(smtkLoader.GFP_PATH, null, "El encabezado del archivo no es válido", ERROR);
+            }
+
+            while (reader.readLine() != null) lines++;
+            reader.close();
+
+            smtkLoader.setConceptsTotal(lines-1);
+            smtkLoader.setConceptsProcessed(0);
+
+            smtkLoader.logTick();
+
+        } catch (IOException e) {
+            throw e;
+        } catch (LoadException e) {
+            if(e.isSevere()) {
+                throw e;
+            }
+            else {
+                smtkLoader.logError(e);
+            }
+        }
+    }
+
+    public void checkFPDataFiles(SMTKLoader smtkLoader) throws LoadException, IOException {
+
+        try {
+
+            smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles GFP", INFO));
+
+            this.path = Paths.get(smtkLoader.FP_PATH);
+            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+
+            int lines = 1;
+
+            /**
+             * Recuperar el header del archivo
+             */
+            String header = reader.readLine();
+
+            if(!assertHeader((List<String>) (Object) Arrays.asList(FPConceptLoader.fpConceptFields.keySet().toArray()),
+                    Arrays.asList(header.split(separator)))) {
+                throw new LoadException(smtkLoader.FP_PATH, null, "El encabezado del archivo no es válido", ERROR);
+            }
+
+            while (reader.readLine() != null) lines++;
+            reader.close();
+
+            smtkLoader.setConceptsTotal(lines-1);
+            smtkLoader.setConceptsProcessed(0);
+
+            smtkLoader.logTick();
+
+        } catch (IOException e) {
+            throw e;
+        } catch (LoadException e) {
+            if(e.isSevere()) {
+                throw e;
+            }
+            else {
+                smtkLoader.logError(e);
+            }
+        }
+    }
+
+    public void checkPCDataFiles(SMTKLoader smtkLoader) throws LoadException, IOException {
+
+        try {
+
+            smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles PC", INFO));
+
+            this.path = Paths.get(smtkLoader.PC_PATH);
+            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+
+            int lines = 1;
+
+            /**
+             * Recuperar el header del archivo
+             */
+            String header = reader.readLine();
+
+            if(!assertHeader((List<String>) (Object) Arrays.asList(PCConceptLoader.pcConceptFields.keySet().toArray()),
+                    Arrays.asList(header.split(separator)))) {
+                throw new LoadException(smtkLoader.PC_PATH, null, "El encabezado del archivo no es válido", ERROR);
+            }
+
+            while (reader.readLine() != null) lines++;
+            reader.close();
+
+            smtkLoader.setConceptsTotal(lines-1);
+            smtkLoader.setConceptsProcessed(0);
+
+            smtkLoader.logTick();
+
+        } catch (IOException e) {
+            throw e;
+        } catch (LoadException e) {
+            if(e.isSevere()) {
+                throw e;
+            }
+            else {
+                smtkLoader.logError(e);
+            }
+        }
+    }
+
+    public void checkPCCEDataFiles(SMTKLoader smtkLoader) throws LoadException, IOException {
+
+        try {
+
+            smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles PCCE", INFO));
+
+            this.path = Paths.get(smtkLoader.PCCE_PATH);
+            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+
+            int lines = 1;
+
+            /**
+             * Recuperar el header del archivo
+             */
+            String header = reader.readLine();
+
+            if(!assertHeader((List<String>) (Object) Arrays.asList(PCCEConceptLoader.pcceConceptFields.keySet().toArray()),
+                    Arrays.asList(header.split(separator)))) {
+                throw new LoadException(smtkLoader.PC_PATH, null, "El encabezado del archivo no es válido", ERROR);
+            }
+
+            while (reader.readLine() != null) lines++;
+            reader.close();
+
+            smtkLoader.setConceptsTotal(lines-1);
+            smtkLoader.setConceptsProcessed(0);
+
+            smtkLoader.logTick();
+
+        } catch (IOException e) {
+            throw e;
+        } catch (LoadException e) {
+            if(e.isSevere()) {
+                throw e;
+            }
+            else {
+                smtkLoader.logError(e);
+            }
+        }
+    }
 }

@@ -165,8 +165,10 @@ public class RelationshipDefinition implements Serializable {
 
     @Override
     public String toString() {
-        return "id: " + id + ". [" + super.toString() + "]";
+        //return "id: " + id + ". [" + super.toString() + "]";
+        return "id: " + id + ". [" + name + "]";
     }
+
 
 
     public RelationshipAttributeDefinition getOrderAttributeDefinition() {

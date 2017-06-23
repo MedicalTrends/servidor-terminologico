@@ -93,4 +93,10 @@ public class RelationshipAttributeDefinition implements Serializable {
     public int hashCode() {
         return new Long(id).hashCode();
     }
+
+    @Override
+    public String toString() {
+        //return "id: " + id + ". [" + super.toString() + "]";
+        return "id: " + id + ". [" + name + "]";
+    }
 }

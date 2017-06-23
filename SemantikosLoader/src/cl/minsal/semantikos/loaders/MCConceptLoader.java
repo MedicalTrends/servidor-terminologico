@@ -101,7 +101,7 @@ public class MCConceptLoader extends EntityLoader {
 
     public void loadConceptFromFileLine(String line, User user) throws LoadException {
 
-        String[] tokens = line.split(separator);
+        String[] tokens = line.split(separator,-1);
         long id = Long.parseLong(tokens[mcConceptFields.get("CONCEPTO_ID")]);
 
         try {
@@ -287,24 +287,38 @@ public class MCConceptLoader extends EntityLoader {
                 }
 
                 // Obteniendo Cantidad y Unidad Potencia
-                if(!StringUtils.isEmpty(substanceTokens[1])) {
+                if(!StringUtils.isEmpty(substanceTokens[1].trim())) {
 
-                    String[] potenciaTokens = substanceTokens[1].split(" ");
+                    String[] potenciaTokens = substanceTokens[1].trim().split(" ");
+
+                    BasicTypeValue cantidadPotencia;
+                    int unitIndex = 1;
 
                     // Cantidad
-                    BasicTypeValue cantidadPotencia = new BasicTypeValue(Integer.parseInt(potenciaTokens[0].trim()));
+                    try {
+                        cantidadPotencia = new BasicTypeValue(Float.parseFloat(potenciaTokens[0].trim().replace(",",".")));
+                    }
+                    catch (NumberFormatException e) {
+                        cantidadPotencia = new BasicTypeValue(1.0);
+                        unitIndex = 0;
+                    }
 
-                    attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Cantidad de Potencia").get(0);
+
+                    attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Cantidad Potencia").get(0);
 
                     ra = new RelationshipAttribute(attDef, relationshipSubstance, cantidadPotencia);
                     relationshipSubstance.getRelationshipAttributes().add(ra);
 
                     //Unidad
-                    attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Unidad de Potencia").get(0);
+                    attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Unidad Potencia").get(0);
 
                     helperTable = (HelperTable) attDef.getTargetDefinition();
 
-                    List<HelperTableRow> unidadPotencia = helperTableManager.searchRows(helperTable, potenciaTokens[1].trim());
+                    List<String> columnNames = new ArrayList<>();
+
+                    columnNames.add("DESCRIPCION ABREVIADA");
+
+                    List<HelperTableRow> unidadPotencia = helperTableManager.searchRows(helperTable, potenciaTokens[unitIndex].trim(), columnNames);
 
                     ra = new RelationshipAttribute(attDef, relationshipSubstance, unidadPotencia.get(0));
                     relationshipSubstance.getRelationshipAttributes().add(ra);
@@ -312,24 +326,38 @@ public class MCConceptLoader extends EntityLoader {
                 }
 
                 // Obteniendo PP
-                if(!StringUtils.isEmpty(substanceTokens[2])) {
+                if(!StringUtils.isEmpty(substanceTokens[2].trim())) {
 
-                    String[] partidoPorTokens = substanceTokens[2].split(" ");
+                    String[] partidoPorTokens = substanceTokens[2].trim().split(" ");
+
+                    BasicTypeValue cantidadPartidoPor;
+
+                    int unitIndex = 1;
 
                     // Cantidad
-                    BasicTypeValue cantidadPartidoPor = new BasicTypeValue(Integer.parseInt(partidoPorTokens[0].trim()));
+                    try {
+                        cantidadPartidoPor = new BasicTypeValue(Float.parseFloat(partidoPorTokens[0].trim().replace(",",".")));
+                    }
+                    catch (NumberFormatException e) {
+                        cantidadPartidoPor = new BasicTypeValue(1.0);
+                        unitIndex = 0;
+                    }
 
-                    attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Cantidad Partido Por").get(0);
+                    attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Cantidad PP").get(0);
 
                     ra = new RelationshipAttribute(attDef, relationshipSubstance, cantidadPartidoPor);
                     relationshipSubstance.getRelationshipAttributes().add(ra);
 
                     //Unidad
-                    attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Unidad Partido Por").get(0);
+                    attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Unidad PP").get(0);
 
                     helperTable = (HelperTable) attDef.getTargetDefinition();
 
-                    List<HelperTableRow> unidadPartidoPor = helperTableManager.searchRows(helperTable, partidoPorTokens[1].trim());
+                    List<String> columnNames = new ArrayList<>();
+
+                    columnNames.add("DESCRIPCION ABREVIADA");
+
+                    List<HelperTableRow> unidadPartidoPor = helperTableManager.searchRows(helperTable, partidoPorTokens[unitIndex].trim(), columnNames);
 
                     ra = new RelationshipAttribute(attDef, relationshipSubstance, unidadPartidoPor.get(0));
                     relationshipSubstance.getRelationshipAttributes().add(ra);
@@ -380,7 +408,7 @@ public class MCConceptLoader extends EntityLoader {
                 List<Description> mb = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mbName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Básico")}), EMPTY_LIST);
 
                 if(mb.isEmpty()) {
-                    throw new LoadException(path.toString(), id, "No existe un Medicamento Básico con preferida: "+mbName, ERROR);
+                    throw new LoadException(path.toString(), id, "No existe un MB con preferida: "+mbName, ERROR);
                 }
 
                 if(!mb.get(0).getConceptSMTK().isModeled()) {
@@ -419,7 +447,19 @@ public class MCConceptLoader extends EntityLoader {
 
                 List<HelperTableRow> ffaType = helperTableManager.searchRows(helperTable, ffaTypeName);
 
+                if(ffaType.isEmpty()) {
+                    throw new LoadException(path.toString(), id, "No existe un tipo FFA con glosa: "+ffaTypeName, ERROR);
+                }
+
                 ra = new RelationshipAttribute(attDef, relationshipFFA, ffaType.get(0));
+                relationshipFFA.getRelationshipAttributes().add(ra);
+
+                // Orden
+                BasicTypeValue order = new BasicTypeValue(1);
+
+                attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Orden").get(0);
+
+                ra = new RelationshipAttribute(attDef, relationshipFFA, order);
                 relationshipFFA.getRelationshipAttributes().add(ra);
 
                 conceptSMTK.addRelationship(relationshipFFA);
@@ -452,7 +492,7 @@ public class MCConceptLoader extends EntityLoader {
 
             if(!StringUtils.isEmpty(assistanceUnitName)) {
 
-                relationshipDefinition = category.findRelationshipDefinitionsByName("Unidad de U Asist").get(0);
+                relationshipDefinition = category.findRelationshipDefinitionsByName("Unidad de UAsist").get(0);
 
                 helperTable = (HelperTable) relationshipDefinition.getTargetDefinition();
 
@@ -471,11 +511,11 @@ public class MCConceptLoader extends EntityLoader {
 
             String volumeName = tokens[mcConceptFields.get("VOLUMEN_TOTAL_CANTIDAD")];
 
-            if(!volumeName.isEmpty()) {
+            if(!StringUtils.isEmpty(volumeName)) {
 
                 relationshipDefinition = category.findRelationshipDefinitionsByName("Cantidad de Volumen Total").get(0);
 
-                basicTypeValue = new BasicTypeValue(new Integer(volumeName.replace(",",".")));
+                basicTypeValue = new BasicTypeValue(Float.parseFloat(volumeName.replace(",",".")));
 
                 Relationship relationshipVolume = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
 
@@ -483,6 +523,10 @@ public class MCConceptLoader extends EntityLoader {
                 attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Unidad de Volumen").get(0);
 
                 String volumeUnitName = tokens[mcConceptFields.get("VOLUMEN_TOTAL_UNIDAD_DESC")];
+
+                if(volumeUnitName.isEmpty()) {
+                    throw new LoadException(path.toString(), id, "No se ha especificado una unidad para esta cantidad de volumen total: "+volumeName, ERROR);
+                }
 
                 helperTable = (HelperTable) attDef.getTargetDefinition();
 
@@ -513,7 +557,7 @@ public class MCConceptLoader extends EntityLoader {
 
             String atcName = tokens[mcConceptFields.get("ATC_DESCRIPCION_DESC")];
 
-            if(!StringUtils.isEmpty(assistanceUnitName)) {
+            if(!StringUtils.isEmpty(atcName)) {
 
                 relationshipDefinition = category.findRelationshipDefinitionsByName("ATC").get(0);
 
@@ -526,25 +570,29 @@ public class MCConceptLoader extends EntityLoader {
                 List<HelperTableRow> atc = helperTableManager.searchRows(helperTable, atcName, columnNames);
 
                 if(atc.isEmpty()) {
-                    throw new LoadException(path.toString(), id, "No existe un ATC con glosa: "+atcName, ERROR);
+                    SMTKLoader.logError(new LoadException(path.toString(), id, "No existe un ATC con código: "+atcName, ERROR));
+                    //throw new LoadException(path.toString(), id, "No existe un ATC con código: "+atcName, ERROR);
+                }
+                else {
+                    Relationship relationshipATC = new Relationship(conceptSMTK, atc.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+
+                    conceptSMTK.addRelationship(relationshipATC);
                 }
 
-                Relationship relationshipATC = new Relationship(conceptSMTK, atc.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
-
-                conceptSMTK.addRelationship(relationshipATC);
             }
 
             conceptSMTKMap.put(id, conceptSMTK);
         }
         catch (Exception e) {
             throw new LoadException(path.toString(), id, "Error desconocido: "+e.toString(), ERROR);
+
         }
 
     }
 
     public void loadAdministrationVias(String line) throws LoadException {
 
-        String[] tokens = line.split(separator);
+        String[] tokens = line.split(separator,-1);
 
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
         long id = Long.parseLong(tokens[admViasFields.get("FK_CCTNU_CONCEPTO_ID")]);
@@ -553,7 +601,7 @@ public class MCConceptLoader extends EntityLoader {
 
             Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico");
 
-            long idConceptSMTK = Long.parseLong(tokens[admViasFields.get("STK_CONCEPTOORIGEN")]);
+            long idConceptSMTK = id;
 
             RelationshipDefinition relationshipDefinition;
 
@@ -578,11 +626,11 @@ public class MCConceptLoader extends EntityLoader {
 
             /*Recuperando Unidad de UAsist*/
 
-            String admViaName = tokens[mcConceptFields.get("CCTVA_DESCRIPCION_USUARIO")];
+            String admViaName = tokens[admViasFields.get("CCTVA_DESCRIPCION_USUARIO")];
 
-            if(!admViaName.isEmpty()) {
+            if(!admViaName.trim().isEmpty()) {
 
-                relationshipDefinition = category.findRelationshipDefinitionsByName("Unidad de U Asist").get(0);
+                relationshipDefinition = category.findRelationshipDefinitionsByName("Vía Administración").get(0);
 
                 helperTable = (HelperTable) relationshipDefinition.getTargetDefinition();
 
@@ -594,7 +642,7 @@ public class MCConceptLoader extends EntityLoader {
 
                 Relationship relationshipAdmVia = new Relationship(conceptSMTK, admVia.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
 
-                // Cantidad
+                // Orden
                 BasicTypeValue order = new BasicTypeValue(admVias.get(idConceptSMTK).size()+1);
 
                 attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Orden").get(0);
@@ -613,7 +661,7 @@ public class MCConceptLoader extends EntityLoader {
 
     public void loadAllConcepts(SMTKLoader smtkLoader) {
 
-        smtkLoader.logInfo(new LoadLog("Comprobando Conceptos Básicos", INFO));
+        smtkLoader.logInfo(new LoadLog("Comprobando Conceptos Fármacos - Medicamento Clínico", INFO));
 
         try {
 
@@ -624,6 +672,7 @@ public class MCConceptLoader extends EntityLoader {
             while ((line = reader.readLine()) != null) {
                 try {
                     loadConceptFromFileLine(line, smtkLoader.getUser());
+                    smtkLoader.incrementConceptsProcessed(1);
                 }
                 catch (LoadException e) {
                     smtkLoader.logError(e);
@@ -657,7 +706,9 @@ public class MCConceptLoader extends EntityLoader {
 
     public void persistAllConcepts(SMTKLoader smtkLoader) {
 
-        smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos Fármacos - Sustancia", INFO));
+        smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos Fármacos - Medicamento Clínico", INFO));
+
+        smtkLoader.setConceptsProcessed(0);
 
         Iterator it = conceptSMTKMap.entrySet().iterator();
 
@@ -676,6 +727,8 @@ public class MCConceptLoader extends EntityLoader {
 
             it.remove(); // avoids a ConcurrentModificationException
         }
+
+        smtkLoader.logTick();
     }
 
     public void processConcepts(SMTKLoader smtkLoader) {

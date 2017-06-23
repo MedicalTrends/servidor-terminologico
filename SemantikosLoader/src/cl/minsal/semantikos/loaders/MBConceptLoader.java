@@ -266,6 +266,8 @@ public class MBConceptLoader extends EntityLoader {
 
         smtkLoader.logInfo(new LoadLog("Comprobando Conceptos MB", INFO));
 
+        smtkLoader.setConceptsProcessed(0);
+
         try {
 
             initReader(smtkLoader.MB_PATH);
@@ -275,6 +277,7 @@ public class MBConceptLoader extends EntityLoader {
             while ((line = reader.readLine()) != null) {
                 try {
                     loadConceptFromFileLine(line, smtkLoader.getUser());
+                    smtkLoader.incrementConceptsProcessed(1);
                 }
                 catch (LoadException e) {
                     smtkLoader.logError(e);
@@ -296,6 +299,8 @@ public class MBConceptLoader extends EntityLoader {
 
         smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos Fármacos - MB", INFO));
 
+        smtkLoader.setConceptsProcessed(0);
+
         Iterator it = conceptSMTKMap.entrySet().iterator();
 
         while (it.hasNext()) {
@@ -313,6 +318,8 @@ public class MBConceptLoader extends EntityLoader {
 
             it.remove(); // avoids a ConcurrentModificationException
         }
+
+        smtkLoader.logTick();
     }
 
     public void processConcepts(SMTKLoader smtkLoader) {
