@@ -49,7 +49,6 @@ public class LoaderView {
 
     public static void main(String[] args) {
         JFrame jFrame = new JFrame("Semantikos - Carga Inicial");
-        LoaderView loaderView = new LoaderView();
 
         double offset=0.595;
         jFrame.setSize(new Dimension((int)(0.3*java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()),
@@ -57,6 +56,7 @@ public class LoaderView {
         jFrame.setMinimumSize(new Dimension((int)(0.3*java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()),
                 (int)(offset*java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight())));
 
+        LoaderView loaderView = new LoaderView();
         jFrame.setContentPane(loaderView.panelMain);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.pack();

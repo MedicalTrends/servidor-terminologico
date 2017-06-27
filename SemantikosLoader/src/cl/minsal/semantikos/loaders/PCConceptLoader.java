@@ -460,7 +460,7 @@ public class PCConceptLoader extends EntityLoader {
 
         try {
 
-            Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico");
+            Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Producto Comercial");
 
             long idConceptSMTK = id;
 
@@ -553,8 +553,7 @@ public class PCConceptLoader extends EntityLoader {
             initReader(smtkLoader.PC_PATH);
 
             while ((line = reader.readLine()) != null) {
-                try {
-                    loadBioequivalents(line);
+                try {loadBioequivalents(line);
                     smtkLoader.incrementConceptsProcessed(1);
                 }
                 catch (LoadException e) {

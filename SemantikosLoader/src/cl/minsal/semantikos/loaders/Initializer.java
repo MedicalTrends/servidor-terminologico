@@ -308,7 +308,7 @@ public class Initializer extends EntityLoader {
 
         try {
 
-            smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles GFP", INFO));
+            smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles FP", INFO));
 
             this.path = Paths.get(smtkLoader.FP_PATH);
             reader = Files.newBufferedReader(this.path, Charset.defaultCharset());

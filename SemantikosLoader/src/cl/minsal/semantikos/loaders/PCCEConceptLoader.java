@@ -278,7 +278,7 @@ public class PCCEConceptLoader extends EntityLoader {
 
         try {
 
-            initReader(smtkLoader.PC_PATH);
+            initReader(smtkLoader.PCCE_PATH);
 
             String line;
 

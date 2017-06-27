@@ -29,7 +29,7 @@ public class SMTKLoader extends SwingWorker<Void, String> {
     public static final String PATH_PREFIX = Paths.get(".").toAbsolutePath().normalize().toString().concat("/SemantikosLoader/resources/");
 
     private static final String ROOT = "datafiles/";
-    //private static final String ENV = "test/";
+    //private static final String ENV_DRUGS = "test/";
     private static final String ENV = "basic/";
     private static final String ENV_DRUGS = "drugs/";
 
@@ -324,13 +324,13 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             fpConceptLoader.processConcepts(this);
             */
 
+            /*
             initializer.checkPCDataFiles(this);
             pcConceptLoader.processConcepts(this);
+            */
 
-            /*
             initializer.checkPCCEDataFiles(this);
             pcceConceptLoader.processConcepts(this);
-            */
 
             JOptionPane.showMessageDialog(null, "Carga de conceptos finalizada!");
         } catch (LoadException e1) {
