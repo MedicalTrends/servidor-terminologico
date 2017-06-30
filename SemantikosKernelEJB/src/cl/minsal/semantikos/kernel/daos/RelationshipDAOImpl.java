@@ -1,6 +1,8 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.daos.mappers.RelationshipMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
@@ -31,6 +33,9 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
     @EJB
     private RelationshipFactory relationshipFactory;
+
+    @EJB
+    private RelationshipMapper relationshipMapper;
 
     @EJB
     private TargetDAO targetDAO;
@@ -325,20 +330,25 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     }
 
     @Override
-    public List<Relationship> getRelationshipsBySourceConcept(long idConcept) {
+    public List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK conceptSMTK) {
 
         ConnectionBD connect = new ConnectionBD();
         String sql = "{call semantikos.get_relationships_by_source_concept_id(?)}";
-        String resultJSON;
+        //String resultJSON;
+
+        Relationship relationship;
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, idConcept);
+            call.setLong(1, conceptSMTK.getId());
             call.execute();
 
             ResultSet rs = call.getResultSet();
             if (rs.next()) {
-                resultJSON = rs.getString(1);
+                //resultJSON = rs.getString(1);
+
+                relationship = relationshipMapper.
             } else {
                 String errorMsg = "No se obtuvo respuesta desde la base de datos.";
                 logger.error(errorMsg);

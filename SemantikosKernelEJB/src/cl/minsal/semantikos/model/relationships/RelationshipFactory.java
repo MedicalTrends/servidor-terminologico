@@ -151,12 +151,12 @@ public class RelationshipFactory {
         /* Definición de la relación y sus atributos */
         long idRelationshipDefinition = relationshipDTO.idRelationshipDefinition;
         RelationshipDefinition relationshipDefinition = relDefDAO.getRelationshipDefinitionByID(idRelationshipDefinition);
-        List<RelationshipAttribute> relationshipAttributes = relationshipAttributeDAO.getRelationshipAttribute(relationshipDTO.getId());
+        //List<RelationshipAttribute> relationshipAttributes = relationshipAttributeDAO.getRelationshipAttribute(relationshipDTO.getId());
         relationshipDefinition.setRelationshipAttributeDefinitions(relationshipDefinitionDAO.getRelationshipAttributeDefinitionsByRelationshipDefinition(relationshipDefinition));
 
         /* El target que puede ser básico, smtk, tablas, crossmaps o snomed-ct */
         Relationship relationship = createRelationshipByTargetType(relationshipDTO, sourceConceptSMTK, relationshipDefinition);
-        relationship.setRelationshipAttributes(relationshipAttributes);
+        //relationship.setRelationshipAttributes(relationshipAttributes);
         relationship.setValidityUntil(relationshipDTO.getValidityUntil());
         relationship.setCreationDate(relationshipDTO.getCreationDate());
         return relationship;

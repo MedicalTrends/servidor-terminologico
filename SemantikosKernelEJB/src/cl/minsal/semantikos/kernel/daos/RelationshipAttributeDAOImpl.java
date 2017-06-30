@@ -79,7 +79,7 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
     }
 
     @Override
-    public List<RelationshipAttribute> getRelationshipAttribute(long id) {
+    public List<RelationshipAttribute> getRelationshipAttribute(Relationship relationship) {
 
         ConnectionBD connect = new ConnectionBD();
 
@@ -90,13 +90,13 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, id);
+            call.setLong(1, relationship.getId());
             call.execute();
 
             rs = call.getResultSet();
 
             while (rs.next()) {
-                relationshipAttributeList.add(createRelationshipAttribute(rs));
+                relationshipAttributeList.add(createRelationshipAttributeFromResultSet(rs, relationship));
             }
             rs.close();
         } catch (SQLException e) {
@@ -106,12 +106,14 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
         return relationshipAttributeList;
     }
 
-    private RelationshipAttribute createRelationshipAttribute(ResultSet rs) throws SQLException {
+    private RelationshipAttribute createRelationshipAttributeFromResultSet(ResultSet rs, Relationship relationship) throws SQLException {
 
         Target target = targetDAO.getTargetByID(rs.getLong("id_destiny"));
-        Relationship relationship = relationshipDAO.getRelationshipByID(rs.getLong("id_relationship"));
+        //Relationship relationship = relationshipDAO.getRelationshipByID(rs.getLong("id_relationship"));
 
-        RelationshipAttributeDefinition relationshipAttributeDefinition = relationshipDefinitionDAO.getRelationshipAttributeDefinitionBy(rs.getLong("id_relation_attribute_definition")) ;
+        //RelationshipAttributeDefinition relationshipAttributeDefinition = relationshipDefinitionDAO.getRelationshipAttributeDefinitionBy(rs.getLong("id_relation_attribute_definition")) ;
+        String relationshipDefinitionName = relationship.getRelationshipDefinition().getName();
+        RelationshipAttributeDefinition relationshipAttributeDefinition = relationship.getRelationshipDefinition().findRelationshipAttributeDefinitionsByName(relationshipDefinitionName).get(0);
 
         RelationshipAttribute relationshipAttribute = new RelationshipAttribute(relationshipAttributeDefinition, relationship, target);
         relationshipAttribute.setIdRelationshipAttribute(rs.getLong("id"));

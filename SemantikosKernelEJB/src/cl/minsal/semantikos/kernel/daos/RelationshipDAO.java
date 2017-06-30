@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
@@ -89,11 +90,11 @@ public interface RelationshipDAO {
      * Este método es responsable de recuperar las relaciones donde el concepto de origen coincide con el
      * <code>idConcept</code> dado como argumento.
      *
-     * @param idConcept El id del concepto cuyas relaciones se quiere recuperar.
+     * @param conceptSMTK El id del concepto cuyas relaciones se quiere recuperar.
      *
      * @return Una lista con las relaciones del concepto.
      */
-    List<Relationship> getRelationshipsBySourceConcept(long idConcept);
+    List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK conceptSMTK);
 
     /**
      * Este método es responsable de recuperar las relaciones donde el concepto de origen coincide con el
