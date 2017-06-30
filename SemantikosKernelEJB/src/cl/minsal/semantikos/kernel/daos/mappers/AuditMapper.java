@@ -49,7 +49,7 @@ public class AuditMapper {
      */
     public List<ConceptAuditAction> createAuditActionsFromResultSet(ResultSet rs) {
 
-        List<ConceptAuditAction> conceptAuditActions =new ArrayList<>();
+        List<ConceptAuditAction> conceptAuditActions = new ArrayList<>();
 
         try {
 

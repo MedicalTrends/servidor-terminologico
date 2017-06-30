@@ -437,7 +437,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
     @Override
     public List<Relationship> loadRelationships(ConceptSMTK concept) {
-        List<Relationship> relationships = relationshipDAO.getRelationshipsBySourceConcept(concept.getId());
+        List<Relationship> relationships = relationshipDAO.getRelationshipsBySourceConcept(concept);
         /* Se agregan las relaciones al componente */
         concept.setRelationships(relationships);
         /* Se agregan los crossmaps indirectos al componente */
@@ -450,7 +450,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
     @Override
     public List<Relationship> getRelationships(ConceptSMTK concept) {
-        return relationshipDAO.getRelationshipsBySourceConcept(concept.getId());
+        return relationshipDAO.getRelationshipsBySourceConcept(concept);
     }
 
     @Override

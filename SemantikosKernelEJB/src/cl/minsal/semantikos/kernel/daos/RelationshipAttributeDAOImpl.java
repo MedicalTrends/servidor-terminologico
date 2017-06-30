@@ -112,8 +112,9 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
         //Relationship relationship = relationshipDAO.getRelationshipByID(rs.getLong("id_relationship"));
 
         //RelationshipAttributeDefinition relationshipAttributeDefinition = relationshipDefinitionDAO.getRelationshipAttributeDefinitionBy(rs.getLong("id_relation_attribute_definition")) ;
-        String relationshipDefinitionName = relationship.getRelationshipDefinition().getName();
-        RelationshipAttributeDefinition relationshipAttributeDefinition = relationship.getRelationshipDefinition().findRelationshipAttributeDefinitionsByName(relationshipDefinitionName).get(0);
+        long relationshipAttributeDefinitionId = rs.getLong("Id_relation_attribute_definition");
+
+        RelationshipAttributeDefinition relationshipAttributeDefinition = relationship.getRelationshipDefinition().findRelationshipAttributeDefinitionsById(relationshipAttributeDefinitionId).get(0);
 
         RelationshipAttribute relationshipAttribute = new RelationshipAttribute(relationshipAttributeDefinition, relationship, target);
         relationshipAttribute.setIdRelationshipAttribute(rs.getLong("id"));

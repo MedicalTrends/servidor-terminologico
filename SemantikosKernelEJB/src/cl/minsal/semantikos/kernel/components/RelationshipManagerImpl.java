@@ -133,30 +133,6 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
-    public Relationship[] findRelationsByOriginConcept(long id) {
-        // TODO: Terminar esto
-        return new Relationship[0];
-    }
-
-    @Override
-    public List<Relationship> findRelationsByTargetSCTConcept(ConceptSCT conceptSCT) {
-        return relationshipDAO.getRelationshipsToCSTConcept(conceptSCT);
-    }
-
-    @Override
-    public List<ConceptSMTK> getTargetConceptsByCategory(ConceptSMTK conceptSMTK, Category category) {
-
-        /* Se espera, por defecto, que el concepto no traiga sus relaciones cargadas, pero se verificará */
-        if (conceptSMTK.getRelationships().isEmpty()) {
-            List<Relationship> relationshipsBySourceConcept = this.getRelationshipsBySourceConcept(conceptSMTK);
-            conceptSMTK.setRelationships(relationshipsBySourceConcept);
-        }
-
-        /* Se retornan los conceptos que son el destino de relaciones SMTK */
-        return conceptSMTK.getRelatedSMTKConceptsBy(category);
-    }
-
-    @Override
     public void updateRelationship(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship originalRelationship, @NotNull Relationship editedRelationship, @NotNull User user) {
 
         /* Se aplican las reglas de negocio */
@@ -289,15 +265,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
     @Override
     public List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK concept) {
-        return relationshipDAO.getRelationshipsBySourceConcept(concept.getId());
+        return relationshipDAO.getRelationshipsBySourceConcept(concept);
     }
 
-    @Override
-    public Map<Long, ArrayList<Relationship>> getRelationshipsBySourceConcepts(List<ConceptSMTK> concept) {
-        List<Long> conceptIds = new ArrayList<>();
-        for (ConceptSMTK conceptSMTK : concept) {
-            conceptIds.add(conceptSMTK.getId());
-        }
-        return relationshipDAO.getRelationshipsBySourceConcepts(conceptIds);
-    }
 }

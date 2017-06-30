@@ -148,7 +148,6 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         }
     }
 
-
     @Override
     public void invalidate(Relationship relationship) {
         ConnectionBD connect = new ConnectionBD();
@@ -163,37 +162,6 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         } catch (SQLException e) {
             throw new EJBException(e);
         }
-    }
-
-    @Override
-    public List<Relationship> getRelationshipsToCSTConcept(ConceptSCT destinyConceptSCT) {
-
-        long idDestinyConceptSCT = destinyConceptSCT.getId();
-
-        ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_relationships_to_concept_sct(?)}";
-        String resultJSON;
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.setLong(1, idDestinyConceptSCT);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-
-            if (rs.next()) {
-                resultJSON = rs.getString(1);
-            } else {
-                String errorMsg = "La relacion no fue creada. Esta es una situación imposible. Contactar a Desarrollo";
-                logger.error(errorMsg);
-                throw new IllegalArgumentException(errorMsg);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            throw new EJBException(e);
-        }
-
-        return relationshipFactory.createRelationshipsFromJSON(resultJSON);
     }
 
     @Override
@@ -259,7 +227,9 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         ConnectionBD connect = new ConnectionBD();
         String sql = "{call semantikos.find_relationships_like(?, ?)}";
-        String resultJSON;
+
+        List<Relationship> relationships = new ArrayList<>();
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -283,50 +253,15 @@ public class RelationshipDAOImpl implements RelationshipDAO {
             call.execute();
 
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                resultJSON = rs.getString(1);
-            } else {
-                String errorMsg = "Ocurrió un error en la recuperación de los datos. Contactar a Desarrollo";
-                logger.error(errorMsg);
-                throw new IllegalArgumentException(errorMsg);
-            }
+
+            relationships = relationshipMapper.createRelationshipFromResultSet(rs, null);
+
             rs.close();
         } catch (SQLException e) {
             throw new EJBException(e);
         }
 
-        return relationshipFactory.createRelationshipsFromJSON(resultJSON);
-    }
-
-    @Override
-    public List<Relationship> getRelationshipsByRelationshipDefinition(RelationshipDefinition relationshipDefinition) {
-
-        ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_relationships_by_definition(?)}";
-        String resultJSON;
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.setLong(1, relationshipDefinition.getId());
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                resultJSON = rs.getString(1);
-                if (resultJSON == null) {
-                    return Collections.emptyList();
-                }
-            } else {
-                String errorMsg = "La relación no fue creada. Esta es una situación imposible. Contactar a Desarrollo";
-                logger.error(errorMsg);
-                throw new IllegalArgumentException(errorMsg);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            throw new EJBException(e);
-        }
-
-        return relationshipFactory.createRelationshipsFromJSON(resultJSON);
+        return relationships;
     }
 
     @Override
@@ -336,7 +271,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         String sql = "{call semantikos.get_relationships_by_source_concept_id(?)}";
         //String resultJSON;
 
-        Relationship relationship;
+        List<Relationship> relationships = new ArrayList<>();
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
@@ -345,63 +280,15 @@ public class RelationshipDAOImpl implements RelationshipDAO {
             call.execute();
 
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                //resultJSON = rs.getString(1);
 
-                relationship = relationshipMapper.
-            } else {
-                String errorMsg = "No se obtuvo respuesta desde la base de datos.";
-                logger.error(errorMsg);
-                throw new IllegalArgumentException(errorMsg);
-            }
+            relationships = relationshipMapper.createRelationshipFromResultSet(rs, conceptSMTK);
+
             rs.close();
         } catch (SQLException e) {
             throw new EJBException(e);
         }
 
-        return relationshipFactory.createRelationshipsFromJSON(resultJSON);
-    }
-
-    @Override
-    public Map<Long, ArrayList<Relationship>> getRelationshipsBySourceConcepts(List<Long> idsConcept) {
-
-        ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_relationships_by_source_concept_ids(?)}";
-        String resultJSON;
-        Map<Long, ArrayList<Relationship>> relationshipsMap = new HashMap<>();
-
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.setArray(1, connection.createArrayOf("bigint", idsConcept.toArray()));
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                resultJSON = rs.getString(1);
-            } else {
-                String errorMsg = "No se obtuvo respuesta desde la base de datos.";
-                logger.error(errorMsg);
-                throw new IllegalArgumentException(errorMsg);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            throw new EJBException(e);
-        }
-
-        List<Relationship> relationships = relationshipFactory.createRelationshipsFromJSON(resultJSON);
-
-        for (Relationship relationship : relationships) {
-            if(relationshipsMap.containsKey(relationship.getSourceConcept().getId())) {
-                relationshipsMap.get(relationship.getSourceConcept().getId()).add(relationship);
-            }
-            else {
-                relationshipsMap.put(relationship.getSourceConcept().getId(), new ArrayList<Relationship>());
-                relationshipsMap.get(relationship.getSourceConcept().getId()).add(relationship);
-            }
-        }
-
-        return relationshipsMap;
+        return relationships;
     }
 
     @Override

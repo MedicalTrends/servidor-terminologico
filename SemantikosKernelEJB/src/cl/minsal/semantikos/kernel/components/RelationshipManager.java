@@ -60,34 +60,6 @@ public interface RelationshipManager {
     public Relationship removeRelationship(ConceptSMTK conceptSMTK, Relationship relationship, User user);
 
     /**
-     * Este método es responsable de recuperar todas las relaciones que tienen como
-     * origen un concepto dado.
-     *
-     * @param id El identificador único (BDD) del concepto SMTK.
-     */
-    public Relationship[] findRelationsByOriginConcept(long id);
-
-    /**
-     * Este método es responsable de recuperar todas las relaciones que tienen como
-     * destino un concepto Snomed CT dado.
-     *
-     * @param conceptSCT El identificador único (BDD) del concepto CST.
-     */
-    public List<Relationship> findRelationsByTargetSCTConcept(ConceptSCT conceptSCT);
-
-    /**
-     * Este método es responsable de retornar la lista de todos los conceptos relacionados con el concepto
-     * <code>conceptSMTK</code> desde este objeto, y que pertenecen a la categoría <code>category</code> dada como
-     * parámetro.
-     *
-     * @param conceptSMTK El concepto origen.
-     * @param category    La categoría a la que pertenecen los conceptos destino.
-     *
-     * @return Una lista de todos los conceptos destino que pertenecen a la categoría <code>category</code>.
-     */
-    public List<ConceptSMTK> getTargetConceptsByCategory(ConceptSMTK conceptSMTK, Category category);
-
-    /**
      * Este método es responsable de actualizar el valor de una relación, actualizando
      * su destino. El destino debe ser del mismo tipo que el valor original.
      *
@@ -156,12 +128,4 @@ public interface RelationshipManager {
      */
     List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK concept);
 
-    /**
-     * Este método es responsable de recuperar todas las relaciones del <code>concepto</code>.
-     *
-     * @param concept El concepto cuyas relaciones son recuperadas.
-     *
-     * @return Una lista de relaciones asociadas al concepto.
-     */
-    Map<Long, ArrayList<Relationship>> getRelationshipsBySourceConcepts(List<ConceptSMTK> concept);
 }

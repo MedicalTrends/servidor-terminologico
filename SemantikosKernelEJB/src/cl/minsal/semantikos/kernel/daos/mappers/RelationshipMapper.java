@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos.mappers;
 
 import cl.minsal.semantikos.kernel.daos.*;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
@@ -45,36 +46,53 @@ public class RelationshipMapper {
     RelationshipAttributeDAO relationshipAttributeDAO;
 
 
-    private Relationship createRelationshipFromResultSet(ResultSet rs, ConceptSMTK conceptSMTK) {
+    public List<Relationship> createRelationshipFromResultSet(ResultSet rs, ConceptSMTK conceptSMTK) {
 
         /* Concepto origen */
         //ConceptSMTK sourceConceptSMTK = conceptDAO.getConceptByID(relationshipDTO.idSourceConcept);
 
+        List<Relationship> relationships =new ArrayList<>();
+
         try {
-            /* Definición de la relación y sus atributos */
-            RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionById(rs.getLong("id_relationship_definition"));
 
-            long id = rs.getLong("id");
-            Timestamp validityUntil = rs.getTimestamp("validity_until");
-            long idTarget = rs.getLong("id_target");
-            Timestamp creationDate = rs.getTimestamp("creation_date");
+            while(rs.next()) {
 
-            /* El target que puede ser básico, smtk, tablas, crossmaps o snomed-ct */
-            Relationship relationship = createRelationshipByTargetType(idTarget, conceptSMTK, relationshipDefinition, id, validityUntil);
+                try {
 
-            List<RelationshipAttribute> relationshipAttributes = relationshipAttributeDAO.getRelationshipAttribute(relationship);
-            //relationshipDefinition.setRelationshipAttributeDefinitions(relationshipDefinitionDAO.getRelationshipAttributeDefinitionsByRelationshipDefinition(relationshipDefinition));
+                    long id = rs.getLong("id");
+                    long idConcept = rs.getLong("id_source_concept");
+                    long idRelationshipDefinition = rs.getLong("id_relationship_definition");
+                    Timestamp validityUntil = rs.getTimestamp("validity_until");
+                    long idTarget = rs.getLong("id_target");
+                    Timestamp creationDate = rs.getTimestamp("creation_date");
 
-            relationship.setRelationshipAttributes(relationshipAttributes);
-            relationship.setValidityUntil(validityUntil);
-            relationship.setCreationDate(creationDate);
-            return relationship;
+                    if(conceptSMTK == null) {
+                        conceptSMTK = conceptDAO.getConceptByID(idConcept);
+                    }
 
+                    /* Definición de la relación y sus atributos */
+                    RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsById(idRelationshipDefinition).get(0);
+
+                    /* El target que puede ser básico, smtk, tablas, crossmaps o snomed-ct */
+                    Relationship relationship = createRelationshipByTargetType(idTarget, conceptSMTK, relationshipDefinition, id, validityUntil);
+                    relationship.setValidityUntil(validityUntil);
+                    relationship.setCreationDate(creationDate);
+
+                    List<RelationshipAttribute> relationshipAttributes = relationshipAttributeDAO.getRelationshipAttribute(relationship);
+                    relationship.setRelationshipAttributes(relationshipAttributes);
+
+                    relationships.add(relationship);
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return relationships;
     }
 
     /**
@@ -99,6 +117,7 @@ public class RelationshipMapper {
         if (relationshipDefinition.getTargetDefinition().isHelperTable()) {
             //target = helperTableManager.getRecord(idTarget);
             target = targetDAO.getTargetByID(idTarget);
+            //target = new HelperTableRow();
             /**
              * Se setea el id desde el fields para ser utilizado por el custom converter
              */
@@ -106,6 +125,7 @@ public class RelationshipMapper {
 
             return new Relationship(id, conceptSMTK, helperTableRow, relationshipDefinition, validityUntil, new ArrayList<RelationshipAttribute>());
         }
+
 
         /* El target puede ser un concepto SMTK */
         if (relationshipDefinition.getTargetDefinition().isSMTKType()) {
