@@ -1,6 +1,9 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.daos.mappers.AuditMapper;
+import cl.minsal.semantikos.kernel.daos.mappers.BasicTypeMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.audit.*;
 import org.slf4j.Logger;
@@ -10,6 +13,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -24,14 +28,15 @@ public class AuditDAOImpl implements AuditDAO {
     private static final Logger logger = LoggerFactory.getLogger(AuditDAOImpl.class);
 
     @EJB
-    private ConceptAuditActionFactory conceptAuditActionFactory;
+    AuditMapper auditMapper;
 
     @Override
     public List<ConceptAuditAction> getConceptAuditActions(long idConcept, boolean changes) {
         ConnectionBD connect = new ConnectionBD();
         String sqlQuery = "{call semantikos.get_concept_audit_actions(?,?)}";
 
-        List<ConceptAuditAction> auditActions;
+        List<ConceptAuditAction> auditActions = new ArrayList<>();
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sqlQuery)) {
 
@@ -41,20 +46,9 @@ public class AuditDAOImpl implements AuditDAO {
             call.execute();
 
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                String jsonResult = rs.getString(1);
 
-                /* El resultado podría ser nulo si no hay un historial para ese concepto */
-                if(jsonResult == null){
-                    return emptyList();
-                }
+            auditActions = auditMapper.createAuditActionsFromResultSet(rs);
 
-                auditActions = conceptAuditActionFactory.createAuditActionsFromJSON(jsonResult);
-            } else {
-                String errorMsg = "Un error imposible ocurrio al pasar JSON a BasicTypeDefinition";
-                logger.error(errorMsg);
-                throw new EJBException(errorMsg);
-            }
             rs.close();
 
         } catch (SQLException e) {
@@ -139,4 +133,5 @@ public class AuditDAOImpl implements AuditDAO {
         }
 
     }
+
 }

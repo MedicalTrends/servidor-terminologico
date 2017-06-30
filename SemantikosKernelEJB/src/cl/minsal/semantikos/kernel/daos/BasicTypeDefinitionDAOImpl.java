@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.daos.mappers.BasicTypeMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinitionFactory;
@@ -32,6 +33,7 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
         String sqlQuery = "{call semantikos.get_basic_type_type_definition_by_id(?)}";
 
         BasicTypeDefinition basicTypeDefinition;
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sqlQuery)) {
 
@@ -41,8 +43,8 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
 
             ResultSet rs = call.getResultSet();
             if (rs.next()) {
-                String jsonResult = rs.getString(1);
-                basicTypeDefinition = basicTypeDefinitionFactory.createSimpleBasicTypeDefinitionFromJSON(jsonResult);
+                //basicTypeDefinition = basicTypeDefinitionFactory.createSimpleBasicTypeDefinitionFromJSON(jsonResult);
+                basicTypeDefinition = BasicTypeMapper.createBasicTypeDefinitionFromResultSet(rs);
             } else {
                 String errorMsg = "Un error imposible ocurrio al pasar JSON a BasicTypeDefinition";
                 logger.error(errorMsg);

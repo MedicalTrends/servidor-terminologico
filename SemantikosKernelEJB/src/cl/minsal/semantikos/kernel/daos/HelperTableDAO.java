@@ -31,6 +31,8 @@ public interface HelperTableDAO {
 
     HelperTableColumn getColumnById(long id);
 
+    List<HelperTableData> getCellsByRow(HelperTableRow helperTableRow);
+
     HelperTableRow updateRow(HelperTableRow row);
 
     HelperTable getHelperTableByID(long tableId);

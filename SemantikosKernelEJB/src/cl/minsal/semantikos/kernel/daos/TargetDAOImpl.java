@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.daos.mappers.TargetMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
@@ -32,6 +33,9 @@ public class TargetDAOImpl implements TargetDAO {
     private TargetFactory targetFactory;
 
     @EJB
+    private TargetMapper targetMapper;
+
+    @EJB
     private HelperTableDAO helperTableDAO;
 
     @EJB
@@ -57,8 +61,9 @@ public class TargetDAOImpl implements TargetDAO {
             /* Cada Fila del ResultSet trae una relación */
             ResultSet rs = call.getResultSet();
             if (rs.next()) {
-                String jsonResult = rs.getString(1);
-                target = targetFactory.createTargetFromJSON(jsonResult);
+                //String jsonResult = rs.getString(1);
+                //target = targetFactory.createTargetFromJSON(jsonResult);
+                target = targetMapper.createTargetFromResultSet(rs);
             } else {
                 String errorMsg = "Un error imposible acaba de ocurrir";
                 logger.error(errorMsg);

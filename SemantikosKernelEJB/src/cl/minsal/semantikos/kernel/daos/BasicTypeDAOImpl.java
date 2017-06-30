@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.daos.mappers.BasicTypeMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.relationships.Target;
@@ -26,7 +27,8 @@ public class BasicTypeDAOImpl implements BasicTypeDAO {
     @Override
     public BasicTypeValue getBasicTypeValueByID(long idBasicValue) {
 
-        String jsonResult;
+        BasicTypeValue basicTypeValue;
+        //String jsonResult;
         ConnectionBD connect = new ConnectionBD();
         String sqlQuery = "{call semantikos.get_basic_type_by_id(?)}";
         try (Connection connection = connect.getConnection();
@@ -38,22 +40,25 @@ public class BasicTypeDAOImpl implements BasicTypeDAO {
 
             /* Cada Fila del ResultSet trae una relación */
             ResultSet rs = call.getResultSet();
+
             if (rs.next()) {
-                jsonResult = rs.getString(1);
+                basicTypeValue = BasicTypeMapper.createBasicTypeFromResultSet(rs);
+                //jsonResult = rs.getString(1);
 
             } else {
                 String errorMsg = "Un error imposible acaba de ocurrir";
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
+
             rs.close();
         } catch (SQLException e) {
             String errorMsg = "Erro al invocar get_basic_type_by_id(" + idBasicValue + ")";
             logger.error(errorMsg, e);
             throw new EJBException(errorMsg, e);
         }
-
-        return createBasicTypeFromJSON(jsonResult);
+        //return createBasicTypeFromJSON(jsonResult);
+        return basicTypeValue;
     }
 
 

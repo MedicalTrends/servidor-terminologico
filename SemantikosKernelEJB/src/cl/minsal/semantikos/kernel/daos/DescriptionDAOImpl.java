@@ -138,44 +138,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     }
 
     @Override
-    public Description getDescriptionById(long id) {
-
-        ConnectionBD connectionBD = new ConnectionBD();
-        String selectRecord = "{call semantikos.get_description_json_by_id(?)}";
-        ObjectMapper mapper = new ObjectMapper();
-        Description jsonRecord;
-        try (Connection connection = connectionBD.getConnection();
-             CallableStatement call = connection.prepareCall(selectRecord)) {
-
-            call.setLong(1,id);
-            /* Se prepara y realiza la consulta */
-            call.execute();
-            ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-
-                String json = rs.getString(1);
-
-                try {
-                    jsonRecord = mapper.readValue(underScoreToCamelCaseJSON(json), Description.class);
-                } catch (IOException e) {
-                    logger.error("Hubo un error procesar los resultados con JSON.", e);
-                    e.printStackTrace();
-                    throw new EJBException(e);
-                }
-
-            } else {
-                throw new EJBException("Error imposible en HelperTableDAOImpl");
-            }
-            rs.close();
-        } catch (SQLException e) {
-            logger.error("Hubo un error al acceder a la base de datos.", e);
-            throw new EJBException(e);
-        }
-
-        return jsonRecord;
-    }
-
-    @Override
     public Description getDescriptionByDescriptionID(String descriptionId) {
         ConnectionBD connect = new ConnectionBD();
         Description description= null;
@@ -733,7 +695,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         Timestamp validityUntil = resultSet.getTimestamp("validity_until");
         Timestamp creationDate = resultSet.getTimestamp("creation_date");
         long uses = resultSet.getLong("uses");
-
 
         long idUser = resultSet.getLong("id_user");
 

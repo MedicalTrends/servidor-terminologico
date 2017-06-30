@@ -33,14 +33,6 @@ public interface DescriptionDAO {
      */
     public Description getDescriptionBy(long id);
 
-    /**
-     * Este método es responsable de recuperar una descripción desde la BDD a partir de su llave primaria.
-     *
-     * @param id La llave de la descripción que se desea recuperar.
-     *
-     * @return Una descripción fresca desde la base de datos.
-     */
-    public Description getDescriptionById(long id);
 
     /**
      * Este método es responsable de recuperar una descripción desde la BDD a partir de su identificador de negocio, el
