@@ -41,36 +41,26 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         ConnectionBD connectionBD = new ConnectionBD();
         String selectRecord = "{call semantikos.get_helper_tables()}";
-        List<HelperTable> recordFromJSON;
+        List<HelperTable> helperTables = new ArrayList<>();
+
         try (Connection connection = connectionBD.getConnection();
              CallableStatement call = connection.prepareCall(selectRecord)) {
 
             /* Se prepara y realiza la consulta */
             call.execute();
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                recordFromJSON = this.helperTableRecordFactory.createHelperTablesFromJSON(rs.getString(1));
 
-                for (HelperTable table: recordFromJSON) {
-                    if(table.getColumns()==null)
-                        table.setColumns(new ArrayList<HelperTableColumn>());
-                }
-
-            } else {
-                throw new EJBException("Error imposible en HelperTableDAOImpl");
+            while(rs.next()) {
+                helperTables.add(helperTableMapper.createHelperTableFromResultSet(rs));
             }
             rs.close();
         } catch (SQLException e) {
             logger.error("Hubo un error al acceder a la base de datos.", e);
             throw new EJBException(e);
-        } catch (IOException e) {
-            logger.error("Hubo un error procesar los resultados con JSON.", e);
-            throw new EJBException(e);
         }
 
-        return recordFromJSON;
+        return helperTables;
     }
-
 
     @Override
     public HelperTableColumn createColumn(HelperTableColumn column) {
@@ -133,44 +123,12 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
     }
 
-
-    @Override
-    public List<HelperTableDataType> getAllDataTypes(){
-
-        ConnectionBD connectionBD = new ConnectionBD();
-        String selectRecord = "{call semantikos.get_helper_table_data_types()}";
-        List<HelperTableDataType> recordFromJSON;
-        try (Connection connection = connectionBD.getConnection();
-             CallableStatement call = connection.prepareCall(selectRecord)) {
-
-            /* Se prepara y realiza la consulta */
-            call.execute();
-            ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                recordFromJSON = this.helperTableRecordFactory.createHelperTablesDataTypesFromJSON(rs.getString(1));
-            } else {
-                throw new EJBException("Error imposible en HelperTableDAOImpl");
-            }
-            rs.close();
-        } catch (SQLException e) {
-            logger.error("Hubo un error al acceder a la base de datos.", e);
-            throw new EJBException(e);
-        } catch (IOException e) {
-            logger.error("Hubo un error procesar los resultados con JSON.", e);
-            throw new EJBException(e);
-        }
-
-        return recordFromJSON;
-    }
-
-
-
     @Override
     public List<HelperTableRow> getTableRows(long tableId) {
 
         ConnectionBD connectionBD = new ConnectionBD();
         String selectRecord = "{call semantikos.get_helper_table_rows(?)}";
-        List<HelperTableRow> recordFromJSON;
+        List<HelperTableRow> helperTableRows = new ArrayList<>();
         try (Connection connection = connectionBD.getConnection();
              CallableStatement call = connection.prepareCall(selectRecord)) {
 
@@ -178,33 +136,18 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             /* Se prepara y realiza la consulta */
             call.execute();
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
 
-                String json = rs.getString(1);
-                if(json==null)
-                    return new ArrayList<>();
-
-                recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
-
-                for (HelperTableRow helperTableRow : recordFromJSON) {
-                    for (HelperTableData cell : helperTableRow.getCells()) {
-                        cell.setColumn(getColumnById(cell.getColumnId()));
-                    }
-                }
-
-            } else {
-                throw new EJBException("Error imposible en HelperTableDAOImpl");
+            while(rs.next()) {
+                helperTableRows.add(helperTableMapper.createHelperTableRowFromResultSet(rs));
             }
+
             rs.close();
         } catch (SQLException e) {
             logger.error("Hubo un error al acceder a la base de datos.", e);
             throw new EJBException(e);
-        } catch (IOException e) {
-            logger.error("Hubo un error procesar los resultados con JSON.", e);
-            throw new EJBException(e);
         }
 
-        return recordFromJSON;
+        return helperTableRows;
     }
 
     @Override
@@ -212,7 +155,8 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         ConnectionBD connectionBD = new ConnectionBD();
         String selectRecord = "{call semantikos.get_valid_helper_table_rows(?)}";
-        List<HelperTableRow> recordFromJSON;
+        List<HelperTableRow> helperTableRows = new ArrayList<>();
+
         try (Connection connection = connectionBD.getConnection();
              CallableStatement call = connection.prepareCall(selectRecord)) {
 
@@ -220,33 +164,17 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             /* Se prepara y realiza la consulta */
             call.execute();
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
 
-                String json = rs.getString(1);
-                if(json==null)
-                    return new ArrayList<>();
-
-                recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
-
-                for (HelperTableRow helperTableRow : recordFromJSON) {
-                    for (HelperTableData cell : helperTableRow.getCells()) {
-                        cell.setColumn(getColumnById(cell.getColumnId()));
-                    }
-                }
-
-            } else {
-                throw new EJBException("Error imposible en HelperTableDAOImpl");
+            while(rs.next()) {
+                helperTableRows.add(helperTableMapper.createHelperTableRowFromResultSet(rs));
             }
             rs.close();
         } catch (SQLException e) {
             logger.error("Hubo un error al acceder a la base de datos.", e);
             throw new EJBException(e);
-        } catch (IOException e) {
-            logger.error("Hubo un error procesar los resultados con JSON.", e);
-            throw new EJBException(e);
         }
 
-        return recordFromJSON;
+        return helperTableRows;
     }
 
     /*
@@ -261,7 +189,6 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(UPDATE)) {
 
-
             call.setLong(1, row.getHelperTableId());
             call.setString(2, row.getDescription());
             call.setTimestamp(3, row.getCreationDate());
@@ -272,8 +199,6 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.setBoolean(8, row.isValid());
 
             ResultSet rs = call.executeQuery();
-
-
 
             if (rs.next()) {
                 row.setId(rs.getLong(1));
@@ -292,7 +217,6 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
     @Override
     public HelperTableData createData(HelperTableData cell) {
-
 
         ConnectionBD connect = new ConnectionBD();
         String UPDATE = "{call semantikos.create_helper_table_data(?,?,?,?,?,?,?,?)}";
@@ -390,9 +314,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         return cell;
 
-
     }
-
 
     @Override
     public HelperTableRow getRowById(long id) {
@@ -411,7 +333,6 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
             if (rs.next()) {
                 helperTableRow = helperTableMapper.createHelperTableRowFromResultSet(rs);
-                //jsonResult = rs.getString(1);
             } else {
                 String errorMsg = "Un error imposible acaba de ocurrir";
                 logger.error(errorMsg);
@@ -430,7 +351,8 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
     public HelperTableRow getRowBy(long tableId, long id) {
         ConnectionBD connectionBD = new ConnectionBD();
         String selectRecord = "{call semantikos.get_helper_table_row(?,?)}";
-        List<HelperTableRow> recordFromJSON;
+        HelperTableRow helperTableRow;
+
         try (Connection connection = connectionBD.getConnection();
              CallableStatement call = connection.prepareCall(selectRecord)) {
 
@@ -439,35 +361,21 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             /* Se prepara y realiza la consulta */
             call.execute();
             ResultSet rs = call.getResultSet();
+
             if (rs.next()) {
-
-                String json = rs.getString(1);
-                if(json==null)
-                    return null;
-
-                recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
-
-                for (HelperTableRow helperTableRow : recordFromJSON) {
-                    for (HelperTableData cell : helperTableRow.getCells()) {
-                        cell.setColumn(getColumnById(cell.getColumnId()));
-                    }
-                }
-
-                if(recordFromJSON==null)
-                    throw new EJBException("Error imposible en HelperTableDAOImpl");
-            } else {
+                helperTableRow = helperTableMapper.createHelperTableRowFromResultSet(rs);
+            }
+            else {
                 throw new EJBException("Error imposible en HelperTableDAOImpl");
             }
+
             rs.close();
         } catch (SQLException e) {
             logger.error("Hubo un error al acceder a la base de datos.", e);
             throw new EJBException(e);
-        } catch (IOException e) {
-            logger.error("Hubo un error procesar los resultados con JSON.", e);
-            throw new EJBException(e);
         }
 
-        return recordFromJSON.get(0);
+        return helperTableRow;
 
     }
 
@@ -475,7 +383,8 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
     public List<HelperTableRow> getRowBy(long tableId, boolean valid) {
         ConnectionBD connectionBD = new ConnectionBD();
         String selectRecord = "{call semantikos.get_helper_table_rows_by_valid(?,?)}";
-        List<HelperTableRow> recordFromJSON;
+        List<HelperTableRow> helperTableRows = new ArrayList<>();
+
         try (Connection connection = connectionBD.getConnection();
              CallableStatement call = connection.prepareCall(selectRecord)) {
 
@@ -485,40 +394,26 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             /* Se prepara y realiza la consulta */
             call.execute();
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
 
-                String json = rs.getString(1);
-                if(json==null)
-                    return new ArrayList<>();
-
-                recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
-
-                for (HelperTableRow helperTableRow : recordFromJSON) {
-                    for (HelperTableData cell : helperTableRow.getCells()) {
-                        cell.setColumn(getColumnById(cell.getColumnId()));
-                    }
-                }
-
-            } else {
-                throw new EJBException("Error imposible en HelperTableDAOImpl");
+            while(rs.next()) {
+                helperTableRows.add(helperTableMapper.createHelperTableRowFromResultSet(rs));
             }
+
             rs.close();
         } catch (SQLException e) {
             logger.error("Hubo un error al acceder a la base de datos.", e);
             throw new EJBException(e);
-        } catch (IOException e) {
-            logger.error("Hubo un error procesar los resultados con JSON.", e);
-            throw new EJBException(e);
         }
 
-        return recordFromJSON;
+        return helperTableRows;
     }
 
     @Override
     public HelperTableColumn getColumnById(long id) {
         ConnectionBD connectionBD = new ConnectionBD();
         String selectRecord = "{call semantikos.get_helper_table_column(?)}";
-        HelperTableColumn columnFromJSON;
+        HelperTableColumn helperTableColumn;
+
         try (Connection connection = connectionBD.getConnection();
              CallableStatement call = connection.prepareCall(selectRecord)) {
 
@@ -526,29 +421,21 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             /* Se prepara y realiza la consulta */
             call.execute();
             ResultSet rs = call.getResultSet();
+
             if (rs.next()) {
-
-                String json = rs.getString(1);
-                if(json==null)
-                    return null;
-
-                columnFromJSON = this.helperTableRecordFactory.createHelperTableColumnFromJSON(json);
-
-                if(columnFromJSON==null)
-                    throw new EJBException("Error imposible en HelperTableDAOImpl");
-            } else {
+                helperTableColumn = helperTableMapper.createHelperTableColumnFromResultSet(rs);
+            }
+            else {
                 throw new EJBException("Error imposible en HelperTableDAOImpl");
             }
+
             rs.close();
         } catch (SQLException e) {
             logger.error("Hubo un error al acceder a la base de datos.", e);
             throw new EJBException(e);
-        } catch (IOException e) {
-            logger.error("Hubo un error procesar los resultados con JSON.", e);
-            throw new EJBException(e);
         }
 
-        return columnFromJSON;
+        return helperTableColumn;
     }
 
     @Override
@@ -617,41 +504,37 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         ConnectionBD connectionBD = new ConnectionBD();
         String selectRecord = "{call semantikos.get_helper_table(?)}";
-        List<HelperTable> recordFromJSON;
+        HelperTable helperTable;
+
         try (Connection connection = connectionBD.getConnection();
              CallableStatement call = connection.prepareCall(selectRecord)) {
 
             /* Se prepara y realiza la consulta */
-
             call.setLong(1,tableId);
             call.execute();
             ResultSet rs = call.getResultSet();
+
             if (rs.next()) {
-                recordFromJSON = this.helperTableRecordFactory.createHelperTablesFromJSON(rs.getString(1));
-                for (HelperTable table: recordFromJSON) {
-                    if(table.getColumns()==null)
-                        table.setColumns(new ArrayList<HelperTableColumn>());
-                }
-            } else {
+                helperTable = helperTableMapper.createHelperTableFromResultSet(rs);
+            }
+            else {
                 throw new EJBException("Error imposible en HelperTableDAOImpl");
             }
             rs.close();
         } catch (SQLException e) {
             logger.error("Hubo un error al acceder a la base de datos.", e);
             throw new EJBException(e);
-        } catch (IOException e) {
-            logger.error("Hubo un error procesar los resultados con JSON.", e);
-            throw new EJBException(e);
         }
 
-        return recordFromJSON.get(0);
+        return helperTable;
     }
 
     @Override
     public List<HelperTableRow> searchRecords(HelperTable helperTable, String pattern) {
         ConnectionBD connectionBD = new ConnectionBD();
         String selectRecord = "{call semantikos.get_helper_table_rows(?,?)}";
-        List<HelperTableRow> recordFromJSON;
+        List<HelperTableRow> helperTableRows = new ArrayList<>();
+
         try (Connection connection = connectionBD.getConnection();
              CallableStatement call = connection.prepareCall(selectRecord)) {
 
@@ -661,40 +544,26 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             /* Se prepara y realiza la consulta */
             call.execute();
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
 
-                String json = rs.getString(1);
-                if(json==null)
-                    return new ArrayList<>();
-
-                recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
-
-                for (HelperTableRow helperTableRow : recordFromJSON) {
-                    for (HelperTableData cell : helperTableRow.getCells()) {
-                        cell.setColumn(getColumnById(cell.getColumnId()));
-                    }
-                }
-
-            } else {
-                throw new EJBException("Error imposible en HelperTableDAOImpl");
+            while(rs.next()) {
+                helperTableRows.add(helperTableMapper.createHelperTableRowFromResultSet(rs));
             }
+
             rs.close();
         } catch (SQLException e) {
             logger.error("Hubo un error al acceder a la base de datos.", e);
             throw new EJBException(e);
-        } catch (IOException e) {
-            logger.error("Hubo un error procesar los resultados con JSON.", e);
-            throw new EJBException(e);
         }
 
-        return recordFromJSON;
+        return helperTableRows;
     }
 
     @Override
     public List<HelperTableRow> searchAllRecords(HelperTable helperTable, String pattern) {
         ConnectionBD connectionBD = new ConnectionBD();
         String selectRecord = "{call semantikos.get_all_helper_table_rows(?,?)}";
-        List<HelperTableRow> recordFromJSON;
+        List<HelperTableRow> helperTableRows = new ArrayList<>();
+
         try (Connection connection = connectionBD.getConnection();
              CallableStatement call = connection.prepareCall(selectRecord)) {
 
@@ -704,32 +573,18 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             /* Se prepara y realiza la consulta */
             call.execute();
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
 
-                String json = rs.getString(1);
-                if(json==null)
-                    return new ArrayList<>();
-
-                recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
-
-                for (HelperTableRow helperTableRow : recordFromJSON) {
-                    for (HelperTableData cell : helperTableRow.getCells()) {
-                        cell.setColumn(getColumnById(cell.getColumnId()));
-                    }
-                }
-
-            } else {
-                throw new EJBException("Error imposible en HelperTableDAOImpl");
+            while(rs.next()) {
+                helperTableRows.add(helperTableMapper.createHelperTableRowFromResultSet(rs));
             }
+
             rs.close();
         } catch (SQLException e) {
             logger.error("Hubo un error al acceder a la base de datos.", e);
             throw new EJBException(e);
-        } catch (IOException e) {
-            logger.error("Hubo un error procesar los resultados con JSON.", e);
-            throw new EJBException(e);
         }
-        return recordFromJSON;
+
+        return helperTableRows;
 
     }
 
@@ -737,7 +592,8 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
     public List<HelperTableRow> searchRecords(HelperTable helperTable, String pattern, String columnName) {
         ConnectionBD connectionBD = new ConnectionBD();
         String selectRecord = "{call semantikos.get_helper_table_rows(?,?,?)}";
-        List<HelperTableRow> recordFromJSON;
+        List<HelperTableRow> helperTableRows = new ArrayList<>();
+
         try (Connection connection = connectionBD.getConnection();
              CallableStatement call = connection.prepareCall(selectRecord)) {
 
@@ -749,33 +605,18 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.execute();
 
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
 
-                String json = rs.getString(1);
-                if(json==null)
-                    return new ArrayList<>();
-
-                recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
-
-                for (HelperTableRow helperTableRow : recordFromJSON) {
-                    for (HelperTableData cell : helperTableRow.getCells()) {
-                        cell.setColumn(getColumnById(cell.getColumnId()));
-                    }
-                }
-
-            } else {
-                throw new EJBException("Error imposible en HelperTableDAOImpl");
+            while(rs.next()) {
+                helperTableRows.add(helperTableMapper.createHelperTableRowFromResultSet(rs));
             }
+
             rs.close();
         } catch (SQLException e) {
             logger.error("Hubo un error al acceder a la base de datos.", e);
             throw new EJBException(e);
-        } catch (IOException e) {
-            logger.error("Hubo un error procesar los resultados con JSON.", e);
-            throw new EJBException(e);
         }
 
-        return recordFromJSON;
+        return helperTableRows;
     }
 
     @Override

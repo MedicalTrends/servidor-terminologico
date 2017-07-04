@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.model.browser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +23,11 @@ public class Query implements IQuery {
      */
     private int pageSize;
     private int pageNumber;
+
+    /**
+     * Columnas dinámicas
+     */
+    private List<QueryColumn> columns = new ArrayList<>();
 
     public String getQuery() {
         return query;
@@ -71,8 +77,27 @@ public class Query implements IQuery {
         this.pageNumber = pageNumber;
     }
 
+    public List<QueryColumn> getColumns() {
+        return columns;
+    }
+
+    public void setColumns(List<QueryColumn> columns) {
+        this.columns = columns;
+    }
+
     @Override
     public List<QueryParameter> getQueryParameters() {
         return null;
+    }
+
+    public List<Long> getDefinitionIds() {
+
+        List<Long> ids = new ArrayList<>();
+
+        for (QueryColumn column : columns) {
+            ids.add(column.getRelationshipDefinition().getId());
+        }
+
+        return ids;
     }
 }

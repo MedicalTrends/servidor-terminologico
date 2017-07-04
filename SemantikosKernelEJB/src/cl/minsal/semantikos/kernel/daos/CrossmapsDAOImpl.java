@@ -113,7 +113,8 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
         ConceptSMTK conceptSMTK = conceptDAO.getConceptByID(idConcept);
         CrossmapSetMember crossmapSetMember = this.getCrossmapSetMemberById(idCrossmapSet);
-        RelationshipDefinition relationshipDefinition = relationshipDAO.getRelationshipDefinitionByID(idRelationshipDefinition);
+        RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsById(idRelationshipDefinition).get(0);
+
         return new DirectCrossmap(id, conceptSMTK, crossmapSetMember, relationshipDefinition, validityUntil);
     }
 

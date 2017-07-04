@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.daos.mappers.TagMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
@@ -12,6 +13,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
@@ -28,6 +30,9 @@ public class TagDAOImpl implements TagDAO {
 
     @EJB
     private TagFactory tagFactory;
+
+    @EJB
+    private TagMapper tagMapper;
 
     @Override
     public Tag persist(Tag tag) {
@@ -130,7 +135,8 @@ public class TagDAOImpl implements TagDAO {
     public List<Tag> findTagsBy(String[] namePattern) {
         ConnectionBD connect = new ConnectionBD();
 
-        String json;
+        List<Tag> tags = new ArrayList<>();
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.find_tag_by_pattern(?)}")) {
 
@@ -138,13 +144,11 @@ public class TagDAOImpl implements TagDAO {
             call.execute();
 
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                json = rs.getString(1);
-            } else {
-                String errorMsg = "Error imposible!";
-                logger.error(errorMsg);
-                throw new EJBException(errorMsg);
+
+            while(rs.next()) {
+                tags.add(tagMapper.createTagFromResultSet(rs, null));
             }
+
             rs.close();
 
         } catch (SQLException e) {
@@ -153,7 +157,7 @@ public class TagDAOImpl implements TagDAO {
             throw new EJBException(errorMsg, e);
         }
 
-        return tagFactory.createTagsFromJSON(json);
+        return tags;
     }
 
     @Override
@@ -195,21 +199,19 @@ public class TagDAOImpl implements TagDAO {
 
         ConnectionBD connect = new ConnectionBD();
 
-        String json;
+        List<Tag> tags = new ArrayList<>();
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.semantikos.get_all_tags()}")) {
-
 
             call.execute();
 
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                json = rs.getString(1);
-            } else {
-                String errorMsg = "Error imposible!";
-                logger.error(errorMsg);
-                throw new EJBException(errorMsg);
+
+            while(rs.next()) {
+                tags.add(tagMapper.createTagFromResultSet(rs, null));
             }
+
             rs.close();
 
         } catch (SQLException e) {
@@ -218,14 +220,15 @@ public class TagDAOImpl implements TagDAO {
             throw new EJBException(errorMsg, e);
         }
 
-        return tagFactory.createTagsFromJSON(json);
+        return tags;
     }
 
     @Override
     public List<Tag> getAllTagsWithoutParent() {
         ConnectionBD connect = new ConnectionBD();
 
-        String json;
+        List<Tag> tags = new ArrayList<>();
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.semantikos.get_all_tags_without()}")) {
 
@@ -233,13 +236,11 @@ public class TagDAOImpl implements TagDAO {
             call.execute();
 
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                json = rs.getString(1);
-            } else {
-                String errorMsg = "Error imposible!";
-                logger.error(errorMsg);
-                throw new EJBException(errorMsg);
+
+            while(rs.next()) {
+                tags.add(tagMapper.createTagFromResultSet(rs, null));
             }
+
             rs.close();
 
         } catch (SQLException e) {
@@ -248,14 +249,15 @@ public class TagDAOImpl implements TagDAO {
             throw new EJBException(errorMsg, e);
         }
 
-        return tagFactory.createTagsFromJSON(json);
+        return tags;
     }
 
     @Override
     public List<Tag> getTagsByConcept(long idConcept) {
         //ConnectionBD connect = new ConnectionBD();
 
-        String json;
+        List<Tag> tags = new ArrayList<>();
+
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.semantikos.get_tags_by_concept_id(?)}")) {
 
@@ -263,13 +265,11 @@ public class TagDAOImpl implements TagDAO {
             call.execute();
 
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                json = rs.getString(1);
-            } else {
-                String errorMsg = "Error imposible!";
-                logger.error(errorMsg);
-                throw new EJBException(errorMsg);
+
+            while(rs.next()) {
+                tags.add(tagMapper.createTagFromResultSet(rs, null));
             }
+
             rs.close();
 
         } catch (SQLException e) {
@@ -278,7 +278,7 @@ public class TagDAOImpl implements TagDAO {
             throw new EJBException(errorMsg, e);
         }
 
-        return tagFactory.createTagsFromJSON(json);
+        return tags;
 
     }
 
@@ -286,7 +286,8 @@ public class TagDAOImpl implements TagDAO {
     public List<Tag> getChildrenOf(Tag parent) {
         ConnectionBD connect = new ConnectionBD();
 
-        String json;
+        List<Tag> tags = new ArrayList<>();
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.find_tags_by_parent(?)}")) {
 
@@ -294,13 +295,11 @@ public class TagDAOImpl implements TagDAO {
             call.execute();
 
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                json = rs.getString(1);
-            } else {
-                String errorMsg = "Error imposible!";
-                logger.error(errorMsg);
-                throw new EJBException(errorMsg);
+
+            while(rs.next()) {
+                tags.add(tagMapper.createTagFromResultSet(rs, parent));
             }
+
             rs.close();
 
         } catch (SQLException e) {
@@ -309,7 +308,7 @@ public class TagDAOImpl implements TagDAO {
             throw new EJBException(errorMsg, e);
         }
 
-        return tagFactory.createChildrenTagsFromJSON(parent,json);
+        return tags;
 
     }
 
@@ -355,7 +354,8 @@ public class TagDAOImpl implements TagDAO {
         if(id==0 || id==NON_PERSISTED_ID) return null;
         ConnectionBD connect = new ConnectionBD();
 
-        String json;
+        Tag tag;
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.find_tags_by_id(?)}")) {
 
@@ -364,7 +364,7 @@ public class TagDAOImpl implements TagDAO {
 
             ResultSet rs = call.getResultSet();
             if (rs.next()) {
-                json = rs.getString(1);
+                tag = tagMapper.createTagFromResultSet(rs, null);
             } else {
                 String errorMsg = "Error imposible!";
                 logger.error(errorMsg);
@@ -378,7 +378,7 @@ public class TagDAOImpl implements TagDAO {
             throw new EJBException(errorMsg, e);
         }
 
-        return tagFactory.createTagFromJSON(json);
+        return tag;
     }
 
     @Override

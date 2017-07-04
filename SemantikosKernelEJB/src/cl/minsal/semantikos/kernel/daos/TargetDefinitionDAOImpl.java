@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.daos.mappers.TargetMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 import cl.minsal.semantikos.model.relationships.TargetDefinitionFactory;
@@ -26,6 +27,9 @@ public class TargetDefinitionDAOImpl implements TargetDefinitionDAO {
     @EJB
     TargetDefinitionFactory targetDefinitionFactory;
 
+    @EJB
+    TargetMapper targetMapper;
+
     @Override
     public TargetDefinition getTargetDefinitionById(long idTargetDefinition) {
 
@@ -33,6 +37,7 @@ public class TargetDefinitionDAOImpl implements TargetDefinitionDAO {
         String sqlQuery = "{call semantikos.get_target_definition_by_id(?)}";
 
         TargetDefinition targetDefinition = null;
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sqlQuery)) {
 
@@ -42,8 +47,7 @@ public class TargetDefinitionDAOImpl implements TargetDefinitionDAO {
 
             ResultSet rs = call.getResultSet();
             if (rs.next()) {
-                String jsonResult = rs.getString(1);
-                targetDefinition = targetDefinitionFactory.createFromJSON(jsonResult);
+                targetDefinition = targetMapper.createTargetDefinitionFromResultSet(rs);
             }
             rs.close();
 

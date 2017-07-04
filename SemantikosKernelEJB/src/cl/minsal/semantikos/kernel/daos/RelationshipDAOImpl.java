@@ -32,9 +32,6 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     private static final Logger logger = LoggerFactory.getLogger(RelationshipDAOImpl.class);
 
     @EJB
-    private RelationshipFactory relationshipFactory;
-
-    @EJB
     private RelationshipMapper relationshipMapper;
 
     @EJB
@@ -50,9 +47,9 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            if(relationship.getIdRelationship()!=null){
+            if(relationship.getIdRelationship()!=null) {
                 call.setString(1,relationship.getIdRelationship());
-            }else{
+            }else {
                call.setNull(1,VARCHAR);
             }
             call.setLong(2, relationship.getSourceConcept().getId());
@@ -133,9 +130,9 @@ public class RelationshipDAOImpl implements RelationshipDAO {
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, relationship.getId());
-            if(relationship.getIdRelationship()!=null){
+            if(relationship.getIdRelationship()!=null) {
                 call.setString(2,relationship.getIdRelationship());
-            }else{
+            }else {
                 call.setNull(2,VARCHAR);
             }
             call.setLong(2, relationship.getSourceConcept().getId());
@@ -169,7 +166,8 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         ConnectionBD connect = new ConnectionBD();
         String sql = "{call semantikos.get_relationships_by_id(?)}";
-        String resultJSON;
+        Relationship relationship = null;
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -179,7 +177,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
             ResultSet rs = call.getResultSet();
 
             if (rs.next()) {
-                resultJSON = rs.getString(1);
+                relationship = relationshipMapper.createRelationshipFromResultSet(rs, null);
             } else {
                 String errorMsg = "La relacion no fue creada. Esta es una situación imposible. Contactar a Desarrollo";
                 logger.error(errorMsg);
@@ -190,7 +188,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
             throw new EJBException(e);
         }
 
-        return relationshipFactory.createFromJSON(resultJSON);
+        return relationship;
     }
 
     @Override
@@ -198,7 +196,9 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         ConnectionBD connect = new ConnectionBD();
         String sql = "{call semantikos.get_snomedct_relationship(?, ?)}";
-        String resultJSON;
+
+        List<Relationship> relationships = new ArrayList<>();
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -207,19 +207,17 @@ public class RelationshipDAOImpl implements RelationshipDAO {
             call.execute();
 
             ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                resultJSON = rs.getString(1);
-            } else {
-                String errorMsg = "La relación no fue creada. Esta es una situación imposible. Contactar a Desarrollo";
-                logger.error(errorMsg);
-                throw new IllegalArgumentException(errorMsg);
+
+            while(rs.next()) {
+                relationships.add(relationshipMapper.createRelationshipFromResultSet(rs, null));
             }
+
             rs.close();
         } catch (SQLException e) {
             throw new EJBException(e);
         }
 
-        return relationshipFactory.createRelationshipsFromJSON(resultJSON);
+        return relationships;
     }
 
     @Override
@@ -254,7 +252,9 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
             ResultSet rs = call.getResultSet();
 
-            relationships = relationshipMapper.createRelationshipFromResultSet(rs, null);
+            while(rs.next()) {
+                relationships.add(relationshipMapper.createRelationshipFromResultSet(rs, null));
+            }
 
             rs.close();
         } catch (SQLException e) {
@@ -281,7 +281,9 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
             ResultSet rs = call.getResultSet();
 
-            relationships = relationshipMapper.createRelationshipFromResultSet(rs, conceptSMTK);
+            while(rs.next()) {
+                relationships.add(relationshipMapper.createRelationshipFromResultSet(rs, conceptSMTK));
+            }
 
             rs.close();
         } catch (SQLException e) {

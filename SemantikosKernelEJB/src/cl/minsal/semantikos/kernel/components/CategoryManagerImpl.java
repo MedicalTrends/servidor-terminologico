@@ -37,11 +37,6 @@ public class CategoryManagerImpl implements CategoryManager {
     private DescriptionManager descriptionManager;
 
     @Override
-    public List<RelationshipDefinition> getCategoryMetaData(int id) {
-        return categoryDAO.getCategoryMetaData(id);
-    }
-
-    @Override
     public void addAttribute(RelationshipDefinition attributeCategory, int idCategory) {
 
     }

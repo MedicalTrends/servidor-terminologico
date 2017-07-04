@@ -8,10 +8,7 @@ import cl.minsal.semantikos.model.audit.AuditActionType;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.audit.AuditableEntityType;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
-import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
-import cl.minsal.semantikos.model.helpertables.HelperTableColumnFactory;
-import cl.minsal.semantikos.model.helpertables.HelperTableData;
-import cl.minsal.semantikos.model.helpertables.HelperTableRow;
+import cl.minsal.semantikos.model.helpertables.*;
 import cl.minsal.semantikos.model.users.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -33,6 +30,72 @@ public class HelperTableMapper {
 
     @EJB
     HelperTableDAO helperTableDAO;
+
+    /**
+     * Este método es responsable de crear un HelperTable Record a partir de un objeto JSON.
+     *
+     * @param rs El objeto JSON a partir del cual se crea el objeto. El formato JSON será:
+     *                       <code>{"TableName":"helper_table_atc","records":[{"id":1,"codigo_atc":"atc1"}</code>
+     *
+     * @return Un objeto fresco de tipo <code>HelperTableRecord</code> creado a partir del objeto JSON.
+     *
+     * @throws IOException Arrojada si hay un problema.
+     */
+    public HelperTable createHelperTableFromResultSet(ResultSet rs) {
+
+        HelperTable helperTable = new HelperTable();
+
+        try {
+            helperTable.setId(rs.getLong("id"));
+            helperTable.setName(rs.getString("name"));
+            helperTable.setDescription(rs.getString("description"));
+
+            helperTable.setColumns(HelperTableColumnFactory.getInstance().findColumnsByHelperTable(rs.getLong("id")));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return helperTable;
+
+    }
+
+    /**
+     * Este método es responsable de crear un HelperTable Record a partir de un objeto JSON.
+     *
+     * @param rs El objeto JSON a partir del cual se crea el objeto. El formato JSON será:
+     *                       <code>{"TableName":"helper_table_atc","records":[{"id":1,"codigo_atc":"atc1"}</code>
+     *
+     * @return Un objeto fresco de tipo <code>HelperTableRecord</code> creado a partir del objeto JSON.
+     *
+     * @throws IOException Arrojada si hay un problema.
+     */
+    public HelperTableColumn createHelperTableColumnFromResultSet(ResultSet rs) {
+
+        HelperTableColumn helperTableColumn = new HelperTableColumn();
+
+        try {
+            helperTableColumn.setId(rs.getLong("id"));
+            helperTableColumn.setName(rs.getString("name"));
+            helperTableColumn.setHelperTableId(rs.getLong("helper_table_id"));
+            helperTableColumn.setHelperTableDataTypeId(rs.getInt("helper_table_data_type_id"));
+            helperTableColumn.setForeignKeyHelperTableId(rs.getInt("foreign_key_table_id"));
+            helperTableColumn.setForeignKey(rs.getBoolean("foreign_key"));
+            helperTableColumn.setDescription(rs.getString("description"));
+            helperTableColumn.setSearchable(rs.getBoolean("searchable"));
+            helperTableColumn.setSearchable(rs.getBoolean("showable"));
+            helperTableColumn.setSearchable(rs.getBoolean("editable"));
+            helperTableColumn.setSearchable(rs.getBoolean("sortable"));
+            helperTableColumn.setSearchable(rs.getBoolean("required"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return helperTableColumn;
+
+    }
+
 
     /**
      * Este método es responsable de crear un HelperTable Record a partir de un objeto JSON.

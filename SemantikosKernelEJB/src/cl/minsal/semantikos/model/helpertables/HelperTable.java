@@ -14,8 +14,8 @@ public class HelperTable implements TargetDefinition{
     private long id;
     private String name;
     private String description;
-    private List<HelperTableColumn> columns;
-    private List<HelperTableRow> rows;
+    private List<HelperTableColumn> columns = new ArrayList<>();
+    private List<HelperTableRow> rows = new ArrayList<>();
 
     public long getId() {
         return id;

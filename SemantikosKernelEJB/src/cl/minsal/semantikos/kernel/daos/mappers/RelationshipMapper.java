@@ -9,17 +9,21 @@ import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import com.fasterxml.jackson.databind.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Singleton;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
 
 /**
  * Created by root on 28-06-17.
@@ -43,56 +47,48 @@ public class RelationshipMapper {
     BasicTypeDAO basicTypeDAO;
 
     @EJB
+    RelationshipDefinitionDAO relationshipDefinitionDAO;
+
+    @EJB
     RelationshipAttributeDAO relationshipAttributeDAO;
 
+    @EJB
+    TargetDefinitionDAO targetDefinitionDAO;
 
-    public List<Relationship> createRelationshipFromResultSet(ResultSet rs, ConceptSMTK conceptSMTK) {
 
-        /* Concepto origen */
-        //ConceptSMTK sourceConceptSMTK = conceptDAO.getConceptByID(relationshipDTO.idSourceConcept);
-
-        List<Relationship> relationships =new ArrayList<>();
+    public Relationship createRelationshipFromResultSet(ResultSet rs, ConceptSMTK conceptSMTK) {
 
         try {
 
-            while(rs.next()) {
+            long id = rs.getLong("id");
+            long idConcept = rs.getLong("id_source_concept");
+            long idRelationshipDefinition = rs.getLong("id_relationship_definition");
+            Timestamp validityUntil = rs.getTimestamp("validity_until");
+            long idTarget = rs.getLong("id_target");
+            Timestamp creationDate = rs.getTimestamp("creation_date");
 
-                try {
-
-                    long id = rs.getLong("id");
-                    long idConcept = rs.getLong("id_source_concept");
-                    long idRelationshipDefinition = rs.getLong("id_relationship_definition");
-                    Timestamp validityUntil = rs.getTimestamp("validity_until");
-                    long idTarget = rs.getLong("id_target");
-                    Timestamp creationDate = rs.getTimestamp("creation_date");
-
-                    if(conceptSMTK == null) {
-                        conceptSMTK = conceptDAO.getConceptByID(idConcept);
-                    }
-
-                    /* Definición de la relación y sus atributos */
-                    RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsById(idRelationshipDefinition).get(0);
-
-                    /* El target que puede ser básico, smtk, tablas, crossmaps o snomed-ct */
-                    Relationship relationship = createRelationshipByTargetType(idTarget, conceptSMTK, relationshipDefinition, id, validityUntil);
-                    relationship.setValidityUntil(validityUntil);
-                    relationship.setCreationDate(creationDate);
-
-                    List<RelationshipAttribute> relationshipAttributes = relationshipAttributeDAO.getRelationshipAttribute(relationship);
-                    relationship.setRelationshipAttributes(relationshipAttributes);
-
-                    relationships.add(relationship);
-
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
+            if(conceptSMTK == null) {
+                conceptSMTK = conceptDAO.getConceptByID(idConcept);
             }
+
+            /* Definición de la relación y sus atributos */
+            RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsById(idRelationshipDefinition).get(0);
+
+            /* El target que puede ser básico, smtk, tablas, crossmaps o snomed-ct */
+            Relationship relationship = createRelationshipByTargetType(idTarget, conceptSMTK, relationshipDefinition, id, validityUntil);
+            relationship.setValidityUntil(validityUntil);
+            relationship.setCreationDate(creationDate);
+
+            List<RelationshipAttribute> relationshipAttributes = relationshipAttributeDAO.getRelationshipAttribute(relationship);
+            relationship.setRelationshipAttributes(relationshipAttributes);
+
+            return relationship;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return relationships;
+        return null;
     }
 
     /**
@@ -126,7 +122,6 @@ public class RelationshipMapper {
             return new Relationship(id, conceptSMTK, helperTableRow, relationshipDefinition, validityUntil, new ArrayList<RelationshipAttribute>());
         }
 
-
         /* El target puede ser un concepto SMTK */
         if (relationshipDefinition.getTargetDefinition().isSMTKType()) {
 
@@ -152,4 +147,46 @@ public class RelationshipMapper {
         logger.error(msg);
         throw new EJBException(msg);
     }
+
+    public RelationshipDefinition createRelationshipDefinitionFromResultSet(ResultSet rs) {
+
+        try {
+
+            long id = rs.getLong("id");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            TargetDefinition targetDefinition = targetDefinitionDAO.getTargetDefinitionById(rs.getLong("id_target_definition"));
+            Multiplicity multiplicity = new Multiplicity(rs.getInt("lower_boundary"), rs.getInt("upper_boundary"));
+
+            RelationshipDefinition relationshipDefinition = new RelationshipDefinition(id, name, description, targetDefinition, multiplicity);
+
+            relationshipDefinition.setRelationshipAttributeDefinitions(relationshipDefinitionDAO.getRelationshipAttributeDefinitionsByRelationshipDefinition(relationshipDefinition));
+
+            return relationshipDefinition;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public RelationshipAttributeDefinition createRelationshipAttributeDefinitionFromResultSet(ResultSet rs) {
+
+        try {
+
+            long id = rs.getLong("id");
+            String name = rs.getString("name");
+            TargetDefinition targetDefinition = targetDefinitionDAO.getTargetDefinitionById(rs.getLong("id_target_definition"));
+            Multiplicity multiplicity = new Multiplicity(rs.getInt("lower_boundary"), rs.getInt("upper_boundary"));
+
+            return new RelationshipAttributeDefinition(id, targetDefinition, name, multiplicity);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 }

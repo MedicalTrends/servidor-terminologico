@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.components.PendingTermsManager;
+import cl.minsal.semantikos.kernel.daos.mappers.RelationshipMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.*;
@@ -10,6 +11,7 @@ import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.NoValidDescription;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;
+import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.Tag;
@@ -39,6 +41,9 @@ public class QueryDAOImpl implements QueryDAO {
 
     @EJB
     PendingTermsManager pendingTermsManager;
+
+    @EJB
+    private RelationshipMapper relationshipMapper;
 
     public List<Object> executeQuery(IQuery query) {
 
@@ -513,6 +518,39 @@ public class QueryDAOImpl implements QueryDAO {
         }
 
         return compositeValue;
+    }
+
+    @Override
+    public List<Relationship> getRelationshipsByColumns(ConceptSMTK conceptSMTK, Query query) {
+
+        ConnectionBD connect = new ConnectionBD();
+        String sql = "{call semantikos.get_relationships_by_source_concept_id(?)}";
+
+        List<Long> definitions = query.getDefinitionIds();
+
+        List<Relationship> relationships = new ArrayList<>();
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setLong(1, conceptSMTK.getId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while(rs.next()) {
+                if(definitions.contains(rs.getLong("id_relationship_definition"))) {
+                    relationships.add(relationshipMapper.createRelationshipFromResultSet(rs, conceptSMTK));
+                }
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            throw new EJBException(e);
+        }
+
+        return relationships;
+
     }
 
     private void bindParameter(int paramNumber, CallableStatement call, Connection connection, QueryParameter param)

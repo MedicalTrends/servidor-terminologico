@@ -43,15 +43,6 @@ public interface CategoryManager {
     public Category getCategoryByName(String name);
 
     /**
-     * Este método responsable de recuperar toda la meta-data que consituye la definición de una categoría, en
-     * particular todos los atributos que define.
-     *
-     * @param id Identificador único de la categoría.
-     * @return La lista de definiciones de atributos de la categoría.
-     */
-    public List<RelationshipDefinition> getCategoryMetaData(int id);
-
-    /**
      * Método encagado de recuperar todas las categorías existentes.
      *
      * @return Lista de categorías

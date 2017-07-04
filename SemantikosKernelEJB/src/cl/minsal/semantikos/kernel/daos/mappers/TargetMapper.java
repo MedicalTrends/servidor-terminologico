@@ -1,14 +1,15 @@
 package cl.minsal.semantikos.kernel.daos.mappers;
 
-import cl.minsal.semantikos.kernel.daos.ConceptDAO;
-import cl.minsal.semantikos.kernel.daos.CrossmapsDAO;
-import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
-import cl.minsal.semantikos.kernel.daos.SnomedCTDAO;
+import cl.minsal.semantikos.kernel.daos.*;
 import cl.minsal.semantikos.kernel.util.DaoTools;
+import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Target;
+import cl.minsal.semantikos.model.relationships.TargetDefinition;
+import cl.minsal.semantikos.model.snomedct.SnomedCT;
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -26,6 +27,12 @@ import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCase
 @Singleton
 public class TargetMapper {
 
+    private static final int BASIC_TYPE_ID = 1;
+    private static final int SMTK_TYPE_ID = 2;
+    private static final int SCT_TYPE_ID = 3;
+    private static final int HELPER_TABLE_TYPE_ID = 4;
+    private static final int CROSSMAP_TYPE_ID = 5;
+
     @EJB
     HelperTableDAO helperTableDAO;
 
@@ -37,6 +44,12 @@ public class TargetMapper {
 
     @EJB
     ConceptDAO conceptDAO;
+
+    @EJB
+    BasicTypeDefinitionDAO basicTypeDefinitionDAO;
+
+    @EJB
+    CategoryDAO categoryDAO;
 
     /**
      * Este método es responsable de reconstruir un Target a partir de una expresión JSON, yendo a buscar los otros
@@ -76,4 +89,38 @@ public class TargetMapper {
 
         return target;
     }
+
+    public TargetDefinition createTargetDefinitionFromResultSet(ResultSet rs) {
+
+        TargetDefinition targetDefinition = null;
+
+        try {
+            switch ((int) rs.getLong("id_target_type")) {
+
+                case BASIC_TYPE_ID:
+                    return basicTypeDefinitionDAO.getBasicTypeDefinitionById(rs.getLong("id_basic_type"));
+
+                case SMTK_TYPE_ID:
+                    return categoryDAO.getCategoryById(rs.getLong("id_category"));
+
+                case SCT_TYPE_ID:
+                    return new SnomedCT("1.0");
+
+                case HELPER_TABLE_TYPE_ID:
+                    return helperTableDAO.getHelperTableByID(rs.getLong("id_helper_table_name"));
+
+                case CROSSMAP_TYPE_ID:
+                    return crossmapsDAO.getCrossmapSetByID(rs.getLong("id_extern_table_name"));
+
+                default:
+                    throw new EJBException("TIPO DE DEFINICION INCORRECTO. ID Target Type=" + rs.getLong("id_target_type"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return targetDefinition;
+    }
+
 }

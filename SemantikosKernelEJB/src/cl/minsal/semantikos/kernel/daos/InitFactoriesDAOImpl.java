@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.daos.mappers.DescriptionMapper;
+import cl.minsal.semantikos.kernel.daos.mappers.HelperTableMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.model.browser.*;
@@ -56,6 +58,9 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     HelperTableRecordFactory helperTableRecordFactory;
 
     @EJB
+    HelperTableMapper helperTableMapper;
+
+    @EJB
     RelationshipDefinitionDAO relationshipDefinitionDAO;
 
     @EJB
@@ -80,15 +85,15 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     private void init() {
         try {
             this.refreshDataSource();
-            this.refreshEmail();
+            //this.refreshEmail();
         } catch (NamingException e) {
             e.printStackTrace();
         }
+        this.refreshColumns();
         this.refreshCategories();
         this.refreshQueries();
         this.refreshDescriptionTypes();
         this.refreshTagsSMTK();
-        this.refreshColumns();
         this.refreshUsers();
     }
 
@@ -229,7 +234,8 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
             // Adding second order columns, if this apply
             for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions() ) {
-                if(relationshipDefinition.getTargetDefinition().isSMTKType()){
+
+                if(relationshipDefinition.getTargetDefinition().isSMTKType()) {
                     Category categoryDestination = (Category) relationshipDefinition.getTargetDefinition();
 
                     for (RelationshipDefinition relationshipDefinitionDestination : queryDAO.getSecondOrderShowableAttributesByCategory(categoryDestination)) {
@@ -335,7 +341,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     public DescriptionTypeFactory refreshDescriptionTypes() {
 
         ConnectionBD connect = new ConnectionBD();
-        ObjectMapper mapper = new ObjectMapper();
 
         List<DescriptionType> descriptionTypes = new ArrayList<>();
 
@@ -347,27 +352,15 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
             ResultSet rs = call.getResultSet();
 
             /* Se recuperan los description types */
-            DescriptionTypeDTO[] theDescriptionTypes = new DescriptionTypeDTO[0];
-            if (rs.next()) {
-                String resultJSON = rs.getString(1);
-                theDescriptionTypes = mapper.readValue(underScoreToCamelCaseJSON(resultJSON), DescriptionTypeDTO[].class);
-            }
-
-            if (theDescriptionTypes.length > 0) {
-                for (DescriptionTypeDTO aDescriptionType : theDescriptionTypes) {
-                    DescriptionType descriptionType = aDescriptionType.getDescriptionType();
-                    descriptionTypes.add(descriptionType);
-                }
+            while (rs.next()) {
+                descriptionTypes.add(DescriptionMapper.createDescriptionTypeFromResultSet(rs));
             }
 
             /* Se setea la lista de Tipos de descripción */
             DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypes);
+
         } catch (SQLException e) {
             String errorMsg = "Error al intentar recuperar Description Types de la BDD.";
-            logger.error(errorMsg, e);
-            throw new EJBException(errorMsg, e);
-        } catch (IOException e) {
-            String errorMsg = "Error al intentar parsear Description Types en JSON.";
             logger.error(errorMsg, e);
             throw new EJBException(errorMsg, e);
         }
@@ -421,20 +414,8 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
             ResultSet rs = call.getResultSet();
 
             /* Se recuperan las columnas */
-            if (rs.next()) {
-
-                String json = rs.getString(1);
-                if(json==null)
-                    return null;
-
-                try {
-                    helperTableColumns = helperTableRecordFactory.createHelperTableColumnsFromJSON(json);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            } else {
-                throw new EJBException("Error imposible en HelperTableDAOImpl");
+            while(rs.next()) {
+                helperTableColumns.add(helperTableMapper.createHelperTableColumnFromResultSet(rs));
             }
 
             /* Se setea la lista de tagsSMTK */

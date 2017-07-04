@@ -98,58 +98,6 @@ public class CategoryDAOImpl implements CategoryDAO {
         return category;
     }
 
-    @Override
-    public List<Category> getAllCategories() {
-        ConnectionBD connect = new ConnectionBD();
-        List<Category> categories = new ArrayList<>();
-        ;
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("SELECT * FROM semantikos.get_all_categories()")) {
-            call.execute();
-
-            ResultSet resultSet = call.getResultSet();
-            while (resultSet.next()) {
-                Category categoryFromResultSet = createCategoryFromResultSet(resultSet);
-                categories.add(categoryFromResultSet);
-            }
-
-            /* Ahora se recuperan sus definiciones */
-            for (Category category : categories) {
-                long id = category.getId();
-                List<RelationshipDefinition> categoryMetaData = getCategoryMetaData(id);
-                category.setRelationshipDefinitions(categoryMetaData);
-
-                if (!categoryMapByID.containsKey(id)){
-                    categoryMapByID.put(id, category);
-                }
-            }
-
-        } catch (SQLException e) {
-            throw new EJBException(e);
-        }
-
-        return categories;
-    }
-
-    @Override
-    public Category getCategoryByName(String categoryName) {
-
-        logger.debug("CategoryDAO.getCategoryByName(" + categoryName + ")");
-
-        /* Si no están cargadas las categorías, se cargan */
-        if (categoryMapByID.isEmpty()){
-            getAllCategories();
-        }
-
-        for (Category category : categoryMapByID.values()) {
-            if (category.getName().equalsIgnoreCase(categoryName)){
-                return category;
-            }
-        }
-
-        throw new IllegalArgumentException("No existe categoría de nombre " + categoryName);
-    }
-
     private Category createCategoryFromResultSet(ResultSet resultSet) throws SQLException {
         long idCategory = resultSet.getLong("idcategory");
         String nameCategory = resultSet.getString("namecategory");

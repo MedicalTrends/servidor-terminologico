@@ -82,4 +82,16 @@ public class HelperTableColumnFactory {
         }
     }
 
+    public List<HelperTableColumn> findColumnsByHelperTable(long idHelperTable) {
+        List<HelperTableColumn> columns = new ArrayList<>();
+
+        for (HelperTableColumn helperTableColumn : helperTableColumns) {
+            if(helperTableColumn.getHelperTableId() == idHelperTable) {
+                columns.add(helperTableColumn);
+            }
+        }
+
+        return columns;
+    }
+
 }
