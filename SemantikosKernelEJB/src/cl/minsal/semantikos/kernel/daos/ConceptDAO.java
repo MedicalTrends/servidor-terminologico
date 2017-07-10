@@ -35,18 +35,6 @@ public interface ConceptDAO {
      */
     public List<ConceptSMTK> getConceptsBy(boolean modeled, int pageSize, int pageNumber);
 
-    /**
-     * Este método es responsable de recuperar los conceptos que coincidan con un cierto patrón (<code>pattern</code>)
-     * y que pertenezcan a una o más categorías.
-     *
-     * @param pattern    El patrón de búsqueda en los términos.
-     * @param categories Las categorías en las que se realiza la búsqueda.
-     * @param modeled    Los estados que deben satisfacer los conceptos a retornar.
-     * @param pageSize   El tamaño de la página.
-     * @param pageNumber La página de resultados que se desea obtener.
-     * @return Una lista de <code>ConceptSMTK</code> que cumplen los criterios de búsqueda.
-     */
-    public List<ConceptSMTK> findConceptsBy(String[] pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber);
 
     /**
      * Este método es responsable de recuperar los conceptos que coincidan con un cierto patrón (<code>pattern</code>)
@@ -82,8 +70,6 @@ public interface ConceptDAO {
      * @return Una lista con los conceptos asociados a la categoría.
      */
     List<ConceptSMTK> findConceptsBy(Category category);
-
-    public List<ConceptSMTK> findConceptsBy(String[] pattern, boolean isModeled, int pageSize, int pageNumber);
 
     public List<ConceptSMTK> findConceptsBy(String PatternOrConceptId, Long[] Category, int pageNumber, int pageSize, boolean isModeled);
 
@@ -205,33 +191,17 @@ public interface ConceptDAO {
     public List<Long> getAllConceptsId();
 
     /**
-     *
-     * @return
-     */
-
-    /**
      * Método encargado de realizar perfect match con patrón de búsqueda y categorías
      * @return
      */
-    public List<ConceptSMTK> findPerfectMatchConceptBy(String pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findPerfectMatchConcept(String pattern, Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber);
 
-    /**
-     * Método encargado de realizar perfect match con patrón de búsqueda
-     * @return
-     */
-    public List<ConceptSMTK> findPerfectMatchConceptBy(String pattern, boolean modeled, int pageSize, int pageNumber);
-
-    /**
-     * Método encargado de realizar truncate match con patrón de búsqueda y categorías
-     * @return
-     */
-    public List<ConceptSMTK> findTruncateMatchConceptBy(String pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber);
 
     /**
      * Método encargado de realizar truncate match con patrón de búsqueda
      * @return
      */
-    public List<ConceptSMTK> findTruncateMatchConceptBy(String pattern, boolean modeled, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findTruncateMatchConcept(String pattern,  Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber);
 
     /**
      * Método encargado de contar los conceptos con perfect match

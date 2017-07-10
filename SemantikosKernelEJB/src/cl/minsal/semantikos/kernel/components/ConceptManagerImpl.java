@@ -28,6 +28,7 @@ import java.util.*;
 
 import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
 import static cl.minsal.semantikos.model.PersistentEntity.getIdArray;
+import static java.util.Collections.EMPTY_LIST;
 
 /**
  * @author Andrés Farías
@@ -201,9 +202,8 @@ public class ConceptManagerImpl implements ConceptManager {
         refsets = (refsets == null) ? new Long[0] : refsets;
 
         pattern = standardizationPattern(pattern);
-        String[] arrayPattern = patternToArray(pattern);
 
-        return conceptDAO.findConceptsBy(arrayPattern, categories, refsets, isModeled, pageSize, pageNumber);
+        return conceptDAO.findTruncateMatchConcept(pattern, categories, refsets, isModeled, pageSize, pageNumber);
     }
 
     @Override
@@ -563,14 +563,14 @@ public class ConceptManagerImpl implements ConceptManager {
          * Existe al menos una categoría y el patron de búsqueda
          */
         if ((categories.length != 0 && pattern.length() != 0)) {
-            return conceptDAO.findPerfectMatchConceptBy(pattern, categories, isModeled, pageSize, pageNumber);
+            return conceptDAO.findPerfectMatchConcept(pattern, categories, null, isModeled, pageSize, pageNumber);
         }
 
         /**
          * No existen categorías pero si un patrón de búsqueda
          */
         if ((categories.length == 0 && pattern.length() != 0)) {
-            return conceptDAO.findPerfectMatchConceptBy(pattern, isModeled, pageSize, pageNumber);
+            return conceptDAO.findPerfectMatchConcept(pattern, null, null, isModeled, pageSize, pageNumber);
         }
 
 
@@ -586,10 +586,10 @@ public class ConceptManagerImpl implements ConceptManager {
          * Existe al menos una categoría y el patron de búsqueda
          */
         if ((categories.length != 0 && pattern.length() != 0)) {
-            conceptSMTKs= conceptDAO.findTruncateMatchConceptBy(patternTruncate, categories, isModeled, pageSize, pageNumber);
+            conceptSMTKs= conceptDAO.findTruncateMatchConcept(patternTruncate, categories, null, isModeled, pageSize, pageNumber);
         }else{
             if ((categories.length == 0 && pattern.length() != 0)) {
-                conceptSMTKs= conceptDAO.findTruncateMatchConceptBy(patternTruncate, isModeled, pageSize, pageNumber);
+                conceptSMTKs= conceptDAO.findTruncateMatchConcept(patternTruncate, null, null, isModeled, pageSize, pageNumber);
             }
         }
 

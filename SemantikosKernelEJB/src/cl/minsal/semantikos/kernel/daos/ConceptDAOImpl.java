@@ -253,76 +253,13 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> findConceptsBy(String[] pattern, boolean isModeled, int pageSize, int pageNumber) {
-        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
-        ConnectionBD connect = new ConnectionBD();
-
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_concept_by_pattern(?,?,?,?)}")) {
-
-            call.setArray(1, connection.createArrayOf("text", pattern));
-            call.setInt(2, pageNumber);
-            call.setInt(3, pageSize);
-            call.setBoolean(4, isModeled);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                ConceptSMTK conceptSMTK = createConceptSMTKFromResultSet(rs);
-                concepts.add(conceptSMTK);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-
-        return concepts;
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptsBy(String[] pattern, Long[] categories, boolean modeled, int pageSize, int
-            pageNumber) {
-
-        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
-        ConnectionBD connect = new ConnectionBD();
-
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_concept_by_pattern_and_categories" +
-                     "(?,?,?,?,?)}")) {
-
-            Array ArrayCategories = connection.createArrayOf("integer", categories);
-
-            call.setArray(1, ArrayCategories);
-            call.setArray(2, connection.createArrayOf("text", pattern));
-            call.setInt(3, pageNumber);
-            call.setInt(4, pageSize);
-            call.setBoolean(5, modeled);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                ConceptSMTK conceptSMTK = createConceptSMTKFromResultSet(rs);
-                concepts.add(conceptSMTK);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-
-        return concepts;
-    }
-
-    @Override
     public List<ConceptSMTK> findConceptsBy(String[] pattern, Long[] categories, Long[] refsets, boolean modeled, int
             pageSize, int pageNumber) {
         List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
         ConnectionBD connect = new ConnectionBD();
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos" +
-                     ".find_concept_by_pattern_and_categories_and_refsets(?,?,?,?,?,?)}")) {
+             CallableStatement call = connection.prepareCall("{call semantikos.find_concept_by_pattern_and_categories_and_refsets(?,?,?,?,?,?)}")) {
 
             Array ArrayCategories = connection.createArrayOf("integer", categories);
             Array ArrayRefsets = connection.createArrayOf("integer", refsets);
@@ -1095,120 +1032,12 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> findPerfectMatchConceptBy(String pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber) {
-
+    public List<ConceptSMTK> findTruncateMatchConcept(String pattern, Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber) {
         List<ConceptSMTK> concepts;
 
         ConnectionBD connect = new ConnectionBD();
 
-        String QUERY_PERFECT_MATCH = "{call semantikos.perfect_match_pattern_and_categories(?,?,?,?,?)}";
-
-        try (Connection connection = connect.getConnection(); CallableStatement call =
-                connection.prepareCall(QUERY_PERFECT_MATCH)) {
-
-            Array ArrayCategories = connection.createArrayOf("integer", categories);
-            call.setArray(1, ArrayCategories);
-            call.setString(2, pattern);
-            call.setInt(3, pageNumber);
-            call.setInt(4, pageSize);
-            call.setBoolean(5, modeled);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            concepts = new ArrayList<>();
-            while (rs.next()) {
-                concepts.add(createConceptSMTKFromResultSet(rs));
-            }
-            rs.close();
-            call.close();
-
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-
-        return concepts;
-    }
-
-    @Override
-    public List<ConceptSMTK> findPerfectMatchConceptBy(String pattern, boolean modeled, int pageSize, int pageNumber) {
-        List<ConceptSMTK> concepts;
-
-        ConnectionBD connect = new ConnectionBD();
-
-        String QUERY_PERFECT_MATCH = "{call semantikos.perfect_match_pattern(?,?,?,?)}";
-
-        try (Connection connection = connect.getConnection(); CallableStatement call =
-                connection.prepareCall(QUERY_PERFECT_MATCH)) {
-
-
-            call.setString(1, pattern);
-            call.setInt(2, pageNumber);
-            call.setInt(3, pageSize);
-            call.setBoolean(4, modeled);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            concepts = new ArrayList<>();
-            while (rs.next()) {
-                concepts.add(createConceptSMTKFromResultSet(rs));
-            }
-            rs.close();
-            call.close();
-
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-
-        return concepts;
-    }
-
-    @Override
-    public List<ConceptSMTK> findTruncateMatchConceptBy(String pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber) {
-        List<ConceptSMTK> concepts;
-
-        ConnectionBD connect = new ConnectionBD();
-
-        String QUERY_TRUNCATE_MATCH = "{call semantikos.truncate_match_by_pattern_and_categories(?,?,?,?,?)}";
-
-        try (Connection connection = connect.getConnection(); CallableStatement call =
-                connection.prepareCall(QUERY_TRUNCATE_MATCH)) {
-
-
-            Array ArrayCategories = connection.createArrayOf("integer", categories);
-
-            call.setArray(1, ArrayCategories);
-            call.setString(2, pattern);
-            call.setInt(3, pageNumber);
-            call.setInt(4, pageSize);
-            call.setBoolean(5, modeled);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            concepts = new ArrayList<>();
-            while (rs.next()) {
-                concepts.add(createConceptSMTKFromResultSet(rs));
-            }
-            rs.close();
-            call.close();
-
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-
-        return concepts;
-    }
-
-    @Override
-    public List<ConceptSMTK> findTruncateMatchConceptBy(String pattern, boolean modeled, int pageSize, int pageNumber) {
-        List<ConceptSMTK> concepts;
-
-        ConnectionBD connect = new ConnectionBD();
-
-        String QUERY_TRUNCATE_MATCH = "{call semantikos.truncate_match_by_pattern(?,?,?,?" +
-                ")}";
+        String QUERY_TRUNCATE_MATCH = "{call semantikos.find_concept_truncate_match(?,?,?,?,?,?)}";
 
         try (Connection connection = connect.getConnection(); CallableStatement call =
                 connection.prepareCall(QUERY_TRUNCATE_MATCH)) {
@@ -1234,6 +1063,40 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         return concepts;
     }
+
+    @Override
+    public List<ConceptSMTK> findPerfectMatchConcept(String pattern, Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber) {
+        List<ConceptSMTK> concepts;
+
+        ConnectionBD connect = new ConnectionBD();
+
+        String QUERY_TRUNCATE_MATCH = "{call semantikos.find_concept_perfect_match(?,?,?,?,?,?)}";
+
+        try (Connection connection = connect.getConnection(); CallableStatement call =
+                connection.prepareCall(QUERY_TRUNCATE_MATCH)) {
+
+            call.setString(1, pattern);
+            call.setInt(2, pageNumber);
+            call.setInt(3, pageSize);
+            call.setBoolean(4, modeled);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            concepts = new ArrayList<>();
+            while (rs.next()) {
+                concepts.add(createConceptSMTKFromResultSet(rs));
+            }
+            rs.close();
+            call.close();
+
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
+        return concepts;
+    }
+
 
     @Override
     public int countPerfectMatchConceptBy(String pattern, Long[] categories, boolean modeled) {
