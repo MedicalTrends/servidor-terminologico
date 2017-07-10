@@ -99,99 +99,6 @@ public class ConceptManagerImpl implements ConceptManager {
         return conceptSMTK;
     }
 
-    @Override
-    public List<ConceptSMTK> findConceptsBy(Category category) {
-
-        /* Se validan los parámetros */
-        if (category == null) {
-            logger.error("Se solicitan los conceptos de categoría nula.");
-            return Collections.emptyList();
-        }
-
-        /* Se delega al DAO directamente */
-        return conceptDAO.findConceptsBy(category);
-    }
-
-
-
-    @Override
-    public List<ConceptSMTK> findConcepts(Category aCategory, List<String> refSetNames, RelationshipDefinition basicTypeAttribute, String value) {
-
-        /* Primero se debe validar que el RelationshipDefinition es tipo Tipo Básico */
-        boolean basicType = basicTypeAttribute.getTargetDefinition().isBasicType();
-        if (!basicType) {
-            throw new IllegalArgumentException("Se consideró un tipo básico de un target que no lo es: " + basicTypeAttribute);
-        }
-
-        /* Luego se recuperan los refsets */
-        ArrayList<RefSet> refsets = new ArrayList<>();
-        for (String refSetName : refSetNames) {
-            RefSet refsetByName = refSetManager.getRefsetByName(refSetName);
-            refsets.add(refsetByName);
-        }
-
-        /* Por razones de eficiencia, es mejor realizar la búsqueda directamente en la base de datos */
-        if (refsets.isEmpty()) {
-            return conceptDAO.findConceptsWithStringBasicType(aCategory, basicTypeAttribute, value);
-        } else {
-            return conceptDAO.findConceptsWithStringBasicType(aCategory, refsets, basicTypeAttribute, value);
-        }
-    }
-
-    @Override
-    public List<ConceptSMTK> findModeledConceptBy(Category category, int pageSize, int pageNumber) {
-        return this.conceptDAO.getModeledConceptBy(category.getId(), pageSize, pageNumber);
-    }
-
-    @Override
-    public List<ConceptSMTK> findModeledConceptPaginated(Category category, int pageSize, int pageNumber) {
-        return this.conceptDAO.getModeledConceptPaginated(category.getId(), pageSize, pageNumber);
-    }
-
-    @Override
-    public int countModeledConceptBy(Category category) {
-        return this.conceptDAO.countModeledConceptBy(category.getId());
-    }
-
-    @Override
-    public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize) {
-        return this.conceptDAO.findModeledConceptsBy(refSet, page, pageSize);
-    }
-
-    @Override
-    public Integer countModeledConceptsBy(RefSet refSet) {
-        return this.conceptDAO.countModeledConceptsBy(refSet);
-    }
-
-    @Override
-    public Integer countConceptBy(String pattern, Long[] categories, Long[] refsets) {
-        boolean isModeled = true;
-        categories = (categories == null) ? new Long[0] : categories;
-        refsets = (refsets == null) ? new Long[0] : refsets;
-
-        pattern = standardizationPattern(pattern);
-        String[] arrayPattern = patternToArray(pattern);
-
-        return this.conceptDAO.countConceptBy(arrayPattern, categories, refsets, isModeled);
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptsBy(String patternOrConceptID, Long[] categories, int pageNumber, int pageSize) {
-
-        boolean isModeled = true;
-        categories = (categories == null) ? new Long[0] : categories;
-
-        //Búsqueda por categoría
-        if (categories.length > 0 && patternOrConceptID.trim().length() == 0) {
-            return conceptDAO.findConceptsBy(categories, isModeled, pageSize, pageNumber);
-        }
-
-        //Búsqueda páginas
-        if (categories.length == 0 && patternOrConceptID.trim().length() == 0) {
-            return conceptDAO.getConceptsBy(isModeled, pageSize, pageNumber);
-        }
-        return findConceptBy(patternOrConceptID, categories, pageNumber, pageSize, isModeled);
-    }
 
     @Override
     public List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int pageNumber, int pageSize) {
@@ -234,44 +141,6 @@ public class ConceptManagerImpl implements ConceptManager {
         } while (thereAreMore);
 
         return concepts;
-    }
-
-    @Override
-    public int countConceptBy(String pattern, Long[] categories) {
-        boolean isModeled = true;
-        pattern = standardizationPattern(pattern);
-        //Cuenta por categoría
-        if (categories.length > 0) {
-            return conceptDAO.countConceptBy((String[]) null, categories, isModeled);
-        }
-        if (categories.length == 0 && pattern.trim().length() == 0) {
-            return conceptDAO.countConceptBy((String[]) null, categories, isModeled);
-        }
-        return countConceptBy(pattern, categories, isModeled);
-
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptsBy(String pattern) {
-
-        /* Se realiza la búsqueda estándard */
-        List<ConceptSMTK> conceptSMTKList = findConceptsBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
-        if (conceptSMTKList.size() != 0) {
-            return conceptSMTKList;
-        }
-
-        /* Si la búsqueda estándard no dio resultados, se intenta con una búsqueda truncada */
-        else {
-            pattern = truncatePattern(pattern);
-            return findConceptsBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
-        }
-
-    }
-
-    @Override
-    public List<ConceptSMTK> getConceptBy(RefSet refSet) {
-        return conceptDAO.findConceptsBy(refSet);
-
     }
 
     @Override
@@ -451,11 +320,6 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public List<Relationship> getRelationships(ConceptSMTK concept) {
         return relationshipDAO.getRelationshipsBySourceConcept(concept);
-    }
-
-    @Override
-    public List<ConceptSMTK> getConceptDraft() {
-        return conceptDAO.getConceptDraft();
     }
 
     @Override
