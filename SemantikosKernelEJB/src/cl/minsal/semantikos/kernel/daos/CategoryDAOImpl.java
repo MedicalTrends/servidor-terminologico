@@ -1,10 +1,12 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.daos.mappers.CategoryMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,9 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @EJB
     private TagSMTKDAO tagSMTKDAO;
+
+    @EJB
+    private CategoryMapper categoryMapper;
 
     /** Un caché de categorías */
     private Map<Long, Category> categoryMapByID;
@@ -74,17 +79,21 @@ public class CategoryDAOImpl implements CategoryDAO {
     private Category getCategoryByIdFromDB(long idCategory) {
         Category category;
         //ConnectionBD connect = new ConnectionBD();
-        String GET_CATEGORY_BY_ID = "{call semantikos.get_category_by_id(?)}";
+
+        String sql = "begin ? := stk.stk_pck_category.get_category_by_id(?); end;";
 
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
-             CallableStatement call = connection.prepareCall(GET_CATEGORY_BY_ID)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, idCategory);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idCategory);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
-                category = createCategoryFromResultSet(rs);
+                category = categoryMapper.createCategoryFromResultSet(rs);
             } else {
                 throw new EJBException("Error en la llamada");
             }
@@ -98,18 +107,6 @@ public class CategoryDAOImpl implements CategoryDAO {
         return category;
     }
 
-    private Category createCategoryFromResultSet(ResultSet resultSet) throws SQLException {
-        long idCategory = resultSet.getLong("idcategory");
-        String nameCategory = resultSet.getString("namecategory");
-        String nameAbbreviated = resultSet.getString("nameabbreviated");
-        boolean restriction = resultSet.getBoolean("restriction");
-        String color = resultSet.getString("nameabbreviated");
-        long idTagSMTK = resultSet.getLong("tag");
-        TagSMTK tagSMTKByID = tagSMTKDAO.findTagSMTKByID(idTagSMTK);
-
-        return new Category(idCategory, nameCategory, nameAbbreviated, restriction, color, tagSMTKByID);
-    }
-
     @Override
     public List<RelationshipDefinition> getCategoryMetaData(long idCategory) {
         return relationshipDefinitionDAO.getRelationshipDefinitionsByCategory(idCategory);
@@ -118,19 +115,23 @@ public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public void persist(Category category) {
         ConnectionBD connect = new ConnectionBD();
-        String CREATE_CATEGORY = "{call semantikos.create_category(?, ?, ?, ?, ?)}";
+
+        String sql = "begin ? := stk.stk_pck_category.create_category(?,?,?,?,?); end;";
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(CREATE_CATEGORY)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, category.getName());
-            call.setString(2, category.getNameAbbreviated());
-            call.setBoolean(3, category.isRestriction());
-            call.setLong(4, category.getTagSemantikos().getId());
-            call.setString(5, category.getColor());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, category.getName());
+            call.setString(3, category.getNameAbbreviated());
+            call.setBoolean(4, category.isRestriction());
+            call.setLong(5, category.getTagSemantikos().getId());
+            call.setString(6, category.getColor());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
                 long catID = rs.getLong(1);
                 category.setId(catID);
@@ -154,15 +155,21 @@ public class CategoryDAOImpl implements CategoryDAO {
 
         CallableStatement call;
 
+        String sql = "begin ? := stk.stk_pck_category.get_related_category(?); end;";
+
         try (Connection connection = connect.getConnection();) {
 
-            call = connection.prepareCall("{call semantikos.get_related_category(?)}");
-            call.setLong(1,category.getId());
+            call = connection.prepareCall(sql);
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2,category.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
-                categories.add(createCategoryFromResultSet(rs));
+                categories.add(categoryMapper.createCategoryFromResultSet(rs));
             }
             rs.close();
 

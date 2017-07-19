@@ -209,7 +209,7 @@
                     <f:setPropertyActionListener value="#{description}"
                                                  target="#{conceptBean.descriptionToTranslate}"/>
                     <f:setPropertyActionListener value="" target="#{conceptBean.conceptSMTKTranslateDes}"/>
-                    <f:setPropertyActionListener value="" target="#{findConceptBean.categoryArrayID}"/>
+                    <f:setPropertyActionListener value="" target="#{findConceptBean.selectedCategories}"/>
                 </p:commandLink>
 
                 <p:commandLink rendered="#{conceptBean.concept.persistent and description.persistent and profilePermissionsBeans.permissionsBy(conceptBean.category)}"
@@ -290,12 +290,14 @@
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-6">
                         <p:selectCheckboxMenu style="width: 300px;" id="menu"
-                                              value="#{findConceptBean.categoryArrayID}" label="Filtro categorías"
+                                              value="#{findConceptBean.selectedCategories}"
+                                              label="Filtro categorías"
+                                              converter="CategoryConverter"
                                               filter="true" filterMatchMode="startsWith"
                                               disabled="#{conceptBean.conceptSMTKTranslateDes!=null}">
 
                             <f:selectItems value="#{findConceptBean.categoryList}" var="category"
-                                           itemLabel="#{category.name}" itemValue="#{category.id}"/>
+                                           itemLabel="#{category.name}" itemValue="#{category}"/>
                             <p:ajax event="toggleSelect"
                                     listener="#{findConceptBean.getConceptSearchInputAndCategories}"
                                     update="inputFindConcept"/>

@@ -105,70 +105,11 @@ public interface ConceptManager {
      */
     public ConceptSMTK getConceptByID(long id);
 
-    /**
-     * Este método es responsable de buscar conceptos cuyo CONCEPT_ID o en descripciones de términos de conceptos, y
-     * entregar los resultados de manera paginada.
-     *
-     * @param patternOrConceptID El patrón de búsqueda.
-     * @param categories         Las categorías a las que pertenecen los conceptos sobre los cuales se realiza la
-     *                           búsqueda.
-     * @param pageNumber         El número de página que se desea obtener.
-     * @param pageSize           La cantidad de resultados por página.
-     * @return Una lista de conceptos (correspondiendo a la página solicitada), sin ningún orden particular, de los
-     * conceptos que corresponden al criterio de búsqueda.
-     */
-    public List<ConceptSMTK> findConceptsBy(String patternOrConceptID, Long[] categories, int pageNumber, int pageSize);
+    public List<ConceptSMTK> findConcepts(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled);
 
-    /**
-     * Lo mismo que el metodo anterior pero el match con el pattern se hace por truncate perfect.
-     *
-     * @param pattern
-     * @param categories
-     * @param refsets
-     * @param pageNumber
-     * @param pageSize
-     * @return
-     */
-    List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int pageNumber, int pageSize);
+    public long countConceptsByPattern(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled);
 
-    /**
-     * Este método es responsable de recuperar todos los conceptos que hacen truncate match con el termino
-     * <code>termPattern</code> y que pertenece a alguna de las categorías <code>categories</code> o a alguno de
-     * los refsets <code>refsets</code>.
-     * <p/>
-     * Si no se especifica alguna categoría, se busca por conceptos en cualquier categoría.
-     * <p/>
-     * Si no se especifica algún refset, se busca por conceptos que pertenezcan a cualquier RefSet. Esto excluye a
-     * conceptos que no se encuentren en algún RefSet.
-     *
-     * @param termPattern El patrón de búsqueda.
-     * @param categories  Las categorías a las que se quiere asociado el concepto.
-     * @param refSets     Los RefSets en los que podría estar el concepto.
-     * @return Una lista de conceptos que coinciden con el criterio de búsqueda.
-     */
-    List<ConceptSMTK> findConceptTruncatePerfect(String termPattern, List<Category> categories, List<RefSet> refSets);
-
-    /**
-     * Este método es responsable de recuperar todos los conceptos que pertenecen a una categoría dada.
-     *
-     * @param category La Categoría especificada.
-     * @return Una lista con todos los conceptos de una categoría.
-     */
-    public List<ConceptSMTK> findConceptsBy(Category category);
-
-    /**
-     * Este método es responsable de buscar los conceptos que posean un atributo de tipo básico que tenga el valor
-     * <code>value</code>.
-     *
-     * @param aCategory            La categoría en la cual se buscan los conceptos.
-     * @param refSetNames          Los refsets en los cuales deben encontrarse los conceptos.
-     * @param requestableAttribute El atributo utilizado para filtrar la búsqueda.
-     * @param value                El valor que debe tener el atributo.
-     * @return Una lista fresca de conceptos, perezosamente incializados.
-     */
-    public List<ConceptSMTK> findConcepts(Category aCategory, List<String> refSetNames, RelationshipDefinition requestableAttribute, String value);
-
-    public Integer countModeledConceptsBy(RefSet refSet);
+    public List<ConceptSMTK> findModeledConceptPaginated(Category category, int pageSize, int pageNumber);
 
     /**
      * Método encargado de generar el concept ID
@@ -211,8 +152,6 @@ public interface ConceptManager {
      */
     public List<Relationship> getRelationships(ConceptSMTK concept);
 
-    public List<ConceptSMTK> getConceptBy(RefSet refSet);
-
     /**
      * Este método es responsable de obtener los conceptos que se relacionan con el concepto <code>conceptSMTK</code> a
      * través de relaciones, donde <code>conceptSMTK</code> es el concepto de origen y los conceptos relacionados con
@@ -232,13 +171,6 @@ public interface ConceptManager {
      * @return La lista de conceptos relacionados que pertenecen a alguna de las categorías en <code>categories</code>.
      */
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK, Category... categories);
-
-    /**
-     * Método encargado de obtener los conceptos en borrador
-     *
-     * @return lista de conceptos en borrador
-     */
-    public List<ConceptSMTK> getConceptDraft();
 
     /**
      * Este método es responsable de retornar la instancia del concepto no valido.
@@ -265,51 +197,26 @@ public interface ConceptManager {
     public ConceptSMTK getPendingConcept();
 
     /**
-     * Método encargado de realizar la búsqueda de conceptos
-     *
-     * @param pattern patrón de búsqueda
-     * @param categories categorías en las que desea buscar el concepto
-     * @param pageNumber número de la página
-     * @param pageSize tamaño de la página
-     * @param isModeled conceptos modelados (true) o en borrador (false)
-     * @return Lista de conceptos que concuerdan con los parámetros de búsqueda
-     */
-
-    public List<ConceptSMTK> findConceptBy(String pattern, Long[] categories, int pageNumber, int pageSize, boolean isModeled);
-
-    /**
      * Método encargado de hacer Perfect Match según los parámetros ingresados
      * @return  Lista de conceptos que concuerdan con los parámetros de búsqueda
      */
-    public List<ConceptSMTK> perfectMatch(String pattern, Long[] categories, int pageNumber, int pageSize, Boolean isModeled);
+    public List<ConceptSMTK> perfectMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean isModeled);
 
     /**
      * Método encargado de hacer Truncate Match según los parámetros ingresados
      * @return  Lista de conceptos que concuerdan con los parámetros de búsqueda
      */
-    public List<ConceptSMTK> truncateMatch(String pattern, Long[] categories, int pageNumber, int pageSize, Boolean isModeled);
-
-    /**
-     * Este método se encarga de entregar la cantidad de conceptos según patron, categoría y si esta modelado o no.
-     * @param pattern    patrón de búsqueda
-     * @param categories arreglo de idś de categorías
-     * @param isModeled conceptos modelados (true) o borrador (false)
-     * @return cantidad de conceptos según los parámetros ingresados
-     */
-    public int countConceptBy(String pattern, Long[] categories, Boolean isModeled);
+    public List<ConceptSMTK> truncateMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean isModeled);
 
     /**
      * Este método se encarga de entregar la cantidad de conceptos por Perfect Match según patron, categoría y si esta modelado o no.
      * @return cantidad de conceptos según los parámetros ingresados
      */
-    public int countPerfectMatch(String pattern, Long[] categories, Boolean isModeled);
+    public long countPerfectMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean isModeled);
     /**
      * Este método se encarga de entregar la cantidad de conceptos por Truncate Match según patron, categoría y si esta modelado o no.
      * @return cantidad de conceptos según los parámetros ingresados
      */
-    public int countTruncateMatch(String pattern, Long[] categories, Boolean isModeled);
-
-
-    public String standardizationPattern(String pattern);
+    public long countTruncateMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean isModeled);
 
 }

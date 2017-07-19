@@ -15,6 +15,7 @@ import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.Tag;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,21 +55,23 @@ public class QueryDAOImpl implements QueryDAO {
         String QUERY = "";
 
         if(  query instanceof  GeneralQuery )
-            QUERY = "{call semantikos.get_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            QUERY = "begin ? := stk.stk_pck_query.get_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  DescriptionQuery )
-            QUERY = "{call semantikos.get_description_by_description_query(?,?,?,?,?,?,?,?,?)}";
+            QUERY = "begin ? := stk.stk_pck_query.get_description_by_description_query(?,?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  NoValidQuery )
-            QUERY = "{call semantikos.get_description_by_no_valid_query(?,?,?,?,?,?,?,?)}";
+            QUERY = "begin ? := stk.stk_pck_query.get_description_by_no_valid_query(?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  PendingQuery )
-            QUERY = "{call semantikos.get_pending_term_by_pending_query(?,?,?,?,?,?,?)}";
+            QUERY = "begin ? := stk.stk_pck_query.get_pending_term_by_pending_query(?,?,?,?,?,?,?); end;";
         if(  query instanceof  BrowserQuery )
-            QUERY = "{call semantikos.get_concept_by_browser_query(?,?,?,?,?,?,?,?)}";
+            QUERY = "begin ? := stk.stk_pck_query.get_concept_by_browser_query(?,?,?,?,?,?,?,?); end;";
 
         try (Connection connection = connect.getConnection();
 
              CallableStatement call = connection.prepareCall(QUERY)){
 
-            int paramNumber = 1;
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+
+            int paramNumber = 2;
 
             for (QueryParameter queryParameter : query.getQueryParameters()) {
                 bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
@@ -77,7 +80,7 @@ public class QueryDAOImpl implements QueryDAO {
 
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
 
@@ -122,21 +125,23 @@ public class QueryDAOImpl implements QueryDAO {
         String QUERY = "";
 
         if(  query instanceof  GeneralQuery )
-            QUERY = "{call semantikos.count_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            QUERY = "begin ? := stk.stk_pck_query.count_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  DescriptionQuery )
-            QUERY = "{call semantikos.count_description_by_description_query(?,?,?,?,?,?,?,?,?)}";
+            QUERY = "begin ? := stk.stk_pck_query.count_description_by_description_query(?,?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  NoValidQuery )
-            QUERY = "{call semantikos.count_description_by_no_valid_query(?,?,?,?,?,?,?,?)}";
+            QUERY = "begin ? := stk.stk_pck_query.count_description_by_no_valid_query(?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  PendingQuery )
-            QUERY = "{call semantikos.count_pending_term_by_no_pending_query(?,?,?,?,?,?,?)}";
+            QUERY = "begin ? := stk.stk_pck_query.count_pending_term_by_no_pending_query(?,?,?,?,?,?,?); end;";
         if(  query instanceof  BrowserQuery )
-            QUERY = "{call semantikos.count_concept_by_browser_query(?,?,?,?,?,?,?,?)}";
+            QUERY = "begin ? := stk.stk_pck_query.count_concept_by_browser_query(?,?,?,?,?,?,?,?); end;";
 
         try (Connection connection = connect.getConnection();
 
-             CallableStatement call = connection.prepareCall(QUERY)){
+             CallableStatement call = connection.prepareCall(QUERY)) {
 
-            int paramNumber = 1;
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+
+            int paramNumber = 2;
 
             for (QueryParameter queryParameter : query.getQueryParameters()) {
                 bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
@@ -145,7 +150,7 @@ public class QueryDAOImpl implements QueryDAO {
 
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
 
@@ -165,7 +170,8 @@ public class QueryDAOImpl implements QueryDAO {
     public List<RelationshipDefinition> getSearchableAttributesByCategory(Category category) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_view_info_by_relationship_definition(?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_definition(?,?); end;";
 
         List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
 
@@ -177,11 +183,12 @@ public class QueryDAOImpl implements QueryDAO {
 
                 boolean searchable;
 
-                call.setLong(1, category.getId());
-                call.setLong(2, relationshipDefinition.getId());
+                call.registerOutParameter (1, OracleTypes.CURSOR);
+                call.setLong(2, category.getId());
+                call.setLong(3, relationshipDefinition.getId());
                 call.execute();
 
-                ResultSet rs = call.getResultSet();
+                ResultSet rs = (ResultSet) call.getObject(1);
 
                 if (rs.next()) {
 
@@ -203,7 +210,8 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public List<RelationshipDefinition> getSecondOrderSearchableAttributesByCategory(Category category) {
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_second_order_view_info_by_relationship_definition(?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_query.get_second_order_view_info_by_relationship_definition(?,?); end;";
 
         List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
 
@@ -215,11 +223,12 @@ public class QueryDAOImpl implements QueryDAO {
 
                 boolean searchable;
 
-                call.setLong(1, category.getId());
-                call.setLong(2, relationshipDefinition.getId());
+                call.registerOutParameter (1, OracleTypes.CURSOR);
+                call.setLong(2, category.getId());
+                call.setLong(3, relationshipDefinition.getId());
                 call.execute();
 
-                ResultSet rs = call.getResultSet();
+                ResultSet rs = (ResultSet) call.getObject(1);
 
                 if (rs.next()) {
 
@@ -241,7 +250,8 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public List<RelationshipAttributeDefinition> getSecondDerivateSearchableAttributesByCategory(Category category) {
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_view_info_by_relationship_attribute_definition(?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_attribute_definition(?,?); end;";
 
         List<RelationshipAttributeDefinition> someRelationshipAttributeDefinitions = new ArrayList<>();
 
@@ -255,11 +265,12 @@ public class QueryDAOImpl implements QueryDAO {
 
                     boolean searchable;
 
-                    call.setLong(1, category.getId());
-                    call.setLong(2, relationshipAttributeDefinition.getId());
+                    call.registerOutParameter (1, OracleTypes.CURSOR);
+                    call.setLong(2, category.getId());
+                    call.setLong(3, relationshipAttributeDefinition.getId());
                     call.execute();
 
-                    ResultSet rs = call.getResultSet();
+                    ResultSet rs = (ResultSet) call.getObject(1);
 
                     if (rs.next()) {
 
@@ -284,7 +295,8 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public List<RelationshipDefinition> getShowableAttributesByCategory(Category category) {
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_view_info_by_relationship_definition(?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_definition(?,?); end;";
 
         List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
 
@@ -296,11 +308,12 @@ public class QueryDAOImpl implements QueryDAO {
 
                 boolean showable;
 
-                call.setLong(1, category.getId());
-                call.setLong(2, relationshipDefinition.getId());
+                call.registerOutParameter (1, OracleTypes.CURSOR);
+                call.setLong(2, category.getId());
+                call.setLong(3, relationshipDefinition.getId());
                 call.execute();
 
-                ResultSet rs = call.getResultSet();
+                ResultSet rs = (ResultSet) call.getObject(1);
 
                 if (rs.next()) {
 
@@ -322,7 +335,8 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public List<RelationshipDefinition> getSecondOrderShowableAttributesByCategory(Category category) {
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_second_order_view_info_by_relationship_definition(?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_query.get_second_order_view_info_by_relationship_definition(?,?); end;";
 
         List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
 
@@ -334,11 +348,12 @@ public class QueryDAOImpl implements QueryDAO {
 
                 boolean showable;
 
-                call.setLong(1, category.getId());
-                call.setLong(2, relationshipDefinition.getId());
+                call.registerOutParameter (1, OracleTypes.CURSOR);
+                call.setLong(2, category.getId());
+                call.setLong(3, relationshipDefinition.getId());
                 call.execute();
 
-                ResultSet rs = call.getResultSet();
+                ResultSet rs = (ResultSet) call.getObject(1);
 
                 if (rs.next()) {
 
@@ -361,7 +376,8 @@ public class QueryDAOImpl implements QueryDAO {
     public boolean getCustomFilteringValue(Category category) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_view_info_by_category(?)}";
+
+        String sql = "begin ? := stk.stk_pck_query.get_view_info_by_category(?); end;";
 
         boolean customFilteringValue = false;
 
@@ -369,10 +385,11 @@ public class QueryDAOImpl implements QueryDAO {
 
             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, category.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, category.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
 
@@ -393,7 +410,8 @@ public class QueryDAOImpl implements QueryDAO {
     public boolean getShowableRelatedConceptsValue(Category category) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_view_info_by_category(?)}";
+
+        String sql = "begin ? := stk.stk_pck_query.get_view_info_by_category(?); end;";
 
         boolean showableRelatedConcepts = false;
 
@@ -401,10 +419,11 @@ public class QueryDAOImpl implements QueryDAO {
 
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, category.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, category.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
 
@@ -425,7 +444,8 @@ public class QueryDAOImpl implements QueryDAO {
     public boolean getShowableValue(Category category) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_view_info_by_category(?)}";
+
+        String sql = "begin ? := stk.stk_pck_query.get_view_info_by_category(?); end;";
 
         boolean showable = false;
 
@@ -433,10 +453,11 @@ public class QueryDAOImpl implements QueryDAO {
 
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, category.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, category.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
 
@@ -458,7 +479,8 @@ public class QueryDAOImpl implements QueryDAO {
     public boolean getMultipleFilteringValue(Category category, RelationshipDefinition relationshipDefinition) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_view_info_by_relationship_definition(?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_definition(?,?); end;";
 
         boolean multipleFilteringValue = false;
 
@@ -466,11 +488,12 @@ public class QueryDAOImpl implements QueryDAO {
 
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, category.getId());
-            call.setLong(2, relationshipDefinition.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, category.getId());
+            call.setLong(3, relationshipDefinition.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
 
@@ -491,7 +514,8 @@ public class QueryDAOImpl implements QueryDAO {
     public int getCompositeValue(Category category, RelationshipDefinition relationshipDefinition) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_view_info_by_relationship_definition(?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_definition(?,?); end;";
 
         int compositeValue = -1;
 
@@ -499,16 +523,15 @@ public class QueryDAOImpl implements QueryDAO {
 
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, category.getId());
-            call.setLong(2, relationshipDefinition.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, category.getId());
+            call.setLong(3, relationshipDefinition.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-
                 compositeValue = rs.getInt("id_composite");
-
             }
 
         } catch (SQLException e) {
@@ -524,7 +547,8 @@ public class QueryDAOImpl implements QueryDAO {
     public List<Relationship> getRelationshipsByColumns(ConceptSMTK conceptSMTK, Query query) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_relationships_by_source_concept_id(?)}";
+
+        String sql = "begin ? := stk.stk_pck_relationship.get_relationships_by_source_concept_id(?); end;";
 
         List<Long> definitions = query.getDefinitionIds();
 
@@ -533,10 +557,11 @@ public class QueryDAOImpl implements QueryDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, conceptSMTK.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSMTK.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
                 if(definitions.contains(rs.getLong("id_relationship_definition"))) {

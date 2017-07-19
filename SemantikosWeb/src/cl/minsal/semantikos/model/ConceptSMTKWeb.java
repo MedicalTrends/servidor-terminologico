@@ -14,6 +14,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.primefaces.util.Constants.EMPTY_STRING;
+
 /**
  * @author Diego Soto
  */
@@ -56,6 +58,23 @@ public class ConceptSMTKWeb extends ConceptSMTK {
             for (Description description : conceptSMTK.getValidDescriptions()) {
                 addDescriptionWeb(new DescriptionWeb(this, description));
             }
+        }
+    }
+
+    public ConceptSMTKWeb(ConceptSMTK conceptSMTK, String term) {
+
+        this(conceptSMTK);
+
+        DescriptionWeb fsnDescription = new DescriptionWeb(this, term, DescriptionTypeFactory.getInstance().getFSNDescriptionType());
+        fsnDescription.setDescriptionId(EMPTY_STRING);
+        fsnDescription.setTerm(term);
+
+        DescriptionWeb favouriteDescription = new DescriptionWeb(this, term, DescriptionTypeFactory.getInstance().getFavoriteDescriptionType());
+        favouriteDescription.setDescriptionId(EMPTY_STRING);
+        favouriteDescription.setTerm(term);
+
+        for (DescriptionWeb description : new DescriptionWeb[]{favouriteDescription, fsnDescription}) {
+            addDescriptionWeb(description);
         }
     }
 

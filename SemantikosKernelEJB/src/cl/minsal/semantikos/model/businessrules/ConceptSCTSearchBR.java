@@ -1,20 +1,21 @@
 package cl.minsal.semantikos.model.businessrules;
 
-import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.validation.constraints.NotNull;
 import java.text.Normalizer;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author Andrés Farías on 11/24/16.
  */
 @Singleton
-public class ConceptSearchBR {
+public class ConceptSCTSearchBR {
 
     /**
      * Método de normalización del patrón de búsqueda, lleva las palabras a minúsculas,
@@ -42,31 +43,31 @@ public class ConceptSearchBR {
      * <b>BR-HT-PA01</b>: Los elementos de las tabla auxiliar deben ser ordenados alfabéticamente, excepto por la tabla
      * HT_ATC_NAME que se ordena por el largo de los resultados.
      *
-     * @param conceptSMTKs Los registros que se desea ordenar.
+     * @param conceptSCTs Los registros que se desea ordenar.
      */
-    public void applyPostActions(@NotNull List<ConceptSMTK> conceptSMTKs) {
+    public void applyPostActions(@NotNull List<ConceptSCT> conceptSCTs) {
 
         /* Se ordenan los resultados */
-        postActionsortCollections(conceptSMTKs);
+        postActionsortCollections(conceptSCTs);
     }
 
-    private void postActionsortCollections(List<ConceptSMTK> conceptSMTKs) {
+    private void postActionsortCollections(List<ConceptSCT> conceptSCTs) {
 
         /* Las listas vacías no requieren ser ordenadas */
-        if (conceptSMTKs == null || conceptSMTKs.isEmpty()){
+        if (conceptSCTs == null || conceptSCTs.isEmpty()){
             return;
         }
 
         /* Si la lista de registros es de la tabla HT_ATC_NAME, el ordenamiento es especial */
-        Collections.sort(conceptSMTKs, new STKComparator());
+        Collections.sort(conceptSCTs, new SCTComparator());
     }
 
-    class STKComparator implements Comparator<ConceptSMTK> {
+    class SCTComparator implements Comparator<ConceptSCT> {
 
         @Override
-        public int compare(ConceptSMTK conceptSMTK1, ConceptSMTK conceptSMTK2) {
+        public int compare(ConceptSCT conceptSCT1, ConceptSCT conceptSCT2) {
 
-            return conceptSMTK1.getDescriptionFavorite().getTerm().length() - conceptSMTK2.getDescriptionFavorite().getTerm().length();
+            return conceptSCT1.getDescriptionFSN().getTerm().length() - conceptSCT2.getDescriptionFSN().getTerm().length();
         }
 
         @Override

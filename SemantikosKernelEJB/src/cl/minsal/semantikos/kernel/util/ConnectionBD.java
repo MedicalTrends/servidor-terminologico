@@ -23,7 +23,7 @@ public class ConnectionBD {
 
         try {
             ctx = new javax.naming.InitialContext();
-            ds = (javax.sql.DataSource) ctx.lookup("java:jboss/PostgresDS");
+            ds = (javax.sql.DataSource) ctx.lookup("java:jboss/OracleDS");
             connection = ds.getConnection();
         } catch (NamingException e) {
             logger.error("Error al buscar Datasource en Jboss", e);

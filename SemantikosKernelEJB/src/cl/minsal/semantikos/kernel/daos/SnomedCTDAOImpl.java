@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.snomedct.*;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,19 +25,23 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     public List<ConceptSCT> findConceptsBy(String pattern, Integer group) {
         List<ConceptSCT> concepts = new ArrayList<>();
 
+        String sql = "begin ? := stk.stk_pck_snomed.find_sct_by_pattern(?,?); end;";
+
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_sct_by_pattern(?,?)}")) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, pattern);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, pattern);
             if (group == null) {
-                call.setNull(2, Types.INTEGER);
+                call.setNull(3, Types.INTEGER);
             } else {
-                call.setInt(2, group);
+                call.setInt(3, group);
             }
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 ConceptSCT recoveredConcept = createConceptSCTFromResultSet(rs);
                 concepts.add(recoveredConcept);
@@ -56,19 +61,22 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     public List<ConceptSCT> findPerfectMatch(String pattern, Integer group) {
         List<ConceptSCT> concepts = new ArrayList<>();
 
+        String sql = "begin ? := stk.stk_pck_snomed.find_sct_perfect_match(?,?); end;";
+
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_sct_perfect_match(?,?)}")) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, pattern);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, pattern);
             if (group == null) {
-                call.setNull(2, Types.INTEGER);
+                call.setNull(3, Types.INTEGER);
             } else {
-                call.setInt(2, group);
+                call.setInt(3, group);
             }
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
                 ConceptSCT recoveredConcept = createConceptSCTFromResultSet(rs);
@@ -89,19 +97,23 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     public List<ConceptSCT> findTruncateMatch(String pattern, Integer group) {
         List<ConceptSCT> concepts = new ArrayList<>();
 
+        String sql = "begin ? := stk.stk_pck_snomed.find_sct_truncate_match(?,?); end;";
+
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_sct_truncate_match(?,?)}")) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, pattern);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, pattern);
             if (group == null) {
-                call.setNull(2, Types.INTEGER);
+                call.setNull(3, Types.INTEGER);
             } else {
-                call.setInt(2, group);
+                call.setInt(3, group);
             }
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 ConceptSCT recoveredConcept = createConceptSCTFromResultSet(rs);
                 concepts.add(recoveredConcept);
@@ -121,19 +133,22 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     public long countPerfectMatch(String pattern, Integer group) {
         long concepts = 0;
 
+        String sql = "begin ? := stk.stk_pck_snomed.count_sct_perfect_match(?,?); end;";
+
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.count_sct_perfect_match(?,?)}")) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, pattern);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, pattern);
             if (group == null) {
-                call.setNull(2, Types.INTEGER);
+                call.setNull(3, Types.INTEGER);
             } else {
-                call.setInt(2, group);
+                call.setInt(3, group);
             }
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
                 concepts = rs.getLong(1);
@@ -153,10 +168,13 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     public long countTruncateMatch(String pattern, Integer group) {
         long concepts = 0;
 
+        String sql = "begin ? := stk.stk_pck_snomed.count_sct_truncate_match(?,?); end;";
+
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.count_sct_truncate_match(?,?)}")) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(1, pattern);
             if (group == null) {
                 call.setNull(2, Types.INTEGER);
@@ -165,7 +183,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
             }
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
                 concepts = rs.getLong(1);
@@ -185,13 +203,18 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     public ConceptSCT getConceptByID(long conceptID) {
 
         ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_sct_by_concept_id(?)}")) {
 
-            call.setLong(1, conceptID);
+        String sql = "begin ? := stk.stk_pck_snomed.get_sct_by_concept_id(?); end;";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptID);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             ConceptSCT conceptSCTFromResultSet;
             if (rs.next()) {
                 conceptSCTFromResultSet = createConceptSCTFromResultSet(rs);
@@ -212,19 +235,24 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     public List<ConceptSCT> findConceptsByConceptID(long conceptIdPattern, Integer group) {
 
         List<ConceptSCT> conceptSCTs = new ArrayList<>();
+
+        String sql = "begin ? := stk.stk_pck_snomed.get_concepts_sct_by_id(?,?); end;";
+
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_concepts_sct_by_id(?,?)}")) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, conceptIdPattern);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptIdPattern);
             if (group == null) {
-                call.setNull(2, Types.INTEGER);
+                call.setNull(3, Types.INTEGER);
             } else {
-                call.setInt(2, group);
+                call.setInt(3, group);
             }
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 ConceptSCT conceptSCT = createConceptSCTFromResultSet(rs);
                 conceptSCTs.add(conceptSCT);
@@ -245,13 +273,18 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
         Map<DescriptionSCT, ConceptSCT> result = new HashMap<>();
         ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_descriptions_sct_by_pattern(?)}")) {
 
-            call.setString(1, pattern);
+        String sql = "begin ? := stk.stk_pck_snomed.find_descriptions_sct_by_pattern(?); end;";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, pattern);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 DescriptionSCT descriptionSCT = createDescriptionSCTFromResultSet(rs);
                 ConceptSCT conceptByID = this.getConceptByID(rs.getLong("conceptId"));
@@ -292,13 +325,18 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     private List<DescriptionSCT> getDescriptionsSCTByConcept(long id) {
         List<DescriptionSCT> descriptionSCTs = new ArrayList<>();
         ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_descriptions_sct_by_id(?)}")) {
 
-            call.setLong(1, id);
+        String sql = "begin ? := stk.stk_pck_snomed.get_descriptions_sct_by_id(?); end;";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, id);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 DescriptionSCT recoveredConcept = createDescriptionSCTFromResultSet(rs);
                 descriptionSCTs.add(recoveredConcept);
@@ -345,13 +383,17 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     public DescriptionSCT getDescriptionSCTBy(long idDescriptionSCT) {
         ConnectionBD connect = new ConnectionBD();
         DescriptionSCT descriptionSCT = null;
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_description_sct_by_id(?)}")) {
 
-            call.setLong(1, idDescriptionSCT);
+        String sql = "begin ? := stk.stk_pck_snomed.get_description_sct_by_id(?); end;";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idDescriptionSCT);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
                 descriptionSCT = createDescriptionSCTFromResultSet(rs);

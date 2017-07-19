@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.Institution;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +13,9 @@ import javax.ejb.Stateless;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_ARRAY;
+import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_OBJECT_ARRAY;
 
 /**
  * @author Andrés Farías on 9/20/16.
@@ -31,18 +35,22 @@ public class RefSetDAOImpl implements RefSetDAO {
     public void persist(RefSet refSet) {
 
         ConnectionBD connect = new ConnectionBD();
-        String CREATE_REFSET = "{call semantikos.create_refset(?,?,?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_refset.create_refset(?,?,?,?); end;";
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(CREATE_REFSET)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, refSet.getName());
-            call.setLong(2, refSet.getInstitution().getId());
-            call.setTimestamp(3, refSet.getCreationDate());
-            call.setTimestamp(4, refSet.getValidityUntil());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, refSet.getName());
+            call.setLong(3, refSet.getInstitution().getId());
+            call.setTimestamp(4, refSet.getCreationDate());
+            call.setTimestamp(5, refSet.getValidityUntil());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
                 refSet.setId(rs.getLong(1));
             }
@@ -56,19 +64,21 @@ public class RefSetDAOImpl implements RefSetDAO {
     @Override
     public void update(RefSet refSet) {
         ConnectionBD connect = new ConnectionBD();
-        String UPDATE_REFSET = "{call semantikos.update_refset(?,?,?,?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_refset.update_refset(?,?,?,?,?); end;";
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(UPDATE_REFSET)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, refSet.getId());
-            call.setString(2, refSet.getName());
-            call.setLong(3, refSet.getInstitution().getId());
-            call.setTimestamp(4, refSet.getCreationDate());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, refSet.getId());
+            call.setString(3, refSet.getName());
+            call.setLong(4, refSet.getInstitution().getId());
+            call.setTimestamp(5, refSet.getCreationDate());
             if(refSet.getValidityUntil()==null){
-                call.setNull(5, Types.TIMESTAMP);
+                call.setNull(6, Types.TIMESTAMP);
             }else {
-                call.setTimestamp(5, refSet.getValidityUntil());
+                call.setTimestamp(6, refSet.getValidityUntil());
             }
             call.execute();
         } catch (SQLException e) {
@@ -79,13 +89,15 @@ public class RefSetDAOImpl implements RefSetDAO {
     @Override
     public void bind(ConceptSMTK conceptSMTK, RefSet refSet) {
         ConnectionBD connect = new ConnectionBD();
-        String UPDATE_REFSET = "{call semantikos.bind_concept_to_refset(?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_refset.bind_concept_to_refset(?,?); end;";
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(UPDATE_REFSET)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, refSet.getId());
-            call.setLong(2, conceptSMTK.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, refSet.getId());
+            call.setLong(3, conceptSMTK.getId());
             call.execute();
         } catch (SQLException e) {
             logger.error("Error al asociar el RefSet:" + refSet + " al concepto " + conceptSMTK, e);
@@ -95,13 +107,15 @@ public class RefSetDAOImpl implements RefSetDAO {
     @Override
     public void unbind(ConceptSMTK conceptSMTK, RefSet refSet) {
         ConnectionBD connect = new ConnectionBD();
-        String UPDATE_REFSET = "{call semantikos.unbind_concept_from_refset(?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_refset.unbind_concept_from_refset(?,?); end;";
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(UPDATE_REFSET)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, refSet.getId());
-            call.setLong(2, conceptSMTK.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, refSet.getId());
+            call.setLong(3, conceptSMTK.getId());
             call.execute();
         } catch (SQLException e) {
             logger.error("Error al des-asociar el RefSet:" + refSet + " al concepto " + conceptSMTK, e);
@@ -116,14 +130,17 @@ public class RefSetDAOImpl implements RefSetDAO {
         List<RefSet> refSets= new ArrayList<>();
 
         ConnectionBD connect = new ConnectionBD();
-        String ALL_REFSETS = "{call semantikos.get_all_refsets()}";
+
+        String sql = "begin ? := stk.stk_pck_refset.get_all_refsets; end;";
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(ALL_REFSETS)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 refSets.add(createRefsetFromResultSet(rs));
             }
@@ -142,14 +159,17 @@ public class RefSetDAOImpl implements RefSetDAO {
         List<RefSet> refSets= new ArrayList<>();
 
         ConnectionBD connect = new ConnectionBD();
-        String ALL_REFSETS = "{call semantikos.get_valid_refsets()}";
+
+        String sql = "begin ? := stk.stk_pck_refset.get_valid_refsets; end;";
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(ALL_REFSETS)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 refSets.add(createRefsetFromResultSet(rs));
             }
@@ -165,14 +185,18 @@ public class RefSetDAOImpl implements RefSetDAO {
         List<RefSet> refSets= new ArrayList<>();
 
         ConnectionBD connect = new ConnectionBD();
-        String ALL_REFSETS_BY_CONCEPT = "{call semantikos.get_refsets_by_concept(?)}";
+
+        String sql = "begin ? := stk.stk_pck_refset.get_refsets_by_concept(?); end;";
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(ALL_REFSETS_BY_CONCEPT)) {
-            call.setLong(1,conceptSMTK.getId());
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2,conceptSMTK.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 refSets.add(createRefsetFromResultSet(rs));
             }
@@ -187,15 +211,17 @@ public class RefSetDAOImpl implements RefSetDAO {
     public List<RefSet> getRefsetBy(Institution institution) {
         List<RefSet> refSetsByInstitution= new ArrayList<>();
         ConnectionBD connect = new ConnectionBD();
-        String ALL_REFSETS_BY_INSTITUTION = "{call semantikos.get_refset_by_institution(?)}";
+
+        String sql = "begin ? := stk.stk_pck_refset.get_refset_by_institution(?); end;";
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(ALL_REFSETS_BY_INSTITUTION)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1,institution.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2,institution.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
                 refSetsByInstitution.add(createRefsetFromResultSet(rs));
@@ -210,14 +236,18 @@ public class RefSetDAOImpl implements RefSetDAO {
     public RefSet getRefsetBy(long id) {
         RefSet refSet=null;
         ConnectionBD connect = new ConnectionBD();
-        String GET_REFSET_BY_ID = "{call semantikos.get_refset_by_id(?)}";
+
+        String sql = "begin ? := stk.stk_pck_refset.get_refset_by_id(?); end;";
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(GET_REFSET_BY_ID)) {
-            call.setLong(1,id);
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2,id);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 refSet=createRefsetFromResultSet(rs);
             }
@@ -233,17 +263,21 @@ public class RefSetDAOImpl implements RefSetDAO {
         List<RefSet> refSets= new ArrayList<>();
 
         ConnectionBD connect = new ConnectionBD();
-        String ALL_REFSETS_BY_CONCEPT = "{call semantikos.get_refsets_by_categories_and_pattern(?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_refset.get_refsets_by_categories_and_pattern(?,?); end;";
 
         try (Connection connection = connect.getConnection();
 
-             CallableStatement call = connection.prepareCall(ALL_REFSETS_BY_CONCEPT)) {
+             CallableStatement call = connection.prepareCall(sql)) {
             Array categoryIds = connection.createArrayOf("long", categories.toArray(new Long[categories.size()]));
-            call.setArray(1,categoryIds);
-            call.setString(2,pattern);
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setArray(2,categoryIds);
+            call.setString(3,pattern);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 refSets.add(createRefsetFromResultSet(rs));
             }
@@ -266,7 +300,7 @@ public class RefSetDAOImpl implements RefSetDAO {
         RefSet refSet= new RefSet(name,institution,timestamp);
         refSet.setId(id);
         refSet.setValidityUntil(validity);
-        refSet.setConcepts(conceptDAO.findConceptsBy(refSet));
+        refSet.setConcepts(conceptDAO.findConcepts(EMPTY_LONG_OBJECT_ARRAY, new Long[]{refSet.getId()}, null));
         return refSet;
     }
 
@@ -275,14 +309,17 @@ public class RefSetDAOImpl implements RefSetDAO {
         List<RefSet> refSets = new ArrayList<>();
 
         ConnectionBD connect = new ConnectionBD();
-        String ALL_REFSETS = "{call semantikos.find_refsets_by_name(?)}";
+
+        String sql = "begin ? := stk.stk_pck_refset.find_refsets_by_name(?); end;";
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(ALL_REFSETS)) {
-            call.setString(1, pattern);
+             CallableStatement call = connection.prepareCall(sql)) {
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, pattern);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 refSets.add(createRefsetFromResultSet(rs));
             }
@@ -297,14 +334,18 @@ public class RefSetDAOImpl implements RefSetDAO {
     public List<RefSet> findByConcept(ConceptSMTK conceptSMTK) {
         List<RefSet> refSets = new ArrayList<>();
         ConnectionBD connect = new ConnectionBD();
-        String ALL_REFSETS = "{call semantikos.find_refsets_by_concept(?)}";
+
+        String sql = "begin ? := stk.stk_pck_refset.find_refsets_by_concept(?); end;";
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(ALL_REFSETS)) {
-            call.setLong(1, conceptSMTK.getId());
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSMTK.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 refSets.add(createRefsetFromResultSet(rs));
             }

@@ -29,11 +29,9 @@ public interface ConceptDAO {
      *
      * @param categories Las categorías desde donde se extraen los conceptos.
      * @param modeled    El estado de los conceptos que se desea obtener.
-     * @param pageSize   El tamaño de la página.
-     * @param pageNumber La página de resultados que se desea obtener.
      * @return Una lista de <code>ConceptSMTK</code> que cumplen los criterios de búsqueda.
      */
-    public List<ConceptSMTK> findConcepts(Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findConcepts(Long[] categories, Long[] refsets, Boolean modeled);
 
 
     /**
@@ -99,35 +97,30 @@ public interface ConceptDAO {
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);
 
     /**
-     * Este método recupera todos los ID's de los conceptos exsitentes.
-     *
-     * @return Una lista con los ID's de los conceptos.
-     */
-    public List<Long> getAllConceptsId();
-
-    /**
      * Método encargado de realizar perfect match con patrón de búsqueda y categorías
      * @return
      */
-    public List<ConceptSMTK> findPerfectMatchConcept(String pattern, Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findPerfectMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled);
 
     /**
      * Método encargado de realizar truncate match con patrón de búsqueda
      * @return
      */
-    public List<ConceptSMTK> findTruncateMatchConcept(String pattern,  Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findTruncateMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled);
 
     /**
      * Método encargado de contar los conceptos con perfect match
      * @return
      */
-    public int countPerfectMatchConceptBy(String pattern, Long[] categories, boolean modeled);
+    public int countPerfectMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled);
 
     /**
      * Método encargado de contar los conceptos con truncate match
      * @return
      */
-    public int countTruncateMatchConceptBy(String pattern, Long[] categories, boolean modeled);
+    public int countTruncateMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled);
 
+
+    public List<ConceptSMTK> getModeledConceptPaginated(Long categoryId, int pageSize, int pageNumber);
 
 }

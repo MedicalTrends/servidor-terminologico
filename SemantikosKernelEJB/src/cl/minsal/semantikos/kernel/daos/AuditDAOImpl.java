@@ -6,6 +6,7 @@ import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.audit.*;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,20 +33,24 @@ public class AuditDAOImpl implements AuditDAO {
 
     @Override
     public List<ConceptAuditAction> getConceptAuditActions(long idConcept, boolean changes) {
+
         ConnectionBD connect = new ConnectionBD();
-        String sqlQuery = "{call semantikos.get_concept_audit_actions(?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_audit.get_concept_audit_actions(?,?); end;";
 
         List<ConceptAuditAction> auditActions = new ArrayList<>();
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sqlQuery)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */
-            call.setLong(1, idConcept);
-            call.setBoolean(2, changes);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idConcept);
+            call.setBoolean(3, changes);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             auditActions = auditMapper.createAuditActionsFromResultSet(rs);
 
@@ -72,9 +77,10 @@ public class AuditDAOImpl implements AuditDAO {
          * param 4: El tipo de acción que realiza
          * param 5: La entidad en la que se realizó la acción..
          */
-        String sqlQuery = "{call semantikos.create_concept_audit_actions(?,?,?,?,?)}";
+        String sql = "begin ? := stk.stk_pck_audit.create_concept_audit_actions(?,?,?,?,?); end;";
+
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sqlQuery)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */
             Timestamp actionDate = conceptAuditAction.getActionDate();
@@ -83,12 +89,24 @@ public class AuditDAOImpl implements AuditDAO {
             AuditActionType auditActionType = conceptAuditAction.getAuditActionType();
             AuditableEntity auditableEntity = conceptAuditAction.getAuditableEntity();
 
-            call.setTimestamp(1, actionDate);
-            call.setLong(2, user.getId());
-            call.setLong(3, subjectConcept.getId());
-            call.setLong(4, auditActionType.getId());
-            call.setLong(5, auditableEntity.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setTimestamp(2, actionDate);
+            call.setLong(3, user.getId());
+            call.setLong(4, subjectConcept.getId());
+            call.setLong(5, auditActionType.getId());
+            call.setLong(6, auditableEntity.getId());
             call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            if (rs.next()) {
+                rs.getLong(1);
+            } else {
+                String errorMsg = "La información de auditoría del concepto no fue creada por una razón desconocida. Alertar al area de desarrollo" +
+                        " sobre esto";
+                logger.error(errorMsg);
+                throw new EJBException(errorMsg);
+            }
 
         } catch (SQLException e) {
             String errorMsg = "Error al registrar en el log.";
@@ -108,9 +126,10 @@ public class AuditDAOImpl implements AuditDAO {
          * param 5: La entidad en la que se realizó la acción..
          */
         //TODO arreglar esto
-        String sqlQuery = "{call semantikos.create_refset_audit_actions(?,?,?,?,?)}";
+        String sql = "begin ? := stk.stk_pck_audit.create_refset_audit_actions(?,?,?,?,?); end;";
+
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sqlQuery)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */
             Timestamp actionDate = refSetAuditAction.getActionDate();
@@ -119,12 +138,24 @@ public class AuditDAOImpl implements AuditDAO {
             AuditableEntity auditableEntity = refSetAuditAction.getAuditableEntity();
             AuditableEntity subjectConcept = refSetAuditAction.getBaseEntity();
 
-            call.setTimestamp(1, actionDate);
-            call.setLong(2, user.getId());
-            call.setLong(3, subjectConcept.getId());
-            call.setLong(4, auditActionType.getId());
-            call.setLong(5, auditableEntity.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setTimestamp(2, actionDate);
+            call.setLong(3, user.getId());
+            call.setLong(4, subjectConcept.getId());
+            call.setLong(5, auditActionType.getId());
+            call.setLong(6, auditableEntity.getId());
             call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            if (rs.next()) {
+                rs.getLong(1);
+            } else {
+                String errorMsg = "La información de auditoría del refset no fue creada por una razón desconocida. Alertar al area de desarrollo" +
+                        " sobre esto";
+                logger.error(errorMsg);
+                throw new EJBException(errorMsg);
+            }
 
         } catch (SQLException e) {
             String errorMsg = "Error al registrar en el log.";

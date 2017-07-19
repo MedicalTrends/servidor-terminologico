@@ -18,6 +18,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Collections.EMPTY_LIST;
+
 
 /**
  * Created by diego on 26/06/2016.
@@ -46,7 +48,7 @@ public class DrugsBrowserBean implements Serializable {
 
     private ConceptSMTK conceptSelected = null;
 
-    private Long[] drugsCategories;
+    private List<Category> drugsCategories;
 
     private TreeNode root;
 
@@ -62,7 +64,7 @@ public class DrugsBrowserBean implements Serializable {
     @PostConstruct
     public void init(){
         root = new DefaultTreeNode(new ConceptSMTK(categoryManager.getCategoryById(39)), null);
-        drugsCategories = getCategoryValues(drugsManager.getDrugsCategories());
+        drugsCategories = drugsManager.getDrugsCategories();
     }
 
     public ConceptSMTK getConceptSelected() {
@@ -121,26 +123,9 @@ public class DrugsBrowserBean implements Serializable {
 
     public List<ConceptSMTK> getConceptSearchInput(String patron) {
 
-        int countConcept=conceptManager.countConceptBy(patron,drugsCategories,true);
-        concepts = conceptManager.findConceptBy(patron, drugsCategories, 0, countConcept,true);
+        concepts = conceptManager.findConcepts(patron, drugsCategories, EMPTY_LIST, true);
 
         return concepts;
-    }
-
-    public Long[] getCategoryValues(List<Category> drugsCategories){
-
-        List<Long> categoryValues = new ArrayList<>();
-
-        for (Category category : drugsCategories)
-            categoryValues.add(category.getId());
-
-        if(categoryValues.isEmpty())
-            return null;
-
-        else {
-            Long[] array = new Long[categoryValues.size()];
-            return categoryValues.toArray(array);
-        }
     }
 
     public TreeNode getRoot() {

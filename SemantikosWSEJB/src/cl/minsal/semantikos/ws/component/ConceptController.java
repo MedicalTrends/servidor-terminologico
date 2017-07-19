@@ -27,6 +27,7 @@ import javax.annotation.Resource;
 import javax.ejb.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -421,11 +422,11 @@ public class ConceptController {
             throws NotFoundFault {
 
         /* Se recuperan los objetos de negocio de las categorías y refsets */
-        List<Category> categories = this.categoryController.findCategories(categoriesNames);
-        List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
+        List<Category> categories = categoryController.findCategories(categoriesNames);
+        List<RefSet> refSets = refSetController.findRefsets(refSetsNames);
 
         /* Se realiza la búsqueda */
-        List<ConceptSMTK> conceptSMTKS = this.conceptManager.findConceptTruncatePerfect(term, categories, refSets);
+        List<ConceptSMTK> conceptSMTKS = conceptManager.truncateMatch(term, categories, refSets, true);
 
         /* Se encapsulan los conceptos retornados en un wrapper XML */
         List<ConceptResponse> conceptResponses = new ArrayList<>();
@@ -497,7 +498,7 @@ public class ConceptController {
             throw new NotFoundFault("No se encontró una categoría de nombre '" + categoryName + "'");
         }
 
-        List<ConceptSMTK> concepts = this.conceptManager.findConceptsBy(category);
+        List<ConceptSMTK> concepts = this.conceptManager.findConcepts(null, Collections.singletonList(category), null, null);
 
         List<ConceptResponse> conceptResponses = new ArrayList<>();
 
@@ -538,12 +539,12 @@ public class ConceptController {
         /* Se recupera la categoría */
         Category category;
         try {
-            category = this.categoryManager.getCategoryByName(categoryName);
+            category = categoryManager.getCategoryByName(categoryName);
         } catch (Exception e) {
             throw new NotFoundFault("No se encontró una categoría de nombre '" + categoryName + "'");
         }
 
-        List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptPaginated(category, pageSize, pageNumber);
+        List<ConceptSMTK> concepts = conceptManager.findModeledConceptPaginated(category, pageSize, pageNumber);
 
         List<ConceptResponse> conceptResponses = new ArrayList<>();
 

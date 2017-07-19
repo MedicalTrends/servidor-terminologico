@@ -10,6 +10,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_ARRAY;
+import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_OBJECT_ARRAY;
+
 /**
  * @author Andrés Farías on 8/29/16.
  */

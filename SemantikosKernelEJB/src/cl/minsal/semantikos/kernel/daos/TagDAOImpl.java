@@ -6,6 +6,7 @@ import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.tags.TagFactory;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,23 +39,26 @@ public class TagDAOImpl implements TagDAO {
     public Tag persist(Tag tag) {
         ConnectionBD connect = new ConnectionBD();
 
+        String sql = "begin ? := stk.stk_pck_tag.create_tag(?,?,?,?); end;";
+
         long idTag;
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.create_tag(?,?,?,?)}")) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, tag.getName());
-            call.setString(2, tag.getColorLetter());
-            call.setString(3, tag.getColorBackground());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, tag.getName());
+            call.setString(3, tag.getColorLetter());
+            call.setString(4, tag.getColorBackground());
 
             long id = (tag.getParentTag()==null)?-1:tag.getParentTag().getId();
             if( id != NON_PERSISTED_ID) {
-                call.setLong(4, id);
+                call.setLong(5, id);
             } else {
-                call.setNull(4, BIGINT);
+                call.setNull(5, BIGINT);
             }
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
                 idTag = rs.getLong(1);
@@ -82,24 +86,27 @@ public class TagDAOImpl implements TagDAO {
     public void update(Tag tag) {
         ConnectionBD connect = new ConnectionBD();
 
+        String sql = "begin ? := stk.stk_pck_tag.update_tag(?,?,?,?,?); end;";
+
         long idTag;
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.update_tag(?,?,?,?,?)}")) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, tag.getId());
-            call.setString(2, tag.getName());
-            call.setString(3, tag.getColorLetter());
-            call.setString(4, tag.getColorBackground());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, tag.getId());
+            call.setString(3, tag.getName());
+            call.setString(4, tag.getColorLetter());
+            call.setString(5, tag.getColorBackground());
             long id = (tag.getParentTag()==null)?-1:tag.getParentTag().getId();
             if( id != NON_PERSISTED_ID) {
-                call.setLong(5, tag.getParentTag().getId());
+                call.setLong(6, tag.getParentTag().getId());
             } else {
-                call.setNull(5, BIGINT);
+                call.setNull(6, BIGINT);
             }
-
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 idTag = rs.getLong(1);
                 if (idTag == 0) {
@@ -119,10 +126,13 @@ public class TagDAOImpl implements TagDAO {
     public void remove(Tag tag) {
         ConnectionBD connect = new ConnectionBD();
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.delete_tag(?)}")) {
+        String sql = "begin ? := stk.stk_pck_tag.delete_tag(?); end;";
 
-            call.setLong(1, tag.getId());
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, tag.getId());
             call.execute();
         } catch (SQLException e) {
             String errorMsg = "Error al persistir el tag " + tag;
@@ -137,13 +147,16 @@ public class TagDAOImpl implements TagDAO {
 
         List<Tag> tags = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_tag_by_pattern(?)}")) {
+        String sql = "begin ? := stk.stk_pck_tag.delete_tag(?); end;";
 
-            call.setArray(1, connect.getConnection().createArrayOf("text", namePattern));
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setArray(2, connect.getConnection().createArrayOf("text", namePattern));
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
                 tags.add(tagMapper.createTagFromResultSet(rs, null));
@@ -164,11 +177,14 @@ public class TagDAOImpl implements TagDAO {
     public void linkTagToTag(Tag tag, Tag tagLink) {
         ConnectionBD connect = new ConnectionBD();
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.link_parent_tag_to_child_tag(?,?)}")) {
+        String sql = "begin ? := stk.stk_pck_tag.link_parent_tag_to_child_tag(?,?); end;";
 
-            call.setLong(1, tag.getId());
-            call.setLong(2, tagLink.getId());
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, tag.getId());
+            call.setLong(3, tagLink.getId());
             call.execute();
         } catch (SQLException e) {
             String errorMsg = "Error al asociar el tag " + tagLink + " al Tag " + tag;
@@ -181,11 +197,14 @@ public class TagDAOImpl implements TagDAO {
     public void unlinkTagToTag(Tag tag, Tag tagUnlink) {
         ConnectionBD connect = new ConnectionBD();
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.unlink_tag_to_tag(?,?)}")) {
+        String sql = "begin ? := stk.stk_pck_tag.unlink_tag_to_tag(?,?); end;";
 
-            call.setLong(1, tag.getId());
-            call.setLong(2, tagUnlink.getId());
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, tag.getId());
+            call.setLong(3, tagUnlink.getId());
             call.execute();
         } catch (SQLException e) {
             String errorMsg = "Error al desasociar el tag " + tagUnlink + " del " + tag;
@@ -201,12 +220,15 @@ public class TagDAOImpl implements TagDAO {
 
         List<Tag> tags = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.semantikos.get_all_tags()}")) {
+        String sql = "begin ? := stk.stk_pck_tag.get_all_tags; end;";
 
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
                 tags.add(tagMapper.createTagFromResultSet(rs, null));
@@ -229,13 +251,15 @@ public class TagDAOImpl implements TagDAO {
 
         List<Tag> tags = new ArrayList<>();
 
+        String sql = "begin ? := stk.stk_pck_tag.get_all_tags_without; end;";
+
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.semantikos.get_all_tags_without()}")) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
                 tags.add(tagMapper.createTagFromResultSet(rs, null));
@@ -258,13 +282,16 @@ public class TagDAOImpl implements TagDAO {
 
         List<Tag> tags = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.semantikos.get_tags_by_concept_id(?)}")) {
+        String sql = "begin ? := stk.stk_pck_tag.get_tags_by_concept_id(?); end;";
 
-            call.setLong(1, idConcept);
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idConcept);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
                 tags.add(tagMapper.createTagFromResultSet(rs, null));
@@ -288,13 +315,16 @@ public class TagDAOImpl implements TagDAO {
 
         List<Tag> tags = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_tags_by_parent(?)}")) {
+        String sql = "begin ? := stk.stk_pck_tag.find_tags_by_parent(?); end;";
 
-            call.setLong(1, parent.getId());
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, parent.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
                 tags.add(tagMapper.createTagFromResultSet(rs, parent));
@@ -316,12 +346,15 @@ public class TagDAOImpl implements TagDAO {
     public void assignTag(ConceptSMTK conceptSMTK, Tag tag) {
         ConnectionBD connect = new ConnectionBD();
 
+        String sql = "begin ? := stk.stk_pck_tag.assign_concept_to_tag(?,?); end;";
+
         logger.debug("Asociando el tag " + tag + " al concepto " + conceptSMTK);
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.assign_concept_to_tag(?,?)}")) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, conceptSMTK.getId());
-            call.setLong(2, tag.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSMTK.getId());
+            call.setLong(3, tag.getId());
             call.execute();
         } catch (SQLException e) {
             String errorMsg = "Error al asociar el tag " + tag + " al concepto " + conceptSMTK;
@@ -334,12 +367,15 @@ public class TagDAOImpl implements TagDAO {
     public void unassignTag(ConceptSMTK conceptSMTK, Tag tag) {
         ConnectionBD connect = new ConnectionBD();
 
+        String sql = "begin ? := stk.stk_pck_tag.unassign_concept_to_tag(?,?); end;";
+
         logger.debug("Desasociando el tag " + tag + " al concepto " + conceptSMTK);
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.unassign_concept_to_tag(?,?)}")) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, conceptSMTK.getId());
-            call.setLong(2, tag.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSMTK.getId());
+            call.setLong(3, tag.getId());
             call.execute();
         } catch (SQLException e) {
             String errorMsg = "Error al desasociar el tag " + tag + " al concepto " + conceptSMTK;
@@ -356,13 +392,17 @@ public class TagDAOImpl implements TagDAO {
 
         Tag tag;
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_tags_by_id(?)}")) {
+        String sql = "begin ? := stk.stk_pck_tag.find_tags_by_id(?); end;";
 
-            call.setLong(1, id);
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, id);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
                 tag = tagMapper.createTagFromResultSet(rs, null);
             } else {
@@ -385,13 +425,18 @@ public class TagDAOImpl implements TagDAO {
     public boolean containTag(String tagName) {
         ConnectionBD connect = new ConnectionBD();
         Long contain;
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.contain_tag(?)}")) {
 
-            call.setString(1, tagName);
+        String sql = "begin ? := stk.stk_pck_tag.contain_tag(?); end;";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, tagName);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
                 contain = rs.getLong(1);
             } else {
@@ -414,13 +459,18 @@ public class TagDAOImpl implements TagDAO {
     public long countConceptContainTag(Tag tag) {
         ConnectionBD connect = new ConnectionBD();
         long count=0;
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.concept_contain_tag(?)}")) {
 
-            call.setLong(1, tag.getId());
+        String sql = "begin ? := stk.stk_pck_tag.concept_contain_tag(?); end;";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, tag.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
                 count = rs.getLong(1);
             }

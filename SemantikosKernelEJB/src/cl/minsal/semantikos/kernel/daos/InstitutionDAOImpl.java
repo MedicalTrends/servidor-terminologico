@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,14 +30,18 @@ public class InstitutionDAOImpl implements InstitutionDAO {
     public Institution getInstitutionBy(long id) {
 
         ConnectionBD connect = new ConnectionBD();
-        String GET_INSTITUTION_BY_ID = "{call semantikos.get_institution_by_id(?)}";
+
+        String sql = "begin ? := stk.stk_pck_institution.get_institution_by_id(?); end;";
+
         Institution institution= new Institution();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(GET_INSTITUTION_BY_ID)) {
-            call.setLong(1, id);
+             CallableStatement call = connection.prepareCall(sql)) {
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, id);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 institution = createInstitutionFromResultSet(rs);
             }
@@ -50,14 +55,18 @@ public class InstitutionDAOImpl implements InstitutionDAO {
     @Override
     public List<Institution> getInstitutionBy(User user) {
         //ConnectionBD connect = new ConnectionBD();
-        String GET_INSTITUTION_BY_USER = "{call semantikos.get_institution_by_user(?)}";
+
+        String sql = "begin ? := stk.stk_pck_institution.get_institution_by_user(?); end;";
+
         List<Institution> institutions= new ArrayList<>();
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
-             CallableStatement call = connection.prepareCall(GET_INSTITUTION_BY_USER)) {
-            call.setLong(1, user.getId());
+             CallableStatement call = connection.prepareCall(sql)) {
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, user.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 institutions.add(createInstitutionFromResultSet(rs));
             }
@@ -71,13 +80,17 @@ public class InstitutionDAOImpl implements InstitutionDAO {
     @Override
     public Institution getInstitutionById(long id) {
         ConnectionBD connect = new ConnectionBD();
-        String GET_INSTITUTION_BY_ID = "{call semantikos.get_institution_by_id(?)}";
+
+        String sql = "begin ? := stk.stk_pck_institution.get_institution_by_id(?); end;";
+
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(GET_INSTITUTION_BY_ID)) {
-            call.setLong(1, id);
+             CallableStatement call = connection.prepareCall(sql)) {
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, id);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
                 return createInstitutionFromResultSet(rs);
             }
@@ -91,12 +104,17 @@ public class InstitutionDAOImpl implements InstitutionDAO {
     @Override
     public List<Institution> getAllInstitution() {
         ConnectionBD connect = new ConnectionBD();
-        String GET_ALL_INSTITUTION = "{call semantikos.get_all_institution()}";
+
+        String sql = "begin ? := stk.stk_pck_institution.get_all_institution; end;";
+
         List<Institution> institutions= new ArrayList<>();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(GET_ALL_INSTITUTION)) {
+             CallableStatement call = connection.prepareCall(sql)) {
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
-            ResultSet rs = call.getResultSet();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 institutions.add(createInstitutionFromResultSet(rs));
             }

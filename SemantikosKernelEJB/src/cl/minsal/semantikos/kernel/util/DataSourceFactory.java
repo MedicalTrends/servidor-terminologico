@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.util;
 
+import oracle.jdbc.OracleConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -4,6 +4,7 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.daos.mappers.RelationshipMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.relationships.*;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,16 +58,19 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
         List<RelationshipDefinition> relationshipDefinitions = new ArrayList<>();
 
         ConnectionBD connect = new ConnectionBD();
-        String sqlQuery = "{call semantikos.get_relationship_definitions_by_category(?)}";
+
+        String sql = "begin ? := stk.stk_pck_relationship_definition.get_relationship_definitions_by_category(?); end;";
+
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sqlQuery)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */
-            call.setLong(1, idCategory);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idCategory);
             call.execute();
 
             /* Cada Fila del ResultSet trae una relación */
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
                 relationshipDefinitions.add(relationshipMapper.createRelationshipDefinitionFromResultSet(rs));
@@ -92,18 +96,21 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
     public List<RelationshipAttributeDefinition> getRelationshipAttributeDefinitionsByRelationshipDefinition(RelationshipDefinition relationshipDefinition) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sqlQuery = "{call semantikos.get_relationship_attribute_definitions_json_by_id(?)}";
+
+        String sql = "begin ? := stk.stk_pck_relationship_definition.get_relationship_attribute_definitions_by_id(?); end;";
+
         List<RelationshipAttributeDefinition> relationshipAttributeDefinitions = new ArrayList<>();
 
         long id = relationshipDefinition.getId();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sqlQuery)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar los atributos de esta relación */
-            call.setLong(1, id);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, id);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
                 relationshipAttributeDefinitions.add(relationshipMapper.createRelationshipAttributeDefinitionFromResultSet(rs));

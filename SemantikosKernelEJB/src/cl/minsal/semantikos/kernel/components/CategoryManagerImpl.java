@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Collections.EMPTY_LIST;
+
 /**
  * @author Andrés Farías on 27-05-16.
  */
@@ -66,7 +68,7 @@ public class CategoryManagerImpl implements CategoryManager {
     @Override
     public ConceptSMTK categoryContains(Category category, String term) {
 
-        List<Description> descriptions = descriptionManager.searchDescriptionsByTerm(term, Arrays.asList(category));
+        List<Description> descriptions = descriptionManager.searchDescriptionsByTerm(term, Arrays.asList(category), EMPTY_LIST);
 
         /* Si la búsqueda resultó con al menos un término vigente, entonces si contiene */
         for (Description description : descriptions) {

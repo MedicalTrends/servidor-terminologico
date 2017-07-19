@@ -381,16 +381,7 @@ public class ConceptBean implements Serializable {
 
     //Este método es responsable de a partir de un concepto SMTK y un término, devolver un concepto WEB con su FSN y su Preferida
     public ConceptSMTKWeb initConcept(ConceptSMTK concept, String term) {
-        ConceptSMTKWeb conceptWeb = new ConceptSMTKWeb(concept);
-
-        DescriptionWeb fsnDescription = new DescriptionWeb(conceptWeb, term, descriptionManager.getTypeFSN());
-        fsnDescription.setDescriptionId(EMPTY_STRING);
-
-        DescriptionWeb favouriteDescription = new DescriptionWeb(conceptWeb, term, descriptionManager.getTypeFavorite());
-        favouriteDescription.setDescriptionId(EMPTY_STRING);
-
-        for (DescriptionWeb description : new DescriptionWeb[]{favouriteDescription, fsnDescription})
-            conceptWeb.addDescriptionWeb(description);
+        ConceptSMTKWeb conceptWeb = new ConceptSMTKWeb(concept, term);
 
         fullyDefined = concept.isFullyDefined();
 

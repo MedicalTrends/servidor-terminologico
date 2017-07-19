@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.view.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,13 +26,18 @@ public class TimeOutWebDAOImpl implements TimeOutWebDAO {
         ConnectionBD connect = new ConnectionBD();
         int time = 0;
 
+        String sql = "begin ? := stk.stk_pck_system.get_time_out; end;";
+
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_time_out()}")) {
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
-                time = rs.getInt("time_out_parameter");
+                time = rs.getInt("time_out");
             }
 
             rs.close();

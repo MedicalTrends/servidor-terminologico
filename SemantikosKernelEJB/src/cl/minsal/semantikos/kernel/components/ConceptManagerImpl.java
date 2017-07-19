@@ -11,7 +11,6 @@ import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.users.User;
@@ -28,7 +27,6 @@ import java.util.*;
 
 import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
 import static cl.minsal.semantikos.model.PersistentEntity.getIdArray;
-import static java.util.Collections.EMPTY_LIST;
 
 /**
  * @author Andrés Farías
@@ -74,6 +72,9 @@ public class ConceptManagerImpl implements ConceptManager {
     @EJB
     private RelationshipBindingBRInterface relationshipBindingBR;
 
+    @EJB
+    private ConceptSearchBR conceptSearchBR;
+
     @Override
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptId) {
 
@@ -97,50 +98,6 @@ public class ConceptManagerImpl implements ConceptManager {
         //conceptSMTK.setDescriptions(descriptionDAO.getDescriptionsByConcept(conceptSMTK));
 
         return conceptSMTK;
-    }
-
-
-    @Override
-    public List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int pageNumber, int pageSize) {
-        boolean isModeled = true;
-        //TODO: Actualizar esto de los estados que ya no va.
-
-        categories = (categories == null) ? new Long[0] : categories;
-        refsets = (refsets == null) ? new Long[0] : refsets;
-
-        pattern = standardizationPattern(pattern);
-
-        return conceptDAO.findTruncateMatchConcept(pattern, categories, refsets, isModeled, pageSize, pageNumber);
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptTruncatePerfect(String termPattern, List<Category> categories, List<RefSet> refSets) {
-
-        /* En esta implementación se utiliza el método
-         * findConceptTruncatePerfect(
-         *      String pattern,
-         *      Long[] categories,
-         *      Long[] refsets,
-         *      int pageNumber,
-         *      int pageSize)
-         *
-         * Se recuperan de a 1000 conceptos
-         */
-        List<ConceptSMTK> concepts = new ArrayList<>();
-        int page = 1;
-
-
-        boolean thereAreMore;
-        do {
-            //List<ConceptSMTK> conceptTruncatePerfect = truncateMatch(termPattern, getIdArray(categories), pageNumber, pageSize, isModeled);
-            List<ConceptSMTK> conceptTruncatePerfect = findConceptTruncatePerfect(termPattern, getIdArray(categories), getIdArray(refSets), page++, 1000);
-            concepts.addAll(conceptTruncatePerfect);
-
-            /* Si la busqueda retorno 1000, quizás hay más */
-            thereAreMore = conceptTruncatePerfect.size() == 1000;
-        } while (thereAreMore);
-
-        return concepts;
     }
 
     @Override
@@ -351,6 +308,16 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    public List<ConceptSMTK> perfectMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean isModeled) {
+        return conceptDAO.findPerfectMatch(pattern, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refsets), isModeled);
+    }
+
+    @Override
+    public List<ConceptSMTK> truncateMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean isModeled) {
+        return conceptDAO.findTruncateMatch(pattern, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refsets), isModeled);
+    }
+
+    @Override
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK) {
         return conceptDAO.getRelatedConcepts(conceptSMTK);
     }
@@ -396,223 +363,49 @@ public class ConceptManagerImpl implements ConceptManager {
         return filteredRelatedConcepts;
     }
 
-
     @Override
-    public List<ConceptSMTK> findConceptBy(String pattern, Long[] categories, int pageNumber, int pageSize, boolean isModeled) {
+    public List<ConceptSMTK> findConcepts(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled) {
 
-        String patternStandard = standardizationPattern(pattern);
+        String patternStandard = conceptSearchBR.standardizationPattern(pattern);
+        List<ConceptSMTK> results;
 
-        if (patternStandard.length() > 2) {
-            List<ConceptSMTK> resultToFind = perfectMatch(patternStandard, categories, pageNumber, pageSize, isModeled);
+        results = conceptDAO.findPerfectMatch(patternStandard, PersistentEntity.getIdArray(categories),
+                                              PersistentEntity.getIdArray(refsets), modeled);
 
-            if (!resultToFind.isEmpty()) {
-                return resultToFind;
-            } else {
-
-                resultToFind = truncateMatch(patternStandard, categories, pageNumber, pageSize, isModeled);
-                if (resultToFind.isEmpty()) {
-                    return Collections.emptyList();
-                } else {
-                    return resultToFind;
-                }
-            }
+        if (results.isEmpty()) {
+            results = conceptDAO.findTruncateMatch(patternStandard, PersistentEntity.getIdArray(categories),
+                                            PersistentEntity.getIdArray(refsets), modeled);
         }
-        return Collections.emptyList();
+
+        new ConceptSearchBR().applyPostActions(results);
+
+        return results;
     }
 
     @Override
-    public List<ConceptSMTK> perfectMatch(String pattern, Long[] categories, int pageNumber, int pageSize, Boolean isModeled) {
+    public long countConceptsByPattern(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled) {
+        String patternStandard = conceptSearchBR.standardizationPattern(pattern);
 
-        /**
-         * Existe al menos una categoría y el patron de búsqueda
-         */
-        if ((categories.length != 0 && pattern.length() != 0)) {
-            return conceptDAO.findPerfectMatchConcept(pattern, categories, null, isModeled, pageSize, pageNumber);
-        }
-
-        /**
-         * No existen categorías pero si un patrón de búsqueda
-         */
-        if ((categories.length == 0 && pattern.length() != 0)) {
-            return conceptDAO.findPerfectMatchConcept(pattern, null, null, isModeled, pageSize, pageNumber);
-        }
-
-
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<ConceptSMTK> truncateMatch(String pattern, Long[] categories, int pageNumber, int pageSize, Boolean isModeled) {
-
-        String patternTruncate = truncatePattern(pattern);
-        List <ConceptSMTK> conceptSMTKs= new ArrayList<>();
-        /**
-         * Existe al menos una categoría y el patron de búsqueda
-         */
-        if ((categories.length != 0 && pattern.length() != 0)) {
-            conceptSMTKs= conceptDAO.findTruncateMatchConcept(patternTruncate, categories, null, isModeled, pageSize, pageNumber);
-        }else{
-            if ((categories.length == 0 && pattern.length() != 0)) {
-                conceptSMTKs= conceptDAO.findTruncateMatchConcept(patternTruncate, null, null, isModeled, pageSize, pageNumber);
-            }
-        }
-
-
-        if(conceptSMTKs.isEmpty()){
-            return Collections.emptyList();
-        }
-        Collections.sort(conceptSMTKs,new ConceptSMTKComparator());
-
-        return conceptSMTKs;
-    }
-
-    class ConceptSMTKComparator implements Comparator<ConceptSMTK> {
-
-        @Override
-        public int compare(ConceptSMTK conceptSMTK1, ConceptSMTK conceptSMTK2) {
-
-            return conceptSMTK1.getDescriptionFavorite().getTerm().length() -  conceptSMTK2.getDescriptionFavorite().getTerm().length();
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return false;
-        }
-    }
-
-
-    @Override
-    public int countConceptBy(String pattern, Long[] categories, Boolean isModeled) {
-        String patternStandard = standardizationPattern(pattern);
-
-        int count = countPerfectMatch(patternStandard, categories, isModeled);
+        long count = countPerfectMatch(patternStandard, categories, refsets, modeled);
 
         if (count != 0) {
             return count;
         } else {
-            count = countTruncateMatch(patternStandard, categories, isModeled);
-            if (count == 0) {
-                return 0;
-            } else {
-                return count;
-            }
+            return countTruncateMatch(patternStandard, categories, refsets, modeled);
         }
+    }
+
+    public long countPerfectMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled) {
+        return conceptDAO.countPerfectMatch(pattern, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refsets), modeled);
+    }
+
+    public long countTruncateMatch(String pattern,List<Category> categories, List<RefSet> refsets, Boolean modeled) {
+        return conceptDAO.countTruncateMatch(pattern,  PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refsets), modeled);
     }
 
     @Override
-    public int countPerfectMatch(String pattern, Long[] categories, Boolean isModeled) {
-        /**
-         * Existe al menos una categoría y el patron de búsqueda
-         */
-        if ((categories.length != 0 && pattern.length() != 0)) {
-            return conceptDAO.countPerfectMatchConceptBy(pattern, categories, isModeled);
-        }
-
-        /**
-         * No existen categorías pero si un patrón de búsqueda
-         */
-        if ((categories.length == 0 && pattern.length() != 0)) {
-            return conceptDAO.countPerfectMatchConceptBy(pattern, new Long[0], isModeled);
-        }
-
-        return 0;
+    public List<ConceptSMTK> findModeledConceptPaginated(Category category, int pageSize, int pageNumber) {
+        return this.conceptDAO.getModeledConceptPaginated(category.getId(), pageSize, pageNumber);
     }
-
-    @Override
-    public int countTruncateMatch(String pattern, Long[] categories, Boolean isModeled) {
-        String patternTruncate = truncatePattern(pattern);
-
-        /**
-         * Existe al menos una categoría y el patron de búsqueda
-         */
-        if ((categories.length != 0 && pattern.length() != 0)) {
-            return conceptDAO.countTruncateMatchConceptBy(patternTruncate, categories, isModeled);
-        }
-
-        /**
-         * No existen categorías pero si un patrón de búsqueda
-         */
-        if ((categories.length == 0 && pattern.length() != 0)) {
-            return conceptDAO.countTruncateMatchConceptBy(patternTruncate, new Long[0], isModeled);
-        }
-
-        return 0;
-    }
-
-    /**
-     * Método de normalización del patrón de búsqueda, lleva las palabras a minúsculas,
-     * le quita los signos de puntuación y ortográficos
-     *
-     * @param pattern patrón de texto a normalizar
-     * @return patrón normalizado
-     */
-    //TODO: Falta quitar los StopWords (no se encuentran definidos)
-    public String standardizationPattern(String pattern) {
-
-        if (pattern != null) {
-            pattern = Normalizer.normalize(pattern, Normalizer.Form.NFD);
-            pattern = pattern.toLowerCase();
-            pattern = pattern.replaceAll("[^\\p{ASCII}]", "");
-            pattern = pattern.replaceAll("\\p{Punct}+", "");
-        } else {
-            pattern = "";
-        }
-        return pattern;
-    }
-
-    /**
-     * Método encargado de truncar a un largo de 3 las palabras del String ingresado
-     *
-     * @param pattern arreglo de palabras
-     * @return arreglo de String con las palabras truncadas
-     */
-    private String truncatePattern(String pattern) {
-        if(pattern.length()==0)return pattern;
-        pattern = standardizationPattern(pattern);
-        String[] arrayToPattern = patternToArray(pattern);
-        String patternTruncate="";
-        for (int i = 0; i < arrayToPattern.length; i++) {
-            if ( arrayToPattern[i].length()<=2) {
-                patternTruncate = patternTruncate + arrayToPattern[i].substring(0, arrayToPattern[i].length()) + " ";
-            } else {
-                patternTruncate = patternTruncate + arrayToPattern[i].substring(0, 3) + " ";
-            }
-        }
-        if(patternTruncate.charAt(patternTruncate.length()-1)==' '){
-            patternTruncate=patternTruncate.substring(0,patternTruncate.length()-1);
-        }
-        return patternTruncate;
-    }
-
-    /**
-     * Método encargado de convertir un string en una lista de string.
-     *
-     * @param pattern patrón de texto
-     * @return retorna una lista de String
-     */
-
-    private String[] patternToArray(String pattern) {
-        if (pattern != null) {
-            StringTokenizer st;
-            String token;
-            st = new StringTokenizer(pattern, " ");
-            ArrayList<String> listPattern = new ArrayList<>();
-            int count = 0;
-
-            while (st.hasMoreTokens()) {
-                token = st.nextToken();
-                if (token.length() >= 2) {
-                    listPattern.add(token.trim());
-                }
-                if (count == 0 && listPattern.size() == 0) {
-                    listPattern.add(token.trim());
-                }
-                count++;
-            }
-            return listPattern.toArray(new String[listPattern.size()]);
-        }
-        return new String[0];
-    }
-
 
 }

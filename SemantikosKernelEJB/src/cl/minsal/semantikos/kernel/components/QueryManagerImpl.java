@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.kernel.daos.QueryDAO;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.*;
+import cl.minsal.semantikos.model.businessrules.ConceptSearchBR;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.NoValidDescription;
@@ -33,6 +34,9 @@ public class QueryManagerImpl implements QueryManager {
 
     @EJB
     private RelationshipManager relationshipManager;
+
+    @EJB
+    private ConceptSearchBR conceptSearchBR;
 
     @Override
     public GeneralQuery getDefaultGeneralQuery(Category category) {
@@ -207,7 +211,7 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public List<ConceptSMTK> executeQuery(BrowserQuery query) {
 
-        query.setQuery(conceptManager.standardizationPattern(query.getQuery()));
+        query.setQuery(conceptSearchBR.standardizationPattern(query.getQuery()));
 
         List<ConceptSMTK> concepts = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
 

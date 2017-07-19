@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.snomedct.ConceptSCTFactory;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,22 +44,26 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         long idTarget= targetDAO.persist(relationship.getTarget(),relationship.getRelationshipDefinition().getTargetDefinition());
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.create_relationship(?,?,?,?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_relationship.create_relationship(?,?,?,?,?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+
             if(relationship.getIdRelationship()!=null) {
-                call.setString(1,relationship.getIdRelationship());
+                call.setString(2,relationship.getIdRelationship());
             }else {
-               call.setNull(1,VARCHAR);
+               call.setNull(2,VARCHAR);
             }
-            call.setLong(2, relationship.getSourceConcept().getId());
-            call.setLong(3, idTarget);
-            call.setLong(4, relationship.getRelationshipDefinition().getId());
-            call.setTimestamp(5, relationship.getCreationDate());
+            call.setLong(3, relationship.getSourceConcept().getId());
+            call.setLong(4, idTarget);
+            call.setLong(5, relationship.getRelationshipDefinition().getId());
+            call.setTimestamp(6, relationship.getCreationDate());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
                 relationship.setId(rs.getLong(1));
@@ -88,16 +93,20 @@ public class RelationshipDAOImpl implements RelationshipDAO {
          * param 4: upper boundary
          * param 5: idTargetDefinition
          */
-        String sql = "{call semantikos.create_relationship_definition(?,?,?,?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_relationship.create_relationship_definition(?,?,?,?,?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, relationshipDefinition.getName());
-            call.setString(2, relationshipDefinition.getDescription());
-            call.setInt(3, relationshipDefinition.getMultiplicity().getLowerBoundary());
-            call.setInt(4, relationshipDefinition.getMultiplicity().getUpperBoundary());
-            call.setLong(5, idTargetDefinition);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, relationshipDefinition.getName());
+            call.setString(3, relationshipDefinition.getDescription());
+            call.setInt(4, relationshipDefinition.getMultiplicity().getLowerBoundary());
+            call.setInt(5, relationshipDefinition.getMultiplicity().getUpperBoundary());
+            call.setLong(6, idTargetDefinition);
             call.execute();
+
         } catch (SQLException e) {
             throw new EJBException(e);
         }
@@ -109,13 +118,16 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     public void delete(Relationship relationship) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.invalidate_relationship(?)}";
+
+        String sql = "begin ? := stk.stk_pck_relationship.invalidate_relationship(?); end;";
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, relationship.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, relationship.getId());
             call.execute();
+
         } catch (SQLException e) {
             throw new EJBException(e);
         }
@@ -124,21 +136,18 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     @Override
     public void update(Relationship relationship) {
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.update_relation(?,?,?,?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_relationship.update_relation(?,?,?,?,?); end;";
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, relationship.getId());
-            if(relationship.getIdRelationship()!=null) {
-                call.setString(2,relationship.getIdRelationship());
-            }else {
-                call.setNull(2,VARCHAR);
-            }
-            call.setLong(2, relationship.getSourceConcept().getId());
-            call.setLong(3, getTargetByRelationship(relationship));
-            call.setLong(4, relationship.getRelationshipDefinition().getId());
-            call.setTimestamp(5, relationship.getValidityUntil());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, relationship.getId());
+            call.setLong(3, relationship.getSourceConcept().getId());
+            call.setLong(4, getTargetByRelationship(relationship));
+            call.setLong(5, relationship.getRelationshipDefinition().getId());
+            call.setTimestamp(6, relationship.getValidityUntil());
             call.execute();
         } catch (SQLException e) {
             throw new EJBException(e);
@@ -148,13 +157,15 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     @Override
     public void invalidate(Relationship relationship) {
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.invalidate_relationship(?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_relationship.invalidate_relationship(?,?); end;";
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, relationship.getId());
-            call.setTimestamp(2, relationship.getValidityUntil());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, relationship.getId());
+            call.setTimestamp(3, relationship.getValidityUntil());
             call.execute();
         } catch (SQLException e) {
             throw new EJBException(e);
@@ -165,16 +176,19 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     public Relationship getRelationshipByID(long idRelationship) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_relationships_by_id(?)}";
+
+        String sql = "begin ? := stk.stk_pck_relationship.get_relationships_by_id(?); end;";
+
         Relationship relationship = null;
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, idRelationship);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idRelationship);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
                 relationship = relationshipMapper.createRelationshipFromResultSet(rs, null);
@@ -195,18 +209,20 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     public List<Relationship> getRelationshipsLike(RelationshipDefinition relationshipDefinition, Target target) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_snomedct_relationship(?, ?)}";
+
+        String sql = "begin ? := stk.stk_pck_relationship.get_snomedct_relationship(?,?); end;";
 
         List<Relationship> relationships = new ArrayList<>();
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, relationshipDefinition.getId());
-            call.setLong(2, target.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, relationshipDefinition.getId());
+            call.setLong(3, target.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
                 relationships.add(relationshipMapper.createRelationshipFromResultSet(rs, null));
@@ -224,33 +240,36 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     public List<Relationship> findRelationshipsLike(RelationshipDefinition relationshipDefinition, Target target) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.find_relationships_like(?, ?)}";
+
+        String sql = "begin ? := stk.stk_pck_relationship.find_relationships_like(?,?); end;";
 
         List<Relationship> relationships = new ArrayList<>();
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+
             if(relationshipDefinition.getTargetDefinition().isSMTKType()){
-                call.setLong(1, relationshipDefinition.getTargetDefinition().getId());
-                call.setString(2, String.valueOf(target.getId()));
+                call.setLong(2, relationshipDefinition.getTargetDefinition().getId());
+                call.setString(3, String.valueOf(target.getId()));
             }
 
             if(relationshipDefinition.getTargetDefinition().isHelperTable()){
-                call.setLong(1, relationshipDefinition.getTargetDefinition().getId());
+                call.setLong(2, relationshipDefinition.getTargetDefinition().getId());
                 HelperTableRow helperTableRow = (HelperTableRow) target;
-                call.setString(2, String.valueOf(helperTableRow.getId()));
+                call.setString(3, String.valueOf(helperTableRow.getId()));
             }
 
             if(relationshipDefinition.getTargetDefinition().isBasicType()){
-                call.setLong(1, relationshipDefinition.getId());
+                call.setLong(2, relationshipDefinition.getId());
                 BasicTypeValue basicTypeValue = (BasicTypeValue) target;
-                call.setString(2, basicTypeValue.getValue().toString());
+                call.setString(3, basicTypeValue.getValue().toString());
             }
 
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
                 relationships.add(relationshipMapper.createRelationshipFromResultSet(rs, null));
@@ -268,18 +287,19 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     public List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK conceptSMTK) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_relationships_by_source_concept_id(?)}";
-        //String resultJSON;
+
+        String sql = "begin ? := stk.stk_pck_relationship.get_relationships_by_source_concept_id(?); end;";
 
         List<Relationship> relationships = new ArrayList<>();
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, conceptSMTK.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSMTK.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
                 relationships.add(relationshipMapper.createRelationshipFromResultSet(rs, conceptSMTK));
@@ -297,15 +317,19 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     public Long getTargetByRelationship(Relationship relationship) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_id_target_by_id_relationship(?)}";
+
+        String sql = "begin ? := stk.stk_pck_relationship.get_id_target_by_id_relationship(?); end;";
+
         Long result;
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, relationship.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, relationship.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
                 result = rs.getLong(1);
             } else {
