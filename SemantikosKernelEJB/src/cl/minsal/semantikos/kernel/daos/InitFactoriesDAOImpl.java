@@ -23,6 +23,7 @@ import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.users.UserFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import oracle.jdbc.OracleTypes;
+import oracle.jdbc.driver.OracleConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +38,8 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,12 +93,35 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         } catch (NamingException e) {
             e.printStackTrace();
         }
+        this.testArrayOracle();
         this.refreshColumns();
         this.refreshCategories();
         this.refreshQueries();
         this.refreshDescriptionTypes();
         this.refreshTagsSMTK();
         this.refreshUsers();
+    }
+
+    private void testArrayOracle() {
+
+        int intArray[] = { 1,2,3,4,5,6 };
+
+        String sql = "begin stk.give_me_an_array(?); end;";
+
+        try (Connection connection = DataSourceFactory.getInstance().getConnection(); CallableStatement call =
+                connection.prepareCall(sql)) {
+
+            call.setArray(1, connection.unwrap(oracle.jdbc.OracleConnection.class).createARRAY("STK.STK_TYPE_NUM_ARRAY", intArray));
+
+            call.execute();
+
+            call.close();
+
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
     }
 
     /**

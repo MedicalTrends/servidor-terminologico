@@ -329,7 +329,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             while (rs.next()) {
                 Long id = rs.getLong("id");
-                String description = rs.getString("description");
+                String description = rs.getString("observation");
                 observationNoValids.add(new ObservationNoValid(id,description));
             }
 

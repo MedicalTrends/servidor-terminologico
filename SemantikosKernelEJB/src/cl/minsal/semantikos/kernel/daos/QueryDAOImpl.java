@@ -15,7 +15,9 @@ import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.Tag;
+import oracle.jdbc.OracleConnection;
 import oracle.jdbc.OracleTypes;
+import oracle.sql.ARRAY;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -584,7 +586,13 @@ public class QueryDAOImpl implements QueryDAO {
         if(param.getValue() == null){
 
             if(param.isArray()){
-                call.setNull(paramNumber, Types.ARRAY);
+                //call.setNull(paramNumber, Types.ARRAY);
+                if(param.getType() == String.class) {
+                    call.setArray(paramNumber, connection.unwrap(OracleConnection.class).createARRAY("STK.TEXT_ARRAY",null));
+                }
+                if(param.getType() == Long.class) {
+                    call.setArray(paramNumber, connection.unwrap(OracleConnection.class).createARRAY("STK.STK_TYPE_NUM_ARRAY",null));
+                }
                 return;
             }
             else{
@@ -604,7 +612,8 @@ public class QueryDAOImpl implements QueryDAO {
                 }
 
                 if(param.getType() == Boolean.class) {
-                    call.setNull(paramNumber, Types.BOOLEAN);
+                    //call.setNull(paramNumber, Types.BOOLEAN);
+                    call.setNull(paramNumber, Types.NUMERIC);
                     return;
                 }
 
@@ -617,11 +626,11 @@ public class QueryDAOImpl implements QueryDAO {
         else{
             if(param.isArray()){
                 if(param.getType() == String.class) {
-                    call.setArray(paramNumber, connection.createArrayOf("text", (String[]) param.getValue()));
+                    call.setArray(paramNumber, connection.unwrap(OracleConnection.class).createARRAY("STK.TEXT_ARRAY", (String[]) param.getValue()));
                     return;
                 }
                 if(param.getType() == Long.class) {
-                    call.setArray(paramNumber, connection.createArrayOf("bigint", (Long[]) param.getValue()));
+                    call.setArray(paramNumber, connection.unwrap(OracleConnection.class).createARRAY("STK.STK_TYPE_NUM_ARRAY", (Long[]) param.getValue()));
                     return;
                 }
             }
