@@ -113,7 +113,7 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
         //Relationship relationship = relationshipDAO.getRelationshipByID(rs.getLong("id_relationship"));
 
         //RelationshipAttributeDefinition relationshipAttributeDefinition = relationshipDefinitionDAO.getRelationshipAttributeDefinitionBy(rs.getLong("id_relation_attribute_definition")) ;
-        long relationshipAttributeDefinitionId = rs.getLong("Id_relation_attribute_definition");
+        long relationshipAttributeDefinitionId = rs.getLong("id_rel_att_def");
 
         RelationshipAttributeDefinition relationshipAttributeDefinition = relationship.getRelationshipDefinition().findRelationshipAttributeDefinitionsById(relationshipAttributeDefinitionId).get(0);
 

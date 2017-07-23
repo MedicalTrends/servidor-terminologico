@@ -160,7 +160,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, Types.NUMERIC);
             call.setLong(2, relationship.getId());
             call.setTimestamp(3, relationship.getValidityUntil());
             call.execute();
