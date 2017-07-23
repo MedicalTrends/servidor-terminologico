@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.relationships.*;
 import oracle.jdbc.OracleTypes;
+import oracle.sql.NUMBER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -145,7 +146,7 @@ public class TargetDAOImpl implements TargetDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, Types.NUMERIC);
 
             /* Se fijan de los argumentos por defecto */
             setDefaultValuesForCreateTargetFunction(call);
@@ -182,14 +183,14 @@ public class TargetDAOImpl implements TargetDAO {
 
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (rs.next()) {
-                idTarget = rs.getLong(1);
+            if (call.getLong(1) > 0) {
+                idTarget = call.getLong(1);
             } else {
                 throw new EJBException("No se obtuvo respuesta de la base de datos, ni una excepción.");
             }
-            rs.close();
+            //rs.close();
 
         } catch (SQLException e) {
             throw new EJBException(e);
@@ -413,15 +414,15 @@ public class TargetDAOImpl implements TargetDAO {
 
         if (targetDefinition.getType().getTypeName().equals("date")) {
             java.util.Date d = (java.util.Date) target.getValue();
-            call.setTimestamp(2, new Timestamp(d.getTime()) );
+            call.setTimestamp(3, new Timestamp(d.getTime()) );
         } else if (targetDefinition.getType().getTypeName().equals("float")) {
-            call.setFloat(1, Float.parseFloat (target.getValue().toString()) );
+            call.setFloat(2, Float.parseFloat (target.getValue().toString()) );
         } else if (targetDefinition.getType().getTypeName().equals("int")) {
-            call.setInt(5, (Integer.parseInt(target.getValue().toString())));
+            call.setInt(6, (Integer.parseInt(target.getValue().toString())));
         } else if (targetDefinition.getType().getTypeName().equals("string")) {
-            call.setString(3, (String) target.getValue());
+            call.setString(4, (String) target.getValue());
         } else if (targetDefinition.getType().getTypeName().equals("boolean")) {
-            call.setBoolean(4, (Boolean) target.getValue());
+            call.setBoolean(5, (Boolean) target.getValue());
         } else {
             throw new EJBException("Tipo Básico no conocido.");
         }
@@ -436,7 +437,8 @@ public class TargetDAOImpl implements TargetDAO {
         call.setNull(2, REAL);
         call.setNull(3, TIMESTAMP);
         call.setNull(4, VARCHAR);
-        call.setNull(5, BOOLEAN);
+        //call.setNull(5, BOOLEAN);
+        call.setNull(5, NUMERIC);
         call.setNull(6, BIGINT);
         call.setNull(7, BIGINT);
         call.setNull(8, BIGINT);

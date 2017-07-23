@@ -47,22 +47,6 @@ public class DescriptionManagerImpl implements DescriptionManager {
     /* El conjunto de reglas de negocio para validar creación de descripciones */
     private DescriptionCreationBR descriptionCreationBR = new DescriptionCreationBR();
 
-    @AroundInvoke
-    public Object postActions(InvocationContext ic) throws Exception {
-        try {
-            return ic.proceed();
-        } finally {
-            if(Arrays.asList(new String[]{"createDescription", "bindDescriptionToConcept", "updateDescription"}).contains(ic.getMethod().getName())) {
-                for (Object o : ic.getParameters()) {
-                    if(o instanceof Description) {
-                        descriptionDAO.updateSearchIndexes((Description)o);
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
     @Override
     public void createDescription(Description description, boolean editionMode, User user) {
 

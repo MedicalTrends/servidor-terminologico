@@ -139,7 +139,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, Types.NUMERIC);
             call.setString(2, pattern);
             if (group == null) {
                 call.setNull(3, Types.INTEGER);
@@ -148,12 +148,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
             }
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
-
-            while (rs.next()) {
-                concepts = rs.getLong(1);
-            }
-            rs.close();
+            concepts = call.getLong(1);
 
         } catch (SQLException e) {
             String errorMsg = "Error al buscar Snomed CT";

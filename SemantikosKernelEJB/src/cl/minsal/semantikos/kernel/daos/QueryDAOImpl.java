@@ -17,7 +17,6 @@ import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.Tag;
 import oracle.jdbc.OracleConnection;
 import oracle.jdbc.OracleTypes;
-import oracle.sql.ARRAY;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -141,7 +140,7 @@ public class QueryDAOImpl implements QueryDAO {
 
              CallableStatement call = connection.prepareCall(QUERY)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, Types.NUMERIC);
 
             int paramNumber = 2;
 
@@ -152,14 +151,9 @@ public class QueryDAOImpl implements QueryDAO {
 
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            resultCount =  call.getLong(1);
 
-            while (rs.next()) {
-
-                resultCount = rs.getLong(1);
-
-            }
-            rs.close();
+            call.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -591,8 +585,9 @@ public class QueryDAOImpl implements QueryDAO {
                     call.setArray(paramNumber, connection.unwrap(OracleConnection.class).createARRAY("STK.TEXT_ARRAY",null));
                 }
                 if(param.getType() == Long.class) {
-                    call.setArray(paramNumber, connection.unwrap(OracleConnection.class).createARRAY("STK.STK_TYPE_NUM_ARRAY",null));
+                    call.setArray(paramNumber, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY",null));
                 }
+
                 return;
             }
             else{
@@ -613,7 +608,7 @@ public class QueryDAOImpl implements QueryDAO {
 
                 if(param.getType() == Boolean.class) {
                     //call.setNull(paramNumber, Types.BOOLEAN);
-                    call.setNull(paramNumber, Types.NUMERIC);
+                    call.setNull(paramNumber, OracleTypes.NUMBER);
                     return;
                 }
 
@@ -630,7 +625,7 @@ public class QueryDAOImpl implements QueryDAO {
                     return;
                 }
                 if(param.getType() == Long.class) {
-                    call.setArray(paramNumber, connection.unwrap(OracleConnection.class).createARRAY("STK.STK_TYPE_NUM_ARRAY", (Long[]) param.getValue()));
+                    call.setArray(paramNumber, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", (Long[]) param.getValue()));
                     return;
                 }
             }

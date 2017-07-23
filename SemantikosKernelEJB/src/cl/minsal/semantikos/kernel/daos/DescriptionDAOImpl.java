@@ -10,6 +10,7 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.users.UserFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import oracle.jdbc.OracleConnection;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -205,7 +206,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, Types.NUMERIC);
             call.setString(2, description.getDescriptionId());
             call.setLong(3, description.getDescriptionType().getId());
             call.setString(4, description.getTerm());
@@ -227,16 +228,16 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (rs.next()) {
-                description.setId(rs.getLong(1));
+            if (call.getLong(1) > 0) {
+                description.setId(call.getLong(1));
             } else {
                 String errorMsg = "La descripción no fue creada. Contacte a Desarrollo";
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
-            rs.close();
+            //rs.close();
         } catch (SQLException e) {
             throw new EJBException(e);
         }
@@ -279,7 +280,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, Types.NUMERIC);
             call.setLong(2, description.getId());
             call.setString(3, description.getDescriptionId());
             call.setLong(4, description.getDescriptionType().getId());
@@ -294,18 +295,14 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             call.setTimestamp(13, description.getCreationDate());
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (rs.next()) {
-                if (!rs.getBoolean(1)) {
-                    throw new EJBException("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue actualizada.");
-                }
-            } else {
+            if (call.getLong(1) == 0) {
                 String errorMsg = "La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue actualizada.";
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
-            rs.close();
+            //rs.close();
         } catch (SQLException e) {
             logger.error("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue actualizada.", e);
             throw new EJBException("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue actualizada.", e);
@@ -454,8 +451,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             call.setString(2, term.toLowerCase());
             Category[] entities = categories.toArray(new Category[categories.size()]);
             RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
-            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
-            call.setArray(4, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
+            call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", convertListPersistentToListID(entities)));
+            call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", convertListPersistentToListID(refsetEntities)));
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);
@@ -638,34 +635,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         return count;
     }
 
-    @Override
-    public void updateSearchIndexes(Description description) {
-
-        ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.update_description_search_indexes(?)}";
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.setLong(1, description.getId());
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                if (!rs.getBoolean(1)) {
-                    throw new EJBException("Los índices de búsqueda de la descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fueron actualizados.");
-                }
-            } else {
-                String errorMsg = "Los índices de búsqueda de la descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fueron actualizados.";
-                logger.error(errorMsg);
-                throw new EJBException(errorMsg);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            logger.error("Los índices de búsqueda de la descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fueron actualizados.", e);
-            throw new EJBException("Los índices de búsqueda de la descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fueron actualizados.", e);
-        }
-    }
 
     private Long[] convertListPersistentToListID(PersistentEntity[] entities) {
 

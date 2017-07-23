@@ -252,7 +252,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, Types.NUMERIC);
             call.setString(2, conceptSMTK.getConceptID());
             call.setLong(3, conceptSMTK.getCategory().getId());
             call.setBoolean(4, conceptSMTK.isToBeReviewed());
@@ -266,11 +266,11 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.execute();
 
             //ResultSet rs = call.getResultSet();
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (rs.next()) {
+            if (call.getLong(1) > 0) {
                 /* Se recupera el ID del concepto persistido */
-                id = rs.getLong(1);
+                id = call.getLong(1);
                 conceptSMTK.setId(id);
             } else {
                 String errorMsg = "El concepto no fue creado por una razon desconocida. Alertar al area de desarrollo" +
@@ -278,7 +278,7 @@ public class ConceptDAOImpl implements ConceptDAO {
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
-            rs.close();
+            //rs.close();
         } catch (SQLException e) {
             String errorMsg = "El concepto " + conceptSMTK.toString() + " no fue persistido.";
             logger.error(errorMsg, e);
@@ -299,7 +299,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, Types.NUMERIC);
             call.setLong(2, conceptSMTK.getId());
             call.setString(3, conceptSMTK.getConceptID());
             call.setLong(4, conceptSMTK.getCategory().getId());
@@ -314,18 +314,18 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.execute();
 
             //ResultSet rs = call.getResultSet();
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (rs.next()) {
+            if (call.getLong(1) > 0) {
                 /* Se recupera el ID del concepto persistido */
-                updated = rs.getLong(1);
+                updated = call.getLong(1);
             } else {
                 String errorMsg = "El concepto no fue creado por una razón desconocida. Alertar al area de desarrollo" +
                         " sobre esto";
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
-            rs.close();
+            //rs.close();
         } catch (SQLException e) {
             String errorMsg = "El concepto " + conceptSMTK.toString() + " no fue actualizado.";
             logger.error(errorMsg, e);
@@ -447,8 +447,8 @@ public class ConceptDAOImpl implements ConceptDAO {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, pattern);
-            call.setArray(3, connect.getConnection().unwrap(OracleConnection.class).createARRAY("integer", categories));
-            call.setArray(4, connect.getConnection().unwrap(OracleConnection.class).createARRAY("integer", refsets));
+            call.setArray(3, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            call.setArray(4, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
             if(modeled == null) {
                 call.setNull(5, Types.BOOLEAN);
             }

@@ -172,7 +172,6 @@ public class TagManagerImpl implements TagManager {
                 update(son);
             }
 
-
         }
         logger.debug("Tag creado:" + tag);
     }

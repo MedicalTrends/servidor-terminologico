@@ -276,7 +276,7 @@ public class AuthDAOImpl implements AuthDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, Types.INTEGER);
+            call.registerOutParameter (1, Types.NUMERIC);
             call.setString(2, user.getName().trim());
             call.setString(3, user.getLastName().trim());
             call.setString(4, user.getSecondLastName().trim());
@@ -291,10 +291,10 @@ public class AuthDAOImpl implements AuthDAO {
             call.execute();
 
             //ResultSet rs = call.getResultSet();
-            ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (rs.next()) {
-                user.setId(rs.getLong(1));
+
+            if (call.getLong(1) > 0) {
+                user.setId(call.getLong(1));
             } else {
                 String errorMsg = "El usuario no fué creado. Esta es una situación imposible. Contactar a Desarrollo";
                 logger.error(errorMsg);

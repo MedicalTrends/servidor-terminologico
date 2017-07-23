@@ -66,11 +66,13 @@ public class ConceptSMTKWeb extends ConceptSMTK {
         this(conceptSMTK);
 
         DescriptionWeb fsnDescription = new DescriptionWeb(this, term, DescriptionTypeFactory.getInstance().getFSNDescriptionType());
-        fsnDescription.setDescriptionId(EMPTY_STRING);
+        //fsnDescription.setDescriptionId(EMPTY_STRING);
+        fsnDescription.setDescriptionId(" ");
         fsnDescription.setTerm(term);
 
         DescriptionWeb favouriteDescription = new DescriptionWeb(this, term, DescriptionTypeFactory.getInstance().getFavoriteDescriptionType());
-        favouriteDescription.setDescriptionId(EMPTY_STRING);
+        //favouriteDescription.setDescriptionId(EMPTY_STRING);
+        favouriteDescription.setDescriptionId(" ");
         favouriteDescription.setTerm(term);
 
         for (DescriptionWeb description : new DescriptionWeb[]{favouriteDescription, fsnDescription}) {

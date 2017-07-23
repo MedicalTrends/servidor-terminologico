@@ -96,7 +96,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
 
             if (rs.next()) {
                 order = rs.getInt("order_view");
-                idComposite = rs.getLong("composite");
+                idComposite = rs.getLong("id_composite");
                 idTarget = rs.getLong("id_default_target");
                 if(idTarget!=0)
                     defaultValue = targetDAO.getDefaultTargetByID(idTarget);

@@ -152,5 +152,4 @@ public interface DescriptionDAO {
 
     public List<ConceptSMTK> getSuggestedConceptsBy(Description description);
 
-    void updateSearchIndexes(Description description);
 }

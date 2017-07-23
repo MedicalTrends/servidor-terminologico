@@ -12,10 +12,7 @@ import org.slf4j.LoggerFactory;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,16 +48,16 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, Types.NUMERIC);
             call.setLong(2, relationshipAttribute.getRelationAttributeDefinition().getId());
             call.setLong(3, relationshipAttribute.getRelationship().getId());
             call.setLong(4, idTarget);
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (rs.next()) {
-                idRelationShipAttribute = rs.getLong(1);
+            if (call.getLong(1) > 0) {
+                idRelationShipAttribute = call.getLong(1);
                 if (idRelationShipAttribute == -1) {
                     String errorMsg = "La relacion no fue creada";
                     logger.error(errorMsg);
@@ -72,7 +69,7 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
                 logger.error(errorMsg);
                 throw new IllegalArgumentException(errorMsg);
             }
-            rs.close();
+            //rs.close();
         } catch (SQLException e) {
             throw new EJBException(e);
         }

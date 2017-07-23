@@ -45,7 +45,7 @@ public class TagDAOImpl implements TagDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, Types.NUMERIC);
             call.setString(2, tag.getName());
             call.setString(3, tag.getColorLetter());
             call.setString(4, tag.getColorBackground());
@@ -58,17 +58,17 @@ public class TagDAOImpl implements TagDAO {
             }
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (rs.next()) {
-                idTag = rs.getLong(1);
+            if (call.getLong(1) > 0) {
+                idTag = call.getLong(1);
             } else {
                 String errorMsg = "Error al persistir el tag " + tag;
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
 
-            rs.close();
+            //rs.close();
 
         } catch (SQLException e) {
             String errorMsg = "Error al persistir el tag " + tag;
@@ -352,7 +352,7 @@ public class TagDAOImpl implements TagDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, Types.NUMERIC);
             call.setLong(2, conceptSMTK.getId());
             call.setLong(3, tag.getId());
             call.execute();
@@ -373,7 +373,7 @@ public class TagDAOImpl implements TagDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, Types.NUMERIC);
             call.setLong(2, conceptSMTK.getId());
             call.setLong(3, tag.getId());
             call.execute();
@@ -465,16 +465,12 @@ public class TagDAOImpl implements TagDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, Types.NUMERIC);
             call.setLong(2, tag.getId());
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            count = call.getLong(1);
 
-            if (rs.next()) {
-                count = rs.getLong(1);
-            }
-            rs.close();
         } catch (SQLException e) {
             String errorMsg = "Error al consultar si contiene el registro";
             logger.error(errorMsg, e);

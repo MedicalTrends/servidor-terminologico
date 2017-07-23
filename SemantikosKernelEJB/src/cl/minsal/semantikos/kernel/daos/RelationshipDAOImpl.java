@@ -15,10 +15,7 @@ import org.slf4j.LoggerFactory;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 import static java.sql.Types.VARCHAR;
@@ -50,7 +47,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, Types.NUMERIC);
 
             if(relationship.getIdRelationship()!=null) {
                 call.setString(2,relationship.getIdRelationship());
@@ -63,16 +60,16 @@ public class RelationshipDAOImpl implements RelationshipDAO {
             call.setTimestamp(6, relationship.getCreationDate());
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (rs.next()) {
-                relationship.setId(rs.getLong(1));
+            if (call.getLong(1) > 0) {
+                relationship.setId(call.getLong(1));
             } else {
                 String errorMsg = "La relacion no fue creada. Esta es una situación imposible. Contactar a Desarrollo";
                 logger.error(errorMsg);
                 throw new IllegalArgumentException(errorMsg);
             }
-            rs.close();
+            //rs.close();
         } catch (SQLException e) {
             throw new EJBException(e);
         }
