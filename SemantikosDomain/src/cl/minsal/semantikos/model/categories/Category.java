@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**

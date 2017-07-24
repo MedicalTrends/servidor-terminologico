@@ -18,7 +18,6 @@
         <module>SemantikosLoader</module>
         <!--module>SemantikosWS</module-->
         <module>SemantikosBusinessEAR</module>
-        <module>SemantikosWebEAR</module>
     </modules>
 
     <build>

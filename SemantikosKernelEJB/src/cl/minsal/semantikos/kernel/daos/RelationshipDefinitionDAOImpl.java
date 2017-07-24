@@ -41,12 +41,6 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
     private TargetTypeDAO targetTypeDAO;
 
     @EJB
-    private RelationshipDefinitionFactory relationshipDefinitionFactory;
-
-    @EJB
-    private RelationshipAttributeDefinitionFactory factory;
-
-    @EJB
     private RelationshipMapper relationshipMapper;
 
     @EJB

@@ -30,7 +30,6 @@
         <module name="SemantikosKernelEJB" />
         <module name="SemantikosLoader" />
         <module name="SemantikosWeb" />
-        <module name="SemantikosWebEAR" />
         <module name="SemantikosWS" />
         <module name="SemantikosWSEJB" />
       </profile>

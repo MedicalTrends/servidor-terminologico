@@ -372,7 +372,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      *
      * @return Una <code>java.util.List</code> de relaciones que son del tipo Atributo.
      */
-    public List<Relationship> getAttributes() {
+    public List<Relationship> getAttributes() throws Exception {
         List<Relationship> someRelationships = new ArrayList<>();
         for (Relationship relationship : relationships) {
             if (relationship.isAttribute()) {
@@ -832,7 +832,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         return conceptSMTK;
     }
 
-    public boolean contains(String snomedRelationshipType) {
+    public boolean contains(String snomedRelationshipType) throws Exception {
         for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
             if (snomedCTRelationship.getSnomedCTRelationshipType().equalsIgnoreCase(snomedRelationshipType)) {
                 return true;
@@ -868,7 +868,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      *
      * @return <code>true</code> si el concepto posee una relación de tipo ES UN MAPEO y <code>false</code> sino.
      */
-    public boolean hasES_UN_MAPEO() {
+    public boolean hasES_UN_MAPEO() throws Exception {
 
         for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
             if (snomedCTRelationship.isES_UN_MAPEO()) return true;

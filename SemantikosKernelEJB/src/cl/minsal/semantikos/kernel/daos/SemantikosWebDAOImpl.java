@@ -1,13 +1,18 @@
-package cl.minsal.semantikos.view.daos;
+package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.daos.ExtendedRelationshipAttributeDefinitionInfo;
+import cl.minsal.semantikos.kernel.daos.ExtendedRelationshipDefinitionInfo;
+import cl.minsal.semantikos.kernel.daos.SemantikosWebDAO;
 import cl.minsal.semantikos.kernel.daos.TargetDAO;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.categories.Category;
-import cl.minsal.semantikos.model.ConceptSMTKWeb;
-import cl.minsal.semantikos.model.DescriptionWeb;
+
+
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
+import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
+import cl.minsal.semantikos.modelweb.DescriptionWeb;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

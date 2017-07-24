@@ -2,10 +2,9 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.daos.mappers.TagMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.kernel.util.DataSourceFactory;
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.tags.Tag;
-import cl.minsal.semantikos.model.tags.TagFactory;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
+import static cl.minsal.semantikos.model.DAO.NON_PERSISTED_ID;
 import static java.sql.Types.BIGINT;
 
 /**
@@ -28,9 +27,6 @@ public class TagDAOImpl implements TagDAO {
 
     /** El logger de esta clase */
     private static final Logger logger = LoggerFactory.getLogger(ConceptDAOImpl.class);
-
-    @EJB
-    private TagFactory tagFactory;
 
     @EJB
     private TagMapper tagMapper;

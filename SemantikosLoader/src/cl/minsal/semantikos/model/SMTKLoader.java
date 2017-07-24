@@ -130,7 +130,6 @@ public class SMTKLoader extends SwingWorker<Void, String> {
         categoryFactory =  categoryManager.getCategoryFactory();
         tagSMTKFactory = tagSMTKManager.getTagSMTKFactory();
         descriptionTypeFactory = descriptionManager.getDescriptionTypeFactory();
-        relationshipDefinitionFactory = relationshipManager.getRelationshipDefinitionFactory();
 
         TagSMTKFactory.getInstance().setTagsSMTK(tagSMTKFactory.getTagsSMTK());
         TagSMTKFactory.getInstance().setTagsSMTKByName(tagSMTKFactory.getTagsSMTKByName());
@@ -139,9 +138,6 @@ public class SMTKLoader extends SwingWorker<Void, String> {
         CategoryFactory.getInstance().setCategoriesByName(categoryFactory.getCategoriesByName());
 
         DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypeFactory.getDescriptionTypes());
-
-        RelationshipDefinitionFactory.getInstance().setRelationshipDefinitions(relationshipDefinitionFactory.getRelationshipDefinitions());
-        RelationshipDefinitionFactory.getInstance().setRelationshipDefinitionByName(relationshipDefinitionFactory.getRelationshipDefinitionByName());
     }
 
     public Timestamp getDate() {
@@ -291,10 +287,8 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             PCConceptLoader pcConceptLoader = new PCConceptLoader();
             PCCEConceptLoader pcceConceptLoader = new PCCEConceptLoader();
 
-            /*
             initializer.checkBasicConceptsDataFiles(this);
             basicConceptLoader.processConcepts(this);
-            */
 
             /*
             initializer.checkSubstanceDataFiles(this);
@@ -329,8 +323,10 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             pcConceptLoader.processConcepts(this);
             */
 
+            /*
             initializer.checkPCCEDataFiles(this);
             pcceConceptLoader.processConcepts(this);
+            */
 
             JOptionPane.showMessageDialog(null, "Carga de conceptos finalizada!");
         } catch (LoadException e1) {

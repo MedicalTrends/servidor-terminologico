@@ -19,4 +19,7 @@ public interface DescriptionTranslationBR {
     public void apply(ConceptSMTK sourceConcept, ConceptSMTK targetConcept, Description description,
                       ConceptManager conceptManager, CategoryManager categoryManager);
 
+    public void validatePreConditions(ConceptSMTK sourceConcept, Description description, ConceptSMTK targetConcept,
+                                      ConceptManager conceptManager, CategoryManager categoryManager);
+
 }

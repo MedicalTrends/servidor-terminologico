@@ -27,10 +27,6 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
     /** Logger de la clase */
     private static final Logger logger = LoggerFactory.getLogger(HelperTableDAOImpl.class);
 
-
-    @EJB
-    HelperTableRecordFactory helperTableRecordFactory;
-
     @EJB
     HelperTableMapper helperTableMapper;
 

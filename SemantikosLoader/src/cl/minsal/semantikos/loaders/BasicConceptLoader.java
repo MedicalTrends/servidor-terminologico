@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.LoadException;
 import cl.minsal.semantikos.model.LoadLog;
 import cl.minsal.semantikos.model.SMTKLoader;
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.Description;
@@ -105,6 +106,8 @@ public class BasicConceptLoader extends EntityLoader {
 
     Map<Long, ConceptSMTK> conceptSMTKMap = new HashMap<>();
 
+    Map<String, Description> descriptionMap = new HashMap<>();
+
     public void loadConceptFromFileLine(String line) throws LoadException {
 
         String[] tokens = line.split(separator,-1);
@@ -179,7 +182,13 @@ public class BasicConceptLoader extends EntityLoader {
             description.setCaseSensitive(caseSensitive);
             description.setCreatorUser(user);
 
-            conceptSMTK.addDescription(description);
+            if(descriptionMap.containsKey(conceptSMTK.getCategory().getId()+description.getTerm())) {
+                SMTKLoader.logWarning(new LoadLog("Término repetido para descripción "+description.toString()+". Se descarta descripción", INFO));
+            }
+            else {
+                descriptionMap.put(conceptSMTK.getCategory().getId()+description.getTerm(), description);
+                conceptSMTK.addDescription(description);
+            }
 
         }
         catch (Exception e) {
@@ -213,7 +222,7 @@ public class BasicConceptLoader extends EntityLoader {
             }
 
             /**Se obtiene la definición de relacion SNOMED CT**/
-            RelationshipDefinition relationshipDefinition = RelationshipDefinitionFactory.getInstance().findRelationshipDefinitionByName(TargetDefinition.SNOMED_CT);
+            RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.SNOMED_CT).get(0);
 
             Relationship relationship = new Relationship(conceptSMTK, conceptSCT, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
 
@@ -235,6 +244,14 @@ public class BasicConceptLoader extends EntityLoader {
                     relationship.getRelationshipAttributes().add(ra);
                 }
             }
+
+            /* Generando Grupo */
+            BasicTypeValue group = new BasicTypeValue(0);
+
+            RelationshipAttributeDefinition attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Grupo").get(0);
+
+            RelationshipAttribute ra = new RelationshipAttribute(attDef, relationship, group);
+            relationship.getRelationshipAttributes().add(ra);
 
             conceptSMTK.addRelationship(relationship);
         }
@@ -278,6 +295,8 @@ public class BasicConceptLoader extends EntityLoader {
                 }
             }
 
+            descriptionMap.clear();
+
             haltReader();
 
             initReader(smtkLoader.getBasicRelationshipPath());
@@ -285,6 +304,7 @@ public class BasicConceptLoader extends EntityLoader {
             while ((line = reader.readLine()) != null) {
                 try {
                     loadRelationshipFromFileLine(line);
+                    smtkLoader.incrementConceptsProcessed(1);
                 }
                 catch (LoadException e) {
                     smtkLoader.logError(e);
@@ -308,6 +328,8 @@ public class BasicConceptLoader extends EntityLoader {
 
         Iterator it = conceptSMTKMap.entrySet().iterator();
 
+        smtkLoader.setConceptsProcessed(0);
+
         while (it.hasNext()) {
 
             Map.Entry pair = (Map.Entry) it.next();
@@ -326,44 +348,6 @@ public class BasicConceptLoader extends EntityLoader {
 
         smtkLoader.logTick();
     }
-
-    /*
-    public void persistAllConcepts(SMTKLoader smtkLoader) {
-
-        smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos Básicos", INFO));
-
-        List<ConceptSMTK> conceptsBatch = new ArrayList<>();
-
-        Iterator it = conceptSMTKMap.entrySet().iterator();
-        int count = 0;
-
-        while (it.hasNext()) {
-
-            Map.Entry pair = (Map.Entry) it.next();
-
-            if((count % 100) == 0) {
-
-                try {
-                    conceptManager.persist(conceptsBatch, smtkLoader.getUser());
-                    smtkLoader.incrementConceptsProcessed(100);
-                    conceptsBatch.clear();
-                }
-                catch (Exception e) {
-                    smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
-                    e.printStackTrace();
-                }
-            }
-
-            conceptsBatch.add((ConceptSMTK)pair.getValue());
-
-            count++;
-
-            it.remove(); // avoids a ConcurrentModificationException
-        }
-
-        smtkLoader.logTick();
-    }
-    */
 
     public void processConcepts(SMTKLoader smtkLoader) {
         loadAllConcepts(smtkLoader);

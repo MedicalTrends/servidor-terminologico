@@ -27,6 +27,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/SemantikosDomain_/pom.xml" />
+        <option value="$PROJECT_DIR$/SemantikosWebEAR/pom.xml" />
         <option value="$PROJECT_DIR$/TestWSRest/pom.xml" />
       </set>
     </option>

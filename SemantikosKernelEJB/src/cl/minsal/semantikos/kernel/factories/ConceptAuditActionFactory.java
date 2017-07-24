@@ -5,6 +5,7 @@ import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.audit.AuditActionType;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
+import cl.minsal.semantikos.model.audit.AuditableEntityType;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.users.User;
 import com.fasterxml.jackson.annotation.JsonFormat;

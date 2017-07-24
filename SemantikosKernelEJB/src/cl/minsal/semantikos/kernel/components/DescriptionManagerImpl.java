@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 
+import cl.minsal.semantikos.kernel.businessrules.*;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.kernel.util.IDGenerator;
 import cl.minsal.semantikos.model.*;
@@ -46,6 +47,9 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
     /* El conjunto de reglas de negocio para validar creación de descripciones */
     private DescriptionCreationBR descriptionCreationBR = new DescriptionCreationBR();
+
+    @EJB
+    private DescriptionTranslationBR descriptionTranslationBR;
 
     @Override
     public void createDescription(Description description, boolean editionMode, User user) {
@@ -196,7 +200,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         ConceptSMTK targetConcept = description.getConceptSMTK();
 
         /* Se aplican las reglas de negocio para el traslado */
-        DescriptionTranslationBR descriptionTranslationBR = new DescriptionTranslationBR();
+        //DescriptionTranslationBR descriptionTranslationBR = new DescriptionTranslationBR();
         descriptionTranslationBR.validatePreConditions(sourceConcept,description, targetConcept, conceptManager, categoryManager);
 
         /* Se realiza la actualización a nivel del modelo lógico */
@@ -403,5 +407,10 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
         /* Finalmente se retorna */
         return descriptionByDescriptionID;
+    }
+
+    @Override
+    public DescriptionTypeFactory getDescriptionTypeFactory() {
+        return DescriptionTypeFactory.getInstance();
     }
 }

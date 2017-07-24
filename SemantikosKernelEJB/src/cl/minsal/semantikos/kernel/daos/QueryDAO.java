@@ -1,8 +1,9 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.browser.*;
 import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.queries.IQuery;
+import cl.minsal.semantikos.model.queries.Query;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;

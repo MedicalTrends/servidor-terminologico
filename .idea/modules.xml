@@ -12,7 +12,6 @@
       <module fileurl="file://$PROJECT_DIR$/SemantikosWS/SemantikosWS.iml" filepath="$PROJECT_DIR$/SemantikosWS/SemantikosWS.iml" />
       <module fileurl="file://$PROJECT_DIR$/SemantikosWSEJB/SemantikosWSEJB.iml" filepath="$PROJECT_DIR$/SemantikosWSEJB/SemantikosWSEJB.iml" />
       <module fileurl="file://$PROJECT_DIR$/SemantikosWeb/SemantikosWeb.iml" filepath="$PROJECT_DIR$/SemantikosWeb/SemantikosWeb.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SemantikosWebEAR/SemantikosWebEAR.iml" filepath="$PROJECT_DIR$/SemantikosWebEAR/SemantikosWebEAR.iml" />
     </modules>
   </component>
 </project>

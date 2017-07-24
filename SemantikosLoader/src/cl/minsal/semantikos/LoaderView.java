@@ -29,7 +29,7 @@ public class LoaderView {
 
     SMTKLoader smtkLoader;
 
-    public LoaderView() {
+    public LoaderView() throws InterruptedException {
 
         smtkLoader = new SMTKLoader(textArea1, textArea2, textField1, textField2, textField3, textField4);
 
@@ -47,7 +47,7 @@ public class LoaderView {
         });
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         JFrame jFrame = new JFrame("Semantikos - Carga Inicial");
 
         double offset=0.595;

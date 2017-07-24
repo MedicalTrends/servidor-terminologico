@@ -2,22 +2,25 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.daos.mappers.DescriptionMapper;
 import cl.minsal.semantikos.kernel.daos.mappers.HelperTableMapper;
+import cl.minsal.semantikos.kernel.factories.EmailFactory;
+import cl.minsal.semantikos.kernel.factories.QueryFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.kernel.util.DataSourceFactory;
-import cl.minsal.semantikos.model.browser.*;
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
+
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumnFactory;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecordFactory;
+
+import cl.minsal.semantikos.model.queries.*;
 import cl.minsal.semantikos.model.relationships.MultiplicityFactory;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
-import cl.minsal.semantikos.model.users.EmailFactory;
+
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.users.UserFactory;
@@ -55,8 +58,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(InitFactoriesDAOImpl.class);
 
-    @EJB
-    HelperTableRecordFactory helperTableRecordFactory;
 
     @EJB
     HelperTableMapper helperTableMapper;

@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.factories;
 
 import cl.minsal.semantikos.kernel.daos.*;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
+import cl.minsal.semantikos.model.audit.AuditableEntityType;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;

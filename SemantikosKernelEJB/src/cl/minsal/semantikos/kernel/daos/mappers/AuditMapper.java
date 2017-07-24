@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos.mappers;
 
 import cl.minsal.semantikos.kernel.daos.AuthDAO;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
+import cl.minsal.semantikos.kernel.factories.AuditableEntityFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.audit.*;
 import cl.minsal.semantikos.model.users.User;

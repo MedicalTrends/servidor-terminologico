@@ -2,7 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.daos.mappers.DescriptionMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.kernel.util.DataSourceFactory;
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.*;
@@ -23,8 +23,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
-import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
 import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
+import static cl.minsal.semantikos.model.DAO.NON_PERSISTED_ID;
 import static java.lang.System.currentTimeMillis;
 import static java.sql.Types.TIMESTAMP;
 
@@ -448,7 +448,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.setString(2, term.toLowerCase());
+            call.setString(2, term);
             Category[] entities = categories.toArray(new Category[categories.size()]);
             RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
             call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", convertListPersistentToListID(entities)));

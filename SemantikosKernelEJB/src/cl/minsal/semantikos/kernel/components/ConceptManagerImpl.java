@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.components;
 
+import cl.minsal.semantikos.kernel.businessrules.*;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
@@ -25,7 +26,8 @@ import java.sql.Timestamp;
 import java.text.Normalizer;
 import java.util.*;
 
-import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
+
+import static cl.minsal.semantikos.model.DAO.NON_PERSISTED_ID;
 import static cl.minsal.semantikos.model.PersistentEntity.getIdArray;
 
 /**
@@ -70,7 +72,7 @@ public class ConceptManagerImpl implements ConceptManager {
     private ConceptTransferBR conceptTransferBR;
 
     @EJB
-    private RelationshipBindingBRInterface relationshipBindingBR;
+    private RelationshipBindingBR relationshipBindingBR;
 
     @EJB
     private ConceptSearchBR conceptSearchBR;
@@ -101,7 +103,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public void persist(@NotNull ConceptSMTK conceptSMTK, User user) {
+    public long persist(@NotNull ConceptSMTK conceptSMTK, User user) throws Exception {
         logger.debug("El concepto " + conceptSMTK + " será persistido.");
 
         /* Pre-condición técnica: el concepto no debe estar persistido */
@@ -143,6 +145,8 @@ public class ConceptManagerImpl implements ConceptManager {
         auditManager.recordNewConcept(conceptSMTK, user);
 
         logger.debug("El concepto " + conceptSMTK + " fue persistido.");
+
+        return conceptSMTK.getId();
     }
 
     @Override
@@ -218,7 +222,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public void bindRelationshipToConcept(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship relationship, @NotNull User user) {
+    public void bindRelationshipToConcept(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship relationship, @NotNull User user) throws Exception {
         relationshipManager.bindRelationshipToConcept(conceptSMTK, relationship, user);
     }
 
@@ -262,7 +266,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public List<Relationship> loadRelationships(ConceptSMTK concept) {
+    public List<Relationship> loadRelationships(ConceptSMTK concept) throws Exception {
         List<Relationship> relationships = relationshipDAO.getRelationshipsBySourceConcept(concept);
         /* Se agregan las relaciones al componente */
         concept.setRelationships(relationships);
@@ -285,7 +289,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category, User user) {
+    public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category, User user) throws Exception {
 
         /* Validacion de pre-condiciones */
         conceptTransferBR.validatePreConditions(conceptSMTK);

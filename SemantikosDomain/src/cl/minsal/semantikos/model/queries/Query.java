@@ -1,4 +1,6 @@
-package cl.minsal.semantikos.model.browser;
+package cl.minsal.semantikos.model.queries;
+
+import cl.minsal.semantikos.model.queries.IQuery;
 
 import java.util.ArrayList;
 import java.util.List;

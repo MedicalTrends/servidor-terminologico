@@ -1,9 +1,10 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.daos.mappers.BasicTypeMapper;
+import cl.minsal.semantikos.kernel.factories.BasicTypeDefinitionFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
-import cl.minsal.semantikos.model.basictypes.BasicTypeDefinitionFactory;
+
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
