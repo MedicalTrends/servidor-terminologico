@@ -1,30 +1,31 @@
 package cl.minsal.semantikos.kernel.components;
 
-import cl.minsal.semantikos.kernel.businessrules.*;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.kernel.util.IDGenerator;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.*;
+import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.text.Normalizer;
 import java.util.*;
 
-import static cl.minsal.semantikos.model.DAO.NON_PERSISTED_ID;
+import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
 import static cl.minsal.semantikos.model.PersistentEntity.getIdArray;
 
 /**
@@ -69,7 +70,10 @@ public class ConceptManagerImpl implements ConceptManager {
     private ConceptTransferBR conceptTransferBR;
 
     @EJB
-    private RelationshipBindingBR relationshipBindingBR;
+    private RelationshipBindingBRInterface relationshipBindingBR;
+
+    @EJB
+    private ConceptSearchBR conceptSearchBR;
 
     @Override
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptId) {
@@ -97,183 +101,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public List<ConceptSMTK> findConceptsBy(Category category) {
-
-        /* Se validan los parámetros */
-        if (category == null) {
-            logger.error("Se solicitan los conceptos de categoría nula.");
-            return Collections.emptyList();
-        }
-
-        /* Se delega al DAO directamente */
-        return conceptDAO.findConceptsBy(category);
-    }
-
-
-
-    @Override
-    public List<ConceptSMTK> findConcepts(Category aCategory, List<String> refSetNames, RelationshipDefinition basicTypeAttribute, String value) {
-
-        /* Primero se debe validar que el RelationshipDefinition es tipo Tipo Básico */
-        boolean basicType = basicTypeAttribute.getTargetDefinition().isBasicType();
-        if (!basicType) {
-            throw new IllegalArgumentException("Se consideró un tipo básico de un target que no lo es: " + basicTypeAttribute);
-        }
-
-        /* Luego se recuperan los refsets */
-        ArrayList<RefSet> refsets = new ArrayList<>();
-        for (String refSetName : refSetNames) {
-            RefSet refsetByName = refSetManager.getRefsetByName(refSetName);
-            refsets.add(refsetByName);
-        }
-
-        /* Por razones de eficiencia, es mejor realizar la búsqueda directamente en la base de datos */
-        if (refsets.isEmpty()) {
-            return conceptDAO.findConceptsWithStringBasicType(aCategory, basicTypeAttribute, value);
-        } else {
-            return conceptDAO.findConceptsWithStringBasicType(aCategory, refsets, basicTypeAttribute, value);
-        }
-    }
-
-    @Override
-    public List<ConceptSMTK> findModeledConceptBy(Category category, int pageSize, int pageNumber) {
-        return this.conceptDAO.getModeledConceptBy(category.getId(), pageSize, pageNumber);
-    }
-
-    @Override
-    public List<ConceptSMTK> findModeledConceptPaginated(Category category, int pageSize, int pageNumber) {
-        return this.conceptDAO.getModeledConceptPaginated(category.getId(), pageSize, pageNumber);
-    }
-
-    @Override
-    public int countModeledConceptBy(Category category) {
-        return this.conceptDAO.countModeledConceptBy(category.getId());
-    }
-
-    @Override
-    public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize) {
-        return this.conceptDAO.findModeledConceptsBy(refSet, page, pageSize);
-    }
-
-    @Override
-    public Integer countModeledConceptsBy(RefSet refSet) {
-        return this.conceptDAO.countModeledConceptsBy(refSet);
-    }
-
-    @Override
-    public Integer countConceptBy(String pattern, Long[] categories, Long[] refsets) {
-        boolean isModeled = true;
-        categories = (categories == null) ? new Long[0] : categories;
-        refsets = (refsets == null) ? new Long[0] : refsets;
-
-        pattern = standardizationPattern(pattern);
-        String[] arrayPattern = patternToArray(pattern);
-
-        return this.conceptDAO.countConceptBy(arrayPattern, categories, refsets, isModeled);
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptsBy(String patternOrConceptID, Long[] categories, int pageNumber, int pageSize) {
-
-        boolean isModeled = true;
-        categories = (categories == null) ? new Long[0] : categories;
-
-        //Búsqueda por categoría
-        if (categories.length > 0 && patternOrConceptID.trim().length() == 0) {
-            return conceptDAO.findConceptsBy(categories, isModeled, pageSize, pageNumber);
-        }
-
-        //Búsqueda páginas
-        if (categories.length == 0 && patternOrConceptID.trim().length() == 0) {
-            return conceptDAO.getConceptsBy(isModeled, pageSize, pageNumber);
-        }
-        return findConceptBy(patternOrConceptID, categories, pageNumber, pageSize, isModeled);
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int pageNumber, int pageSize) {
-        boolean isModeled = true;
-        //TODO: Actualizar esto de los estados que ya no va.
-
-        categories = (categories == null) ? new Long[0] : categories;
-        refsets = (refsets == null) ? new Long[0] : refsets;
-
-        pattern = standardizationPattern(pattern);
-        String[] arrayPattern = patternToArray(pattern);
-
-        return conceptDAO.findConceptsBy(arrayPattern, categories, refsets, isModeled, pageSize, pageNumber);
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptTruncatePerfect(String termPattern, List<Category> categories, List<RefSet> refSets) {
-
-        /* En esta implementación se utiliza el método
-         * findConceptTruncatePerfect(
-         *      String pattern,
-         *      Long[] categories,
-         *      Long[] refsets,
-         *      int pageNumber,
-         *      int pageSize)
-         *
-         * Se recuperan de a 1000 conceptos
-         */
-        List<ConceptSMTK> concepts = new ArrayList<>();
-        int page = 1;
-
-
-        boolean thereAreMore;
-        do {
-            //List<ConceptSMTK> conceptTruncatePerfect = truncateMatch(termPattern, getIdArray(categories), pageNumber, pageSize, isModeled);
-            List<ConceptSMTK> conceptTruncatePerfect = findConceptTruncatePerfect(termPattern, getIdArray(categories), getIdArray(refSets), page++, 1000);
-            concepts.addAll(conceptTruncatePerfect);
-
-            /* Si la busqueda retorno 1000, quizás hay más */
-            thereAreMore = conceptTruncatePerfect.size() == 1000;
-        } while (thereAreMore);
-
-        return concepts;
-    }
-
-    @Override
-    public int countConceptBy(String pattern, Long[] categories) {
-        boolean isModeled = true;
-        pattern = standardizationPattern(pattern);
-        //Cuenta por categoría
-        if (categories.length > 0) {
-            return conceptDAO.countConceptBy((String[]) null, categories, isModeled);
-        }
-        if (categories.length == 0 && pattern.trim().length() == 0) {
-            return conceptDAO.countConceptBy((String[]) null, categories, isModeled);
-        }
-        return countConceptBy(pattern, categories, isModeled);
-
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptsBy(String pattern) {
-
-        /* Se realiza la búsqueda estándard */
-        List<ConceptSMTK> conceptSMTKList = findConceptsBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
-        if (conceptSMTKList.size() != 0) {
-            return conceptSMTKList;
-        }
-
-        /* Si la búsqueda estándard no dio resultados, se intenta con una búsqueda truncada */
-        else {
-            pattern = truncatePattern(pattern);
-            return findConceptsBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
-        }
-
-    }
-
-    @Override
-    public List<ConceptSMTK> getConceptBy(RefSet refSet) {
-        return conceptDAO.findConceptsBy(refSet);
-
-    }
-
-    @Override
-    public long persist(@NotNull ConceptSMTK conceptSMTK, User user) throws Exception {
+    public void persist(@NotNull ConceptSMTK conceptSMTK, User user) {
         logger.debug("El concepto " + conceptSMTK + " será persistido.");
 
         /* Pre-condición técnica: el concepto no debe estar persistido */
@@ -297,7 +125,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         /* Y sus relaciones */
         for (Relationship relationship : conceptSMTK.getRelationships()) {
-            relationship = relationshipManager.createRelationship(relationship);
+            relationshipManager.createRelationship(relationship);
             /* Se realizan las acciones asociadas a la asociación */
             relationshipBindingBR.postActions(relationship, user);
         }
@@ -311,19 +139,10 @@ public class ConceptManagerImpl implements ConceptManager {
         }
 
         /* Se deja registro en la auditoría sólo para conceptos modelados */
+
         auditManager.recordNewConcept(conceptSMTK, user);
 
         logger.debug("El concepto " + conceptSMTK + " fue persistido.");
-
-        return conceptSMTK.getId();
-    }
-
-    @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public void persist(List<ConceptSMTK> conceptsSMTK, User user) throws Exception {
-        for (ConceptSMTK conceptSMTK : conceptsSMTK) {
-            persist(conceptSMTK, user);
-        }
     }
 
     @Override
@@ -399,7 +218,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public void bindRelationshipToConcept(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship relationship, @NotNull User user) throws Exception {
+    public void bindRelationshipToConcept(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship relationship, @NotNull User user) {
         relationshipManager.bindRelationshipToConcept(conceptSMTK, relationship, user);
     }
 
@@ -443,8 +262,8 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public List<Relationship> loadRelationships(ConceptSMTK concept) throws Exception {
-        List<Relationship> relationships = relationshipDAO.getRelationshipsBySourceConcept(concept.getId());
+    public List<Relationship> loadRelationships(ConceptSMTK concept) {
+        List<Relationship> relationships = relationshipDAO.getRelationshipsBySourceConcept(concept);
         /* Se agregan las relaciones al componente */
         concept.setRelationships(relationships);
         /* Se agregan los crossmaps indirectos al componente */
@@ -457,12 +276,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
     @Override
     public List<Relationship> getRelationships(ConceptSMTK concept) {
-        return relationshipDAO.getRelationshipsBySourceConcept(concept.getId());
-    }
-
-    @Override
-    public List<ConceptSMTK> getConceptDraft() {
-        return conceptDAO.getConceptDraft();
+        return relationshipDAO.getRelationshipsBySourceConcept(concept);
     }
 
     @Override
@@ -471,7 +285,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category, User user) throws Exception {
+    public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category, User user) {
 
         /* Validacion de pre-condiciones */
         conceptTransferBR.validatePreConditions(conceptSMTK);
@@ -491,6 +305,16 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public ConceptSMTK getPendingConcept() {
         return conceptDAO.getPendingConcept();
+    }
+
+    @Override
+    public List<ConceptSMTK> perfectMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean isModeled) {
+        return conceptDAO.findPerfectMatch(pattern, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refsets), isModeled);
+    }
+
+    @Override
+    public List<ConceptSMTK> truncateMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean isModeled) {
+        return conceptDAO.findTruncateMatch(pattern, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refsets), isModeled);
     }
 
     @Override
@@ -539,223 +363,49 @@ public class ConceptManagerImpl implements ConceptManager {
         return filteredRelatedConcepts;
     }
 
-
     @Override
-    public List<ConceptSMTK> findConceptBy(String pattern, Long[] categories, int pageNumber, int pageSize, boolean isModeled) {
+    public List<ConceptSMTK> findConcepts(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled) {
 
-        String patternStandard = standardizationPattern(pattern);
+        String patternStandard = conceptSearchBR.standardizationPattern(pattern);
+        List<ConceptSMTK> results;
 
-        if (patternStandard.length() > 2) {
-            List<ConceptSMTK> resultToFind = perfectMatch(patternStandard, categories, pageNumber, pageSize, isModeled);
+        results = conceptDAO.findPerfectMatch(patternStandard, PersistentEntity.getIdArray(categories),
+                                              PersistentEntity.getIdArray(refsets), modeled);
 
-            if (!resultToFind.isEmpty()) {
-                return resultToFind;
-            } else {
-
-                resultToFind = truncateMatch(patternStandard, categories, pageNumber, pageSize, isModeled);
-                if (resultToFind.isEmpty()) {
-                    return Collections.emptyList();
-                } else {
-                    return resultToFind;
-                }
-            }
+        if (results.isEmpty()) {
+            results = conceptDAO.findTruncateMatch(patternStandard, PersistentEntity.getIdArray(categories),
+                                            PersistentEntity.getIdArray(refsets), modeled);
         }
-        return Collections.emptyList();
+
+        new ConceptSearchBR().applyPostActions(results);
+
+        return results;
     }
 
     @Override
-    public List<ConceptSMTK> perfectMatch(String pattern, Long[] categories, int pageNumber, int pageSize, Boolean isModeled) {
+    public long countConceptsByPattern(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled) {
+        String patternStandard = conceptSearchBR.standardizationPattern(pattern);
 
-        /**
-         * Existe al menos una categoría y el patron de búsqueda
-         */
-        if ((categories.length != 0 && pattern.length() != 0)) {
-            return conceptDAO.findPerfectMatchConceptBy(pattern, categories, isModeled, pageSize, pageNumber);
-        }
-
-        /**
-         * No existen categorías pero si un patrón de búsqueda
-         */
-        if ((categories.length == 0 && pattern.length() != 0)) {
-            return conceptDAO.findPerfectMatchConceptBy(pattern, isModeled, pageSize, pageNumber);
-        }
-
-
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<ConceptSMTK> truncateMatch(String pattern, Long[] categories, int pageNumber, int pageSize, Boolean isModeled) {
-
-        String patternTruncate = truncatePattern(pattern);
-        List <ConceptSMTK> conceptSMTKs= new ArrayList<>();
-        /**
-         * Existe al menos una categoría y el patron de búsqueda
-         */
-        if ((categories.length != 0 && pattern.length() != 0)) {
-            conceptSMTKs= conceptDAO.findTruncateMatchConceptBy(patternTruncate, categories, isModeled, pageSize, pageNumber);
-        }else{
-            if ((categories.length == 0 && pattern.length() != 0)) {
-                conceptSMTKs= conceptDAO.findTruncateMatchConceptBy(patternTruncate, isModeled, pageSize, pageNumber);
-            }
-        }
-
-
-        if(conceptSMTKs.isEmpty()){
-            return Collections.emptyList();
-        }
-        Collections.sort(conceptSMTKs,new ConceptSMTKComparator());
-
-        return conceptSMTKs;
-    }
-
-    class ConceptSMTKComparator implements Comparator<ConceptSMTK> {
-
-        @Override
-        public int compare(ConceptSMTK conceptSMTK1, ConceptSMTK conceptSMTK2) {
-
-            return conceptSMTK1.getDescriptionFavorite().getTerm().length() -  conceptSMTK2.getDescriptionFavorite().getTerm().length();
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return false;
-        }
-    }
-
-
-    @Override
-    public int countConceptBy(String pattern, Long[] categories, Boolean isModeled) {
-        String patternStandard = standardizationPattern(pattern);
-
-        int count = countPerfectMatch(patternStandard, categories, isModeled);
+        long count = countPerfectMatch(patternStandard, categories, refsets, modeled);
 
         if (count != 0) {
             return count;
         } else {
-            count = countTruncateMatch(patternStandard, categories, isModeled);
-            if (count == 0) {
-                return 0;
-            } else {
-                return count;
-            }
+            return countTruncateMatch(patternStandard, categories, refsets, modeled);
         }
+    }
+
+    public long countPerfectMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled) {
+        return conceptDAO.countPerfectMatch(pattern, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refsets), modeled);
+    }
+
+    public long countTruncateMatch(String pattern,List<Category> categories, List<RefSet> refsets, Boolean modeled) {
+        return conceptDAO.countTruncateMatch(pattern,  PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refsets), modeled);
     }
 
     @Override
-    public int countPerfectMatch(String pattern, Long[] categories, Boolean isModeled) {
-        /**
-         * Existe al menos una categoría y el patron de búsqueda
-         */
-        if ((categories.length != 0 && pattern.length() != 0)) {
-            return conceptDAO.countPerfectMatchConceptBy(pattern, categories, isModeled);
-        }
-
-        /**
-         * No existen categorías pero si un patrón de búsqueda
-         */
-        if ((categories.length == 0 && pattern.length() != 0)) {
-            return conceptDAO.countPerfectMatchConceptBy(pattern, new Long[0], isModeled);
-        }
-
-        return 0;
+    public List<ConceptSMTK> findModeledConceptPaginated(Category category, int pageSize, int pageNumber) {
+        return this.conceptDAO.getModeledConceptPaginated(category.getId(), pageSize, pageNumber);
     }
-
-    @Override
-    public int countTruncateMatch(String pattern, Long[] categories, Boolean isModeled) {
-        String patternTruncate = truncatePattern(pattern);
-
-        /**
-         * Existe al menos una categoría y el patron de búsqueda
-         */
-        if ((categories.length != 0 && pattern.length() != 0)) {
-            return conceptDAO.countTruncateMatchConceptBy(patternTruncate, categories, isModeled);
-        }
-
-        /**
-         * No existen categorías pero si un patrón de búsqueda
-         */
-        if ((categories.length == 0 && pattern.length() != 0)) {
-            return conceptDAO.countTruncateMatchConceptBy(patternTruncate, new Long[0], isModeled);
-        }
-
-        return 0;
-    }
-
-    /**
-     * Método de normalización del patrón de búsqueda, lleva las palabras a minúsculas,
-     * le quita los signos de puntuación y ortográficos
-     *
-     * @param pattern patrón de texto a normalizar
-     * @return patrón normalizado
-     */
-    //TODO: Falta quitar los StopWords (no se encuentran definidos)
-    public String standardizationPattern(String pattern) {
-
-        if (pattern != null) {
-            pattern = Normalizer.normalize(pattern, Normalizer.Form.NFD);
-            pattern = pattern.toLowerCase();
-            pattern = pattern.replaceAll("[^\\p{ASCII}]", "");
-            pattern = pattern.replaceAll("\\p{Punct}+", "");
-        } else {
-            pattern = "";
-        }
-        return pattern;
-    }
-
-    /**
-     * Método encargado de truncar a un largo de 3 las palabras del String ingresado
-     *
-     * @param pattern arreglo de palabras
-     * @return arreglo de String con las palabras truncadas
-     */
-    private String truncatePattern(String pattern) {
-        if(pattern.length()==0)return pattern;
-        pattern = standardizationPattern(pattern);
-        String[] arrayToPattern = patternToArray(pattern);
-        String patternTruncate="";
-        for (int i = 0; i < arrayToPattern.length; i++) {
-            if ( arrayToPattern[i].length()<=2) {
-                patternTruncate = patternTruncate + arrayToPattern[i].substring(0, arrayToPattern[i].length()) + " ";
-            } else {
-                patternTruncate = patternTruncate + arrayToPattern[i].substring(0, 3) + " ";
-            }
-        }
-        if(patternTruncate.charAt(patternTruncate.length()-1)==' '){
-            patternTruncate=patternTruncate.substring(0,patternTruncate.length()-1);
-        }
-        return patternTruncate;
-    }
-
-    /**
-     * Método encargado de convertir un string en una lista de string.
-     *
-     * @param pattern patrón de texto
-     * @return retorna una lista de String
-     */
-
-    private String[] patternToArray(String pattern) {
-        if (pattern != null) {
-            StringTokenizer st;
-            String token;
-            st = new StringTokenizer(pattern, " ");
-            ArrayList<String> listPattern = new ArrayList<>();
-            int count = 0;
-
-            while (st.hasMoreTokens()) {
-                token = st.nextToken();
-                if (token.length() >= 2) {
-                    listPattern.add(token.trim());
-                }
-                if (count == 0 && listPattern.size() == 0) {
-                    listPattern.add(token.trim());
-                }
-                count++;
-            }
-            return listPattern.toArray(new String[listPattern.size()]);
-        }
-        return new String[0];
-    }
-
 
 }

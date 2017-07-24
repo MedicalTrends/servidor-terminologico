@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.SnomedCTSnapshotDAO;
-import cl.minsal.semantikos.kernel.businessrules.ConceptSearchBR;
+import cl.minsal.semantikos.model.businessrules.ConceptSCTSearchBR;
 import cl.minsal.semantikos.model.snapshots.*;
 
 import javax.ejb.EJB;
@@ -19,7 +19,7 @@ public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
     private SnomedCTSnapshotDAO snomedCTSnapshotDAO;
 
     @EJB
-    private ConceptSearchBR conceptSearchBR;
+    private ConceptSCTSearchBR conceptSCTSearchBR;
 
     private SnapshotPreprocessingRequest snapshotPreprocessingRequest = new SnapshotPreprocessingRequest();
 

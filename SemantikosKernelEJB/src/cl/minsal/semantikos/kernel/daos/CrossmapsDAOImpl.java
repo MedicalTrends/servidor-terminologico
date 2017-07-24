@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.CrossmapFactory;
+import cl.minsal.semantikos.kernel.daos.mappers.CrossmapMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.MultiplicityFactory;
@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,14 +36,17 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     private RelationshipDefinitionDAO relationshipDAO;
 
     @EJB
-    private CrossmapFactory crossmapFactory;
+    private CrossmapMapper crossmapMapper;
 
     @Override
     public DirectCrossmap create(DirectCrossmap directCrossmap, User user) {
 
         ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_crossmap.create_direct_crossmap(?,?,?,?); end;";
+
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.create_direct_crossmap(?,?,?,?)}")) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
             /*
                 1. source concept
@@ -50,13 +54,16 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
                 3. validity until.
                 4. user id
             */
-            call.setLong(1, directCrossmap.getSourceConcept().getId());
-            call.setLong(2, directCrossmap.getTarget().getId());
-            call.setTimestamp(3, new Timestamp(currentTimeMillis()));
-            call.setLong(4, user.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, directCrossmap.getSourceConcept().getId());
+            call.setLong(3, directCrossmap.getTarget().getId());
+            call.setTimestamp(4, new Timestamp(currentTimeMillis()));
+            call.setLong(5, user.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
                 directCrossmap.setId(rs.getLong(1));
             }
@@ -74,15 +81,21 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     public DirectCrossmap getDirectCrossmapById(long idCrossmap) {
         ConnectionBD connect = new ConnectionBD();
         DirectCrossmap directCrossmapFromResultSet;
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_direct_crossmap(?)}")) {
 
-            call.setLong(1, idCrossmap);
+        String sql = "begin ? := stk.stk_pck_crossmap.get_direct_crossmap(?); end;";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idCrossmap);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
-                directCrossmapFromResultSet = createDirectCrossmapFromResultSet(rs);
+                directCrossmapFromResultSet = crossmapMapper.createDirectCrossmapFromResultSet(rs);
             } else {
                 throw new EJBException("Error al intentar obtener un crossmap directo de ID= " + idCrossmap);
             }
@@ -96,28 +109,6 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         return directCrossmapFromResultSet;
     }
 
-    /**
-     * Este método es responsable de crear un objeto <code>DirectCrossmap</code> a partir de un ResultSet.
-     *
-     * @param rs El ResultSet a partir del cual se crea el crossmap.
-     *
-     * @return Un Crossmap Directo creado a partir del result set.
-     */
-    private DirectCrossmap createDirectCrossmapFromResultSet(ResultSet rs) throws SQLException {
-        // id bigint, id_concept bigint, id_crossmapset bigint, id_user bigint, id_validity_until timestamp
-        long id = rs.getLong("id");
-        long idConcept = rs.getLong("id_concept");
-        long idCrossmapSet = rs.getLong("id_crossmapsetmember");
-        long idRelationshipDefinition = rs.getLong("id_relationshipdefinition");
-        long idUser = rs.getLong("id_user");
-        Timestamp validityUntil = rs.getTimestamp("validity_until");
-
-        ConceptSMTK conceptSMTK = conceptDAO.getConceptByID(idConcept);
-        CrossmapSetMember crossmapSetMember = this.getCrossmapSetMemberById(idCrossmapSet);
-        RelationshipDefinition relationshipDefinition = relationshipDAO.getRelationshipDefinitionByID(idRelationshipDefinition);
-        return new DirectCrossmap(id, conceptSMTK, crossmapSetMember, relationshipDefinition, validityUntil);
-    }
-
     @Override
     public DirectCrossmap bindConceptSMTKToCrossmapSetMember(ConceptSMTK conceptSMTK, CrossmapSetMember crossmapSetMember) {
         return null;
@@ -129,15 +120,20 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         ConnectionBD connect = new ConnectionBD();
         CrossmapSet crossmapSetFromResultSet;
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_crossmapsetmember_by_id(?)}")) {
+        String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsetmember_by_id(?); end;";
 
-            call.setLong(1, idCrossmapSetMember);
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idCrossmapSetMember);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
-                return crossmapFactory.createCrossmapSetMemberFromResultSet(rs);
+                return crossmapMapper.createCrossmapSetMemberFromResultSet(rs, null);
             }
 
             rs.close();
@@ -155,15 +151,20 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         List<CrossmapSetMember> crossmapSetMembers = new ArrayList<>();
         ConnectionBD connect = new ConnectionBD();
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_related_crossmapset_member(?)}")) {
+        String sql = "begin ? := stk.stk_pck_crossmap.get_related_crossmapset_member(?); end;";
 
-            call.setLong(1, conceptSCT.getId());
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSCT.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
-                CrossmapSetMember crossmapSetMember = crossmapFactory.createCrossmapSetMemberFromResultSet(rs);
+                CrossmapSetMember crossmapSetMember = crossmapMapper.createCrossmapSetMemberFromResultSet(rs, null);
                 crossmapSetMembers.add(crossmapSetMember);
             }
             rs.close();
@@ -181,15 +182,20 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         ConnectionBD connect = new ConnectionBD();
         CrossmapSet crossmapSetFromResultSet;
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_crossmapset_by_id(?)}")) {
+        String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapset_by_id(?); end;";
 
-            call.setLong(1, id);
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, id);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
-                crossmapSetFromResultSet = createCrossmapSetFromResultSet(rs);
+                crossmapSetFromResultSet = crossmapMapper.createCrossmapSetFromResultSet(rs);
             } else {
                 throw new EJBException("Error al intentar obtener un crossmap directo de ID= " + id);
             }
@@ -208,16 +214,21 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         List<CrossmapSetMember> crossmapSetMembers = new ArrayList<CrossmapSetMember>();
         ConnectionBD connect = new ConnectionBD();
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_crossmapsetmember_by_pattern_and_crossmapset(?,?)}")) {
+        String sql = "begin ? := stk.stk_pck_crossmap.find_crossmapsetmember_by_pattern_and_crossmapset(?,?); end;";
 
-            call.setLong(1, crossmapSet.getId());
-            call.setString(2, pattern);
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, crossmapSet.getId());
+            call.setString(3, pattern);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
-                CrossmapSetMember crossmapSetMember = createCrossmapSetMemberFromResultSet(rs, crossmapSet);
+                CrossmapSetMember crossmapSetMember = crossmapMapper.createCrossmapSetMemberFromResultSet(rs, crossmapSet);
                 crossmapSetMembers.add(crossmapSetMember);
             }
             rs.close();
@@ -234,16 +245,21 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         List<CrossmapSetMember> crossmapSetMembers = new ArrayList<CrossmapSetMember>();
         ConnectionBD connect = new ConnectionBD();
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_crossmapsetmember_by_cod1_and_crossmapset(?,?)}")) {
+        String sql = "begin ? := stk.stk_pck_crossmap.find_crossmapsetmember_by_cod1_and_crossmapset(?,?); end;";
 
-            call.setLong(1, crossmapSet.getId());
-            call.setString(2, cod);
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, crossmapSet.getId());
+            call.setString(3, cod);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
-                CrossmapSetMember crossmapSetMember = createCrossmapSetMemberFromResultSet(rs, crossmapSet);
+                CrossmapSetMember crossmapSetMember = crossmapMapper.createCrossmapSetMemberFromResultSet(rs, crossmapSet);
                 crossmapSetMembers.add(crossmapSetMember);
             }
             rs.close();
@@ -260,12 +276,17 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         ConnectionBD connect = new ConnectionBD();
         List<CrossmapSet> crossmapSets = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_crossmapsets()}")) {
+        String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsets; end;";
 
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 crossmapSets.add(getCrossmapSetByID(rs.getLong(1)));
             }
@@ -285,16 +306,22 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
 
         ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_crossmap_by_sct(?)}")) {
 
-            call.setLong(1, idConceptSCT);
+        String sql = "begin ? := stk.stk_pck_crossmap.get_crossmap_by_sct(?); end;";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idConceptSCT);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
 
-                IndirectCrossmap indirectCrossmap = createIndirectCrossMapFromResultSet(rs, sourceConcept);
+                IndirectCrossmap indirectCrossmap = crossmapMapper.createIndirectCrossMapFromResultSet(rs, sourceConcept);
                 indirectCrossmaps.add(indirectCrossmap);
             }
             rs.close();
@@ -314,15 +341,19 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         CrossmapSet crossmapSet = getCrossmapSetByAbbreviatedName(crossmapSetAbbreviatedName);
         ConnectionBD connect = new ConnectionBD();
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_crossmapsetmember_by_cms_abbreviated_name(?)}")) {
+        String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsetmember_by_cms_abbreviated_name(?); end;";
 
-            call.setString(1, crossmapSetAbbreviatedName);
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, crossmapSetAbbreviatedName);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
-                CrossmapSetMember crossmapSetMember = createCrossmapSetMemberFromResultSet(rs, crossmapSet);
+                CrossmapSetMember crossmapSetMember = crossmapMapper.createCrossmapSetMemberFromResultSet(rs, crossmapSet);
                 crossmapSetMembers.add(crossmapSetMember);
             }
             rs.close();
@@ -338,16 +369,20 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
         ConnectionBD connect = new ConnectionBD();
 
+        String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapset_by_cms_abbreviated_name(?); end;";
+
         ResultSet rs;
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_crossmapset_by_cms_abbreviated_name(?)}")) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, crossmapSetAbbreviatedName);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, crossmapSetAbbreviatedName);
             call.execute();
 
-            rs = call.getResultSet();
+            rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
-                CrossmapSet crossmapSetFromResultSet = createCrossmapSetFromResultSet(rs);
+                CrossmapSet crossmapSetFromResultSet = crossmapMapper.createCrossmapSetFromResultSet(rs);
                 rs.close();
                 return crossmapSetFromResultSet;
             } else {
@@ -360,72 +395,4 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         }
     }
 
-    private IndirectCrossmap createIndirectCrossMapFromResultSet(ResultSet rs, ConceptSMTK sourceConcept) throws SQLException {
-
-        long id = rs.getLong("id");
-        long idCrossMapSetMember = rs.getLong("id_cross_map_set_member");
-        CrossmapSetMember crossmapSetMemberById = this.getCrossmapSetMemberById(idCrossMapSetMember);
-        RelationshipDefinition relationshipDefinition = new RelationshipDefinition("Indirect Crossmap", "Un crossmap Indirecto", MultiplicityFactory.ONE_TO_ONE, crossmapSetMemberById.getCrossmapSet());
-
-        long idSnomedCT = rs.getLong("id_snomed_ct");
-        long idCrossmapSet = rs.getLong("id_cross_map_set");
-        int mapGroup = rs.getInt("map_group");
-        int mapPriority = rs.getInt("map_priority");
-        String mapRule = rs.getString("map_rule");
-        String mapAdvice = rs.getString("map_advice");
-        String mapTarget = rs.getString("map_target");
-
-        long idCorrelation = rs.getLong("id_correlation");
-        long idCrossmapCategory = rs.getLong("id_crossmap_category");
-        boolean state = rs.getBoolean("state");
-
-        IndirectCrossmap indirectCrossmap = new IndirectCrossmap(id, sourceConcept, crossmapSetMemberById, relationshipDefinition, null);
-        indirectCrossmap.setIdCrossmapSet(idCrossmapSet);
-        indirectCrossmap.setIdSnomedCT(idSnomedCT);
-        indirectCrossmap.setCorrelation(idCorrelation);
-        indirectCrossmap.setIdCrossmapCategory(idCrossmapCategory);
-        indirectCrossmap.setMapGroup(mapGroup);
-        indirectCrossmap.setMapPriority(mapPriority);
-        indirectCrossmap.setMapRule(mapRule);
-        indirectCrossmap.setMapAdvice(mapAdvice);
-        indirectCrossmap.setMapTarget(mapTarget);
-        indirectCrossmap.setState(state);
-
-        return indirectCrossmap;
-    }
-
-
-    /**
-     * Este método es responsable de crear un objeto <code>CrossmapSetMember</code> a partir de un ResultSet.
-     *
-     * @param rs El ResultSet a partir del cual se crea el crossmap.
-     *
-     * @return Un Crossmap Directo creado a partir del result set.
-     */
-    private CrossmapSetMember createCrossmapSetMemberFromResultSet(ResultSet rs, CrossmapSet crossmapSet) throws SQLException {
-        // id bigint, id_concept bigint, id_crossmapset bigint, id_user bigint, id_validity_until timestamp
-        long id = rs.getLong("id");
-        String code = rs.getString("code");
-        String gloss = rs.getString("gloss");
-
-        return new CrossmapSetMember(id, id, crossmapSet, code, gloss);
-    }
-
-    /**
-     * Este método es responsable de crear un objeto <code>CrossmapSetMember</code> a partir de un ResultSet.
-     *
-     * @param rs El ResultSet a partir del cual se crea el crossmap.
-     *
-     * @return Un Crossmap Directo creado a partir del result set.
-     */
-    private CrossmapSet createCrossmapSetFromResultSet(ResultSet rs) throws SQLException {
-        // id bigint, id_concept bigint, id_crossmapset bigint, id_user bigint, id_validity_until timestamp
-        long id = rs.getLong("id");
-        String nameAbbreviated = rs.getString("name_abbreviated");
-        String name = rs.getString("name");
-        int version = rs.getInt("version");
-        boolean state = rs.getBoolean("state");
-
-        return new CrossmapSet(id, nameAbbreviated, name, version, state);
-    }
 }

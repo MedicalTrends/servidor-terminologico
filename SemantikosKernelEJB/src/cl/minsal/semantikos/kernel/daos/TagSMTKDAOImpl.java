@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,11 +40,17 @@ public class TagSMTKDAOImpl implements TagSMTKDAO {
         List<TagSMTK> tagSMTKs = new ArrayList<>();
         ConnectionBD connect = new ConnectionBD();
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_all_tag_smtks()}")) {
+        String sql = "begin ? := stk.stk_pck_tag_smtk.get_all_tag_smtks; end;";
 
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
-            ResultSet rs = call.getResultSet();
+
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 tagSMTKs.add(createTagSMTKFromResultSet(rs));
             }
@@ -60,14 +67,21 @@ public class TagSMTKDAOImpl implements TagSMTKDAO {
     @Override
     public TagSMTK findTagSMTKByID(long idTag) {
         //ConnectionBD connect = new ConnectionBD();
-
         TagSMTK tagSMTK;
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_tag_smtks_by_id(?)}")) {
 
-            call.setLong(1, idTag);
+        String sql = "begin ? := stk.stk_pck_tag_smtk.get_tag_smtks_by_id(?); end;";
+
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idTag);
+
             call.execute();
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
                 tagSMTK = createTagSMTKFromResultSet(rs);
             } else {
@@ -110,13 +124,16 @@ public class TagSMTKDAOImpl implements TagSMTKDAO {
 
         List<TagSMTK> tagsSMTK = new ArrayList<>();
 
-        String sql = "{call semantikos.get_all_tag_smtks()}";
+        String sql = "begin ? := stk.stk_pck_tag_smtk.get_all_tag_smtks; end;";
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
-            ResultSet rs = call.getResultSet();
+
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             /* Se recuperan los tagsSMTK */
             while (rs.next()) {

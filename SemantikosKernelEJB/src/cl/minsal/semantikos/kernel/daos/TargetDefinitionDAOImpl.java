@@ -1,8 +1,10 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.daos.mappers.TargetMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
-import cl.minsal.semantikos.kernel.factories.TargetDefinitionFactory;
+import cl.minsal.semantikos.model.relationships.TargetDefinitionFactory;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,24 +28,31 @@ public class TargetDefinitionDAOImpl implements TargetDefinitionDAO {
     @EJB
     TargetDefinitionFactory targetDefinitionFactory;
 
+    @EJB
+    TargetMapper targetMapper;
+
     @Override
     public TargetDefinition getTargetDefinitionById(long idTargetDefinition) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sqlQuery = "{call semantikos.get_target_definition_by_id(?)}";
+
+        String sql = "begin ? := stk.stk_pck_target_definition.get_target_definition_by_id(?); end;";
 
         TargetDefinition targetDefinition = null;
+
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sqlQuery)) {
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
 
             /* Se invoca la consulta para recuperar las relaciones */
-            call.setLong(1, idTargetDefinition);
+            call.setLong(2, idTargetDefinition);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
-                String jsonResult = rs.getString(1);
-                targetDefinition = targetDefinitionFactory.createFromJSON(jsonResult);
+                targetDefinition = targetMapper.createTargetDefinitionFromResultSet(rs);
             }
             rs.close();
 

@@ -1,20 +1,18 @@
 package cl.minsal.semantikos.model.categories;
 
 import cl.minsal.semantikos.model.PersistentEntity;
+import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
-import cl.minsal.semantikos.model.tags.TagSMTK;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Una categoría puede ser el sujeto de una acción de auditoría.
  */
 
-public class Category extends PersistentEntity implements TargetDefinition, AuditableEntity, Serializable {
+public class Category extends PersistentEntity implements TargetDefinition, AuditableEntity {
 
     /** Nombre de la categoría */
     private String name;
@@ -113,6 +111,18 @@ public class Category extends PersistentEntity implements TargetDefinition, Audi
 
         for (RelationshipDefinition relationshipDefinition : getRelationshipDefinitions()) {
             if(relationshipDefinition.getName().equals(name)) {
+                someRelationshipDefinitions.add(relationshipDefinition);
+            }
+        }
+
+        return someRelationshipDefinitions;
+    }
+
+    public List<RelationshipDefinition> findRelationshipDefinitionsById(long id) {
+        List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
+
+        for (RelationshipDefinition relationshipDefinition : getRelationshipDefinitions()) {
+            if(relationshipDefinition.getId() == id) {
                 someRelationshipDefinitions.add(relationshipDefinition);
             }
         }

@@ -1,10 +1,10 @@
 package cl.minsal.semantikos.kernel.daos;
 
 
-import cl.minsal.semantikos.kernel.factories.RelationshipAttributeDefinitionFactory;
-import cl.minsal.semantikos.kernel.factories.RelationshipDefinitionFactory;
+import cl.minsal.semantikos.kernel.daos.mappers.RelationshipMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.relationships.*;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +16,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -46,42 +47,37 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
     private RelationshipAttributeDefinitionFactory factory;
 
     @EJB
+    private RelationshipMapper relationshipMapper;
+
+    @EJB
     private HelperTableDAO helperTableDAO;
 
     @Override
     public List<RelationshipDefinition> getRelationshipDefinitionsByCategory(long idCategory) {
 
-        List<RelationshipDefinition> relationshipDefinitions;
+        List<RelationshipDefinition> relationshipDefinitions = new ArrayList<>();
 
         ConnectionBD connect = new ConnectionBD();
-        String sqlQuery = "{call semantikos.get_relationship_definitions_by_category(?)}";
+
+        String sql = "begin ? := stk.stk_pck_relationship_definition.get_relationship_definitions_by_category(?); end;";
+
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sqlQuery)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */
-            call.setLong(1, idCategory);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idCategory);
             call.execute();
 
             /* Cada Fila del ResultSet trae una relación */
-            ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                if (rs.getString(1) != null) {
-                    relationshipDefinitions = relationshipDefinitionFactory.createRelDefinitionsFromJSON(rs.getString(1));
-                } else {
-                    return emptyList();
-                }
+            ResultSet rs = (ResultSet) call.getObject(1);
 
-            } else {
-                String errorMsg = "Un error imposible acaba de ocurrir";
-                logger.error(errorMsg);
-                throw new EJBException(errorMsg);
+            while(rs.next()) {
+                relationshipDefinitions.add(relationshipMapper.createRelationshipDefinitionFromResultSet(rs));
             }
+
             rs.close();
 
-            /* Para cada relationshipDefinition se deben recuperar sus atributos */
-            for (RelationshipDefinition relationshipDefinition : relationshipDefinitions) {
-                relationshipDefinition.setRelationshipAttributeDefinitions(getRelationshipAttributeDefinitionsByRelationshipDefinition(relationshipDefinition));
-            }
         } catch (SQLException e) {
             String errorMsg = "Erro al invocar get_relationship_definitions_by_category(" + idCategory + ")";
             logger.error(errorMsg, e);
@@ -100,26 +96,26 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
     public List<RelationshipAttributeDefinition> getRelationshipAttributeDefinitionsByRelationshipDefinition(RelationshipDefinition relationshipDefinition) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sqlQuery = "{call semantikos.get_relationship_attribute_definitions_json_by_id(?)}";
-        List<RelationshipAttributeDefinition> relationshipAttributeDefinitions;
+
+        String sql = "begin ? := stk.stk_pck_relationship_definition.get_relationship_attribute_definitions_by_id(?); end;";
+
+        List<RelationshipAttributeDefinition> relationshipAttributeDefinitions = new ArrayList<>();
+
         long id = relationshipDefinition.getId();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sqlQuery)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar los atributos de esta relación */
-            call.setLong(1, id);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, id);
             call.execute();
 
-            ResultSet resultSet = call.getResultSet();
-            resultSet.next();
-            String jsonExpression = resultSet.getString(1);
-            resultSet.close();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (jsonExpression == null) {
-                return emptyList();
-            } else {
-                relationshipAttributeDefinitions = factory.createFromJSON(jsonExpression);
+            while(rs.next()) {
+                relationshipAttributeDefinitions.add(relationshipMapper.createRelationshipAttributeDefinitionFromResultSet(rs));
             }
+
         } catch (SQLException e) {
             String errorMsg = "Erro al invocar get_relationship_definition_by_id(" + id + ")";
             logger.error(errorMsg, e);
@@ -127,40 +123,6 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
         }
 
         return relationshipAttributeDefinitions;
-    }
-
-    @Override
-    public RelationshipDefinition getRelationshipDefinitionByID(long idRelationshipDefinition) {
-
-        ConnectionBD connect = new ConnectionBD();
-        String sqlQuery = "{call semantikos.get_relationship_definition_by_id(?)}";
-
-        RelationshipDefinition relationshipDefinition;
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sqlQuery)) {
-
-            /* Se invoca la consulta para recuperar las relaciones */
-            call.setLong(1, idRelationshipDefinition);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                String jsonResult = rs.getString(1);
-                relationshipDefinition = relationshipDefinitionFactory.createFromJSON(jsonResult);
-            } else {
-                String errorMsg = "No se obtuvo ningún resultado de invocar get_relationship_definition_by_id(" + idRelationshipDefinition + ")";
-                logger.error(errorMsg);
-                throw new EJBException(errorMsg);
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            String errorMsg = "Erro al invocar get_relationship_definition_by_id(" + idRelationshipDefinition + ")";
-            logger.error(errorMsg, e);
-            throw new EJBException(errorMsg, e);
-        }
-
-        return relationshipDefinition;
     }
 
     /**
@@ -196,31 +158,4 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
         throw new IllegalArgumentException("Todos los parámetros eran nulos.");
     }
 
-    @Override
-    public RelationshipAttributeDefinition getRelationshipAttributeDefinitionBy(long id) {
-        ConnectionBD connect = new ConnectionBD();
-        String sqlQuery = "{call semantikos.get_relationship_attribute_definition_by_id(?)}";
-        RelationshipAttributeDefinition relationshipAttributeDefinition;
-
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sqlQuery)) {
-
-            /* Se invoca la consulta para recuperar el atributo */
-            call.setLong(1, id);
-            call.execute();
-
-            ResultSet resultSet = call.getResultSet();
-            resultSet.next();
-            String jsonExpression = resultSet.getString(1);
-            resultSet.close();
-            relationshipAttributeDefinition = factory.createFromRelationshipAttributeDefinitionJSON(jsonExpression);
-
-        } catch (SQLException e) {
-            String errorMsg = "Erro al invocar get_relationship_attribute_definition_by_id(" + id + ")";
-            logger.error(errorMsg, e);
-            throw new EJBException(errorMsg, e);
-        }
-
-        return relationshipAttributeDefinition;
-    }
 }

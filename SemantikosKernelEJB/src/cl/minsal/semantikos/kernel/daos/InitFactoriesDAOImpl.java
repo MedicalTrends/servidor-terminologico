@@ -1,23 +1,29 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.factories.EmailFactory;
-import cl.minsal.semantikos.kernel.factories.HelperTableRecordFactory;
-import cl.minsal.semantikos.kernel.factories.QueryFactory;
+import cl.minsal.semantikos.kernel.daos.mappers.DescriptionMapper;
+import cl.minsal.semantikos.kernel.daos.mappers.HelperTableMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DataSourceFactory;
+import cl.minsal.semantikos.model.browser.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumnFactory;
-import cl.minsal.semantikos.model.queries.*;
-import cl.minsal.semantikos.model.relationships.*;
+import cl.minsal.semantikos.model.helpertables.HelperTableRecordFactory;
+import cl.minsal.semantikos.model.relationships.MultiplicityFactory;
+import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
+import cl.minsal.semantikos.model.users.EmailFactory;
+import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.users.UserFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import oracle.jdbc.OracleTypes;
+import oracle.jdbc.driver.OracleConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,10 +38,9 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +57,9 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
     @EJB
     HelperTableRecordFactory helperTableRecordFactory;
+
+    @EJB
+    HelperTableMapper helperTableMapper;
 
     @EJB
     RelationshipDefinitionDAO relationshipDefinitionDAO;
@@ -74,20 +82,46 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     @EJB
     private AuthDAO authDAO;
 
+    @EJB
+    private DescriptionMapper descriptionMapper;
+
     @PostConstruct
     private void init() {
         try {
             this.refreshDataSource();
-            this.refreshEmail();
+            //this.refreshEmail();
         } catch (NamingException e) {
             e.printStackTrace();
         }
+        this.testArrayOracle();
+        this.refreshColumns();
         this.refreshCategories();
         this.refreshQueries();
         this.refreshDescriptionTypes();
         this.refreshTagsSMTK();
-        this.refreshColumns();
         this.refreshUsers();
+    }
+
+    private void testArrayOracle() {
+
+        int intArray[] = { 1,2,3,4,5,6 };
+
+        String sql = "begin stk.give_me_an_array(?); end;";
+
+        try (Connection connection = DataSourceFactory.getInstance().getConnection(); CallableStatement call =
+                connection.prepareCall(sql)) {
+
+            call.setArray(1, connection.unwrap(oracle.jdbc.OracleConnection.class).createARRAY("STK.STK_TYPE_NUM_ARRAY", intArray));
+
+            call.execute();
+
+            call.close();
+
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
     }
 
     /**
@@ -108,12 +142,12 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     }
 
     private Category createCategoryFromResultSet(ResultSet resultSet) throws SQLException {
-        long idCategory = resultSet.getLong("idcategory");
-        String nameCategory = resultSet.getString("namecategory");
-        String nameAbbreviated = resultSet.getString("nameabbreviated");
+        long idCategory = resultSet.getLong("id");
+        String nameCategory = resultSet.getString("name");
+        String nameAbbreviated = resultSet.getString("name_abreviated");
         boolean restriction = resultSet.getBoolean("restriction");
-        String color = resultSet.getString("nameabbreviated");
-        long idTagSMTK = resultSet.getLong("tag");
+        String color = resultSet.getString("name_abreviated");
+        long idTagSMTK = resultSet.getLong("tag_semantikos");
         TagSMTK tagSMTKByID = tagSMTKDAO.findTagSMTKByID(idTagSMTK);
 
         return new Category(idCategory, nameCategory, nameAbbreviated, restriction, color, tagSMTKByID);
@@ -172,12 +206,18 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     public CategoryFactory refreshCategories() {
 
         List<Category> categories = new ArrayList<>();
-        ;
+
+        String sql = "begin ? := stk.stk_pck_category.get_all_categories; end;";
+
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
-             CallableStatement call = connection.prepareCall("SELECT * FROM semantikos.get_all_categories()")) {
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+
             call.execute();
 
-            ResultSet resultSet = call.getResultSet();
+            //ResultSet resultSet = call.getResultSet();
+            ResultSet resultSet = (ResultSet) call.getObject(1);
 
             while (resultSet.next()) {
                 Category categoryFromResultSet = createCategoryFromResultSet(resultSet);
@@ -189,7 +229,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
                 long id = category.getId();
                 List<RelationshipDefinition> categoryMetaData = getCategoryMetaData(id);
                 category.setRelationshipDefinitions(categoryMetaData);
-                RelationshipDefinitionFactory.getInstance().addRelationshipDefinitions(categoryMetaData);
             }
 
             /* Se setea la lista de tagsSMTK */
@@ -228,7 +267,8 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
             // Adding second order columns, if this apply
             for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions() ) {
-                if(relationshipDefinition.getTargetDefinition().isSMTKType()){
+
+                if(relationshipDefinition.getTargetDefinition().isSMTKType()) {
                     Category categoryDestination = (Category) relationshipDefinition.getTargetDefinition();
 
                     for (RelationshipDefinition relationshipDefinitionDestination : queryDAO.getSecondOrderShowableAttributesByCategory(categoryDestination)) {
@@ -305,13 +345,16 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
         List<TagSMTK> tagsSMTK = new ArrayList<>();
 
-        String sql = "{call semantikos.get_all_tag_smtks()}";
+        String sql = "begin ? := stk.stk_pck_tag_smtk.get_all_tag_smtks; end;";
 
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
-            ResultSet rs = call.getResultSet();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = call.getResultSet();
 
             /* Se recuperan los tagsSMTK */
             while (rs.next()) {
@@ -334,39 +377,30 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     public DescriptionTypeFactory refreshDescriptionTypes() {
 
         ConnectionBD connect = new ConnectionBD();
-        ObjectMapper mapper = new ObjectMapper();
 
         List<DescriptionType> descriptionTypes = new ArrayList<>();
 
-        String sql = "{call semantikos.get_description_types()}";
+        String sql = "begin ? := stk.stk_pck_description.get_description_types; end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
-            ResultSet rs = call.getResultSet();
+
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             /* Se recuperan los description types */
-            DescriptionTypeDTO[] theDescriptionTypes = new DescriptionTypeDTO[0];
-            if (rs.next()) {
-                String resultJSON = rs.getString(1);
-                theDescriptionTypes = mapper.readValue(underScoreToCamelCaseJSON(resultJSON), DescriptionTypeDTO[].class);
-            }
-
-            if (theDescriptionTypes.length > 0) {
-                for (DescriptionTypeDTO aDescriptionType : theDescriptionTypes) {
-                    DescriptionType descriptionType = aDescriptionType.getDescriptionType();
-                    descriptionTypes.add(descriptionType);
-                }
+            while (rs.next()) {
+                descriptionTypes.add(descriptionMapper.createDescriptionTypeFromResultSet(rs));
             }
 
             /* Se setea la lista de Tipos de descripción */
             DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypes);
+
         } catch (SQLException e) {
             String errorMsg = "Error al intentar recuperar Description Types de la BDD.";
-            logger.error(errorMsg, e);
-            throw new EJBException(errorMsg, e);
-        } catch (IOException e) {
-            String errorMsg = "Error al intentar parsear Description Types en JSON.";
             logger.error(errorMsg, e);
             throw new EJBException(errorMsg, e);
         }
@@ -381,14 +415,19 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
         User user = null;
 
-        String sql = "{call semantikos.get_all_users()}";
+        String sql = "begin ? := stk.stk_pck_user.get_all_users; end;";
+
+        //String sql = "begin ? := stk.stk_pck_helper_table.get_all_helper_table_columns; end;";
+
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
 
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
-            ResultSet rs = call.getResultSet();
             while (rs.next()) {
                 user = makeUserFromResult(rs);
                 users.add(user);
@@ -411,29 +450,21 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
         List<HelperTableColumn> helperTableColumns = new ArrayList<>();
 
-        String sql = "{call semantikos.get_all_helper_table_columns()}";
+        String sql = "begin ? := stk.stk_pck_helper_table.get_all_helper_table_columns; end;";
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+
             call.execute();
-            ResultSet rs = call.getResultSet();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = call.getResultSet();
 
             /* Se recuperan las columnas */
-            if (rs.next()) {
-
-                String json = rs.getString(1);
-                if(json==null)
-                    return null;
-
-                try {
-                    helperTableColumns = helperTableRecordFactory.createHelperTableColumnsFromJSON(json);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            } else {
-                throw new EJBException("Error imposible en HelperTableDAOImpl");
+            while(rs.next()) {
+                helperTableColumns.add(helperTableMapper.createHelperTableColumnFromResultSet(rs));
             }
 
             /* Se setea la lista de tagsSMTK */
@@ -461,7 +492,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     @Override
     public DataSourceFactory refreshDataSource() throws NamingException {
         InitialContext c = new InitialContext();
-        DataSource dataSource = (DataSource) c.lookup("java:jboss/PostgresDS");
+        DataSource dataSource = (DataSource) c.lookup("java:jboss/OracleDS");
         DataSourceFactory.getInstance().setDataSource(dataSource);
 
         return DataSourceFactory.getInstance();

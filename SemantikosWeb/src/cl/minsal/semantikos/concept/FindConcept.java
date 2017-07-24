@@ -18,7 +18,14 @@ import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.EMPTY_LIST;
+import static java.util.Collections.singletonList;
+import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_ARRAY;
+import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_OBJECT_ARRAY;
 
 /**
  * Created by des01c7 on 23-08-16.
@@ -33,11 +40,9 @@ public class FindConcept implements Serializable{
 
     private List<Category> categoryList;
 
-    private Category[] categorySelect;
-
-    private Long[] categoryArrayID;
-
     private Category categorySelected;
+
+    private List<Category> selectedCategories = new ArrayList<>();
 
     private String pattern;
 
@@ -49,6 +54,7 @@ public class FindConcept implements Serializable{
 
     @PostConstruct
     public void init() {
+        selectedCategories = new ArrayList<>();
         findConcepts = new ArrayList<>();
         categoryList = categoryManager.getCategories();
     }
@@ -57,13 +63,7 @@ public class FindConcept implements Serializable{
      * Método encargado de obtener los conceptos por categoría
      */
     public void getConceptByCategory(){
-       if(pattern==null || pattern.trim().length()==0){
-           categoryArrayID= new Long[] {categorySelected.getId()};
-           int countConcept=conceptManager.countConceptBy(pattern,categoryArrayID);
-           findConcepts =conceptManager.findConceptsBy(pattern,categoryArrayID,0,countConcept);
-       }else{
-           getConceptSearchInputAndCategories(pattern);
-       }
+       findConcepts =conceptManager.findConcepts(pattern, selectedCategories,EMPTY_LIST,null);
     }
 
     /**
@@ -73,13 +73,13 @@ public class FindConcept implements Serializable{
      */
     public List<ConceptSMTK> getConceptSearchInputAndCategories(String pattern) {
         RequestContext.getCurrentInstance().update("::conceptTranslate");
-        categoryArrayID= (categorySelected==null)? new Long[0]:new Long[] {categorySelected.getId()};
 
         if (pattern != null) {
             if (pattern.trim().length() >= 2) {
-                if(standardizationPattern(pattern).length()<=1)return null;
-                int countConcept=conceptManager.countConceptBy(pattern,categoryArrayID,true);
-                findConcepts=conceptManager.findConceptBy(pattern,categoryArrayID,0,countConcept,true);
+                if(standardizationPattern(pattern).length() <= 1) {
+                    return null;
+                }
+                findConcepts=conceptManager.findConcepts(pattern,selectedCategories,EMPTY_LIST,true);
                 return findConcepts;
             }
         }
@@ -94,17 +94,10 @@ public class FindConcept implements Serializable{
     public List<ConceptSMTK> getConceptSearchInputCategoryContext(String pattern) {
 
         if (pattern != null) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            Category category = (Category) UIComponent.getCurrentComponent(context).getAttributes().get("category");
-            if(category!=null){
-                categoryArrayID= (category==null)? new Long[0]:new Long[] {category.getId()};
-            }
-
 
             if (pattern.trim().length() >= 2) {
                 if(standardizationPattern(pattern).length()<=1)return null;
-                int countConcept=conceptManager.countConceptBy(pattern,categoryArrayID,true);
-                findConcepts=conceptManager.findConceptBy(pattern,categoryArrayID,0,countConcept,true);
+                findConcepts=conceptManager.findConcepts(pattern,selectedCategories,EMPTY_LIST,true);
                 return findConcepts;
             }
         }
@@ -120,9 +113,10 @@ public class FindConcept implements Serializable{
     public List<ConceptSMTK> findConceptAllCategories(String pattern) {
         if (pattern != null) {
             if (pattern.trim().length() >= 2) {
-                if(standardizationPattern(pattern).length()<=1)return null;
-                int countConcept=conceptManager.countConceptBy(pattern,new Long[0],true);
-                findConcepts=conceptManager.findConceptBy(pattern,new Long[0],0,countConcept,true);
+                if(standardizationPattern(pattern).length() <= 1) {
+                    return null;
+                }
+                findConcepts=conceptManager.findConcepts(pattern,EMPTY_LIST,EMPTY_LIST,true);
                 return findConcepts;
             }
         }
@@ -177,28 +171,15 @@ public class FindConcept implements Serializable{
         this.categoryList = categoryList;
     }
 
-    public Category[] getCategorySelect() {
-        return categorySelect;
-    }
-
-    public void setCategorySelect(Category[] categorySelect) {
-        this.categorySelect = categorySelect;
-    }
-
-    public Long[] getCategoryArrayID() {
-        return categoryArrayID;
-    }
-
-    public void setCategoryArrayID(Long[] categoryArrayID) {
-        this.categoryArrayID = categoryArrayID;
-    }
-
     public Category getCategorySelected() {
         return categorySelected;
     }
 
     public void setCategorySelected(Category categorySelected) {
         this.categorySelected = categorySelected;
+        if(categorySelected != null) {
+            this.selectedCategories = singletonList(categorySelected);
+        }
     }
 
     public String getPattern() {
@@ -207,5 +188,15 @@ public class FindConcept implements Serializable{
 
     public void setPattern(String pattern) {
         this.pattern = pattern;
+    }
+
+    public List<Category> getSelectedCategories() {
+        return selectedCategories;
+    }
+
+    public void setSelectedCategories(List<Category> selectedCategories) {
+        if(selectedCategories != null) {
+            this.selectedCategories = selectedCategories;
+        }
     }
 }

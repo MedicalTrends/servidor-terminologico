@@ -33,7 +33,9 @@ public class ConceptSCTDAOImpl implements ConceptSCTDAO {
     public ConceptSCT getConceptCSTByID(long idConceptCST) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_concept_sct_by_id(?)}";
+
+        String sql = "begin ? := stk.stk_pck_snomed.get_concept_sct_by_id(?); end;";
+
         ConceptSCT conceptSCT;
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {

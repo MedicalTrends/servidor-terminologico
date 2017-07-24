@@ -117,15 +117,6 @@ public interface DescriptionManager {
      */
     public String generateDescriptionId(long id);
 
-    /**
-     * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
-     * parámetro en cada una de las categorías indicadas.
-     *
-     * @param term       El término buscado.
-     * @param categories Las categorías en donde se realiza la búsqueda.
-     * @return Todas las descripciones que poseen exactamente el término <code>term</code>.
-     */
-    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como

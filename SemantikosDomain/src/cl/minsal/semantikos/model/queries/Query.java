@@ -1,12 +1,12 @@
-package cl.minsal.semantikos.model.queries;
+package cl.minsal.semantikos.model.browser;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by root on 27-04-17.
  */
-public class Query implements IQuery, Serializable {
+public class Query implements IQuery {
 
     private String query;
 
@@ -23,6 +23,11 @@ public class Query implements IQuery, Serializable {
      */
     private int pageSize;
     private int pageNumber;
+
+    /**
+     * Columnas dinámicas
+     */
+    private List<QueryColumn> columns = new ArrayList<>();
 
     public String getQuery() {
         return query;
@@ -72,8 +77,27 @@ public class Query implements IQuery, Serializable {
         this.pageNumber = pageNumber;
     }
 
+    public List<QueryColumn> getColumns() {
+        return columns;
+    }
+
+    public void setColumns(List<QueryColumn> columns) {
+        this.columns = columns;
+    }
+
     @Override
     public List<QueryParameter> getQueryParameters() {
         return null;
+    }
+
+    public List<Long> getDefinitionIds() {
+
+        List<Long> ids = new ArrayList<>();
+
+        for (QueryColumn column : columns) {
+            ids.add(column.getRelationshipDefinition().getId());
+        }
+
+        return ids;
     }
 }

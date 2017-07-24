@@ -21,18 +21,5 @@ public interface RelationshipDefinitionDAO {
      */
     public List<RelationshipDefinition> getRelationshipDefinitionsByCategory(long idCategory);
 
-    /**
-     * Este método es responsable de recuperar un objeto <code>RelationshipDefinition</code> desde la base de datos a
-     * partir de su identificador único <code>idRelationshipDefinition</code>.
-     *
-     * @param idRelationshipDefinition Identificador único del tipo de relación en la base de datos.
-     *
-     * @return Un objeto fresco que representa el tipo de relación.
-     */
-    RelationshipDefinition getRelationshipDefinitionByID(long idRelationshipDefinition);
-
-
-    RelationshipAttributeDefinition getRelationshipAttributeDefinitionBy(long id);
-
     List<RelationshipAttributeDefinition> getRelationshipAttributeDefinitionsByRelationshipDefinition(RelationshipDefinition relationshipDefinition);
 }

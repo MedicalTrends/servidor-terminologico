@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.businessrules;
 
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.Singleton;
@@ -41,31 +42,31 @@ public class ConceptSearchBR {
      * <b>BR-HT-PA01</b>: Los elementos de las tabla auxiliar deben ser ordenados alfabéticamente, excepto por la tabla
      * HT_ATC_NAME que se ordena por el largo de los resultados.
      *
-     * @param conceptSCTs Los registros que se desea ordenar.
+     * @param conceptSMTKs Los registros que se desea ordenar.
      */
-    public void applyPostActions(@NotNull List<ConceptSCT> conceptSCTs) {
+    public void applyPostActions(@NotNull List<ConceptSMTK> conceptSMTKs) {
 
         /* Se ordenan los resultados */
-        postActionsortCollections(conceptSCTs);
+        postActionsortCollections(conceptSMTKs);
     }
 
-    private void postActionsortCollections(List<ConceptSCT> conceptSCTs) {
+    private void postActionsortCollections(List<ConceptSMTK> conceptSMTKs) {
 
         /* Las listas vacías no requieren ser ordenadas */
-        if (conceptSCTs == null || conceptSCTs.isEmpty()){
+        if (conceptSMTKs == null || conceptSMTKs.isEmpty()){
             return;
         }
 
         /* Si la lista de registros es de la tabla HT_ATC_NAME, el ordenamiento es especial */
-        Collections.sort(conceptSCTs, new SCTComparator());
+        Collections.sort(conceptSMTKs, new STKComparator());
     }
 
-    class SCTComparator implements Comparator<ConceptSCT> {
+    class STKComparator implements Comparator<ConceptSMTK> {
 
         @Override
-        public int compare(ConceptSCT conceptSCT1, ConceptSCT conceptSCT2) {
+        public int compare(ConceptSMTK conceptSMTK1, ConceptSMTK conceptSMTK2) {
 
-            return conceptSCT1.getDescriptionFSN().getTerm().length() - conceptSCT2.getDescriptionFSN().getTerm().length();
+            return conceptSMTK1.getDescriptionFavorite().getTerm().length() - conceptSMTK2.getDescriptionFavorite().getTerm().length();
         }
 
         @Override

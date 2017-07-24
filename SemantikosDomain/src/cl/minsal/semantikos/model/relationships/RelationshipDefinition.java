@@ -201,6 +201,18 @@ public class RelationshipDefinition implements Serializable {
         return someRelationshipAttributeDefinitions;
     }
 
+    public List<RelationshipAttributeDefinition> findRelationshipAttributeDefinitionsById(long id) {
+        List<RelationshipAttributeDefinition> someRelationshipAttributeDefinitions = new ArrayList<>();
+
+        for (RelationshipAttributeDefinition relationshipAttributeDefinition : getRelationshipAttributeDefinitions()) {
+            if(relationshipAttributeDefinition.getId() == id) {
+                someRelationshipAttributeDefinitions.add(relationshipAttributeDefinition);
+            }
+        }
+
+        return someRelationshipAttributeDefinitions;
+    }
+
     public boolean isRequired() {
         return getMultiplicity().getLowerBoundary() > 0;
     }

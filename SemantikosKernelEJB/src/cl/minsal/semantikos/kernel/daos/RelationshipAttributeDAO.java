@@ -28,11 +28,11 @@ public interface RelationshipAttributeDAO {
 
     /**
      * Metodo encargado de obtener un relationship attribute por id
-     * @param idRelationship id del relationship
+     * @param relationship id del relationship
      * @return retorna un relationship attribute
      */
 
-    public List<RelationshipAttribute> getRelationshipAttribute(long idRelationship);
+    public List<RelationshipAttribute> getRelationshipAttribute(Relationship relationship);
 
     public Long getTargetByRelationshipAttribute(RelationshipAttribute relationshipAttribute);
 }

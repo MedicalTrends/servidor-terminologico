@@ -49,10 +49,7 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
      */
     private List<QueryFilterAttribute> attributeFilters = new ArrayList<>();
 
-    /**
-     * Columnas dinámicas
-     */
-    private List<QueryColumn> columns = new ArrayList<>();
+
 
     /**
      * Definiciones para las columnas de 2o orden
@@ -140,14 +137,6 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
-    }
-
-    public List<QueryColumn> getColumns() {
-        return columns;
-    }
-
-    public void setColumns(List<QueryColumn> columns) {
-        this.columns = columns;
     }
 
     public User getUser() {

@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.SnomedCTDAO;
-import cl.minsal.semantikos.kernel.businessrules.ConceptSearchBR;
+import cl.minsal.semantikos.model.businessrules.ConceptSCTSearchBR;
 import cl.minsal.semantikos.model.snomedct.*;
 
 import javax.ejb.EJB;
@@ -22,7 +22,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     private SnomedCTDAO snomedctDAO;
 
     @EJB
-    private ConceptSearchBR conceptSearchBR;
+    private ConceptSCTSearchBR conceptSCTSearchBR;
 
     @Override
     public List<RelationshipSCT> getRelationshipsFrom(long idConceptSCT) {
@@ -37,7 +37,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     @Override
     public List<ConceptSCT> findConceptsByPattern(String pattern, Integer group) {
 
-        String patternStandard = conceptSearchBR.standardizationPattern(pattern);
+        String patternStandard = conceptSCTSearchBR.standardizationPattern(pattern);
         List<ConceptSCT> results;
 
         results = snomedctDAO.findPerfectMatch(patternStandard, group);
@@ -45,14 +45,14 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
         if (results.isEmpty())
             results = snomedctDAO.findTruncateMatch(patternStandard, group);
 
-        new ConceptSearchBR().applyPostActions(results);
+        new ConceptSCTSearchBR().applyPostActions(results);
 
         return results;
     }
 
     @Override
     public long countConceptByPattern(String pattern, Integer group) {
-        String patternStandard = conceptSearchBR.standardizationPattern(pattern);
+        String patternStandard = conceptSCTSearchBR.standardizationPattern(pattern);
 
         long count = countPerfectMatch(patternStandard, group);
 

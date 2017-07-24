@@ -3,8 +3,6 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinitionFactory;
-import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -12,7 +10,6 @@ import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.Local;
-import javax.ejb.Remote;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,7 @@ import java.util.Map;
  * @version 1.0
  * @created 17-ago-2016 12:23:53
  */
-@Remote
+@Local
 public interface RelationshipManager {
 
     /**
@@ -49,7 +46,7 @@ public interface RelationshipManager {
      *
      * @return La descripción creada a partir del término dado.
      */
-    public Relationship bindRelationshipToConcept(ConceptSMTK concept, Relationship relationship, User user) throws Exception;
+    public Relationship bindRelationshipToConcept(ConceptSMTK concept, Relationship relationship, User user);
 
     /**
      * Este método es responsable de eliminar lógicamente una relación, dejándola no vigente, no desasociándola del
@@ -60,35 +57,7 @@ public interface RelationshipManager {
      *
      * @return La relación eliminada, con sus campos de vigencia actualizados.
      */
-    public Relationship removeRelationship(ConceptSMTK conceptSMTK, Relationship relationship, User user) throws Exception;
-
-    /**
-     * Este método es responsable de recuperar todas las relaciones que tienen como
-     * origen un concepto dado.
-     *
-     * @param id El identificador único (BDD) del concepto SMTK.
-     */
-    public Relationship[] findRelationsByOriginConcept(long id);
-
-    /**
-     * Este método es responsable de recuperar todas las relaciones que tienen como
-     * destino un concepto Snomed CT dado.
-     *
-     * @param conceptSCT El identificador único (BDD) del concepto CST.
-     */
-    public List<Relationship> findRelationsByTargetSCTConcept(ConceptSCT conceptSCT);
-
-    /**
-     * Este método es responsable de retornar la lista de todos los conceptos relacionados con el concepto
-     * <code>conceptSMTK</code> desde este objeto, y que pertenecen a la categoría <code>category</code> dada como
-     * parámetro.
-     *
-     * @param conceptSMTK El concepto origen.
-     * @param category    La categoría a la que pertenecen los conceptos destino.
-     *
-     * @return Una lista de todos los conceptos destino que pertenecen a la categoría <code>category</code>.
-     */
-    public List<ConceptSMTK> getTargetConceptsByCategory(ConceptSMTK conceptSMTK, Category category) throws Exception;
+    public Relationship removeRelationship(ConceptSMTK conceptSMTK, Relationship relationship, User user);
 
     /**
      * Este método es responsable de actualizar el valor de una relación, actualizando
@@ -109,7 +78,7 @@ public interface RelationshipManager {
      * @param editedRelationship   La relación actualizada.
      * @param user                 El usuario que realiza la operación.
      */
-    void updateRelationship(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship originalRelationship, @NotNull Relationship editedRelationship, @NotNull User user) throws Exception;
+    void updateRelationship(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship originalRelationship, @NotNull Relationship editedRelationship, @NotNull User user);
 
     /**
      * Este método es responsable de dejar no vigente la relación a partir de este momento.
@@ -159,14 +128,4 @@ public interface RelationshipManager {
      */
     List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK concept);
 
-    /**
-     * Este método es responsable de recuperar todas las relaciones del <code>concepto</code>.
-     *
-     * @param concept El concepto cuyas relaciones son recuperadas.
-     *
-     * @return Una lista de relaciones asociadas al concepto.
-     */
-    Map<Long, ArrayList<Relationship>> getRelationshipsBySourceConcepts(List<ConceptSMTK> concept);
-
-    public RelationshipDefinitionFactory getRelationshipDefinitionFactory();
 }

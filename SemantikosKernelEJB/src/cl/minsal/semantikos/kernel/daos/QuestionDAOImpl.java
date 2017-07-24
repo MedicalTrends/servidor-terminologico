@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.users.Answer;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.Question;
 import cl.minsal.semantikos.model.users.User;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,12 +35,17 @@ public class QuestionDAOImpl implements QuestionDAO {
     @Override
     public List<Question> getAllQuestions() {
         ConnectionBD connect = new ConnectionBD();
-        String GET_ALL_QUESTIONS = "{call semantikos.get_all_questions()}";
+
+        String sql = "begin ? := stk.stk_pck_question.get_all_questions; end;";
+
         List<Question> institutions= new ArrayList<>();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(GET_ALL_QUESTIONS)) {
+             CallableStatement call = connection.prepareCall(sql)) {
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
-            ResultSet rs = call.getResultSet();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 institutions.add(createQuestionFromResultSet(rs));
             }
@@ -54,13 +60,18 @@ public class QuestionDAOImpl implements QuestionDAO {
     public List<Answer> getAnswersByUser(User user) {
 
         //ConnectionBD connect = new ConnectionBD();
-        String GET_ANSWERS_BY_USERS = "{call semantikos.get_answers_by_user(?)}";
+
+        String sql = "begin ? := stk.stk_pck_question.get_answers_by_user(?); end;";
+
         List<Answer> answers= new ArrayList<>();
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
-             CallableStatement call = connection.prepareCall(GET_ANSWERS_BY_USERS)) {
-            call.setLong(1, user.getId());
+             CallableStatement call = connection.prepareCall(sql)) {
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, user.getId());
             call.execute();
-            ResultSet rs = call.getResultSet();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 answers.add(createAnswerFromResultSet(rs));
             }
@@ -74,14 +85,19 @@ public class QuestionDAOImpl implements QuestionDAO {
     @Override
     public Question getQuestionById(long id) {
         ConnectionBD connect = new ConnectionBD();
-        String GET_QUESTION_BY_ID = "{call semantikos.get_question_by_id(?)}";
+
+        String sql = "begin ? := stk.stk_pck_question.get_question_by_id(?); end;";
+
         Question question = null;
 
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(GET_QUESTION_BY_ID)) {
+             CallableStatement call = connection.prepareCall(sql)) {
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(1, id);
             call.execute();
-            ResultSet rs = call.getResultSet();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
                 question = createQuestionFromResultSet(rs);
             }
@@ -95,12 +111,17 @@ public class QuestionDAOImpl implements QuestionDAO {
     @Override
     public void deleteUserAnswers(User user) {
         ConnectionBD connect = new ConnectionBD();
-        String DELETE_USER_ANSWERS = "{call semantikos.delete_user_answers(?)}";
+
+        String sql = "begin ? := stk.stk_pck_question.delete_user_answers(?); end;";
+
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(DELETE_USER_ANSWERS)) {
-            call.setLong(1, user.getId());
+             CallableStatement call = connection.prepareCall(sql)) {
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, user.getId());
             call.execute();
-            ResultSet rs = call.getResultSet();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
                 if(!rs.getBoolean(1)) {
                     String errorMsg = "Las Answers no fueron eliminadas. Alertar al area de desarrollo sobre esto";

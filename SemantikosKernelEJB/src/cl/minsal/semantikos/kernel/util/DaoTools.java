@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -35,6 +36,11 @@ public class DaoTools {
 
     static public Date getDate(ResultSet rs, String strColName) throws SQLException {
         Date nValue = rs.getDate(strColName);
+        return rs.wasNull() ? null : nValue;
+    }
+
+    static public Timestamp getTimestamp(ResultSet rs, String strColName) throws SQLException {
+        Timestamp nValue = rs.getTimestamp(strColName);
         return rs.wasNull() ? null : nValue;
     }
 }

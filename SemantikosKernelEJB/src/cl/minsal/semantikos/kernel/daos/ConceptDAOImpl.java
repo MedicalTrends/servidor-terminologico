@@ -1,18 +1,17 @@
 package cl.minsal.semantikos.kernel.daos;
 
 
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
+import cl.minsal.semantikos.kernel.daos.mappers.ConceptMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
-import cl.minsal.semantikos.model.descriptions.Description;
-import cl.minsal.semantikos.model.refsets.RefSet;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.Tag;
-import cl.minsal.semantikos.model.tags.TagSMTK;
-import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
+import oracle.jdbc.OracleConnection;
+import oracle.jdbc.OracleTypes;
+import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +23,9 @@ import javax.persistence.PersistenceContext;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Collections.EMPTY_LIST;
+import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_OBJECT_ARRAY;
 
 /**
  * @author Gusatvo Punucura on 13-07-16.
@@ -73,6 +75,9 @@ public class ConceptDAOImpl implements ConceptDAO {
     @EJB
     RefSetDAO refSetDAO;
 
+    @EJB
+    ConceptMapper conceptMapper;
+
     @Override
     public void delete(ConceptSMTK conceptSMTK) {
 
@@ -81,12 +86,16 @@ public class ConceptDAOImpl implements ConceptDAO {
             return;
         }
 
+        String sql = "begin ? := stk.stk_pck_concept.delete_concept(?); end;";
+
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.delete_concept(?)}")) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, conceptSMTK.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSMTK.getId());
             call.execute();
+
         } catch (SQLException e) {
             String errorMessage = "No se pudo eliminar el concepto: " + conceptSMTK.toString();
             logger.error(errorMessage, e);
@@ -95,61 +104,34 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> getConceptsBy(boolean modeled, int pageSize, int pageNumber) {
-
+    public List<ConceptSMTK> findConcepts(Long[] categories, Long[] refsets, Boolean modeled) {
         List<ConceptSMTK> concepts = new ArrayList<>();
         ConnectionBD connect = new ConnectionBD();
         CallableStatement call;
 
+        String sql = "begin ? := stk.stk_pck_concept.find_concept(?,?,?); end;";
+
         try (Connection connection = connect.getConnection();) {
 
-            call = connection.prepareCall("{call semantikos.get_all_concepts(?,?,?)}");
-            call.setBoolean(1, modeled);
-            call.setInt(2, pageNumber);
-            call.setInt(3, pageSize);
-            call.execute();
+            call = connection.prepareCall(sql);
 
-            ResultSet rs = call.getResultSet();
-
-            while (rs.next()) {
-                ConceptSMTK recoveredConcept = createConceptSMTKFromResultSet(rs);
-                concepts.add(recoveredConcept);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setArray(2, connect.getConnection().unwrap(OracleConnection.class).createARRAY("integer", categories));
+            call.setArray(3, connect.getConnection().unwrap(OracleConnection.class).createARRAY("integer", refsets));
+            if(modeled == null) {
+                call.setNull(4, Types.BOOLEAN);
             }
-            rs.close();
-
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-
-        return concepts;
-    }
-
-    @Override
-    public List<ConceptSMTK> getModeledConceptBy(Long categoryId, int pageSize, int pageNumber) {
-        return this.findConceptsBy(new Long[]{categoryId}, true, pageSize, pageNumber);
-    }
-
-    @Override
-    public List<ConceptSMTK> getModeledConceptPaginated(Long categoryId, int pageSize, int pageNumber) {
-        List<ConceptSMTK> concepts = new ArrayList<>();
-        ConnectionBD connect = new ConnectionBD();
-        CallableStatement call;
-
-        try (Connection connection = connect.getConnection();) {
-
-            call = connection.prepareCall("{call semantikos.find_concept_by_categories_paginated(?,?,?,?)}");
-
-            call.setArray(1, connect.getConnection().createArrayOf("integer", new Long[]{categoryId}));
-            call.setInt(2, pageNumber);
-            call.setInt(3, pageSize);
-            call.setBoolean(4, true);
+            else {
+                call.setBoolean(4, modeled);
+            }
 
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
-                ConceptSMTK e = this.createConceptSMTKFromResultSet(rs);
+                ConceptSMTK e = conceptMapper.createConceptSMTKFromResultSet(rs);
                 concepts.add(e);
             }
             rs.close();
@@ -159,395 +141,27 @@ public class ConceptDAOImpl implements ConceptDAO {
         }
 
         return concepts;
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptsBy(Long[] categories, boolean modeled, int pageSize, int pageNumber) {
-
-        List<ConceptSMTK> concepts = new ArrayList<>();
-        ConnectionBD connect = new ConnectionBD();
-        CallableStatement call;
-
-        try (Connection connection = connect.getConnection();) {
-
-            call = connection.prepareCall("{call semantikos.find_concept_by_categories(?,?,?,?)}");
-
-            call.setArray(1, connect.getConnection().createArrayOf("integer", categories));
-            call.setInt(2, pageNumber);
-            call.setInt(3, pageSize);
-            call.setBoolean(4, modeled);
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                ConceptSMTK e = this.createConceptSMTKFromResultSet(rs);
-                concepts.add(e);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-
-        return concepts;
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptsBy(Category category, int pageSize, int pageNumber) {
-
-        List<ConceptSMTK> concepts = new ArrayList<>();
-        ConnectionBD connect = new ConnectionBD();
-        CallableStatement call;
-
-        try (Connection connection = connect.getConnection();) {
-
-            call = connection.prepareCall("{call semantikos.find_concept_by_category(?,?,?)}");
-
-            call.setLong(1, category.getId());
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                ConceptSMTK e = this.getConceptByID(rs.getLong(1));
-                concepts.add(e);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return concepts;
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptsBy(Category category) {
-
-        logger.debug("ConceptDAO.findConceptsBy(" + category.getName() + ")");
-        List<ConceptSMTK> concepts = new ArrayList<>();
-
-        /* Esta funcion recupera los ID's de los conceptos de una categoría */
-        ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.find_concept_by_category(?)}";
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.setLong(1, category.getId());
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                long conceptId = rs.getLong("id");
-                concepts.add(this.getConceptByID(conceptId));
-            }
-            rs.close();
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-
-        logger.debug("ConceptDAO.findConceptsBy(" + category.getName() + "): " + concepts.size() + " conceptos " +
-                "recuperados.");
-        return concepts;
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptsBy(String[] pattern, boolean isModeled, int pageSize, int pageNumber) {
-        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
-        ConnectionBD connect = new ConnectionBD();
-
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_concept_by_pattern(?,?,?,?)}")) {
-
-            call.setArray(1, connection.createArrayOf("text", pattern));
-            call.setInt(2, pageNumber);
-            call.setInt(3, pageSize);
-            call.setBoolean(4, isModeled);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                ConceptSMTK conceptSMTK = createConceptSMTKFromResultSet(rs);
-                concepts.add(conceptSMTK);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-
-        return concepts;
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptsBy(String[] pattern, Long[] categories, boolean modeled, int pageSize, int
-            pageNumber) {
-
-        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
-        ConnectionBD connect = new ConnectionBD();
-
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_concept_by_pattern_and_categories" +
-                     "(?,?,?,?,?)}")) {
-
-            Array ArrayCategories = connection.createArrayOf("integer", categories);
-
-            call.setArray(1, ArrayCategories);
-            call.setArray(2, connection.createArrayOf("text", pattern));
-            call.setInt(3, pageNumber);
-            call.setInt(4, pageSize);
-            call.setBoolean(5, modeled);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                ConceptSMTK conceptSMTK = createConceptSMTKFromResultSet(rs);
-                concepts.add(conceptSMTK);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-
-        return concepts;
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptsBy(String[] pattern, Long[] categories, Long[] refsets, boolean modeled, int
-            pageSize, int pageNumber) {
-        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
-        ConnectionBD connect = new ConnectionBD();
-
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos" +
-                     ".find_concept_by_pattern_and_categories_and_refsets(?,?,?,?,?,?)}")) {
-
-            Array ArrayCategories = connection.createArrayOf("integer", categories);
-            Array ArrayRefsets = connection.createArrayOf("integer", refsets);
-
-            call.setArray(1, ArrayCategories);
-            call.setArray(2, ArrayRefsets);
-            call.setArray(3, connection.createArrayOf("text", pattern));
-            call.setInt(4, pageNumber);
-            call.setInt(5, pageSize);
-            call.setBoolean(6, modeled);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                ConceptSMTK conceptSMTK = createConceptSMTKFromResultSet(rs);
-                concepts.add(conceptSMTK);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-
-        return concepts;
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptsBy(String PatternOrConceptId, Long[] Category, int pageNumber, int pageSize,
-                                            boolean isModeled) {
-
-        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
-
-        ConnectionBD connect = new ConnectionBD();
-
-        String findConceptID = "{call semantikos.find_concept_by_concept_id(?,?,?,?)}";
-
-        String findConceptIDCategories = "{call semantikos.find_concept_by_conceptid_categories(?,?,?,?,?)}";
-
-        String QUERY = (Category.length > 0) ? findConceptIDCategories : findConceptID;
-
-
-        try (Connection connection = connect.getConnection(); CallableStatement call =
-                connection.prepareCall(QUERY)) {
-            if (Category.length > 0) {
-                Array ArrayCategories = connection.createArrayOf("integer", Category);
-                call.setString(1, PatternOrConceptId);
-                call.setArray(2, ArrayCategories);
-                call.setInt(3, pageNumber);
-                call.setInt(4, pageSize);
-                call.setBoolean(5, isModeled);
-            } else {
-                call.setString(1, PatternOrConceptId);
-                call.setInt(2, pageNumber);
-                call.setInt(3, pageSize);
-                call.setBoolean(4, isModeled);
-            }
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            concepts = new ArrayList<>();
-            while (rs.next()) {
-                concepts.add(createConceptSMTKFromResultSet(rs));
-            }
-            rs.close();
-            call.close();
-
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        } finally {
-
-        }
-
-        return concepts;
-    }
-
-    @Override
-    public int countConceptBy(String[] Pattern, Long[] category, boolean isModeled) {
-
-
-        ConnectionBD connect = new ConnectionBD();
-        CallableStatement call;
-        int count = 0;
-
-        try (Connection connection = connect.getConnection();) {
-
-            if (Pattern != null) {
-
-                Array ArrayPattern = connection.createArrayOf("text", Pattern);
-
-                if (category.length > 0) {
-                    call = connection.prepareCall("{call semantikos.count_concept_by_pattern_and_categories(?,?,?)}");
-                    Array ArrayCategories = connection.createArrayOf("integer", category);
-
-                    call.setArray(1, ArrayCategories);
-                    call.setArray(2, ArrayPattern);
-                    call.setBoolean(3, isModeled);
-
-                } else {
-                    call = connection.prepareCall("{call semantikos.count_concept_by_pattern(?,?)}");
-                    call.setArray(1, ArrayPattern);
-                    call.setBoolean(2, isModeled);
-                }
-
-            } else {
-
-                if (category.length > 0) {
-                    call = connection.prepareCall("{call semantikos.count_concept_count_by_categories(?,?)}");
-                    Array ArrayCategories = connect.getConnection().createArrayOf("integer", category);
-                    call.setArray(1, ArrayCategories);
-                    call.setBoolean(2, isModeled);
-
-                } else {
-                    call = connection.prepareCall("{call semantikos.count_concept_by_page_size(?)}");
-                    call.setBoolean(1, isModeled);
-                }
-            }
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                count = Integer.parseInt(rs.getString("count"));
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-
-
-        return count;
-    }
-
-    @Override
-    public Integer countConceptBy(String[] Pattern, Long[] category, Long[] refset, boolean isModeled) {
-        ConnectionBD connect = new ConnectionBD();
-        CallableStatement call;
-        int count = 0;
-
-        try (Connection connection = connect.getConnection();) {
-
-            Array ArrayPattern = connection.createArrayOf("text", Pattern);
-            call = connection.prepareCall("{call semantikos.count_concept_by_pattern_and_categories_and_refsets(?,?," +
-                    "?,?)}");
-            Array ArrayCategories = connection.createArrayOf("integer", category);
-            Array ArrayRefSets = connection.createArrayOf("integer", refset);
-
-            call.setArray(1, ArrayCategories);
-            call.setArray(2, ArrayRefSets);
-            call.setArray(3, ArrayPattern);
-            call.setBoolean(4, isModeled);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                count = Integer.parseInt(rs.getString("count"));
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-
-        return count;
-    }
-
-    @Override
-    public int countConceptBy(String Pattern, Long[] category, boolean isModeled) {
-        ConnectionBD connect = new ConnectionBD();
-        int count = 0;
-
-
-        String COUNT_WITH_CATEGORIES = "{call semantikos.count_concept_by_conceptid_categories(?,?,?)}";
-        String COUNT_WITHOUT_CATEGORIES = "{call semantikos.count_concept_by_concept_id(?,?)}";
-        String COUNT_CALL = (category.length > 0) ? COUNT_WITH_CATEGORIES : COUNT_WITHOUT_CATEGORIES;
-
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(COUNT_CALL)) {
-
-            call.setString(1, Pattern);
-            call.setBoolean(2, isModeled);
-            if (category.length > 0) {
-                call.setArray(3, connect.getConnection().createArrayOf("integer", category));
-            }
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                count = Integer.parseInt(rs.getString("count"));
-            }
-
-            rs.close();
-
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-        return count;
-    }
-
-    @Override
-    public int countModeledConceptBy(Long categoryId) {
-        return this.countConceptBy((String[]) null, new Long[]{categoryId}, true);
     }
 
     @Override
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptID) {
         ConnectionBD connect = new ConnectionBD();
 
-        String sql = "{call semantikos.get_concept_by_conceptid(?)}";
+        String sql = "begin ? := stk.stk_pck_concept.get_concept_by_conceptid(?); end;";
+
         ConceptSMTK conceptSMTK;
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, conceptID);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, conceptID);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
-                conceptSMTK = createConceptSMTKFromResultSet(rs);
+                conceptSMTK = conceptMapper.createConceptSMTKFromResultSet(rs);
             } else {
                 String errorMsg = "No existe un concepto con CONCEPT_ID=" + conceptID;
                 logger.error(errorMsg);
@@ -566,18 +180,21 @@ public class ConceptDAOImpl implements ConceptDAO {
     public ConceptSMTK getConceptByID(long id) {
         //ConnectionBD connect = new ConnectionBD();
 
-        String sql = "{call semantikos.get_concept_by_id(?)}";
+        String sql = "begin ? := stk.stk_pck_concept.get_concept_by_id(?); end;";
+
         ConceptSMTK conceptSMTK;
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, id);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, id);
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-                conceptSMTK = createConceptSMTKFromResultSet(rs);
+                conceptSMTK = conceptMapper.createConceptSMTKFromResultSet(rs);
             } else {
                 String errorMsg = "No existe un concepto con CONCEPT_ID=" + id;
                 logger.error(errorMsg);
@@ -593,24 +210,25 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public ConceptSMTK findConceptsBy(Category category, long id) {
-        return null;
-    }
-
-    @Override
     public List<ConceptSMTK> findConceptsByTag(Tag tag) {
 
         List<ConceptSMTK> concepts = new ArrayList<>();
         ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_concepts_by_tag(?)}")) {
 
+        String sql = "begin ? := stk.stk_pck_concept.find_concepts_by_tag(?); end;";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(1, tag.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
-                ConceptSMTK conceptSMTKFromResultSet = createConceptSMTKFromResultSet(rs);
+                ConceptSMTK conceptSMTKFromResultSet = conceptMapper.createConceptSMTKFromResultSet(rs);
                 concepts.add(conceptSMTKFromResultSet);
             }
             rs.close();
@@ -623,128 +241,18 @@ public class ConceptDAOImpl implements ConceptDAO {
         return concepts;
     }
 
-    /**
-     * Este método es responsable de crear un concepto SMTK a partir de un resultset.
-     *
-     * @param resultSet El resultset a partir del cual se obtienen los conceptos.
-     * @return La lista de conceptos contenidos en el ResultSet.
-     * @throws SQLException Se arroja si hay un problema SQL.
-     */
-    private ConceptSMTK createConceptSMTKFromResultSet(ResultSet resultSet) throws SQLException {
-
-        long id;
-        long idCategory;
-        Category objectCategory;
-        boolean check;
-        boolean consult;
-        boolean modeled;
-        boolean completelyDefined;
-        boolean published;
-        String conceptId;
-        boolean heritable = false;
-
-        id = Long.valueOf(resultSet.getString("id"));
-        conceptId = resultSet.getString("conceptid");
-
-        /* Se recupera la categoría como objeto de negocio */
-        idCategory = Long.valueOf(resultSet.getString("id_category"));
-        //objectCategory = categoryDAO.getCategoryById(idCategory);
-        objectCategory = CategoryFactory.getInstance().findCategoryById(idCategory);
-
-        check = resultSet.getBoolean("is_to_be_reviewed");
-        consult = resultSet.getBoolean("is_to_be_consultated");
-        modeled = resultSet.getBoolean("is_modeled");
-        completelyDefined = resultSet.getBoolean("is_fully_defined");
-        published = resultSet.getBoolean("is_published");
-        conceptId = resultSet.getString("conceptid");
-        String observation = resultSet.getString("observation");
-        long idTagSMTK = resultSet.getLong("id_tag_smtk");
-
-        /**
-         * Try y catch ignored porque no todas las funciones de la BD que recuperan Concepts de la BD traen esta
-         * columna.
-         * Ej: Usar la funcion semantikos.find_concepts_by_refset_paginated para recueprar conceptos se cae con la
-         * excepcion:
-         * org.postgresql.util.PSQLException: The column name is_inherited was not found in this ResultSet.
-         */
-        try {
-            heritable = resultSet.getBoolean("is_inherited");
-        } catch (Exception ignored) {
-        }
-
-
-        /* Se recupera su Tag Semántikos */
-        //TagSMTK tagSMTKByID = tagSMTKDAO.findTagSMTKByID(idTagSMTK);
-        TagSMTK tagSMTKByID = TagSMTKFactory.getInstance().findTagSMTKById(idTagSMTK);
-
-        ConceptSMTK conceptSMTK = new ConceptSMTK(id, conceptId, objectCategory, check, consult, modeled,
-                completelyDefined, heritable, published, observation, tagSMTKByID);
-
-        /* Se recuperan las descripciones del concepto */
-        List<Description> descriptions = descriptionDAO.getDescriptionsByConcept(conceptSMTK);
-
-        conceptSMTK.setDescriptions(descriptions);
-
-        /* Se recuperan sus Etiquetas */
-        conceptSMTK.setTags(tagDAO.getTagsByConcept(id));
-
-        return conceptSMTK;
-    }
-
     @Override
     public void persistConceptAttributes(ConceptSMTK conceptSMTK, User user) {
 
+        ConnectionBD connect = new ConnectionBD();
         long id;
-        String sql = "{call semantikos.create_concept(?,?,?,?,?,?,?,?,?,?)}";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        String sql = "begin ? := stk.stk_pck_concept.create_concept(?,?,?,?,?,?,?,?,?,?); end;";
+
+        try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, conceptSMTK.getConceptID());
-            call.setLong(2, conceptSMTK.getCategory().getId());
-            call.setBoolean(3, conceptSMTK.isToBeReviewed());
-            call.setBoolean(4, conceptSMTK.isToBeConsulted());
-            call.setBoolean(5, conceptSMTK.isModeled());
-            call.setBoolean(6, conceptSMTK.isFullyDefined());
-            call.setBoolean(7, conceptSMTK.isInherited());
-            call.setBoolean(8, conceptSMTK.isPublished());
-            call.setString(9, conceptSMTK.getObservation());
-            call.setLong(10, conceptSMTK.getTagSMTK().getId());
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-
-            if (rs.next()) {
-                /* Se recupera el ID del concepto persistido */
-                id = rs.getLong(1);
-                conceptSMTK.setId(id);
-            } else {
-                String errorMsg = "El concepto no fue creado por una razon desconocida. Alertar al area de desarrollo" +
-                        " sobre esto";
-                logger.error(errorMsg);
-                throw new EJBException(errorMsg);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            String errorMsg = "El concepto " + conceptSMTK.toString() + " no fue persistido.";
-            logger.error(errorMsg, e);
-            throw new EJBException(errorMsg, e);
-        }
-
-    }
-
-    @Override
-    public void update(ConceptSMTK conceptSMTK) {
-
-        logger.info("Actualizando información básica de concepto: " + conceptSMTK.toString());
-
-        long updated;
-        String sql = "{call semantikos.update_concept(?,?,?,?,?,?,?,?,?,?,?)}";
-
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.setLong(1, conceptSMTK.getId());
+            call.registerOutParameter (1, Types.NUMERIC);
             call.setString(2, conceptSMTK.getConceptID());
             call.setLong(3, conceptSMTK.getCategory().getId());
             call.setBoolean(4, conceptSMTK.isToBeReviewed());
@@ -757,17 +265,67 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.setLong(11, conceptSMTK.getTagSMTK().getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
-            if (rs.next()) {
+            //ResultSet rs = call.getResultSet();
+            //ResultSet rs = (ResultSet) call.getObject(1);
+
+            if (call.getLong(1) > 0) {
                 /* Se recupera el ID del concepto persistido */
-                updated = rs.getLong(1);
+                id = call.getLong(1);
+                conceptSMTK.setId(id);
+            } else {
+                String errorMsg = "El concepto no fue creado por una razon desconocida. Alertar al area de desarrollo" +
+                        " sobre esto";
+                logger.error(errorMsg);
+                throw new EJBException(errorMsg);
+            }
+            //rs.close();
+        } catch (SQLException e) {
+            String errorMsg = "El concepto " + conceptSMTK.toString() + " no fue persistido.";
+            logger.error(errorMsg, e);
+            throw new EJBException(errorMsg, e);
+        }
+
+    }
+
+    @Override
+    public void update(ConceptSMTK conceptSMTK) {
+
+        logger.info("Actualizando información básica de concepto: " + conceptSMTK.toString());
+        ConnectionBD connect = new ConnectionBD();
+        long updated;
+
+        String sql = "begin ? := stk.stk_pck_concept.update_concept(?,?,?,?,?,?,?,?,?,?,?); end;";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, Types.NUMERIC);
+            call.setLong(2, conceptSMTK.getId());
+            call.setString(3, conceptSMTK.getConceptID());
+            call.setLong(4, conceptSMTK.getCategory().getId());
+            call.setBoolean(5, conceptSMTK.isToBeReviewed());
+            call.setBoolean(6, conceptSMTK.isToBeConsulted());
+            call.setBoolean(7, conceptSMTK.isModeled());
+            call.setBoolean(8, conceptSMTK.isFullyDefined());
+            call.setBoolean(9, conceptSMTK.isInherited());
+            call.setBoolean(10, conceptSMTK.isPublished());
+            call.setString(11, conceptSMTK.getObservation());
+            call.setLong(12, conceptSMTK.getTagSMTK().getId());
+            call.execute();
+
+            //ResultSet rs = call.getResultSet();
+            //ResultSet rs = (ResultSet) call.getObject(1);
+
+            if (call.getLong(1) > 0) {
+                /* Se recupera el ID del concepto persistido */
+                updated = call.getLong(1);
             } else {
                 String errorMsg = "El concepto no fue creado por una razón desconocida. Alertar al area de desarrollo" +
                         " sobre esto";
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
-            rs.close();
+            //rs.close();
         } catch (SQLException e) {
             String errorMsg = "El concepto " + conceptSMTK.toString() + " no fue actualizado.";
             logger.error(errorMsg, e);
@@ -786,216 +344,18 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> findConceptsBy(RefSet refSet) {
-
-        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
-
-        ConnectionBD connect = new ConnectionBD();
-
-
-        CallableStatement call;
-
-        try (Connection connection = connect.getConnection();) {
-
-            call = connection.prepareCall("{call semantikos.get_concept_by_refset(?)}");
-            call.setLong(1, refSet.getId());
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            concepts = new ArrayList<>();
-            while (rs.next()) {
-                concepts.add(createConceptSMTKFromResultSet(rs));
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return concepts;
-    }
-
-    @Override
-    public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize) {
-        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
-        ConnectionBD connect = new ConnectionBD();
-        CallableStatement call;
-
-        try (Connection connection = connect.getConnection();) {
-            call = connection.prepareCall("{call semantikos.find_concepts_by_refset_paginated(?,?,?,?)}");
-            call.setLong(1, refSet.getId());
-            call.setInt(2, page);
-            call.setInt(3, pageSize);
-            call.setBoolean(4, Boolean.TRUE);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            concepts = new ArrayList<>();
-            while (rs.next()) {
-                concepts.add(createConceptSMTKFromResultSet(rs));
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return concepts;
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptsWithStringBasicType(Category aCategory, RelationshipDefinition
-            stringBasicTypeAttribute, String aString) {
-        ConnectionBD connect = new ConnectionBD();
-        List<ConceptSMTK> conceptSMTKs = new ArrayList<>();
-
-        /**
-         * semantikos.find_concepts_by_attribute_boolean(?,?,?)
-         * Param 1: Category ID.
-         * Param 2: Relationship Attribute ID
-         * Param 3: String value.
-         */
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_concepts_by_attribute_string(?,?," +
-                     "?)}")) {
-
-            call.setLong(1, aCategory.getId());
-            call.setLong(2, stringBasicTypeAttribute.getId());
-            call.setString(3, aString);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                ConceptSMTK aConcept = createConceptSMTKFromResultSet(rs);
-                conceptSMTKs.add(aConcept);
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            String errorMsg = "Error al llamar la consulta find_concepts_by_attribute_string con parámetros: " +
-                    aCategory.getId() + " " + stringBasicTypeAttribute.getId() + " " + stringBasicTypeAttribute.getId();
-            logger.error(errorMsg, e);
-            throw new EJBException(errorMsg, e);
-        }
-
-        return conceptSMTKs;
-    }
-
-    @Override
-    public List<ConceptSMTK> findConceptsWithStringBasicType(Category aCategory, ArrayList<RefSet> refsets,
-                                                             RelationshipDefinition stringBasicTypeAttribute, String
-                                                                         aString) {
-
-        List<ConceptSMTK> conceptSMTKs = new ArrayList<>();
-        Long[] theRefSetIDs = PersistentEntity.getIdArray(refsets);
-
-        /**
-         * semantikos.find_concepts_by_attribute_string_category_refset(?,?,?,?)
-         * IN p_id_category bigint,
-         * IN p_id_refset bigint[],
-         * IN p_id_relationship_definition bigint,
-         * IN p_string_value character varying
-         *
-         * Param 1: Category ID (bigint).
-         * Param 2: Refsets (bigint[]).
-         * Param 3: Relationship Attribute ID (bigint)
-         * Param 4: String value character varying.
-         */
-        ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos" +
-                     ".find_concepts_by_attribute_string_category_refset(?,?,?,?)}")) {
-
-            call.setLong(1, aCategory.getId());
-            call.setArray(2, connection.createArrayOf("integer", theRefSetIDs));
-            call.setLong(3, stringBasicTypeAttribute.getId());
-            call.setString(4, aString);
-
-            logger.debug("ConceptDAO.find_concepts_by_attribute_string.find_concepts_by_attribute_string(cat=" +
-                    aCategory.getId() + ", refsets=" + refsets + ", attrType=" + stringBasicTypeAttribute.getId() +
-                    ", val=" + aString + ")");
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                ConceptSMTK aConcept = createConceptSMTKFromResultSet(rs);
-                conceptSMTKs.add(aConcept);
-            }
-            rs.close();
-            logger.debug("ConceptDAO.find_concepts_by_attribute_string.find_concepts_by_attribute_string()=" +
-                    conceptSMTKs);
-
-        } catch (SQLException e) {
-            String errorMsg = "Error al llamar la consulta find_concepts_by_attribute_string con parámetros: " +
-                    aCategory.getId() + " " + stringBasicTypeAttribute.getId() + " " + stringBasicTypeAttribute.getId();
-            logger.error(errorMsg, e);
-            throw new EJBException(errorMsg, e);
-        }
-
-        return conceptSMTKs;
-    }
-
-    @Override
-    public Integer countModeledConceptsBy(RefSet refSet) {
-        ConnectionBD connect = new ConnectionBD();
-        CallableStatement call;
-        int count = 0;
-
-        try (Connection connection = connect.getConnection();) {
-            call = connection.prepareCall("{call semantikos.count_concepts_by_refset(?,?)}");
-            call.setLong(1, refSet.getId());
-            call.setBoolean(2, Boolean.TRUE);
-            call.execute();
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                count = Integer.parseInt(rs.getString("count"));
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return count;
-    }
-
-    @Override
-    public List<ConceptSMTK> getConceptDraft() {
-
-        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
-        ConnectionBD connect = new ConnectionBD();
-
-
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_concept_draft()}")) {
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            concepts = new ArrayList<>();
-            while (rs.next()) {
-                concepts.add(createConceptSMTKFromResultSet(rs));
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return concepts;
-
-    }
-
-    @Override
     public void forcedModeledConcept(Long idConcept) {
 
         logger.info("Pasando a modelado el concepto de ID=" + idConcept);
         ConnectionBD connect = new ConnectionBD();
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.force_modeled_concept(?)}")) {
+        String sql = "begin ? := stk.stk_pck_concept.force_modeled_concept(?); end;";
 
-            call.setLong(1, idConcept);
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idConcept);
             call.execute();
         } catch (SQLException e) {
             logger.error("Error al tratar de modelar un concepto.", e);
@@ -1028,7 +388,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         }
 
         /* Luego se recuperan los conceptos de la categoría y se busca por el que tenga el FSN adecuado */
-        List<ConceptSMTK> specialConcepts = this.findConceptsBy(specialConceptCategory);
+        List<ConceptSMTK> specialConcepts = findPerfectMatch(PENDING_CONCEPT_FSN_DESCRIPTION, new Long[]{specialConceptCategory.getId()}, EMPTY_LONG_OBJECT_ARRAY, true);
         for (ConceptSMTK specialConcept : specialConcepts) {
             if (specialConcept.getDescriptionFavorite().getTerm().equalsIgnoreCase(PENDING_CONCEPT_FSN_DESCRIPTION)) {
                 PENDING_CONCEPT = specialConcept;
@@ -1050,15 +410,20 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         ConnectionBD connect = new ConnectionBD();
 
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_related_concept(?)}")) {
+        String sql = "begin ? := stk.stk_pck_concept.get_related_concept(?); end;";
 
-            call.setLong(1, conceptSMTK.getId());
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSMTK.getId());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
-                concepts.add(createConceptSMTKFromResultSet(rs));
+                concepts.add(conceptMapper.createConceptSMTKFromResultSet(rs));
             }
             rs.close();
 
@@ -1070,53 +435,35 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<Long> getAllConceptsId() {
-        List<Long> ids = new ArrayList<>();
-
-        ConnectionBD connect = new ConnectionBD();
-
-
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_concepts_id()}")) {
-
-            call.execute();
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                ids.add(rs.getLong(1));
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            logger.error("Error al buscar conceptos relacionados", e);
-        }
-
-        return ids;
-    }
-
-    @Override
-    public List<ConceptSMTK> findPerfectMatchConceptBy(String pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber) {
-
+    public List<ConceptSMTK> findTruncateMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled) {
         List<ConceptSMTK> concepts;
 
         ConnectionBD connect = new ConnectionBD();
 
-        String QUERY_PERFECT_MATCH = "{call semantikos.perfect_match_pattern_and_categories(?,?,?,?,?)}";
+        String sql = "begin ? := stk.stk_pck_concept.find_concept_truncate_match(?,?,?,?); end;";
 
         try (Connection connection = connect.getConnection(); CallableStatement call =
-                connection.prepareCall(QUERY_PERFECT_MATCH)) {
+                connection.prepareCall(sql)) {
 
-            Array ArrayCategories = connection.createArrayOf("integer", categories);
-            call.setArray(1, ArrayCategories);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, pattern);
-            call.setInt(3, pageNumber);
-            call.setInt(4, pageSize);
-            call.setBoolean(5, modeled);
+            call.setArray(3, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            call.setArray(4, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+            if(modeled == null) {
+                call.setNull(5, Types.BOOLEAN);
+            }
+            else {
+                call.setBoolean(5, modeled);
+            }
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             concepts = new ArrayList<>();
+
             while (rs.next()) {
-                concepts.add(createConceptSMTKFromResultSet(rs));
+                concepts.add(conceptMapper.createConceptSMTKFromResultSet(rs));
             }
             rs.close();
             call.close();
@@ -1130,64 +477,42 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> findPerfectMatchConceptBy(String pattern, boolean modeled, int pageSize, int pageNumber) {
+    public List<ConceptSMTK> findPerfectMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled) {
         List<ConceptSMTK> concepts;
 
         ConnectionBD connect = new ConnectionBD();
 
-        String QUERY_PERFECT_MATCH = "{call semantikos.perfect_match_pattern(?,?,?,?)}";
+        OracleConnection oracleConnection = null;
 
-        try (Connection connection = connect.getConnection(); CallableStatement call =
-                connection.prepareCall(QUERY_PERFECT_MATCH)) {
-
-
-            call.setString(1, pattern);
-            call.setInt(2, pageNumber);
-            call.setInt(3, pageSize);
-            call.setBoolean(4, modeled);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            concepts = new ArrayList<>();
-            while (rs.next()) {
-                concepts.add(createConceptSMTKFromResultSet(rs));
-            }
-            rs.close();
-            call.close();
-
+        try {
+            oracleConnection = (OracleConnection)(connect.getConnection().getMetaData().getConnection());
         } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
+            e.printStackTrace();
         }
 
-        return concepts;
-    }
-
-    @Override
-    public List<ConceptSMTK> findTruncateMatchConceptBy(String pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber) {
-        List<ConceptSMTK> concepts;
-
-        ConnectionBD connect = new ConnectionBD();
-
-        String QUERY_TRUNCATE_MATCH = "{call semantikos.truncate_match_by_pattern_and_categories(?,?,?,?,?)}";
+        String sql = "begin ? := stk.stk_pck_concept.find_concept_perfect_match(?,?,?,?); end;";
 
         try (Connection connection = connect.getConnection(); CallableStatement call =
-                connection.prepareCall(QUERY_TRUNCATE_MATCH)) {
+                connection.prepareCall(sql)) {
 
-
-            Array ArrayCategories = connection.createArrayOf("integer", categories);
-
-            call.setArray(1, ArrayCategories);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, pattern);
-            call.setInt(3, pageNumber);
-            call.setInt(4, pageSize);
-            call.setBoolean(5, modeled);
+            call.setArray(3, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            call.setArray(4, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+            if(modeled == null) {
+                call.setNull(5, Types.BOOLEAN);
+            }
+            else {
+                call.setBoolean(5, modeled);
+            }
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             concepts = new ArrayList<>();
             while (rs.next()) {
-                concepts.add(createConceptSMTKFromResultSet(rs));
+                concepts.add(conceptMapper.createConceptSMTKFromResultSet(rs));
             }
             rs.close();
             call.close();
@@ -1200,65 +525,34 @@ public class ConceptDAOImpl implements ConceptDAO {
         return concepts;
     }
 
-    @Override
-    public List<ConceptSMTK> findTruncateMatchConceptBy(String pattern, boolean modeled, int pageSize, int pageNumber) {
-        List<ConceptSMTK> concepts;
-
-        ConnectionBD connect = new ConnectionBD();
-
-        String QUERY_TRUNCATE_MATCH = "{call semantikos.truncate_match_by_pattern(?,?,?,?" +
-                ")}";
-
-        try (Connection connection = connect.getConnection(); CallableStatement call =
-                connection.prepareCall(QUERY_TRUNCATE_MATCH)) {
-
-            call.setString(1, pattern);
-            call.setInt(2, pageNumber);
-            call.setInt(3, pageSize);
-            call.setBoolean(4, modeled);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            concepts = new ArrayList<>();
-            while (rs.next()) {
-                concepts.add(createConceptSMTKFromResultSet(rs));
-            }
-            rs.close();
-            call.close();
-
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-
-        return concepts;
-    }
 
     @Override
-    public int countPerfectMatchConceptBy(String pattern, Long[] categories, boolean modeled) {
+    public int countPerfectMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled) {
         int concepts=0;
 
         ConnectionBD connect = new ConnectionBD();
 
-        String QUERY_PERFECT_MATCH_WITH_CATEGORIES = "{call semantikos.count_perfect_match_pattern_and_categories(?,?,?)}";
-        String QUERY_PERFECT_MATCH_WITHOUT_CATEGORIES = "{call semantikos.count_perfect_match_pattern(?,?)}";
-        String QUERY=(categories.length>0)?QUERY_PERFECT_MATCH_WITH_CATEGORIES:QUERY_PERFECT_MATCH_WITHOUT_CATEGORIES;
+        String sql = "begin ? := stk.stk_pck_concept.count_concept_perfect_match(?,?,?,?); end;";
 
         try (Connection connection = connect.getConnection(); CallableStatement call =
-                connection.prepareCall(QUERY)) {
+            connection.prepareCall(sql)) {
 
-            if(categories.length>0){
-                Array ArrayCategories = connection.createArrayOf("integer", categories);
-                call.setArray(1, ArrayCategories);
-                call.setString(2, pattern);
-                call.setBoolean(3, modeled);
-            }else{
-                call.setString(1, pattern);
-                call.setBoolean(2, modeled);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, pattern);
+            call.setArray(3, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            call.setArray(4, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+            if(modeled == null) {
+                call.setNull(5, Types.BOOLEAN);
             }
+            else {
+                call.setBoolean(5, modeled);
+            }
+
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 concepts = Integer.parseInt(rs.getString("count"));
             }
@@ -1274,36 +568,75 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public int countTruncateMatchConceptBy(String pattern, Long[] categories, boolean modeled) {
+    public int countTruncateMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled) {
         int concepts=0;
 
         ConnectionBD connect = new ConnectionBD();
-        String QUERY_TRUNCATE_MATCH_WITH_CATEGORIES = "{call semantikos.count_truncate_match_by_pattern_and_categories(?,?,?)}";
-        String QUERY_TRUNCATE_MATCH_WITHOUT_CATEGORIES = "{call semantikos.count_truncate_match_by_pattern(?,?)}";
-        String QUERY=(categories.length>0)?QUERY_TRUNCATE_MATCH_WITH_CATEGORIES:QUERY_TRUNCATE_MATCH_WITHOUT_CATEGORIES;
+
+        String sql = "begin ? := stk.stk_pck_concept.count_concept_truncate_match(?,?,?,?); end;";
 
         try (Connection connection = connect.getConnection(); CallableStatement call =
-                connection.prepareCall(QUERY)) {
+                connection.prepareCall(sql)) {
 
-            if(categories.length>0){
-                Array ArrayCategories = connection.createArrayOf("integer", categories);
-                call.setArray(1, ArrayCategories);
-                call.setString(2, pattern);
-                call.setBoolean(3, modeled);
-            }else{
-                call.setString(1, pattern);
-                call.setBoolean(2, modeled);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, pattern);
+            call.setArray(3, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            call.setArray(4, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+
+            if(modeled == null) {
+                call.setNull(5, Types.BOOLEAN);
             }
+            else {
+                call.setBoolean(5, modeled);
+            }
+
             call.execute();
 
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
-            ResultSet rs = call.getResultSet();
             while (rs.next()) {
                 concepts = Integer.parseInt(rs.getString("count"));
             }
             rs.close();
             call.close();
 
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
+        return concepts;
+    }
+
+    @Override
+    public List<ConceptSMTK> getModeledConceptPaginated(Long categoryId, int pageSize, int pageNumber) {
+        List<ConceptSMTK> concepts = new ArrayList<>();
+        ConnectionBD connect = new ConnectionBD();
+        CallableStatement call;
+
+        String sql = "begin ? := stk.stk_pck_concept.find_concept_by_categories_paginated(?,?,?,?); end;";
+
+        try (Connection connection = connect.getConnection();) {
+
+            call = connection.prepareCall(sql);
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setArray(2, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", new Long[]{categoryId}));
+            call.setInt(3, pageNumber);
+            call.setInt(4, pageSize);
+            call.setBoolean(5, true);
+
+            call.execute();
+
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                ConceptSMTK e = conceptMapper.createConceptSMTKFromResultSet(rs);
+                concepts.add(e);
+            }
+            rs.close();
         } catch (SQLException e) {
             logger.error("Se produjo un error al acceder a la BDD.", e);
             throw new EJBException(e);

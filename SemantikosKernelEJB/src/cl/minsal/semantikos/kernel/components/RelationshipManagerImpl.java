@@ -1,18 +1,17 @@
 package cl.minsal.semantikos.kernel.components;
 
-import cl.minsal.semantikos.kernel.businessrules.ConceptCreationBR;
-import cl.minsal.semantikos.kernel.businessrules.RelationshipBindingBR;
-import cl.minsal.semantikos.kernel.businessrules.RelationshipEditionBR;
-import cl.minsal.semantikos.kernel.businessrules.RelationshipRemovalBR;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.kernel.daos.TargetDAO;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.relationships.*;
-import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.model.businessrules.*;
+import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.EJB;
@@ -48,10 +47,10 @@ public class RelationshipManagerImpl implements RelationshipManager {
     private RelationshipAttributeDAO relationshipAttributeDAO;
 
     @EJB
-    private RelationshipBindingBR relationshipBindingBR;
+    private RelationshipBindingBRInterface relationshipBindingBR;
 
     @Override
-    public Relationship bindRelationshipToConcept(ConceptSMTK concept, Relationship relationship, User user) throws Exception {
+    public Relationship bindRelationshipToConcept(ConceptSMTK concept, Relationship relationship, User user) {
 
         /* Primero se validan las reglas de negocio asociadas a la eliminación de un concepto */
         relationshipBindingBR.verifyPreConditions(concept, relationship, user);
@@ -92,7 +91,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
      * @param relationship La relación.
      * @param user         El usuario que realiza la operación.
      */
-    private void assurePersistence(ConceptSMTK concept, Relationship relationship, User user) throws Exception {
+    private void assurePersistence(ConceptSMTK concept, Relationship relationship, User user) {
         if (!relationship.isPersistent()) {
 
             /* Se validan las reglas de negocio */
@@ -116,7 +115,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
-    public Relationship removeRelationship(ConceptSMTK conceptSMTK,Relationship relationship, User user) throws Exception {
+    public Relationship removeRelationship(ConceptSMTK conceptSMTK,Relationship relationship, User user) {
 
         /* Primero se validan las reglas de negocio asociadas a la eliminación de un concepto */
         new RelationshipRemovalBR().applyRules(conceptSMTK, relationship, user);
@@ -134,31 +133,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
-    public Relationship[] findRelationsByOriginConcept(long id) {
-        // TODO: Terminar esto
-        return new Relationship[0];
-    }
-
-    @Override
-    public List<Relationship> findRelationsByTargetSCTConcept(ConceptSCT conceptSCT) {
-        return relationshipDAO.getRelationshipsToCSTConcept(conceptSCT);
-    }
-
-    @Override
-    public List<ConceptSMTK> getTargetConceptsByCategory(ConceptSMTK conceptSMTK, Category category) throws Exception {
-
-        /* Se espera, por defecto, que el concepto no traiga sus relaciones cargadas, pero se verificará */
-        if (conceptSMTK.getRelationships().isEmpty()) {
-            List<Relationship> relationshipsBySourceConcept = this.getRelationshipsBySourceConcept(conceptSMTK);
-            conceptSMTK.setRelationships(relationshipsBySourceConcept);
-        }
-
-        /* Se retornan los conceptos que son el destino de relaciones SMTK */
-        return conceptSMTK.getRelatedSMTKConceptsBy(category);
-    }
-
-    @Override
-    public void updateRelationship(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship originalRelationship, @NotNull Relationship editedRelationship, @NotNull User user) throws Exception {
+    public void updateRelationship(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship originalRelationship, @NotNull Relationship editedRelationship, @NotNull User user) {
 
         /* Se aplican las reglas de negocio */
         new RelationshipEditionBR().applyRules(originalRelationship, editedRelationship);
@@ -290,20 +265,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
     @Override
     public List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK concept) {
-        return relationshipDAO.getRelationshipsBySourceConcept(concept.getId());
+        return relationshipDAO.getRelationshipsBySourceConcept(concept);
     }
 
-    @Override
-    public Map<Long, ArrayList<Relationship>> getRelationshipsBySourceConcepts(List<ConceptSMTK> concept) {
-        List<Long> conceptIds = new ArrayList<>();
-        for (ConceptSMTK conceptSMTK : concept) {
-            conceptIds.add(conceptSMTK.getId());
-        }
-        return relationshipDAO.getRelationshipsBySourceConcepts(conceptIds);
-    }
-
-    @Override
-    public RelationshipDefinitionFactory getRelationshipDefinitionFactory() {
-        return RelationshipDefinitionFactory.getInstance();
-    }
 }

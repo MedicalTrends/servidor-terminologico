@@ -36,6 +36,11 @@ public class TargetTypeDAOImpl implements TargetTypeDAO {
         String GET_BASIC_TYPE_INTERVAL_BY_ID = "{call semantikos.get_basic_type_interval_by_id(?)}";
         String GET_BASIC_DOMAIN_BY_ID = "{call semantikos.get_basic_domain_definition_by_id(?)}";
 
+        /*
+        String GET_BASIC_TYPE_BY_ID = "begin ? := stk.stk_pck_basic_type_definition.get_basic_type_definition_by_id(?); end;";
+        String GET_BASIC_TYPE_INTERVAL_BY_ID = "begin ? := stk.stk_pck_basic_type_definition.get_basic_type_definition_by_id(?); end;";
+        */
+
         try (Connection connection = connect.getConnection();
 
              CallableStatement call_basic_type = connection.prepareCall(GET_BASIC_TYPE_BY_ID);

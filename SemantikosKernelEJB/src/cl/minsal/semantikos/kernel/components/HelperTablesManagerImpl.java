@@ -46,17 +46,9 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
     }
 
     @Override
-    public List<HelperTableDataType> getAllDataTypes(){
-        return dao.getAllDataTypes();
-    }
-
-    @Override
     public HelperTableColumn createColumn(HelperTableColumn column) {
 
-
         HelperTableColumn createdColumn = dao.createColumn(column);
-
-
 
         return createdColumn;
     }

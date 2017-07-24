@@ -1,17 +1,16 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.QueryDAO;
-import cl.minsal.semantikos.kernel.factories.QueryFactory;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.browser.*;
+import cl.minsal.semantikos.model.businessrules.ConceptSearchBR;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.NoValidDescription;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;
-import cl.minsal.semantikos.model.queries.*;
 import cl.minsal.semantikos.model.relationships.*;
 
 import javax.ejb.EJB;
-import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +20,6 @@ import java.util.List;
  * Created by BluePrints Developer on 21-09-2016.
  */
 @Stateless
-@Remote(QueryManager.class)
 public class QueryManagerImpl implements QueryManager {
 
 
@@ -36,6 +34,9 @@ public class QueryManagerImpl implements QueryManager {
 
     @EJB
     private RelationshipManager relationshipManager;
+
+    @EJB
+    private ConceptSearchBR conceptSearchBR;
 
     @Override
     public GeneralQuery getDefaultGeneralQuery(Category category) {
@@ -73,7 +74,7 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
-    public List<ConceptSMTK> executeQuery(GeneralQuery query) throws Exception {
+    public List<ConceptSMTK> executeQuery(GeneralQuery query) {
 
         List<ConceptSMTK> conceptSMTKs = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
 
@@ -89,7 +90,11 @@ public class QueryManagerImpl implements QueryManager {
 
             if(!query.getColumns().isEmpty()) {
 
-                conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
+                //conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
+
+                conceptSMTK.setRelationships(queryDAO.getRelationshipsByColumns(conceptSMTK, query));
+
+                //query.getColumns().get(0).
 
                 // Adding second order columns, if this apply
 
@@ -132,7 +137,7 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
-    public List<Description> executeQuery(DescriptionQuery query) throws Exception {
+    public List<Description> executeQuery(DescriptionQuery query) {
 
         List<Description> descriptions = (List<Description>) (Object) queryDAO.executeQuery(query);
 
@@ -206,7 +211,7 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public List<ConceptSMTK> executeQuery(BrowserQuery query) {
 
-        query.setQuery(conceptManager.standardizationPattern(query.getQuery()));
+        query.setQuery(conceptSearchBR.standardizationPattern(query.getQuery()));
 
         List<ConceptSMTK> concepts = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
 

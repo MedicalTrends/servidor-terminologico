@@ -14,6 +14,8 @@ import javax.ejb.Singleton;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Collections.EMPTY_LIST;
+
 /**
  * @author Andrés Farías on 11/23/16.
  */
@@ -65,7 +67,7 @@ public class PendingTermAddingBR {
 
         /* Se obtienen descripciones similares (no hay busqueda exacta por el momento) */
         String termToAdd = pendingTerm.getTerm();
-        List<Description> descriptions = descriptionManager.searchDescriptionsByTerm(termToAdd, Arrays.asList(specialConceptCategory));
+        List<Description> descriptions = descriptionManager.searchDescriptionsByTerm(termToAdd, Arrays.asList(specialConceptCategory), EMPTY_LIST);
         for (Description description : descriptions) {
 
             /* Y se compara el término con el que se desea agregar */

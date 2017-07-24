@@ -21,8 +21,6 @@ public interface HelperTablesManager {
 
     HelperTableColumn updateColumn(HelperTableColumn column);
 
-    List<HelperTableDataType> getAllDataTypes();
-
     HelperTableColumn createColumn(HelperTableColumn column);
 
     List<HelperTableRow> getTableRows(long tableId);

@@ -16,7 +16,6 @@ public class TestEJB {
     @PersistenceContext(unitName = "SEMANTIKOS_PU")
     EntityManager em;
 
-
     public String getTest(){
 
         Query q = em.createNativeQuery("call semantikos.get_concept_count()");

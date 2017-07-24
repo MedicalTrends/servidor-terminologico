@@ -13,8 +13,6 @@ public interface HelperTableDAO {
 
     HelperTableColumn updateColumn(HelperTableColumn column);
 
-    List<HelperTableDataType> getAllDataTypes();
-
     HelperTableColumn createColumn(HelperTableColumn column);
 
     List<HelperTableRow> getTableRows(long tableId);
@@ -30,6 +28,8 @@ public interface HelperTableDAO {
     List<HelperTableRow> getRowBy(long tableId, boolean valid);
 
     HelperTableColumn getColumnById(long id);
+
+    List<HelperTableData> getCellsByRow(HelperTableRow helperTableRow);
 
     HelperTableRow updateRow(HelperTableRow row);
 

@@ -1,7 +1,8 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
+import cl.minsal.semantikos.kernel.daos.mappers.DescriptionMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DataSourceFactory;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.*;
@@ -9,18 +10,21 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.users.UserFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import oracle.jdbc.OracleConnection;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.*;
 import javax.interceptor.AroundInvoke;
+import javax.interceptor.Interceptors;
 import javax.interceptor.InvocationContext;
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
-import static cl.minsal.semantikos.model.DAO.NON_PERSISTED_ID;
-import static cl.minsal.semantikos.util.StringUtils.underScoreToCamelCaseJSON;
+import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
+import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
 import static java.lang.System.currentTimeMillis;
 import static java.sql.Types.TIMESTAMP;
 
@@ -28,6 +32,7 @@ import static java.sql.Types.TIMESTAMP;
  * @author Andres Farias.
  */
 @Stateless
+@Interceptors(value={net.bull.javamelody.MonitoringInterceptor.class})
 public class DescriptionDAOImpl implements DescriptionDAO {
 
     /** El logger para esta clase */
@@ -39,9 +44,12 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     @EJB
     private AuthDAO authDAO;
 
-    public static List<String> NO_VALID_TERMS = Arrays.asList(new String[]{"Concepto no válido", "Concepto no válido (concepto especial)"});
+    public static List<String> NO_VALID_TERMS = Arrays.asList(new String[] {"Concepto no válido", "Concepto no válido (concepto especial)"});
 
-    private Map<Long, ConceptSMTK> conceptSMTKMap = new HashMap<>();
+    Map<Long, ConceptSMTK> conceptSMTKMap = new HashMap<>();
+
+    @EJB
+    private DescriptionMapper descriptionMapper;
 
     @AroundInvoke
     public Object preConditions(InvocationContext ic) throws Exception {
@@ -50,51 +58,25 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     }
 
     @Override
-    public List<DescriptionType> getDescriptionTypes() {
-
-        ConnectionBD connect = new ConnectionBD();
-        ObjectMapper mapper = new ObjectMapper();
-        DescriptionType[] descriptionTypes = new DescriptionType[0];
-        String sql = "{call semantikos.get_all_description_types()}";
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.execute();
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                String resultJSON = rs.getString(1);
-                descriptionTypes = mapper.readValue(underScoreToCamelCaseJSON(resultJSON), DescriptionType[].class);
-            }
-        } catch (SQLException e) {
-            String errorMsg = "Error al recuperar descripciones de la BDD.";
-            logger.error(errorMsg, e);
-            throw new EJBException(e);
-        } catch (IOException e) {
-            String errorMsg = "Error al parsear los objetos a JSON.";
-            logger.error(errorMsg, e);
-            throw new EJBException(e);
-        }
-
-        return Arrays.asList(descriptionTypes);
-    }
-
-    @Override
     public NoValidDescription getNoValidDescriptionByID(long id) {
         ConnectionBD connect = new ConnectionBD();
 
         NoValidDescription noValidDescription = null;
 
-        String sql = "{call semantikos.get_description_by_id(?)}";
+        String sql = "begin ? := stk.stk_pck_description.get_description_by_id(?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, id);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, id);
             call.execute();
 
             logger.debug("Descripciones recuperadas con ID=" + id);
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
-                noValidDescription = createNoValidDescriptionFromResultSet(rs, null);
+                noValidDescription = descriptionMapper.createNoValidDescriptionFromResultSet(rs, null);
             }
 
         } catch (SQLException e) {
@@ -112,18 +94,20 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         ConnectionBD connect = new ConnectionBD();
         Description description = null;
 
-        String sql = "{call semantikos.get_description_by_id(?)}";
+        String sql = "begin ? := stk.stk_pck_description.get_description_by_id(?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, id);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, id);
             call.execute();
 
             logger.debug("Descripciones recuperadas con ID=" + id);
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                description = createDescriptionFromResultSet(rs, null);
+            ResultSet rs = (ResultSet) call.getObject(1);
 
+            while (rs.next()) {
+                description = descriptionMapper.createDescriptionFromResultSet(rs, null, conceptSMTKMap);
             }
 
         } catch (SQLException e) {
@@ -136,59 +120,24 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     }
 
     @Override
-    public Description getDescriptionById(long id) {
-
-        ConnectionBD connectionBD = new ConnectionBD();
-        String selectRecord = "{call semantikos.get_description_json_by_id(?)}";
-        ObjectMapper mapper = new ObjectMapper();
-        Description jsonRecord;
-        try (Connection connection = connectionBD.getConnection();
-             CallableStatement call = connection.prepareCall(selectRecord)) {
-
-            call.setLong(1,id);
-            /* Se prepara y realiza la consulta */
-            call.execute();
-            ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-
-                String json = rs.getString(1);
-
-                try {
-                    jsonRecord = mapper.readValue(underScoreToCamelCaseJSON(json), Description.class);
-                } catch (IOException e) {
-                    logger.error("Hubo un error procesar los resultados con JSON.", e);
-                    e.printStackTrace();
-                    throw new EJBException(e);
-                }
-
-            } else {
-                throw new EJBException("Error imposible en HelperTableDAOImpl");
-            }
-            rs.close();
-        } catch (SQLException e) {
-            logger.error("Hubo un error al acceder a la base de datos.", e);
-            throw new EJBException(e);
-        }
-
-        return jsonRecord;
-    }
-
-    @Override
     public Description getDescriptionByDescriptionID(String descriptionId) {
         ConnectionBD connect = new ConnectionBD();
         Description description= null;
 
-        String sql = "{call semantikos.get_description_by_business_id(?)}";
+        String sql = "begin ? := stk.stk_pck_description.get_description_by_business_id(?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, descriptionId);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, descriptionId);
             call.execute();
 
             logger.debug("Descripciones recuperadas con Business ID=" + descriptionId);
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             if (rs.next()) {
-                description = createDescriptionFromResultSet(rs, null);
+                description = descriptionMapper.createDescriptionFromResultSet(rs, null, conceptSMTKMap);
             } else {
                 throw new IllegalArgumentException("No existe una descripción con DESCRIPTION_ID = " + descriptionId);
             }
@@ -208,18 +157,22 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         //ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
 
-        String sql = "{call semantikos.get_descriptions_by_idconcept(?)}";
+        String sql = "begin ? := stk.stk_pck_description.get_descriptions_by_idconcept(?); end;";
+
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             long idConcept = conceptSMTK.getId();
-            call.setLong(1, idConcept);
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idConcept);
             call.execute();
 
             logger.debug("Descripciones recuperadas para concepto con ID=" + idConcept);
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
-                Description description = createDescriptionFromResultSet(rs, conceptSMTK);
+                Description description = descriptionMapper.createDescriptionFromResultSet(rs, conceptSMTK, conceptSMTKMap);
                 descriptions.add(description);
             }
 
@@ -235,6 +188,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     @Override
     public Description persist(Description description, User user) {
 
+        ConnectionBD connect = new ConnectionBD();
         /*
          * param1: ID
          * param 2: DesType ID
@@ -247,41 +201,43 @@ public class DescriptionDAOImpl implements DescriptionDAO {
          * param 9: id user
          * param 10: id concepto
          */
-        String sql = "{call semantikos.create_description(?,?,?,?,?,?,?,?,?,?,?)}";
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        String sql = "begin ? := stk.stk_pck_description.create_description(?,?,?,?,?,?,?,?,?,?,?); end;";
+
+        try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, description.getDescriptionId());
-            call.setLong(2, description.getDescriptionType().getId());
-            call.setString(3, description.getTerm());
-            call.setBoolean(4, description.isCaseSensitive());
-            call.setBoolean(5, description.isAutogeneratedName());
-            call.setBoolean(7, description.isPublished());
-            call.setBoolean(8, description.isModeled());
-            call.setLong(9, user.getId());
-            call.setLong(10, description.getConceptSMTK().getId());
-            call.setTimestamp(11, description.getCreationDate());
+            call.registerOutParameter (1, Types.NUMERIC);
+            call.setString(2, description.getDescriptionId());
+            call.setLong(3, description.getDescriptionType().getId());
+            call.setString(4, description.getTerm());
+            call.setBoolean(5, description.isCaseSensitive());
+            call.setBoolean(6, description.isAutogeneratedName());
+            call.setBoolean(8, description.isPublished());
+            call.setBoolean(9, description.isModeled());
+            call.setLong(10, user.getId());
+            call.setLong(11, description.getConceptSMTK().getId());
+            call.setTimestamp(12, description.getCreationDate());
 
             /* Y el caso especial "nulo" del validity until */
             Timestamp validityUntil = description.getValidityUntil();
             if (validityUntil == null) {
-                call.setNull(6, TIMESTAMP);
+                call.setNull(7, TIMESTAMP);
             } else {
-                call.setTimestamp(6, validityUntil);
+                call.setTimestamp(7, validityUntil);
             }
 
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (rs.next()) {
-                description.setId(rs.getLong(1));
+            if (call.getLong(1) > 0) {
+                description.setId(call.getLong(1));
             } else {
                 String errorMsg = "La descripción no fue creada. Contacte a Desarrollo";
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
-            rs.close();
+            //rs.close();
         } catch (SQLException e) {
             throw new EJBException(e);
         }
@@ -298,12 +254,16 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     @Override
     public void deleteDescription(Description description) {
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.delete_description(?)}";
+
+        String sql = "begin ? := stk.stk_pck_description.delete_description(?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, description.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, description.getId());
             call.execute();
+
         } catch (SQLException e) {
             logger.error("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue eliminada.", e);
             throw new EJBException("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue eliminada.", e);
@@ -313,35 +273,36 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     @Override
     public void update(Description description) {
 
-        String sql = "{call semantikos.update_description(?,?,?,?,?,?,?,?,?,?,?,?)}";
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_description.update_description(?,?,?,?,?,?,?,?,?,?,?,?); end;";
+
+        try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, description.getId());
-            call.setString(2, description.getDescriptionId());
-            call.setLong(3, description.getDescriptionType().getId());
-            call.setString(4, description.getTerm());
-            call.setBoolean(5, description.isCaseSensitive());
-            call.setBoolean(6, description.isAutogeneratedName());
-            call.setBoolean(7, description.isPublished());
-            call.setBoolean(8, description.isModeled());
-            call.setLong(9, description.getUses());
-            call.setTimestamp(10, description.getValidityUntil());
-            call.setLong(11, description.getConceptSMTK().getId());
-            call.setTimestamp(12, description.getCreationDate());
+            call.registerOutParameter (1, Types.NUMERIC);
+            call.setLong(2, description.getId());
+            call.setString(3, description.getDescriptionId());
+            call.setLong(4, description.getDescriptionType().getId());
+            call.setString(5, description.getTerm());
+            call.setBoolean(6, description.isCaseSensitive());
+            call.setBoolean(7, description.isAutogeneratedName());
+            call.setBoolean(8, description.isPublished());
+            call.setBoolean(9, description.isModeled());
+            call.setLong(10, description.getUses());
+            call.setTimestamp(11, description.getValidityUntil());
+            call.setLong(12, description.getConceptSMTK().getId());
+            call.setTimestamp(13, description.getCreationDate());
             call.execute();
 
-            ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                if (!rs.getBoolean(1)) {
-                    throw new EJBException("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue actualizada.");
-                }
-            } else {
+            //ResultSet rs = (ResultSet) call.getObject(1);
+
+            if (call.getLong(1) == 0) {
                 String errorMsg = "La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue actualizada.";
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
-            rs.close();
+            //rs.close();
         } catch (SQLException e) {
             logger.error("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue actualizada.", e);
             throw new EJBException("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue actualizada.", e);
@@ -352,14 +313,20 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     public List<ObservationNoValid> getObservationsNoValid() {
         ConnectionBD connect = new ConnectionBD();
         List<ObservationNoValid> observationNoValids= new ArrayList<>();
-        String sql = "{call semantikos.get_all_not_valid_observation()}";
+
+        String sql = "begin ? := stk.stk_pck_description.get_all_not_valid_observation; end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
-            ResultSet rs = call.getResultSet();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 Long id = rs.getLong("id");
-                String description = rs.getString("description");
+                String description = rs.getString("observation");
                 observationNoValids.add(new ObservationNoValid(id,description));
             }
 
@@ -376,12 +343,17 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     public ObservationNoValid getObservationNoValidBy(Description description) {
         ConnectionBD connect = new ConnectionBD();
         ObservationNoValid observationNoValid= null;
-        String sql = "{call semantikos.get_observation_no_valid_by_description(?)}";
+
+        String sql = "begin ? := stk.stk_pck_description.get_observation_no_valid_by_description(?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
-            call.setLong(1, description.getId());
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, description.getId());
             call.execute();
-            ResultSet rs = call.getResultSet();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
                 Long id = rs.getLong("id");
@@ -402,12 +374,16 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     public List<ConceptSMTK> getSuggestedConceptsBy(Description description) {
         ConnectionBD connect = new ConnectionBD();
         List<ConceptSMTK> suggestedConcepts = new ArrayList<>();
-        String sql = "{call semantikos.get_concept_suggested(?)}";
+
+        String sql = "begin ? := stk.stk_pck_description.get_concept_suggested(?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
-            call.setLong(1, description.getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, description.getId());
             call.execute();
-            ResultSet rs = call.getResultSet();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
                 ConceptSMTK recoveredConcept = conceptDAO.getConceptByID(rs.getLong("id"));
@@ -427,61 +403,35 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     public void setInvalidDescription(NoValidDescription noValidDescription) {
         ConnectionBD connect = new ConnectionBD();
 
-        String sql1 = "{call semantikos.persist_observation_to_description_no_valid(?,?)}";
-        String sql2 = "{call semantikos.persist_concept_suggested_to_description_no_valid(?,?)}";
+        String sql1 = "begin ? := stk.stk_pck_description.persist_observation_to_description_no_valid(?,?); end;";
+        String sql2 = "begin ? := stk.stk_pck_description.persist_concept_suggested_to_description_no_valid(?,?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call1 = connection.prepareCall(sql1);
              CallableStatement call2 = connection.prepareCall(sql2)) {
 
             /* Se registra la observación primero */
-            call1.setLong(1, noValidDescription.getNoValidDescription().getId());
-            call1.setLong(2, noValidDescription.getObservation());
+            call1.registerOutParameter (1, OracleTypes.CURSOR);
+            call1.setLong(2, noValidDescription.getNoValidDescription().getId());
+            call1.setLong(3, noValidDescription.getObservation());
             call1.execute();
-
 
             /* Se guardan los conceptos sugeridos para dicha descripción */
             List<ConceptSMTK> suggestedConcepts = noValidDescription.getSuggestedConcepts();
-            call2.setLong(1, noValidDescription.getNoValidDescription().getId());
+
+            call2.registerOutParameter (1, OracleTypes.CURSOR);
+            call2.setLong(2, noValidDescription.getNoValidDescription().getId());
+
             for (ConceptSMTK suggestedConcept : suggestedConcepts) {
-                call2.setLong(2, suggestedConcept.getId());
+                call2.setLong(3, suggestedConcept.getId());
                 call2.execute();
             }
-        } catch (SQLException e) {
-            String errorMsg = "Error al recuperar descripciones de la BDD.";
-            logger.error(errorMsg, e);
-            throw new EJBException(e);
-        }
-    }
-
-    @Override
-    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories) {
-        ConnectionBD connect = new ConnectionBD();
-        List<Description> descriptions = new ArrayList<>();
-
-        String sql = "{call semantikos.search_descriptions_by_term_and_categories(?,?)}";
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.setString(1, term);
-            //call.setString(1, term.toLowerCase());
-            Category[] entities = categories.toArray(new Category[categories.size()]);
-            call.setArray(2, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
-            call.execute();
-
-            logger.debug("Búsqueda exacta descripciones con término =" + term);
-            ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                Description description = createDescriptionFromResultSet(rs, null);
-                descriptions.add(description);
-            }
 
         } catch (SQLException e) {
             String errorMsg = "Error al recuperar descripciones de la BDD.";
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }
-
-        return descriptions;
     }
 
     @Override
@@ -492,20 +442,23 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
 
-        String sql = "{call semantikos.search_descriptions_by_term_and_categories_and_refsets(?,?,?)}";
+        String sql = "begin ? := stk.stk_pck_description.search_descriptions(?,?,?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, term.toLowerCase());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, term.toLowerCase());
             Category[] entities = categories.toArray(new Category[categories.size()]);
             RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
-            call.setArray(2, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
-            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
+            call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", convertListPersistentToListID(entities)));
+            call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", convertListPersistentToListID(refsetEntities)));
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
-                Description description = createDescriptionFromResultSet(rs, null);
+                Description description = descriptionMapper.createDescriptionFromResultSet(rs, null, conceptSMTKMap);
                 descriptions.add(description);
             }
 
@@ -532,21 +485,24 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         List<Description> descriptions = new ArrayList<>();
 
-        String sql = "{call semantikos.search_descriptions_perfect_match(?,?,?)}";
+        String sql = "begin ? := stk.stk_pck_description.search_descriptions_perfect_match(?,?,?); end;";
+
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, term.toLowerCase());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, term.toLowerCase());
             Category[] entities = categories.toArray(new Category[categories.size()]);
             RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
-            call.setArray(2, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
-            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
+            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
+            call.setArray(4, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
 
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
-                Description description = createDescriptionFromResultSet(rs, null);
+                Description description = descriptionMapper.createDescriptionFromResultSet(rs, null, conceptSMTKMap);
                 //Description description = getDescriptionById(rs.getLong("id"));
                 descriptions.add(description);
             }
@@ -570,20 +526,23 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
 
-        String sql = "{call semantikos.search_descriptions_truncate_match(?,?,?)}";
+        String sql = "begin ? := stk.stk_pck_description.search_descriptions_truncate_match(?,?,?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, term.toLowerCase());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, term.toLowerCase());
             Category[] entities = categories.toArray(new Category[categories.size()]);
             RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
-            call.setArray(2, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
-            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
+            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
+            call.setArray(4, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
-                Description description = createDescriptionFromResultSet(rs, null);
+                Description description = descriptionMapper.createDescriptionFromResultSet(rs, null, conceptSMTKMap);
                 descriptions.add(description);
             }
 
@@ -606,18 +565,21 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
 
-        String sql = "{call semantikos.search_descriptions_suggested_alt(?,?,?)}";
+        String sql = "begin ? := stk.stk_pck_description.search_descriptions_suggested(?,?,?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, term.toLowerCase());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, term.toLowerCase());
             Category[] entities = categories.toArray(new Category[categories.size()]);
             RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
-            call.setArray(2, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
-            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
+            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
+            call.setArray(4, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
             while (rs.next()) {
                 //Description description = createDescriptionFromResultSet(rs, null);
                 descriptions.add(getDescriptionBy(rs.getLong(1)));
@@ -643,18 +605,20 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         List<Description> descriptions = new ArrayList<>();
         int count = 0;
 
-        String sql = "{call semantikos.count_descriptions_suggested_alt(?,?,?)}";
+        String sql = "begin ? := stk.stk_pck_description.count_descriptions_suggested(?,?,?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, term.toLowerCase());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, term.toLowerCase());
             Category[] entities = categories.toArray(new Category[categories.size()]);
             RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
-            call.setArray(2, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
-            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
+            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
+            call.setArray(4, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
                 count = Integer.parseInt(rs.getString("count"));
@@ -671,34 +635,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         return count;
     }
 
-    @Override
-    public void updateSearchIndexes(Description description) {
-
-        ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.update_description_search_indexes(?)}";
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.setLong(1, description.getId());
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                if (!rs.getBoolean(1)) {
-                    throw new EJBException("Los índices de búsqueda de la descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fueron actualizados.");
-                }
-            } else {
-                String errorMsg = "Los índices de búsqueda de la descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fueron actualizados.";
-                logger.error(errorMsg);
-                throw new EJBException(errorMsg);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            logger.error("Los índices de búsqueda de la descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fueron actualizados.", e);
-            throw new EJBException("Los índices de búsqueda de la descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fueron actualizados.", e);
-        }
-    }
 
     private Long[] convertListPersistentToListID(PersistentEntity[] entities) {
 
@@ -709,88 +645,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         }
 
         return listIDs.toArray(new Long[entities.length]);
-    }
-
-    private Description createDescriptionFromResultSet(ResultSet resultSet, ConceptSMTK conceptSMTK) throws SQLException {
-
-        long id = resultSet.getLong("id");
-
-        /*
-         * Try y catch ignored porque no todas las funciones de la BD que recuperan Descriptions de la BD traen esta columna.
-         * Ej: Usar la funcion semantikos.get_descriptions_by_idconcept para recueprar conceptos se cae con la excepcion:
-         * org.postgresql.util.PSQLException: The column name uses was not found in this ResultSet.
-         */
-        String descriptionID = resultSet.getString("description_id");
-        long idDescriptionType = resultSet.getLong("id_description_type");
-        String term = resultSet.getString("term");
-        boolean isCaseSensitive = resultSet.getBoolean("case_sensitive");
-        boolean isAutoGenerated = resultSet.getBoolean("autogenerated");
-        boolean isPublished = resultSet.getBoolean("is_published");
-        boolean isModeled = resultSet.getBoolean("is_modeled");
-        Timestamp validityUntil = resultSet.getTimestamp("validity_until");
-        Timestamp creationDate = resultSet.getTimestamp("creation_date");
-        long uses = resultSet.getLong("uses");
-
-
-        long idUser = resultSet.getLong("id_user");
-
-        User user = UserFactory.getInstance().findUserById(idUser);//authDAO.getUserById();
-
-        long idConcept = resultSet.getLong("id_concept");
-
-        ConceptSMTK conceptByID = null;
-
-        if (conceptSMTK == null) {
-            if(conceptSMTKMap.containsKey(idConcept)) {
-                conceptByID = conceptSMTKMap.get(idConcept);
-            }
-            else {
-                conceptByID = conceptDAO.getConceptByID(idConcept);
-                conceptSMTKMap.put(idConcept, conceptByID);
-            }
-        } else {
-            conceptByID = conceptSMTK;
-        }
-
-        DescriptionType descriptionType = DescriptionTypeFactory.getInstance().getDescriptionTypeByID(idDescriptionType);
-        Description description = new Description(id, conceptByID, descriptionID, descriptionType, term, uses,
-                isCaseSensitive, isAutoGenerated, isPublished,
-                validityUntil, creationDate, user, isModeled);
-
-        return description;
-    }
-
-    private NoValidDescription createNoValidDescriptionFromResultSet(ResultSet resultSet, ConceptSMTK conceptSMTK) throws SQLException {
-
-        long id = resultSet.getLong("id");
-        String descriptionID = resultSet.getString("description_id");
-        long idDescriptionType = resultSet.getLong("id_description_type");
-        String term = resultSet.getString("term");
-        boolean isCaseSensitive = resultSet.getBoolean("case_sensitive");
-        boolean isAutoGenerated = resultSet.getBoolean("autogenerated");
-        boolean isPublished = resultSet.getBoolean("is_published");
-        boolean isModeled = resultSet.getBoolean("is_modeled");
-        Timestamp validityUntil = resultSet.getTimestamp("validity_until");
-        Timestamp creationDate = resultSet.getTimestamp("creation_date");
-        long uses = resultSet.getLong("uses");
-
-        User user = authDAO.getUserById(resultSet.getLong("id_user"));
-
-        long idConcept = resultSet.getLong("id_concept");
-
-        ConceptSMTK conceptByID;
-        if (conceptSMTK == null) {
-            conceptByID = conceptDAO.getConceptByID(idConcept);
-        } else {
-            conceptByID = conceptSMTK;
-        }
-
-        DescriptionType descriptionType = DescriptionTypeFactory.getInstance().getDescriptionTypeByID(idDescriptionType);
-        Description description = new Description(id, conceptByID, descriptionID, descriptionType, term, 0, isCaseSensitive, isAutoGenerated, isPublished, validityUntil, creationDate, user, isModeled);
-        description.setUses(uses);
-        ObservationNoValid observationNoValid = getObservationNoValidBy(description);
-        List<ConceptSMTK> suggestedConcepts = getSuggestedConceptsBy(description);
-        return new NoValidDescription(description, observationNoValid, suggestedConcepts);
     }
 
     @Override
@@ -816,52 +670,5 @@ public class DescriptionDAOImpl implements DescriptionDAO {
      */
     private boolean isPersistent(Description description) {
         return description.getId() != NON_PERSISTED_ID;
-    }
-}
-
-class DescriptionTypeDTO {
-
-    private long id;
-    private String name;
-    private String description;
-
-    public DescriptionTypeDTO() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public DescriptionType getDescriptionType() {
-        return new DescriptionType(this.id, this.name, this.description);
-    }
-
-    @Override
-    public String toString() {
-        return "DescriptionTypeDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                '}';
     }
 }

@@ -1,10 +1,10 @@
 package cl.minsal.semantikos.kernel.components;
 
 
-import cl.minsal.semantikos.kernel.businessrules.*;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.kernel.util.IDGenerator;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.*;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
@@ -13,7 +13,8 @@ import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.*;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.validation.constraints.NotNull;
@@ -46,127 +47,86 @@ public class DescriptionManagerImpl implements DescriptionManager {
     /* El conjunto de reglas de negocio para validar creación de descripciones */
     private DescriptionCreationBR descriptionCreationBR = new DescriptionCreationBR();
 
-    private boolean exceptions = false;
-
-    /*
-    @AroundInvoke
-    public Object postActions(InvocationContext ic) throws Exception {
-        try {
-            return ic.proceed();
-        }
-        catch(BusinessRuleException e) {
-            throw e;
-        }
-        finally {
-            if(!exceptions) {
-                if(Arrays.asList(new String[]{"createDescription", "bindDescriptionToConcept", "updateDescription"}).contains(ic.getMethod().getName())) {
-                    for (Object o : ic.getParameters()) {
-                        if(o instanceof Description) {
-                            descriptionDAO.updateSearchIndexes((Description)o);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    */
-
     @Override
     public void createDescription(Description description, boolean editionMode, User user) {
 
-        try {
-            /* Reglas de negocio previas */
-            ConceptSMTK conceptSMTK = description.getConceptSMTK();
-            DescriptionCreationBR descriptionCreationBR1 = new DescriptionCreationBR();
-            descriptionCreationBR1.validatePreConditions(conceptSMTK, description, categoryManager, editionMode);
+        /* Reglas de negocio previas */
+        ConceptSMTK conceptSMTK = description.getConceptSMTK();
+        DescriptionCreationBR descriptionCreationBR1 = new DescriptionCreationBR();
+        descriptionCreationBR1.validatePreConditions(conceptSMTK, description, categoryManager, editionMode);
 
-            descriptionCreationBR1.applyRules(conceptSMTK, description.getTerm(), description.getDescriptionType(), user, categoryManager);
+        descriptionCreationBR1.applyRules(conceptSMTK, description.getTerm(), description.getDescriptionType(), user, categoryManager);
 
-            if (!description.isPersistent()) {
-                descriptionDAO.persist(description, user);
-                description.setDescriptionId(generateDescriptionId(description.getId()));
-                descriptionDAO.update(description);
-            }
+        if (!description.isPersistent()) {
+            descriptionDAO.persist(description, user);
+            description.setDescriptionId(generateDescriptionId(description.getId()));
+            descriptionDAO.update(description);
+        }
 
         /* Si el concepto al cual se agrega la descripción está modelado, se registra en el historial */
-            if (conceptSMTK.isModeled()) {
-                auditManager.recordDescriptionCreation(description, user);
-            }
-        }
-        catch (BusinessRuleException e) {
-            exceptions = true;
-            throw e;
+        if (conceptSMTK.isModeled()) {
+            auditManager.recordDescriptionCreation(description, user);
         }
     }
 
     @Override
     public Description bindDescriptionToConcept(ConceptSMTK concept, String term, boolean caseSensitive, DescriptionType descriptionType, User user) {
 
-        try {
-            /* Se aplican las reglas de negocio para crear la Descripción*/
-            descriptionCreationBR.applyRules(concept, term, descriptionType, user, categoryManager);
+        /* Se aplican las reglas de negocio para crear la Descripción*/
+        descriptionCreationBR.applyRules(concept, term, descriptionType, user, categoryManager);
 
-            /* Se crea la descripción */
-            Description description = new Description(concept, term, descriptionType);
-            description.setDescriptionId("");
-            description.setCaseSensitive(caseSensitive);
+        /* Se crea la descripción */
+        Description description = new Description(concept, term, descriptionType);
+        description.setDescriptionId("");
+        description.setCaseSensitive(caseSensitive);
 
-            /* Se aplican las reglas de negocio para crear la Descripción y se persiste y asocia al concepto */
-            new DescriptionBindingBR().applyRules(concept, description, user);
-            descriptionDAO.persist(description, user);
-            description.setDescriptionId(generateDescriptionId(description.getId()));
-            descriptionDAO.update(description);
-            if (!concept.getDescriptions().contains(description)) {
-                concept.addDescription(description);
-            }
-
-            /* Se retorna la descripción persistida */
-            return description;
+        /* Se aplican las reglas de negocio para crear la Descripción y se persiste y asocia al concepto */
+        new DescriptionBindingBR().applyRules(concept, description, user);
+        descriptionDAO.persist(description, user);
+        description.setDescriptionId(generateDescriptionId(description.getId()));
+        descriptionDAO.update(description);
+        if (!concept.getDescriptions().contains(description)) {
+            concept.addDescription(description);
         }
-        catch (BusinessRuleException e) {
-            exceptions = true;
-            throw e;
-        }
+
+        /* Se retorna la descripción persistida */
+        return description;
     }
 
     @Override
     public Description bindDescriptionToConcept(ConceptSMTK concept, Description description, boolean editionMode, User user) {
 
-            /*
-             * Se aplican las pre-condiciones para asociar la descripción al concepto. En particular hay que validar que
-             * no exista el término dentro de la misma categoría
-             */
-            descriptionCreationBR.validatePreConditions(concept, description, categoryManager, editionMode);
+        /*
+         * Se aplican las pre-condiciones para asociar la descripción al concepto. En particular hay que validar que
+         * no exista el término dentro de la misma categoría
+         */
+        descriptionCreationBR.validatePreConditions(concept, description, categoryManager, editionMode);
 
-            /* Se aplican las reglas de negocio para crear la Descripción y se persiste y asocia al concepto */
-            new DescriptionBindingBR().applyRules(concept, description, user);
+        /* Se aplican las reglas de negocio para crear la Descripción y se persiste y asocia al concepto */
+        new DescriptionBindingBR().applyRules(concept, description, user);
 
-            /* Se hace la relación a nivel lógico del modelo */
-            if (!concept.getDescriptions().contains(description)) {
-                concept.addDescription(description);
-                description.setConceptSMTK(concept);
-            }
+        /* Se hace la relación a nivel lógico del modelo */
+        if (!concept.getDescriptions().contains(description)) {
+            concept.addDescription(description);
+            description.setConceptSMTK(concept);
+        }
 
-            /* Lo esperable es que la descripción no se encontrara persistida */
-            if (!description.isPersistent()) {
-                descriptionDAO.persist(description, user);
-                description.setDescriptionId(generateDescriptionId(description.getId()));
-                /* Se hereda el estado del concepto */
-                description.setModeled(concept.isModeled());
-                descriptionDAO.update(description);
-            }
+        /* Lo esperable es que la descripción no se encontrara persistida */
+        if (!description.isPersistent()) {
+            descriptionDAO.persist(description, user);
+            description.setDescriptionId(generateDescriptionId(description.getId()));
+            descriptionDAO.update(description);
+        }
 
-            //descriptionDAO.update(description);
+        descriptionDAO.update(description);
 
-            /* Registrar en el Historial si es preferida (Historial BR) */
-            if (description.getConceptSMTK().isModeled()) {
-                auditManager.recordDescriptionCreation(description, user);
-            }
+        /* Registrar en el Historial si es preferida (Historial BR) */
+        if (description.getConceptSMTK().isModeled()) {
+            auditManager.recordDescriptionCreation(description, user);
+        }
 
-            /* Se retorna la descripción persistida */
-            return description;
-
+        /* Se retorna la descripción persistida */
+        return description;
     }
 
     @Override
@@ -193,27 +153,21 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
         logger.info("Se actualizan descripciones. \nOriginal: " + initDescription + "\nFinal: " + finalDescription);
 
-        try {
-            /* Se aplican las reglas de negocio */
-            new DescriptionEditionBR().validatePreConditions(initDescription, finalDescription);
+        /* Se aplican las reglas de negocio */
+        new DescriptionEditionBR().validatePreConditions(initDescription, finalDescription);
 
-            /* Se actualiza el modelo de negocio primero */
-                if(initDescription.getConceptSMTK().getId()!=finalDescription.getConceptSMTK().getId()){
-                    finalDescription.setId(PersistentEntity.NON_PERSISTED_ID);
-                    descriptionDAO.invalidate(initDescription);
-                    finalDescription.setConceptSMTK(conceptSMTK);
-                    this.bindDescriptionToConcept(conceptSMTK, finalDescription, true, user);
-                }else{
-                    descriptionDAO.update(finalDescription);
-                }
+        /* Se actualiza el modelo de negocio primero */
+        if(initDescription.getConceptSMTK().getId()!=finalDescription.getConceptSMTK().getId()){
+            finalDescription.setId(PersistentEntity.NON_PERSISTED_ID);
+            descriptionDAO.invalidate(initDescription);
+            finalDescription.setConceptSMTK(conceptSMTK);
+            this.bindDescriptionToConcept(conceptSMTK, finalDescription, true, user);
+        }else{
+            descriptionDAO.update(finalDescription);
+        }
 
-            /* Registrar en el Historial si es preferida (Historial BR) */
-                auditManager.recordFavouriteDescriptionUpdate(conceptSMTK, initDescription, user);
-        }
-        catch (BusinessRuleException e) {
-            exceptions = true;
-            throw e;
-        }
+        /* Registrar en el Historial si es preferida (Historial BR) */
+        auditManager.recordFavouriteDescriptionUpdate(conceptSMTK, initDescription, user);
     }
 
 
@@ -242,8 +196,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
         ConceptSMTK targetConcept = description.getConceptSMTK();
 
         /* Se aplican las reglas de negocio para el traslado */
-        DescriptionTranslationBRImpl descriptionTranslationBRImpl = new DescriptionTranslationBRImpl();
-        descriptionTranslationBRImpl.validatePreConditions(sourceConcept,description, targetConcept, conceptManager, categoryManager);
+        DescriptionTranslationBR descriptionTranslationBR = new DescriptionTranslationBR();
+        descriptionTranslationBR.validatePreConditions(sourceConcept,description, targetConcept, conceptManager, categoryManager);
 
         /* Se realiza la actualización a nivel del modelo lógico */
 
@@ -258,7 +212,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         description.setConceptSMTK(targetConcept);
 
         /* Se aplican las reglas de negocio asociadas al movimiento de un concepto */
-        descriptionTranslationBRImpl.apply(sourceConcept, targetConcept, description, conceptManager, categoryManager);
+        descriptionTranslationBR.apply(sourceConcept, targetConcept, description, conceptManager, categoryManager);
 
         /*Se cambia el estado de la descripción segun el concepto*/
 
@@ -340,11 +294,6 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
-    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories) {
-        return descriptionDAO.searchDescriptionsByTerm(term, categories);
-    }
-
-    @Override
     public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
         List<Description> descriptions = descriptionDAO.searchDescriptionsByTerm(term, categories, refSets);
@@ -357,7 +306,6 @@ public class DescriptionManagerImpl implements DescriptionManager {
     public List<Description> searchDescriptionsPerfectMatch(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
         List<Description> descriptions = descriptionDAO.searchDescriptionsPerfectMatch(term, categories, refSets);
-        new DescriptionSearchBR().applyPostActions(descriptions);
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
@@ -367,7 +315,6 @@ public class DescriptionManagerImpl implements DescriptionManager {
     public List<Description> searchDescriptionsTruncateMatch(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
         List<Description> descriptions = descriptionDAO.searchDescriptionsTruncateMatch(term, categories, refSets);
-        new DescriptionSearchBR().applyPostActions(descriptions);
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
@@ -377,7 +324,6 @@ public class DescriptionManagerImpl implements DescriptionManager {
     public List<Description> searchDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
         List<Description> descriptions = descriptionDAO.searchDescriptionsSuggested(term, categories, refSets);
-        new DescriptionSearchBR().applyPostActions(descriptions);
         logger.info("searchDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
         logger.info("searchDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
@@ -457,10 +403,5 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
         /* Finalmente se retorna */
         return descriptionByDescriptionID;
-    }
-
-    @Override
-    public DescriptionTypeFactory getDescriptionTypeFactory() {
-        return DescriptionTypeFactory.getInstance();
     }
 }

@@ -10,7 +10,10 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
+import javax.interceptor.Interceptors;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -19,7 +22,6 @@ import java.util.List;
 @Local
 public interface DescriptionDAO {
 
-    public List<DescriptionType> getDescriptionTypes();
 
     public NoValidDescription getNoValidDescriptionByID(long id);
 
@@ -31,15 +33,6 @@ public interface DescriptionDAO {
      * @return Una descripción fresca desde la base de datos.
      */
     public Description getDescriptionBy(long id);
-
-    /**
-     * Este método es responsable de recuperar una descripción desde la BDD a partir de su llave primaria.
-     *
-     * @param id La llave de la descripción que se desea recuperar.
-     *
-     * @return Una descripción fresca desde la base de datos.
-     */
-    public Description getDescriptionById(long id);
 
     /**
      * Este método es responsable de recuperar una descripción desde la BDD a partir de su identificador de negocio, el
@@ -59,17 +52,6 @@ public interface DescriptionDAO {
      * @return La lista de las descripciones del concepto cuyo ID fue dado.
      */
     public List<Description> getDescriptionsByConcept(ConceptSMTK conceptSMTK);
-
-    /**
-     * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
-     * parámetro en cada una de las categorías indicadas.
-     *
-     * @param term       El término buscado.
-     * @param categories Las categorías en donde se realiza la búsqueda.
-     *
-     * @return Todas las descripciones que poseen exactamente el término <code>term</code>.
-     */
-    List<Description> searchDescriptionsByTerm(String term, List<Category> categories);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
@@ -170,5 +152,4 @@ public interface DescriptionDAO {
 
     public List<ConceptSMTK> getSuggestedConceptsBy(Description description);
 
-    void updateSearchIndexes(Description description);
 }
