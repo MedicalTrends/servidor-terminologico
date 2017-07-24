@@ -582,10 +582,12 @@ public class QueryDAOImpl implements QueryDAO {
             if(param.isArray()){
                 //call.setNull(paramNumber, Types.ARRAY);
                 if(param.getType() == String.class) {
-                    call.setArray(paramNumber, connection.unwrap(OracleConnection.class).createARRAY("STK.TEXT_ARRAY",null));
+                    call.setNull(paramNumber, Types.ARRAY, "STK.TEXT_ARRAY");
+                    //call.setArray(paramNumber, connection.unwrap(OracleConnection.class).createARRAY("STK.TEXT_ARRAY",null));
                 }
                 if(param.getType() == Long.class) {
-                    call.setArray(paramNumber, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY",null));
+                    call.setNull(paramNumber, Types.ARRAY, "STK.NUMBER_ARRAY");
+                    //call.setArray(paramNumber, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY",null));
                 }
 
                 return;
