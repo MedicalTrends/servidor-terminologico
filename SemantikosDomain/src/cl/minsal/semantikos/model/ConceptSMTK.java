@@ -737,6 +737,16 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         return this.getRelationships().contains(relationship);
     }
 
+
+    public void replaceDescriptionByTerm(Description description) {
+        for (Description aDescription : descriptions) {
+            if(aDescription.getTerm().equals(description.getTerm())) {
+                aDescription.overWrite(description);
+                return;
+            }
+        }
+    }
+
     public boolean isModeled() {
         return this.modeled;
     }

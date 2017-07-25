@@ -227,6 +227,13 @@ public class Description extends PersistentEntity implements AuditableEntity, Se
         this.creatorUser = creatorUser;
     }
 
+    public void overWrite(Description description) {
+        setDescriptionType(description.descriptionType);
+        setCaseSensitive(description.isCaseSensitive);
+        setModeled(description.modeled);
+        setPublished(description.isPublished);
+    }
+
     /**
      * Este método es responsable de dar la representación de la descripción.
      * En particular, hay una BR que indica que para las descripciones FSN siempre se debe mostrar concatenado con el
@@ -258,4 +265,5 @@ public class Description extends PersistentEntity implements AuditableEntity, Se
     public String fullToString(){
         return this.term + "[ID=" + this.getId() + ", DESCRIPTION_ID=" + this.descriptionID + " Type=" + this.descriptionType + "]";
     }
+
 }

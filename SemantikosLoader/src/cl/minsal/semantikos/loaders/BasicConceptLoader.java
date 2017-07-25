@@ -183,7 +183,15 @@ public class BasicConceptLoader extends EntityLoader {
             description.setCreatorUser(user);
 
             if(descriptionMap.containsKey(conceptSMTK.getCategory().getId()+description.getTerm())) {
-                SMTKLoader.logWarning(new LoadLog("Término repetido para descripción "+description.toString()+". Se descarta descripción", INFO));
+                if(description.getDescriptionType().equals(DescriptionType.PREFERIDA) ||
+                   description.getDescriptionType().equals(DescriptionType.FSN)) {
+                    SMTKLoader.logWarning(new LoadLog("Término repetido para descripción "+description.toString()+". Se reemplaza por descripcion actual", INFO));
+                    conceptSMTK.replaceDescriptionByTerm(description);
+                }
+                else {
+                    SMTKLoader.logWarning(new LoadLog("Término repetido para descripción "+description.toString()+". Se descarta descripcion", INFO));
+                }
+
             }
             else {
                 descriptionMap.put(conceptSMTK.getCategory().getId()+description.getTerm(), description);
