@@ -41,20 +41,19 @@ public class RefSetDAOImpl implements RefSetDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setString(2, refSet.getName());
             call.setLong(3, refSet.getInstitution().getId());
             call.setTimestamp(4, refSet.getCreationDate());
             call.setTimestamp(5, refSet.getValidityUntil());
             call.execute();
 
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            ResultSet rs = (ResultSet) call.getObject(1);
-
-            if (rs.next()) {
-                refSet.setId(rs.getLong(1));
+            if (call.getLong(1) > 0) {
+                refSet.setId(call.getLong(1));
             }
-            rs.close();
+            //rs.close();
 
         } catch (SQLException e) {
             logger.error("Error al crear el RefSet:" + refSet, e);
@@ -70,7 +69,7 @@ public class RefSetDAOImpl implements RefSetDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setLong(2, refSet.getId());
             call.setString(3, refSet.getName());
             call.setLong(4, refSet.getInstitution().getId());
@@ -95,7 +94,7 @@ public class RefSetDAOImpl implements RefSetDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setLong(2, refSet.getId());
             call.setLong(3, conceptSMTK.getId());
             call.execute();
@@ -113,7 +112,7 @@ public class RefSetDAOImpl implements RefSetDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setLong(2, refSet.getId());
             call.setLong(3, conceptSMTK.getId());
             call.execute();
@@ -291,11 +290,11 @@ public class RefSetDAOImpl implements RefSetDAO {
     private RefSet createRefsetFromResultSet(ResultSet rs) throws SQLException {
 
         long id= rs.getLong("id");
-        String name = rs.getString("name");
+        String name = rs.getString("name_refset");
         Timestamp timestamp= rs.getTimestamp("creation_date");
         Timestamp validity= rs.getTimestamp("validity_until");
 
-        Institution institution= institutionDAO.getInstitutionBy(rs.getLong("institution"));
+        Institution institution= institutionDAO.getInstitutionBy(rs.getLong("id_institution"));
 
         RefSet refSet= new RefSet(name,institution,timestamp);
         refSet.setId(id);

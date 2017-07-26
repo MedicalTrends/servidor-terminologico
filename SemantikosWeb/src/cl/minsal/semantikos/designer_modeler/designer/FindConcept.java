@@ -60,6 +60,9 @@ public class FindConcept implements Serializable{
      * Método encargado de obtener los conceptos por categoría
      */
     public void getConceptByCategory(){
+        if(pattern == null || pattern.isEmpty()) {
+            return;
+        }
        findConcepts =conceptManager.findConcepts(pattern, selectedCategories,EMPTY_LIST,null);
     }
 
