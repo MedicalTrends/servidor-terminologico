@@ -101,6 +101,10 @@ public class CrossmapMapper {
         String code = rs.getString("code");
         String gloss = rs.getString("gloss");
 
+        if(crossmapSet == null) {
+            crossmapSet = crossmapsDAO.getCrossmapSetByID(rs.getLong("id_cross_map_set"));
+        }
+
         return new CrossmapSetMember(id, id, crossmapSet, code, gloss);
     }
 

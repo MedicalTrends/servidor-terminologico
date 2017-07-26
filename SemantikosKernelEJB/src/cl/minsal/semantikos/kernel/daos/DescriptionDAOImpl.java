@@ -260,7 +260,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setLong(2, description.getId());
             call.execute();
 
@@ -357,7 +357,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             while (rs.next()) {
                 Long id = rs.getLong("id");
-                String obsDescription = rs.getString("description");
+                String obsDescription = rs.getString("observation");
                 observationNoValid = new ObservationNoValid(id,obsDescription);
             }
 
@@ -411,7 +411,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
              CallableStatement call2 = connection.prepareCall(sql2)) {
 
             /* Se registra la observación primero */
-            call1.registerOutParameter (1, OracleTypes.CURSOR);
+            call1.registerOutParameter (1, OracleTypes.NUMERIC);
             call1.setLong(2, noValidDescription.getNoValidDescription().getId());
             call1.setLong(3, noValidDescription.getObservation());
             call1.execute();
@@ -419,7 +419,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             /* Se guardan los conceptos sugeridos para dicha descripción */
             List<ConceptSMTK> suggestedConcepts = noValidDescription.getSuggestedConcepts();
 
-            call2.registerOutParameter (1, OracleTypes.CURSOR);
+            call2.registerOutParameter (1, OracleTypes.NUMERIC);
             call2.setLong(2, noValidDescription.getNoValidDescription().getId());
 
             for (ConceptSMTK suggestedConcept : suggestedConcepts) {

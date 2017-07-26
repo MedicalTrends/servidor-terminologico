@@ -138,7 +138,7 @@ public class AuditDAOImpl implements AuditDAO {
             AuditableEntity auditableEntity = refSetAuditAction.getAuditableEntity();
             AuditableEntity subjectConcept = refSetAuditAction.getBaseEntity();
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setTimestamp(2, actionDate);
             call.setLong(3, user.getId());
             call.setLong(4, subjectConcept.getId());
@@ -146,10 +146,10 @@ public class AuditDAOImpl implements AuditDAO {
             call.setLong(6, auditableEntity.getId());
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (rs.next()) {
-                rs.getLong(1);
+            if (call.getLong(1) > 0) {
+                call.getLong(1);
             } else {
                 String errorMsg = "La información de auditoría del refset no fue creada por una razón desconocida. Alertar al area de desarrollo" +
                         " sobre esto";
