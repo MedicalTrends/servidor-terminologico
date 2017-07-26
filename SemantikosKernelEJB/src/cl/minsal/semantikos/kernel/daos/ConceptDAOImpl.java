@@ -92,7 +92,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setLong(2, conceptSMTK.getId());
             call.execute();
 

@@ -588,7 +588,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
     public List<HelperTableRow> searchRecords(HelperTable helperTable, String pattern) {
         ConnectionBD connectionBD = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_helper_table.get_helper_table_rows(?,?); end;";
+        String sql = "begin ? := stk.stk_pck_helper_table.find_rows_by_pattern(?,?); end;";
 
         List<HelperTableRow> helperTableRows = new ArrayList<>();
 
@@ -655,7 +655,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
     public List<HelperTableRow> searchRecords(HelperTable helperTable, String pattern, String columnName) {
         ConnectionBD connectionBD = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_helper_table.get_helper_table_rows(?,?,?); end;";
+        String sql = "begin ? := stk.stk_pck_helper_table.find_rows_by_pattern_and_column(?,?,?); end;";
 
         List<HelperTableRow> helperTableRows = new ArrayList<>();
 
