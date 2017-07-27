@@ -59,7 +59,7 @@ public interface DescriptionDAO {
      *
      * @return
      */
-    List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets);
+    List<Description> searchDescriptionsByTerm(String term, Long[] categories, Long[] refsets);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que hagan perfect match con el término
@@ -67,7 +67,7 @@ public interface DescriptionDAO {
      *
      * @return
      */
-    List<Description> searchDescriptionsPerfectMatch(String term, List<Category> categories, List<RefSet> refSets);
+    List<Description> searchDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que hagan truncate match con el término
@@ -75,7 +75,7 @@ public interface DescriptionDAO {
      *
      * @return
      */
-    List<Description> searchDescriptionsTruncateMatch(String term, List<Category> categories, List<RefSet> refSets);
+    List<Description> searchDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que hagan truncate match con el término
@@ -83,7 +83,7 @@ public interface DescriptionDAO {
      *
      * @return
      */
-    List<Description> searchDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets);
+    List<Description> searchDescriptionsSuggested(String term, Long[] categories, Long[] refsets);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que hagan truncate match con el término
@@ -91,7 +91,7 @@ public interface DescriptionDAO {
      *
      * @return
      */
-    int countDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets);
+    int countDescriptionsSuggested(String term, Long[] categories, Long[] refsets);
 
     /**
      * Este método es responsable de persistir una descripción en la BDD. Luego de ser persistida, la descripción es

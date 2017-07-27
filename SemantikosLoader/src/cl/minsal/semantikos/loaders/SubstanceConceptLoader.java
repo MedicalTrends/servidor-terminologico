@@ -223,7 +223,7 @@ public class SubstanceConceptLoader extends EntityLoader {
             }
 
             BasicTypeValue basicTypeValue = new BasicTypeValue(true);
-            relationshipDefinition = RelationshipDefinitionFactory.getInstance().findRelationshipDefinitionByName(TargetDefinition.COMERCIALIZADO);
+            relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.COMERCIALIZADO).get(0);
 
             Relationship relationshipMarketed = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
 

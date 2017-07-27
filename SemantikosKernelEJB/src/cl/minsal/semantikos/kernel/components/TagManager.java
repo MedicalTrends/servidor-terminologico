@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * @author Andrés Farías on 8/26/16.
  */
+@Remote
 public interface TagManager {
 
     public List<Tag> getAllTags();

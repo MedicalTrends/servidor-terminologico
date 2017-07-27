@@ -270,7 +270,7 @@ public class MCConceptLoader extends EntityLoader {
             /*Generando Comercializado*/
             BasicTypeValue basicTypeValue = new BasicTypeValue(true);
 
-            relationshipDefinition = RelationshipDefinitionFactory.getInstance().findRelationshipDefinitionByName(TargetDefinition.COMERCIALIZADO);
+            relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.COMERCIALIZADO).get(0);
 
             Relationship relationshipMarketed = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
 
@@ -528,7 +528,7 @@ public class MCConceptLoader extends EntityLoader {
 
             if(!StringUtils.isEmpty(assistanceUnitName)) {
 
-                relationshipDefinition = category.findRelationshipDefinitionsByName("Unidad de UAsist").get(0);
+                relationshipDefinition = category.findRelationshipDefinitionsByName("Unidad de U_Asist").get(0);
 
                 helperTable = (HelperTable) relationshipDefinition.getTargetDefinition();
 

@@ -435,7 +435,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     }
 
     @Override
-    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets) {
+    public List<Description> searchDescriptionsByTerm(String term, Long[] categories, Long[] refsets) {
         /* Se registra el tiempo de inicio */
         long init = currentTimeMillis();
 
@@ -449,10 +449,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, term);
-            Category[] entities = categories.toArray(new Category[categories.size()]);
-            RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
-            call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", convertListPersistentToListID(entities)));
-            call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", convertListPersistentToListID(refsetEntities)));
+            call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);
@@ -468,13 +466,13 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             throw new EJBException(e);
         }
 
-        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
-        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): " + descriptions);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
     }
 
     @Override
-    public List<Description> searchDescriptionsPerfectMatch(String term, List<Category> categories, List<RefSet> refSets) {
+    public List<Description> searchDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets) {
 
         conceptSMTKMap = new HashMap<>();
 
@@ -492,10 +490,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, term.toLowerCase());
-            Category[] entities = categories.toArray(new Category[categories.size()]);
-            RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
-            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
-            call.setArray(4, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
+            call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
 
             call.execute();
 
@@ -513,13 +509,13 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             throw new EJBException(e);
         }
 
-        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
-        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): " + descriptions);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
     }
 
     @Override
-    public List<Description> searchDescriptionsTruncateMatch(String term, List<Category> categories, List<RefSet> refSets) {
+    public List<Description> searchDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets) {
         /* Se registra el tiempo de inicio */
         long init = currentTimeMillis();
 
@@ -533,10 +529,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, term.toLowerCase());
-            Category[] entities = categories.toArray(new Category[categories.size()]);
-            RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
-            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
-            call.setArray(4, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
+            call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);
@@ -552,13 +546,13 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             throw new EJBException(e);
         }
 
-        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
-        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): " + descriptions);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
     }
 
     @Override
-    public List<Description> searchDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets) {
+    public List<Description> searchDescriptionsSuggested(String term, Long[] categories, Long[] refsets) {
         /* Se registra el tiempo de inicio */
         long init = currentTimeMillis();
 
@@ -572,10 +566,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, term.toLowerCase());
-            Category[] entities = categories.toArray(new Category[categories.size()]);
-            RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
-            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
-            call.setArray(4, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
+            call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);
@@ -591,13 +583,13 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             throw new EJBException(e);
         }
 
-        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
-        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): " + descriptions);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
     }
 
     @Override
-    public int countDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets) {
+    public int countDescriptionsSuggested(String term, Long[] categories, Long[] refsets) {
         /* Se registra el tiempo de inicio */
         long init = currentTimeMillis();
 
@@ -612,10 +604,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, term.toLowerCase());
-            Category[] entities = categories.toArray(new Category[categories.size()]);
-            RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
-            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
-            call.setArray(4, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
+            call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);
@@ -630,8 +620,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             throw new EJBException(e);
         }
 
-        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
-        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): " + descriptions);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return count;
     }
 

@@ -300,7 +300,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     @Override
     public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
-        List<Description> descriptions = descriptionDAO.searchDescriptionsByTerm(term, categories, refSets);
+        List<Description> descriptions = descriptionDAO.searchDescriptionsByTerm(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
@@ -309,7 +309,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     @Override
     public List<Description> searchDescriptionsPerfectMatch(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
-        List<Description> descriptions = descriptionDAO.searchDescriptionsPerfectMatch(term, categories, refSets);
+        List<Description> descriptions = descriptionDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
@@ -318,7 +318,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     @Override
     public List<Description> searchDescriptionsTruncateMatch(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
-        List<Description> descriptions = descriptionDAO.searchDescriptionsTruncateMatch(term, categories, refSets);
+        List<Description> descriptions = descriptionDAO.searchDescriptionsTruncateMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
@@ -327,7 +327,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     @Override
     public List<Description> searchDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
-        List<Description> descriptions = descriptionDAO.searchDescriptionsSuggested(term, categories, refSets);
+        List<Description> descriptions = descriptionDAO.searchDescriptionsSuggested(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
         logger.info("searchDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
         logger.info("searchDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
@@ -336,7 +336,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     @Override
     public int countDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
-        int count = descriptionDAO.countDescriptionsSuggested(term, categories, refSets);
+        int count = descriptionDAO.countDescriptionsSuggested(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
         logger.info("countDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): " + count);
         logger.info("countDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return count;

@@ -214,7 +214,8 @@ public class MBConceptLoader extends EntityLoader {
             conceptSMTK.addRelationship(relationshipSnomed);
 
             BasicTypeValue basicTypeValue = new BasicTypeValue(true);
-            relationshipDefinition = RelationshipDefinitionFactory.getInstance().findRelationshipDefinitionByName(TargetDefinition.COMERCIALIZADO);
+
+            relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.COMERCIALIZADO).get(0);
 
             Relationship relationshipMarketed = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
 
@@ -237,7 +238,7 @@ public class MBConceptLoader extends EntityLoader {
 
                 String termFavourite = StringUtils.normalizeSpaces(substanceTokens[1]).trim();
 
-                List<Description> substanceList = descriptionManager.searchDescriptionsPerfectMatch(termFavourite, Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia")}), EMPTY_LIST);
+                List<Description> substanceList = descriptionManager.searchDescriptionsPerfectMatch(termFavourite, Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia")}), null);
 
                 if(substanceList.isEmpty()) {
                     throw new LoadException(path.toString(), id, "No existe una sustancia con preferida: "+termFavourite, ERROR);

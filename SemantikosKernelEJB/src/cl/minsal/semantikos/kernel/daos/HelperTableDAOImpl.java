@@ -206,7 +206,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setLong(2, row.getHelperTableId());
             call.setString(3, row.getDescription());
             call.setTimestamp(4, row.getCreationDate());
@@ -218,10 +218,10 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (rs.next()) {
-                row.setId(rs.getLong(1));
+            if (call.getLong(1) > 0) {
+                row.setId(call.getLong(1));
             } else {
                 String errorMsg = "La columna no fue creada. Esta es una situación imposible. Contactar a Desarrollo";
                 logger.error(errorMsg);
@@ -245,7 +245,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setString(2, cell.getStringValue());
             call.setDate(3, cell.getDateValue()==null?null:new Date(cell.getDateValue().getTime()));
 
@@ -260,7 +260,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
                 call.setLong(5, cell.getIntValue());
 
             if(cell.getBooleanValue()==null)
-                call.setNull(6, Types.BOOLEAN);
+                call.setNull(6, Types.NUMERIC);
             else
                 call.setBoolean(6,cell.getBooleanValue());
 
@@ -274,10 +274,10 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (rs.next()) {
-                cell.setId(rs.getLong(1));
+            if (call.getLong(1) > 0) {
+                cell.setId(call.getLong(1));
             } else {
                 String errorMsg = "La columna no fue creada. Esta es una situación imposible. Contactar a Desarrollo";
                 logger.error(errorMsg);
@@ -304,7 +304,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setLong(2, cell.getId());
             call.setString(3, cell.getStringValue());
             call.setDate(4, cell.getDateValue()==null?null:new Date(cell.getDateValue().getTime()));
@@ -523,7 +523,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setLong(2, row.getId());
             call.setLong(3, row.getHelperTableId());
             call.setString(4, row.getDescription());
@@ -536,7 +536,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
         } catch (SQLException e) {
             logger.error("Error al crear la row:" + row, e);

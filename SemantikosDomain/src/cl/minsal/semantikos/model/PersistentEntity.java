@@ -55,6 +55,9 @@ public abstract class PersistentEntity implements IPersistentEntity, Serializabl
     }
 
     public static Long[] getIdArray(@NotNull Collection<? extends PersistentEntity> entities) {
+        if(entities==null) {
+            return null;
+        }
         return getIdList(entities).toArray(new Long[entities.size()]);
     }
 

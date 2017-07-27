@@ -86,17 +86,16 @@ public class HelperTableSearchBRImpl implements HelperTableSearchBR {
         /* Si la lista de registros es de la tabla HT_ATC_NAME, el ordenamiento es especial */
         HelperTableRow helperTableRow = rows.get(0);
 
-        Collections.sort(rows, new ATCRecordComparator());
+        //Collections.sort(rows, new ATCRecordComparator());
 
-        /*
         if (helperTableRow.getHelperTableId()==HT_ATC_ID) {
             Collections.sort(rows, new ATCRecordComparator());
         }
         else{
+            // Sino, se ordena por el largo de la descripcion
             // Sino, se ordena alfabéticamente
             Collections.sort(rows, new DefaultRecordComparator());
         }
-        */
     }
 
     public int getMinQueryLength(HelperTable helperTable) {
@@ -129,8 +128,8 @@ public class HelperTableSearchBRImpl implements HelperTableSearchBR {
 
         @Override
         public int compare(HelperTableRow row1, HelperTableRow row2) {
-
-            return row1.getDescription().compareTo(row2.getDescription());
+            return row1.getDescription().length() - row2.getDescription().length();
+            //return row1.getDescription().compareTo(row2.getDescription());
         }
 
         @Override
