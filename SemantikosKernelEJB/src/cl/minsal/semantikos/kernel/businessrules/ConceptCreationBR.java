@@ -118,6 +118,7 @@ public class ConceptCreationBR implements BusinessRulesContainer {
 
         /**Se obtiene la definición de relacion SNOMED CT**/
         RelationshipDefinition relationshipDefinition = RelationshipDefinitionFactory.getInstance().findRelationshipDefinitionByName(TargetDefinition.SNOMED_CT);
+        relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.SNOMED_CT).get(0);
 
         /**
          * Si alguna de las relaciones es de tipo snomed es posible determinar el grado de definición
