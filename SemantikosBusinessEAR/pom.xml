@@ -90,6 +90,17 @@
                     <earSourceDirectory>src/main/java</earSourceDirectory>
                     <modules>
 
+                        <!-- Modulos para WS SOAP -->
+                        <webModule>
+                            <groupId>cl.minsal.semantikos</groupId>
+                            <artifactId>SemantikosWS</artifactId>
+                            <contextRoot>ws</contextRoot>
+                        </webModule>
+                        <ejbModule>
+                            <groupId>cl.minsal.semantikos</groupId>
+                            <artifactId>SemantikosKernelEJB</artifactId>
+                        </ejbModule>
+
                     </modules>
                 </configuration>
             </plugin>
