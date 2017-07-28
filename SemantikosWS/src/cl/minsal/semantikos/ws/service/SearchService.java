@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.ws.service;
 
-import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
+import cl.minsal.semantikos.kernel.components.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.modelws.request.*;
@@ -54,7 +54,7 @@ public class SearchService {
     private CategoryManager categoryManager;
 
     @EJB
-    private AuthenticationManagerImpl authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Resource
     WebServiceContext wsctx;

@@ -382,8 +382,8 @@ public class ConceptController {
 
         //List<Description> descriptions = this.descriptionManager.searchDescriptionsTruncateMatch(term, categories, EMPTY_LIST);
 
-        List<Description> descriptions = this.descriptionManager.searchDescriptionsSuggested(term, categories, EMPTY_LIST);
-        int count = this.descriptionManager.countDescriptionsSuggested(term, categories, EMPTY_LIST);
+        List<Description> descriptions = this.descriptionManager.searchDescriptionsSuggested(term, categories, null);
+        int count = this.descriptionManager.countDescriptionsSuggested(term, categories, null);
 
         logger.debug("ws-req-006. descripciones encontradas: " + descriptions);
 
