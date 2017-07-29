@@ -31,10 +31,12 @@ public class AuthenticationFilter implements Filter {
         ((HttpServletResponse) response).setHeader("Expires", "0");
 
         /* Inició sesión e intenta volver atrás */
+        /*
         if(isLoggedIn(req) && req.getRequestURI().contains(Constants.LOGIN_PAGE)) {
             logger.debug("Intento de acceso sin sesión: " + req);
             res.sendRedirect(req.getContextPath() + Constants.HOME_PAGE);
         }
+        */
 
         if (req.getRequestURI().contains(Constants.LOGIN_PAGE) || req.getRequestURI().contains(Constants.ERRORS_FOLDER) ||
             req.getRequestURI().contains(Constants.ACCOUNT_ACTIVATION_PAGE) || req.getRequestURI().contains(Constants.FORGOT_PASSWORD_PAGE) ||

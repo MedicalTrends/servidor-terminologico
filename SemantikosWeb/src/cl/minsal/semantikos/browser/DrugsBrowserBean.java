@@ -70,8 +70,9 @@ public class DrugsBrowserBean implements Serializable {
     }
 
     public void setConceptSelected(ConceptSMTK conceptSelected) {
-        if(conceptSelected==null)
+        if(conceptSelected==null) {
             return;
+        }
         this.conceptSelected = conceptSelected;
         conceptHierarchies = drugsManager.getDrugsConceptHierarchies(this.conceptSelected);
         root = new DefaultTreeNode(new ConceptSMTK(categoryManager.getCategoryById(39)), null);
@@ -125,7 +126,7 @@ public class DrugsBrowserBean implements Serializable {
 
     public List<ConceptSMTK> getConceptSearchInput(String patron) {
 
-        concepts = conceptManager.findConcepts(patron, drugsCategories, EMPTY_LIST, true);
+        concepts = conceptManager.findConcepts(patron, drugsCategories, null, true);
 
         return concepts;
     }

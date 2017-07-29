@@ -387,7 +387,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                ConceptSMTK recoveredConcept = conceptDAO.getConceptByID(rs.getLong("id"));
+                ConceptSMTK recoveredConcept = conceptDAO.getConceptByID(rs.getLong("id_concept"));
                 suggestedConcepts.add(recoveredConcept);
             }
 

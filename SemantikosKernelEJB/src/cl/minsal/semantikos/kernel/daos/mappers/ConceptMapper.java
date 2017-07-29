@@ -1,9 +1,6 @@
 package cl.minsal.semantikos.kernel.daos.mappers;
 
-import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
-import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
-import cl.minsal.semantikos.kernel.daos.TagDAO;
-import cl.minsal.semantikos.kernel.daos.TargetDefinitionDAO;
+import cl.minsal.semantikos.kernel.daos.*;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
@@ -31,6 +28,9 @@ public class ConceptMapper {
 
     @EJB
     TagDAO tagDAO;
+
+    @EJB
+    RefSetDAO refSetDAO;
 
     /**
      * Este método es responsable de crear un concepto SMTK a partir de un resultset.

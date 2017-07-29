@@ -682,7 +682,7 @@ public class ConceptController {
         }
 
         ConceptSMTK conceptSMTK = getConcept(conceptId, descriptionId);
-        this.conceptManager.loadRelationships(conceptSMTK);
+        conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
         BioequivalentSearchResponse res = new BioequivalentSearchResponse();
 
         res.setConceptId(conceptSMTK.getConceptID());
@@ -709,7 +709,7 @@ public class ConceptController {
         }
 
         ConceptSMTK conceptSMTK = getConcept(conceptId, descriptionId);
-        this.conceptManager.loadRelationships(conceptSMTK);
+        conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
         ISPRegisterSearchResponse res = new ISPRegisterSearchResponse();
 
         res.setConceptId(conceptSMTK.getConceptID());
@@ -753,7 +753,8 @@ public class ConceptController {
     public ConceptResponse loadAttributes(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) throws Exception {
         if (conceptResponse.getAttributes() == null || conceptResponse.getAttributes().isEmpty()) {
             if (!source.isRelationshipsLoaded()) {
-                conceptManager.loadRelationships(source);
+                source.setRelationships(relationshipManager.getRelationshipsBySourceConcept(source));
+                //conceptManager.loadRelationships(source);
             }
             ConceptMapper.appendAttributes(conceptResponse, source);
         }

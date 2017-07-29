@@ -66,7 +66,7 @@ public class FindConcept implements Serializable{
         if(pattern == null || pattern.isEmpty()) {
             return;
         }
-       findConcepts =conceptManager.findConcepts(pattern, selectedCategories,EMPTY_LIST,null);
+       findConcepts =conceptManager.findConcepts(pattern, selectedCategories,null,null);
     }
 
     /**
@@ -82,7 +82,8 @@ public class FindConcept implements Serializable{
                 if(standardizationPattern(pattern).length() <= 1) {
                     return null;
                 }
-                findConcepts=conceptManager.findConcepts(pattern,selectedCategories,EMPTY_LIST,true);
+
+                findConcepts=conceptManager.findConcepts(pattern,selectedCategories.isEmpty()?null:selectedCategories,null,true);
                 return findConcepts;
             }
         }
@@ -100,7 +101,7 @@ public class FindConcept implements Serializable{
 
             if (pattern.trim().length() >= 2) {
                 if(standardizationPattern(pattern).length()<=1)return null;
-                findConcepts=conceptManager.findConcepts(pattern,selectedCategories,EMPTY_LIST,true);
+                findConcepts=conceptManager.findConcepts(pattern,selectedCategories,null,true);
                 return findConcepts;
             }
         }
@@ -119,7 +120,7 @@ public class FindConcept implements Serializable{
                 if(standardizationPattern(pattern).length() <= 1) {
                     return null;
                 }
-                findConcepts=conceptManager.findConcepts(pattern,EMPTY_LIST,EMPTY_LIST,true);
+                findConcepts=conceptManager.findConcepts(pattern,null,null,true);
                 return findConcepts;
             }
         }

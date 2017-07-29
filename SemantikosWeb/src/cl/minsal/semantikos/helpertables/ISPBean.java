@@ -70,7 +70,7 @@ public class ISPBean {
     UserManager userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
 
     //@EJB
-    RelationshipManager relationshipManager;
+    RelationshipManager relationshipManager = (RelationshipManager) RemoteEJBClientFactory.getInstance().getManager(RelationshipManager.class);;
 
 
     @PostConstruct

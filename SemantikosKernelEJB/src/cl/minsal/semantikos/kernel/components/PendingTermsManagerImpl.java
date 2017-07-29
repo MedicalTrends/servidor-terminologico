@@ -42,6 +42,25 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
 
     private boolean exceptions = false;
 
+    /*
+    @AroundInvoke
+    public Object postActions(InvocationContext ic) throws Exception {
+        try {
+            return ic.proceed();
+        }
+        finally {
+
+            if(Arrays.asList(new String[]{"addPendingTerm"}).contains(ic.getMethod().getName())) {
+                for (Object o : ic.getParameters()) {
+                    if(o instanceof PendingTerm) {
+                        pendingTermAddingBR.validatePostConditions((PendingTerm)o);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    */
 
     @Override
     public Description addPendingTerm(PendingTerm pendingTerm, User loggedUser) throws EJBTransactionRolledbackException {
@@ -50,13 +69,13 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
             /* Validación de pre-condiciones */
             pendingTermAddingBR.validatePreConditions(pendingTerm);
 
-        /* Acciones de negocio a continuación */
+            /* Acciones de negocio a continuación */
 
-        /* 1. Persistir el término pendiente */
+            /* 1. Persistir el término pendiente */
             pendingTermDAO.persist(pendingTerm);
             logger.info("Pending term persited: " + pendingTerm);
 
-        /* 2. Agregarlo al concepto especial 'Pendientes' */
+            /* 2. Agregarlo al concepto especial 'Pendientes' */
             ConceptSMTK pendingTermsConcept = conceptManager.getPendingConcept();
             Description description = descriptionManager.bindDescriptionToConcept(pendingTermsConcept, pendingTerm.getTerm(), pendingTerm.isSensibility(), DescriptionType.SYNONYMOUS, loggedUser);
             logger.info("Description from pending term created: " + description.fullToString());
@@ -64,8 +83,8 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
             pendingTerm.setRelatedDescription(description);
             pendingTermDAO.bindTerm2Description(pendingTerm, description);
 
-        /* Validación de post-condiciones */
-            pendingTermAddingBR.validatePostConditions(pendingTerm);
+            /* Validación de post-condiciones */
+            //pendingTermAddingBR.validatePostConditions(pendingTerm);
 
             return description;
         }

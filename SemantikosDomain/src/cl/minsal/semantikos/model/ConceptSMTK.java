@@ -96,7 +96,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     private boolean inherited;
 
     /** RefSets a los que pertenece el concepto */
-    private List<RefSet> refsets;
+    private List<RefSet> refsets = new ArrayList<>();
 
     public ConceptSMTK() {
         super(PersistentEntity.NON_PERSISTED_ID);
