@@ -42,24 +42,6 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
 
     private boolean exceptions = false;
 
-    @AroundInvoke
-    public Object postActions(InvocationContext ic) throws Exception {
-        try {
-            return ic.proceed();
-        }
-        finally {
-            if(!exceptions) {
-                if(Arrays.asList(new String[]{"addPendingTerm"}).contains(ic.getMethod().getName())) {
-                    for (Object o : ic.getParameters()) {
-                        if(o instanceof PendingTerm) {
-                            pendingTermDAO.updateSearchIndexes((PendingTerm)o);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     @Override
     public Description addPendingTerm(PendingTerm pendingTerm, User loggedUser) throws EJBTransactionRolledbackException {

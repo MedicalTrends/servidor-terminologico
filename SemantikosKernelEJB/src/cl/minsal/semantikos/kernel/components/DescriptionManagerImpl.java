@@ -81,7 +81,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
         /* Se crea la descripción */
         Description description = new Description(concept, term, descriptionType);
-        description.setDescriptionId("");
+        description.setDescriptionId(" ");
         description.setCaseSensitive(caseSensitive);
 
         /* Se aplican las reglas de negocio para crear la Descripción y se persiste y asocia al concepto */

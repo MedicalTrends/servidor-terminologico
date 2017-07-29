@@ -92,6 +92,8 @@ public class BrowserBean implements Serializable {
         categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
         conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
 
+        RemoteEJBClientFactory.getInstance().closeContext();
+
         tags = tagManager.getAllTags();
         categories = categoryManager.getCategories();
 
@@ -173,6 +175,12 @@ public class BrowserBean implements Serializable {
                     browserQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
 
                 List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(browserQuery);
+
+                if(conceptSMTKs.isEmpty()) {
+                    browserQuery.setTruncateMatch(true);
+                    conceptSMTKs = queryManager.executeQuery(browserQuery);;
+                }
+
                 this.setRowCount(queryManager.countQueryResults(browserQuery));
 
                 return conceptSMTKs;

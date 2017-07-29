@@ -521,10 +521,18 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             ResultSet rs = (ResultSet) call.getObject(1);
 
+            int cont = 0;
+
             while (rs.next()) {
                 Description description = descriptionMapper.createDescriptionFromResultSet(rs, null, conceptSMTKMap);
                 //Description description = getDescriptionById(rs.getLong("id"));
                 descriptions.add(description);
+                cont++;
+
+                if((cont % 1000) == 0) {
+                    System.out.println("hola");
+                }
+
             }
 
         } catch (SQLException e) {

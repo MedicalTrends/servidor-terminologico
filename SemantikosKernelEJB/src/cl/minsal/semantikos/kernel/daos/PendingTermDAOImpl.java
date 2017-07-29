@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;
+import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,33 +46,36 @@ public class PendingTermDAOImpl implements PendingTermDAO {
          * param 9: id user
          * param 10: id concepto
          */
-        String sql = "{call semantikos.create_pending_term(?,?,?,?,?,?,?,?,?,?,?)}";
+        String sql = "begin ? := stk.stk_pck_pending_term.create_pending_term(?,?,?,?,?,?,?,?,?,?,?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setString(1, pendingTerm.getTerm());
-            call.setTimestamp(2, new Timestamp(pendingTerm.getDate().getTime()));
-            call.setBoolean(3, pendingTerm.isSensibility());
-            call.setLong(4, pendingTerm.getCategory().getId());
-            call.setString(5, pendingTerm.getNameProfessional());
-            call.setString(6, pendingTerm.getProfession());
-            call.setString(7, pendingTerm.getSpeciality());
-            call.setString(8, pendingTerm.getSubSpeciality());
-            call.setString(9, pendingTerm.getMail());
-            call.setString(10, pendingTerm.getObservation());
-            call.setString(11,pendingTerm.getPlaceOrigin());
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
+            call.setString(2, pendingTerm.getTerm());
+            call.setTimestamp(3, new Timestamp(pendingTerm.getDate().getTime()));
+            call.setBoolean(4, pendingTerm.isSensibility());
+            call.setLong(5, pendingTerm.getCategory().getId());
+            call.setString(6, pendingTerm.getNameProfessional());
+            call.setString(7, pendingTerm.getProfession());
+            call.setString(8, pendingTerm.getSpeciality());
+            call.setString(9, pendingTerm.getSubSpeciality());
+            call.setString(10, pendingTerm.getMail());
+            call.setString(11, pendingTerm.getObservation());
+            call.setString(12,pendingTerm.getPlaceOrigin());
 
             call.execute();
 
-            ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                pendingTerm.setId(rs.getLong(1));
+            //ResultSet rs = call.getResultSet();
+
+            if (call.getLong(1) > 0) {
+                pendingTerm.setId(call.getLong(1));
             } else {
                 String errorMsg = "El termino pendiente no fue creado. Contacte a Desarrollo";
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
-            rs.close();
+
         } catch (SQLException e) {
             throw new EJBException(e);
         }
@@ -93,12 +97,16 @@ public class PendingTermDAOImpl implements PendingTermDAO {
          * param 9: id user
          * param 10: id concepto
          */
-        String sql = "{call semantikos.bind_pending_term_to_description(?,?)}";
+        //String sql = "{call semantikos.bind_pending_term_to_description(?,?)}";
+
+        String sql = "begin ? := stk.stk_pck_pending_term.bind_pending_term_to_description(?,?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, pendingTerm.getId());
-            call.setLong(2, description.getId());
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
+            call.setLong(2, pendingTerm.getId());
+            call.setLong(3, description.getId());
             call.execute();
         } catch (SQLException e) {
             throw new EJBException(e);
@@ -117,16 +125,21 @@ public class PendingTermDAOImpl implements PendingTermDAO {
         List<PendingTerm> pendingTerms = new ArrayList<>();
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_all_pending_terms(?)}";
+
+        String sql = "begin ? := stk.stk_pck_pending_term.get_all_pending_terms(?); end;";
+
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, conceptDAO.getPendingConcept().getId());
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptDAO.getPendingConcept().getId());
             call.execute();
 
-            ResultSet resultSet = call.getResultSet();
-            while(resultSet.next()){
-                pendingTerms.add(createPendingTermFromResultSet(resultSet));
+            //ResultSet resultSet = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while(rs.next()){
+                pendingTerms.add(createPendingTermFromResultSet(rs));
             }
         } catch (SQLException e) {
             throw new EJBException(e);
@@ -142,17 +155,17 @@ public class PendingTermDAOImpl implements PendingTermDAO {
 
         ConnectionBD connect = new ConnectionBD();
 
-        String sql = "{call semantikos.get_pending_term_by_id(?)}";
+        String sql = "begin ? := stk.stk_pck_pending_term.get_pending_term_by_id(?); end;";
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, id);
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, id);
             call.execute();
 
-            ResultSet resultSet = call.getResultSet();
-
-            ResultSet rs = call.getResultSet();
+            //ResultSet resultSet = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
                 pendingTerm = createPendingTermFromResultSet(rs);
@@ -166,35 +179,6 @@ public class PendingTermDAOImpl implements PendingTermDAO {
         }
 
         return pendingTerm;
-    }
-
-    @Override
-    public void updateSearchIndexes(PendingTerm pendingTerm) {
-
-        ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.update_pending_term_search_indexes(?)}";
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.setLong(1, pendingTerm.getId());
-
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                if (!rs.getBoolean(1)) {
-                    throw new EJBException("Los índices de búsqueda del término con id=" + pendingTerm.getId() + " no fueron actualizados.");
-                }
-            } else {
-                String errorMsg = "Los índices de búsqueda del término con id=" + pendingTerm.getId() + " no fueron actualizados.";
-                logger.error(errorMsg);
-                throw new EJBException(errorMsg);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            logger.error("Los índices de búsqueda del término con id=" + pendingTerm.getId() + " no fueron actualizados.", e);
-            throw new EJBException("Los índices de búsqueda del término con id=" + pendingTerm.getId() + " no fueron actualizados.", e);
-        }
     }
 
     private PendingTerm createPendingTermFromResultSet(ResultSet resultSet) throws SQLException {

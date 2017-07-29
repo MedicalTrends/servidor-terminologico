@@ -166,11 +166,14 @@ public class GeneralBrowserBean implements Serializable {
                 }
 
                 List<ConceptSMTK> conceptSMTKs = null;
-                try {
-                    conceptSMTKs = queryManager.executeQuery(generalQuery);
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+                conceptSMTKs = queryManager.executeQuery(generalQuery);
+
+                if(conceptSMTKs.isEmpty()) {
+                    generalQuery.setTruncateMatch(true);
+                    conceptSMTKs = queryManager.executeQuery(generalQuery);;
                 }
+
                 this.setRowCount(queryManager.countQueryResults(generalQuery));
 
                 return conceptSMTKs;

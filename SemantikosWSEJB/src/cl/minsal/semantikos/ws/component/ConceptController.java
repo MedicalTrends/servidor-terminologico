@@ -69,6 +69,8 @@ public class ConceptController {
     private PendingTermsManager pendingTermManager;
     @EJB
     private CrossmapController crossmapController;
+    @EJB
+    private UserManager userManager;
 
     @Resource
     private SessionContext ctx;
@@ -837,7 +839,9 @@ public class ConceptController {
      */
     public NewTermResponse requestTermCreation(NewTermRequest termRequest) throws IllegalInputFault, NotFoundFault {
 
-        User user = new User(1, "demo", "Demo User", "demo", false);
+        //User user = new User(1, "demo", "Demo User", "demo", false);
+
+        User user = userManager.getUserByEmail("user@admin.cl");
 
         if (termRequest.getTerm() == null || termRequest.getTerm().isEmpty()) {
             throw new IllegalInputFault("Debe ingresar un término propuesto");
@@ -856,10 +860,10 @@ public class ConceptController {
                 category,
                 termRequest.getProfessional(),
                 termRequest.getProfesion(),
-                termRequest.getSpecialty(),
-                termRequest.getSubSpecialty(),
+                termRequest.getSpecialty().isEmpty()?" ":termRequest.getSpecialty(),
+                termRequest.getSubSpecialty().isEmpty()?" ":termRequest.getSubSpecialty(),
                 termRequest.getEmail(),
-                termRequest.getObservation(),
+                termRequest.getObservation().isEmpty()?" ":termRequest.getObservation(),
                 termRequest.getIdStablishment());
 
         /* Se realiza la solicitud */

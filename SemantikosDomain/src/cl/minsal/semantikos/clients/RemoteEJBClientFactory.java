@@ -98,4 +98,12 @@ public class RemoteEJBClientFactory {
         return type.toString().split(" ")[1];
     }
 
+    public void closeContext() {
+        try {
+            context.close();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

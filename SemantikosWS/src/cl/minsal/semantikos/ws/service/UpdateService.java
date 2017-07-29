@@ -1,6 +1,8 @@
 package cl.minsal.semantikos.ws.service;
 
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
+import cl.minsal.semantikos.kernel.components.UserManager;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.modelweb.Pair;
 import cl.minsal.semantikos.modelws.request.DescriptionHitRequest;
 import cl.minsal.semantikos.modelws.request.NewTermRequest;
@@ -48,6 +50,12 @@ public class UpdateService {
     @EJB
     private AuthenticationManager authenticationManager;
 
+    @EJB
+    private UserManager userManager;
+
+
+    User wsUser;
+
     //Inicializacion del Bean
     //@PostConstruct
     @AroundInvoke
@@ -58,6 +66,7 @@ public class UpdateService {
             authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
             Request request = (Request)ctx.getParameters()[0];
             authenticationManager.validateInstitution(request.getIdStablishment());
+            //wsUser = userManager.getUserByEmail(credentials.getFirst().toString());
         }
         catch (Exception e) {
             throw new NotFoundFault(e.getMessage());

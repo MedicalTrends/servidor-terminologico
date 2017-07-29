@@ -80,10 +80,12 @@ public class QueryManagerImpl implements QueryManager {
 
         List<ConceptSMTK> conceptSMTKs = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
 
+        /*
         if(conceptSMTKs.isEmpty()) {
             query.setTruncateMatch(true);
             conceptSMTKs = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
         }
+        */
 
         boolean showRelatedConcepts = query.isShowRelatedConcepts();//getShowableRelatedConceptsValue(category);
         List<RelationshipDefinition> sourceSecondOrderShowableAttributes = query.getSourceSecondOrderShowableAttributes();//getSourceSecondOrderShowableAttributesByCategory(category);
@@ -213,14 +215,16 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public List<ConceptSMTK> executeQuery(BrowserQuery query) {
 
-        query.setQuery(conceptSearchBR.standardizationPattern(query.getQuery()));
+        //query.setQuery(conceptSearchBR.standardizationPattern(query.getQuery()));
 
         List<ConceptSMTK> concepts = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
 
+        /*
         if(concepts.isEmpty()) {
             query.setTruncateMatch(true);
             concepts = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
         }
+        */
 
         return concepts;
     }
