@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,6 +116,10 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
         ArrayList<DirectCrossmap> directCrossmaps = new ArrayList<>();
         for (Relationship relationship : relationshipsBySourceConcept) {
             if (relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()){
+
+                if(relationship.getValidityUntil() != null && relationship.getValidityUntil().before(new Timestamp(System.currentTimeMillis()))) {
+                    continue;
+                }
 
                 /* Se crea una instancia precisa */
                 DirectCrossmap directCrossmap;

@@ -28,11 +28,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
+        <!--dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosDomain</artifactId>
             <version>4.0.0</version>
-        </dependency>
+        </dependency-->
 
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>

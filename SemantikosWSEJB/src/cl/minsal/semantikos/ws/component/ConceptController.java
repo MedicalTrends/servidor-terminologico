@@ -233,6 +233,14 @@ public class ConceptController {
         List<Category> categories = this.categoryController.findCategories(categoriesNames);
         List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
 
+        if(categories.isEmpty()) {
+            categories = null;
+        }
+
+        if(refSets.isEmpty()) {
+            refSets = null;
+        }
+
         List<PerfectMatchDescriptionResponse> perfectMatchDescriptions = new ArrayList<>();
         List<NoValidDescriptionResponse> noValidDescriptions = new ArrayList<>();
         List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
@@ -306,6 +314,14 @@ public class ConceptController {
         }
         List<Category> categories = this.categoryController.findCategories(categoriesNames);
         List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
+
+        if(categories.isEmpty()) {
+            categories = null;
+        }
+
+        if(refSets.isEmpty()) {
+            refSets = null;
+        }
 
         List<PerfectMatchDescriptionResponse> perfectMatchDescriptions = new ArrayList<>();
         List<NoValidDescriptionResponse> noValidDescriptions = new ArrayList<>();

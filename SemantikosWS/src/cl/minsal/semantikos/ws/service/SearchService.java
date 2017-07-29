@@ -1,8 +1,9 @@
 package cl.minsal.semantikos.ws.service;
 
-import cl.minsal.semantikos.kernel.components.AuthenticationManager;
-import cl.minsal.semantikos.kernel.components.CategoryManager;
+import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.modelweb.Pair;
 import cl.minsal.semantikos.modelws.request.*;
 import cl.minsal.semantikos.modelws.response.*;
 import cl.minsal.semantikos.ws.component.CategoryController;
@@ -14,9 +15,11 @@ import cl.minsal.semantikos.modelws.fault.NotFoundFault;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ws.minsal.semantikos.ws.utils.UtilsWS;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.Local;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.jws.WebMethod;
@@ -54,7 +57,7 @@ public class SearchService {
     private CategoryManager categoryManager;
 
     @EJB
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;//= (AuthenticationManager) RemoteEJBClientFactory.getInstance().getManager(AuthenticationManager.class);;
 
     @Resource
     WebServiceContext wsctx;
@@ -67,7 +70,8 @@ public class SearchService {
     protected Object authenticate(InvocationContext ctx) throws Exception {
 
         try {
-            authenticationManager.authenticate(wsctx.getMessageContext());
+            Pair credentials = UtilsWS.getCredentialsFromWSContext(wsctx.getMessageContext());
+            authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
             Request request = (Request)ctx.getParameters()[0];
             authenticationManager.validateInstitution(request.getIdStablishment());
         }
@@ -96,8 +100,7 @@ public class SearchService {
 
         logger.info("ws-req-001: {}s", String.format("%.2f", (currentTimeMillis() - init)/1.0));
 
-        return this.conceptController.searchTermGeneric(request.getTerm(), request.getCategoryNames(), request
-                .getRefSetNames());
+        return this.conceptController.searchTermGeneric(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
     }
 
     // REQ-WS-002

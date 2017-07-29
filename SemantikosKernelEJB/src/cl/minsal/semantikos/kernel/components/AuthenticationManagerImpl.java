@@ -50,35 +50,8 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
     }
 
     @PermitAll
-    public void authenticate(MessageContext mctx) throws Exception {
+    public void authenticateWS(String username, String password) throws Exception {
 
-        Map http_headers = (Map) mctx.get(MessageContext.HTTP_REQUEST_HEADERS);
-
-        ArrayList list = (ArrayList) http_headers.get("Authorization");
-
-        if (list == null || list.size() == 0) {
-            throw new Exception("Error de autenticación: Este WS necesita Autenticación!");
-        }
-
-        String userpass = (String) list.get(0);
-        userpass = userpass.substring(5);
-        byte[] buf = new byte[0];
-
-        buf = Base64.decodeBase64(userpass.getBytes());
-
-        String credentials = new String(buf);
-
-        String username = null;
-        String password = null;
-        int p = credentials.indexOf(":");
-
-        if (p > -1) {
-            username = credentials.substring(0, p);
-            password = credentials.substring(p+1);
-        }
-        else {
-            throw new Exception("Hubo un error al decodificar la autenticación");
-        }
         // This should be changed to a DB / Ldap authentication check
         try {
             getAuthenticationMethod().authenticateWS(username, password);

@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.ws.service;
 
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
+import cl.minsal.semantikos.modelweb.Pair;
 import cl.minsal.semantikos.modelws.request.DescriptionHitRequest;
 import cl.minsal.semantikos.modelws.request.NewTermRequest;
 import cl.minsal.semantikos.modelws.request.Request;
@@ -12,6 +13,7 @@ import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
 import cl.minsal.semantikos.modelws.fault.NotFoundFault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ws.minsal.semantikos.ws.utils.UtilsWS;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -52,7 +54,8 @@ public class UpdateService {
     protected Object authenticate(InvocationContext ctx) throws Exception {
 
         try {
-            authenticationManager.authenticate(wsctx.getMessageContext());
+            Pair credentials = UtilsWS.getCredentialsFromWSContext(wsctx.getMessageContext());
+            authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
             Request request = (Request)ctx.getParameters()[0];
             authenticationManager.validateInstitution(request.getIdStablishment());
         }

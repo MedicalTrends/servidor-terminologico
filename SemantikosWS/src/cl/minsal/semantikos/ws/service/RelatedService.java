@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.ws.service;
 
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
+import cl.minsal.semantikos.modelweb.Pair;
 import cl.minsal.semantikos.modelws.request.RelatedConceptsByCategoryRequest;
 import cl.minsal.semantikos.modelws.request.RelatedConceptsRequest;
 import cl.minsal.semantikos.modelws.request.Request;
@@ -11,6 +12,7 @@ import cl.minsal.semantikos.modelws.response.RelatedConceptsResponse;
 import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
 import cl.minsal.semantikos.modelws.fault.NotFoundFault;
+import ws.minsal.semantikos.ws.utils.UtilsWS;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -45,7 +47,8 @@ public class RelatedService {
     protected Object authenticate(InvocationContext ctx) throws Exception {
 
         try {
-            authenticationManager.authenticate(wsctx.getMessageContext());
+            Pair credentials = UtilsWS.getCredentialsFromWSContext(wsctx.getMessageContext());
+            authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
             Request request = (Request)ctx.getParameters()[0];
             authenticationManager.validateInstitution(request.getIdStablishment());
         }

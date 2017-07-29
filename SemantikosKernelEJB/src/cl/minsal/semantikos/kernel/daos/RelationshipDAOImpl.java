@@ -260,7 +260,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
             if(relationshipDefinition.getTargetDefinition().isBasicType()){
                 call.setLong(2, relationshipDefinition.getId());
                 BasicTypeValue basicTypeValue = (BasicTypeValue) target;
-                call.setString(3, basicTypeValue.getValue().toString());
+                call.setString(3, basicTypeValue.toString());
             }
 
             call.execute();

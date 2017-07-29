@@ -26,6 +26,7 @@ import java.util.*;
 import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
 import static cl.minsal.semantikos.model.DAO.NON_PERSISTED_ID;
 import static java.lang.System.currentTimeMillis;
+
 import static java.sql.Types.TIMESTAMP;
 
 /**
@@ -449,8 +450,20 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, term);
-            call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
-            call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+
+            if(categories == null) {
+                call.setNull(3, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            }
+            if(refsets == null) {
+                call.setNull(4, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+            }
+
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);
@@ -490,8 +503,19 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, term.toLowerCase());
-            call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
-            call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+
+            if(categories == null) {
+                call.setNull(3, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            }
+            if(refsets == null) {
+                call.setNull(4, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+            }
 
             call.execute();
 
@@ -529,8 +553,20 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, term.toLowerCase());
-            call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
-            call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+
+            if(categories == null) {
+                call.setNull(3, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            }
+            if(refsets == null) {
+                call.setNull(4, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+            }
+
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);
@@ -566,8 +602,20 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, term.toLowerCase());
-            call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
-            call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+
+            if(categories == null) {
+                call.setNull(3, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            }
+            if(refsets == null) {
+                call.setNull(4, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+            }
+
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);
@@ -602,17 +650,27 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setString(2, term.toLowerCase());
-            call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
-            call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+
+            if(categories == null) {
+                call.setNull(3, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            }
+            if(refsets == null) {
+                call.setNull(4, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+            }
+
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (rs.next()) {
-                count = Integer.parseInt(rs.getString("count"));
-            }
+            count = (int) call.getLong(1);
 
         } catch (SQLException e) {
             String errorMsg = "Error al recuperar descripciones de la BDD.";

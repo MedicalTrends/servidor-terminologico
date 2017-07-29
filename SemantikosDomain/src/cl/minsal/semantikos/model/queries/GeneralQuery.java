@@ -207,7 +207,7 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
      * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de las
      * categorías filtradas
      */
-    public Long[] getCategoryValues(){
+    public Long[] getCategoryValues() {
 
         List<Long> categoryValues = new ArrayList<>();
 

@@ -388,7 +388,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         }
 
         /* Luego se recuperan los conceptos de la categoría y se busca por el que tenga el FSN adecuado */
-        List<ConceptSMTK> specialConcepts = findPerfectMatch(PENDING_CONCEPT_FSN_DESCRIPTION, new Long[]{specialConceptCategory.getId()}, EMPTY_LONG_OBJECT_ARRAY, true);
+        List<ConceptSMTK> specialConcepts = findPerfectMatch(PENDING_CONCEPT_FSN_DESCRIPTION, new Long[]{specialConceptCategory.getId()}, null, true);
         for (ConceptSMTK specialConcept : specialConcepts) {
             if (specialConcept.getDescriptionFavorite().getTerm().equalsIgnoreCase(PENDING_CONCEPT_FSN_DESCRIPTION)) {
                 PENDING_CONCEPT = specialConcept;
@@ -447,8 +447,21 @@ public class ConceptDAOImpl implements ConceptDAO {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, pattern);
-            call.setArray(3, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
-            call.setArray(4, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+
+            if(categories == null) {
+                call.setNull(3, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            }
+
+            if(refsets == null) {
+                call.setNull(4, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+            }
+
             if(modeled == null) {
                 call.setNull(5, Types.BOOLEAN);
             }
@@ -482,14 +495,6 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         ConnectionBD connect = new ConnectionBD();
 
-        OracleConnection oracleConnection = null;
-
-        try {
-            oracleConnection = (OracleConnection)(connect.getConnection().getMetaData().getConnection());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         String sql = "begin ? := stk.stk_pck_concept.find_concept_perfect_match(?,?,?,?); end;";
 
         try (Connection connection = connect.getConnection(); CallableStatement call =
@@ -497,8 +502,21 @@ public class ConceptDAOImpl implements ConceptDAO {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, pattern);
-            call.setArray(3, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
-            call.setArray(4, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+
+            if(categories == null) {
+                call.setNull(3, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            }
+
+            if(refsets == null) {
+                call.setNull(4, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+            }
+
             if(modeled == null) {
                 call.setNull(5, Types.NUMERIC);
             }
@@ -539,8 +557,20 @@ public class ConceptDAOImpl implements ConceptDAO {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, pattern);
-            call.setArray(3, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
-            call.setArray(4, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+
+            if(categories == null) {
+                call.setNull(3, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            }
+            if(refsets == null) {
+                call.setNull(4, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+            }
+
             if(modeled == null) {
                 call.setNull(5, Types.BOOLEAN);
             }
@@ -580,8 +610,19 @@ public class ConceptDAOImpl implements ConceptDAO {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, pattern);
-            call.setArray(3, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
-            call.setArray(4, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+
+            if(categories == null) {
+                call.setNull(3, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            }
+            if(refsets == null) {
+                call.setNull(4, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+            }
 
             if(modeled == null) {
                 call.setNull(5, Types.BOOLEAN);

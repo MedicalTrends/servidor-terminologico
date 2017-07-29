@@ -184,5 +184,21 @@ public interface DescriptionManager {
      */
     public Description incrementDescriptionHits(String descriptionId);
 
+    /**
+     * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
+     * parámetro en cada una de las categorías y refsets indicadas.
+     *
+     * @return Una lista con descripciones que hacen truncate match.
+     */
+    public List<Description> searchDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets);
+
+    /**
+     * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
+     * parámetro en cada una de las categorías y refsets indicadas.
+     *
+     * @return Una lista con descripciones que hacen truncate match.
+     */
+    public int countDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets);
+
     public DescriptionTypeFactory getDescriptionTypeFactory();
 }

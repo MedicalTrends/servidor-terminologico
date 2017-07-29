@@ -335,7 +335,7 @@ public class ConceptBean implements Serializable {
 
     //Inicializacion del Bean
     @PostConstruct
-    public void initialize() throws ParseException {
+    public void initialize() {
         user = authenticationBean.getLoggedUser();
         autogenerateMCCE = new AutogenerateMCCE();
         autogenerateMC = new AutogenerateMC();
@@ -405,10 +405,10 @@ public class ConceptBean implements Serializable {
         ConceptSMTKWeb conceptWeb = new ConceptSMTKWeb(concept);
 
         DescriptionWeb fsnDescription = new DescriptionWeb(conceptWeb, term, descriptionManager.getTypeFSN());
-        fsnDescription.setDescriptionId(EMPTY_STRING);
+        fsnDescription.setDescriptionId(" ");
 
         DescriptionWeb favouriteDescription = new DescriptionWeb(conceptWeb, term, descriptionManager.getTypeFavorite());
-        favouriteDescription.setDescriptionId(EMPTY_STRING);
+        favouriteDescription.setDescriptionId(" ");
 
         for (DescriptionWeb description : new DescriptionWeb[]{favouriteDescription, fsnDescription}) {
             conceptWeb.addDescriptionWeb(description);

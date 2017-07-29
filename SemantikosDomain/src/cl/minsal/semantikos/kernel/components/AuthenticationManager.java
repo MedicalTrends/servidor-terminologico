@@ -18,7 +18,7 @@ public interface AuthenticationManager {
 
     public boolean authenticate(String email, String password) throws AuthenticationException;
 
-    public void authenticate(MessageContext mctx) throws Exception;
+    public void authenticateWS(String email, String password) throws Exception;
 
     public void validateInstitution(String idInstitution) throws Exception ;
 

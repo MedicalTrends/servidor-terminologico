@@ -2,6 +2,7 @@ package cl.minsal.semantikos.model.basictypes;
 
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,10 +82,20 @@ public class BasicTypeValue<T extends Comparable> implements Target, Serializabl
     @Override
     public String toString() {
         //return String.format("ExampleEntity[%d, %s]", idDescriptionType, glosa);
-        if(this.getValue()!=null)
+        if(this.getValue() != null) {
+            if(this.getValue() instanceof Boolean) {
+                if((Boolean)this.getValue()) {
+                    return "1";
+                }
+                else {
+                    return "0";
+                }
+            }
             return getValue().toString();
-        else
+        }
+        else {
             return "null";
+        }
     }
 
     public boolean isBoolean() {

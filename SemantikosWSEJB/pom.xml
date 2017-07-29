@@ -46,11 +46,13 @@
             <version>1.0.0.GA</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosDomain</artifactId>
             <version>4.0.0</version>
         </dependency>
+
     </dependencies>
 
     <build>
