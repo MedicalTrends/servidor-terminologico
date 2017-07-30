@@ -72,7 +72,7 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
             /* Acciones de negocio a continuación */
 
             /* 1. Persistir el término pendiente */
-            pendingTermDAO.persist(pendingTerm);
+            pendingTerm.setId(pendingTermDAO.persist(pendingTerm));
             logger.info("Pending term persited: " + pendingTerm);
 
             /* 2. Agregarlo al concepto especial 'Pendientes' */

@@ -32,7 +32,7 @@ public class PendingTermDAOImpl implements PendingTermDAO {
     private DescriptionDAO descriptionDAO;
 
     @Override
-    public void persist(PendingTerm pendingTerm) {
+    public long persist(PendingTerm pendingTerm) {
         ConnectionBD connect = new ConnectionBD();
         /*
          * param1: ID
@@ -79,6 +79,8 @@ public class PendingTermDAOImpl implements PendingTermDAO {
         } catch (SQLException e) {
             throw new EJBException(e);
         }
+
+        return pendingTerm.getId();
     }
 
     @Override

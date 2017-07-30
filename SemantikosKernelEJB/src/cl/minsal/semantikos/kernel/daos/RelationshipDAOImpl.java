@@ -95,7 +95,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setString(2, relationshipDefinition.getName());
             call.setString(3, relationshipDefinition.getDescription());
             call.setInt(4, relationshipDefinition.getMultiplicity().getLowerBoundary());
@@ -120,7 +120,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setLong(2, relationship.getId());
             call.execute();
 
@@ -138,7 +138,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setLong(2, relationship.getId());
             call.setLong(3, relationship.getSourceConcept().getId());
             call.setLong(4, getTargetByRelationship(relationship));

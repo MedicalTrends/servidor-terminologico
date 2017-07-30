@@ -264,7 +264,7 @@ public class TargetDAOImpl implements TargetDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
 
             setDefaultValuesForUpdateTargetFunction(call);
             /* Almacenar el tipo básico */
@@ -317,14 +317,14 @@ public class TargetDAOImpl implements TargetDAO {
 
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            /*
-            if (rs.next()) {
-                idTarget = rs.getLong(1);
+
+            if (call.getLong(1) > 0) {
+                idTarget = call.getLong(1);
             }
-            */
-            rs.close();
+
+            //rs.close();
 
         } catch (SQLException e) {
             throw new EJBException(e);

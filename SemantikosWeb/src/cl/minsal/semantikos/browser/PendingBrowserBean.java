@@ -136,6 +136,11 @@ public class PendingBrowserBean implements Serializable {
 
                 List<PendingTerm> pendingTerms = queryManager.executeQuery(pendingQuery);
 
+                if(pendingTerms.isEmpty()) {
+                    pendingQuery.setTruncateMatch(true);
+                    pendingTerms = queryManager.executeQuery(pendingQuery);
+                }
+
                 //if(dataSource.isEmpty())
                 dataSource = pendingTerms;
 

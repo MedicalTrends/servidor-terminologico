@@ -18,7 +18,7 @@ public interface PendingTermDAO {
      *
      * @param pendingTerm El término pendiente que se desea persistir.
      */
-    public void persist(PendingTerm pendingTerm);
+    public long persist(PendingTerm pendingTerm);
 
     /**
      * Este método es responsable de asociar el término pendiente a una descripción.

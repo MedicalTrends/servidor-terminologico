@@ -204,10 +204,12 @@ public class QueryManagerImpl implements QueryManager {
 
         List<PendingTerm> pendingTerms = (List<PendingTerm>) (Object) queryDAO.executeQuery(query);
 
+        /*
         if(pendingTerms.isEmpty()) {
             query.setTruncateMatch(true);
             pendingTerms = (List<PendingTerm>) (Object) queryDAO.executeQuery(query);
         }
+        */
 
         return pendingTerms;
     }

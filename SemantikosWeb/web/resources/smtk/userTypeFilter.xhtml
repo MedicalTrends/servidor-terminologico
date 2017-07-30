@@ -24,7 +24,7 @@
                              autoWidth="false">
                 <f:selectItem itemLabel="Usuario..." itemValue="#{null}"/>
                 <f:selectItems value="#{generalBrowserBean.users}" var="user"
-                               itemLabel="#{user.username}" itemValue="#{user}"/>
+                               itemLabel="#{user.email}" itemValue="#{user}"/>
 
                 <p:ajax event="itemSelect" update="@(.browserTable)" />
             </p:selectOneMenu>

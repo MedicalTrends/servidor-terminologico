@@ -206,7 +206,7 @@ public class QueryFilter implements Serializable {
         if(definition.getTargetDefinition().isBasicType()){
             for (Target target : targets) {
                 BasicTypeValue basicTypeValue = (BasicTypeValue) target;
-                basicTypeValues.add(basicTypeValue.getValue().toString());
+                basicTypeValues.add(basicTypeValue.toString());
             }
         }
 
