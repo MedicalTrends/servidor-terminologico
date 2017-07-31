@@ -92,7 +92,7 @@ public class BrowserBean implements Serializable {
         categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
         conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
 
-        RemoteEJBClientFactory.getInstance().closeContext();
+        //RemoteEJBClientFactory.getInstance().closeContext();
 
         tags = tagManager.getAllTags();
         categories = categoryManager.getCategories();

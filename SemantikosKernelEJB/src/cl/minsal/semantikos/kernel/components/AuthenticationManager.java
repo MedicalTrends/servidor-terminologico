@@ -44,7 +44,7 @@ public interface AuthenticationManager {
 
     public void setUserPassword(String username, String password) throws PasswordChangeException;
 
-    public void createUserPassword(User user, String username, String password) throws PasswordChangeException;
+    public User createUserPassword(User user, String username, String password) throws PasswordChangeException;
 
     public void createUserVerificationCode(User user, String username, String password) throws PasswordChangeException;
 

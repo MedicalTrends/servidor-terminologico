@@ -23,8 +23,8 @@ public interface UserCreationBR {
 
     public void verifyPreConditions(User user);
 
-    public void preActions(User user);
+    public User preActions(User user);
 
-    public void postActions(User user, HttpServletRequest request);
+    public User postActions(User user, String baseURL);
 
 }

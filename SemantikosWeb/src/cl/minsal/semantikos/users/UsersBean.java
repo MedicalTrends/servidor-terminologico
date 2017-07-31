@@ -81,7 +81,7 @@ public class UsersBean {
 
     //Inicializacion del Bean
     @PostConstruct
-    protected void initialize() throws ParseException {
+    protected void initialize() {
         createOrUpdateUser();
     }
 
@@ -308,7 +308,7 @@ public class UsersBean {
                 try {
                     HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
 
-                    userManager.createUser(selectedUser, request);
+                    userManager.createUser(selectedUser, getURLWithContextPath(request));
                     selectedUser = userManager.getUser(selectedUser.getId());
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "1° Usuario creado de manera exitosa!!"));
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "2° Se ha enviado un correo de notificación al usuario para activar esta cuenta."));

@@ -93,7 +93,7 @@ public class QuestionDAOImpl implements QuestionDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.setLong(1, id);
+            call.setLong(2, id);
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);

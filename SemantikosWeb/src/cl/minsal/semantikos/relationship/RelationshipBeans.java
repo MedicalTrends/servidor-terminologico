@@ -61,6 +61,9 @@ public class RelationshipBeans {
         conceptBean.getConcept().addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
     }
 
+    public void onRowEdit(RowEditEvent event) {
+
+    }
 
     /**
      * Este método es el responsable de retornar verdadero en caso que se cumpla el UpperBoundary de la multiplicidad,

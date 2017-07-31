@@ -727,18 +727,18 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         try (Connection connection = connectionBD.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setLong(2,row.getId());
 
             /* Se prepara y realiza la consulta */
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            while (rs.next()) {
-                result = rs.getInt(1);
+            while (call.getLong(1) > 0) {
+                result = call.getInt(1);
             }
-            rs.close();
+            //rs.close();
         } catch (SQLException e) {
             logger.error("Hubo un error al acceder a la base de datos.", e);
             throw new EJBException(e);

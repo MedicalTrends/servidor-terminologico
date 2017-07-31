@@ -65,7 +65,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
     public void validateInstitution(String idInstitution) throws Exception {
 
         if(idInstitution.isEmpty()) {
-            throw new Exception("No se ha especificado idEstablemciento como parámetro de esta operación");
+            throw new Exception("No se ha especificado idEstablecimiento como parámetro de esta operación");
         }
 
         Institution institution = null;
@@ -100,8 +100,9 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 
     @PermitAll()
     //@RolesAllowed("Administrador")
-    public void createUserPassword(User user, String username, String password) throws PasswordChangeException {
+    public User createUserPassword(User user, String username, String password) throws PasswordChangeException {
         user.setPasswordHash(getAuthenticationMethod().createUserPassword(username, password));
+        return user;
     }
 
     @PermitAll()

@@ -131,7 +131,7 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setLong(2, relationshipAttribute.getIdRelationshipAttribute());
             call.setLong(3, relationshipAttribute.getRelationship().getId());
             call.setLong(4, getTargetByRelationshipAttribute(relationshipAttribute));

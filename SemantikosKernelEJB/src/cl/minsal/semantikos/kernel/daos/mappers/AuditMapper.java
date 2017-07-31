@@ -58,7 +58,7 @@ public class AuditMapper {
 
                 ConceptSMTK concept = conceptDAO.getConceptByID(rs.getLong("id_concept"));
                 AuditActionType auditActionType = AuditActionType.valueOf(rs.getLong("id_action_type"));
-                User user = userDAO.getUserById(rs.getInt("id_user"));
+                User user = userDAO.getUserById(rs.getLong("id_user"));
                 AuditableEntityType auditableEntityType = AuditableEntityType.valueOf(rs.getLong("id_audit_entity_type"));
                 AuditableEntity auditableEntityByID = auditableEntityFactory.findAuditableEntityByID(rs.getLong("id_auditable_entity"), auditableEntityType);
                 Timestamp date = rs.getTimestamp("date");

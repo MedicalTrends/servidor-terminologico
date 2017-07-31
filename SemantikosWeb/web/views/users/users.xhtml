@@ -22,7 +22,7 @@
 
                             <h:form id="form">
 
-                                <p:growl id="globalMessage" showDetail="true" showSummary="true"/>
+                                <p:growl id="globalMessage" showDetail="true" autoUpdate="true" showSummary="true"/>
 
                                 <p:dataTable id="singleDT" var="user" value="#{usersBrowser.allUsers}" rowKey="#{user.id}" styleClass="users"
                                              rows="30" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"

@@ -67,15 +67,15 @@ public class UserManagerImpl implements UserManager {
         return questionDAO.getAllQuestions();
     }
 
-    public void createUser(User user, HttpServletRequest request) throws BusinessRuleException {
+    public void createUser(User user, String baseURL) throws BusinessRuleException {
 
         /* Se validan las pre-condiciones para crear un usuario */
         try {
             userCreationBR.verifyPreConditions(user);
-            userCreationBR.preActions(user);
+            user = userCreationBR.preActions(user);
             authDAO.createUser(user);
             //user = authDAO.getUserById(user.getIdUser());
-            userCreationBR.postActions(user, request);
+            userCreationBR.postActions(user, baseURL);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -137,9 +137,9 @@ public class UserManagerImpl implements UserManager {
 
     }
 
-    public void resetAccount(User user, HttpServletRequest request) {
-        userCreationBR.preActions(user);
-        userCreationBR.postActions(user, request);
+    public void resetAccount(User user, String baseURL) {
+        user = userCreationBR.preActions(user);
+        user = userCreationBR.postActions(user, baseURL);
         questionDAO.deleteUserAnswers(user);
         user.setFailedAnswerAttempts(0);
     }

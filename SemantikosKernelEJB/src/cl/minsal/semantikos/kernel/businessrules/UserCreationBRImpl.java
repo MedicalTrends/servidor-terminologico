@@ -112,12 +112,13 @@ public class UserCreationBRImpl implements UserCreationBR {
      *
      * @param user El usuario
      */
-    public void br304DefaultPassword(User user) {
+    public User br304DefaultPassword(User user) {
 
         try {
             String password = RandomStringUtils.random(8, 0, 20, true, true, "qw32rfHIJk9iQ8Ud7h0X".toCharArray());
             user.setPassword(password);
-            authenticationManager.createUserPassword(user,user.getEmail(),user.getPassword());
+            user = authenticationManager.createUserPassword(user,user.getEmail(),user.getPassword());
+            return user;
         } catch (PasswordChangeException e) {
             e.printStackTrace();
             throw new BusinessRuleException("BR-304-DefaultPassword", "No se pudo generar una contraseña por defecto. Contactar a desarrollo");
@@ -171,11 +172,11 @@ public class UserCreationBRImpl implements UserCreationBR {
      *
      * @param user El usuario
      */
-    public void br306SendEmail(User user, HttpServletRequest request) {
+    public void br306SendEmail(User user, String baseURL) {
 
         try {
-            String link = getURLWithContextPath(request) + "/designer/views/users/activateAccount.xhtml?key="+user.getVerificationCode();
-            String link2 = getURLWithContextPath(request) + "/designer/views/login.xhtml";
+            String link = baseURL + "/designer/views/users/activateAccount.xhtml?key="+user.getVerificationCode();
+            String link2 = baseURL + "/designer/views/login.xhtml";
             EmailFactory.getInstance().send(user.getEmail(), user.getPassword(), link, link2);
         } catch (Exception e) {
             e.printStackTrace();
@@ -202,7 +203,6 @@ public class UserCreationBRImpl implements UserCreationBR {
         return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
     }
 
-
     @Override
     public void verifyPreConditions(User user) throws BusinessRuleException {
         br301UniqueDocumentNumber(user);
@@ -211,15 +211,17 @@ public class UserCreationBRImpl implements UserCreationBR {
     }
 
     @Override
-    public void preActions(User user) throws BusinessRuleException {
-        br304DefaultPassword(user);
+    public User preActions(User user) throws BusinessRuleException {
+        user = br304DefaultPassword(user);
+        return user;
     }
 
     @Override
-    public void postActions(User user, HttpServletRequest request) throws BusinessRuleException {
+    public User postActions(User user, String baseURL) throws BusinessRuleException {
         br305VerificationCode(user);
-        br306SendEmail(user, request);
+        br306SendEmail(user, baseURL);
         br308LockUser(user);
+        return user;
     }
 
     /**

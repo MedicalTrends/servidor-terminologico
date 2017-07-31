@@ -39,5 +39,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="SemantikosWSEJB" />
+    <orderEntry type="module" module-name="SemantikosDomain" />
   </component>
 </module>

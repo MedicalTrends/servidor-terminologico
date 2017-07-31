@@ -170,7 +170,6 @@ public class HelperTableBean implements Serializable {
             row.setCells(updatedRow.getCells());
             row.setId(updatedRow.getId());
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }

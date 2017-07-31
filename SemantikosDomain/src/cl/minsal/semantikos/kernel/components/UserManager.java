@@ -28,7 +28,7 @@ public interface UserManager {
 
     public List<Question> getAllQuestions();
 
-    public void createUser(User user, HttpServletRequest request);
+    public void createUser(User user, String baseURL);
 
     public void activateAccount(User user);
 
