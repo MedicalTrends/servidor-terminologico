@@ -574,6 +574,41 @@ public class QueryDAOImpl implements QueryDAO {
 
     }
 
+    @Override
+    public List<Relationship> getRelationshipsBySecondOrderColumns(ConceptSMTK conceptSMTK, Query query) {
+
+        ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_relationship.get_relationships_by_source_concept_id(?); end;";
+
+        List<Long> definitions = query.getSecondOrderDefinitionIds();
+
+        List<Relationship> relationships = new ArrayList<>();
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSMTK.getId());
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while(rs.next()) {
+                if(definitions.contains(rs.getLong("id_relationship_definition"))) {
+                    relationships.add(relationshipMapper.createRelationshipFromResultSet(rs, conceptSMTK));
+                }
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            throw new EJBException(e);
+        }
+
+        return relationships;
+
+    }
+
     private void bindParameter(int paramNumber, CallableStatement call, Connection connection, QueryParameter param)
             throws SQLException {
 

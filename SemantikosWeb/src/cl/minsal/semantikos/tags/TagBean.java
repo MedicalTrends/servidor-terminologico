@@ -243,7 +243,7 @@ public class TagBean implements Serializable{
         }else{
 
             if(conceptBean.getConcept().isPersistent()){
-                tagManager.persist(tagCreate);
+                tagCreate.setId(tagManager.persist(tagCreate));
                 tagManager.assignTag(conceptBean.getConcept(),tagCreate);
             }
             conceptBean.getConcept().getTags().add(tagCreate);

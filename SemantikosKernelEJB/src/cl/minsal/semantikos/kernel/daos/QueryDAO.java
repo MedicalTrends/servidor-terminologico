@@ -44,4 +44,6 @@ public interface QueryDAO {
     int getCompositeValue(Category category, RelationshipDefinition relationshipDefinition);
 
     List<Relationship> getRelationshipsByColumns(ConceptSMTK conceptSMTK, Query query);
+
+    List<Relationship> getRelationshipsBySecondOrderColumns(ConceptSMTK conceptSMTK, Query query);
 }

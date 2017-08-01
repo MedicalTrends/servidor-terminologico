@@ -148,7 +148,7 @@ public class TagManagerImpl implements TagManager {
     }
 
     @Override
-    public void persist(Tag tag) {
+    public long persist(Tag tag) {
         logger.debug("Creando concepto " + tag);
 
         /* Se validan las reglas de negocio */
@@ -176,6 +176,8 @@ public class TagManagerImpl implements TagManager {
 
         }
         logger.debug("Tag creado:" + tag);
+
+        return tag.getId();
     }
 
     @Override

@@ -246,12 +246,12 @@ public class AuditManagerImpl implements AuditManager {
 
     @Override
     public List<ConceptAuditAction> getConceptAuditActions(ConceptSMTK conceptSMTK, boolean changes) {
-        return auditDAO.getConceptAuditActions(conceptSMTK.getId(), changes);
+        return auditDAO.getConceptAuditActions(conceptSMTK, changes);
     }
 
     @Override
     public ConceptAuditAction getConceptCreationAuditAction(ConceptSMTK conceptSMTK, boolean changes) {
-        for (ConceptAuditAction conceptAuditAction : auditDAO.getConceptAuditActions(conceptSMTK.getId(), changes)) {
+        for (ConceptAuditAction conceptAuditAction : auditDAO.getConceptAuditActions(conceptSMTK, changes)) {
             if(conceptAuditAction.getAuditActionType().equals(AuditActionType.CONCEPT_CREATION)) {
                 return conceptAuditAction;
             }
@@ -261,7 +261,7 @@ public class AuditManagerImpl implements AuditManager {
 
     @Override
     public ConceptAuditAction getConceptPublicationAuditAction(ConceptSMTK conceptSMTK, boolean changes) {
-        for (ConceptAuditAction conceptAuditAction : auditDAO.getConceptAuditActions(conceptSMTK.getId(), changes)) {
+        for (ConceptAuditAction conceptAuditAction : auditDAO.getConceptAuditActions(conceptSMTK, changes)) {
             if(conceptAuditAction.getAuditActionType().equals(AuditActionType.CONCEPT_PUBLICATION)) {
                 return conceptAuditAction;
             }

@@ -32,7 +32,7 @@ public class AuditDAOImpl implements AuditDAO {
     AuditMapper auditMapper;
 
     @Override
-    public List<ConceptAuditAction> getConceptAuditActions(long idConcept, boolean changes) {
+    public List<ConceptAuditAction> getConceptAuditActions(ConceptSMTK conceptSMTK, boolean changes) {
 
         ConnectionBD connect = new ConnectionBD();
 
@@ -45,14 +45,14 @@ public class AuditDAOImpl implements AuditDAO {
 
             /* Se invoca la consulta para recuperar las relaciones */
             call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.setLong(2, idConcept);
+            call.setLong(2, conceptSMTK.getId());
             call.setBoolean(3, changes);
             call.execute();
 
             //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
-            auditActions = auditMapper.createAuditActionsFromResultSet(rs);
+            auditActions = auditMapper.createAuditActionsFromResultSet(rs, conceptSMTK);
 
             rs.close();
 

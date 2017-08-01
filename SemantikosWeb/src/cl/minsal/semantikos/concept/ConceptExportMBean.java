@@ -52,7 +52,7 @@ public class ConceptExportMBean extends UINamingContainer {
 
 
     @PostConstruct
-    protected void initialize() throws ParseException {
+    protected void initialize() {
     }
 
     public void loadConcept() {

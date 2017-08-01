@@ -58,7 +58,7 @@ public class HelperTableBean implements Serializable {
     HelperTableSearchBR helperTableSearchBR = (HelperTableSearchBR) RemoteEJBClientFactory.getInstance().getManager(HelperTableSearchBR.class);
 
     @PostConstruct
-    protected void initialize() throws ParseException {
+    protected void initialize() {
     }
 
     public AuthenticationBean getAuthenticationBean() {

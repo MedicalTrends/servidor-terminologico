@@ -103,4 +103,17 @@ public class Query implements IQuery, Serializable {
 
         return ids;
     }
+
+    public List<Long> getSecondOrderDefinitionIds() {
+
+        List<Long> ids = new ArrayList<>();
+
+        for (QueryColumn column : columns) {
+            if(column.isSecondOrder()) {
+                ids.add(column.getRelationshipDefinition().getId());
+            }
+        }
+
+        return ids;
+    }
 }

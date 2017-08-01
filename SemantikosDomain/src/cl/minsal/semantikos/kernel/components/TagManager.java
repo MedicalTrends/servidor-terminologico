@@ -48,7 +48,7 @@ public interface TagManager {
 
     public void unassignTag(ConceptSMTK conceptSMTK, Tag tag);
 
-    public void persist(Tag tag);
+    public long persist(Tag tag);
 
     public void update(Tag tag);
 

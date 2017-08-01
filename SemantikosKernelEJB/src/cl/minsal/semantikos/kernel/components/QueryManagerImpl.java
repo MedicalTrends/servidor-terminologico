@@ -112,7 +112,8 @@ public class QueryManagerImpl implements QueryManager {
 
                             ConceptSMTK targetConcept = (ConceptSMTK)firstOrderRelationship.getTarget();
 
-                            for (Relationship secondOrderRelationship : relationshipManager.getRelationshipsBySourceConcept(targetConcept)) {
+                            //for (Relationship secondOrderRelationship : relationshipManager.getRelationshipsBySourceConcept(targetConcept)) {
+                            for (Relationship secondOrderRelationship : queryDAO.getRelationshipsBySecondOrderColumns(targetConcept, query)) {
 
                                 if(secondOrderAttributes.equals(secondOrderRelationship.getRelationshipDefinition())) {
 

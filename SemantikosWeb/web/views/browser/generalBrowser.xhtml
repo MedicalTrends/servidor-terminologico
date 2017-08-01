@@ -74,6 +74,7 @@
                                                 var="tag">
 
                                             <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" />
+                                            <h:outputText value=", " rendered="#{concept.tags.size() > 1}" />
 
                                         </p:repeat>
                                     </p:column>

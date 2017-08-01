@@ -93,9 +93,7 @@
                                 </p:dataTable>
                             </p:outputPanel>
 
-
                         </p:dialog>
-
 
                         <p:dialog id="edit-data-dialog-var"
                                   header="Editar Datos" widgetVar="edit-data-dialog-var"
@@ -160,7 +158,7 @@
                                         />
                                     </f:facet>
 
-                                    <p:ajax event="rowEdit" listener="#{helperTableBean.onRowEdit}" update="@(.dialog-concept-related-panel)"/>
+                                    <p:ajax event="rowEdit" listener="#{helperTableBean.onRowEdit}" update="@this"/>
                                     <p:ajax event="rowEditCancel" listener="#{helperTableBean.onRowEditCancel}"
                                             oncomplete="onRowEditCancel#{varStatus1.index}()"/>
 
