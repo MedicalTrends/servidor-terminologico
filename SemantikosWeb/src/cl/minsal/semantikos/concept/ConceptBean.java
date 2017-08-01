@@ -766,6 +766,8 @@ public class ConceptBean implements Serializable {
             }
         }
 
+        autogenerateMCCE = new AutogenerateMCCE();
+
         if(concept.isPersistent() && !concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0) {
             autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
         }

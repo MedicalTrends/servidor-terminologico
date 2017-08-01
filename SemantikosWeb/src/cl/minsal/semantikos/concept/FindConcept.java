@@ -101,7 +101,7 @@ public class FindConcept implements Serializable{
 
             if (pattern.trim().length() >= 2) {
                 if(standardizationPattern(pattern).length()<=1)return null;
-                findConcepts=conceptManager.findConcepts(pattern,selectedCategories,null,true);
+                findConcepts=conceptManager.findConcepts(pattern,selectedCategories.isEmpty()?null:selectedCategories,null,true);
                 return findConcepts;
             }
         }
