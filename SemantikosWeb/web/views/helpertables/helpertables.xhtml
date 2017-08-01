@@ -83,7 +83,7 @@
 
                                 </div>
 
-                                <p:dataTable id="conceptRelated" rows="10" value="#{helperTableBean.conceptSMTKs}" paginator="true" var="concept" lazy="true">
+                                <p:dataTable id="conceptRelated" styleClass="conceptRelatedTable" rows="10" value="#{helperTableBean.conceptSMTKs}" paginator="true" var="concept" lazy="true">
                                     <p:column headerText="Concept ID">
                                         <h:outputText value="#{concept.conceptID}"/>
                                     </p:column>
@@ -158,7 +158,7 @@
                                         />
                                     </f:facet>
 
-                                    <p:ajax event="rowEdit" listener="#{helperTableBean.onRowEdit}" update="@this"/>
+                                    <p:ajax event="rowEdit" listener="#{helperTableBean.onRowEdit}" update="@(.conceptRelatedTable)"/>
                                     <p:ajax event="rowEditCancel" listener="#{helperTableBean.onRowEditCancel}"
                                             oncomplete="onRowEditCancel#{varStatus1.index}()"/>
 

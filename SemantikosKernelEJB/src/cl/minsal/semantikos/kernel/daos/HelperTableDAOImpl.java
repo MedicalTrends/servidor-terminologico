@@ -734,10 +734,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.execute();
 
             //ResultSet rs = (ResultSet) call.getObject(1);
-
-            while (call.getLong(1) > 0) {
-                result = call.getInt(1);
-            }
+            result = call.getInt(1);
             //rs.close();
         } catch (SQLException e) {
             logger.error("Hubo un error al acceder a la base de datos.", e);

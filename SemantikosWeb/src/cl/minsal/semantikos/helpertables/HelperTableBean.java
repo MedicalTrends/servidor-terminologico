@@ -148,8 +148,10 @@ public class HelperTableBean implements Serializable {
                         conceptSMTKs= new LazyDataModel<ConceptSMTK>() {
                             @Override
                             public List<ConceptSMTK> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+                                List<ConceptSMTK> conceptSMTKs = null;
+                                conceptSMTKs = manager.isRowUsed(r,pageSize,first);
                                 setRowCount(manager.countIsRowUsed(r));
-                                return manager.isRowUsed(r,pageSize,first);
+                                return  conceptSMTKs;
                             }
                         };
                         context.execute("PF('dialog-concept-related').show();");

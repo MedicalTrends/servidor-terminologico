@@ -167,7 +167,13 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
 
     @Override
     public List<HelperTableRow> searchRows(HelperTable helperTable, String pattern) {
-        return dao.searchRecords( helperTable, pattern);
+        /* Se delega la búsqueda al DAO, ya que pasaron las pre-condiciones */
+        List<HelperTableRow> foundRows =  dao.searchRecords( helperTable, pattern);
+        /* Se aplican reglas de negocio sobre los resultados retornados */
+        new HelperTableSearchBRImpl().applyPostActions(foundRows);
+
+        return foundRows;
+
     }
 
     @Override
