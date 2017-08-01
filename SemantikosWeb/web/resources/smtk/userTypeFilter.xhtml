@@ -20,13 +20,13 @@
 
             <h:outputText value="#{cc.attrs.name}" />
 
-            <p:selectOneMenu value="#{cc.attrs.user}" converter="omnifaces.SelectItemsConverter"
+            <p:selectOneMenu value="#{cc.attrs.user}" converter="userConverter"
                              autoWidth="false">
                 <f:selectItem itemLabel="Usuario..." itemValue="#{null}"/>
                 <f:selectItems value="#{generalBrowserBean.users}" var="user"
                                itemLabel="#{user.email}" itemValue="#{user}"/>
 
-                <p:ajax event="itemSelect" update="@(.browserTable)" />
+                <p:ajax event="itemSelect" process="@this" update="@(.browserTable)" />
             </p:selectOneMenu>
 
         </div>

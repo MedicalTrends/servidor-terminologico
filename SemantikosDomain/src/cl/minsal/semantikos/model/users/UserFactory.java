@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.model.users;
 
+import javax.ejb.Singleton;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,12 +10,20 @@ import java.util.Map;
 /**
  * @author Andrés Farías
  */
-public class UserFactory {
+public class UserFactory implements Serializable {
 
     private static final UserFactory instance = new UserFactory();
 
     /** La lista de tagSMTK */
     private List<User> users;
+
+    public Map<Long, User> getUsersById() {
+        return usersById;
+    }
+
+    public void setUsersById(Map<Long, User> usersById) {
+        this.usersById = usersById;
+    }
 
     /** Mapa de tagSMTK por su nombre. */
     private Map<Long, User> usersById;

@@ -300,7 +300,7 @@ public class AutogenerateBeans {
             autogenerateMC=new AutogenerateMC();
             for (RelationshipWeb relationship :  conceptSMTKWeb.getRelationshipsWeb()) {
 
-                if(!relationship.getRelationshipAttributes().isEmpty()){
+                if(!relationship.getRelationshipAttributes().isEmpty()) {
                     autogenerateRelationshipWithAttributes(relationship.getRelationshipDefinition(),relationship,conceptSMTKWeb,autogenerateList,autogenerateMC);
                     autogenerateRelationship(relationship.getRelationshipDefinition(),relationship,relationship.getTarget(),conceptSMTKWeb,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
                     for (RelationshipAttributeDefinition relationshipAttributeDefinition : relationship.getRelationshipDefinition().getRelationshipAttributeDefinitions()) {
@@ -308,7 +308,8 @@ public class AutogenerateBeans {
                             autogenerateAttributeDefinition(relationshipAttributeDefinition, relationship.getAttribute(relationshipAttributeDefinition).getTarget(), relationship.getAttribute(relationshipAttributeDefinition), conceptSMTKWeb, autogenerateMC, autogenerateMCCE);
                         }
                     }
-                }else{
+                }
+                else {
                     autogenerateRelationship(relationship.getRelationshipDefinition(),relationship,relationship.getTarget(),conceptSMTKWeb,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
                 }
                 addSustancia(relationship,autogenerateMC);

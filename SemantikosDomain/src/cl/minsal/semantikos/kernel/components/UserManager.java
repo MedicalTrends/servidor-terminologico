@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.Question;
 import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.model.users.UserFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -28,7 +29,7 @@ public interface UserManager {
 
     public List<Question> getAllQuestions();
 
-    public void createUser(User user, String baseURL);
+    public long createUser(User user, String baseURL);
 
     public void activateAccount(User user);
 
@@ -47,5 +48,7 @@ public interface UserManager {
     public void unlockUser(String email);
 
     public void lockUser(String email);
+
+    public UserFactory getUserFactory();
 
 }

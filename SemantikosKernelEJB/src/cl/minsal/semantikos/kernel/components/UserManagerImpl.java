@@ -4,10 +4,7 @@ import cl.minsal.semantikos.kernel.daos.AuthDAO;
 
 import cl.minsal.semantikos.kernel.daos.QuestionDAO;
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
-import cl.minsal.semantikos.model.users.Answer;
-import cl.minsal.semantikos.model.users.Profile;
-import cl.minsal.semantikos.model.users.Question;
-import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.model.users.*;
 import cl.minsal.semantikos.kernel.businessrules.UserCreationBR;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 
@@ -67,7 +64,7 @@ public class UserManagerImpl implements UserManager {
         return questionDAO.getAllQuestions();
     }
 
-    public void createUser(User user, String baseURL) throws BusinessRuleException {
+    public long createUser(User user, String baseURL) throws BusinessRuleException {
 
         /* Se validan las pre-condiciones para crear un usuario */
         try {
@@ -76,6 +73,7 @@ public class UserManagerImpl implements UserManager {
             authDAO.createUser(user);
             //user = authDAO.getUserById(user.getIdUser());
             userCreationBR.postActions(user, baseURL);
+            return user.getId();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -86,7 +84,7 @@ public class UserManagerImpl implements UserManager {
 
         /* Se validan las pre-condiciones para crear un usuario */
         try {
-            authenticationManager.createUserPassword(user,user.getEmail(),user.getPassword());
+            user.setPasswordHash(authenticationManager.createUserPassword(user,user.getEmail(),user.getPassword()));
         } catch (PasswordChangeException e) {
             e.printStackTrace();
         }
@@ -164,6 +162,10 @@ public class UserManagerImpl implements UserManager {
 
     public void lockUser(String email) {
         authDAO.lockUser(email);
+    }
+
+    public UserFactory getUserFactory() {
+        return UserFactory.getInstance();
     }
 
 }

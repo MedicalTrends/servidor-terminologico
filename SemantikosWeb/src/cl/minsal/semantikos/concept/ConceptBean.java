@@ -765,9 +765,14 @@ public class ConceptBean implements Serializable {
                 order++;
             }
         }
-        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
-        if(!isMCSpecialThisConcept())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+        if(concept.isPersistent() && !concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0) {
+            autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+        }
+
+        if(!isMCSpecialThisConcept()) {
+            autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+        }
 
         crossmapBean.refreshCrossmapIndirect(concept);
 
@@ -1093,6 +1098,7 @@ public class ConceptBean implements Serializable {
     }
 
     public void onRowReorder(ReorderEvent event) {
+
         FacesContext context = FacesContext.getCurrentInstance();
         if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 

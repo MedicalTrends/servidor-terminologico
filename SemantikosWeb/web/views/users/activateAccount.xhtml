@@ -111,8 +111,8 @@
 
                                 <h:column>
                                     <ui:repeat value="#{accountActivation.user.getAnswersByQuestion(question)}" var="answer">
-                                        <p:inputText value="#{answer.answer}" autocomplete="off" styleClass="Wid90" >
-                                            <p:ajax process="@this" update="@this" />
+                                        <p:inputText value="#{answer.answer}" autocomplete="off" styleClass="Wid90">
+                                            <p:ajax event="blur" process="@(.questions)" update="@(.questions)" />
                                         </p:inputText>
                                     </ui:repeat>
                                 </h:column>

@@ -100,9 +100,9 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 
     @PermitAll()
     //@RolesAllowed("Administrador")
-    public User createUserPassword(User user, String username, String password) throws PasswordChangeException {
+    public String createUserPassword(User user, String username, String password) throws PasswordChangeException {
         user.setPasswordHash(getAuthenticationMethod().createUserPassword(username, password));
-        return user;
+        return user.getPasswordHash();
     }
 
     @PermitAll()

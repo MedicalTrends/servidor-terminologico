@@ -12,6 +12,7 @@ import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.users.UserFactory;
 import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
 import cl.minsal.semantikos.modelweb.RelationshipAttributeDefinitionWeb;
 import cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb;
@@ -40,7 +41,7 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
  * Created by diego on 26/06/2016.
  */
 
-@ManagedBean(name = "mainMenuBean")
+@ManagedBean(name = "mainMenuBean", eager = true)
 @ApplicationScoped
 public class MainMenuBean implements Serializable {
 
@@ -61,11 +62,15 @@ public class MainMenuBean implements Serializable {
 
     ViewAugmenter viewAugmenter = (ViewAugmenter) RemoteEJBClientFactory.getInstance().getManager(ViewAugmenter.class);
 
+    UserManager userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
+
     private TagSMTKFactory tagSMTKFactory;
 
     private DescriptionTypeFactory descriptionTypeFactory;
 
     private Map<Long, RelationshipDefinitionWeb> relationshipDefinitiosnWeb = new HashMap<>();
+
+    private UserFactory userFactory;
 
     @PostConstruct
     public void init() {
@@ -76,10 +81,15 @@ public class MainMenuBean implements Serializable {
 
         descriptionTypeFactory = descriptionManager.getDescriptionTypeFactory();
 
+        userFactory = userManager.getUserFactory();
+
+
         TagSMTKFactory.getInstance().setTagsSMTK(tagSMTKFactory.getTagsSMTK());
         TagSMTKFactory.getInstance().setTagsSMTKByName(tagSMTKFactory.getTagsSMTKByName());
 
         DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypeFactory.getDescriptionTypes());
+
+        UserFactory.getInstance().setUsersById(userFactory.getUsersById());
 
         categoryMenuModel = new DefaultMenuModel();
 

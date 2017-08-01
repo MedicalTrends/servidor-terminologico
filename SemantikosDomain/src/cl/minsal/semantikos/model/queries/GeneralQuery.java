@@ -144,7 +144,9 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
     }
 
     public void setUser(User user) {
-        this.user = user;
+        if(user != null) {
+            this.user = user;
+        }
     }
 
     public boolean isCustomFilterable() {
@@ -505,7 +507,7 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
      * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de los
      * usuarios
      */
-    public Long getUserValue(){
+    public Long getUserValue() {
         if(getUser()==null)
             return null;
         else

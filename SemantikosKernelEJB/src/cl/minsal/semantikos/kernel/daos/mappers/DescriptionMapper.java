@@ -126,7 +126,8 @@ public class DescriptionMapper {
         Timestamp creationDate = resultSet.getTimestamp("creation_date");
         long uses = resultSet.getLong("uses");
 
-        User user = authDAO.getUserById(resultSet.getLong("id_user"));
+        //User user = authDAO.getUserById(resultSet.getLong("id_user"));
+        User user = UserFactory.getInstance().findUserById(resultSet.getLong("id_user"));
 
         long idConcept = resultSet.getLong("id_concept");
 

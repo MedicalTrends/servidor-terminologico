@@ -145,7 +145,6 @@
             <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"/>
             <!---->
 
-
             <p:ajax event="rowEdit" listener="#{relationshipBean.onRowEdit}"/>
 
             <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
@@ -164,7 +163,6 @@
                     <h:outputText value="#{attribute.name}"/>
                 </f:facet>
 
-
                     <p:repeat
                             offset="0"
                             size="#{relationship.getAttributesByAttributeDefinition(attribute.relationshipAttributeDefinition).size()}"
@@ -174,22 +172,18 @@
                             var="relationshipattribute">
                         <p:cellEditor rendered="#{attribute.targetDefinition.basicType}">
                         <f:facet name="output">
-                            <h:outputText value="#{relationshipattribute.target}" />
+                            <h:outputText value="Si" rendered="#{relationshipattribute.target.value}" />
+                            <h:outputText value="No" rendered="#{not relationshipattribute.target.value}" />
                         </f:facet>
                         <f:facet name="input">
                             <p:selectBooleanButton rendered="#{attribute.targetDefinition.basicType}"
                                                    value="#{relationshipattribute.target.value}"
                                                    offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg"
                                                    offIcon="fa fa-close fa-lg">
-                                <p:ajax event="change"
-                                        listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition,attribute.relationshipAttributeDefinition,relationshipattribute.target)}"
-                                        process="@this" />
                             </p:selectBooleanButton>
                         </f:facet>
                         </p:cellEditor>
                     </p:repeat>
-
-
 
                 <smtk:helperTableTypeAttributeCell attribute="#{attribute.relationshipAttributeDefinition}"
                                                    relationship="#{relationship}"

@@ -308,8 +308,7 @@ public class UsersBean {
                 try {
                     HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
 
-                    userManager.createUser(selectedUser, getURLWithContextPath(request));
-                    selectedUser = userManager.getUser(selectedUser.getId());
+                    selectedUser = userManager.getUser(userManager.createUser(selectedUser, getURLWithContextPath(request)));
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "1° Usuario creado de manera exitosa!!"));
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "2° Se ha enviado un correo de notificación al usuario para activar esta cuenta."));
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "3° Este usuario permanecerá bloqueado hasta que él active su cuenta"));

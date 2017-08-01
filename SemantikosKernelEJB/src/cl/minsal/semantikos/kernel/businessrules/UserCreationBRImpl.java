@@ -117,7 +117,7 @@ public class UserCreationBRImpl implements UserCreationBR {
         try {
             String password = RandomStringUtils.random(8, 0, 20, true, true, "qw32rfHIJk9iQ8Ud7h0X".toCharArray());
             user.setPassword(password);
-            user = authenticationManager.createUserPassword(user,user.getEmail(),user.getPassword());
+            user.setPasswordHash(authenticationManager.createUserPassword(user,user.getEmail(),user.getPassword()));
             return user;
         } catch (PasswordChangeException e) {
             e.printStackTrace();

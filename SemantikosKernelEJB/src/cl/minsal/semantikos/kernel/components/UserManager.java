@@ -10,10 +10,7 @@ import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.users.Answer;
-import cl.minsal.semantikos.model.users.Profile;
-import cl.minsal.semantikos.model.users.Question;
-import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.model.users.*;
 
 import javax.ejb.Remote;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +38,7 @@ public interface UserManager {
 
     public List<Question> getAllQuestions();
 
-    public void createUser(User user, String baseURL);
+    public long createUser(User user, String baseURL);
 
     public void activateAccount(User user);
 
@@ -60,5 +57,7 @@ public interface UserManager {
     public void unlockUser(String email);
 
     public void lockUser(String email);
+
+    public UserFactory getUserFactory();
 
 }
