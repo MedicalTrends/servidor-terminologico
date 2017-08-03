@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
@@ -41,11 +42,11 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
         long idRelationShipAttribute;
         long idTarget = targetDAO.persist(relationshipAttribute.getTarget(), relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition());
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship_attribute.create_relationship_attribute(?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -80,14 +81,14 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
     @Override
     public List<RelationshipAttribute> getRelationshipAttribute(Relationship relationship) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship_attribute.get_relationship_attribute_by_relationship(?); end;";
 
         ResultSet rs;
         List<RelationshipAttribute> relationshipAttributeList = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -125,10 +126,10 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
     @Override
     public void update(RelationshipAttribute relationshipAttribute) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         String sql = "begin ? := stk.stk_pck_relationship_attribute.update_relation_attribute(?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -144,17 +145,15 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
 
     }
 
-
-
     @Override
     public Long getTargetByRelationshipAttribute(RelationshipAttribute relationshipAttribute) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship_attribute.get_id_target_by_id_relationship_attribute(?); end;";
 
         Long result;
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

@@ -88,10 +88,13 @@ public class ConceptMapper {
         ConceptSMTK conceptSMTK = new ConceptSMTK(id, conceptId, objectCategory, check, consult, modeled,
                 completelyDefined, heritable, published, observation, tagSMTKByID);
 
-        /* Se recuperan las descripciones del concepto */
-        List<Description> descriptions = descriptionDAO.getDescriptionsByConcept(conceptSMTK);
+        if(conceptSMTK.getDescriptions().isEmpty() || conceptSMTK.getDescriptions() == null) {
+            /* Se recuperan las descripciones del concepto */
+            List<Description> descriptions = descriptionDAO.getDescriptionsByConcept(conceptSMTK);
 
-        conceptSMTK.setDescriptions(descriptions);
+            conceptSMTK.setDescriptions(descriptions);
+        }
+
 
         /* Se recuperan sus Etiquetas */
         conceptSMTK.setTags(tagDAO.getTagsByConcept(id));

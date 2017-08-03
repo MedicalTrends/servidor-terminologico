@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.daos.mappers.BasicTypeMapper;
 import cl.minsal.semantikos.kernel.factories.BasicTypeDefinitionFactory;
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 
@@ -31,13 +32,13 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
 
     @Override
     public BasicTypeDefinition getBasicTypeDefinitionById(long idBasicTypeDefinition) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_basic_type.get_basic_type_definition_by_id(?); end;";
 
         BasicTypeDefinition basicTypeDefinition;
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */

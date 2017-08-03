@@ -73,12 +73,12 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public User getUserByDocumentNumber(String documentNumber) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         User user = null;
 
         String sql = "begin ? := stk.stk_pck_user.get_user_by_document_number(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -104,12 +104,12 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public User getUserByVerificationCode(String key) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         User user = null;
 
         String sql = "begin ? := stk.stk_pck_user.get_user_by_verification_code(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -135,13 +135,12 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public User getUserByUsername(String username) {
 
-
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         User user = null;
 
         String sql = "begin ? := stk.stk_pck_user.get_user_by_username(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -167,12 +166,12 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public User getUserByEmail(String email) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         User user = null;
 
         String sql = "begin ? := stk.stk_pck_user.get_user_by_email(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -236,12 +235,12 @@ public class AuthDAOImpl implements AuthDAO {
 
         ArrayList<User> users = new ArrayList<>();
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         User user = null;
 
         String sql = "begin ? := stk.stk_pck_user.get_all_users; end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -268,12 +267,11 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public void createUser(User user) {
 
-
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_user.create_user(?,?,?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -321,7 +319,7 @@ public class AuthDAOImpl implements AuthDAO {
 
         String sql = "begin ? := stk.stk_pck_user.update_user(?,?,?,?,?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = (new ConnectionBD()).getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.INTEGER);
@@ -354,7 +352,7 @@ public class AuthDAOImpl implements AuthDAO {
 
         sql = "begin ? := stk.stk_pck_user.delete_user_profiles(?); end;";
 
-        try (Connection connection = (new ConnectionBD()).getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.INTEGER);
@@ -374,7 +372,7 @@ public class AuthDAOImpl implements AuthDAO {
 
         sql = "begin ? := stk.stk_pck_user.delete_user_answers(?); end;";
 
-        try (Connection connection = (new ConnectionBD()).getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.INTEGER);
@@ -395,11 +393,11 @@ public class AuthDAOImpl implements AuthDAO {
 
     private void addProfileToUser(User user, Profile p) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_user.add_user_profile(?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.INTEGER);
@@ -418,11 +416,11 @@ public class AuthDAOImpl implements AuthDAO {
 
     private void addAnswerToUser(User user, Answer a) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_user.add_answer(?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.INTEGER);
@@ -445,12 +443,12 @@ public class AuthDAOImpl implements AuthDAO {
 
         List<Profile> profiles = new ArrayList<Profile>();
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         Profile profile = null;
 
         String sql = "begin ? := stk.stk_pck_user.get_all_profiles; end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -476,12 +474,12 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public void updateUserPasswords(User user) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         boolean updated = false;
 
         String sql = "begin ? := stk.stk_pck_user.update_user_passwords(?,?,?,?,?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.INTEGER);
@@ -535,11 +533,11 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public void markLogin(String email) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_user.mark_login(?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.INTEGER);
@@ -559,11 +557,11 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public void markLoginFail(String username) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_user.mark_login_fail(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.INTEGER);
@@ -581,11 +579,11 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public void markAnswer(String email) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_user.mark_answer(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.INTEGER);
@@ -598,16 +596,15 @@ public class AuthDAOImpl implements AuthDAO {
             throw new EJBException(e);
         }
 
-
     }
 
     @Override
     public void markAnswerFail(String username) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_user.mark_answer_fail(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.INTEGER);
@@ -623,11 +620,11 @@ public class AuthDAOImpl implements AuthDAO {
 
     @Override
     public void lockUser(String username) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_user.lock_user(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.INTEGER);
@@ -644,12 +641,12 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public Profile getProfile(long id) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         Profile profile = null;
 
         String sql = "begin ? := stk.stk_pck_user.get_profile_by_id(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -673,11 +670,11 @@ public class AuthDAOImpl implements AuthDAO {
 
     @Override
     public void unlockUser(String username) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_user.unlock_user(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

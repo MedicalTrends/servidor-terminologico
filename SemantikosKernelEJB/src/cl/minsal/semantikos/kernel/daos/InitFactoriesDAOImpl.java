@@ -58,7 +58,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(InitFactoriesDAOImpl.class);
 
-
     @EJB
     HelperTableMapper helperTableMapper;
 
@@ -377,13 +376,13 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     @Override
     public DescriptionTypeFactory refreshDescriptionTypes() {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         List<DescriptionType> descriptionTypes = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_description.get_description_types; end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -447,13 +446,13 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
     @Override
     public HelperTableColumnFactory refreshColumns() {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         List<HelperTableColumn> helperTableColumns = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_helper_table.get_all_helper_table_columns; end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

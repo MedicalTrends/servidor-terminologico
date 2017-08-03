@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.daos.mappers.BasicTypeMapper;
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,11 +28,11 @@ public class BasicTypeDAOImpl implements BasicTypeDAO {
 
         BasicTypeValue basicTypeValue;
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_basic_type.get_basic_type_by_id(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar el basic type */

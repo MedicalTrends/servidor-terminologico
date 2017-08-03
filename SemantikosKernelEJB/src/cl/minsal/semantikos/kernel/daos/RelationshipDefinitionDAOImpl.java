@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 
 import cl.minsal.semantikos.kernel.daos.mappers.RelationshipMapper;
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.relationships.*;
 import oracle.jdbc.OracleTypes;
@@ -51,11 +52,11 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
 
         List<RelationshipDefinition> relationshipDefinitions = new ArrayList<>();
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship_definition.get_relationship_definitions_by_category(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */
@@ -89,14 +90,14 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
      */
     public List<RelationshipAttributeDefinition> getRelationshipAttributeDefinitionsByRelationshipDefinition(RelationshipDefinition relationshipDefinition) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship_definition.get_relationship_attribute_definitions_by_id(?); end;";
 
         List<RelationshipAttributeDefinition> relationshipAttributeDefinitions = new ArrayList<>();
 
         long id = relationshipDefinition.getId();
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar los atributos de esta relación */

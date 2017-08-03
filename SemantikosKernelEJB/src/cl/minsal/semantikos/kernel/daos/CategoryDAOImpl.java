@@ -114,11 +114,11 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public void persist(Category category) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_category.create_category(?,?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -151,13 +151,13 @@ public class CategoryDAOImpl implements CategoryDAO {
     public List<Category> getRelatedCategories(Category category) {
         List<Category> categories = new ArrayList<>();
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         CallableStatement call;
 
         String sql = "begin ? := stk.stk_pck_category.get_related_category(?); end;";
 
-        try (Connection connection = connect.getConnection();) {
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();) {
 
             call = connection.prepareCall(sql);
 

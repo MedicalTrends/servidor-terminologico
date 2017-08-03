@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.daos.mappers.CrossmapMapper;
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.MultiplicityFactory;
@@ -41,11 +42,11 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     @Override
     public DirectCrossmap create(DirectCrossmap directCrossmap, User user) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_crossmap.create_direct_crossmap(?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /*
@@ -79,12 +80,12 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
     @Override
     public DirectCrossmap getDirectCrossmapById(long idCrossmap) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         DirectCrossmap directCrossmapFromResultSet;
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_direct_crossmap(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -117,12 +118,12 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     @Override
     public CrossmapSetMember getCrossmapSetMemberById(long idCrossmapSetMember) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         CrossmapSet crossmapSetFromResultSet;
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsetmember_by_id(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -149,11 +150,11 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     public List<CrossmapSetMember> getRelatedCrossMapSetMembers(ConceptSCT conceptSCT) {
 
         List<CrossmapSetMember> crossmapSetMembers = new ArrayList<>();
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_related_crossmapset_member(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -179,12 +180,12 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     @Override
     public CrossmapSet getCrossmapSetByID(long id) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         CrossmapSet crossmapSetFromResultSet;
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapset_by_id(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -212,11 +213,11 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     @Override
     public List<CrossmapSetMember> findCrossmapSetMemberBy(CrossmapSet crossmapSet, String pattern) {
         List<CrossmapSetMember> crossmapSetMembers = new ArrayList<CrossmapSetMember>();
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_crossmap.find_crossmapsetmember_by_pattern_and_crossmapset(?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -243,11 +244,11 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     @Override
     public List<CrossmapSetMember> findCrossmapSetMemberByCod1(CrossmapSet crossmapSet, String cod) {
         List<CrossmapSetMember> crossmapSetMembers = new ArrayList<CrossmapSetMember>();
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_crossmap.find_crossmapsetmember_by_cod1_and_crossmapset(?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -273,12 +274,12 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
     @Override
     public List<CrossmapSet> getCrossmapSets() {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         List<CrossmapSet> crossmapSets = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsets; end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -305,11 +306,11 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
         List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_crossmap_by_sct(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -339,11 +340,11 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         List<CrossmapSetMember> crossmapSetMembers = new ArrayList<CrossmapSetMember>();
 
         CrossmapSet crossmapSet = getCrossmapSetByAbbreviatedName(crossmapSetAbbreviatedName);
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsetmember_by_cms_abbreviated_name(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -367,12 +368,12 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
     private CrossmapSet getCrossmapSetByAbbreviatedName(String crossmapSetAbbreviatedName) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapset_by_cms_abbreviated_name(?); end;";
 
         ResultSet rs;
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.daos.ExtendedRelationshipAttributeDefinitionI
 import cl.minsal.semantikos.kernel.daos.ExtendedRelationshipDefinitionInfo;
 import cl.minsal.semantikos.kernel.daos.SemantikosWebDAO;
 import cl.minsal.semantikos.kernel.daos.TargetDAO;
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.categories.Category;
 
@@ -39,7 +40,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
     @Override
     public ExtendedRelationshipDefinitionInfo getCompositeOf(Category category, RelationshipDefinition relationshipDefinition) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_definition(?,?); end;";
 
@@ -48,9 +49,9 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
         long idTarget;
         Target defaultValue = null;
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
 
-            CallableStatement call = connection.prepareCall(sql)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, category.getId());
@@ -79,7 +80,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
 
     @Override
     public ExtendedRelationshipAttributeDefinitionInfo getCompositeOf(Category category, RelationshipAttributeDefinition relationshipAttributeDefinition) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_attribute_definition(?,?); end;";
 
@@ -88,7 +89,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
         long idTarget;
         Target defaultValue = null;
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -121,13 +122,13 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
     @Override
     public ConceptSMTKWeb augmentConcept(Category category, ConceptSMTKWeb concept) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_category(?); end;";
 
         boolean caseSensitive = false;
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 

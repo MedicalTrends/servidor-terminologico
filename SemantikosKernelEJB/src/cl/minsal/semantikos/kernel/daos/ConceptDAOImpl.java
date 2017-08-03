@@ -88,8 +88,8 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         String sql = "begin ? := stk.stk_pck_concept.delete_concept(?); end;";
 
-        ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = connect.getConnection();
+        //ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -106,18 +106,18 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public List<ConceptSMTK> findConcepts(Long[] categories, Long[] refsets, Boolean modeled) {
         List<ConceptSMTK> concepts = new ArrayList<>();
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         CallableStatement call;
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept(?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();) {
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();) {
 
             call = connection.prepareCall(sql);
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.setArray(2, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
-            call.setArray(3, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+            call.setArray(2, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
             if(modeled == null) {
                 call.setNull(4, Types.NUMERIC);
             }
@@ -145,12 +145,12 @@ public class ConceptDAOImpl implements ConceptDAO {
 
     @Override
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptID) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.get_concept_by_conceptid(?); end;";
 
         ConceptSMTK conceptSMTK;
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -213,11 +213,11 @@ public class ConceptDAOImpl implements ConceptDAO {
     public List<ConceptSMTK> findConceptsByTag(Tag tag) {
 
         List<ConceptSMTK> concepts = new ArrayList<>();
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.find_concepts_by_tag(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -244,12 +244,12 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public void persistConceptAttributes(ConceptSMTK conceptSMTK, User user) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         long id;
 
         String sql = "begin ? := stk.stk_pck_concept.create_concept(?,?,?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -291,12 +291,12 @@ public class ConceptDAOImpl implements ConceptDAO {
     public void update(ConceptSMTK conceptSMTK) {
 
         logger.info("Actualizando información básica de concepto: " + conceptSMTK.toString());
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         long updated;
 
         String sql = "begin ? := stk.stk_pck_concept.update_concept(?,?,?,?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -347,11 +347,11 @@ public class ConceptDAOImpl implements ConceptDAO {
     public void forcedModeledConcept(Long idConcept) {
 
         logger.info("Pasando a modelado el concepto de ID=" + idConcept);
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.force_modeled_concept(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -408,11 +408,11 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         List<ConceptSMTK> concepts = new ArrayList<>();
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.get_related_concept(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -438,11 +438,11 @@ public class ConceptDAOImpl implements ConceptDAO {
     public List<ConceptSMTK> findTruncateMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled) {
         List<ConceptSMTK> concepts;
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept_truncate_match(?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection(); CallableStatement call =
+        try (Connection connection = DataSourceFactory.getInstance().getConnection(); CallableStatement call =
                 connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -493,11 +493,11 @@ public class ConceptDAOImpl implements ConceptDAO {
     public List<ConceptSMTK> findPerfectMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled) {
         List<ConceptSMTK> concepts;
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept_perfect_match(?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection(); CallableStatement call =
+        try (Connection connection = DataSourceFactory.getInstance().getConnection(); CallableStatement call =
                 connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -548,11 +548,11 @@ public class ConceptDAOImpl implements ConceptDAO {
     public int countPerfectMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled) {
         int concepts=0;
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.count_concept_perfect_match(?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection(); CallableStatement call =
+        try (Connection connection = DataSourceFactory.getInstance().getConnection(); CallableStatement call =
             connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -601,11 +601,11 @@ public class ConceptDAOImpl implements ConceptDAO {
     public int countTruncateMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled) {
         int concepts=0;
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.count_concept_truncate_match(?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection(); CallableStatement call =
+        try (Connection connection = DataSourceFactory.getInstance().getConnection(); CallableStatement call =
                 connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -653,17 +653,17 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public List<ConceptSMTK> getModeledConceptPaginated(Long categoryId, int pageSize, int pageNumber) {
         List<ConceptSMTK> concepts = new ArrayList<>();
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         CallableStatement call;
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept_by_categories_paginated(?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();) {
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();) {
 
             call = connection.prepareCall(sql);
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.setArray(2, connect.getConnection().unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", new Long[]{categoryId}));
+            call.setArray(2, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", new Long[]{categoryId}));
             call.setInt(3, pageNumber);
             call.setInt(4, pageSize);
             call.setBoolean(5, true);

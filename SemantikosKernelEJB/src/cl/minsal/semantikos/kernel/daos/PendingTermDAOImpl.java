@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;
@@ -33,7 +34,7 @@ public class PendingTermDAOImpl implements PendingTermDAO {
 
     @Override
     public long persist(PendingTerm pendingTerm) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         /*
          * param1: ID
          * param 2: DesType ID
@@ -48,7 +49,7 @@ public class PendingTermDAOImpl implements PendingTermDAO {
          */
         String sql = "begin ? := stk.stk_pck_pending_term.create_pending_term(?,?,?,?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -86,7 +87,7 @@ public class PendingTermDAOImpl implements PendingTermDAO {
     @Override
     public void bindTerm2Description(PendingTerm pendingTerm, Description description) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         /*
          * param1: ID
          * param 2: DesType ID
@@ -103,7 +104,7 @@ public class PendingTermDAOImpl implements PendingTermDAO {
 
         String sql = "begin ? := stk.stk_pck_pending_term.bind_pending_term_to_description(?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -126,11 +127,11 @@ public class PendingTermDAOImpl implements PendingTermDAO {
 
         List<PendingTerm> pendingTerms = new ArrayList<>();
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_pending_term.get_all_pending_terms(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -155,11 +156,11 @@ public class PendingTermDAOImpl implements PendingTermDAO {
 
         PendingTerm pendingTerm = null;
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_pending_term.get_pending_term_by_id(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

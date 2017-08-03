@@ -34,12 +34,12 @@ public class QuestionDAOImpl implements QuestionDAO {
 
     @Override
     public List<Question> getAllQuestions() {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_question.get_all_questions; end;";
 
         List<Question> institutions= new ArrayList<>();
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
@@ -84,13 +84,13 @@ public class QuestionDAOImpl implements QuestionDAO {
 
     @Override
     public Question getQuestionById(long id) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_question.get_question_by_id(?); end;";
 
         Question question = null;
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, id);
@@ -110,11 +110,11 @@ public class QuestionDAOImpl implements QuestionDAO {
 
     @Override
     public void deleteUserAnswers(User user) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_question.delete_user_answers(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, user.getId());

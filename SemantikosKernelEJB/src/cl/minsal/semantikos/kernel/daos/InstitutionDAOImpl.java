@@ -29,12 +29,12 @@ public class InstitutionDAOImpl implements InstitutionDAO {
     @Override
     public Institution getInstitutionBy(long id) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_institution.get_institution_by_id(?); end;";
 
         Institution institution= new Institution();
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, id);
@@ -79,11 +79,11 @@ public class InstitutionDAOImpl implements InstitutionDAO {
 
     @Override
     public Institution getInstitutionById(long id) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_institution.get_institution_by_id(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, id);
@@ -103,12 +103,12 @@ public class InstitutionDAOImpl implements InstitutionDAO {
 
     @Override
     public List<Institution> getAllInstitution() {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_institution.get_all_institution; end;";
 
         List<Institution> institutions= new ArrayList<>();
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();

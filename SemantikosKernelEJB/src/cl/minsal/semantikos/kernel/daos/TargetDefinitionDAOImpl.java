@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.daos.mappers.TargetMapper;
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.factories.TargetDefinitionFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
@@ -35,13 +36,13 @@ public class TargetDefinitionDAOImpl implements TargetDefinitionDAO {
     @Override
     public TargetDefinition getTargetDefinitionById(long idTargetDefinition) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_target_definition.get_target_definition_by_id(?); end;";
 
         TargetDefinition targetDefinition = null;
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

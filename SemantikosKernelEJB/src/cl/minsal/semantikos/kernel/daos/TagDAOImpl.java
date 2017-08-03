@@ -33,12 +33,12 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public Tag persist(Tag tag) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_tag.create_tag(?,?,?,?); end;";
 
         long idTag;
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -80,12 +80,12 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public void update(Tag tag) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_tag.update_tag(?,?,?,?,?); end;";
 
         long idTag;
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -120,11 +120,11 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public void remove(Tag tag) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_tag.delete_tag(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -139,17 +139,17 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public List<Tag> findTagsBy(String[] namePattern) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         List<Tag> tags = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_tag.delete_tag(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.setArray(2, connect.getConnection().createArrayOf("text", namePattern));
+            call.setArray(2, connection.createArrayOf("text", namePattern));
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);
@@ -171,11 +171,11 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public void linkTagToTag(Tag tag, Tag tagLink) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_tag.link_parent_tag_to_child_tag(?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -191,11 +191,11 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public void unlinkTagToTag(Tag tag, Tag tagUnlink) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_tag.unlink_tag_to_tag(?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -212,13 +212,13 @@ public class TagDAOImpl implements TagDAO {
     @Override
     public List<Tag> getAllTags() {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         List<Tag> tags = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_tag.get_all_tags; end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -243,13 +243,13 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public List<Tag> getAllTagsWithoutParent() {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         List<Tag> tags = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_tag.get_all_tags_without; end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -307,13 +307,13 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public List<Tag> getChildrenOf(Tag parent) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         List<Tag> tags = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_tag.find_tags_by_parent(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -340,12 +340,12 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public void assignTag(ConceptSMTK conceptSMTK, Tag tag) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_tag.assign_concept_to_tag(?,?); end;";
 
         logger.debug("Asociando el tag " + tag + " al concepto " + conceptSMTK);
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -361,12 +361,12 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public void unassignTag(ConceptSMTK conceptSMTK, Tag tag) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_tag.unassign_concept_to_tag(?,?); end;";
 
         logger.debug("Desasociando el tag " + tag + " al concepto " + conceptSMTK);
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -384,13 +384,13 @@ public class TagDAOImpl implements TagDAO {
     @Override
     public Tag findTagByID(long id) {
         if(id==0 || id==NON_PERSISTED_ID) return null;
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         Tag tag;
 
         String sql = "begin ? := stk.stk_pck_tag.find_tags_by_id(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -419,12 +419,12 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public boolean containTag(String tagName) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         Long contain;
 
         String sql = "begin ? := stk.stk_pck_tag.contain_tag(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -447,12 +447,12 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public long countConceptContainTag(Tag tag) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         long count=0;
 
         String sql = "begin ? := stk.stk_pck_tag.concept_contain_tag(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);

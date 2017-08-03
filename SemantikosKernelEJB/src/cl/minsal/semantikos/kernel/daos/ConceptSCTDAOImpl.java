@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.users.User;
@@ -32,12 +33,12 @@ public class ConceptSCTDAOImpl implements ConceptSCTDAO {
     @Override
     public ConceptSCT getConceptCSTByID(long idConceptCST) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_snomed.get_concept_sct_by_id(?); end;";
 
         ConceptSCT conceptSCT;
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, idConceptCST);
@@ -70,11 +71,11 @@ public class ConceptSCTDAOImpl implements ConceptSCTDAO {
     @Override
     public void persist(ConceptSCT conceptSCT, User user) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         long id;
         String sql = "{call semantikos.create_concept_sct(?,?,?,?,?,?,?,?,?)}";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, conceptSCT.getId());

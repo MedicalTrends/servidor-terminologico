@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.daos.mappers.RelationshipMapper;
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
@@ -39,11 +40,11 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         long idTarget= targetDAO.persist(relationship.getTarget(),relationship.getRelationshipDefinition().getTargetDefinition());
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship.create_relationship(?,?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -81,7 +82,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         /* Primero se persiste el Target Definition */
         long idTargetDefinition = targetDAO.persist(relationshipDefinition.getTargetDefinition());
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         /*
          * param 1: nombre
          * param 2: descripción
@@ -92,7 +93,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         String sql = "begin ? := stk.stk_pck_relationship.create_relationship_definition(?,?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -113,11 +114,11 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     @Override
     public void delete(Relationship relationship) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship.invalidate_relationship(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -131,11 +132,11 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
     @Override
     public void update(Relationship relationship) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship.update_relation(?,?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -152,11 +153,11 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
     @Override
     public void invalidate(Relationship relationship) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship.invalidate_relationship(?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -171,13 +172,13 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     @Override
     public Relationship getRelationshipByID(long idRelationship) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship.get_relationships_by_id(?); end;";
 
         Relationship relationship = null;
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -204,13 +205,13 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     @Override
     public List<Relationship> getRelationshipsLike(RelationshipDefinition relationshipDefinition, Target target) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship.get_snomedct_relationship(?,?); end;";
 
         List<Relationship> relationships = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -235,13 +236,13 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     @Override
     public List<Relationship> findRelationshipsLike(RelationshipDefinition relationshipDefinition, Target target) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship.find_relationships_like(?,?); end;";
 
         List<Relationship> relationships = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -282,13 +283,13 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     @Override
     public List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK conceptSMTK) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship.get_relationships_by_source_concept_id(?); end;";
 
         List<Relationship> relationships = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -312,12 +313,12 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     @Override
     public Long getTargetByRelationship(Relationship relationship) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship.get_id_target_by_id_relationship(?); end;";
 
         Long result;
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

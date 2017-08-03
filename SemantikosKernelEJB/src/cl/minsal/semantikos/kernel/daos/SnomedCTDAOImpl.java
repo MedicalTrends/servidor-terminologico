@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.snomedct.*;
 import oracle.jdbc.OracleTypes;
@@ -27,8 +28,8 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
         String sql = "begin ? := stk.stk_pck_snomed.find_sct_by_pattern(?,?); end;";
 
-        ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = connect.getConnection();
+        //ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -63,8 +64,8 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
         String sql = "begin ? := stk.stk_pck_snomed.find_sct_perfect_match(?,?); end;";
 
-        ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = connect.getConnection();
+        //ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -99,8 +100,8 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
         String sql = "begin ? := stk.stk_pck_snomed.find_sct_truncate_match(?,?); end;";
 
-        ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = connect.getConnection();
+        //ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -135,8 +136,8 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
         String sql = "begin ? := stk.stk_pck_snomed.count_sct_perfect_match(?,?); end;";
 
-        ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = connect.getConnection();
+        //ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -165,8 +166,8 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
         String sql = "begin ? := stk.stk_pck_snomed.count_sct_truncate_match(?,?); end;";
 
-        ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = connect.getConnection();
+        //ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -192,11 +193,11 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     @Override
     public ConceptSCT getConceptByID(long conceptID) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_snomed.get_sct_by_concept_id(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -228,8 +229,8 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
         String sql = "begin ? := stk.stk_pck_snomed.get_concepts_sct_by_id(?,?); end;";
 
-        ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = connect.getConnection();
+        //ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -262,11 +263,11 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     public Map<DescriptionSCT, ConceptSCT> findDescriptionsByPattern(String pattern) {
 
         Map<DescriptionSCT, ConceptSCT> result = new HashMap<>();
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_snomed.find_descriptions_sct_by_pattern(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -314,11 +315,11 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
     private List<DescriptionSCT> getDescriptionsSCTByConcept(long id) {
         List<DescriptionSCT> descriptionSCTs = new ArrayList<>();
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_snomed.get_descriptions_sct_by_id(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -371,12 +372,12 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
     @Override
     public DescriptionSCT getDescriptionSCTBy(long idDescriptionSCT) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         DescriptionSCT descriptionSCT = null;
 
         String sql = "begin ? := stk.stk_pck_snomed.get_description_sct_by_id(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

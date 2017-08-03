@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.components.PendingTermsManager;
 import cl.minsal.semantikos.kernel.daos.mappers.RelationshipMapper;
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.queries.*;
@@ -51,7 +52,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         List<Object> queryResult = new ArrayList<Object>();
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String QUERY = "";
 
@@ -66,7 +67,7 @@ public class QueryDAOImpl implements QueryDAO {
         if(  query instanceof  BrowserQuery )
             QUERY = "begin ? := stk.stk_pck_query.get_concept_by_browser_query(?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
 
              CallableStatement call = connection.prepareCall(QUERY)){
 
@@ -75,7 +76,7 @@ public class QueryDAOImpl implements QueryDAO {
             int paramNumber = 2;
 
             for (QueryParameter queryParameter : query.getQueryParameters()) {
-                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
+                bindParameter(paramNumber, call, connection, queryParameter);
                 paramNumber++;
             }
 
@@ -121,7 +122,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         long resultCount = 0;
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String QUERY = "";
 
@@ -136,7 +137,7 @@ public class QueryDAOImpl implements QueryDAO {
         if(  query instanceof  BrowserQuery )
             QUERY = "begin ? := stk.stk_pck_query.count_concept_by_browser_query(?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
 
              CallableStatement call = connection.prepareCall(QUERY)) {
 
@@ -145,7 +146,7 @@ public class QueryDAOImpl implements QueryDAO {
             int paramNumber = 2;
 
             for (QueryParameter queryParameter : query.getQueryParameters()) {
-                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
+                bindParameter(paramNumber, call, connection, queryParameter);
                 paramNumber++;
             }
 
@@ -165,13 +166,13 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public List<RelationshipDefinition> getSearchableAttributesByCategory(Category category) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_definition(?,?); end;";
 
         List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -205,13 +206,13 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public List<RelationshipDefinition> getSecondOrderSearchableAttributesByCategory(Category category) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_second_order_view_info_by_relationship_definition(?,?); end;";
 
         List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -245,13 +246,13 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public List<RelationshipAttributeDefinition> getSecondDerivateSearchableAttributesByCategory(Category category) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_attribute_definition(?,?); end;";
 
         List<RelationshipAttributeDefinition> someRelationshipAttributeDefinitions = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -290,13 +291,13 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public List<RelationshipDefinition> getShowableAttributesByCategory(Category category) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_definition(?,?); end;";
 
         List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -330,13 +331,13 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public List<RelationshipDefinition> getSecondOrderShowableAttributesByCategory(Category category) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_second_order_view_info_by_relationship_definition(?,?); end;";
 
         List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -371,13 +372,13 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public boolean getCustomFilteringValue(Category category) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_category(?); end;";
 
         boolean customFilteringValue = false;
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
 
             CallableStatement call = connection.prepareCall(sql)) {
 
@@ -405,13 +406,13 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public boolean getShowableRelatedConceptsValue(Category category) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_category(?); end;";
 
         boolean showableRelatedConcepts = false;
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -439,13 +440,13 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public boolean getShowableValue(Category category) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_category(?); end;";
 
         boolean showable = false;
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -474,13 +475,13 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public boolean getMultipleFilteringValue(Category category, RelationshipDefinition relationshipDefinition) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_definition(?,?); end;";
 
         boolean multipleFilteringValue = false;
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -509,13 +510,13 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public int getCompositeValue(Category category, RelationshipDefinition relationshipDefinition) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_definition(?,?); end;";
 
         int compositeValue = -1;
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -542,7 +543,7 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public List<Relationship> getRelationshipsByColumns(ConceptSMTK conceptSMTK, Query query) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship.get_relationships_by_source_concept_id(?); end;";
 
@@ -550,7 +551,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         List<Relationship> relationships = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -577,7 +578,7 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public List<Relationship> getRelationshipsBySecondOrderColumns(ConceptSMTK conceptSMTK, Query query) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship.get_relationships_by_source_concept_id(?); end;";
 
@@ -585,7 +586,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         List<Relationship> relationships = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

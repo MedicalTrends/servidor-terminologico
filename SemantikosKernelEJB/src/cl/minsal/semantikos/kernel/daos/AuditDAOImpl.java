@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.daos.mappers.AuditMapper;
 import cl.minsal.semantikos.kernel.daos.mappers.BasicTypeMapper;
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.users.User;
@@ -34,13 +35,13 @@ public class AuditDAOImpl implements AuditDAO {
     @Override
     public List<ConceptAuditAction> getConceptAuditActions(ConceptSMTK conceptSMTK, boolean changes) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_audit.get_concept_audit_actions(?,?); end;";
 
         List<ConceptAuditAction> auditActions = new ArrayList<>();
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */
@@ -69,7 +70,7 @@ public class AuditDAOImpl implements AuditDAO {
     public void recordAuditAction(ConceptAuditAction conceptAuditAction) {
 
         logger.debug("Registrando información de Auditoría: " + conceptAuditAction);
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         /*
          * param 1: La fecha en que se realiza (Timestamp).
          * param 2: El usuario que realiza la acción (id_user).
@@ -79,7 +80,7 @@ public class AuditDAOImpl implements AuditDAO {
          */
         String sql = "begin ? := stk.stk_pck_audit.create_concept_audit_actions(?,?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */
@@ -117,7 +118,7 @@ public class AuditDAOImpl implements AuditDAO {
 
     public void recordAuditAction(RefSetAuditAction refSetAuditAction){
         logger.debug("Registrando información de Auditoría: " + refSetAuditAction);
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         /*
          * param 1: La fecha en que se realiza (Timestamp).
          * param 2: El usuario que realiza la acción (id_user).
@@ -128,7 +129,7 @@ public class AuditDAOImpl implements AuditDAO {
         //TODO arreglar esto
         String sql = "begin ? := stk.stk_pck_audit.create_refset_audit_actions(?,?,?,?,?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */

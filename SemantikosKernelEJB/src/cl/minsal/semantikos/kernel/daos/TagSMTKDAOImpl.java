@@ -31,18 +31,18 @@ public class TagSMTKDAOImpl implements TagSMTKDAO {
 
     @PostConstruct
     private void init() {
-        this.refreshTagsSMTK();
+        //this.refreshTagsSMTK();
     }
 
     @Override
     public List<TagSMTK> getAllTagSMTKs() {
 
         List<TagSMTK> tagSMTKs = new ArrayList<>();
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_tag_smtk.get_all_tag_smtks; end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -120,13 +120,13 @@ public class TagSMTKDAOImpl implements TagSMTKDAO {
     @Override
     public TagSMTKFactory refreshTagsSMTK() {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         List<TagSMTK> tagsSMTK = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_tag_smtk.get_all_tag_smtks; end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

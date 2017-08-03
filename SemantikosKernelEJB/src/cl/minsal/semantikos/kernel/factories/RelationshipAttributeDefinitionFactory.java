@@ -39,7 +39,7 @@ public class RelationshipAttributeDefinitionFactory {
     public void init() {
         //if(stateMachineDAO == null)
 
-        targetDefinitionDAO.getTargetDefinitionById(1);
+        //targetDefinitionDAO.getTargetDefinitionById(1);
     }
 
     /**

@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.daos.mappers.TargetMapper;
+import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.factories.TargetFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
@@ -52,11 +53,11 @@ public class TargetDAOImpl implements TargetDAO {
     public Target getTargetByID(long idTarget) {
 
         Target target;
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_target.get_target_by_id(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */
@@ -90,11 +91,11 @@ public class TargetDAOImpl implements TargetDAO {
     public Target getDefaultTargetByID(long idTarget) {
 
         Target target;
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_target.get_default_target_by_id(?); end;";
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */
@@ -125,7 +126,7 @@ public class TargetDAOImpl implements TargetDAO {
     @Override
     public long persist(Target target, TargetDefinition targetDefinition) {
 
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         /*
          * Parámetros de la función:
          *   1: Valor flotante tipo básico.
@@ -144,7 +145,7 @@ public class TargetDAOImpl implements TargetDAO {
 
         long idTarget;
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -201,7 +202,7 @@ public class TargetDAOImpl implements TargetDAO {
 
     @Override
     public long persist(TargetDefinition targetDefinition) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
         /**
          * param 1: ID Categoría.
          * param 2: Helper Table
@@ -213,7 +214,7 @@ public class TargetDAOImpl implements TargetDAO {
         String sql = "begin ? := stk.stk_pck_target.create_target_definition(?,?,?,?,?); end;";
 
         long idTarget;
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se setean todas las posibilidades en NULL */
@@ -255,13 +256,13 @@ public class TargetDAOImpl implements TargetDAO {
 
     @Override
     public long update(Relationship relationship) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_target.update_target(?,?,?,?,?,?,?,?,?,?,?); end;";
 
         long idTarget = relationshipDAO.getTargetByRelationship(relationship);
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -334,13 +335,13 @@ public class TargetDAOImpl implements TargetDAO {
 
     @Override
     public long update(RelationshipAttribute relationshipAttribute) {
-        ConnectionBD connect = new ConnectionBD();
+        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_target.update_target(?,?,?,?,?,?,?,?,?,?,?); end;";
 
         long idTarget = relationshipAttributeDAO.getTargetByRelationshipAttribute(relationshipAttribute);
 
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);

@@ -174,7 +174,6 @@ public class RelationshipMapper {
     public RelationshipAttributeDefinition createRelationshipAttributeDefinitionFromResultSet(ResultSet rs) {
 
         try {
-
             long id = rs.getLong("id");
             String name = rs.getString("name");
             TargetDefinition targetDefinition = targetDefinitionDAO.getTargetDefinitionById(rs.getLong("id_target_definition"));
