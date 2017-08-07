@@ -1,7 +1,5 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.daos.mappers.DescriptionMapper;
-import cl.minsal.semantikos.kernel.daos.mappers.HelperTableMapper;
 import cl.minsal.semantikos.kernel.factories.EmailFactory;
 import cl.minsal.semantikos.kernel.factories.QueryFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
@@ -59,9 +57,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     private static final Logger logger = LoggerFactory.getLogger(InitFactoriesDAOImpl.class);
 
     @EJB
-    HelperTableMapper helperTableMapper;
-
-    @EJB
     RelationshipDefinitionDAO relationshipDefinitionDAO;
 
     @EJB
@@ -81,9 +76,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
     @EJB
     private AuthDAO authDAO;
-
-    @EJB
-    private DescriptionMapper descriptionMapper;
 
     @PostConstruct
     private void init() {
@@ -393,7 +385,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
             /* Se recuperan los description types */
             while (rs.next()) {
-                descriptionTypes.add(descriptionMapper.createDescriptionTypeFromResultSet(rs));
+                descriptionTypes.add(createDescriptionTypeFromResultSet(rs));
             }
 
             /* Se setea la lista de Tipos de descripción */
@@ -464,7 +456,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
             /* Se recuperan las columnas */
             while(rs.next()) {
-                helperTableColumns.add(helperTableMapper.createHelperTableColumnFromResultSet(rs));
+                helperTableColumns.add(createHelperTableColumnFromResultSet(rs));
             }
 
             /* Se setea la lista de tagsSMTK */

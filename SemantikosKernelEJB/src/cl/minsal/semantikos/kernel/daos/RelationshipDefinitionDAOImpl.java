@@ -38,9 +38,14 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
     @EJB
     private TargetTypeDAO targetTypeDAO;
 
-
     @EJB
     private HelperTableDAO helperTableDAO;
+
+    @EJB
+    private TargetDefinitionDAO targetDefinitionDAO;
+
+    @EJB
+    private RelationshipDefinitionDAO relationshipDefinitionDAO;
 
     @Override
     public List<RelationshipDefinition> getRelationshipDefinitionsByCategory(long idCategory) {
@@ -147,5 +152,47 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
 
         throw new IllegalArgumentException("Todos los parámetros eran nulos.");
     }
+
+    public RelationshipDefinition createRelationshipDefinitionFromResultSet(ResultSet rs) {
+
+        try {
+
+            long id = rs.getLong("id");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            TargetDefinition targetDefinition = targetDefinitionDAO.getTargetDefinitionById(rs.getLong("id_target_definition"));
+            Multiplicity multiplicity = new Multiplicity(rs.getInt("lower_boundary"), rs.getInt("upper_boundary"));
+
+            RelationshipDefinition relationshipDefinition = new RelationshipDefinition(id, name, description, targetDefinition, multiplicity);
+
+            relationshipDefinition.setRelationshipAttributeDefinitions(relationshipDefinitionDAO.getRelationshipAttributeDefinitionsByRelationshipDefinition(relationshipDefinition));
+
+            return relationshipDefinition;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public RelationshipAttributeDefinition createRelationshipAttributeDefinitionFromResultSet(ResultSet rs) {
+
+        try {
+
+            long id = rs.getLong("id");
+            String name = rs.getString("name");
+            TargetDefinition targetDefinition = targetDefinitionDAO.getTargetDefinitionById(rs.getLong("id_target_definition"));
+            Multiplicity multiplicity = new Multiplicity(rs.getInt("lower_boundary"), rs.getInt("upper_boundary"));
+
+            return new RelationshipAttributeDefinition(id, targetDefinition, name, multiplicity);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
 }
