@@ -3,18 +3,19 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.components.PendingTermsManager;
-import cl.minsal.semantikos.kernel.daos.mappers.RelationshipMapper;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
+import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.queries.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.NoValidDescription;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;
-import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.*;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.tags.Tag;
 import oracle.jdbc.OracleConnection;
 import oracle.jdbc.OracleTypes;
@@ -46,7 +47,17 @@ public class QueryDAOImpl implements QueryDAO {
     PendingTermsManager pendingTermsManager;
 
     @EJB
-    private RelationshipMapper relationshipMapper;
+    private TargetDAO targetDAO;
+
+    @EJB
+    private ConceptDAO conceptDAO;
+
+    @EJB
+    private RelationshipAttributeDAO relationshipAttributeDAO;
+
+    @EJB
+    private BasicTypeDAO basicTypeDAO;
+
 
     public List<Object> executeQuery(IQuery query) {
 
@@ -562,7 +573,7 @@ public class QueryDAOImpl implements QueryDAO {
 
             while(rs.next()) {
                 if(definitions.contains(rs.getLong("id_relationship_definition"))) {
-                    relationships.add(relationshipMapper.createRelationshipFromResultSet(rs, conceptSMTK));
+                    relationships.add(createRelationshipFromResultSet(rs, conceptSMTK));
                 }
             }
 
@@ -597,7 +608,7 @@ public class QueryDAOImpl implements QueryDAO {
 
             while(rs.next()) {
                 if(definitions.contains(rs.getLong("id_relationship_definition"))) {
-                    relationships.add(relationshipMapper.createRelationshipFromResultSet(rs, conceptSMTK));
+                    relationships.add(createRelationshipFromResultSet(rs, conceptSMTK));
                 }
             }
 
@@ -700,5 +711,97 @@ public class QueryDAOImpl implements QueryDAO {
                 }
             }
         }
+    }
+
+    public Relationship createRelationshipFromResultSet(ResultSet rs, ConceptSMTK conceptSMTK) {
+
+        try {
+
+            long id = rs.getLong("id");
+            long idConcept = rs.getLong("id_source_concept");
+            long idRelationshipDefinition = rs.getLong("id_relationship_definition");
+            Timestamp validityUntil = rs.getTimestamp("validity_until");
+            long idTarget = rs.getLong("id_target");
+            Timestamp creationDate = rs.getTimestamp("creation_date");
+
+            if(conceptSMTK == null) {
+                conceptSMTK = conceptDAO.getConceptByID(idConcept);
+            }
+
+            /* Definición de la relación y sus atributos */
+            RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsById(idRelationshipDefinition).get(0);
+
+            /* El target que puede ser básico, smtk, tablas, crossmaps o snomed-ct */
+            Relationship relationship = createRelationshipByTargetType(idTarget, conceptSMTK, relationshipDefinition, id, validityUntil);
+            relationship.setValidityUntil(validityUntil);
+            relationship.setCreationDate(creationDate);
+
+            List<RelationshipAttribute> relationshipAttributes = relationshipAttributeDAO.getRelationshipAttribute(relationship);
+            relationship.setRelationshipAttributes(relationshipAttributes);
+
+            return relationship;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Este método es reponsable de crear una instancia del tipo correcto de relación en función del target de un tipo
+     * en particular.
+     *
+     * @param relationshipDefinition La relación que lo define.
+     *
+     * @return Una relación del tipo correcta que define el Target.
+     */
+    private Relationship createRelationshipByTargetType(long idTarget, ConceptSMTK conceptSMTK, RelationshipDefinition relationshipDefinition, long id, Timestamp validityUntil) {
+
+        Target target;
+
+        /* El target puede ser Tipo Básico */
+        if (relationshipDefinition.getTargetDefinition().isBasicType()) {
+            BasicTypeValue basicTypeValueByID = basicTypeDAO.getBasicTypeValueByID(idTarget);
+            return new Relationship(id, conceptSMTK, basicTypeValueByID, relationshipDefinition, validityUntil, new ArrayList<RelationshipAttribute>());
+        }
+
+        /* El target puede ser a un registro de una tabla auxiliar */
+        if (relationshipDefinition.getTargetDefinition().isHelperTable()) {
+            //target = helperTableManager.getRecord(idTarget);
+            target = targetDAO.getTargetByID(idTarget);
+            //target = new HelperTableRow();
+            /**
+             * Se setea el id desde el fields para ser utilizado por el custom converter
+             */
+            HelperTableRow helperTableRow = (HelperTableRow) target;
+
+            return new Relationship(id, conceptSMTK, helperTableRow, relationshipDefinition, validityUntil, new ArrayList<RelationshipAttribute>());
+        }
+
+        /* El target puede ser un concepto SMTK */
+        if (relationshipDefinition.getTargetDefinition().isSMTKType()) {
+
+            ConceptSMTK conceptByID = (ConceptSMTK) targetDAO.getTargetByID(idTarget);
+            return new Relationship(id, conceptSMTK, conceptByID, relationshipDefinition, validityUntil, new ArrayList<RelationshipAttribute>());
+        }
+
+        /* El target puede ser un concepto Snomed CT */
+        if (relationshipDefinition.getTargetDefinition().isSnomedCTType()) {
+            ConceptSCT conceptCSTByID = (ConceptSCT) targetDAO.getTargetByID(idTarget);
+            return new SnomedCTRelationship(id, conceptSMTK, conceptCSTByID, relationshipDefinition, new ArrayList<RelationshipAttribute>(), validityUntil);
+        }
+
+        /* Y sino, puede ser crossmap */
+        if (relationshipDefinition.getTargetDefinition().isCrossMapType()) {
+            target = targetDAO.getTargetByID(idTarget);
+            //CrossmapSetMember crossmapSetMemberById = crossmapDAO.getCrossmapSetMemberById(idTarget);
+            return new DirectCrossmap(id, conceptSMTK, (CrossmapSetMember)target, relationshipDefinition, validityUntil);
+        }
+
+        /* Sino, hay un nuevo tipo de target que no está siendo gestionado */
+        String msg = "Un tipo no manejado de Target se ha recibido.";
+        logger.error(msg);
+        throw new EJBException(msg);
     }
 }

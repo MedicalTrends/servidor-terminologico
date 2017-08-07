@@ -35,6 +35,8 @@ public class DataSourceFactory {
             return dataSource.getConnection();
         } catch (SQLException e) {
             logger.error("Error al conectarse a BD", e);
+        } catch (Exception e) {
+            logger.error("Error al obtener una conexión", e);
         }
         return null;
     }

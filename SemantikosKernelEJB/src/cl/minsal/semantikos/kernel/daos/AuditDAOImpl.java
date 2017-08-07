@@ -1,12 +1,11 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.daos.mappers.AuditMapper;
-import cl.minsal.semantikos.kernel.daos.mappers.BasicTypeMapper;
+import cl.minsal.semantikos.kernel.factories.AuditableEntityFactory;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.audit.*;
+import cl.minsal.semantikos.model.users.UserFactory;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +29,13 @@ public class AuditDAOImpl implements AuditDAO {
     private static final Logger logger = LoggerFactory.getLogger(AuditDAOImpl.class);
 
     @EJB
-    AuditMapper auditMapper;
+    ConceptDAO conceptDAO;
+
+    @EJB
+    AuthDAO userDAO;
+
+    @EJB
+    AuditableEntityFactory auditableEntityFactory;
 
     @Override
     public List<ConceptAuditAction> getConceptAuditActions(ConceptSMTK conceptSMTK, boolean changes) {
@@ -53,7 +58,7 @@ public class AuditDAOImpl implements AuditDAO {
             //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
-            auditActions = auditMapper.createAuditActionsFromResultSet(rs, conceptSMTK);
+            auditActions = createAuditActionsFromResultSet(rs, conceptSMTK);
 
             rs.close();
 
@@ -164,6 +169,43 @@ public class AuditDAOImpl implements AuditDAO {
             throw new EJBException(errorMsg, e);
         }
 
+    }
+
+    /**
+     * Este método es responsable de crear un arreglo de objetos de auditoría a partir de una expresión JSON de la
+     * forma:
+     *
+     * @param rs La expresión JSON a partir de la cual se crean los elementos de auditoría.
+     *
+     * @return Una lista de objetos auditables.
+     */
+    public List<ConceptAuditAction> createAuditActionsFromResultSet(ResultSet rs, ConceptSMTK conceptSMTK) {
+
+        List<ConceptAuditAction> conceptAuditActions = new ArrayList<>();
+
+        try {
+
+            while(rs.next()) {
+
+                if(conceptSMTK == null) {
+                    conceptSMTK = conceptDAO.getConceptByID(rs.getLong("id_concept"));
+                }
+
+                AuditActionType auditActionType = AuditActionType.valueOf(rs.getLong("id_action_type"));
+                //User user = userDAO.getUserById(rs.getLong("id_user"));
+                User user = UserFactory.getInstance().findUserById(rs.getLong("id_user"));
+                AuditableEntityType auditableEntityType = AuditableEntityType.valueOf(rs.getLong("id_audit_entity_type"));
+                AuditableEntity auditableEntityByID = auditableEntityFactory.findAuditableEntityByID(rs.getLong("id_auditable_entity"), auditableEntityType);
+                Timestamp date = rs.getTimestamp("date");
+
+                ConceptAuditAction conceptAuditAction = new ConceptAuditAction(conceptSMTK, auditActionType, date, user, auditableEntityByID);
+                conceptAuditActions.add(conceptAuditAction);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return conceptAuditActions;
     }
 
 }

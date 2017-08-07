@@ -128,7 +128,7 @@ public class TagManagerImpl implements TagManager {
 
     @Override
     public List<Tag> getTagByConcept(ConceptSMTK conceptSMTK) {
-        return tagDAO.getTagsByConcept(conceptSMTK.getId());
+        return tagDAO.getTagsByConcept(conceptSMTK);
     }
 
     @Override

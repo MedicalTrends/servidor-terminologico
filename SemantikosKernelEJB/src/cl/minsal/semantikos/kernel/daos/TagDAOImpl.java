@@ -1,6 +1,5 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.daos.mappers.TagMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
@@ -29,7 +28,7 @@ public class TagDAOImpl implements TagDAO {
     private static final Logger logger = LoggerFactory.getLogger(ConceptDAOImpl.class);
 
     @EJB
-    private TagMapper tagMapper;
+    TagDAO tagDAO;
 
     @Override
     public Tag persist(Tag tag) {
@@ -155,7 +154,7 @@ public class TagDAOImpl implements TagDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
-                tags.add(tagMapper.createTagFromResultSet(rs, null));
+                tags.add(createTagFromResultSet(rs, null));
             }
 
             rs.close();
@@ -227,7 +226,7 @@ public class TagDAOImpl implements TagDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
-                tags.add(tagMapper.createTagFromResultSet(rs, null));
+                tags.add(createTagFromResultSet(rs, null));
             }
 
             rs.close();
@@ -258,7 +257,7 @@ public class TagDAOImpl implements TagDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
-                tags.add(tagMapper.createTagFromResultSet(rs, null));
+                tags.add(createTagFromResultSet(rs, null));
             }
 
             rs.close();
@@ -273,7 +272,7 @@ public class TagDAOImpl implements TagDAO {
     }
 
     @Override
-    public List<Tag> getTagsByConcept(long idConcept) {
+    public List<Tag> getTagsByConcept(ConceptSMTK conceptSMTK) {
         //ConnectionBD connect = new ConnectionBD();
 
         List<Tag> tags = new ArrayList<>();
@@ -284,13 +283,13 @@ public class TagDAOImpl implements TagDAO {
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.setLong(2, idConcept);
+            call.setLong(2, conceptSMTK.getId());
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
-                tags.add(tagMapper.createTagFromResultSet(rs, null));
+                tags.add(createTagFromResultSet(rs, null));
             }
 
             rs.close();
@@ -323,7 +322,7 @@ public class TagDAOImpl implements TagDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
-                tags.add(tagMapper.createTagFromResultSet(rs, parent));
+                tags.add(createTagFromResultSet(rs, parent));
             }
 
             rs.close();
@@ -400,7 +399,7 @@ public class TagDAOImpl implements TagDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-                tag = tagMapper.createTagFromResultSet(rs, null);
+                tag = createTagFromResultSet(rs, null);
             } else {
                 String errorMsg = "Error imposible!";
                 logger.error(errorMsg);
@@ -468,5 +467,31 @@ public class TagDAOImpl implements TagDAO {
         }
 
         return count;
+    }
+
+    public Tag createTagFromResultSet(ResultSet rs, Tag parent) {
+
+        try {
+            long id = rs.getLong("id");
+            String name = rs.getString("name");
+            String backgroundColor =  rs.getString("background_color");
+            String letterColor = rs.getString("letter_color");
+
+            if(parent == null) {
+                parent = tagDAO.findTagByID(rs.getLong("id_parent_tag"));
+            }
+            List<Tag> children = new ArrayList<>();
+            Tag tag = new Tag(id, name, backgroundColor, letterColor, parent);
+
+            children = tagDAO.getChildrenOf(tag);
+            tag.setSon(children);
+
+            return tag;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

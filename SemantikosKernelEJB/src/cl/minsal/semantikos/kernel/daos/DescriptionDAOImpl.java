@@ -1,15 +1,10 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.daos.mappers.DescriptionMapper;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.*;
-import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.users.UserFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import oracle.jdbc.OracleConnection;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
@@ -33,7 +28,6 @@ import static java.sql.Types.TIMESTAMP;
  * @author Andres Farias.
  */
 @Stateless
-@Interceptors(value={net.bull.javamelody.MonitoringInterceptor.class})
 public class DescriptionDAOImpl implements DescriptionDAO {
 
     /** El logger para esta clase */
@@ -45,18 +39,9 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     @EJB
     private AuthDAO authDAO;
 
+    Map<Long, ConceptSMTK> conceptSMTKMap;
+
     public static List<String> NO_VALID_TERMS = Arrays.asList(new String[] {"Concepto no válido", "Concepto no válido (concepto especial)"});
-
-    @EJB
-    private DescriptionMapper descriptionMapper;
-
-    @AroundInvoke
-    public Object preConditions(InvocationContext ic) throws Exception {
-        try{
-
-        }
-        return ic.proceed();
-    }
 
     @Override
     public NoValidDescription getNoValidDescriptionByID(long id) {
@@ -77,7 +62,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                noValidDescription = descriptionMapper.createNoValidDescriptionFromResultSet(rs, null);
+                noValidDescription = createNoValidDescriptionFromResultSet(rs, null);
             }
 
         } catch (SQLException e) {
@@ -108,7 +93,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                description = descriptionMapper.createDescriptionFromResultSet(rs, null);
+                description = createDescriptionFromResultSet(rs, null);
             }
 
         } catch (SQLException e) {
@@ -138,7 +123,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-                description = descriptionMapper.createDescriptionFromResultSet(rs, null);
+                description = createDescriptionFromResultSet(rs, null);
             } else {
                 throw new IllegalArgumentException("No existe una descripción con DESCRIPTION_ID = " + descriptionId);
             }
@@ -158,6 +143,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         //ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
 
+        conceptSMTKMap = new HashMap<>();
+
         String sql = "begin ? := stk.stk_pck_description.get_descriptions_by_idconcept(?); end;";
 
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
@@ -173,7 +160,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                Description description = descriptionMapper.createDescriptionFromResultSet(rs, conceptSMTK);
+                Description description = createDescriptionFromResultSet(rs, conceptSMTK);
                 descriptions.add(description);
             }
 
@@ -469,7 +456,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                Description description = descriptionMapper.createDescriptionFromResultSet(rs, null);
+                Description description = createDescriptionFromResultSet(rs, null);
                 descriptions.add(description);
             }
 
@@ -491,6 +478,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         long init = currentTimeMillis();
 
         //ConnectionBD connect = new ConnectionBD();
+
+        conceptSMTKMap = new HashMap<>();
 
         List<Description> descriptions = new ArrayList<>();
 
@@ -522,7 +511,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             int cont = 0;
 
             while (rs.next()) {
-                Description description = descriptionMapper.createDescriptionFromResultSet(rs, null);
+                Description description = createDescriptionFromResultSet(rs, null);
                 //Description description = getDescriptionById(rs.getLong("id"));
                 descriptions.add(description);
                 cont++;
@@ -548,6 +537,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     public List<Description> searchDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets) {
         /* Se registra el tiempo de inicio */
         long init = currentTimeMillis();
+
+        conceptSMTKMap = new HashMap<>();
 
         //ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
@@ -578,7 +569,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                Description description = descriptionMapper.createDescriptionFromResultSet(rs, null);
+                Description description = createDescriptionFromResultSet(rs, null);
                 descriptions.add(description);
             }
 
@@ -715,6 +706,58 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         return persistedDescriptions;
     }
 
+    public Description createDescriptionFromResultSet(ResultSet resultSet, ConceptSMTK conceptSMTK) throws SQLException {
+
+        long id = resultSet.getLong("id");
+
+        /*
+         * Try y catch ignored porque no todas las funciones de la BD que recuperan Descriptions de la BD traen esta columna.
+         * Ej: Usar la funcion semantikos.get_descriptions_by_idconcept para recueprar conceptos se cae con la excepcion:
+         * org.postgresql.util.PSQLException: The column name uses was not found in this ResultSet.
+         */
+        String descriptionID = resultSet.getString("descid");
+        long idDescriptionType = resultSet.getLong("id_description_type");
+        String term = resultSet.getString("term");
+        boolean isCaseSensitive = resultSet.getBoolean("case_sensitive");
+        boolean isAutoGenerated = resultSet.getBoolean("autogenerated_name");
+        boolean isPublished = resultSet.getBoolean("is_published");
+        boolean isModeled = resultSet.getBoolean("is_modeled");
+        Timestamp validityUntil = resultSet.getTimestamp("validity_until");
+        Timestamp creationDate = resultSet.getTimestamp("creation_date");
+        long uses = resultSet.getLong("uses");
+
+        long idUser = resultSet.getLong("id_user");
+
+        User user = UserFactory.getInstance().findUserById(idUser);//authDAO.getUserById();
+
+        long idConcept = resultSet.getLong("id_concept");
+
+        if (conceptSMTK == null) {
+            if(conceptSMTKMap.containsKey(idConcept)) {
+                conceptSMTK = conceptSMTKMap.get(idConcept);
+            }
+            else {
+                conceptSMTK = conceptDAO.getConceptByID(idConcept);
+                conceptSMTKMap.put(idConcept, conceptSMTK);
+            }
+        }
+
+        DescriptionType descriptionType = DescriptionTypeFactory.getInstance().getDescriptionTypeByID(idDescriptionType);
+
+        Description description = new Description(id, conceptSMTK, descriptionID, descriptionType, term, uses,
+                isCaseSensitive, isAutoGenerated, isPublished,
+                validityUntil, creationDate, user, isModeled);
+
+        if(conceptSMTK.getDescriptions() == null) {
+            conceptSMTK.setDescriptions(new ArrayList<Description>());
+        }
+
+        conceptSMTK.getDescriptions().add(description);
+
+        return description;
+    }
+
+
     /**
      * Este método es responsable de indicar si la descripción es persistente o no.
      *
@@ -725,4 +768,40 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     private boolean isPersistent(Description description) {
         return description.getId() != NON_PERSISTED_ID;
     }
+
+    public NoValidDescription createNoValidDescriptionFromResultSet(ResultSet resultSet, ConceptSMTK conceptSMTK) throws SQLException {
+
+        long id = resultSet.getLong("id");
+        String descriptionID = resultSet.getString("descid");
+        long idDescriptionType = resultSet.getLong("id_description_type");
+        String term = resultSet.getString("term");
+        boolean isCaseSensitive = resultSet.getBoolean("case_sensitive");
+        boolean isAutoGenerated = resultSet.getBoolean("autogenerated_name");
+        boolean isPublished = resultSet.getBoolean("is_published");
+        boolean isModeled = resultSet.getBoolean("is_modeled");
+        Timestamp validityUntil = resultSet.getTimestamp("validity_until");
+        Timestamp creationDate = resultSet.getTimestamp("creation_date");
+        long uses = resultSet.getLong("uses");
+
+        //User user = authDAO.getUserById(resultSet.getLong("id_user"));
+        User user = UserFactory.getInstance().findUserById(resultSet.getLong("id_user"));
+
+        long idConcept = resultSet.getLong("id_concept");
+
+        ConceptSMTK conceptByID;
+        if (conceptSMTK == null) {
+            conceptByID = conceptDAO.getConceptByID(idConcept);
+        } else {
+            conceptByID = conceptSMTK;
+        }
+
+        DescriptionType descriptionType = DescriptionTypeFactory.getInstance().getDescriptionTypeByID(idDescriptionType);
+        Description description = new Description(id, conceptByID, descriptionID, descriptionType, term, 0, isCaseSensitive, isAutoGenerated, isPublished, validityUntil, creationDate, user, isModeled);
+        description.setUses(uses);
+        ObservationNoValid observationNoValid = getObservationNoValidBy(description);
+        List<ConceptSMTK> suggestedConcepts = getSuggestedConceptsBy(description);
+        return new NoValidDescription(description, observationNoValid, suggestedConcepts);
+    }
+
+
 }

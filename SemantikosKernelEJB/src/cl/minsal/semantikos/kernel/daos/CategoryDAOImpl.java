@@ -1,6 +1,5 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.daos.mappers.CategoryMapper;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.categories.Category;
@@ -40,8 +39,6 @@ public class CategoryDAOImpl implements CategoryDAO {
     @EJB
     private TagSMTKDAO tagSMTKDAO;
 
-    @EJB
-    private CategoryMapper categoryMapper;
 
     /** Un caché de categorías */
     private Map<Long, Category> categoryMapByID;
@@ -93,7 +90,7 @@ public class CategoryDAOImpl implements CategoryDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-                category = categoryMapper.createCategoryFromResultSet(rs);
+                category = createCategoryFromResultSet(rs);
             } else {
                 throw new EJBException("Error en la llamada");
             }
@@ -169,7 +166,7 @@ public class CategoryDAOImpl implements CategoryDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                categories.add(categoryMapper.createCategoryFromResultSet(rs));
+                categories.add(createCategoryFromResultSet(rs));
             }
             rs.close();
 
@@ -178,6 +175,18 @@ public class CategoryDAOImpl implements CategoryDAO {
         }
 
         return categories;
+    }
+
+    public Category createCategoryFromResultSet(ResultSet resultSet) throws SQLException {
+        long idCategory = resultSet.getLong("id");
+        String nameCategory = resultSet.getString("name");
+        String nameAbbreviated = resultSet.getString("name_abreviated");
+        boolean restriction = resultSet.getBoolean("restriction");
+        String color = resultSet.getString("name_abreviated");
+        long idTagSMTK = resultSet.getLong("tag_semantikos");
+        TagSMTK tagSMTKByID = tagSMTKDAO.findTagSMTKByID(idTagSMTK);
+
+        return new Category(idCategory, nameCategory, nameAbbreviated, restriction, color, tagSMTKByID);
     }
 }
 

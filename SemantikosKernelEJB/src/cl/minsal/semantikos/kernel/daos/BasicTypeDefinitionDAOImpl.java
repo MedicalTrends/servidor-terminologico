@@ -1,11 +1,11 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.daos.mappers.BasicTypeMapper;
 import cl.minsal.semantikos.kernel.factories.BasicTypeDefinitionFactory;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 
+import cl.minsal.semantikos.model.relationships.BasicTypeType;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +13,10 @@ import org.slf4j.LoggerFactory;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+
+import static java.util.Arrays.asList;
 
 /**
  * @author Andrés Farías & Gustavo Punucura
@@ -51,7 +51,7 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
 
             if (rs.next()) {
                 //basicTypeDefinition = basicTypeDefinitionFactory.createSimpleBasicTypeDefinitionFromJSON(jsonResult);
-                basicTypeDefinition = BasicTypeMapper.createBasicTypeDefinitionFromResultSet(rs);
+                basicTypeDefinition = createBasicTypeDefinitionFromResultSet(rs);
             } else {
                 String errorMsg = "Un error imposible ocurrio al pasar el resultSet a BasicTypeDefinition para id ="+idBasicTypeDefinition;
                 logger.error(errorMsg);
@@ -66,5 +66,55 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
         }
 
         return basicTypeDefinition;
+    }
+
+    /**
+     * Crea un BasicTypeDefinition en su forma básica: sin dominio ni intervalos
+     *
+     * @param rs El JSON a partir del cual se crea el dominio.
+     *
+     * @return Un BasicTypeDefinition básico, sin dominio ni intervalos.
+     */
+    public BasicTypeDefinition createBasicTypeDefinitionFromResultSet(ResultSet rs) {
+
+        try {
+            long idBasicType = rs.getLong("id");
+            String nameBasicType = rs.getString("name");
+            String descriptionBasicType = rs.getString("description");
+            BasicTypeType basicTypeType = null;
+            basicTypeType = BasicTypeType.valueOf(rs.getLong("id_type"));
+
+            Array domain = rs.getArray("domain");
+            Array interval = rs.getArray("interval");
+
+            switch (basicTypeType) {
+
+                case STRING_TYPE:
+                    BasicTypeDefinition<String> stringBasicTypeDefinition;
+                    stringBasicTypeDefinition = new BasicTypeDefinition<>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
+
+                    if (domain != null) {
+                        stringBasicTypeDefinition.setDomain(asList((String[])domain.getArray()));
+                    } else {
+                        stringBasicTypeDefinition.setDomain(new ArrayList<String>());
+                    }
+                    return stringBasicTypeDefinition;
+
+                case BOOLEAN_TYPE:
+                    return new BasicTypeDefinition<Boolean>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
+                case INTEGER_TYPE:
+                    return new BasicTypeDefinition<Integer>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
+                case FLOAT_TYPE:
+                    return new BasicTypeDefinition<Float>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
+                case DATE_TYPE:
+                    return new BasicTypeDefinition<Timestamp>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
+                default:
+                    throw new IllegalArgumentException("TODO");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

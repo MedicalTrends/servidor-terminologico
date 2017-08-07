@@ -1,13 +1,13 @@
 package cl.minsal.semantikos.kernel.daos;
 
-
-import cl.minsal.semantikos.kernel.daos.mappers.ConceptMapper;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
+import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.tags.Tag;
+import cl.minsal.semantikos.model.tags.TagSMTK;
+import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
 import oracle.jdbc.OracleConnection;
 import oracle.jdbc.OracleTypes;
@@ -75,9 +75,6 @@ public class ConceptDAOImpl implements ConceptDAO {
     @EJB
     RefSetDAO refSetDAO;
 
-    @EJB
-    ConceptMapper conceptMapper;
-
     @Override
     public void delete(ConceptSMTK conceptSMTK) {
 
@@ -131,7 +128,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                ConceptSMTK e = conceptMapper.createConceptSMTKFromResultSet(rs);
+                ConceptSMTK e = createConceptSMTKFromResultSet(rs, null);
                 concepts.add(e);
             }
             rs.close();
@@ -161,7 +158,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-                conceptSMTK = conceptMapper.createConceptSMTKFromResultSet(rs);
+                conceptSMTK = createConceptSMTKFromResultSet(rs, null);
             } else {
                 String errorMsg = "No existe un concepto con CONCEPT_ID=" + conceptID;
                 logger.error(errorMsg);
@@ -194,7 +191,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-                conceptSMTK = conceptMapper.createConceptSMTKFromResultSet(rs);
+                conceptSMTK = createConceptSMTKFromResultSet(rs, null);
             } else {
                 String errorMsg = "No existe un concepto con CONCEPT_ID=" + id;
                 logger.error(errorMsg);
@@ -228,7 +225,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                ConceptSMTK conceptSMTKFromResultSet = conceptMapper.createConceptSMTKFromResultSet(rs);
+                ConceptSMTK conceptSMTKFromResultSet = createConceptSMTKFromResultSet(rs, null);
                 concepts.add(conceptSMTKFromResultSet);
             }
             rs.close();
@@ -423,7 +420,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                concepts.add(conceptMapper.createConceptSMTKFromResultSet(rs));
+                concepts.add(createConceptSMTKFromResultSet(rs, null));
             }
             rs.close();
 
@@ -476,7 +473,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             concepts = new ArrayList<>();
 
             while (rs.next()) {
-                concepts.add(conceptMapper.createConceptSMTKFromResultSet(rs));
+                concepts.add(createConceptSMTKFromResultSet(rs, null));
             }
             rs.close();
             call.close();
@@ -530,7 +527,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
             concepts = new ArrayList<>();
             while (rs.next()) {
-                concepts.add(conceptMapper.createConceptSMTKFromResultSet(rs));
+                concepts.add(createConceptSMTKFromResultSet(rs, null));
             }
             rs.close();
             call.close();
@@ -674,7 +671,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                ConceptSMTK e = conceptMapper.createConceptSMTKFromResultSet(rs);
+                ConceptSMTK e = createConceptSMTKFromResultSet(rs, null);
                 concepts.add(e);
             }
             rs.close();
@@ -684,5 +681,73 @@ public class ConceptDAOImpl implements ConceptDAO {
         }
 
         return concepts;
+    }
+
+    /**
+     * Este método es responsable de crear un concepto SMTK a partir de un resultset.
+     *
+     * @param resultSet El resultset a partir del cual se obtienen los conceptos.
+     * @return La lista de conceptos contenidos en el ResultSet.
+     * @throws SQLException Se arroja si hay un problema SQL.
+     */
+    public ConceptSMTK createConceptSMTKFromResultSet(ResultSet resultSet, List<Description> descriptions) throws SQLException {
+
+        long id;
+        long idCategory;
+        Category objectCategory;
+        boolean check;
+        boolean consult;
+        boolean modeled;
+        boolean completelyDefined;
+        boolean published;
+        String conceptId;
+        boolean heritable = false;
+
+        id = Long.valueOf(resultSet.getString("id"));
+        conceptId = resultSet.getString("conceptid");
+
+        /* Se recupera la categoría como objeto de negocio */
+        idCategory = Long.valueOf(resultSet.getString("id_category"));
+        //objectCategory = categoryDAO.getCategoryById(idCategory);
+        objectCategory = CategoryFactory.getInstance().findCategoryById(idCategory);
+
+        check = resultSet.getBoolean("is_to_be_reviewed");
+        consult = resultSet.getBoolean("is_to_be_consultated");
+        modeled = resultSet.getBoolean("is_modeled");
+        completelyDefined = resultSet.getBoolean("is_fully_defined");
+        published = resultSet.getBoolean("is_published");
+        conceptId = resultSet.getString("conceptid");
+        String observation = resultSet.getString("observation");
+        long idTagSMTK = resultSet.getLong("id_tag_smtk");
+
+        /**
+         * Try y catch ignored porque no todas las funciones de la BD que recuperan Concepts de la BD traen esta
+         * columna.
+         * Ej: Usar la funcion semantikos.find_concepts_by_refset_paginated para recueprar conceptos se cae con la
+         * excepcion:
+         * org.postgresql.util.PSQLException: The column name is_inherited was not found in this ResultSet.
+         */
+        try {
+            heritable = resultSet.getBoolean("is_inherited");
+        } catch (Exception ignored) {
+        }
+
+        /* Se recupera su Tag Semántikos */
+        //TagSMTK tagSMTKByID = tagSMTKDAO.findTagSMTKByID(idTagSMTK);
+        TagSMTK tagSMTKByID = TagSMTKFactory.getInstance().findTagSMTKById(idTagSMTK);
+
+        ConceptSMTK conceptSMTK = new ConceptSMTK(id, conceptId, objectCategory, check, consult, modeled,
+                completelyDefined, heritable, published, observation, tagSMTKByID);
+
+        if(descriptions == null || descriptions.isEmpty()) {
+            /* Se recuperan las descripciones del concepto */
+            descriptions = descriptionDAO.getDescriptionsByConcept(conceptSMTK);
+            conceptSMTK.setDescriptions(descriptions);
+        }
+
+        /* Se recuperan sus Etiquetas */
+        conceptSMTK.setTags(tagDAO.getTagsByConcept(conceptSMTK));
+
+        return conceptSMTK;
     }
 }

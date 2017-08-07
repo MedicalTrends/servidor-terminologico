@@ -1,9 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.daos.mappers.TargetMapper;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.factories.TargetFactory;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DaoTools;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.relationships.*;
@@ -34,12 +32,6 @@ public class TargetDAOImpl implements TargetDAO {
     private static final Logger logger = LoggerFactory.getLogger(TargetDAOImpl.class);
 
     @EJB
-    private TargetFactory targetFactory;
-
-    @EJB
-    private TargetMapper targetMapper;
-
-    @EJB
     private HelperTableDAO helperTableDAO;
 
     @EJB
@@ -47,6 +39,21 @@ public class TargetDAOImpl implements TargetDAO {
 
     @EJB
     private RelationshipAttributeDAO relationshipAttributeDAO;
+
+    @EJB
+    CrossmapsDAO crossmapsDAO;
+
+    @EJB
+    SnomedCTDAO snomedCTDAO;
+
+    @EJB
+    ConceptDAO conceptDAO;
+
+    @EJB
+    BasicTypeDefinitionDAO basicTypeDefinitionDAO;
+
+    @EJB
+    CategoryDAO categoryDAO;
 
 
     @Override
@@ -71,7 +78,7 @@ public class TargetDAOImpl implements TargetDAO {
             if (rs.next()) {
                 //String jsonResult = rs.getString(1);
                 //target = targetFactory.createTargetFromJSON(jsonResult);
-                target = targetMapper.createTargetFromResultSet(rs);
+                target = createTargetFromResultSet(rs);
             } else {
                 String errorMsg = "Un error imposible acaba de ocurrir";
                 logger.error(errorMsg);
@@ -107,7 +114,7 @@ public class TargetDAOImpl implements TargetDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-                target = targetMapper.createTargetFromResultSet(rs);
+                target = createTargetFromResultSet(rs);
             } else {
                 String errorMsg = "Un error imposible acaba de ocurrir";
                 logger.error(errorMsg);
@@ -451,6 +458,80 @@ public class TargetDAOImpl implements TargetDAO {
     private void setDefaultValuesForUpdateTargetFunction(CallableStatement call) throws SQLException {
         setDefaultValuesForCreateTargetFunction(call);
         call.setNull(12, BIGINT);
+    }
+
+    /**
+     * Este método es responsable de reconstruir un Target a partir de una expresión JSON, yendo a buscar los otros
+     * objetos necesarios.
+     *
+     * @param rs Una expresión JSON de la forma {"id":1,"float_value":null,"date_value":null,"string_value":"strig","boolean_value":null,"int_value":null,"id_auxiliary":null,"id_extern":null,"id_concept_sct":null,"id_concept_stk":null,"id_target_type":null}
+     * @return Una instancia fresca y completa
+     */
+    public Target createTargetFromResultSet(ResultSet rs) {
+
+        Target target = null;
+
+        try {
+            long idHelperTableRecord = rs.getLong("id_auxiliary");
+            long idExtern = rs.getLong("id_extern");
+            long idConceptSct = rs.getLong("id_concept_sct");
+            long idConceptStk = rs.getLong("id_concept_stk");
+
+            /* Se evalúa caso a caso. Helper Tables: */
+            if (idHelperTableRecord > 0) {
+                target = helperTableDAO.getRowById(idHelperTableRecord);
+            } else if (idExtern > 0) {
+                target = crossmapsDAO.getCrossmapSetMemberById(idExtern);
+            } else if (idConceptSct > 0) {
+                target = snomedCTDAO.getConceptByID(idConceptSct);
+            } else if (idConceptStk > 0) {
+                target = conceptDAO.getConceptByID(idConceptStk);
+            }
+            /* Ahora los tipos básicos */
+            else {
+                target = createBasicTypeFromResultSet(rs);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return target;
+    }
+
+    public BasicTypeValue createBasicTypeFromResultSet(ResultSet rs) {
+
+        BasicTypeValue bt = null;
+
+        /* Se evaluan los tipos básicos */
+        try {
+            long id = rs.getLong("id");
+
+            if (DaoTools.getFloat(rs, "float_value") != null) {
+                bt = new BasicTypeValue<Float>(DaoTools.getFloat(rs, "float_value"));
+                bt.setId(id);
+            } else if (DaoTools.getInteger(rs, "int_value") != null) {
+                bt = new BasicTypeValue<Integer>(DaoTools.getInteger(rs, "int_value"));
+                bt.setId(id);
+            } else if (DaoTools.getBoolean(rs, "boolean_value") != null) {
+                bt = new BasicTypeValue<Boolean>(DaoTools.getBoolean(rs, "boolean_value"));
+                bt.setId(id);
+            } else if (DaoTools.getString(rs, "string_value") != null) {
+                bt = new BasicTypeValue<String>(DaoTools.getString(rs, "string_value"));
+                bt.setId(id);
+            } else if (DaoTools.getDate(rs, "date_value") != null) {
+                bt = new BasicTypeValue<Timestamp>(DaoTools.getTimestamp(rs, "date_value"));
+                bt.setId(id);
+            } else {
+                String message = "Existe un caso no contemplado";
+                logger.error(message);
+                throw new EJBException(message);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return bt;
     }
 
 }

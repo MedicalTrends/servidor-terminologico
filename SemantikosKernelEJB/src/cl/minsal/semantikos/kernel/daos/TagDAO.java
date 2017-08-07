@@ -63,11 +63,11 @@ public interface TagDAO {
     /**
      * Este método es responsable de recuperar las etiquetas de un concepto.
      *
-     * @param idConcept El Identificador único del concepto.
+     * @param conceptSMTK El Identificador único del concepto.
      *
      * @return Una lista de los Tags asociados al concepto.
      */
-    public List<Tag> getTagsByConcept(long idConcept);
+    public List<Tag> getTagsByConcept(ConceptSMTK conceptSMTK);
 
     /**
      * Este método es responsable de recuperar todos los hijos de un Tag.

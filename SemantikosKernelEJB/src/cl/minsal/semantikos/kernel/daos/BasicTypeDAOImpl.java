@@ -1,8 +1,8 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.daos.mappers.BasicTypeMapper;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DaoTools;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import oracle.jdbc.OracleTypes;
@@ -45,7 +45,7 @@ public class BasicTypeDAOImpl implements BasicTypeDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-                basicTypeValue = BasicTypeMapper.createBasicTypeFromResultSet(rs);
+                basicTypeValue = createBasicTypeFromResultSet(rs);
                 //jsonResult = rs.getString(1);
 
             } else {
@@ -62,6 +62,41 @@ public class BasicTypeDAOImpl implements BasicTypeDAO {
         }
         //return createBasicTypeFromJSON(jsonResult);
         return basicTypeValue;
+    }
+
+    public BasicTypeValue createBasicTypeFromResultSet(ResultSet rs) {
+
+        BasicTypeValue bt = null;
+
+        /* Se evaluan los tipos básicos */
+        try {
+            long id = rs.getLong("id");
+
+            if (DaoTools.getFloat(rs, "float_value") != null) {
+                bt = new BasicTypeValue<Float>(DaoTools.getFloat(rs, "float_value"));
+                bt.setId(id);
+            } else if (DaoTools.getInteger(rs, "int_value") != null) {
+                bt = new BasicTypeValue<Integer>(DaoTools.getInteger(rs, "int_value"));
+                bt.setId(id);
+            } else if (DaoTools.getBoolean(rs, "boolean_value") != null) {
+                bt = new BasicTypeValue<Boolean>(DaoTools.getBoolean(rs, "boolean_value"));
+                bt.setId(id);
+            } else if (DaoTools.getString(rs, "string_value") != null) {
+                bt = new BasicTypeValue<String>(DaoTools.getString(rs, "string_value"));
+                bt.setId(id);
+            } else if (DaoTools.getDate(rs, "date_value") != null) {
+                bt = new BasicTypeValue<Timestamp>(DaoTools.getTimestamp(rs, "date_value"));
+                bt.setId(id);
+            } else {
+                String message = "Existe un caso no contemplado";
+                logger.error(message);
+                throw new EJBException(message);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return bt;
     }
 
 }

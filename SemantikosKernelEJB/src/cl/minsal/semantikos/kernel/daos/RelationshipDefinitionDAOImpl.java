@@ -1,9 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
-
-import cl.minsal.semantikos.kernel.daos.mappers.RelationshipMapper;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.relationships.*;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
@@ -41,8 +38,6 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
     @EJB
     private TargetTypeDAO targetTypeDAO;
 
-    @EJB
-    private RelationshipMapper relationshipMapper;
 
     @EJB
     private HelperTableDAO helperTableDAO;
@@ -68,7 +63,7 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
-                relationshipDefinitions.add(relationshipMapper.createRelationshipDefinitionFromResultSet(rs));
+                relationshipDefinitions.add(createRelationshipDefinitionFromResultSet(rs));
             }
 
             rs.close();
@@ -108,7 +103,7 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
-                relationshipAttributeDefinitions.add(relationshipMapper.createRelationshipAttributeDefinitionFromResultSet(rs));
+                relationshipAttributeDefinitions.add(createRelationshipAttributeDefinitionFromResultSet(rs));
             }
 
         } catch (SQLException e) {
