@@ -51,7 +51,7 @@ public interface ConceptDAO {
      */
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptID);
 
-    public ConceptSMTK getConceptByID(long id, List<Description> descriptions);
+    public ConceptSMTK getConceptByID(long id, boolean chargeDescriptions);
 
     public ConceptSMTK getConceptByID(long id);
 

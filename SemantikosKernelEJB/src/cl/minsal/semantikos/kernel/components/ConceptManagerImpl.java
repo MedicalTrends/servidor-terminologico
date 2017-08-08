@@ -12,6 +12,7 @@ import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.TargetType;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.users.User;
@@ -351,7 +352,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         /* Si no se obtuvieron conceptos relacionados se intenta con los conceptos hijos */
         if(filteredRelatedConcepts.isEmpty()) {
-            for (Relationship relationship : getRelationships(conceptSMTK)) {
+            for (Relationship relationship : relationshipDAO.getRelationshipsBySourceConcept(conceptSMTK, TargetType.SMTK)) {
                 if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
                     ConceptSMTK relatedConcept = (ConceptSMTK) relationship.getTarget();
                     List<Category> categoryFilters = Arrays.asList(categories);

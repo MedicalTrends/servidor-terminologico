@@ -19,6 +19,8 @@ import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import java.util.*;
 
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
+
 /**
  * Created by Development on 2016-11-18.
  */
@@ -111,11 +113,20 @@ public class RefSetController {
 
         logger.debug("RefSetController.findRefsets(" + refSetsNames + ")");
 
+        if (isEmpty(refSetsNames)) {
+            logger.debug("RefSetController.findRefsets(" + refSetsNames + ") --> " + 0 + " refsets " +
+                    "retornados.");
+            return Collections.emptyList();
+        }
+
         /* Validacion de parámetros */
-        List<RefSet> refSets = this.refSetManager.getAllRefSets();
+        //List<RefSet> refSets = this.refSetManager.getAllRefSets();
         List<RefSet> someRefsets = new ArrayList<>();
         Map<String, RefSet> refSetsMap = new HashMap<>();
 
+        List<RefSet> refSets = refSetManager.findRefSetsByName(refSetsNames);
+
+        /*
         Iterator<String> it = refSetsNames.iterator();
 
         while (it.hasNext()) {
@@ -124,12 +135,7 @@ public class RefSetController {
                 it.remove();
             }
         }
-
-        if (refSetsNames == null || refSetsNames.isEmpty()) {
-            logger.debug("RefSetController.findRefsets(" + refSetsNames + ") --> " + refSets.size() + " refsets " +
-                    "retornados.");
-            return Collections.emptyList();
-        }
+        */
 
         for (RefSet refSet : refSets) {
             refSetsMap.put(refSet.getName(), refSet);
@@ -154,6 +160,10 @@ public class RefSetController {
         }
 
         return someRefsets;
+    }
+
+    private boolean isEmpty(List<String> list) {
+        return list == null || list.isEmpty() || (list.size() == 1 && list.contains(EMPTY_STRING));
     }
 
     /**

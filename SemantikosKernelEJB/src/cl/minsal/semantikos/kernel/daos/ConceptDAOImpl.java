@@ -128,7 +128,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                ConceptSMTK e = createConceptSMTKFromResultSet(rs, null);
+                ConceptSMTK e = createConceptSMTKFromResultSet(rs, true);
                 concepts.add(e);
             }
             rs.close();
@@ -158,7 +158,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-                conceptSMTK = createConceptSMTKFromResultSet(rs, null);
+                conceptSMTK = createConceptSMTKFromResultSet(rs, true);
             } else {
                 String errorMsg = "No existe un concepto con CONCEPT_ID=" + conceptID;
                 logger.error(errorMsg);
@@ -191,7 +191,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-                conceptSMTK = createConceptSMTKFromResultSet(rs, null);
+                conceptSMTK = createConceptSMTKFromResultSet(rs, true);
             } else {
                 String errorMsg = "No existe un concepto con CONCEPT_ID=" + id;
                 logger.error(errorMsg);
@@ -207,7 +207,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public ConceptSMTK getConceptByID(long id, List<Description> descriptions) {
+    public ConceptSMTK getConceptByID(long id, boolean chargeDescriptions) {
         //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.get_concept_by_id(?); end;";
@@ -224,7 +224,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-                conceptSMTK = createConceptSMTKFromResultSet(rs, descriptions);
+                conceptSMTK = createConceptSMTKFromResultSet(rs, chargeDescriptions);
             } else {
                 String errorMsg = "No existe un concepto con CONCEPT_ID=" + id;
                 logger.error(errorMsg);
@@ -258,7 +258,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                ConceptSMTK conceptSMTKFromResultSet = createConceptSMTKFromResultSet(rs, null);
+                ConceptSMTK conceptSMTKFromResultSet = createConceptSMTKFromResultSet(rs, true);
                 concepts.add(conceptSMTKFromResultSet);
             }
             rs.close();
@@ -453,7 +453,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                concepts.add(createConceptSMTKFromResultSet(rs, null));
+                concepts.add(createConceptSMTKFromResultSet(rs, true));
             }
             rs.close();
 
@@ -506,7 +506,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             concepts = new ArrayList<>();
 
             while (rs.next()) {
-                concepts.add(createConceptSMTKFromResultSet(rs, null));
+                concepts.add(createConceptSMTKFromResultSet(rs, true));
             }
             rs.close();
             call.close();
@@ -560,7 +560,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
             concepts = new ArrayList<>();
             while (rs.next()) {
-                concepts.add(createConceptSMTKFromResultSet(rs, null));
+                concepts.add(createConceptSMTKFromResultSet(rs, true));
             }
             rs.close();
             call.close();
@@ -704,7 +704,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                ConceptSMTK e = createConceptSMTKFromResultSet(rs, null);
+                ConceptSMTK e = createConceptSMTKFromResultSet(rs, true);
                 concepts.add(e);
             }
             rs.close();
@@ -723,7 +723,7 @@ public class ConceptDAOImpl implements ConceptDAO {
      * @return La lista de conceptos contenidos en el ResultSet.
      * @throws SQLException Se arroja si hay un problema SQL.
      */
-    public ConceptSMTK createConceptSMTKFromResultSet(ResultSet resultSet, List<Description> descriptions) throws SQLException {
+    public ConceptSMTK createConceptSMTKFromResultSet(ResultSet resultSet, boolean chargeDescriptions) throws SQLException {
 
         long id;
         long idCategory;
@@ -772,10 +772,9 @@ public class ConceptDAOImpl implements ConceptDAO {
         ConceptSMTK conceptSMTK = new ConceptSMTK(id, conceptId, objectCategory, check, consult, modeled,
                 completelyDefined, heritable, published, observation, tagSMTKByID);
 
-        if(descriptions == null || descriptions.isEmpty()) {
-            /* Se recuperan las descripciones del concepto */
-            descriptions = descriptionDAO.getDescriptionsByConcept(conceptSMTK);
-            conceptSMTK.setDescriptions(descriptions);
+        /* Se recuperan las descripciones del concepto */
+        if(chargeDescriptions) {
+            conceptSMTK.setDescriptions(descriptionDAO.getDescriptionsByConcept(conceptSMTK));
         }
 
         /* Se recuperan sus Etiquetas */

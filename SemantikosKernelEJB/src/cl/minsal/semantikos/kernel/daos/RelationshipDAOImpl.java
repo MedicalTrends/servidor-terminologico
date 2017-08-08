@@ -318,6 +318,37 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     }
 
     @Override
+    public List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK conceptSMTK, TargetType targetType) {
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_relationship.get_relationships_by_source_concept_and_target_type(?,?); end;";
+
+        List<Relationship> relationships = new ArrayList<>();
+
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSMTK.getId());
+            call.setLong(3, targetType.getIdTargetType());
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while(rs.next()) {
+                relationships.add(createRelationshipFromResultSet(rs, conceptSMTK));
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            throw new EJBException(e);
+        }
+
+        return relationships;
+    }
+
+    @Override
     public Long getTargetByRelationship(Relationship relationship) {
 
         //ConnectionBD connect = new ConnectionBD();
