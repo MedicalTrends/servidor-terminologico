@@ -85,7 +85,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         } catch (NamingException e) {
             e.printStackTrace();
         }
-        this.testArrayOracle();
+        //this.testArrayOracle();
         this.refreshColumns();
         this.refreshCategories();
         this.refreshQueries();
@@ -516,4 +516,41 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         return descriptionType;
 
     }
+
+    /**
+     * Este método es responsable de crear un HelperTable Record a partir de un objeto JSON.
+     *
+     * @param rs El objeto JSON a partir del cual se crea el objeto. El formato JSON será:
+     *                       <code>{"TableName":"helper_table_atc","records":[{"id":1,"codigo_atc":"atc1"}</code>
+     *
+     * @return Un objeto fresco de tipo <code>HelperTableRecord</code> creado a partir del objeto JSON.
+     *
+     * @throws IOException Arrojada si hay un problema.
+     */
+    public HelperTableColumn createHelperTableColumnFromResultSet(ResultSet rs) {
+
+        HelperTableColumn helperTableColumn = new HelperTableColumn();
+
+        try {
+            helperTableColumn.setId(rs.getLong("id"));
+            helperTableColumn.setName(rs.getString("name"));
+            helperTableColumn.setHelperTableId(rs.getLong("helper_table_id"));
+            helperTableColumn.setHelperTableDataTypeId(rs.getInt("helper_table_data_type_id"));
+            helperTableColumn.setForeignKeyHelperTableId(rs.getInt("foreign_key_table_id"));
+            helperTableColumn.setForeignKey(rs.getBoolean("foreign_key"));
+            helperTableColumn.setDescription(rs.getString("description"));
+            helperTableColumn.setSearchable(rs.getBoolean("searchable"));
+            helperTableColumn.setSearchable(rs.getBoolean("showable"));
+            helperTableColumn.setSearchable(rs.getBoolean("editable"));
+            helperTableColumn.setSearchable(rs.getBoolean("sortable"));
+            helperTableColumn.setSearchable(rs.getBoolean("required"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return helperTableColumn;
+
+    }
+
 }

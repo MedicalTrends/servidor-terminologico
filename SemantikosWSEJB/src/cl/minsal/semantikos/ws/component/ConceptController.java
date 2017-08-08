@@ -248,11 +248,11 @@ public class ConceptController {
         List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
 
         List<Description> descriptions = this.descriptionManager.searchDescriptionsPerfectMatch(term, categories, refSets);
-        logger.debug("ws-req-001. descripciones encontradas: " + descriptions);
+        //logger.debug("ws-req-001. descripciones encontradas: " + descriptions);
 
         for (Description description : descriptions) {
 
-            logger.info("ws-req-001. descripciones encontrada: " + description.fullToString());
+            //logger.info("ws-req-001. descripciones encontrada: " + description.fullToString());
 
             if( NO_VALID_TERMS.contains(description.getTerm()) ) {
                 continue;
@@ -330,11 +330,11 @@ public class ConceptController {
         List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
 
         List<Description> descriptions = this.descriptionManager.searchDescriptionsTruncateMatch(term, categories, refSets);
-        logger.debug("ws-req-001. descripciones encontradas: " + descriptions);
+        //logger.debug("ws-req-001. descripciones encontradas: " + descriptions);
 
         for (Description description : descriptions) {
 
-            logger.info("ws-req-001. descripciones encontrada: " + description.fullToString());
+            //logger.info("ws-req-001. descripciones encontrada: " + description.fullToString());
 
             if( NO_VALID_TERMS.contains(description.getTerm()) ) {
                 continue;
@@ -403,7 +403,7 @@ public class ConceptController {
         List<Description> descriptions = this.descriptionManager.searchDescriptionsSuggested(term, categories, null);
         int count = this.descriptionManager.countDescriptionsSuggested(term, categories, null);
 
-        logger.debug("ws-req-006. descripciones encontradas: " + descriptions);
+        //logger.debug("ws-req-006. descripciones encontradas: " + descriptions);
 
         int cont = 0;
 
@@ -413,7 +413,7 @@ public class ConceptController {
                 break;
             }
 
-            logger.info("ws-req-006. descripciones encontrada: " + description.fullToString());
+            //logger.info("ws-req-006. descripciones encontrada: " + description.fullToString());
 
             suggestedDescriptions.add(new SuggestedDescriptionResponse(description));
 
@@ -552,7 +552,7 @@ public class ConceptController {
     ) throws Exception {
 
         /* Logging de invocación del servicio */
-        logger.info("SearchService:findConceptsByCategory(" + categoryName + ", " + idEstablecimiento + ")");
+        //logger.info("SearchService:findConceptsByCategory(" + categoryName + ", " + idEstablecimiento + ")");
 
         /* Se recupera la categoría */
         Category category;

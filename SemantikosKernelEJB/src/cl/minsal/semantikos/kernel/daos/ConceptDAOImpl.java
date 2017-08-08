@@ -207,6 +207,39 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
+    public ConceptSMTK getConceptByID(long id, List<Description> descriptions) {
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_concept.get_concept_by_id(?); end;";
+
+        ConceptSMTK conceptSMTK;
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, id);
+            call.execute();
+
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            if (rs.next()) {
+                conceptSMTK = createConceptSMTKFromResultSet(rs, descriptions);
+            } else {
+                String errorMsg = "No existe un concepto con CONCEPT_ID=" + id;
+                logger.error(errorMsg);
+                throw new IllegalArgumentException(errorMsg);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
+        return conceptSMTK;
+    }
+
+    @Override
     public List<ConceptSMTK> findConceptsByTag(Tag tag) {
 
         List<ConceptSMTK> concepts = new ArrayList<>();

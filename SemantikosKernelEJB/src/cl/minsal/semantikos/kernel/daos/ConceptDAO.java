@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.Tag;
@@ -49,6 +50,8 @@ public interface ConceptDAO {
      * @return Un objeto fresco de tipo <code>ConceptSMTK</code> con el Concepto solicitado.
      */
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptID);
+
+    public ConceptSMTK getConceptByID(long id, List<Description> descriptions);
 
     public ConceptSMTK getConceptByID(long id);
 
