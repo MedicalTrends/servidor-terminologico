@@ -72,13 +72,13 @@ public class RefSetsBean implements Serializable {
     private List<ConceptSMTK> conceptSMTKListSelectedEdit;
 
     @ManagedProperty(value = "#{authenticationBean}")
-    private AuthenticationBean authenticationBean;
+    private transient AuthenticationBean authenticationBean;
 
     @ManagedProperty(value = "#{conceptBean}")
     private ConceptBean conceptBean;
 
     @ManagedProperty(value = "#{messageBean}")
-    private MessageBean messageBean;
+    private transient MessageBean messageBean;
 
     //@EJB
     AuditManager auditManager = (AuditManager) RemoteEJBClientFactory.getInstance().getManager(AuditManager.class);

@@ -49,7 +49,7 @@ public class MainMenuBean implements Serializable {
 
     private List<Category> categories;
 
-    private MenuModel categoryMenuModel;
+    private transient MenuModel categoryMenuModel;
 
     //@EJB
     private CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
@@ -82,7 +82,6 @@ public class MainMenuBean implements Serializable {
         descriptionTypeFactory = descriptionManager.getDescriptionTypeFactory();
 
         userFactory = userManager.getUserFactory();
-
 
         TagSMTKFactory.getInstance().setTagsSMTK(tagSMTKFactory.getTagsSMTK());
         TagSMTKFactory.getInstance().setTagsSMTKByName(tagSMTKFactory.getTagsSMTKByName());

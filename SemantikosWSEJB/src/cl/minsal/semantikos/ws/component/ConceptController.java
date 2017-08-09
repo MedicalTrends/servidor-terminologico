@@ -11,6 +11,7 @@ import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.TargetType;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.modelws.request.DescriptionIDorConceptIDRequest;
 import cl.minsal.semantikos.modelws.request.NewTermRequest;
@@ -682,7 +683,7 @@ public class ConceptController {
         }
 
         ConceptSMTK conceptSMTK = getConcept(conceptId, descriptionId);
-        conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
+        conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConceptAndTargetType(conceptSMTK, TargetType.HelperTable));
         BioequivalentSearchResponse res = new BioequivalentSearchResponse();
 
         res.setConceptId(conceptSMTK.getConceptID());
@@ -754,7 +755,7 @@ public class ConceptController {
         if (conceptResponse.getAttributes() == null || conceptResponse.getAttributes().isEmpty()) {
             if (!source.isRelationshipsLoaded()) {
                 source.setRelationships(relationshipManager.getRelationshipsBySourceConcept(source));
-                //conceptManager.loadRelationships(source);
+                conceptManager.loadRelationships(source);
             }
             ConceptMapper.appendAttributes(conceptResponse, source);
         }
@@ -764,7 +765,7 @@ public class ConceptController {
     public ConceptResponse loadRelationships(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) throws Exception {
         if (conceptResponse.getRelationships() == null || conceptResponse.getRelationships().isEmpty()) {
             if (!source.isRelationshipsLoaded()) {
-                conceptManager.loadRelationships(source);
+                source.setRelationships(relationshipManager.getRelationshipsBySourceConcept(source));
             }
             ConceptMapper.appendRelationships(conceptResponse, source);
         }
@@ -776,7 +777,7 @@ public class ConceptController {
         if (conceptResponse.getSnomedCTRelationshipResponses() == null || conceptResponse
                 .getSnomedCTRelationshipResponses().isEmpty()) {
             if (!source.isRelationshipsLoaded()) {
-                conceptManager.loadRelationships(source);
+                source.setRelationships(relationshipManager.getRelationshipsBySourceConcept(source));
             }
             ConceptMapper.appendSnomedCTRelationships(conceptResponse, source);
         }
@@ -809,8 +810,7 @@ public class ConceptController {
 
             DescriptionIDorConceptIDRequest request = new DescriptionIDorConceptIDRequest();
             request.setDescriptionId(conceptSMTK.getDescriptionFavorite().getDescriptionId());
-            IndirectCrossMapSearchResponse indirectCrossMapSearchResponse = this.crossmapController
-                    .getIndirectCrossmapsByDescriptionID(request);
+            IndirectCrossMapSearchResponse indirectCrossMapSearchResponse = this.crossmapController.getIndirectCrossmapsByDescriptionID(request);
 
             res.setIndirectCrossMaps(indirectCrossMapSearchResponse.getIndirectCrossMapResponses());
         }
@@ -818,13 +818,11 @@ public class ConceptController {
         return res;
     }
 
-    private ConceptResponse loadDirectCrossmaps(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK
-            conceptSMTK) {
+    private ConceptResponse loadDirectCrossmaps(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK conceptSMTK) {
         if (conceptResponse.getCrossmapSetMember() == null || conceptResponse.getCrossmapSetMember().isEmpty()) {
             DescriptionIDorConceptIDRequest request = new DescriptionIDorConceptIDRequest();
             request.setDescriptionId(conceptSMTK.getDescriptionFavorite().getDescriptionId());
-            CrossmapSetMembersResponse crossmapSetMembersResponse = this.crossmapController
-                    .getDirectCrossmapsSetMembersByDescriptionID(request);
+            CrossmapSetMembersResponse crossmapSetMembersResponse = this.crossmapController.getDirectCrossmapsSetMembersByDescriptionID(conceptSMTK);
             conceptResponse.setCrossmapSetMember(crossmapSetMembersResponse.getCrossmapSetMemberResponses());
         }
 

@@ -104,13 +104,11 @@ public class ConceptDAOImpl implements ConceptDAO {
     public List<ConceptSMTK> findConcepts(Long[] categories, Long[] refsets, Boolean modeled) {
         List<ConceptSMTK> concepts = new ArrayList<>();
         //ConnectionBD connect = new ConnectionBD();
-        CallableStatement call;
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept(?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();) {
-
-            call = connection.prepareCall(sql);
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setArray(2, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
@@ -684,13 +682,11 @@ public class ConceptDAOImpl implements ConceptDAO {
     public List<ConceptSMTK> getModeledConceptPaginated(Long categoryId, int pageSize, int pageNumber) {
         List<ConceptSMTK> concepts = new ArrayList<>();
         //ConnectionBD connect = new ConnectionBD();
-        CallableStatement call;
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept_by_categories_paginated(?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();) {
-
-            call = connection.prepareCall(sql);
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setArray(2, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", new Long[]{categoryId}));

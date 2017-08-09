@@ -75,7 +75,7 @@ public class NoValidBrowserBean implements Serializable {
     private boolean isFilterChanged;
 
     @ManagedProperty(value = "#{authenticationBean}")
-    private AuthenticationBean authenticationBean;
+    private transient AuthenticationBean authenticationBean;
 
     //@EJB
     DescriptionManager descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);

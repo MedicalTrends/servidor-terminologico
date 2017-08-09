@@ -84,7 +84,7 @@ public class DescriptionsBrowserBean implements Serializable {
 
 
     @ManagedProperty(value = "#{authenticationBean}")
-    private AuthenticationBean authenticationBean;
+    private transient AuthenticationBean authenticationBean;
 
 
     @PostConstruct

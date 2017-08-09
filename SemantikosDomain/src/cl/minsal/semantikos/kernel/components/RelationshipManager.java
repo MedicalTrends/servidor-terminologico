@@ -3,10 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.categories.Category;
-import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinitionFactory;
-import cl.minsal.semantikos.model.relationships.Target;
+import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.users.User;
 
@@ -154,6 +151,16 @@ public interface RelationshipManager {
      * @return Una lista de relaciones asociadas al concepto.
      */
     List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK concept);
+
+    /**
+     * Este método es responsable de recuperar las relaciones donde el concepto de origen coincide con el
+     * <code>idConcept</code> dado como argumento.
+     *
+     * @param conceptSMTK El id del concepto cuyas relaciones se quiere recuperar.
+     *
+     * @return Una lista con las relaciones del concepto.
+     */
+    List<Relationship> getRelationshipsBySourceConceptAndTargetType(ConceptSMTK conceptSMTK, TargetType targetType);
 
     /**
      * Este método es responsable de recuperar todas las relaciones del <code>concepto</code>.

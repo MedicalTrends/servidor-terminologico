@@ -133,7 +133,7 @@ public class Tag extends PersistentEntity implements Serializable {
         }
 
         /* Si es el padre, también lo contiene */
-        else if (parentTag != null && parentTag.equals(tag)) {
+        if (parentTag != null && parentTag.equals(tag)) {
             return true;
         }
 

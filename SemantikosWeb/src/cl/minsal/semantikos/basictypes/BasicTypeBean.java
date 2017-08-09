@@ -24,10 +24,6 @@ public class BasicTypeBean implements Serializable {
 
     private BasicTypeValue basicTypeValuePlaceHolder = new BasicTypeValue(null);
 
-    @PostConstruct
-    protected void initialize() throws ParseException {
-
-    }
 
     public List<String> getRecordSearchInput(String patron) {
 

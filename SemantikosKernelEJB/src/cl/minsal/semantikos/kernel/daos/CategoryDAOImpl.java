@@ -150,13 +150,10 @@ public class CategoryDAOImpl implements CategoryDAO {
 
         //ConnectionBD connect = new ConnectionBD();
 
-        CallableStatement call;
-
         String sql = "begin ? := stk.stk_pck_category.get_related_category(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();) {
-
-            call = connection.prepareCall(sql);
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2,category.getId());

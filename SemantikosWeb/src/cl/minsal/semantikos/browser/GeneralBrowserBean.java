@@ -90,7 +90,7 @@ public class GeneralBrowserBean implements Serializable {
     private ConceptSMTK conceptSMTK = null;
 
     @ManagedProperty(value = "#{authenticationBean}")
-    private AuthenticationBean authenticationBean;
+    private transient AuthenticationBean authenticationBean;
 
     //@EJB
     QueryManager queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);

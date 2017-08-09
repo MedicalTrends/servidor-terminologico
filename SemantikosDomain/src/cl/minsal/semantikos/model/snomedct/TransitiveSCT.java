@@ -44,7 +44,7 @@ public class TransitiveSCT extends PersistentEntity implements SnomedCTComponent
     @Override
     public AuditActionType evaluateChange(SnomedCTComponent snomedCTComponent) {
 
-        DescriptionSCT that = (DescriptionSCT) snomedCTComponent;
+        TransitiveSCT that = (TransitiveSCT) snomedCTComponent;
 
         if(this.equals(that))
             return AuditActionType.SNOMED_CT_UNMODIFYING;

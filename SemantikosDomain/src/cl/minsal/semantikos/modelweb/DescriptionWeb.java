@@ -18,7 +18,7 @@ public class DescriptionWeb extends Description implements Serializable {
     /** Establece el estilo para el estado de error */
     private boolean uiValid = true;
 
-    public DescriptionWeb(){
+    public DescriptionWeb() {
         super(null,"", DescriptionTypeFactory.TYPELESS_DESCRIPTION_TYPE);
         this.representation = "";
     }
@@ -107,8 +107,8 @@ public class DescriptionWeb extends Description implements Serializable {
     @Override
     public boolean equals(Object o) {
 
-        if (o == this)return true;
-
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Description description = (Description) o;
 

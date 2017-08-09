@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.factories.TargetDefinitionFactory;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
 import cl.minsal.semantikos.model.snomedct.SnomedCT;
@@ -25,9 +24,6 @@ public class TargetDefinitionDAOImpl implements TargetDefinitionDAO {
 
     /** El logger para esta clase */
     private static final Logger logger = LoggerFactory.getLogger(TargetDefinitionDAOImpl.class);
-
-    @EJB
-    TargetDefinitionFactory targetDefinitionFactory;
 
     @EJB
     HelperTableDAO helperTableDAO;

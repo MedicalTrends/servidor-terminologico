@@ -88,10 +88,16 @@ public class AuthenticationFilter implements Filter {
     }
 
     public void destroy() {
+        /**
+         * Not implemented yet
+         */
     }
 
 
     public void init(FilterConfig arg0) throws ServletException {
+        /**
+         * Not implemented yet
+         */
     }
 
 

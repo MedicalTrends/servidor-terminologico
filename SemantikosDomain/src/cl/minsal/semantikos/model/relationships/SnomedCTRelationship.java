@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
+
 /**
  * Esta clase representa una relación hacia un concepto Snomed-CT.
  *
@@ -162,6 +164,6 @@ public class SnomedCTRelationship extends Relationship implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return EMPTY_STRING;
     }
 }

@@ -1,10 +1,10 @@
 <component name="ArtifactManager">
   <artifact type="exploded-ear" name="SemantikosBusinessEAR:ear exploded">
-    <output-path>$PROJECT_DIR$/SemantikosBusinessEAR/target/SemantikosBusinessEAR-4.0.0</output-path>
+    <output-path>$PROJECT_DIR$/SemantikosBusinessEAR/target/SemantikosBusinessEAR-0.9.0</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="SemantikosBusinessEAR/javaeeApplication/JavaEE" />
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/SemantikosBusinessEAR/target/SemantikosBusinessEAR-4.0.0/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/SemantikosBusinessEAR/target/SemantikosBusinessEAR-0.9.0/META-INF/MANIFEST.MF" />
       </element>
       <element id="dir-copy" path="src/main/java" />
       <element id="directory" name="lib">
@@ -26,9 +26,7 @@
         <element id="library" level="project" name="Maven: net.bull.javamelody:javamelody-core:1.59.0" />
         <element id="library" level="project" name="Maven: org.jrobin:jrobin:1.5.9" />
         <element id="library" level="project" name="Maven: com.github.noraui:ojdbc7:12.1.0.2" />
-        <element id="archive" name="SemantikosDomain-4.0.0.jar">
-          <element id="module-output" name="SemantikosDomain" />
-        </element>
+        <element id="file-copy" path="$PROJECT_DIR$/SemantikosDomain/pom.xml" output-file-name="SemantikosDomain-4.0.0.jar" />
         <element id="library" level="project" name="Maven: org.jboss:jboss-ejb-client:1.0.16.Final" />
         <element id="library" level="project" name="Maven: org.jboss:jboss-remote-naming:1.0.5.Final" />
         <element id="library" level="project" name="Maven: org.jboss.logging:jboss-logging:3.1.2.GA" />
@@ -46,15 +44,9 @@
         <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
         <element id="library" level="project" name="Maven: javax.validation:validation-api:1.0.0.GA" />
       </element>
-      <element id="archive" name="SemantikosKernelEJB-4.0.0.jar">
-        <element id="artifact" artifact-name="SemantikosKernelEJB:ejb exploded" />
-      </element>
-      <element id="archive" name="SemantikosWSEJB-4.0.0.jar">
-        <element id="artifact" artifact-name="SemantikosWSEJB:ejb exploded" />
-      </element>
-      <element id="archive" name="SemantikosWS-4.0.0.war">
-        <element id="artifact" artifact-name="SemantikosWS:war exploded" />
-      </element>
+      <element id="file-copy" path="$PROJECT_DIR$/SemantikosKernelEJB/pom.xml" output-file-name="SemantikosKernelEJB-4.0.0.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/SemantikosWSEJB/pom.xml" output-file-name="SemantikosWSEJB-4.0.0.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/SemantikosWS/pom.xml" output-file-name="SemantikosWS-4.0.0.war" />
     </root>
   </artifact>
 </component>

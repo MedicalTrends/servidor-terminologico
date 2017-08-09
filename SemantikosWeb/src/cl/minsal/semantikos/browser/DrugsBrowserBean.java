@@ -48,7 +48,7 @@ public class DrugsBrowserBean implements Serializable {
 
     private List<Category> drugsCategories;
 
-    private TreeNode root;
+    private transient TreeNode root;
 
     //@EJB
     DrugsManager drugsManager = (DrugsManager) RemoteEJBClientFactory.getInstance().getManager(DrugsManager.class);

@@ -118,6 +118,30 @@ public class CrossmapController {
     }
 
     /**
+     * Este método es responsable de recuperar los crossmapSetMembers de los crossmpas directos asociados al concepto
+     * cuya descripción posee el identificador de negocio dado como parámetro.
+     *
+     * @param conceptSMTK El identificador de negocio <em>DESCRIPTION_ID</em> de la descripción.
+     * @return La respuesta XML con la lista de los crossmapSetMembers directos asociados al concepto de la descripción
+     * indicada.
+     */
+    public CrossmapSetMembersResponse getDirectCrossmapsSetMembersByDescriptionID(ConceptSMTK conceptSMTK) {
+
+        /* Luego se recuperan los crossmapSetMembers directos del concepto */
+        List<CrossmapSetMember> directCrossmapsSetMembersOf = crossmapManager.getDirectCrossmapsSetMembersOf(conceptSMTK);
+
+        CrossmapSetMembersResponse res = new CrossmapSetMembersResponse(directCrossmapsSetMembersOf);
+
+        res.setConceptId(conceptSMTK.getConceptID());
+        res.setCategory(conceptSMTK.getCategory().getName());
+        res.setDescriptionId(conceptSMTK.getDescriptionFavorite().getDescriptionId());
+        res.setDescription(conceptSMTK.getDescriptionFavorite().getTerm());
+        res.setVersion(null);
+
+        return res;
+    }
+
+    /**
      * Este método es repsonsable de recuperar los crossmapSetMembers de un crossmapSet dado por su nombre abreviado.
      *
      * @param crossmapSetAbbreviatedName El nombre abreviado del crossmapSet que se quiere recuperar.

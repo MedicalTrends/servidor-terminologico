@@ -110,7 +110,14 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     public List<DirectCrossmap> getDirectCrossmaps(ConceptSMTK conceptSMTK) {
 
         /* Se recuperan todas las relaciones del concepto, dentro de las cuales estarán los crossmaps directos */
-        List<Relationship> relationshipsBySourceConcept = relationshipManager.getRelationshipsBySourceConcept(conceptSMTK);
+        List<Relationship> relationshipsBySourceConcept;
+
+        if(!conceptSMTK.isRelationshipsLoaded()) {
+            relationshipsBySourceConcept = relationshipManager.getRelationshipsBySourceConcept(conceptSMTK);
+        }
+        else {
+            relationshipsBySourceConcept = conceptSMTK.getRelationships();
+        }
 
         /* Luego se filtran las relaciones a crossmaps indirectos */
         ArrayList<DirectCrossmap> directCrossmaps = new ArrayList<>();

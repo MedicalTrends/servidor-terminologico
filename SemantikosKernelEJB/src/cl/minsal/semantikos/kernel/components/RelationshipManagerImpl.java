@@ -270,6 +270,11 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
+    public List<Relationship> getRelationshipsBySourceConceptAndTargetType(ConceptSMTK concept, TargetType targetType) {
+        return relationshipDAO.getRelationshipsBySourceConcept(concept, targetType);
+    }
+
+    @Override
     public RelationshipDefinitionFactory getRelationshipDefinitionFactory() {
         return RelationshipDefinitionFactory.getInstance();
     }
