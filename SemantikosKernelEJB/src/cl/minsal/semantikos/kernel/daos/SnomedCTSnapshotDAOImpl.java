@@ -10,6 +10,8 @@ import javax.ejb.*;
 import java.sql.*;
 import java.util.*;
 
+import static java.util.Collections.EMPTY_LIST;
+
 /**
  * Funciones de base de dato para acceder a los datos de Snomed.
  *
@@ -139,16 +141,18 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
 
         for (SnomedCTComponent snomedCTComponent : snomedCTComponents) {
 
-            if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof ConceptSCT )
+            if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof ConceptSCT)
                 persistedSnomedCTComponent = snomedCTDAO.getConceptByID(snomedCTComponent.getId());
             if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof DescriptionSCT)
                 persistedSnomedCTComponent = snomedCTDAO.getDescriptionSCTBy(snomedCTComponent.getId());
-            if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof RelationshipSCT)
+            //if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof RelationshipSCT)
                 //persistedSnomedCTComponent = snomedCTDAO.getRelationshipSCTBy(snomedCTComponent.getId());
+            else
+                continue;
 
-                if(persistedSnomedCTComponent.equals(snomedCTComponent)) {
-                    snomedCTComponents.remove(snomedCTComponent);
-                }
+            if(persistedSnomedCTComponent.equals(snomedCTComponent)) {
+                snomedCTComponents.remove(snomedCTComponent);
+            }
 
             snomedCTSnapshotUpdateDetails.add(new SnomedCTSnapshotUpdateDetail(snomedCTComponent, persistedSnomedCTComponent.evaluateChange(snomedCTComponent)));
 
@@ -260,14 +264,14 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
         List<Long> errors = new ArrayList<>();
 
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
-             CallableStatement call = connection.prepareCall(QUERY)) {
+             CallableStatement call = connection.prepareCall(QUERY);) {
 
             //if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof ConceptSCT)
             call.setArray(1, connection.createArrayOf("bigint", references.values().toArray(new Long[references.size()])));
 
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
                 errors.add(rs.getLong(1));
@@ -316,11 +320,12 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(QUERY)) {
 
-            if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof LanguageRefsetSCT) {
-                call.setArray(1, connection.createArrayOf("text", map.keySet().toArray(new String[map.size()])));
+            if(map.isEmpty()){
+                return EMPTY_LIST;
             }
-            if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof TransitiveSCT) {
-                call.setArray(1, connection.createArrayOf("bigint", map.keySet().toArray(new Long[map.size()])));
+
+            if (map.get(map.keySet().toArray()[0]) instanceof LanguageRefsetSCT) {
+                call.setArray(1, connection.createArrayOf("text", map.keySet().toArray(new String[map.size()])));
             }
             else {
                 call.setArray(1, connection.createArrayOf("bigint", map.keySet().toArray(new Long[map.size()])));
@@ -328,9 +333,9 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
 
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (!map.isEmpty() && map.get(map.keySet().toArray()[0]) instanceof LanguageRefsetSCT) {
+            if (map.get(map.keySet().toArray()[0]) instanceof LanguageRefsetSCT) {
                 while (rs.next()) {
                     registersToUpdate.add(map.get(rs.getString(1)));
                 }
@@ -364,7 +369,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
 
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
                 TransitiveSCT transitiveSCT = new TransitiveSCT(rs.getLong(1), rs.getLong(2));
@@ -454,7 +459,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
 
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
                 /* Se recupera el ID del concepto persistido */
@@ -497,7 +502,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
 
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
                 /* Se recupera el status de la transacción */
@@ -553,7 +558,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
 
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
                 /* Se recupera el status de la transacción */
@@ -600,7 +605,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
 
             call.execute();
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
                 /* Se recupera el status de la transacción */

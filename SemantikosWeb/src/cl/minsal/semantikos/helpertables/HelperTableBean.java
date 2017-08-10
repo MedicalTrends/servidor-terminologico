@@ -241,30 +241,36 @@ public class HelperTableBean implements Serializable {
                 if(helperTableRows.size()!=0){
                     return helperTableRowsFiltered;
                 }
+                break;
             case (int)HelperTableColumnFactory.U_POTENCIA_ID:
                 helperTableRowsFiltered = getValidTableRowsUnit(helperTableRows,HelperTableColumnFactory.COLUMN_U_POTENCIA);
                 if(helperTableRows.size()!=0){
                     return helperTableRowsFiltered;
                 }
+                break;
             case (int)HelperTableColumnFactory.U_UNIDAD_CANTIDAD_ID:
                 helperTableRowsFiltered = getValidTableRowsUnit(helperTableRows,HelperTableColumnFactory.COLUMN_U_UNIDAD_CANTIDAD);
                 if(helperTableRows.size()!=0){
                     return helperTableRowsFiltered;
                 }
+                break;
             case (int)HelperTableColumnFactory.U_PACK_MULTI_ID:
                 helperTableRowsFiltered = getValidTableRowsUnit(helperTableRows,HelperTableColumnFactory.COLUMN_U_PACK_MULTI);
                 if(helperTableRows.size()!=0){
                     return helperTableRowsFiltered;
                 }
+                break;
             case (int)HelperTableColumnFactory.U_VOLUMEN_TOT_ID:
                 helperTableRowsFiltered = getValidTableRowsUnit(helperTableRows,HelperTableColumnFactory.COLUMN_U_VOLUMEN_TOT);
                 if(helperTableRows.size()!=0){
                     return helperTableRowsFiltered;
                 }
+                break;
             default:
                 return helperTableRows;
         }
 
+        return helperTableRows;
     }
 
     public List<HelperTableRow> getValidTableRows(HelperTable table, RelationshipAttributeDefinition attributeDefinition, RelationshipDefinition relationshipDefinition) {

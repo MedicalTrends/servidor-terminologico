@@ -5,6 +5,7 @@ import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
@@ -15,9 +16,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.EJB;
-import javax.ejb.EJBException;
-import javax.ejb.Stateless;
+import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.sql.*;
@@ -172,6 +171,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
+    //@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public ConceptSMTK getConceptByID(long id) {
         //ConnectionBD connect = new ConnectionBD();
 
@@ -196,6 +196,8 @@ public class ConceptDAOImpl implements ConceptDAO {
                 throw new IllegalArgumentException(errorMsg);
             }
             rs.close();
+            call.close();
+            connection.close();
         } catch (SQLException e) {
             logger.error("Se produjo un error al acceder a la BDD.", e);
             throw new EJBException(e);
@@ -262,6 +264,38 @@ public class ConceptDAOImpl implements ConceptDAO {
             rs.close();
         } catch (SQLException e) {
             String errorMgs = "Error al buscar conceptos por Tag[" + tag + "]";
+            logger.error(errorMgs, e);
+            throw new EJBException(errorMgs, e);
+        }
+
+        return concepts;
+    }
+
+    @Override
+    public List<ConceptSMTK> findConceptsByRefSet(RefSet refSet) {
+
+        List<ConceptSMTK> concepts = new ArrayList<>();
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_concept.find_concept_by_refset(?); end;";
+
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, refSet.getId());
+            call.execute();
+
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                ConceptSMTK conceptSMTKFromResultSet = createConceptSMTKFromResultSet(rs, true);
+                concepts.add(conceptSMTKFromResultSet);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            String errorMgs = "Error al buscar conceptos por RefSet[" + refSet + "]";
             logger.error(errorMgs, e);
             throw new EJBException(errorMgs, e);
         }

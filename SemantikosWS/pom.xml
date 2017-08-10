@@ -60,11 +60,12 @@
             <version>1.7.21</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
+
+        <!--dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosDomain</artifactId>
             <version>0.9.0</version>
-        </dependency>
+        </dependency-->
 
     </dependencies>
 

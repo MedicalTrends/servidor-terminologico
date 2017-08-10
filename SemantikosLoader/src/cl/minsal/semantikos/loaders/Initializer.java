@@ -40,7 +40,7 @@ public class Initializer extends EntityLoader {
                 throw new LoadException(smtkLoader.BASIC_CONCEPTS_PATH, null, "El encabezado del archivo no es válido", ERROR);
             }
 
-            while (reader.readLine() != null) lines++;
+            while ( reader.readLine() != null) lines++;
             reader.close();
 
             this.path = Paths.get(smtkLoader.BASIC_DESCRIPTIONS_PATH);

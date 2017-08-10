@@ -266,6 +266,8 @@ public class SubstanceConceptLoader extends EntityLoader {
         } catch (Exception e) {
             smtkLoader.logError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
             e.printStackTrace();
+        } catch (LoadException e) {
+            e.printStackTrace();
         }
     }
 

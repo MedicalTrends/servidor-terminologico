@@ -46,7 +46,7 @@ public class EntityLoader {
         this.separator = separator;
     }
 
-    public void initReader(String path) {
+    public void initReader(String path) throws LoadException {
 
         this.path = Paths.get(path);
         try {
@@ -54,7 +54,11 @@ public class EntityLoader {
             /**
              * Descartar header
              */
-            reader.readLine();
+            String line = reader.readLine();
+
+            if(line == null) {
+                throw new LoadException(path, null, "Archivo sin cabecera!!", ERROR);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

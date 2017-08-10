@@ -44,6 +44,14 @@ public interface ConceptDAO {
     List<ConceptSMTK> findConceptsByTag(Tag tag);
 
     /**
+     * Este método es responsable de recuperar todos los objetos que están asociados a un Tag.
+     *
+     * @param refSet El refSet del cual los conceptos que están asociados se desean recuperar.
+     * @return Una lista de conceptos, donde cada uno se encuentra asociado al RefSet <code>RefSet</code>.
+     */
+    List<ConceptSMTK> findConceptsByRefSet(RefSet refSet);
+
+    /**
      * Este método es responsable de recuperar el concepto con DESCRIPTION_ID.
      *
      * @param conceptID El DESCRIPTION_ID (valor de negocio) del concepto que se desea recuperar.

@@ -293,6 +293,8 @@ public class TagDAOImpl implements TagDAO {
             }
 
             rs.close();
+            call.close();
+            connection.close();
 
         } catch (SQLException e) {
             String errorMsg = "Error al buscar los hijos del tag ";
