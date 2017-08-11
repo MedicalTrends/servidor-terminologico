@@ -3,6 +3,7 @@ package cl.minsal.semantikos.ws.service;
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.modelweb.Pair;
 import cl.minsal.semantikos.modelws.request.*;
 import cl.minsal.semantikos.modelws.response.*;
@@ -69,15 +70,18 @@ public class SearchService {
     @AroundInvoke
     protected Object authenticate(InvocationContext ctx) throws Exception {
 
+        Request request = (Request) ctx.getParameters()[0];
+
         try {
             Pair credentials = UtilsWS.getCredentialsFromWSContext(wsctx.getMessageContext());
             authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
-            Request request = (Request)ctx.getParameters()[0];
             authenticationManager.validateInstitution(request.getIdStablishment());
         }
         catch (Exception e) {
+            logger.error("El web service ha arrojado el siguiente error: "+e.getMessage(),e);
             throw new NotFoundFault(e.getMessage());
         }
+
         return ctx.proceed();
     }
 

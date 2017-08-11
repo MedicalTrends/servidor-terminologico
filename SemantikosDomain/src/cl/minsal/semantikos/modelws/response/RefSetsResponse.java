@@ -12,7 +12,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "respuestaRefSets", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "RespuestaRefSets", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class RefSetsResponse {
+public class RefSetsResponse extends Response {
 
     @XmlElementWrapper(name = "refsets")
     @XmlElement(name = "refset")
@@ -22,6 +22,7 @@ public class RefSetsResponse {
     private int quantity;
 
     public RefSetsResponse() {
+        super();
         this.refSetResponses = new ArrayList<>();
     }
 

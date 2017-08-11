@@ -125,8 +125,6 @@ public class RefSetDAOImpl implements RefSetDAO {
     @Override
     public List<RefSet> getReftsets() {
 
-        //TODO: terminar esto
-
         List<RefSet> refSets= new ArrayList<>();
 
         //ConnectionBD connect = new ConnectionBD();
