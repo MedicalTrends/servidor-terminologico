@@ -70,4 +70,16 @@ public class UserFactory implements Serializable {
         }
     }
 
+    public void refresh(User user) {
+        if(!users.contains(user)) {
+            users.add(user);
+            usersById.put(user.getId(), user);
+        }
+        else {
+            users.remove(user);
+            users.add(user);
+            usersById.put(user.getId(), user);
+        }
+    }
+
 }

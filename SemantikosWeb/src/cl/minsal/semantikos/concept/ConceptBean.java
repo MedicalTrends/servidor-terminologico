@@ -901,6 +901,7 @@ public class ConceptBean implements Serializable {
 
         try {
             id = conceptManager.persist(concept, user);
+            concept.setId(id);
             if (pendingTerms) {
                 for (DescriptionWeb descriptionWeb : concept.getDescriptionsWeb()) {
                     if(descriptionWeb.getConceptSMTK().equals(conceptManager.getPendingConcept())){

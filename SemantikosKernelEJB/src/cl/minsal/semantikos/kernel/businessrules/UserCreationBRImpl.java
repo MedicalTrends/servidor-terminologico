@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.kernel.factories.EmailFactory;
 import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.model.users.UserFactory;
 import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -199,6 +200,17 @@ public class UserCreationBRImpl implements UserCreationBR {
         return found;
     }
 
+    /**
+     * Esta accion consiste en actualizar el cache de usuarios posterior a alguna accion de CRUD sobre el repositorio
+     * de usuarios
+     *
+     * @param user El nuevo usuario
+     */
+    public void br309RefreshCaches(User user) {
+
+        UserFactory.getInstance().refresh(user);
+    }
+
     public String getURLWithContextPath(HttpServletRequest request) {
         return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
     }
@@ -221,8 +233,11 @@ public class UserCreationBRImpl implements UserCreationBR {
         br305VerificationCode(user);
         br306SendEmail(user, baseURL);
         br308LockUser(user);
+        br309RefreshCaches(user);
         return user;
     }
+
+
 
     /**
      * <b>BR-SMTK-001</b>: Conceptos de ciertas categorías pueden sólo ser creados por usuarios con el perfil

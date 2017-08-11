@@ -60,6 +60,7 @@
                                     var="tag">
 
                                 <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+                                <h:outputText value=", " rendered="#{conceptSMTK.tags.size() > 1}" />
 
                             </p:repeat>
 

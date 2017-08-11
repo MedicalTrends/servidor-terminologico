@@ -739,8 +739,7 @@ public class ConceptController {
                 conceptSMTK = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
             }
         } catch (Exception e) {
-            throw new NotFoundFault("Concepto no encontrado: " + (conceptId != null ? conceptId : "") +
-                    (descriptionId != null ? descriptionId : ""));
+            throw new NotFoundFault(e.getMessage());
         }
 
         if (conceptSMTK == null) {

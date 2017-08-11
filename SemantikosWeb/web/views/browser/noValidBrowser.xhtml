@@ -70,7 +70,7 @@
                                     </p:column>
 
                                     <p:column headerText="Conceptos Sugeridos">
-                                        <p:commandLink update="@(.suggestedConceptsDetail)" oncomplete="PF('carOP').show('#{component.clientId}')" icon="ui-icon-search"
+                                        <p:commandLink update="@(.suggestedConceptsDetail),@(.browserTable)" oncomplete="PF('carOP').show('#{component.clientId}')" icon="ui-icon-search"
                                                        rendered="#{not empty noValidDescription.suggestedConcepts}">
                                             <h:outputText value="#{noValidDescription.suggestedConcepts.size()}" />
                                             <f:setPropertyActionListener value="#{noValidDescription}" target="#{noValidBrowserBean.noValidDescriptionSelected}" />

@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.users;
 
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.concept.SMTKTypeBean;
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
@@ -10,6 +11,7 @@ import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
 
+import cl.minsal.semantikos.model.users.UserFactory;
 import cl.minsal.semantikos.util.StringUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DualListModel;
@@ -20,6 +22,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +48,9 @@ public class UsersBean {
 
     //@EJB
     AuthenticationManager authenticationManager = (AuthenticationManager) RemoteEJBClientFactory.getInstance().getManager(AuthenticationManager.class);
+
+    @ManagedProperty(value = "#{authenticationBean}")
+    private AuthenticationBean authenticationBean;
 
     User selectedUser;
 
@@ -323,6 +329,8 @@ public class UsersBean {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario: "+selectedUser.getEmail()+" modificado de manera exitosa!!"));
             }
 
+            refreshUserFactory();
+
             //facesContext.getExternalContext().redirect(((HttpServletRequest) facesContext.getExternalContext().getRequest()).getRequestURI());
 
         } catch (Exception e){
@@ -510,6 +518,19 @@ public class UsersBean {
     public void setIdUser(long idUser) {
         this.idUser = idUser;
         createOrUpdateUser();
+    }
+
+    public void refreshUserFactory() {
+        UserFactory.getInstance().setUsersById(userManager.getUserFactory().getUsersById());
+        authenticationBean.refreshLoggedUser(selectedUser);
+    }
+
+    public AuthenticationBean getAuthenticationBean() {
+        return authenticationBean;
+    }
+
+    public void setAuthenticationBean(AuthenticationBean authenticationBean) {
+        this.authenticationBean = authenticationBean;
     }
 
 }

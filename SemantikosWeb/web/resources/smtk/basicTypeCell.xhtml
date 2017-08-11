@@ -28,8 +28,11 @@
             <f:convertNumber locale="es_CL" minFractionDigits="0" maxFractionDigits="2" />
         </h:outputText>
 
-        <h:outputText value="#{relationship.target}" rendered="#{cc.attrs.basicTypeDefinition.type.typeName != 'float'}" />
+        <h:outputText value="Si" rendered="#{cc.attrs.basicTypeDefinition.type.typeName eq 'boolean' and relationship.target.value}" />
+        <h:outputText value="No" rendered="#{cc.attrs.basicTypeDefinition.type.typeName eq 'boolean' and not relationship.target.value}" />
 
+        <h:outputText value="#{relationship.target}"
+                      rendered="#{cc.attrs.basicTypeDefinition.type.typeName != 'float' and cc.attrs.basicTypeDefinition.type.typeName != 'boolean'}" />
 
         <p:repeat
                 offset="0"

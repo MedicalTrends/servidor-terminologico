@@ -183,6 +183,12 @@ public class AuthenticationBean {
         return loggedUser;
     }
 
+    public void refreshLoggedUser(User user) {
+        if(loggedUser.equals(user)) {
+            loggedUser = user;
+        }
+    }
+
     public void setLoggedUser(User loggedUser) {
         this.loggedUser = loggedUser;
     }

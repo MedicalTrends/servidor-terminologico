@@ -56,8 +56,11 @@ public class UserManagerImpl implements UserManager {
     public User getUserByVerificationCode(String key) { return authDAO.getUserByVerificationCode(key); }
 
     public void updateUser(User user) {
-
         authDAO.updateUser(user);
+        /**
+         * Se actualiza la cache de usuarios
+         */
+        UserFactory.getInstance().refresh(user);
     }
 
     public List<Question> getAllQuestions() {
@@ -91,6 +94,10 @@ public class UserManagerImpl implements UserManager {
         user.setLocked(false);
         user.setVerificationCode(null);
         authDAO.updateUser(user);
+        /**
+         * Se actualiza la cache de usuarios
+         */
+        UserFactory.getInstance().refresh(user);
 
     }
 
