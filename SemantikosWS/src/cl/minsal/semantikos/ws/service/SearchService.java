@@ -67,6 +67,7 @@ public class SearchService {
 
     //Inicializacion del Bean
     //@PostConstruct
+    /*
     @AroundInvoke
     protected Object authenticate(InvocationContext ctx) throws Exception {
 
@@ -84,6 +85,7 @@ public class SearchService {
 
         return ctx.proceed();
     }
+    */
 
     // REQ-WS-001
     @WebResult(name = "respuestaBuscarTermino")

@@ -361,6 +361,36 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         return crossmapSetMembers;
     }
 
+    @Override
+    public List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet) {
+        List<CrossmapSetMember> crossmapSetMembers = new ArrayList<CrossmapSetMember>();
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsetmember_by_crossmapset(?); end;";
+
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, crossmapSet.getId());
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                CrossmapSetMember crossmapSetMember = createCrossmapSetMemberFromResultSet(rs, crossmapSet);
+                crossmapSetMembers.add(crossmapSetMember);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
+        return crossmapSetMembers;
+    }
+
     private CrossmapSet getCrossmapSetByAbbreviatedName(String crossmapSetAbbreviatedName) {
 
         //ConnectionBD connect = new ConnectionBD();

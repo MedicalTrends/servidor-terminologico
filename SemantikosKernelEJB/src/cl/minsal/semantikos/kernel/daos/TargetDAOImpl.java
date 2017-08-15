@@ -508,19 +508,19 @@ public class TargetDAOImpl implements TargetDAO {
             long id = rs.getLong("id");
 
             if (DaoTools.getFloat(rs, "float_value") != null) {
-                bt = new BasicTypeValue<Float>(DaoTools.getFloat(rs, "float_value"));
+                bt = new BasicTypeValue<>(DaoTools.getFloat(rs, "float_value"));
                 bt.setId(id);
             } else if (DaoTools.getInteger(rs, "int_value") != null) {
-                bt = new BasicTypeValue<Integer>(DaoTools.getInteger(rs, "int_value"));
+                bt = new BasicTypeValue<>(DaoTools.getInteger(rs, "int_value"));
                 bt.setId(id);
             } else if (DaoTools.getBoolean(rs, "boolean_value") != null) {
-                bt = new BasicTypeValue<Boolean>(DaoTools.getBoolean(rs, "boolean_value"));
+                bt = new BasicTypeValue<>(DaoTools.getBoolean(rs, "boolean_value"));
                 bt.setId(id);
             } else if (DaoTools.getString(rs, "string_value") != null) {
-                bt = new BasicTypeValue<String>(DaoTools.getString(rs, "string_value"));
+                bt = new BasicTypeValue<>(DaoTools.getString(rs, "string_value"));
                 bt.setId(id);
             } else if (DaoTools.getDate(rs, "date_value") != null) {
-                bt = new BasicTypeValue<Timestamp>(DaoTools.getTimestamp(rs, "date_value"));
+                bt = new BasicTypeValue<>(DaoTools.getTimestamp(rs, "date_value"));
                 bt.setId(id);
             } else {
                 String message = "Existe un caso no contemplado";

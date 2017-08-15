@@ -172,6 +172,13 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
+    public List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet) {
+
+        /* Lo primero es recuperar el crossmapSet a partir de su nombre abreviado */
+        return crossmapsDAO.getCrossmapSetMemberByCrossmapSet(crossmapSet);
+    }
+
+    @Override
     public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSMTK conceptSMTK) throws Exception {
 
         /* Se valida si el concepto tiene cargada sus relaciones */

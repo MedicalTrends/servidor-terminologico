@@ -126,5 +126,10 @@ public interface CrossmapsManager {
      */
     public List<CrossmapSetMember> findByPatternCode1(CrossmapSet crossmapSet, String code);
 
-
+    /**
+     * Este método es repsonsable de recuperar los crossmapSetMembers de un crossmapSet dado por su nombre abreviado.
+     * @param crossmapSet El crossmapSet que se quiere recuperar.
+     * @return Una lista con los crossmapSetMembers del crossmapSet dado <code>crossmapSetAbbreviatedName</code>.
+     */
+    public List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet);
 }

@@ -100,4 +100,12 @@ public interface CrossmapsDAO {
      * @return La lista de los miembros del crossmap set indicado.
      */
     List<CrossmapSetMember> getCrossmapSetMemberByAbbreviatedName(String crossmapSetAbbreviatedName);
+
+    /**
+     * Este método es responsable de obtener la lista de todos los CrossmapSetMembers que pertenecen a un Crossmap Set.
+     *
+     * @param crossmapSet El crossmap Set cuyos miembros se quieren recuperar.
+     * @return La lista de los miembros del crossmap set indicado.
+     */
+    List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet);
 }

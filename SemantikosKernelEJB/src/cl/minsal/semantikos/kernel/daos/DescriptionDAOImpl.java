@@ -595,6 +595,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         /* Se registra el tiempo de inicio */
         long init = currentTimeMillis();
 
+        conceptSMTKMap = new HashMap<>();
+
         //ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
 

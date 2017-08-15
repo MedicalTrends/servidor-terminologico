@@ -12,6 +12,8 @@ import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.tags.TagSMTK;
@@ -411,6 +413,11 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public List<ConceptSMTK> findModeledConceptPaginated(Category category, int pageSize, int pageNumber) {
         return this.conceptDAO.getModeledConceptPaginated(category.getId(), pageSize, pageNumber);
+    }
+
+    @Override
+    public List<ConceptSMTK> findConceptsWithTarget(Relationship relationship) {
+        return conceptDAO.findConceptsWithTarget(relationship);
     }
 
 }

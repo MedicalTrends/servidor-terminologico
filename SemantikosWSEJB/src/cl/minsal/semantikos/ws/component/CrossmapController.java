@@ -155,6 +155,7 @@ public class CrossmapController {
         for (CrossmapSet crossmapSet : crossmapSets) {
             if(crossmapSet.getAbbreviatedName().equals(crossmapSetAbbreviatedName)) {
                 theCrossmapSet = crossmapSet;
+                break;
             }
         }
 
@@ -166,7 +167,7 @@ public class CrossmapController {
             throw new NotFoundFault("Este CrossmapSet no está vigente");
         }
 
-        List<CrossmapSetMember> crossmapSetByAbbreviatedName = crossmapManager.getCrossmapSetByAbbreviatedName(crossmapSetAbbreviatedName);
+        List<CrossmapSetMember> crossmapSetByAbbreviatedName = crossmapManager.getCrossmapSetMemberByCrossmapSet(theCrossmapSet);
         logger.debug("CrossmapController.getCrossmapSetMembersByCrossmapSetAbbreviatedName:: " +
                 "crossmapSetByAbbreviatedName=" + crossmapSetByAbbreviatedName);
 

@@ -683,7 +683,7 @@ public class ConceptController {
         }
 
         ConceptSMTK conceptSMTK = getConcept(conceptId, descriptionId);
-        conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConceptAndTargetType(conceptSMTK, TargetType.HelperTable));
+
         BioequivalentSearchResponse res = new BioequivalentSearchResponse();
 
         res.setConceptId(conceptSMTK.getConceptID());
@@ -691,9 +691,9 @@ public class ConceptController {
         res.setDescriptionId(conceptSMTK.getDescriptionFavorite().getDescriptionId());
         res.setCategory(conceptSMTK.getCategory().getName());
 
-        for (Relationship relationship : conceptSMTK.getValidRelationships()) {
+        for (Relationship relationship : relationshipManager.getRelationshipsBySourceConceptAndTargetType(conceptSMTK, TargetType.HelperTable)) {
             if (relationship.getRelationshipDefinition().isBioequivalente()) {
-                res.getBioequivalentsResponse().add(BioequivalentMapper.map(relationship, relationshipManager.findRelationshipsLike(relationship)));
+                res.getBioequivalentsResponse().add(BioequivalentMapper.map(relationship, conceptManager.findConceptsWithTarget(relationship)));
             }
         }
 
@@ -910,10 +910,6 @@ public class ConceptController {
             }
 
             TermSearchResponse termSearchResponse = new TermSearchResponse(allRequestableConcepts);
-
-            for (ConceptSMTK allRequestableConcept : allRequestableConcepts) {
-
-            }
 
             termSearchResponse.setQuantity(allRequestableConcepts.size());
 

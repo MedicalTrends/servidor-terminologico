@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.users.User;
 
@@ -13,6 +14,7 @@ import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Andrés Farías
@@ -111,6 +113,8 @@ public interface ConceptManager {
     public long countConceptsByPattern(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled);
 
     public List<ConceptSMTK> findModeledConceptPaginated(Category category, int pageSize, int pageNumber);
+
+    public List<ConceptSMTK> findConceptsWithTarget(Relationship relationship);
 
     /**
      * Método encargado de generar el concept ID

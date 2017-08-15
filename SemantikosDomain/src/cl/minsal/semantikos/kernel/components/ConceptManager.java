@@ -13,6 +13,7 @@ import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Andrés Farías
@@ -111,6 +112,8 @@ public interface ConceptManager {
     public long countConceptsByPattern(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled);
 
     public List<ConceptSMTK> findModeledConceptPaginated(Category category, int pageSize, int pageNumber);
+
+    public Map<Relationship, List<ConceptSMTK>> findConceptsWithTargets(List<Relationship> relationship);
 
     /**
      * Método encargado de generar el concept ID

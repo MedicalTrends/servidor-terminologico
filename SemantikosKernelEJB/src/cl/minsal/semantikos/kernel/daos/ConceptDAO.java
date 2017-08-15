@@ -4,7 +4,9 @@ import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.refsets.RefSet;
+import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.users.User;
 
@@ -106,6 +108,14 @@ public interface ConceptDAO {
      * @return Lista de conceptos relacionados
      */
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);
+
+    /**
+     * Este método es responsable de obtener los conceptos que se relacionan con el concepto indicado como parametro
+     *
+     * @param relationship concepto que se relaciona con otros
+     * @return Lista de conceptos relacionados
+     */
+    public List<ConceptSMTK> findConceptsWithTarget(Relationship relationship);
 
     /**
      * Método encargado de realizar perfect match con patrón de búsqueda y categorías
