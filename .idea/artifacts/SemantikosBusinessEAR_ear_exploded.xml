@@ -1,17 +1,17 @@
 <component name="ArtifactManager">
   <artifact type="exploded-ear" name="SemantikosBusinessEAR:ear exploded">
-    <output-path>$PROJECT_DIR$/SemantikosBusinessEAR/target/SemantikosBusinessEAR-0.9.1</output-path>
+    <output-path>$PROJECT_DIR$/SemantikosBusinessEAR/target/SemantikosBusinessEAR-0.9.2</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="SemantikosBusinessEAR/javaeeApplication/JavaEE" />
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/SemantikosBusinessEAR/target/SemantikosBusinessEAR-0.9.1/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/SemantikosBusinessEAR/target/SemantikosBusinessEAR-0.9.2/META-INF/MANIFEST.MF" />
       </element>
       <element id="dir-copy" path="src/main/java" />
       <element id="directory" name="lib">
         <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.7.21" />
         <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.21" />
         <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
-        <element id="archive" name="SemantikosDomain-0.9.1.jar">
+        <element id="archive" name="SemantikosDomain-0.9.2.jar">
           <element id="module-output" name="SemantikosDomain" />
         </element>
         <element id="library" level="project" name="Maven: org.jboss:jboss-ejb-client:1.0.16.Final" />
@@ -46,13 +46,13 @@
         <element id="library" level="project" name="Maven: com.github.noraui:ojdbc7:12.1.0.2" />
         <element id="library" level="project" name="Maven: javax.validation:validation-api:1.0.0.GA" />
       </element>
-      <element id="archive" name="SemantikosKernelEJB-0.9.1.jar">
+      <element id="archive" name="SemantikosKernelEJB-0.9.2.jar">
         <element id="artifact" artifact-name="SemantikosKernelEJB:ejb exploded" />
       </element>
-      <element id="archive" name="SemantikosWSEJB-0.9.1.jar">
+      <element id="archive" name="SemantikosWSEJB-0.9.2.jar">
         <element id="artifact" artifact-name="SemantikosWSEJB:ejb exploded" />
       </element>
-      <element id="archive" name="SemantikosWS-0.9.1.war">
+      <element id="archive" name="SemantikosWS-0.9.2.war">
         <element id="artifact" artifact-name="SemantikosWS:war exploded" />
       </element>
     </root>
