@@ -504,7 +504,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public List<ConceptSMTK> findConceptsWithTarget(Relationship relationship) {
 
-        String sql = "begin ? := stk.stk_pck_concept.find_concepts_with_target(?,?,?); end;";
+        String sql = "begin ? := stk.stk_pck_concept.find_concepts_with_target(?,?,?,?); end;";
 
         List<ConceptSMTK> conceptSMTKs = new ArrayList<>();
 
@@ -515,21 +515,23 @@ public class ConceptDAOImpl implements ConceptDAO {
 
             call.setLong(2, relationship.getSourceConcept().getId());
 
+            call.setLong(3, relationship.getRelationshipDefinition().getId());
+
             if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()){
-                call.setLong(3, relationship.getRelationshipDefinition().getTargetDefinition().getId());
-                call.setString(4, String.valueOf(relationship.getTarget().getId()));
+                call.setLong(4, relationship.getRelationshipDefinition().getTargetDefinition().getId());
+                call.setString(5, String.valueOf(relationship.getTarget().getId()));
             }
 
             if(relationship.getRelationshipDefinition().getTargetDefinition().isHelperTable()){
-                call.setLong(3, relationship.getRelationshipDefinition().getTargetDefinition().getId());
+                call.setLong(4, relationship.getRelationshipDefinition().getTargetDefinition().getId());
                 HelperTableRow helperTableRow = (HelperTableRow) relationship.getTarget();
-                call.setString(4, String.valueOf(helperTableRow.getId()));
+                call.setString(5, String.valueOf(helperTableRow.getId()));
             }
 
             if(relationship.getRelationshipDefinition().getTargetDefinition().isBasicType()){
-                call.setLong(3, relationship.getRelationshipDefinition().getTargetDefinition().getId());
+                call.setLong(4, relationship.getRelationshipDefinition().getTargetDefinition().getId());
                 BasicTypeValue basicTypeValue = (BasicTypeValue) relationship.getTarget();
-                call.setString(4, basicTypeValue.toString());
+                call.setString(5, basicTypeValue.toString());
             }
 
             call.execute();

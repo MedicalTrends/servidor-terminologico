@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.factories.QueryFactory;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetFactory;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumnFactory;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
@@ -37,6 +38,13 @@ public interface InitFactoriesDAO {
      * @return El factory adecuado... //TODO: WHAT?!
      */
     DescriptionTypeFactory refreshDescriptionTypes();
+
+    /**
+     * Este método es responsable de retornar un Factory.
+     *
+     * @return El factory adecuado
+     */
+    CrossmapSetFactory refreshCrossmapSets();
 
     /**
      * Este método es responsable de retornar un Factory.

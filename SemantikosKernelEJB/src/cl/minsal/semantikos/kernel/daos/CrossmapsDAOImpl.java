@@ -492,7 +492,8 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         String gloss = rs.getString("gloss");
 
         if(crossmapSet == null) {
-            crossmapSet = getCrossmapSetByID(rs.getLong("id_cross_map_set"));
+            //crossmapSet = getCrossmapSetByID(rs.getLong("id_cross_map_set"));
+            crossmapSet = CrossmapSetFactory.getInstance().findCrossmapSetsById(rs.getLong("id_cross_map_set"));
         }
 
         return new CrossmapSetMember(id, id, crossmapSet, code, gloss);

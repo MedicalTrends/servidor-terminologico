@@ -7,6 +7,8 @@ import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetFactory;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
@@ -88,6 +90,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         //this.testArrayOracle();
         this.refreshColumns();
         this.refreshCategories();
+        this.refreshCrossmapSets();
         this.refreshQueries();
         this.refreshDescriptionTypes();
         this.refreshTagsSMTK();
@@ -400,6 +403,41 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         return DescriptionTypeFactory.getInstance();
     }
 
+    @Override
+    public CrossmapSetFactory refreshCrossmapSets() {
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        List<CrossmapSet> crossmapSets = new ArrayList<>();
+
+        String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsets; end;";
+
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.execute();
+
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            /* Se recuperan los description types */
+            while (rs.next()) {
+                crossmapSets.add(createCrossmapSetFromResultSet(rs));
+            }
+
+            /* Se setea la lista de Tipos de descripción */
+            CrossmapSetFactory.getInstance().setCrossmapSets(crossmapSets);
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al intentar recuperar Description Types de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return CrossmapSetFactory.getInstance();
+    }
+
     //@Override
     public UserFactory refreshUsers() {
 
@@ -551,6 +589,17 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
         return helperTableColumn;
 
+    }
+
+    public CrossmapSet createCrossmapSetFromResultSet(ResultSet rs) throws SQLException {
+        // id bigint, id_concept bigint, id_crossmapset bigint, id_user bigint, id_validity_until timestamp
+        long id = rs.getLong("id");
+        String nameAbbreviated = rs.getString("name_abbreviated");
+        String name = rs.getString("name");
+        int version = Integer.parseInt(rs.getString("version"));
+        boolean state = rs.getBoolean("state");
+
+        return new CrossmapSet(id, nameAbbreviated, name, version, state);
     }
 
 }

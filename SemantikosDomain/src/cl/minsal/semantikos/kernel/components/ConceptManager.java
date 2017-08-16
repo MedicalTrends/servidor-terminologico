@@ -113,7 +113,7 @@ public interface ConceptManager {
 
     public List<ConceptSMTK> findModeledConceptPaginated(Category category, int pageSize, int pageNumber);
 
-    public Map<Relationship, List<ConceptSMTK>> findConceptsWithTargets(List<Relationship> relationship);
+    public List<ConceptSMTK> findConceptsWithTarget(Relationship relationship);
 
     /**
      * Método encargado de generar el concept ID

@@ -245,7 +245,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         //ConnectionBD connect = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_relationship.find_relationships_like(?,?); end;";
+        String sql = "begin ? := stk.stk_pck_relationship.find_relationships_like(?,?,?); end;";
 
         List<Relationship> relationships = new ArrayList<>();
 
@@ -254,21 +254,23 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
 
+            call.setLong(2, relationshipDefinition.getId());
+
             if(relationshipDefinition.getTargetDefinition().isSMTKType()){
-                call.setLong(2, relationshipDefinition.getTargetDefinition().getId());
-                call.setString(3, String.valueOf(target.getId()));
+                call.setLong(3, relationshipDefinition.getTargetDefinition().getId());
+                call.setString(4, String.valueOf(target.getId()));
             }
 
             if(relationshipDefinition.getTargetDefinition().isHelperTable()){
-                call.setLong(2, relationshipDefinition.getTargetDefinition().getId());
+                call.setLong(3, relationshipDefinition.getTargetDefinition().getId());
                 HelperTableRow helperTableRow = (HelperTableRow) target;
-                call.setString(3, String.valueOf(helperTableRow.getId()));
+                call.setString(4, String.valueOf(helperTableRow.getId()));
             }
 
             if(relationshipDefinition.getTargetDefinition().isBasicType()){
-                call.setLong(2, relationshipDefinition.getId());
+                call.setLong(3, relationshipDefinition.getId());
                 BasicTypeValue basicTypeValue = (BasicTypeValue) target;
-                call.setString(3, basicTypeValue.toString());
+                call.setString(4, basicTypeValue.toString());
             }
 
             call.execute();

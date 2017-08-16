@@ -754,7 +754,7 @@ public class ConceptController {
         if (conceptResponse.getAttributes() == null || conceptResponse.getAttributes().isEmpty()) {
             if (!source.isRelationshipsLoaded()) {
                 source.setRelationships(relationshipManager.getRelationshipsBySourceConcept(source));
-                conceptManager.loadRelationships(source);
+                //conceptManager.loadRelationships(source);
             }
             ConceptMapper.appendAttributes(conceptResponse, source);
         }
