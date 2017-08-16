@@ -155,7 +155,7 @@ public class QueryManagerImpl implements QueryManager {
 
             Relationship otherThanFullyDefinitional = null;
 
-            for (Relationship relationship : conceptManager.getRelationships(description.getConceptSMTK()) ) {
+            for (Relationship relationship : relationshipManager.getRelationshipsBySourceConceptAndTargetType(description.getConceptSMTK(), TargetType.SnomedCT) ) {
 
                 if(relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType()){
 

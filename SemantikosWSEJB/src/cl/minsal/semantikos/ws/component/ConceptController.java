@@ -90,10 +90,7 @@ public class ConceptController {
     public RelatedConceptsResponse findRelated(String descriptionId, String conceptId, @NotNull String categoryName)
             throws Exception {
 
-        /* Lo primero consiste en recuperar el concepto cuyos conceptos relacionados se quiere recuperar. */
-        ConceptSMTK sourceConcept;
-        sourceConcept = getSourceConcept(descriptionId, conceptId);
-
+        /* Lo primero consiste en recuperar la categoría dentro de la cual se debe realizar la búsqueda. */
         Category category;
         try {
             category = this.categoryManager.getCategoryByName(categoryName);
@@ -103,6 +100,10 @@ public class ConceptController {
             logger.error("Se buscó una categoría inexistente: " + categoryName, e);
             throw e;
         }
+
+        /* Lo siguiente consiste en recuperar el concepto cuyos conceptos relacionados se quiere recuperar. */
+        ConceptSMTK sourceConcept;
+        sourceConcept = getSourceConcept(descriptionId, conceptId);
 
         List<ConceptResponse> relatedResponses = new ArrayList<>();
         List<ConceptSMTK> relatedConcepts = this.conceptManager.getRelatedConcepts(sourceConcept, category);

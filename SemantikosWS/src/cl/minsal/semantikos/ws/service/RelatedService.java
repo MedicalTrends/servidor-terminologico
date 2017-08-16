@@ -77,7 +77,7 @@ public class RelatedService {
             return this.conceptController.findRelated(request.getDescriptionId(), request.getConceptId(), request.getRelatedCategoryName());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new IllegalInputFault("Debe ingresar un idConcepto o idDescripcion");
+            throw new IllegalInputFault(e.getMessage());
         }
     }
 

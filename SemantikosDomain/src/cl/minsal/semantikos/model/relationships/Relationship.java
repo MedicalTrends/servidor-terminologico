@@ -343,6 +343,10 @@ public class Relationship extends PersistentEntity implements AuditableEntity, S
         if (!this.getRelationshipDefinition().equals(relationship.getRelationshipDefinition())) return false;
 
         /* 2. Si no tienen los mismos atributos */
+        if(this.getRelationshipAttributes().size() != relationship.getRelationshipAttributes().size()) {
+            return false;
+        }
+
         for (RelationshipAttribute attribute : this.getRelationshipAttributes()) {
             if (!relationship.getRelationshipAttributes().contains(attribute)) {
                 return false;
