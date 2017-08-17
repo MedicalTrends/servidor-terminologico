@@ -88,7 +88,7 @@ public class SMTKLoader extends SwingWorker<Void, String> {
     /** Usuario */
     private User user;
 
-    /** Rutas de los datafiles (componentes) del snapshot
+    /** Rutas de los datafiles
      *
      */
     private String basicConceptPath = BASIC_CONCEPTS_PATH;
@@ -106,6 +106,7 @@ public class SMTKLoader extends SwingWorker<Void, String> {
      */
     private JTextField conceptsTotal;
     private JTextField conceptsProcessed;
+    private JProgressBar progressBar;
 
     /**
      *
@@ -113,12 +114,13 @@ public class SMTKLoader extends SwingWorker<Void, String> {
      */
     private List<LoadLog> logs = new ArrayList<>();
 
-    public SMTKLoader(JTextArea infoLogs, JTextArea errorLogs, JTextField conceptsTotal, JTextField conceptsProcessed, JTextField userName, JTextField timeStamp) {
+    public SMTKLoader(JTextArea infoLogs, JTextArea errorLogs, JTextField conceptsTotal, JTextField conceptsProcessed, JTextField userName, JTextField timeStamp, JProgressBar progressBar) {
 
         this.infoLogs = infoLogs;
         this.errorLogs = errorLogs;
         this.conceptsTotal = conceptsTotal;
         this.conceptsProcessed = conceptsProcessed;
+        this.progressBar = progressBar;
         this.userName = userName;
         this.timeStamp = timeStamp;
 
@@ -190,6 +192,8 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
     public void setConceptsTotal(int conceptsTotal) {
         this.getConceptsTotal().setText(String.valueOf(conceptsTotal));
+        this.progressBar.setMinimum(0);
+        this.progressBar.setMaximum(conceptsTotal);
     }
 
     public JTextField getConceptsProcessed() {
@@ -206,8 +210,8 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
     public void incrementConceptsProcessed(int n) {
         int conceptsProcessed = Integer.parseInt(this.getConceptsProcessed().getText())+n;
-        this.getConceptsProcessed().setText(String.valueOf(conceptsProcessed));
-
+        this.conceptsProcessed.setText(String.valueOf(conceptsProcessed));
+        this.progressBar.setValue(conceptsProcessed);
     }
 
     public JTextField getTimeStamp() {
@@ -287,49 +291,32 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             PCConceptLoader pcConceptLoader = new PCConceptLoader();
             PCCEConceptLoader pcceConceptLoader = new PCCEConceptLoader();
 
-            /*
             initializer.checkBasicConceptsDataFiles(this);
             basicConceptLoader.processConcepts(this);
-            */
 
-            /*
             initializer.checkSubstanceDataFiles(this);
             substanceConceptLoader.processConcepts(this);
-            */
 
-            /*
             initializer.checkMBDataFiles(this);
             mbConceptLoader.processConcepts(this);
-            */
 
-            /*
             initializer.checkMCDataFiles(this);
             mcConceptLoader.processConcepts(this);
-            */
 
-            /*
             initializer.checkMCCEDataFiles(this);
             mcceConceptLoader.processConcepts(this);
-            */
 
-            /*
             initializer.checkGFPDataFiles(this);
             gfpConceptLoader.processConcepts(this);
-            */
 
-            /*
             initializer.checkFPDataFiles(this);
             fpConceptLoader.processConcepts(this);
-            */
 
-            /*
             initializer.checkPCDataFiles(this);
             pcConceptLoader.processConcepts(this);
-            */
 
             initializer.checkPCCEDataFiles(this);
             pcceConceptLoader.processConcepts(this);
-
 
             JOptionPane.showMessageDialog(null, "Carga de conceptos finalizada!");
         } catch (LoadException e1) {

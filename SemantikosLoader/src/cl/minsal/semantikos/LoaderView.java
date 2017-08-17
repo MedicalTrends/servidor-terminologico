@@ -31,7 +31,7 @@ public class LoaderView {
 
     public LoaderView() throws InterruptedException {
 
-        smtkLoader = new SMTKLoader(textArea1, textArea2, textField1, textField2, textField3, textField4);
+        smtkLoader = new SMTKLoader(textArea1, textArea2, textField1, textField2, textField3, textField4, progressBar1);
 
         //textArea1.setRows(10);
 

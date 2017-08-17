@@ -8,6 +8,7 @@ import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.kernel.daos.TargetDAO;
+import cl.minsal.semantikos.kernel.factories.RelationshipLoaderFactory;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.*;
@@ -20,8 +21,12 @@ import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -49,6 +54,8 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
     @EJB
     private RelationshipBindingBR relationshipBindingBR;
+
+    ExecutorService executor;
 
     @Override
     public Relationship bindRelationshipToConcept(ConceptSMTK concept, Relationship relationship, User user) throws Exception {
@@ -277,6 +284,34 @@ public class RelationshipManagerImpl implements RelationshipManager {
     @Override
     public RelationshipDefinitionFactory getRelationshipDefinitionFactory() {
         return RelationshipDefinitionFactory.getInstance();
+    }
+
+    @Override
+    public List<ConceptSMTK> loadRelationships(List<ConceptSMTK> conceptSMTKs) throws Exception {
+
+        executor = Executors.newFixedThreadPool(30);
+
+        if(conceptSMTKs.size() > 30) {
+            throw new Exception("Cantidad de conceptos excede número de threads");
+        }
+
+        Collection<RelationshipLoaderFactory> tasks = new ArrayList<>();
+
+        for (ConceptSMTK conceptSMTK : conceptSMTKs) {
+            tasks.add(new RelationshipLoaderFactory(conceptSMTK, this));
+        }
+
+        List<Future<List<Relationship>>> results = executor.invokeAll(tasks);
+        int i = 0;
+
+        for(Future<List<Relationship>> result : results){
+            conceptSMTKs.get(i).setRelationships(result.get());
+            i++;
+        }
+
+        executor.shutdown(); //always reclaim resources
+
+        return conceptSMTKs;
     }
 
 }

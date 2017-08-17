@@ -7,7 +7,6 @@ import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.NoValidDescription;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;
-import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -33,7 +32,6 @@ import java.util.Date;
 import java.util.List;
 
 import static cl.minsal.semantikos.kernel.daos.DescriptionDAOImpl.NO_VALID_TERMS;
-import static java.util.Collections.EMPTY_LIST;
 
 /**
  * @author Alfonso Cornejo on 2016-11-17.
@@ -565,6 +563,8 @@ public class ConceptController {
         }
 
         List<ConceptSMTK> concepts = conceptManager.findModeledConceptPaginated(category, pageSize, pageNumber);
+
+        concepts = relationshipManager.loadRelationships(concepts);
 
         List<ConceptResponse> conceptResponses = new ArrayList<>();
 

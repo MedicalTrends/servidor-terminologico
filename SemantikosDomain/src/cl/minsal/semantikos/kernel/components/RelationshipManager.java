@@ -172,4 +172,6 @@ public interface RelationshipManager {
     Map<Long, ArrayList<Relationship>> getRelationshipsBySourceConcepts(List<ConceptSMTK> concept);
 
     public RelationshipDefinitionFactory getRelationshipDefinitionFactory();
+
+    public List<ConceptSMTK> loadRelationships(List<ConceptSMTK> conceptSMTKs) throws Exception;
 }

@@ -6,12 +6,12 @@ import org.slf4j.LoggerFactory;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.concurrent.Callable;
 
 /**
  * @author Diego Soto
  */
 public class Mailer implements Runnable {
-
 
     private Session mySession;
 

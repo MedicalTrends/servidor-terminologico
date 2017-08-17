@@ -139,4 +139,6 @@ public interface RelationshipManager {
 
     public RelationshipDefinitionFactory getRelationshipDefinitionFactory();
 
+    public List<ConceptSMTK> loadRelationships(List<ConceptSMTK> conceptSMTKs) throws Exception;
+
 }
