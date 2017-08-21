@@ -289,11 +289,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
     @Override
     public List<ConceptSMTK> loadRelationships(List<ConceptSMTK> conceptSMTKs) throws Exception {
 
-        executor = Executors.newFixedThreadPool(30);
-
-        if(conceptSMTKs.size() > 30) {
-            throw new Exception("Cantidad de conceptos excede número de threads");
-        }
+        executor = Executors.newFixedThreadPool(conceptSMTKs.size());
 
         Collection<RelationshipLoaderFactory> tasks = new ArrayList<>();
 

@@ -482,7 +482,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @Override
     //@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Description> searchDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets) {
+    public List<Description> searchDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets, int quantity) {
 
         /* Se registra el tiempo de inicio */
         long init = currentTimeMillis();
@@ -493,7 +493,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         List<Description> descriptions = new ArrayList<>();
 
-        String sql = "begin ? := stk.stk_pck_description.search_descriptions_perfect_match(?,?,?); end;";
+        String sql = "begin ? := stk.stk_pck_description.search_descriptions_perfect_match(?,?,?,?); end;";
 
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
@@ -513,6 +513,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             else {
                 call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
             }
+
+            call.setInt(5, quantity);
 
             call.execute();
 
@@ -540,7 +542,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     }
 
     @Override
-    public List<Description> searchDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets) {
+    public List<Description> searchDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets, int quantity) {
         /* Se registra el tiempo de inicio */
         long init = currentTimeMillis();
 
@@ -549,7 +551,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         //ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
 
-        String sql = "begin ? := stk.stk_pck_description.search_descriptions_truncate_match(?,?,?); end;";
+        String sql = "begin ? := stk.stk_pck_description.search_descriptions_truncate_match(?,?,?,?); end;";
 
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
@@ -569,6 +571,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             else {
                 call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
             }
+
+            call.setInt(5, quantity);
 
             call.execute();
 
@@ -591,21 +595,20 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     }
 
     @Override
-    public List<Description> searchDescriptionsSuggested(String term, Long[] categories, Long[] refsets) {
+    public int countDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets) {
         /* Se registra el tiempo de inicio */
         long init = currentTimeMillis();
 
-        conceptSMTKMap = new HashMap<>();
-
         //ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
+        int count = 0;
 
-        String sql = "begin ? := stk.stk_pck_description.search_descriptions_suggested(?,?,?); end;";
+        String sql = "begin ? := stk.stk_pck_description.count_descriptions_perfect_match(?,?,?); end;";
 
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
             call.setString(2, term.toLowerCase());
 
             if(categories == null) {
@@ -623,12 +626,9 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             call.execute();
 
-            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = (ResultSet) call.getObject(1);
 
-            while (rs.next()) {
-                //Description description = createDescriptionFromResultSet(rs, null);
-                descriptions.add(getDescriptionBy(rs.getLong(1)));
-            }
+            count = (int) call.getLong(1);
 
         } catch (SQLException e) {
             String errorMsg = "Error al recuperar descripciones de la BDD.";
@@ -638,11 +638,11 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): " + descriptions);
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
-        return descriptions;
+        return count;
     }
 
     @Override
-    public int countDescriptionsSuggested(String term, Long[] categories, Long[] refsets) {
+    public int countDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets) {
         /* Se registra el tiempo de inicio */
         long init = currentTimeMillis();
 
@@ -650,7 +650,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         List<Description> descriptions = new ArrayList<>();
         int count = 0;
 
-        String sql = "begin ? := stk.stk_pck_description.count_descriptions_suggested(?,?,?); end;";
+        String sql = "begin ? := stk.stk_pck_description.count_descriptions_truncate_match(?,?,?); end;";
 
         try (Connection connection = DataSourceFactory.getInstance().getConnection();
              CallableStatement call = connection.prepareCall(sql)) {

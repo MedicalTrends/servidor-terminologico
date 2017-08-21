@@ -67,7 +67,7 @@ public interface DescriptionDAO {
      *
      * @return
      */
-    List<Description> searchDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets);
+    List<Description> searchDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets, int quantity);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que hagan truncate match con el término
@@ -75,7 +75,15 @@ public interface DescriptionDAO {
      *
      * @return
      */
-    List<Description> searchDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets);
+    List<Description> searchDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets, int quantity);
+
+    /**
+     * Este método es responsable de buscar y retornar todas las descripciones que hagan perfect match con el término
+     * dado como parámetro en cada una de las categorías y refsets indicadas.
+     *
+     * @return
+     */
+    int countDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que hagan truncate match con el término
@@ -83,15 +91,7 @@ public interface DescriptionDAO {
      *
      * @return
      */
-    List<Description> searchDescriptionsSuggested(String term, Long[] categories, Long[] refsets);
-
-    /**
-     * Este método es responsable de buscar y retornar todas las descripciones que hagan truncate match con el término
-     * dado como parámetro en cada una de las categorías y refsets indicadas.
-     *
-     * @return
-     */
-    int countDescriptionsSuggested(String term, Long[] categories, Long[] refsets);
+    int countDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets);
 
     /**
      * Este método es responsable de persistir una descripción en la BDD. Luego de ser persistida, la descripción es

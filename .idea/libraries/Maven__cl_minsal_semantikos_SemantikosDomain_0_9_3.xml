@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Maven: cl.minsal.semantikos:SemantikosDomain:0.9.3">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/cl/minsal/semantikos/SemantikosDomain/0.9.3/SemantikosDomain-0.9.3.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/SemantikosDomain/SemantikosDomain-0.9.3-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/cl/minsal/semantikos/SemantikosDomain/0.9.3/SemantikosDomain-0.9.3-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/SemantikosDomain/SemantikosDomain-0.9.3-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/cl/minsal/semantikos/SemantikosDomain/0.9.3/SemantikosDomain-0.9.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -29,6 +29,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.System.currentTimeMillis;
+
 /**
  * Created by BluePrints Developer on 22-09-2016.
  */
@@ -65,6 +67,8 @@ public class QueryDAOImpl implements QueryDAO {
 
         //ConnectionBD connect = new ConnectionBD();
 
+        List<Description> descriptions; //= descriptionDAO.searchDescriptionsSuggested(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
+
         String QUERY = "";
 
         if(  query instanceof  GeneralQuery )
@@ -91,7 +95,13 @@ public class QueryDAOImpl implements QueryDAO {
                 paramNumber++;
             }
 
+            long init = currentTimeMillis();
+
             call.execute();
+
+            logger.info("{}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+
+            //logger.info("searchDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
 
             ResultSet rs = (ResultSet) call.getObject(1);
 

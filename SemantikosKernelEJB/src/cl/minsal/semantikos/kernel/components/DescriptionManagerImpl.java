@@ -309,7 +309,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     @Override
     public List<Description> searchDescriptionsPerfectMatch(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
-        List<Description> descriptions = descriptionDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
+        List<Description> descriptions = descriptionDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),100);
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
@@ -318,7 +318,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     @Override
     public List<Description> searchDescriptionsTruncateMatch(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
-        List<Description> descriptions = descriptionDAO.searchDescriptionsTruncateMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
+        List<Description> descriptions = descriptionDAO.searchDescriptionsTruncateMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),100);
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
@@ -327,19 +327,33 @@ public class DescriptionManagerImpl implements DescriptionManager {
     @Override
     public List<Description> searchDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
-        List<Description> descriptions = descriptionDAO.searchDescriptionsSuggested(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
+        List<Description> descriptions; //= descriptionDAO.searchDescriptionsSuggested(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
         //logger.info("searchDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
         //logger.info("searchDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+
+        descriptions = descriptionDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),5);
+
+        if (descriptions.isEmpty()) {
+            descriptions = descriptionDAO.searchDescriptionsTruncateMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),100);
+        }
+
         return descriptions;
     }
 
     @Override
     public int countDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
-        int count = descriptionDAO.countDescriptionsSuggested(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
-        logger.info("countDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): " + count);
-        logger.info("countDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
-        return count;
+        //int count = descriptionDAO.countDescriptionsSuggested(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
+        long count = descriptionDAO.countDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
+
+        //logger.info("countDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): " + count);
+        //logger.info("countDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+
+        if (count != 0) {
+            return (int)count;
+        } else {
+            return descriptionDAO.countDescriptionsTruncateMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
+        }
     }
 
     @Override
