@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.annotation.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlRootElement(name = "respuestaCategorias", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "RespuestaCategorias", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class CategoriesResponse {
+public class CategoriesResponse extends Response implements Serializable{
 
     private final static Logger logger = LoggerFactory.getLogger(CategoriesResponse.class);
 

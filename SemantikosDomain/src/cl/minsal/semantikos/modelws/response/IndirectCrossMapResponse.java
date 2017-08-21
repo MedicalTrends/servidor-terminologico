@@ -5,6 +5,8 @@ import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 
 import javax.xml.bind.annotation.*;
 
+import java.io.Serializable;
+
 import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 
 /**
@@ -13,7 +15,7 @@ import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "indirectCrossmap", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "IndirectCrossmap", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class IndirectCrossMapResponse {
+public class IndirectCrossMapResponse implements Serializable {
 
     @XmlElement(name = "idCrossmapSet")
     private long idCrossmapSet;

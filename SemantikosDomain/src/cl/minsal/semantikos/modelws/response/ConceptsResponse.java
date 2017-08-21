@@ -15,7 +15,7 @@ import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "respuestaConceptosPorCategoriaPaginados", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "RespuestaConceptosPorCategoriaPaginados", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class ConceptsResponse implements Serializable {
+public class ConceptsResponse extends Response implements Serializable {
 
     @XmlElement(name = "nombreCategoria")
     private String category;

@@ -11,7 +11,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "respuestaBuscarRegistroISP", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "RespuestaBuscarRegistroISP", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class ISPRegisterSearchResponse implements Serializable {
+public class ISPRegisterSearchResponse extends Response implements Serializable {
 
     @XmlElement(name="conceptID")
     private String conceptId;

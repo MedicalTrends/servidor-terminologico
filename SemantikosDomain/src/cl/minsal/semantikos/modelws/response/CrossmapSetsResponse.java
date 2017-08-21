@@ -3,6 +3,7 @@ package cl.minsal.semantikos.modelws.response;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 
 import javax.xml.bind.annotation.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "crossmapSetsResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "CrossmapSetsResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class CrossmapSetsResponse {
+public class CrossmapSetsResponse extends Response implements Serializable {
 
     /** La lista de crossmaps indirectos (response) */
     @XmlElementWrapper(name = "crossmapSets")

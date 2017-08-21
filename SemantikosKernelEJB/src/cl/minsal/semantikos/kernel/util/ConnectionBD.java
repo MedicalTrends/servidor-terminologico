@@ -10,6 +10,7 @@ import java.sql.SQLException;
 /**
  * @author Francisco Mendez on 29-06-16.
  */
+@Deprecated
 public class ConnectionBD {
 
     static private final Logger logger = LoggerFactory.getLogger(ConnectionBD.class);

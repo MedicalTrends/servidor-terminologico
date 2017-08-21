@@ -1,26 +1,24 @@
 package cl.minsal.semantikos.ws.service;
 
-import cl.minsal.semantikos.kernel.components.AuthenticationManager;
+import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
 import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.modelweb.Pair;
 import cl.minsal.semantikos.modelws.request.DescriptionHitRequest;
 import cl.minsal.semantikos.modelws.request.NewTermRequest;
-import cl.minsal.semantikos.modelws.request.Request;
 import cl.minsal.semantikos.modelws.response.DescriptionResponse;
 import cl.minsal.semantikos.modelws.response.NewTermResponse;
 import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.component.DescriptionController;
-import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
-import cl.minsal.semantikos.modelws.fault.NotFoundFault;
+
+
+import ws.minsal.semantikos.ws.utils.UtilsWS;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ws.minsal.semantikos.ws.utils.UtilsWS;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.interceptor.AroundInvoke;
-import javax.interceptor.InvocationContext;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -48,7 +46,7 @@ public class UpdateService {
     WebServiceContext wsctx;
 
     @EJB
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManagerImpl authenticationManager;
 
     @EJB
     private UserManager userManager;
@@ -56,22 +54,16 @@ public class UpdateService {
 
     User wsUser;
 
-    //Inicializacion del Bean
-    //@PostConstruct
-    @AroundInvoke
-    protected Object authenticate(InvocationContext ctx) throws Exception {
-
-        try {
-            Pair credentials = UtilsWS.getCredentialsFromWSContext(wsctx.getMessageContext());
-            authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
-            Request request = (Request)ctx.getParameters()[0];
-            authenticationManager.validateInstitution(request.getIdStablishment());
-            //wsUser = userManager.getUserByEmail(credentials.getFirst().toString());
-        }
-        catch (Exception e) {
-            throw new NotFoundFault(e.getMessage());
-        }
-        return ctx.proceed();
+    /**
+     * Metodo de autenticacion
+     * @param idStablishment ID de establecimiento
+     * @throws Exception
+     */
+    private void authenticate(String idStablishment) throws Exception {
+        Pair credentials = UtilsWS.getCredentialsFromWSContext(wsctx.getMessageContext());
+        authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
+        if(idStablishment!=null)
+            authenticationManager.validateInstitution(idStablishment);
     }
 
     /**
@@ -85,12 +77,19 @@ public class UpdateService {
     public NewTermResponse codificacionDeNuevoTermino(
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionCodificacionDeNuevoTermino")
-                    NewTermRequest termRequest) throws IllegalInputFault, NotFoundFault {
+                    NewTermRequest termRequest) {
 
-        NewTermResponse newTermResponse = conceptController.requestTermCreation(termRequest);
-        logger.info("codificacionDeNuevoTermino response: " + newTermResponse);
-
-        return newTermResponse;
+        NewTermResponse response = new NewTermResponse();
+        try {
+            this.authenticate(termRequest.getIdStablishment());
+            response = conceptController.requestTermCreation(termRequest);
+            logger.info("codificacionDeNuevoTermino response: " + response);
+        }catch(Exception e){
+            logger.error(e.getMessage(), e);
+            response.setCode(1);
+            response.setMessage(e.getMessage());
+        }
+        return response;
     }
 
     // REQ-WS-030
@@ -107,8 +106,17 @@ public class UpdateService {
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionContarDescripcionConsumida")
                     DescriptionHitRequest descriptionHitRequest
-    ) throws IllegalInputFault, NotFoundFault  {
-        return descriptionController.incrementDescriptionHits(descriptionHitRequest.getDescriptionID());
+    )  {
+        DescriptionResponse response = new DescriptionResponse();
+        try {
+            this.authenticate(descriptionHitRequest.getIdStablishment());
+            response = descriptionController.incrementDescriptionHits(descriptionHitRequest.getDescriptionID());
+        }catch(Exception e){
+            logger.error(e.getMessage(), e);
+            response.setCode(1);
+            response.setMessage(e.getMessage());
+        }
+        return response;
     }
 
 }
