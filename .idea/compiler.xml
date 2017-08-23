@@ -26,6 +26,8 @@
         <module name="ClienteJava" />
         <module name="SemantikosBrowser" />
         <module name="SemantikosBusinessEAR" />
+        <module name="SemantikosCentral" />
+        <module name="SemantikosDesigner" />
         <module name="SemantikosDomain" />
         <module name="SemantikosKernelEJB" />
         <module name="SemantikosLoader" />
@@ -39,7 +41,9 @@
       <module name="Semantikos" target="1.7" />
       <module name="SemantikosBrowser" target="1.7" />
       <module name="SemantikosBusinessEAR" target="1.7" />
+      <module name="SemantikosCentral" target="1.7" />
       <module name="SemantikosCentralEAR" target="1.7" />
+      <module name="SemantikosDesigner" target="1.7" />
       <module name="SemantikosDomain" target="1.7" />
       <module name="SemantikosKernelEJB" target="1.7" />
       <module name="SemantikosLoader" target="1.7" />

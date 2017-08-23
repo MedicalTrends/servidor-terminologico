@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/template.xhtml">
+
+    <ui:define name="content">
+
+        <h:outputText value="${persistenceTestMBean.test}" rendered="false" />
+
+        <div class="Container100">
+            <div class="Container50 Responsive100">
+                <div class="ContainerIndent">
+                    <div class="Card ShadowEffect HeiAutoOnMobile" style="min-height:816px;">
+                        <h2 class="CardTopic"><i class="fa fa-list-alt Fs20 Fleft MarRight10 OvHidden" /> Categorías
+                        </h2>
+                        <div class="Separator"></div>
+                        <h:form styleClass="mainMenu">
+                            <p:menu toggleable="false"  model="#{mainMenuBean.categoryMenuModel}" style="width: 100%" />
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+            <div class="Container50 Responsive100">
+                <div class="ContainerIndent">
+                    <div class="Card ShadowEffect HeiAutoOnMobile">
+                        <h2 class="CardTopic"><i class="fa fa-plus-square Fs20 Fleft MarRight10 OvHidden" /> Otros
+                        </h2>
+                        <div class="Separator"></div>
+                        <h:form styleClass="mainMenu">
+                            <p:menu toggleable="false" style="width: 100%">
+                                <p:submenu label="Otros">
+                                    <p:menuitem value="Descripciones" icon="ui-icon-disk fa fa-edit Fs15" url="/views/browser/descriptionBrowser.xhtml" />
+                                    <p:menuitem value="Fármacos" icon="ui-icon-disk fa fa-medkit Fs15" url="/views/browser/drugsBrowser.xhtml" />
+                                    <p:menuitem value="Pendientes" icon="ui-icon-disk fa fa-exclamation-triangle  Fs15" url="/views/browser/pendingBrowser.xhtml" />
+                                    <p:menuitem value="No Válidos" icon="ui-icon-disk fa fa-ban Fs15" url="/views/browser/noValidBrowser.xhtml" />
+                                </p:submenu>
+                            </p:menu>
+                        </h:form>
+                    </div>
+                </div>
+
+                <div class="ContainerIndent">
+                    <div class="Card ShadowEffect HeiAutoOnMobile">
+                        <h2 class="CardTopic"><i class="icon-google132 Fs20 Fleft MarRight10 OvHidden" /> Administradores
+                        </h2>
+                        <div class="Separator"></div>
+                        <h:form styleClass="mainMenu">
+                            <p:menu toggleable="false" style="width: 100%">
+                                <p:submenu label="Otros">
+                                    <p:menuitem value="Administración Usuarios" icon="fa fa-user Fs15" url="/views/users/users.xhtml" />
+                                    <p:menuitem value="Administración RefSets" icon="fa fa-dropbox Fs15" url="/views/refsets/admin_refsets.xhtml" />
+                                    <p:menuitem value="Administración Tablas" icon="ui-icon-disk fa fa-columns Fs15" url="/views/helpertables/helpertables.xhtml" />
+                                </p:submenu>
+                            </p:menu>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

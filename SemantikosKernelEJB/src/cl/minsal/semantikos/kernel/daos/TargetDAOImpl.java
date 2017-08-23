@@ -85,6 +85,8 @@ public class TargetDAOImpl implements TargetDAO {
                 throw new EJBException(errorMsg);
             }
             rs.close();
+            call.close();
+            connection.close();
         } catch (SQLException e) {
             String errorMsg = "Erro al invocar get_relationship_definitions_by_category(" + idTarget + ")";
             logger.error(errorMsg, e);

@@ -7,12 +7,12 @@
     <file type="ejb" url="file://$PROJECT_DIR$/SemantikosDomain" />
     <file type="ejb" url="file://$PROJECT_DIR$/SemantikosKernelEJB" />
     <file type="ejb" url="file://$PROJECT_DIR$/SemantikosWSEJB" />
-    <file type="javaeeApplication" url="file://$PROJECT_DIR$/SemantikosBusinessEAR" />
+    <file type="javaeeApplication" url="file://$PROJECT_DIR$/SemantikosCentral" />
     <file type="javaeeApplication" url="file://$PROJECT_DIR$/SemantikosCentralEAR" />
     <file type="javaeeApplication" url="file://$PROJECT_DIR$/SemantikosWebEAR" />
     <file type="web" url="file://$PROJECT_DIR$/SemantikosBrowser" />
     <file type="web" url="file://$PROJECT_DIR$/SemantikosClientesWS/ClienteJava" />
-    <file type="web" url="file://$PROJECT_DIR$/SemantikosWeb" />
+    <file type="web" url="file://$PROJECT_DIR$/SemantikosDesigner" />
     <file type="web" url="file://$PROJECT_DIR$/SemantikosWS" />
     <file type="web" url="file://$PROJECT_DIR$/TestWSRest" />
   </component>

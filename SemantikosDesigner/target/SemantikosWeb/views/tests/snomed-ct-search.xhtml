@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/template.xhtml">
+
+    <ui:define name="content">
+
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect ui-fluid">
+                    <div class="Container50 Responsive50">
+                        <div class="ContainerIndent">
+                            <h2 class="BigTopic">Búsqueda de Conceptos Snomed CT</h2>
+
+                            <h:form>
+                                <p:panelGrid columns="3" layout="grid" style="border:0px !important; background:none;"
+                                             styleClass="ui-panelgrid-blank">
+                                    <p:inputText placeholder="Patrón de Descripción"/>
+                                    <p:commandButton icon="fa fa-search Fs16 White" actionListener="#{findSnomedCTBean.getConcept}"/>
+                                </p:panelGrid>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect ui-fluid">
+                    <div class="Container50 Responsive50">
+                        <div class="ContainerIndent">
+                            <h2 class="BigTopic">AutoComplete</h2>
+                            <p:panelGrid columns="1" styleClass="ui-panelgrid-blank" layout="grid">
+                                <p:outputLabel value="Simple:" for="acSimple"/>
+                                <p:autoComplete id="acSimple" value="#{autoCompleteView.txt1}"
+                                                completeMethod="#{autoCompleteView.completeText}"/>
+
+                                <p:outputLabel value="DropDown:" for="dd"/>
+                                <p:autoComplete id="dd" dropdown="true" value="#{autoCompleteView.txt6}"
+                                                completeMethod="#{autoCompleteView.completeText}"/>
+
+                            </p:panelGrid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

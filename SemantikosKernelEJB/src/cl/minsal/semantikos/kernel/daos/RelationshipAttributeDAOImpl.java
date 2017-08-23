@@ -101,6 +101,8 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
                 relationshipAttributeList.add(createRelationshipAttributeFromResultSet(rs, relationship));
             }
             rs.close();
+            call.close();
+            connection.close();
         } catch (SQLException e) {
             throw new EJBException(e);
         }

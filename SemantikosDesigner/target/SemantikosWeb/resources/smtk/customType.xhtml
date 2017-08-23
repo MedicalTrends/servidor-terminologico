@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.basictypes.BasicTypeDefinition" />
+    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
+</composite:interface>
+<composite:implementation>
+
+
+    <smtk:helperTableTypeListBox
+            rendered="#{cc.attrs.relationshipDefinition.compositeID eq 5}"
+            targetDefinition="#{cc.attrs.relationshipDefinition.targetDefinition}"
+            relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+            concept="#{cc.attrs.concept}"/>
+
+    <smtk:smtkTypeCustomCompoundSpecialty rendered="#{cc.attrs.relationshipDefinition.compositeID eq 7}"
+                                          targetDefinition="#{cc.attrs.relationshipDefinition.targetDefinition}"
+                                          relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                          concept="#{cc.attrs.concept}"/>
+
+    <smtk:customSMTKViewFSN rendered="#{cc.attrs.relationshipDefinition.compositeID eq 8}"
+                                          targetDefinition="#{cc.attrs.relationshipDefinition.targetDefinition}"
+                                          relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                          concept="#{cc.attrs.concept}"/>
+
+    <smtk:helperTableTypeISP
+            rendered="#{cc.attrs.relationshipDefinition.compositeID eq 9}"
+            targetDefinition="#{cc.attrs.relationshipDefinition.targetDefinition}"
+            relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+            concept="#{cc.attrs.concept}"/>
+
+    <smtk:helperTableTypeBioequivalente
+            rendered="#{cc.attrs.relationshipDefinition.compositeID eq 10}"
+            targetDefinition="#{cc.attrs.relationshipDefinition.targetDefinition}"
+            relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+            concept="#{cc.attrs.concept}"/>
+
+    <smtk:helperTableTypeRecomendacion
+            rendered="#{cc.attrs.relationshipDefinition.compositeID eq 11}"
+            targetDefinition="#{cc.attrs.relationshipDefinition.targetDefinition}"
+            relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+            concept="#{cc.attrs.concept}"/>
+
+
+</composite:implementation>
+</html>

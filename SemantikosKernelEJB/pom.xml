@@ -8,6 +8,8 @@
     <version>0.9.4</version>
     <packaging>ejb</packaging>
 
+    <name>SemantikosKernelEJB</name>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -185,7 +187,9 @@
     </dependencies>
 
     <build>
+        <finalName>SemantikosKernelEJB</finalName>
         <sourceDirectory>src</sourceDirectory>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -226,7 +230,6 @@
                             <addClasspath>true</addClasspath>
                         </manifest>
                     </archive>
-
                 </configuration>
 
                 <executions>
@@ -239,7 +242,6 @@
                     </execution>
                 </executions>
             </plugin>
-
 
         </plugins>
     </build>

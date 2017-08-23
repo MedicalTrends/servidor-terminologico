@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.basictypes.BasicTypeDefinition" />
+    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
+</composite:interface>
+<composite:implementation>
+
+    <smtk:basicTypeBoolean
+            targetDefinition="#{cc.attrs.targetDefinition}"
+            relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+            concept="#{conceptBean.concept}"
+            rendered="#{cc.attrs.targetDefinition.type.typeName eq 'boolean'}"/>
+
+    <smtk:basicTypeInteger
+            targetDefinition="#{cc.attrs.targetDefinition}"
+            relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+            concept="#{conceptBean.concept}"
+            rendered="#{cc.attrs.targetDefinition.type.typeName eq 'int'}"/>
+
+    <smtk:basicTypeFloat
+            targetDefinition="#{cc.attrs.targetDefinition}"
+            relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+            concept="#{conceptBean.concept}"
+            rendered="#{cc.attrs.targetDefinition.type.typeName eq 'float'}"/>
+
+    <smtk:basicTypeString
+            targetDefinition="#{cc.attrs.targetDefinition}"
+            relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+            concept="#{conceptBean.concept}"
+            rendered="#{cc.attrs.targetDefinition.type.typeName eq 'string'}"/>
+
+    <smtk:basicTypeDate
+            targetDefinition="#{cc.attrs.targetDefinition}"
+            relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+            concept="#{conceptBean.concept}"
+            rendered="#{cc.attrs.targetDefinition.type.typeName eq 'date'}"/>
+
+    <script type="text/javascript">
+
+    </script>
+
+    <h:outputStylesheet id="customCSS">
+        .ui-selectonemenu .ui-selectonemenu-label {
+            overflow: visible;
+        }
+
+
+    </h:outputStylesheet>
+
+
+</composite:implementation>
+</html>

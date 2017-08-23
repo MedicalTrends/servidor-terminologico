@@ -1,0 +1,206 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/template/template.xhtml">
+
+    <ui:define name="content">
+        <p:panel id="findConcept">
+            <h3>Crear categoria</h3>
+            <h:form id="form">
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        <p:outputLabel for="nameCategory" value="Nombre categoria"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        <p:inputText id="nameCategory" value="#{beanCategory.category.name}"/>
+                    </div>
+                </div>
+                <p:spacer/>
+                <div class="ui-g">
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                    <p:outputLabel for="nameCategoryAbreviated" value="Nombre abreviado categoria"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        <p:inputText id="nameCategoryAbreviated" value="#{beanCategory.category.nameAbbreviated}"/>
+                    </div>
+                </div>
+                <p:spacer/>
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        <p:outputLabel  value="Tag Semantikos"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+
+                        <p:selectOneMenu id="tagSMTK"
+                                         value="#{beanCategory.category.tagSemantikos}"
+                                         panelStyle="width:180px"
+                                         converter="omnifaces.SelectItemsConverter"
+                                         effect="fade" var="t" style="width:160px" filter="true"
+                                         filterMatchMode="startsWith">
+                            <f:selectItems value="#{beanCategory.tagSMTKList}" var="tagSMTK"
+                                           itemLabel="#{tagSMTK.name}" itemValue="#{tagSMTK}"/>
+                            <p:ajax event="itemSelect"/>
+
+                            <p:column>
+                                <h:outputText value="#{t.name}"/>
+                            </p:column>
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+                <p:spacer/>
+                <div class="ui-g">
+
+                    <h:panelGrid columns="2" cellpadding="5" style="margin-left: 20px">
+                        <h:outputText value="Color: " />
+                        <p:colorPicker value="#{beanCategory.category.color}" />
+
+
+                        <p:dialog modal="true" widgetVar="dlg" showEffect="fade" hideEffect="fade" header="Seleccione un color de fondo" resizable="false">
+                            <h:panelGrid id="grid" columns="2" cellpadding="5">
+                                <h:outputText value="Color: " />
+                                <h:outputText value="#{beanCategory.category.color}" style="background-color: \##{beanCategory.category.color}" />
+                            </h:panelGrid>
+                        </p:dialog>
+                    </h:panelGrid>
+
+                </div>
+                <p:spacer/>
+                <div class="ui-g">
+                    <p:selectBooleanCheckbox id="restrict" itemLabel="Restriccion" value="#{beanCategory.category.restriction}" style="width:40%" />
+
+                    <p:selectBooleanCheckbox id="valid" itemLabel="Valido" value="#{beanCategory.category.valid}" style="width:40%" />
+                </div>
+                <p:spacer/>
+                <div class="ui-g">
+
+                    <p:commandButton update=":form:relationshipDefinitionDetail"
+                                     oncomplete="PF('relationshipDefinitionDialog').show()"
+                                     icon="fa fa-bars" title="add" value="Crear relacion">
+
+                    </p:commandButton>
+
+                    <p:dialog widgetVar="relationshipDefinitionDialog" modal="true" showEffect="fade"
+                              hideEffect="fade" resizable="true" style="margin:40px;">
+                        <p:outputPanel id="relationshipDefinitionDetail" style="text-align:center;">
+
+
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:outputLabel for="nameRelationshipDefinition" value="Nombre"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <p:inputText id="nameRelationshipDefinition" value="#{beanCategory.nameRelationshipDefinition}"/>
+                                </div>
+                            </div>
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:outputLabel for="descriptionRelationshipDefinition" value="Descripcion"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <p:inputText  id="descriptionRelationshipDefinition" value="#{beanCategory.descriptionRelationshipDefinition}"/>
+                                    <p:spacer/>
+                                </div>
+                            </div>
+
+
+                            <div class="ui-g">
+                                <h3>Multiplicidad</h3>
+                                <div class="ui-g">
+
+                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                        <p:outputLabel for="lower" value="Limite inferior"/>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                        <p:inputText id="lower" value="#{beanCategory.lowerBoundary}"/>
+                                    </div>
+                                </div>
+                                <p:spacer/>
+                                <div class="ui-g">
+                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                        <p:outputLabel for="upper" value="Limite superior"/>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                        <p:inputText id="upper" value="#{beanCategory.upperBoundary}"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ui-g">
+                                <h3>Tipo de relacion</h3>
+
+                                <p:selectOneMenu value="#{beanCategory.type}" >
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione un tipo"></f:selectItem>
+                                    <f:selectItem itemLabel="Concepto a Concepto" itemValue="1"></f:selectItem>
+                                    <f:selectItem itemLabel="Tipo basico" itemValue="2"></f:selectItem>
+                                    <f:selectItem itemLabel="Tabla accesoria" itemValue="3"></f:selectItem>
+                                    <p:ajax event="change" update="types"
+                                            listener="#{beanCategory.selectType}" />
+                                </p:selectOneMenu>
+
+                            </div>
+
+                            <div class="ui-g">
+                                <p:panel id="types">
+                                    <p:panel id="SMTK" rendered="#{beanCategory.smtk}" >
+
+                                        <h:selectOneMenu value="#{beanCategory.categorySelected}"
+                                                         converter="omnifaces.SelectItemsConverter" style="width:100%">
+                                            <f:selectItem itemLabel="Seleccione tipo" itemValue=""/>
+                                            <f:selectItems value="#{beanCategory.categories}"
+                                                           var="category" itemLabel="#{category.name}"
+                                                           itemValue="#{category}"/>
+                                        </h:selectOneMenu>
+                                        <p:commandButton update="relationshipDefinitionTable"  value="Crear relacion" actionListener="#{beanCategory.createRelationshipDefinition}">
+
+                                        </p:commandButton>
+                                    </p:panel>
+                                    <p:panel id="other" rendered="#{beanCategory.other}" >
+                                        <p:commandButton   update="relationshipDefinitionTable" value="Crear relacion" actionListener="#{beanCategory.createRelationshipDefinition}">
+
+                                        </p:commandButton>
+                                    </p:panel>
+
+                                </p:panel>
+
+                            </div>
+
+
+                        </p:outputPanel>
+                    </p:dialog>
+
+
+                </div>
+                <p:spacer/>
+
+                <div class="ui-g">
+                    <p:panel id="relationshipDefinitionTable">
+                        <h4>Relationships Definition</h4>
+
+                        <p:dataTable id="tableRD" value="#{beanCategory.relationshipDefinitions}"
+                            var="rd">
+                            <p:column headerText="name">
+                                <h:outputText value="#{rd.name}"/>
+                            </p:column>
+
+                            <p:column headerText="Descripción">
+                                <h:outputText value="#{rd.description}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </p:panel>
+
+
+
+                </div>
+
+                <p:commandButton  value="Crear categoria" actionListener="#{beanCategory.createCategory}">
+
+                </p:commandButton>
+            </h:form>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

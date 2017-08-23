@@ -1,0 +1,152 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/template/template.xhtml">
+
+    <ui:define name="content">
+
+            <h:form id="conceptSMTK">
+                <p:panel id="findConcept" style="display: none">
+                <p:dataTable id="conceptBasicsTable" var="conceptBasics" value="#{conceptExport.conceptBasics}"
+                             paginator="false" rows="2" >
+
+                    <p:column>
+                        <h:outputText value="#{conceptBasics.propertyName}"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{conceptBasics.propertyValue}"/>
+                    </p:column>
+                </p:dataTable>
+
+                <p:dataTable id="conceptDescriptionsTable" var="descriptions" value="#{conceptExport.conceptSMTK.descriptions}"
+                             paginator="false" rows="6">
+
+                    <p:column>
+                        <h:outputText value="#{descriptions.descriptionId}"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{descriptions.term}"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{descriptions.descriptionType}"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{descriptions.caseSensitive ? 'Sensible' : 'Insensible'}"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{descriptions.uses}"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+                </p:dataTable>
+
+                <p:dataTable id="conceptAttributesTable" var="attribute" value="#{conceptExport.conceptSMTK.attributes}"
+                             paginator="false" rows="2">
+
+                    <p:column>
+                        <h:outputText value="#{attribute.relationshipDefinition.description}"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{attribute.target}"/>
+                    </p:column>
+                </p:dataTable>
+
+                <p:dataTable id="conceptRelationshipsTable" var="snomedctRelation" value="#{conceptExport.snomedCTRelationships}"
+                             paginator="false" rows="4">
+
+                    <p:column>
+                        <h:outputText value="#{snomedctRelation.relationType}"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{snomedctRelation.snomedCT.descriptionFSN}"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{snomedctRelation.snomedCT.idSnomedCT}"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{snomedctRelation.snomedCT.active ? 'Activo' : 'Inactivo'}"/>
+                    </p:column>
+                </p:dataTable>
+
+                <p:dataTable id="crossMapsDirectosTable" var="snomedctRelation" value="#{conceptExport.crossMapsRelationships}"
+                             paginator="false" rows="6">
+
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:dataTable id="crossMapsInDirectosTable" var="snomedctRelation" value="#{conceptExport.crossMapsRelationships}"
+                             paginator="false" rows="6">
+
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:dataTable id="refsetsTable" var="snomedctRelation" value="#{conceptExport.refSets}"
+                             paginator="false" rows="6">
+
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="No implementado"/>
+                    </p:column>
+
+                </p:dataTable>
+                </p:panel>
+
+
+                <p:commandButton ajax="false" value="Exportar">
+                    <p:dataExporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,crossMapsDirectosTable,crossMapsInDirectosTable,refsetsTable"  type="xls" fileName="concepto"></p:dataExporter>
+                </p:commandButton>
+
+            </h:form>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
+    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
+</composite:interface>
+<composite:implementation>
+
+    <p:panel header="Crossmaps Indirecto" toggleable="true"  toggleSpeed="500"
+             collapsed="true"
+             styleClass="crossmapindirect">
+
+        <f:facet name="#{(not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition))? 'footer':null}">
+            <p:outputPanel>
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="El concepto no tiene Crossmaps Indirecto" style="font-size: small;" />
+            </p:outputPanel>
+        </f:facet>
+
+        <p:dataTable value="#{crossmapBean.indirectCrossmaps}" var="crossmapsIndirect"
+                     rendered="#{cc.attrs.concept.editable or not cc.attrs.concept.editable  or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+            <p:column headerText="Terminología">
+                <h:outputText value="#{crossmapsIndirect.target.crossmapSet.name}"/>
+            </p:column>
+            <p:column headerText="Cod-1 Crossmapset Member">
+                <h:outputText value="#{crossmapsIndirect.target.code}"/>
+            </p:column>
+            <p:column headerText="Descripción">
+                <h:outputText value="#{crossmapsIndirect.target.gloss}"/>
+            </p:column>
+            <p:column headerText="MapRule">
+                <h:outputText value="#{crossmapsIndirect.mapRule}"/>
+            </p:column>
+            <p:column headerText="MapAdvice">
+                <h:outputText value="#{crossmapsIndirect.mapAdvice}"/>
+            </p:column>
+            <p:column headerText="Origen">
+                <h:outputText value=""/>
+            </p:column>
+        </p:dataTable>
+    </p:panel>
+
+</composite:implementation>
+</html>

@@ -13,11 +13,11 @@
         <module>SemantikosDomain</module>
         <module>SemantikosKernelEJB</module>
         <module>SemantikosWSEJB</module>
-        <module>SemantikosWeb</module>
+        <module>SemantikosDesigner</module>
         <module>SemantikosBrowser</module>
         <module>SemantikosLoader</module>
         <module>SemantikosWS</module>
-        <module>SemantikosBusinessEAR</module>
+        <module>SemantikosCentral</module>
     </modules>
 
     <build>

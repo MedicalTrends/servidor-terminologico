@@ -213,7 +213,8 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
                 throw new EJBException("No se encontró un concepto con ID=" + conceptID);
             }
             rs.close();
-
+            call.close();
+            connection.close();
             return conceptSCTFromResultSet;
         } catch (SQLException e) {
             String errorMsg = "Error al buscar Snomed CT por CONCEPT_ID: " + conceptID;

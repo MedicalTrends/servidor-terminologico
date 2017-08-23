@@ -362,6 +362,8 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
                 throw new EJBException(errorMsg);
             }
             rs.close();
+            call.close();
+            connection.close();
         } catch (SQLException e) {
             logger.error("Hubo un error al acceder a la base de datos.", e);
             throw new EJBException(e);

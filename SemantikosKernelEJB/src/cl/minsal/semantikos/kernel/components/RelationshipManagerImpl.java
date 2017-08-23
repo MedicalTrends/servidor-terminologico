@@ -272,6 +272,20 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
+    public List<Relationship> findRelationshipsLike(Relationship relationship, RelationshipDefinition relationshipDefinition) {
+
+        List<Relationship> relationshipsLike = new ArrayList<>();
+
+        for (Relationship relationshipLike : findRelationshipsLike(relationshipDefinition, relationship.getTarget())) {
+            if(!relationship.getSourceConcept().equals(relationshipLike.getSourceConcept())) {
+                relationshipsLike.add(relationshipLike);
+            }
+        }
+
+        return relationshipsLike;
+    }
+
+    @Override
     public List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK concept) {
         return relationshipDAO.getRelationshipsBySourceConcept(concept);
     }

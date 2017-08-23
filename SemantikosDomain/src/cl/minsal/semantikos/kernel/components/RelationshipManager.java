@@ -144,6 +144,16 @@ public interface RelationshipManager {
     public List<Relationship> findRelationshipsLike(Relationship relationship);
 
     /**
+     * Este método es responsable de recuperar todas las relaciones de un cierto tipo y que
+     * referencian un cierto destino <code>target</code>.
+     *
+     * @param relationship            La relacion objeto de la comparación
+     *
+     * @return Una lista de relaciones del tipo indicado que apuntan al <code>target</code> indicado.
+     */
+    public List<Relationship> findRelationshipsLike(Relationship relationship, RelationshipDefinition relationshipDefinition);
+
+    /**
      * Este método es responsable de recuperar todas las relaciones del <code>concepto</code>.
      *
      * @param concept El concepto cuyas relaciones son recuperadas.

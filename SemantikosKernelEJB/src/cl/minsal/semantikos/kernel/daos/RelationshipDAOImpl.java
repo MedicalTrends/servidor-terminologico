@@ -312,6 +312,8 @@ public class RelationshipDAOImpl implements RelationshipDAO {
             }
 
             rs.close();
+            call.close();
+            connection.close();
         } catch (SQLException e) {
             throw new EJBException(e);
         }

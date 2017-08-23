@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
+        </f:facet>
+        <h:outputScript name="js/layout.js" library="rio-layout" />
+        <title>Semantikos - Consola de Administración</title>
+        <ui:insert name="head" />
+    </h:head>
+
+    <h:body styleClass="loginbodyblue">
+
+        
+        <div class="Wid90 DispBlock MarAuto MarTopPerc5 TexAlCenter">
+            <div class="Wid33 MarAuto WidAutoOnMobile">
+                <h:graphicImage alt="Semantikos" width="180" library="semantikos" name="images/minsal.png" />
+                <div class="EmptyBox30"></div>
+                <h:form id="loginform">
+                <div class="Card ShadowEffect">
+
+                    <div class="EmptyBox20"></div>
+                    <div class="Wid100 OvHidden BigTopic Fs30"><i class="icon-users Fs40" />Ingreso</div>
+                    <div class="EmptyBox20"></div>
+
+                    <p:messages id="login-form-messages" showDetail="true" autoUpdate="true" closable="false" />
+                    <p:growl id="login-form-messages-2" showDetail="true" showSummary="true"  />
+
+                    <div class="Wid100">
+                        <p:inputText placeholder="E-mail" value="#{authenticationBean.email}"
+                                     styleClass="Wid80 TexAlCenter Fs18 #{authenticationBean.emailError}"/>
+                    </div>
+                    <div class="EmptyBox10"></div>
+                    <div class="Wid100">
+                        <p:inputText type="password" placeholder="Contraseña" value="#{authenticationBean.password}"
+                                     styleClass="Wid80 TexAlCenter Fs18 #{authenticationBean.passwordError}"/>
+                    </div>
+                    <div class="EmptyBox30"></div>
+                    <div class="Wid100">
+                        <p:commandButton update="loginform" value="Ingresar" icon="fa fa-sign-in" styleClass="Wid60 Fs18 White RaisedButton" action="#{authenticationBean.login}"/>
+                    </div>
+
+                    <div class="EmptyBox20"></div>
+
+                    <div class="Wid100">
+                        <p:link value="¿Olvidó su contraseña?" href="/views/users/forgotPassword.xhtml"/>
+                    </div>
+
+                    <div class="EmptyBox20"></div>
+                </div>
+                </h:form>
+                <div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular WhiteBlue">
+                    <i class="fa fa-copyright" />2016 <a class="WhiteBlue" href="http://www.semantikos.cl">Ministerio de Salud.</a><br/>
+                    <span>Version: <h:outputText value="${bpversion['version']} ${bpversion['build.date']}" /></span>
+                </div>
+            </div>
+        </div>
+
+        <h:outputStylesheet name="css/animate.css" library="rio-layout" />
+        <h:outputStylesheet name="css/rio-font.css" library="rio-layout" />
+        <h:outputStylesheet name="css/ripple-effect.css" library="rio-layout" />
+        <h:outputStylesheet name="css/font-awesome.css" library="rio-layout" />
+        <h:outputStylesheet name="css/rio-layout.css" library="rio-layout" />
+        <h:outputStylesheet name="css/core-layout.css" library="rio-layout" />
+
+        <script type="text/javascript">
+            Rio.clearMenuState();
+        </script>
+    </h:body>
+
+</html>

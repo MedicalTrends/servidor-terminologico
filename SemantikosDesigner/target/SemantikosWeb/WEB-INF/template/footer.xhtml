@@ -1,0 +1,34 @@
+<ui:composition 
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+
+    <!-- FOOTER  -->
+    <div class="Container100">
+        <div class="ContainerIndent">
+            <div class="Card ShadowEffect">
+                <div class="Container50 Responsive100">
+                    <div class="DispInlBlock Fleft">
+                        <span class="DispInlBlock FontSourceSansLight BoldGray Fs12 Fleft HoverEffect TexAlRight FloatNoneOnMobile">
+                            <i class="fa fa-copyright"></i>2016 <a class="BoldGray" href="http://www.semantikos.cl">Ministerio de Salud.</a>
+                        </span><br/>
+                        <span class="DispInlBlock FontSourceSansLight BoldGray Fs12 Fleft HoverEffect TexAlRight FloatNoneOnMobile">Version: <h:outputText value="${bpversion['version']} ${bpversion['build.date']}"></h:outputText></span>
+                    </div>
+                </div>
+
+
+
+                <div class="Container50 Responsive100">
+                    <div class="DispInlBlock Fright">
+                        <h:graphicImage alt="Semantikos" name="images/logo180-180.png" styleClass="" library="blueprints" style="height:37px;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>

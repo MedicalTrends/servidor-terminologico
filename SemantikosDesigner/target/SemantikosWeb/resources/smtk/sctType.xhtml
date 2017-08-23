@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<composite:interface>
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb"/>
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.categories.Category"/>
+    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
+    <composite:attribute name="targetDefinition2" type="cl.minsal.semantikos.model.snomedct.ConceptSCT" />
+</composite:interface>
+
+<composite:implementation>
+
+    <p:panel id="multiplicityN_with_attributes" styleClass="sctPanel"
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
+
+        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}">
+
+            <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+            <div class="ui-fluid">
+
+                <div class="Container">
+
+                    <div class="Container20 White Responsive">
+
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                            <p:inputNumber id="basicTypeValue12"
+                                           value="#{sctBean.relationshipGroup}"
+                                           placeholder="Grupo..."
+                                           var="value"
+                                           minValue="0"
+                                           decimalPlaces="0"
+                                           decimalSeparator=","
+                                           thousandSeparator="."
+                                           autocomplete="off">
+                                <p:ajax process="@this" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
+                            </p:inputNumber>
+
+                        </div>
+
+                    </div>
+
+                    <div class="Container30 White Responsive">
+
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                            <p:selectOneRadio value="#{sctBean.searchOption}" style="width:100%">
+                                <f:selectItem itemLabel="Buscar por Término" itemValue="term" />
+                                <f:selectItem itemLabel="Buscar por ConceptId" itemValue="conceptId" />
+                                <p:ajax update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
+                            </p:selectOneRadio>
+
+                        </div>
+
+                    </div>
+
+                    <p:repeat
+                            offset="0"
+                            size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
+                            step="1"
+                            varStatus="var"
+                            value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
+                            var="relationshipAttributeDefinition">
+                        <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                                 concept="#{cc.attrs.concept}"
+                                                 relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
+                                                 targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                                 rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()
+                                                             and not relationshipAttributeDefinition.groupSCT}"
+                        />
+                        <smtk:helperTableTypeAttributeSCT relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                                          concept="#{cc.attrs.concept}"
+                                                          relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
+                                                          targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                                          rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
+                        />
+                    </p:repeat>
+
+                    <div class="Container20 White Responsive">
+
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                            <p:outputPanel styleClass="search searchSCT">
+
+                                <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
+                                                forceSelection="true"
+                                                id="findConceptSCT"
+                                                widgetVar="findConceptSCT"
+                                                queryDelay="500"
+                                                scrollHeight="200" size="5"
+                                                completeMethod="#{sctBean.getConceptSearchInput}"
+                                                placeholder="#{sctBean.searchOption eq 'term'? 'Ingrese término...': 'Ingrese conceptId...'}"
+                                                converter="conceptSCTConverter"
+                                                var="concept"
+                                                value="#{conceptBean.conceptSCTSelected}"
+                                                itemLabel="#{concept.descriptionFSN.term}"
+                                                itemValue="#{concept}"
+                                                disabled="#{not cc.attrs.concept.editable}">
+
+                                    <!-- Parámetros del validador -->
+                                    <f:attribute name="concept" value="#{cc.attrs.concept}"  />
+                                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+
+                                    <f:attribute name="searchOption" value="#{sctBean.searchOption}"  />
+                                    <f:attribute name="relationshipGroup" value="#{sctBean.relationshipGroup}"  />
+                                    <!---->
+
+                                    <p:column>
+                                        <h:outputText value="#{concept.idSnomedCT}" />
+                                    </p:column>
+
+                                    <p:column style="width: 500px">
+                                        <h:outputText value="#{concept.descriptionFSN.term}" />
+                                    </p:column>
+
+                                    <p:ajax event="query" update="findConceptSCT" />
+
+                                    <p:ajax event="itemSelect"
+                                            listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.conceptSCTSelected)}"
+                                            process="@this"/>
+
+                                    <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
+
+                                </p:autoComplete>
+                                <i class="fa fa-search fa-lg"  />
+                            </p:outputPanel>
+                        </div>
+                    </div>
+
+                    <div class="Container10 White Responsive">
+
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                            <p:commandButton
+                                    process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                                    action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
+                                    update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader),@(.crossmapindirect)"
+                                    disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept)}"
+                                    style="max-width: 100px"
+                                    value="Agregar">
+                            </p:commandButton>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </p:outputPanel>
+
+        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
+            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="El concepto no tiene Relaciones a SNOMED" />
+            </p:outputPanel>
+        </f:facet>
+
+        <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
+                     id="tableRelationship3"
+                     rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
+                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and cc.attrs.concept.editable}" style="margin: 10px;"
+                     value="#{conceptBean.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     var="rel">
+
+            <!-- Parámetros del validador -->
+            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+            <!---->
+
+            <p:ajax event="rowReorder" listener="#{conceptBean.onRowReorder}"
+                    update="@(.conceptHeader),@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id})">
+
+            </p:ajax>
+
+            <f:attribute name="relationshipDefinitionRowEdit" value="#{cc.attrs.relationshipDefinition}" />
+
+            <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitionWebs}"
+                       var="attribute"
+                       columnIndexVar="colIndex">
+                <f:facet name="header">
+                    <h:outputText value="#{attribute.name}" />
+                </f:facet>
+                <p:outputPanel rendered="#{not empty rel.getAttributesByAttributeDefinition(attribute.relationshipAttributeDefinition)}">
+                    <smtk:basicTypeAttributeCell attribute="#{attribute.relationshipAttributeDefinition}" relationship="#{rel}"
+                                                 rendered="#{attribute.targetDefinition.basicType}" />
+                    <smtk:helperTableTypeAttributeCell attribute="#{attribute.relationshipAttributeDefinition}" relationship="#{rel}"
+                                                       rendered="#{attribute.targetDefinition.helperTable}" />
+                </p:outputPanel>
+            </p:columns>
+
+            <p:column headerText="ConceptID">
+                <h:outputText value="#{rel.target.idSnomedCT}"/>
+            </p:column>
+
+            <p:column headerText="FSN">
+                <h:outputText value="#{rel.target.descriptionFSN.term}"/>
+            </p:column>
+
+            <p:column headerText="Acción">
+                <div style="text-align: center">
+                    <p:commandButton title="Ver" oncomplete="PF('dialogC').show()" process="@this"
+                                   update="@(.query-concept-sct)" icon="fa fa-search">
+                        <f:setPropertyActionListener value="#{rel.target}" target="#{sctBean.conceptSelected}"/>
+                    </p:commandButton>
+                    <p:commandButton rendered="#{profilePermissionsBeans.modeler and cc.attrs.concept.editable}" icon="fa fa-trash" title="Eliminar"
+                                     actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
+                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}), @(.attributes),@(.crossmapindirect)"
+                                     process="@this">
+                        <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar esta relación?"
+                                   icon="ui-icon-alert"/>
+                    </p:commandButton>
+                </div>
+            </p:column>
+        </p:dataTable>
+
+
+        <p:dialog id="dialogSCT" widgetVar="dialogSCT" global="true" showEffect="fade" hideEffect="fade"
+                         header="Advertencia"
+                         message="Los resultados de esta búsqueda exceden los 10.000 registros. La recuperación de los resultados puede demorar ¿Qué desea hacer?">
+            <p:commandButton value="Truncar resultados ( 1°s 1000 registros )" type="button" styleClass="CyanButton" actionListener="#{sctBean.triggerSearch()}" update="findConceptSCT"
+                             icon="fa fa-scissors"/>
+            <p:commandButton value="Continuar con la búsqueda" type="button" styleClass="OrangeButton" actionListener="#{sctBean.triggerSearch()}" update="findConceptSCT"
+                             icon="fa fa-clock-o"/>
+        </p:dialog>
+
+        <!-- Consulta término pendiente -->
+        <p:dialog id="dialogC" header="Ver Concepto SNOMED" widgetVar="dialogC" global="true" width="700px"
+                  showEffect="fade" hideEffect="fade">
+
+            <p:panel styleClass="query-concept-sct">
+                <p:panelGrid style="width:100%">
+                    <f:facet name="header">
+                        <p:row>
+                            <p:column colspan="2">
+                                #{sctBean.conceptSelected.descriptionFSN}
+                            </p:column>
+                        </p:row>
+                    </f:facet>
+                    <p:row>
+                        <p:column styleClass="BoldGray FontBold">ConceptID</p:column>
+                        <p:column>#{sctBean.conceptSelected.idSnomedCT}</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column styleClass="BoldGray FontBold">FSN</p:column>
+                        <p:column>#{sctBean.conceptSelected.descriptionFSN}</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column styleClass="BoldGray FontBold">Preferida</p:column>
+                        <p:column>#{sctBean.conceptSelected.descriptionFavouriteSynonymous}</p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:dataTable id="otherDescriptions"
+                             var="description"
+                             value="#{sctBean.getOtherDescriptions(sctBean.conceptSelected)}"
+                             rendered="#{ not empty sctBean.getOtherDescriptions(sctBean.conceptSelected) }"
+                             editable="true"
+                             reflow="true">
+                    <p:columnGroup type="header">
+
+                        <p:row>
+                            <p:column colspan="2" headerText="Otras Descripciones"/>
+                        </p:row>
+
+                    </p:columnGroup>
+                    <p:column style="width: 25%" styleClass="BoldGray FontBold">
+                        #{description.descriptionType.name}
+                    </p:column>
+                    <p:column>
+                        #{description.term}
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </p:dialog>
+
+    </p:panel>
+
+</composite:implementation>
+</html>

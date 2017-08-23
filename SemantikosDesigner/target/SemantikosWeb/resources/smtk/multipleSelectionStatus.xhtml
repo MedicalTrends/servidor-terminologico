@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+    <composite:attribute name="itemName" type="java.lang.String"/>
+    <composite:attribute name="selectedItems" type="java.util.List"/>
+</composite:interface>
+<composite:implementation>
+    <h:panelGrid  columns="1"
+                  layout="grid" styleClass="ui-panelgrid-blank filterStatus BoldGray"
+                  rendered="#{not empty cc.attrs.selectedItems}">
+        <p:outputPanel>
+            <i class="fa  fa-info-circle fa-lg" style="padding-right: 10px"/>
+            <h:outputText value="#{'Filtros por '.concat(cc.attrs.itemName).concat(': ')}" style="font-size: small;" />
+        </p:outputPanel>
+        <p:outputPanel>
+            <div class="ui-autocomplete ui-autocomplete-multiple">
+                <ul class="ui-autocomplete-multiple-container ui-widget ui-inputfield ui-state-default ui-corner-all">
+                    <p:repeat
+                            offset="0"
+                            size="#{cc.attrs.selectedItems.size()}"
+                            step="1"
+                            varStatus="var"
+                            value="#{cc.attrs.selectedItems}"
+                            var="selectedItem">
+
+                        <li style="display: list-item;" class="ui-autocomplete-token ui-state-active ui-corner-all ui-helper-hidden">
+                            <p:commandLink actionListener="#{cc.attrs.selectedItems.remove(selectedItem)}" update="@(.browserFilters),@(.browserTable)">
+                                <span class="ui-autocomplete-token-icon ui-icon ui-icon-close">
+                                </span>
+                            </p:commandLink>
+                            <span class="ui-autocomplete-token-label" style="font-size: small;">#{selectedItem}</span>
+                        </li>
+                    </p:repeat>
+                </ul>
+            </div>
+        </p:outputPanel>
+    </h:panelGrid>
+
+    <h:outputStylesheet id="customCSS">
+
+    </h:outputStylesheet>
+
+
+</composite:implementation>
+</html>

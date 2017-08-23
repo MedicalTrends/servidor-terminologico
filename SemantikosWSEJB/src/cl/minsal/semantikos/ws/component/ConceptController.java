@@ -10,6 +10,7 @@ import cl.minsal.semantikos.model.descriptions.PendingTerm;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.TargetDefinition;
 import cl.minsal.semantikos.model.relationships.TargetType;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.modelws.request.DescriptionIDorConceptIDRequest;
@@ -564,7 +565,9 @@ public class ConceptController {
 
         List<ConceptSMTK> concepts = conceptManager.findModeledConceptPaginated(category, pageSize, pageNumber);
 
-        concepts = relationshipManager.loadRelationships(concepts);
+        if(!category.getRelationshipDefinitions().isEmpty()) {
+            concepts = relationshipManager.loadRelationships(concepts);
+        }
 
         List<ConceptResponse> conceptResponses = new ArrayList<>();
 
@@ -692,9 +695,11 @@ public class ConceptController {
         res.setDescriptionId(conceptSMTK.getDescriptionFavorite().getDescriptionId());
         res.setCategory(conceptSMTK.getCategory().getName());
 
+        RelationshipDefinition ispRelationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.ISP).get(0);
+
         for (Relationship relationship : relationshipManager.getRelationshipsBySourceConceptAndTargetType(conceptSMTK, TargetType.HelperTable)) {
             if (relationship.getRelationshipDefinition().isBioequivalente()) {
-                res.getBioequivalentsResponse().add(BioequivalentMapper.map(relationship, conceptManager.findConceptsWithTarget(relationship)));
+                res.getBioequivalentsResponse().add(BioequivalentMapper.map(relationship, relationshipManager.findRelationshipsLike(ispRelationshipDefinition,relationship.getTarget())));
             }
         }
 

@@ -1,0 +1,219 @@
+/*@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"); /*** override primefaces style ***/
+
+form.consult input.ui-inputfield[disabled],
+form.consult input.ui-inputfield[disabled].ui-state-focus,
+form.consult textarea.ui-inputfield[disabled],
+form.consult textarea.ui-inputfield[disabled].ui-state-focus,
+form.consult div.ui-selectonemenu.ui-state-disabled .ui-selectonemenu-label {
+    /*border: 1px !important;
+    box-shadow: none !important;
+    outline: 0 !important;*/
+    opacity: 100 !important;
+    background-color: #FFF !important;
+}
+
+.ContainerIndentBottom {
+    margin-bottom: 5px !important;
+}
+
+.ContainerIndentRight {
+    margin-right: 10px !important;
+}
+
+form.consult div.ui-selectoneradio .ui-state-disabled {
+    opacity: 100 !important;
+}
+
+form.consult div.ui-selectonemenu.ui-state-disabled {
+    opacity: 100 !important;
+    /*border-bottom: 0px !important;*/
+}
+
+form.consult .ui-autocomplete-dropdown.ui-state-disabled {
+    display: none !important;
+}
+
+form.consult .ui-selectonemenu.ui-state-disabled .ui-selectonemenu-trigger {
+    display: none !important;
+}
+
+form.consult .fa.fa-close.fa-lg {
+    display: none !important;
+}
+
+form.consult .ui-messages-detail {
+    display: none !important;
+}
+
+form.consult .fa.fa-search.fa-lg {
+    display: none !important;
+}
+
+form.consult .ui-messages-icon.fa.fa-info-circle {
+    display: none !important;
+}
+
+form#mainForm table tbody tr td div.relationshipDefinitionError {
+    border: 1px solid #F03369 !important;
+    color: #F03369;
+}
+
+.matchedConcept {
+    /*color: #3bba18 !important;*/
+    font-weight: bold;
+}
+
+form#mainForm .ui-tabs .ui-tabs-panel {
+    padding: 2px !important;
+}
+
+form#mainForm .ui-grid-col-1, .ui-grid-col-2, .ui-grid-col-3, .ui-grid-col-4, .ui-grid-col-5, .ui-grid-col-6, .ui-grid-col-7, .ui-grid-col-8, .ui-grid-col-9, .ui-grid-col-10, .ui-grid-col-11, .ui-grid-col-12 {
+    float: none !important;
+}
+
+.filterStatus .ui-grid-col-1, .ui-grid-col-2, .ui-grid-col-3, .ui-grid-col-4, .ui-grid-col-5, .ui-grid-col-6, .ui-grid-col-7, .ui-grid-col-8, .ui-grid-col-9, .ui-grid-col-10, .ui-grid-col-11, .ui-grid-col-12 {
+    float: none !important;
+}
+
+form#mainForm .ui-panelgrid .ui-panelgrid-cell {
+
+}
+/*
+.descriptionFilters .ui-inputfield {
+    padding: 0px !important
+}
+*/
+
+.filterStatus .ui-autocomplete {
+    width: 95%;
+}
+
+.browserFilters .ui-autocomplete-multiple-container {
+    width: 100% !important;
+}
+
+.browserFilters .ui-autocomplete-input-token input {
+    margin: 0px !important;
+}
+
+.browserFilters .ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token {
+    padding: 2px !important;
+}
+
+.browserFilters .ui-autocomplete-token {
+    margin: 0px !important;
+    margin-right: 2px !important;
+    margin-bottom: 5px !important;
+}
+
+.browserFilters .ui-autocomplete-multiple-container {
+    opacity:100;
+    background-color: #FFF;
+    border-bottom: 0;
+}
+
+.search {
+    position: relative;
+    color: #aaa;
+    font-size: 16px;
+}
+
+.search input { text-indent: 32px;}
+
+.search textarea { text-indent: 32px;}
+
+.consult .search input { text-indent: 0px;}
+
+.consult .search textarea { text-indent: 0px;}
+
+.search .fa-search {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.search .fa.fa-close.fa-lg {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.conceptFilters .ui-menubar .ui-menubar-options {
+    float: left;
+}
+
+.mainMenu .ui-menu .ui-menuitem .ui-menuitem-link {
+    padding: 6px 0px;
+}
+
+.mainMenu .ui-menu .ui-widget-header  {
+    display: none;
+}
+
+.browserLayout .ui-widget-content {
+    border: 1px solid #d5d5d5;
+    background: #fff;
+    color: #222;
+}
+
+.ui-widget-content.ui-layout-pane {
+    border: 1px solid #d5d5d5;
+    background: #fff;
+    color: #222;
+}
+
+.browserLayout {
+    width:  100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.northPane, .southPane, .westPane, .centerPane {
+    padding: 0;
+}
+
+.layout-menu {
+    margin-top: 0px;
+}
+
+#logo {
+    width: 240px;
+}
+
+.pe-layout-pane-header {
+    background: #f5f5f5;
+}
+
+.pe-layout-pane-header {
+    padding: 4px 0.5em 0px 0.5em;
+    border-width: 0 0 1px;
+}
+
+.pe-layout-pane-header .ui-menuitem-icon {
+    padding-right: 0.5em;
+}
+
+.browserTableDetail .ui-column-title {
+    display: none;
+}
+
+.ui-autocomplete-query {
+    background: yellow;
+}
+
+.searchSCT.ui-autocomplete-panel {
+    width: 50%;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+    background-color: #5c6bc0;
+    color: white;
+}
+
+.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon-closethick {
+    background-image: url("#{resource['primefaces-rio/images/delete-white.svg']}");;
+}
+
+.ui-datatable table tbody .ui-state-highlight.ui-row-editing > td {
+    color: #108bd5;
+}

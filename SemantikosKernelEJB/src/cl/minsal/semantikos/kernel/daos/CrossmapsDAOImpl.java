@@ -133,6 +133,8 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
             }
 
             rs.close();
+            call.close();
+            connection.close();
         } catch (SQLException e) {
             logger.error("Se produjo un error al acceder a la BDD.", e);
             throw new EJBException(e);

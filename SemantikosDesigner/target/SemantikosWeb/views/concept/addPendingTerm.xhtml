@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/template.xhtml">
+    >
+    <ui:define name="content">
+        <p:panel id="addPendingTermPanel">
+
+            <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+            <h:form>
+                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+                    <p:outputLabel id="termLabel" for="term" value="Término"/>
+                    <p:inputText id="term" value="#{pendingTerms.term}" required="true"/>
+
+                    <p:outputLabel id="dateLabel" for="date" value="Fecha"/>
+                    <p:calendar id="date" value="#{pendingTerms.date}" required="true"/>
+
+                    <p:outputLabel id="sensitiveLabel" for="sensibility" value="Sensibilidad"/>
+                    <p:selectOneRadio id="sensibility" value="#{pendingTerms.sensibility}" required="true">
+                        <f:selectItem itemLabel="Si" itemValue="true"/>
+                        <f:selectItem itemLabel="No" itemValue="false"/>
+                    </p:selectOneRadio>
+
+                    <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categoría propuesta"/>
+                    <p:selectOneMenu id="categoryMenu" value="#{pendingTerms.categoryId}" required="true">
+                        <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
+                                       itemLabel="#{category.name}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel id="nameProfessionLabel" for="nameProfessional" value="Nombre del Profesional"/>
+                    <p:inputText type="text" id="nameProfessional" value="#{pendingTerms.nameProfessional}" required="true"/>
+
+                    <p:outputLabel id="professionLabel" for="profession" value="Profesión"/>
+                    <p:inputText type="text" id="profession" value="#{pendingTerms.profession}" required="true"/>
+
+                    <p:outputLabel id="specialityLabel" for="speciality" value="Especialidad"/>
+                    <p:inputText type="text" id="speciality" value="#{pendingTerms.speciality}"
+                                 placeholder="Escriba su especialidad" required="true"/>
+
+                    <p:outputLabel id="subspecialityLabel" for="subSpeciality" value="Sub-especialidad"/>
+                    <p:inputText type="text" id="subSpeciality" value="#{pendingTerms.subspeciality}" required="true"/>
+
+                    <p:outputLabel id="mailLabel" for="mail" value="Mail"/>
+                    <p:inputText type="mail" id="mail" value="#{pendingTerms.mail}" required="true" />
+
+                    <p:outputLabel id="observationLabel" for="observation" value="Observación"/>
+                    <p:inputText type="text" id="observation" value="#{pendingTerms.observation}" required="true"/>
+
+                    <p:outputLabel id="placeOriginLabel" for="placeOrigin" value="Lugar de procedencia"/>
+                    <p:inputText type="text" id="placeOrigin" value="#{pendingTerms.placeOrigin}" required="true"/>
+
+
+                    <p:commandButton actionListener="#{pendingTerms.save}" icon="fa fa-check"
+                                     styleClass="ui-priority-primary"
+                                     value="Guardar" update="addPendingTermPanel"/>
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
+    </ui:define>
+</ui:composition>
