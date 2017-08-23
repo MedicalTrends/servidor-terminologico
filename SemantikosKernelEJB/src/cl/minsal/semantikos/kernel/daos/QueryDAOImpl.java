@@ -154,7 +154,7 @@ public class QueryDAOImpl implements QueryDAO {
         if(  query instanceof  NoValidQuery )
             QUERY = "begin ? := stk.stk_pck_query.count_description_by_no_valid_query(?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  PendingQuery )
-            QUERY = "begin ? := stk.stk_pck_query.count_pending_term_by_no_pending_query(?,?,?,?,?,?,?); end;";
+            QUERY = "begin ? := stk.stk_pck_query.count_pending_term_by_pending_query(?,?,?,?,?,?,?); end;";
         if(  query instanceof  BrowserQuery )
             QUERY = "begin ? := stk.stk_pck_query.count_concept_by_browser_query(?,?,?,?,?,?,?,?); end;";
 

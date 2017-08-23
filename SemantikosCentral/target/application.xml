@@ -6,7 +6,7 @@
   <display-name>SemantikosCentral</display-name>
   <module>
     <web>
-      <web-uri>SemantikosWS-0.9.4.war</web-uri>
+      <web-uri>SemantikosWS-0.9.5.war</web-uri>
       <context-root>ws</context-root>
     </web>
   </module>
@@ -14,6 +14,6 @@
     <ejb>SemantikosKernelEJB</ejb>
   </module>
   <module>
-    <ejb>SemantikosWSEJB-0.9.4.jar</ejb>
+    <ejb>SemantikosWSEJB-0.9.5.jar</ejb>
   </module>
 </application>

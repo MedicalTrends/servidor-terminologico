@@ -145,7 +145,7 @@ public class PendingBrowserBean implements Serializable {
                 dataSource = pendingTerms;
 
                 this.setRowCount(30);
-                //this.setRowCount(queryManager.countQueryResults(noValidQuery));
+                this.setRowCount(queryManager.countQueryResults(pendingQuery));
 
                 return pendingTerms;
             }
