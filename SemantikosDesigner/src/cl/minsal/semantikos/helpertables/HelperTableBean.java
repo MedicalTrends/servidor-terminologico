@@ -290,8 +290,8 @@ public class HelperTableBean implements Serializable {
         List<HelperTableRow> helperTableRows = getReferencedTableRows(table.getId());
         List<HelperTableRow> helperTableRowsFiltered;
 
-
-        switch ((int)idRelationshipDefinition) {
+        //@mromero cambie el switch por un if
+        /*switch ((int)idRelationshipDefinition) {
             case (int)HelperTableColumnFactory.U_ASIST_ID:
                 helperTableRowsFiltered = getValidTableRowsUnit(helperTableRows,HelperTableColumnFactory.COLUMN_U_ASIST);
                 if(helperTableRows.size()!=0){
@@ -299,7 +299,14 @@ public class HelperTableBean implements Serializable {
                 }
             default:
                 return helperTableRows;
+        }*/
+
+        if(idRelationshipDefinition == HelperTableColumnFactory.U_ASIST_ID){
+            helperTableRowsFiltered = getValidTableRowsUnit(helperTableRows,HelperTableColumnFactory.COLUMN_U_ASIST);
+            if(!helperTableRowsFiltered.isEmpty())
+                return helperTableRowsFiltered;
         }
+        return helperTableRows;
     }
 
     public List<HelperTableRow> getValidTableRowsUnit(List<HelperTableRow> helperTableRows, long idColumn) {

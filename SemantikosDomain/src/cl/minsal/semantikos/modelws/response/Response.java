@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.modelws.response;
 
 import javax.xml.bind.annotation.*;
+import java.io.Serializable;
 
 /**
  * Created by root on 09-05-17.
@@ -8,28 +9,28 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "response", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "Response", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class Response {
+public class Response implements Serializable{
 
     @XmlElement(required = true, defaultValue = "0" , name = "code")
     private int code;
 
-    @XmlElement(required = true, defaultValue = "" , name = "description")
-    private String description;
+    @XmlElement(required = true, defaultValue = "" , name = "message")
+    private String message;
 
     public Response() {
     }
 
-    public Response(int code, String description) {
+    public Response(int code, String message) {
         this.code = code;
-        this.description = description;
+        this.message = message;
     }
 
-    public String getDescription() {
-        return description;
+    public String getMessage() {
+        return message;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public int getCode() {

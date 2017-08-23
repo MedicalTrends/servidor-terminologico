@@ -13,7 +13,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "respuestaBuscarTerminos", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "RespuestaBuscarTerminos", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class TermSearchesResponse implements Serializable {
+public class TermSearchesResponse extends Response implements Serializable {
 
     @XmlElement(name = "pedible")
     private boolean requestable;

@@ -18,7 +18,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "concepto", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "Concepto", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class ConceptResponse implements Serializable {
+public class ConceptResponse extends Response implements Serializable {
 
     @XmlElement(name = "categoria")
     private CategoryResponse category;

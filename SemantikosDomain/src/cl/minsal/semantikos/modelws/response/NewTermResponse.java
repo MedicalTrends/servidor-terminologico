@@ -10,7 +10,7 @@ import java.io.Serializable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "respuestaCodificacionDeNuevoTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "RespuestaCodificacionDeNuevoTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class NewTermResponse implements Serializable {
+public class NewTermResponse extends Response implements Serializable {
 
     @XmlElement(name="descriptionID")
     private String descriptionID;

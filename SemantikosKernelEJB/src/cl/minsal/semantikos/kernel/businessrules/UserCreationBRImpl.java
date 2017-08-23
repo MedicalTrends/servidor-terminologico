@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.businessrules;
 
-import cl.minsal.semantikos.kernel.components.AuthenticationManager;
+
+import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
 import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
 import cl.minsal.semantikos.model.ConceptSMTK;
@@ -37,8 +38,9 @@ public class UserCreationBRImpl implements UserCreationBR {
     @EJB
     private UserManager userManager;
 
+
     @EJB
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManagerImpl authenticationManager;
 
     public void preconditions(User IUser) throws BusinessRuleException {
 

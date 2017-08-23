@@ -3,6 +3,7 @@ package cl.minsal.semantikos.modelws.response;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 
 import javax.xml.bind.annotation.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "respuestaObtenerCrossmapsIndirectos", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "RespuestaObtenerCrossmapsIndirectos", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class IndirectCrossMapSearchResponse {
+public class IndirectCrossMapSearchResponse extends Response implements Serializable{
 
     @XmlElement(name="conceptID")
     private String conceptId;

@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.List;
  * @author Andrés Farías on 8/30/16.
  */
 @Stateless
+@LocalBean
 public class CrossmapsManagerImpl implements CrossmapsManager {
 
     /** El logger de la clase */

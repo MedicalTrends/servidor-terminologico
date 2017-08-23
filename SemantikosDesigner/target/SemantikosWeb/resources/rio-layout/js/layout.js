@@ -141,7 +141,7 @@ var Rio = {
     },
     restoreMenuState: function () {
         var menucookie = $.cookie('rio_expandeditems');
-        var scrollcookie = $.cookie("rio_menu_scroll");
+        //var scrollcookie = $.cookie("rio_menu_scroll");
 
         if (menucookie) {
             this.expandedMenuitems = menucookie.split(',');
