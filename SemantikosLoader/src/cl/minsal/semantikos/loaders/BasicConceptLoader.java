@@ -17,6 +17,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
+import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.*;
 

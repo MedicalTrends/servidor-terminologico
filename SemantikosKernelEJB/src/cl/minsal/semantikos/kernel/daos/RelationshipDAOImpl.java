@@ -13,11 +13,10 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.EJB;
-import javax.ejb.EJBException;
-import javax.ejb.Stateless;
+import javax.ejb.*;
 import java.sql.*;
 import java.util.*;
+import java.util.concurrent.Future;
 
 import static java.sql.Types.VARCHAR;
 
@@ -319,6 +318,39 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         }
 
         return relationships;
+    }
+
+    @Override
+    @Asynchronous
+    public Future<List<Relationship>> getRelationshipsBySourceConceptAsync(ConceptSMTK conceptSMTK) {
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_relationship.get_relationships_by_source_concept_id(?); end;";
+
+        List<Relationship> relationships = new ArrayList<>();
+
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSMTK.getId());
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while(rs.next()) {
+                relationships.add(createRelationshipFromResultSet(rs, conceptSMTK));
+            }
+
+            rs.close();
+            call.close();
+            connection.close();
+        } catch (SQLException e) {
+            throw new EJBException(e);
+        }
+
+        return new AsyncResult<>(relationships);
     }
 
     @Override

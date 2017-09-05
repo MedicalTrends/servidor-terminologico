@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Andrés Farías
@@ -19,14 +20,14 @@ public class CrossmapSetFactory implements Serializable {
     private List<CrossmapSet> crossmapSets;
 
     /** Mapa de categorías por su id. */
-    private Map<Long, CrossmapSet> crossmapSetById;
+    private ConcurrentHashMap<Long, CrossmapSet> crossmapSetById;
 
     /**
      * Constructor privado para el Singleton del Factory.
      */
     private CrossmapSetFactory() {
         this.crossmapSets = new ArrayList<>();
-        this.crossmapSetById = new HashMap<>();
+        this.crossmapSetById = new ConcurrentHashMap<>();
     }
 
     public static CrossmapSetFactory getInstance() {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Andrés Farías
@@ -21,18 +22,18 @@ public class DescriptionTypeFactory implements Serializable {
     private List<DescriptionType> descriptionTypes;
 
     /** Mapa de Descripciones por su nombre. */
-    private Map<String, DescriptionType> descriptionTypesByName;
+    private ConcurrentHashMap<String, DescriptionType> descriptionTypesByName;
 
     /** Mapa de Descripciones por su ID */
-    private Map<Long, DescriptionType> descriptionTypesByID;
+    private ConcurrentHashMap<Long, DescriptionType> descriptionTypesByID;
 
     /**
      * Constructor privado para el Singleton del Factory.
      */
     private DescriptionTypeFactory() {
         this.descriptionTypes = new ArrayList<>();
-        this.descriptionTypesByID = new HashMap<>();
-        this.descriptionTypesByName = new HashMap<>();
+        this.descriptionTypesByID = new ConcurrentHashMap<>();
+        this.descriptionTypesByName = new ConcurrentHashMap<>();
     }
 
     public static DescriptionTypeFactory getInstance() {

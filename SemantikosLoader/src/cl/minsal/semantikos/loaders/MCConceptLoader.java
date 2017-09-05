@@ -296,7 +296,7 @@ public class MCConceptLoader extends EntityLoader {
                 // Obteniendo Sustancia
                 String termFavourite = StringUtils.normalizeSpaces(substanceTokens[0]).trim();
 
-                List<Description> substanceList = descriptionManager.searchDescriptionsPerfectMatch(termFavourite, Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia")}), EMPTY_LIST);
+                List<Description> substanceList = descriptionManager.searchDescriptionsPerfectMatch(termFavourite, Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia")}), null);
 
                 if(substanceList.isEmpty()) {
                     throw new LoadException(path.toString(), id, "No existe una sustancia con preferida: "+termFavourite, ERROR);
@@ -441,7 +441,7 @@ public class MCConceptLoader extends EntityLoader {
 
                 relationshipDefinition = category.findRelationshipDefinitionsByName("Medicamento Básico").get(0);
 
-                List<Description> mb = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mbName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Básico")}), EMPTY_LIST);
+                List<Description> mb = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mbName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Básico")}), null);
 
                 if(mb.isEmpty()) {
                     throw new LoadException(path.toString(), id, "No existe un MB con preferida: "+mbName, ERROR);

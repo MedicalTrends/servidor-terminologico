@@ -4,8 +4,10 @@ import cl.minsal.semantikos.kernel.daos.InstitutionDAO;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.util.List;
 
 /**

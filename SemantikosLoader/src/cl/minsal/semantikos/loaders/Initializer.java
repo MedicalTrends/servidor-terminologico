@@ -4,7 +4,9 @@ import cl.minsal.semantikos.model.LoadException;
 import cl.minsal.semantikos.model.LoadLog;
 import cl.minsal.semantikos.model.SMTKLoader;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,8 +27,9 @@ public class Initializer extends EntityLoader {
 
             smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles Conceptos Básicos", INFO));
 
-            this.path = Paths.get(smtkLoader.BASIC_CONCEPTS_PATH);
-            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+            //this.path = Paths.get(smtkLoader.BASIC_CONCEPTS_PATH);
+            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.BASIC_CONCEPTS_PATH)));
+            //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
 
             int lines = 1;
 
@@ -43,8 +46,9 @@ public class Initializer extends EntityLoader {
             while ( reader.readLine() != null) lines++;
             reader.close();
 
-            this.path = Paths.get(smtkLoader.BASIC_DESCRIPTIONS_PATH);
-            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+            //this.path = Paths.get(smtkLoader.BASIC_DESCRIPTIONS_PATH);
+            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.BASIC_DESCRIPTIONS_PATH)));
+            //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
 
             /**
              * Recuperar el header del archivo
@@ -56,8 +60,9 @@ public class Initializer extends EntityLoader {
                 throw new LoadException(smtkLoader.BASIC_DESCRIPTIONS_PATH, null, "El encabezado del archivo no es válido", ERROR);
             }
 
-            this.path = Paths.get(smtkLoader.BASIC_RELATIONSHIPS_PATH);
-            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+            //this.path = Paths.get(smtkLoader.BASIC_RELATIONSHIPS_PATH);
+            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.BASIC_RELATIONSHIPS_PATH)));
+            //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
 
             /**
              * Recuperar el header del archivo
@@ -92,8 +97,9 @@ public class Initializer extends EntityLoader {
 
             smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles Sustancias", INFO));
 
-            this.path = Paths.get(smtkLoader.SUBSTANCE_PATH);
-            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+            //this.path = Paths.get(smtkLoader.SUBSTANCE_PATH);
+            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.SUBSTANCE_PATH)));
+            //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
 
             int lines = 1;
 
@@ -133,8 +139,9 @@ public class Initializer extends EntityLoader {
 
             smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles MB", INFO));
 
-            this.path = Paths.get(smtkLoader.MB_PATH);
-            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+            //this.path = Paths.get(smtkLoader.MB_PATH);
+            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.MB_PATH)));
+            //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
 
             int lines = 1;
 
@@ -174,8 +181,9 @@ public class Initializer extends EntityLoader {
 
             smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles MC", INFO));
 
-            this.path = Paths.get(smtkLoader.MC_PATH);
-            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+            //this.path = Paths.get(smtkLoader.MC_PATH);
+            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.MC_PATH)));
+            //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
 
             int lines = 1;
 
@@ -192,8 +200,9 @@ public class Initializer extends EntityLoader {
             while (reader.readLine() != null) lines++;
             reader.close();
 
-            this.path = Paths.get(smtkLoader.MC_VIAS_ADM_PATH);
-            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+            //this.path = Paths.get(smtkLoader.MC_VIAS_ADM_PATH);
+            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.MC_VIAS_ADM_PATH)));
+            //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
 
             /**
              * Recuperar el header del archivo
@@ -228,8 +237,9 @@ public class Initializer extends EntityLoader {
 
             smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles MCCE", INFO));
 
-            this.path = Paths.get(smtkLoader.MCCE_PATH);
-            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+            //this.path = Paths.get(smtkLoader.MCCE_PATH);
+            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.MCCE_PATH)));
+            //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
 
             int lines = 1;
 
@@ -269,8 +279,9 @@ public class Initializer extends EntityLoader {
 
             smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles GFP", INFO));
 
-            this.path = Paths.get(smtkLoader.GFP_PATH);
-            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+            //this.path = Paths.get(smtkLoader.GFP_PATH);
+            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.GFP_PATH)));
+            //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
 
             int lines = 1;
 
@@ -310,8 +321,9 @@ public class Initializer extends EntityLoader {
 
             smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles FP", INFO));
 
-            this.path = Paths.get(smtkLoader.FP_PATH);
-            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+            //this.path = Paths.get(smtkLoader.FP_PATH);
+            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.FP_PATH)));
+            //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
 
             int lines = 1;
 
@@ -351,8 +363,9 @@ public class Initializer extends EntityLoader {
 
             smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles PC", INFO));
 
-            this.path = Paths.get(smtkLoader.PC_PATH);
-            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+            //this.path = Paths.get(smtkLoader.PC_PATH);
+            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.PC_PATH)));
+            //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
 
             int lines = 1;
 
@@ -392,8 +405,9 @@ public class Initializer extends EntityLoader {
 
             smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles PCCE", INFO));
 
-            this.path = Paths.get(smtkLoader.PCCE_PATH);
-            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+            //this.path = Paths.get(smtkLoader.PCCE_PATH);
+            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.PCCE_PATH)));
+            //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
 
             int lines = 1;
 
@@ -404,7 +418,7 @@ public class Initializer extends EntityLoader {
 
             if(!assertHeader((List<String>) (Object) Arrays.asList(PCCEConceptLoader.pcceConceptFields.keySet().toArray()),
                     Arrays.asList(header.split(separator)))) {
-                throw new LoadException(smtkLoader.PC_PATH, null, "El encabezado del archivo no es válido", ERROR);
+                throw new LoadException(smtkLoader.PCCE_PATH, null, "El encabezado del archivo no es válido", ERROR);
             }
 
             while (reader.readLine() != null) lines++;

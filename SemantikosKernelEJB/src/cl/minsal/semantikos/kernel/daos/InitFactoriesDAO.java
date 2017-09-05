@@ -73,4 +73,11 @@ public interface InitFactoriesDAO {
      * @return El factory correspondiente
      */
     DataSourceFactory refreshDataSource() throws NamingException;
+
+    /**
+     * Este método es responsable de retornar un Factory.
+     *
+     * @return El factory correspondiente
+     */
+    DataSourceFactory refreshThreadPool() throws NamingException;
 }

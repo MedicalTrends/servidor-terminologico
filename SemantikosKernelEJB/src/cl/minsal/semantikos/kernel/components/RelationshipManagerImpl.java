@@ -9,6 +9,7 @@ import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.kernel.daos.TargetDAO;
 import cl.minsal.semantikos.kernel.factories.RelationshipLoaderFactory;
+import cl.minsal.semantikos.kernel.factories.ThreadFactory;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.*;
@@ -16,8 +17,11 @@ import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.enterprise.concurrent.ManagedThreadFactory;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -34,6 +38,7 @@ import static java.lang.System.currentTimeMillis;
  * @author Andrés Farías.
  */
 @Stateless
+@LocalBean
 public class RelationshipManagerImpl implements RelationshipManager {
 
     /** El gestor de relaciones con la base de datos */
@@ -55,7 +60,6 @@ public class RelationshipManagerImpl implements RelationshipManager {
     @EJB
     private RelationshipBindingBR relationshipBindingBR;
 
-    ExecutorService executor;
 
     @Override
     public Relationship bindRelationshipToConcept(ConceptSMTK concept, Relationship relationship, User user) throws Exception {
@@ -301,25 +305,32 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
-    public List<ConceptSMTK> loadRelationships(List<ConceptSMTK> conceptSMTKs) throws Exception {
+    public List<ConceptSMTK> loadRelationshipsInParallel(List<ConceptSMTK> conceptSMTKs) throws Exception {
 
-        executor = Executors.newFixedThreadPool(conceptSMTKs.size());
-
+        //executor;
+        /*
         Collection<RelationshipLoaderFactory> tasks = new ArrayList<>();
 
         for (ConceptSMTK conceptSMTK : conceptSMTKs) {
-            tasks.add(new RelationshipLoaderFactory(conceptSMTK, this));
+            tasks.add(new RelationshipLoaderFactory(conceptSMTK, relationshipDAO));
         }
 
-        List<Future<List<Relationship>>> results = executor.invokeAll(tasks);
+        List<Future<List<Relationship>>> results = ThreadFactory.getInstance().getExecutor().invokeAll(tasks);
+        */
+
+        List<Future<List<Relationship>>> results = new ArrayList<>();
         int i = 0;
+
+        for (ConceptSMTK conceptSMTK : conceptSMTKs) {
+            results.add(relationshipDAO.getRelationshipsBySourceConceptAsync(conceptSMTK));
+        }
 
         for(Future<List<Relationship>> result : results){
             conceptSMTKs.get(i).setRelationships(result.get());
             i++;
         }
 
-        executor.shutdown(); //always reclaim resources
+//        ThreadFactory.getInstance().getExecutor(); //always reclaim resources
 
         return conceptSMTKs;
     }

@@ -35,7 +35,7 @@ public class QueryManagerImpl implements QueryManager {
     private CategoryManager categoryManager;
 
     @EJB
-    private RelationshipManager relationshipManager;
+    private RelationshipManagerImpl relationshipManager;
 
     @EJB
     private ConceptSearchBR conceptSearchBR;

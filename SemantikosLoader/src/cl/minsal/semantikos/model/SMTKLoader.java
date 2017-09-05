@@ -26,9 +26,11 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-    public static final String PATH_PREFIX = Paths.get(".").toAbsolutePath().normalize().toString().concat("/SemantikosLoader/resources/");
+    //public static final String PATH_PREFIX = Paths.get(".").toAbsolutePath().normalize().toString().concat("/SemantikosLoader/resources/");
 
-    private static final String ROOT = "datafiles/";
+    //public static final String PATH_PREFIX = "/resources/";
+
+    private static final String ROOT = "/datafiles/";
     //private static final String ENV_DRUGS = "test/";
     private static final String ENV = "basic/";
     private static final String ENV_DRUGS = "drugs/";
@@ -43,26 +45,26 @@ public class SMTKLoader extends SwingWorker<Void, String> {
     private static final String PCCE = "PCCE/";
 
     /*Datafiles conceptos básicos*/
-    public static final String BASIC_CONCEPTS_PATH=PATH_PREFIX+ROOT+ENV+"Conceptos_VIG_SMTK.txt";
-    public static final String BASIC_DESCRIPTIONS_PATH=PATH_PREFIX+ROOT+ENV+"Descripciones_VIG_STK.txt";
-    public static final String BASIC_RELATIONSHIPS_PATH=PATH_PREFIX+ROOT+ENV+"Relaciones_Conceptos_VIG_STK.txt";
+    public static final String BASIC_CONCEPTS_PATH= ROOT+ENV+"Conceptos_VIG_SMTK.txt";
+    public static final String BASIC_DESCRIPTIONS_PATH= ROOT+ENV+"Descripciones_VIG_STK.txt";
+    public static final String BASIC_RELATIONSHIPS_PATH= ROOT+ENV+"Relaciones_Conceptos_VIG_STK.txt";
     /*Datafiles Sustancias*/
-    public static final String SUBSTANCE_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+SUBSTANCE+"01_Sustancias.Base.txt";
+    public static final String SUBSTANCE_PATH= ROOT+ENV_DRUGS+SUBSTANCE+"01_Sustancias.Base.txt";
     /*Datafiles MB*/
-    public static final String MB_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+MB+"02_Medicamento_Basico.Base.txt";
+    public static final String MB_PATH= ROOT+ENV_DRUGS+MB+"02_Medicamento_Basico.Base.txt";
     /*Datafiles MC*/
-    public static final String MC_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+MC+"03_Medicamento_Clinico.Base.txt";
-    public static final String MC_VIAS_ADM_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+MC+"03_Medicamento_Clinico.Via_Administracion.txt";
+    public static final String MC_PATH= ROOT+ENV_DRUGS+MC+"03_Medicamento_Clinico.Base.txt";
+    public static final String MC_VIAS_ADM_PATH= ROOT+ENV_DRUGS+MC+"03_Medicamento_Clinico.Via_Administracion.txt";
     /*Datafiles MCCE*/
-    public static final String MCCE_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+MCCE+"04_Medicamento_Clinico_Con_Envase.Base.txt";
+    public static final String MCCE_PATH= ROOT+ENV_DRUGS+MCCE+"04_Medicamento_Clinico_Con_Envase.Base.txt";
     /*Datafiles GFP*/
-    public static final String GFP_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+GFP+"05_Grupo_Familia_Producto.Base.txt";
+    public static final String GFP_PATH= ROOT+ENV_DRUGS+GFP+"05_Grupo_Familia_Producto.Base.txt";
     /*Datafiles FP*/
-    public static final String FP_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+FP+"06_Familia_Producto.Base.txt";
+    public static final String FP_PATH= ROOT+ENV_DRUGS+FP+"06_Familia_Producto.Base.txt";
     /*Datafiles PC*/
-    public static final String PC_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+PC+"07_Producto_Comercial.Base.txt";
+    public static final String PC_PATH= ROOT+ENV_DRUGS+PC+"07_Producto_Comercial.Base.txt";
     /*Datafiles PCCE*/
-    public static final String PCCE_PATH=PATH_PREFIX+ROOT+ENV_DRUGS+PCCE+"08_Producto_Comercial_Con_Envase.Base.txt";
+    public static final String PCCE_PATH= ROOT+ENV_DRUGS+PCCE+"08_Producto_Comercial_Con_Envase.Base.txt";
 
     private CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
     private TagSMTKManager tagSMTKManager = (TagSMTKManager) RemoteEJBClientFactory.getInstance().getManager(TagSMTKManager.class);
@@ -114,7 +116,7 @@ public class SMTKLoader extends SwingWorker<Void, String> {
      */
     private List<LoadLog> logs = new ArrayList<>();
 
-    public SMTKLoader(JTextArea infoLogs, JTextArea errorLogs, JTextField conceptsTotal, JTextField conceptsProcessed, JTextField userName, JTextField timeStamp, JProgressBar progressBar) {
+    public SMTKLoader(JTextArea infoLogs, JTextArea errorLogs, JTextField conceptsTotal, JTextField conceptsProcessed, JTextField userName, JTextField timeStamp, JProgressBar progressBar) throws InterruptedException {
 
         this.infoLogs = infoLogs;
         this.errorLogs = errorLogs;
@@ -141,6 +143,8 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
         DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypeFactory.getDescriptionTypes());
     }
+
+
 
     public Timestamp getDate() {
         return date;
@@ -291,6 +295,7 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             PCConceptLoader pcConceptLoader = new PCConceptLoader();
             PCCEConceptLoader pcceConceptLoader = new PCCEConceptLoader();
 
+            /*
             initializer.checkBasicConceptsDataFiles(this);
             basicConceptLoader.processConcepts(this);
 
@@ -314,6 +319,7 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
             initializer.checkPCDataFiles(this);
             pcConceptLoader.processConcepts(this);
+            */
 
             initializer.checkPCCEDataFiles(this);
             pcceConceptLoader.processConcepts(this);

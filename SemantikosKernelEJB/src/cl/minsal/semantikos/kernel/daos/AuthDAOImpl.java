@@ -9,9 +9,9 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.EJB;
-import javax.ejb.EJBException;
-import javax.ejb.Stateless;
+import javax.annotation.Resource;
+import javax.ejb.*;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +31,9 @@ public class AuthDAOImpl implements AuthDAO {
 
     @EJB
     private QuestionDAO questionDAO;
+
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
 
     @Override
     public User getUserById(long id) {
@@ -159,6 +162,7 @@ public class AuthDAOImpl implements AuthDAO {
     }
 
     @Override
+    //@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public User getUserByEmail(String email) {
 
         //ConnectionBD connect = new ConnectionBD();
@@ -166,8 +170,10 @@ public class AuthDAOImpl implements AuthDAO {
 
         String sql = "begin ? := stk.stk_pck_user.get_user_by_email(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
+
+            //connection.setReadOnly(true);
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, email);

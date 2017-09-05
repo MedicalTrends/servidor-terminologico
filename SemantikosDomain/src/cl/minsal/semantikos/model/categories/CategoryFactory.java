@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Andrés Farías
@@ -21,18 +22,18 @@ public class CategoryFactory implements Serializable {
     private List<Category> categories;
 
     /** Mapa de categorías por su id. */
-    private Map<Long, Category> categoriesById;
+    private ConcurrentHashMap<Long, Category> categoriesById;
 
     /** Mapa de categorías por su nombre. */
-    private Map<String, Category> categoriesByName;
+    private ConcurrentHashMap<String, Category> categoriesByName;
 
     /**
      * Constructor privado para el Singleton del Factory.
      */
     private CategoryFactory() {
         this.categories = new ArrayList<>();
-        this.categoriesById = new HashMap<>();
-        this.categoriesByName = new HashMap<>();
+        this.categoriesById = new ConcurrentHashMap<>();
+        this.categoriesByName = new ConcurrentHashMap<>();
     }
 
     public static CategoryFactory getInstance() {
@@ -84,11 +85,11 @@ public class CategoryFactory implements Serializable {
         }
     }
 
-    public Map<String, Category> getCategoriesByName() {
+    public ConcurrentHashMap<String, Category> getCategoriesByName() {
         return categoriesByName;
     }
 
-    public void setCategoriesByName(Map<String, Category> categoriesByName) {
+    public void setCategoriesByName(ConcurrentHashMap<String, Category> categoriesByName) {
         this.categoriesByName = categoriesByName;
     }
 }

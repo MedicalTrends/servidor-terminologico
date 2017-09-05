@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.util.concurrent.Future;
+
 
 /**
  * @author Andrés Farías.
@@ -67,7 +69,15 @@ public interface DescriptionDAO {
      *
      * @return
      */
-    List<Description> searchDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets, int quantity);
+    List<Description> searchDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets, int page, int pageSize);
+
+    /**
+     * Este método es responsable de buscar y retornar todas las descripciones que hagan perfect match con el término
+     * dado como parámetro en cada una de las categorías y refsets indicadas.
+     *
+     * @return
+     */
+    Future<List<Description>> searchDescriptionsPerfectMatchAsync(String term, Long[] categories, Long[] refsets, int page, int pageSize);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que hagan truncate match con el término
@@ -75,7 +85,7 @@ public interface DescriptionDAO {
      *
      * @return
      */
-    List<Description> searchDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets, int quantity);
+    List<Description> searchDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets, int page, int pageSize);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que hagan perfect match con el término

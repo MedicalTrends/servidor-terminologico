@@ -254,7 +254,7 @@ public class PCCEConceptLoader extends EntityLoader {
 
                 relationshipDefinition = category.findRelationshipDefinitionsByName("Producto Comercial").get(0);
 
-                List<Description> pc = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(pcName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Producto Comercial")}), EMPTY_LIST);
+                List<Description> pc = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(pcName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Producto Comercial")}), null);
 
                 if(pc.isEmpty()) {
                     throw new LoadException(path.toString(), id, "No existe un PC con preferida: "+pcName, ERROR);
@@ -277,7 +277,7 @@ public class PCCEConceptLoader extends EntityLoader {
 
                 relationshipDefinition = category.findRelationshipDefinitionsByName("Medicamento Clínico con Envase").get(0);
 
-                List<Description> mcce = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mcceName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico con Envase")}), EMPTY_LIST);
+                List<Description> mcce = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mcceName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico con Envase")}), null);
 
                 if(mcce.isEmpty()) {
                     throw new LoadException(path.toString(), id, "No existe un MCCE con preferida: "+pcName, ERROR);
@@ -311,7 +311,7 @@ public class PCCEConceptLoader extends EntityLoader {
 
     public void loadAllConcepts(SMTKLoader smtkLoader) {
 
-        smtkLoader.logInfo(new LoadLog("Comprobando Conceptos PC", INFO));
+        smtkLoader.logInfo(new LoadLog("Comprobando Conceptos PCCE", INFO));
 
         try {
 
@@ -344,7 +344,7 @@ public class PCCEConceptLoader extends EntityLoader {
 
     public void persistAllConcepts(SMTKLoader smtkLoader) {
 
-        smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos PC", INFO));
+        smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos PCCE", INFO));
 
         smtkLoader.setConceptsProcessed(0);
 

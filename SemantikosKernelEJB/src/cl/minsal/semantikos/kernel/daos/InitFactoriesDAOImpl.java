@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.factories.EmailFactory;
 import cl.minsal.semantikos.kernel.factories.QueryFactory;
+import cl.minsal.semantikos.kernel.factories.ThreadFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 
@@ -38,6 +39,7 @@ import javax.ejb.Startup;
 import javax.mail.Session;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.resource.spi.work.WorkManager;
 import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
@@ -46,6 +48,7 @@ import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
 
@@ -95,6 +98,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         this.refreshDescriptionTypes();
         this.refreshTagsSMTK();
         this.refreshUsers();
+        this.refreshThreadPool();
     }
 
     private void testArrayOracle() {
@@ -430,7 +434,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
             CrossmapSetFactory.getInstance().setCrossmapSets(crossmapSets);
 
         } catch (SQLException e) {
-            String errorMsg = "Error al intentar recuperar Description Types de la BDD.";
+            String errorMsg = "Error al intentar recuperar CrossmapsSets de la BDD.";
             logger.error(errorMsg, e);
             throw new EJBException(errorMsg, e);
         }
@@ -524,7 +528,12 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         InitialContext c = new InitialContext();
         DataSource dataSource = (DataSource) c.lookup("java:jboss/OracleDS");
         DataSourceFactory.getInstance().setDataSource(dataSource);
+        return DataSourceFactory.getInstance();
+    }
 
+    @Override
+    public DataSourceFactory refreshThreadPool() {
+        ThreadFactory.getInstance().setExecutor(Executors.newFixedThreadPool(500));
         return DataSourceFactory.getInstance();
     }
 

@@ -21,9 +21,11 @@ import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +80,9 @@ public class ConceptDAOImpl implements ConceptDAO {
 
     @EJB
     RefSetDAO refSetDAO;
+
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
 
     @Override
     public void delete(ConceptSMTK conceptSMTK) {
@@ -183,8 +188,10 @@ public class ConceptDAOImpl implements ConceptDAO {
         String sql = "begin ? := stk.stk_pck_concept.get_concept_by_id(?); end;";
 
         ConceptSMTK conceptSMTK;
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
+
+            //connection.setReadOnly(true);
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, id);
@@ -200,9 +207,9 @@ public class ConceptDAOImpl implements ConceptDAO {
                 logger.error(errorMsg);
                 throw new IllegalArgumentException(errorMsg);
             }
-            rs.close();
-            call.close();
-            connection.close();
+            //rs.close();
+            //call.close();
+            //connection.close();
         } catch (SQLException e) {
             logger.error("Se produjo un error al acceder a la BDD.", e);
             throw new EJBException(e);
@@ -859,8 +866,10 @@ public class ConceptDAOImpl implements ConceptDAO {
         /* Se recuperan las descripciones del concepto */
         conceptSMTK.setDescriptions(descriptionDAO.getDescriptionsByConcept(conceptSMTK));
 
-        /* Se recuperan sus Etiquetas */
-        conceptSMTK.setTags(tagDAO.getTagsByConcept(conceptSMTK));
+        /* Se recuperan sus Etiquetas, solo si posee */
+        if(resultSet.getLong("id_concept") != 0) {
+            conceptSMTK.setTags(tagDAO.getTagsByConcept(conceptSMTK));
+        }
 
         return conceptSMTK;
     }

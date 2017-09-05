@@ -183,5 +183,5 @@ public interface RelationshipManager {
 
     public RelationshipDefinitionFactory getRelationshipDefinitionFactory();
 
-    public List<ConceptSMTK> loadRelationships(List<ConceptSMTK> conceptSMTKs) throws Exception;
+    public List<ConceptSMTK> loadRelationshipsInParallel(List<ConceptSMTK> conceptSMTKs) throws Exception;
 }

@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.User;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Diego Soto on 07-06-16.
@@ -139,6 +140,15 @@ public interface DescriptionManager {
      * @return Una lista con descripciones que hacen perfect match.
      */
     public List<Description> searchDescriptionsPerfectMatch(String term, List<Category> categories, List<RefSet> refSets);
+
+    /**
+     * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
+     * parámetro en cada una de las categorías y refsets indicadas.
+     *
+     * @return Una lista con descripciones que hacen perfect match.
+     */
+    public List<Description> searchDescriptionsPerfectMatchInParallel(String term, List<Category> categories, List<RefSet> refSets)
+            throws InterruptedException, ExecutionException;
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como

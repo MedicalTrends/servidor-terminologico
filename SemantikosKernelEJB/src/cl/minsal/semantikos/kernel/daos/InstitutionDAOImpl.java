@@ -8,7 +8,9 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -25,6 +27,8 @@ public class InstitutionDAOImpl implements InstitutionDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(InstitutionDAOImpl.class);
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
 
     @Override
     public Institution getInstitutionBy(long id) {
@@ -34,8 +38,11 @@ public class InstitutionDAOImpl implements InstitutionDAO {
         String sql = "begin ? := stk.stk_pck_institution.get_institution_by_id(?); end;";
 
         Institution institution= new Institution();
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
+
+            connection.setReadOnly(true);
+
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, id);
             call.execute();

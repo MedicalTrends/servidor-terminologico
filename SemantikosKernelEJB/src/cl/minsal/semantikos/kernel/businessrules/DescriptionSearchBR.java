@@ -6,15 +6,30 @@ import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import javax.ejb.Singleton;
 import javax.validation.constraints.NotNull;
 import java.text.Normalizer;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Andrés Farías on 11/24/16.
  */
 @Singleton
 public class DescriptionSearchBR {
+
+    static final String[] STOP_WORDS = new String[]{"a","aquí","cuantos","esta","misma","nosotras","querer","tales",
+            "usted","acá","cada","cuán","estar","mismas","nosotros","qué","tan","ustedes","ahí","cierta","cuánto",
+            "estas","mismo","nuestra","quien","tanta","varias","ajena","ciertas","cuántos","este","mismos","nuestras",
+            "quienes","tantas","varios","ajenas","cierto","de","estos","mucha","nuestro","quienesquiera","tanto",
+            "vosotras","ajeno","ciertos","dejar","hacer","muchas","nuestros","quienquiera","tantos","vosotros","ajenos",
+            "como","del","hasta","muchísima","nunca","quién","te","vuestra","al","cómo","demasiada","jamás","muchísimas",
+            "os","ser","tener","vuestras","algo","con","demasiadas","junto","muchísimo","otra","si","ti","vuestro",
+            "alguna","conmigo","demasiado","juntos","muchísimos","otras","siempre","toda","vuestros","algunas","consigo",
+            "demasiados","la","mucho","otro","sí","todas","y","alguno","contigo","demás","las","muchos","otros","sín",
+            "todo","yo","algunos","cualquier","el","lo","muy","para","Sr","todos ","algún","cualquiera","ella","los",
+            "nada","parecer","Sra","tomar ","allá","cualquieras","él","me","ningunas","poco","suya","tú ","aquella",
+            "cuantas","esa","menos","ninguno","pocos","suyas","un ","aquellas","cuánta","esas","mía","ningunos","por",
+            "suyo","una ","aquello","cuántas","ese","mientras","no","porque","suyos","unas","aquellos","cuanto","esos",
+            "mío","nos","que","tal","unos"};
 
     /**
      * Método de normalización del patrón de búsqueda, lleva las palabras a minúsculas,
@@ -26,15 +41,22 @@ public class DescriptionSearchBR {
     //TODO: Falta quitar los StopWords (no se encuentran definidos)
     public String standardizationPattern(String pattern) {
 
-        if (pattern != null) {
-            pattern = Normalizer.normalize(pattern, Normalizer.Form.NFD);
-            pattern = pattern.toLowerCase();
-            pattern = pattern.replaceAll("[^\\p{ASCII}]", "");
-            pattern = pattern.replaceAll("\\p{Punct}+", "");
-        }else{
-            pattern="";
+        String result = "";
+
+        List stopWords = Arrays.asList(STOP_WORDS);
+
+        for (String s : pattern.toLowerCase().split("\\b")) {
+            if (!stopWords.contains(s)) {
+                result=result+s;
+            }
         }
-        return pattern;
+
+        result = Normalizer.normalize(result, Normalizer.Form.NFD);
+        result = result.toLowerCase();
+        result = result.replaceAll("[^\\p{ASCII}]", "");
+        result = result.replaceAll("\\p{Punct}+", "");
+
+        return result;
     }
 
     /**

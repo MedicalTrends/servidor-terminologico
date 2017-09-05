@@ -11,6 +11,7 @@ import javax.ejb.Local;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
  * @author Andrés Farías
@@ -74,6 +75,16 @@ public interface RelationshipDAO {
      * @return Una lista con las relaciones del concepto.
      */
     List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK conceptSMTK);
+
+    /**
+     * Este método es responsable de recuperar las relaciones donde el concepto de origen coincide con el
+     * <code>idConcept</code> dado como argumento.
+     *
+     * @param conceptSMTK El id del concepto cuyas relaciones se quiere recuperar.
+     *
+     * @return Una lista con las relaciones del concepto.
+     */
+    Future<List<Relationship>> getRelationshipsBySourceConceptAsync(ConceptSMTK conceptSMTK);
 
     /**
      * Este método es responsable de recuperar las relaciones donde el concepto de origen coincide con el

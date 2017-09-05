@@ -5,6 +5,7 @@ import cl.minsal.semantikos.model.SMTKLoader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -50,7 +51,8 @@ public class EntityLoader {
 
         this.path = Paths.get(path);
         try {
-            reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+            //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
+            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(path)));
             /**
              * Descartar header
              */

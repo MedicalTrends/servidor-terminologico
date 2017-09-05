@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static cl.minsal.semantikos.kernel.daos.DescriptionDAOImpl.NO_VALID_TERMS;
 
@@ -48,7 +49,7 @@ public class ConceptController {
     @EJB
     private ConceptManager conceptManager;
     @EJB
-    private RelationshipManager relationshipManager;
+    private RelationshipManagerImpl relationshipManager;
     @EJB
     private DescriptionManager descriptionManager;
     @EJB
@@ -227,7 +228,7 @@ public class ConceptController {
             String term,
             List<String> categoriesNames,
             List<String> refSetsNames
-    ) throws NotFoundFault {
+    ) throws NotFoundFault, ExecutionException, InterruptedException {
 
         if(!categoriesNames.contains("Concepto Especial")) {
             categoriesNames.add("Concepto Especial");
@@ -248,7 +249,8 @@ public class ConceptController {
         List<NoValidDescriptionResponse> noValidDescriptions = new ArrayList<>();
         List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
 
-        List<Description> descriptions = this.descriptionManager.searchDescriptionsPerfectMatch(term, categories, refSets);
+        //List<Description> descriptions = this.descriptionManager.searchDescriptionsPerfectMatch(term, categories, refSets);
+        List<Description> descriptions = this.descriptionManager.searchDescriptionsPerfectMatchInParallel(term, categories, refSets);
         //logger.debug("ws-req-001. descripciones encontradas: " + descriptions);
 
         for (Description description : descriptions) {
@@ -565,8 +567,8 @@ public class ConceptController {
 
         List<ConceptSMTK> concepts = conceptManager.findModeledConceptPaginated(category, pageSize, pageNumber);
 
-        if(!category.getRelationshipDefinitions().isEmpty()) {
-            concepts = relationshipManager.loadRelationships(concepts);
+        if(category.getRelationshipDefinitions().size() > 2) {
+            concepts = relationshipManager.loadRelationshipsInParallel(concepts);
         }
 
         List<ConceptResponse> conceptResponses = new ArrayList<>();

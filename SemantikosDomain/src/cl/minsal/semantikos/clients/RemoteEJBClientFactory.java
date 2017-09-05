@@ -12,6 +12,7 @@ import javax.naming.*;
 
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public class RemoteEJBClientFactory {
@@ -69,7 +70,7 @@ public class RemoteEJBClientFactory {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        this.managersByName = new HashMap<>();
+        this.managersByName = new ConcurrentHashMap<>();
     }
 
     public static RemoteEJBClientFactory getInstance() {

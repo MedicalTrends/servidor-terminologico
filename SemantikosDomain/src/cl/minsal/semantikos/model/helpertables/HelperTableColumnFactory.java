@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Andrés Farías
@@ -38,18 +39,18 @@ public class HelperTableColumnFactory implements Serializable {
     private List<HelperTableColumn> helperTableColumns;
 
     /** Mapa de columnas por su nombre. */
-    private Map<String, HelperTableColumn> columnByName;
+    private ConcurrentHashMap<String, HelperTableColumn> columnByName;
 
     /** Mapa de columnas por su id. */
-    private Map<Long, HelperTableColumn> columnById;
+    private ConcurrentHashMap<Long, HelperTableColumn> columnById;
 
     /**
      * Constructor privado para el Singleton del Factory.
      */
     private HelperTableColumnFactory() {
         this.helperTableColumns = new ArrayList<>();
-        this.columnByName = new HashMap<>();
-        this.columnById = new HashMap<>();
+        this.columnByName = new ConcurrentHashMap<>();
+        this.columnById = new ConcurrentHashMap<>();
     }
 
     public static HelperTableColumnFactory getInstance() {

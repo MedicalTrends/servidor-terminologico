@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ws.rs.*;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -23,7 +24,7 @@ public class TermSearcherWS {
 
     @GET
     @Produces(APPLICATION_JSON)
-    public GenericTermSearchResponse findTerm(@PathParam("term") String term) throws NotFoundFault {
+    public GenericTermSearchResponse findTerm(@PathParam("term") String term) throws NotFoundFault, ExecutionException, InterruptedException {
 
         GenericTermSearchResponse genericTermSearchResponse;
         if (conceptController == null){

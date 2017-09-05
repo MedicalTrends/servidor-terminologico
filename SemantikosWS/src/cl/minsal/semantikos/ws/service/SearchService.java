@@ -24,6 +24,7 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 
 
+import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -69,6 +70,7 @@ public class SearchService {
 
     private static final Logger logger = LoggerFactory.getLogger(SearchService.class);
 
+
     //Inicializacion del Bean
     //@PostConstruct
 
@@ -102,10 +104,9 @@ public class SearchService {
 
         /* Se hace una validación de los parámetros */
             validateAtLeastOneCategoryOrOneRefSet(request);
-            logger.debug("ws-req-001: " + request.getTerm() + ", " + request.getCategoryNames() + " " + request
-                    .getRefSetNames());
+            //logger.debug("ws-req-001: " + request.getTerm() + ", " + request.getCategoryNames() + " " + request.getRefSetNames());
 
-            logger.info("ws-req-001: {}s", String.format("%.2f", (currentTimeMillis() - init)/1.0));
+            //logger.info("ws-req-001: {}s", String.format("%.2f", (currentTimeMillis() - init)/1.0));
             response =  this.conceptController.searchTermGeneric(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
 
         }catch(Exception e){

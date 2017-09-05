@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Andrés Farías
@@ -17,23 +18,23 @@ public class UserFactory implements Serializable {
     /** La lista de tagSMTK */
     private List<User> users;
 
-    public Map<Long, User> getUsersById() {
+    public ConcurrentHashMap<Long, User> getUsersById() {
         return usersById;
     }
 
-    public void setUsersById(Map<Long, User> usersById) {
+    public void setUsersById(ConcurrentHashMap<Long, User> usersById) {
         this.usersById = usersById;
     }
 
     /** Mapa de tagSMTK por su nombre. */
-    private Map<Long, User> usersById;
+    private ConcurrentHashMap<Long, User> usersById;
 
     /**
      * Constructor privado para el Singleton del Factory.
      */
     private UserFactory() {
         this.users = new ArrayList<>();
-        this.usersById = new HashMap<>();
+        this.usersById = new ConcurrentHashMap<>();
     }
 
     public static UserFactory getInstance() {

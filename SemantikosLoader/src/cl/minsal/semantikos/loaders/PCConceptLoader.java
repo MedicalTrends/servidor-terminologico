@@ -266,7 +266,7 @@ public class PCConceptLoader extends EntityLoader {
 
                 relationshipDefinition = category.findRelationshipDefinitionsByName("Medicamento Clínico").get(0);
 
-                List<Description> mc = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mcName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico")}), EMPTY_LIST);
+                List<Description> mc = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mcName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico")}), null);
 
                 if(mc.isEmpty()) {
                     throw new LoadException(path.toString(), id, "No existe un MC con preferida: "+mcName, ERROR);
@@ -289,7 +289,7 @@ public class PCConceptLoader extends EntityLoader {
 
                 relationshipDefinition = category.findRelationshipDefinitionsByName("Familia de Producto").get(0);
 
-                List<Description> fp = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(gfpName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Familia de Productos")}), EMPTY_LIST);
+                List<Description> fp = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(gfpName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Familia de Productos")}), null);
 
                 if(fp.isEmpty()) {
                     //SMTKLoader.logError(new LoadException(path.toString(), id, "No existe una FP con preferida: "+gfpName, ERROR));

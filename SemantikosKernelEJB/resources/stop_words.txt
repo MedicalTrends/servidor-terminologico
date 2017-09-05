@@ -1,0 +1,13 @@
+"a","aquí","cuantos","esta","misma","nosotras","querer","tales","usted","acá","cada","cuán","estar","mismas","nosotros",
+"qué","tan","ustedes","ahí","cierta","cuánto","estas","mismo","nuestra","quien","tanta","varias","ajena","ciertas",
+"cuántos","este","mismos","nuestras","quienes","tantas","varios","ajenas","cierto","de","estos","mucha","nuestro",
+"quienesquiera","tanto","vosotras","ajeno","ciertos","dejar","hacer","muchas","nuestros","quienquiera","tantos",
+"vosotros","ajenos","como","del","hasta","muchísima","nunca","quién","te","vuestra","al","cómo","demasiada","jamás",
+"muchísimas","os","ser","tener","vuestras","algo","con","demasiadas","junto","muchísimo","otra","si","ti","vuestro",
+"alguna","conmigo","demasiado","juntos","muchísimos","otras","siempre","toda","vuestros","algunas","consigo","demasiados",
+"la","mucho","otro","sí","todas","y","alguno","contigo","demás","las","muchos","otros","sín","todo","yo","algunos","cualquier",
+"el","lo","muy","para","Sr","todos ","algún","cualquiera","ella","los","nada","parecer","Sra","tomar ","allá","cualquieras",
+"ellas","mas","ni","poca","Sres","tuya ","allí","cuan","ellos","más","ninguna","pocas","Sta","tuyo ","aquel","cuanta",
+"él","me","ningunas","poco","suya","tú ","aquella","cuantas","esa","menos","ninguno","pocos","suyas","un ","aquellas",
+"cuánta","esas","mía","ningunos","por","suyo","una ","aquello","cuántas","ese","mientras","no","porque","suyos","unas",
+"aquellos","cuanto","esos","mío","nos","que","tal","unos"

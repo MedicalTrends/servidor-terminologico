@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,7 +19,7 @@ public class TagSMTKFactory implements Serializable {
     /** La lista de tagSMTK */
     private List<TagSMTK> tagsSMTK;
 
-    public Map<String, TagSMTK> getTagsSMTKByName() {
+    public ConcurrentHashMap<String, TagSMTK> getTagsSMTKByName() {
         return tagsSMTKByName;
     }
 
@@ -27,27 +28,27 @@ public class TagSMTKFactory implements Serializable {
         return tagsSMTK;
     }
 
-    public void setTagsSMTKByName(Map<String, TagSMTK> tagsSMTKByName) {
+    public void setTagsSMTKByName(ConcurrentHashMap<String, TagSMTK> tagsSMTKByName) {
         this.tagsSMTKByName = tagsSMTKByName;
     }
 
-    public void setTagsSMTKById(Map<Long, TagSMTK> tagsSMTKById) {
+    public void setTagsSMTKById(ConcurrentHashMap<Long, TagSMTK> tagsSMTKById) {
         this.tagsSMTKById = tagsSMTKById;
     }
 
     /** Mapa de tagSMTK por su nombre. */
-    private Map<String, TagSMTK> tagsSMTKByName;
+    private ConcurrentHashMap<String, TagSMTK> tagsSMTKByName;
 
     /** Mapa de tagSMTK por su nombre. */
-    private Map<Long, TagSMTK> tagsSMTKById;
+    private ConcurrentHashMap<Long, TagSMTK> tagsSMTKById;
 
     /**
      * Constructor privado para el Singleton del Factory.
      */
     private TagSMTKFactory() {
         this.tagsSMTK = new ArrayList<>();
-        this.tagsSMTKByName = new HashMap<>();
-        this.tagsSMTKById = new HashMap<>();
+        this.tagsSMTKByName = new ConcurrentHashMap<>();
+        this.tagsSMTKById = new ConcurrentHashMap<>();
     }
 
     public static TagSMTKFactory getInstance() {

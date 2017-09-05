@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.factories;
 
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
+import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import org.slf4j.Logger;
@@ -17,16 +18,16 @@ import java.util.concurrent.Callable;
 public class RelationshipLoaderFactory implements Callable<List<Relationship>> {
 
     private ConceptSMTK conceptSMTK;
-    RelationshipManager relationshipManager;
+    RelationshipDAO relationshipDAO;
     private static final Logger logger = LoggerFactory.getLogger(RelationshipLoaderFactory.class);
 
-    public RelationshipLoaderFactory(ConceptSMTK conceptSMTK, RelationshipManager relationshipManager) {
+    public RelationshipLoaderFactory(ConceptSMTK conceptSMTK, RelationshipDAO relationshipDAO) {
         this.conceptSMTK = conceptSMTK;
-        this.relationshipManager = relationshipManager;
+        this.relationshipDAO = relationshipDAO;
     }
 
     @Override
     public List<Relationship> call() throws Exception {
-        return relationshipManager.getRelationshipsBySourceConcept(conceptSMTK);
+        return relationshipDAO.getRelationshipsBySourceConcept(conceptSMTK);
     }
 }
