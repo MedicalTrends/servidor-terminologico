@@ -6,7 +6,7 @@
 
     <groupId>cl.minsal.semantikos</groupId>
     <artifactId>Semantikos</artifactId>
-    <version>0.9.5</version>
+    <version>0.9.6</version>
     <packaging>pom</packaging>
 
     <modules>
