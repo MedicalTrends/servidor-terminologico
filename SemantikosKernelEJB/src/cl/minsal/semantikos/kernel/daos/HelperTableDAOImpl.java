@@ -6,10 +6,13 @@ import cl.minsal.semantikos.kernel.util.DaoTools;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.*;
 import oracle.jdbc.OracleTypes;
+import org.jboss.ejb3.annotation.TransactionTimeout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.*;
+import javax.sql.DataSource;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -29,6 +32,9 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
     @EJB
     ConceptDAO conceptDAO;
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @Override
     public List<HelperTable> getAllTables() {
 
@@ -38,7 +44,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         List<HelperTable> helperTables = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se prepara y realiza la consulta */
@@ -66,7 +72,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         String sql = "begin ? := stk.stk_pck_helper_table.create_helper_table_column(?,?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -105,7 +111,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         String sql = "begin ? := stk.stk_pck_helper_table.update_helper_table_column(?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -135,7 +141,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         String sql = "begin ? := stk.stk_pck_helper_table.get_helper_table_rows(?); end;";
 
         List<HelperTableRow> helperTableRows = new ArrayList<>();
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -167,7 +173,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         List<HelperTableRow> helperTableRows = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -199,7 +205,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         String sql = "begin ? := stk.stk_pck_helper_table.create_helper_table_row(?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -238,7 +244,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         String sql = "begin ? := stk.stk_pck_helper_table.create_helper_table_data(?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -297,7 +303,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         String sql = "begin ? := stk.stk_pck_helper_table.update_helper_table_data(?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -344,7 +350,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         HelperTableRow helperTableRow;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -380,7 +386,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         HelperTableRow helperTableRow;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -416,7 +422,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         List<HelperTableRow> helperTableRows = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -449,7 +455,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         HelperTableColumn helperTableColumn;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -482,7 +488,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         String sql = "begin ? := stk.stk_pck_helper_table.get_helper_table_data_by_row(?); end;";
 
         List<HelperTableData> cells;
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -518,7 +524,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         String sql = "begin ? := stk.stk_pck_helper_table.update_helper_table_row(?,?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -553,7 +559,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         HelperTable helperTable;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se prepara y realiza la consulta */
@@ -586,7 +592,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         List<HelperTableRow> helperTableRows = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -619,7 +625,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         List<HelperTableRow> helperTableRows = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -653,7 +659,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         List<HelperTableRow> helperTableRows = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -688,7 +694,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
             List<ConceptSMTK> result = new ArrayList<>();
 
-            try (Connection connection = DataSourceFactory.getInstance().getConnection();
+            try (Connection connection = dataSource.getConnection();
                  CallableStatement call = connection.prepareCall(sql)) {
 
                 call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -722,7 +728,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         String sql = "begin ? := stk.stk_pck_helper_table.count_concepts_ids_by_helper_table_target(?); end;";
         int result = 0;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -750,7 +756,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         String sql = "begin ? := stk.stk_pck_helper_table.get_concepts_ids_by_helper_table_target(?,?,?); end;";
 
-        try(Connection connection = DataSourceFactory.getInstance().getConnection();
+        try(Connection connection = dataSource.getConnection();
             CallableStatement call = connection.prepareCall(sql);) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2,row.getId());

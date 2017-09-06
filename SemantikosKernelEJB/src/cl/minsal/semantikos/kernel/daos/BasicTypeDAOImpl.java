@@ -9,8 +9,10 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.*;
 
@@ -23,6 +25,9 @@ import static cl.minsal.semantikos.util.StringUtils.underScoreToCamelCaseJSON;
 public class BasicTypeDAOImpl implements BasicTypeDAO {
     private static final Logger logger = LoggerFactory.getLogger(BasicTypeDAOImpl.class);
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @Override
     public BasicTypeValue getBasicTypeValueByID(long idBasicValue) {
 
@@ -32,7 +37,7 @@ public class BasicTypeDAOImpl implements BasicTypeDAO {
 
         String sql = "begin ? := stk.stk_pck_basic_type.get_basic_type_by_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar el basic type */

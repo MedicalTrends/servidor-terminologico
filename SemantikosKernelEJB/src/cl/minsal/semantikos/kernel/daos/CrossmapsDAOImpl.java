@@ -11,9 +11,11 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,9 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     @EJB
     private RelationshipDefinitionDAO relationshipDAO;
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @Override
     public DirectCrossmap create(DirectCrossmap directCrossmap, User user) {
 
@@ -41,7 +46,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
         String sql = "begin ? := stk.stk_pck_crossmap.create_direct_crossmap(?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /*
@@ -80,7 +85,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_direct_crossmap(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -118,7 +123,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsetmember_by_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -151,7 +156,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_related_crossmapset_member(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -182,7 +187,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapset_by_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -214,7 +219,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
         String sql = "begin ? := stk.stk_pck_crossmap.find_crossmapsetmember_by_pattern_and_crossmapset(?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -245,7 +250,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
         String sql = "begin ? := stk.stk_pck_crossmap.find_crossmapsetmember_by_cod1_and_crossmapset(?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -276,7 +281,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsets; end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -307,7 +312,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_crossmap_by_sct(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -341,7 +346,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsetmember_by_cms_abbreviated_name(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -371,7 +376,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsetmember_by_crossmapset(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -400,7 +405,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapset_by_cms_abbreviated_name(?); end;";
 
         ResultSet rs;
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

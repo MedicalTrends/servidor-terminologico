@@ -18,9 +18,11 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -37,6 +39,9 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
     @EJB
     private TargetDAO targetDAO;
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @Override
     public ExtendedRelationshipDefinitionInfo getCompositeOf(Category category, RelationshipDefinition relationshipDefinition) {
 
@@ -49,7 +54,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
         long idTarget;
         Target defaultValue = null;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -89,7 +94,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
         long idTarget;
         Target defaultValue = null;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -128,7 +133,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
 
         boolean caseSensitive = false;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 

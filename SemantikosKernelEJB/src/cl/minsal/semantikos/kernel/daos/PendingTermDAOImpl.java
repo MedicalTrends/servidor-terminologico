@@ -8,9 +8,11 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,9 @@ public class PendingTermDAOImpl implements PendingTermDAO {
     @EJB
     private DescriptionDAO descriptionDAO;
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @Override
     public long persist(PendingTerm pendingTerm) {
         //ConnectionBD connect = new ConnectionBD();
@@ -49,7 +54,7 @@ public class PendingTermDAOImpl implements PendingTermDAO {
          */
         String sql = "begin ? := stk.stk_pck_pending_term.create_pending_term(?,?,?,?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -104,7 +109,7 @@ public class PendingTermDAOImpl implements PendingTermDAO {
 
         String sql = "begin ? := stk.stk_pck_pending_term.bind_pending_term_to_description(?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -131,7 +136,7 @@ public class PendingTermDAOImpl implements PendingTermDAO {
 
         String sql = "begin ? := stk.stk_pck_pending_term.get_all_pending_terms(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -160,7 +165,7 @@ public class PendingTermDAOImpl implements PendingTermDAO {
 
         String sql = "begin ? := stk.stk_pck_pending_term.get_pending_term_by_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

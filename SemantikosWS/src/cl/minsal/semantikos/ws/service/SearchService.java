@@ -24,6 +24,7 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 
 
+import javax.ejb.Timeout;
 import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

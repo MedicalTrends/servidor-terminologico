@@ -13,7 +13,9 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.*;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.*;
 import java.util.concurrent.Future;
@@ -24,6 +26,7 @@ import static java.sql.Types.VARCHAR;
  * @author Diego Soto / Gustavo Punucura
  */
 @Stateless
+@org.jboss.ejb3.annotation.Pool(value="heavy-load-pool")
 public class RelationshipDAOImpl implements RelationshipDAO {
 
     /** El logger para esta clase */
@@ -41,6 +44,9 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     @EJB
     private BasicTypeDAO basicTypeDAO;
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @Override
     public Relationship persist(Relationship relationship) {
 
@@ -50,7 +56,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         String sql = "begin ? := stk.stk_pck_relationship.create_relationship(?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -99,7 +105,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         String sql = "begin ? := stk.stk_pck_relationship.create_relationship_definition(?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -124,7 +130,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         String sql = "begin ? := stk.stk_pck_relationship.invalidate_relationship(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -142,7 +148,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         String sql = "begin ? := stk.stk_pck_relationship.update_relation(?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -163,7 +169,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         String sql = "begin ? := stk.stk_pck_relationship.invalidate_relationship(?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -184,7 +190,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         Relationship relationship = null;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -217,7 +223,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         List<Relationship> relationships = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -248,7 +254,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         List<Relationship> relationships = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -297,7 +303,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         List<Relationship> relationships = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -330,7 +336,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         List<Relationship> relationships = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -362,7 +368,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         List<Relationship> relationships = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -392,7 +398,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         String sql = "begin ? := stk.stk_pck_relationship.get_id_target_by_id_relationship(?); end;";
 
         Long result;
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

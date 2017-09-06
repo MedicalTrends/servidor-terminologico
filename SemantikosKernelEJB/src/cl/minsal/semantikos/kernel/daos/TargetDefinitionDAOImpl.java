@@ -8,9 +8,11 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -43,6 +45,9 @@ public class TargetDefinitionDAOImpl implements TargetDefinitionDAO {
     @EJB
     CategoryDAO categoryDAO;
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     private static final int BASIC_TYPE_ID = 1;
     private static final int SMTK_TYPE_ID = 2;
     private static final int SCT_TYPE_ID = 3;
@@ -58,7 +63,7 @@ public class TargetDefinitionDAOImpl implements TargetDefinitionDAO {
 
         TargetDefinition targetDefinition = null;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

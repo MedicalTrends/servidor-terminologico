@@ -22,9 +22,11 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +62,8 @@ public class QueryDAOImpl implements QueryDAO {
     @EJB
     private BasicTypeDAO basicTypeDAO;
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
 
     public List<Object> executeQuery(IQuery query) {
 
@@ -82,7 +86,7 @@ public class QueryDAOImpl implements QueryDAO {
         if(  query instanceof  BrowserQuery )
             QUERY = "begin ? := stk.stk_pck_query.get_concept_by_browser_query(?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(QUERY)){
 
@@ -158,7 +162,7 @@ public class QueryDAOImpl implements QueryDAO {
         if(  query instanceof  BrowserQuery )
             QUERY = "begin ? := stk.stk_pck_query.count_concept_by_browser_query(?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(QUERY)) {
 
@@ -193,7 +197,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -233,7 +237,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -273,7 +277,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         List<RelationshipAttributeDefinition> someRelationshipAttributeDefinitions = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -318,7 +322,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -358,7 +362,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -399,7 +403,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         boolean customFilteringValue = false;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
             CallableStatement call = connection.prepareCall(sql)) {
 
@@ -433,7 +437,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         boolean showableRelatedConcepts = false;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -467,7 +471,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         boolean showable = false;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -502,7 +506,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         boolean multipleFilteringValue = false;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -537,7 +541,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         int compositeValue = -1;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -572,7 +576,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         List<Relationship> relationships = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -607,7 +611,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         List<Relationship> relationships = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

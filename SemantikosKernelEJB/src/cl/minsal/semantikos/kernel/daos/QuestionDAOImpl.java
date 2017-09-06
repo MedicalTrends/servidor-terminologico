@@ -12,9 +12,11 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +34,9 @@ public class QuestionDAOImpl implements QuestionDAO {
     @EJB
     private AuthDAO authDao;
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @Override
     public List<Question> getAllQuestions() {
         //ConnectionBD connect = new ConnectionBD();
@@ -39,7 +44,7 @@ public class QuestionDAOImpl implements QuestionDAO {
         String sql = "begin ? := stk.stk_pck_question.get_all_questions; end;";
 
         List<Question> institutions= new ArrayList<>();
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();
@@ -64,7 +69,7 @@ public class QuestionDAOImpl implements QuestionDAO {
         String sql = "begin ? := stk.stk_pck_question.get_answers_by_user(?); end;";
 
         List<Answer> answers= new ArrayList<>();
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, user.getId());
@@ -90,7 +95,7 @@ public class QuestionDAOImpl implements QuestionDAO {
 
         Question question = null;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, id);
@@ -114,7 +119,7 @@ public class QuestionDAOImpl implements QuestionDAO {
 
         String sql = "begin ? := stk.stk_pck_question.delete_user_answers(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, user.getId());

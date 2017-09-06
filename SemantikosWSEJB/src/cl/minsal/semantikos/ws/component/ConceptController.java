@@ -107,6 +107,11 @@ public class ConceptController {
 
         List<ConceptResponse> relatedResponses = new ArrayList<>();
         List<ConceptSMTK> relatedConcepts = this.conceptManager.getRelatedConcepts(sourceConcept, category);
+
+        if(category.getRelationshipDefinitions().size() > 2) {
+            relatedConcepts = relationshipManager.loadRelationshipsInParallel(relatedConcepts);
+        }
+
         for (ConceptSMTK related : relatedConcepts) {
             ConceptResponse conceptResponse = new ConceptResponse(related);
             //conceptResponse.setForREQWS002();
@@ -249,8 +254,8 @@ public class ConceptController {
         List<NoValidDescriptionResponse> noValidDescriptions = new ArrayList<>();
         List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
 
-        //List<Description> descriptions = this.descriptionManager.searchDescriptionsPerfectMatch(term, categories, refSets);
-        List<Description> descriptions = this.descriptionManager.searchDescriptionsPerfectMatchInParallel(term, categories, refSets);
+        List<Description> descriptions = this.descriptionManager.searchDescriptionsPerfectMatch(term, categories, refSets);
+        //List<Description> descriptions = this.descriptionManager.searchDescriptionsPerfectMatchInParallel(term, categories, refSets);
         //logger.debug("ws-req-001. descripciones encontradas: " + descriptions);
 
         for (Description description : descriptions) {

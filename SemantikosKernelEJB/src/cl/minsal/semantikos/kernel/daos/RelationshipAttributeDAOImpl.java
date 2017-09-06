@@ -10,9 +10,11 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,9 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
     @EJB
     private RelationshipDefinitionDAO relationshipDefinitionDAO;
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @Override
     public RelationshipAttribute createRelationshipAttribute(RelationshipAttribute relationshipAttribute) {
         long idRelationShipAttribute;
@@ -46,7 +51,7 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
 
         String sql = "begin ? := stk.stk_pck_relationship_attribute.create_relationship_attribute(?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -88,7 +93,7 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
         ResultSet rs;
         List<RelationshipAttribute> relationshipAttributeList = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -131,7 +136,7 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
         //ConnectionBD connect = new ConnectionBD();
         String sql = "begin ? := stk.stk_pck_relationship_attribute.update_relation_attribute(?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -155,7 +160,7 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
         String sql = "begin ? := stk.stk_pck_relationship_attribute.get_id_target_by_id_relationship_attribute(?); end;";
 
         Long result;
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

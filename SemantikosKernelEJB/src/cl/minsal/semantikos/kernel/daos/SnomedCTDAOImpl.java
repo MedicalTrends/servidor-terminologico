@@ -7,8 +7,10 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.*;
 
@@ -22,6 +24,9 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(SnomedCTDAOImpl.class);
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @Override
     public List<ConceptSCT> findConceptsBy(String pattern, Integer group) {
         List<ConceptSCT> concepts = new ArrayList<>();
@@ -29,7 +34,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         String sql = "begin ? := stk.stk_pck_snomed.find_sct_by_pattern(?,?); end;";
 
         //ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -65,7 +70,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         String sql = "begin ? := stk.stk_pck_snomed.find_sct_perfect_match(?,?); end;";
 
         //ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -101,7 +106,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         String sql = "begin ? := stk.stk_pck_snomed.find_sct_truncate_match(?,?); end;";
 
         //ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -137,7 +142,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         String sql = "begin ? := stk.stk_pck_snomed.count_sct_perfect_match(?,?); end;";
 
         //ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -167,7 +172,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         String sql = "begin ? := stk.stk_pck_snomed.count_sct_truncate_match(?,?); end;";
 
         //ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -197,7 +202,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
         String sql = "begin ? := stk.stk_pck_snomed.get_sct_by_concept_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -231,7 +236,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         String sql = "begin ? := stk.stk_pck_snomed.get_concepts_sct_by_id(?,?); end;";
 
         //ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -268,7 +273,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
         String sql = "begin ? := stk.stk_pck_snomed.find_descriptions_sct_by_pattern(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -320,7 +325,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
         String sql = "begin ? := stk.stk_pck_snomed.get_descriptions_sct_by_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -378,7 +383,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
         String sql = "begin ? := stk.stk_pck_snomed.get_description_sct_by_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

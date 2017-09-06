@@ -38,6 +38,7 @@ import static java.sql.Types.TIMESTAMP;
  * @author Andres Farias.
  */
 @Stateless
+@org.jboss.ejb3.annotation.Pool(value="heavy-load-pool")
 public class DescriptionDAOImpl implements DescriptionDAO {
 
     /** El logger para esta clase */
@@ -67,7 +68,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         String sql = "begin ? := stk.stk_pck_description.get_description_by_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -98,7 +99,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         String sql = "begin ? := stk.stk_pck_description.get_description_by_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -130,7 +131,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         String sql = "begin ? := stk.stk_pck_description.get_description_by_business_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -156,7 +157,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     }
 
     @Override
-    //@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<Description> getDescriptionsByConcept(ConceptSMTK conceptSMTK) {
 
         //ConnectionBD connect = new ConnectionBD();
@@ -214,7 +214,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
          */
         String sql = "begin ? := stk.stk_pck_description.create_description(?,?,?,?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -268,7 +268,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         String sql = "begin ? := stk.stk_pck_description.delete_description(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -288,7 +288,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         String sql = "begin ? := stk.stk_pck_description.update_description(?,?,?,?,?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -327,7 +327,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         String sql = "begin ? := stk.stk_pck_description.get_all_not_valid_observation; end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -357,7 +357,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         String sql = "begin ? := stk.stk_pck_description.get_observation_no_valid_by_description(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -388,7 +388,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         String sql = "begin ? := stk.stk_pck_description.get_concept_suggested(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, description.getId());
@@ -417,7 +417,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         String sql1 = "begin ? := stk.stk_pck_description.persist_observation_to_description_no_valid(?,?); end;";
         String sql2 = "begin ? := stk.stk_pck_description.persist_concept_suggested_to_description_no_valid(?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call1 = connection.prepareCall(sql1);
              CallableStatement call2 = connection.prepareCall(sql2)) {
 
@@ -455,7 +455,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         String sql = "begin ? := stk.stk_pck_description.search_descriptions(?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -495,7 +495,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     }
 
     @Override
-    //@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<Description> searchDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets, int page, int pageSize) {
 
         /* Se registra el tiempo de inicio */
@@ -640,7 +639,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         String sql = "begin ? := stk.stk_pck_description.search_descriptions_truncate_match(?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -694,7 +693,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         String sql = "begin ? := stk.stk_pck_description.count_descriptions_perfect_match(?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -741,7 +740,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         String sql = "begin ? := stk.stk_pck_description.count_descriptions_truncate_match(?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);

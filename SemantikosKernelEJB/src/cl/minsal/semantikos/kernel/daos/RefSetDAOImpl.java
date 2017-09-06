@@ -9,8 +9,10 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,9 @@ public class RefSetDAOImpl implements RefSetDAO {
     @EJB
     private InstitutionDAO institutionDAO;
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @Override
     public void persist(RefSet refSet) {
 
@@ -39,7 +44,7 @@ public class RefSetDAOImpl implements RefSetDAO {
 
         String sql = "begin ? := stk.stk_pck_refset.create_refset(?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -67,7 +72,7 @@ public class RefSetDAOImpl implements RefSetDAO {
 
         String sql = "begin ? := stk.stk_pck_refset.update_refset(?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -92,7 +97,7 @@ public class RefSetDAOImpl implements RefSetDAO {
 
         String sql = "begin ? := stk.stk_pck_refset.bind_concept_to_refset(?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -110,7 +115,7 @@ public class RefSetDAOImpl implements RefSetDAO {
 
         String sql = "begin ? := stk.stk_pck_refset.unbind_concept_from_refset(?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -131,7 +136,7 @@ public class RefSetDAOImpl implements RefSetDAO {
 
         String sql = "begin ? := stk.stk_pck_refset.get_all_refsets; end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -160,7 +165,7 @@ public class RefSetDAOImpl implements RefSetDAO {
 
         String sql = "begin ? := stk.stk_pck_refset.get_valid_refsets; end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -186,7 +191,7 @@ public class RefSetDAOImpl implements RefSetDAO {
 
         String sql = "begin ? := stk.stk_pck_refset.get_refsets_by_concept(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -212,7 +217,7 @@ public class RefSetDAOImpl implements RefSetDAO {
 
         String sql = "begin ? := stk.stk_pck_refset.get_refset_by_institution(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -237,7 +242,7 @@ public class RefSetDAOImpl implements RefSetDAO {
 
         String sql = "begin ? := stk.stk_pck_refset.get_refset_by_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -264,7 +269,7 @@ public class RefSetDAOImpl implements RefSetDAO {
 
         String sql = "begin ? := stk.stk_pck_refset.get_refsets_by_categories_and_pattern(?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
             Array categoryIds = connection.createArrayOf("long", categories.toArray(new Long[categories.size()]));
@@ -310,7 +315,7 @@ public class RefSetDAOImpl implements RefSetDAO {
 
         String sql = "begin ? := stk.stk_pck_refset.find_refsets_by_name(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setString(2, pattern);
@@ -335,7 +340,7 @@ public class RefSetDAOImpl implements RefSetDAO {
 
         String sql = "begin ? := stk.stk_pck_refset.find_refsets_by_concept(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

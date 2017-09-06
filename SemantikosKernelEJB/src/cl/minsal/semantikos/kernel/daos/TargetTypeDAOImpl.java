@@ -6,7 +6,9 @@ import cl.minsal.semantikos.model.basictypes.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -23,6 +25,9 @@ import java.util.Date;
 public class TargetTypeDAOImpl implements TargetTypeDAO {
 
     static final Logger logger = LoggerFactory.getLogger(TargetTypeDAOImpl.class);
+
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
 
     @Override
     public BasicTypeDefinition findByID(long idBasicType) {

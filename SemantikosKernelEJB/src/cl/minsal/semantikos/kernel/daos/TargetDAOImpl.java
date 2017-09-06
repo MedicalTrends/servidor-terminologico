@@ -10,9 +10,11 @@ import oracle.sql.NUMBER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
@@ -55,6 +57,8 @@ public class TargetDAOImpl implements TargetDAO {
     @EJB
     CategoryDAO categoryDAO;
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
 
     @Override
     public Target getTargetByID(long idTarget) {
@@ -64,7 +68,7 @@ public class TargetDAOImpl implements TargetDAO {
 
         String sql = "begin ? := stk.stk_pck_target.get_target_by_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */
@@ -104,7 +108,7 @@ public class TargetDAOImpl implements TargetDAO {
 
         String sql = "begin ? := stk.stk_pck_target.get_default_target_by_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */
@@ -154,7 +158,7 @@ public class TargetDAOImpl implements TargetDAO {
 
         long idTarget;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -223,7 +227,7 @@ public class TargetDAOImpl implements TargetDAO {
         String sql = "begin ? := stk.stk_pck_target.create_target_definition(?,?,?,?,?); end;";
 
         long idTarget;
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se setean todas las posibilidades en NULL */
@@ -271,7 +275,7 @@ public class TargetDAOImpl implements TargetDAO {
 
         long idTarget = relationshipDAO.getTargetByRelationship(relationship);
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -350,7 +354,7 @@ public class TargetDAOImpl implements TargetDAO {
 
         long idTarget = relationshipAttributeDAO.getTargetByRelationshipAttribute(relationshipAttribute);
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);

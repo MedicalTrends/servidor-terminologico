@@ -6,9 +6,11 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.math.BigInteger;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -47,6 +49,9 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
     @EJB
     private RelationshipDefinitionDAO relationshipDefinitionDAO;
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @Override
     public List<RelationshipDefinition> getRelationshipDefinitionsByCategory(long idCategory) {
 
@@ -56,7 +61,7 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
 
         String sql = "begin ? := stk.stk_pck_relationship_definition.get_relationship_definitions_by_category(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */
@@ -97,7 +102,7 @@ public class RelationshipDefinitionDAOImpl implements RelationshipDefinitionDAO 
         List<RelationshipAttributeDefinition> relationshipAttributeDefinitions = new ArrayList<>();
 
         long id = relationshipDefinition.getId();
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar los atributos de esta relación */

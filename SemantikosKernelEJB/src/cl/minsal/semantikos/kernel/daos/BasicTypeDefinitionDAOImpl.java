@@ -10,9 +10,11 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -30,6 +32,9 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
     @EJB
     private BasicTypeDefinitionFactory basicTypeDefinitionFactory;
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @Override
     public BasicTypeDefinition getBasicTypeDefinitionById(long idBasicTypeDefinition) {
         //ConnectionBD connect = new ConnectionBD();
@@ -38,7 +43,7 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
 
         BasicTypeDefinition basicTypeDefinition;
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             /* Se invoca la consulta para recuperar las relaciones */

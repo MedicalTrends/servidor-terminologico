@@ -9,9 +9,11 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Singleton;
+import javax.sql.DataSource;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -39,9 +41,11 @@ public class CategoryDAOImpl implements CategoryDAO {
     @EJB
     private TagSMTKDAO tagSMTKDAO;
 
-
     /** Un caché de categorías */
     private Map<Long, Category> categoryMapByID;
+
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
 
     public CategoryDAOImpl() {
         this.categoryMapByID = new HashMap<>();
@@ -79,7 +83,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
         String sql = "begin ? := stk.stk_pck_category.get_category_by_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -115,7 +119,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
         String sql = "begin ? := stk.stk_pck_category.create_category(?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -152,7 +156,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
         String sql = "begin ? := stk.stk_pck_category.get_related_category(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

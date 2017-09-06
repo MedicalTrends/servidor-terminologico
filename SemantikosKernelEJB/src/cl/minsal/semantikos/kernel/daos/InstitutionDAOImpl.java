@@ -66,7 +66,7 @@ public class InstitutionDAOImpl implements InstitutionDAO {
         String sql = "begin ? := stk.stk_pck_institution.get_institution_by_user(?); end;";
 
         List<Institution> institutions= new ArrayList<>();
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, user.getId());
@@ -90,7 +90,7 @@ public class InstitutionDAOImpl implements InstitutionDAO {
 
         String sql = "begin ? := stk.stk_pck_institution.get_institution_by_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, id);
@@ -115,7 +115,7 @@ public class InstitutionDAOImpl implements InstitutionDAO {
         String sql = "begin ? := stk.stk_pck_institution.get_all_institution; end;";
 
         List<Institution> institutions= new ArrayList<>();
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.execute();

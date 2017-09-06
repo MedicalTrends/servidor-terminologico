@@ -9,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.EJBException;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -29,6 +31,9 @@ public class TagSMTKDAOImpl implements TagSMTKDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(TagSMTKDAOImpl.class);
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @PostConstruct
     private void init() {
         //this.refreshTagsSMTK();
@@ -42,7 +47,7 @@ public class TagSMTKDAOImpl implements TagSMTKDAO {
 
         String sql = "begin ? := stk.stk_pck_tag_smtk.get_all_tag_smtks; end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -71,7 +76,7 @@ public class TagSMTKDAOImpl implements TagSMTKDAO {
 
         String sql = "begin ? := stk.stk_pck_tag_smtk.get_tag_smtks_by_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
 
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -126,7 +131,7 @@ public class TagSMTKDAOImpl implements TagSMTKDAO {
 
         String sql = "begin ? := stk.stk_pck_tag_smtk.get_all_tag_smtks; end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

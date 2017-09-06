@@ -6,8 +6,10 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,6 +24,9 @@ public class TimeOutWebDAOImpl implements TimeOutWebDAO {
     /** El logger de esta clase */
     private static final Logger logger = LoggerFactory.getLogger(TimeOutWebDAOImpl.class);
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @Override
     public int getTimeOut() {
         //ConnectionBD connect = new ConnectionBD();
@@ -29,7 +34,7 @@ public class TimeOutWebDAOImpl implements TimeOutWebDAO {
 
         String sql = "begin ? := stk.stk_pck_system.get_time_out; end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);

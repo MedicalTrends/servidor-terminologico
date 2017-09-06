@@ -95,7 +95,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         String sql = "begin ? := stk.stk_pck_concept.delete_concept(?); end;";
 
         //ConnectionBD connect = new ConnectionBD();
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -116,7 +116,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept(?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -154,7 +154,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         String sql = "begin ? := stk.stk_pck_concept.get_concept_by_conceptid(?); end;";
 
         ConceptSMTK conceptSMTK;
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -181,7 +181,6 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    //@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public ConceptSMTK getConceptByID(long id) {
         //ConnectionBD connect = new ConnectionBD();
 
@@ -225,7 +224,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         String sql = "begin ? := stk.stk_pck_concept.get_concept_by_id(?); end;";
 
         ConceptSMTK conceptSMTK;
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -259,7 +258,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         String sql = "begin ? := stk.stk_pck_concept.find_concepts_by_tag(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -291,7 +290,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept_by_refset(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -323,7 +322,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         String sql = "begin ? := stk.stk_pck_concept.create_concept(?,?,?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -370,7 +369,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         String sql = "begin ? := stk.stk_pck_concept.update_concept(?,?,?,?,?,?,?,?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -425,7 +424,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         String sql = "begin ? := stk.stk_pck_concept.force_modeled_concept(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -486,7 +485,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         String sql = "begin ? := stk.stk_pck_concept.get_related_concept(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -515,7 +514,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         List<ConceptSMTK> conceptSMTKs = new ArrayList<>();
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -565,7 +564,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept_truncate_match(?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection(); CallableStatement call =
+        try (Connection connection = dataSource.getConnection(); CallableStatement call =
                 connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -620,7 +619,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept_perfect_match(?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection(); CallableStatement call =
+        try (Connection connection = dataSource.getConnection(); CallableStatement call =
                 connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -675,7 +674,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         String sql = "begin ? := stk.stk_pck_concept.count_concept_perfect_match(?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection(); CallableStatement call =
+        try (Connection connection = dataSource.getConnection(); CallableStatement call =
             connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -728,7 +727,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         String sql = "begin ? := stk.stk_pck_concept.count_concept_truncate_match(?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection(); CallableStatement call =
+        try (Connection connection = dataSource.getConnection(); CallableStatement call =
                 connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -780,7 +779,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept_by_categories_paginated(?,?,?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -867,9 +866,12 @@ public class ConceptDAOImpl implements ConceptDAO {
         conceptSMTK.setDescriptions(descriptionDAO.getDescriptionsByConcept(conceptSMTK));
 
         /* Se recuperan sus Etiquetas, solo si posee */
+        /*
         if(resultSet.getLong("id_concept") != 0) {
             conceptSMTK.setTags(tagDAO.getTagsByConcept(conceptSMTK));
         }
+        */
+        conceptSMTK.setTags(tagDAO.getTagsByConcept(conceptSMTK));
 
         return conceptSMTK;
     }

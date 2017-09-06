@@ -8,9 +8,11 @@ import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,9 @@ public class TagDAOImpl implements TagDAO {
     @EJB
     TagDAO tagDAO;
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @Override
     public Tag persist(Tag tag) {
         //ConnectionBD connect = new ConnectionBD();
@@ -37,7 +42,7 @@ public class TagDAOImpl implements TagDAO {
         String sql = "begin ? := stk.stk_pck_tag.create_tag(?,?,?,?); end;";
 
         long idTag;
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -84,7 +89,7 @@ public class TagDAOImpl implements TagDAO {
         String sql = "begin ? := stk.stk_pck_tag.update_tag(?,?,?,?,?); end;";
 
         long idTag;
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -123,7 +128,7 @@ public class TagDAOImpl implements TagDAO {
 
         String sql = "begin ? := stk.stk_pck_tag.delete_tag(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -144,7 +149,7 @@ public class TagDAOImpl implements TagDAO {
 
         String sql = "begin ? := stk.stk_pck_tag.delete_tag(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -174,7 +179,7 @@ public class TagDAOImpl implements TagDAO {
 
         String sql = "begin ? := stk.stk_pck_tag.link_parent_tag_to_child_tag(?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -194,7 +199,7 @@ public class TagDAOImpl implements TagDAO {
 
         String sql = "begin ? := stk.stk_pck_tag.unlink_tag_to_tag(?,?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -217,7 +222,7 @@ public class TagDAOImpl implements TagDAO {
 
         String sql = "begin ? := stk.stk_pck_tag.get_all_tags; end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -248,7 +253,7 @@ public class TagDAOImpl implements TagDAO {
 
         String sql = "begin ? := stk.stk_pck_tag.get_all_tags_without; end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -279,7 +284,7 @@ public class TagDAOImpl implements TagDAO {
 
         String sql = "begin ? := stk.stk_pck_tag.get_tags_by_concept_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -314,7 +319,7 @@ public class TagDAOImpl implements TagDAO {
 
         String sql = "begin ? := stk.stk_pck_tag.find_tags_by_parent(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -346,7 +351,7 @@ public class TagDAOImpl implements TagDAO {
         String sql = "begin ? := stk.stk_pck_tag.assign_concept_to_tag(?,?); end;";
 
         logger.debug("Asociando el tag " + tag + " al concepto " + conceptSMTK);
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -367,7 +372,7 @@ public class TagDAOImpl implements TagDAO {
         String sql = "begin ? := stk.stk_pck_tag.unassign_concept_to_tag(?,?); end;";
 
         logger.debug("Desasociando el tag " + tag + " al concepto " + conceptSMTK);
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
@@ -391,7 +396,7 @@ public class TagDAOImpl implements TagDAO {
 
         String sql = "begin ? := stk.stk_pck_tag.find_tags_by_id(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -425,7 +430,7 @@ public class TagDAOImpl implements TagDAO {
 
         String sql = "begin ? := stk.stk_pck_tag.contain_tag(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.NUMERIC);
@@ -453,7 +458,7 @@ public class TagDAOImpl implements TagDAO {
 
         String sql = "begin ? := stk.stk_pck_tag.concept_contain_tag(?); end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);

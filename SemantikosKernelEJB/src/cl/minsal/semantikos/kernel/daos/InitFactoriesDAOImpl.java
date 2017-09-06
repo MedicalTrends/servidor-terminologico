@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Singleton;
@@ -82,6 +83,9 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     @EJB
     private AuthDAO authDAO;
 
+    @Resource(lookup = "java:jboss/OracleDS")
+    private DataSource dataSource;
+
     @PostConstruct
     private void init() {
         try {
@@ -98,29 +102,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         this.refreshDescriptionTypes();
         this.refreshTagsSMTK();
         this.refreshUsers();
-        this.refreshThreadPool();
-    }
-
-    private void testArrayOracle() {
-
-        int intArray[] = { 1,2,3,4,5,6 };
-
-        String sql = "begin stk.give_me_an_array(?); end;";
-
-        try (Connection connection = DataSourceFactory.getInstance().getConnection(); CallableStatement call =
-                connection.prepareCall(sql)) {
-
-            call.setArray(1, connection.unwrap(oracle.jdbc.OracleConnection.class).createARRAY("STK.STK_TYPE_NUM_ARRAY", intArray));
-
-            call.execute();
-
-            call.close();
-
-        } catch (SQLException e) {
-            logger.error("Se produjo un error al acceder a la BDD.", e);
-            throw new EJBException(e);
-        }
-
     }
 
     /**
@@ -208,7 +189,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
         String sql = "begin ? := stk.stk_pck_category.get_all_categories; end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -346,7 +327,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
         String sql = "begin ? := stk.stk_pck_tag_smtk.get_all_tag_smtks; end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -381,7 +362,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
         String sql = "begin ? := stk.stk_pck_description.get_description_types; end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -416,7 +397,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
         String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsets; end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -453,7 +434,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
         //String sql = "begin ? := stk.stk_pck_helper_table.get_all_helper_table_columns; end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -486,7 +467,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
         String sql = "begin ? := stk.stk_pck_helper_table.get_all_helper_table_columns; end;";
 
-        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -528,12 +509,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         InitialContext c = new InitialContext();
         DataSource dataSource = (DataSource) c.lookup("java:jboss/OracleDS");
         DataSourceFactory.getInstance().setDataSource(dataSource);
-        return DataSourceFactory.getInstance();
-    }
-
-    @Override
-    public DataSourceFactory refreshThreadPool() {
-        ThreadFactory.getInstance().setExecutor(Executors.newFixedThreadPool(500));
         return DataSourceFactory.getInstance();
     }
 
