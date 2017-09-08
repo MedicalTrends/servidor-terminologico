@@ -278,9 +278,16 @@ public class MBConceptLoader extends EntityLoader {
                 }
 
                 String tagName = StringUtils.normalizeSpaces(tagToken.split("-")[1]).trim();
+
                 Tag tag = new Tag();
 
                 tag.setName(tagName);
+
+                /*
+                if(!tagManager.getAllTags().contains(tag)) {
+                    tagManager.persist(tag);
+                }
+                */
 
                 conceptSMTK.getTags().add(tag);
             }

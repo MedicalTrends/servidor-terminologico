@@ -1,7 +1,14 @@
 package cl.minsal.semantikos;
 
+import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.kernel.components.ConceptManager;
+import cl.minsal.semantikos.kernel.components.DescriptionManager;
+import cl.minsal.semantikos.kernel.components.RelationshipManager;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.SMTKLoader;
 import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.utils.ObjectSizeFetcher;
+import org.ehcache.sizeof.SizeOf;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,9 +34,17 @@ public class LoaderView {
     private JTextField textField3;
     private JTextField textField4;
 
+    //private ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+    //private RelationshipManager relationshipManager = (RelationshipManager) RemoteEJBClientFactory.getInstance().getManager(RelationshipManager.class);
+
+    static ConceptSMTK conceptSMTK;
+
     SMTKLoader smtkLoader;
 
     public LoaderView() throws InterruptedException {
+
+        //conceptSMTK = conceptManager.getConceptByID(306551);
+        //conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
 
         smtkLoader = new SMTKLoader(textArea1, textArea2, textField1, textField2, textField3, textField4, progressBar1);
 
@@ -48,6 +63,7 @@ public class LoaderView {
     }
 
     public static void main(String[] args) throws InterruptedException {
+
         JFrame jFrame = new JFrame("Semantikos - Carga Inicial");
 
         double offset=0.595;
@@ -57,6 +73,11 @@ public class LoaderView {
                 (int)(offset*java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight())));
 
         LoaderView loaderView = new LoaderView();
+
+        //SizeOf sizeOf = SizeOf.newInstance();
+
+        //long deepSize = sizeOf.deepSizeOf(conceptSMTK);
+
         jFrame.setContentPane(loaderView.panelMain);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.pack();

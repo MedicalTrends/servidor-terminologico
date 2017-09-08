@@ -9,7 +9,7 @@ import java.io.Serializable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "respuestaBuscarTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "RespuestaBuscarTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class GenericTermSearchResponse extends Response implements Serializable {
+public class GenericTermSearchResponse implements Serializable {
 
     @XmlElement(name="terminoBuscar")
     private String pattern;

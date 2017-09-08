@@ -32,7 +32,8 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
     private static final String ROOT = "/datafiles/";
     //private static final String ENV_DRUGS = "test/";
-    private static final String ENV = "basic/";
+    private static final String ENV = "test/";
+    //private static final String ENV = "basic/";
     private static final String ENV_DRUGS = "drugs/";
 
     private static final String SUBSTANCE = "substance/";
@@ -295,10 +296,10 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             PCConceptLoader pcConceptLoader = new PCConceptLoader();
             PCCEConceptLoader pcceConceptLoader = new PCCEConceptLoader();
 
-            /*
             initializer.checkBasicConceptsDataFiles(this);
             basicConceptLoader.processConcepts(this);
 
+            /*
             initializer.checkSubstanceDataFiles(this);
             substanceConceptLoader.processConcepts(this);
 

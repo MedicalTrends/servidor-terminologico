@@ -13,7 +13,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "respuestaConceptosRelacionados", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "RespuestaConceptosRelacionados", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class RelatedConceptsResponse extends Response implements Serializable {
+public class RelatedConceptsResponse implements Serializable {
 
     @XmlElement(name="conceptID")
     private String conceptId;

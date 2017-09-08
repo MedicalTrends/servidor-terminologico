@@ -555,6 +555,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             throw new EJBException(e);
         }
 
+        conceptSMTKMap.clear();
+
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): " + descriptions);
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
@@ -622,6 +624,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             throw new EJBException(e);
         }
 
+        conceptSMTKMap.clear();
+
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): " + descriptions);
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return new AsyncResult<>(descriptions);
@@ -676,6 +680,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }
+
+        conceptSMTKMap.clear();
 
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): " + descriptions);
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
@@ -774,18 +780,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): " + descriptions);
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return count;
-    }
-
-
-    private Long[] convertListPersistentToListID(PersistentEntity[] entities) {
-
-        List<Long> listIDs = new ArrayList<>();
-
-        for (PersistentEntity entity : entities) {
-            listIDs.add(entity.getId());
-        }
-
-        return listIDs.toArray(new Long[entities.length]);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package cl.minsal.semantikos.modelws.request;
 
-import cl.minsal.semantikos.modelws.response.Response;
-
 import javax.xml.bind.annotation.*;
 
 /**

@@ -13,7 +13,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "crossmapSetsResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "CrossmapSetsResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class CrossmapSetsResponse extends Response implements Serializable {
+public class CrossmapSetsResponse implements Serializable {
 
     /** La lista de crossmaps indirectos (response) */
     @XmlElementWrapper(name = "crossmapSets")

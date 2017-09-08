@@ -103,8 +103,9 @@ public class ConceptCreationBR implements BusinessRulesContainer {
 
     public void br103DefinitionalGrade(ConceptSMTK conceptSMTK) throws Exception {
 
-        if(conceptSMTK.isFullyDefined()!=null)
+        if(conceptSMTK.isFullyDefined() != null) {
             return;
+        }
 
         if(!conceptSMTK.isRelationshipsLoaded()) {
             throw new BusinessRuleException("BR-UNK","Intento de cálculo de grado de definición para concepto sin relaciones cargadas",conceptSMTK);
@@ -117,8 +118,7 @@ public class ConceptCreationBR implements BusinessRulesContainer {
         }
 
         /**Se obtiene la definición de relacion SNOMED CT**/
-        RelationshipDefinition relationshipDefinition = RelationshipDefinitionFactory.getInstance().findRelationshipDefinitionByName(TargetDefinition.SNOMED_CT);
-        relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.SNOMED_CT).get(0);
+        RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.SNOMED_CT).get(0);
 
         /**
          * Si alguna de las relaciones es de tipo snomed es posible determinar el grado de definición

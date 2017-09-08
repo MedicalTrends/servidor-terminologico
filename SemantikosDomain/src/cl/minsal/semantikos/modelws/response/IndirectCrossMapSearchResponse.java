@@ -13,7 +13,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "respuestaObtenerCrossmapsIndirectos", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "RespuestaObtenerCrossmapsIndirectos", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class IndirectCrossMapSearchResponse extends Response implements Serializable{
+public class IndirectCrossMapSearchResponse implements Serializable{
 
     @XmlElement(name="conceptID")
     private String conceptId;

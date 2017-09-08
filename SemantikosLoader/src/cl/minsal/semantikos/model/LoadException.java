@@ -49,6 +49,6 @@ public class LoadException extends LoadLog {
 
     @Override
     public String toString() {
-        return super.toString()+"("+dataFilePath.split("\\/")[dataFilePath.split("\\/").length-1]+":"+idConcept+")";
+        return super.toString()+" ("+dataFilePath.split("\\/")[dataFilePath.split("\\/").length-1]+":"+idConcept+")";
     }
 }

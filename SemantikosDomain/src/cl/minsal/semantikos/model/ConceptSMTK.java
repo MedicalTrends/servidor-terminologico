@@ -664,7 +664,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
             Description descriptionFavorite = getDescriptionFavorite();
             return toString + " - [Pref]: " + descriptionFavorite.getTerm();
         }
-        Description aDescription = this.descriptions.get(1);
+        Description aDescription = this.descriptions.get(0);
         return toString + " - " + aDescription.getDescriptionType().getName() + ": " + aDescription.getTerm();
     }
 

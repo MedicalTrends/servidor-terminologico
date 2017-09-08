@@ -137,10 +137,10 @@ public class ConceptManagerImpl implements ConceptManager {
 
         /* Y sus tags */
         for (Tag tag : conceptSMTK.getTags()) {
-            if (tag.isPersistent()) {
+            if (!tag.isPersistent()) {
                 tagManager.persist(tag);
-                tagManager.assignTag(conceptSMTK, tag);
             }
+            tagManager.assignTag(conceptSMTK, tag);
         }
 
         /* Se deja registro en la auditoría sólo para conceptos modelados */

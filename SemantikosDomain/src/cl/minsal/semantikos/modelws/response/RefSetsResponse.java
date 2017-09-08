@@ -3,6 +3,7 @@ package cl.minsal.semantikos.modelws.response;
 import cl.minsal.semantikos.model.refsets.RefSet;
 
 import javax.xml.bind.annotation.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "respuestaRefSets", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "RespuestaRefSets", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class RefSetsResponse extends Response {
+public class RefSetsResponse implements Serializable {
 
     @XmlElementWrapper(name = "refsets")
     @XmlElement(name = "refset")
@@ -22,7 +23,6 @@ public class RefSetsResponse extends Response {
     private int quantity;
 
     public RefSetsResponse() {
-        super();
         this.refSetResponses = new ArrayList<>();
     }
 

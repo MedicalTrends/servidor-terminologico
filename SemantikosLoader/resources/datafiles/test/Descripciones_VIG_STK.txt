@@ -1,5 +1,3 @@
 STK_DESCRIPCION;STK_CONCEPTO;TERMINO;tipo;SENS_MAYUSC;CREAC_NOMBRE;ESTADO;FECHA_REGISTRO;USUARIO_REGISTRO;MODELADO;forma;USOS
-415;88;síndrome  de bernheim;1;0;;;;;;AOK;
-414;88;síndrome  de bernheim (hallazgo);3;0;;;;;;AOK;
-426137;88;síndrome de Bernheim;2;0;;;;;;AOK;
-426138;88;síndrome de insuficiencia - obstrucción ventricular derecha;2;0;;;;;;AOK;
+105009;14280;escafoides prominente (hallazgo);1;0;;;;;;AOK;
+82790;14280;escafoides prominente (hallazgo);3;0;;;;;;AOK;

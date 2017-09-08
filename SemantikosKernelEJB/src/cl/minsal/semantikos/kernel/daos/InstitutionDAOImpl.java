@@ -41,8 +41,6 @@ public class InstitutionDAOImpl implements InstitutionDAO {
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            connection.setReadOnly(true);
-
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, id);
             call.execute();

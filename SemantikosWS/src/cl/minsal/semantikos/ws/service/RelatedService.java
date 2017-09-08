@@ -3,8 +3,10 @@ package cl.minsal.semantikos.ws.service;
 
 import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
 import cl.minsal.semantikos.modelweb.Pair;
+import cl.minsal.semantikos.modelws.fault.NotFoundFault;
 import cl.minsal.semantikos.modelws.request.RelatedConceptsByCategoryRequest;
 import cl.minsal.semantikos.modelws.request.RelatedConceptsRequest;
+import cl.minsal.semantikos.modelws.request.Request;
 import cl.minsal.semantikos.modelws.response.BioequivalentSearchResponse;
 import cl.minsal.semantikos.modelws.response.ISPRegisterSearchResponse;
 import cl.minsal.semantikos.modelws.response.RelatedConceptsLiteResponse;
@@ -17,12 +19,16 @@ import ws.minsal.semantikos.ws.utils.UtilsWS;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.InvocationContext;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.ws.WebServiceContext;
+import javax.xml.ws.handler.MessageContext;
 
 /**
  * Created by Development on 2016-11-18.
@@ -43,15 +49,37 @@ public class RelatedService {
     private static final Logger logger = LoggerFactory.getLogger(RelatedService.class);
 
     /**
-     * Metodo de autenticacion
-     * @param idStablishment ID de establecimiento
+     * Metodo de envoltura de los web methods
+     * @param ctx Contexto de invocacion
      * @throws Exception
      */
-    private void authenticate(String idStablishment) throws Exception {
-        Pair credentials = UtilsWS.getCredentialsFromWSContext(wsctx.getMessageContext());
-        authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
-        if(idStablishment!=null)
-            authenticationManager.validateInstitution(idStablishment);
+    @AroundInvoke
+    protected Object webMethodWrapper(InvocationContext ctx) throws Exception {
+
+        Request request = (Request) ctx.getParameters()[0];
+        String webMethodStatus = "0";
+        String webMethodMessage = "OK";
+
+        try {
+            Pair credentials = UtilsWS.getCredentialsFromWSContext(wsctx.getMessageContext());
+            authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
+            authenticationManager.validateInstitution(request.getIdStablishment());
+
+            return ctx.proceed();
+        }
+        catch (Exception e) {
+            logger.error("El web service ha arrojado el siguiente error: "+e.getMessage(),e);
+            //throw new NotFoundFault(e.getMessage());
+            webMethodStatus = "1";
+            webMethodMessage = e.getMessage();
+        }
+        finally {
+            HttpServletResponse response = (HttpServletResponse) wsctx.getMessageContext().get(MessageContext.SERVLET_RESPONSE);
+            response.addHeader("web-method-status",webMethodStatus);
+            response.addHeader("web-method-message",webMethodMessage);
+        }
+
+        return null;
     }
 
     // REQ-WS-010...021
@@ -61,24 +89,20 @@ public class RelatedService {
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsByCategoryRequest request
-    )  {
-        RelatedConceptsResponse response = new RelatedConceptsResponse();
+    ) throws IllegalInputFault, NotFoundFault {
 
-        try {
-            this.authenticate(request.getIdStablishment());
-            /* Validación de parámetros */
-            if ((request.getConceptId() == null || "".equals(request.getConceptId())) && (request.getDescriptionId() == null || "".equals(request.getDescriptionId()))) {
-                throw new IllegalInputFault("Debe ingresar un idConcepto o idDescripcion");
-            }
-            /* Se realiza la búsqueda */
-            response =  this.conceptController.findRelated(request.getDescriptionId(), request.getConceptId(), request.getRelatedCategoryName());
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            response.setCode(1);
-            response.setMessage(e.getMessage());
+        /* Validación de parámetros */
+        if ((request.getConceptId() == null || "".equals(request.getConceptId())) && (request.getDescriptionId() == null || "".equals(request.getDescriptionId()))) {
+            throw new IllegalInputFault("Debe ingresar un idConcepto o idDescripcion");
         }
 
-        return response;
+        /* Se realiza la búsqueda */
+        try {
+            return this.conceptController.findRelated(request.getDescriptionId(), request.getConceptId(), request.getRelatedCategoryName());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalInputFault(e.getMessage());
+        }
     }
 
     // REQ-WS-010...021 Lite
@@ -88,22 +112,12 @@ public class RelatedService {
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionConceptosRelacionados")
                     RelatedConceptsByCategoryRequest request
-    ) {
-        RelatedConceptsLiteResponse response = new RelatedConceptsLiteResponse();
-        try {
-            this.authenticate(request.getIdStablishment());
-            if ((request.getConceptId() == null || "".equals(request.getConceptId()))
-                    && (request.getDescriptionId() == null || "".equals(request.getDescriptionId()))) {
-                logger.debug("Debe ingresar un idConcepto o idDescripcion");
-                throw new IllegalInputFault("Debe ingresar un idConcepto o idDescripcion");
-            }
-            response = this.conceptController.findRelatedLite(request.getConceptId(), request.getDescriptionId(), request.getRelatedCategoryName());
-        }catch(Exception e){
-            logger.error(e.getMessage(), e);
-            response.setCode(1);
-            response.setMessage(e.getMessage());
+    ) throws IllegalInputFault, NotFoundFault {
+        if ((request.getConceptId() == null || "".equals(request.getConceptId()))
+                && (request.getDescriptionId() == null || "".equals(request.getDescriptionId()))) {
+            throw new IllegalInputFault("Debe ingresar un idConcepto o idDescripcion");
         }
-        return response;
+        return this.conceptController.findRelatedLite(request.getConceptId(), request.getDescriptionId(), request.getRelatedCategoryName());
     }
 
     // REQ-WS-020
@@ -113,17 +127,12 @@ public class RelatedService {
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionObtenerRegistroISP")
                     RelatedConceptsRequest request
-    ) {
-        ISPRegisterSearchResponse response = new ISPRegisterSearchResponse();
+    ) throws IllegalInputFault, NotFoundFault {
         try {
-            this.authenticate(request.getIdStablishment());
-            response = this.conceptController.getRegistrosISP(request.getConceptId(), request.getDescriptionId());
+            return this.conceptController.getRegistrosISP(request.getConceptId(), request.getDescriptionId());
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            response.setCode(1);
-            response.setMessage(e.getMessage());
+            throw new NotFoundFault(e.getMessage());
         }
-        return response;
     }
 
     // REQ-WS-021
@@ -133,17 +142,12 @@ public class RelatedService {
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionObtenerBioequivalentes")
             RelatedConceptsRequest request
-    ) {
-        BioequivalentSearchResponse response = new BioequivalentSearchResponse();
+    ) throws IllegalInputFault, NotFoundFault {
         try {
-            this.authenticate(request.getIdStablishment());
-            response = this.conceptController.getBioequivalentes(request.getConceptId(), request.getDescriptionId());
+            return this.conceptController.getBioequivalentes(request.getConceptId(), request.getDescriptionId());
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            response.setCode(1);
-            response.setMessage(e.getMessage());
+            throw new NotFoundFault(e.getMessage());
         }
-        return response;
     }
 
 }

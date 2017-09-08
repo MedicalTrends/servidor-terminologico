@@ -144,7 +144,8 @@ public class BasicConceptLoader extends EntityLoader {
             long idConcept = Long.parseLong(tokens[basicDescriptionFields.get("STK_CONCEPTO")]);
 
             String term = StringUtils.normalizeSpaces(tokens[basicDescriptionFields.get("TERMINO")]);
-            int idDescriptionType = Integer.parseInt(tokens[basicDescriptionFields.get("tipo")]);
+            String idDescriptionTypeString = tokens[basicDescriptionFields.get("tipo")];
+            int idDescriptionType;
             boolean caseSensitive = tokens[basicDescriptionFields.get("SENS_MAYUSC")].equals("1");
 
             DescriptionType descriptionType = DescriptionTypeFactory.TYPELESS_DESCRIPTION_TYPE;
@@ -153,6 +154,13 @@ public class BasicConceptLoader extends EntityLoader {
 
             if(conceptSMTK == null) {
                 throw new LoadException(path.toString(), idConcept, "Descripción referencia a concepto inexistente", ERROR);
+            }
+
+            try {
+                idDescriptionType = Integer.parseInt(idDescriptionTypeString);
+            }
+            catch (NumberFormatException e) {
+                throw new LoadException(path.toString(), idConcept, "Tipo de descripcion invalido", ERROR);
             }
 
             switch(idDescriptionType) {

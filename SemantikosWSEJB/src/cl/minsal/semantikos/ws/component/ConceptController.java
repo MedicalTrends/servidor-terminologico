@@ -695,6 +695,10 @@ public class ConceptController {
 
         ConceptSMTK conceptSMTK = getConcept(conceptId, descriptionId);
 
+        if(!conceptSMTK.getCategory().getName().equalsIgnoreCase("Farmacos - Producto Comercial")) {
+            throw new IllegalInputFault("Concepto "+conceptSMTK.toString()+" no corresponde a un Producto Comercial");
+        };
+
         BioequivalentSearchResponse res = new BioequivalentSearchResponse();
 
         res.setConceptId(conceptSMTK.getConceptID());
@@ -764,13 +768,13 @@ public class ConceptController {
     }
 
     public ConceptResponse loadAttributes(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) throws Exception {
-        if (conceptResponse.getAttributes() == null || conceptResponse.getAttributes().isEmpty()) {
+        //if (conceptResponse.getAttributes() == null || conceptResponse.getAttributes().isEmpty()) {
             if (!source.isRelationshipsLoaded()) {
                 source.setRelationships(relationshipManager.getRelationshipsBySourceConcept(source));
                 //conceptManager.loadRelationships(source);
             }
             ConceptMapper.appendAttributes(conceptResponse, source);
-        }
+        //}
         return conceptResponse;
     }
 

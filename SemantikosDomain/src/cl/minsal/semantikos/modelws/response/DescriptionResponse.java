@@ -14,7 +14,7 @@ import java.util.Date;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "descripcion", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "Descripcion", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class DescriptionResponse extends Response implements Serializable, Comparable<DescriptionResponse> {
+public class DescriptionResponse implements Serializable, Comparable<DescriptionResponse> {
 
     @XmlElement(name="descriptionID")
     private String descriptionID;

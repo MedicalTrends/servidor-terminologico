@@ -89,6 +89,13 @@
             <version>0.9.6</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.ehcache/sizeof -->
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>sizeof</artifactId>
+            <version>0.3.0</version>
+        </dependency>
+
     </dependencies>
 
 
@@ -166,6 +173,9 @@
                             <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>cl.minsal.semantikos.LoaderView</mainClass>
                         </manifest>
+                        <manifestEntries>
+                            <Premain-Class>cl.minsal.semantikos.utils.ObjectSizeFetcher</Premain-Class>
+                        </manifestEntries>
                     </archive>
                     <finalName>SemantikosLoader</finalName>
                     <appendAssemblyId>false</appendAssemblyId>

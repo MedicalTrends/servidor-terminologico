@@ -173,11 +173,13 @@
             <artifactId>javamelody-core</artifactId>
             <version>1.59.0</version>
         </dependency>
+
         <dependency>
             <groupId>com.github.noraui</groupId>
             <artifactId>ojdbc7</artifactId>
             <version>12.1.0.2</version>
         </dependency>
+
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosDomain</artifactId>

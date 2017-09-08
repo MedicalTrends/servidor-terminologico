@@ -15,7 +15,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlRootElement(name = "respuestaCategorias", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "RespuestaCategorias", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class CategoriesResponse extends Response implements Serializable{
+public class CategoriesResponse implements Serializable{
 
     private final static Logger logger = LoggerFactory.getLogger(CategoriesResponse.class);
 
