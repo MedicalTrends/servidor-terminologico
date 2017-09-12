@@ -42,8 +42,10 @@ public class RefSetUpdateBR {
      */
     protected void brRefSet002(RefSet refSet, User user) {
         for (Institution institution: user.getInstitutions() ) {
-            if(institution.getId()==refSet.getInstitution().getId())return;
-        }throw new BusinessRuleException("BR-RefSet-002", "Un usuario puede editar RefSets de instituciones a las que se encuentra asociado.");
+            if(institution.getId()==refSet.getInstitution().getId()) {
+                return;
+            }
+        } throw new BusinessRuleException("BR-RefSet-002", "Un usuario puede editar RefSets de instituciones a las que se encuentra asociado.");
 
     }
 }

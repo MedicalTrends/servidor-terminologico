@@ -16,6 +16,7 @@ import org.primefaces.model.LazyDataModel;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -172,9 +173,14 @@ public class RefSetsBean implements Serializable {
      * Método encargado de validate el RefSet seleccionado por el usuario
      */
     public void validRefset(RefSet refSetSelected) {
-        refSetSelected.setValidityUntil(null);
-        refSetManager.updateRefSet(refSetSelected, authenticationBean.getLoggedUser());
-        refSetList = refSetManager.getAllRefSets();
+        try {
+            refSetSelected.setValidityUntil(null);
+            refSetManager.updateRefSet(refSetSelected, authenticationBean.getLoggedUser());
+            refSetList = refSetManager.getAllRefSets();
+        }
+        catch (EJBException e) {
+            messageBean.messageError(e.getMessage());
+        }
     }
 
     /**

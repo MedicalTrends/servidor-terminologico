@@ -32,8 +32,8 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
     private static final String ROOT = "/datafiles/";
     //private static final String ENV_DRUGS = "test/";
-    private static final String ENV = "test/";
-    //private static final String ENV = "basic/";
+    //private static final String ENV = "test/";
+    private static final String ENV = "basic/";
     private static final String ENV_DRUGS = "drugs/";
 
     private static final String SUBSTANCE = "substance/";
@@ -320,10 +320,10 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
             initializer.checkPCDataFiles(this);
             pcConceptLoader.processConcepts(this);
-            */
 
             initializer.checkPCCEDataFiles(this);
             pcceConceptLoader.processConcepts(this);
+            */
 
             JOptionPane.showMessageDialog(null, "Carga de conceptos finalizada!");
         } catch (LoadException e1) {

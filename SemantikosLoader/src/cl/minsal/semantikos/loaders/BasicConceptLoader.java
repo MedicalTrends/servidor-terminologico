@@ -200,7 +200,6 @@ public class BasicConceptLoader extends EntityLoader {
                 else {
                     SMTKLoader.logWarning(new LoadLog("Término repetido para descripción "+description.toString()+". Se descarta descripcion", INFO));
                 }
-
             }
             else {
                 descriptionMap.put(conceptSMTK.getCategory().getId()+description.getTerm(), description);

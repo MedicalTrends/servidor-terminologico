@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
+import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Remote;
@@ -19,9 +20,9 @@ public interface AuthenticationManager {
 
     public boolean authenticate(String email, String password) throws AuthenticationException;
 
-    public void authenticateWS(String email, String password) throws AuthenticationException;
+    public User authenticateWS(String email, String password) throws AuthenticationException;
 
-    public void validateInstitution(String idInstitution) throws Exception ;
+    public Institution validateInstitution(String idInstitution) throws Exception ;
 
     public User getUserDetails(String email);
 

@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.factories.CacheFactory;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
@@ -363,6 +364,11 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     public List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK conceptSMTK, TargetType targetType) {
 
         //ConnectionBD connect = new ConnectionBD();
+        /*
+        if(CacheFactory.getInstance().getCache().containsKey(conceptSMTK.getId())) {
+            return CacheFactory.getInstance().getCache().get(conceptSMTK.getId()).getRelationships();
+        }
+        */
 
         String sql = "begin ? := stk.stk_pck_relationship.get_relationships_by_source_concept_and_target_type(?,?); end;";
 
@@ -386,6 +392,8 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         } catch (SQLException e) {
             throw new EJBException(e);
         }
+
+        //CacheFactory.getInstance().getCache().put(conceptSMTK.getId(), conceptSMTK);;
 
         return relationships;
     }

@@ -112,26 +112,32 @@ public class DescriptionsBrowserBean implements Serializable {
             @Override
             public List<Description> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 
-                if(isFilterChanged)
+                if(isFilterChanged) {
                     descriptionQuery.setPageNumber(0);
-                else
+                }
+                else {
                     descriptionQuery.setPageNumber(first);
+                }
 
                 isFilterChanged = false;
 
                 descriptionQuery.setPageSize(pageSize);
                 descriptionQuery.setOrder(new Integer(sortField));
 
-                if(sortOrder.name().substring(0,3).toLowerCase().equals("asc"))
-                    descriptionQuery.setAsc(sortOrder.name().substring(0,3).toLowerCase());
-                else
-                    descriptionQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
+                if(sortOrder.name().substring(0,3).toLowerCase().equals("asc")) {
+                    descriptionQuery.setAsc(sortOrder.name().substring(0, 3).toLowerCase());
+                }
+                else {
+                    descriptionQuery.setAsc(sortOrder.name().substring(0, 4).toLowerCase());
+                }
 
                 List<Description> descriptions = null;
-                try {
-                    descriptions = queryManager.executeQuery(descriptionQuery);
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+                descriptions = queryManager.executeQuery(descriptionQuery);
+
+                if(descriptions.isEmpty()) {
+                    descriptionQuery.setTruncateMatch(true);
+                    descriptions = queryManager.executeQuery(descriptionQuery);;
                 }
 
                 this.setRowCount(queryManager.countQueryResults(descriptionQuery));

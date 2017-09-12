@@ -66,10 +66,10 @@ public class ConceptManagerImpl implements ConceptManager {
     private DescriptionManager descriptionManager;
 
     @EJB
-    private RelationshipManager relationshipManager;
+    private RelationshipManagerImpl relationshipManager;
 
     @EJB
-    private CrossmapsManager crossmapsManager;
+    private CrossmapsManagerImpl crossmapsManager;
 
     @EJB
     private ConceptTransferBR conceptTransferBR;
@@ -135,10 +135,16 @@ public class ConceptManagerImpl implements ConceptManager {
             relationshipBindingBR.postActions(relationship, user);
         }
 
-        /* Y sus tags */
         for (Tag tag : conceptSMTK.getTags()) {
-            if (!tag.isPersistent()) {
-                tagManager.persist(tag);
+            /* Y sus tags. los tags deberian estar persistidos, sin embargo se soporta el caso en que no lo esten */
+            if(!tag.isPersistent()) {
+                List<Tag> tags = tagManager.findTagByNamePattern(tag.getName());
+                if (tags.isEmpty()) {
+                    tag.setId(tagManager.persist(tag));
+                }
+                else {
+                    tag = tags.get(0);
+                }
             }
             tagManager.assignTag(conceptSMTK, tag);
         }

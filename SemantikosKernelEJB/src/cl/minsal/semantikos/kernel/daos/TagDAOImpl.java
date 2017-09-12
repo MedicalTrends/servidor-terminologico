@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.tags.Tag;
+import oracle.jdbc.OracleConnection;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -147,13 +148,13 @@ public class TagDAOImpl implements TagDAO {
 
         List<Tag> tags = new ArrayList<>();
 
-        String sql = "begin ? := stk.stk_pck_tag.delete_tag(?); end;";
+        String sql = "begin ? := stk.stk_pck_tag.find_tab_by_pattern(?); end;";
 
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.setArray(2, connection.createArrayOf("text", namePattern));
+            call.setArray(2, connection.unwrap(OracleConnection.class).createARRAY("STK.TEXT_ARRAY", namePattern));
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);

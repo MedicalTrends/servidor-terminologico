@@ -206,8 +206,10 @@
                             process="@this"
                             immediate="true"
                             actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                            styleClass="relationships"
-                    />
+                            styleClass="relationships">
+                        <p:confirm header="Confirmar Acción" message="¿Desea eliminar esta recomendacion?"
+                                   icon="ui-icon-alert"/>
+                    </p:commandButton>
 
             </p:column>
         </p:dataTable>

@@ -112,10 +112,12 @@ public class ConceptCreationBR implements BusinessRulesContainer {
         }
 
         /*Si el concepto está en borrador se deja como primitivo */
+        /*
         if(!conceptSMTK.isModeled()) {
             conceptSMTK.setFullyDefined(false);
             return;
         }
+        */
 
         /**Se obtiene la definición de relacion SNOMED CT**/
         RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.SNOMED_CT).get(0);
@@ -126,14 +128,26 @@ public class ConceptCreationBR implements BusinessRulesContainer {
         for (Relationship relationship : conceptSMTK.getRelationships()) {
             if(relationship.getRelationshipDefinition().equals(relationshipDefinition)) {
                 ConceptSCT conceptSCT = (ConceptSCT) relationship.getTarget();
-                conceptSMTK.setFullyDefined((conceptSCT.isCompletelyDefined()) ? true : false);
+                if(conceptSCT.isCompletelyDefined()) {
+                    conceptSMTK.setFullyDefined(true);
+                }
+                else {
+                    conceptSMTK.setFullyDefined(false);
+                }
+                //conceptSMTK.setFullyDefined((conceptSCT.isCompletelyDefined()) ? true : false);
                 conceptSMTK.setInherited(true);
                 return;
             } else {
+                conceptSMTK.setFullyDefined(false);
                 conceptSMTK.setInherited(false);
                 return;
             }
         }
+        /*
+        Si aun no se ha seteado el grado de definicion, es porque el concepto esta en borrador, luego setearlo a false
+         */
+        conceptSMTK.setFullyDefined(false);
+        conceptSMTK.setInherited(false);
 
     }
 

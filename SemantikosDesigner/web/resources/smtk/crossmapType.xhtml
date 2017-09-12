@@ -19,7 +19,7 @@
 
     <!-- Multiplicidad N con atributos-->
 
-    <p:panel id="crossmapTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}"  toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
+    <p:panel id="crossmapTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}"  toggleSpeed="500" collapsed="#{not cc.attrs.relationshipDefinition.required}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
         <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}" style="width:100%">
@@ -179,13 +179,12 @@
                 <p:commandButton
                         icon="fa fa-trash"
                         title="Eliminar"
-                        update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                        update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                         style="float: right"
                         process="@this"
                         immediate="true"
                         actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                        styleClass="relationships"
-                >
+                        styleClass="relationships">
                     <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar este Crossmaps Directo?"
                                icon="ui-icon-alert"/>
                 </p:commandButton>

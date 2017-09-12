@@ -68,7 +68,7 @@
 
                         <p:column exportable="false" style="text-align: center">
 
-                            <p:commandLink oncomplete="PF('dialogC').show()" update=":browserForm:conceptTable,:browserForm:query-concept-sct" title="Ver Detalle">
+                            <p:commandLink oncomplete="PF('dialogC').show()" update=":browserForm:conceptTable,:browserForm:query-concept-sct" title="Ver Concepto">
                                 <i class="fa fa-search fa-lg" />
                                 <f:setPropertyActionListener value="#{conceptSMTK}" target="#{browserBean.conceptSelected}"/>
                             </p:commandLink>

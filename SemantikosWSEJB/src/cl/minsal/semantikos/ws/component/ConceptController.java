@@ -12,6 +12,7 @@ import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 import cl.minsal.semantikos.model.relationships.TargetType;
+import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.modelws.request.DescriptionIDorConceptIDRequest;
 import cl.minsal.semantikos.modelws.request.NewTermRequest;
@@ -108,9 +109,11 @@ public class ConceptController {
         List<ConceptResponse> relatedResponses = new ArrayList<>();
         List<ConceptSMTK> relatedConcepts = this.conceptManager.getRelatedConcepts(sourceConcept, category);
 
+        /*
         if(category.getRelationshipDefinitions().size() > 2) {
             relatedConcepts = relationshipManager.loadRelationshipsInParallel(relatedConcepts);
         }
+        */
 
         for (ConceptSMTK related : relatedConcepts) {
             ConceptResponse conceptResponse = new ConceptResponse(related);
@@ -572,9 +575,11 @@ public class ConceptController {
 
         List<ConceptSMTK> concepts = conceptManager.findModeledConceptPaginated(category, pageSize, pageNumber);
 
+        /*
         if(category.getRelationshipDefinitions().size() > 2) {
             concepts = relationshipManager.loadRelationshipsInParallel(concepts);
         }
+        */
 
         List<ConceptResponse> conceptResponses = new ArrayList<>();
 
@@ -695,7 +700,7 @@ public class ConceptController {
 
         ConceptSMTK conceptSMTK = getConcept(conceptId, descriptionId);
 
-        if(!conceptSMTK.getCategory().getName().equalsIgnoreCase("Farmacos - Producto Comercial")) {
+        if(!conceptSMTK.getCategory().getName().equalsIgnoreCase("Fármacos - Producto Comercial")) {
             throw new IllegalInputFault("Concepto "+conceptSMTK.toString()+" no corresponde a un Producto Comercial");
         };
 
@@ -852,11 +857,11 @@ public class ConceptController {
      * @param termRequest La solicitud de creación de término.
      * @return La respuesta respecto a la descripción creada.
      */
-    public NewTermResponse requestTermCreation(NewTermRequest termRequest) throws IllegalInputFault, NotFoundFault {
+    public NewTermResponse requestTermCreation(NewTermRequest termRequest, User user, Institution institution) throws IllegalInputFault, NotFoundFault {
 
         //User user = new User(1, "demo", "Demo User", "demo", false);
 
-        User user = userManager.getUserByEmail("user@admin.cl");
+        //User user = userManager.getUserByEmail("user@admin.cl");
 
         if (termRequest.getTerm() == null || termRequest.getTerm().isEmpty()) {
             throw new IllegalInputFault("Debe ingresar un término propuesto");
@@ -879,7 +884,7 @@ public class ConceptController {
                 termRequest.getSubSpecialty().isEmpty()?" ":termRequest.getSubSpecialty(),
                 termRequest.getEmail(),
                 termRequest.getObservation().isEmpty()?" ":termRequest.getObservation(),
-                termRequest.getIdStablishment());
+                institution.getName());
 
         /* Se realiza la solicitud */
         Description description;

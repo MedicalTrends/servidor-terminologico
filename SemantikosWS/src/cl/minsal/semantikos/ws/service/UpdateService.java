@@ -2,6 +2,7 @@ package cl.minsal.semantikos.ws.service;
 
 import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
 import cl.minsal.semantikos.kernel.components.UserManager;
+import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.modelweb.Pair;
 import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
@@ -58,6 +59,10 @@ public class UpdateService {
     @EJB
     private UserManager userManager;
 
+    User user;
+
+    Institution institution;
+
 
     /**
      * Metodo de envoltura de los web methods
@@ -73,8 +78,8 @@ public class UpdateService {
 
         try {
             Pair credentials = UtilsWS.getCredentialsFromWSContext(wsctx.getMessageContext());
-            authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
-            authenticationManager.validateInstitution(request.getIdStablishment());
+            user = authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
+            institution = authenticationManager.validateInstitution(request.getIdStablishment());
 
             return ctx.proceed();
         }
@@ -106,7 +111,7 @@ public class UpdateService {
             @WebParam(name = "peticionCodificacionDeNuevoTermino")
                     NewTermRequest termRequest) throws IllegalInputFault, NotFoundFault {
 
-        NewTermResponse newTermResponse = conceptController.requestTermCreation(termRequest);
+        NewTermResponse newTermResponse = conceptController.requestTermCreation(termRequest, user, institution);
         logger.info("codificacionDeNuevoTermino response: " + newTermResponse);
 
         return newTermResponse;

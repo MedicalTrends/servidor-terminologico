@@ -38,7 +38,6 @@ public class DescriptionSearchBR {
      * @param pattern patrón de texto a normalizar
      * @return patrón normalizado
      */
-    //TODO: Falta quitar los StopWords (no se encuentran definidos)
     public String standardizationPattern(String pattern) {
 
         String result = "";

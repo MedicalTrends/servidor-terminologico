@@ -120,7 +120,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
     }
 
     @PermitAll
-    public void authenticateWS(String username, String password) throws AuthenticationException {
+    public User authenticateWS(String username, String password) throws AuthenticationException {
         User user = authDAO.getUserByEmail(username);
         if (user == null)
             throw new AuthenticationException("Usuario no existe");
@@ -142,7 +142,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
         for (Profile profile : user.getProfiles()) {
             if(profile.equals(ProfileFactory.WS_CONSUMER_PROFILE)) {
                 authDAO.markLogin(username);
-                return;
+                return user;
             }
         }
 
@@ -150,13 +150,13 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
     }
 
     @PermitAll
-    public void validateInstitution(String idInstitution) throws Exception {
+    public Institution validateInstitution(String idInstitution) throws Exception {
+
+        Institution institution = null;
 
         if(idInstitution.isEmpty()) {
             throw new Exception("No se ha especificado idEstablecimiento como parámetro de esta operación");
         }
-
-        Institution institution = null;
 
         try {
             institution = institutionManager.getInstitutionById(Long.parseLong(idInstitution));
@@ -168,6 +168,8 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
         if(institution == null) {
             throw new Exception("No existe un establecimiento con el idEstablecimiento proporcionado");
         }
+
+        return institution;
     }
 
     @PermitAll

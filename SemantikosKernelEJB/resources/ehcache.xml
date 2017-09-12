@@ -12,17 +12,5 @@
         </resources>
     </cache>
 
-    <cache-template name="myDefaults">
-        <key-type>java.lang.Long</key-type>
-        <value-type>java.lang.String</value-type>
-        <heap unit="entries">200</heap>
-    </cache-template>
-
-    <cache alias="bar" uses-template="myDefaults">
-        <key-type>java.lang.Number</key-type>
-    </cache>
-
-    <cache alias="simpleCache" uses-template="myDefaults" />
-
 </config>
 

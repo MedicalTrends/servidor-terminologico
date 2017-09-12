@@ -1,3 +1,3 @@
 STK_DESCRIPCION;STK_CONCEPTO;TERMINO;tipo;SENS_MAYUSC;CREAC_NOMBRE;ESTADO;FECHA_REGISTRO;USUARIO_REGISTRO;MODELADO;forma;USOS
-105009;14280;escafoides prominente (hallazgo);1;0;;;;;;AOK;
-82790;14280;escafoides prominente (hallazgo);3;0;;;;;;AOK;
+2422;600;fracaso en intubacion;1;0;;;;;;AOK;
+2421;600;fracaso en intubacion (hallazgo);3;0;;;;;;AOK;

@@ -283,11 +283,9 @@ public class MBConceptLoader extends EntityLoader {
 
                 tag.setName(tagName);
 
-                /*
                 if(!tagManager.getAllTags().contains(tag)) {
-                    tagManager.persist(tag);
+                    tag.setId(tagManager.persist(tag));
                 }
-                */
 
                 conceptSMTK.getTags().add(tag);
             }

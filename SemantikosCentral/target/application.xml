@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application xmlns="http://java.sun.com/xml/ns/javaee"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_6.xsd"
-             version="6">
-
-    <module>
-        <ejb>SemantikosKernelEJB</ejb>
-    </module>
-    <module>
-        <ejb>SemantikosWSEJB-0.9.6.jar</ejb>
-    </module>
-    <module>
-        <web>
-            <web-uri>SemantikosWS-0.9.6.war</web-uri>
-            <context-root>ws</context-root>
-        </web>
-    </module>
+<!DOCTYPE application PUBLIC
+	"-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN"
+	"http://java.sun.com/dtd/application_1_3.dtd">
+<application>
+  <display-name>SemantikosCentral</display-name>
+  <module>
+    <web>
+      <web-uri>SemantikosWS-0.9.7.war</web-uri>
+      <context-root>ws</context-root>
+    </web>
+  </module>
+  <module>
+    <ejb>SemantikosKernelEJB</ejb>
+  </module>
+  <module>
+    <ejb>SemantikosWSEJB-0.9.7.jar</ejb>
+  </module>
 </application>
