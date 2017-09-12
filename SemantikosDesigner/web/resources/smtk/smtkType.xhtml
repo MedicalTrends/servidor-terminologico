@@ -108,6 +108,8 @@
                                  action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                  update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                  process="@this">
+                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
+                               icon="ui-icon-alert"/>
                 </p:commandButton>
             </p:column>
         </p:dataTable>
@@ -247,6 +249,8 @@
                                  action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                  update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                  process="@this">
+                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
+                               icon="ui-icon-alert"/>
                 </p:commandButton>
             </p:column>
         </p:dataTable>
@@ -351,6 +355,8 @@
                                                            rendered="#{conceptBean.concept.hasRelationships(cc.attrs.relationshipDefinition)}"
                                                            action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
                                                 <i class="fa fa-close fa-lg"  />
+                                                <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
+                                                           icon="ui-icon-alert"/>
                                             </p:commandLink>
                                         </p:outputPanel>
 

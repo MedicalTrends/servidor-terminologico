@@ -19,7 +19,7 @@
 
     <!-- Multiplicidad N con atributos-->
 
-    <p:panel id="crossmapTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}"  toggleSpeed="500" collapsed="#{not cc.attrs.relationshipDefinition.required}"
+    <p:panel id="crossmapTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{true}"  toggleSpeed="500" collapsed="#{true}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
         <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}" style="width:100%">
@@ -173,7 +173,6 @@
             <p:column headerText="Fecha Creación">
                 <h:outputText value="#{relationship.getDateCreationFormat()}"/>
             </p:column>
-
 
             <p:column headerText="Acción" style="width: 4%" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}">
                 <p:commandButton

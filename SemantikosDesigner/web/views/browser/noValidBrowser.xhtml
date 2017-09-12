@@ -230,11 +230,13 @@
                                         <div style="text-align: center">
                                             <p:commandButton rendered="#{noValidBrowserBean.conceptSelected!=null}"
                                                              update="@(.pending-description),@(.browserTable)"
-                                                             value="Trasladar Concepto"
+                                                             value="Trasladar Término No Válido"
                                                              oncomplete="PF('dialogTDP').hide()"
                                                              icon="fa fa-exchange"
                                                              actionListener="#{noValidBrowserBean.translateDescription}">
                                                 <f:setPropertyActionListener value="" target="#{noValidBrowserBean.conceptSelected}" />
+                                                <p:confirm header="Confirmar Acción" message="¿Desea trasladar este término no válido a un concepto modelado?"
+                                                           icon="ui-icon-alert"/>
                                             </p:commandButton>
                                         </div>
 

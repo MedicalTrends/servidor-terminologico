@@ -146,10 +146,12 @@ public class QueryManagerImpl implements QueryManager {
 
         List<Description> descriptions = (List<Description>) (Object) queryDAO.executeQuery(query);
 
+        /*
         if(descriptions.isEmpty()) {
             query.setTruncateMatch(true);
             descriptions = (List<Description>) (Object) queryDAO.executeQuery(query);
         }
+        */
 
         for (Description description : descriptions) {
 
@@ -192,10 +194,12 @@ public class QueryManagerImpl implements QueryManager {
 
         List<NoValidDescription> noValidDescriptions = (List<NoValidDescription>) (Object) queryDAO.executeQuery(query);
 
+        /*
         if(noValidDescriptions.isEmpty()) {
             query.setTruncateMatch(true);
             noValidDescriptions = (List<NoValidDescription>) (Object) queryDAO.executeQuery(query);
         }
+        */
 
         return noValidDescriptions;
     }
