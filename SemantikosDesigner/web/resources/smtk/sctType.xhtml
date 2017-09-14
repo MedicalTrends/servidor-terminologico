@@ -95,9 +95,11 @@
                                 <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
                                                 forceSelection="true"
                                                 id="findConceptSCT"
+                                                styleClass="findSCT"
                                                 widgetVar="findConceptSCT"
                                                 queryDelay="500"
                                                 scrollHeight="200" size="5"
+                                                minQueryLength="3"
                                                 completeMethod="#{sctBean.getConceptSearchInput}"
                                                 placeholder="#{sctBean.searchOption eq 'term'? 'Ingrese término...': 'Ingrese conceptId...'}"
                                                 converter="conceptSCTConverter"
@@ -123,10 +125,12 @@
                                         <h:outputText value="#{concept.descriptionFSN.term}" />
                                     </p:column>
 
-                                    <p:ajax event="query" update="findConceptSCT" />
-
                                     <p:ajax event="itemSelect"
                                             listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.conceptSCTSelected)}"
+                                            process="@this"/>
+
+                                    <p:ajax event="change"
+                                            listener="#{sctBean.loadNextChunk}"
                                             process="@this"/>
 
                                     <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
@@ -282,6 +286,11 @@
         </p:dialog>
 
     </p:panel>
+
+    <script type="text/javascript">
+
+
+    </script>
 
 </composite:implementation>
 </html>

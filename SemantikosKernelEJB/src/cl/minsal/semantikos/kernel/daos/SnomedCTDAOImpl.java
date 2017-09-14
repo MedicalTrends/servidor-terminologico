@@ -64,10 +64,10 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     }
 
     @Override
-    public List<ConceptSCT> findPerfectMatch(String pattern, Integer group) {
+    public List<ConceptSCT> findPerfectMatch(String pattern, Integer group, int page, int pageSize) {
         List<ConceptSCT> concepts = new ArrayList<>();
 
-        String sql = "begin ? := stk.stk_pck_snomed.find_sct_perfect_match(?,?); end;";
+        String sql = "begin ? := stk.stk_pck_snomed.find_sct_perfect_match(?,?,?,?); end;";
 
         //ConnectionBD connect = new ConnectionBD();
         try (Connection connection = dataSource.getConnection();
@@ -80,6 +80,9 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
             } else {
                 call.setInt(3, group);
             }
+            call.setInt(4, page);
+            call.setInt(5, pageSize);
+
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);
@@ -100,10 +103,10 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     }
 
     @Override
-    public List<ConceptSCT> findTruncateMatch(String pattern, Integer group) {
+    public List<ConceptSCT> findTruncateMatch(String pattern, Integer group, int page, int pageSize) {
         List<ConceptSCT> concepts = new ArrayList<>();
 
-        String sql = "begin ? := stk.stk_pck_snomed.find_sct_truncate_match(?,?); end;";
+        String sql = "begin ? := stk.stk_pck_snomed.find_sct_truncate_match(?,?,?,?); end;";
 
         //ConnectionBD connect = new ConnectionBD();
         try (Connection connection = dataSource.getConnection();
@@ -116,6 +119,9 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
             } else {
                 call.setInt(3, group);
             }
+            call.setInt(4, page);
+            call.setInt(5, pageSize);
+
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);

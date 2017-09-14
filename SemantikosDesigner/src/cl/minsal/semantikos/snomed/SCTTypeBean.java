@@ -48,7 +48,11 @@ public class SCTTypeBean implements Serializable {
 
     private Integer relationshipGroup = null;
 
+    private boolean endReached = false;
+
     List<Integer> relationshipGroups = Arrays.asList(new Integer[] {0, 1, 2, 3, 4});
+
+    private int pageSize = 100;
 
     /**
      * Constructor por defecto para la inicialización de componentes.
@@ -65,6 +69,7 @@ public class SCTTypeBean implements Serializable {
         this.conceptSel = conceptSel;
     }
 
+
     /**
      * Este método realiza la búsqueda del auto-complete, recuperando todos los conceptos (mostrando su toString()) SCT
      * cuyas descripciones coinciden con el patrón buscado.
@@ -74,6 +79,15 @@ public class SCTTypeBean implements Serializable {
      * @return Una lista con los conceptos a desplegar.
      */
     public List<ConceptSCT> getConceptSearchInput(String patron) {
+
+        if(!patron.equals(pattern)) {
+            endReached = false;
+            pageSize = 100;
+
+        }
+        else {
+            pageSize=pageSize+100;
+        }
 
         pattern = patron;
 
@@ -89,7 +103,7 @@ public class SCTTypeBean implements Serializable {
 
         /* La búsqueda empieza aquí */
         if(searchOption.equals("term")) {
-            concepts = cstManager.findConceptsByPattern(patron, relationshipGroup);
+            concepts = cstManager.findConceptsByPattern(patron, relationshipGroup, 0, pageSize);
         }
         else{
             try{
@@ -99,7 +113,17 @@ public class SCTTypeBean implements Serializable {
                 return null;
             }
         }
+
+        Ajax.update("findConceptSCT_input");
+
         return concepts;
+    }
+
+    public void loadNextChunk() {
+        if(endReached) {
+            getConceptSearchInput(pattern);
+        }
+        endReached = true;
     }
 
 

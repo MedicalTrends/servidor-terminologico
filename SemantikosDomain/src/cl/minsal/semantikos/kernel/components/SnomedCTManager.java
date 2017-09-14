@@ -41,7 +41,7 @@ public interface SnomedCTManager {
      *
      * @return La lista de conceptos que satisfacen el criterio de búsqueda.
      */
-    public List<ConceptSCT> findConceptsByPattern(String pattern, Integer group);
+    public List<ConceptSCT> findConceptsByPattern(String pattern, Integer group, int page, int pageSize);
 
     /**
      * Este método se encarga de entregar la cantidad de conceptos según patron, categoría y si esta modelado o no.

@@ -31,19 +31,20 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
 
     @Override
     public List<ConceptSCT> findConceptsByPattern(String pattern) {
-        return this.findConceptsByPattern(pattern, null);
+        return this.findConceptsByPattern(pattern, null, 0, 100);
     }
 
     @Override
-    public List<ConceptSCT> findConceptsByPattern(String pattern, Integer group) {
+    public List<ConceptSCT> findConceptsByPattern(String pattern, Integer group, int page, int pageSize) {
 
         String patternStandard = conceptSCTSearchBR.standardizationPattern(pattern);
         List<ConceptSCT> results;
 
-        results = snomedctDAO.findPerfectMatch(patternStandard, group);
+        results = snomedctDAO.findPerfectMatch(patternStandard, group, page, pageSize);
 
-        if (results.isEmpty())
-            results = snomedctDAO.findTruncateMatch(patternStandard, group);
+        if (results.isEmpty()) {
+            results = snomedctDAO.findTruncateMatch(patternStandard, group, page, pageSize);
+        }
 
         new ConceptSCTSearchBR().applyPostActions(results);
 

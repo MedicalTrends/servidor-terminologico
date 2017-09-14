@@ -62,7 +62,7 @@ public interface SnomedCTDAO {
      *
      * @return La lista de conceptos que satisfacen el criterio de búsqueda.
      */
-    List<ConceptSCT> findPerfectMatch(String pattern, Integer group);
+    List<ConceptSCT> findPerfectMatch(String pattern, Integer group, int page, int pageSize);
 
     /**
      * Este método es responsable de buscar aquellos conceptos que posean un CONCEPT_ID que coincida con el
@@ -73,7 +73,7 @@ public interface SnomedCTDAO {
      *
      * @return La lista de conceptos que satisfacen el criterio de búsqueda.
      */
-    List<ConceptSCT> findTruncateMatch(String pattern, Integer group);
+    List<ConceptSCT> findTruncateMatch(String pattern, Integer group, int page, int pageSize);
 
     /**
      * Este método es responsable de buscar aquellos conceptos que posean un CONCEPT_ID que coincida con el
