@@ -46,6 +46,7 @@ import java.util.concurrent.ExecutionException;
 
 import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 import static java.lang.System.currentTimeMillis;
+import static java.lang.System.nanoTime;
 
 
 /**
@@ -130,9 +131,13 @@ public class SearchService {
         logger.debug("ws-req-001: " + request.getTerm() + ", " + request.getCategoryNames() + " " + request
                 .getRefSetNames());
 
-        logger.info("ws-req-001: {}s", String.format("%.2f", (currentTimeMillis() - init)/1.0));
+        GenericTermSearchResponse response = this.conceptController.searchTermGeneric(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
 
-        return this.conceptController.searchTermGeneric(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
+        //float time = (float) (currentTimeMillis() - init);
+
+        //logger.info("ws-req-001: {}s", String.format("%.2f", time));
+
+        return  response;
     }
 
     // REQ-WS-002
@@ -389,7 +394,8 @@ public class SearchService {
             @WebParam(name = "peticionCrosmapSetMembersDeCrossmapSet")
                     CrossmapSetMembersRequest request
     ) throws NotFoundFault {
-        return this.crossmapsController.getCrossmapSetMembersByCrossmapSetAbbreviatedName(request.getCrossmapSetAbbreviatedName());
+        return this.crossmapsController.getCrossmapSetMembersByCrossmapSetAbbreviatedName(request.getCrossmapSetAbbreviatedName(),
+                request.getPageNumber(), request.getPageSize());
     }
 
     /**

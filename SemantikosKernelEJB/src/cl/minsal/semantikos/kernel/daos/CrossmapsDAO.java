@@ -107,5 +107,5 @@ public interface CrossmapsDAO {
      * @param crossmapSet El crossmap Set cuyos miembros se quieren recuperar.
      * @return La lista de los miembros del crossmap set indicado.
      */
-    List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet);
+    List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize);
 }

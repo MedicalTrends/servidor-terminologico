@@ -23,6 +23,9 @@ import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.util.StringUtils;
 
 import java.sql.Timestamp;
+import java.text.Collator;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static cl.minsal.semantikos.model.LoadLog.ERROR;
@@ -456,17 +459,24 @@ public class PCConceptLoader extends EntityLoader {
 
     }
 
-    public void mapIspRecord(HelperTable ispHelperTable, HelperTableRow ispRecord, Map<String,String> fetchedRecord){
+    public void mapIspRecord(HelperTable ispHelperTable, HelperTableRow ispRecord, Map<String,String> fetchedRecord) throws ParseException {
+
+        final Collator instance = Collator.getInstance();
+
+        // This strategy mean it'll ignore the accents
+        instance.setStrength(Collator.NO_DECOMPOSITION);
 
         for (HelperTableColumn helperTableColumn : ispHelperTable.getColumns()) {
             for (String s : fetchedRecord.keySet()) {
-                if(helperTableColumn.getDescription().toLowerCase().contains(s.toLowerCase())) {
+                if(instance.compare(helperTableColumn.getDescription().trim().toLowerCase(), s.trim().toLowerCase()) == 0) {
                     HelperTableData cell = new HelperTableData();
                     cell.setColumn(helperTableColumn);
                     if(helperTableColumn.getDescription().toLowerCase().contains("fecha") ||
                             helperTableColumn.getDescription().toLowerCase().contains("ultima") ) {
                         if(!fetchedRecord.get(s).trim().isEmpty()) {
-                            cell.setDateValue(new Timestamp(Date.parse(fetchedRecord.get(s))));
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                            Date parsedDate = dateFormat.parse(fetchedRecord.get(s));
+                            cell.setDateValue(new java.sql.Timestamp(parsedDate.getTime()));
                         }
                     }
                     else {

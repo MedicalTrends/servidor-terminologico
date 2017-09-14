@@ -148,7 +148,7 @@ public class TagDAOImpl implements TagDAO {
 
         List<Tag> tags = new ArrayList<>();
 
-        String sql = "begin ? := stk.stk_pck_tag.find_tab_by_pattern(?); end;";
+        String sql = "begin ? := stk.stk_pck_tag.find_tag_by_pattern(?); end;";
 
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {

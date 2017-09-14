@@ -60,8 +60,8 @@ public class TagManagerImpl implements TagManager {
         logger.debug("Buscando tags por patrón: " + pattern);
 
 
-        String[] patterns = patternToArray(pattern);
-        List<Tag> tagsBy = tagDAO.findTagsBy(patterns);
+        //String[] patterns = patternToArray(pattern);
+        List<Tag> tagsBy = tagDAO.findTagsBy(new String[]{pattern});
         logger.debug(tagsBy.size() + " tags encontrados por patrón: " + pattern);
 
         return tagsBy;

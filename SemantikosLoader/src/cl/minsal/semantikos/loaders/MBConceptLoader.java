@@ -281,7 +281,7 @@ public class MBConceptLoader extends EntityLoader {
 
                 Tag tag = new Tag();
 
-                tag.setName(tagName);
+                tag.setName(tagName.replace("\"",""));
 
                 if(!tagManager.getAllTags().contains(tag)) {
                     tag.setId(tagManager.persist(tag));

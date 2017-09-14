@@ -105,7 +105,7 @@ public interface CrossmapsManager {
      * @param crossmapSet El crossmapSet que se quiere recuperar.
      * @return Una lista con los crossmapSetMembers del crossmapSet dado <code>crossmapSetAbbreviatedName</code>.
      */
-    public List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet);
+    public List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize);
 
     /**
      * Este método es responsable de establecer un crossmap directo hacia un término de otra terminología.

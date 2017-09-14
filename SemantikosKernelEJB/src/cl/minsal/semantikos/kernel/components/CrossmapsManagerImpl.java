@@ -174,10 +174,10 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
-    public List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet) {
+    public List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize) {
 
         /* Lo primero es recuperar el crossmapSet a partir de su nombre abreviado */
-        return crossmapsDAO.getCrossmapSetMemberByCrossmapSet(crossmapSet);
+        return crossmapsDAO.getCrossmapSetMemberByCrossmapSet(crossmapSet, page, pageSize);
     }
 
     @Override

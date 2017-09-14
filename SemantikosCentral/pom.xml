@@ -56,6 +56,23 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- javamelody-core -->
+        <!--dependency>
+            <groupId>net.bull.javamelody</groupId>
+            <artifactId>javamelody-core</artifactId>
+            <version>1.69.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jrobin</groupId>
+            <artifactId>jrobin</artifactId>
+            <version>1.5.9</version>
+        </dependency-->
+
     </dependencies>
 
     <build>
@@ -88,6 +105,17 @@
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
                     <earSourceDirectory>src/main/java</earSourceDirectory>
                     <modules>
+                        <!--Modulos para java melody-->
+                        <!--jarModule>
+                            <groupId>net.bull.javamelody</groupId>
+                            <artifactId>javamelody-core</artifactId>
+                            <includeInApplicationXml>true</includeInApplicationXml>
+                        </jarModule>
+                        <jarModule>
+                            <groupId>org.jrobin</groupId>
+                            <artifactId>jrobin</artifactId>
+                            <includeInApplicationXml>true</includeInApplicationXml>
+                        </jarModule-->
                         <!-- Modulos para WS SOAP -->
                         <webModule>
                             <groupId>cl.minsal.semantikos</groupId>

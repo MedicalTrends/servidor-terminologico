@@ -147,7 +147,12 @@ public class CrossmapController {
      * @param crossmapSetAbbreviatedName El nombre abreviado del crossmapSet que se quiere recuperar.
      * @return El response de un conjunto de crossmapsetMembers del crossmapSet <code>crossmapSetAbbreviatedName</code>.
      */
-    public CrossmapSetMembersResponse getCrossmapSetMembersByCrossmapSetAbbreviatedName(String crossmapSetAbbreviatedName) throws NotFoundFault {
+    public CrossmapSetMembersResponse getCrossmapSetMembersByCrossmapSetAbbreviatedName(String crossmapSetAbbreviatedName, int page, int pageSize)
+            throws NotFoundFault, IllegalArgumentException {
+
+        if(pageSize > 100) {
+            throw new NotFoundFault("Tamaño de página excede máximo permitido de 100 registros");
+        }
 
         List<CrossmapSet> crossmapSets = crossmapManager.getCrossmapSets();
         CrossmapSet theCrossmapSet = null;
@@ -167,7 +172,7 @@ public class CrossmapController {
             throw new NotFoundFault("Este CrossmapSet no está vigente");
         }
 
-        List<CrossmapSetMember> crossmapSetByAbbreviatedName = crossmapManager.getCrossmapSetMemberByCrossmapSet(theCrossmapSet);
+        List<CrossmapSetMember> crossmapSetByAbbreviatedName = crossmapManager.getCrossmapSetMemberByCrossmapSet(theCrossmapSet, page, pageSize);
         logger.debug("CrossmapController.getCrossmapSetMembersByCrossmapSetAbbreviatedName:: " +
                 "crossmapSetByAbbreviatedName=" + crossmapSetByAbbreviatedName);
 

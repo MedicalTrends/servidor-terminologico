@@ -37,7 +37,7 @@ public interface UserManager {
 
     public boolean checkAnswers(User user);
 
-    public void resetAccount(User user, HttpServletRequest request);
+    public void resetAccount(User user, String baseURL);
 
     public void deleteUser(User user);
 

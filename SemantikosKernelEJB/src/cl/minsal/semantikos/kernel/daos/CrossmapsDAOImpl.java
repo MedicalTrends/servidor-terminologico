@@ -369,18 +369,21 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     }
 
     @Override
-    public List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet) {
+    public List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize) {
         List<CrossmapSetMember> crossmapSetMembers = new ArrayList<CrossmapSetMember>();
 
         //ConnectionBD connect = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsetmember_by_crossmapset(?); end;";
+        String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsetmember_by_crossmapset_paginated(?,?,?); end;";
 
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, crossmapSet.getId());
+            call.setInt(3, page);
+            call.setInt(4, pageSize);
+
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);

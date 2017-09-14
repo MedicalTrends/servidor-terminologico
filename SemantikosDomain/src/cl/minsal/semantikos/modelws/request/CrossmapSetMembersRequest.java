@@ -16,6 +16,28 @@ public class CrossmapSetMembersRequest extends Request implements Serializable {
     @XmlElement(required = true, name = "nombreAbreviadoCrossmapSet")
     private String crossmapSetAbbreviatedName;
 
+    @XmlElement(required = true, defaultValue = "0", name = "numeroPagina")
+    private int pageNumber;
+
+    @XmlElement(required = true, defaultValue = "30", name = "tamanoPagina")
+    private int pageSize;
+
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
     public String getCrossmapSetAbbreviatedName() {
         return crossmapSetAbbreviatedName;
     }

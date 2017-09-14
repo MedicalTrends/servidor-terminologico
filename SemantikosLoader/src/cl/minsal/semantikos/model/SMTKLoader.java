@@ -296,34 +296,46 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             PCConceptLoader pcConceptLoader = new PCConceptLoader();
             PCCEConceptLoader pcceConceptLoader = new PCCEConceptLoader();
 
+            /*
             initializer.checkBasicConceptsDataFiles(this);
             basicConceptLoader.processConcepts(this);
 
-            /*
             initializer.checkSubstanceDataFiles(this);
             substanceConceptLoader.processConcepts(this);
+            */
 
+            /*
             initializer.checkMBDataFiles(this);
             mbConceptLoader.processConcepts(this);
+            */
 
+            /*
             initializer.checkMCDataFiles(this);
             mcConceptLoader.processConcepts(this);
+            */
 
+            /*
             initializer.checkMCCEDataFiles(this);
             mcceConceptLoader.processConcepts(this);
+            */
 
+            /*
             initializer.checkGFPDataFiles(this);
             gfpConceptLoader.processConcepts(this);
+            */
 
+            /*
             initializer.checkFPDataFiles(this);
             fpConceptLoader.processConcepts(this);
+            */
 
+            /*
             initializer.checkPCDataFiles(this);
             pcConceptLoader.processConcepts(this);
+            */
 
             initializer.checkPCCEDataFiles(this);
             pcceConceptLoader.processConcepts(this);
-            */
 
             JOptionPane.showMessageDialog(null, "Carga de conceptos finalizada!");
         } catch (LoadException e1) {
