@@ -88,7 +88,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         /* Se cargan las descripciones del concepto */
         // TODO: Factorizar esto para que siempre se cree el concepto de la misma manera cuando se crea.
-        concept.setDescriptions(descriptionDAO.getDescriptionsByConcept(concept));
+        //concept.setDescriptions(descriptionDAO.getDescriptionsByConcept(concept));
 
         return concept;
     }

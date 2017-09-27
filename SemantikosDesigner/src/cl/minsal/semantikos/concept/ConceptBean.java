@@ -376,8 +376,12 @@ public class ConceptBean implements Serializable {
     public void createConcept() {
 
         if (idConcept == 0) {
+
             setCategory(categoryManager.getCategoryById(idCategory));
-            if (category.getId() == 34) changeMultiplicityToRequiredRelationshipDefinitionMC();
+
+            if (category.getId() == 34) {
+                changeMultiplicityToRequiredRelationshipDefinitionMC();
+            }
 
             ConceptSMTK aConcept = categoryManager.categoryContains(category, favoriteDescription);
 
@@ -390,7 +394,9 @@ public class ConceptBean implements Serializable {
             }
         } else {
             getConceptById(idConcept);
-            if (category.getId() == 34) changeMCSpecial();
+            if (category.getId() == 34) {
+                changeMCSpecial();
+            }
         }
 
         // Una vez que se ha inicializado el concepto, inicializar los placeholders para las relaciones

@@ -116,14 +116,17 @@
                                     <f:attribute name="searchOption" value="#{sctBean.searchOption}"  />
                                     <f:attribute name="relationshipGroup" value="#{sctBean.relationshipGroup}"  />
                                     <!---->
+                                    <p:outputPanel id="query-results" styleClass="query-results">
 
-                                    <p:column>
-                                        <h:outputText value="#{concept.idSnomedCT}" />
-                                    </p:column>
+                                        <p:column>
+                                            <h:outputText value="#{concept.idSnomedCT}" />
+                                        </p:column>
 
-                                    <p:column style="width: 500px">
-                                        <h:outputText value="#{concept.descriptionFSN.term}" />
-                                    </p:column>
+                                        <p:column style="width: 500px">
+                                            <h:outputText value="#{concept.descriptionFSN.term}" />
+                                        </p:column>
+
+                                    </p:outputPanel>
 
                                     <p:ajax event="itemSelect"
                                             listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.conceptSCTSelected)}"

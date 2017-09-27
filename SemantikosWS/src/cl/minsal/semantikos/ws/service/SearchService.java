@@ -133,7 +133,7 @@ public class SearchService {
 
         GenericTermSearchResponse response = this.conceptController.searchTermGeneric(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
 
-        //float time = (float) (currentTimeMillis() - init);
+        float time = (float) (currentTimeMillis() - init);
 
         //logger.info("ws-req-001: {}s", String.format("%.2f", time));
 

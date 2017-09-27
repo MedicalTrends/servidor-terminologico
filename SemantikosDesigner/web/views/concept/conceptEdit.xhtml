@@ -78,7 +78,7 @@
                                         <p:outputPanel id="atributos"
                                                        widgetVar="panelAtributos"
                                                        styleClass="attributes"
-                                                       rendered="#{ not empty conceptBean.orderedSMTKRelationshipDefinitions}">
+                                                       rendered="#{ not empty conceptBean.orderedSMTKRelationshipDefinitions }">
 
                                             <h:dataTable style="width: 100%;" value="#{conceptBean.orderedSMTKRelationshipDefinitions}"
                                                          var="relationshipDefinition">
@@ -341,12 +341,15 @@
 
         <script type="text/javascript">
 
+            /*
             $("div[id$=findConceptSCT_panel]").on("scroll", function (event) {
                 if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
                     //alert('end reached');
+                    var pattern = $("input[id$=findConceptSCT_input]").val();
                     $("input[id$=findConceptSCT_input]").trigger("change");
                 }
             });
+            */
 
         </script>
 

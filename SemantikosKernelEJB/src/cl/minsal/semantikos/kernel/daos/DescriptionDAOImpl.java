@@ -498,7 +498,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     public List<Description> searchDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets, int page, int pageSize) {
 
         /* Se registra el tiempo de inicio */
-        long init = currentTimeMillis();
+        //long init = currentTimeMillis();
 
         //ConnectionBD connect = new ConnectionBD();
 
@@ -556,6 +556,10 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         }
 
         conceptSMTKMap.clear();
+
+        //float time = (float) (currentTimeMillis() - init);
+
+        //logger.info("ws-req-001: {}s", String.format("%.2f", time));
 
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): " + descriptions);
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));

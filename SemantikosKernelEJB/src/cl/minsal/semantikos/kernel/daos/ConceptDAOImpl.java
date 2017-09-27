@@ -30,6 +30,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.System.currentTimeMillis;
 import static java.util.Collections.EMPTY_LIST;
 import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_OBJECT_ARRAY;
 
@@ -183,6 +184,8 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public ConceptSMTK getConceptByID(long id) {
         //ConnectionBD connect = new ConnectionBD();
+        /* Se registra el tiempo de inicio */
+        long init = currentTimeMillis();
 
         String sql = "begin ? := stk.stk_pck_concept.get_concept_by_id(?); end;";
 
@@ -213,6 +216,10 @@ public class ConceptDAOImpl implements ConceptDAO {
             logger.error("Se produjo un error al acceder a la BDD.", e);
             throw new EJBException(e);
         }
+
+        float time = (float) (currentTimeMillis() - init);
+
+        //logger.info("ws-req-001: {}s", String.format("%.2f", time));
 
         return conceptSMTK;
     }

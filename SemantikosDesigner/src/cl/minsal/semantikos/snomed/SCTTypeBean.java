@@ -70,6 +70,14 @@ public class SCTTypeBean implements Serializable {
     }
 
 
+    public boolean isEndReached() {
+        return endReached;
+    }
+
+    public void setEndReached(boolean endReached) {
+        this.endReached = endReached;
+    }
+
     /**
      * Este método realiza la búsqueda del auto-complete, recuperando todos los conceptos (mostrando su toString()) SCT
      * cuyas descripciones coinciden con el patrón buscado.
@@ -83,7 +91,6 @@ public class SCTTypeBean implements Serializable {
         if(!patron.equals(pattern)) {
             endReached = false;
             pageSize = 100;
-
         }
         else {
             pageSize=pageSize+100;
@@ -93,8 +100,9 @@ public class SCTTypeBean implements Serializable {
 
         List<ConceptSCT> concepts = new ArrayList<>();
 
-        if( !validateQueryResultSize() )
+        if( !validateQueryResultSize() ) {
             return concepts;
+        }
 
         /* Si el patrón viene vacío o es menor a tres caracteres, no se hace nada */
         if ( searchOption.equals("term") &&  ( patron == null || patron.trim().length() < 3 ) ) {
@@ -106,15 +114,16 @@ public class SCTTypeBean implements Serializable {
             concepts = cstManager.findConceptsByPattern(patron, relationshipGroup, 0, pageSize);
         }
         else{
-            try{
+            try {
                 concepts = cstManager.findConceptsByConceptID(new Long(patron), relationshipGroup);
             }
-            catch (NumberFormatException e){
+            catch (NumberFormatException e) {
                 return null;
             }
+
         }
 
-        Ajax.update("findConceptSCT_input");
+        //Ajax.update("mainForm:j_idt109:j_idt2294:0:j_idt2296:findConceptSCT_panel");
 
         return concepts;
     }

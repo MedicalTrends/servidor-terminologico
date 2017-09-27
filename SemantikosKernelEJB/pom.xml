@@ -132,6 +132,14 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- ojdbc8.jar example -->
+        <!--dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <version>12.2.0.1.0</version>
+            <scope>provided</scope>
+        </dependency-->
+
         <!--dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc7</artifactId>
