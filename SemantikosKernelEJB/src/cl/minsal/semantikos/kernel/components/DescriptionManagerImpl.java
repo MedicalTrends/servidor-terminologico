@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.businessrules.*;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
+import cl.minsal.semantikos.kernel.daos.WSDAO;
 import cl.minsal.semantikos.kernel.factories.DescriptionSearcherFactory;
 import cl.minsal.semantikos.kernel.factories.RelationshipLoaderFactory;
 import cl.minsal.semantikos.kernel.factories.ThreadFactory;
@@ -25,6 +26,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +47,9 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
     @EJB
     DescriptionDAO descriptionDAO;
+
+    @EJB
+    WSDAO wsDAO;
 
     @EJB
     CategoryManager categoryManager;
@@ -322,7 +327,13 @@ public class DescriptionManagerImpl implements DescriptionManager {
     @Override
     public List<Description> searchDescriptionsPerfectMatch(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
-        return descriptionDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
+        //return descriptionDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
+        try {
+            return wsDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
