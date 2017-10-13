@@ -89,7 +89,7 @@
                                         <h:outputText value="Insensible" rendered="#{ not concept.descriptionFavorite.caseSensitive }"/>
                                     </p:column>
 
-                                    <p:columns value="#{generalBrowserBean.generalQuery.columns}" rendered="true"
+                                    <p:columns value="#{generalBrowserBean.generalQuery.showableColumns}"
                                                var="column"
                                                columnIndexVar="colIndex">
                                         <f:facet name="header">

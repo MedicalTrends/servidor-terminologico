@@ -1,22 +1,28 @@
-package cl.minsal.semantikos.model.users;
+package cl.minsal.semantikos.kernel.singletons;
 
+import cl.minsal.semantikos.model.users.User;
+
+import javax.ejb.Lock;
 import javax.ejb.Singleton;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static javax.ejb.LockType.READ;
+import static javax.ejb.LockType.WRITE;
 
 /**
  * @author Andrés Farías
  */
-public class UserFactory implements Serializable {
-
-    private static final UserFactory instance = new UserFactory();
+@Singleton
+public class UserSingleton implements Serializable {
 
     /** La lista de tagSMTK */
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
+
+    /** Mapa de tagSMTK por su nombre. */
+    private static ConcurrentHashMap<Long, User> usersById = new ConcurrentHashMap<>();
 
     public ConcurrentHashMap<Long, User> getUsersById() {
         return usersById;
@@ -26,26 +32,12 @@ public class UserFactory implements Serializable {
         this.usersById = usersById;
     }
 
-    /** Mapa de tagSMTK por su nombre. */
-    private static ConcurrentHashMap<Long, User> usersById;
-
-    /**
-     * Constructor privado para el Singleton del Factory.
-     */
-    private UserFactory() {
-        this.users = new ArrayList<>();
-        this.usersById = new ConcurrentHashMap<>();
-    }
-
-    public static UserFactory getInstance() {
-        return instance;
-    }
-
     /**
      * Este método es responsable de retornar el tipo de descripción llamado FSN.
      *
      * @return Retorna una instancia de FSN.
      */
+    @Lock(READ)
     public User findUserById(long id) {
 
         if (usersById.containsKey(id)) {
@@ -59,6 +51,7 @@ public class UserFactory implements Serializable {
      * Este método es responsable de asignar un nuevo conjunto de tagsSMTJ. Al hacerlo, es necesario actualizar
      * los mapas.
      */
+    @Lock(WRITE)
     public void setUsers(List<User> users) {
 
         /* Se actualiza la lista */
@@ -71,6 +64,7 @@ public class UserFactory implements Serializable {
         }
     }
 
+    @Lock(WRITE)
     public void refresh(User user) {
         if(!users.contains(user)) {
             users.add(user);

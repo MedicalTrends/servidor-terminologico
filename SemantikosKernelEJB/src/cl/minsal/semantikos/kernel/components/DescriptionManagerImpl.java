@@ -19,10 +19,7 @@ import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
+import javax.ejb.*;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.validation.constraints.NotNull;
@@ -41,6 +38,7 @@ import static java.lang.System.currentTimeMillis;
  * @author Andrés Farías
  */
 @Stateless
+@LocalBean
 public class DescriptionManagerImpl implements DescriptionManager {
 
     private static final Logger logger = LoggerFactory.getLogger(DescriptionManagerImpl.class);
@@ -325,18 +323,22 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    //@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<Description> searchDescriptionsPerfectMatch(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
-        //return descriptionDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
+        return descriptionDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
+        /*
         try {
             return wsDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+        */
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<Description> searchDescriptionsPerfectMatchInParallel(String term, List<Category> categories, List<RefSet> refSets) throws InterruptedException, ExecutionException {
         long init = currentTimeMillis();
         //int cont = descriptionDAO.countDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
@@ -344,7 +346,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
         List<Description> descriptions = new ArrayList<>();
 
-        int pageSize = 50;
+        int pageSize = 20;
 
         List<Future<List<Description>>> results = new ArrayList<>();
 

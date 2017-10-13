@@ -4,6 +4,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.queries.IQuery;
 import cl.minsal.semantikos.model.queries.Query;
+import cl.minsal.semantikos.model.queries.QueryColumn;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -29,7 +30,7 @@ public interface QueryDAO {
 
     List<RelationshipAttributeDefinition> getSecondDerivateSearchableAttributesByCategory(Category category);
 
-    List<RelationshipDefinition> getShowableAttributesByCategory(Category category);
+    List<QueryColumn> getShowableAttributesByCategory(Category category);
 
     List<RelationshipDefinition> getSecondOrderShowableAttributesByCategory(Category category);
 

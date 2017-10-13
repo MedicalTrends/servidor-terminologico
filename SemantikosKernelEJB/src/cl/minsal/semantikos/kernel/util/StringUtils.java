@@ -186,4 +186,22 @@ public class StringUtils {
         }
         return result;
     }
+
+    public static String cleanJSON(String json){
+        /*
+        Pattern p = Pattern.compile( "([/]+)" );
+        Matcher m = p.matcher( json );
+        StringBuffer sb = new StringBuffer();
+        while (m.find()) {
+            m.appendReplacement(sb, "/");
+        }
+        return m.appendTail(sb).toString();
+        */
+        //return json.replaceAll("\\\\[\\\\]+","\\\\").replaceAll("[a-zA-Z]]","]").replaceAll("\\\"}","}").replaceAll("\\\\}","}").replaceAll("\\\"\\[","[").replaceAll("\\\\\\[","[");
+
+
+        //return json.replaceAll("\\\\[\\\\]*","").replaceAll("\\\"}","}").replaceAll("\\\\}","}").replaceAll("\\\"\\[","[").replaceAll("\\\\\\[","[").replaceAll("\\\"\\{","{").replaceAll("\\}\\\"","}");
+        return json.replaceAll("\\\\[\\\\]*","").replaceAll("\\\\}","}").replaceAll("\\\"\\[","[").replaceAll("\\\\\\[","[").replaceAll("\\]\"","]").replaceAll("\\\"\\{","{").replaceAll("\\}\\\"","}");
+    }
 }
+

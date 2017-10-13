@@ -3,6 +3,9 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.factories.EmailFactory;
 import cl.minsal.semantikos.kernel.factories.QueryFactory;
 import cl.minsal.semantikos.kernel.factories.ThreadFactory;
+import cl.minsal.semantikos.kernel.singletons.CategorySingleton;
+import cl.minsal.semantikos.kernel.singletons.DescriptionTypeSingleton;
+import cl.minsal.semantikos.kernel.singletons.UserSingleton;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 
@@ -82,6 +85,15 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
     @EJB
     private AuthDAO authDAO;
+
+    @EJB
+    private CategorySingleton categorySingleton;
+
+    @EJB
+    private DescriptionTypeSingleton descriptionTypeSingleton;
+
+    @EJB
+    private UserSingleton userSingleton;
 
     @Resource(lookup = "java:jboss/OracleDS")
     private DataSource dataSource;
@@ -213,6 +225,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
             /* Se setea la lista de tagsSMTK */
             CategoryFactory.getInstance().setCategories(categories);
+            categorySingleton.setCategories(categories);
 
         } catch (SQLException e) {
             throw new EJBException(e);
@@ -241,8 +254,8 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
             query.setCustomFilterable(queryDAO.getCustomFilteringValue(category));
 
             // Adding dynamic columns
-            for (RelationshipDefinition relationshipDefinition : queryDAO.getShowableAttributesByCategory(category)) {
-                query.getColumns().add(new QueryColumn(relationshipDefinition.getName(), new Sort(null, false), relationshipDefinition));
+            for (QueryColumn queryColumn : queryDAO.getShowableAttributesByCategory(category)) {
+                query.getColumns().add(queryColumn);
             }
 
             // Adding second order columns, if this apply
@@ -253,7 +266,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
                     for (RelationshipDefinition relationshipDefinitionDestination : queryDAO.getSecondOrderShowableAttributesByCategory(categoryDestination)) {
 
-                        QueryColumn secondOrderColumn = new QueryColumn(relationshipDefinitionDestination.getName(), new Sort(null, false), relationshipDefinitionDestination);
+                        QueryColumn secondOrderColumn = new QueryColumn(relationshipDefinitionDestination.getName(), new Sort(null, false), relationshipDefinitionDestination, true);
                         if(relationshipDefinitionDestination.isU_asist() && category.getNameAbbreviated().equals("MCCE")) {
                             continue;
                         }
@@ -262,7 +275,9 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
                         }
                         else {
                             if(relationshipDefinition.getTargetDefinition().isSMTKType()) {
-                                query.getSourceSecondOrderShowableAttributes().add(relationshipDefinition);
+                                if(!query.getSourceSecondOrderShowableAttributes().contains(relationshipDefinition)) {
+                                    query.getSourceSecondOrderShowableAttributes().add(relationshipDefinition);
+                                }
                             }
 
                             query.getColumns().add(secondOrderColumn);
@@ -278,7 +293,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
                 for (Category relatedCategory : categoryDAO.getRelatedCategories(category)) {
                     if(queryDAO.getShowableValue(relatedCategory)) {
                         RelationshipDefinition rd = new RelationshipDefinition(relatedCategory.getId(), relatedCategory.getName(), relatedCategory.getName(), relatedCategory, MultiplicityFactory.ONE_TO_ONE);
-                        query.getColumns().add(new QueryColumn(rd.getName(), new Sort(null, false), rd));
+                        query.getColumns().add(new QueryColumn(rd.getName(), new Sort(null, false), rd, true));
                     }
                 }
             }
@@ -378,6 +393,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
             /* Se setea la lista de Tipos de descripción */
             DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypes);
+            descriptionTypeSingleton.setDescriptionTypes(descriptionTypes);
 
         } catch (SQLException e) {
             String errorMsg = "Error al intentar recuperar Description Types de la BDD.";
@@ -455,6 +471,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         }
 
         UserFactory.getInstance().setUsers(users);
+        userSingleton.setUsers(users);
 
         return UserFactory.getInstance();
     }

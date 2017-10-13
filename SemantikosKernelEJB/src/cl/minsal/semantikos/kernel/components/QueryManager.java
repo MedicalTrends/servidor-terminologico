@@ -113,6 +113,6 @@ public interface QueryManager {
      *
      * @param category El objeto de consulta para el navegador de pendientes
      */
-    public List<RelationshipDefinition> getShowableAttributesByCategory(Category category);
+    public List<QueryColumn> getShowableAttributesByCategory(Category category);
 
 }

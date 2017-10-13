@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
+import cl.minsal.semantikos.kernel.singletons.CategorySingleton;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.categories.Category;
@@ -81,6 +82,9 @@ public class ConceptDAOImpl implements ConceptDAO {
 
     @EJB
     RefSetDAO refSetDAO;
+
+    @EJB
+    CategorySingleton categorySingleton;
 
     @Resource(lookup = "java:jboss/OracleDS")
     private DataSource dataSource;
@@ -839,7 +843,8 @@ public class ConceptDAOImpl implements ConceptDAO {
         /* Se recupera la categoría como objeto de negocio */
         idCategory = Long.valueOf(resultSet.getString("id_category"));
         //objectCategory = categoryDAO.getCategoryById(idCategory);
-        objectCategory = CategoryFactory.getInstance().findCategoryById(idCategory);
+        //objectCategory = CategoryFactory.getInstance().findCategoryById(idCategory);
+        objectCategory = categorySingleton.findCategoryById(idCategory);
 
         check = resultSet.getBoolean("is_to_be_reviewed");
         consult = resultSet.getBoolean("is_to_be_consultated");

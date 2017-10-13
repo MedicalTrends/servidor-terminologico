@@ -244,7 +244,7 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
-    public List<RelationshipDefinition> getShowableAttributesByCategory(Category category) {
+    public List<QueryColumn> getShowableAttributesByCategory(Category category) {
         return queryDAO.getShowableAttributesByCategory(category);
     }
 

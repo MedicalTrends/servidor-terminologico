@@ -133,7 +133,9 @@ public class Description extends PersistentEntity implements AuditableEntity, Se
                 }
             }
 
-            this.term = this.term + " (" + conceptSMTK.getTagSMTK() + ")";
+            if(conceptSMTK != null) {
+                this.term = this.term + " (" + conceptSMTK.getTagSMTK() + ")";
+            }
 
         }
     }

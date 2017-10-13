@@ -6,6 +6,7 @@ package cl.minsal.semantikos.ws.service;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.categories.Category;
 
+import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.modelweb.Pair;
 import cl.minsal.semantikos.modelws.fault.NotFoundFault;
 import cl.minsal.semantikos.modelws.request.*;
@@ -82,9 +83,10 @@ public class SearchService {
 
     /**
      * Metodo de envoltura de los web methods
-     * @param ctx Contexto de invocacion
+     * //@param ctx Contexto de invocacion
      * @throws Exception
      */
+
     @AroundInvoke
     protected Object webMethodWrapper(InvocationContext ctx) throws Exception {
 
@@ -101,17 +103,18 @@ public class SearchService {
         }
         catch (Exception e) {
             logger.error("El web service ha arrojado el siguiente error: "+e.getMessage(),e);
-            //throw new NotFoundFault(e.getMessage());
-            webMethodStatus = "1";
-            webMethodMessage = e.getMessage();
+            throw new NotFoundFault(e.getMessage());
+            //return new NotFoundFault(e.getMessage());
+            //webMethodStatus = "1";
+            //webMethodMessage = e.getMessage();
         }
         finally {
-            HttpServletResponse response = (HttpServletResponse) wsctx.getMessageContext().get(MessageContext.SERVLET_RESPONSE);
-            response.addHeader("web-method-status",webMethodStatus);
-            response.addHeader("web-method-message",webMethodMessage);
+            //HttpServletResponse response = (HttpServletResponse) wsctx.getMessageContext().get(MessageContext.SERVLET_RESPONSE);
+            //response.addHeader("web-method-status",webMethodStatus);
+            //response.addHeader("web-method-message",webMethodMessage);
         }
 
-        return null;
+        //return null;
     }
 
     // REQ-WS-001
@@ -123,8 +126,6 @@ public class SearchService {
                     SimpleSearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault, ExecutionException, InterruptedException {
 
-        long init = currentTimeMillis();
-
         /* Se hace una validación de los parámetros */
         validateAtLeastOneCategoryOrOneRefSet(request);
 
@@ -133,11 +134,8 @@ public class SearchService {
 
         GenericTermSearchResponse response = this.conceptController.searchTermGeneric(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
 
-        float time = (float) (currentTimeMillis() - init);
-
-        //logger.info("ws-req-001: {}s", String.format("%.2f", time));
-
         return  response;
+
     }
 
     // REQ-WS-002
@@ -179,7 +177,11 @@ public class SearchService {
         CategoriesResponse response = new CategoriesResponse();
         logger.debug("Se invocado el servicio listaCategorias().");
         try {
-            response = this.categoryController.categoryList();
+            //response = this.categoryController.categoryList();
+            response = new CategoriesResponse(CategoryFactory.getInstance().getCategories());
+            synchronized(this) {
+                wait(500);
+            }
             logger.debug("El servicio listaCategorias() a retornado " + response.getCategoryResponses().size()
                     + " categorias Responses.");
         }catch(Exception e){

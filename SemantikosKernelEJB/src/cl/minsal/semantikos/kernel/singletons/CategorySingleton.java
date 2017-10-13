@@ -1,43 +1,32 @@
-package cl.minsal.semantikos.model.categories;
+package cl.minsal.semantikos.kernel.singletons;
 
+import cl.minsal.semantikos.model.categories.Category;
+
+import javax.ejb.Lock;
+import javax.ejb.Singleton;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @author Andrés Farías
- */
-public class CategoryFactory implements Serializable {
+import static javax.ejb.LockType.READ;
+import static javax.ejb.LockType.WRITE;
 
-    private static final CategoryFactory instance = new CategoryFactory();
-
-    public List<Category> getCategories() {
-        return categories;
-    }
+@Singleton
+public class CategorySingleton implements Serializable {
 
     /** La lista de categorías */
-    private List<Category> categories;
+    private List<Category> categories= new ArrayList<>();
 
     /** Mapa de categorías por su id. */
-    private static ConcurrentHashMap<Long, Category> categoriesById;
+    private static ConcurrentHashMap<Long, Category> categoriesById = new ConcurrentHashMap<>();
 
     /** Mapa de categorías por su nombre. */
-    private static ConcurrentHashMap<String, Category> categoriesByName;
+    private static ConcurrentHashMap<String, Category> categoriesByName = new ConcurrentHashMap<>();
 
-    /**
-     * Constructor privado para el Singleton del Factory.
-     */
-    private CategoryFactory() {
-        this.categories = new ArrayList<>();
-        this.categoriesById = new ConcurrentHashMap<>();
-        this.categoriesByName = new ConcurrentHashMap<>();
-    }
-
-    public static CategoryFactory getInstance() {
-        return instance;
+    @Lock(READ)
+    public List<Category> getCategories() {
+        return categories;
     }
 
     /**
@@ -45,6 +34,7 @@ public class CategoryFactory implements Serializable {
      *
      * @return Retorna una instancia de FSN.
      */
+    @Lock(READ)
     public Category findCategoryById(long id) {
 
         if (categoriesById.containsKey(id)) {
@@ -58,6 +48,7 @@ public class CategoryFactory implements Serializable {
      *
      * @return Retorna una instancia de FSN.
      */
+    @Lock(READ)
     public Category findCategoryByName(String name) {
 
         if (categoriesByName.containsKey(name.toLowerCase())) {
@@ -70,6 +61,7 @@ public class CategoryFactory implements Serializable {
      * Este método es responsable de asignar un nuevo conjunto de tagsSMTJ. Al hacerlo, es necesario actualizar
      * los mapas.
      */
+    @Lock(WRITE)
     public void setCategories( List<Category> categories) {
 
         /* Se actualiza la lista */
@@ -85,10 +77,12 @@ public class CategoryFactory implements Serializable {
         }
     }
 
+    @Lock(READ)
     public ConcurrentHashMap<String, Category> getCategoriesByName() {
         return categoriesByName;
     }
 
+    @Lock(WRITE)
     public void setCategoriesByName(ConcurrentHashMap<String, Category> categoriesByName) {
         this.categoriesByName = categoriesByName;
     }

@@ -1,50 +1,43 @@
-package cl.minsal.semantikos.model.descriptions;
+package cl.minsal.semantikos.kernel.singletons;
 
+import cl.minsal.semantikos.model.descriptions.DescriptionType;
+
+import javax.ejb.Lock;
+import javax.ejb.Singleton;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static javax.ejb.LockType.READ;
+import static javax.ejb.LockType.WRITE;
 
 /**
  * @author Andrés Farías
  */
-public class DescriptionTypeFactory implements Serializable {
+@Singleton
+public class DescriptionTypeSingleton implements Serializable {
 
-    private static final DescriptionTypeFactory instance = new DescriptionTypeFactory();
 
     public static final DescriptionType TYPELESS_DESCRIPTION_TYPE = new DescriptionType(-1, "Sin Tipo", "El tipo de descripcion sin tipo :).");
 
     public static final String FAVOURITE_DESCRIPTION_TYPE_NAME = "preferida";
 
     /** La lista de descripciones */
-    private List<DescriptionType> descriptionTypes;
+    private List<DescriptionType> descriptionTypes = new ArrayList<>();
 
     /** Mapa de Descripciones por su nombre. */
-    private static ConcurrentHashMap<String, DescriptionType> descriptionTypesByName;
+    private ConcurrentHashMap<String, DescriptionType> descriptionTypesByName = new ConcurrentHashMap<>();
 
     /** Mapa de Descripciones por su ID */
-    private static ConcurrentHashMap<Long, DescriptionType> descriptionTypesByID;
-
-    /**
-     * Constructor privado para el Singleton del Factory.
-     */
-    private DescriptionTypeFactory() {
-        this.descriptionTypes = new ArrayList<>();
-        this.descriptionTypesByID = new ConcurrentHashMap<>();
-        this.descriptionTypesByName = new ConcurrentHashMap<>();
-    }
-
-    public static DescriptionTypeFactory getInstance() {
-        return instance;
-    }
+    private ConcurrentHashMap<Long, DescriptionType> descriptionTypesByID = new ConcurrentHashMap<>();
 
     /**
      * Este método es responsable de retornar el tipo de descripción llamado FSN.
      *
      * @return Retorna una instancia de FSN.
      */
+    @Lock(READ)
     public DescriptionType getFSNDescriptionType() {
 
         if (descriptionTypesByName.containsKey("FSN")) {
@@ -59,6 +52,7 @@ public class DescriptionTypeFactory implements Serializable {
      *
      * @return Retorna una instancia de Sinónimo.
      */
+    @Lock(READ)
     public DescriptionType getSynonymDescriptionType() {
 
         if (descriptionTypesByName.containsKey("sinónimo")) {
@@ -73,6 +67,7 @@ public class DescriptionTypeFactory implements Serializable {
      *
      * @return El tipo de Descripción llamado Preferida.
      */
+    @Lock(READ)
     public DescriptionType getFavoriteDescriptionType() {
         if (descriptionTypesByName.containsKey(FAVOURITE_DESCRIPTION_TYPE_NAME)) {
             return this.descriptionTypesByName.get(FAVOURITE_DESCRIPTION_TYPE_NAME);
@@ -86,6 +81,7 @@ public class DescriptionTypeFactory implements Serializable {
      * los
      * mapas de tipo de descripciones.
      */
+    @Lock(WRITE)
     public void setDescriptionTypes( List<DescriptionType> descriptionTypes) {
 
         /* Se actualiza la lista */
@@ -104,10 +100,12 @@ public class DescriptionTypeFactory implements Serializable {
         }
     }
 
+    @Lock(READ)
     public List<DescriptionType> getDescriptionTypes() {
         return descriptionTypes;
     }
 
+    @Lock(READ)
     public DescriptionType getDescriptionTypeByID(long idDescriptionType) {
 
         if (this.descriptionTypesByID.containsKey(idDescriptionType)){
@@ -117,11 +115,12 @@ public class DescriptionTypeFactory implements Serializable {
         throw new IllegalArgumentException("DescriptionType con ID=" + idDescriptionType + " no existe.");
     }
 
+    @Lock(READ)
     public List<DescriptionType> getDescriptionTypesButFSNandFavorite() {
 
         List<DescriptionType> otherDescriptionTypes = new ArrayList<DescriptionType>();
-        DescriptionType fsnType = DescriptionTypeFactory.getInstance().getFSNDescriptionType();
-        DescriptionType favoriteType = DescriptionTypeFactory.getInstance().getFavoriteDescriptionType();
+        DescriptionType fsnType = getFSNDescriptionType();
+        DescriptionType favoriteType = getFavoriteDescriptionType();
 
         for (DescriptionType descriptionType : getDescriptionTypes()) {
             if (!descriptionType.equals(fsnType) && !descriptionType.equals(favoriteType)) {
@@ -132,10 +131,11 @@ public class DescriptionTypeFactory implements Serializable {
         return otherDescriptionTypes;
     }
 
+    @Lock(READ)
     public List<DescriptionType> getDescriptionTypesButFSN() {
 
         List<DescriptionType> otherDescriptionTypes = new ArrayList<DescriptionType>();
-        DescriptionType fsnType = DescriptionTypeFactory.getInstance().getFSNDescriptionType();
+        DescriptionType fsnType = getFSNDescriptionType();
 
         for (DescriptionType descriptionType : getDescriptionTypes()) {
             if (!descriptionType.equals(fsnType)) {

@@ -61,6 +61,7 @@
 
                                 <p:autoComplete id="findCSM6" scrollHeight="200"
                                                 completeMethod="#{crossmapBean.getCrossmapSearchInput}"
+                                                minQueryLength="3"
                                                 forceSelection="true"
                                                 var="crossmap"
                                                 placeholder="#{cc.attrs.targetDefinition.abbreviatedName}"

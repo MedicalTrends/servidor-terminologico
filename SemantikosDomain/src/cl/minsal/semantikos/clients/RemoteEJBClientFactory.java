@@ -48,6 +48,7 @@ public class RemoteEJBClientFactory {
         final String viewClassName = getViewClassName(type);
         // let's do the lookup (notice the ?stateful string as the last part of the jndi name for stateful bean lookup)
         String jndiname = "ejb:" + appName + moduleName + beanName + "!" + viewClassName;
+        //String jndiname = appName + moduleName + beanName + "!" + viewClassName;
 
         Object remoteEjb = context.lookup(jndiname);
 
@@ -57,7 +58,9 @@ public class RemoteEJBClientFactory {
 
     /**
      * Constructor privado para el Singleton del Factory.
+     * EJBClientContext using EJBClientAPI
      */
+
     private RemoteEJBClientFactory() {
 
         Properties props = new Properties();
@@ -73,9 +76,36 @@ public class RemoteEJBClientFactory {
         this.managersByName = new ConcurrentHashMap<>();
     }
 
+
     public static RemoteEJBClientFactory getInstance() {
         return instance;
     }
+
+    /**
+     * Constructor privado para el Singleton del Factory.
+     * EJBClientContext using RemoteNamingProject
+     */
+    /*
+    private RemoteEJBClientFactory() {
+
+        Properties props = new Properties();
+        props.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
+        props.put(Context.PROVIDER_URL, "remote://192.168.0.194:4447");
+
+        //props.put("jboss.naming.client.ejb.context", true);
+        props.put("jboss.naming.client.ejb.context", false);
+        props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+
+        try {
+            context = new InitialContext(props);
+            //context = new InitialContext(properties);
+        } catch (NamingException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        this.managersByName = new ConcurrentHashMap<>();
+    }
+    */
 
     /**
      * Este método es responsable de retornar el manager correspondiente.

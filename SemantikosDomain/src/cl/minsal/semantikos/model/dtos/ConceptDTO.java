@@ -77,7 +77,6 @@ public class ConceptDTO extends PersistentEntity implements Serializable {
     private boolean inherited;
 
     public ConceptDTO() {
-        super(PersistentEntity.NON_PERSISTED_ID);
     }
 
     public List<DescriptionDTO> getDescriptionsDTO() {

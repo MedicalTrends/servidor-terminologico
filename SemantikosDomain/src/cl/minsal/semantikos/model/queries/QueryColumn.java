@@ -13,15 +13,17 @@ public class QueryColumn implements Serializable {
     Sort sort;
     RelationshipDefinition relationshipDefinition;
     boolean secondOrder;
+    boolean showable;
 
     public QueryColumn(String columnName, Sort sort) {
         this.columnName = columnName;
         this.sort = sort;
     }
 
-    public QueryColumn(String columnName, Sort sort, RelationshipDefinition relationshipDefinition) {
+    public QueryColumn(String columnName, Sort sort, RelationshipDefinition relationshipDefinition, boolean showable) {
         this(columnName, sort);
         this.relationshipDefinition = relationshipDefinition;
+        this.showable = showable;
     }
 
     public Sort getSort() {
@@ -54,5 +56,13 @@ public class QueryColumn implements Serializable {
 
     public void setSecondOrder(boolean secondOrder) {
         this.secondOrder = secondOrder;
+    }
+
+    public boolean isShowable() {
+        return showable;
+    }
+
+    public void setShowable(boolean showable) {
+        this.showable = showable;
     }
 }

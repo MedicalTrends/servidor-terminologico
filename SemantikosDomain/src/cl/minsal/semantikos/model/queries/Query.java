@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.model.queries;
 
 import cl.minsal.semantikos.model.queries.IQuery;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -84,6 +85,16 @@ public class Query implements IQuery, Serializable {
         return columns;
     }
 
+    public List<QueryColumn> getShowableColumns() {
+        List<QueryColumn> showableColumns = new ArrayList<>();
+        for (QueryColumn column : columns) {
+            if(column.isShowable()) {
+                showableColumns.add(column);
+            }
+        }
+        return showableColumns;
+    }
+
     public void setColumns(List<QueryColumn> columns) {
         this.columns = columns;
     }
@@ -115,5 +126,14 @@ public class Query implements IQuery, Serializable {
         }
 
         return ids;
+    }
+
+    public void removeColumn(RelationshipDefinition relationshipDefinition) {
+        for (QueryColumn column : columns) {
+            if(column.getRelationshipDefinition().equals(relationshipDefinition)) {
+                columns.remove(column);
+                break;
+            }
+        }
     }
 }

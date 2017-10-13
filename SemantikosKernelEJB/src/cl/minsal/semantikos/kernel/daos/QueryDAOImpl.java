@@ -315,12 +315,12 @@ public class QueryDAOImpl implements QueryDAO {
     }
 
     @Override
-    public List<RelationshipDefinition> getShowableAttributesByCategory(Category category) {
+    public List<QueryColumn> getShowableAttributesByCategory(Category category) {
         //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_definition(?,?); end;";
 
-        List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
+        List<QueryColumn> queryColumns = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection();
 
@@ -329,6 +329,7 @@ public class QueryDAOImpl implements QueryDAO {
             for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
 
                 boolean showable;
+                boolean reallyShowable;
 
                 call.registerOutParameter (1, OracleTypes.CURSOR);
                 call.setLong(2, category.getId());
@@ -340,9 +341,11 @@ public class QueryDAOImpl implements QueryDAO {
                 if (rs.next()) {
 
                     showable = rs.getBoolean("showable_by_browser");
+                    reallyShowable = rs.getBoolean("really_showable");
 
-                    if(showable)
-                        someRelationshipDefinitions.add(relationshipDefinition);
+                    if(showable) {
+                        queryColumns.add(new QueryColumn(relationshipDefinition.getName(), new Sort(null, false), relationshipDefinition, reallyShowable));
+                    }
                 }
             }
 
@@ -351,7 +354,7 @@ public class QueryDAOImpl implements QueryDAO {
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }
-        return someRelationshipDefinitions;
+        return queryColumns;
     }
 
     @Override

@@ -52,7 +52,7 @@ public class ConceptController {
     @EJB
     private RelationshipManagerImpl relationshipManager;
     @EJB
-    private DescriptionManager descriptionManager;
+    private DescriptionManagerImpl descriptionManager;
     @EJB
     private RefSetManager refSetManager;
     @EJB
@@ -232,6 +232,7 @@ public class ConceptController {
      * @return Conceptos buscados segun especificaciones de REQ-WS-001.
      * @throws NotFoundFault Si uno de los nombres de Categorias o REFSETS no existe.
      */
+    //@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public GenericTermSearchResponse searchTermGeneric(
             String term,
             List<String> categoriesNames,

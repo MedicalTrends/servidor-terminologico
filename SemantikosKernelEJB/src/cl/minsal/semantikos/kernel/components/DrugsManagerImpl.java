@@ -22,6 +22,9 @@ public class DrugsManagerImpl implements DrugsManager {
     private ConceptManager conceptManager;
 
     @EJB
+    private RelationshipManagerImpl relationshipManager;
+
+    @EJB
     private CategoryManager categoryManager;
 
     @EJB
@@ -51,7 +54,7 @@ public class DrugsManagerImpl implements DrugsManager {
 
     private ConceptSMTK traverseDown(ConceptSMTK node){
 
-        List<Relationship> relationships = conceptManager.getRelationships(node);
+        List<Relationship> relationships = relationshipManager.getRelationshipsBySourceConceptAndTargetType(node,TargetType.SMTK);
         List<Relationship> edges = new ArrayList<>();
 
 
@@ -84,8 +87,9 @@ public class DrugsManagerImpl implements DrugsManager {
 
         for (ConceptSMTK node : nodes) {
 
-            if(node == null)
+            if(node == null) {
                 break;
+            }
 
             List<ConceptSMTK> parentNodes = conceptManager.getRelatedConcepts(node);
 
@@ -99,14 +103,15 @@ public class DrugsManagerImpl implements DrugsManager {
 
             for (ConceptSMTK parentNode : parentNodes) {
 
-                if(!parentNode.isModeled())
+                if(!parentNode.isModeled()) {
                     continue;
+                }
 
                 RelationshipDefinition rd = new RelationshipDefinition(node.getCategory().getName(), node.getCategory().getName(),MultiplicityFactory.ONE_TO_ONE, node.getCategory());
                 Relationship r = new Relationship(parentNode, node, rd, new ArrayList<RelationshipAttribute>(), null);
                 parentNode.setRelationships(Arrays.asList(r));
 
-                List<Relationship> relationships = conceptManager.getRelationships(parentNode);
+                List<Relationship> relationships = relationshipManager.getRelationshipsBySourceConceptAndTargetType(node,TargetType.SMTK);
                 //parentNode.setRelationships(new ArrayList<Relationship>());
 
                 for (Relationship relationship : relationships) {
@@ -120,8 +125,6 @@ public class DrugsManagerImpl implements DrugsManager {
                         }
                     }
                 }
-
-
                 thisNodeParentNodes.add(parentNode);
             }
 
@@ -133,10 +136,12 @@ public class DrugsManagerImpl implements DrugsManager {
             return allNodesParentNodes;
         }
         else {
-            if(allNodesParentNodes.isEmpty())
+            if(allNodesParentNodes.isEmpty()) {
                 return nodes;
-            else
+            }
+            else {
                 return traverseUp(allNodesParentNodes);
+            }
         }
     }
 

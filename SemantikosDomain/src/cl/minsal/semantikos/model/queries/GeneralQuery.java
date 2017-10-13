@@ -49,8 +49,6 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
      */
     private List<QueryFilterAttribute> attributeFilters = new ArrayList<>();
 
-
-
     /**
      * Definiciones para las columnas de 2o orden
      */
@@ -166,6 +164,15 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
     }
 
     public List<RelationshipDefinition> getSourceSecondOrderShowableAttributes() {
+        /*
+        List<RelationshipDefinition> someColumns = new ArrayList<>();
+        for (QueryColumn queryColumn : getColumns()) {
+            if(queryColumn.isSecondOrder()) {
+                someColumns.add(queryColumn.getRelationshipDefinition());
+            }
+        }
+        return someColumns;
+        */
         return sourceSecondOrderShowableAttributes;
     }
 

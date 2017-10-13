@@ -324,8 +324,10 @@
                             process="@this"
                             immediate="true"
                             actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                            styleClass="relationships"
-                    />
+                            styleClass="relationships">
+                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
+                               icon="ui-icon-alert"/>
+                    </p:commandButton>
                 </div>
             </p:column>
         </p:dataTable>
@@ -459,8 +461,10 @@
                             process="@this"
                             immediate="true"
                             actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                            styleClass="relationships"
-                    />
+                            styleClass="relationships">
+                        <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
+                                   icon="ui-icon-alert"/>
+                    </p:commandButton>
                 </div>
             </p:column>
         </p:dataTable>

@@ -69,17 +69,19 @@ public class RelatedService {
         }
         catch (Exception e) {
             logger.error("El web service ha arrojado el siguiente error: "+e.getMessage(),e);
-            //throw new NotFoundFault(e.getMessage());
-            webMethodStatus = "1";
-            webMethodMessage = e.getMessage();
+            throw new NotFoundFault(e.getMessage());
+            //webMethodStatus = "1";
+            //webMethodMessage = e.getMessage();
         }
+        /*
         finally {
             HttpServletResponse response = (HttpServletResponse) wsctx.getMessageContext().get(MessageContext.SERVLET_RESPONSE);
             response.addHeader("web-method-status",webMethodStatus);
             response.addHeader("web-method-message",webMethodMessage);
         }
+        */
 
-        return null;
+        //return null;
     }
 
     // REQ-WS-010...021

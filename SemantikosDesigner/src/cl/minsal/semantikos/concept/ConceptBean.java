@@ -910,7 +910,7 @@ public class ConceptBean implements Serializable {
             concept.setId(id);
             if (pendingTerms) {
                 for (DescriptionWeb descriptionWeb : concept.getDescriptionsWeb()) {
-                    if(descriptionWeb.getConceptSMTK().equals(conceptManager.getPendingConcept())){
+                    if(descriptionWeb.getConceptSMTK().equals(conceptManager.getPendingConcept())) {
                         ConceptSMTK conceptSource = descriptionWeb.getConceptSMTK();
                         descriptionWeb.setConceptSMTK(concept);
                         descriptionManager.moveDescriptionToConcept(conceptSource, descriptionWeb, user);

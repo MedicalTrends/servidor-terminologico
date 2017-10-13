@@ -1,6 +1,8 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
+import cl.minsal.semantikos.kernel.singletons.DescriptionTypeSingleton;
+import cl.minsal.semantikos.kernel.singletons.UserSingleton;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
@@ -127,7 +129,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         //ConnectionBD connect = new ConnectionBD();
         Description description= null;
 
-        conceptSMTKMap = new HashMap<>();
+        //conceptSMTKMap = new HashMap<>();
 
         String sql = "begin ? := stk.stk_pck_description.get_description_by_business_id(?); end;";
 
@@ -162,7 +164,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         //ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
 
-        conceptSMTKMap = new HashMap<>();
+        //conceptSMTKMap = new HashMap<>();
 
         String sql = "begin ? := stk.stk_pck_description.get_descriptions_by_idconcept(?); end;";
 
@@ -533,7 +535,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             call.setInt(6, pageSize);
 
-            call.setFetchSize(100);
+            //call.setFetchSize(100);
 
             call.execute();
 
@@ -568,6 +570,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @Override
     @Asynchronous
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Future<List<Description>> searchDescriptionsPerfectMatchAsync(String term, Long[] categories, Long[] refsets, int page, int pageSize) {
 
         /* Se registra el tiempo de inicio */
@@ -606,7 +609,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             call.setInt(6, pageSize);
 
-            call.setFetchSize(100);
+            //call.setFetchSize(100);
 
             call.execute();
 
@@ -827,6 +830,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         long idConcept = resultSet.getLong("id_concept");
 
         if (conceptSMTK == null) {
+            conceptSMTK = conceptDAO.getConceptByID(idConcept);
+            /*
             if(conceptSMTKMap.containsKey(idConcept)) {
                 conceptSMTK = conceptSMTKMap.get(idConcept);
             }
@@ -834,6 +839,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
                 conceptSMTK = conceptDAO.getConceptByID(idConcept);
                 conceptSMTKMap.put(idConcept, conceptSMTK);
             }
+            */
         }
 
         DescriptionType descriptionType = DescriptionTypeFactory.getInstance().getDescriptionTypeByID(idDescriptionType);
