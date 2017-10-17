@@ -499,31 +499,20 @@ public class AuthDAOImpl implements AuthDAO {
             call.execute();
 
             //ResultSet rs = call.getResultSet();
-            ResultSet rs = (ResultSet) call.getObject(1);
 
-            if (rs.next()) {
-                /* Se recupera el status de la transacción */
-                updated = rs.getBoolean(1);
-            } else {
-                String errorMsg = "El concepto no fue creado por una razón desconocida. Alertar al area de desarrollo" +
-                        " sobre esto";
+            if (call.getLong(1) == 0) {
+                String errorMsg = "Información de usuario (USER_ID=" + user.getId() + ") no fue actualizada.";
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
-
+            else {
+                logger.info("Información de usuario (USER_ID=" + user.getId() + ") actualizada exitosamente.");
+            }
 
         } catch (SQLException e) {
             String errorMsg = "Error al actualizar usuario de la BDD.";
             logger.error(errorMsg, e);
             throw new EJBException(e);
-        }
-
-        if (updated) {
-            logger.info("Información de usuario (USER_ID=" + user.getId() + ") actualizada exitosamente.");
-        } else {
-            String errorMsg = "Información de usuario (USER_ID=" + user.getId() + ") no fue actualizada.";
-            logger.error(errorMsg);
-            throw new EJBException(errorMsg);
         }
 
     }

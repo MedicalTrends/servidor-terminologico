@@ -109,7 +109,8 @@ public class SearchService {
             //webMethodMessage = e.getMessage();
         }
         finally {
-            //HttpServletResponse response = (HttpServletResponse) wsctx.getMessageContext().get(MessageContext.SERVLET_RESPONSE);
+            HttpServletResponse response = (HttpServletResponse) wsctx.getMessageContext().get(MessageContext.SERVLET_RESPONSE);
+            response.setStatus(HttpServletResponse.SC_OK);
             //response.addHeader("web-method-status",webMethodStatus);
             //response.addHeader("web-method-message",webMethodMessage);
         }

@@ -50,7 +50,7 @@
                             <p:selectBooleanButton value="#{conceptBean.basicTypeValue.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg" offIcon="fa fa-close fa-lg">
                                 <p:ajax event="change"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
-                                        process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptMarketed)" />
+                                        process="@this" update="#{cc.attrs.relationshipDefinition.isMCSpecial()}?'@(.attributes)':'@(.panel_'#{cc.attrs.relationshipDefinition.id}')',@(.conceptMarketed)}" />
                             </p:selectBooleanButton>
                         </div>
                     </div>

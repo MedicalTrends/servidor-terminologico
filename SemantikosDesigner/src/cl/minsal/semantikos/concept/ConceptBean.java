@@ -1499,7 +1499,7 @@ public class ConceptBean implements Serializable {
     }
 
     public void changeMultiplicityNotRequiredRelationshipDefinitionMC() {
-        for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
+        for (RelationshipDefinition relationshipDefinition : orderedRelationshipDefinitionsList) {
             if (relationshipDefinition.getId() == 46) relationshipDefinition.getMultiplicity().setLowerBoundary(0);
             if (relationshipDefinition.getId() == 58) relationshipDefinition.getMultiplicity().setLowerBoundary(0);
             if (relationshipDefinition.getId() == 47) relationshipDefinition.getMultiplicity().setLowerBoundary(0);
@@ -1507,7 +1507,7 @@ public class ConceptBean implements Serializable {
     }
 
     public void changeMultiplicityToRequiredRelationshipDefinitionMC() {
-        for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
+        for (RelationshipDefinition relationshipDefinition : orderedRelationshipDefinitionsList) {
             if (relationshipDefinition.getId() == 46) relationshipDefinition.getMultiplicity().setLowerBoundary(1);
             if (relationshipDefinition.getId() == 58) relationshipDefinition.getMultiplicity().setLowerBoundary(1);
             if (relationshipDefinition.getId() == 47) relationshipDefinition.getMultiplicity().setLowerBoundary(1);

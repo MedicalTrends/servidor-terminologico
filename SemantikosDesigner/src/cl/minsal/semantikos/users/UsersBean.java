@@ -409,6 +409,7 @@ public class UsersBean {
         if(oldPass.trim().equals("")) {
             oldPasswordError = "ui-state-error";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar contraseña actual"));
+            return;
         }
         else {
             oldPasswordError = "";
@@ -417,6 +418,7 @@ public class UsersBean {
         if(newPass1.trim().equals("")) {
             passwordError = "ui-state-error";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar una nueva contraseña"));
+            return;
         }
         else {
             passwordError = "";
@@ -425,6 +427,7 @@ public class UsersBean {
         if(newPass2.trim().equals("")) {
             password2Error = "ui-state-error";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe confirmar la nueva contraseña"));
+            return;
         }
         else {
             password2Error = "";
@@ -437,6 +440,7 @@ public class UsersBean {
         if(!authenticationManager.checkPassword(selectedUser, selectedUser.getEmail(), oldPass)) {
             oldPasswordError = "ui-state-error";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La contraseña actual no es correcta"));
+            return;
         }
         else {
             oldPasswordError = "";
@@ -445,6 +449,7 @@ public class UsersBean {
         if(!newPass1.equals(newPass2)) {
             password2Error = "ui-state-error";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La confirmación de contraseña no coincide con la original"));
+            return;
         }
         else {
             password2Error = "";
@@ -458,6 +463,8 @@ public class UsersBean {
             authenticationManager.setUserPassword(selectedUser.getEmail(),newPass1);
         } catch (PasswordChangeException e) {
             e.printStackTrace();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+            return;
         }
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Contraseña modificada de manera exitosa!!"));
 

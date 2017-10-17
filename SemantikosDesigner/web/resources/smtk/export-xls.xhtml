@@ -7,6 +7,7 @@
       xmlns:composite="http://java.sun.com/jsf/composite"
       xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <composite:interface>
@@ -16,7 +17,15 @@
 <composite:implementation>
     <p:panel id="exportConcept" style="display: none">
         <p:dataTable id="conceptBasicsTable" var="conceptBasics" value="#{conceptExport.conceptBasics}"
-                     paginator="false" rows="2" >
+                     paginator="false">
+
+            <f:facet name="header">
+                <h:outputText value="Basic Message Table"/>
+                <h:outputText value="-As At Date-"/>
+                <h:outputText value="#{messageTableController.currentDate}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+                </h:outputText>
+            </f:facet>
 
             <p:column>
                 <h:outputText value="#{conceptBasics.propertyName}"/>
@@ -154,7 +163,8 @@
 
 
     <p:commandButton  icon="fa fa-file-excel-o" styleClass="ui-priority-primary" ajax="false" value="Exportar"  rendered="#{conceptBean.concept.modeled}">
-        <p:dataExporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,crossMapsDirectosTable,crossMapsInDirectosTable,refsetsTable"  type="xls" fileName="concepto" />
+        <!--p:dataExporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,crossMapsDirectosTable,crossMapsInDirectosTable,refsetsTable"  type="xls" fileName="concepto" /-->
+        <pe:exporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,crossMapsDirectosTable,crossMapsInDirectosTable,refsetsTable" type="xlsx" fileName="concepto" />
     </p:commandButton>
 </composite:implementation>
 </html>

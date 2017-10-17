@@ -252,6 +252,10 @@ public class RelationshipDefinition implements Serializable {
         return this.getName().equalsIgnoreCase(TargetDefinition.PEDIBLE);
     }
 
+    public boolean isMCSpecial() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.MC_SPECIAL);
+    }
+
     private final String SNOMEDCT="SNOMED CT";
 
     public boolean isSNOMEDCT(){

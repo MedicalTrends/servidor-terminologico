@@ -25,6 +25,8 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String SUSTANCIA = "Sustancia";
 
+    public static final String MC_SPECIAL = "Medicamento Clínico Especial";
+
     /**
      * Este metodo es responsable de determinar si el target type es de tipo básico es o no.
      *
