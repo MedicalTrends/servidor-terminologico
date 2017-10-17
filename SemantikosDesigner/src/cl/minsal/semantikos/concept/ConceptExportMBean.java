@@ -59,10 +59,10 @@ public class ConceptExportMBean extends UINamingContainer {
 
             conceptBasics = new ArrayList<ConceptBasic>();
 
+            conceptBasics.add(new ConceptBasic("Fecha Informe", getReportDate()));
             conceptBasics.add(new ConceptBasic("IDCONCEPT", conceptSMTK.getConceptID()));
             conceptBasics.add(new ConceptBasic("Categoría", conceptSMTK.getCategory().toString()));
             conceptBasics.add(new ConceptBasic("Estado", conceptSMTK.isModeled() ? "Modelado" : "Borrador"));
-            conceptBasics.add(new ConceptBasic("Fecha Informe", getReportDate()));
             conceptBasics.add(new ConceptBasic("Fecha Creación", getCreationDate(auditAction)));
             conceptBasics.add(new ConceptBasic("Fecha Publicación", getPublicationDate(auditAction)));
             conceptBasics.add(new ConceptBasic("FSN", conceptSMTK.getDescriptionFSN().toString()));
@@ -122,6 +122,9 @@ public class ConceptExportMBean extends UINamingContainer {
     public List<SnomedCTRelationshipDTO> getSnomedCTRelationships() {
 
         List<SnomedCTRelationshipDTO> snomedCTRelationships = new ArrayList<SnomedCTRelationshipDTO>();
+
+        conceptSMTK.getRelationshipsIndirectCrossMap().get(0).
+
         for (SnomedCTRelationship relationship : conceptSMTK.getRelationshipsSnomedCT()) {
             snomedCTRelationships.add(new SnomedCTRelationshipDTO(relationship));
         }
