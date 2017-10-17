@@ -35,7 +35,7 @@
                      paginator="false" rows="6">
 
             <f:facet name="header">
-                <h:outputText value="Descripciones asociadas al Concepto"/>
+                <h:outputText value="Descripciones"/>
             </f:facet>
 
             <p:column headerText="IdDescription">
@@ -58,11 +58,12 @@
             </p:column>
         </p:dataTable>
 
-        <p:dataTable id="conceptAttributesTable" var="attribute" value="#{conceptExport.conceptSMTK.attributes}"
+        <p:dataTable id="conceptAttributesTable" var="attribute" value="#{conceptExport.getSMTKRelationships()}"
+                     rendered="#{ not empty conceptExport.getSMTKRelationships() }"
                      paginator="false" rows="2">
 
             <f:facet name="header">
-                <h:outputText value="Atributos del Concepto"/>
+                <h:outputText value="Atributos"/>
             </f:facet>
 
             <p:column headerText="Atributo">
@@ -75,76 +76,98 @@
 
         </p:dataTable>
 
-        <p:dataTable id="conceptRelationshipsTable" var="snomedctRelation" value="#{conceptExport.conceptSMTK.relationshipsSnomedCT}"
+        <p:dataTable id="conceptRelationshipsTable" var="rel" value="#{conceptExport.conceptSMTK.relationshipsSnomedCT}"
+                     rendered="#{ not empty conceptExport.conceptSMTK.relationshipsSnomedCT }"
                      paginator="false" rows="6">
 
-            <p:column>
-                <h:outputText value="Definitoria"/>
+            <f:facet name="header">
+                <h:outputText value="Snomed-CT"/>
+            </f:facet>
+
+            <p:column headerText="Grupo">
+                <h:outputText
+                    value="#{rel.getAttributesByAttributeDefinition(rel.relationshipDefinition.findRelationshipAttributeDefinitionsByName('Grupo').get(0)).get(0).target}"/>
             </p:column>
-            <p:column>
-                <h:outputText value="#{snomedctRelation.target.descriptionFSN}"/>
+
+            <p:column headerText="Tipo Relación">
+                <h:outputText
+                    value="#{rel.getAttributesByAttributeDefinition(rel.relationshipDefinition.findRelationshipAttributeDefinitionsByName('Tipo de Relación').get(0)).get(0).target}"/>
             </p:column>
-            <p:column>
-                <h:outputText value="#{snomedctRelation.target.idSnomedCT}"/>
+
+            <p:column headerText="ConceptID">
+                <h:outputText value="#{rel.target.idSnomedCT}"/>
             </p:column>
-            <!--p:column>
-                <h:outputText value="#{snomedctRelation.target.domain}"/>
-            </p:column-->
-            <p:column>
-                <h:outputText value="#{descriptions.uses}"/>
+
+            <p:column headerText="FSN">
+                <h:outputText value="#{rel.target.descriptionFSN.term}"/>
             </p:column>
-            <p:column>
-                <h:outputText value="No implementado"/>
-            </p:column>
+
         </p:dataTable>
 
         <p:dataTable id="crossMapsDirectosTable" var="directCrossmap" value="#{conceptExport.conceptSMTK.relationshipsCrossMap}"
+                     rendered="#{ not empty conceptExport.conceptSMTK.relationshipsCrossMap }"
                      paginator="false" rows="6">
 
-            <p:column headerText="CrossmapSet">
+            <f:facet name="header">
+                <h:outputText value="Crossmaps Directos"/>
+            </f:facet>
+
+            <p:column headerText="CrossmapSet" rendered="#{ not empty conceptExport.conceptSMTK.relationshipsCrossMap }">
                 <h:outputText value="#{directCrossmap.target.crossmapSet.name}"/>
             </p:column>
-            <p:column headerText="Version">
+            <p:column headerText="Version" rendered="#{ not empty conceptExport.conceptSMTK.relationshipsCrossMap }">
                 <h:outputText value="#{directCrossmap.target.crossmapSet.version}"/>
             </p:column>
-            <p:column headerText="CrossmapSetMember">
+            <p:column headerText="CrossmapSetMember" rendered="#{ not empty conceptExport.conceptSMTK.relationshipsCrossMap }">
                 <h:outputText value="#{directCrossmap.target.code1} #{directCrossmap.target.gloss}"/>
             </p:column>
-            <p:column headerText="Fecha en que se realizó">
+            <p:column headerText="Fecha en que se realizó" rendered="#{ not empty conceptExport.conceptSMTK.relationshipsCrossMap }">
                 <h:outputText value="#{directCrossmap.creationDate}"/>
             </p:column>
 
         </p:dataTable>
 
-        <p:dataTable id="crossMapsInDirectosTable" var="indirectCrossmap" value="#{conceptExport.conceptSMTK.getRelationshipsIndirectCrossMap}"
+        <p:dataTable id="crossMapsInDirectosTable" var="indirectCrossmap" value="#{conceptExport.conceptSMTK.relationshipsIndirectCrossMap}"
+                     rendered="#{ not empty conceptExport.conceptSMTK.relationshipsIndirectCrossMap}"
                      paginator="false" rows="6">
 
-            <p:column headerText="IDSnomed">
-                <h:outputText value="#{indirectCrossmap.}"/>
+            <f:facet name="header">
+                <h:outputText value="Crossmaps Indirectos"/>
+            </f:facet>
+
+            <p:column headerText="IDSnomed" rendered="#{ not empty conceptExport.conceptSMTK.relationshipsIndirectCrossMap}">
+                <h:outputText value="#{indirectCrossmap.target.idSnomedCT}"/>
             </p:column>
-            <p:column headerText="CrossmapSet/Version">
+            <p:column headerText="CrossmapSet/Version" rendered="#{ not empty conceptExport.conceptSMTK.relationshipsIndirectCrossMap}">
                 <h:outputText value="No implementado"/>
             </p:column>
-            <p:column headerText="CrossmapSetMember">
+            <p:column headerText="CrossmapSetMember" rendered="#{ not empty conceptExport.conceptSMTK.relationshipsIndirectCrossMap}">
                 <h:outputText value="No implementado"/>
             </p:column>
-            <p:column headerText="Fecha en que se realizó">
+            <p:column headerText="Fecha en que se realizó" rendered="#{ not empty conceptExport.conceptSMTK.relationshipsIndirectCrossMap}">
                 <h:outputText value="No implementado"/>
             </p:column>
 
         </p:dataTable>
 
-        <p:dataTable id="refsetsTable" var="snomedctRelation" value="#{conceptExport.refSets}"
+        <p:dataTable id="refsetsTable" var="refset" value="#{conceptExport.refSets}"
+                     rendered="#{ not empty conceptExport.refSets }"
                      paginator="false" rows="6">
 
-            <p:column>
-                <h:outputText value="No implementado"/>
+            <f:facet name="header">
+                <h:outputText value="Refsets"/>
+            </f:facet>
+
+            <p:column headerText="Nombre" rendered="#{ not empty conceptExport.refSets }">
+                <h:outputText value="#{refset.name}"/>
             </p:column>
-            <p:column>
-                <h:outputText value="No implementado"/>
+
+            <p:column headerText="Establecimiento Dueño del Refset" rendered="#{ not empty conceptExport.refSets }">
+                <h:outputText value="#{refset.institution.name}"/>
             </p:column>
-            <p:column>
-                <h:outputText value="No implementado"/>
+
+            <p:column headerText="Fecha en que se asoció" rendered="#{ not empty conceptExport.refSets }">
+                <h:outputText value="#{conceptExport.getRefsetBindingDate(conceptExport.auditAction)}"/>
             </p:column>
 
         </p:dataTable>

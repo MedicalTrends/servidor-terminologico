@@ -85,10 +85,10 @@ public class BasicTypeValue<T extends Comparable> implements Target, Serializabl
         if(this.getValue() != null) {
             if(this.getValue() instanceof Boolean) {
                 if((Boolean)this.getValue()) {
-                    return "1";
+                    return "Si";
                 }
                 else {
-                    return "0";
+                    return "No";
                 }
             }
             return getValue().toString();

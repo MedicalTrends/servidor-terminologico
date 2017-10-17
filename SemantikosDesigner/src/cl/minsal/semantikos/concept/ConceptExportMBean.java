@@ -21,6 +21,7 @@ import java.util.List;
 
 import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_CREATION;
 import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_PUBLICATION;
+import static cl.minsal.semantikos.model.audit.AuditActionType.REFSET_BINDING;
 
 /**
  * @author Francisco Mendez
@@ -50,6 +51,13 @@ public class ConceptExportMBean extends UINamingContainer {
 
     private List<ConceptAuditAction> auditAction;
 
+    public List<ConceptAuditAction> getAuditAction() {
+        return auditAction;
+    }
+
+    public void setAuditAction(List<ConceptAuditAction> auditAction) {
+        this.auditAction = auditAction;
+    }
 
     @PostConstruct
     protected void initialize() {
@@ -60,7 +68,7 @@ public class ConceptExportMBean extends UINamingContainer {
             conceptBasics = new ArrayList<ConceptBasic>();
 
             conceptBasics.add(new ConceptBasic("Fecha Informe", getReportDate()));
-            conceptBasics.add(new ConceptBasic("IDCONCEPT", conceptSMTK.getConceptID()));
+            conceptBasics.add(new ConceptBasic("ConceptID", conceptSMTK.getConceptID()));
             conceptBasics.add(new ConceptBasic("Categoría", conceptSMTK.getCategory().toString()));
             conceptBasics.add(new ConceptBasic("Estado", conceptSMTK.isModeled() ? "Modelado" : "Borrador"));
             conceptBasics.add(new ConceptBasic("Fecha Creación", getCreationDate(auditAction)));
@@ -85,6 +93,14 @@ public class ConceptExportMBean extends UINamingContainer {
     public String getCreationDate(List<ConceptAuditAction> conceptAuditActions) {
         for (ConceptAuditAction conceptAuditAction : conceptAuditActions) {
             if( conceptAuditAction.getAuditActionType().equals(CONCEPT_CREATION)) {
+                return conceptAuditAction.getActionDateFormat();
+            }
+        }
+        return "";
+    }
+    public String getRefsetBindingDate(List<ConceptAuditAction> conceptAuditActions) {
+        for (ConceptAuditAction conceptAuditAction : conceptAuditActions) {
+            if( conceptAuditAction.getAuditActionType().equals(REFSET_BINDING)) {
                 return conceptAuditAction.getActionDateFormat();
             }
         }
@@ -123,13 +139,24 @@ public class ConceptExportMBean extends UINamingContainer {
 
         List<SnomedCTRelationshipDTO> snomedCTRelationships = new ArrayList<SnomedCTRelationshipDTO>();
 
-        conceptSMTK.getRelationshipsIndirectCrossMap().get(0).
-
         for (SnomedCTRelationship relationship : conceptSMTK.getRelationshipsSnomedCT()) {
             snomedCTRelationships.add(new SnomedCTRelationshipDTO(relationship));
         }
 
         return snomedCTRelationships;
+    }
+
+    public List<Relationship> getSMTKRelationships() {
+
+        List<Relationship> smtkRelationships = new ArrayList<Relationship>();
+
+        for (Relationship relationship : conceptSMTK.getRelationships()) {
+            if(!relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType()) {
+                smtkRelationships.add(relationship);
+            }
+        }
+
+        return smtkRelationships;
     }
 
     public List<Relationship> getCrossMapsRelationships() {

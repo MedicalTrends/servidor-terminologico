@@ -193,7 +193,7 @@ public class RelationshipDefinition implements Serializable {
         List<RelationshipAttributeDefinition> someRelationshipAttributeDefinitions = new ArrayList<>();
 
         for (RelationshipAttributeDefinition relationshipAttributeDefinition : getRelationshipAttributeDefinitions()) {
-            if(relationshipAttributeDefinition.getName().equals(name)) {
+            if(relationshipAttributeDefinition.getName().equalsIgnoreCase(name)) {
                 someRelationshipAttributeDefinitions.add(relationshipAttributeDefinition);
             }
         }
