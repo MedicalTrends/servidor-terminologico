@@ -535,7 +535,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             call.setInt(6, pageSize);
 
-            //call.setFetchSize(100);
+            call.setFetchSize(100);
 
             call.execute();
 

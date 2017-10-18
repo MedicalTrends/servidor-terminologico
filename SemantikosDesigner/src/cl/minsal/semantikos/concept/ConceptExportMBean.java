@@ -2,6 +2,7 @@ package cl.minsal.semantikos.concept;
 
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
 import cl.minsal.semantikos.kernel.components.AuditManager;
+import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.relationships.Relationship;
@@ -151,7 +152,34 @@ public class ConceptExportMBean extends UINamingContainer {
         List<Relationship> smtkRelationships = new ArrayList<Relationship>();
 
         for (Relationship relationship : conceptSMTK.getRelationships()) {
-            if(!relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType()) {
+            if(!relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType() &&
+                !relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
+                smtkRelationships.add(relationship);
+            }
+        }
+
+        return smtkRelationships;
+    }
+
+    public List<Relationship> getDirectCrossmapsRelationships() {
+
+        List<Relationship> smtkRelationships = new ArrayList<Relationship>();
+
+        for (Relationship relationship : conceptSMTK.getRelationships()) {
+            if(relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
+                smtkRelationships.add(relationship);
+            }
+        }
+
+        return smtkRelationships;
+    }
+
+    public List<Relationship> getIndirectCrossmapsRelationships() {
+
+        List<Relationship> smtkRelationships = new ArrayList<Relationship>();
+
+        for (Relationship relationship : conceptSMTK.getRelationships()) {
+            if(relationship instanceof IndirectCrossmap) {
                 smtkRelationships.add(relationship);
             }
         }
