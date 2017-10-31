@@ -354,9 +354,8 @@
                                                            update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                                            rendered="#{conceptBean.concept.hasRelationships(cc.attrs.relationshipDefinition)}"
                                                            action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
-                                                <i class="fa fa-close fa-lg"  />
-                                                <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
-                                                           icon="ui-icon-alert"/>
+                                                <i class="fa fa-close fa-lg" />
+                                                <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?" icon="ui-icon-alert"/>
                                             </p:commandLink>
                                         </p:outputPanel>
 
@@ -385,7 +384,6 @@
                     </ui:repeat>
 
             </p:outputPanel>
-
 
 
     </p:panel>

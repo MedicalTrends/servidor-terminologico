@@ -2,6 +2,8 @@ package cl.minsal.semantikos.concept;
 
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
 import cl.minsal.semantikos.kernel.components.AuditManager;
+import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
@@ -39,7 +41,7 @@ public class ConceptExportMBean extends UINamingContainer {
 
     private List<ConceptBasic> conceptBasics;
 
-    private ConceptSMTKWeb conceptSMTK;
+    private ConceptSMTK conceptSMTK;
 
     //80614
 
@@ -121,11 +123,11 @@ public class ConceptExportMBean extends UINamingContainer {
         this.conceptBasics = conceptBasics;
     }
 
-    public ConceptSMTKWeb getConceptSMTK() {
+    public ConceptSMTK getConceptSMTK() {
         return conceptSMTK;
     }
 
-    public void setConceptSMTK(ConceptSMTKWeb conceptSMTK) {
+    public void setConceptSMTK(ConceptSMTK conceptSMTK) {
 
         this.conceptSMTK = conceptSMTK;
         auditAction = auditManager.getConceptAuditActions(conceptSMTK, true);
@@ -166,7 +168,7 @@ public class ConceptExportMBean extends UINamingContainer {
         List<Relationship> smtkRelationships = new ArrayList<Relationship>();
 
         for (Relationship relationship : conceptSMTK.getRelationships()) {
-            if(relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
+            if(relationship instanceof DirectCrossmap) {
                 smtkRelationships.add(relationship);
             }
         }

@@ -234,7 +234,7 @@
                                                      styleClass="ui-priority-primary"
                                                      value="Deshacer" type="submit" process="mainForm"
                                                      rendered="#{conceptBean.concept.editable}"
-                                                     update="growl, mainForm">
+                                                     update="@(.attributes)">
                                         <p:confirm header="Confirmar Acción"
                                                    message="¿Desea deshacer los cambios realizados en esta sesión?"
                                                    icon="ui-icon-alert"/>
@@ -319,7 +319,6 @@
                                                              value="Editar Concepto"/>
                                         </div>
                                     </div>
-
 
                                 </h:form>
                             </p:dialog>

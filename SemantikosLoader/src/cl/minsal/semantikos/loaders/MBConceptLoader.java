@@ -22,6 +22,7 @@ import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.util.StringUtils;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 import static cl.minsal.semantikos.model.LoadLog.ERROR;
@@ -93,7 +94,7 @@ public class MBConceptLoader extends EntityLoader {
             /*Recuperando datos Descripciones*/
 
             /*Recuperando descripcion preferida*/
-            String term = StringUtils.normalizeSpaces(tokens[mbConceptFields.get("DESCRIPCION")]);
+            String term = StringUtils.normalizeSpaces(tokens[mbConceptFields.get("DESCRIPCION")]).trim();
             boolean caseSensitive = tokens[mbConceptFields.get("SENSIBLE_MAYUSCULA")].equals("Sensible");
             DescriptionType descriptionType = DescriptionType.PREFERIDA;
 
@@ -140,7 +141,7 @@ public class MBConceptLoader extends EntityLoader {
                         continue;
                     }
 
-                    term = StringUtils.normalizeSpaces(synonymsToken.split("-")[1]);
+                    term = StringUtils.normalizeSpaces(synonymsToken.split("-")[1]).trim();
                     descriptionType = DescriptionType.SYNONYMOUS;
 
                     Description description = new Description(conceptSMTK, term, descriptionType);
@@ -182,7 +183,7 @@ public class MBConceptLoader extends EntityLoader {
             /**Se obtiene la definición de relacion SNOMED CT**/
             RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.SNOMED_CT).get(0);
 
-            Relationship relationshipSnomed = new Relationship(conceptSMTK, conceptSCT, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+            Relationship relationshipSnomed = new Relationship(conceptSMTK, conceptSCT, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
             /**Para esta definición, se obtiente el atributo tipo de relación**/
             for (RelationshipAttributeDefinition attDef : relationshipDefinition.getRelationshipAttributeDefinitions()) {
@@ -217,7 +218,7 @@ public class MBConceptLoader extends EntityLoader {
 
             relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.COMERCIALIZADO).get(0);
 
-            Relationship relationshipMarketed = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+            Relationship relationshipMarketed = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
             conceptSMTK.addRelationship(relationshipMarketed);
 
@@ -248,7 +249,7 @@ public class MBConceptLoader extends EntityLoader {
                     throw new LoadException(path.toString(), id, "La sustancia: "+termFavourite+" no está modelada, se descarta este MB", ERROR);
                 }
 
-                Relationship relationshipSubstance = new Relationship(conceptSMTK, substanceList.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipSubstance = new Relationship(conceptSMTK, substanceList.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 BasicTypeValue order = new BasicTypeValue(Integer.parseInt(substanceTokens[2].trim()));
 

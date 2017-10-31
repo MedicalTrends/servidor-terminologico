@@ -194,9 +194,8 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
         List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
         for (SnomedCTRelationship snomedCTRelationship : relationshipsSnomedCT) {
             if (snomedCTRelationship.isES_UN_MAPEO() || snomedCTRelationship.isES_UN()) {
-
                 /* Se recuperan los crossmaps del concepto CST y se almacenan */
-                indirectCrossmaps.addAll(crossmapsDAO.getCrossmapsBySCT(snomedCTRelationship.getTarget().getId(), conceptSMTK));
+                indirectCrossmaps.addAll(crossmapsDAO.getCrossmapsBySCT(snomedCTRelationship, conceptSMTK));
             }
         }
 

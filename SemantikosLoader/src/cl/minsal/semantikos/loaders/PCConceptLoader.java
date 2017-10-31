@@ -111,7 +111,7 @@ public class PCConceptLoader extends EntityLoader {
             /*Recuperando datos Descripciones*/
 
             /*Recuperando descripcion preferida*/
-            String term = StringUtils.normalizeSpaces(tokens[pcConceptFields.get("DESCRIPCION")]);
+            String term = StringUtils.normalizeSpaces(tokens[pcConceptFields.get("DESCRIPCION")]).trim();
             boolean caseSensitive = tokens[pcConceptFields.get("SENSIBLE_MAYUSCULA")].equals("Sensible");
             DescriptionType descriptionType = DescriptionType.PREFERIDA;
 
@@ -140,7 +140,7 @@ public class PCConceptLoader extends EntityLoader {
             conceptSMTK.addDescription(descriptionFSN);
 
             /*Recuperando descripcion Abreviada*/
-            term = StringUtils.normalizeSpaces(tokens[pcConceptFields.get("DESC_ABREVIADA")]);
+            term = StringUtils.normalizeSpaces(tokens[pcConceptFields.get("DESC_ABREVIADA")]).trim();
 
             if(!StringUtils.isEmpty(term)) {
                 descriptionType = DescriptionType.ABREVIADA;
@@ -171,7 +171,7 @@ public class PCConceptLoader extends EntityLoader {
                     continue;
                 }
 
-                term = StringUtils.normalizeSpaces(synonymsToken.split("-")[1]);
+                term = StringUtils.normalizeSpaces(synonymsToken.split("-")[1]).trim();
 
                 Description description = new Description(conceptSMTK, term, descriptionType);
                 description.setCaseSensitive(caseSensitive);
@@ -214,7 +214,7 @@ public class PCConceptLoader extends EntityLoader {
 
             RelationshipAttribute ra;
 
-            Relationship relationshipSnomed = new Relationship(conceptSMTK, conceptSCT, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+            Relationship relationshipSnomed = new Relationship(conceptSMTK, conceptSCT, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
             /**Para esta definición, se obtiente el atributo tipo de relación**/
             for (RelationshipAttributeDefinition attDef1 : relationshipDefinition.getRelationshipAttributeDefinitions()) {
@@ -256,7 +256,7 @@ public class PCConceptLoader extends EntityLoader {
                 basicTypeValue = new BasicTypeValue(marketedName.trim().equals("Si"));
                 relationshipDefinition = category.findRelationshipDefinitionsByName("Comercializado").get(0);
 
-                Relationship relationshipMarketed = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipMarketed = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 conceptSMTK.addRelationship(relationshipMarketed);
             }
@@ -279,7 +279,7 @@ public class PCConceptLoader extends EntityLoader {
                     throw new LoadException(path.toString(), id, "EL MC: "+mcName+" no está modelado, se descarta este MC", ERROR);
                 }
 
-                Relationship relationshipMC = new Relationship(conceptSMTK, mc.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipMC = new Relationship(conceptSMTK, mc.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 conceptSMTK.addRelationship(relationshipMC);
             }
@@ -303,7 +303,7 @@ public class PCConceptLoader extends EntityLoader {
                     throw new LoadException(path.toString(), id, "La FP: "+gfpName+" no está modelado, se descarta este MC", ERROR);
                 }
 
-                Relationship relationshipFP = new Relationship(conceptSMTK, fp.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipFP = new Relationship(conceptSMTK, fp.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
                 conceptSMTK.addRelationship(relationshipFP);
             }
 
@@ -323,7 +323,7 @@ public class PCConceptLoader extends EntityLoader {
                     throw new LoadException(path.toString(), id, "No existe un sabor con glosa: "+flavourName, ERROR);
                 }
 
-                Relationship relationshipFlavour = new Relationship(conceptSMTK, flavour.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipFlavour = new Relationship(conceptSMTK, flavour.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 conceptSMTK.addRelationship(relationshipFlavour);
             }
@@ -344,7 +344,7 @@ public class PCConceptLoader extends EntityLoader {
                     throw new LoadException(path.toString(), id, "No existe un laboratorio comercial con glosa: "+commercialLabName, ERROR);
                 }
 
-                Relationship relationshipCommercialLab = new Relationship(conceptSMTK, commercialLab.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipCommercialLab = new Relationship(conceptSMTK, commercialLab.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 conceptSMTK.addRelationship(relationshipCommercialLab);
             }
@@ -365,7 +365,7 @@ public class PCConceptLoader extends EntityLoader {
                     throw new LoadException(path.toString(), id, "No existe una FFE con glosa: "+ffeName, ERROR);
                 }
 
-                Relationship relationshipFFE = new Relationship(conceptSMTK, ffe.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipFFE = new Relationship(conceptSMTK, ffe.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 conceptSMTK.addRelationship(relationshipFFE);
             }
@@ -433,7 +433,7 @@ public class PCConceptLoader extends EntityLoader {
                         mapIspRecord(helperTable, ispRecord, fetchedData);
                         helperTableManager.insertRow(ispRecord,user.getEmail());
                         ispRecord = helperTableManager.searchRows(helperTable,regnumRegano).get(0);
-                        Relationship relationshipISP = new Relationship(conceptSMTK, ispRecord, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                        Relationship relationshipISP = new Relationship(conceptSMTK, ispRecord, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
                         conceptSMTK.addRelationship(relationshipISP);
                     }
 
@@ -544,7 +544,7 @@ public class PCConceptLoader extends EntityLoader {
                  */
                 for (HelperTableRow helperTableRecord : helperTableManager.searchRows(helperTable,regnumRegano)) {
                     ispRecord = helperTableRecord;
-                    Relationship relationshipISP = new Relationship(conceptSMTK, ispRecord, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                    Relationship relationshipISP = new Relationship(conceptSMTK, ispRecord, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
                     conceptSMTK.addRelationship(relationshipISP);
                     break;
                 }

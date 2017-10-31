@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.MultiplicityFactory;
+import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -304,7 +305,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     }
 
     @Override
-    public List<IndirectCrossmap> getCrossmapsBySCT(long idConceptSCT, ConceptSMTK sourceConcept) {
+    public List<IndirectCrossmap> getCrossmapsBySCT(SnomedCTRelationship snomedCTRelationship, ConceptSMTK sourceConcept) {
 
         List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
 
@@ -316,7 +317,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.setLong(2, idConceptSCT);
+            call.setLong(2, snomedCTRelationship.getTarget().getIdSnomedCT());
             call.execute();
 
             //ResultSet rs = call.getResultSet();
@@ -325,6 +326,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
             while (rs.next()) {
 
                 IndirectCrossmap indirectCrossmap = createIndirectCrossMapFromResultSet(rs, sourceConcept);
+                indirectCrossmap.setCreationDate(snomedCTRelationship.getCreationDate());
                 indirectCrossmaps.add(indirectCrossmap);
             }
             rs.close();

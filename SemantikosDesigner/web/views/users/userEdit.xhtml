@@ -127,7 +127,7 @@
                                                          update="mainForm, @(.breadUpdate)" />
 
                                         <p:commandButton value="Cancelar" icon="fa fa-undo" action="#{users.saveUser}" styleClass="ui-priority-primary" disabled="#{ not users.selectedUser.valid}"
-                                                         process="mainForm" update="mainForm, @(.breadUpdate)">
+                                                         process="mainForm" update="mainForm, @(.breadUpdate)" rendered="false">
                                             <p:confirm header="Confirmar Acción" message="¿Desea deshacer los cambios realizados?" icon="ui-icon-alert"/>
                                         </p:commandButton>
 

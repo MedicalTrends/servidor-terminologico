@@ -21,6 +21,7 @@ import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.util.StringUtils;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 import static cl.minsal.semantikos.model.LoadLog.ERROR;
@@ -127,7 +128,7 @@ public class MCConceptLoader extends EntityLoader {
             /*Recuperando datos Descripciones*/
 
             /*Recuperando descripcion preferida*/
-            String term = StringUtils.normalizeSpaces(tokens[mcConceptFields.get("DESCRIPCION")]);
+            String term = StringUtils.normalizeSpaces(tokens[mcConceptFields.get("DESCRIPCION")]).trim();
             boolean caseSensitive = tokens[mcConceptFields.get("SENSIBLE_MAYUSCULA")].equals("Sensible");
             DescriptionType descriptionType = DescriptionType.PREFERIDA;
 
@@ -162,7 +163,7 @@ public class MCConceptLoader extends EntityLoader {
             }
 
             /*Recuperando descripcion Abreviada*/
-            term = StringUtils.normalizeSpaces(tokens[mcConceptFields.get("DESC_ABREVIADA")]);
+            term = StringUtils.normalizeSpaces(tokens[mcConceptFields.get("DESC_ABREVIADA")]).trim();
 
             if(!StringUtils.isEmpty(term)) {
                 descriptionType = DescriptionType.ABREVIADA;
@@ -193,7 +194,7 @@ public class MCConceptLoader extends EntityLoader {
                     continue;
                 }
 
-                term = StringUtils.normalizeSpaces(synonymsToken.split("-")[1]);
+                term = StringUtils.normalizeSpaces(synonymsToken.split("-")[1]).trim();
 
                 Description description = new Description(conceptSMTK, term, descriptionType);
                 description.setCaseSensitive(caseSensitive);
@@ -236,7 +237,7 @@ public class MCConceptLoader extends EntityLoader {
 
             RelationshipAttribute ra;
 
-            Relationship relationshipSnomed = new Relationship(conceptSMTK, conceptSCT, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+            Relationship relationshipSnomed = new Relationship(conceptSMTK, conceptSCT, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
             /**Para esta definición, se obtiente el atributo tipo de relación**/
             for (RelationshipAttributeDefinition attDef1 : relationshipDefinition.getRelationshipAttributeDefinitions()) {
@@ -272,7 +273,7 @@ public class MCConceptLoader extends EntityLoader {
 
             relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.COMERCIALIZADO).get(0);
 
-            Relationship relationshipMarketed = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+            Relationship relationshipMarketed = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
             conceptSMTK.addRelationship(relationshipMarketed);
 
@@ -306,7 +307,7 @@ public class MCConceptLoader extends EntityLoader {
                     throw new LoadException(path.toString(), id, "La sustancia: "+termFavourite+" no está modelada, se descarta este MC", ERROR);
                 }
 
-                Relationship relationshipSubstance = new Relationship(conceptSMTK, substanceList.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipSubstance = new Relationship(conceptSMTK, substanceList.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 conceptSMTK.addRelationship(relationshipSubstance);
 
@@ -408,7 +409,7 @@ public class MCConceptLoader extends EntityLoader {
 
             relationshipDefinition = category.findRelationshipDefinitionsByName("Medicamento clínico especial").get(0);
 
-            Relationship relationshipMCSpecial = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+            Relationship relationshipMCSpecial = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
             conceptSMTK.addRelationship(relationshipMCSpecial);
 
@@ -428,7 +429,7 @@ public class MCConceptLoader extends EntityLoader {
                     throw new LoadException(path.toString(), id, "No existe un Estado Prescripción con glosa: "+prescriptionStateName, ERROR);
                 }
 
-                Relationship relationshipPrescriptionState = new Relationship(conceptSMTK, prescriptionState.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipPrescriptionState = new Relationship(conceptSMTK, prescriptionState.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 conceptSMTK.addRelationship(relationshipPrescriptionState);
             }
@@ -451,7 +452,7 @@ public class MCConceptLoader extends EntityLoader {
                     throw new LoadException(path.toString(), id, "EL MB: "+mbName+" no está modelado, se descarta este MC", ERROR);
                 }
 
-                Relationship relationshipMB = new Relationship(conceptSMTK, mb.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipMB = new Relationship(conceptSMTK, mb.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 conceptSMTK.addRelationship(relationshipMB);
             }
@@ -472,7 +473,7 @@ public class MCConceptLoader extends EntityLoader {
                     throw new LoadException(path.toString(), id, "No existe una FFA con glosa: "+ffaName, ERROR);
                 }
 
-                Relationship relationshipFFA = new Relationship(conceptSMTK, ffa.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipFFA = new Relationship(conceptSMTK, ffa.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 //Tipo FFA
                 attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Tipo FFA").get(0);
@@ -517,7 +518,7 @@ public class MCConceptLoader extends EntityLoader {
                     throw new LoadException(path.toString(), id, "No existe una Condición de Venta con glosa: "+saleConditionName, ERROR);
                 }
 
-                Relationship relationshipSaleCondition = new Relationship(conceptSMTK, prescriptionState.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipSaleCondition = new Relationship(conceptSMTK, prescriptionState.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 conceptSMTK.addRelationship(relationshipSaleCondition);
             }
@@ -538,7 +539,7 @@ public class MCConceptLoader extends EntityLoader {
                     throw new LoadException(path.toString(), id, "No existe una Unidad de U Asist con glosa: "+assistanceUnitName, ERROR);
                 }
 
-                Relationship relationshipSaleCondition = new Relationship(conceptSMTK, assistanceUnit.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipSaleCondition = new Relationship(conceptSMTK, assistanceUnit.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 conceptSMTK.addRelationship(relationshipSaleCondition);
             }
@@ -553,7 +554,7 @@ public class MCConceptLoader extends EntityLoader {
 
                 basicTypeValue = new BasicTypeValue(Float.parseFloat(volumeName.replace(",",".")));
 
-                Relationship relationshipVolume = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipVolume = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 //Unidad Volumen
                 attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Unidad de Volumen").get(0);
@@ -584,7 +585,7 @@ public class MCConceptLoader extends EntityLoader {
 
                 basicTypeValue = new BasicTypeValue(new String(urlName));
 
-                Relationship relationshipURL = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipURL = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 conceptSMTK.addRelationship(relationshipURL);
             }
@@ -610,7 +611,7 @@ public class MCConceptLoader extends EntityLoader {
                     //throw new LoadException(path.toString(), id, "No existe un ATC con código: "+atcName, ERROR);
                 }
                 else {
-                    Relationship relationshipATC = new Relationship(conceptSMTK, atc.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                    Relationship relationshipATC = new Relationship(conceptSMTK, atc.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                     conceptSMTK.addRelationship(relationshipATC);
                 }
@@ -676,7 +677,7 @@ public class MCConceptLoader extends EntityLoader {
                     throw new LoadException(path.toString(), id, "No existe una Vía Administración con glosa: "+admViaName, ERROR);
                 }
 
-                Relationship relationshipAdmVia = new Relationship(conceptSMTK, admVia.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipAdmVia = new Relationship(conceptSMTK, admVia.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 // Orden
                 BasicTypeValue order = new BasicTypeValue(admVias.get(idConceptSMTK).size()+1);

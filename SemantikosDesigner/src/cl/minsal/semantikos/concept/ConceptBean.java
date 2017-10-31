@@ -484,7 +484,7 @@ public class ConceptBean implements Serializable {
         concept.setEditable(editable);
         auditAction = auditManager.getConceptAuditActions(concept, true);
         category = concept.getCategory();
-        conceptBeanExport.setConceptSMTK(concept);
+        conceptBeanExport.setConceptSMTK(conceptSMTK);
         conceptBeanExport.loadConcept();
     }
 
@@ -1081,6 +1081,7 @@ public class ConceptBean implements Serializable {
         descriptionsToTraslate.clear();
         noValidDescriptions.clear();
         changeMarketedBean.conceptSelected.clear();
+        resetPlaceHolders();
         messageBean.messageSuccess("Acción exitosa", "Los cambios se han descartado");
     }
 
@@ -1504,6 +1505,13 @@ public class ConceptBean implements Serializable {
             if (relationshipDefinition.getId() == 58) relationshipDefinition.getMultiplicity().setLowerBoundary(0);
             if (relationshipDefinition.getId() == 47) relationshipDefinition.getMultiplicity().setLowerBoundary(0);
         }
+        if(concept != null) {
+            for (RelationshipDefinition relationshipDefinition : concept.getCategory().getRelationshipDefinitions()) {
+                if (relationshipDefinition.getId() == 46) relationshipDefinition.getMultiplicity().setLowerBoundary(0);
+                if (relationshipDefinition.getId() == 58) relationshipDefinition.getMultiplicity().setLowerBoundary(0);
+                if (relationshipDefinition.getId() == 47) relationshipDefinition.getMultiplicity().setLowerBoundary(0);
+            }
+        }
     }
 
     public void changeMultiplicityToRequiredRelationshipDefinitionMC() {
@@ -1511,6 +1519,13 @@ public class ConceptBean implements Serializable {
             if (relationshipDefinition.getId() == 46) relationshipDefinition.getMultiplicity().setLowerBoundary(1);
             if (relationshipDefinition.getId() == 58) relationshipDefinition.getMultiplicity().setLowerBoundary(1);
             if (relationshipDefinition.getId() == 47) relationshipDefinition.getMultiplicity().setLowerBoundary(1);
+        }
+        if(concept != null) {
+            for (RelationshipDefinition relationshipDefinition : concept.getCategory().getRelationshipDefinitions()) {
+                if (relationshipDefinition.getId() == 46) relationshipDefinition.getMultiplicity().setLowerBoundary(1);
+                if (relationshipDefinition.getId() == 58) relationshipDefinition.getMultiplicity().setLowerBoundary(1);
+                if (relationshipDefinition.getId() == 47) relationshipDefinition.getMultiplicity().setLowerBoundary(1);
+            }
         }
     }
 

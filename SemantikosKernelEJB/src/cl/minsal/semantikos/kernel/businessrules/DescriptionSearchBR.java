@@ -59,6 +59,24 @@ public class DescriptionSearchBR {
     }
 
     /**
+     * Método de normalización del patrón de búsqueda, lleva las palabras a minúsculas,
+     * le quita los signos de puntuación y ortográficos
+     *
+     * @param pattern patrón de texto a normalizar
+     * @return patrón normalizado
+     */
+    public String truncatePattern(String pattern) {
+
+        String result = "";
+
+        for (String s : pattern.toLowerCase().split("\\b")) {
+            result=result+s.substring(0,Math.min(3,s.length()));
+        }
+
+        return result;
+    }
+
+    /**
      * <p>Este método es responsable de implementar la regla de negocio:</p>
      * <b>BR-HT-PA01</b>: Los elementos de las tabla auxiliar deben ser ordenados alfabéticamente, excepto por la tabla
      * HT_ATC_NAME que se ordena por el largo de los resultados.

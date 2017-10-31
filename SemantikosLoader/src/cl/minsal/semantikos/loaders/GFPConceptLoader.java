@@ -23,6 +23,7 @@ import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.util.StringUtils;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 import static cl.minsal.semantikos.model.LoadLog.ERROR;
@@ -91,7 +92,7 @@ public class GFPConceptLoader extends EntityLoader {
             /*Recuperando datos Descripciones*/
 
             /*Recuperando descripcion preferida*/
-            String term = StringUtils.normalizeSpaces(tokens[gfpConceptFields.get("DESCRIPCION")]);
+            String term = StringUtils.normalizeSpaces(tokens[gfpConceptFields.get("DESCRIPCION")]).trim();
             boolean caseSensitive = tokens[gfpConceptFields.get("SENSIBLE_MAYUSCULA")].equals("Sensible");
             DescriptionType descriptionType = DescriptionType.PREFERIDA;
 
@@ -183,7 +184,7 @@ public class GFPConceptLoader extends EntityLoader {
                 /**Se obtiene la definición de relacion SNOMED CT**/
                 relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.SNOMED_CT).get(0);
 
-                Relationship relationshipSnomed = new Relationship(conceptSMTK, conceptSCT, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipSnomed = new Relationship(conceptSMTK, conceptSCT, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 /**Para esta definición, se obtiente el atributo tipo de relación**/
                 for (RelationshipAttributeDefinition attDef : relationshipDefinition.getRelationshipAttributeDefinitions()) {
@@ -220,7 +221,7 @@ public class GFPConceptLoader extends EntityLoader {
 
             relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.COMERCIALIZADO).get(0);
 
-            Relationship relationshipMarketed = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+            Relationship relationshipMarketed = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
             conceptSMTK.addRelationship(relationshipMarketed);
 

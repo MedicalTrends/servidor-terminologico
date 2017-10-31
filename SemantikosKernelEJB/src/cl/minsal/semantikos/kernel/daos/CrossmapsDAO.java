@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
@@ -87,11 +88,11 @@ public interface CrossmapsDAO {
      * Este método es responsable de recuperar los crossmaps (como relaciones indirectas) ya pobladas con todos sus
      * campos, a partir del concepto SCT.
      *
-     * @param idConceptSCT  El ID del concepto Snomed CT.
+     * @param snomedCTRelationship  Relacon Snomed CT.
      * @param sourceConcept El concepto base.
      * @return Una lista de todos los crossmaps que van a través del concepto SnomedCT.
      */
-    public List<IndirectCrossmap> getCrossmapsBySCT(long idConceptSCT, ConceptSMTK sourceConcept);
+    public List<IndirectCrossmap> getCrossmapsBySCT(SnomedCTRelationship snomedCTRelationship, ConceptSMTK sourceConcept);
 
     /**
      * Este método es responsable de obtener la lista de todos los CrossmapSetMembers que pertenecen a un Crossmap Set.

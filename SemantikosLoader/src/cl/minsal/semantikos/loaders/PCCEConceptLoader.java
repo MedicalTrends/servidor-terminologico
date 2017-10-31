@@ -20,6 +20,7 @@ import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.util.StringUtils;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 import static cl.minsal.semantikos.model.LoadLog.ERROR;
@@ -98,7 +99,7 @@ public class PCCEConceptLoader extends EntityLoader {
             /*Recuperando datos Descripciones*/
 
             /*Recuperando descripcion preferida*/
-            String term = StringUtils.normalizeSpaces(tokens[pcceConceptFields.get("DESCRIPCION")]);
+            String term = StringUtils.normalizeSpaces(tokens[pcceConceptFields.get("DESCRIPCION")]).trim();
             boolean caseSensitive = tokens[pcceConceptFields.get("SENSIBLE_MAYUSCULA")].equals("Sensible");
             DescriptionType descriptionType = DescriptionType.PREFERIDA;
 
@@ -133,7 +134,7 @@ public class PCCEConceptLoader extends EntityLoader {
             }
 
             /*Recuperando descripcion Abreviada*/
-            term = StringUtils.normalizeSpaces(tokens[pcceConceptFields.get("DESC_ABREVIADA")]);
+            term = StringUtils.normalizeSpaces(tokens[pcceConceptFields.get("DESC_ABREVIADA")]).trim();
 
             if(!StringUtils.isEmpty(term)) {
                 descriptionType = DescriptionType.ABREVIADA;
@@ -164,7 +165,7 @@ public class PCCEConceptLoader extends EntityLoader {
                     continue;
                 }
 
-                term = StringUtils.normalizeSpaces(synonymsToken.split("-")[1]);
+                term = StringUtils.normalizeSpaces(synonymsToken.split("-")[1]).trim();
 
                 Description description = new Description(conceptSMTK, term, descriptionType);
                 description.setCaseSensitive(caseSensitive);
@@ -207,7 +208,7 @@ public class PCCEConceptLoader extends EntityLoader {
 
             RelationshipAttribute ra;
 
-            Relationship relationshipSnomed = new Relationship(conceptSMTK, conceptSCT, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+            Relationship relationshipSnomed = new Relationship(conceptSMTK, conceptSCT, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
             /**Para esta definición, se obtiente el atributo tipo de relación**/
             for (RelationshipAttributeDefinition attDef1 : relationshipDefinition.getRelationshipAttributeDefinitions()) {
@@ -242,7 +243,7 @@ public class PCCEConceptLoader extends EntityLoader {
 
             relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.COMERCIALIZADO).get(0);
 
-            Relationship relationshipMarketed = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+            Relationship relationshipMarketed = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
             conceptSMTK.addRelationship(relationshipMarketed);
 
@@ -264,7 +265,7 @@ public class PCCEConceptLoader extends EntityLoader {
                     throw new LoadException(path.toString(), id, "EL PC: "+pcName+" no está modelado, se descarta este MC", ERROR);
                 }
 
-                Relationship relationshipPC = new Relationship(conceptSMTK, pc.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipPC = new Relationship(conceptSMTK, pc.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 conceptSMTK.addRelationship(relationshipPC);
             }
@@ -287,7 +288,7 @@ public class PCCEConceptLoader extends EntityLoader {
                     throw new LoadException(path.toString(), id, "EL MCCE: "+pcName+" no está modelado, se descarta este MC", ERROR);
                 }
 
-                Relationship relationshipMCCE = new Relationship(conceptSMTK, mcce.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipMCCE = new Relationship(conceptSMTK, mcce.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 conceptSMTK.addRelationship(relationshipMCCE);
             }
@@ -297,7 +298,7 @@ public class PCCEConceptLoader extends EntityLoader {
             basicTypeValue = new BasicTypeValue(false);
             relationshipDefinition = category.findRelationshipDefinitionsByName("Existe GS1").get(0);
 
-            Relationship relationshipExistGS1 = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+            Relationship relationshipExistGS1 = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
             conceptSMTK.addRelationship(relationshipExistGS1);
 

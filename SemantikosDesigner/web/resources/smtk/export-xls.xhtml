@@ -66,11 +66,11 @@
                 <h:outputText value="Atributos"/>
             </f:facet>
 
-            <p:column headerText="Atributo">
+            <p:column headerText="Atributo" rendered="#{ not empty conceptExport.getSMTKRelationships() }">
                 <h:outputText value="#{attribute.relationshipDefinition.name}"/>
             </p:column>
 
-            <p:column headerText="Valor">
+            <p:column headerText="Valor" rendered="#{ not empty conceptExport.getSMTKRelationships() }">
                 <h:outputText value="#{attribute.target}"/>
             </p:column>
 
@@ -127,8 +127,8 @@
 
         </p:dataTable>
 
-        <p:dataTable id="crossMapsInDirectosTable" var="indirectCrossmap" value="#{conceptExport.getIndirectCrossmapsRelationships()}"
-                     rendered="#{ not empty conceptExport.getIndirectCrossmapsRelationships()}"
+        <p:dataTable id="crossMapsIndirectosTable" var="indirectCrossmap" value="#{conceptExport.getIndirectCrossmapsRelationships()}"
+                     rendered="#{ not empty conceptExport.getIndirectCrossmapsRelationships() }"
                      paginator="false" rows="6">
 
             <f:facet name="header">
@@ -136,16 +136,16 @@
             </f:facet>
 
             <p:column headerText="IDSnomed" rendered="#{ not empty conceptExport.getIndirectCrossmapsRelationships()}">
-                <h:outputText value="#{indirectCrossmap.target.idSnomedCT}"/>
+                <h:outputText value="#{indirectCrossmap.idSnomedCT}"/>
             </p:column>
-            <p:column headerText="CrossmapSet/Version" rendered="#{ not empty conceptExport.getIndirectCrossmapsRelationships()}">
-                <h:outputText value="No implementado"/>
+            <p:column headerText="Version" rendered="#{ not empty conceptExport.getIndirectCrossmapsRelationships() }">
+                <h:outputText value="#{indirectCrossmap.target.crossmapSet.version}"/>
             </p:column>
-            <p:column headerText="CrossmapSetMember" rendered="#{ not empty conceptExport.getIndirectCrossmapsRelationships()}">
-                <h:outputText value="No implementado"/>
+            <p:column headerText="CrossmapSetMember" rendered="#{ not empty conceptExport.getIndirectCrossmapsRelationships() }">
+                <h:outputText value="#{indirectCrossmap.target.code} #{indirectCrossmap.target.gloss}"/>
             </p:column>
-            <p:column headerText="Fecha en que se realizó" rendered="#{ not empty conceptExport.getIndirectCrossmapsRelationships()}">
-                <h:outputText value="No implementado"/>
+            <p:column headerText="Fecha en que se realizó" rendered="#{ not empty conceptExport.getIndirectCrossmapsRelationships() }">
+                <h:outputText value="#{indirectCrossmap.creationDate}"/>
             </p:column>
 
         </p:dataTable>
@@ -175,7 +175,7 @@
 
 
     <p:commandButton  icon="fa fa-file-excel-o" styleClass="ui-priority-primary" ajax="false" value="Exportar"  rendered="#{conceptBean.concept.modeled}">
-        <p:dataExporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,crossMapsDirectosTable,crossMapsInDirectosTable,refsetsTable"  type="xls" fileName="concepto" />
+        <p:dataExporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,crossMapsDirectosTable,crossMapsIndirectosTable,refsetsTable"  type="xls" fileName="concepto" />
         <!--pe:exporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,crossMapsDirectosTable,crossMapsInDirectosTable,refsetsTable" type="xlsx" fileName="concepto" /-->
     </p:commandButton>
 </composite:implementation>

@@ -18,6 +18,7 @@ import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import java.io.InputStreamReader;
+import java.sql.Timestamp;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.*;
 
@@ -143,7 +144,7 @@ public class BasicConceptLoader extends EntityLoader {
 
             long idConcept = Long.parseLong(tokens[basicDescriptionFields.get("STK_CONCEPTO")]);
 
-            String term = StringUtils.normalizeSpaces(tokens[basicDescriptionFields.get("TERMINO")]);
+            String term = StringUtils.normalizeSpaces(tokens[basicDescriptionFields.get("TERMINO")]).trim();
             String idDescriptionTypeString = tokens[basicDescriptionFields.get("tipo")];
             int idDescriptionType;
             boolean caseSensitive = tokens[basicDescriptionFields.get("SENS_MAYUSC")].equals("1");
@@ -240,7 +241,7 @@ public class BasicConceptLoader extends EntityLoader {
             /**Se obtiene la definición de relacion SNOMED CT**/
             RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.SNOMED_CT).get(0);
 
-            Relationship relationship = new Relationship(conceptSMTK, conceptSCT, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+            Relationship relationship = new Relationship(conceptSMTK, conceptSCT, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
             /**Para esta definición, se obtiente el atributo tipo de relación**/
             for (RelationshipAttributeDefinition attDef : relationshipDefinition.getRelationshipAttributeDefinitions()) {
@@ -257,6 +258,7 @@ public class BasicConceptLoader extends EntityLoader {
                     }
 
                     ra = new RelationshipAttribute(attDef, relationship, relationshipTypes.get(0));
+
                     relationship.getRelationshipAttributes().add(ra);
                 }
             }

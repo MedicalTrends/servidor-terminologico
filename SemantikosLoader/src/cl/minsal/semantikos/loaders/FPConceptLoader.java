@@ -23,6 +23,7 @@ import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.util.StringUtils;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 import static cl.minsal.semantikos.model.LoadLog.ERROR;
@@ -93,7 +94,7 @@ public class FPConceptLoader extends EntityLoader {
             /*Recuperando datos Descripciones*/
 
             /*Recuperando descripcion preferida*/
-            String term = StringUtils.normalizeSpaces(tokens[fpConceptFields.get("DESCRIPCION")]);
+            String term = StringUtils.normalizeSpaces(tokens[fpConceptFields.get("DESCRIPCION")]).trim();
             boolean caseSensitive = tokens[fpConceptFields.get("SENSIBLE_MAYUSCULA")].equals("Sensible");
             DescriptionType descriptionType = DescriptionType.PREFERIDA;
 
@@ -185,7 +186,7 @@ public class FPConceptLoader extends EntityLoader {
                 /**Se obtiene la definición de relacion SNOMED CT**/
                 relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.SNOMED_CT).get(0);
 
-                Relationship relationshipSnomed = new Relationship(conceptSMTK, conceptSCT, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipSnomed = new Relationship(conceptSMTK, conceptSCT, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 /**Para esta definición, se obtiente el atributo tipo de relación**/
                 for (RelationshipAttributeDefinition attDef : relationshipDefinition.getRelationshipAttributeDefinitions()) {
@@ -222,7 +223,7 @@ public class FPConceptLoader extends EntityLoader {
 
             relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.COMERCIALIZADO).get(0);
 
-            Relationship relationshipMarketed = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+            Relationship relationshipMarketed = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
             conceptSMTK.addRelationship(relationshipMarketed);
 
@@ -235,7 +236,7 @@ public class FPConceptLoader extends EntityLoader {
                 basicTypeValue = new BasicTypeValue(genericFamilyName.trim().equals("Si"));
                 relationshipDefinition = category.findRelationshipDefinitionsByName("Familia Genérica").get(0);
 
-                Relationship relationshipSaleCondition = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                Relationship relationshipSaleCondition = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 conceptSMTK.addRelationship(relationshipSaleCondition);
             }
@@ -259,7 +260,7 @@ public class FPConceptLoader extends EntityLoader {
                         throw new LoadException(path.toString(), id, "EL GFP: "+gfpName+" no está modelado, se descarta esta FP", ERROR);
                     }
 
-                    Relationship relationshipGFP = new Relationship(conceptSMTK, gfp.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+                    Relationship relationshipGFP = new Relationship(conceptSMTK, gfp.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
                     conceptSMTK.addRelationship(relationshipGFP);
                 }
             }

@@ -11,7 +11,7 @@
     <parent>
         <groupId>cl.minsal.semantikos</groupId>
         <artifactId>Semantikos</artifactId>
-        <version>0.9.8</version>
+        <version>0.9.9</version>
     </parent>
 
     <properties>
@@ -53,14 +53,14 @@
         <!--dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosKernelEJB</artifactId>
-            <version>0.9.8</version>
+            <version>0.9.9</version>
             <scope>provided</scope>
         </dependency-->
 
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosDomain</artifactId>
-            <version>0.9.8</version>
+            <version>0.9.9</version>
             <type>jar</type>
         </dependency>
 
@@ -117,13 +117,13 @@
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosDomain</artifactId>
-            <version>0.9.8</version>
+            <version>0.9.9</version>
         </dependency>
 
         <!--dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosDomain</artifactId>
-            <version>0.9.8</version>
+            <version>0.9.9</version>
         </dependency-->
 
     </dependencies>

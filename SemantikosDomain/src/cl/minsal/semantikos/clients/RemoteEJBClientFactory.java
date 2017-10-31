@@ -18,7 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RemoteEJBClientFactory {
 
     private static final RemoteEJBClientFactory instance = new RemoteEJBClientFactory();
-    private Context context;
+    private static Context context;
+    private static Properties props;
 
     /** Mapa de interfaces por su nombre. */
     private Map<String, Object> managersByName;
@@ -63,7 +64,7 @@ public class RemoteEJBClientFactory {
 
     private RemoteEJBClientFactory() {
 
-        Properties props = new Properties();
+        props = new Properties();
         props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 
         try {
@@ -73,6 +74,7 @@ public class RemoteEJBClientFactory {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+
         this.managersByName = new ConcurrentHashMap<>();
     }
 

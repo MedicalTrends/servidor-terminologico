@@ -880,7 +880,7 @@ public class ConceptController {
                 false, /*Por defecto un término pendiente es insensible a mayúscula*/
                 category,
                 termRequest.getProfessional(),
-                termRequest.getProfesion(),
+                termRequest.getProfesion().isEmpty()?" ":termRequest.getProfesion(),
                 termRequest.getSpecialty().isEmpty()?" ":termRequest.getSpecialty(),
                 termRequest.getSubSpecialty().isEmpty()?" ":termRequest.getSubSpecialty(),
                 termRequest.getEmail(),
