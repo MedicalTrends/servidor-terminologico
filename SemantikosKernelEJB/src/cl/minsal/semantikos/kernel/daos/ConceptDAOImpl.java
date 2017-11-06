@@ -213,9 +213,9 @@ public class ConceptDAOImpl implements ConceptDAO {
                 logger.error(errorMsg);
                 throw new IllegalArgumentException(errorMsg);
             }
-            //rs.close();
-            //call.close();
-            //connection.close();
+
+            rs.close();
+
         } catch (SQLException e) {
             logger.error("Se produjo un error al acceder a la BDD.", e);
             throw new EJBException(e);
@@ -843,8 +843,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         /* Se recupera la categoría como objeto de negocio */
         idCategory = Long.valueOf(resultSet.getString("id_category"));
         //objectCategory = categoryDAO.getCategoryById(idCategory);
-        //objectCategory = CategoryFactory.getInstance().findCategoryById(idCategory);
-        objectCategory = categorySingleton.findCategoryById(idCategory);
+        objectCategory = CategoryFactory.getInstance().findCategoryById(idCategory);
 
         check = resultSet.getBoolean("is_to_be_reviewed");
         consult = resultSet.getBoolean("is_to_be_consultated");

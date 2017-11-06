@@ -32,7 +32,7 @@ import static java.lang.System.currentTimeMillis;
  *
  * @author Diego Soto.
  */
-public class ConceptDTO extends PersistentEntity implements Serializable {
+public class ConceptDTO extends PersistentEntity implements TargetDTO, Serializable {
 
     /** El valor de negocio del concept_id */
     private String conceptID;
@@ -68,7 +68,7 @@ public class ConceptDTO extends PersistentEntity implements Serializable {
     private String observation;
 
     /** Lista de etiquetas */
-    private List<Tag> tags = new ArrayList<>();
+    private boolean hasTags;
 
     /** El Tag Semántikos que tiene asociado el concepto */
     private long idTagSMTK;
@@ -115,12 +115,12 @@ public class ConceptDTO extends PersistentEntity implements Serializable {
         return isFullyDefined;
     }
 
-    public List<Tag> getTags() {
-        return tags;
+    public boolean isHasTags() {
+        return hasTags;
     }
 
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
+    public void setHasTags(boolean hasTags) {
+        this.hasTags = hasTags;
     }
 
     public String getObservation() {

@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.businessrules.*;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
+import cl.minsal.semantikos.kernel.daos.ws.ConceptWSDAO;
 import cl.minsal.semantikos.kernel.util.IDGenerator;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.*;
@@ -46,6 +47,9 @@ public class ConceptManagerImpl implements ConceptManager {
 
     @EJB
     private ConceptDAO conceptDAO;
+
+    @EJB
+    private ConceptWSDAO conceptWSDAO;
 
     @EJB
     private AuditManager auditManager;
@@ -418,7 +422,8 @@ public class ConceptManagerImpl implements ConceptManager {
 
     @Override
     public List<ConceptSMTK> findModeledConceptPaginated(Category category, int pageSize, int pageNumber) {
-        return this.conceptDAO.getModeledConceptPaginated(category.getId(), pageSize, pageNumber);
+        //return this.conceptDAO.getModeledConceptPaginated(category.getId(), pageSize, pageNumber);
+        return this.conceptWSDAO.getConceptsPaginated(category.getId(), pageSize, pageNumber);
     }
 
     @Override

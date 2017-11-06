@@ -2,32 +2,22 @@ package cl.minsal.semantikos.kernel.components;
 
 
 import cl.minsal.semantikos.kernel.businessrules.*;
-import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
-import cl.minsal.semantikos.kernel.daos.WSDAO;
-import cl.minsal.semantikos.kernel.factories.DescriptionSearcherFactory;
-import cl.minsal.semantikos.kernel.factories.RelationshipLoaderFactory;
-import cl.minsal.semantikos.kernel.factories.ThreadFactory;
+import cl.minsal.semantikos.kernel.daos.ws.DescriptionWSDAO;
 import cl.minsal.semantikos.kernel.util.IDGenerator;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.*;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.refsets.RefSet;
-import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.*;
-import javax.interceptor.AroundInvoke;
-import javax.interceptor.InvocationContext;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -44,10 +34,10 @@ public class DescriptionManagerImpl implements DescriptionManager {
     private static final Logger logger = LoggerFactory.getLogger(DescriptionManagerImpl.class);
 
     @EJB
-    DescriptionDAO descriptionDAO;
+    cl.minsal.semantikos.kernel.daos.DescriptionDAO descriptionDAO;
 
     @EJB
-    WSDAO wsDAO;
+    DescriptionWSDAO descriptionWSDAO;
 
     @EJB
     CategoryManager categoryManager;
@@ -326,15 +316,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
     //@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<Description> searchDescriptionsPerfectMatch(String term, List<Category> categories, List<RefSet> refSets) {
         //long init = currentTimeMillis();
-        return descriptionDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
-        /*
-        try {
-            return wsDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-        */
+        //return descriptionDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
+        return descriptionWSDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
     }
 
     @Override

@@ -185,9 +185,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
                 descriptions.add(description);
             }
 
-            //rs.close();
-            //call.close();
-            //connection.close();
+            rs.close();
 
         } catch (SQLException e) {
             String errorMsg = "Error al recuperar descripciones de la BDD.";
@@ -546,10 +544,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
                 //Description description = getDescriptionById(rs.getLong("id"));
                 descriptions.add(description);
             }
-
-            //rs.close();
-            //call.close();
-            //connection.close();
+            rs.close();
 
         } catch (SQLException e) {
             String errorMsg = "Error al recuperar descripciones de la BDD.";

@@ -185,6 +185,8 @@ public class AuthDAOImpl implements AuthDAO {
                 user = makeUserFromResult(rs);
             }
 
+            rs.close();
+
         } catch (SQLException e) {
             String errorMsg = "Error al recuperar usuario de la BDD.";
             logger.error(errorMsg, e);

@@ -8,6 +8,8 @@ import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.kernel.daos.TargetDAO;
+import cl.minsal.semantikos.kernel.daos.ws.DescriptionWSDAO;
+import cl.minsal.semantikos.kernel.daos.ws.RelationshipWSDAO;
 import cl.minsal.semantikos.kernel.factories.RelationshipLoaderFactory;
 import cl.minsal.semantikos.kernel.factories.ThreadFactory;
 import cl.minsal.semantikos.model.categories.Category;
@@ -60,6 +62,8 @@ public class RelationshipManagerImpl implements RelationshipManager {
     @EJB
     private RelationshipBindingBR relationshipBindingBR;
 
+    @EJB
+    RelationshipWSDAO relationshipWSDAO;
 
     @Override
     public Relationship bindRelationshipToConcept(ConceptSMTK concept, Relationship relationship, User user) throws Exception {
@@ -291,7 +295,8 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
     @Override
     public List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK concept) {
-        return relationshipDAO.getRelationshipsBySourceConcept(concept);
+        //return relationshipDAO.getRelationshipsBySourceConcept(concept);
+        return relationshipWSDAO.getRelationshipsBySourceConcept(concept);
     }
 
     @Override
