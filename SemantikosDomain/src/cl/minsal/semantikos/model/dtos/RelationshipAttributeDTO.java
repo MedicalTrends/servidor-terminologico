@@ -12,7 +12,7 @@ import java.io.Serializable;
 // TODO: Normalizar esta clase
 public class RelationshipAttributeDTO implements Serializable {
 
-    private Long idRelationshipAttribute;
+    private Long id;
     private long relationAttributeDefinitionId;
     private long relationshipId;
     private TargetDTO targetDTO;
@@ -20,12 +20,12 @@ public class RelationshipAttributeDTO implements Serializable {
     public RelationshipAttributeDTO() {
     }
 
-    public Long getIdRelationshipAttribute() {
-        return idRelationshipAttribute;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdRelationshipAttribute(Long idRelationshipAttribute) {
-        this.idRelationshipAttribute = idRelationshipAttribute;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public long getRelationAttributeDefinitionId() {
@@ -52,9 +52,4 @@ public class RelationshipAttributeDTO implements Serializable {
         this.targetDTO = targetDTO;
     }
 
-    @Override
-    public int hashCode() {
-        int result = idRelationshipAttribute != null ? idRelationshipAttribute.hashCode() : 0;
-        return result;
-    }
 }

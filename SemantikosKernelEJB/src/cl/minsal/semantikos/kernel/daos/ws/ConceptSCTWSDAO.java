@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.dtos.ConceptSCTDTO;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.Local;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -14,5 +15,5 @@ import java.util.List;
 @Local
 public interface ConceptSCTWSDAO {
 
-    public ConceptSCT createConceptSCTFromDTO(ConceptSCTDTO conceptDTO);
+    public ConceptSCT createConceptSCTFromDTO(ConceptSCTDTO conceptDTO) throws SQLException;
 }

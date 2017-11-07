@@ -122,7 +122,7 @@ public class RelationshipWSDAOImpl implements RelationshipWSDAO {
             relationship.setValidityUntil(validityUntil);
             relationship.setCreationDate(creationDate);
 
-            List<RelationshipAttributeDTO> relationshipAttributesDTO = relationshipDTO.getRelationshipAttributesDTO();
+            List<RelationshipAttributeDTO> relationshipAttributesDTO = relationshipDTO.getRelationshipAttributeDTOs();
             relationship.setRelationshipAttributes(createRelationshipAttributesFromDTO(relationshipAttributesDTO, relationship));
 
             return relationship;
@@ -142,7 +142,7 @@ public class RelationshipWSDAOImpl implements RelationshipWSDAO {
      *
      * @return Una relación del tipo correcta que define el Target.
      */
-    private Relationship createRelationshipByTargetType(TargetDTO targetDTO, ConceptSMTK conceptSMTK, RelationshipDefinition relationshipDefinition, long id, Timestamp validityUntil) {
+    private Relationship createRelationshipByTargetType(TargetDTO targetDTO, ConceptSMTK conceptSMTK, RelationshipDefinition relationshipDefinition, long id, Timestamp validityUntil) throws SQLException {
 
         Target target = null;
 
@@ -181,23 +181,27 @@ public class RelationshipWSDAOImpl implements RelationshipWSDAO {
         return new Relationship(id, conceptSMTK, target, relationshipDefinition, validityUntil, new ArrayList<RelationshipAttribute>());
     }
 
-    public List<RelationshipAttribute> createRelationshipAttributesFromDTO(List<RelationshipAttributeDTO> attributesDTO, Relationship relationship) {
+    public List<RelationshipAttribute> createRelationshipAttributesFromDTO(List<RelationshipAttributeDTO> attributesDTO, Relationship relationship) throws SQLException {
 
         List<RelationshipAttribute> relationshipAttributes = new ArrayList<>();
 
-        for (RelationshipAttributeDTO relationshipAttributeDTO : attributesDTO) {
+        if(attributesDTO != null) {
 
-            long id = relationshipAttributeDTO.getIdRelationshipAttribute();
+            for (RelationshipAttributeDTO relationshipAttributeDTO : attributesDTO) {
 
-            TargetDTO targetDTO = relationshipAttributeDTO.getTargetDTO();
+                long id = relationshipAttributeDTO.getId();
 
-            long relationshipAttributeDefinitionId = relationshipAttributeDTO.getRelationAttributeDefinitionId();
+                TargetDTO targetDTO = relationshipAttributeDTO.getTargetDTO();
 
-            RelationshipAttributeDefinition relationshipAttributeDefinition = relationship.getRelationshipDefinition().findRelationshipAttributeDefinitionsById(relationshipAttributeDefinitionId).get(0);
+                long relationshipAttributeDefinitionId = relationshipAttributeDTO.getRelationAttributeDefinitionId();
 
-            RelationshipAttribute relationshipAttribute = createRelationshipAttributeByTargetType(targetDTO, relationship, relationshipAttributeDefinition, id);
+                RelationshipAttributeDefinition relationshipAttributeDefinition = relationship.getRelationshipDefinition().findRelationshipAttributeDefinitionsById(relationshipAttributeDefinitionId).get(0);
 
-            relationshipAttributes.add(relationshipAttribute);
+                RelationshipAttribute relationshipAttribute = createRelationshipAttributeByTargetType(targetDTO, relationship, relationshipAttributeDefinition, id);
+
+                relationshipAttributes.add(relationshipAttribute);
+
+            }
 
         }
 
@@ -212,7 +216,7 @@ public class RelationshipWSDAOImpl implements RelationshipWSDAO {
      *
      * @return Una relación del tipo correcta que define el Target.
      */
-    private RelationshipAttribute createRelationshipAttributeByTargetType(TargetDTO targetDTO, Relationship relationship, RelationshipAttributeDefinition relationshipAttributeDefinition, long id) {
+    private RelationshipAttribute createRelationshipAttributeByTargetType(TargetDTO targetDTO, Relationship relationship, RelationshipAttributeDefinition relationshipAttributeDefinition, long id) throws SQLException {
 
         Target target = null;
 

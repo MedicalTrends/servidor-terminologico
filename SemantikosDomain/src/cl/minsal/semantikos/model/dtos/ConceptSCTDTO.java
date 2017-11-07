@@ -31,7 +31,7 @@ public class ConceptSCTDTO implements TargetDTO, Serializable {
     private long id;
 
     /** Descripciones del Concepto */
-    private List<DescriptionSCT> descriptions;
+    private List<DescriptionSCTDTO> descriptions;
 
     private List<RelationshipSCT> relationships;
 
@@ -101,11 +101,11 @@ public class ConceptSCTDTO implements TargetDTO, Serializable {
         this.definitionStatusId = definitionStatusId;
     }
 
-    public void setDescriptions(List<DescriptionSCT> descriptions) {
+    public void setDescriptions(List<DescriptionSCTDTO> descriptions) {
         this.descriptions = descriptions;
     }
 
-    public List<DescriptionSCT> getDescriptions() {
+    public List<DescriptionSCTDTO> getDescriptions() {
         return descriptions;
     }
 

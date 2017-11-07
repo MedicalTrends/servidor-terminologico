@@ -40,7 +40,7 @@ public class ConceptSCTWSDAOImpl implements ConceptSCTWSDAO {
     /** El logger para esta clase */
     private static final Logger logger = LoggerFactory.getLogger(ConceptSCTWSDAOImpl.class);
 
-    public ConceptSCT createConceptSCTFromDTO(ConceptSCTDTO conceptDTO) {
+    public ConceptSCT createConceptSCTFromDTO(ConceptSCTDTO conceptDTO) throws SQLException {
 
         long id = conceptDTO.getId();
         Timestamp effectiveTime = conceptDTO.getEffectiveTime();
@@ -53,14 +53,16 @@ public class ConceptSCTWSDAOImpl implements ConceptSCTWSDAO {
         conceptSCT.setId(id);
 
         /* Se recuperan las descripciones del concepto */
-        List<DescriptionSCT> descriptions = conceptDTO.getDescriptions();
-        conceptSCT.setDescriptions(descriptions);
+        List<DescriptionSCTDTO> descriptions = conceptDTO.getDescriptions();
+        conceptSCT.setDescriptions(createDescriptionsSCTFromDTO(descriptions));
 
         return conceptSCT;
 
     }
 
-    private DescriptionSCT createDescriptionsSCTFromDTO(List<DescriptionSCTDTO> descriptions) throws SQLException {
+    private List<DescriptionSCT> createDescriptionsSCTFromDTO(List<DescriptionSCTDTO> descriptions) throws SQLException {
+
+        List<DescriptionSCT> descriptionsSCT = new ArrayList<>();
 
         for (DescriptionSCTDTO description : descriptions) {
             long id = description.getId();
@@ -83,12 +85,12 @@ public class ConceptSCTWSDAOImpl implements ConceptSCTWSDAO {
 
                 descriptionSCT.setFavourite(DescriptionSCTType.valueOf(acceptabilityID).equals(DescriptionSCTType.PREFERRED));
 
-                return descriptionSCT;
+                descriptionsSCT.add(descriptionSCT);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        return null;
+        return descriptionsSCT;
     }
 }

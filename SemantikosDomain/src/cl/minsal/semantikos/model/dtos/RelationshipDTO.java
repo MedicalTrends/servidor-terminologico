@@ -28,16 +28,16 @@ import java.util.List;
  *
  * @author Andrés Farías
  */
-public class RelationshipDTO extends PersistentEntity implements AuditableEntity, Serializable {
+public class RelationshipDTO implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(RelationshipDTO.class);
+
+    private long id;
 
     /** ID de negocio (Solo utilizado en relaciones SCT) */
     private String idRelationship;
 
     private long idSourceConcept;
-
-    private Multiplicity multiplicity;
 
     /** La definición de esta relación */
     private long idRelationshipDefinition;
@@ -50,6 +50,19 @@ public class RelationshipDTO extends PersistentEntity implements AuditableEntity
 
     /** Fecha en que fue creada la relación */
     private Timestamp creationDate;
+
+    private List<RelationshipAttributeDTO> relationshipAttributeDTOs = new ArrayList<>();
+
+    public RelationshipDTO() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public long getIdSourceConcept() {
         return idSourceConcept;
@@ -75,17 +88,6 @@ public class RelationshipDTO extends PersistentEntity implements AuditableEntity
         this.targetDTO = targetDTO;
     }
 
-    public List<RelationshipAttributeDTO> getRelationshipAttributesDTO() {
-        return relationshipAttributesDTO;
-    }
-
-    public void setRelationshipAttributesDTO(List<RelationshipAttributeDTO> relationshipAttributesDTO) {
-        this.relationshipAttributesDTO = relationshipAttributesDTO;
-    }
-
-    /** Lista de Atributos de la relacion * */
-    private List<RelationshipAttributeDTO> relationshipAttributesDTO;
-
     public String getIdRelationship() {
         return idRelationship;
     }
@@ -110,4 +112,13 @@ public class RelationshipDTO extends PersistentEntity implements AuditableEntity
         this.creationDate = creationDate;
     }
 
+    public List<RelationshipAttributeDTO> getRelationshipAttributeDTOs() {
+        return relationshipAttributeDTOs;
+    }
+
+    public void setRelationshipAttributeDTOs(List<RelationshipAttributeDTO> relationshipAttributeDTOs) {
+        if(relationshipAttributeDTOs != null) {
+            this.relationshipAttributeDTOs = relationshipAttributeDTOs;
+        }
+    }
 }

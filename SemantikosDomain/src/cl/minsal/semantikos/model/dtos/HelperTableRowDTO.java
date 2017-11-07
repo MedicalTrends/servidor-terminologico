@@ -22,7 +22,7 @@ import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
  * Created by BluePrints Developer on 14-12-2016.
  */
 
-public class HelperTableRowDTO implements Serializable {
+public class HelperTableRowDTO implements TargetDTO, Serializable {
 
     private long id;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss", timezone="America/Buenos_Aires")
@@ -51,47 +51,37 @@ public class HelperTableRowDTO implements Serializable {
         this.id = id;
     }
 
-    @JsonProperty("creation_date")
     public Timestamp getCreationDate() {
         return creationDate;
     }
 
-    @JsonProperty("creation_date")
     public void setCreationDate(Timestamp creationDate) {
         this.creationDate = creationDate;
     }
 
-    @JsonProperty("last_edit_date")
     public Timestamp getLastEditDate() {
         return lastEditDate;
     }
 
-    @JsonProperty("last_edit_date")
     public void setLastEditDate(Timestamp lastEditDate) {
         this.lastEditDate = lastEditDate;
     }
 
-    @JsonProperty("valid")
     public boolean isValid() {
         return valid;
     }
 
-    @JsonProperty("valid")
     public void setValid(boolean valid) {
         this.valid = valid;
     }
 
-    @JsonProperty("validity_until")
     public Timestamp getValidityUntil() {
         return validityUntil;
     }
 
-
-    @JsonProperty("validity_until")
     public void setValidityUntil(Timestamp validityUntil) {
         this.validityUntil = validityUntil;
     }
-
 
     public String getDescription() {
         return description;
@@ -101,42 +91,28 @@ public class HelperTableRowDTO implements Serializable {
         this.description = description;
     }
 
-
-    @JsonProperty("creation_user")
     public String getCreationUsername() {
         return creationUsername;
     }
 
-
-    @JsonProperty("creation_user")
     public void setCreationUsername(String creationUsername) {
         this.creationUsername = creationUsername;
     }
 
-    @JsonProperty("helper_table_id")
     public long getHelperTableId() {
-
         return helperTableId;
     }
 
-    @JsonProperty("helper_table_id")
     public void setHelperTableId(long helperTableId) {
         this.helperTableId = helperTableId;
     }
 
-    @JsonProperty("last_edit_user")
     public String getLastEditUsername() {
         return lastEditUsername;
     }
 
-    @JsonProperty("last_edit_user")
     public void setLastEditUsername(String lastEditUsername) {
         this.lastEditUsername = lastEditUsername;
-    }
-
-    @Override
-    public String toString() {
-        return description;
     }
 
     public List<HelperTableData> getCells() {
@@ -144,6 +120,8 @@ public class HelperTableRowDTO implements Serializable {
     }
 
     public void setCells(List<HelperTableData> cells) {
-        this.cells = cells;
+        if(cells != null) {
+            this.cells = cells;
+        }
     }
 }
