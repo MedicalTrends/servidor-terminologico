@@ -80,6 +80,11 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.commons:commons-csv:1.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: commons-io:commons-io:1.3.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jsoup:jsoup:1.10.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.guava:guava:23.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.code.findbugs:jsr305:1.3.9" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.errorprone:error_prone_annotations:2.0.18" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.j2objc:j2objc-annotations:1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
     <orderEntry type="module" module-name="SemantikosWSEJB" scope="PROVIDED" />
     <orderEntry type="library" name="Maven: net.bull.javamelody:javamelody-core:1.59.0" level="project" />
     <orderEntry type="library" name="Maven: org.jrobin:jrobin:1.5.9" level="project" />
