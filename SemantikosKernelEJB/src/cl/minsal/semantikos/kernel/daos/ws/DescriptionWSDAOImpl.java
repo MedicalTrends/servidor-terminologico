@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
+import static java.lang.System.currentTimeMillis;
+
 /**
  * @author Andres Farias.
  */
@@ -110,6 +112,59 @@ public class DescriptionWSDAOImpl implements DescriptionWSDAO {
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
     }
+
+    @Override
+    public List<Description> searchDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets, int page, int pageSize) {
+
+        List<Description> descriptions = new ArrayList<>();
+
+        String sql = "begin ? := stk.stk_pck_ws.search_descriptions_truncate_match_json(?,?,?,?,?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, term.toLowerCase());
+
+            if(categories == null) {
+                call.setNull(3, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(3, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", categories));
+            }
+            if(refsets == null) {
+                call.setNull(4, Types.ARRAY, "STK.NUMBER_ARRAY");
+            }
+            else {
+                call.setArray(4, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", refsets));
+            }
+
+            call.setInt(5, page);
+
+            call.setInt(6, pageSize);
+
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                descriptions.add(createDescriptionFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar descripciones de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        } catch (IOException e) {
+            String errorMsg = "Error al recuperar descripciones de la BDD.";
+            logger.error(errorMsg, e);
+        }
+
+        //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): " + descriptions);
+        //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        return descriptions;
+    }
+
 
 
     public Description createDescriptionFromResultSet(ResultSet resultSet) throws SQLException, IOException {

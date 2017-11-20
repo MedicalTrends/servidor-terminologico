@@ -26,6 +26,8 @@ import javax.ejb.Stateless;
 import static cl.minsal.semantikos.model.users.ProfileFactory.ADMINISTRATOR_PROFILE;
 import static cl.minsal.semantikos.model.users.ProfileFactory.DESIGNER_PROFILE;
 import static cl.minsal.semantikos.model.users.ProfileFactory.MODELER_PROFILE;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.MINUTES;
 
 /**
  * @author Francisco Méndez on 19-05-2016.
@@ -46,6 +48,8 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
 
     @EJB
     private AuthDAO authDAO;
+
+    long MAX_DURATION = MILLISECONDS.convert(10, MINUTES);
 
     @PermitAll
     public boolean authenticate(String email, String password, HttpServletRequest request) throws AuthenticationException {
@@ -141,7 +145,13 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
          */
         for (Profile profile : user.getProfiles()) {
             if(profile.equals(ProfileFactory.WS_CONSUMER_PROFILE)) {
-                authDAO.markLogin(username);
+                /*
+                Para evitar contención en BD al actualizar concurrentemente el mismo registro, se actualiza
+                el ultimo login solo si se ha sobrepasado una ventana de tiempo
+                 */
+                if( (System.currentTimeMillis() - user.getLastLogin().getTime()) > MAX_DURATION ) {
+                    authDAO.markLogin(username);
+                }
                 return user;
             }
         }

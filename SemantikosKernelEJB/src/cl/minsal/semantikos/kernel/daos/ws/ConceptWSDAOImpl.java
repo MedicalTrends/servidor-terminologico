@@ -55,25 +55,26 @@ public class ConceptWSDAOImpl implements ConceptWSDAO {
         String sql = "begin ? := stk.stk_pck_ws.get_concept_by_id_json(?); end;";
 
         ConceptSMTK conceptSMTK;
+
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.VARCHAR);
             call.setLong(2, id);
             call.execute();
 
             //ResultSet rs = call.getResultSet();
-            ResultSet rs = (ResultSet) call.getObject(1);
+            String jsonObject = (String) call.getObject(1);
 
-            if (rs.next()) {
-                conceptSMTK = createConceptFromResultSet(rs);
+            if (jsonObject != null) {
+                ConceptDTO conceptDTO = mapper.readValue(StringUtils.cleanJSON(jsonObject), ConceptDTO.class);
+
+                conceptSMTK = createConceptFromDTO(conceptDTO);
             } else {
                 String errorMsg = "No existe un concepto con CONCEPT_ID=" + id;
                 logger.error(errorMsg);
                 throw new IllegalArgumentException(errorMsg);
             }
-
-            rs.close();
 
         } catch (SQLException e) {
             logger.error("Se produjo un error al acceder a la BDD.", e);
@@ -82,10 +83,6 @@ public class ConceptWSDAOImpl implements ConceptWSDAO {
             logger.error("Se produjo un error al acceder a la BDD.", e);
             throw new EJBException(e);
         }
-
-        float time = (float) (currentTimeMillis() - init);
-
-        //logger.info("ws-req-001: {}s", String.format("%.2f", time));
 
         return conceptSMTK;
     }
@@ -122,6 +119,41 @@ public class ConceptWSDAOImpl implements ConceptWSDAO {
         } catch (IOException e) {
             String errorMsg = "Error al recuperar descripciones de la BDD.";
             logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return concepts;
+    }
+
+    @Override
+    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK) {
+
+        List<ConceptSMTK> concepts = new ArrayList<>();
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_ws.get_related_concepts_json(?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSMTK.getId());
+            call.execute();
+
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                concepts.add(createConceptFromResultSet(rs));
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            logger.error("Error al buscar conceptos relacionados", e);
+            throw new EJBException(e);
+        } catch (IOException e) {
+            logger.error("Error al buscar conceptos relacionados", e);
             throw new EJBException(e);
         }
 

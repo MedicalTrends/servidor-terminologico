@@ -17,4 +17,6 @@ public interface ConceptWSDAO {
     public List<ConceptSMTK> getConceptsPaginated(Long categoryId, int pageSize, int pageNumber);
 
     public ConceptSMTK createConceptFromDTO(ConceptDTO conceptDTO);
+
+    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);
 }

@@ -342,7 +342,7 @@ public class ConceptManagerImpl implements ConceptManager {
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK, Category... categories) {
 
         /* Se recuperan los conceptos relacionados: 1o se intenta con los conceptos padres */
-        List<ConceptSMTK> relatedConcepts =  getRelatedConcepts(conceptSMTK);
+        List<ConceptSMTK> relatedConcepts =  conceptWSDAO.getRelatedConcepts(conceptSMTK);
 
         /* Si no hay categorías por las que filtrar, se retorna la lista original */
         if (categories == null || categories.length == 0) {
@@ -364,7 +364,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         /* Si no se obtuvieron conceptos relacionados se intenta con los conceptos hijos */
         if(filteredRelatedConcepts.isEmpty()) {
-            for (Relationship relationship : relationshipDAO.getRelationshipsBySourceConcept(conceptSMTK, TargetType.SMTK)) {
+            for (Relationship relationship : relationshipManager.getRelationshipsBySourceConcept(conceptSMTK)) {
                 if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
                     ConceptSMTK relatedConcept = (ConceptSMTK) relationship.getTarget();
                     List<Category> categoryFilters = Arrays.asList(categories);

@@ -262,7 +262,8 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
     @Override
     public List<Relationship> findRelationshipsLike(RelationshipDefinition relationshipDefinition, Target target) {
-        return relationshipDAO.findRelationshipsLike(relationshipDefinition, target);
+        //return relationshipDAO.findRelationshipsLike(relationshipDefinition, target);
+        return relationshipWSDAO.findRelationshipsLike(relationshipDefinition, target);
     }
 
     @Override
@@ -327,7 +328,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
         int i = 0;
 
         for (ConceptSMTK conceptSMTK : conceptSMTKs) {
-            results.add(relationshipDAO.getRelationshipsBySourceConceptAsync(conceptSMTK));
+            results.add(relationshipWSDAO.getRelationshipsBySourceConceptAsync(conceptSMTK));
         }
 
         for(Future<List<Relationship>> result : results){

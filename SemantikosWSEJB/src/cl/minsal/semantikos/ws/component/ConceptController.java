@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.NoValidDescription;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;
@@ -28,12 +29,11 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
 import javax.ejb.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
+import static cl.minsal.semantikos.kernel.daos.ConceptDAOImpl.NO_VALID_CONCEPT;
+import static cl.minsal.semantikos.kernel.daos.ConceptDAOImpl.PENDING_CONCEPT;
 import static cl.minsal.semantikos.kernel.daos.DescriptionDAOImpl.NO_VALID_TERMS;
 
 /**
@@ -109,11 +109,7 @@ public class ConceptController {
         List<ConceptResponse> relatedResponses = new ArrayList<>();
         List<ConceptSMTK> relatedConcepts = this.conceptManager.getRelatedConcepts(sourceConcept, category);
 
-        /*
-        if(category.getRelationshipDefinitions().size() > 2) {
-            relatedConcepts = relationshipManager.loadRelationshipsInParallel(relatedConcepts);
-        }
-        */
+        relatedConcepts = relationshipManager.loadRelationshipsInParallel(relatedConcepts);
 
         for (ConceptSMTK related : relatedConcepts) {
             ConceptResponse conceptResponse = new ConceptResponse(related);
@@ -239,11 +235,10 @@ public class ConceptController {
             List<String> refSetsNames
     ) throws NotFoundFault, ExecutionException, InterruptedException {
 
-        if(!categoriesNames.contains("Concepto Especial")) {
-            categoriesNames.add("Concepto Especial");
-        }
+        List<String> categoryNames = new ArrayList<>(categoriesNames);
+
         GenericTermSearchResponse res = new GenericTermSearchResponse();
-        List<Category> categories = this.categoryController.findCategories(categoriesNames);
+        List<Category> categories = this.categoryController.findCategories(categoryNames);
         List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
 
         if(categories.isEmpty()) {
@@ -258,29 +253,27 @@ public class ConceptController {
         List<NoValidDescriptionResponse> noValidDescriptions = new ArrayList<>();
         List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
 
-        List<Description> descriptions = this.descriptionManager.searchDescriptionsPerfectMatch(term, categories, refSets);
+        List<Description> descriptions = descriptionManager.searchDescriptionsPerfectMatch(term, categories, refSets);
+
+        if(!categoriesNames.contains("Concepto Especial")) {
+            descriptions.addAll(descriptionManager.searchDescriptionsTruncateMatch(term, Arrays.asList(CategoryFactory.SPECIAL_CONCEPT), null));
+        }
+
         //List<Description> descriptions = this.descriptionManager.searchDescriptionsPerfectMatchInParallel(term, categories, refSets);
         //logger.debug("ws-req-001. descripciones encontradas: " + descriptions);
-
         for (Description description : descriptions) {
-
-            //logger.info("ws-req-001. descripciones encontrada: " + description.fullToString());
-
-            if( NO_VALID_TERMS.contains(description.getTerm()) ) {
-                continue;
-            }
-
-            /* Caso 1: es una descripcion del concepto especial No valido */
-            if ("Concepto no válido".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm()) ) {
-                NoValidDescription noValidDescription = this.descriptionManager.getNoValidDescriptionByID(description.getId());
+            if(description.getConceptSMTK().equals(NO_VALID_CONCEPT)) {
+                NoValidDescription noValidDescription = descriptionManager.getNoValidDescriptionByID(description.getId());
                 if (noValidDescription != null) {
                     noValidDescriptions.add(new NoValidDescriptionResponse(noValidDescription));
                 } else {
                     perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
                 }
-            } else if ("Pendientes".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm())) {
+            }
+            if(description.getConceptSMTK().equals(PENDING_CONCEPT)) {
                 pendingDescriptions.add(new PendingDescriptionResponse(description));
-            } else {
+            }
+            else {
                 perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
             }
         }
@@ -323,9 +316,7 @@ public class ConceptController {
             List<String> refSetsNames
     ) throws NotFoundFault {
         GenericTermSearchResponse res = new GenericTermSearchResponse();
-        if(!categoriesNames.contains("Concepto Especial")) {
-            categoriesNames.add("Concepto Especial");
-        }
+
         List<Category> categories = this.categoryController.findCategories(categoriesNames);
         List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
 
@@ -341,29 +332,27 @@ public class ConceptController {
         List<NoValidDescriptionResponse> noValidDescriptions = new ArrayList<>();
         List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
 
-        List<Description> descriptions = this.descriptionManager.searchDescriptionsTruncateMatch(term, categories, refSets);
+        List<Description> descriptions = descriptionManager.searchDescriptionsTruncateMatch(term, categories, refSets);
+
+        if(!categoriesNames.contains("Concepto Especial")) {
+            descriptions.addAll(descriptionManager.searchDescriptionsTruncateMatch(term, Arrays.asList(CategoryFactory.SPECIAL_CONCEPT), null));
+        }
+
         //logger.debug("ws-req-001. descripciones encontradas: " + descriptions);
 
         for (Description description : descriptions) {
-
-            //logger.info("ws-req-001. descripciones encontrada: " + description.fullToString());
-
-            if( NO_VALID_TERMS.contains(description.getTerm()) ) {
-                continue;
-            }
-
-            /* Caso 1: es una descripcion del concepto especial No valido */
-            if ("Concepto no válido".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm())) {
-                NoValidDescription noValidDescription = this.descriptionManager.getNoValidDescriptionByID(description
-                        .getId());
+            if(description.getConceptSMTK().equals(NO_VALID_CONCEPT)) {
+                NoValidDescription noValidDescription = descriptionManager.getNoValidDescriptionByID(description.getId());
                 if (noValidDescription != null) {
                     noValidDescriptions.add(new NoValidDescriptionResponse(noValidDescription));
                 } else {
                     perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
                 }
-            } else if ("Pendientes".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm())) {
+            }
+            if(description.getConceptSMTK().equals(PENDING_CONCEPT)) {
                 pendingDescriptions.add(new PendingDescriptionResponse(description));
-            } else {
+            }
+            else {
                 perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
             }
         }
@@ -561,7 +550,7 @@ public class ConceptController {
             String idEstablecimiento,
             int pageNumber,
             int pageSize
-    ) throws Exception {
+    ) throws NotFoundFault {
 
         /* Logging de invocación del servicio */
         //logger.info("SearchService:findConceptsByCategory(" + categoryName + ", " + idEstablecimiento + ")");
@@ -588,7 +577,12 @@ public class ConceptController {
             ConceptResponse conceptResponse = new ConceptResponse(source);
             conceptResponse.setForREQWS002();
             this.loadAttributes(conceptResponse, source);
-            this.loadSnomedCTRelationships(conceptResponse, source);
+            try {
+                this.loadSnomedCTRelationships(conceptResponse, source);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new NotFoundFault(e.getMessage());
+            }
             conceptResponse.setCategory(null);
             conceptResponses.add(conceptResponse);
         }
@@ -714,7 +708,7 @@ public class ConceptController {
 
         RelationshipDefinition ispRelationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.ISP).get(0);
 
-        for (Relationship relationship : relationshipManager.getRelationshipsBySourceConceptAndTargetType(conceptSMTK, TargetType.HelperTable)) {
+        for (Relationship relationship : relationshipManager.getRelationshipsBySourceConcept(conceptSMTK)) {
             if (relationship.getRelationshipDefinition().isBioequivalente()) {
                 res.getBioequivalentsResponse().add(BioequivalentMapper.map(relationship, relationshipManager.findRelationshipsLike(ispRelationshipDefinition,relationship.getTarget())));
             }
@@ -773,7 +767,7 @@ public class ConceptController {
         return conceptSMTK;
     }
 
-    public ConceptResponse loadAttributes(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) throws Exception {
+    public ConceptResponse loadAttributes(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) {
         //if (conceptResponse.getAttributes() == null || conceptResponse.getAttributes().isEmpty()) {
             if (!source.isRelationshipsLoaded()) {
                 source.setRelationships(relationshipManager.getRelationshipsBySourceConcept(source));

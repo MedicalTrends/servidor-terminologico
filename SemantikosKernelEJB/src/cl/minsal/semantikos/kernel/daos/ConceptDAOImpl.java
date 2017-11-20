@@ -47,14 +47,13 @@ public class ConceptDAOImpl implements ConceptDAO {
      */
     private static final Logger logger = LoggerFactory.getLogger(ConceptDAOImpl.class);
 
-    private final static String PENDING_CONCEPT_FSN_DESCRIPTION = "Pendientes";
+    private final static String PENDING_CONCEPT_PREFERRED_TERM = "Pendientes";
 
-    /**
-     * Determina si el concepto pendiente ha sido recuperado desde el repositorio
-     */
-    private static boolean PENDING_CONCEPT_RETRIEVED = false;
+    private final static String NO_VALID_CONCEPT_PREFERRED_TERM = "Concepto no válido";
 
-    private static ConceptSMTK PENDING_CONCEPT;
+    public static ConceptSMTK NO_VALID_CONCEPT;
+
+    public static ConceptSMTK PENDING_CONCEPT;
 
     @PersistenceContext(unitName = "SEMANTIKOS_PU")
     private EntityManager em;
@@ -448,15 +447,41 @@ public class ConceptDAOImpl implements ConceptDAO {
 
     @Override
     public ConceptSMTK getNoValidConcept() {
-        // TODO: Parametrizar esto
-        return getConceptByID(100); // Desarrollo & Testing
+
+        if(NO_VALID_CONCEPT != null) {
+            return NO_VALID_CONCEPT;
+        }
+
+        /* De otro modo, se recupera desde la base de datos. Primero se busca su categoría por nombre */
+        Category specialConceptCategory;
+        try {
+            //specialConceptCategory = categoryDAO.getCategoryByName("Concepto Especial");
+            specialConceptCategory = CategoryFactory.getInstance().findCategoryByName("Concepto Especial");
+        } catch (IllegalArgumentException iae) {
+            String errorMsg = "No se encontró la categoría Especial!";
+            logger.error(errorMsg, iae);
+            throw new EJBException(errorMsg, iae);
+        }
+
+        /* Luego se recuperan los conceptos de la categoría y se busca por el que tenga el FSN adecuado */
+        List<ConceptSMTK> specialConcepts = findPerfectMatch(NO_VALID_CONCEPT_PREFERRED_TERM, new Long[]{specialConceptCategory.getId()}, null, true);
+        for (ConceptSMTK specialConcept : specialConcepts) {
+            if (specialConcept.getDescriptionFavorite().getTerm().equalsIgnoreCase(NO_VALID_CONCEPT_PREFERRED_TERM)) {
+                NO_VALID_CONCEPT = specialConcept;
+                return specialConcept;
+            }
+        }
+
+        /* Saliendo del for significa que no se creo */
+        String errorMsg = "No se encontró el concepto especial!";
+        logger.error(errorMsg);
+        throw new EJBException(errorMsg);
     }
 
     @Override
     public ConceptSMTK getPendingConcept() {
 
-        /* Se valida si ya fue recuperado */
-        if (PENDING_CONCEPT_RETRIEVED) {
+        if(PENDING_CONCEPT != null) {
             return PENDING_CONCEPT;
         }
 
@@ -472,11 +497,10 @@ public class ConceptDAOImpl implements ConceptDAO {
         }
 
         /* Luego se recuperan los conceptos de la categoría y se busca por el que tenga el FSN adecuado */
-        List<ConceptSMTK> specialConcepts = findPerfectMatch(PENDING_CONCEPT_FSN_DESCRIPTION, new Long[]{specialConceptCategory.getId()}, null, true);
+        List<ConceptSMTK> specialConcepts = findPerfectMatch(PENDING_CONCEPT_PREFERRED_TERM, new Long[]{specialConceptCategory.getId()}, null, true);
         for (ConceptSMTK specialConcept : specialConcepts) {
-            if (specialConcept.getDescriptionFavorite().getTerm().equalsIgnoreCase(PENDING_CONCEPT_FSN_DESCRIPTION)) {
+            if (specialConcept.getDescriptionFavorite().getTerm().equalsIgnoreCase(PENDING_CONCEPT_PREFERRED_TERM)) {
                 PENDING_CONCEPT = specialConcept;
-                PENDING_CONCEPT_RETRIEVED = true;
                 return specialConcept;
             }
         }

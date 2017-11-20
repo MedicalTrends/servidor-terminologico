@@ -27,6 +27,8 @@ public class CategoryFactory implements Serializable {
     /** Mapa de categorías por su nombre. */
     private static ConcurrentHashMap<String, Category> categoriesByName;
 
+    public static Category SPECIAL_CONCEPT;
+
     /**
      * Constructor privado para el Singleton del Factory.
      */
@@ -80,6 +82,9 @@ public class CategoryFactory implements Serializable {
         this.categoriesByName.clear();
 
         for (Category category : categories) {
+            if(category.getName().equalsIgnoreCase("Concepto Especial")) {
+                SPECIAL_CONCEPT = category;
+            }
             this.categoriesById.put(category.getId(), category);
             this.categoriesByName.put(category.getName().toLowerCase(), category);
         }

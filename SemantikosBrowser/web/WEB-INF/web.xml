@@ -75,7 +75,8 @@
 
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/views/login.xhtml</location>
+        <!--location>/views/login.xhtml</location-->
+        <location>/views/home.xhtml</location>
     </error-page>
 
     <error-page>

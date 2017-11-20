@@ -298,7 +298,8 @@ public class BrowserBean implements Serializable {
         isFilterChanged = filterChanged;
     }
 
-    public List<Description> getOtherDescriptions(ConceptSMTK concept){
+    public List<Description> getOtherDescriptions(ConceptSMTK concept) {
+
         if(concept == null)
             return null;
 

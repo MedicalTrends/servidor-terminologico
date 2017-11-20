@@ -5,14 +5,14 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <servlet>
+    <!--servlet>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
-    </servlet>
+    </servlet-->
 
-    <servlet-mapping>
+    <!--servlet-mapping>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <url-pattern>/rest/*</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping-->
 
     <!--filter>
         <filter-name>javamelody</filter-name>

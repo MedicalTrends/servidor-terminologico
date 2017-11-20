@@ -35,13 +35,16 @@ public class BasicTypeWSDAOImpl implements BasicTypeWSDAO {
                 value = String.valueOf(basicTypeValueDTO.getValue());
                 break;
             case "float":
-                value = Float.valueOf(basicTypeValueDTO.getValue());
+                value = Float.valueOf(basicTypeValueDTO.getValue().replace(",","."));
                 break;
             case "int":
                 value = Integer.valueOf(basicTypeValueDTO.getValue());
                 break;
             case "date":
                 value = Timestamp.valueOf(basicTypeValueDTO.getValue());
+                break;
+            case "boolean":
+                value = Boolean.valueOf(basicTypeValueDTO.getValue());
                 break;
         }
 

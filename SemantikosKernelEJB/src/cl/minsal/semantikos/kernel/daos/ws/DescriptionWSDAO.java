@@ -28,6 +28,8 @@ public interface DescriptionWSDAO {
      */
     List<Description> searchDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets, int page, int pageSize);
 
+    List<Description> searchDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets, int page, int pageSize);
+
     List<Description> createDescriptionsFromDTO(List<DescriptionDTO> descriptionsDTO, ConceptSMTK conceptSMTK);
 
 }

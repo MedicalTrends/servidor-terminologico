@@ -16,7 +16,7 @@ public class CrossmapSetMemberDTO implements TargetDTO, Serializable {
     private long id;
 
     /** Terminología a la que pertenece */
-    private CrossmapSet crossmapSet;
+    private long crossmapSetId;
 
     private String code;
 
@@ -34,12 +34,12 @@ public class CrossmapSetMemberDTO implements TargetDTO, Serializable {
         this.id = id;
     }
 
-    public CrossmapSet getCrossmapSet() {
-        return crossmapSet;
+    public long getCrossmapSetId() {
+        return crossmapSetId;
     }
 
-    public void setCrossmapSet(CrossmapSet crossmapSet) {
-        this.crossmapSet = crossmapSet;
+    public void setCrossmapSetId(long crossmapSetId) {
+        this.crossmapSetId = crossmapSetId;
     }
 
     public String getCode() {

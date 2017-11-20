@@ -20,14 +20,12 @@ import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ws.minsal.semantikos.ws.utils.UtilsWS;
+import cl.minsal.semantikos.ws.utils.UtilsWS;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 
 
-import javax.ejb.Timeout;
-import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.jws.WebMethod;
@@ -39,15 +37,8 @@ import javax.xml.bind.annotation.*;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
-
-
-import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
-import static java.lang.System.currentTimeMillis;
-import static java.lang.System.nanoTime;
 
 
 /**
@@ -104,7 +95,7 @@ public class SearchService {
         catch (Exception e) {
             logger.error("El web service ha arrojado el siguiente error: "+e.getMessage(),e);
             throw new NotFoundFault(e.getMessage());
-            //return new NotFoundFault(e.getMessage());
+            //return ctx.proceed();
             //webMethodStatus = "1";
             //webMethodMessage = e.getMessage();
         }
@@ -128,7 +119,7 @@ public class SearchService {
     ) throws IllegalInputFault, NotFoundFault, ExecutionException, InterruptedException {
 
         /* Se hace una validación de los parámetros */
-        validateAtLeastOneCategoryOrOneRefSet(request);
+        UtilsWS.validateAtLeastOneCategoryOrOneRefSet(request);
 
         logger.debug("ws-req-001: " + request.getTerm() + ", " + request.getCategoryNames() + " " + request
                 .getRefSetNames());
@@ -165,7 +156,7 @@ public class SearchService {
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionConceptosPorCategoriaPaginados")
                     CategoryRequestPaginated request
-    ) throws Exception {
+    ) throws NotFoundFault {
 
         return this.conceptController.findConceptsByCategoryPaginated(request.getCategoryName(), request.getIdStablishment(),
                                                                           request.getPageNumber(), request.getPageSize());
@@ -202,7 +193,7 @@ public class SearchService {
     ) throws IllegalInputFault, NotFoundFault {
 
         /* Se hace una validación de los parámetros */
-        validateAtLeastOneCategoryOrOneRefSet(request);
+        UtilsWS.validateAtLeastOneCategoryOrOneRefSet(request);
 
         return this.conceptController.searchTermGeneric2(request.getTerm(), request.getCategoryNames(), request
                 .getRefSetNames());
@@ -238,12 +229,9 @@ public class SearchService {
             @WebParam(name = "peticionSugerenciasDeDescripciones")
                     DescriptionsSuggestionsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())) {
-            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría");
-        }
-        if (request.getTerm() == null || "".equals(request.getTerm())) {
-            throw new IllegalInputFault("Debe ingresar un Termino a buscar");
-        }
+
+        UtilsWS.validateAtLeastOneCategory(request);
+
         if ( request.getTerm().length() < 3 ) {
             throw new IllegalInputFault("El termino a buscar debe tener minimo 3 caracteres de largo");
         }
@@ -263,7 +251,7 @@ public class SearchService {
     private void obtenerTerminosPediblesParamValidation(RequestableConceptsRequest request) throws IllegalInputFault {
 
         /* Se valida que haya al menos 1 categoría o 1 refset */
-        validateAtLeastOneCategory(request);
+        UtilsWS.validateAtLeastOneCategory(request);
 
         /* Luego es necesario validar que si hay categorías especificadas, se limiten a "interconsulta",
         "indicaciones generales" e "indicaciones de laboratorio" */
@@ -282,32 +270,6 @@ public class SearchService {
                 }
             }
         }
-    }
-
-    /**
-     * Este método es responsable de validar que una petición posea al menos una categoría o un refset.
-     *
-     * @param request La petición enviada.
-     * @throws cl.minsal.semantikos.modelws.fault.IllegalInputFault Se arroja si se viola la condición.
-     */
-    private void validateAtLeastOneCategory(RequestableConceptsRequest request) throws IllegalInputFault {
-        if (isEmpty(request.getCategoryNames())) {
-            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría.");
-        }
-    }
-
-    private void validateAtLeastOneCategoryOrOneRefSet(SimpleSearchTermRequest request) throws IllegalInputFault {
-        if (isEmpty(request.getCategoryNames()) /*&& isEmpty(request.getRefSetNames())*/) {
-            //throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet.");
-            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría.");
-        }
-        if (request.getTerm() == null || request.getTerm().trim().isEmpty()) {
-            throw new IllegalInputFault("Debe ingresar un Termino a buscar");
-        }
-    }
-
-    private boolean isEmpty(List<String> list) {
-        return list.isEmpty() || (list.size() == 1 && list.contains(EMPTY_STRING));
     }
 
 

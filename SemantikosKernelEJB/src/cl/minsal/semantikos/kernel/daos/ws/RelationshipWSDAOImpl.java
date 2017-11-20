@@ -98,6 +98,97 @@ public class RelationshipWSDAOImpl implements RelationshipWSDAO {
         return relationships;
     }
 
+    @Override
+    @Asynchronous
+    public Future<List<Relationship>> getRelationshipsBySourceConceptAsync(ConceptSMTK conceptSMTK) {
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_ws.get_relationships_by_source_concept_json(?); end;";
+
+        List<Relationship> relationships = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSMTK.getId());
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while(rs.next()) {
+                relationships.add(createRelationshipFromResultSet(rs, conceptSMTK));
+            }
+
+            rs.close();
+            call.close();
+            connection.close();
+        } catch (SQLException e) {
+            throw new EJBException(e);
+        } catch (IOException e) {
+            throw new EJBException(e);
+        }
+
+        return new AsyncResult<>(relationships);
+    }
+
+    @Override
+    public List<Relationship> findRelationshipsLike(RelationshipDefinition relationshipDefinition, Target target) {
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_ws.find_relationships_like_json(?,?,?); end;";
+
+        List<Relationship> relationships = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+
+            call.setLong(2, relationshipDefinition.getId());
+
+            if(relationshipDefinition.getTargetDefinition().isSMTKType()){
+                call.setLong(3, relationshipDefinition.getTargetDefinition().getId());
+                call.setString(4, String.valueOf(target.getId()));
+            }
+
+            if(relationshipDefinition.getTargetDefinition().isHelperTable()){
+                call.setLong(3, relationshipDefinition.getTargetDefinition().getId());
+                HelperTableRow helperTableRow = (HelperTableRow) target;
+                call.setString(4, String.valueOf(helperTableRow.getId()));
+            }
+
+            if(relationshipDefinition.getTargetDefinition().isBasicType()){
+                call.setLong(3, relationshipDefinition.getId());
+                BasicTypeValue basicTypeValue = (BasicTypeValue) target;
+                if(basicTypeValue.isBoolean()) {
+                    call.setString(4, (Boolean)basicTypeValue.getValue()?"1":"0");
+                }
+                else {
+                    call.setString(4, String.valueOf(basicTypeValue.getValue()));
+                }
+            }
+
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while(rs.next()) {
+                relationships.add(createRelationshipFromResultSet(rs, null));
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            throw new EJBException(e);
+        } catch (IOException e) {
+            throw new EJBException(e);
+        }
+
+        return relationships;
+    }
+
 
     public Relationship createRelationshipFromResultSet(ResultSet rs, ConceptSMTK conceptSMTK) throws IOException {
 
@@ -113,6 +204,10 @@ public class RelationshipWSDAOImpl implements RelationshipWSDAO {
             Timestamp validityUntil = relationshipDTO.getValidityUntil();
             TargetDTO targetDTO = relationshipDTO.getTargetDTO();
             Timestamp creationDate = relationshipDTO.getCreationDate();
+
+            if(conceptSMTK == null) {
+                conceptSMTK = conceptDAO.getConceptByID(idConcept);
+            }
 
             /* Definición de la relación y sus atributos */
             RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsById(idRelationshipDefinition).get(0);
@@ -168,7 +263,7 @@ public class RelationshipWSDAOImpl implements RelationshipWSDAO {
 
         /* Y sino, puede ser crossmap */
         if (relationshipDefinition.getTargetDefinition().isCrossMapType()) {
-            target = crossmapDAO.createCrossmapSetMemberFromDTO((CrossmapSetMemberDTO) targetDTO, (CrossmapSet)relationshipDefinition.getTargetDefinition());
+            target = crossmapDAO.createCrossmapSetMemberFromDTO((CrossmapSetMemberDTO) targetDTO);
         }
 
         if(target == null) {
@@ -242,7 +337,7 @@ public class RelationshipWSDAOImpl implements RelationshipWSDAO {
 
         /* Y sino, puede ser crossmap */
         if (relationshipAttributeDefinition.getTargetDefinition().isCrossMapType()) {
-            target = crossmapDAO.createCrossmapSetMemberFromDTO((CrossmapSetMemberDTO) targetDTO, (CrossmapSet)relationshipAttributeDefinition.getTargetDefinition());
+            target = crossmapDAO.createCrossmapSetMemberFromDTO((CrossmapSetMemberDTO) targetDTO);
         }
 
         if(target == null) {

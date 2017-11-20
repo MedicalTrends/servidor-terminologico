@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class ConceptMapper {
 
-    public static List<AttributeResponse> getAttributes(ConceptSMTK conceptSMTK) throws Exception {
+    public static List<AttributeResponse> getAttributes(ConceptSMTK conceptSMTK) {
         if ( conceptSMTK != null ) {
             List<AttributeResponse> attributeResponses = new ArrayList<>();
 
@@ -34,7 +34,7 @@ public class ConceptMapper {
         return null;
     }
 
-    public static ConceptResponse appendAttributes(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) throws Exception {
+    public static ConceptResponse appendAttributes(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
         if ( conceptResponse != null ) {
             conceptResponse.setAttributes(getAttributes(conceptSMTK));
         }

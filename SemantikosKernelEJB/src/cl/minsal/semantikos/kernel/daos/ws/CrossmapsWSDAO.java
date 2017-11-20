@@ -19,5 +19,5 @@ import java.util.List;
 @Local
 public interface CrossmapsWSDAO {
 
-    public CrossmapSetMember createCrossmapSetMemberFromDTO(CrossmapSetMemberDTO crossmapSetMemberDTO, CrossmapSet crossmapSet);
+    public CrossmapSetMember createCrossmapSetMemberFromDTO(CrossmapSetMemberDTO crossmapSetMemberDTO);
 }

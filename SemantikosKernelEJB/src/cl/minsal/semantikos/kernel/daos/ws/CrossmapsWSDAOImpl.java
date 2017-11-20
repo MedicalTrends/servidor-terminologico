@@ -43,11 +43,13 @@ public class CrossmapsWSDAOImpl implements CrossmapsWSDAO {
      *
      * @return Un Crossmap Directo creado a partir del result set.
      */
-    public CrossmapSetMember createCrossmapSetMemberFromDTO(CrossmapSetMemberDTO crossmapSetMemberDTO, CrossmapSet crossmapSet) {
+    public CrossmapSetMember createCrossmapSetMemberFromDTO(CrossmapSetMemberDTO crossmapSetMemberDTO) {
         // id bigint, id_concept bigint, id_crossmapset bigint, id_user bigint, id_validity_until timestamp
         long id = crossmapSetMemberDTO.getId();
         String code = crossmapSetMemberDTO.getCode();
         String gloss = crossmapSetMemberDTO.getGloss();
+
+        CrossmapSet crossmapSet = CrossmapSetFactory.getInstance().findCrossmapSetsById(crossmapSetMemberDTO.getCrossmapSetId());
 
         return new CrossmapSetMember(id, id, crossmapSet, code, gloss);
     }
