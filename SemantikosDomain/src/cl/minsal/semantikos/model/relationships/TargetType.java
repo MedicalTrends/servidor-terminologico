@@ -10,11 +10,12 @@ import java.util.List;
  */
 public enum TargetType implements Serializable {
 
-    BasicType(1, "SCT", "Snomed CT"),
-    SMTK(2, "SCT", "Snomed CT"),
+    BasicType(1, "Basic Type", "Basic Type"),
+    SMTK(2, "SMTK", "SMTK"),
     SnomedCT(3, "SCT", "Snomed CT"),
-    HelperTable(4, "Helper Table", ""),
-    CrossMap(5, "CrossMap", "Relaciones a terminologías externas");
+    HelperTable(4, "Helper Table", "Helper Table"),
+    CrossMap(5, "CrossMap", "Relaciones a terminologías externas"),
+    GMDN(6, "Gmdn", "Gmdn");
 
 
     TargetType(long idTargetType, String nombre, String description) {

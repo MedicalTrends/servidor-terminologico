@@ -170,4 +170,9 @@ public class BasicTypeDefinition<T extends Comparable> extends PersistentEntity 
     public boolean isCrossMapType() {
         return false;
     }
+
+    @Override
+    public boolean isGMDNType() {
+        return false;
+    }
 }

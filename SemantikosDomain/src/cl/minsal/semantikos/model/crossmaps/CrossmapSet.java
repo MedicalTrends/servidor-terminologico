@@ -95,4 +95,9 @@ public class CrossmapSet extends PersistentEntity implements TargetDefinition, S
     public boolean isCrossMapType() {
         return true;
     }
+
+    @Override
+    public boolean isGMDNType() {
+        return false;
+    }
 }

@@ -114,6 +114,11 @@ public class HelperTable implements TargetDefinition, Serializable {
         return false;
     }
 
+    @Override
+    public boolean isGMDNType() {
+        return false;
+    }
+
     public List<HelperTableRow> getRows() {
         return rows;
     }

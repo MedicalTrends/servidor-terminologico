@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model.snomedct;
+package cl.minsal.semantikos.model.gmdn;
 
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
@@ -6,16 +6,16 @@ import cl.minsal.semantikos.model.relationships.TargetDefinition;
 import java.io.Serializable;
 
 /**
- * Esta clase, representa la terminología internacional estándar SNOMED CT.
+ * Esta clase, representa la terminología internacional estándar GMDN.
  *
  * @author Andrés Farías
  */
-public class SnomedCT extends PersistentEntity implements TargetDefinition, Serializable {
+public class Gmdn extends PersistentEntity implements TargetDefinition, Serializable {
 
     /** Descripción del concepto */
     private String version;
 
-    public SnomedCT(String version) {
+    public Gmdn(String version) {
         super();
     }
 
@@ -44,7 +44,7 @@ public class SnomedCT extends PersistentEntity implements TargetDefinition, Seri
 
     @Override
     public boolean isSnomedCTType() {
-        return true;
+        return false;
     }
 
     @Override
@@ -54,6 +54,6 @@ public class SnomedCT extends PersistentEntity implements TargetDefinition, Seri
 
     @Override
     public boolean isGMDNType() {
-        return false;
+        return true;
     }
 }

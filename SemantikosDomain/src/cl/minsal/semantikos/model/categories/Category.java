@@ -170,4 +170,9 @@ public class Category extends PersistentEntity implements TargetDefinition, Audi
         return false;
     }
 
+    @Override
+    public boolean isGMDNType() {
+        return false;
+    }
+
 }

@@ -63,4 +63,11 @@ public interface TargetDefinition extends IPersistentEntity {
      */
     public boolean isCrossMapType();
 
+    /**
+     * Este método es responsable de determinar si el target type es de tipo GMDN o no.
+     *
+     * @return <code>true</code> si es de tipo GMDN y <code>false</code> si no.
+     */
+    public boolean isGMDNType();
+
 }
