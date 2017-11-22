@@ -10,7 +10,7 @@ import cl.minsal.semantikos.model.relationships.TargetType;
  */
 public class DeviceType extends PersistentEntity implements Target {
 
-    private String brand;
+    private String make;
 
     private String model;
 
@@ -18,33 +18,33 @@ public class DeviceType extends PersistentEntity implements Target {
 
     private GenericDeviceGroup genericDeviceGroup;
 
-    public DeviceType(String brand, String model, String tradeName) {
-        this.brand = brand;
+    public DeviceType(String make, String model, String tradeName) {
+        this.make = make;
         this.model = model;
         this.tradeName = tradeName;
     }
 
-    public DeviceType(String brand, String model, String tradeName, GenericDeviceGroup genericDeviceGroup) {
-        this.brand = brand;
+    public DeviceType(String make, String model, String tradeName, GenericDeviceGroup genericDeviceGroup) {
+        this.make = make;
         this.model = model;
         this.tradeName = tradeName;
         this.genericDeviceGroup = genericDeviceGroup;
     }
 
-    public DeviceType(long id, String brand, String model, String tradeName, GenericDeviceGroup genericDeviceGroup) {
+    public DeviceType(long id, String make, String model, String tradeName, GenericDeviceGroup genericDeviceGroup) {
         super(id);
-        this.brand = brand;
+        this.make = make;
         this.model = model;
         this.tradeName = tradeName;
         this.genericDeviceGroup = genericDeviceGroup;
     }
 
-    public String getBrand() {
-        return brand;
+    public String getMake() {
+        return make;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public void setMake(String make) {
+        this.make = make;
     }
 
     public String getModel() {
@@ -83,11 +83,11 @@ public class DeviceType extends PersistentEntity implements Target {
 
     @Override
     public String getRepresentation() {
-        return this.getGenericDeviceGroup().getTermName()+" - Marca: "+this.getBrand() +" Modelo: "+this.getModel();
+        return this.getGenericDeviceGroup().getTermName()+" - Marca: "+this.getMake() +" Modelo: "+this.getModel();
     }
 
     @Override
     public Target copy() {
-        return new DeviceType(this.getBrand(), this.getModel(), this.getTradeName(), this.genericDeviceGroup);
+        return new DeviceType(this.getMake(), this.getModel(), this.getTradeName(), this.genericDeviceGroup);
     }
 }

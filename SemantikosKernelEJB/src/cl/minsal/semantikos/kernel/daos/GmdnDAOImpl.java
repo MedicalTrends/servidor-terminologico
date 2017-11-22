@@ -259,8 +259,39 @@ public class GmdnDAOImpl implements GmdnDAO {
     }
 
     @Override
+    public List<DeviceType> findDeviceTypeByPattern(String pattern) {
+
+        List<DeviceType> deviceTypes = new ArrayList<>();
+
+        String sql = "begin ? := stk.stk_pck_gmdn.find_device_type_by_pattern(?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, pattern);
+            call.execute();
+
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                deviceTypes.add(createDeviceTypeFromResultSet(rs));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            String s = "Error al crear un Grupo de Dispositivo Genérico en la base de datos";
+            logger.error(s);
+            throw new EJBException(s, e);
+        }
+
+        return deviceTypes;
+    }
+
+    @Override
     public DeviceType getDeviceTypeById(long id) {
-        CollectiveTerm collectiveTerm;
+
+        DeviceType deviceType;
 
         String sql = "begin ? := stk.stk_pck_gmdn.get_device_type_by_id(?); end;";
 
@@ -275,18 +306,18 @@ public class GmdnDAOImpl implements GmdnDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-                collectiveTerm = createDeviceTypeFromResultSet(rs);
+                deviceType = createDeviceTypeFromResultSet(rs);
             } else {
-                throw new EJBException("Error al intentar obtener un Tipo de Dispositivo de code= " + code);
+                throw new EJBException("Error al intentar obtener un Tipo de Dispositivo de id = " + id);
             }
             rs.close();
         } catch (SQLException e) {
-            String s = "Error al crear un Grupo de Dispositivo Genérico en la base de datos";
+            String s = "Error al crear un Tipo de Dispositivo en la base de datos";
             logger.error(s);
             throw new EJBException(s, e);
         }
 
-        return collectiveTerm;
+        return deviceType;
     }
 
     /**
@@ -313,11 +344,11 @@ public class GmdnDAOImpl implements GmdnDAO {
 
         genericDeviceGroup.setDeviceCategories(deviceCategories);
 
-        List<CollectiveTerm> collectiveTerms = getCollectiveTermsByGenericDeviceGroup(genericDeviceGroup);
+        //List<CollectiveTerm> collectiveTerms = getCollectiveTermsByGenericDeviceGroup(genericDeviceGroup);
 
-        collectiveTerms = getParentLines(collectiveTerms);
+        //collectiveTerms = getParentLines(collectiveTerms);
 
-        genericDeviceGroup.setCollectiveTerms(collectiveTerms);
+        //genericDeviceGroup.setCollectiveTerms(collectiveTerms);
 
         return genericDeviceGroup;
     }
@@ -353,5 +384,29 @@ public class GmdnDAOImpl implements GmdnDAO {
         String description = rs.getString("description");
 
         return new DeviceCategory(code, description);
+    }
+
+    /**
+     * Este método es responsable de crear un objeto <code>CrossmapSetMember</code> a partir de un ResultSet.
+     *
+     * @param rs El ResultSet a partir del cual se crea el crossmap.
+     *
+     * @return Un Crossmap Directo creado a partir del result set.
+     */
+    public DeviceType createDeviceTypeFromResultSet(ResultSet rs) throws SQLException {
+        // id bigint, id_concept bigint, id_crossmapset bigint, id_user bigint, id_validity_until timestamp
+        long id = rs.getLong("id");
+
+        String make = rs.getString("make");
+
+        String model = rs.getString("model");
+
+        String tradeName = rs.getString("tradeName");
+
+        long codeGenericDeviceGroup = rs.getLong("code_generic_device_group");
+
+        GenericDeviceGroup genericDeviceGroup = getGenericDeviceGroupByCode(codeGenericDeviceGroup);
+
+        return new DeviceType(id, make, model, tradeName, genericDeviceGroup);
     }
 }

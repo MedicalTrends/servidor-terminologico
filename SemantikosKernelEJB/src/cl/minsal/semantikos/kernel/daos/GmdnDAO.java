@@ -87,6 +87,7 @@ public interface GmdnDAO {
      */
     List<CollectiveTerm> getParentLines(List<CollectiveTerm> collectiveTerms);
 
-
     DeviceType getDeviceTypeById(long id);
+
+    List<DeviceType> findDeviceTypeByPattern(String pattern);
 }

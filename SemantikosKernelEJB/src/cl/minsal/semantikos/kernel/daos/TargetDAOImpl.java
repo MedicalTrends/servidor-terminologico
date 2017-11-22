@@ -57,6 +57,9 @@ public class TargetDAOImpl implements TargetDAO {
     @EJB
     CategoryDAO categoryDAO;
 
+    @EJB
+    GmdnDAO gmdnDAO;
+
     @Resource(lookup = "java:jboss/OracleDS")
     private DataSource dataSource;
 
@@ -482,6 +485,7 @@ public class TargetDAOImpl implements TargetDAO {
             long idExtern = rs.getLong("id_extern");
             long idConceptSct = rs.getLong("id_concept_sct");
             long idConceptStk = rs.getLong("id_concept_stk");
+            long idDeviceType = rs.getLong("id_device_type");
 
             /* Se evalúa caso a caso. Helper Tables: */
             if (idHelperTableRecord > 0) {
@@ -492,6 +496,8 @@ public class TargetDAOImpl implements TargetDAO {
                 target = snomedCTDAO.getConceptByID(idConceptSct);
             } else if (idConceptStk > 0) {
                 target = conceptDAO.getConceptByID(idConceptStk);
+            } else if (idDeviceType > 0) {
+                target = gmdnDAO.getDeviceTypeById(idDeviceType);
             }
             /* Ahora los tipos básicos */
             else {

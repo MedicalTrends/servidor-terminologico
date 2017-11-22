@@ -152,6 +152,35 @@
                                         </p:outputPanel>
                                     </p:tab>
 
+                                    <!--Relaciones GMDN -->
+                                    <p:tab title="GMDN">
+                                        <p:outputPanel id="atributoGMDN"
+                                                       widgetVar="panelAtributoGMDN"
+                                                       styleClass="attributes"
+                                                       rendered="#{conceptBean.category.hasRelationshipDefinitions}">
+
+                                            <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
+                                                         var="relationshipDefinition">
+
+                                                <h:column>
+
+                                                    <p:outputPanel
+                                                            id="panelRelationshipDefinitonGMDN"
+                                                            styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}">
+
+                                                        <smtk:sctType
+                                                                targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                                                relationshipDefinition="#{relationshipDefinition}"
+                                                                concept="#{conceptBean.concept}"
+                                                                rendered="#{relationshipDefinition.targetDefinition.snomedCTType}" />
+
+                                                    </p:outputPanel>
+
+                                                </h:column>
+                                            </h:dataTable>
+                                        </p:outputPanel>
+                                    </p:tab>
+
                                     <!--Crossmaps -->
                                     <p:tab title="Crossmaps" rendered="#{ conceptBean.concept.persistent and conceptBean.concept.modeled }">
                                         <p:panel id="indirectCrossmap"

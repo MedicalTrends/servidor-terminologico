@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
+import cl.minsal.semantikos.model.gmdn.Gmdn;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
 import cl.minsal.semantikos.model.snomedct.SnomedCT;
@@ -53,6 +54,7 @@ public class TargetDefinitionDAOImpl implements TargetDefinitionDAO {
     private static final int SCT_TYPE_ID = 3;
     private static final int HELPER_TABLE_TYPE_ID = 4;
     private static final int CROSSMAP_TYPE_ID = 5;
+    private static final int GMDN_TYPE_ID = 6;
 
     @Override
     public TargetDefinition getTargetDefinitionById(long idTargetDefinition) {
@@ -109,6 +111,9 @@ public class TargetDefinitionDAOImpl implements TargetDefinitionDAO {
 
                 case CROSSMAP_TYPE_ID:
                     return crossmapsDAO.getCrossmapSetByID(rs.getLong("id_extern_table_name"));
+
+                case GMDN_TYPE_ID:
+                    return new Gmdn("1.0");
 
                 default:
                     throw new EJBException("TIPO DE DEFINICION INCORRECTO. ID Target Type=" + rs.getLong("id_target_type"));

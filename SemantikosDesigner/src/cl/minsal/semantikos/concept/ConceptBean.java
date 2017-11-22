@@ -5,6 +5,7 @@ import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
 import cl.minsal.semantikos.description.AutogenerateBeans;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.messages.MessageBean;
+import cl.minsal.semantikos.model.gmdn.DeviceType;
 import cl.minsal.semantikos.relationship.RelationshipBeans;
 import cl.minsal.semantikos.session.ProfilePermissionsBeans;
 import cl.minsal.semantikos.snomed.SCTTypeBean;
@@ -79,6 +80,9 @@ public class ConceptBean implements Serializable {
 
     //@EJB
     HelperTablesManager helperTablesManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
+
+
+    GmdnManager gmdnManager = (GmdnManager) RemoteEJBClientFactory.getInstance().getManager(GmdnManager.class);
 
     //@EJB
     TagSMTKManager tagSMTKManager = (TagSMTKManager) RemoteEJBClientFactory.getInstance().getManager(TagSMTKManager.class);
@@ -229,6 +233,10 @@ public class ConceptBean implements Serializable {
     private ConceptSCT conceptSCTSelected;
 
     private CrossmapSetMember crossmapSetMemberSelected;
+
+    private DeviceType deviceTypeSelected;
+
+    ////////////////////////////////////////////////////////
 
     private Map<Long, ConceptSMTK> targetSelected;
 
@@ -591,7 +599,8 @@ public class ConceptBean implements Serializable {
         conceptSelected = null;
         conceptSCTSelected = null;
         crossmapSetMemberSelected = null;
-        conceptSMTKAttributeSelected=null;
+        conceptSMTKAttributeSelected = null;
+        deviceTypeSelected = null;
     }
 
     /**
@@ -642,6 +651,11 @@ public class ConceptBean implements Serializable {
             conceptSelected = null;
             return;
         }
+
+        if(relationshipDefinition.getTargetDefinition().isGMDNType()) {
+            gmdnManager.loadCollectiveTerms(((DeviceType) target).getGenericDeviceGroup());
+        }
+
         // Se busca la relación
         for (Relationship relationshipWeb : concept.getRelationshipsWeb()) {
             if (relationshipWeb.getRelationshipDefinition().equals(relationshipDefinition)) {
@@ -1258,6 +1272,14 @@ public class ConceptBean implements Serializable {
         this.helperTablesManager = helperTableManager;
     }
 
+    public GmdnManager getGmdnManager() {
+        return gmdnManager;
+    }
+
+    public void setGmdnManager(GmdnManager gmdnManager) {
+        this.gmdnManager = gmdnManager;
+    }
+
     public BasicTypeValue getBasicTypeValue() {
         return basicTypeValue;
     }
@@ -1456,6 +1478,14 @@ public class ConceptBean implements Serializable {
 
     public void setCrossmapSetMemberSelected(CrossmapSetMember crossmapSetMemberSelected) {
         this.crossmapSetMemberSelected = crossmapSetMemberSelected;
+    }
+
+    public DeviceType getDeviceTypeSelected() {
+        return deviceTypeSelected;
+    }
+
+    public void setDeviceTypeSelected(DeviceType deviceTypeSelected) {
+        this.deviceTypeSelected = deviceTypeSelected;
     }
 
     /**
