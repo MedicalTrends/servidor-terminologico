@@ -108,8 +108,6 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
         return newRow;
     }
 
-
-
     private HelperTableData createCell(HelperTableColumn column, HelperTableRow row) {
         HelperTableData data = new HelperTableData();
         data.setColumn(column);
@@ -197,6 +195,11 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
         new HelperTableSearchBRImpl().applyPostActions(foundRows);
 
         return foundRows;
+    }
+
+    @Override
+    public List<HelperTableRow> getRelatedRows(HelperTableRow parentRow, HelperTableColumn helperTableColumn) {
+        return dao.getRelatedRows(parentRow, helperTableColumn);
     }
 
     @Override

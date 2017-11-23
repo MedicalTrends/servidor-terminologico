@@ -286,6 +286,11 @@ public class HelperTableBean implements Serializable {
         return someRows;
     }
 
+    public List<HelperTableRow> getRelatedRows(HelperTableRow helperTableRow, HelperTableColumn helperTableColumn) {
+
+        return manager.getRelatedRows(helperTableRow, helperTableColumn);
+    }
+
     public List<HelperTableRow> getValidTableRowsRD( HelperTable table, long idRelationshipDefinition) {
         List<HelperTableRow> helperTableRows = getReferencedTableRows(table.getId());
         List<HelperTableRow> helperTableRowsFiltered;

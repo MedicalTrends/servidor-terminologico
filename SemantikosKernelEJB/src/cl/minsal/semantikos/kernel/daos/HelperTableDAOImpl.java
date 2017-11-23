@@ -686,6 +686,38 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
     }
 
     @Override
+    public List<HelperTableRow> getRelatedRows(HelperTableRow helperTableRow, HelperTableColumn helperTableColumn) {
+
+        String sql = "begin ? := stk.stk_pck_helper_table.get_related_rows(?,?); end;";
+
+        List<HelperTableRow> helperTableRows = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2,helperTableRow.getId());
+            call.setLong(3,helperTableColumn.getId());
+
+            /* Se prepara y realiza la consulta */
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while(rs.next()) {
+                helperTableRows.add(createHelperTableRowFromResultSet(rs));
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Hubo un error al acceder a la base de datos.", e);
+            throw new EJBException(e);
+        }
+
+        return helperTableRows;
+    }
+
+    @Override
     public List<ConceptSMTK> isRowUsed(HelperTableRow row) {
 
         //ConnectionBD connectionBD = new ConnectionBD();

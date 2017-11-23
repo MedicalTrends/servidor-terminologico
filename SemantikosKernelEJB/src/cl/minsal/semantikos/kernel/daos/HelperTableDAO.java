@@ -41,6 +41,8 @@ public interface HelperTableDAO {
 
     List<HelperTableRow> searchRecords(HelperTable helperTable, String pattern, String columnName);
 
+    List<HelperTableRow> getRelatedRows(HelperTableRow parentRow, HelperTableColumn helperTableColumn);
+
     List<HelperTableRow> getValidTableRows(long id);
 
     List<ConceptSMTK> isRowUsed(HelperTableRow row);
