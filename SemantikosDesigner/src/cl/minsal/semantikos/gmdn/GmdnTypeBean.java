@@ -4,14 +4,18 @@ import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
 import cl.minsal.semantikos.kernel.components.GmdnManager;
 import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.gmdn.CollectiveTerm;
 import cl.minsal.semantikos.model.gmdn.DeviceType;
+import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.snomedct.DescriptionSCT;
 import cl.minsal.semantikos.model.snomedct.DescriptionSCTType;
 import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Ajax;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.TreeNode;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -37,8 +41,11 @@ public class GmdnTypeBean implements Serializable {
 
     private String pattern;
 
+    private transient TreeNode root;
+
     /**
      * Constructor por defecto para la inicialización de componentes.
+
      */
     public GmdnTypeBean() {
 
@@ -73,7 +80,40 @@ public class GmdnTypeBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        root = new DefaultTreeNode(new CollectiveTerm(0,"root", "root element"), null);
+    }
 
+    public TreeNode getRoot() {
+        return root;
+    }
+
+
+    public TreeNode mapCollectiveTerms(List<CollectiveTerm> collectiveTerms, TreeNode treeNode, boolean expanded) {
+
+        //CollectiveTerm collectiveTermData = (CollectiveTerm) treeNode.getData();
+
+        /*
+        if(conceptData.equals(conceptSelected)) {
+            expanded = false;
+        }
+        */
+
+        treeNode.setExpanded(expanded);
+
+        for (CollectiveTerm collectiveTerm : collectiveTerms) {
+
+            TreeNode childTreeNode = new DefaultTreeNode(collectiveTerm, treeNode);
+
+            List<CollectiveTerm> children = new ArrayList<>();
+
+            for (CollectiveTerm child : collectiveTerm.getChildren()) {
+                children.add(child);
+            }
+
+            mapCollectiveTerms(children, childTreeNode, expanded);
+        }
+
+        return root;
     }
 
     public String getPattern() {

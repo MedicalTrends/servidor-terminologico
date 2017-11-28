@@ -210,7 +210,7 @@ public class Relationship extends PersistentEntity implements AuditableEntity, S
     public List<RelationshipAttribute> getAttributesByAttributeDefinition(RelationshipAttributeDefinition relationshipAttributeDefinition) {
         List<RelationshipAttribute> someAttributes = new ArrayList<>();
         for (RelationshipAttribute attribute : relationshipAttributes) {
-            if (attribute.getRelationAttributeDefinition().equals(relationshipAttributeDefinition)) {
+            if (attribute.getRelationAttributeDefinition().equals(relationshipAttributeDefinition) && attribute.getTarget() != null) {
                 someAttributes.add(attribute);
             }
         }

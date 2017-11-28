@@ -38,8 +38,6 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
     @Override
     public List<HelperTable> getAllTables() {
 
-        //ConnectionBD connectionBD = new ConnectionBD();
-
         String sql = "begin ? := stk.stk_pck_helper_table.get_helper_tables; end;";
 
         List<HelperTable> helperTables = new ArrayList<>();
@@ -715,6 +713,38 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         }
 
         return helperTableRows;
+    }
+
+    @Override
+    public List<HelperTableColumn> getRelatedColumns(HelperTable helperTable) {
+
+        String sql = "begin ? := stk.stk_pck_helper_table.get_related_columns(?); end;";
+
+        List<HelperTableColumn> helperTableColumns = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2,helperTable.getId());
+
+            /* Se prepara y realiza la consulta */
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while(rs.next()) {
+                //helperTableColumns.add(createHelperTableColumnFromResultSet(rs));
+                helperTableColumns.add(HelperTableColumnFactory.getInstance().findColumnById(rs.getLong("id")));
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Hubo un error al acceder a la base de datos.", e);
+            throw new EJBException(e);
+        }
+
+        return helperTableColumns;
     }
 
     @Override

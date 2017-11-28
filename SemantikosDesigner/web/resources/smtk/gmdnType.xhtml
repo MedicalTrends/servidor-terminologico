@@ -20,9 +20,10 @@
 <composite:implementation>
 
     <p:panel id="multiplicityN_with_attributes" styleClass="sctPanel"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
+             rendered="#{ true }">
 
-        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}">
+        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%"
+                       rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
 
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
@@ -32,7 +33,7 @@
 
                     <div class="Container20 White Responsive">
 
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                        <div class="ContainerIndent">
 
                             <p:outputLabel value="Tipo Dispositivo: " />
 
@@ -40,7 +41,7 @@
 
                     </div>
 
-                    <div class="Container20 White Responsive">
+                    <div class="Container40 White Responsive">
 
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
@@ -55,11 +56,11 @@
                                                 scrollHeight="200" size="5"
                                                 minQueryLength="3"
                                                 completeMethod="#{gmdnBean.getDeviceTypeSearchInput}"
-                                                placeholder="Marca, modelo o nombre comercial..."
-                                                converter="omnifaces.SelectItemsConverter"
+                                                placeholder="marca | modelo | nombre comercial..."
+                                                converter="deviceTypeConverter"
                                                 var="deviceType"
-                                                value="#{gmdnBean.deviceTypeSelected}"
-                                                itemLabel="#{deviceType.toString}"
+                                                value="#{conceptBean.deviceTypeSelected}"
+                                                itemLabel="#{deviceType.toString()}"
                                                 itemValue="#{deviceType}">
 
                                     <!-- Parámetros del validador -->
@@ -76,6 +77,7 @@
 
                                     <p:ajax event="itemSelect"
                                             listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.deviceTypeSelected)}"
+                                            update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                             process="@this"/>
 
                                     <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
@@ -83,147 +85,88 @@
                                 </p:autoComplete>
                                 <i class="fa fa-search fa-lg"  />
                             </p:outputPanel>
+
                         </div>
                     </div>
                 </div>
             </div>
         </p:outputPanel>
 
-        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
-            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="El concepto no tiene Relaciones a SNOMED" />
-            </p:outputPanel>
-        </f:facet>
+        <p:panel id="helperTableTypeSimpleWithAttributes"
+                 widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
+                 rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
 
-        <p:outputPanel style="width:100%">
+            <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                       var="relationship"
+                       varStatus="var">
 
-            <div class="ui-fluid">
+                <div class="ui-fluid">
 
-                <div class="Container">
+                    <div class="Container">
 
-                    <div class="Container20 White Responsive">
+                        <div class="Container20 White Responsive">
 
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                            <div class="ContainerIndent">
 
-                            <p:outputLabel value="Marca: " />
+                                <p:outputLabel value="Tipo Dispositivo: " />
+
+                            </div>
+
+                        </div>
+
+                        <div class="Container40 White Responsive">
+                            <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                                <p:outputPanel styleClass="search">
+                                    <p:inputText disabled="true" id="findHTRecords4" value="#{relationship.target.toString()}" />
+                                    <p:commandLink process="@this"
+                                                   update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                                   action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                                        <i class="fa fa-close fa-lg"  />
+                                    </p:commandLink>
+                                </p:outputPanel>
+
+                            </div>
+
+                            <p:spacer />
+
+                            <h4 class="BoldGray">Tipo de Dispositivo</h4>
+
+                            <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid">
+                                <p:outputLabel value="Marca: " />
+                                <p:outputLabel value="#{relationship.target.make}" />
+                                <p:outputLabel value="Modelo: " />
+                                <p:outputLabel value="#{relationship.target.model}" />
+                                <p:outputLabel value="Nombre Comercial: " />
+                                <p:outputLabel value="#{relationship.target.tradeName}" />
+                            </p:panelGrid>
+
+                            <p:spacer />
+
+                            <h4 class="BoldGray">Grupo de Dispositivos Genérico</h4>
+
+                            <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid">
+                                <p:outputLabel value="Código: " />
+                                <p:outputLabel value="#{relationship.target.genericDeviceGroup.code}" />
+                                <p:outputLabel value="Término Preferido: " />
+                                <p:outputLabel value="#{relationship.target.genericDeviceGroup.termName}" />
+                                <p:outputLabel value="Definición: " />
+                                <p:outputLabel value="#{relationship.target.genericDeviceGroup.termDefinition}" styleClass="Fs14" />
+                                <p:outputLabel value="Términos Colectivos: " />
+                                <p:treeTable id="treeDocs" value="#{gmdnBean.root}" var="collectiveTerm">
+                                    <p:column>
+                                        <h:outputText value="#{collectiveTerm.toString()}" styleClass="Fs14" />
+                                    </p:column>
+                                </p:treeTable>
+                            </p:panelGrid>
 
                         </div>
 
                     </div>
-
-                    <div class="Container80 White Responsive">
-
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-                            <p:outputLabel value="#{conceptBean.deviceTypeSelected.make}" />
-
-                        </div>
-
-                    </div>
-
-                    <div class="Container20 White Responsive">
-
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-                            <p:outputLabel value="Modelo: " />
-
-                        </div>
-
-                    </div>
-
-                    <div class="Container80 White Responsive">
-
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-                            <p:outputLabel value="#{conceptBean.deviceTypeSelected.model}" />
-
-                        </div>
-
-                    </div>
-
-                    <div class="Container20 White Responsive">
-
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-                            <p:outputLabel value="Nombre Comercial: " />
-
-                        </div>
-
-                    </div>
-
-                    <div class="Container80 White Responsive">
-
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-                            <p:outputLabel value="#{conceptBean.deviceTypeSelected.tradeName}" />
-
-                        </div>
-
-                    </div>
-
                 </div>
-            </div>
-        </p:outputPanel>
 
-
-        <p:dialog id="dialogSCT" widgetVar="dialogSCT" global="true" showEffect="fade" hideEffect="fade"
-                         header="Advertencia"
-                         message="Los resultados de esta búsqueda exceden los 10.000 registros. La recuperación de los resultados puede demorar ¿Qué desea hacer?">
-            <p:commandButton value="Truncar resultados ( 1°s 1000 registros )" type="button" styleClass="CyanButton" actionListener="#{sctBean.triggerSearch()}" update="findConceptSCT"
-                             icon="fa fa-scissors"/>
-            <p:commandButton value="Continuar con la búsqueda" type="button" styleClass="OrangeButton" actionListener="#{sctBean.triggerSearch()}" update="findConceptSCT"
-                             icon="fa fa-clock-o"/>
-        </p:dialog>
-
-        <!-- Consulta término pendiente -->
-        <p:dialog id="dialogC" header="Ver Concepto SNOMED" widgetVar="dialogC" global="true" width="700px"
-                  showEffect="fade" hideEffect="fade">
-
-            <p:panel styleClass="query-concept-sct">
-                <p:panelGrid style="width:100%">
-                    <f:facet name="header">
-                        <p:row>
-                            <p:column colspan="2">
-                                #{sctBean.conceptSelected.descriptionFSN}
-                            </p:column>
-                        </p:row>
-                    </f:facet>
-                    <p:row>
-                        <p:column styleClass="BoldGray FontBold">ConceptID</p:column>
-                        <p:column>#{sctBean.conceptSelected.idSnomedCT}</p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column styleClass="BoldGray FontBold">FSN</p:column>
-                        <p:column>#{sctBean.conceptSelected.descriptionFSN}</p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column styleClass="BoldGray FontBold">Preferida</p:column>
-                        <p:column>#{sctBean.conceptSelected.descriptionFavouriteSynonymous}</p:column>
-                    </p:row>
-                </p:panelGrid>
-                <p:dataTable id="otherDescriptions"
-                             var="description"
-                             value="#{sctBean.getOtherDescriptions(sctBean.conceptSelected)}"
-                             rendered="#{ not empty sctBean.getOtherDescriptions(sctBean.conceptSelected) }"
-                             editable="true"
-                             reflow="true">
-                    <p:columnGroup type="header">
-
-                        <p:row>
-                            <p:column colspan="2" headerText="Otras Descripciones"/>
-                        </p:row>
-
-                    </p:columnGroup>
-                    <p:column style="width: 25%" styleClass="BoldGray FontBold">
-                        #{description.descriptionType.name}
-                    </p:column>
-                    <p:column>
-                        #{description.term}
-                    </p:column>
-                </p:dataTable>
-            </p:panel>
-        </p:dialog>
+            </ui:repeat>
+        </p:panel>
 
     </p:panel>
 
@@ -231,6 +174,14 @@
 
 
     </script>
+
+    <h:outputStylesheet id="customCSS">
+
+        .ui-treetable table thead tr th {
+            display: none !important;
+        }
+
+    </h:outputStylesheet>
 
 </composite:implementation>
 </html>

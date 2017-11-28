@@ -203,6 +203,11 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
     }
 
     @Override
+    public List<HelperTableColumn> getRelatedColumns(HelperTable helperTable) {
+        return dao.getRelatedColumns(helperTable);
+    }
+
+    @Override
     public List<HelperTableRow> searchRows(HelperTable helperTable, String pattern, List<String> searchColumns) {
 
         List<HelperTableRow> rows = new ArrayList<>();

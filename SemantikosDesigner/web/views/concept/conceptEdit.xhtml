@@ -168,11 +168,11 @@
                                                             id="panelRelationshipDefinitonGMDN"
                                                             styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}">
 
-                                                        <smtk:sctType
+                                                        <smtk:gmdnType
                                                                 targetDefinition="#{relationshipDefinition.targetDefinition}"
                                                                 relationshipDefinition="#{relationshipDefinition}"
                                                                 concept="#{conceptBean.concept}"
-                                                                rendered="#{relationshipDefinition.targetDefinition.snomedCTType}" />
+                                                                rendered="#{relationshipDefinition.targetDefinition.GMDNType}" />
 
                                                     </p:outputPanel>
 

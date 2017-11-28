@@ -63,6 +63,17 @@ public class HelperTable implements TargetDefinition, Serializable {
         return showableColumns;
     }
 
+    public List<HelperTableColumn> getForeignKeyColumns() {
+
+        List<HelperTableColumn> foreignKeyColumns = new ArrayList<>();
+
+        for (HelperTableColumn column: getColumns()) {
+            if(column.isForeignKey())
+                foreignKeyColumns.add(column);
+        }
+        return foreignKeyColumns;
+    }
+
     public void setColumns(List<HelperTableColumn> columns) {
         this.columns = columns;
     }

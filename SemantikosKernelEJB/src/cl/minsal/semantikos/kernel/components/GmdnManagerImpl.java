@@ -43,12 +43,15 @@ public class GmdnManagerImpl implements GmdnManager {
     }
 
     @Override
-    public void loadCollectiveTerms(GenericDeviceGroup genericDeviceGroup) {
+    public DeviceType getDeviceTypeById(long id) {
+        return gmdnDAO.getDeviceTypeById(id);
+    }
+
+    @Override
+    public List<CollectiveTerm> getParentLines(GenericDeviceGroup genericDeviceGroup) {
 
         List<CollectiveTerm> collectiveTerms = gmdnDAO.getCollectiveTermsByGenericDeviceGroup(genericDeviceGroup);
 
-        collectiveTerms = gmdnDAO.getParentLines(collectiveTerms);
-
-        genericDeviceGroup.setCollectiveTerms(collectiveTerms);
+        return gmdnDAO.getParentLines(collectiveTerms);
     }
 }

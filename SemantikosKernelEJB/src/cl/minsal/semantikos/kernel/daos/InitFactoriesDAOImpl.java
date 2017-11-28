@@ -15,9 +15,11 @@ import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetFactory;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
+import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumnFactory;
 
+import cl.minsal.semantikos.model.helpertables.HelperTableFactory;
 import cl.minsal.semantikos.model.queries.*;
 import cl.minsal.semantikos.model.relationships.MultiplicityFactory;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
@@ -107,6 +109,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
             e.printStackTrace();
         }
         //this.testArrayOracle();
+        this.refreshTables();
         this.refreshColumns();
         this.refreshCategories();
         this.refreshCrossmapSets();
@@ -478,7 +481,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
     @Override
     public HelperTableColumnFactory refreshColumns() {
-        //ConnectionBD connect = new ConnectionBD();
 
         List<HelperTableColumn> helperTableColumns = new ArrayList<>();
 
@@ -509,6 +511,37 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         }
 
         return HelperTableColumnFactory.getInstance();
+    }
+
+    @Override
+    public HelperTableFactory refreshTables() {
+
+        String sql = "begin ? := stk.stk_pck_helper_table.get_helper_tables; end;";
+
+        List<HelperTable> helperTables = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            /* Se prepara y realiza la consulta */
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while(rs.next()) {
+                helperTables.add(createHelperTableFromResultSet(rs));
+            }
+            rs.close();
+
+            HelperTableFactory.getInstance().setHelperTables(helperTables);
+
+        } catch (SQLException e) {
+            logger.error("Hubo un error al acceder a la base de datos.", e);
+            throw new EJBException(e);
+        }
+
+        return HelperTableFactory.getInstance();
     }
 
     @Override
@@ -583,6 +616,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
             helperTableColumn.setSearchable(rs.getBoolean("editable"));
             helperTableColumn.setSearchable(rs.getBoolean("sortable"));
             helperTableColumn.setSearchable(rs.getBoolean("required"));
+            helperTableColumn.setHelperTable(HelperTableFactory.getInstance().findTableById(rs.getLong("helper_table_id")));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -601,6 +635,25 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         boolean state = rs.getBoolean("state");
 
         return new CrossmapSet(id, nameAbbreviated, name, version, state);
+    }
+
+    public HelperTable createHelperTableFromResultSet(ResultSet rs) {
+
+        HelperTable helperTable = new HelperTable();
+
+        try {
+            helperTable.setId(rs.getLong("id"));
+            helperTable.setName(rs.getString("name"));
+            helperTable.setDescription(rs.getString("description"));
+
+            helperTable.setColumns(HelperTableColumnFactory.getInstance().findColumnsByHelperTable(rs.getLong("id")));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return helperTable;
+
     }
 
 }

@@ -110,4 +110,14 @@ public interface HelperTablesManager {
      * búsqueda.
      */
     List<HelperTableRow> getRelatedRows(HelperTableRow parentRow, HelperTableColumn helperTableColumn);
+
+    /**
+     * Este método es responsable de recuperar las columnas que referencian a otra tabla auxiliar, dada una tabla auxiliar
+     *
+     * @param helperTable La tabla auxiliar padre
+     *
+     * @return La lista de registros en la tabla <code>helperTable</code> que cumplen con el <code>pattern</code> de
+     * búsqueda.
+     */
+    List<HelperTableColumn> getRelatedColumns(HelperTable helperTable);
 }

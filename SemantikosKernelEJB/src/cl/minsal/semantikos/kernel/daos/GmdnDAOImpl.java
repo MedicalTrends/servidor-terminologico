@@ -211,7 +211,8 @@ public class GmdnDAOImpl implements GmdnDAO {
 
             for (CollectiveTerm parentNode : parentNodes) {
 
-                parentNode.getChildren().addAll(getChildrenOf(parentNode));
+                parentNode.getChildren().add(node);
+                //parentNode.getChildren().addAll(getChildrenOf(parentNode));
                 //parentNode.getChildren().addAll(getChildrenOf(node));
                 thisNodeParentNodes.add(parentNode);
             }
@@ -401,7 +402,7 @@ public class GmdnDAOImpl implements GmdnDAO {
 
         String model = rs.getString("model");
 
-        String tradeName = rs.getString("tradeName");
+        String tradeName = rs.getString("trade_name");
 
         long codeGenericDeviceGroup = rs.getLong("code_generic_device_group");
 

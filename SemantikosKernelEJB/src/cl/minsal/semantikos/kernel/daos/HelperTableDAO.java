@@ -43,6 +43,8 @@ public interface HelperTableDAO {
 
     List<HelperTableRow> getRelatedRows(HelperTableRow parentRow, HelperTableColumn helperTableColumn);
 
+    List<HelperTableColumn> getRelatedColumns(HelperTable helperTable);
+
     List<HelperTableRow> getValidTableRows(long id);
 
     List<ConceptSMTK> isRowUsed(HelperTableRow row);

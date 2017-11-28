@@ -1,11 +1,12 @@
 package cl.minsal.semantikos.model.gmdn;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by des01c7 on 20-11-17.
  */
-public class GenericDeviceGroup {
+public class GenericDeviceGroup implements Serializable {
 
     private long code;
 

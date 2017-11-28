@@ -5,10 +5,12 @@ import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
 
+import java.io.Serializable;
+
 /**
  * Created by des01c7 on 20-11-17.
  */
-public class DeviceType extends PersistentEntity implements Target {
+public class DeviceType extends PersistentEntity implements Target, Serializable {
 
     private String make;
 
@@ -89,5 +91,10 @@ public class DeviceType extends PersistentEntity implements Target {
     @Override
     public Target copy() {
         return new DeviceType(this.getMake(), this.getModel(), this.getTradeName(), this.genericDeviceGroup);
+    }
+
+    @Override
+    public String toString() {
+        return tradeName + ": " + make + ", " + model;
     }
 }

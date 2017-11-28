@@ -21,7 +21,8 @@
     <div class="Container#{cc.attrs.targetDefinition.type.typeName eq 'boolean'?'10':'20'} White Responsive" style="text-align: center">
 
         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes}">
+
+            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.getAttributesByAttributeDefinition(cc.attrs.relationshipAttributeDefinition)}">
 
 
                 <p:selectOneMenu id="basicTypeValue1"
@@ -118,6 +119,7 @@
                             disabled="#{not cc.attrs.concept.editable }"
                             placeholder="#{cc.attrs.relationshipAttributeDefinition.name}"
                             showOn="button"
+                            locale="es_ES" pattern="dd/MM/yyyy"
                             mindate="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                             maxdate="#{cc.attrs.targetDefinition.interval.upperBoundary}"
                             rendered="#{cc.attrs.targetDefinition.type.typeName=='date' and not cc.attrs.targetDefinition.discreteDomain}"
@@ -132,26 +134,121 @@
             </p:outputPanel>
 
 
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.relationship.relationshipAttributes}">
+            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.relationship.getAttributesByAttributeDefinition(cc.attrs.relationshipAttributeDefinition)}">
 
                 <p:repeat
                         offset="0"
-                        size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
+                        size="#{cc.attrs.relationship.getAttributesByAttributeDefinition(cc.attrs.relationshipAttributeDefinition).size()}"
                         step="1"
                         varStatus="var"
-                        value="#{cc.attrs.relationship.relationshipAttributes}"
+                        value="#{cc.attrs.relationship.getAttributesByAttributeDefinition(cc.attrs.relationshipAttributeDefinition)}"
                         var="relationshipAttribute">
 
-                    <p:outputPanel styleClass="search">
+                    <p:selectOneMenu id="basicTypeValue21"
+                                     value="#{relationshipAttribute.target.value}"
+                                     var="value1"
+                                     converter="omnifaces.SelectItemsConverter"
+                                     rendered="#{cc.attrs.targetDefinition.discreteDomain}"
+                                     disabled="#{not cc.attrs.concept.editable }"
+                                     styleClass="relationships">
+                        <p:ajax event="itemSelect"
+                                listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, relationshipAttribute.target)}"
+                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                process="@this" />
+                        <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..."
+                                      itemValue=""
+                        />
+                        <f:selectItems value="#{cc.attrs.targetDefinition.domain}"
+                                       var="domain"
+                                       itemLabel="#{domain}"
+                                       itemValue="#{domain}"/>
+                    </p:selectOneMenu>
 
-                            <p:inputText disabled="true" id="basicTypeValue" value="#{relationshipAttribute.target}" style="width: 70%" />
-                            <p:commandLink process="@this"
-                                           update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                                           action="#{conceptBean.removeRelationshipAttribute(cc.attrs.relationship,relationshipAttribute)}">
-                                <i class="fa fa-close fa-lg"  />
-                            </p:commandLink>
+                    <p:selectBooleanCheckbox id="basicTypeValue26"
+                                             value="#{relationshipAttribute.target.value}"
+                                             itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}"
+                                             disabled="#{not cc.attrs.concept.editable}"
+                                             style="padding-top: 0.6em"
+                                             rendered="#{cc.attrs.targetDefinition.type.typeName=='boolean'}">
+                        <p:ajax event="change"
+                                listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, relationshipAttribute.target)}"
+                                process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
+                    </p:selectBooleanCheckbox>
 
-                    </p:outputPanel>
+                    <p:inputNumber id="basicTypeValue22"
+                                   value="#{relationshipAttribute.target.value}"
+                                   var="value"
+                                   autocomplete="off"
+                                   disabled="#{not cc.attrs.concept.editable }"
+                                   placeholder="#{cc.attrs.relationshipAttributeDefinition.name}"
+                                   minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
+                                   maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
+                                   decimalPlaces="0"
+                                   decimalSeparator=","
+                                   thousandSeparator="."
+                                   rendered="#{cc.attrs.targetDefinition.type.typeName=='int' and not cc.attrs.targetDefinition.discreteDomain}"
+                                   styleClass="relationships">
+                        <f:attribute name="concept" value="#{cc.attrs.concept}"  />
+                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                        <p:ajax event="blur"
+                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, relationshipAttribute.target)}"
+                                process="@this" />
+                    </p:inputNumber>
+
+                    <p:inputNumber id="basicTypeValue23"
+                                   value="#{relationshipAttribute.target.value}"
+                                   var="value"
+                                   autocomplete="off"
+                                   disabled="#{not cc.attrs.concept.editable }"
+                                   placeholder="#{cc.attrs.relationshipAttributeDefinition.name}"
+                                   minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
+                                   maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
+                                   decimalSeparator=","
+                                   thousandSeparator="."
+                                   decimalPlaces="2"
+                                   rendered="#{cc.attrs.targetDefinition.type.typeName=='float' and not cc.attrs.targetDefinition.discreteDomain}"
+                                   styleClass="relationships">
+                        <f:attribute name="concept" value="#{cc.attrs.concept}"  />
+                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                        <p:ajax event="blur"
+                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, relationshipAttribute.target)}"
+                                process="@this" />
+                    </p:inputNumber>
+
+                    <p:inputText id="basicTypeValue24"
+                                 value="#{relationshipAttribute.target.value}"
+                                 var="value"
+                                 autocomplete="off"
+                                 disabled="#{not cc.attrs.concept.editable }"
+                                 placeholder="#{cc.attrs.relationshipAttributeDefinition.name}"
+                                 minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
+                                 maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
+                                 rendered="#{cc.attrs.targetDefinition.type.typeName=='string' and not cc.attrs.targetDefinition.discreteDomain}"
+                                 styleClass="relationships">
+                        <p:ajax event="blur"
+                                listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, relationshipAttribute.target)}"
+                                process="@this" />
+                    </p:inputText>
+
+                    <p:calendar id="basicTypeValue25"
+                                value="#{relationshipAttribute.target.value}"
+                                var="value"
+                                disabled="#{not cc.attrs.concept.editable }"
+                                placeholder="#{cc.attrs.relationshipAttributeDefinition.name}"
+                                showOn="button"
+                                locale="es_ES" pattern="dd/MM/yyyy"
+                                mindate="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
+                                maxdate="#{cc.attrs.targetDefinition.interval.upperBoundary}"
+                                rendered="#{cc.attrs.targetDefinition.type.typeName=='date' and not cc.attrs.targetDefinition.discreteDomain}"
+                                styleClass="relationships">
+                        <f:attribute name="concept" value="#{cc.attrs.concept}"  />
+                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                        <p:ajax event="blur"
+                                listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, relationshipAttribute.target)}"
+                                process="@this" />
+                    </p:calendar>
 
                 </p:repeat>
 
@@ -246,6 +343,7 @@
                             placeholder="#{cc.attrs.relationshipAttributeDefinition.name}"
                             disabled="#{not cc.attrs.concept.editable }"
                             showOn="button"
+                            locale="es_ES" pattern="dd/MM/yyyy"
                             mindate="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                             maxdate="#{cc.attrs.targetDefinition.interval.upperBoundary}"
                             rendered="#{cc.attrs.targetDefinition.type.typeName=='date' and not cc.attrs.targetDefinition.discreteDomain}"

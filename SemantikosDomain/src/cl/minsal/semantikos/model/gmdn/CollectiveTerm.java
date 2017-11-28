@@ -1,11 +1,13 @@
 package cl.minsal.semantikos.model.gmdn;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by des01c7 on 20-11-17.
  */
-public class CollectiveTerm {
+public class CollectiveTerm implements Serializable {
 
     private long code;
 
@@ -13,12 +15,17 @@ public class CollectiveTerm {
 
     private String termDefinition;
 
-    private List<CollectiveTerm> children;
+    private List<CollectiveTerm> children = new ArrayList<>();
 
     public CollectiveTerm(long code, String termName, String termDefinition) {
         this.code = code;
         this.termName = termName;
         this.termDefinition = termDefinition;
+    }
+
+    @Override
+    public String toString() {
+        return "CT"+code +" "+termName;
     }
 
     public CollectiveTerm(long code, String termName, String termDefinition, List<CollectiveTerm> children) {

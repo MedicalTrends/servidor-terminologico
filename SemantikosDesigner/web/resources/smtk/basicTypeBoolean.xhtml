@@ -32,7 +32,7 @@
                         <div class="ContainerIndent">
 
                             <p:outputLabel for="basicTypeValue11" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}">
-                                <span class="FontBold">
+                                <span>
                                     #{cc.attrs.relationshipDefinition.name}
                                 </span>
                             </p:outputLabel>
@@ -47,7 +47,7 @@
 
                     <div class="Container10 White Responsive">
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-                            <p:selectBooleanButton value="#{conceptBean.basicTypeValue.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg" offIcon="fa fa-close fa-lg">
+                            <p:selectBooleanButton id="basicTypeValue11" value="#{conceptBean.basicTypeValue.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg" offIcon="fa fa-close fa-lg">
                                 <p:ajax event="change"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                         process="@this" update="#{cc.attrs.relationshipDefinition.isMCSpecial()}?'@(.attributes)':'@(.panel_'#{cc.attrs.relationshipDefinition.id}')',@(.conceptMarketed)}" />
@@ -102,6 +102,7 @@
                                                    onLabel="Si"
                                                    onIcon="fa fa-check"
                                                    offIcon="fa fa-close"
+                                                   id="basicTypeValue"
                                                    disabled="#{(conceptBean.isMCSpecial(cc.attrs.relationshipDefinition) and conceptBean.concept.isModeled()) or conceptBean.editable eq false}">
                                 <p:ajax event="change"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,relationship.target)}"

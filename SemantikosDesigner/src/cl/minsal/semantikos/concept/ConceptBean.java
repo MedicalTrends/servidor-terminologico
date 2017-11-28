@@ -3,6 +3,7 @@ package cl.minsal.semantikos.concept;
 import cl.minsal.semantikos.MainMenuBean;
 import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
 import cl.minsal.semantikos.description.AutogenerateBeans;
+import cl.minsal.semantikos.gmdn.GmdnTypeBean;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.model.gmdn.DeviceType;
@@ -117,6 +118,9 @@ public class ConceptBean implements Serializable {
     @ManagedProperty(value = "#{crossmapBean}")
     private CrossmapBean crossmapBean;
 
+    @ManagedProperty( value="#{gmdnBean}")
+    private GmdnTypeBean gmdnTypeBean;
+
     @ManagedProperty(value = "#{messageBean}")
     MessageBean messageBean;
 
@@ -156,6 +160,14 @@ public class ConceptBean implements Serializable {
 
     public void setAutogenerateBeans(AutogenerateBeans autogenerateBeans) {
         this.autogenerateBeans = autogenerateBeans;
+    }
+
+    public GmdnTypeBean getGmdnTypeBean() {
+        return gmdnTypeBean;
+    }
+
+    public void setGmdnTypeBean(GmdnTypeBean gmdnTypeBean) {
+        this.gmdnTypeBean = gmdnTypeBean;
     }
 
     private List<Category> categoryList;
@@ -653,7 +665,7 @@ public class ConceptBean implements Serializable {
         }
 
         if(relationshipDefinition.getTargetDefinition().isGMDNType()) {
-            gmdnManager.loadCollectiveTerms(((DeviceType) target).getGenericDeviceGroup());
+            gmdnTypeBean.mapCollectiveTerms(gmdnManager.getParentLines(((DeviceType) target).getGenericDeviceGroup()), gmdnTypeBean.getRoot(), true);
         }
 
         // Se busca la relación
