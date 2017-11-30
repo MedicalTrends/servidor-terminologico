@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
+import cl.minsal.semantikos.model.gmdn.DeviceType;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
@@ -243,6 +244,7 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
     public void addRelationshipWeb(RelationshipWeb relationship) {
         this.addRelationship(relationship);
         this.relationshipsWeb.add(relationship);
+        autogenerate(relationship, true);
     }
 
     /**
@@ -302,6 +304,7 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
     public void removeRelationshipWeb(Relationship relationship) throws Exception {
         this.getRelationships().remove(relationship);
         this.relationshipsWeb.remove(relationship);
+        autogenerate(relationship, false);
     }
 
 
@@ -547,6 +550,20 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
         }
 
         return this.getValidRelationshipsWebByRelationDefinition(relationshipDefinition).size()>=relationshipDefinition.getMultiplicity().getLowerBoundary();
+    }
+
+    public void autogenerate(Relationship relationship, boolean flag) {
+        String pattern = "";
+        if(relationship.getRelationshipDefinition().getTargetDefinition().isGMDNType()) {
+
+            DeviceType deviceType = (DeviceType)relationship.getTarget();
+
+            if(flag) {
+                pattern = deviceType.getTradeName();
+            }
+            relationship.getSourceConcept().getDescriptionFavorite().setTerm(pattern);
+            relationship.getSourceConcept().getDescriptionFSN().setTerm(pattern);
+        }
     }
 
 }

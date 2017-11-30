@@ -40,6 +40,9 @@ public class GmdnDAOImpl implements GmdnDAO {
     @Resource(lookup = "java:jboss/OracleDS")
     private DataSource dataSource;
 
+    @EJB
+    private SnomedCTDAO snomedCTDAO;
+
     @Override
     public List<DeviceCategory> getDeviceCategoriesByGenericDeviceGroup(GenericDeviceGroup genericDeviceGroup) {
 
@@ -321,6 +324,31 @@ public class GmdnDAOImpl implements GmdnDAO {
         return deviceType;
     }
 
+    @Override
+    public List<ConceptSCT> getMappingSnomedCT(GenericDeviceGroup genericDeviceGroup) {
+        List<ConceptSCT> conceptSCTs= new ArrayList<>();
+
+        String sql = "begin ? := stk.stk_pck_gmdn.get_mapping_snomed_ct(?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, genericDeviceGroup.getCode());
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                conceptSCTs.add(snomedCTDAO.getConceptByID(rs.getLong("id_concept_sct")));
+            }
+        } catch (SQLException e) {
+            logger.error("Error al al obtener los RefSets ", e);
+        }
+
+        return conceptSCTs;
+    }
+
     /**
      * Este método es responsable de crear un objeto <code>CrossmapSetMember</code> a partir de un ResultSet.
      *
@@ -345,11 +373,15 @@ public class GmdnDAOImpl implements GmdnDAO {
 
         genericDeviceGroup.setDeviceCategories(deviceCategories);
 
-        //List<CollectiveTerm> collectiveTerms = getCollectiveTermsByGenericDeviceGroup(genericDeviceGroup);
+        List<ConceptSCT> conceptSCTs = getMappingSnomedCT(genericDeviceGroup);
 
-        //collectiveTerms = getParentLines(collectiveTerms);
+        genericDeviceGroup.setConceptSCTs(conceptSCTs);
 
-        //genericDeviceGroup.setCollectiveTerms(collectiveTerms);
+        List<CollectiveTerm> collectiveTerms = getCollectiveTermsByGenericDeviceGroup(genericDeviceGroup);
+
+        collectiveTerms = getParentLines(collectiveTerms);
+
+        genericDeviceGroup.setCollectiveTerms(collectiveTerms);
 
         return genericDeviceGroup;
     }

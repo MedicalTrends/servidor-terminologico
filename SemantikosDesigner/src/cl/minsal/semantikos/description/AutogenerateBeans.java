@@ -29,6 +29,8 @@ public class AutogenerateBeans {
     //@EJB
     private RelationshipManager relationshipManager = (RelationshipManager) RemoteEJBClientFactory.getInstance().getManager(RelationshipManager.class);;
 
+    private Map<Integer,String> ordenSustancias;
+
     public String autogenerate(List<String> autoGenerateList) {
         String autogenerateString = "";
         for (int i = 0; i < autoGenerateList.size(); i++) {
@@ -85,91 +87,6 @@ public class AutogenerateBeans {
         }
     }
 
-    public void autogenerateRemoveRelationshipWithAttributes(RelationshipDefinition relationshipDefinition, Relationship relationship, ConceptSMTKWeb concept, List<String> autoGenerateList, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE) {
-        if (!concept.isModeled()) {
-            if (relationshipDefinition.getId() == 45) {
-                ConceptSMTK conceptRelationship = ((ConceptSMTK) relationship.getTarget());
-                autoGenerateList.remove(conceptRelationship.getDescriptionFavorite().getTerm());
-                concept.getDescriptionFavorite().setTerm(autogenerate(autoGenerateList));
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-                if (conceptRelationship.getDescriptionFSN().isCaseSensitive()) {
-                    concept.getDescriptionFSN().setCaseSensitive(false);
-                }
-            }
-            if (relationshipDefinition.getId() == 47) {
-                ConceptSMTK conceptRelationship = ((ConceptSMTK) relationship.getTarget());
-                autogenerateMC.getSustancias().remove(autogenerateMC.generateNameSustancia(relationship));
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-                if (conceptRelationship.getDescriptionFavorite().isCaseSensitive()) {
-                    concept.getDescriptionFSN().setCaseSensitive(false);
-                    concept.getDescriptionFavorite().setCaseSensitive(false);
-                }
-            }
-            if (relationshipDefinition.getId() == 58) {
-                autogenerateMC.voidRemoveFFA(relationship);
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if(relationshipDefinition.getId() == 77){
-                autogenerateMCCE.setPack("");
-                concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if(relationshipDefinition.getId() == 93){
-                autogenerateMCCE.setVolumen("");
-                concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-        }
-    }
-
-    public void autogenerateRemoveRelationship(RelationshipDefinition relationshipDefinition, Relationship relationship, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE){
-        if (!concept.isModeled()) {
-            if (relationshipDefinition.getId() == 52) {
-                autogeneratePCCE.setAutogeneratePCCE("");
-                autogeneratePCCE.setCVP();
-                concept.getDescriptionFavorite().setTerm(autogeneratePCCE.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinition.getId() == 51) {
-                autogeneratePCCE.setPc("");
-                concept.getDescriptionFavorite().setTerm(autogeneratePCCE.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinition.getId() == 58) {
-                autogenerateMC.voidRemoveFFA(relationship);
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinition.getId() == 69) {
-                autogenerateMC.setVolumenEmpty();
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-        }
-    }
-
-    public void autogenerateRemoveAttribute(RelationshipAttributeDefinition relationshipAttributeDefinition, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE) {
-        if (!concept.isModeled()) {
-            if (relationshipAttributeDefinition.getId() == 12) {
-                autogenerateMC.setUnidadVolumenEmpty();
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipAttributeDefinition.getId() == 16) {
-                autogenerateMCCE.setPackUnidad("");
-                concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipAttributeDefinition.getId() == 17) {
-                autogenerateMCCE.setVolumenUnidad("");
-                concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-        }
-    }
-
     public void autogenerateRelationship(RelationshipDefinition relationshipDefinition, Relationship relationship, Target target, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE) {
         if (!concept.isModeled()) {
             if (relationshipDefinition.getId() == 48) {
@@ -213,27 +130,6 @@ public class AutogenerateBeans {
         sensibility(relationship,relationshipDefinition,concept);
     }
 
-    public void autogenerateOrder(ConceptSMTKWeb concept, List<String> autoGenerateList, RelationshipDefinition relationshipDefinitionRowEdit, AutogenerateMC autogenerateMC, ReorderEvent event) {
-        if (!concept.isModeled()) {
-
-            if (relationshipDefinitionRowEdit.getId() == 45) {
-                autoGenerateList = newOrderList(autoGenerateList, event);
-                concept.getDescriptionFavorite().setTerm(autogenerate(autoGenerateList));
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinitionRowEdit.getId() == 47) {
-                autogenerateMC.setSustancias(newOrderList(autogenerateMC.getSustancias(), event));
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinitionRowEdit.getId() == 58) {
-                autogenerateMC.setFfa(newOrderList(autogenerateMC.getFfa(), event));
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-        }
-    }
-
     public void autogenerateAttributeDefinition(RelationshipAttributeDefinition relationshipAttributeDefinition, Target target, RelationshipAttribute attribute, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE) {
         if (!concept.isModeled()) {
             if (relationshipAttributeDefinition.getId() == 16) {
@@ -272,26 +168,6 @@ public class AutogenerateBeans {
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }
         }
-    }
-
-    public List<String> newOrderList(List<String> list, ReorderEvent event) {
-        List<String> autoNuevoOrden = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (i != event.getFromIndex()) {
-                if (i == event.getToIndex()) {
-                        autoNuevoOrden.add(list.get(event.getFromIndex()));
-                } else {
-                    autoNuevoOrden.add(list.get(i));
-                }
-            }else{
-                autoNuevoOrden.add(list.get(event.getToIndex()));
-            }
-        }
-        list.clear();
-        for (int i = 0; i < autoNuevoOrden.size(); i++) {
-            list.add(autoNuevoOrden.get(i));
-        }
-        return autoNuevoOrden;
     }
 
     public void loadAutogenerate(ConceptSMTKWeb conceptSMTKWeb, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE, List<String> autogenerateList){
@@ -344,12 +220,11 @@ public class AutogenerateBeans {
 
     }
 
-    public void autogenerateMB(ConceptSMTK concept,List<String> autogenerateList){
+    public void autogenerateMB(ConceptSMTK concept, List<String> autogenerateList){
         String term= autogenerate(autogenerateList);
         concept.getDescriptionFavorite().setTerm(term);
         concept.getDescriptionFSN().setTerm(term);
     }
 
-    private Map<Integer,String> ordenSustancias;
 
 }

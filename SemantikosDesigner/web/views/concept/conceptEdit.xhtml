@@ -153,11 +153,10 @@
                                     </p:tab>
 
                                     <!--Relaciones GMDN -->
-                                    <p:tab title="GMDN">
+                                    <p:tab title="GMDN" rendered="#{conceptBean.category.id eq 40}">
                                         <p:outputPanel id="atributoGMDN"
                                                        widgetVar="panelAtributoGMDN"
-                                                       styleClass="attributes"
-                                                       rendered="#{conceptBean.category.hasRelationshipDefinitions}">
+                                                       styleClass="attributes">
 
                                             <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
                                                          var="relationshipDefinition">

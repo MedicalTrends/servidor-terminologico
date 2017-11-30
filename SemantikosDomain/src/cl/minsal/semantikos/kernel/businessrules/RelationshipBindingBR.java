@@ -4,11 +4,6 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.users.User;
 
-
-/**
- * TODO: Eliminar esta interfaz, no es necesaria.
- */
-
 public interface RelationshipBindingBR {
 
     public void verifyPreConditions(ConceptSMTK concept, Relationship relationship, User user) throws Exception;

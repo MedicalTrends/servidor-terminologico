@@ -1,6 +1,9 @@
 package cl.minsal.semantikos.model.gmdn;
 
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,9 +23,16 @@ public class GenericDeviceGroup implements Serializable {
 
     private String productSpecifier;
 
-    private List<DeviceCategory> deviceCategories;
+    private List<DeviceCategory> deviceCategories = new ArrayList<>();
 
-    private List<CollectiveTerm> collectiveTerms;
+    private List<CollectiveTerm> collectiveTerms = new ArrayList<>();
+
+    /**
+     * Esta lista representa el mapping GMDN-SnomedCT
+     * TODO: Si es necesario, redefinir cuando Minsal envie los datafiles
+     */
+    private List<ConceptSCT> conceptSCTs = new ArrayList<>();
+
 
     public GenericDeviceGroup(long code, String termName, String termDefinition, String termStatus, char termTypeIdentifier, String productSpecifier) {
         this.code = code;
@@ -106,5 +116,13 @@ public class GenericDeviceGroup implements Serializable {
 
     public void setCollectiveTerms(List<CollectiveTerm> collectiveTerms) {
         this.collectiveTerms = collectiveTerms;
+    }
+
+    public List<ConceptSCT> getConceptSCTs() {
+        return conceptSCTs;
+    }
+
+    public void setConceptSCTs(List<ConceptSCT> conceptSCTs) {
+        this.conceptSCTs = conceptSCTs;
     }
 }

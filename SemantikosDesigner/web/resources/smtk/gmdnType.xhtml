@@ -19,6 +19,8 @@
 
 <composite:implementation>
 
+    <p:remoteCommand name="onload2" action="#{gmdnBean.setClientId(cc.clientId)}" autoRun="true" />
+
     <p:panel id="multiplicityN_with_attributes" styleClass="sctPanel"
              rendered="#{ true }">
 
@@ -77,7 +79,7 @@
 
                                     <p:ajax event="itemSelect"
                                             listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.deviceTypeSelected)}"
-                                            update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                            update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                             process="@this"/>
 
                                     <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
@@ -100,6 +102,8 @@
                        var="relationship"
                        varStatus="var">
 
+                <p:remoteCommand name="onload" action="#{gmdnBean.setDeviceType(relationship.target)}" autoRun="true" />
+
                 <div class="ui-fluid">
 
                     <div class="Container">
@@ -120,7 +124,7 @@
                                 <p:outputPanel styleClass="search">
                                     <p:inputText disabled="true" id="findHTRecords4" value="#{relationship.target.toString()}" />
                                     <p:commandLink process="@this"
-                                                   update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                                   update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                                    action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
                                         <i class="fa fa-close fa-lg"  />
                                     </p:commandLink>
@@ -153,12 +157,25 @@
                                 <p:outputLabel value="Definición: " />
                                 <p:outputLabel value="#{relationship.target.genericDeviceGroup.termDefinition}" styleClass="Fs14" />
                                 <p:outputLabel value="Términos Colectivos: " />
-                                <p:treeTable id="treeDocs" value="#{gmdnBean.root}" var="collectiveTerm">
+                                <p:treeTable id="collectiveTerms" value="#{gmdnBean.root}" var="collectiveTerm" expandMode="false" styleClass="collectiveTerms">
                                     <p:column>
                                         <h:outputText value="#{collectiveTerm.toString()}" styleClass="Fs14" />
                                     </p:column>
                                 </p:treeTable>
                             </p:panelGrid>
+
+                            <p:spacer />
+
+                            <h4 class="BoldGray">Mapeo a Snomed-CT</h4>
+
+                            <ui:repeat value="#{relationship.target.genericDeviceGroup.conceptSCTs}" var="conceptSCT">
+                                <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid">
+                                    <p:outputLabel value="Código Snomed: " />
+                                    <p:outputLabel value="#{conceptSCT.idSnomedCT}" />
+                                    <p:outputLabel value="Término FSN: " />
+                                    <p:outputLabel value="#{conceptSCT.descriptionFSN.term}" />
+                                </p:panelGrid>
+                            </ui:repeat>
 
                         </div>
 
@@ -177,7 +194,7 @@
 
     <h:outputStylesheet id="customCSS">
 
-        .ui-treetable table thead tr th {
+        .ui-treetable table thead {
             display: none !important;
         }
 

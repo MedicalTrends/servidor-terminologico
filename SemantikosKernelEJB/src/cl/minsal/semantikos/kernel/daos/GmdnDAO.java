@@ -90,4 +90,6 @@ public interface GmdnDAO {
     DeviceType getDeviceTypeById(long id);
 
     List<DeviceType> findDeviceTypeByPattern(String pattern);
+
+    List<ConceptSCT> getMappingSnomedCT(GenericDeviceGroup genericDeviceGroup);
 }

@@ -41,11 +41,22 @@ public class GmdnTypeBean implements Serializable {
 
     private String pattern;
 
+    private DeviceType deviceType;
+
     private transient TreeNode root;
+
+    private String clientId;
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
 
     /**
      * Constructor por defecto para la inicialización de componentes.
-
      */
     public GmdnTypeBean() {
 
@@ -87,16 +98,14 @@ public class GmdnTypeBean implements Serializable {
         return root;
     }
 
+    public TreeNode updateCollectiveTerms() {
+        root = new DefaultTreeNode(new CollectiveTerm(0,"root", "root element"), null);
+        //return mapCollectiveTerms(gmdnManager.getParentLines(deviceType.getGenericDeviceGroup()), root, true);
+        return mapCollectiveTerms(this.deviceType.getGenericDeviceGroup().getCollectiveTerms(), root, true);
+    }
+
 
     public TreeNode mapCollectiveTerms(List<CollectiveTerm> collectiveTerms, TreeNode treeNode, boolean expanded) {
-
-        //CollectiveTerm collectiveTermData = (CollectiveTerm) treeNode.getData();
-
-        /*
-        if(conceptData.equals(conceptSelected)) {
-            expanded = false;
-        }
-        */
 
         treeNode.setExpanded(expanded);
 
@@ -124,5 +133,15 @@ public class GmdnTypeBean implements Serializable {
         this.pattern = pattern;
     }
 
+    public DeviceType getDeviceType() {
+        return deviceType;
+    }
 
+    public void setDeviceType(DeviceType deviceType) {
+        this.deviceType = deviceType;
+        updateCollectiveTerms();
+        Ajax.update(clientId+":collectiveTerms");
+        //"mainForm:j_idt109:j_idt2491:1:j_idt2493:j_idt2504:0:collectiveTerms"
+        //"mainForm:j_idt109:j_idt2491:1:j_idt2493:collectiveTerms"
+    }
 }

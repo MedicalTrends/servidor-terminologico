@@ -118,9 +118,6 @@ public class ConceptBean implements Serializable {
     @ManagedProperty(value = "#{crossmapBean}")
     private CrossmapBean crossmapBean;
 
-    @ManagedProperty( value="#{gmdnBean}")
-    private GmdnTypeBean gmdnTypeBean;
-
     @ManagedProperty(value = "#{messageBean}")
     MessageBean messageBean;
 
@@ -160,14 +157,6 @@ public class ConceptBean implements Serializable {
 
     public void setAutogenerateBeans(AutogenerateBeans autogenerateBeans) {
         this.autogenerateBeans = autogenerateBeans;
-    }
-
-    public GmdnTypeBean getGmdnTypeBean() {
-        return gmdnTypeBean;
-    }
-
-    public void setGmdnTypeBean(GmdnTypeBean gmdnTypeBean) {
-        this.gmdnTypeBean = gmdnTypeBean;
     }
 
     private List<Category> categoryList;
@@ -655,17 +644,14 @@ public class ConceptBean implements Serializable {
         Relationship relationship = null;
         boolean isRelationshipFound = false;
 
-        if ( target.getRepresentation().equals("null") )
+        if ( target.getRepresentation().equals("null") ) {
             return;
+        }
 
         if (relationshipDefinition.getTargetDefinition().isSMTKType() && target.getId() == concept.getId()) {
             messageBean.messageError("No puede seleccionar el mismo concepto que está editando");
             conceptSelected = null;
             return;
-        }
-
-        if(relationshipDefinition.getTargetDefinition().isGMDNType()) {
-            gmdnTypeBean.mapCollectiveTerms(gmdnManager.getParentLines(((DeviceType) target).getGenericDeviceGroup()), gmdnTypeBean.getRoot(), true);
         }
 
         // Se busca la relación
@@ -700,7 +686,9 @@ public class ConceptBean implements Serializable {
                 changeMultiplicityToRequiredRelationshipDefinitionMC();
         }
         //Autogenerado
-        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0) {
+            autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+        }
 
         autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
         // Se resetean los placeholder para los target de las relaciones

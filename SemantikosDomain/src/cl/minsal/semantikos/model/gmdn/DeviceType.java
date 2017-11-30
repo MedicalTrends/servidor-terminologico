@@ -90,7 +90,7 @@ public class DeviceType extends PersistentEntity implements Target, Serializable
 
     @Override
     public Target copy() {
-        return new DeviceType(this.getMake(), this.getModel(), this.getTradeName(), this.genericDeviceGroup);
+        return new DeviceType(this.getId(), this.getMake(), this.getModel(), this.getTradeName(), this.genericDeviceGroup);
     }
 
     @Override

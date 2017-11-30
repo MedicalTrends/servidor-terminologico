@@ -218,6 +218,6 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     color: #108bd5;
 }
 
-.ui-treetable table thead {
+.ui-treetable.collectiveTerms table thead {
     display: none !important;
 }

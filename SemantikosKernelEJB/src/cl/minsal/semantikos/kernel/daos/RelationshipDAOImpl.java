@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
+import cl.minsal.semantikos.model.gmdn.DeviceType;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 
@@ -519,6 +520,13 @@ public class RelationshipDAOImpl implements RelationshipDAO {
             target = targetDAO.getTargetByID(idTarget);
             //CrossmapSetMember crossmapSetMemberById = crossmapDAO.getCrossmapSetMemberById(idTarget);
             return new DirectCrossmap(id, conceptSMTK, (CrossmapSetMember)target, relationshipDefinition, validityUntil);
+        }
+
+                /* Y sino, puede ser crossmap */
+        if (relationshipDefinition.getTargetDefinition().isGMDNType()) {
+            target = targetDAO.getTargetByID(idTarget);
+            //CrossmapSetMember crossmapSetMemberById = crossmapDAO.getCrossmapSetMemberById(idTarget);
+            return new Relationship(id, conceptSMTK, (DeviceType) target, relationshipDefinition, validityUntil, new ArrayList<RelationshipAttribute>());
         }
 
         /* Sino, hay un nuevo tipo de target que no está siendo gestionado */
