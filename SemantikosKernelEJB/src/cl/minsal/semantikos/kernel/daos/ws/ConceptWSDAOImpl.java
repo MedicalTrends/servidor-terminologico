@@ -48,9 +48,6 @@ public class ConceptWSDAOImpl implements ConceptWSDAO {
 
     @Override
     public ConceptSMTK getConceptByID(long id) {
-        //ConnectionBD connect = new ConnectionBD();
-        /* Se registra el tiempo de inicio */
-        long init = currentTimeMillis();
 
         String sql = "begin ? := stk.stk_pck_ws.get_concept_by_id_json(?); end;";
 
@@ -88,9 +85,8 @@ public class ConceptWSDAOImpl implements ConceptWSDAO {
     }
 
     @Override
-    public List<ConceptSMTK> getConceptsPaginated(Long categoryId, int pageSize, int pageNumber) {
+    public List<ConceptSMTK> getConceptsPaginated(Long categoryId, int pageSize, int pageNumber, boolean modeled) {
         List<ConceptSMTK> concepts = new ArrayList<>();
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_ws.find_concept_by_categories_paginated_json(?,?,?,?); end;";
 
@@ -101,7 +97,7 @@ public class ConceptWSDAOImpl implements ConceptWSDAO {
             call.setArray(2, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", new Long[]{categoryId}));
             call.setInt(3, pageNumber);
             call.setInt(4, pageSize);
-            call.setBoolean(5, true);
+            call.setBoolean(5, modeled);
 
             call.execute();
 
@@ -129,8 +125,6 @@ public class ConceptWSDAOImpl implements ConceptWSDAO {
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK) {
 
         List<ConceptSMTK> concepts = new ArrayList<>();
-
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_ws.get_related_concepts_json(?); end;";
 

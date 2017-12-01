@@ -110,9 +110,9 @@ public interface ConceptManager {
 
     public List<ConceptSMTK> findConcepts(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled);
 
-    public long countConceptsByPattern(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled);
+    public int countConcepts(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled);
 
-    public List<ConceptSMTK> findModeledConceptPaginated(Category category, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findConceptsPaginated(Category category, int pageSize, int pageNumber, Boolean modeled);
 
     public List<ConceptSMTK> findConceptsWithTarget(Relationship relationship);
 
@@ -217,11 +217,11 @@ public interface ConceptManager {
      * Este método se encarga de entregar la cantidad de conceptos por Perfect Match según patron, categoría y si esta modelado o no.
      * @return cantidad de conceptos según los parámetros ingresados
      */
-    public long countPerfectMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean isModeled);
+    public int countPerfectMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean isModeled);
     /**
      * Este método se encarga de entregar la cantidad de conceptos por Truncate Match según patron, categoría y si esta modelado o no.
      * @return cantidad de conceptos según los parámetros ingresados
      */
-    public long countTruncateMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean isModeled);
+    public int countTruncateMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean isModeled);
 
 }

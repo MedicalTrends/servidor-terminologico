@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.helpertables;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.concept.ConceptBean;
 import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.users.AuthenticationBean;
@@ -61,16 +61,16 @@ public class ISPBean {
     private ConceptBean conceptBean;
 
     //@EJB
-    ISPFetcher ispFetcher = (ISPFetcher) RemoteEJBClientFactory.getInstance().getManager(ISPFetcher.class);
+    ISPFetcher ispFetcher = (ISPFetcher) ServiceLocator.getInstance().getService(ISPFetcher.class);
 
     //@EJB
-    HelperTablesManager helperTablesManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
+    HelperTablesManager helperTablesManager = (HelperTablesManager) ServiceLocator.getInstance().getService(HelperTablesManager.class);
 
     //@EJB
-    UserManager userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
+    UserManager userManager = (UserManager) ServiceLocator.getInstance().getService(UserManager.class);
 
     //@EJB
-    RelationshipManager relationshipManager = (RelationshipManager) RemoteEJBClientFactory.getInstance().getManager(RelationshipManager.class);;
+    RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);;
 
 
     @PostConstruct

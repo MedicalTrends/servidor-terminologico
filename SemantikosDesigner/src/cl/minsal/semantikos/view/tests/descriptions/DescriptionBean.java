@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.view.tests.descriptions;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.businessrules.ConceptDefinitionalGradeBR;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
@@ -28,7 +28,7 @@ public class DescriptionBean {
     static final Logger logger = LoggerFactory.getLogger(DescriptionBean.class);
 
     //@EJB
-    private DescriptionManager descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);;
+    private DescriptionManager descriptionManager = (DescriptionManager) ServiceLocator.getInstance().getService(DescriptionManager.class);;
 
     /** El valor de negocio del <em>DESCRIPTION_ID</em> de la descripción */
     private String descriptionId;

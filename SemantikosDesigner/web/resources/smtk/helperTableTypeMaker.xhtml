@@ -134,7 +134,16 @@
                                 <h:column>
                                     <ui:repeat value="#{helperTableBean.getRelatedRows(relationship.target, column)}" var="relatedRow">
                                         <p:outputLabel value="#{relatedRow.description}" styleClass="Fs14" />
-                                        <ui:fragment rendered="#{helperTableBean.getRelatedRows(relationship.target, column).size() > 0}"><br /></ui:fragment>
+                                        <ui:fragment rendered="#{ not empty relatedRow.cells}">
+                                            <p:outputLabel value=", " styleClass="Fs14" />
+                                        </ui:fragment>
+                                        <ui:repeat value="#{relatedRow.cells}" var="cell">
+                                            <p:outputLabel value="#{cell}" styleClass="Fs14" />
+                                            <p:outputLabel value=", " styleClass="Fs14" />
+                                        </ui:repeat>
+                                        <ui:fragment rendered="#{helperTableBean.getRelatedRows(relationship.target, column).size() > 0}">
+                                            <br />
+                                        </ui:fragment>
                                     </ui:repeat>
                                 </h:column>
                             </h:dataTable>

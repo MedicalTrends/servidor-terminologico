@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.concept;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 
@@ -20,7 +20,7 @@ public class ConceptSpecialBean {
     private ConceptSMTK conceptSMTKNotValid;
 
     //@EJB
-    private ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+    private ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
 
     @PostConstruct
     public void init(){

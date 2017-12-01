@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.designer;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.CrossmapsManager;
 import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
 import cl.minsal.semantikos.model.ConceptSMTK;
@@ -40,7 +40,7 @@ public class CrossmapBean implements Serializable {
     private String typeSearch;
 
     //@EJB
-    private CrossmapsManager crossmapsManager = (CrossmapsManager) RemoteEJBClientFactory.getInstance().getManager(CrossmapsManager.class);
+    private CrossmapsManager crossmapsManager = (CrossmapsManager) ServiceLocator.getInstance().getService(CrossmapsManager.class);
 
 
     @PostConstruct

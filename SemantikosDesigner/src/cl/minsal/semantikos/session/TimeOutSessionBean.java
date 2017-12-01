@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.session;
 
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.QueryManager;
 import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
 
@@ -22,7 +22,7 @@ import java.io.IOException;
 public class TimeOutSessionBean {
 
     //@EJB
-    private TimeOutWeb timeOutWeb= (TimeOutWeb) RemoteEJBClientFactory.getInstance().getManager(TimeOutWeb.class);
+    private TimeOutWeb timeOutWeb= (TimeOutWeb) ServiceLocator.getInstance().getService(TimeOutWeb.class);
 
     private static int timeOut;
 

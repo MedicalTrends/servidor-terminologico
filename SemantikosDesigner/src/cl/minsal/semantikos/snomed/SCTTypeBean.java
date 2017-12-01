@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.snomed;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
@@ -32,7 +32,7 @@ import static java.util.Collections.emptyList;
 public class SCTTypeBean implements Serializable {
 
     //@EJB
-    private SnomedCTManager cstManager = (SnomedCTManager) RemoteEJBClientFactory.getInstance().getManager(SnomedCTManager.class);
+    private SnomedCTManager cstManager = (SnomedCTManager) ServiceLocator.getInstance().getService(SnomedCTManager.class);
 
     private String pattern;
 

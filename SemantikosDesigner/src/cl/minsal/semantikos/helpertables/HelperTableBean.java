@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.helpertables;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.concept.ConceptBean;
 import cl.minsal.semantikos.kernel.businessrules.HelperTableSearchBR;
 import cl.minsal.semantikos.messages.MessageBean;
@@ -53,9 +53,9 @@ public class HelperTableBean implements Serializable {
     private MessageBean messageBean;
 
     //@EJB
-    HelperTablesManager manager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
+    HelperTablesManager manager = (HelperTablesManager) ServiceLocator.getInstance().getService(HelperTablesManager.class);
 
-    HelperTableSearchBR helperTableSearchBR = (HelperTableSearchBR) RemoteEJBClientFactory.getInstance().getManager(HelperTableSearchBR.class);
+    HelperTableSearchBR helperTableSearchBR = (HelperTableSearchBR) ServiceLocator.getInstance().getService(HelperTableSearchBR.class);
 
     @PostConstruct
     protected void initialize() {

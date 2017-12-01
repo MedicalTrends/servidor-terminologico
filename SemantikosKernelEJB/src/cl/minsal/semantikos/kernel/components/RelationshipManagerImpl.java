@@ -296,8 +296,8 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
     @Override
     public List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK concept) {
-        //return relationshipDAO.getRelationshipsBySourceConcept(concept);
-        return relationshipWSDAO.getRelationshipsBySourceConcept(concept);
+        return relationshipDAO.getRelationshipsBySourceConcept(concept);
+        //return relationshipWSDAO.getRelationshipsBySourceConcept(concept);
     }
 
     @Override

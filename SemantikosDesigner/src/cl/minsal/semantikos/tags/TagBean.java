@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.tags;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.concept.ConceptBean;
 import cl.minsal.semantikos.kernel.components.TagManager;
 import cl.minsal.semantikos.kernel.components.UserManager;
@@ -65,7 +65,7 @@ public class TagBean implements Serializable{
 
 
     //@EJB
-    private TagManager tagManager = (TagManager) RemoteEJBClientFactory.getInstance().getManager(TagManager.class);
+    private TagManager tagManager = (TagManager) ServiceLocator.getInstance().getService(TagManager.class);
 
     @ManagedProperty(value="#{conceptBean}")
     private ConceptBean conceptBean;

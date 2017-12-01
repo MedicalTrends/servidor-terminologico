@@ -400,10 +400,10 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public long countConceptsByPattern(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled) {
+    public int countConcepts(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled) {
         String patternStandard = conceptSearchBR.standardizationPattern(pattern);
 
-        long count = countPerfectMatch(patternStandard, categories, refsets, modeled);
+        int count = countPerfectMatch(patternStandard, categories, refsets, modeled);
 
         if (count != 0) {
             return count;
@@ -412,18 +412,18 @@ public class ConceptManagerImpl implements ConceptManager {
         }
     }
 
-    public long countPerfectMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled) {
+    public int countPerfectMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled) {
         return conceptDAO.countPerfectMatch(pattern, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refsets), modeled);
     }
 
-    public long countTruncateMatch(String pattern,List<Category> categories, List<RefSet> refsets, Boolean modeled) {
+    public int countTruncateMatch(String pattern,List<Category> categories, List<RefSet> refsets, Boolean modeled) {
         return conceptDAO.countTruncateMatch(pattern,  PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refsets), modeled);
     }
 
     @Override
-    public List<ConceptSMTK> findModeledConceptPaginated(Category category, int pageSize, int pageNumber) {
+    public List<ConceptSMTK> findConceptsPaginated(Category category, int pageSize, int pageNumber, Boolean modeled) {
         //return this.conceptDAO.getModeledConceptPaginated(category.getId(), pageSize, pageNumber);
-        return this.conceptWSDAO.getConceptsPaginated(category.getId(), pageSize, pageNumber);
+        return this.conceptWSDAO.getConceptsPaginated(category.getId(), pageSize, pageNumber, modeled);
     }
 
     @Override

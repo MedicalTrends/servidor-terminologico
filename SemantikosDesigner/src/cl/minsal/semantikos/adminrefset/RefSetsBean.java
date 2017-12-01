@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.adminrefset;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.users.AuthenticationBean;
@@ -82,16 +82,16 @@ public class RefSetsBean implements Serializable {
     private transient MessageBean messageBean;
 
     //@EJB
-    AuditManager auditManager = (AuditManager) RemoteEJBClientFactory.getInstance().getManager(AuditManager.class);
+    AuditManager auditManager = (AuditManager) ServiceLocator.getInstance().getService(AuditManager.class);
 
     //@EJB
-    CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
+    CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
 
     //@EJB
-    ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+    ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
 
     //@EJB
-    RefSetManager refSetManager = (RefSetManager) RemoteEJBClientFactory.getInstance().getManager(RefSetManager.class);
+    RefSetManager refSetManager = (RefSetManager) ServiceLocator.getInstance().getService(RefSetManager.class);
 
 
     @PostConstruct

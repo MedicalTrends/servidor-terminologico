@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.users;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.concept.SMTKTypeBean;
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.UserManager;
@@ -41,13 +41,13 @@ public class UsersBean {
     static private final Logger logger = LoggerFactory.getLogger(UsersBean.class);
 
     //@EJB
-    UserManager userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
+    UserManager userManager = (UserManager) ServiceLocator.getInstance().getService(UserManager.class);
 
     //@EJB
-    InstitutionManager institutionManager = (InstitutionManager) RemoteEJBClientFactory.getInstance().getManager(InstitutionManager.class);
+    InstitutionManager institutionManager = (InstitutionManager) ServiceLocator.getInstance().getService(InstitutionManager.class);
 
     //@EJB
-    AuthenticationManager authenticationManager = (AuthenticationManager) RemoteEJBClientFactory.getInstance().getManager(AuthenticationManager.class);
+    AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
 
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;

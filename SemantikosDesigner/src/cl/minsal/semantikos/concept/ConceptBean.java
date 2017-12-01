@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.concept;
 
 import cl.minsal.semantikos.MainMenuBean;
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.description.AutogenerateBeans;
 import cl.minsal.semantikos.gmdn.GmdnTypeBean;
 import cl.minsal.semantikos.kernel.components.*;
@@ -68,37 +68,37 @@ public class ConceptBean implements Serializable {
     private static final Logger logger = LoggerFactory.getLogger(ConceptBean.class);
 
     //@EJB
-    ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+    ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
 
     //@EJB
-    DescriptionManager descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
+    DescriptionManager descriptionManager = (DescriptionManager) ServiceLocator.getInstance().getService(DescriptionManager.class);
 
     //@EJB
-    RelationshipManager relationshipManager = (RelationshipManager) RemoteEJBClientFactory.getInstance().getManager(RelationshipManager.class);;
+    RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);;
 
     //@EJB
-    CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
+    CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
 
     //@EJB
-    HelperTablesManager helperTablesManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
+    HelperTablesManager helperTablesManager = (HelperTablesManager) ServiceLocator.getInstance().getService(HelperTablesManager.class);
 
 
-    GmdnManager gmdnManager = (GmdnManager) RemoteEJBClientFactory.getInstance().getManager(GmdnManager.class);
-
-    //@EJB
-    TagSMTKManager tagSMTKManager = (TagSMTKManager) RemoteEJBClientFactory.getInstance().getManager(TagSMTKManager.class);
+    GmdnManager gmdnManager = (GmdnManager) ServiceLocator.getInstance().getService(GmdnManager.class);
 
     //@EJB
-    AuditManager auditManager = (AuditManager) RemoteEJBClientFactory.getInstance().getManager(AuditManager.class);
+    TagSMTKManager tagSMTKManager = (TagSMTKManager) ServiceLocator.getInstance().getService(TagSMTKManager.class);
 
     //@EJB
-    ViewAugmenter viewAugmenter = (ViewAugmenter) RemoteEJBClientFactory.getInstance().getManager(ViewAugmenter.class);
+    AuditManager auditManager = (AuditManager) ServiceLocator.getInstance().getService(AuditManager.class);
 
     //@EJB
-    RelationshipBindingBR relationshipBindingBR = (RelationshipBindingBR) RemoteEJBClientFactory.getInstance().getManager(RelationshipBindingBR.class);
+    ViewAugmenter viewAugmenter = (ViewAugmenter) ServiceLocator.getInstance().getService(ViewAugmenter.class);
 
     //@EJB
-    ConceptDefinitionalGradeBR conceptDefinitionalGradeBR = (ConceptDefinitionalGradeBR) RemoteEJBClientFactory.getInstance().getManager(ConceptDefinitionalGradeBR.class);
+    RelationshipBindingBR relationshipBindingBR = (RelationshipBindingBR) ServiceLocator.getInstance().getService(RelationshipBindingBR.class);
+
+    //@EJB
+    ConceptDefinitionalGradeBR conceptDefinitionalGradeBR = (ConceptDefinitionalGradeBR) ServiceLocator.getInstance().getService(ConceptDefinitionalGradeBR.class);
 
     @ManagedProperty(value = "#{smtkBean}")
     private SMTKTypeBean smtkTypeBean;

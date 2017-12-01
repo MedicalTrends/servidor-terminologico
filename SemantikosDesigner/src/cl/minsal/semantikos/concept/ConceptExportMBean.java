@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.concept;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.AuditManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
@@ -46,7 +46,7 @@ public class ConceptExportMBean extends UINamingContainer {
     //80614
 
     //@EJB
-    AuditManager auditManager = (AuditManager) RemoteEJBClientFactory.getInstance().getManager(AuditManager.class);
+    AuditManager auditManager = (AuditManager) ServiceLocator.getInstance().getService(AuditManager.class);
 
     private List<Relationship> crossMapsRelationships;
 

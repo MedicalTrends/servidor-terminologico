@@ -563,7 +563,7 @@ public class ConceptController {
             throw new NotFoundFault("No se encontró una categoría de nombre '" + categoryName + "'");
         }
 
-        List<ConceptSMTK> concepts = conceptManager.findModeledConceptPaginated(category, pageSize, pageNumber);
+        List<ConceptSMTK> concepts = conceptManager.findConceptsPaginated(category, pageSize, pageNumber, true);
 
         /*
         if(category.getRelationshipDefinitions().size() > 2) {

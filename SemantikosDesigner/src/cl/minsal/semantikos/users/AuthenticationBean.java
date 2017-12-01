@@ -2,7 +2,7 @@ package cl.minsal.semantikos.users;
 
 import cl.minsal.semantikos.Constants;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.InstitutionManager;
 import cl.minsal.semantikos.kernel.components.UserManager;
@@ -46,10 +46,10 @@ public class AuthenticationBean {
     private User loggedUser;
 
     //@EJB(name = "AuthenticationManagerEJB")
-    AuthenticationManager authenticationManager = (AuthenticationManager) RemoteEJBClientFactory.getInstance().getManager(AuthenticationManager.class);
+    AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
 
     //@EJB
-    TimeOutWeb timeOutWeb = (TimeOutWeb) RemoteEJBClientFactory.getInstance().getManager(TimeOutWeb.class);
+    TimeOutWeb timeOutWeb = (TimeOutWeb) ServiceLocator.getInstance().getService(TimeOutWeb.class);
 
 
     public boolean isLoggedIn() {

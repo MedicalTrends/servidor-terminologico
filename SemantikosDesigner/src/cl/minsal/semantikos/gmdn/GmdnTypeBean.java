@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.gmdn;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.GmdnManager;
 import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
@@ -37,7 +37,7 @@ import static java.util.Collections.emptyList;
 public class GmdnTypeBean implements Serializable {
 
     //@EJB
-    private GmdnManager gmdnManager = (GmdnManager) RemoteEJBClientFactory.getInstance().getManager(GmdnManager.class);
+    private GmdnManager gmdnManager = (GmdnManager) ServiceLocator.getInstance().getService(GmdnManager.class);
 
     private String pattern;
 
@@ -45,15 +45,7 @@ public class GmdnTypeBean implements Serializable {
 
     private transient TreeNode root;
 
-    private String clientId;
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
+    private boolean rootLoaded = false;
 
     /**
      * Constructor por defecto para la inicialización de componentes.
@@ -122,6 +114,8 @@ public class GmdnTypeBean implements Serializable {
             mapCollectiveTerms(children, childTreeNode, expanded);
         }
 
+        rootLoaded = true;
+
         return root;
     }
 
@@ -140,8 +134,13 @@ public class GmdnTypeBean implements Serializable {
     public void setDeviceType(DeviceType deviceType) {
         this.deviceType = deviceType;
         updateCollectiveTerms();
-        Ajax.update(clientId+":collectiveTerms");
-        //"mainForm:j_idt109:j_idt2491:1:j_idt2493:j_idt2504:0:collectiveTerms"
-        //"mainForm:j_idt109:j_idt2491:1:j_idt2493:collectiveTerms"
+    }
+
+    public boolean isRootLoaded() {
+        return rootLoaded;
+    }
+
+    public void setRootLoaded(boolean rootLoaded) {
+        this.rootLoaded = rootLoaded;
     }
 }

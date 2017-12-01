@@ -19,8 +19,6 @@
 
 <composite:implementation>
 
-    <p:remoteCommand name="onload2" action="#{gmdnBean.setClientId(cc.clientId)}" autoRun="true" />
-
     <p:panel id="multiplicityN_with_attributes" styleClass="sctPanel"
              rendered="#{ true }">
 
@@ -163,6 +161,9 @@
                                     </p:column>
                                 </p:treeTable>
                             </p:panelGrid>
+
+                            <p:poll interval="2" update="@(.collectiveTerms)" widgetVar="poll" autoStart="true" stop="#{gmdnBean.rootLoaded}"
+                                    async="true" process="@this" />
 
                             <p:spacer />
 

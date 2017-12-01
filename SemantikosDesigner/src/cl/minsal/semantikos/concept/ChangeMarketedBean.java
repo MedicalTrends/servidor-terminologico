@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.concept;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.model.ConceptSMTK;
@@ -43,10 +43,10 @@ public class ChangeMarketedBean {
     private Target targetSelected;
 
     //@EJB
-    private ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+    private ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
 
     //@EJB
-    private RelationshipManager relationshipManager = (RelationshipManager) RemoteEJBClientFactory.getInstance().getManager(RelationshipManager.class);
+    private RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);
 
     @PostConstruct
     public void init() {

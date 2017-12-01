@@ -808,9 +808,8 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> getModeledConceptPaginated(Long categoryId, int pageSize, int pageNumber) {
+    public List<ConceptSMTK> getConceptsPaginated(Long categoryId, int pageSize, int pageNumber, boolean modeled) {
         List<ConceptSMTK> concepts = new ArrayList<>();
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept_by_categories_paginated(?,?,?,?); end;";
 
@@ -821,7 +820,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.setArray(2, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", new Long[]{categoryId}));
             call.setInt(3, pageNumber);
             call.setInt(4, pageSize);
-            call.setBoolean(5, true);
+            call.setBoolean(5, modeled);
 
             call.execute();
 

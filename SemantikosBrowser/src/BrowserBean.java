@@ -1,5 +1,5 @@
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.QueryManager;
@@ -87,12 +87,12 @@ public class BrowserBean implements Serializable {
     @PostConstruct
     protected void initialize() {
 
-        queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
-        tagManager = (TagManager) RemoteEJBClientFactory.getInstance().getManager(TagManager.class);
-        categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
-        conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+        queryManager = (QueryManager) ServiceLocator.getInstance().getService(QueryManager.class);
+        tagManager = (TagManager) ServiceLocator.getInstance().getService(TagManager.class);
+        categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
+        conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
 
-        //RemoteEJBClientFactory.getInstance().closeContext();
+        //ServiceLocator.getInstance().closeContext();
 
         tags = tagManager.getAllTags();
         categories = categoryManager.getCategories();

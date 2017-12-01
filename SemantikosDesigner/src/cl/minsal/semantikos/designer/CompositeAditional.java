@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.designer;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
@@ -26,7 +26,7 @@ import java.util.Map;
 public class CompositeAditional {
     //TODO: refactorizar
     //@EJB
-    private ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+    private ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
 
     private Map<Long, List<Relationship>> relationships;
 

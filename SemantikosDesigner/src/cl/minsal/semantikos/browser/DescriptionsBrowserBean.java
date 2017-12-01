@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.browser;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.users.AuthenticationBean;
 
@@ -39,16 +39,16 @@ public class DescriptionsBrowserBean implements Serializable {
     static final Logger logger = LoggerFactory.getLogger(DescriptionsBrowserBean.class);
 
     //@EJB
-    QueryManager queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
+    QueryManager queryManager = (QueryManager) ServiceLocator.getInstance().getService(QueryManager.class);
 
     //@EJB
-    RefSetManager refSetManager = (RefSetManager) RemoteEJBClientFactory.getInstance().getManager(RefSetManager.class);
+    RefSetManager refSetManager = (RefSetManager) ServiceLocator.getInstance().getService(RefSetManager.class);
 
     //@EJB
-    private CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
+    private CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
 
     //@EJB
-    private ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+    private ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
 
     /**
      * Objeto de consulta: contiene todos los filtros y columnas necesarios para el despliegue de los resultados en el navegador

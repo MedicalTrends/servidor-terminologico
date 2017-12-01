@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.snomed;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.PendingTermsManager;
 import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
@@ -22,7 +22,7 @@ public class FindSnomedCT {
     private static final Logger logger = LoggerFactory.getLogger(FindSnomedCT.class);
 
     //@EJB
-    private SnomedCTManager snomedCTManager = (SnomedCTManager) RemoteEJBClientFactory.getInstance().getManager(SnomedCTManager.class);
+    private SnomedCTManager snomedCTManager = (SnomedCTManager) ServiceLocator.getInstance().getService(SnomedCTManager.class);
 
     private List<ConceptSCT> conceptSCTs;
 
