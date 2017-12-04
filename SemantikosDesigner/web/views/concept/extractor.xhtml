@@ -24,24 +24,20 @@
                 <p:growl id="msg" showDetail="true" autoUpdate="true" />
                 <p:growl id="messages1" showDetail="true"/>
 
+            <p:selectManyCheckbox id="categories"
+                                  converter="omnifaces.SelectItemsConverter"
+                                  value="#{conceptExtractBean.selectedCategories}"
+                                  layout="responsive"
+                                  columns="4">
+
+                <f:selectItems value="#{conceptExtractBean.categoryList}" var="category"
+                               itemLabel="#{category.name}" itemValue="#{category}"/>
+
+            </p:selectManyCheckbox>
+
             <div class="ui-fluid">
 
             <h:panelGrid columns="2" layout="grid">
-
-                <p:outputLabel value="Categorías" />
-
-                <p:selectCheckboxMenu id="categories"
-                                      value="#{conceptExtractBean.selectedCategories}"
-                                      converter="omnifaces.SelectItemsConverter"
-                                      label="Seleccione..."
-                                      autoWidth="false"
-                                      filter="true"
-                                      filterMatchMode="startsWith">
-
-                    <f:selectItems value="#{conceptExtractBean.categoryList}" var="category"
-                                   itemLabel="#{category.name}" itemValue="#{category}"/>
-
-                </p:selectCheckboxMenu>
 
                 <p:commandButton value="Ejecutar" styleClass="ui-priority-primary"
                                                   onclick="PF('poll').start()"

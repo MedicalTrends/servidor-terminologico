@@ -281,7 +281,7 @@ public class TargetDAOImpl implements TargetDAO {
     public long update(Relationship relationship) {
         //ConnectionBD connect = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_target.update_target(?,?,?,?,?,?,?,?,?,?,?,?,?); end;";
+        String sql = "begin ? := stk.stk_pck_target.update_target(?,?,?,?,?,?,?,?,?,?,?,?); end;";
 
         long idTarget = relationshipDAO.getTargetByRelationship(relationship);
 
@@ -366,7 +366,7 @@ public class TargetDAOImpl implements TargetDAO {
     public long update(RelationshipAttribute relationshipAttribute) {
         //ConnectionBD connect = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_target.update_target(?,?,?,?,?,?,?,?,?,?,?); end;";
+        String sql = "begin ? := stk.stk_pck_target.update_target(?,?,?,?,?,?,?,?,?,?,?,?); end;";
 
         long idTarget = relationshipAttributeDAO.getTargetByRelationshipAttribute(relationshipAttribute);
 
@@ -405,23 +405,23 @@ public class TargetDAOImpl implements TargetDAO {
             /* Almacenar concepto SMTK */
             if (relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition().isSMTKType()) {
                 call.setLong(10, relationshipAttribute.getTarget().getId());
-                call.setLong(11, SMTK.getIdTargetType());
+                call.setLong(12, SMTK.getIdTargetType());
             }
 
             /* Almacenar registro Tabla auxiliar */
             else if (relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition().isHelperTable()) {
                 //helperTableDAO.updateAuxiliary(relationship.getId(), relationship.getTarget().getId());
                 call.setLong(7, relationshipAttribute.getTarget().getId()); //Id de HelperTableRow
-                call.setLong(11, HelperTable.getIdTargetType());
+                call.setLong(12, HelperTable.getIdTargetType());
             }
 
             /* Almacenar concepto SCT */
             else if (relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition().isSnomedCTType()) {
-                call.setLong(10, relationshipAttribute.getTarget().getId());
-                call.setLong(11, SnomedCT.getIdTargetType());
+                call.setLong(9, relationshipAttribute.getTarget().getId());
+                call.setLong(12, SnomedCT.getIdTargetType());
             }
 
-            call.setLong(12, idTarget);
+            call.setLong(13, idTarget);
 
             call.execute();
 

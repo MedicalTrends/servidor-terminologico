@@ -262,8 +262,8 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
     @Override
     public List<Relationship> findRelationshipsLike(RelationshipDefinition relationshipDefinition, Target target) {
-        //return relationshipDAO.findRelationshipsLike(relationshipDefinition, target);
-        return relationshipWSDAO.findRelationshipsLike(relationshipDefinition, target);
+        return relationshipDAO.findRelationshipsLike(relationshipDefinition, target);
+        //return relationshipWSDAO.findRelationshipsLike(relationshipDefinition, target);
     }
 
     @Override

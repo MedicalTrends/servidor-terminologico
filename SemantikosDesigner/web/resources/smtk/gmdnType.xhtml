@@ -22,8 +22,15 @@
     <p:panel id="multiplicityN_with_attributes" styleClass="sctPanel"
              rendered="#{ true }">
 
+        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
+            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="El concepto no tiene Relaciones a GMDN" />
+            </p:outputPanel>
+        </f:facet>
+
         <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%"
-                       rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+                       rendered="#{ empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
 
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
@@ -33,9 +40,9 @@
 
                     <div class="Container20 White Responsive">
 
-                        <div class="ContainerIndent">
+                        <div class="#{ cc.attrs.concept.editable?'ContainerIndent':''}" >
 
-                            <p:outputLabel value="Tipo Dispositivo: " />
+                            <p:outputLabel value="Tipo Dispositivo: " rendered="#{ cc.attrs.concept.editable }" />
 
                         </div>
 
@@ -45,7 +52,7 @@
 
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
-                            <p:outputPanel styleClass="search searchSCT">
+                            <p:outputPanel styleClass="search searchSCT" rendered="#{ cc.attrs.concept.editable }">
 
                                 <p:autoComplete emptyMessage="No se encontraron tipos de dispositivos relacionados"
                                                 forceSelection="true"
@@ -94,7 +101,7 @@
 
         <p:panel id="helperTableTypeSimpleWithAttributes"
                  widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
-                 rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+                 rendered="#{ not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
 
             <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                        var="relationship"
@@ -108,9 +115,9 @@
 
                         <div class="Container20 White Responsive">
 
-                            <div class="ContainerIndent">
+                            <div class="#{ cc.attrs.concept.editable?'ContainerIndent':'' }">
 
-                                <p:outputLabel value="Tipo Dispositivo: " />
+                                <p:outputLabel value="Tipo Dispositivo: " rendered="#{ cc.attrs.concept.editable }" />
 
                             </div>
 
@@ -119,7 +126,7 @@
                         <div class="Container40 White Responsive">
                             <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
-                                <p:outputPanel styleClass="search">
+                                <p:outputPanel styleClass="search" rendered="#{ cc.attrs.concept.editable }">
                                     <p:inputText disabled="true" id="findHTRecords4" value="#{relationship.target.toString()}" />
                                     <p:commandLink process="@this"
                                                    update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
@@ -162,7 +169,7 @@
                                 </p:treeTable>
                             </p:panelGrid>
 
-                            <p:poll interval="2" update="@(.collectiveTerms)" widgetVar="poll" autoStart="true" stop="#{gmdnBean.rootLoaded}"
+                            <p:poll interval="1" update="@(.collectiveTerms)" widgetVar="poll" autoStart="true" stop="#{gmdnBean.rootLoaded}"
                                     async="true" process="@this" />
 
                             <p:spacer />

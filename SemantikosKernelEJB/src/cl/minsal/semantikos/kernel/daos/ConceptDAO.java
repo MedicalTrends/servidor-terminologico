@@ -142,6 +142,6 @@ public interface ConceptDAO {
     public int countTruncateMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled);
 
 
-    public List<ConceptSMTK> getConceptsPaginated(Long categoryId, int pageSize, int pageNumber, boolean modeled);
+    public List<ConceptSMTK> getConceptsPaginated(Long categoryId, int pageSize, int pageNumber, Boolean modeled);
 
 }

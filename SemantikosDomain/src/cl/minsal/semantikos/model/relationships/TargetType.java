@@ -18,13 +18,13 @@ public enum TargetType implements Serializable {
     GMDN(6, "Gmdn", "Gmdn");
 
 
-    TargetType(long idTargetType, String nombre, String description) {
+    TargetType(int idTargetType, String nombre, String description) {
         this.idTargetType = idTargetType;
         this.nombre = nombre;
         this.description = description;
     }
 
-    private long idTargetType;
+    private int idTargetType;
 
     private String nombre;
 
@@ -34,11 +34,11 @@ public enum TargetType implements Serializable {
 
     private List<BasicTypeDefinition> basicTypeDefinitions;
 
-    public long getIdTargetType() {
+    public int getIdTargetType() {
         return idTargetType;
     }
 
-    public void setIdTargetType(long idTargetType) {
+    public void setIdTargetType(int idTargetType) {
         this.idTargetType = idTargetType;
     }
 

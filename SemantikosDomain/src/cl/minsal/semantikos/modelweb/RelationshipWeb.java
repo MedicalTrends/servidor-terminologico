@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.modelweb;
 
 
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
@@ -104,5 +105,29 @@ public class RelationshipWeb extends Relationship implements Comparable<Relation
         }
 
         return null;
+    }
+
+    /**
+     * Este método es responsable de retornar todas las relaciones de este concepto que son de un cierto tipo de
+     * relación.
+     *
+     * @param value El tipo de relación al que pertenecen las relaciones a retornar.
+     *
+     * @return Una <code>java.util.List</code> de relaciones de tipo <code>relationshipAttribute</code>.
+     */
+    public List<RelationshipAttribute> getBasicAttributesLike(boolean value) {
+
+        List<RelationshipAttribute> someAttributes = new ArrayList<>();
+
+        for (RelationshipAttribute attribute : this.getRelationshipAttributes()) {
+            if (attribute.getRelationAttributeDefinition().getTargetDefinition().isBasicType()) {
+                BasicTypeValue basicTypeValue = (BasicTypeValue) attribute.getTarget();
+                if(basicTypeValue.getValue().equals(value)) {
+                    someAttributes.add(attribute);
+                }
+            }
+        }
+
+        return someAttributes;
     }
 }
