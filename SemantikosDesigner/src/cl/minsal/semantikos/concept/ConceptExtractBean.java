@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import org.omnifaces.util.Ajax;
 import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
@@ -18,6 +19,7 @@ import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.text.Normalizer;
 import java.util.*;
+import java.util.regex.Matcher;
 
 import static java.util.Collections.singletonList;
 
@@ -32,11 +34,17 @@ public class ConceptExtractBean implements Serializable {
 
     private Map<Long, Integer> sizes = new HashMap<>();
 
+    private Map<Long, Boolean> flags = new HashMap<>();
+
     private List<Category> categoryList = new ArrayList<>();
 
     private List<Category> selectedCategories = new ArrayList<>();
 
     private static final int BLOCK_SIZE = 100;
+
+    private boolean processFinished = false;
+
+    private static Long[] drugs = {13L, 33L, 34L, 35L, 36L, 37L, 38L, 39L};
 
     //@EJB
     private ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
@@ -49,11 +57,15 @@ public class ConceptExtractBean implements Serializable {
 
     @PostConstruct
     public void init() {
+
         selectedCategories = new ArrayList<>();
-        categoryList = categoryManager.getCategories();
-        for (Category category : categoryList) {
-            concepts.put(category.getId(), new ArrayList<ConceptSMTK>());
-            sizes.put(category.getId(), 0);
+        for (Category category : categoryManager.getCategories()) {
+            if(Arrays.asList(drugs).contains(category.getId())) {
+                categoryList.add(category);
+                concepts.put(category.getId(), new ArrayList<ConceptSMTK>());
+                sizes.put(category.getId(), 0);
+                flags.put(category.getId(), false);
+            }
         }
     }
 
@@ -87,6 +99,22 @@ public class ConceptExtractBean implements Serializable {
 
     public void setConcepts(Map<Long, List<ConceptSMTK>> concepts) {
         this.concepts = concepts;
+    }
+
+    public Map<Long, Boolean> getFlags() {
+        return flags;
+    }
+
+    public void setFlags(Map<Long, Boolean> flags) {
+        this.flags = flags;
+    }
+
+    public boolean isProcessFinished() {
+        return processFinished;
+    }
+
+    public void setProcessFinished(boolean processFinished) {
+        this.processFinished = processFinished;
     }
 
     public void extract() {
@@ -124,6 +152,18 @@ public class ConceptExtractBean implements Serializable {
 
             }
 
+            flags.put(selectedCategory.getId(), true);
+
         }
+
+        RequestContext reqCtx = RequestContext.getCurrentInstance();
+        reqCtx.execute("PF('poll').stop();");
+        Ajax.update("extractorForm:process-state");
+        //selectedCategories = new ArrayList<>();
+        processFinished = true;
+    }
+
+    public int getCurrentProgress(long id) {
+        return Math.round(((float)concepts.get(id).size()/(float)sizes.get(id))*100);
     }
 }

@@ -99,6 +99,8 @@
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
                                     <i class="fa fa-close fa-lg"  />
+                                    <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar esta relación?"
+                                               icon="ui-icon-alert"/>
                                 </p:commandLink>
                             </p:outputPanel>
 
@@ -188,6 +190,8 @@
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
                                     <i class="fa fa-close fa-lg"  />
+                                    <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar esta relación?"
+                                               icon="ui-icon-alert"/>
                                 </p:commandLink>
                             </p:outputPanel>
                         </div>

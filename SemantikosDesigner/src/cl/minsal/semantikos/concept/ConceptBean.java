@@ -798,6 +798,8 @@ public class ConceptBean implements Serializable {
 
         crossmapBean.refreshCrossmapIndirect(concept);
 
+        resetPlaceHolders();
+
     }
 
     /**

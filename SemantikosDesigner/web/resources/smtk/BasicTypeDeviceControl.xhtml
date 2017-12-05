@@ -47,7 +47,7 @@
                 <div class="Container80 White Responsive">
                     <!-- Atributos de relación -->
                     <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}" var="relationship">
-                        <p:selectBooleanCheckbox value="#{ not empty relationship.getBasicAttributesLike(true) }" disabled="true" style="display: none" />
+                        <p:selectBooleanCheckbox value="#{ not empty deviceControlBean.updateRelationship(relationship) }" disabled="true" style="display: none" />
                         <smtk:attributes concept="#{cc.attrs.concept}" relationship="#{relationship}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
                     </ui:repeat>
                 </div>

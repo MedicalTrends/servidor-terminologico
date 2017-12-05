@@ -2,7 +2,8 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui"
+                xmlns:ce="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui" xmlns:c="http://mojarra.dev.java.net/mojarra_ext"
                 template="/WEB-INF/template/template.xhtml">
 
     <ui:define name="header">
@@ -24,42 +25,101 @@
                 <p:growl id="msg" showDetail="true" autoUpdate="true" />
                 <p:growl id="messages1" showDetail="true"/>
 
-            <p:selectManyCheckbox id="categories"
-                                  converter="omnifaces.SelectItemsConverter"
-                                  value="#{conceptExtractBean.selectedCategories}"
-                                  layout="responsive"
-                                  columns="4">
+            <div class="Container30 Responsive30">
+                <div class="ContainerIndent">
+                    <div class="Card ShadowEffect HeiAutoOnMobile">
+                        <h2 class="CardTopic"><i class="icon-timelapse Fs20 Fleft MarRight10"></i> SELECCIÓN CATEGORÍAS</h2>
+                        <div class="SeparatorFull"></div>
 
-                <f:selectItems value="#{conceptExtractBean.categoryList}" var="category"
-                               itemLabel="#{category.name}" itemValue="#{category}"/>
+                            <p:selectManyCheckbox id="categories"
+                                                  converter="omnifaces.SelectItemsConverter"
+                                                  value="#{conceptExtractBean.selectedCategories}"
+                                                  layout="responsive"
+                                                  columns="1">
 
-            </p:selectManyCheckbox>
+                                <f:selectItems value="#{conceptExtractBean.categoryList}" var="category"
+                                               itemLabel="#{category.name}" itemValue="#{category}"/>
 
-            <div class="ui-fluid">
+                            </p:selectManyCheckbox>
 
-            <h:panelGrid columns="2" layout="grid">
+                        <div class="SeparatorFull"></div>
 
-                <p:commandButton value="Ejecutar" styleClass="ui-priority-primary"
-                                                  onclick="PF('poll').start()"
-                                                  actionListener="#{conceptExtractBean.extract}" />
+                            <p:commandButton value="Ejecutar" styleClass="ui-priority-primary Fright"
+                                                              onclick="PF('poll').start()"
+                                                              update="process-state"
+                                                              actionListener="#{conceptExtractBean.extract}" />
 
-                <p:poll interval="1" update="@(.process-state)" widgetVar="poll" autoStart="false" async="true" process="@this" />
+                            <p:commandButton value="Detener" styleClass="ui-priority-primary Fright OrangeButton"
+                                             disabled="true"
+                                             update="process-state"
+                                             actionListener="#{conceptExtractBean.extract}" />
 
-            </h:panelGrid>
+                            <p:poll interval="1" update="process-state" widgetVar="poll" autoStart="false" async="true"
+                                    process="@this" />
 
+                    </div>
+                </div>
             </div>
 
-            <br/>
+            <div class="Container50 Responsive50">
+                <div class="ContainerIndent">
+                    <div class="Card ShadowEffect HeiAutoOnMobile">
+                        <h2 class="CardTopic"><i class="icon-timelapse Fs20 Fleft MarRight10"></i> PROGRESO EXTRACCIÓN</h2>
+                        <p:outputPanel id="process-state">
+                            <ce:forEach items="#{conceptExtractBean.selectedCategories}" var="cat">
+                                <p:dataTable var="concept" id="cat_#{cat.id}" value="#{conceptExtractBean.concepts.get(cat.id)}"
+                                             style="display: none" paginator="false">
 
-            <h:dataTable value="#{conceptExtractBean.selectedCategories}" var="cat" styleClass="process-state">
-                <h:column>
-                    <h:outputText value="#{cat.name}" />
-                </h:column>
-                <h:column>
-                    <p:progressBar labelTemplate="{value}%" styleClass="animated"
-                                   value="#{(conceptExtractBean.concepts.get(cat.id).size()/conceptExtractBean.sizes.get(cat.id))*100}"/>
-                </h:column>
-            </h:dataTable>
+                                    <p:column headerText="ID" sortBy="#{1}">
+                                        <h:outputText value="#{concept.conceptID}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Término Preferido" sortBy="#{2}">
+                                        <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Observación">
+                                        <h:outputText value="#{concept.observation}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Etiquetas">
+                                        <p:repeat
+                                                offset="0"
+                                                size="#{concept.tags.size()}"
+                                                step="1"
+                                                varStatus="var"
+                                                value="#{concept.tags}"
+                                                var="tag">
+
+                                            <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" />
+                                            <h:outputText value=", " rendered="#{concept.tags.size() > 1}" />
+
+                                        </p:repeat>
+                                    </p:column>
+
+                                    <p:column headerText="Está en">
+                                        <h:outputText value="Borrador" rendered="#{not concept.modeled}"/>
+                                        <h:outputText value="Modelado" rendered="#{concept.modeled}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Sensibilidad">
+                                        <h:outputText value="Sensible" rendered="#{ concept.descriptionFavorite.caseSensitive }"/>
+                                        <h:outputText value="Insensible" rendered="#{ not concept.descriptionFavorite.caseSensitive }"/>
+                                    </p:column>
+
+                                </p:dataTable>
+                                <div class="SeparatorFull"></div>
+                                <div class="Wid100">
+                                    <div class="ContainerIndent Fs16 BoldGray">
+                                        <p:outputPanel rendered="#{ not conceptExtractBean.flags.get(cat.id) }">#{cat.name} <span class="Fright SoftBlue">% #{conceptExtractBean.getCurrentProgress(cat.id)}</span></p:outputPanel>
+                                        <p:outputPanel rendered="#{ conceptExtractBean.flags.get(cat.id) }">#{cat.name} <p:commandButton icon="fa fa-file-excel-o" value="Exportar" styleClass="Fright GreenButton" ><p:dataExporter target="cat_#{cat.id}" type="xls" fileName="concepto" /></p:commandButton></p:outputPanel>
+                                    </div>
+                                </div>
+                            </ce:forEach>
+                        </p:outputPanel>
+                    </div>
+                </div>
+            </div>
 
         </h:form>
 
