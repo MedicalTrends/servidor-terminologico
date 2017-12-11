@@ -554,7 +554,7 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
 
     public void autogenerate(Relationship relationship, boolean flag) {
         String pattern = "";
-        if(relationship.getRelationshipDefinition().getTargetDefinition().isGMDNType()) {
+        if(relationship.getRelationshipDefinition().getTargetDefinition().isGMDNType() && !this.isModeled()) {
 
             DeviceType deviceType = (DeviceType)relationship.getTarget();
 

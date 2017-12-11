@@ -97,4 +97,11 @@ public class DeviceType extends PersistentEntity implements Target, Serializable
     public String toString() {
         return tradeName + ": " + make + ", " + model;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return (other instanceof DeviceType) && (String.valueOf(getId()) != null)
+                ? String.valueOf(getId()).equals(String.valueOf(((DeviceType) other).getId()))
+                : (other == this);
+    }
 }

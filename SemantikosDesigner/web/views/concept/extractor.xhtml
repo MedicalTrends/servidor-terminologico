@@ -4,12 +4,13 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ce="http://java.sun.com/jsp/jstl/core"
                 xmlns:p="http://primefaces.org/ui" xmlns:c="http://mojarra.dev.java.net/mojarra_ext"
+                xmlns:pe="http://primefaces.org/ui/extensions"
                 template="/WEB-INF/template/template.xhtml">
 
     <ui:define name="header">
         <p:breadCrumb>
             <p:menuitem value="Inicio" url="/views/home.xhtml" />
-            <p:menuitem value="Administración de Usuarios" url="#" />
+            <p:menuitem value="Extracción Fármacos" url="#" />
         </p:breadCrumb>
 
     </ui:define>
@@ -44,17 +45,23 @@
 
                         <div class="SeparatorFull"></div>
 
-                            <p:commandButton value="Ejecutar" styleClass="ui-priority-primary Fright"
-                                                              onclick="PF('poll').start()"
-                                                              update="process-state"
-                                                              actionListener="#{conceptExtractBean.extract}" />
+                            <p:outputPanel id="process-actions">
 
-                            <p:commandButton value="Detener" styleClass="ui-priority-primary Fright OrangeButton"
-                                             disabled="true"
-                                             update="process-state"
-                                             actionListener="#{conceptExtractBean.extract}" />
+                                <p:commandButton value="Ejecutar" styleClass="ui-priority-primary Fright"
+                                                                  onclick="PF('poll').start()"
+                                                                  disabled="#{conceptExtractBean.processing}"
+                                                                  update="process-state, process-actions" async="true"
+                                                                  actionListener="#{conceptExtractBean.extract}" />
 
-                            <p:poll interval="1" update="process-state" widgetVar="poll" autoStart="false" async="true"
+                                <p:commandButton value="Detener" styleClass="ui-priority-primary Fright OrangeButton"
+                                                 disabled="#{ not conceptExtractBean.processing }"
+                                                 async="true"
+                                                 update="process-state, process-actions"
+                                                 actionListener="#{conceptExtractBean.stop}" />
+
+                            </p:outputPanel>
+
+                            <p:poll interval="1" update="process-state, process-actions" widgetVar="poll" autoStart="false" async="true"
                                     process="@this" />
 
                     </div>
@@ -70,36 +77,28 @@
                                 <p:dataTable var="concept" id="cat_#{cat.id}" value="#{conceptExtractBean.concepts.get(cat.id)}"
                                              style="display: none" paginator="false">
 
-                                    <p:column headerText="ID" sortBy="#{1}">
+                                    <p:column headerText="ConceptID" sortBy="#{1}">
                                         <h:outputText value="#{concept.conceptID}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Término FSN">
+                                        <h:outputText value="#{concept.descriptionFSN.term}"/>
                                     </p:column>
 
                                     <p:column headerText="Término Preferido" sortBy="#{2}">
                                         <h:outputText value="#{concept.descriptionFavorite.term}"/>
                                     </p:column>
 
+                                    <p:column headerText="Términos Sinónimos">
+                                        <h:outputText value="#{conceptExtractBean.stringifySynonyms(concept.descriptions)}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Término Abreviado">
+                                        <h:outputText value="#{conceptExtractBean.stringifyAbbreviated(concept.descriptions)}"/>
+                                    </p:column>
+
                                     <p:column headerText="Observación">
                                         <h:outputText value="#{concept.observation}"/>
-                                    </p:column>
-
-                                    <p:column headerText="Etiquetas">
-                                        <p:repeat
-                                                offset="0"
-                                                size="#{concept.tags.size()}"
-                                                step="1"
-                                                varStatus="var"
-                                                value="#{concept.tags}"
-                                                var="tag">
-
-                                            <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" />
-                                            <h:outputText value=", " rendered="#{concept.tags.size() > 1}" />
-
-                                        </p:repeat>
-                                    </p:column>
-
-                                    <p:column headerText="Está en">
-                                        <h:outputText value="Borrador" rendered="#{not concept.modeled}"/>
-                                        <h:outputText value="Modelado" rendered="#{concept.modeled}"/>
                                     </p:column>
 
                                     <p:column headerText="Sensibilidad">
@@ -107,12 +106,42 @@
                                         <h:outputText value="Insensible" rendered="#{ not concept.descriptionFavorite.caseSensitive }"/>
                                     </p:column>
 
+                                    <p:column headerText="Creación Nombre">
+                                        <h:outputText value="Autogenerado" rendered="#{ concept.descriptionFavorite.autogeneratedName }"/>
+                                        <h:outputText value="Manual" rendered="#{ not concept.descriptionFavorite.autogeneratedName }"/>
+                                    </p:column>
+
+                                    <p:column headerText="Revisado">
+                                        <h:outputText value="Si" rendered="#{ concept.toBeReviewed }"/>
+                                        <h:outputText value="No" rendered="#{ not concept.toBeReviewed }"/>
+                                    </p:column>
+
+                                    <p:column headerText="Consultar">
+                                        <h:outputText value="Si" rendered="#{ concept.toBeConsulted }"/>
+                                        <h:outputText value="No" rendered="#{ not concept.toBeConsulted }"/>
+                                    </p:column>
+
+                                    <p:column headerText="Etiquetas">
+                                        <h:outputText value="#{conceptExtractBean.stringifyTags(concept.tags)}"/>
+                                    </p:column>
+
+                                    <p:columns value="#{cat.relationshipDefinitions}"
+                                               var="relationshipDefinition"
+                                               columnIndexVar="colIndex">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{conceptExtractBean.stringifyRelationshipDefinition(relationshipDefinition)}" />
+                                        </f:facet>
+
+                                        <h:outputText value="#{conceptExtractBean.stringifyRelationships(concept.getRelationshipsByRelationDefinition(relationshipDefinition))}"/>
+
+                                    </p:columns>
+
                                 </p:dataTable>
                                 <div class="SeparatorFull"></div>
                                 <div class="Wid100">
                                     <div class="ContainerIndent Fs16 BoldGray">
                                         <p:outputPanel rendered="#{ not conceptExtractBean.flags.get(cat.id) }">#{cat.name} <span class="Fright SoftBlue">% #{conceptExtractBean.getCurrentProgress(cat.id)}</span></p:outputPanel>
-                                        <p:outputPanel rendered="#{ conceptExtractBean.flags.get(cat.id) }">#{cat.name} <p:commandButton icon="fa fa-file-excel-o" value="Exportar" styleClass="Fright GreenButton" ><p:dataExporter target="cat_#{cat.id}" type="xls" fileName="concepto" /></p:commandButton></p:outputPanel>
+                                        <p:outputPanel rendered="#{ conceptExtractBean.flags.get(cat.id) }">#{cat.name} <p:commandButton icon="fa fa-file-excel-o" value="Exportar" styleClass="Fright GreenButton" ajax="false" ><p:dataExporter target="cat_#{cat.id}" type="xls" fileName="#{cat.name}" /></p:commandButton></p:outputPanel>
                                     </div>
                                 </div>
                             </ce:forEach>
@@ -124,8 +153,8 @@
         </h:form>
 
         </div>
-        </div>
-        </div>
+    </div>
+</div>
 
     <h:outputStylesheet id="customCSS">
         .animated .ui-progressbar-value {

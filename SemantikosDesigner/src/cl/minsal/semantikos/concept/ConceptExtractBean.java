@@ -7,7 +7,12 @@ import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.omnifaces.util.Ajax;
 import org.primefaces.context.RequestContext;
 
@@ -42,7 +47,7 @@ public class ConceptExtractBean implements Serializable {
 
     private static final int BLOCK_SIZE = 100;
 
-    private boolean processFinished = false;
+    private boolean processing = false;
 
     private static Long[] drugs = {13L, 33L, 34L, 35L, 36L, 37L, 38L, 39L};
 
@@ -109,23 +114,34 @@ public class ConceptExtractBean implements Serializable {
         this.flags = flags;
     }
 
-    public boolean isProcessFinished() {
-        return processFinished;
+    public boolean isProcessing() {
+        return processing;
     }
 
-    public void setProcessFinished(boolean processFinished) {
-        this.processFinished = processFinished;
+    public void setProcessing(boolean processing) {
+        this.processing = processing;
     }
 
     public void extract() {
+
+        processing = true;
 
         List<ConceptSMTK> tempConcepts = new ArrayList<>();
 
         for (Category selectedCategory : selectedCategories) {
             sizes.put(selectedCategory.getId(), conceptManager.countConcepts(null, Arrays.asList(selectedCategory), null, null));
+            concepts.put(selectedCategory.getId(), new ArrayList<ConceptSMTK>());
         }
 
         for (Category selectedCategory : selectedCategories) {
+
+            if(!processing) {
+                return;
+            }
+
+            if(flags.get(selectedCategory.getId())) {
+                continue;
+            }
 
             int total_size = sizes.get(selectedCategory.getId());
 
@@ -160,10 +176,83 @@ public class ConceptExtractBean implements Serializable {
         reqCtx.execute("PF('poll').stop();");
         Ajax.update("extractorForm:process-state");
         //selectedCategories = new ArrayList<>();
-        processFinished = true;
+        processing = false;
+    }
+
+    public void stop () {
+        processing = false;
+        for (Category category : selectedCategories) {
+            concepts.put(category.getId(), new ArrayList<ConceptSMTK>());
+            sizes.put(category.getId(), 0);
+            flags.put(category.getId(), false);
+        }
+        RequestContext reqCtx = RequestContext.getCurrentInstance();
+        reqCtx.execute("PF('poll').stop();");
     }
 
     public int getCurrentProgress(long id) {
         return Math.round(((float)concepts.get(id).size()/(float)sizes.get(id))*100);
     }
+
+    public String stringifyTags(List<Object> objects) {
+        String string = "";
+
+        for (Object object : objects) {
+            string = string + " • " + object.toString();
+        }
+
+        return string;
+    }
+
+    public String stringifyRelationships(List<Relationship> relationships) {
+        String string = "";
+        String prefix = "";
+
+        for (Relationship relationship : relationships) {
+            prefix = relationship.getRelationshipDefinition().getMultiplicity().isCollection()?" • ":"";
+            string = string + prefix + relationship.getTarget().toString();
+            for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
+                string = string + " ¦ " + relationshipAttribute.getTarget().toString();
+            }
+        }
+
+        return string;
+    }
+
+    public String stringifyRelationshipDefinition(RelationshipDefinition relationshipDefinition) {
+
+        String string = relationshipDefinition.getName();
+
+        for (RelationshipAttributeDefinition relationshipAttributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
+            string = string + " ¦ " + relationshipAttributeDefinition.getName();
+        }
+
+        return string;
+    }
+
+    public String stringifySynonyms(List<Description> descriptions) {
+
+        String string = "";
+
+        for (Description description : descriptions) {
+            if(description.getDescriptionType().equals(DescriptionType.SYNONYMOUS))
+            string = string + " • " + description.getTerm();
+        }
+
+        return string;
+    }
+
+    public String stringifyAbbreviated(List<Description> descriptions) {
+
+        String string = "";
+
+        for (Description description : descriptions) {
+            if(description.getDescriptionType().equals(DescriptionType.ABREVIADA))
+                return description.getTerm();
+        }
+
+        return string;
+    }
+
+
 }
