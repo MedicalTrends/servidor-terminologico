@@ -9,6 +9,7 @@ import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
@@ -50,6 +51,10 @@ public class ConceptExtractBean implements Serializable {
     private boolean processing = false;
 
     private static Long[] drugs = {13L, 33L, 34L, 35L, 36L, 37L, 38L, 39L};
+
+    private static Long last;
+
+    private static String newline = System.getProperty("line.separator");
 
     //@EJB
     private ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
@@ -122,6 +127,14 @@ public class ConceptExtractBean implements Serializable {
         this.processing = processing;
     }
 
+    public static Long getLast() {
+        return last;
+    }
+
+    public static void setLast(Long last) {
+        ConceptExtractBean.last = last;
+    }
+
     public void extract() {
 
         processing = true;
@@ -156,6 +169,7 @@ public class ConceptExtractBean implements Serializable {
                 concepts.get(selectedCategory.getId()).addAll(tempConcepts);
             }
 
+            /*
             if(total_size % BLOCK_SIZE > 0) {
 
                 tempConcepts = conceptManager.findConceptsPaginated(selectedCategory, total_size / BLOCK_SIZE, total_size % BLOCK_SIZE, null);
@@ -167,8 +181,10 @@ public class ConceptExtractBean implements Serializable {
                 concepts.get(selectedCategory.getId()).addAll(tempConcepts);
 
             }
+            */
 
             flags.put(selectedCategory.getId(), true);
+            setLast(selectedCategory.getId());
 
         }
 
@@ -191,6 +207,9 @@ public class ConceptExtractBean implements Serializable {
     }
 
     public int getCurrentProgress(long id) {
+        if(!concepts.containsKey(id)) {
+            return 100;
+        }
         return Math.round(((float)concepts.get(id).size()/(float)sizes.get(id))*100);
     }
 
@@ -207,13 +226,30 @@ public class ConceptExtractBean implements Serializable {
     public String stringifyRelationships(List<Relationship> relationships) {
         String string = "";
         String prefix = "";
+        int cont = 0;
 
         for (Relationship relationship : relationships) {
             prefix = relationship.getRelationshipDefinition().getMultiplicity().isCollection()?" • ":"";
-            string = string + prefix + relationship.getTarget().toString();
+            if(cont > 0 ) {
+                string = string + newline;
+            }
+            string = string + prefix + relationship.getTarget().getRepresentation();
+
+            if(relationship.getRelationshipDefinition().getName().equalsIgnoreCase("ISP") ||
+                    relationship.getRelationshipDefinition().getName().equalsIgnoreCase("Bioequivalente")) {
+                HelperTableRow helperTableRow = (HelperTableRow)relationship.getTarget();
+                string = string + " [Nombre]: " +helperTableRow.getCellByColumnName("Nombre");
+            }
+
+            if(relationship.getRelationshipDefinition().getName().equalsIgnoreCase("ATC")) {
+                HelperTableRow helperTableRow = (HelperTableRow)relationship.getTarget();
+                string = string + " [Código]: " +helperTableRow.getCellByColumnName("CODIGO ATC");
+            }
+
             for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
                 string = string + " ¦ " + relationshipAttribute.getTarget().toString();
             }
+            cont++;
         }
 
         return string;
@@ -254,5 +290,12 @@ public class ConceptExtractBean implements Serializable {
         return string;
     }
 
-
+    public void test(Object document) {
+        System.out.println("test");
+        // En este método es el encargado de liberar los objetos que ya no son necesarios.
+        // La regla es liberar los ultimos que fueron generados
+        concepts.remove(getLast());
+        sizes.remove(getLast());
+        System.gc();
+    }
 }

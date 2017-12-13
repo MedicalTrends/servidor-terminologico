@@ -56,6 +56,7 @@
                                 <p:commandButton value="Detener" styleClass="ui-priority-primary Fright OrangeButton"
                                                  disabled="#{ not conceptExtractBean.processing }"
                                                  async="true"
+                                                 rendered="false"
                                                  update="process-state, process-actions"
                                                  actionListener="#{conceptExtractBean.stop}" />
 
@@ -77,15 +78,16 @@
                                 <p:dataTable var="concept" id="cat_#{cat.id}" value="#{conceptExtractBean.concepts.get(cat.id)}"
                                              style="display: none" paginator="false">
 
-                                    <p:column headerText="ConceptID" sortBy="#{1}">
+                                    <p:column headerText="ConceptID">
                                         <h:outputText value="#{concept.conceptID}"/>
                                     </p:column>
 
-                                    <p:column headerText="Término FSN">
-                                        <h:outputText value="#{concept.descriptionFSN.term}"/>
+                                    <p:column headerText="Estado">
+                                        <h:outputText value="Vigente" rendered="#{ concept.validUntil == null }"/>
+                                        <h:outputText value="No Vigente" rendered="#{ concept.validUntil != null }"/>
                                     </p:column>
 
-                                    <p:column headerText="Término Preferido" sortBy="#{2}">
+                                    <p:column headerText="Término Preferido">
                                         <h:outputText value="#{concept.descriptionFavorite.term}"/>
                                     </p:column>
 
@@ -128,6 +130,7 @@
                                     <p:columns value="#{cat.relationshipDefinitions}"
                                                var="relationshipDefinition"
                                                columnIndexVar="colIndex">
+
                                         <f:facet name="header">
                                             <h:outputText value="#{conceptExtractBean.stringifyRelationshipDefinition(relationshipDefinition)}" />
                                         </f:facet>
@@ -137,11 +140,15 @@
                                     </p:columns>
 
                                 </p:dataTable>
+
                                 <div class="SeparatorFull"></div>
                                 <div class="Wid100">
-                                    <div class="ContainerIndent Fs16 BoldGray">
-                                        <p:outputPanel rendered="#{ not conceptExtractBean.flags.get(cat.id) }">#{cat.name} <span class="Fright SoftBlue">% #{conceptExtractBean.getCurrentProgress(cat.id)}</span></p:outputPanel>
-                                        <p:outputPanel rendered="#{ conceptExtractBean.flags.get(cat.id) }">#{cat.name} <p:commandButton icon="fa fa-file-excel-o" value="Exportar" styleClass="Fright GreenButton" ajax="false" ><p:dataExporter target="cat_#{cat.id}" type="xls" fileName="#{cat.name}" /></p:commandButton></p:outputPanel>
+                                    <div id="process-status-div" class="ContainerIndent Fs16 BoldGray">
+                                        <p:outputPanel rendered="#{ true }">#{cat.name} <span class="Fright SoftBlue">% #{conceptExtractBean.getCurrentProgress(cat.id)}</span></p:outputPanel>
+                                        <p:commandButton icon="fa fa-file-excel-o" rendered="#{conceptExtractBean.flags.get(cat.id)}" id="ctg_#{cat.id}"
+                                                         styleClass="Fright GreenButton excel" ajax="false" style="display: none">
+                                            <p:dataExporter target="cat_#{cat.id}" type="xls" fileName="#{cat.name}" postProcessor="#{conceptExtractBean.test}" />
+                                        </p:commandButton>
                                     </div>
                                 </div>
                             </ce:forEach>
@@ -161,6 +168,35 @@
             background-image: url("/resources/semantikos/images/ajax-loader.gif");
         }
     </h:outputStylesheet>
+
+    <script type="text/javascript">
+
+        var categories = [];
+
+        setInterval( function() {
+            console.log(categories);
+            $('button.excel').each( function() {
+                if($.inArray($(this).attr('id'), categories) == -1) {
+                    $(this).click();
+                    $(this).remove();
+                    categories.push($(this).attr('id'));
+                    return false;
+                }
+            });
+         }, 5000);
+
+        /*
+         $("body").on('DOMSubtreeModified', function(e) {
+             console.log("entre");
+             $('.excel').click();
+             $('.excel').remove();
+             e.preventDefault();
+             e.stopPropagation();
+         });
+         */
+
+
+    </script>
 
     </ui:define>
 

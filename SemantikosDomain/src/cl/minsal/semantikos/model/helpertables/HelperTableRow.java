@@ -70,7 +70,7 @@ public class HelperTableRow implements Target, Serializable {
 
     @Override
     public String getRepresentation() {
-        return description;
+        return description +" - [PK]: "+id;
     }
 
     @Override

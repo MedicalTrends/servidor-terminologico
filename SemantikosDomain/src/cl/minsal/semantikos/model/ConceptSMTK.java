@@ -818,7 +818,25 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
     @Override
     public String getRepresentation() {
-        return toString();
+        String toString = "CONCEPT_ID=" + this.conceptID;
+
+        if(this.validUntil == null) {
+            toString = toString + " (Vigente)";
+        }
+        else {
+            toString = toString + " (No Vigente)";
+        }
+
+        if (descriptions.isEmpty()) {
+            return toString;
+        }
+
+        if (this.hasFavouriteDescription()) {
+            Description descriptionFavorite = getDescriptionFavorite();
+            return toString + " - [Pref]: " + descriptionFavorite.getTerm();
+        }
+        Description aDescription = this.descriptions.get(0);
+        return toString + " - " + aDescription.getDescriptionType().getName() + ": " + aDescription.getTerm();
     }
 
     @Override

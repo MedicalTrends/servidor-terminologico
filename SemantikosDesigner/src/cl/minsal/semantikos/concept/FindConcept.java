@@ -22,10 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static java.util.Collections.EMPTY_LIST;
 import static java.util.Collections.singletonList;
-import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_ARRAY;
-import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_OBJECT_ARRAY;
 
 /**
  * Created by des01c7 on 23-08-16.
