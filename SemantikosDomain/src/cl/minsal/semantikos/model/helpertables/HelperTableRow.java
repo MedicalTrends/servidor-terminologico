@@ -66,11 +66,9 @@ public class HelperTableRow implements Target, Serializable {
         return TargetType.HelperTable;
     }
 
-
-
     @Override
     public String getRepresentation() {
-        return description +" - [PK]: "+id;
+        return id +" ¦ "+description;
     }
 
     @Override

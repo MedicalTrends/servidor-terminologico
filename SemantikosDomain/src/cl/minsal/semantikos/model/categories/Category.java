@@ -175,4 +175,9 @@ public class Category extends PersistentEntity implements TargetDefinition, Audi
         return false;
     }
 
+    @Override
+    public String getRepresentation() {
+        return "ConceptID "+name+" ¦ Preferido "+name;
+    }
+
 }

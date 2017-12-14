@@ -76,8 +76,8 @@ public class CrossmapSetMember extends PersistentEntity implements Target, Seria
 
     @Override
     public String getRepresentation() {
-
-        return this.getCrossmapSet().getAbbreviatedName()+" - Código Crossmap: ("+this.getCode()+") - "+this.getGloss();
+        //return this.getCrossmapSet().getAbbreviatedName()+" - Código Crossmap: ("+this.getCode()+") - "+this.getGloss();
+        return this.getGloss();
 
     }
 

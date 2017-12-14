@@ -56,4 +56,9 @@ public class Gmdn extends PersistentEntity implements TargetDefinition, Serializ
     public boolean isGMDNType() {
         return true;
     }
+
+    @Override
+    public String getRepresentation() {
+        return toString();
+    }
 }

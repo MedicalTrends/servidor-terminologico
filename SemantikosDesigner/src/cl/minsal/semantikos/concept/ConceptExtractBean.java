@@ -18,10 +18,14 @@ import org.omnifaces.util.Ajax;
 import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.Normalizer;
 import java.util.*;
@@ -135,7 +139,7 @@ public class ConceptExtractBean implements Serializable {
         ConceptExtractBean.last = last;
     }
 
-    public void extract() {
+    public void extract() throws IOException {
 
         processing = true;
 
@@ -143,6 +147,7 @@ public class ConceptExtractBean implements Serializable {
 
         for (Category selectedCategory : selectedCategories) {
             sizes.put(selectedCategory.getId(), conceptManager.countConcepts(null, Arrays.asList(selectedCategory), null, null));
+            flags.put(selectedCategory.getId(), false);
             concepts.put(selectedCategory.getId(), new ArrayList<ConceptSMTK>());
         }
 
@@ -190,6 +195,7 @@ public class ConceptExtractBean implements Serializable {
 
         RequestContext reqCtx = RequestContext.getCurrentInstance();
         reqCtx.execute("PF('poll').stop();");
+        reqCtx.execute("PF('dlg').show();");
         Ajax.update("extractorForm:process-state");
         //selectedCategories = new ArrayList<>();
         processing = false;
@@ -224,6 +230,7 @@ public class ConceptExtractBean implements Serializable {
     }
 
     public String stringifyRelationships(List<Relationship> relationships) {
+
         String string = "";
         String prefix = "";
         int cont = 0;
@@ -238,17 +245,29 @@ public class ConceptExtractBean implements Serializable {
             if(relationship.getRelationshipDefinition().getName().equalsIgnoreCase("ISP") ||
                     relationship.getRelationshipDefinition().getName().equalsIgnoreCase("Bioequivalente")) {
                 HelperTableRow helperTableRow = (HelperTableRow)relationship.getTarget();
-                string = string + " [Nombre]: " +helperTableRow.getCellByColumnName("Nombre");
+                string = string + " ¦ " +helperTableRow.getCellByColumnName("Nombre");
             }
 
             if(relationship.getRelationshipDefinition().getName().equalsIgnoreCase("ATC")) {
                 HelperTableRow helperTableRow = (HelperTableRow)relationship.getTarget();
-                string = string + " [Código]: " +helperTableRow.getCellByColumnName("CODIGO ATC");
+                string = string + " ¦ " +helperTableRow.getCellByColumnName("CODIGO ATC");
             }
 
             for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
                 string = string + " ¦ " + relationshipAttribute.getTarget().toString();
             }
+
+            if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
+                ConceptSMTK conceptSMTK = (ConceptSMTK) relationship.getTarget();
+
+                if(conceptSMTK.getValidUntil() == null) {
+                    string = string + " ¦ Vigente ";
+                }
+                else {
+                    string = string + " ¦ No Vigente ";
+                }
+            }
+
             cont++;
         }
 
@@ -257,10 +276,22 @@ public class ConceptExtractBean implements Serializable {
 
     public String stringifyRelationshipDefinition(RelationshipDefinition relationshipDefinition) {
 
-        String string = relationshipDefinition.getName();
+        String string;
+
+        if(relationshipDefinition.getTargetDefinition().isSMTKType() ||
+                relationshipDefinition.getTargetDefinition().isSnomedCTType()) {
+            string = relationshipDefinition.getTargetDefinition().getRepresentation();
+        }
+        else {
+            string = relationshipDefinition.getName();
+        }
 
         for (RelationshipAttributeDefinition relationshipAttributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
             string = string + " ¦ " + relationshipAttributeDefinition.getName();
+        }
+
+        if(relationshipDefinition.getTargetDefinition().isSMTKType()) {
+            string = string + " ¦ " + "Estado";
         }
 
         return string;
@@ -290,12 +321,21 @@ public class ConceptExtractBean implements Serializable {
         return string;
     }
 
-    public void test(Object document) {
-        System.out.println("test");
+    public void test(Object document) throws IOException {
+        RequestContext reqCtx = RequestContext.getCurrentInstance();
         // En este método es el encargado de liberar los objetos que ya no son necesarios.
         // La regla es liberar los ultimos que fueron generados
         concepts.remove(getLast());
         sizes.remove(getLast());
+        flags.remove(getLast());
         System.gc();
+        if( (categoryList.size() - concepts.size()) == selectedCategories.size()) {
+            refreshPage();
+        }
+    }
+
+    public void refreshPage() throws IOException {
+        ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+        eContext.redirect(eContext.getRequestContextPath() + "/views/concept/extractor.xhtml");
     }
 }

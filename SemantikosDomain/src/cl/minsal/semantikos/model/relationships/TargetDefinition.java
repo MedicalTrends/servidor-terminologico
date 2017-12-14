@@ -70,4 +70,6 @@ public interface TargetDefinition extends IPersistentEntity {
      */
     public boolean isGMDNType();
 
+    public String getRepresentation();
+
 }

@@ -163,12 +163,6 @@
     </div>
 </div>
 
-    <h:outputStylesheet id="customCSS">
-        .animated .ui-progressbar-value {
-            background-image: url("/resources/semantikos/images/ajax-loader.gif");
-        }
-    </h:outputStylesheet>
-
     <script type="text/javascript">
 
         var categories = [];
@@ -183,7 +177,12 @@
                     return false;
                 }
             });
-         }, 5000);
+         }, 1000);
+
+        $('.finish').click( function() {
+            categories = [];
+            location.reload();
+        });
 
         /*
          $("body").on('DOMSubtreeModified', function(e) {

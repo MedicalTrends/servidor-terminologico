@@ -175,4 +175,14 @@ public class BasicTypeDefinition<T extends Comparable> extends PersistentEntity 
     public boolean isGMDNType() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
+    public String getRepresentation() {
+        return toString();
+    }
 }

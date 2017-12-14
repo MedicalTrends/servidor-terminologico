@@ -818,14 +818,8 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
     @Override
     public String getRepresentation() {
-        String toString = "CONCEPT_ID=" + this.conceptID;
 
-        if(this.validUntil == null) {
-            toString = toString + " (Vigente)";
-        }
-        else {
-            toString = toString + " (No Vigente)";
-        }
+        String toString =  this.conceptID;
 
         if (descriptions.isEmpty()) {
             return toString;
@@ -833,10 +827,13 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
         if (this.hasFavouriteDescription()) {
             Description descriptionFavorite = getDescriptionFavorite();
-            return toString + " - [Pref]: " + descriptionFavorite.getTerm();
+            return toString + " ¦ " + descriptionFavorite.getTerm();
         }
+
         Description aDescription = this.descriptions.get(0);
-        return toString + " - " + aDescription.getDescriptionType().getName() + ": " + aDescription.getTerm();
+        toString = toString + " ¦ " + aDescription.getDescriptionType().getName() + ": " + aDescription.getTerm();
+
+        return toString;
     }
 
     @Override

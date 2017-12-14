@@ -100,4 +100,14 @@ public class CrossmapSet extends PersistentEntity implements TargetDefinition, S
     public boolean isGMDNType() {
         return false;
     }
+
+    @Override
+    public String getRepresentation() {
+        return toString();
+    }
+
+    @Override
+    public String toString() {
+        return abbreviatedName;
+    }
 }

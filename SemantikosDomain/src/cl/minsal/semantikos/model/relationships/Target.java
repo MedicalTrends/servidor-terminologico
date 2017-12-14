@@ -19,11 +19,7 @@ public interface Target {
      */
     public TargetType getTargetType();
 
-    
-    
     public String getRepresentation();
-
-    
     
     public Target copy();
     

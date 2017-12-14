@@ -130,6 +130,11 @@ public class HelperTable implements TargetDefinition, Serializable {
         return false;
     }
 
+    @Override
+    public String getRepresentation() {
+        return "ID "+name+" ¦ DESC "+name;
+    }
+
     public List<HelperTableRow> getRows() {
         return rows;
     }
