@@ -56,10 +56,13 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
 
         //return getAuthenticationMethod().authenticate(email, password, request);
         User user = authDAO.getUserByEmail(email);
-        if (user == null)
+
+        if (user == null) {
             throw new AuthenticationException("Usuario no existe");
-        if (user.isLocked())
+        }
+        if (user.isLocked()) {
             throw new AuthenticationException("Usuario bloqueado. Contacte al administrador");
+        }
         try {
             //si ya esta logueado debo desbloguearlo para evitar exception
             if (request.getUserPrincipal() != null) {
@@ -71,7 +74,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
             //aumenta en 1 los intentos fallidos y si son mas que el maximo bloquea a usuario
             failLogin(user);
             logger.debug("Error de login", e);
-            throw (AuthenticationException) new AuthenticationException("Error de autenticacion: e-mail o contraseña no son correctos");
+            throw new AuthenticationException("Error de autenticacion: e-mail o contraseña no son correctos");
         }
 
         /**
@@ -126,11 +129,13 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
     @PermitAll
     public User authenticateWS(String username, String password) throws AuthenticationException {
         User user = authDAO.getUserByEmail(username);
-        if (user == null)
+        if (user == null) {
             throw new AuthenticationException("Usuario no existe");
+        }
 
-        if (user.isLocked())
+        if (user.isLocked()) {
             throw new AuthenticationException("Usuario bloqueado. Contacte al administrador");
+        }
 
         String passwordHash = createPasswordHash("MD5", BASE64_ENCODING, null, null, password);
 

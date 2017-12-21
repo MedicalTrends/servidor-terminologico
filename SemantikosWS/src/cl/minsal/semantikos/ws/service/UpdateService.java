@@ -75,7 +75,7 @@ public class UpdateService {
         String webMethodMessage = "OK";
 
         try {
-            Pair credentials = UtilsWS.getCredentialsFromWSContext(wsctx.getMessageContext());
+            Pair credentials = UtilsWS.getCredentials(wsctx.getMessageContext());
             user = authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
             institution = authenticationManager.validateInstitution(request.getIdStablishment());
 

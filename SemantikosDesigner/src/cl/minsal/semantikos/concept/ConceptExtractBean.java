@@ -198,7 +198,7 @@ public class ConceptExtractBean implements Serializable {
         reqCtx.execute("PF('dlg').show();");
         Ajax.update("extractorForm:process-state");
         //selectedCategories = new ArrayList<>();
-        processing = false;
+        //processing = false;
     }
 
     public void stop () {
@@ -329,9 +329,15 @@ public class ConceptExtractBean implements Serializable {
         sizes.remove(getLast());
         flags.remove(getLast());
         System.gc();
+        /*
         if( (categoryList.size() - concepts.size()) == selectedCategories.size()) {
             refreshPage();
         }
+        */
+    }
+
+    public boolean finished() {
+        return ((categoryList.size() - concepts.size()) == selectedCategories.size());
     }
 
     public void refreshPage() throws IOException {

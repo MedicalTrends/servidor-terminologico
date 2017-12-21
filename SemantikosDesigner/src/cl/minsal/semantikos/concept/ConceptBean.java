@@ -985,6 +985,7 @@ public class ConceptBean implements Serializable {
                 e.printStackTrace();
             }
         }
+
         for (RelationshipWeb relationshipWeb : relationshipsForPersist) {
             relationshipWeb.setSourceConcept(concept);
             if (snomedBeans.existRelationshipToSCT(concept)) {

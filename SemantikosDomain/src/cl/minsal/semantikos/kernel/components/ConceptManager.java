@@ -41,6 +41,16 @@ public interface ConceptManager {
     public void updateFields(@NotNull ConceptSMTK originalConcept, @NotNull ConceptSMTK updatedConcept, User user);
 
     /**
+     * Este método es responsable de actualizar los campos (para no decir atributos que es un caso particular de las
+     * relaciones).
+     *
+     * @param originalConcept El concepto original.
+     * @param updatedConcept  El concepto actualizado con los cambios.
+     * @param user            El usuario que realiza los cambios.
+     */
+    public void update(@NotNull ConceptSMTK originalConcept, @NotNull ConceptSMTK updatedConcept, User user) throws Exception;
+
+    /**
      * Este método es responsable de cambiar el estado de publicación del concepto.
      *
      * @param conceptSMTK El concepto cuyo estado de publicación ha cambiado.

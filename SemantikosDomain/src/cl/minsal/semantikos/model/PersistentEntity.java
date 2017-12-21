@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.model;
 
+import cl.minsal.semantikos.modelweb.Pair;
+import cl.minsal.semantikos.modelweb.RelationshipWeb;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
@@ -84,4 +86,6 @@ public abstract class PersistentEntity implements IPersistentEntity, Serializabl
     public PersistentEntity(long id) {
         this.id = id;
     }
+
+
 }

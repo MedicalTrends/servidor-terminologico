@@ -126,6 +126,7 @@ public class ConceptCreationBR implements BusinessRulesContainer {
          * Si alguna de las relaciones es de tipo snomed es posible determinar el grado de definición
          */
         for (Relationship relationship : conceptSMTK.getRelationships()) {
+
             if(relationship.getRelationshipDefinition().equals(relationshipDefinition)) {
                 ConceptSCT conceptSCT = (ConceptSCT) relationship.getTarget();
                 if(conceptSCT.isCompletelyDefined()) {
@@ -137,14 +138,17 @@ public class ConceptCreationBR implements BusinessRulesContainer {
                 //conceptSMTK.setFullyDefined((conceptSCT.isCompletelyDefined()) ? true : false);
                 conceptSMTK.setInherited(true);
                 return;
-            } else {
+            }
+            /*
+            else {
                 conceptSMTK.setFullyDefined(false);
                 conceptSMTK.setInherited(false);
                 return;
             }
+            */
         }
         /*
-        Si aun no se ha seteado el grado de definicion, es porque el concepto esta en borrador, luego setearlo a false
+        Si se ha llegado a este punto, es porque el concepto esta en borrador, luego setearlo a false
          */
         conceptSMTK.setFullyDefined(false);
         conceptSMTK.setInherited(false);

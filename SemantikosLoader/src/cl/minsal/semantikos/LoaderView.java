@@ -46,13 +46,16 @@ public class LoaderView {
         //conceptSMTK = conceptManager.getConceptByID(306551);
         //conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
 
-        smtkLoader = new SMTKLoader(textArea1, textArea2, textField1, textField2, textField3, textField4, progressBar1);
-
         //textArea1.setRows(10);
 
+        smtkLoader = new SMTKLoader(textArea1, textArea2, textField1, textField2, textField3, textField4, progressBar1);
+
         iniciarCargaButton.addActionListener(new ActionListener() {
+
+
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 try {
                     smtkLoader.execute();
                 } catch (Exception e1) {
@@ -67,9 +70,9 @@ public class LoaderView {
         JFrame jFrame = new JFrame("Semantikos - Carga Inicial");
 
         double offset=0.595;
-        jFrame.setSize(new Dimension((int)(0.3*java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()),
+        jFrame.setSize(new Dimension((int)(0.5*java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()),
                 (int)(offset*java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight())));
-        jFrame.setMinimumSize(new Dimension((int)(0.3*java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()),
+        jFrame.setMinimumSize(new Dimension((int)(0.5*java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()),
                 (int)(offset*java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight())));
 
         LoaderView loaderView = new LoaderView();

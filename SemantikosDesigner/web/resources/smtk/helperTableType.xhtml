@@ -239,7 +239,7 @@
     </p:panel>
 
     <!-- Multiplicidad N sin atributos-->
-    <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.relationshipDefinition.required}"
+    <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{ not cc.attrs.relationshipDefinition.required}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and not cc.attrs.relationshipDefinition.ISP}">
 
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
@@ -266,7 +266,7 @@
 
                             <p:autoComplete id="findHTRecords5" scrollHeight="200"
                                             completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                            minQueryLength="#{helperTableBean.getMinQueryLength(cc.attrs.targetDefinition)}"
+                                            minQueryLength="2"
                                             forceSelection="true"
                                             var="helperTableRecord"
                                             placeholder="#{cc.attrs.relationshipDefinition.name}..."
@@ -283,9 +283,13 @@
                                 <!-- Parámetros del validador -->
                                 <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
                                 <!---->
-                                <p:column>
-                                    <h:outputText value="#{helperTableRecord.description}"/>
-                                </p:column>
+                                <p:outputPanel>
+
+                                    <p:column>
+                                        <h:outputText value="#{helperTableRecord.description}"/>
+                                    </p:column>
+
+                                </p:outputPanel>
 
                                 <p:ajax event="itemSelect"
                                         update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@(.search)"

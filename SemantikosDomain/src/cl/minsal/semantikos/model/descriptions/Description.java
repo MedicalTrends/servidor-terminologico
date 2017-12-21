@@ -2,6 +2,7 @@
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.DAO;
+import cl.minsal.semantikos.model.IPersistentEntity;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
@@ -17,7 +18,7 @@ import static java.lang.System.currentTimeMillis;
 /**
  * @author Andrés Farías on 08-07-16.
  */
-public class Description extends PersistentEntity implements AuditableEntity, Serializable {
+public class Description extends PersistentEntity implements AuditableEntity, Serializable, IPersistentEntity {
 
     /** El término que representa esta descripción */
     private String term;

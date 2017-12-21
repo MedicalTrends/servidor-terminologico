@@ -41,6 +41,8 @@
                                 <f:selectItems value="#{conceptExtractBean.categoryList}" var="category"
                                                itemLabel="#{category.name}" itemValue="#{category}"/>
 
+                                <p:ajax event="change" update="process-actions"  />
+
                             </p:selectManyCheckbox>
 
                         <div class="SeparatorFull"></div>
@@ -49,21 +51,19 @@
 
                                 <p:commandButton value="Ejecutar" styleClass="ui-priority-primary Fright"
                                                                   onclick="PF('poll').start()"
-                                                                  disabled="#{conceptExtractBean.processing}"
+                                                                  disabled="#{conceptExtractBean.processing or empty conceptExtractBean.selectedCategories}"
                                                                   update="process-state, process-actions" async="true"
                                                                   actionListener="#{conceptExtractBean.extract}" />
 
-                                <p:commandButton value="Detener" styleClass="ui-priority-primary Fright OrangeButton"
-                                                 disabled="#{ not conceptExtractBean.processing }"
+                                <p:commandButton value="Reiniciar" styleClass="ui-priority-primary Fright CyanButton"
                                                  async="true"
-                                                 rendered="false"
                                                  update="process-state, process-actions"
-                                                 actionListener="#{conceptExtractBean.stop}" />
+                                                 actionListener="#{conceptExtractBean.refreshPage}" />
 
                             </p:outputPanel>
 
                             <p:poll interval="1" update="process-state, process-actions" widgetVar="poll" autoStart="false" async="true"
-                                    process="@this" />
+                                    process="@this" stop="#{conceptExtractBean.finished()}" />
 
                     </div>
                 </div>
@@ -152,6 +152,7 @@
                                     </div>
                                 </div>
                             </ce:forEach>
+
                         </p:outputPanel>
                     </div>
                 </div>

@@ -86,7 +86,7 @@ public class SearchService {
         String webMethodMessage = "OK";
 
         try {
-            Pair credentials = UtilsWS.getCredentialsFromWSContext(wsctx.getMessageContext());
+            Pair credentials = UtilsWS.getCredentials(wsctx.getMessageContext());
             authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
             authenticationManager.validateInstitution(request.getIdStablishment());
 
