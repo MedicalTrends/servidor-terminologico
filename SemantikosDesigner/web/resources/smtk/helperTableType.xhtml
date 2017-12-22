@@ -309,6 +309,14 @@
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      reflow="true">
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Descripción" />
+                </f:facet>
+                <h:outputText value="#{relationship.target.description }" />
+            </p:column>
+
             <p:columns value="#{cc.attrs.targetDefinition.columns}"
                        var="column"
                        columnIndexVar="colIndex">
@@ -317,7 +325,6 @@
                 </f:facet>
                 <h:outputText value="#{relationship.target.getColumnValue(column)}" />
             </p:columns>
-
 
             <p:column headerText="Acción" rendered="#{cc.attrs.concept.editable}">
                 <div style="text-align: center">
@@ -437,8 +444,7 @@
 
             <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
                        var="column"
-                       columnIndexVar="colIndex"
-                       >
+                       columnIndexVar="colIndex">
                 <f:facet name="header">
                     <h:outputText value="#{column.name}" />
                 </f:facet>
