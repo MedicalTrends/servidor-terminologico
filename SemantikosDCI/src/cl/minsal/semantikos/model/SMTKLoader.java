@@ -161,17 +161,17 @@ public class SMTKLoader {
         int processedAfter = (int)(((float)this.processed/(float)total)*100);
 
         if(processedBefore < processedAfter ) {
-            logger.log(Level.INFO, "Procesados: "+processedAfter+ " %");
+            logger.log(Level.INFO, "Procesados: "+ processedAfter+ " %");
         }
     }
 
     public void incrementConceptsUpdated(int n) {
-        int processedBefore = (int)(((float)this.processed/(float)total)*100);
-        this.processed = this.processed + n;
-        int processedAfter = (int)(((float)this.processed/(float)total)*100);
+        int updatedBefore = (int)(((float)this.updated/(float)total)*100);
+        this.updated = this.updated + n;
+        int updatedAfter = (int)(((float)this.updated/(float)total)*100);
 
-        if(processedBefore < processedAfter ) {
-            logger.log(Level.INFO, "Actualizados: "+processedAfter+ " %");
+        if(updatedBefore < updatedAfter ) {
+            logger.log(Level.INFO, "Actualizados: "+ updatedAfter+ " %");
         }
     }
 
