@@ -109,6 +109,10 @@ public class SubstanceConceptLoader extends EntityLoader {
 
                     relationshipDefinition = category.findRelationshipDefinitionsByName("Mapear a DCI").get(0);
 
+                    if(!concept.getRelationshipsByRelationDefinition(relationshipDefinition).isEmpty()) {
+                        throw new LoadException(path.toString(), id, "Concepto: "+concept.toString()+" ya posee DCI, se descarta", INFO);
+                    }
+
                     helperTable = (HelperTable) relationshipDefinition.getTargetDefinition();
 
                     List<HelperTableRow> dci = helperTableManager.searchRows(helperTable, dciName);

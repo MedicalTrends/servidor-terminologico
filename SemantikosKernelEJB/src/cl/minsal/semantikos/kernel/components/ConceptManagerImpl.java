@@ -179,37 +179,49 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public void update(@NotNull ConceptSMTK originalConcept, @NotNull ConceptSMTK updatedConcept, User user) throws Exception {
 
+        boolean change = false;
+
         /* Primero de actualizan los campos propios del concepto */
         if(!originalConcept.equals(updatedConcept)) {
             updateFields(originalConcept, updatedConcept, user);
+            change = true;
         }
 
         /* Luego para cada descripción se realiza la acción correspondiente */
         for (Description description : ConceptUtils.getNewDesciptions(originalConcept.getDescriptions(), updatedConcept.getDescriptions())) {
             descriptionManager.bindDescriptionToConcept(updatedConcept, description, true, user);
+            change = true;
         }
 
         for (Description description : ConceptUtils.getRemovedDescriptions(originalConcept.getDescriptions(), updatedConcept.getDescriptions())) {
             descriptionManager.deleteDescription(description, user);
+            change = true;
         }
 
         for (Pair<Description, Description> descriptionPair : ConceptUtils.getModifiedDescriptions(originalConcept.getDescriptions(), updatedConcept.getDescriptions())) {
             descriptionManager.updateDescription(updatedConcept, descriptionPair.getFirst(), descriptionPair.getSecond(), user);
+            change = true;
         }
 
         /* Luego para cada relación se realiza la acción correspondiente */
         for (Relationship relationship : ConceptUtils.getNewRelationships(originalConcept.getRelationships(), updatedConcept.getRelationships())) {
             relationshipManager.bindRelationshipToConcept(updatedConcept, relationship, user);
+            change = true;
         }
 
         for (Relationship relationship : ConceptUtils.getRemovedRelationships(originalConcept.getRelationships(), updatedConcept.getRelationships())) {
             relationshipManager.removeRelationship(updatedConcept, relationship, user);
+            change = true;
         }
 
         for (Pair<Relationship, Relationship> relationshipPair : ConceptUtils.getModifiedRelationships(originalConcept.getRelationships(), updatedConcept.getRelationships())) {
             relationshipManager.updateRelationship(updatedConcept, relationshipPair.getFirst(), relationshipPair.getSecond(), user);
+            change = true;
         }
 
+        if(!change) {
+            throw new EJBException("No es posible actualizar una imagen de Concepto con una imagen idéntica!!");
+        }
     }
 
     @Override
