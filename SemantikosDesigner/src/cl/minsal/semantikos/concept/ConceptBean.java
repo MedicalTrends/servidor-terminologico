@@ -644,7 +644,7 @@ public class ConceptBean implements Serializable {
         Relationship relationship = null;
         boolean isRelationshipFound = false;
 
-        if ( target.getRepresentation().equals("null") ) {
+        if(target == null || target.getRepresentation().equals("null")) {
             return;
         }
 
