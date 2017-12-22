@@ -27,10 +27,12 @@
         <module name="SemantikosBrowser" />
         <module name="SemantikosBusinessEAR" />
         <module name="SemantikosCentral" />
+        <module name="SemantikosDCI" />
         <module name="SemantikosDesigner" />
         <module name="SemantikosDomain" />
         <module name="SemantikosKernelEJB" />
         <module name="SemantikosLoader" />
+        <module name="SemantikosLoader (1)" />
         <module name="SemantikosWeb" />
         <module name="SemantikosWS" />
         <module name="SemantikosWSEJB" />
@@ -43,10 +45,12 @@
       <module name="SemantikosBusinessEAR" target="1.7" />
       <module name="SemantikosCentral" target="1.7" />
       <module name="SemantikosCentralEAR" target="1.7" />
+      <module name="SemantikosDCI" target="1.7" />
       <module name="SemantikosDesigner" target="1.7" />
       <module name="SemantikosDomain" target="1.7" />
       <module name="SemantikosKernelEJB" target="1.7" />
       <module name="SemantikosLoader" target="1.7" />
+      <module name="SemantikosLoader (1)" target="1.7" />
       <module name="SemantikosWeb" target="1.7" />
       <module name="SemantikosWebEAR" target="1.7" />
       <module name="SemantikosWS" target="1.7" />

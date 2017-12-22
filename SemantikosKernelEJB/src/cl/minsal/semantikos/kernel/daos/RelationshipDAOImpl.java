@@ -63,10 +63,10 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
             call.registerOutParameter (1, Types.NUMERIC);
 
-            if(relationship.getIdRelationship()!=null) {
+            if(relationship.getIdRelationship() != null) {
                 call.setString(2,relationship.getIdRelationship());
-            }else {
-               call.setNull(2,VARCHAR);
+            } else {
+               call.setNull(2, VARCHAR);
             }
             call.setLong(3, relationship.getSourceConcept().getId());
             call.setLong(4, idTarget);

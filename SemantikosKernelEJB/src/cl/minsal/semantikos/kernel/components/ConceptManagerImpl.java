@@ -179,19 +179,6 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public void update(@NotNull ConceptSMTK originalConcept, @NotNull ConceptSMTK updatedConcept, User user) throws Exception {
 
-        /* Se validan las invariantes */
-        new ConceptInvariantsBR().invariants(updatedConcept);
-
-        /* Pre-condiciones: Reglas de negocio para la persistencia */
-        new ConceptCreationBR().apply(updatedConcept, user);
-
-        /**
-         * Se asume que ambas imagenes deben estar persistidas
-         */
-        updatedConcept.setId(originalConcept.getId());
-
-        updatedConcept.setConceptID(IDGenerator.generator(String.valueOf(updatedConcept.getId()),IDGenerator.TYPE_CONCEPT));
-
         /* Primero de actualizan los campos propios del concepto */
         if(!originalConcept.equals(updatedConcept)) {
             updateFields(originalConcept, updatedConcept, user);

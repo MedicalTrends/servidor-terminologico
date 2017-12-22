@@ -108,6 +108,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
      * @param user         El usuario que realiza la operación.
      */
     private void assurePersistence(ConceptSMTK concept, Relationship relationship, User user) throws Exception {
+
         if (!relationship.isPersistent()) {
 
             /* Se validan las reglas de negocio */
