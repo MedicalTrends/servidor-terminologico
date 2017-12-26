@@ -154,9 +154,9 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
                 Para evitar contención en BD al actualizar concurrentemente el mismo registro, se actualiza
                 el ultimo login solo si se ha sobrepasado una ventana de tiempo
                  */
-                //if( (System.currentTimeMillis() - user.getLastLogin().getTime()) > MAX_DURATION ) {
+                if( (System.currentTimeMillis() - user.getLastLogin().getTime()) > MAX_DURATION ) {
                     authDAO.markLogin(username);
-                //}
+                }
                 return user;
             }
         }
