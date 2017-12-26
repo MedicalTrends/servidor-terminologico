@@ -256,7 +256,7 @@ public class ConceptController {
         List<Description> descriptions = descriptionManager.searchDescriptionsPerfectMatch(term, categories, refSets);
 
         if(!categoriesNames.contains("Concepto Especial")) {
-            descriptions.addAll(descriptionManager.searchDescriptionsTruncateMatch(term, Arrays.asList(CategoryFactory.SPECIAL_CONCEPT), null));
+            descriptions.addAll(descriptionManager.searchDescriptionsPerfectMatch(term, Arrays.asList(CategoryFactory.SPECIAL_CONCEPT), null));
         }
 
         //List<Description> descriptions = this.descriptionManager.searchDescriptionsPerfectMatchInParallel(term, categories, refSets);
