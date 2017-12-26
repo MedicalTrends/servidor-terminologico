@@ -27,56 +27,6 @@
 
                                 <div class="ui-g">
 
-                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
-
-                                        <p:outputLabel value="Categorías" />
-
-                                    </div>
-
-                                    <div class="ui-g-12 ui-md-6 ui-lg-4">
-
-                                        <p:selectCheckboxMenu id="menu"
-                                                              converter="omnifaces.SelectItemsConverter"
-                                                              value="#{browserBean.browserQuery.categories}"
-                                                              label="Seleccione..."
-                                                              filter="true" filterMatchMode="startsWith">
-                                            <f:selectItems value="#{browserBean.categories}" var="category"
-                                                           itemLabel="#{category.name}" itemValue="#{category}"/>
-                                            <p:ajax event="toggleSelect" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
-                                            <p:ajax update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
-                                        </p:selectCheckboxMenu>
-
-                                    </div>
-
-                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
-
-                                        <p:outputLabel value="Etiquetas" />
-
-                                    </div>
-
-                                    <div class="ui-g-12 ui-md-6 ui-lg-4">
-
-                                        <p:selectCheckboxMenu id="tags"
-                                                              value="#{browserBean.browserQuery.tags}"
-                                                              converter="omnifaces.SelectItemsConverter"
-                                                              label="Seleccione..."
-                                                              autoWidth="false"
-                                                              filter="true"
-                                                              filterMatchMode="startsWith">
-                                            <p:ajax event="change" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
-                                            <p:ajax event="toggleSelect" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
-
-                                            <f:selectItems value="#{browserBean.tags}" var="tag"
-                                                           itemLabel="#{tag.name}" itemValue="#{tag}"/>
-                                        </p:selectCheckboxMenu>
-
-                                    </div>
-
-                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
-
-                                        <p:outputLabel value="Patrón" />
-
-                                    </div>
 
                                     <div class="ui-g-12 ui-md-6 ui-lg-8">
                                         <!--p:inputText value="#{browserBean.browserQuery.query}"
@@ -123,8 +73,72 @@
                                                          update="@(.otherDescriptionsPanel)"/>
                                     </div>
 
+                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                                        <p:selectBooleanButton value="#{browserBean.showFilters}" onLabel="Filtros" styleClass="CyanButton"
+                                                               offLabel="Filtros" onIcon="ui-icon-check" offIcon="ui-icon-close">
+                                            <p:ajax update="browserForm" />
+                                        </p:selectBooleanButton>
+
+                                    </div>
+
                                 </div>
+
                             </div>
+
+                            <p:panel id="filters" rendered="#{browserBean.showFilters}" styleClass="filtros">
+
+                                <div class="ui-g">
+
+                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                                        <p:outputLabel value="Categorías" />
+
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+
+                                        <p:selectCheckboxMenu id="menu2"
+                                                              converter="omnifaces.SelectItemsConverter"
+                                                              value="#{browserBean.browserQuery.categories}"
+                                                              label="Seleccione..." style="width: 95%"
+                                                              filter="true" filterMatchMode="startsWith">
+                                            <f:selectItems value="#{browserBean.categories}" var="category"
+                                                           itemLabel="#{category.name}" itemValue="#{category}"/>
+                                            <p:ajax event="toggleSelect" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+                                            <p:ajax update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+                                        </p:selectCheckboxMenu>
+
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                                        <p:outputLabel value="Etiquetas" />
+
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+
+                                        <p:selectCheckboxMenu id="tags2"
+                                                              value="#{browserBean.browserQuery.tags}"
+                                                              converter="omnifaces.SelectItemsConverter"
+                                                              label="Seleccione..."
+                                                              style="width: 95%"
+                                                              filter="true"
+                                                              filterMatchMode="startsWith">
+                                            <p:ajax event="change" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+                                            <p:ajax event="toggleSelect" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+
+                                            <f:selectItems value="#{browserBean.tags}" var="tag"
+                                                           itemLabel="#{tag.name}" itemValue="#{tag}"/>
+                                        </p:selectCheckboxMenu>
+
+                                    </div>
+
+                                </div>
+
+                            </p:panel>
+
                         </p:outputPanel>
 
                         <br/>

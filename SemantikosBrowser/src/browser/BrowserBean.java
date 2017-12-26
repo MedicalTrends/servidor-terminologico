@@ -86,6 +86,8 @@ public class BrowserBean implements Serializable {
      */
     private boolean performSearch = false;
 
+    private boolean showFilters = false;
+
     //@EJB
     private CategoryManager categoryManager;
 
@@ -218,7 +220,7 @@ public class BrowserBean implements Serializable {
         List<Description> suggestedDescriptions = new ArrayList<>();
         DescriptionTypeFactory.DUMMY_DESCRIPTION.setTerm(EMPTY_STRING);
         suggestedDescriptions.add(DescriptionTypeFactory.DUMMY_DESCRIPTION);
-        suggestedDescriptions.addAll(descriptionManager.searchDescriptionsSuggested(term, categories, EMPTY_LIST));
+        suggestedDescriptions.addAll(descriptionManager.searchDescriptionsSuggested(term, categories, null));
         return suggestedDescriptions;
     }
 
@@ -342,6 +344,14 @@ public class BrowserBean implements Serializable {
 
     public void setFilterChanged(boolean filterChanged) {
         isFilterChanged = filterChanged;
+    }
+
+    public boolean isShowFilters() {
+        return showFilters;
+    }
+
+    public void setShowFilters(boolean showFilters) {
+        this.showFilters = showFilters;
     }
 
     public DescriptionManager getDescriptionManager() {
