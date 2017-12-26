@@ -1,4 +1,32 @@
 
+.topbar-left {
+    background-color: #2f8ee5 !important;
+}
+
+.search {
+    position: relative;
+    color: #aaa;
+    font-size: 16px;
+}
+
+.search input { text-indent: 32px;}
+
+.search .fa-search {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.search .fa.fa-close.fa-lg {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.fa-lg {
+    line-height: .5em !important;
+}
+
 .browserLayout .ui-widget-content {
     border: 1px solid #d5d5d5;
     background: #fff;
