@@ -1,3 +1,5 @@
+package browser;
+
 import org.primefaces.extensions.component.layout.LayoutPane;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.OpenEvent;
