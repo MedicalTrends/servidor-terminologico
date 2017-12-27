@@ -220,7 +220,7 @@ public class ConceptManagerImpl implements ConceptManager {
         }
 
         if(!change) {
-            throw new EJBException("No es posible actualizar una imagen de Concepto con una imagen idéntica!!");
+            throw new EJBException("No es posible actualizar un concepto con una imagen idéntica!!");
         }
     }
 
