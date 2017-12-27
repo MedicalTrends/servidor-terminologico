@@ -40,7 +40,6 @@ import static java.sql.Types.TIMESTAMP;
  * @author Andres Farias.
  */
 @Stateless
-@org.jboss.ejb3.annotation.Pool(value="heavy-load-pool")
 public class DescriptionDAOImpl implements DescriptionDAO {
 
     /** El logger para esta clase */
