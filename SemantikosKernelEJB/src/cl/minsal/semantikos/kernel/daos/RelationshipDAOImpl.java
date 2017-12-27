@@ -27,7 +27,6 @@ import static java.sql.Types.VARCHAR;
  * @author Diego Soto / Gustavo Punucura
  */
 @Stateless
-@org.jboss.ejb3.annotation.Pool(value="heavy-load-pool")
 public class RelationshipDAOImpl implements RelationshipDAO {
 
     /** El logger para esta clase */
