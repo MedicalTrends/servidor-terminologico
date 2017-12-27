@@ -342,7 +342,8 @@ public class ConceptManagerImpl implements ConceptManager {
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK, Category... categories) {
 
         /* Se recuperan los conceptos relacionados: 1o se intenta con los conceptos padres */
-        List<ConceptSMTK> relatedConcepts =  conceptWSDAO.getRelatedConcepts(conceptSMTK);
+        //List<ConceptSMTK> relatedConcepts =  conceptWSDAO.getRelatedConcepts(conceptSMTK);
+        List<ConceptSMTK> relatedConcepts =  conceptDAO.getRelatedConcepts(conceptSMTK);
 
         /* Si no hay categorías por las que filtrar, se retorna la lista original */
         if (categories == null || categories.length == 0) {
@@ -422,8 +423,8 @@ public class ConceptManagerImpl implements ConceptManager {
 
     @Override
     public List<ConceptSMTK> findModeledConceptPaginated(Category category, int pageSize, int pageNumber) {
-        //return this.conceptDAO.getModeledConceptPaginated(category.getId(), pageSize, pageNumber);
-        return this.conceptWSDAO.getConceptsPaginated(category.getId(), pageSize, pageNumber);
+        return this.conceptDAO.getModeledConceptPaginated(category.getId(), pageSize, pageNumber);
+        //return this.conceptWSDAO.getConceptsPaginated(category.getId(), pageSize, pageNumber);
     }
 
     @Override

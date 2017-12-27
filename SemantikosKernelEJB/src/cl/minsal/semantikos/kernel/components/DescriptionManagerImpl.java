@@ -317,9 +317,14 @@ public class DescriptionManagerImpl implements DescriptionManager {
     //@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<Description> searchDescriptionsPerfectMatch(String term, List<Category> categories, List<RefSet> refSets) {
         //long init = currentTimeMillis();
+        term = descriptionSearchBR.escapeSpecialCharacters(term);
 
-        //return descriptionDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
-        return descriptionWSDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
+        if(term.isEmpty()) {
+            return EMPTY_LIST;
+        }
+
+        return descriptionDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
+        //return descriptionWSDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
     }
 
     @Override
@@ -355,12 +360,17 @@ public class DescriptionManagerImpl implements DescriptionManager {
     public List<Description> searchDescriptionsTruncateMatch(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
         //List<Description> descriptions = descriptionWSDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.truncatePattern(term), PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
+        term = descriptionSearchBR.escapeSpecialCharacters(term);
+
+        if(term.isEmpty()) {
+            return EMPTY_LIST;
+        }
 
         List<Description> descriptions = descriptionDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.truncatePattern(term), PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
 
         if (descriptions.isEmpty()) {
-            descriptions = descriptionWSDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.truncatePattern(descriptionSearchBR.standardizationPattern(term)), PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
-            //descriptions = descriptionDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.truncatePattern(descriptionSearchBR.removeStopWords(term)), PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
+            //descriptions = descriptionWSDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.truncatePattern(descriptionSearchBR.standardizationPattern(term)), PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
+            descriptions = descriptionDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.truncatePattern(descriptionSearchBR.removeStopWords(term)), PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
         }
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
@@ -381,7 +391,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         }
 
         if (descriptions.isEmpty()) {
-            descriptions = descriptionDAO.searchDescriptionsTruncateMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,5);
+            descriptions = descriptionDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.removeStopWords(term), PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,5);
         }
 
         return descriptions;
