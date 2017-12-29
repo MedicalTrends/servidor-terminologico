@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.browser;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
@@ -51,13 +51,13 @@ public class DrugsBrowserBean implements Serializable {
     private transient TreeNode root;
 
     //@EJB
-    DrugsManager drugsManager = (DrugsManager) RemoteEJBClientFactory.getInstance().getManager(DrugsManager.class);
+    DrugsManager drugsManager = (DrugsManager) ServiceLocator.getInstance().getService(DrugsManager.class);
 
     //@EJB
-    CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
+    CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
 
     //@EJB
-    ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+    ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
 
     @PostConstruct
     public void init(){

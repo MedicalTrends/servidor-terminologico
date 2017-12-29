@@ -95,4 +95,14 @@ public class CrossmapSet extends PersistentEntity implements TargetDefinition, S
     public boolean isCrossMapType() {
         return true;
     }
+
+    @Override
+    public String getRepresentation() {
+        return toString();
+    }
+
+    @Override
+    public String toString() {
+        return abbreviatedName;
+    }
 }

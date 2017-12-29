@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.browser;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
@@ -79,16 +79,16 @@ public class PendingBrowserBean implements Serializable {
     private AuthenticationBean authenticationBean;
 
     //@EJB
-    DescriptionManager descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
+    DescriptionManager descriptionManager = (DescriptionManager) ServiceLocator.getInstance().getService(DescriptionManager.class);
 
     //@EJB
-    ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+    ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
 
     //@EJB
-    CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
+    CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
 
     //@EJB
-    QueryManager queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
+    QueryManager queryManager = (QueryManager) ServiceLocator.getInstance().getService(QueryManager.class);
 
     @PostConstruct
     public void init() {

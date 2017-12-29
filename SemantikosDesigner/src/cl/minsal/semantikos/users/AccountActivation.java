@@ -2,7 +2,7 @@ package cl.minsal.semantikos.users;
 
 import cl.minsal.semantikos.Constants;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.ISPFetcher;
 import cl.minsal.semantikos.kernel.components.UserManager;
@@ -58,10 +58,10 @@ public class AccountActivation {
     private User user;
 
     //@EJB
-    UserManager userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
+    UserManager userManager = (UserManager) ServiceLocator.getInstance().getService(UserManager.class);
 
     //@EJB
-    AuthenticationManager authenticationManager = (AuthenticationManager) RemoteEJBClientFactory.getInstance().getManager(AuthenticationManager.class);
+    AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
 
     @PostConstruct
     public void init() {

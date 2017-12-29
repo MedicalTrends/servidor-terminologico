@@ -15,14 +15,14 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-public class RemoteEJBClientFactory {
+public class ServiceLocator {
 
-    private static final RemoteEJBClientFactory instance = new RemoteEJBClientFactory();
+    private static final ServiceLocator instance = new ServiceLocator();
     private static Context context;
     private static Properties props;
 
     /** Mapa de interfaces por su nombre. */
-    private Map<String, Object> managersByName;
+    private Map<String, Object> servicesByName;
 
     private static String APP_NAME = "SemantikosCentral/";
     private static String MODULE_NAME = "SemantikosKernelEJB/";
@@ -44,7 +44,7 @@ public class RemoteEJBClientFactory {
         // our EJB deployment, so this is an empty string
         final String distinctName = "";
         // The EJB name which by default is the simple class name of the bean implementation class
-        final String beanName = getBeanName(type);
+        final String beanName = getServiceName(type);
         // the remote view fully qualified class name
         final String viewClassName = getViewClassName(type);
         // let's do the lookup (notice the ?stateful string as the last part of the jndi name for stateful bean lookup)
@@ -53,7 +53,7 @@ public class RemoteEJBClientFactory {
 
         Object remoteEjb = context.lookup(jndiname);
 
-        this.managersByName.put(getBeanName(type), remoteEjb);
+        this.servicesByName.put(getServiceName(type), remoteEjb);
     }
 
 
@@ -62,7 +62,7 @@ public class RemoteEJBClientFactory {
      * EJBClientContext using EJBClientAPI
      */
 
-    private RemoteEJBClientFactory() {
+    private ServiceLocator() {
 
         props = new Properties();
         props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
@@ -75,11 +75,11 @@ public class RemoteEJBClientFactory {
             throw new RuntimeException(e);
         }
 
-        this.managersByName = new ConcurrentHashMap<>();
+        this.servicesByName = new ConcurrentHashMap<>();
     }
 
 
-    public static RemoteEJBClientFactory getInstance() {
+    public static ServiceLocator getInstance() {
         return instance;
     }
 
@@ -88,7 +88,7 @@ public class RemoteEJBClientFactory {
      * EJBClientContext using RemoteNamingProject
      */
     /*
-    private RemoteEJBClientFactory() {
+    private ServiceLocator() {
 
         Properties props = new Properties();
         props.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
@@ -114,19 +114,19 @@ public class RemoteEJBClientFactory {
      *
      * @return Retorna una instancia de FSN.
      */
-    public Object getManager(Type type) {
+    public Object getService(Type type) {
 
-        if (!managersByName.containsKey(getBeanName(type))) {
+        if (!servicesByName.containsKey(getServiceName(type))) {
             try {
                 lookupRemoteStatelessEJB(type);
             } catch (NamingException e) {
                 e.printStackTrace();
             }
         }
-        return this.managersByName.get(getBeanName(type));
+        return this.servicesByName.get(getServiceName(type));
     }
 
-    private String getBeanName(Type type) {
+    private String getServiceName(Type type) {
         String[] tokens = type.toString().split(" ")[1].split("\\.");
         return tokens[tokens.length-1]+"Impl";
     }

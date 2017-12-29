@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.model;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.loaders.*;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
@@ -67,11 +67,11 @@ public class SMTKLoader extends SwingWorker<Void, String> {
     /*Datafiles PCCE*/
     public static final String PCCE_PATH= ROOT+ENV_DRUGS+PCCE+"08_Producto_Comercial_Con_Envase.Base.txt";
 
-    private CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
-    private TagSMTKManager tagSMTKManager = (TagSMTKManager) RemoteEJBClientFactory.getInstance().getManager(TagSMTKManager.class);
-    private DescriptionManager descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
-    private RelationshipManager relationshipManager = (RelationshipManager) RemoteEJBClientFactory.getInstance().getManager(RelationshipManager.class);
-    private UserManager userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
+    private CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
+    private TagSMTKManager tagSMTKManager = (TagSMTKManager) ServiceLocator.getInstance().getService(TagSMTKManager.class);
+    private DescriptionManager descriptionManager = (DescriptionManager) ServiceLocator.getInstance().getService(DescriptionManager.class);
+    private RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);
+    private UserManager userManager = (UserManager) ServiceLocator.getInstance().getService(UserManager.class);
 
     private TagSMTKFactory tagSMTKFactory;
     private CategoryFactory categoryFactory;

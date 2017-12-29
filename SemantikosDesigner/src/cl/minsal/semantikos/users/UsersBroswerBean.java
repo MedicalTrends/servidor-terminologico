@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.users;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
@@ -27,7 +27,7 @@ public class UsersBroswerBean {
     static private final Logger logger = LoggerFactory.getLogger(UsersBroswerBean.class);
 
     //@EJB
-    UserManager userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
+    UserManager userManager = (UserManager) ServiceLocator.getInstance().getService(UserManager.class);
 
     User selectedUser;
 

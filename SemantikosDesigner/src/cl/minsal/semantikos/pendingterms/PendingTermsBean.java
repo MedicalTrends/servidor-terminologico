@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.pendingterms;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.PendingTermsManager;
@@ -48,10 +48,10 @@ public class PendingTermsBean {
     private String placeOrigin;
 
     //@EJB
-    private PendingTermsManager pendingTermsManager = (PendingTermsManager) RemoteEJBClientFactory.getInstance().getManager(PendingTermsManager.class);
+    private PendingTermsManager pendingTermsManager = (PendingTermsManager) ServiceLocator.getInstance().getService(PendingTermsManager.class);
 
     //@EJB
-    private CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
+    private CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
 
     public PendingTermsBean() {
         this.term = "Un término";

@@ -109,9 +109,9 @@ public interface ConceptManager {
 
     public List<ConceptSMTK> findConcepts(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled);
 
-    public long countConceptsByPattern(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled);
+    public int countConcepts(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled);
 
-    public List<ConceptSMTK> findModeledConceptPaginated(Category category, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findConceptsPaginated(Category category, int pageSize, int pageNumber, Boolean modeled);
 
     public List<ConceptSMTK> findConceptsWithTarget(Relationship relationship);
 

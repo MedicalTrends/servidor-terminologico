@@ -419,8 +419,23 @@ public class SearchService {
     @WebMethod(operationName = "conceptoPorIdDescripcion")
     public ConceptResponse conceptoPorIdDescripcion(
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
-            @WebParam(name = "peticionConceptoPorIdDescripcion")
+            @WebParam(name = "peticionGS1PorConceptID")
                     ConceptByDescriptionIDRequest request
+    ) throws NotFoundFault {
+        try {
+            return this.conceptController.conceptByDescriptionId(request.getDescriptionID());
+        } catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
+    }
+
+    // REQ-WS-???
+    @WebResult(name = "respuestaGS1PorConceptID")
+    @WebMethod(operationName = "GS1PorConceptID")
+    public GS1ByConceptIDResponse conceptoPorIdDescripcion(
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionGS1PorConceptID")
+                    GS1ByConceptIDRequest request
     ) throws NotFoundFault {
         try {
             return this.conceptController.conceptByDescriptionId(request.getDescriptionID());

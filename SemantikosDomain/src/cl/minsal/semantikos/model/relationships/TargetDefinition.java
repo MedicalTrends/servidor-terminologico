@@ -63,4 +63,7 @@ public interface TargetDefinition extends IPersistentEntity {
      */
     public boolean isCrossMapType();
 
+
+    public String getRepresentation();
+
 }

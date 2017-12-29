@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.concept;
 
 import cl.minsal.semantikos.MainMenuBean;
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.description.AutogenerateBeans;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.messages.MessageBean;
@@ -66,34 +66,34 @@ public class ConceptBean implements Serializable {
     private static final Logger logger = LoggerFactory.getLogger(ConceptBean.class);
 
     //@EJB
-    ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+    ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
 
     //@EJB
-    DescriptionManager descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
+    DescriptionManager descriptionManager = (DescriptionManager) ServiceLocator.getInstance().getService(DescriptionManager.class);
 
     //@EJB
-    RelationshipManager relationshipManager = (RelationshipManager) RemoteEJBClientFactory.getInstance().getManager(RelationshipManager.class);;
+    RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);;
 
     //@EJB
-    CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
+    CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
 
     //@EJB
-    HelperTablesManager helperTablesManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
+    HelperTablesManager helperTablesManager = (HelperTablesManager) ServiceLocator.getInstance().getService(HelperTablesManager.class);
 
     //@EJB
-    TagSMTKManager tagSMTKManager = (TagSMTKManager) RemoteEJBClientFactory.getInstance().getManager(TagSMTKManager.class);
+    TagSMTKManager tagSMTKManager = (TagSMTKManager) ServiceLocator.getInstance().getService(TagSMTKManager.class);
 
     //@EJB
-    AuditManager auditManager = (AuditManager) RemoteEJBClientFactory.getInstance().getManager(AuditManager.class);
+    AuditManager auditManager = (AuditManager) ServiceLocator.getInstance().getService(AuditManager.class);
 
     //@EJB
-    ViewAugmenter viewAugmenter = (ViewAugmenter) RemoteEJBClientFactory.getInstance().getManager(ViewAugmenter.class);
+    ViewAugmenter viewAugmenter = (ViewAugmenter) ServiceLocator.getInstance().getService(ViewAugmenter.class);
 
     //@EJB
-    RelationshipBindingBR relationshipBindingBR = (RelationshipBindingBR) RemoteEJBClientFactory.getInstance().getManager(RelationshipBindingBR.class);
+    RelationshipBindingBR relationshipBindingBR = (RelationshipBindingBR) ServiceLocator.getInstance().getService(RelationshipBindingBR.class);
 
     //@EJB
-    ConceptDefinitionalGradeBR conceptDefinitionalGradeBR = (ConceptDefinitionalGradeBR) RemoteEJBClientFactory.getInstance().getManager(ConceptDefinitionalGradeBR.class);
+    ConceptDefinitionalGradeBR conceptDefinitionalGradeBR = (ConceptDefinitionalGradeBR) ServiceLocator.getInstance().getService(ConceptDefinitionalGradeBR.class);
 
     @ManagedProperty(value = "#{smtkBean}")
     private SMTKTypeBean smtkTypeBean;
@@ -634,14 +634,16 @@ public class ConceptBean implements Serializable {
         Relationship relationship = null;
         boolean isRelationshipFound = false;
 
-        if ( target.getRepresentation().equals("null") )
+        if(target == null || target.getRepresentation().equals("null")) {
             return;
+        }
 
         if (relationshipDefinition.getTargetDefinition().isSMTKType() && target.getId() == concept.getId()) {
             messageBean.messageError("No puede seleccionar el mismo concepto que está editando");
             conceptSelected = null;
             return;
         }
+
         // Se busca la relación
         for (Relationship relationshipWeb : concept.getRelationshipsWeb()) {
             if (relationshipWeb.getRelationshipDefinition().equals(relationshipDefinition)) {
@@ -674,7 +676,9 @@ public class ConceptBean implements Serializable {
                 changeMultiplicityToRequiredRelationshipDefinitionMC();
         }
         //Autogenerado
-        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0) {
+            autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+        }
 
         autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
         // Se resetean los placeholder para los target de las relaciones

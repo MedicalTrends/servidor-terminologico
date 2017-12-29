@@ -51,4 +51,9 @@ public class SnomedCT extends PersistentEntity implements TargetDefinition, Seri
     public boolean isCrossMapType() {
         return false;
     }
+
+    @Override
+    public String getRepresentation() {
+        return "ConceptID SNM ¦ Preferido SNM";
+    }
 }

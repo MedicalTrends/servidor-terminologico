@@ -15,7 +15,9 @@ import cl.minsal.semantikos.model.relationships.TargetDefinition;
 import cl.minsal.semantikos.model.relationships.TargetType;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.modelws.request.ConceptIDByGS1Request;
 import cl.minsal.semantikos.modelws.request.DescriptionIDorConceptIDRequest;
+import cl.minsal.semantikos.modelws.request.GS1ByConceptIDRequest;
 import cl.minsal.semantikos.modelws.request.NewTermRequest;
 import cl.minsal.semantikos.modelws.response.*;
 import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
@@ -109,7 +111,7 @@ public class ConceptController {
         List<ConceptResponse> relatedResponses = new ArrayList<>();
         List<ConceptSMTK> relatedConcepts = this.conceptManager.getRelatedConcepts(sourceConcept, category);
 
-        relatedConcepts = relationshipManager.loadRelationshipsInParallel(relatedConcepts);
+        //relatedConcepts = relationshipManager.loadRelationshipsInParallel(relatedConcepts);
 
         for (ConceptSMTK related : relatedConcepts) {
             ConceptResponse conceptResponse = new ConceptResponse(related);
@@ -563,7 +565,7 @@ public class ConceptController {
             throw new NotFoundFault("No se encontró una categoría de nombre '" + categoryName + "'");
         }
 
-        List<ConceptSMTK> concepts = conceptManager.findModeledConceptPaginated(category, pageSize, pageNumber);
+        List<ConceptSMTK> concepts = conceptManager.findConceptsPaginated(category, pageSize, pageNumber, true);
 
         /*
         if(category.getRelationshipDefinitions().size() > 2) {
@@ -959,4 +961,48 @@ public class ConceptController {
 
         throw new IllegalArgumentException("La categoría solicitada no posee un atributo 'Pedible'");
     }
+
+    /**
+     * Este método es responsable de recuperar todos los conceptos en las categorías indicadas.
+     *
+     * @param gs1ByConceptIDRequest Nombres de las categorías en las que se desea realizar la búsqueda.
+     * @return La lista de Conceptos Light que satisfacen la búsqueda.
+     */
+    public GS1ByConceptIDResponse searchGS1ByConceptID(GS1ByConceptIDRequest gs1ByConceptIDRequest) throws NotFoundFault {
+
+        ConceptSMTK conceptSMTK = conceptManager.getConceptByCONCEPT_ID(gs1ByConceptIDRequest.getConceptID());
+
+        //Si la categoría no tiene la definición de atributo GS1
+        if(conceptSMTK.getCategory().findRelationshipDefinitionsByName("Número GS1 GTIN").isEmpty()) {
+            throw new NotFoundFault("El concepto: "+ conceptSMTK +" cuya categoría es: "+conceptSMTK.getCategory()+" no tiene la definición de atributo GS1");
+        }
+
+        //Si esta ok, construir respuesta
+
+        GS1ByConceptIDResponse res = new GS1ByConceptIDResponse(conceptSMTK);
+
+        return res;
+    }
+
+    /**
+     * Este método es responsable de recuperar todos los conceptos en las categorías indicadas.
+     *
+     * @param conceptIDByGS1Request Nombres de las categorías en las que se desea realizar la búsqueda.
+     * @return La lista de Conceptos Light que satisfacen la búsqueda.
+     */
+    public ConceptIDByGS1Response searchConceptIDByGS1(ConceptIDByGS1Request conceptIDByGS1Request) throws NotFoundFault {
+
+        BasicTypeValue GS1 = new BasicTypeValue(conceptIDByGS1Request.getGS1());
+
+        Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico con Envase");
+
+        RelationshipDefinition relationshipDefinition = category.findRelationshipDefinitionsByName("Número GS1 GTIN").get(0);
+
+        for (Relationship relationship : relationshipManager.findRelationshipsLike(relationshipDefinition, GS1)) {
+            if(relationship.getSourceConcept().getConceptID().equals(conceptIDByGS1Request.))
+        }
+
+        return res;
+    }
+
 }

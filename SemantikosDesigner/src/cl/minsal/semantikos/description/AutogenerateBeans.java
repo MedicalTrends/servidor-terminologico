@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.description;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.model.*;
@@ -27,7 +27,7 @@ import java.util.Map;
 public class AutogenerateBeans {
 
     //@EJB
-    private RelationshipManager relationshipManager = (RelationshipManager) RemoteEJBClientFactory.getInstance().getManager(RelationshipManager.class);;
+    private RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);;
 
     public String autogenerate(List<String> autoGenerateList) {
         String autogenerateString = "";

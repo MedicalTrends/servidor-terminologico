@@ -712,7 +712,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         try (Connection connection = dataSource.getConnection(); CallableStatement call =
             connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, Types.NUMERIC);
             call.setString(2, pattern);
 
             if(categories == null) {
@@ -729,7 +729,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             }
 
             if(modeled == null) {
-                call.setNull(5, Types.BOOLEAN);
+                call.setNull(5, OracleTypes.NUMBER);
             }
             else {
                 call.setBoolean(5, modeled);
@@ -738,12 +738,8 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.execute();
 
             //ResultSet rs = call.getResultSet();
-            ResultSet rs = (ResultSet) call.getObject(1);
+            concepts =  call.getInt(1);
 
-            while (rs.next()) {
-                concepts = Integer.parseInt(rs.getString("count"));
-            }
-            rs.close();
             call.close();
 
         } catch (SQLException e) {
@@ -782,7 +778,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             }
 
             if(modeled == null) {
-                call.setNull(5, Types.BOOLEAN);
+                call.setNull(5, OracleTypes.NUMBER);
             }
             else {
                 call.setBoolean(5, modeled);
@@ -791,12 +787,8 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.execute();
 
             //ResultSet rs = call.getResultSet();
-            ResultSet rs = (ResultSet) call.getObject(1);
+            concepts =  call.getInt(1);
 
-            while (rs.next()) {
-                concepts = Integer.parseInt(rs.getString("count"));
-            }
-            rs.close();
             call.close();
 
         } catch (SQLException e) {
@@ -808,9 +800,8 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> getModeledConceptPaginated(Long categoryId, int pageSize, int pageNumber) {
+    public List<ConceptSMTK> getConceptsPaginated(Long categoryId, int pageSize, int pageNumber, Boolean modeled) {
         List<ConceptSMTK> concepts = new ArrayList<>();
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept_by_categories_paginated(?,?,?,?); end;";
 
@@ -821,7 +812,13 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.setArray(2, connection.unwrap(OracleConnection.class).createARRAY("STK.NUMBER_ARRAY", new Long[]{categoryId}));
             call.setInt(3, pageNumber);
             call.setInt(4, pageSize);
-            call.setBoolean(5, true);
+
+            if(modeled == null) {
+                call.setNull(5, OracleTypes.NUMBER);
+            }
+            else {
+                call.setBoolean(5, modeled);
+            }
 
             call.execute();
 

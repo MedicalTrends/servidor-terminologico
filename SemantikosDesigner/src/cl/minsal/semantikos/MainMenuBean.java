@@ -1,6 +1,6 @@
 package cl.minsal.semantikos;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.kernel.componentsweb.ViewAugmenter;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
@@ -54,17 +54,17 @@ public class MainMenuBean implements Serializable {
     private transient MenuModel categoryMenuModel;
 
     //@EJB
-    private CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
+    private CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
 
-    private TagSMTKManager tagSMTKManager = (TagSMTKManager) RemoteEJBClientFactory.getInstance().getManager(TagSMTKManager.class);
+    private TagSMTKManager tagSMTKManager = (TagSMTKManager) ServiceLocator.getInstance().getService(TagSMTKManager.class);
 
-    private DescriptionManager descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
+    private DescriptionManager descriptionManager = (DescriptionManager) ServiceLocator.getInstance().getService(DescriptionManager.class);
 
-    HelperTablesManager helperTablesManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
+    HelperTablesManager helperTablesManager = (HelperTablesManager) ServiceLocator.getInstance().getService(HelperTablesManager.class);
 
-    ViewAugmenter viewAugmenter = (ViewAugmenter) RemoteEJBClientFactory.getInstance().getManager(ViewAugmenter.class);
+    ViewAugmenter viewAugmenter = (ViewAugmenter) ServiceLocator.getInstance().getService(ViewAugmenter.class);
 
-    UserManager userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
+    UserManager userManager = (UserManager) ServiceLocator.getInstance().getService(UserManager.class);
 
     private TagSMTKFactory tagSMTKFactory;
 

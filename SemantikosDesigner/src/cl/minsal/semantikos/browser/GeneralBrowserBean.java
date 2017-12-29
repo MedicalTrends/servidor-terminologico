@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.browser;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.users.AuthenticationBean;
 
 import cl.minsal.semantikos.kernel.components.*;
@@ -93,22 +93,22 @@ public class GeneralBrowserBean implements Serializable {
     private transient AuthenticationBean authenticationBean;
 
     //@EJB
-    QueryManager queryManager = (QueryManager) RemoteEJBClientFactory.getInstance().getManager(QueryManager.class);
+    QueryManager queryManager = (QueryManager) ServiceLocator.getInstance().getService(QueryManager.class);
 
     //@EJB
-    TagManager tagManager = (TagManager) RemoteEJBClientFactory.getInstance().getManager(TagManager.class);
+    TagManager tagManager = (TagManager) ServiceLocator.getInstance().getService(TagManager.class);
 
     //@EJB
-    HelperTablesManager helperTablesManager = (HelperTablesManager) RemoteEJBClientFactory.getInstance().getManager(HelperTablesManager.class);
+    HelperTablesManager helperTablesManager = (HelperTablesManager) ServiceLocator.getInstance().getService(HelperTablesManager.class);
 
     //@EJB
-    UserManager userManager = (UserManager) RemoteEJBClientFactory.getInstance().getManager(UserManager.class);
+    UserManager userManager = (UserManager) ServiceLocator.getInstance().getService(UserManager.class);
 
     //@EJB
-    CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
+    CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
 
     //@EJB
-    ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+    ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
 
     @PostConstruct
     public void init() {

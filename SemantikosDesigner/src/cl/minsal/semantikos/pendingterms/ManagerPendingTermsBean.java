@@ -1,6 +1,6 @@
 package cl.minsal.semantikos.pendingterms;
 
-import cl.minsal.semantikos.clients.RemoteEJBClientFactory;
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
@@ -30,16 +30,16 @@ import java.util.List;
 public class ManagerPendingTermsBean {
 
     //@EJB
-    private ConceptManager conceptManager = (ConceptManager) RemoteEJBClientFactory.getInstance().getManager(ConceptManager.class);
+    private ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
 
     //@EJB
-    private CategoryManager categoryManager = (CategoryManager) RemoteEJBClientFactory.getInstance().getManager(CategoryManager.class);
+    private CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
 
     //@EJB
-    private PendingTermsManager pendingTermsManager = (PendingTermsManager) RemoteEJBClientFactory.getInstance().getManager(PendingTermsManager.class);
+    private PendingTermsManager pendingTermsManager = (PendingTermsManager) ServiceLocator.getInstance().getService(PendingTermsManager.class);
 
     //@EJB
-    private DescriptionManager descriptionManager = (DescriptionManager) RemoteEJBClientFactory.getInstance().getManager(DescriptionManager.class);
+    private DescriptionManager descriptionManager = (DescriptionManager) ServiceLocator.getInstance().getService(DescriptionManager.class);
 
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;

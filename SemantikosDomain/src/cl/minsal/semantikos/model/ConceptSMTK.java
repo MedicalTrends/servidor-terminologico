@@ -806,9 +806,15 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
         if (!(other instanceof ConceptSMTK)) return false;
 
-        String otherConceptID = ((ConceptSMTK) other).conceptID;
-        boolean areEquals = this.conceptID.equals(otherConceptID);
-        return areEquals;
+        ConceptSMTK conceptSMTK = (ConceptSMTK) other;
+
+        if (!this.conceptID.equals(conceptSMTK.conceptID)) return false;
+
+        return this.isToBeReviewed() == conceptSMTK.isToBeReviewed()
+                || this.isToBeConsulted() == conceptSMTK.isToBeConsulted()
+                || this.getObservation().equalsIgnoreCase(conceptSMTK.getObservation())
+                || this.getTagSMTK().equals(conceptSMTK.getTagSMTK())
+                || this.isFullyDefined().equals(conceptSMTK.isFullyDefined());
     }
 
     @Override
@@ -818,7 +824,22 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
     @Override
     public String getRepresentation() {
-        return toString();
+
+        String toString =  this.conceptID;
+
+        if (descriptions.isEmpty()) {
+            return toString;
+        }
+
+        if (this.hasFavouriteDescription()) {
+            Description descriptionFavorite = getDescriptionFavorite();
+            return toString + " ¦ " + descriptionFavorite.getTerm();
+        }
+
+        Description aDescription = this.descriptions.get(0);
+        toString = toString + " ¦ " + aDescription.getDescriptionType().getName() + ": " + aDescription.getTerm();
+
+        return toString;
     }
 
     @Override
