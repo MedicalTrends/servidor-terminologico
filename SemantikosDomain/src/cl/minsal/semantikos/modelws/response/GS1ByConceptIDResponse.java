@@ -5,6 +5,7 @@ import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
@@ -31,7 +32,7 @@ public class GS1ByConceptIDResponse implements Serializable {
     public GS1ByConceptIDResponse() { }
 
     public GS1ByConceptIDResponse(@NotNull ConceptSMTK conceptSMTK) {
-        RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName("Número GS1 GTIN").get(0);
+        RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.GTINGS1).get(0);
         List<Relationship> relationshipGS1 = conceptSMTK.getRelationshipsByRelationDefinition(relationshipDefinition);
         if(!relationshipGS1.isEmpty()) {
             BasicTypeValue codeGS1 = (BasicTypeValue) relationshipGS1.get(0).getTarget();

@@ -20,7 +20,7 @@ import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
  */
 public class UtilsWS {
 
-    public static Pair<String, String> getCredentialsFromWSContext(MessageContext mctx) throws Exception {
+    public static Pair<String, String> getCredentials(MessageContext mctx) throws Exception {
         Map http_headers = (Map) mctx.get(MessageContext.HTTP_REQUEST_HEADERS);
 
         ArrayList list = (ArrayList) http_headers.get("Authorization");

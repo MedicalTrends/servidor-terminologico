@@ -12,22 +12,11 @@ import java.io.Serializable;
 @XmlType(name = "PeticionConceptoRefSet", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class ConceptToRefSetRequest extends Request implements Serializable {
 
-    @XmlElement(required = true, name = "terminoPropuesto")
-    private String term;
-
     @XmlElement(required = true, name = "nombreRefSet")
     private String refSetName;
 
-    @XmlElement(required = false, name = "conceptID")
+    @XmlElement(required = true, name = "conceptID")
     private String conceptID;
-
-    public String getTerm() {
-        return term;
-    }
-
-    public void setTerm(String term) {
-        this.term = term;
-    }
 
     public String getRefSetName() {
         return refSetName;

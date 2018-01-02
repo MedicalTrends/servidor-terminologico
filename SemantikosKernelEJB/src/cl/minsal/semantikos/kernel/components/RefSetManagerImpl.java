@@ -166,10 +166,10 @@ public class RefSetManagerImpl implements RefSetManager {
     @Override
     public RefSet getRefsetByName(String pattern) {
         List<RefSet> found = this.findRefsetsByName(pattern);
-        if (found != null && !found.isEmpty()) {
+        if (!found.isEmpty()) {
             return found.get(0);
         }
-        return null;
+        throw new NoSuchElementException("RefSet no encontrado: " + pattern);
     }
 
     @Override

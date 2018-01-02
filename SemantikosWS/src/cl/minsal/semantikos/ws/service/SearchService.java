@@ -86,7 +86,7 @@ public class SearchService {
         String webMethodMessage = "OK";
 
         try {
-            Pair credentials = UtilsWS.getCredentialsFromWSContext(wsctx.getMessageContext());
+            Pair credentials = UtilsWS.getCredentials(wsctx.getMessageContext());
             authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
             authenticationManager.validateInstitution(request.getIdStablishment());
 
@@ -438,6 +438,9 @@ public class SearchService {
                     GS1ByConceptIDRequest request
     ) throws NotFoundFault {
         try {
+            if(request.getConceptID().isEmpty()) {
+                throw new IllegalInputFault("Debe ingresar un ConceptID");
+            }
             return this.conceptController.searchGS1ByConceptID(request);
         } catch (Exception e) {
             throw new NotFoundFault(e.getMessage());

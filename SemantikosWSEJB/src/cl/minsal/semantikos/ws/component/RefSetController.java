@@ -6,6 +6,9 @@ import cl.minsal.semantikos.kernel.components.RefSetManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.modelws.request.ConceptToRefSetRequest;
+import cl.minsal.semantikos.modelws.response.ConceptToRefSetResponse;
 import cl.minsal.semantikos.modelws.response.RefSetResponse;
 import cl.minsal.semantikos.modelws.response.RefSetSearchResponse;
 import cl.minsal.semantikos.modelws.response.RefSetsResponse;
@@ -191,15 +194,15 @@ public class RefSetController {
         List<String> validInstitutions = new ArrayList<>();
 
         if(!connectionInstitution.getName().equals("MINSAL") && includeInstitutions ) {
-            validInstitutions = Arrays.asList(new String[]{"MINSAL", connectionInstitution.getName()});
+            validInstitutions = Arrays.asList(new String[] {"MINSAL", connectionInstitution.getName()});
         }
 
         if(!connectionInstitution.getName().equals("MINSAL") && !includeInstitutions ) {
-            validInstitutions = Arrays.asList(new String[]{connectionInstitution.getName()});
+            validInstitutions = Arrays.asList(new String[] {connectionInstitution.getName()});
         }
 
         if(connectionInstitution.getName().equals("MINSAL") && !includeInstitutions ) {
-            validInstitutions = Arrays.asList(new String[]{"MINSAL"});
+            validInstitutions = Arrays.asList(new String[] {"MINSAL"});
         }
 
         it = refSets.iterator();
@@ -216,11 +219,102 @@ public class RefSetController {
         return new RefSetsResponse(refSets);
     }
 
+    /**
+     *
+     * @param request El parametro no considerado
+     * @return La lista de RefSets encapsulada.
+     * @throws NotFoundFault Arrojada si no ... ???
+     */
+    public ConceptToRefSetResponse addConceptToRefSet(ConceptToRefSetRequest request, User user, Institution institution)
+            throws NotFoundFault {
+
+        ConceptSMTK conceptSMTK = conceptManager.getConceptByCONCEPT_ID(request.getConceptID());
+
+        List<RefSet> refSets = refSetManager.findRefsetsByName(request.getRefSetName());
+
+        if(refSets.isEmpty()) {
+            throw new NotFoundFault("No existe un RefSet de nombre: '"+ request.getRefSetName()+"'");
+        }
+
+        if(!conceptSMTK.isValid()) {
+            throw new NotFoundFault("El concepto: '"+ conceptSMTK +"' no es valido");
+        }
+
+        RefSet refSet = refSets.get(0);
+
+        if(!refSet.isValid()) {
+            throw new NotFoundFault("El refset: '"+ refSet +"' no es valido");
+        }
+
+        /*
+        if(!user.getInstitutions().contains(institution)) {
+            throw new NotFoundFault("El idEstablecimiento no correponde a ninguno de los establecimientos del usuario: '"+user+"'");
+        }
+        */
+
+        if(institution.equals(refSet.getInstitution())) {
+            throw new NotFoundFault("El establecimiento dueño del RefSet: '"+refSet.getInstitution()+"' no corresponde a ninguno de los establecimientos del usuario: '"+user+"'");
+        }
+
+        if(refSet.getConcepts().contains(conceptSMTK)) {
+            throw new NotFoundFault("El RefSet: '"+refSet+"' ya contiene el concepto: '"+conceptSMTK+"'");
+        }
+
+        refSetManager.bindConceptToRefSet(conceptSMTK, refSet, user);
+
+        return new ConceptToRefSetResponse(conceptSMTK);
+    }
+
+    /**
+     *
+     * @param request El parametro no considerado
+     * @return La lista de RefSets encapsulada.
+     * @throws NotFoundFault Arrojada si no ... ???
+     */
+    public ConceptToRefSetResponse removeConceptFromRefSet(ConceptToRefSetRequest request, User user, Institution institution)
+            throws NotFoundFault {
+
+        ConceptSMTK conceptSMTK = conceptManager.getConceptByCONCEPT_ID(request.getConceptID());
+
+        List<RefSet> refSets = refSetManager.findRefsetsByName(request.getRefSetName());
+
+        if(refSets.isEmpty()) {
+            throw new NotFoundFault("No existe un RefSet de nombre: '"+ request.getRefSetName()+"'");
+        }
+
+        if(!conceptSMTK.isValid()) {
+            throw new NotFoundFault("El concepto: '"+ conceptSMTK +"' no es valido");
+        }
+
+        RefSet refSet = refSets.get(0);
+
+        if(!refSet.isValid()) {
+            throw new NotFoundFault("El refset: '"+ refSet +"' no es valido");
+        }
+
+        /*
+        if(!user.getInstitutions().contains(institution)) {
+            throw new NotFoundFault("El idEstablecimiento no correponde a ninguno de los establecimientos del usuario: '"+user+"'");
+        }
+        */
+
+        if(institution.equals(refSet.getInstitution())) {
+            throw new NotFoundFault("El establecimiento dueño del RefSet: '"+refSet.getInstitution()+"' no corresponde a ninguno de los establecimientos del usuario: '"+user+"'");
+        }
+
+        if(!refSet.getConcepts().contains(conceptSMTK)) {
+            throw new NotFoundFault("El RefSet: '"+refSet+"' no contiene el concepto: '"+conceptSMTK+"'");
+        }
+
+        refSetManager.unbindConceptToRefSet(conceptSMTK, refSets.get(0), user);
+
+        return new ConceptToRefSetResponse(conceptSMTK);
+    }
+
     public RefSetResponse getResponse(RefSet refSet) throws NotFoundFault {
         if (refSet == null) {
             throw new NotFoundFault("RefSet no encontrado");
         }
         return RefSetMapper.map(refSet);
     }
-
 }

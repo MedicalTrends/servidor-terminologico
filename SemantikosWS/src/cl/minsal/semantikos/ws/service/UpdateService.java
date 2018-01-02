@@ -7,15 +7,18 @@ import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.modelweb.Pair;
 import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
 import cl.minsal.semantikos.modelws.fault.NotFoundFault;
+import cl.minsal.semantikos.modelws.request.ConceptToRefSetRequest;
 import cl.minsal.semantikos.modelws.request.DescriptionHitRequest;
 import cl.minsal.semantikos.modelws.request.NewTermRequest;
 import cl.minsal.semantikos.modelws.request.Request;
+import cl.minsal.semantikos.modelws.response.ConceptToRefSetResponse;
 import cl.minsal.semantikos.modelws.response.DescriptionResponse;
 import cl.minsal.semantikos.modelws.response.NewTermResponse;
 import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.component.DescriptionController;
 
 
+import cl.minsal.semantikos.ws.component.RefSetController;
 import cl.minsal.semantikos.ws.utils.UtilsWS;
 
 import org.slf4j.Logger;
@@ -48,6 +51,9 @@ public class UpdateService {
     @EJB
     private DescriptionController descriptionController;
 
+    @EJB
+    private RefSetController refSetController;
+
     @Resource
     WebServiceContext wsctx;
 
@@ -75,7 +81,7 @@ public class UpdateService {
         String webMethodMessage = "OK";
 
         try {
-            Pair credentials = UtilsWS.getCredentialsFromWSContext(wsctx.getMessageContext());
+            Pair credentials = UtilsWS.getCredentials(wsctx.getMessageContext());
             user = authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
             institution = authenticationManager.validateInstitution(request.getIdStablishment());
 
@@ -133,6 +139,40 @@ public class UpdateService {
                     DescriptionHitRequest descriptionHitRequest
     ) throws IllegalInputFault, NotFoundFault  {
         return descriptionController.incrementDescriptionHits(descriptionHitRequest.getDescriptionID());
+    }
+
+    // REQ-WS-???
+
+    /**
+     * REQ-WS-???: El sistema Semantikos debe disponer un servicio que permita aumentar el hit de una Descripción.
+     *
+     * @param request El valor de negocio DESCRIPTION_ID de una descripción.
+     * @return
+     */
+    @WebResult(name = "respuestaAgregarConceptoRefSet")
+    @WebMethod(operationName = "agregarConceptoRefSet")
+    public ConceptToRefSetResponse agregarConceptoRefSet(
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionAgregarConceptoRefSet")
+                    ConceptToRefSetRequest request
+    ) throws IllegalInputFault, NotFoundFault  {
+        return refSetController.addConceptToRefSet(request, user, institution);
+    }
+
+    /**
+     * REQ-WS-???: El sistema Semantikos debe disponer un servicio que permita aumentar el hit de una Descripción.
+     *
+     * @param request El valor de negocio DESCRIPTION_ID de una descripción.
+     * @return
+     */
+    @WebResult(name = "respuestaQuitarConceptoRefSet")
+    @WebMethod(operationName = "quitarConceptoRefSet")
+    public ConceptToRefSetResponse quitarConceptoRefSet(
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionQuitarConceptoRefSet")
+                    ConceptToRefSetRequest request
+    ) throws IllegalInputFault, NotFoundFault  {
+        return refSetController.removeConceptFromRefSet(request, user, institution);
     }
 
 }

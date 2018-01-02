@@ -971,10 +971,11 @@ public class ConceptController {
     public GS1ByConceptIDResponse searchGS1ByConceptID(GS1ByConceptIDRequest gs1ByConceptIDRequest) throws NotFoundFault {
 
         ConceptSMTK conceptSMTK = conceptManager.getConceptByCONCEPT_ID(gs1ByConceptIDRequest.getConceptID());
+        conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
 
         //Si la categoría no tiene la definición de atributo GS1
-        if(conceptSMTK.getCategory().findRelationshipDefinitionsByName("Número GS1 GTIN").isEmpty()) {
-            throw new NotFoundFault("El concepto: "+ conceptSMTK +" cuya categoría es: "+conceptSMTK.getCategory()+" no tiene la definición de atributo GS1");
+        if(conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.GTINGS1).isEmpty()) {
+            throw new NotFoundFault("El concepto: "+ conceptSMTK +" perteneciente a categoría: "+conceptSMTK.getCategory()+" no tiene la definición de atributo GS1");
         }
 
         //Si esta ok, construir respuesta
@@ -994,11 +995,17 @@ public class ConceptController {
 
         BasicTypeValue GS1 = new BasicTypeValue(conceptIDByGS1Request.getGS1());
 
-        Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico con Envase");
+        Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Producto Comercial con Envase");
 
-        RelationshipDefinition relationshipDefinition = category.findRelationshipDefinitionsByName("Número GS1 GTIN").get(0);
+        RelationshipDefinition relationshipDefinition = category.findRelationshipDefinitionsByName(TargetDefinition.GTINGS1).get(0);
 
         ConceptIDByGS1Response res = null;
+
+        List<Relationship> relationships = relationshipManager.findRelationshipsLike(relationshipDefinition, GS1);
+
+        if(relationships.isEmpty()) {
+            throw new NotFoundFault("No existen conceptos pertencecientes a "+category.getName()+" con atributo "+relationshipDefinition.getName()+" con valor: '"+GS1+"'");
+        }
 
         for (Relationship relationship : relationshipManager.findRelationshipsLike(relationshipDefinition, GS1)) {
             res = new ConceptIDByGS1Response(relationship.getSourceConcept());
