@@ -1,11 +1,9 @@
-
-/**
+/** 
  * PrimeFaces Poseidon Layout
  */
 PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
-
+    
     init: function(cfg) {
-        alert("hola");
         this._super(cfg);
         this.wrapper = $(document.body).children('.layout-wrapper');
         this.topbar = $('body > .layout-wrapper > .topbar');
@@ -25,25 +23,28 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
         this.topbarMenuClick = false;
 
         this._bindEvents();
-
+        
         if(!this.wrapper.hasClass('menu-layout-horizontal')) {
             this.restoreMenuState();
         }
-
+        
         this.menuContainer.children('.nano').nanoScroller({flash:true});
     },
-
+    
     _bindEvents: function() {
         var $this = this;
 
-        this.menuButton.off('click').on('click', function(e) {
+        this.menuButton.on('click', function(e) {
+
+            alert("hola");
+            
             $this.menuButton.toggleClass('menu-button-rotate');
             $this.topbarItems.removeClass('topbar-items-visible');
-
+            
             //overlay
             if($this.wrapper.hasClass('menu-layout-overlay')) {
                 $this.wrapper.toggleClass('layout-menu-overlay-active');
-
+                
                 if($this.wrapper.hasClass('layout-menu-overlay-active')) {
                     $this.enableModal();
                     $this.enableSwipe();
@@ -74,14 +75,16 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
                     }
                 }
             }
+            e.stopPropagation();
+            e.stopImmediatePropagation();
 
             e.preventDefault();
         });
-
-        this.topbarMenuButton.off('click').on('click', function(e) {
+        
+        this.topbarMenuButton.on('click', function(e) {
             $this.topbarMenuClick = true;
             $this.topbarItems.find('ul').removeClass('fadeInDown fadeOutUp');
-
+            
             if($this.wrapper.hasClass('layout-menu-overlay-active')||$this.wrapper.hasClass('layout-menu-static-active')) {
                 $this.menuButton.removeClass('menu-button-rotate');
                 $this.wrapper.removeClass('layout-menu-overlay-active layout-menu-static-active');
@@ -90,7 +93,7 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
 
             if($this.topbarItems.hasClass('topbar-items-visible')) {
                 $this.topbarItems.addClass('fadeOutUp');
-
+                
                 setTimeout(function() {
                     $this.topbarItems.removeClass('fadeOutUp topbar-items-visible');
                 },500);
@@ -98,33 +101,33 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
             else {
                 $this.topbarItems.addClass('topbar-items-visible fadeInDown');
             }
-
+            
             $this.closeRightSidebarMenu();
-
+            
             e.preventDefault();
         });
-
+        
         this.menulinks.off('click').on('click', function(e) {
             var link = $(this),
-                item = link.parent(),
-                submenu = item.children('ul'),
-                horizontal = $this.isHorizontal() && $this.isDesktop();
-
+            item = link.parent(),
+            submenu = item.children('ul'),
+            horizontal = $this.isHorizontal() && $this.isDesktop();
+            
             if(horizontal) {
                 $this.horizontalMenuClick = true;
                 $this.closeRightSidebarMenu();
             }
-
+                                     
             if(item.hasClass('active-menuitem')) {
                 if(submenu.length) {
                     $this.removeMenuitem(item.attr('id'));
                     item.removeClass('active-menuitem');
-
+                    
                     if(horizontal) {
                         if(item.parent().is($this.jq)) {
                             $this.menuActive = false;
                         }
-
+                        
                         submenu.hide();
                     }
                     else {
@@ -134,7 +137,7 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
             }
             else {
                 $this.addMenuitem(item.attr('id'));
-
+                
                 if(horizontal) {
                     $this.deactivateItems(item.siblings());
                     item.addClass('active-menuitem');
@@ -146,29 +149,29 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
                     $this.activate(item);
                 }
             }
-
+            
             if(!horizontal) {
                 setTimeout(function() {
                     $(".nano").nanoScroller();
                 }, 500);
             }
-
+                                    
             if(submenu.length) {
                 e.preventDefault();
             }
         });
-
-        this.menu.find('> li').on('mouseenter', function(e) {
+        
+        this.menu.find('> li').on('mouseenter', function(e) {    
             if($this.isHorizontal() && $this.isDesktop()) {
                 var item = $(this),
-                    link = item.children('a'),
-                    submenu = item.children('ul');
-
+                link = item.children('a'),
+                submenu = item.children('ul');
+                
                 if(!item.hasClass('active-menuitem')) {
                     $this.menu.find('.active-menuitem').removeClass('active-menuitem');
                     $this.menu.find('ul:visible').hide();
                     $this.menu.find('.ink').remove();
-
+                    
                     if($this.menuActive) {
                         item.addClass('active-menuitem');
                         item.children('ul').show();
@@ -176,27 +179,28 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
                 }
             }
         });
-
-        this.profileButton.off('click').on('click', function(e) {
+        
+        this.profileButton.on('click', function(e) {
             var profile = $this.profileMenu.prev('.profile'),
-                expanded = profile.hasClass('profile-expanded');
-
+            expanded = profile.hasClass('profile-expanded');
+            
             $this.profileMenu.slideToggle();
             $this.profileMenu.prev('.profile').toggleClass('profile-expanded');
             $this.setInlineProfileState(!expanded);
-
+            
             setTimeout(function() {
                 $(".nano").nanoScroller();
             }, 500);
-
+            
             e.preventDefault();
         });
+        
+        this.topbarLinks.on('click', function(e) {
 
-        this.topbarLinks.off('click').on('click', function(e) {
             var link = $(this),
-                item = link.parent(),
-                submenu = link.next();
-
+            item = link.parent(),
+            submenu = link.next();
+            
             $this.topbarLinkClick = true;
 
             item.siblings('.active-top-menu').removeClass('active-top-menu');
@@ -210,10 +214,10 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
                 if(submenu.length) {
                     if(item.hasClass('active-top-menu')) {
                         submenu.addClass('fadeOutUp');
-
+                        
                         setTimeout(function() {
                             item.removeClass('active-top-menu'),
-                                submenu.removeClass('fadeOutUp');
+                            submenu.removeClass('fadeOutUp');
                         },500);
                     }
                     else {
@@ -225,44 +229,45 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
             else {
                 item.children('ul').removeClass('fadeInDown fadeOutUp');
                 item.toggleClass('active-top-menu');
-            }
-
+            }   
+            
             $this.closeRightSidebarMenu();
 
-            if(submenu.length) {
-                e.preventDefault();
-            }
-        });
+            e.stopPropagation();
+            e.stopImmediatePropagation();
 
-        $this.topbarItems.children('.search-item').off('click').on('click', function(e) {
+            e.preventDefault();         
+        });
+        
+        $this.topbarItems.children('.search-item').on('click', function(e) {
             $this.topbarLinkClick = true;
         });
-
-        $(document.body).off('click').on('click', function() {
+        
+        $(document.body).on('click', function() {
             if($this.isHorizontal() && !$this.horizontalMenuClick && $this.isDesktop()) {
                 $this.menu.find('.active-menuitem').removeClass('active-menuitem');
                 $this.menu.find('ul:visible').hide();
                 $this.menuActive = false;
             }
-
+            
             if(!$this.topbarMenuClick && !$this.topbarLinkClick) {
                 $this.topbarItems.find('.active-top-menu').removeClass('active-top-menu');
             }
-
+            
             if(!$this.topbarMenuClick && !$this.topbarLinkClick) {
                 $this.topbarItems.removeClass('topbar-items-visible');
             }
-
+            
             $this.horizontalMenuClick = false;
             $this.topbarLinkClick = false;
             $this.topbarMenuClick = false;
         });
-
+        
         $(function() {
             $this._initRightSidebar();
         });
     },
-
+         
     activate: function(item) {
         var submenu = item.children('ul');
         item.addClass('active-menuitem');
@@ -271,29 +276,29 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
             submenu.slideDown();
         }
     },
-
+    
     deactivate: function(item) {
         var submenu = item.children('ul');
         item.removeClass('active-menuitem');
-
+        
         if(submenu.length) {
             submenu.hide();
         }
     },
-
+        
     deactivateItems: function(items, animate) {
         var $this = this;
-
+        
         for(var i = 0; i < items.length; i++) {
             var item = items.eq(i),
-                submenu = item.children('ul');
-
+            submenu = item.children('ul');
+            
             if(submenu.length) {
                 if(item.hasClass('active-menuitem')) {
                     var activeSubItems = item.find('.active-menuitem');
                     item.removeClass('active-menuitem');
                     item.find('.ink').remove();
-
+                    
                     if(animate) {
                         submenu.slideUp('normal', function() {
                             $(this).parent().find('.active-menuitem').each(function() {
@@ -307,7 +312,7 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
                             $this.deactivate($(this));
                         });
                     }
-
+                    
                     $this.removeMenuitem(item.attr('id'));
                     activeSubItems.each(function() {
                         $this.removeMenuitem($(this).attr('id'));
@@ -327,36 +332,37 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
             }
         }
     },
-
+            
     removeMenuitem: function (id) {
         this.expandedMenuitems = $.grep(this.expandedMenuitems, function (value) {
             return value !== id;
         });
         this.saveMenuState();
     },
-
+    
     addMenuitem: function (id) {
         if ($.inArray(id, this.expandedMenuitems) === -1) {
             this.expandedMenuitems.push(id);
         }
         this.saveMenuState();
     },
-
+    
     saveMenuState: function() {
         $.cookie('poseidon_expandeditems', this.expandedMenuitems.join(','), {path: '/'});
     },
-
+    
     clearMenuState: function() {
+        alert("clearMenuState");
         $.removeCookie('poseidon_expandeditems', {path: '/'});
     },
-
+    
     setInlineProfileState: function(expanded) {
         if(expanded)
             $.cookie('poseidon_inlineprofile_expanded', "1", {path: '/'});
         else
             $.removeCookie('poseidon_inlineprofile_expanded', {path: '/'});
     },
-
+    
     restoreMenuState: function() {
         var menucookie = $.cookie('poseidon_expandeditems');
         if (menucookie) {
@@ -366,7 +372,7 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
                 if (id) {
                     var menuitem = $("#" + this.expandedMenuitems[i].replace(/:/g, "\\:"));
                     menuitem.addClass('active-menuitem');
-
+                    
                     var submenu = menuitem.children('ul');
                     if(submenu.length) {
                         submenu.show();
@@ -374,21 +380,21 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
                 }
             }
         }
-
+        
         var inlineProfileCookie = $.cookie('poseidon_inlineprofile_expanded');
         if (inlineProfileCookie) {
             this.profileMenu.show().prev('.profile').addClass('profile-expanded');
         }
     },
-
+    
     enableModal: function() {
         this.modal = this.wrapper.append('<div class="layout-mask"></div>').children('.layout-mask');
     },
-
+    
     disableModal: function() {
         this.modal.remove();
     },
-
+    
     enableSwipe: function() {
         var $this = this;
         this.menuWrapper.swipe({
@@ -397,15 +403,15 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
             }
         });
     },
-
+    
     disableSwipe: function() {
         this.menuWrapper.swipe('destroy');
     },
-
+    
     isHorizontal: function() {
         return this.wrapper.hasClass('menu-layout-horizontal');
     },
-
+    
     isTablet: function() {
         var width = window.innerWidth;
         return width <= 1024 && width > 640;
@@ -418,39 +424,39 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
     isMobile: function() {
         return window.innerWidth <= 640;
     },
-
+    
     _initRightSidebar: function() {
         var $this = this;
-
+        
         this.rightSidebar = $('#right-sidebar');
         this.rightSidebarBtnOpen = $('#right-sidebar-button-open');
         this.rightSidebarBtnClose = $('#right-sidebar-button-close');
 
         $this.rightSidebar.children('.nano').nanoScroller({flash:true});
-
+        
         this.rightSidebarBtnOpen.on('click', function(e) {
             $this.rightSidebar.addClass('right-sidebar-active');
             e.preventDefault();
         });
-
+        
         this.rightSidebarBtnClose.on('click', function(e) {
             $this.rightSidebar.removeClass('right-sidebar-active');
             e.preventDefault();
         });
-
+        
         this.rightSidebar.on('click', function() {
             setTimeout(function() {
                 $this.rightSidebar.children('.nano').nanoScroller();
             }, 500);
         });
     },
-
+    
     closeRightSidebarMenu: function() {
         if(this.rightSidebar) {
             this.rightSidebar.removeClass('right-sidebar-active');
         }
     }
-
+    
 });
 
 /*!
@@ -461,122 +467,122 @@ PrimeFaces.widget.Poseidon = PrimeFaces.widget.BaseWidget.extend({
  * Released under the MIT license
  */
 (function (factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD (Register as an anonymous module)
-        define(['jquery'], factory);
-    } else if (typeof exports === 'object') {
-        // Node/CommonJS
-        module.exports = factory(require('jquery'));
-    } else {
-        // Browser globals
-        factory(jQuery);
-    }
+	if (typeof define === 'function' && define.amd) {
+		// AMD (Register as an anonymous module)
+		define(['jquery'], factory);
+	} else if (typeof exports === 'object') {
+		// Node/CommonJS
+		module.exports = factory(require('jquery'));
+	} else {
+		// Browser globals
+		factory(jQuery);
+	}
 }(function ($) {
 
-    var pluses = /\+/g;
+	var pluses = /\+/g;
 
-    function encode(s) {
-        return config.raw ? s : encodeURIComponent(s);
-    }
+	function encode(s) {
+		return config.raw ? s : encodeURIComponent(s);
+	}
 
-    function decode(s) {
-        return config.raw ? s : decodeURIComponent(s);
-    }
+	function decode(s) {
+		return config.raw ? s : decodeURIComponent(s);
+	}
 
-    function stringifyCookieValue(value) {
-        return encode(config.json ? JSON.stringify(value) : String(value));
-    }
+	function stringifyCookieValue(value) {
+		return encode(config.json ? JSON.stringify(value) : String(value));
+	}
 
-    function parseCookieValue(s) {
-        if (s.indexOf('"') === 0) {
-            // This is a quoted cookie as according to RFC2068, unescape...
-            s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
-        }
+	function parseCookieValue(s) {
+		if (s.indexOf('"') === 0) {
+			// This is a quoted cookie as according to RFC2068, unescape...
+			s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+		}
 
-        try {
-            // Replace server-side written pluses with spaces.
-            // If we can't decode the cookie, ignore it, it's unusable.
-            // If we can't parse the cookie, ignore it, it's unusable.
-            s = decodeURIComponent(s.replace(pluses, ' '));
-            return config.json ? JSON.parse(s) : s;
-        } catch(e) {}
-    }
+		try {
+			// Replace server-side written pluses with spaces.
+			// If we can't decode the cookie, ignore it, it's unusable.
+			// If we can't parse the cookie, ignore it, it's unusable.
+			s = decodeURIComponent(s.replace(pluses, ' '));
+			return config.json ? JSON.parse(s) : s;
+		} catch(e) {}
+	}
 
-    function read(s, converter) {
-        var value = config.raw ? s : parseCookieValue(s);
-        return $.isFunction(converter) ? converter(value) : value;
-    }
+	function read(s, converter) {
+		var value = config.raw ? s : parseCookieValue(s);
+		return $.isFunction(converter) ? converter(value) : value;
+	}
 
-    var config = $.cookie = function (key, value, options) {
+	var config = $.cookie = function (key, value, options) {
 
-        // Write
+		// Write
 
-        if (arguments.length > 1 && !$.isFunction(value)) {
-            options = $.extend({}, config.defaults, options);
+		if (arguments.length > 1 && !$.isFunction(value)) {
+			options = $.extend({}, config.defaults, options);
 
-            if (typeof options.expires === 'number') {
-                var days = options.expires, t = options.expires = new Date();
-                t.setMilliseconds(t.getMilliseconds() + days * 864e+5);
-            }
+			if (typeof options.expires === 'number') {
+				var days = options.expires, t = options.expires = new Date();
+				t.setMilliseconds(t.getMilliseconds() + days * 864e+5);
+			}
 
-            return (document.cookie = [
-                encode(key), '=', stringifyCookieValue(value),
-                options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-                options.path    ? '; path=' + options.path : '',
-                options.domain  ? '; domain=' + options.domain : '',
-                options.secure  ? '; secure' : ''
-            ].join(''));
-        }
+			return (document.cookie = [
+				encode(key), '=', stringifyCookieValue(value),
+				options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+				options.path    ? '; path=' + options.path : '',
+				options.domain  ? '; domain=' + options.domain : '',
+				options.secure  ? '; secure' : ''
+			].join(''));
+		}
 
-        // Read
+		// Read
 
-        var result = key ? undefined : {},
-        // To prevent the for loop in the first place assign an empty array
-        // in case there are no cookies at all. Also prevents odd result when
-        // calling $.cookie().
-            cookies = document.cookie ? document.cookie.split('; ') : [],
-            i = 0,
-            l = cookies.length;
+		var result = key ? undefined : {},
+			// To prevent the for loop in the first place assign an empty array
+			// in case there are no cookies at all. Also prevents odd result when
+			// calling $.cookie().
+			cookies = document.cookie ? document.cookie.split('; ') : [],
+			i = 0,
+			l = cookies.length;
 
-        for (; i < l; i++) {
-            var parts = cookies[i].split('='),
-                name = decode(parts.shift()),
-                cookie = parts.join('=');
+		for (; i < l; i++) {
+			var parts = cookies[i].split('='),
+				name = decode(parts.shift()),
+				cookie = parts.join('=');
 
-            if (key === name) {
-                // If second argument (value) is a function it's a converter...
-                result = read(cookie, value);
-                break;
-            }
+			if (key === name) {
+				// If second argument (value) is a function it's a converter...
+				result = read(cookie, value);
+				break;
+			}
 
-            // Prevent storing a cookie that we couldn't decode.
-            if (!key && (cookie = read(cookie)) !== undefined) {
-                result[name] = cookie;
-            }
-        }
+			// Prevent storing a cookie that we couldn't decode.
+			if (!key && (cookie = read(cookie)) !== undefined) {
+				result[name] = cookie;
+			}
+		}
 
-        return result;
-    };
+		return result;
+	};
 
-    config.defaults = {};
+	config.defaults = {};
 
-    $.removeCookie = function (key, options) {
-        // Must not alter options, thus extending a fresh object...
-        $.cookie(key, '', $.extend({}, options, { expires: -1 }));
-        return !$.cookie(key);
-    };
+	$.removeCookie = function (key, options) {
+		// Must not alter options, thus extending a fresh object...
+		$.cookie(key, '', $.extend({}, options, { expires: -1 }));
+		return !$.cookie(key);
+	};
 
 }));
 
 /* Issue #924 is fixed for 5.3+ and 6.0. (compatibility with 5.3) */
 if(window['PrimeFaces'] && window['PrimeFaces'].widget.Dialog) {
     PrimeFaces.widget.Dialog = PrimeFaces.widget.Dialog.extend({
-
+        
         enableModality: function() {
             this._super();
             $(document.body).children(this.jqId + '_modal').addClass('ui-dialog-mask');
         },
-
+        
         syncWindowResize: function() {}
     });
 }

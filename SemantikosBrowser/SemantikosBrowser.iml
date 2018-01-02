@@ -53,7 +53,8 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.2_spec:1.0.4.Final" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.xml.soap:jboss-saaj-api_1.3_spec:1.0.3.Final" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.xml.ws:jboss-jaxws-api_2.2_spec:2.0.2.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish:javax.faces:2.2.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-web-api:7.0" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish:javax.faces:2.2.8-02" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.weld.servlet:weld-servlet:2.3.5.Final" level="project" />
     <orderEntry type="module" module-name="SemantikosDomain" />
     <orderEntry type="library" name="Maven: org.jboss:jboss-ejb-client:1.0.39.Final-redhat-1" level="project" />
@@ -79,7 +80,6 @@
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.7.21" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.21" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
-    <orderEntry type="library" name="Maven: org.primefaces:rio:3.1.2" level="project" />
     <orderEntry type="library" name="Maven: org.primefaces.themes:poseidon:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.poi:poi:3.14" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
