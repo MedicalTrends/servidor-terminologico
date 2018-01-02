@@ -998,8 +998,10 @@ public class ConceptController {
 
         RelationshipDefinition relationshipDefinition = category.findRelationshipDefinitionsByName("Número GS1 GTIN").get(0);
 
+        ConceptIDByGS1Response res = null;
+
         for (Relationship relationship : relationshipManager.findRelationshipsLike(relationshipDefinition, GS1)) {
-            if(relationship.getSourceConcept().getConceptID().equals(conceptIDByGS1Request.))
+            res = new ConceptIDByGS1Response(relationship.getSourceConcept());
         }
 
         return res;
