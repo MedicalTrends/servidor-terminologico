@@ -34,7 +34,14 @@ public enum AuditActionType implements Serializable {
     REFSET_UPDATE(21, "Actualización de RefSet", CHANGE),
     REFSET_BINDING(22, "Actualización de Descripción a RefSet", CHANGE),
     CONCEPT_RELATIONSHIP_DEFINITION_CREATION(23, "Nuevo atributo asociado a un concepto.", CHANGE),
-    CONCEPT_RELATIONSHIP_ATTRIBUTE_CREATION(24, "Nueva relación definitoria asociada a un concepto", CHANGE);
+    CONCEPT_RELATIONSHIP_ATTRIBUTE_CREATION(24, "Nueva relación definitoria asociada a un concepto", CHANGE),
+
+    USER_CREATION(25, "Creación de Usuario", CREATION),
+    USER_ATTRIBUTE_CHANGE(26, "Cambio de atributo de un usuario", CHANGE),
+    USER_PROFILE_BINDING(27, "Perfil agregado a usuario", CHANGE),
+    USER_PROFILE_UNBINDING(28, "Perfil eliminado de usuario", CHANGE),
+    USER_INSTITUTION_BINDING(29, "Establecimiento agregado a usuario", CHANGE),
+    USER_INSTITUTION_UNBINDING(30, "Establecimiento eliminado de usuario", CHANGE);
 
     /** Identificador único de la base de datos */
     private long id;

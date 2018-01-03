@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.ws.service;
 
 
+import cl.minsal.semantikos.kernel.components.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
 import cl.minsal.semantikos.modelweb.Pair;
 import cl.minsal.semantikos.modelws.fault.NotFoundFault;
@@ -39,7 +40,7 @@ public class RelatedService {
     private ConceptController conceptController;
 
     @EJB
-    private AuthenticationManagerImpl authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Resource
     WebServiceContext wsctx;

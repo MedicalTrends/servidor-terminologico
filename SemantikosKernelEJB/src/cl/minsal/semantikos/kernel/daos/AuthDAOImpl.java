@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.users.Answer;
+import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
 import oracle.jdbc.OracleTypes;
@@ -25,6 +26,9 @@ import java.util.List;
 public class AuthDAOImpl implements AuthDAO {
 
     static final Logger logger = LoggerFactory.getLogger(AuthDAOImpl.class);
+
+    @EJB
+    private ProfileDAO profileDAO;
 
     @EJB
     private InstitutionDAO institutionDAO;
@@ -196,42 +200,6 @@ public class AuthDAOImpl implements AuthDAO {
         return user;
     }
 
-
-    @Override
-    public List<Profile> getUserProfiles(Long userId) {
-
-        List<Profile> profiles = new ArrayList<Profile>();
-
-        //ConnectionBD connect = new ConnectionBD();
-        Profile profile = null;
-
-        String sql = "begin ? := stk.stk_pck_user.get_profiles_by_user_id(?); end;";
-
-        try (Connection connection = dataSource.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.setLong(2, userId);
-            call.execute();
-
-            //ResultSet rs = call.getResultSet();
-            ResultSet rs = (ResultSet) call.getObject(1);
-
-            while (rs.next()) {
-                profile = makeProfileFromResult(rs);
-                profiles.add(profile);
-            }
-
-        } catch (SQLException e) {
-            String errorMsg = "Error al recuperar perfiles de la BDD.";
-            logger.error(errorMsg, e);
-            throw new EJBException(e);
-        }
-
-        return profiles;
-
-    }
-
     @Override
     public List<User> getAllUsers() {
 
@@ -292,7 +260,6 @@ public class AuthDAOImpl implements AuthDAO {
 
             //ResultSet rs = call.getResultSet();
 
-
             if (call.getLong(1) > 0) {
                 user.setId(call.getLong(1));
             } else {
@@ -305,13 +272,6 @@ public class AuthDAOImpl implements AuthDAO {
             String errorMsg = "Error al crear el usuario en la BDD.";
             logger.error(errorMsg, e);
             throw new EJBException(e);
-        }
-
-        /**
-         * Agregar los perfiles
-         */
-        for (Profile p : user.getProfiles()) {
-            addProfileToUser(user, p);
         }
 
     }
@@ -352,68 +312,6 @@ public class AuthDAOImpl implements AuthDAO {
             throw new EJBException(e);
         }
 
-        sql = "begin ? := stk.stk_pck_user.delete_user_profiles(?); end;";
-
-        try (Connection connection = dataSource.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.registerOutParameter (1, Types.INTEGER);
-            call.setLong(2, user.getId());
-
-            call.execute();
-
-        } catch (SQLException e) {
-            String errorMsg = "Error al eliminar perfiles de la BDD.";
-            logger.error(errorMsg, e);
-            throw new EJBException(e);
-        }
-
-        for (Profile p : user.getProfiles()) {
-            addProfileToUser(user, p);
-        }
-
-        sql = "begin ? := stk.stk_pck_user.delete_user_answers(?); end;";
-
-        try (Connection connection = dataSource.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.registerOutParameter (1, Types.INTEGER);
-            call.setLong(2, user.getId());
-
-            call.execute();
-
-        } catch (SQLException e) {
-            String errorMsg = "Error al eliminar perfiles de la BDD.";
-            logger.error(errorMsg, e);
-            throw new EJBException(e);
-        }
-
-        for (Answer a : user.getAnswers()) {
-            addAnswerToUser(user, a);
-        }
-    }
-
-    private void addProfileToUser(User user, Profile p) {
-
-        //ConnectionBD connect = new ConnectionBD();
-
-        String sql = "begin ? := stk.stk_pck_user.add_user_profile(?,?); end;";
-
-        try (Connection connection = dataSource.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.registerOutParameter (1, Types.INTEGER);
-            call.setLong(2, user.getId());
-            call.setLong(3,  p.getId());
-
-            call.execute();
-
-        } catch (SQLException e) {
-            String errorMsg = "Error al agregar perfila a usuario de la BDD.";
-            logger.error(errorMsg, e);
-            throw new EJBException(e);
-        }
-
     }
 
     private void addAnswerToUser(User user, Answer a) {
@@ -438,39 +336,6 @@ public class AuthDAOImpl implements AuthDAO {
             throw new EJBException(e);
         }
 
-    }
-
-    @Override
-    public List<Profile> getAllProfiles() {
-
-        List<Profile> profiles = new ArrayList<Profile>();
-
-        //ConnectionBD connect = new ConnectionBD();
-        Profile profile = null;
-
-        String sql = "begin ? := stk.stk_pck_user.get_all_profiles; end;";
-
-        try (Connection connection = dataSource.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.execute();
-
-            //ResultSet rs = call.getResultSet();
-            ResultSet rs = (ResultSet) call.getObject(1);
-
-            while (rs.next()) {
-                profile = makeProfileFromResult(rs);
-                profiles.add(profile);
-            }
-
-        } catch (SQLException e) {
-            String errorMsg = "Error al recuperar perfiles de la BDD.";
-            logger.error(errorMsg, e);
-            throw new EJBException(e);
-        }
-
-        return profiles;
     }
 
     @Override
@@ -541,7 +406,6 @@ public class AuthDAOImpl implements AuthDAO {
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }
-
 
     }
 
@@ -630,36 +494,6 @@ public class AuthDAOImpl implements AuthDAO {
     }
 
     @Override
-    public Profile getProfile(long id) {
-
-        //ConnectionBD connect = new ConnectionBD();
-        Profile profile = null;
-
-        String sql = "begin ? := stk.stk_pck_user.get_profile_by_id(?); end;";
-
-        try (Connection connection = dataSource.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.setLong(2,id);
-            call.execute();
-
-            //ResultSet rs = call.getResultSet();
-            ResultSet rs = (ResultSet) call.getObject(1);
-
-            while (rs.next()) {
-                profile = makeProfileFromResult(rs);
-            }
-
-        } catch (SQLException e) {
-            String errorMsg = "Error al recuperar perfiles de la BDD.";
-            logger.error(errorMsg, e);
-            throw new EJBException(e);
-        }
-        return profile;
-    }
-
-    @Override
     public void unlockUser(String username) {
         //ConnectionBD connect = new ConnectionBD();
 
@@ -714,29 +548,13 @@ public class AuthDAOImpl implements AuthDAO {
         u.setValid(rs.getBoolean(24));
         u.setDocumentRut(rs.getBoolean(25));
 
-        u.setProfiles(getUserProfiles(u.getId()));
+        u.setProfiles(profileDAO.getProfilesBy(u));
 
         u.setInstitutions(institutionDAO.getInstitutionBy(u));
 
         u.setAnswers(questionDAO.getAnswersByUser(u));
 
         return u;
-    }
-
-    /**
-     * Este método es responsable de crear un Profile a partir de una fila de un resultset.
-     *
-     * @param rs  resultset parado en la fila a procesar
-     *
-     * @return El Profile creado a partir de la fila.
-     */
-    public Profile makeProfileFromResult(ResultSet rs) throws SQLException {
-
-        long idProfile = ( rs.getBigDecimal(1) ).longValue();
-        String name = rs.getString(2);
-        String description = rs.getString(3);
-
-        return new Profile(idProfile, name, description);
     }
 
 }

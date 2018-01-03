@@ -3,14 +3,22 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.kernel.daos.AuthDAO;
 
 import cl.minsal.semantikos.kernel.daos.QuestionDAO;
+import cl.minsal.semantikos.kernel.util.ConceptUtils;
+import cl.minsal.semantikos.kernel.util.UserUtils;
+import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
+import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.users.*;
 import cl.minsal.semantikos.kernel.businessrules.UserCreationBR;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
+import cl.minsal.semantikos.modelweb.Pair;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 import static cl.minsal.semantikos.kernel.components.AuthenticationManager.MAX_FAILED_ANSWER_ATTEMPTS;
@@ -32,7 +40,19 @@ public class UserManagerImpl implements UserManager {
     AuthenticationManager authenticationManager;
 
     @EJB
+    InstitutionManager institutionManager;
+
+    @EJB
+    ProfileManager profileManager;
+
+    @EJB
+    QuestionManager questionManager;
+
+    @EJB
     UserCreationBR userCreationBR;
+
+    @EJB
+    AuditManager auditManager;
 
 
     public List<User> getAllUsers() {
@@ -56,25 +76,88 @@ public class UserManagerImpl implements UserManager {
     public User getUserByVerificationCode(String key) { return authDAO.getUserByVerificationCode(key); }
 
     public void updateUser(User user) {
+        /* Se persisten los atributos basicos del usuario*/
         authDAO.updateUser(user);
-        /**
-         * Se actualiza la cache de usuarios
-         */
-        UserFactory.getInstance().refresh(user);
+
+        /* Luego se persisten sus respuestas */
+        /*
+        for (Answer answer : user.getAnswers()) {
+            institutionManager.bindInstitutionToUser(user, answer, user);
+        }
+        */
+
+    }
+
+    @Override
+    public void updateFields(@NotNull User originalUser, @NotNull User updatedUser, User user) {
+
+        /* Se actualiza con el DAO */
+        authDAO.updateUser(updatedUser);
+
+        auditManager.recordUserUpgrade(updatedUser, user);
+    }
+
+    @Override
+    public void update(@NotNull User originalUser, @NotNull User updatedUser, User user) {
+
+        boolean change = false;
+
+        /* Primero de actualizan los campos propios del concepto */
+        if(!originalUser.equals(updatedUser)) {
+            updateFields(originalUser, updatedUser, user);
+            change = true;
+        }
+
+        /* Luego para cada perfil se realiza la acción correspondiente */
+        for (Profile profile : UserUtils.getNewProfiles(originalUser.getProfiles(), updatedUser.getProfiles())) {
+            profileManager.bindProfileToUser(updatedUser, profile, user);
+            change = true;
+        }
+
+        for (Profile profile : UserUtils.getRemovedProfiles(originalUser.getProfiles(), updatedUser.getProfiles())) {
+            profileManager.deleteProfile(profile, user);
+            change = true;
+        }
+
+        /* Luego para cada establecimiento se realiza la acción correspondiente */
+        for (Institution institution : UserUtils.getNewInstitutions(originalUser.getInstitutions(), updatedUser.getInstitutions())) {
+            institutionManager.bindInstitutionToUser(updatedUser, institution, user);
+            change = true;
+        }
+
+        for (Institution institution : UserUtils.getRemovedInstitutions(originalUser.getInstitutions(), updatedUser.getInstitutions())) {
+            institutionManager.deleteInstitution(institution, user);
+            change = true;
+        }
+
+        if(!change) {
+            throw new EJBException("No es posible actualizar un usuario con una imagen idéntica!!");
+        }
     }
 
     public List<Question> getAllQuestions() {
         return questionDAO.getAllQuestions();
     }
 
-    public long createUser(User user, String baseURL) throws BusinessRuleException {
+    public long createUser(User user, String baseURL, User _user) throws BusinessRuleException {
 
         /* Se validan las pre-condiciones para crear un usuario */
         try {
             userCreationBR.verifyPreConditions(user);
             user = userCreationBR.preActions(user);
+            /* Se persisten los atributos basicos del usuario*/
             authDAO.createUser(user);
+            /* Luego se persisten sus perfiles */
+            for (Profile profile : user.getProfiles()) {
+                profileManager.bindProfileToUser(user, profile, user);
+            }
+            /* Luego se persisten sus establecimientos */
+            for (Institution institution : user.getInstitutions()) {
+                institutionManager.bindInstitutionToUser(user, institution, user);
+            }
             //user = authDAO.getUserById(user.getIdUser());
+            /* Se deja registro en la auditoría */
+            auditManager.recordUserCreation(user, _user);
             userCreationBR.postActions(user, baseURL);
             return user.getId();
         } catch (Exception e) {
@@ -83,7 +166,7 @@ public class UserManagerImpl implements UserManager {
         }
     }
 
-    public void activateAccount(User user) {
+    public void activateAccount(User user, User _user) {
 
         /* Se validan las pre-condiciones para crear un usuario */
         try {
@@ -94,6 +177,8 @@ public class UserManagerImpl implements UserManager {
         user.setLocked(false);
         user.setVerificationCode(null);
         authDAO.updateUser(user);
+        /* Se deja registro en la auditoría */
+        auditManager.recordUserUpgrade(user, _user);
         /**
          * Se actualiza la cache de usuarios
          */
@@ -152,15 +237,6 @@ public class UserManagerImpl implements UserManager {
     public void deleteUser(User user) {
         user.setValid(false);
         authDAO.updateUser(user);
-    }
-
-    public List<Profile> getAllProfiles() {
-
-        return authDAO.getAllProfiles();
-    }
-
-    public Profile getProfileById(long id){
-        return authDAO.getProfile(id);
     }
 
     public void unlockUser(String email) {

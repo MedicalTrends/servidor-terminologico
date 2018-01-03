@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.ws.rest;
 
 
+import cl.minsal.semantikos.kernel.components.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.modelweb.Pair;
@@ -62,7 +63,7 @@ public class SearchServiceRest {
     private CategoryManager categoryManager;
 
     @EJB
-    private AuthenticationManagerImpl authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     private static final Logger logger = LoggerFactory.getLogger(SearchServiceRest.class);
 

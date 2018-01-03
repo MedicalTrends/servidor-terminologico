@@ -78,6 +78,9 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     private CategoryDAO categoryDAO;
 
     @EJB
+    private ProfileDAO profileDAO;
+
+    @EJB
     private InstitutionDAO institutionDAO;
 
     @EJB
@@ -180,7 +183,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         u.setValid(rs.getBoolean(24));
         u.setDocumentRut(rs.getBoolean(25));
 
-        u.setProfiles(authDAO.getUserProfiles(u.getId()));
+        u.setProfiles(profileDAO.getProfilesBy(u));
 
         u.setInstitutions(institutionDAO.getInstitutionBy(u));
 

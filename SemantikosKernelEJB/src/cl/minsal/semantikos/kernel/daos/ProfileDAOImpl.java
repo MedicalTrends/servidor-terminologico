@@ -1,7 +1,5 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
@@ -21,21 +19,22 @@ import java.util.List;
  * Created by des01c7 on 15-12-16.
  */
 @Stateless
-public class InstitutionDAOImpl implements InstitutionDAO {
+public class ProfileDAOImpl implements ProfileDAO {
 
 
-    private static final Logger logger = LoggerFactory.getLogger(InstitutionDAOImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProfileDAOImpl.class);
 
     @Resource(lookup = "java:jboss/OracleDS")
     private DataSource dataSource;
 
     @Override
-    public List<Institution> getInstitutionBy(User user) {
+    public List<Profile> getProfilesBy(User user) {
         //ConnectionBD connect = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_institution.get_institutions_by_user(?); end;";
+        String sql = "begin ? := stk.stk_pck_profile.get_profiles_by_user(?); end;";
 
-        List<Institution> institutions= new ArrayList<>();
+        List<Profile> profiles = new ArrayList<>();
+
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -45,20 +44,20 @@ public class InstitutionDAOImpl implements InstitutionDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                institutions.add(createInstitutionFromResultSet(rs));
+                profiles.add(createProfileFromResult(rs));
             }
         } catch (SQLException e) {
             logger.error("Error al al obtener los RefSets ", e);
         }
 
-        return institutions;
+        return profiles;
     }
 
     @Override
-    public Institution getInstitutionById(long id) {
+    public Profile getProfileById(long id) {
         //ConnectionBD connect = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_institution.get_institution_by_id(?); end;";
+        String sql = "begin ? := stk.stk_pck_profile.get_profile_by_id(?); end;";
 
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
@@ -69,22 +68,24 @@ public class InstitutionDAOImpl implements InstitutionDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-                return createInstitutionFromResultSet(rs);
+                return createProfileFromResult(rs);
             }
+
         } catch (SQLException e) {
-            logger.error("Error al al obtener los RefSets ", e);
+            logger.error("Error al al obtener el perfil ", e);
         }
 
         return null;
     }
 
     @Override
-    public List<Institution> getAllInstitution() {
+    public List<Profile> getAllProfiles() {
         //ConnectionBD connect = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_institution.get_all_institutions; end;";
+        String sql = "begin ? := stk.stk_pck_profile.get_all_profiles; end;";
 
-        List<Institution> institutions= new ArrayList<>();
+        List<Profile> profiles = new ArrayList<>();
+
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
             call.registerOutParameter (1, OracleTypes.CURSOR);
@@ -93,69 +94,74 @@ public class InstitutionDAOImpl implements InstitutionDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                institutions.add(createInstitutionFromResultSet(rs));
+                profiles.add(createProfileFromResult(rs));
             }
         } catch (SQLException e) {
             logger.error("Error al al obtener los RefSets ", e);
         }
 
-        return institutions;
+        return profiles;
     }
 
-    public void bindInstitutionToUser(User user, Institution institution) {
+    public void bindProfileToUser(User user, Profile profile) {
 
         //ConnectionBD connect = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_institution.bind_institution_to_user(?,?); end;";
+        String sql = "begin ? := stk.stk_pck_profile.bind_profile_to_user(?,?); end;";
 
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.INTEGER);
             call.setLong(2, user.getId());
-            call.setLong(3,  institution.getId());
+            call.setLong(3,  profile.getId());
 
             call.execute();
 
         } catch (SQLException e) {
-            String errorMsg = "Error al enlazar establecimiento a usuario de la BDD.";
+            String errorMsg = "Error al enlazar perfil a usuario de la BDD.";
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }
 
     }
 
-    public void unbindInstitutionFromUser(User user, Institution institution) {
+    public void unbindProfileFromUser(User user, Profile profile) {
 
         //ConnectionBD connect = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_institution.unbind_institution_from_user(?,?); end;";
+        String sql = "begin ? := stk.stk_pck_profile.unbind_profile_from_user(?,?); end;";
 
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.INTEGER);
             call.setLong(2, user.getId());
-            call.setLong(3,  institution.getId());
+            call.setLong(3,  profile.getId());
 
             call.execute();
 
         } catch (SQLException e) {
-            String errorMsg = "Error al desenlazar establecimiento de usuario de la BDD.";
+            String errorMsg = "Error al desenlazar perfil de usuario de la BDD.";
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }
 
     }
 
-    private Institution createInstitutionFromResultSet(ResultSet resultSet) {
-        Institution institution = new Institution();
-        try {
-            institution.setId(resultSet.getLong("id"));
-            institution.setName(resultSet.getString("name"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return institution;
+    /**
+     * Este método es responsable de crear un Profile a partir de una fila de un resultset.
+     *
+     * @param rs  resultset parado en la fila a procesar
+     *
+     * @return El Profile creado a partir de la fila.
+     */
+    public Profile createProfileFromResult(ResultSet rs) throws SQLException {
+
+        long idProfile = ( rs.getBigDecimal(1) ).longValue();
+        String name = rs.getString(2);
+        String description = rs.getString(3);
+
+        return new Profile(idProfile, name, description);
     }
 }

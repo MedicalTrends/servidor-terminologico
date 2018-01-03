@@ -176,6 +176,56 @@ public class AuditDAOImpl implements AuditDAO {
 
     }
 
+    public void recordAuditAction(UserAuditAction userAuditAction){
+        logger.debug("Registrando información de Auditoría: " + userAuditAction);
+        //ConnectionBD connect = new ConnectionBD();
+        /*
+         * param 1: La fecha en que se realiza (Timestamp).
+         * param 2: El usuario que realiza la acción (id_user).
+         * param 3: concepto en el que se realiza la acción.
+         * param 4: El tipo de acción que realiza
+         * param 5: La entidad en la que se realizó la acción..
+         */
+        //TODO arreglar esto
+        String sql = "begin ? := stk.stk_pck_audit.create_user_audit_actions(?,?,?,?,?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            /* Se invoca la consulta para recuperar las relaciones */
+            Timestamp actionDate = userAuditAction.getActionDate();
+            User user = userAuditAction.getUser();
+            AuditActionType auditActionType = userAuditAction.getAuditActionType();
+            AuditableEntity auditableEntity = userAuditAction.getAuditableEntity();
+            AuditableEntity subjectUser = userAuditAction.getBaseEntity();
+
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
+            call.setTimestamp(2, actionDate);
+            call.setLong(3, user.getId());
+            call.setLong(4, subjectUser.getId());
+            call.setLong(5, auditActionType.getId());
+            call.setLong(6, auditableEntity.getId());
+            call.execute();
+
+            //ResultSet rs = (ResultSet) call.getObject(1);
+
+            if (call.getLong(1) > 0) {
+                call.getLong(1);
+            } else {
+                String errorMsg = "La información de auditoría del usuario no fue creada por una razón desconocida. Alertar al area de desarrollo" +
+                        " sobre esto";
+                logger.error(errorMsg);
+                throw new EJBException(errorMsg);
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al registrar en el log.";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+    }
+
     /**
      * Este método es responsable de crear un arreglo de objetos de auditoría a partir de una expresión JSON de la
      * forma:

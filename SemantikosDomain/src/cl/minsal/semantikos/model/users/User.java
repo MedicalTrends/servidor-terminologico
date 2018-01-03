@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.model.users;
 
 import cl.minsal.semantikos.model.PersistentEntity;
+import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.util.StringUtils;
 
 import java.io.Serializable;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * @author Francisco Mendez
  */
-public class User extends PersistentEntity implements Serializable {
+public class User extends PersistentEntity implements Serializable, AuditableEntity {
 
     private static User dummyUser = new User(NON_PERSISTED_ID, "dummy", "Usuario de Prueba", true);
 

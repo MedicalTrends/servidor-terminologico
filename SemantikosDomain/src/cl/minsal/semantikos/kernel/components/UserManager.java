@@ -29,9 +29,9 @@ public interface UserManager {
 
     public List<Question> getAllQuestions();
 
-    public long createUser(User user, String baseURL);
+    public long createUser(User user, String baseURL, User _user);
 
-    public void activateAccount(User user);
+    public void activateAccount(User user, User _user);
 
     public boolean checkActivationCode(String key);
 
@@ -41,6 +41,7 @@ public interface UserManager {
 
     public void deleteUser(User user);
 
+    @Deprecated
     public List<Profile> getAllProfiles();
 
     public Profile getProfileById(long id);

@@ -11,27 +11,26 @@ import java.util.List;
  * Created by des01c7 on 15-12-16.
  */
 @Local
-public interface InstitutionDAO {
+public interface ProfileDAO {
 
     /**
      * Método encargado de obtener las instituciones asociadas a un usuario
      * @param user
      * @return
      */
-    public List<Institution> getInstitutionBy(User user);
+    public List<Profile> getProfilesBy(User user);
 
-    public Institution getInstitutionById(long id);
+    public Profile getProfileById(long id);
 
     /**
      * Método encargado de obtener una lista con todas las instituciones
      * @return Lista de instituciones
      */
-    public List<Institution> getAllInstitution();
+    public List<Profile> getAllProfiles();
 
+    public void bindProfileToUser(User user, Profile profile);
 
-    public void bindInstitutionToUser(User user, Institution institution);
-
-    public void unbindInstitutionFromUser(User user, Institution institution);
+    public void unbindProfileFromUser(User user, Profile profile);
 
 
 }

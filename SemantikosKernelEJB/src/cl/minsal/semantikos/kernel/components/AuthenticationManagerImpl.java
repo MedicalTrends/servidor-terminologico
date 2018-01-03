@@ -33,7 +33,6 @@ import static java.util.concurrent.TimeUnit.MINUTES;
  * @author Francisco Méndez on 19-05-2016.
  */
 @Stateless
-@LocalBean
 //@SecurityDomain("semantikos")
 public class AuthenticationManagerImpl implements AuthenticationManager{
 
@@ -49,7 +48,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
     @EJB
     private AuthDAO authDAO;
 
-    long MAX_DURATION = MILLISECONDS.convert(10, MINUTES);
+    long MAX_DURATION = MILLISECONDS.convert(5, MINUTES);
 
     @PermitAll
     public boolean authenticate(String email, String password, HttpServletRequest request) throws AuthenticationException {

@@ -30,12 +30,14 @@
 
                 <p:growl showDetail="true" showSummary="true" autoUpdate="true" />
 
-                <div class="Container60 Responsive100">
+                <div class="Container70 Responsive100">
                     <div class="ContainerIndent">
                         <div class="Card ShadowEffect HeiAutoOnMobile">
                             <h2 class="CardTopic"><i class="icon-timelapse Fs20 Fleft MarRight10"></i> DATOS PERSONALES</h2>
-                            <div class="SeparatorFull" style="visibility: hidden"></div>
-                            <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank">
+
+                            <div class="SeparatorFull"></div>
+
+                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank">
 
                                 <p:outputLabel for="input-user-document-type" value="Tipo documento" style="font-weight: bold" styleClass="Wid20" />
 
@@ -44,6 +46,10 @@
                                     <f:selectItem itemValue="#{true}" itemLabel="Cédula de identidad" />
                                     <f:selectItem itemValue="#{false}" itemLabel="Pasaporte"/>
                                 </p:selectOneRadio>
+
+                                <p:outputPanel />
+
+                                <p:outputPanel />
 
                                 <p:outputLabel for="input-user-rut2" value="N° Documento *" style="font-weight: bold" styleClass="#{users.documentNumberError} Wid20 Label" />
 
@@ -80,28 +86,31 @@
 
                             </p:panelGrid>
 
-                            <div class="SeparatorFull" style="visibility: hidden"></div>
+                            <p:spacer/>
 
-                            <h2 class="CardTopic"><i class="icon-timelapse Fs20 Fleft MarRight10"></i> PERFILES</h2>
-                            <div class="SeparatorFull" style="visibility: hidden"></div>
-                            <p:pickList id="pickList1" value="#{users.selectedUserProfileModel}" var="profile3" disabled="#{ not users.selectedUser.valid}"
-                                        itemLabel="#{profile3.name}" itemValue="#{profile3}"
-                                        responsive="true" converter="profileConverter" style="width: 100%" >
-                                <f:facet name="sourceCaption">Disponibles</f:facet>
-                                <f:facet name="targetCaption">Asignados</f:facet>
-                            </p:pickList>
+                            <p:tabView>
 
-                            <div class="SeparatorFull" style="visibility: hidden"></div>
+                                <!-- Otras descripciones -->
+                                <p:tab title="Perfiles">
+                                    <p:pickList id="pickList1" value="#{users.selectedUserProfileModel}" var="profile3" disabled="#{ not users.selectedUser.valid}"
+                                                itemLabel="#{profile3.name}" itemValue="#{profile3}"
+                                                responsive="true" converter="profileConverter" style="width: 100%" >
+                                        <f:facet name="sourceCaption">Disponibles</f:facet>
+                                        <f:facet name="targetCaption">Asignados</f:facet>
+                                    </p:pickList>
+                                </p:tab>
 
+                                <!-- Otras descripciones -->
+                                <p:tab title="Establecimientos">
+                                    <p:pickList id="pickList2" value="#{users.selectedUserInsitutionModel}" var="institution" disabled="#{ not users.selectedUser.valid}"
+                                                itemLabel="#{institution.name}" itemValue="#{institution}"
+                                                responsive="true" converter="institutionConverter" style="width: 100%" >
+                                        <f:facet name="sourceCaption">Disponibles</f:facet>
+                                        <f:facet name="targetCaption">Asignados</f:facet>
+                                    </p:pickList>
+                                </p:tab>
 
-                            <h2 class="CardTopic"><i class="icon-timelapse Fs20 Fleft MarRight10"></i> ESTABLECIMIENTOS</h2>
-                            <div class="SeparatorFull" style="visibility: hidden"></div>
-                            <p:pickList id="pickList2" value="#{users.selectedUserInsitutionModel}" var="institution" disabled="#{ not users.selectedUser.valid}"
-                                        itemLabel="#{institution.name}" itemValue="#{institution}"
-                                        responsive="true" converter="omnifaces.SelectItemsConverter" style="width: 100%" >
-                                <f:facet name="sourceCaption">Disponibles</f:facet>
-                                <f:facet name="targetCaption">Asignados</f:facet>
-                            </p:pickList>
+                            </p:tabView>
 
                             <div class="SeparatorFull"></div>
 

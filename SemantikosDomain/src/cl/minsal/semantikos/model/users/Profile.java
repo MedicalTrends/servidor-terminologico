@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.model.users;
 
 import cl.minsal.semantikos.model.PersistentEntity;
+import cl.minsal.semantikos.model.audit.AuditableEntity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * @author Francisco Mendez.
  */
-public class Profile extends PersistentEntity implements Serializable {
+public class Profile extends PersistentEntity implements Serializable, AuditableEntity {
 
     /** Nombre del perfil */
     String name;

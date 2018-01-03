@@ -14,6 +14,7 @@ import cl.minsal.semantikos.model.users.*;
 
 import javax.ejb.Remote;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -36,11 +37,15 @@ public interface UserManager {
 
     public void updateUser(User user);
 
+    public void updateFields(User originalUser, User updatedUser, User user);
+
+    public void update(User originalUser, User updatedUser, User user);
+
     public List<Question> getAllQuestions();
 
-    public long createUser(User user, String baseURL);
+    public long createUser(User user, String baseURL, User _user);
 
-    public void activateAccount(User user);
+    public void activateAccount(User user, User _user);
 
     public boolean checkActivationCode(String key);
 
@@ -49,10 +54,6 @@ public interface UserManager {
     public void resetAccount(User user, String baseURL);
 
     public void deleteUser(User user);
-
-    public List<Profile> getAllProfiles();
-
-    public Profile getProfileById(long id);
 
     public void unlockUser(String email);
 

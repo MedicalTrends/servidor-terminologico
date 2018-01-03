@@ -1,6 +1,9 @@
 package cl.minsal.semantikos.kernel.components;
 
+import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
@@ -28,5 +31,23 @@ public interface InstitutionManager {
      * @return Lista de instituciones
      */
     public List<Institution> getAllInstitution();
+
+    /**
+     * Este método es responsable de asociar (agregar) un establecimiento a un usuario.
+     *
+     * @param user     El usuario al cual se agrega el establecimiento.
+     * @param institution El establecimiento que será asociado al usuario. Este puede o no estar persistido.
+     * @param _user        El usuario que agrega el establecimiento
+     * @return El establecimiento creada a partir de la asociacion.
+     */
+    public Institution bindInstitutionToUser(User user, Institution institution, User _user);
+
+    /**
+     * Este método es responsable de eliminar lógicamente un establecimiento.
+     *
+     * @param institution     El establecimiento que se desea eliminar.
+     * @param user            El usuario que realiza la eliminación.
+     */
+    public void deleteInstitution(Institution institution, User user);
 }
 

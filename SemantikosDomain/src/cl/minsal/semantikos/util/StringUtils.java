@@ -161,7 +161,7 @@ public class StringUtils {
 
         fRut = fRut.concat(rut.substring(rut.length()-1));
 
-        return fRut;
+        return fRut.toUpperCase();
     }
 
     public static String parseRut(String rut) {

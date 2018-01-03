@@ -298,7 +298,7 @@ public class RefSetDAOImpl implements RefSetDAO {
         Timestamp timestamp= rs.getTimestamp("creation_date");
         Timestamp validity= rs.getTimestamp("validity_until");
 
-        Institution institution= institutionDAO.getInstitutionBy(rs.getLong("id_institution"));
+        Institution institution= institutionDAO.getInstitutionById(rs.getLong("id_institution"));
 
         RefSet refSet= new RefSet(name,institution,timestamp);
         refSet.setId(id);

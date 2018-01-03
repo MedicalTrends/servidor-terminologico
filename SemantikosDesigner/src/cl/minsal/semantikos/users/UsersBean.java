@@ -3,6 +3,7 @@ package cl.minsal.semantikos.users;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.concept.SMTKTypeBean;
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
+import cl.minsal.semantikos.kernel.components.ProfileManager;
 import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
 import cl.minsal.semantikos.kernel.components.InstitutionManager;
@@ -13,6 +14,7 @@ import cl.minsal.semantikos.model.users.User;
 
 import cl.minsal.semantikos.model.users.UserFactory;
 import cl.minsal.semantikos.util.StringUtils;
+import org.omnifaces.util.Ajax;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DualListModel;
 import org.slf4j.Logger;
@@ -42,6 +44,9 @@ public class UsersBean {
 
     //@EJB
     UserManager userManager = (UserManager) ServiceLocator.getInstance().getService(UserManager.class);
+
+    //@EJB
+    ProfileManager profileManager = (ProfileManager) ServiceLocator.getInstance().getService(ProfileManager.class);
 
     //@EJB
     InstitutionManager institutionManager = (InstitutionManager) ServiceLocator.getInstance().getService(InstitutionManager.class);
@@ -77,6 +82,10 @@ public class UsersBean {
     String password2Error = "";
 
     String oldPasswordError = "";
+
+    String profileError = "";
+
+    String institutionError = "";
 
     String newPass1 = "";
     String newPass2 = "";
@@ -126,7 +135,7 @@ public class UsersBean {
 
         List<Profile> availableProfiles = new ArrayList<Profile>();
 
-        availableProfiles.addAll(userManager.getAllProfiles());
+        availableProfiles.addAll(profileManager.getAllProfiles());
 
         for (Profile p: selectedUser.getProfiles()){
             availableProfiles.remove(p);
@@ -221,6 +230,8 @@ public class UsersBean {
         oldPass = "";
         newPass1 = "";
         newPass2 = "";
+        profileError = "";
+        institutionError = "";
     }
 
     public void formatRut() {
@@ -302,8 +313,23 @@ public class UsersBean {
         selectedUser.setProfiles(selectedUserProfileModel.getTarget());
 
         if(selectedUser.getProfiles().isEmpty()) {
+            profileError = "ui-state-error";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe asignar por lo menos 1 perfil"));
             return;
+        }
+        else {
+            profileError = "";
+        }
+
+        selectedUser.setInstitutions(selectedUserInsitutionModel.getTarget());
+
+        if(selectedUser.getInstitutions().isEmpty()) {
+            institutionError = "ui-state-error";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe asignar por lo menos 1 establecimiento"));
+            return;
+        }
+        else {
+            institutionError = "";
         }
 
         try {
@@ -314,7 +340,7 @@ public class UsersBean {
                 try {
                     HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
 
-                    selectedUser = userManager.getUser(userManager.createUser(selectedUser, getURLWithContextPath(request)));
+                    selectedUser = userManager.getUser(userManager.createUser(selectedUser, getURLWithContextPath(request), authenticationBean.getLoggedUser()));
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "1° Usuario creado de manera exitosa!!"));
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "2° Se ha enviado un correo de notificación al usuario para activar esta cuenta."));
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "3° Este usuario permanecerá bloqueado hasta que él active su cuenta"));
@@ -356,6 +382,9 @@ public class UsersBean {
     }
 
     public DualListModel<Institution> getSelectedUserInsitutionModel() {
+        if(selectedUserInsitutionModel == null) {
+            selectedUserInsitutionModel = new DualListModel<Institution>();
+        }
         return selectedUserInsitutionModel;
     }
 
@@ -366,8 +395,11 @@ public class UsersBean {
     }
 
     public Profile getProfileById(long profileId){
-        return userManager.getProfileById(profileId);
+        return profileManager.getProfileById(profileId);
+    }
 
+    public Institution getInstitutionById(long institutionId){
+        return institutionManager.getInstitutionById(institutionId);
     }
 
     public void unlockUser(){
@@ -538,6 +570,30 @@ public class UsersBean {
 
     public void setAuthenticationBean(AuthenticationBean authenticationBean) {
         this.authenticationBean = authenticationBean;
+    }
+
+    public ProfileManager getProfileManager() {
+        return profileManager;
+    }
+
+    public void setProfileManager(ProfileManager profileManager) {
+        this.profileManager = profileManager;
+    }
+
+    public String getProfileError() {
+        return profileError;
+    }
+
+    public void setProfileError(String profileError) {
+        this.profileError = profileError;
+    }
+
+    public String getInstitutionError() {
+        return institutionError;
+    }
+
+    public void setInstitutionError(String institutionError) {
+        this.institutionError = institutionError;
     }
 
 }

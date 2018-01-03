@@ -21,15 +21,11 @@ public interface AuthDAO {
 
     User getUserByVerificationCode(String key);
 
-    List<Profile> getUserProfiles(Long userId);
-
     List<User> getAllUsers();
 
     void createUser(User user);
 
     void updateUser(User user);
-
-    List<Profile> getAllProfiles();
 
     void updateUserPasswords(User user);
 
@@ -44,11 +40,7 @@ public interface AuthDAO {
 
     void lockUser(String email);
 
-    Profile getProfile(long id);
-
     void unlockUser(String email);
 
-    public class UserExistsException extends Exception {
-    }
 }
 

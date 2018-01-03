@@ -19,6 +19,9 @@ public class InstitutionManagerImpl implements InstitutionManager {
     @EJB
     private InstitutionDAO institutionDAO;
 
+    @EJB
+    private AuditManager auditManager;
+
     @Override
     public List<Institution> getInstitutionsBy(User user) {
         return institutionDAO.getInstitutionBy(user);
@@ -32,5 +35,22 @@ public class InstitutionManagerImpl implements InstitutionManager {
     @Override
     public List<Institution> getAllInstitution() {
         return institutionDAO.getAllInstitution();
+    }
+
+    @Override
+    public Institution bindInstitutionToUser(User user, Institution institution, User _user) {
+
+        institutionDAO.bindInstitutionToUser(user, institution);
+
+        /* Registrar en el Historial si es preferida (Historial BR) */
+        auditManager.recordUserInstitutionBinding(user, institution, _user);
+
+        /* Se retorna el establecimiento persistido */
+        return institution;
+    }
+
+    @Override
+    public void deleteInstitution(Institution institution, User user) {
+
     }
 }

@@ -6,11 +6,14 @@ import cl.minsal.semantikos.model.audit.AuditActionType;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.audit.RefSetAuditAction;
 import cl.minsal.semantikos.kernel.businessrules.HistoryRecordBL;
+import cl.minsal.semantikos.model.audit.UserAuditAction;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.EJB;
@@ -237,6 +240,60 @@ public class AuditManagerImpl implements AuditManager {
         new HistoryRecordBL().validate(refSetAuditAction);
 
         auditDAO.recordAuditAction(refSetAuditAction);
+    }
+
+    @Override
+    public void recordUserCreation(User user, User _user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_CREATION, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserUpgrade(User user, User _user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_ATTRIBUTE_CHANGE, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserProfileBinding(User user, Profile profile, User _user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_PROFILE_BINDING, now(), _user, profile);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserProfileUnbinding(User user, Profile profile, User _user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_PROFILE_UNBINDING, now(), _user, profile);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserInstitutionBinding(User user, Institution institution, User _user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_INSTITUTION_BINDING, now(), _user, institution);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserInstitutionUnbinding(User user, Institution institution, User _user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_INSTITUTION_UNBINDING, now(), _user, institution);
+
+        auditDAO.recordAuditAction(userAuditAction);
     }
 
     @Override

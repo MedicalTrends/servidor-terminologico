@@ -65,7 +65,7 @@ public class SearchService {
     private CategoryManager categoryManager;
 
     @EJB
-    private AuthenticationManagerImpl authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Resource
     WebServiceContext wsctx;

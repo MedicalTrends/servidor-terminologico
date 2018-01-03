@@ -383,7 +383,7 @@ public class AccountActivation {
 
         try {
             user.setPassword(newPassword1);
-            userManager.activateAccount(user);
+            userManager.activateAccount(user, user);
             accountActive = true;
         }
         catch (EJBException e) {

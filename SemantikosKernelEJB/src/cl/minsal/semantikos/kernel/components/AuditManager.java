@@ -8,6 +8,8 @@ import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
@@ -20,6 +22,10 @@ import java.util.List;
 @Remote
 public interface AuditManager {
 
+
+    /**
+     * API Para Objeto auditable ConceptSMTK
+     */
 
     /**
      * Este método es responsable de registrar en el log de auditoría la creación del concepto, por el usuario.
@@ -85,6 +91,10 @@ public interface AuditManager {
     public void recordAttributeChange(ConceptSMTK conceptSMTK, Relationship originalRelationship, User user);
 
     /**
+     * API Para Objeto auditable Relationship
+     */
+
+    /**
      * Este método es responsable de registrar en el historial las creación de una relación.
      *
      * @param relationship La relación que se ha persistido.
@@ -101,6 +111,10 @@ public interface AuditManager {
     public void recordRelationshipRemoval(Relationship relationship, User user);
 
     /**
+     * API Para Objeto auditable CrossMap
+     */
+
+    /**
      * Este método es responsable de registrar en el historial la creación de un CrossMap.
      *
      * @param crossmap El CrossMap que se desea crear.
@@ -115,6 +129,10 @@ public interface AuditManager {
      * @param user     El usuario que elimina la relación.
      */
     public void recordCrossMapRemoval(Crossmap crossmap, User user);
+
+    /**
+     * API Para Objeto auditable Description
+     */
 
     /**
      * Este método es responsable de registrar en el historial la eliminación de un CrossMap.
@@ -140,6 +158,10 @@ public interface AuditManager {
      * @param user        El usuario que desea eliminar el concepto.
      */
     public void recordConceptInvalidation(ConceptSMTK conceptSMTK, User user);
+
+    /**
+     * API Para Objeto auditable RefSet
+     */
 
     /**
      * Este método es responsable de registrar en el historial la creación de un RefSet.
@@ -184,6 +206,65 @@ public interface AuditManager {
     public void recordRefSetInvalidate(RefSet refSet, User user);
 
     /**
+     * API Para Objeto auditable User
+     */
+
+    /**
+     * Este método es responsable de registrar en el log de auditoría la creación del usuario, por el usuario.
+     * Este método solo registra la creación del usuario, y no de cada una de sus perfiles o establecimientos.
+     *
+     * @param user        El usuario que se creo.
+     * @param user        El usuario que creó el usuario.
+     */
+    public void recordUserCreation(User user, User _user);
+
+    /**
+     * Este método es responsable de registrar en el log de auditoría la actualización del usuario, por el usuario.
+     * Este método solo registra la creación del usuario, y no de cada una de sus perfiles o establecimientos.
+     *
+     * @param user         El usuario que se creo.
+     * @param _user        El usuario que creó el usuario.
+     */
+    public void recordUserUpgrade(User user, User _user);
+
+    /**
+     * Este método es responsable de registrar en el log de auditoría el enlace de un perfil a un usuario
+     *
+     * @param user          El usuario al cual se enlaza el perfil
+     * @param profile       El perfil
+     * @param _user         El usuario que hace el enlace.
+     */
+    public void recordUserProfileBinding(User user, Profile profile, User _user);
+
+    /**
+     * Este método es responsable de registrar en el log de auditoría la desenlace de un perfil a un usuario
+     *
+     * @param user          El usuario al cual se desenlaza el perfil
+     * @param profile       El perfil
+     * @param _user         El usuario que hace el desenlace.
+     */
+    public void recordUserProfileUnbinding(User user, Profile profile, User _user);
+
+    /**
+     * Este método es responsable de registrar en el log de auditoría el enlace de un establecimiento a un usuario
+     *
+     * @param user          El usuario al cual se enlaza el establecimiento
+     * @param institution   El establecimiento
+     * @param _user         El usuario que hace el enlace.
+     */
+    public void recordUserInstitutionBinding(User user, Institution institution, User _user);
+
+    /**
+     * Este método es responsable de registrar en el log de auditoría la desenlace de un establecimiento a un usuario
+     *
+     * @param user          El usuario al cual se enlaza el establecimiento
+     * @param institution   El establecimiento
+     * @param _user         El usuario que hace el desenlace.
+     */
+    public void recordUserInstitutionUnbinding(User user, Institution institution, User _user);
+
+
+    /**
      * Este método es responsable de obtener y agrupar en una lista todos los tipos de cambios existentes.
      *
      * @return Una <code>List</code> con los tipos de cambio.
@@ -225,4 +306,6 @@ public interface AuditManager {
      * <code>conceptSMTK</code>
      */
     public ConceptAuditAction getConceptPublicationAuditAction(ConceptSMTK conceptSMTK,  boolean changes);
+
+
 }
