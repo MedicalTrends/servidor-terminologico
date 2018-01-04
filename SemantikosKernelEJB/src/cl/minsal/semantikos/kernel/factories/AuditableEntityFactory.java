@@ -28,6 +28,15 @@ public class AuditableEntityFactory {
     @EJB
     RefSetDAO refSetDAO;
 
+    @EJB
+    AuthDAO authDAO;
+
+    @EJB
+    ProfileDAO profileDAO;
+
+    @EJB
+    InstitutionDAO institutionDAO;
+
     /**
      * Este método es responsable de recuperar la entidad adecuada.
      *
@@ -39,6 +48,7 @@ public class AuditableEntityFactory {
     public AuditableEntity findAuditableEntityByID(long idAuditableEntity, AuditableEntityType auditableEntityType) {
 
         switch (auditableEntityType) {
+
             case CONCEPT:
                 return conceptDAO.getConceptByID(idAuditableEntity);
 
@@ -53,6 +63,15 @@ public class AuditableEntityFactory {
 
             case REFSET:
                 return refSetDAO.getRefsetBy(idAuditableEntity);
+
+            case USER:
+                return authDAO.getUserById(idAuditableEntity);
+
+            case PROFILE:
+                return profileDAO.getProfileById(idAuditableEntity);
+
+            case INSTITUTION:
+                return institutionDAO.getInstitutionById(idAuditableEntity);
 
             default:
                 throw new IllegalArgumentException("El ID del tipo de Entidad Auditable no existe: " + auditableEntityType);

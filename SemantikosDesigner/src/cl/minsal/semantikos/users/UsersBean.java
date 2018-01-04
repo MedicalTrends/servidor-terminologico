@@ -2,11 +2,10 @@ package cl.minsal.semantikos.users;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.concept.SMTKTypeBean;
-import cl.minsal.semantikos.kernel.components.AuthenticationManager;
-import cl.minsal.semantikos.kernel.components.ProfileManager;
-import cl.minsal.semantikos.kernel.components.UserManager;
+import cl.minsal.semantikos.kernel.components.*;
+import cl.minsal.semantikos.model.audit.ConceptAuditAction;
+import cl.minsal.semantikos.model.audit.UserAuditAction;
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
-import cl.minsal.semantikos.kernel.components.InstitutionManager;
 
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.Profile;
@@ -54,10 +53,17 @@ public class UsersBean {
     //@EJB
     AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
 
+    //@EJB
+    AuditManager auditManager = (AuditManager) ServiceLocator.getInstance().getService(AuditManager.class);
+
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
 
     User selectedUser;
+
+    User originalUser;
+
+    private List<UserAuditAction> auditAction;
 
     List<User> allUsers;
 
@@ -129,6 +135,14 @@ public class UsersBean {
 
     }
 
+    public User getOriginalUser() {
+        return originalUser;
+    }
+
+    public void setOriginalUser(User originalUser) {
+        this.originalUser = originalUser;
+    }
+
     private void updateAvailableProfiles(User selectedUser) {
 
         selectedUserProfileModel.setTarget(selectedUser.getProfiles());
@@ -173,6 +187,8 @@ public class UsersBean {
     public void getUser(long idUser) {
 
         selectedUser = userManager.getUser(idUser);
+        originalUser = new User(selectedUser);
+        auditAction = auditManager.getUserAuditActions(selectedUser);
         updateAvailableProfiles(selectedUser);
         updateAvailableInsitutions(selectedUser);
         clean();
@@ -350,7 +366,7 @@ public class UsersBean {
                 }
             }
             else {
-                userManager.updateUser(selectedUser);
+                userManager.update(originalUser, selectedUser, authenticationBean.getLoggedUser());
                 selectedUser = userManager.getUser(selectedUser.getId());
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario: "+selectedUser.getEmail()+" modificado de manera exitosa!!"));
             }
@@ -407,7 +423,7 @@ public class UsersBean {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
         try {
-            userManager.resetAccount(selectedUser, getURLWithContextPath(request));
+            userManager.resetAccount(selectedUser, getURLWithContextPath(request), authenticationBean.getLoggedUser());
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "1° Se ha enviado un correo de notificación al usuario para activar esta cuenta."));
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "2° Este usuario permanecerá bloqueado hasta que él active su cuenta"));
         } catch (Exception e){
@@ -420,7 +436,7 @@ public class UsersBean {
         //userManager.unlockUser(selectedUser.getUsername());
         FacesContext facesContext = FacesContext.getCurrentInstance();
         try {
-            userManager.deleteUser(selectedUser);
+            userManager.deleteUser(selectedUser, authenticationBean.getLoggedUser());
             selectedUser = userManager.getUser(selectedUser.getId());
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "El usuario se ha eliminado y queda en estado No Vigente."));
         } catch (Exception e){
@@ -594,6 +610,14 @@ public class UsersBean {
 
     public void setInstitutionError(String institutionError) {
         this.institutionError = institutionError;
+    }
+
+    public List<UserAuditAction> getAuditAction() {
+        return auditAction;
+    }
+
+    public void setAuditAction(List<UserAuditAction> auditAction) {
+        this.auditAction = auditAction;
     }
 
 }

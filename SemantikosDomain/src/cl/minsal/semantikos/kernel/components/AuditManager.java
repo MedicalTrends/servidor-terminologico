@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.audit.AuditActionType;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
+import cl.minsal.semantikos.model.audit.UserAuditAction;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
@@ -198,6 +199,17 @@ public interface AuditManager {
      * <code>conceptSMTK</code>
      */
     public List<ConceptAuditAction> getConceptAuditActions(ConceptSMTK conceptSMTK, boolean changes);
+
+    /**
+     * Este método es responsable de recuperar y retornar en una lista los últimos <code>numberOfChanges</code> cambios
+     * que ha tenido un usuario.
+     *
+     * @param user     El usuario cuyos cambios se desean recuperar.
+     *
+     * @return Una lista con los últimos <code>numberOfChanges</code> realizados sobre el concepto
+     * <code>conceptSMTK</code>
+     */
+    public List<UserAuditAction> getUserAuditActions(User user);
 
     /**
      * Este método es responsable de recuperar y retornar en una lista los últimos <code>numberOfChanges</code> cambios

@@ -110,6 +110,33 @@
                                     </p:pickList>
                                 </p:tab>
 
+                                <!-- Otras descripciones -->
+                                <p:tab title="Historial">
+                                    <p:dataTable  rowIndexVar="rowIndex" id="historyDateTable" var="history"
+                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                                  value="#{users.auditAction}" paginator="true" rows="10">
+                                        <f:facet name="{Exporters}">
+                                            <p:commandButton icon="fa fa-file-excel-o" styleClass="ui-priority-primary" ajax="false" value="Exportar">
+                                                <p:dataExporter type="xls" target="historyDateTable" fileName="history" />
+                                            </p:commandButton>
+                                        </f:facet>
+
+                                        <p:column headerText="Fecha">
+                                            <h:outputText value="#{history.actionDateFormat}"/>
+                                        </p:column>
+                                        <p:column headerText="Tipo de cambio">
+                                            <h:outputText value="#{history.auditActionType.name}"/>
+                                        </p:column>
+                                        <p:column headerText="Detalle">
+                                            <h:outputText value="#{history.detailAuditAction()}"/>
+                                        </p:column>
+                                        <p:column headerText="Usuario">
+                                            <h:outputText value="#{history.user.email}"/>
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </p:tab>
+
                             </p:tabView>
 
                             <div class="SeparatorFull"></div>

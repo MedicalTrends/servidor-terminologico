@@ -6,6 +6,7 @@ import cl.minsal.semantikos.kernel.daos.QuestionDAO;
 import cl.minsal.semantikos.kernel.util.ConceptUtils;
 import cl.minsal.semantikos.kernel.util.UserUtils;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.audit.UserAuditAction;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
 import cl.minsal.semantikos.model.relationships.Relationship;
@@ -22,6 +23,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 import static cl.minsal.semantikos.kernel.components.AuthenticationManager.MAX_FAILED_ANSWER_ATTEMPTS;
+import static cl.minsal.semantikos.model.audit.AuditActionType.USER_ATTRIBUTE_CHANGE;
 
 /**
  * Created by BluePrints Developer on 14-07-2016.
@@ -147,17 +149,17 @@ public class UserManagerImpl implements UserManager {
             user = userCreationBR.preActions(user);
             /* Se persisten los atributos basicos del usuario*/
             authDAO.createUser(user);
+            /* Se deja registro en la auditoría */
+            auditManager.recordUserCreation(user, _user);
             /* Luego se persisten sus perfiles */
             for (Profile profile : user.getProfiles()) {
-                profileManager.bindProfileToUser(user, profile, user);
+                profileManager.bindProfileToUser(user, profile, _user);
             }
             /* Luego se persisten sus establecimientos */
             for (Institution institution : user.getInstitutions()) {
-                institutionManager.bindInstitutionToUser(user, institution, user);
+                institutionManager.bindInstitutionToUser(user, institution, _user);
             }
             //user = authDAO.getUserById(user.getIdUser());
-            /* Se deja registro en la auditoría */
-            auditManager.recordUserCreation(user, _user);
             userCreationBR.postActions(user, baseURL);
             return user.getId();
         } catch (Exception e) {
@@ -178,7 +180,7 @@ public class UserManagerImpl implements UserManager {
         user.setVerificationCode(null);
         authDAO.updateUser(user);
         /* Se deja registro en la auditoría */
-        auditManager.recordUserUpgrade(user, _user);
+        auditManager.recordUserActivation(user, _user);
         /**
          * Se actualiza la cache de usuarios
          */
@@ -227,16 +229,20 @@ public class UserManagerImpl implements UserManager {
 
     }
 
-    public void resetAccount(User user, String baseURL) {
+    public void resetAccount(User user, String baseURL, User _user) {
         user = userCreationBR.preActions(user);
         user = userCreationBR.postActions(user, baseURL);
         questionDAO.deleteUserAnswers(user);
         user.setFailedAnswerAttempts(0);
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        auditManager.recordUserAccountReset(user, _user);
     }
 
-    public void deleteUser(User user) {
+    public void deleteUser(User user, User _user) {
         user.setValid(false);
         authDAO.updateUser(user);
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        auditManager.recordUserDelete(user, _user);
     }
 
     public void unlockUser(String email) {

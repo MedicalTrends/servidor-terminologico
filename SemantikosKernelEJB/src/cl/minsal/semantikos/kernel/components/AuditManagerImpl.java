@@ -297,6 +297,54 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    public void recordUserActivation(User user, User _user) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_ACTIVATION, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserPasswordChange(User user, User _user) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_PASSWORD_CHANGE, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserPasswordRecover(User user, User _user) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_PASSWORD_RECOVER, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserLocking(User user, User _user) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_LOCKING, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserDelete(User user, User _user) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_DELETE, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserAccountReset(User user, User _user) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_ACCOUNT_RESET, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
     public List<AuditActionType> getAllAuditActionTypes() {
         return Arrays.asList(AuditActionType.values());
     }
@@ -304,6 +352,11 @@ public class AuditManagerImpl implements AuditManager {
     @Override
     public List<ConceptAuditAction> getConceptAuditActions(ConceptSMTK conceptSMTK, boolean changes) {
         return auditDAO.getConceptAuditActions(conceptSMTK, changes);
+    }
+
+    @Override
+    public List<UserAuditAction> getUserAuditActions(User user) {
+        return auditDAO.getUserAuditActions(user);
     }
 
     @Override

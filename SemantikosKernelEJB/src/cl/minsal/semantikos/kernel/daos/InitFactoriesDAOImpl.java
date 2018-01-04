@@ -89,15 +89,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     @EJB
     private AuthDAO authDAO;
 
-    @EJB
-    private CategorySingleton categorySingleton;
-
-    @EJB
-    private DescriptionTypeSingleton descriptionTypeSingleton;
-
-    @EJB
-    private UserSingleton userSingleton;
-
     @Resource(lookup = "java:jboss/OracleDS")
     private DataSource dataSource;
 
@@ -105,7 +96,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     private void init() {
         try {
             this.refreshDataSource();
-            //this.refreshEmail();
+            this.refreshEmail();
         } catch (NamingException e) {
             e.printStackTrace();
         }
@@ -228,7 +219,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
             /* Se setea la lista de tagsSMTK */
             CategoryFactory.getInstance().setCategories(categories);
-            categorySingleton.setCategories(categories);
 
         } catch (SQLException e) {
             throw new EJBException(e);
@@ -396,7 +386,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
             /* Se setea la lista de Tipos de descripción */
             DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypes);
-            descriptionTypeSingleton.setDescriptionTypes(descriptionTypes);
 
         } catch (SQLException e) {
             String errorMsg = "Error al intentar recuperar Description Types de la BDD.";
@@ -474,7 +463,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         }
 
         UserFactory.getInstance().setUsers(users);
-        userSingleton.setUsers(users);
 
         return UserFactory.getInstance();
     }

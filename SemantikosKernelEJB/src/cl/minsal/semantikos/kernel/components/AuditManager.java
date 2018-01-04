@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.audit.AuditActionType;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
+import cl.minsal.semantikos.model.audit.UserAuditAction;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
@@ -263,6 +264,54 @@ public interface AuditManager {
      */
     public void recordUserInstitutionUnbinding(User user, Institution institution, User _user);
 
+    /**
+     * Este método es responsable de registrar en el log de auditoría la activacion de un usuario
+     *
+     * @param user          El usuario al cual activa
+     * @param _user         El usuario que hace la activacion
+     */
+    public void recordUserActivation(User user, User _user);
+
+    /**
+     * Este método es responsable de registrar en el log de auditoría la modificacion de contraseña de un usuario
+     *
+     * @param user          El usuario al cual se cambia contraseña
+     * @param _user         El usuario que hace el cambio
+     */
+    public void recordUserPasswordChange(User user, User _user);
+
+    /**
+     * Este método es responsable de registrar en el log de auditoría la recuperacion de contraseña de un usuario
+     *
+     * @param user          El usuario al cual se recupera contraseña
+     * @param _user         El usuario que hace la recuperacion
+     */
+    public void recordUserPasswordRecover(User user, User _user);
+
+    /**
+     * Este método es responsable de registrar en el log de auditoría el bloqueo de la cuenta de un usuario
+     *
+     * @param user          El usuario al cual se bloquea su cuenta
+     * @param _user         El usuario que hace el bloqueo
+     */
+    public void recordUserLocking(User user, User _user);
+
+    /**
+     * Este método es responsable de registrar en el log de auditoría la eliminacion de un usuario
+     *
+     * @param user          El usuario al cual se elimina
+     * @param _user         El usuario que hace la eliminacion
+     */
+    public void recordUserDelete(User user, User _user);
+
+    /**
+     * Este método es responsable de registrar en el log de auditoría el reseteo de la cuenta de un usuario
+     *
+     * @param user          El usuario al cual se resetea su cuenta
+     * @param _user         El usuario que hace el reseteo
+     */
+    public void recordUserAccountReset(User user, User _user);
+
 
     /**
      * Este método es responsable de obtener y agrupar en una lista todos los tipos de cambios existentes.
@@ -282,6 +331,17 @@ public interface AuditManager {
      * <code>conceptSMTK</code>
      */
     public List<ConceptAuditAction> getConceptAuditActions(ConceptSMTK conceptSMTK,  boolean changes);
+
+    /**
+     * Este método es responsable de recuperar y retornar en una lista los últimos <code>numberOfChanges</code> cambios
+     * que ha tenido un usuario.
+     *
+     * @param user     El usuario cuyos cambios se desean recuperar.
+     *
+     * @return Una lista con los últimos <code>numberOfChanges</code> realizados sobre el concepto
+     * <code>conceptSMTK</code>
+     */
+    public List<UserAuditAction> getUserAuditActions(User user);
 
     /**
      * Este método es responsable de recuperar y retornar en una lista los últimos <code>numberOfChanges</code> cambios

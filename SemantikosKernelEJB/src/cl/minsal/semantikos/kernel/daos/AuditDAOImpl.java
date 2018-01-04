@@ -77,6 +77,39 @@ public class AuditDAOImpl implements AuditDAO {
     }
 
     @Override
+    public List<UserAuditAction> getUserAuditActions(User user) {
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_audit.get_user_audit_actions(?); end;";
+
+        List<UserAuditAction> auditActions = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            /* Se invoca la consulta para recuperar las relaciones */
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, user.getId());
+            call.execute();
+
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            auditActions = createAuditActionsFromResultSet(rs, user);
+
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "No se pudo parsear el JSON a BasicTypeDefinition.";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return auditActions;
+    }
+
+    @Override
     public void recordAuditAction(ConceptAuditAction conceptAuditAction) {
 
         logger.debug("Registrando información de Auditoría: " + conceptAuditAction);
@@ -261,6 +294,43 @@ public class AuditDAOImpl implements AuditDAO {
         }
 
         return conceptAuditActions;
+    }
+
+    /**
+     * Este método es responsable de crear un arreglo de objetos de auditoría a partir de una expresión JSON de la
+     * forma:
+     *
+     * @param rs La expresión JSON a partir de la cual se crean los elementos de auditoría.
+     *
+     * @return Una lista de objetos auditables.
+     */
+    public List<UserAuditAction> createAuditActionsFromResultSet(ResultSet rs, User user) {
+
+        List<UserAuditAction> userAuditActions = new ArrayList<>();
+
+        try {
+
+            while(rs.next()) {
+
+                if(user == null) {
+                    user = UserFactory.getInstance().findUserById(rs.getLong("id_user"));
+                }
+
+                AuditActionType auditActionType = AuditActionType.valueOf(rs.getLong("id_action_type"));
+                //User user = userDAO.getUserById(rs.getLong("id_user"));
+                User _user = UserFactory.getInstance().findUserById(rs.getLong("id_user_"));
+                AuditableEntityType auditableEntityType = AuditableEntityType.valueOf(rs.getLong("id_audit_entity_type"));
+                AuditableEntity auditableEntityByID = auditableEntityFactory.findAuditableEntityByID(rs.getLong("id_auditable_entity"), auditableEntityType);
+                Timestamp date = rs.getTimestamp("date");
+
+                UserAuditAction userAuditAction = new UserAuditAction(user, auditActionType, date, _user, auditableEntityByID);
+                userAuditActions.add(userAuditAction);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return userAuditActions;
     }
 
 }

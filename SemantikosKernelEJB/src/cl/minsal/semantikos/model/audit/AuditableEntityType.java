@@ -8,7 +8,11 @@ public enum AuditableEntityType {
     RELATIONSHIP(2, "Relacione"),
     DESCRIPTION(3, "Descripción"),
     CATEGORY(4, "Categoría"),
-    REFSET(5,"Refset");
+    REFSET(5,"Refset"),
+    CROSSMAP(5,"Terminologia Externa"),
+    USER(7,"Usuario"),
+    PROFILE(8,"Perfil"),
+    INSTITUTION(9,"Establecimiento");
 
     /** El identificador único del tipo de Entidad */
     private long id;

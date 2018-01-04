@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.model.users;
 
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.util.StringUtils;
@@ -85,6 +86,39 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
     public User(long id, String username, String name, String password, boolean locked) {
         this(id, username, name, locked);
         this.setPassword(password);
+    }
+
+    public User(User user) {
+        super(user.getId());
+        setUsername(user.getUsername());
+        setName(user.getName());
+        setLastName(user.getLastName());
+        setSecondLastName(user.getSecondLastName());
+        setEmail(user.getEmail());
+        setAppointment(user.getAppointment());
+        setDocumentRut(user.isDocumentRut());
+        setDocumentNumber(user.getDocumentNumber());
+        setPassword(user.getPassword());
+        setPasswordHash(user.getPasswordHash());
+        setPasswordSalt(user.getPasswordSalt());
+        setProfiles(user.getProfiles());
+        setLastLogin(user.getLastLogin());
+        setLastPasswordChange(user.getLastPasswordChange());
+        setLocked(user.isLocked());
+        setValid(user.isValid());
+        setFailedLoginAttempts(user.getFailedLoginAttempts());
+        setFailedAnswerAttempts(user.getFailedAnswerAttempts());
+        setLastPasswordHash1(user.getLastPasswordHash1());
+        setLastPasswordSalt1(user.getLastPasswordSalt1());
+        setLastPasswordHash2(user.getLastPasswordHash2());
+        setLastPasswordSalt2(user.getLastPasswordSalt2());
+        setLastPasswordHash3(user.getLastPasswordHash3());
+        setLastPasswordSalt3(user.getLastPasswordSalt3());
+        setLastPasswordHash4(user.getLastPasswordHash4());
+        setLastPasswordSalt4(user.getLastPasswordSalt4());
+        setVerificationCode(user.getVerificationCode());
+        setInstitutions(user.getInstitutions());
+        setAnswers(user.getAnswers());
     }
 
     public String getUsername() {
@@ -319,9 +353,22 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
 
     @Override
     public boolean equals(Object other) {
-        return (other instanceof User) && (String.valueOf(this.getId()) != null)
-                ? String.valueOf(this.getId()).equals(String.valueOf(((User) other).getId()))
-                : (other == this);
+
+        /* Si son el mismo objeto */
+        if (other == this) return true;
+
+        if (!(other instanceof User)) return false;
+
+        User user = (User) other;
+
+        if (!this.documentNumber.equals(user.documentNumber)) return false;
+
+        if (!this.email.equals(user.email)) return false;
+
+        return this.name.equalsIgnoreCase(user.name)
+                && this.lastName.equalsIgnoreCase(user.lastName)
+                && this.secondLastName.equalsIgnoreCase(user.lastName)
+                && this.appointment.equalsIgnoreCase(user.appointment);
     }
 
     @Override

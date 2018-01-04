@@ -4,6 +4,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.audit.RefSetAuditAction;
 import cl.minsal.semantikos.model.audit.UserAuditAction;
+import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -25,6 +26,17 @@ public interface AuditDAO {
      * <code>conceptSMTK</code>
      */
     public List<ConceptAuditAction> getConceptAuditActions(ConceptSMTK conceptSMTK, boolean changes);
+
+    /**
+     * Este método es responsable de recuperar y retornar en una lista los últimos <code>numberOfChanges</code> cambios
+     * que ha tenido un usuario.
+     *
+     * @param user       El usuario cuyos cambios se desean recuperar.
+     *
+     * @return Una lista con los últimos <code>numberOfChanges</code> realizados sobre el usuario
+     * <code>user</code>
+     */
+    public List<UserAuditAction> getUserAuditActions(User user);
 
     /**
      * Este método es responsable de registrar una acción de auditoría (historial) en la base de datos.

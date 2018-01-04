@@ -51,9 +51,9 @@ public interface UserManager {
 
     public boolean checkAnswers(User user);
 
-    public void resetAccount(User user, String baseURL);
+    public void resetAccount(User user, String baseURL, User _user);
 
-    public void deleteUser(User user);
+    public void deleteUser(User user, User _user);
 
     public void unlockUser(String email);
 
