@@ -23,7 +23,6 @@ import java.util.List;
  * @author Andrés Farías on 8/30/16.
  */
 @Stateless
-@LocalBean
 public class CrossmapsManagerImpl implements CrossmapsManager {
 
     /** El logger de la clase */

@@ -245,14 +245,14 @@ public class AuthDAOImpl implements AuthDAO {
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.NUMERIC);
-            call.setString(2, user.getName().trim());
-            call.setString(3, user.getLastName().trim());
-            call.setString(4, user.getSecondLastName().trim());
-            call.setString(5, user.getEmail().trim());
+            call.setString(2, user.getName());
+            call.setString(3, user.getLastName());
+            call.setString(4, user.getSecondLastName());
+            call.setString(5, user.getEmail());
             call.setBoolean(6, false);
             call.setInt(7, 0);
             call.setBoolean(8, user.isDocumentRut());
-            call.setString(9, user.isDocumentRut()?StringUtils.parseRut(user.getDocumentNumber().trim()):user.getDocumentNumber());
+            call.setString(9, user.isDocumentRut()?StringUtils.parseRut(user.getDocumentNumber()):user.getDocumentNumber());
             call.setString(10, user.getPasswordHash());
             call.setString(11, user.getVerificationCode());
 

@@ -40,7 +40,6 @@ import static java.lang.System.currentTimeMillis;
  * @author Andrés Farías.
  */
 @Stateless
-@LocalBean
 public class RelationshipManagerImpl implements RelationshipManager {
 
     /** El gestor de relaciones con la base de datos */

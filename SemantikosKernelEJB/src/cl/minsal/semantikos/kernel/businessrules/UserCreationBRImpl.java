@@ -239,8 +239,6 @@ public class UserCreationBRImpl implements UserCreationBR {
         return user;
     }
 
-
-
     /**
      * <b>BR-SMTK-001</b>: Conceptos de ciertas categorías pueden sólo ser creados por usuarios con el perfil
      * Modelador.

@@ -50,7 +50,10 @@ public class InstitutionManagerImpl implements InstitutionManager {
     }
 
     @Override
-    public void deleteInstitution(Institution institution, User user) {
+    public void unbindInstitutionFromUser(User user, Institution institution, User _user) {
+        institutionDAO.unbindInstitutionFromUser(user, institution);
 
+        /* Registrar en el Historial si es preferida (Historial BR) */
+        auditManager.recordUserInstitutionUnbinding(user, institution, _user);
     }
 }

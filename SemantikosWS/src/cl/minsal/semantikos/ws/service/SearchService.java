@@ -438,9 +438,6 @@ public class SearchService {
                     GS1ByConceptIDRequest request
     ) throws NotFoundFault {
         try {
-            if(request.getConceptID().isEmpty()) {
-                throw new IllegalInputFault("Debe ingresar un ConceptID");
-            }
             return this.conceptController.searchGS1ByConceptID(request);
         } catch (Exception e) {
             throw new NotFoundFault(e.getMessage());

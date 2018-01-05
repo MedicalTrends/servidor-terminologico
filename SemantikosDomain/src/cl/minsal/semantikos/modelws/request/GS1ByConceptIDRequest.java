@@ -15,11 +15,22 @@ public class GS1ByConceptIDRequest extends Request implements Serializable {
     @XmlElement(required = true, name = "conceptID")
     private String conceptID;
 
+    @XmlElement(required = true, name = "descriptionID")
+    private String descriptionID;
+
     public String getConceptID() {
         return conceptID;
     }
 
     public void setConceptID(String conceptID) {
         this.conceptID = conceptID;
+    }
+
+    public String getDescriptionID() {
+        return descriptionID;
+    }
+
+    public void setDescriptionID(String descriptionID) {
+        this.descriptionID = descriptionID;
     }
 }

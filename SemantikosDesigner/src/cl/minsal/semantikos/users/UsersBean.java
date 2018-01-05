@@ -103,7 +103,7 @@ public class UsersBean {
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() {
-        createOrUpdateUser();
+        //createOrUpdateUser();
     }
 
     public void createOrUpdateUser() {
@@ -144,6 +144,8 @@ public class UsersBean {
     }
 
     private void updateAvailableProfiles(User selectedUser) {
+
+
 
         selectedUserProfileModel.setTarget(selectedUser.getProfiles());
 
@@ -367,7 +369,7 @@ public class UsersBean {
             }
             else {
                 userManager.update(originalUser, selectedUser, authenticationBean.getLoggedUser());
-                selectedUser = userManager.getUser(selectedUser.getId());
+                getUser(selectedUser.getId());
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario: "+selectedUser.getEmail()+" modificado de manera exitosa!!"));
             }
 
@@ -389,12 +391,18 @@ public class UsersBean {
         return selectedUserProfileModel;
     }
 
-    public String getURLWithContextPath(HttpServletRequest request) {
-        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+    public void setSelectedUserProfileModel(DualListModel<Profile> selectedUserProfileModel) {
+        if(selectedUserProfileModel == null) {
+            return;
+        }
+        if(this.selectedUserProfileModel.getSource().size() == selectedUserProfileModel.getSource().size()) {
+            return;
+        }
+        this.selectedUserProfileModel = selectedUserProfileModel;
     }
 
-    public void setSelectedUserProfileModel(DualListModel<Profile> selectedUserProfileModel) {
-        this.selectedUserProfileModel = selectedUserProfileModel;
+    public String getURLWithContextPath(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
     }
 
     public DualListModel<Institution> getSelectedUserInsitutionModel() {
@@ -572,7 +580,9 @@ public class UsersBean {
 
     public void setIdUser(long idUser) {
         this.idUser = idUser;
-        createOrUpdateUser();
+        if(selectedUser == null) {
+            createOrUpdateUser();
+        }
     }
 
     public void refreshUserFactory() {

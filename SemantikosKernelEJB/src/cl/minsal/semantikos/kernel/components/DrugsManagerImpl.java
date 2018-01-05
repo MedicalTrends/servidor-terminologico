@@ -22,7 +22,7 @@ public class DrugsManagerImpl implements DrugsManager {
     private ConceptManager conceptManager;
 
     @EJB
-    private RelationshipManagerImpl relationshipManager;
+    private RelationshipManager relationshipManager;
 
     @EJB
     private CategoryManager categoryManager;

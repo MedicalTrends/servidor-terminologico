@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Francisco Mendez
@@ -17,11 +18,11 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
 
     private static User dummyUser = new User(NON_PERSISTED_ID, "dummy", "Usuario de Prueba", true);
 
-    private String username = "";
+    private String username;
     private String name;
     private String lastName;
-    private String secondLastName = "";
-    private String email = "";
+    private String secondLastName;
+    private String email;
     private String appointment;
 
     private boolean documentRut = true;
@@ -169,7 +170,9 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
     }
 
     public void setSecondLastName(String secondLastName) {
-        this.secondLastName = secondLastName;
+        if(secondLastName != null && !secondLastName.isEmpty()) {
+            this.secondLastName = secondLastName;
+        }
     }
 
     public String getFullName() {
@@ -231,7 +234,9 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
     }
 
     public void setAppointment(String appointment) {
-        this.appointment = appointment;
+        if(appointment != null && !appointment.isEmpty()) {
+            this.appointment = appointment;
+        }
     }
 
     public String getDocumentNumber() {
@@ -365,10 +370,11 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
 
         if (!this.email.equals(user.email)) return false;
 
-        return this.name.equalsIgnoreCase(user.name)
-                && this.lastName.equalsIgnoreCase(user.lastName)
-                && this.secondLastName.equalsIgnoreCase(user.lastName)
-                && this.appointment.equalsIgnoreCase(user.appointment);
+        //return (str1 == null ? str2 == null : str1.equals(str2));
+        return Objects.equals(this.name, user.name)
+                && Objects.equals(this.lastName, user.lastName)
+                && Objects.equals(this.secondLastName, user.secondLastName)
+                && Objects.equals(this.appointment, user.appointment);
     }
 
     @Override

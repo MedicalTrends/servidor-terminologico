@@ -72,10 +72,10 @@ public class ConceptManagerImpl implements ConceptManager {
     private DescriptionManager descriptionManager;
 
     @EJB
-    private RelationshipManagerImpl relationshipManager;
+    private RelationshipManager relationshipManager;
 
     @EJB
-    private CrossmapsManagerImpl crossmapsManager;
+    private CrossmapsManager crossmapsManager;
 
     @EJB
     private ConceptTransferBR conceptTransferBR;
@@ -219,7 +219,7 @@ public class ConceptManagerImpl implements ConceptManager {
         }
 
         if(!change) {
-            throw new EJBException("No es posible actualizar un concepto con una imagen idéntica!!");
+            throw new EJBException("No es posible actualizar un concepto con una instancia idéntica!!");
         }
     }
 

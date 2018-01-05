@@ -48,6 +48,6 @@ public interface InstitutionManager {
      * @param institution     El establecimiento que se desea eliminar.
      * @param user            El usuario que realiza la eliminación.
      */
-    public void deleteInstitution(Institution institution, User user);
+    public void unbindInstitutionFromUser(User user, Institution institution, User _user);
 }
 

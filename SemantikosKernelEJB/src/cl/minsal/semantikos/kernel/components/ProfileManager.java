@@ -47,7 +47,7 @@ public interface ProfileManager {
      * @param profile     El perfil que se desea eliminar.
      * @param user        El usuario que realiza la eliminación.
      */
-    public void deleteProfile(Profile profile, User user);
+    public void unbindProfileFromUser(User user, Profile profile, User _user);
 
 }
 

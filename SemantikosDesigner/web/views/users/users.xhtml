@@ -25,8 +25,9 @@
                                 <p:growl id="globalMessage" showDetail="true" autoUpdate="true" showSummary="true"/>
 
                                 <p:dataTable id="singleDT" var="user" value="#{usersBrowser.allUsers}" rowKey="#{user.id}" styleClass="users"
-                                             rows="30" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
-                                             emptyMessage="No hay usuarios en la Base de Datos" reflow="true">
+                                             widgetVar="usersTable" rows="30" paginator="true" emptyMessage="No hay usuarios en la Base de Datos" reflow="true"
+                                             filteredValue="#{usersBrowser.filteredUsers}"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}">
 
                                     <p:ajax event="rowSelect" update=":form:user-detail" oncomplete="PF('userDialog').show()" />
 

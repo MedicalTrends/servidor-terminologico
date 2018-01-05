@@ -50,7 +50,10 @@ public class ProfileManagerImpl implements ProfileManager {
     }
 
     @Override
-    public void deleteProfile(Profile profile, User user) {
+    public void unbindProfileFromUser(User user, Profile profile, User _user) {
+        profileDAO.unbindProfileFromUser(user, profile);
 
+        /* Registrar en el Historial si es preferida (Historial BR) */
+        auditManager.recordUserProfileUnbinding(user, profile, _user);
     }
 }

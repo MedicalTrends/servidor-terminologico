@@ -18,6 +18,9 @@ public class ConceptToRefSetRequest extends Request implements Serializable {
     @XmlElement(required = true, name = "conceptID")
     private String conceptID;
 
+    @XmlElement(required = true, name = "descriptionID")
+    private String descriptionID;
+
     public String getRefSetName() {
         return refSetName;
     }
@@ -32,5 +35,13 @@ public class ConceptToRefSetRequest extends Request implements Serializable {
 
     public void setConceptID(String conceptID) {
         this.conceptID = conceptID;
+    }
+
+    public String getDescriptionID() {
+        return descriptionID;
+    }
+
+    public void setDescriptionID(String descriptionID) {
+        this.descriptionID = descriptionID;
     }
 }

@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
 import cl.minsal.semantikos.modelws.request.ConceptToRefSetRequest;
 import cl.minsal.semantikos.modelws.response.ConceptToRefSetResponse;
 import cl.minsal.semantikos.modelws.response.RefSetResponse;
@@ -226,9 +227,14 @@ public class RefSetController {
      * @throws NotFoundFault Arrojada si no ... ???
      */
     public ConceptToRefSetResponse addConceptToRefSet(ConceptToRefSetRequest request, User user, Institution institution)
-            throws NotFoundFault {
+            throws NotFoundFault, IllegalInputFault {
 
-        ConceptSMTK conceptSMTK = conceptManager.getConceptByCONCEPT_ID(request.getConceptID());
+        if ((request.getConceptID() == null || "".equals(request.getConceptID()))
+                && (request.getDescriptionID() == null || "".equals(request.getDescriptionID()))) {
+            throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
+        }
+
+        ConceptSMTK conceptSMTK = getConcept(request.getConceptID(), request.getDescriptionID());
 
         List<RefSet> refSets = refSetManager.findRefsetsByName(request.getRefSetName());
 
@@ -252,8 +258,8 @@ public class RefSetController {
         }
         */
 
-        if(institution.equals(refSet.getInstitution())) {
-            throw new NotFoundFault("El establecimiento dueño del RefSet: '"+refSet.getInstitution()+"' no corresponde a ninguno de los establecimientos del usuario: '"+user+"'");
+        if(!institution.equals(refSet.getInstitution())) {
+            throw new NotFoundFault("El establecimiento dueño del RefSet: '"+refSet.getInstitution()+"' no corresponde al establecimiento de conexión: '"+institution+"'");
         }
 
         if(refSet.getConcepts().contains(conceptSMTK)) {
@@ -272,9 +278,14 @@ public class RefSetController {
      * @throws NotFoundFault Arrojada si no ... ???
      */
     public ConceptToRefSetResponse removeConceptFromRefSet(ConceptToRefSetRequest request, User user, Institution institution)
-            throws NotFoundFault {
+            throws NotFoundFault, IllegalInputFault {
 
-        ConceptSMTK conceptSMTK = conceptManager.getConceptByCONCEPT_ID(request.getConceptID());
+        if ((request.getConceptID() == null || "".equals(request.getConceptID()))
+                && (request.getDescriptionID() == null || "".equals(request.getDescriptionID()))) {
+            throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
+        }
+
+        ConceptSMTK conceptSMTK = getConcept(request.getConceptID(), request.getDescriptionID());
 
         List<RefSet> refSets = refSetManager.findRefsetsByName(request.getRefSetName());
 
@@ -298,8 +309,8 @@ public class RefSetController {
         }
         */
 
-        if(institution.equals(refSet.getInstitution())) {
-            throw new NotFoundFault("El establecimiento dueño del RefSet: '"+refSet.getInstitution()+"' no corresponde a ninguno de los establecimientos del usuario: '"+user+"'");
+        if(!institution.equals(refSet.getInstitution())) {
+            throw new NotFoundFault("El establecimiento dueño del RefSet: '"+refSet.getInstitution()+"' no corresponde al establecimiento de conexión: '"+institution+"'");
         }
 
         if(!refSet.getConcepts().contains(conceptSMTK)) {
@@ -316,5 +327,26 @@ public class RefSetController {
             throw new NotFoundFault("RefSet no encontrado");
         }
         return RefSetMapper.map(refSet);
+    }
+
+    private ConceptSMTK getConcept(String conceptId, String descriptionId) throws NotFoundFault {
+        ConceptSMTK conceptSMTK = null;
+
+        try {
+            if (descriptionId != null && !descriptionId.isEmpty()) {
+                conceptSMTK = this.conceptManager.getConceptByDescriptionID(descriptionId);
+            } else {
+                conceptSMTK = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
+            }
+        } catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
+
+        if (conceptSMTK == null) {
+            throw new NotFoundFault("Concepto no encontrado: " + (conceptId != null ? conceptId : "") +
+                    (descriptionId != null ? descriptionId : ""));
+        }
+
+        return conceptSMTK;
     }
 }

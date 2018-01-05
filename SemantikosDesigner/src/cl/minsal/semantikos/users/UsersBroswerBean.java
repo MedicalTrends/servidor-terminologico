@@ -33,6 +33,8 @@ public class UsersBroswerBean {
 
     List<User> allUsers;
 
+    List<User> filteredUsers;
+
     List<Profile> allProfiles;
 
     //Inicializacion del Bean
@@ -48,7 +50,7 @@ public class UsersBroswerBean {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
 
         try {
-            eContext.redirect(eContext.getRequestContextPath() + "/views/users/userEdit.xhtml");
+            eContext.redirect(eContext.getRequestContextPath() + "/views/users/userEdit.xhtml?idUser=0");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,6 +73,14 @@ public class UsersBroswerBean {
         }
 
         return allUsers;
+    }
+
+    public List<User> getFilteredUsers() {
+        return filteredUsers;
+    }
+
+    public void setFilteredUsers(List<User> filteredUsers) {
+        this.filteredUsers = filteredUsers;
     }
 
 

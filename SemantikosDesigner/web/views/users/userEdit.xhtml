@@ -92,11 +92,12 @@
 
                                 <!-- Otras descripciones -->
                                 <p:tab title="Perfiles">
-                                    <p:pickList id="pickList1" value="#{users.selectedUserProfileModel}" var="profile3" disabled="#{ not users.selectedUser.valid}"
-                                                itemLabel="#{profile3.name}" itemValue="#{profile3}"
+                                    <p:pickList id="pickList1" value="#{users.selectedUserProfileModel}" var="profile" disabled="#{ not users.selectedUser.valid}"
+                                                itemLabel="#{profile.name}" itemValue="#{profile}"
                                                 responsive="true" converter="profileConverter" style="width: 100%" >
                                         <f:facet name="sourceCaption">Disponibles</f:facet>
                                         <f:facet name="targetCaption">Asignados</f:facet>
+                                        <p:ajax event="transfer" listener="#{users.setSelectedUserProfileModel(profile)}" update="pickList1" />
                                     </p:pickList>
                                 </p:tab>
 

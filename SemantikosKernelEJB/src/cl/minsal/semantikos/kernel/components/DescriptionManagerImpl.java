@@ -29,7 +29,6 @@ import static java.util.Collections.EMPTY_LIST;
  * @author Andrés Farías
  */
 @Stateless
-@LocalBean
 public class DescriptionManagerImpl implements DescriptionManager {
 
     private static final Logger logger = LoggerFactory.getLogger(DescriptionManagerImpl.class);

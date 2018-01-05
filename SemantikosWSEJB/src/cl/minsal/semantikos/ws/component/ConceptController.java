@@ -52,9 +52,9 @@ public class ConceptController {
     @EJB
     private ConceptManager conceptManager;
     @EJB
-    private RelationshipManagerImpl relationshipManager;
+    private RelationshipManager relationshipManager;
     @EJB
-    private DescriptionManagerImpl descriptionManager;
+    private DescriptionManager descriptionManager;
     @EJB
     private RefSetManager refSetManager;
     @EJB
@@ -965,12 +965,18 @@ public class ConceptController {
     /**
      * Este método es responsable de recuperar todos los conceptos en las categorías indicadas.
      *
-     * @param gs1ByConceptIDRequest Nombres de las categorías en las que se desea realizar la búsqueda.
+     * @param request Nombres de las categorías en las que se desea realizar la búsqueda.
      * @return La lista de Conceptos Light que satisfacen la búsqueda.
      */
-    public GS1ByConceptIDResponse searchGS1ByConceptID(GS1ByConceptIDRequest gs1ByConceptIDRequest) throws NotFoundFault {
+    public GS1ByConceptIDResponse searchGS1ByConceptID(GS1ByConceptIDRequest request) throws NotFoundFault, IllegalInputFault {
 
-        ConceptSMTK conceptSMTK = conceptManager.getConceptByCONCEPT_ID(gs1ByConceptIDRequest.getConceptID());
+        if ((request.getConceptID() == null || "".equals(request.getConceptID()))
+                && (request.getDescriptionID() == null || "".equals(request.getDescriptionID()))) {
+            throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
+        }
+
+        ConceptSMTK conceptSMTK = getConcept(request.getConceptID(), request.getDescriptionID());
+
         conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
 
         //Si la categoría no tiene la definición de atributo GS1

@@ -117,7 +117,7 @@ public class UserManagerImpl implements UserManager {
         }
 
         for (Profile profile : UserUtils.getRemovedProfiles(originalUser.getProfiles(), updatedUser.getProfiles())) {
-            profileManager.deleteProfile(profile, user);
+            profileManager.unbindProfileFromUser(updatedUser, profile, user);
             change = true;
         }
 
@@ -128,12 +128,12 @@ public class UserManagerImpl implements UserManager {
         }
 
         for (Institution institution : UserUtils.getRemovedInstitutions(originalUser.getInstitutions(), updatedUser.getInstitutions())) {
-            institutionManager.deleteInstitution(institution, user);
+            institutionManager.unbindInstitutionFromUser(updatedUser, institution, user);
             change = true;
         }
 
         if(!change) {
-            throw new EJBException("No es posible actualizar un usuario con una imagen idéntica!!");
+            throw new EJBException("No es posible actualizar un usuario con una instancia idéntica!!");
         }
     }
 
