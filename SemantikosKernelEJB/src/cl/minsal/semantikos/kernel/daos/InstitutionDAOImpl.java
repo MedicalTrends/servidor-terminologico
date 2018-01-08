@@ -61,7 +61,7 @@ public class InstitutionDAOImpl implements InstitutionDAO {
     public List<Institution> getInstitutionBy(User user) {
         //ConnectionBD connect = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_institution.get_institution_by_user(?); end;";
+        String sql = "begin ? := stk.stk_pck_institution.get_institutions_by_user(?); end;";
 
         List<Institution> institutions= new ArrayList<>();
         try (Connection connection = dataSource.getConnection();

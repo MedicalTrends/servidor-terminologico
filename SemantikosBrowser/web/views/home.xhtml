@@ -4,7 +4,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions"
-                template="/WEB-INF/template/template.xhtml">
+                template="/WEB-INF/template.xhtml">
 
     <ui:define name="content">
         <f:metadata>
@@ -23,16 +23,12 @@
 
                         <p:outputPanel>
 
-                            <div class="ui-fluid">
+                            <div class="ui-g ui-fluid">
 
-                                <div class="ui-g">
+                                <div class="ui-g-12">
 
-
-                                    <div class="ui-g-12 ui-md-6 ui-lg-8">
-                                        <!--p:inputText value="#{browserBean.browserQuery.query}"
-                                                     placeholder="Buscar...">
-                                            <p:ajax event="keyup" update="@(.conceptTable)" listener="#{browserBean.setFilterChanged(true)}" />
-                                        </p:inputText-->
+                                    <p:panelGrid columns="3" columnClasses="ui-grid-col-8,ui-grid-col-2,ui-grid-col-2" layout="grid"
+                                                 styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
 
                                         <p:outputPanel styleClass="search">
                                             <p:autoComplete minQueryLength="3"
@@ -46,10 +42,6 @@
                                                             value="#{browserBean.descriptionSelected}"
                                                             itemLabel="#{description.term}"
                                                             itemValue="#{description}">
-
-                                                <!--p:column>
-                                                    <h:outputText value="#{description.descriptionId}" />
-                                                </p:column-->
 
                                                 <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
                                                     <h:outputText value="#{description.term}" />
@@ -65,22 +57,16 @@
                                             <i class="fa fa-search fa-lg"  />
                                         </p:outputPanel>
 
-                                    </div>
-
-                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
                                         <p:commandButton value="Buscar" id="btn"
                                                          process="@(.otherDescriptionsPanel)"
                                                          update="@(.otherDescriptionsPanel)"/>
-                                    </div>
-
-                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
 
                                         <p:selectBooleanButton value="#{browserBean.showFilters}" onLabel="Filtros" styleClass="CyanButton"
                                                                offLabel="Filtros" onIcon="ui-icon-check" offIcon="ui-icon-close">
                                             <p:ajax update="browserForm" />
                                         </p:selectBooleanButton>
 
-                                    </div>
+                                    </p:panelGrid>
 
                                 </div>
 
