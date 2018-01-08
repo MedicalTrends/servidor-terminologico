@@ -48,7 +48,12 @@ public enum AuditActionType implements Serializable {
     USER_PASSWORD_RECOVER(34, "Recuperacion clave usuario", CHANGE),
     USER_LOCKING(35, "Bloqueo usuario", CHANGE),
     USER_DELETE(36, "Eliminacion usuario", REMOVAL),
-    USER_ACCOUNT_RESET(37, "Usuario reseteado", CHANGE);
+    USER_ACCOUNT_RESET(37, "Usuario reseteado", CHANGE),
+
+    INSTITUTION_CREATION(38, "Creación de Establecimiento", CREATION),
+    INSTITUTION_ATTRIBUTE_CHANGE(39, "Cambio de atributo de un establecimiento", CHANGE),
+    INSTITUTION_DELETE(40, "Eliminacion establecimiento", REMOVAL)
+    ;
 
     /** Identificador único de la base de datos */
     private long id;

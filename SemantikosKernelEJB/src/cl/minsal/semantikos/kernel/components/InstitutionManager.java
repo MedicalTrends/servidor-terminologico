@@ -25,6 +25,13 @@ public interface InstitutionManager {
 
     public Institution getInstitutionById(long id);
 
+    public Institution getInstitutionByCode(long code);
+
+    public long createInstitution(Institution institution, User user);
+
+    public void update(Institution originalInstitution, Institution updatedInstitution, User user);
+
+    public void deleteInstitution(Institution institution, User user);
 
     /**
      * Método encargado de obtener una lista con todas las instituciones

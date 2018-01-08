@@ -1,0 +1,118 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/template.xhtml">
+
+    <ui:define name="header">
+        <p:breadCrumb>
+            <p:menuitem value="Inicio" url="/views/home.xhtml" />
+            <p:menuitem value="Administración Establecimientos" url="#" />
+        </p:breadCrumb>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect  ">
+                    <div class="Container100">
+                        <div class="ContainerIndent">
+
+                            <h:form id="form">
+
+                                <p:growl id="globalMessage" showDetail="true" autoUpdate="true" showSummary="true"/>
+
+                                <p:dataTable id="singleDT" var="institution" value="#{institutionsBrowser.allInstitutions}" rowKey="#{institution.id}"
+                                             styleClass="institutions"
+                                             widgetVar="institutionsTable" rows="30" paginator="true" emptyMessage="No hay establecimientos en la Base de Datos" reflow="true"
+                                             filteredValue="#{institutionsBrowser.filteredInstitutions}"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}">
+
+                                    <p:ajax event="rowSelect" update=":form:institution-detail" oncomplete="PF('institutionDialog').show()" />
+
+                                    <f:facet name="{Exporters}">
+                                        <p:commandButton actionListener="#{institutionsBrowser.newInstitution()}" icon="fa fa-plus" type="submit" process="form"
+                                                         value="Crear Nuevo">
+                                        </p:commandButton>
+                                    </f:facet>
+
+                                    <p:column headerText="Código" sortBy="#{institution.code}">
+                                        <h:outputText value="#{institution.code}" />
+                                    </p:column>
+
+                                    <p:column headerText="Establecimiento" sortBy="#{institution.name}">
+                                        <h:outputText value="#{institution.name}" />
+                                    </p:column>
+
+                                    <p:column headerText="Estado" sortBy="#{institution.validityUntil eq null}">
+                                        <h:outputText value="Vigente" rendered="#{institution.validityUntil != null}" />
+                                        <h:outputText value="No vigente" rendered="#{institution.validityUntil == null}" />
+                                    </p:column>
+
+                                    <p:column headerText="Fecha ingreso">
+                                        <h:outputText value="#{institutionsBrowser.getCreationDate(institutionsBrowser.auditActions.get(institution.id))}" />
+                                    </p:column>
+
+                                    <p:column headerText="Última modificación">
+                                        <h:outputText value="#{institutionsBrowser.getLastUpgradeDate(institutionsBrowser.auditActions.get(institution.id))}" />
+                                    </p:column>
+
+                                    <p:column headerText="Usuario que modifica">
+                                        <h:outputText value="#{institutionsBrowser.getLastUpgradeUser(institutionsBrowser.auditActions.get(institution.id))}" />
+                                    </p:column>
+
+                                    <p:column exportable="false" headerText="Acción">
+                                        <div style="text-align: center;">
+
+                                            <p:commandLink action="#{institutionsBrowser.setSelectedInstitution(institution)}" update=":form:institution-detail" oncomplete="PF('institutionDialog').show()"
+                                                           title="Ver" process="@this" style="padding: 5px">
+                                                <i class="fa fa-eye fa-lg"/>
+                                            </p:commandLink>
+
+                                            <p:link outcome="/views/institutions/institutionEdit" title="Editar" style="padding: 5px">
+                                                <i class="fa fa-edit fa-lg"/>
+                                                <f:param name="idInstitution" value="#{institution.id}" />
+                                            </p:link>
+
+                                        </div>
+                                    </p:column>
+
+                                </p:dataTable>
+
+
+                                <p:dialog height="300" width="500" header="Detalles del Establecimiento" widgetVar="institutionDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="true" responsive="true">
+
+                                    <h:panelGroup layout="block" id="institution-detail" styleClass="Container100">
+
+                                        <p:panelGrid columns="2" styleClass="Wid100" rendered="#{institutionsBrowser.selectedInstitution != null}">
+                                            <f:facet name="header">
+                                                Información General
+                                            </f:facet>
+
+                                            <h:outputText value="Nombre" style="font-weight: bold"/>
+                                            <h:outputText value="#{institutionsBrowser.selectedInstitution.name}"/>
+
+                                            <h:outputText value="Código" style="font-weight: bold"/>
+                                            <h:outputText value="#{institutionsBrowser.selectedInstitution.code}"/>
+
+                                            <h:outputText value="Estado" style="font-weight: bold"/>
+                                            <h:outputText value="Vigente" rendered="#{institution.validityUntil != null}" />
+                                            <h:outputText value="No vigente" rendered="#{institution.validityUntil == null}" />
+
+                                        </p:panelGrid>
+
+                                    </h:panelGroup>
+                                </p:dialog>
+
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

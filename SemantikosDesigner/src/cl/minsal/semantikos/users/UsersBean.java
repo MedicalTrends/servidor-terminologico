@@ -145,8 +145,6 @@ public class UsersBean {
 
     private void updateAvailableProfiles(User selectedUser) {
 
-
-
         selectedUserProfileModel.setTarget(selectedUser.getProfiles());
 
         List<Profile> availableProfiles = new ArrayList<Profile>();

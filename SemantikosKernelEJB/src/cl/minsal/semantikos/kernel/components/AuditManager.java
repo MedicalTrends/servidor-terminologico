@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.audit.AuditActionType;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
+import cl.minsal.semantikos.model.audit.InstitutionAuditAction;
 import cl.minsal.semantikos.model.audit.UserAuditAction;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
@@ -314,6 +315,34 @@ public interface AuditManager {
 
 
     /**
+     * API Para Objeto auditable Institution
+     */
+
+    /**
+     * Este método es responsable de registrar en el log de auditoría la creación del establecimiento, por el usuario.
+     *
+     * @param institution        El establecimiento que se creo.
+     * @param user        El usuario que creó el establecimiento.
+     */
+    public void recordInstitutionCreation(Institution institution, User user);
+
+    /**
+     * Este método es responsable de registrar en el log de auditoría la actualización del establecimiento, por el usuario.
+     *
+     * @param institution         El establecimiento que se actualizo.
+     * @param user        El usuario que actualizo el establecimiento.
+     */
+    public void recordInstitutiuonUpgrade(Institution institution, User user);
+
+    /**
+     * Este método es responsable de registrar en el log de auditoría la eliminacion de un establecimiento
+     *
+     * @param institution          El establecimiento al cual se elimina
+     * @param user         El usuario que hace la eliminacion
+     */
+    public void recordInstitutionDelete(Institution institution, User user);
+
+    /**
      * Este método es responsable de obtener y agrupar en una lista todos los tipos de cambios existentes.
      *
      * @return Una <code>List</code> con los tipos de cambio.
@@ -342,6 +371,17 @@ public interface AuditManager {
      * <code>conceptSMTK</code>
      */
     public List<UserAuditAction> getUserAuditActions(User user);
+
+    /**
+     * Este método es responsable de recuperar y retornar en una lista los últimos <code>numberOfChanges</code> cambios
+     * que ha tenido un establecimiento.
+     *
+     * @param institution     El establecimiento cuyos cambios se desean recuperar.
+     *
+     * @return Una lista con los últimos <code>numberOfChanges</code> realizados sobre el establecimiento
+     * <code>Institution</code>
+     */
+    public List<InstitutionAuditAction> getInstitutionAuditActions(Institution institution);
 
     /**
      * Este método es responsable de recuperar y retornar en una lista los últimos <code>numberOfChanges</code> cambios

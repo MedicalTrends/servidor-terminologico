@@ -2,11 +2,8 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.AuditDAO;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.audit.AuditActionType;
-import cl.minsal.semantikos.model.audit.ConceptAuditAction;
-import cl.minsal.semantikos.model.audit.RefSetAuditAction;
+import cl.minsal.semantikos.model.audit.*;
 import cl.minsal.semantikos.kernel.businessrules.HistoryRecordBL;
-import cl.minsal.semantikos.model.audit.UserAuditAction;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
@@ -345,6 +342,32 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    public void recordInstitutionCreation(Institution institution, User user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        InstitutionAuditAction institutionAuditAction = new InstitutionAuditAction(institution, INSTITUTION_CREATION, now(), user, institution);
+
+        auditDAO.recordAuditAction(institutionAuditAction);
+    }
+
+    @Override
+    public void recordInstitutionDelete(Institution institution, User user) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        InstitutionAuditAction institutionAuditAction = new InstitutionAuditAction(institution, INSTITUTION_DELETE, now(), user, institution);
+
+        auditDAO.recordAuditAction(institutionAuditAction);
+    }
+
+    @Override
+    public void recordInstitutiuonUpgrade(Institution institution, User user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        InstitutionAuditAction institutionAuditAction = new InstitutionAuditAction(institution, INSTITUTION_ATTRIBUTE_CHANGE, now(), user, institution);
+
+        auditDAO.recordAuditAction(institutionAuditAction);
+    }
+
+    @Override
     public List<AuditActionType> getAllAuditActionTypes() {
         return Arrays.asList(AuditActionType.values());
     }
@@ -357,6 +380,11 @@ public class AuditManagerImpl implements AuditManager {
     @Override
     public List<UserAuditAction> getUserAuditActions(User user) {
         return auditDAO.getUserAuditActions(user);
+    }
+
+    @Override
+    public List<InstitutionAuditAction> getInstitutionAuditActions(Institution institution) {
+        return auditDAO.getInstitutionAuditActions(institution);
     }
 
     @Override

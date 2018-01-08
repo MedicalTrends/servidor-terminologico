@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.factories.AuditableEntityFactory;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.audit.*;
 import cl.minsal.semantikos.model.users.UserFactory;
@@ -35,6 +36,9 @@ public class AuditDAOImpl implements AuditDAO {
 
     @EJB
     AuthDAO userDAO;
+
+    @EJB
+    InstitutionDAO institutionDAO;
 
     @EJB
     AuditableEntityFactory auditableEntityFactory;
@@ -97,6 +101,39 @@ public class AuditDAOImpl implements AuditDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             auditActions = createAuditActionsFromResultSet(rs, user);
+
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "No se pudo parsear el JSON a BasicTypeDefinition.";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return auditActions;
+    }
+
+    @Override
+    public List<InstitutionAuditAction> getInstitutionAuditActions(Institution institution) {
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_audit.get_institution_audit_actions(?); end;";
+
+        List<InstitutionAuditAction> auditActions = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            /* Se invoca la consulta para recuperar las relaciones */
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, institution.getId());
+            call.execute();
+
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            auditActions = createAuditActionsFromResultSet(rs, institution);
 
             rs.close();
 
@@ -259,6 +296,56 @@ public class AuditDAOImpl implements AuditDAO {
 
     }
 
+    public void recordAuditAction(InstitutionAuditAction institutionAuditAction){
+        logger.debug("Registrando información de Auditoría: " + institutionAuditAction);
+        //ConnectionBD connect = new ConnectionBD();
+        /*
+         * param 1: La fecha en que se realiza (Timestamp).
+         * param 2: El usuario que realiza la acción (id_user).
+         * param 3: concepto en el que se realiza la acción.
+         * param 4: El tipo de acción que realiza
+         * param 5: La entidad en la que se realizó la acción..
+         */
+        //TODO arreglar esto
+        String sql = "begin ? := stk.stk_pck_audit.create_institution_audit_actions(?,?,?,?,?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            /* Se invoca la consulta para recuperar las relaciones */
+            Timestamp actionDate = institutionAuditAction.getActionDate();
+            User user = institutionAuditAction.getUser();
+            AuditActionType auditActionType = institutionAuditAction.getAuditActionType();
+            AuditableEntity auditableEntity = institutionAuditAction.getAuditableEntity();
+            AuditableEntity subjectUser = institutionAuditAction.getBaseEntity();
+
+            call.registerOutParameter (1, OracleTypes.NUMERIC);
+            call.setTimestamp(2, actionDate);
+            call.setLong(3, user.getId());
+            call.setLong(4, subjectUser.getId());
+            call.setLong(5, auditActionType.getId());
+            call.setLong(6, auditableEntity.getId());
+            call.execute();
+
+            //ResultSet rs = (ResultSet) call.getObject(1);
+
+            if (call.getLong(1) > 0) {
+                call.getLong(1);
+            } else {
+                String errorMsg = "La información de auditoría del establecimiento no fue creada por una razón desconocida. Alertar al area de desarrollo" +
+                        " sobre esto";
+                logger.error(errorMsg);
+                throw new EJBException(errorMsg);
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al registrar en el log.";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+    }
+
     /**
      * Este método es responsable de crear un arreglo de objetos de auditoría a partir de una expresión JSON de la
      * forma:
@@ -331,6 +418,43 @@ public class AuditDAOImpl implements AuditDAO {
         }
 
         return userAuditActions;
+    }
+
+    /**
+     * Este método es responsable de crear un arreglo de objetos de auditoría a partir de una expresión JSON de la
+     * forma:
+     *
+     * @param rs La expresión JSON a partir de la cual se crean los elementos de auditoría.
+     *
+     * @return Una lista de objetos auditables.
+     */
+    public List<InstitutionAuditAction> createAuditActionsFromResultSet(ResultSet rs, Institution institution) {
+
+        List<InstitutionAuditAction> institutionAuditActions = new ArrayList<>();
+
+        try {
+
+            while(rs.next()) {
+
+                if(institution == null) {
+                    institution = institutionDAO.getInstitutionById(rs.getLong("id_institution"));
+                }
+
+                AuditActionType auditActionType = AuditActionType.valueOf(rs.getLong("id_action_type"));
+                //User user = userDAO.getUserById(rs.getLong("id_user"));
+                User user = UserFactory.getInstance().findUserById(rs.getLong("id_user"));
+                AuditableEntityType auditableEntityType = AuditableEntityType.valueOf(rs.getLong("id_audit_entity_type"));
+                AuditableEntity auditableEntityByID = auditableEntityFactory.findAuditableEntityByID(rs.getLong("id_auditable_entity"), auditableEntityType);
+                Timestamp date = rs.getTimestamp("date");
+
+                InstitutionAuditAction institutionAuditAction = new InstitutionAuditAction(institution, auditActionType, date, user, auditableEntityByID);
+                institutionAuditActions.add(institutionAuditAction);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return institutionAuditActions;
     }
 
 }

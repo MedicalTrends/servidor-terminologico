@@ -2,6 +2,8 @@ package cl.minsal.semantikos.users;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.UserManager;
+import cl.minsal.semantikos.model.audit.ConceptAuditAction;
+import cl.minsal.semantikos.model.audit.InstitutionAuditAction;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
@@ -15,6 +17,8 @@ import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
+
+import static cl.minsal.semantikos.model.audit.AuditActionType.*;
 
 /**
  * Created by BluePrints Developer on 14-07-2016.
@@ -39,7 +43,7 @@ public class UsersBroswerBean {
 
     //Inicializacion del Bean
     @PostConstruct
-    protected void initialize() throws ParseException {
+    protected void initialize() {
     }
 
     public void newUser() {
@@ -89,9 +93,6 @@ public class UsersBroswerBean {
 
     }
 
-    public void unlockUser(){
-        userManager.unlockUser(selectedUser.getUsername());
-    }
 
 
 }

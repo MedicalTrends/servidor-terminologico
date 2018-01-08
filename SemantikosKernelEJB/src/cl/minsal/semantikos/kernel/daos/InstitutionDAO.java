@@ -22,12 +22,17 @@ public interface InstitutionDAO {
 
     public Institution getInstitutionById(long id);
 
+    public Institution getInstitutionByCode(long code);
+
     /**
      * Método encargado de obtener una lista con todas las instituciones
      * @return Lista de instituciones
      */
     public List<Institution> getAllInstitution();
 
+    public void createInstitution(Institution institution);
+
+    public void updateInstitution(Institution institution);
 
     public void bindInstitutionToUser(User user, Institution institution);
 

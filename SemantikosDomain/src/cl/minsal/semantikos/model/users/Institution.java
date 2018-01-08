@@ -4,6 +4,7 @@ import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,34 @@ public class Institution extends PersistentEntity implements Serializable, Audit
     /** El nombre de la institución */
     private String name;
 
+    /**
+     * El código del establecimiento
+     */
+    private Long code;
+
+    /**
+     * Fecha hasta la cuál es vigente el establecimiento
+     */
+    private Timestamp validityUntil;
+
+    public Institution(String name, Long code) {
+        this.name = name;
+        this.code = code;
+    }
+
+    public Institution(long id, String name, Long code) {
+        super(id);
+        this.name = name;
+        this.code = code;
+    }
+
+    public Institution(Institution institution) {
+        super(institution.getId());
+        setCode(institution.getId());
+        setName(institution.getName());
+        setValidityUntil(institution.getValidityUntil());
+    }
+
     public Institution() {
         this.administrators = new ArrayList<>();
     }
@@ -34,6 +63,22 @@ public class Institution extends PersistentEntity implements Serializable, Audit
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getCode() {
+        return code;
+    }
+
+    public void setCode(Long code) {
+        this.code = code;
+    }
+
+    public Timestamp getValidityUntil() {
+        return validityUntil;
+    }
+
+    public void setValidityUntil(Timestamp validityUntil) {
+        this.validityUntil = validityUntil;
     }
 
     @Override

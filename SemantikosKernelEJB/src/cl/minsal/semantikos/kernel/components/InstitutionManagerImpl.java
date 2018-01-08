@@ -1,11 +1,15 @@
 package cl.minsal.semantikos.kernel.components;
 
+import cl.minsal.semantikos.kernel.businessrules.InstitutionCreationBR;
+import cl.minsal.semantikos.kernel.businessrules.UserCreationBR;
 import cl.minsal.semantikos.kernel.daos.InstitutionDAO;
+import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
 import java.util.List;
@@ -22,6 +26,9 @@ public class InstitutionManagerImpl implements InstitutionManager {
     @EJB
     private AuditManager auditManager;
 
+    @EJB
+    InstitutionCreationBR institutionCreationBR;
+
     @Override
     public List<Institution> getInstitutionsBy(User user) {
         return institutionDAO.getInstitutionBy(user);
@@ -33,8 +40,56 @@ public class InstitutionManagerImpl implements InstitutionManager {
     }
 
     @Override
+    public Institution getInstitutionByCode(long code) {
+        return institutionDAO.getInstitutionByCode(code);
+    }
+
+    @Override
     public List<Institution> getAllInstitution() {
         return institutionDAO.getAllInstitution();
+    }
+
+    public long createInstitution(Institution institution, User user) throws BusinessRuleException {
+
+        /* Se validan las pre-condiciones para crear un usuario */
+        try {
+            institutionCreationBR.verifyPreConditions(institution);
+
+            /* Se persisten los atributos basicos del usuario*/
+            institutionDAO.createInstitution(institution);
+            /* Se deja registro en la auditoría */
+            auditManager.recordInstitutionCreation(institution, user);
+
+            return institution.getId();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Override
+    public void update(Institution originalInstitution, Institution updatedInstitution, User user) {
+
+        boolean change = false;
+
+        /* Primero de actualizan los campos propios del concepto */
+        if(!originalInstitution.equals(updatedInstitution)) {
+            /* Se actualiza con el DAO */
+            institutionDAO.updateInstitution(updatedInstitution);
+
+            auditManager.recordInstitutiuonUpgrade(updatedInstitution, user);
+            change = true;
+        }
+
+        if(!change) {
+            throw new EJBException("No es posible actualizar un establecimiento con una instancia idéntica!!");
+        }
+
+    }
+
+    @Override
+    public void deleteInstitution(Institution institution, User user) {
+
     }
 
     @Override
