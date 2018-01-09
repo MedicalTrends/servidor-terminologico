@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.audit.InstitutionAuditAction;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
+import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,11 +40,11 @@ public class UsersBroswerBean {
 
     List<User> filteredUsers;
 
-    List<Profile> allProfiles;
-
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() {
+        RequestContext reqCtx = RequestContext.getCurrentInstance();
+        reqCtx.execute("PF('usersTable').filter();");
     }
 
     public void newUser() {
@@ -92,7 +93,6 @@ public class UsersBroswerBean {
         return userManager.getProfileById(profileId);
 
     }
-
 
 
 }

@@ -25,6 +25,7 @@
                                 <p:growl id="globalMessage" showDetail="true" autoUpdate="true" showSummary="true"/>
 
                                 <p:dataTable id="singleDT" var="user" value="#{usersBrowser.allUsers}" rowKey="#{user.id}" styleClass="users"
+                                             sortBy="#{user.email}"
                                              widgetVar="usersTable" rows="30" paginator="true" emptyMessage="No hay usuarios en la Base de Datos" reflow="true"
                                              filteredValue="#{usersBrowser.filteredUsers}"
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}">
@@ -37,24 +38,38 @@
                                         </p:commandButton>
                                     </f:facet>
 
-                                    <p:column headerText="Email" sortBy="#{user.email}">
+                                    <p:column headerText="Email" filterBy="#{user.email}" filterMatchMode="contains" sortBy="#{user.email}">
                                         <h:outputText value="#{user.email}" />
                                     </p:column>
 
-                                    <p:column headerText="N° Documento" sortBy="#{user.documentNumber}">
+                                    <p:column headerText="N° Documento" filterBy="#{user.documentNumber}" filterMatchMode="contains" sortBy="#{user.documentNumber}">
                                         <h:outputText value="#{user.documentNumber}" />
                                     </p:column>
 
-                                    <p:column headerText="Nombre" sortBy="#{user.name} #{user.lastName} #{user.secondLastName}">
+                                    <p:column headerText="Nombre" filterBy="#{user.name} #{user.lastName} #{user.secondLastName}" filterMatchMode="contains" sortBy="#{user.name} #{user.lastName} #{user.secondLastName}">
                                         <h:outputText value="#{user.name} #{user.lastName} #{user.secondLastName}" />
                                     </p:column>
 
-                                    <p:column headerText="Acceso" sortBy="#{user.locked}">
+                                    <p:column headerText="Acceso" filterBy="#{user.locked}" filterMatchMode="exact" sortBy="#{user.locked}">
+                                        <f:facet name="filter">
+                                            <p:selectOneMenu onchange="PF('usersTable').filter()">
+                                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                                <f:selectItem itemLabel="Bloqueados" itemValue="#{true}" />
+                                                <f:selectItem itemLabel="Desbloqueados" itemValue="#{false}" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
                                         <h:outputText value="Desbloqueado" rendered="#{not user.locked}" />
                                         <h:outputText value="Bloqueado" rendered="#{user.locked}" />
                                     </p:column>
 
-                                    <p:column headerText="Estado" sortBy="#{user.valid}">
+                                    <p:column headerText="Estado" filterBy="#{user.valid}" filterMatchMode="exact" sortBy="#{user.valid}">
+                                        <f:facet name="filter">
+                                            <p:selectOneMenu onchange="PF('usersTable').filter()" value="true">
+                                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                                <f:selectItem itemLabel="Vigentes" itemValue="#{true}" />
+                                                <f:selectItem itemLabel="No Vigentes" itemValue="#{false}" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
                                         <h:outputText value="Vigente" rendered="#{user.valid}" />
                                         <h:outputText value="No vigente" rendered="#{not user.valid}" />
                                     </p:column>

@@ -16,18 +16,20 @@ import java.util.List;
  * @author Andrés Farías on 12/13/16.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "GS1ByConceptID", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "GS1ByConceptID", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "respuestaGTINPorConceptID", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "RespuestaGTINPorConceptID", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class GTINByConceptIDResponse implements Serializable {
 
-    @XmlElement(name="codeGS1")
-    private int codeGS1;
+    @XmlElement(name="conceptID")
+    private String conceptID;
     @XmlElement(name="descriptionPreferida")
     private String preferredTerm;
     @XmlElement(name="descriptionIDPreferida")
     private String preferredTermId;
     @XmlElement(name="nombreCategoria")
     private String categoryName;
+    @XmlElement(name="codeGTIN")
+    private int codeGTIN;
 
     public GTINByConceptIDResponse() { }
 
@@ -36,11 +38,20 @@ public class GTINByConceptIDResponse implements Serializable {
         List<Relationship> relationshipGS1 = conceptSMTK.getRelationshipsByRelationDefinition(relationshipDefinition);
         if(!relationshipGS1.isEmpty()) {
             BasicTypeValue codeGS1 = (BasicTypeValue) relationshipGS1.get(0).getTarget();
-            this.codeGS1 = (int) codeGS1.getValue();
+            this.codeGTIN = (int) codeGS1.getValue();
         }
+        this.conceptID = conceptSMTK.getConceptID();
         this.preferredTermId = conceptSMTK.getDescriptionFavorite().getDescriptionId();
         this.categoryName = conceptSMTK.getCategory().getName();
         this.preferredTerm = conceptSMTK.getDescriptionFavorite().getTerm();
+    }
+
+    public String getConceptID() {
+        return conceptID;
+    }
+
+    public void setConceptID(String conceptID) {
+        this.conceptID = conceptID;
     }
 
     public String getCategoryName() {
@@ -59,12 +70,12 @@ public class GTINByConceptIDResponse implements Serializable {
         this.preferredTerm = preferredTerm;
     }
 
-    public int getCodeGS1() {
-        return codeGS1;
+    public int getCodeGTIN() {
+        return codeGTIN;
     }
 
-    public void setCodeGS1(int codeGS1) {
-        this.codeGS1 = codeGS1;
+    public void setCodeGTIN(int codeGTIN) {
+        this.codeGTIN = codeGTIN;
     }
 
     public String getPreferredTermId() {
@@ -74,6 +85,5 @@ public class GTINByConceptIDResponse implements Serializable {
     public void setPreferredTermId(String preferredTermId) {
         this.preferredTermId = preferredTermId;
     }
-
 
 }

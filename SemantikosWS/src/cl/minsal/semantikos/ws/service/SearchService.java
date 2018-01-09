@@ -419,7 +419,7 @@ public class SearchService {
     @WebMethod(operationName = "conceptoPorIdDescripcion")
     public ConceptResponse conceptoPorIdDescripcion(
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
-            @WebParam(name = "peticionGS1PorConceptID")
+            @WebParam(name = "peticionConceptoPorIdDescripcion")
                     ConceptByDescriptionIDRequest request
     ) throws NotFoundFault {
         try {
@@ -446,7 +446,7 @@ public class SearchService {
 
     // REQ-WS-???
     @WebResult(name = "respuestaConceptIDPorGTIN")
-    @WebMethod(operationName = "ConceptIDPorGTIN")
+    @WebMethod(operationName = "conceptIDPorGTIN")
     public ConceptIDByGTINResponse conceptIDPorGTIN(
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
             @WebParam(name = "peticionGTINPorConceptID")

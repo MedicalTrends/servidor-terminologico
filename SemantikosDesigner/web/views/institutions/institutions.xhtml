@@ -25,7 +25,7 @@
                                 <p:growl id="globalMessage" showDetail="true" autoUpdate="true" showSummary="true"/>
 
                                 <p:dataTable id="singleDT" var="institution" value="#{institutionsBrowser.allInstitutions}" rowKey="#{institution.id}"
-                                             styleClass="institutions"
+                                             styleClass="institutions" sortBy="#{institution.code}"
                                              widgetVar="institutionsTable" rows="30" paginator="true" emptyMessage="No hay establecimientos en la Base de Datos" reflow="true"
                                              filteredValue="#{institutionsBrowser.filteredInstitutions}"
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}">
@@ -38,17 +38,24 @@
                                         </p:commandButton>
                                     </f:facet>
 
-                                    <p:column headerText="Código" sortBy="#{institution.code}">
+                                    <p:column headerText="Código" filterBy="#{institution.code}" filterMatchMode="contains" sortBy="#{institution.code}">
                                         <h:outputText value="#{institution.code}" />
                                     </p:column>
 
-                                    <p:column headerText="Establecimiento" sortBy="#{institution.name}">
+                                    <p:column headerText="Establecimiento" filterBy="#{institution.name}" filterMatchMode="contains" sortBy="#{institution.name}">
                                         <h:outputText value="#{institution.name}" />
                                     </p:column>
 
-                                    <p:column headerText="Estado" sortBy="#{institution.validityUntil eq null}">
-                                        <h:outputText value="Vigente" rendered="#{institution.validityUntil != null}" />
-                                        <h:outputText value="No vigente" rendered="#{institution.validityUntil == null}" />
+                                    <p:column headerText="Estado" filterBy="#{institution.validityUntil eq null}" filterMatchMode="exact" sortBy="#{institution.validityUntil eq null}">
+                                        <f:facet name="filter">
+                                            <p:selectOneMenu onchange="PF('institutionsTable').filter()">
+                                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                                <f:selectItem itemLabel="Vigentes" itemValue="#{true}" />
+                                                <f:selectItem itemLabel="No Vigentes" itemValue="#{false}" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                        <h:outputText value="Vigente" rendered="#{institution.validityUntil == null}" />
+                                        <h:outputText value="No vigente" rendered="#{institution.validityUntil != null}" />
                                     </p:column>
 
                                     <p:column headerText="Fecha ingreso">
@@ -98,10 +105,34 @@
                                             <h:outputText value="#{institutionsBrowser.selectedInstitution.code}"/>
 
                                             <h:outputText value="Estado" style="font-weight: bold"/>
-                                            <h:outputText value="Vigente" rendered="#{institution.validityUntil != null}" />
-                                            <h:outputText value="No vigente" rendered="#{institution.validityUntil == null}" />
+                                            <h:outputText value="Vigente" rendered="#{institution.validityUntil == null}" />
+                                            <h:outputText value="No vigente" rendered="#{institution.validityUntil != null}" />
 
                                         </p:panelGrid>
+
+                                        <p:dataTable id="audits"
+                                                     var="audit"
+                                                     value="#{institutionsBrowser.auditActions.get(institutionsBrowser.selectedInstitution.id)}"
+                                                     emptyMessage="Usuario no tiene Perfiles asignados"
+                                                     reflow="true">
+                                            <p:columnGroup type="header">
+                                                <p:row>
+                                                    <p:column colspan="4" headerText="Historial"/>
+                                                </p:row>
+                                            </p:columnGroup>
+                                            <p:column headerText="Fecha">
+                                                <h:outputText value="#{audit.actionDateFormat}"/>
+                                            </p:column>
+                                            <p:column headerText="Tipo de cambio">
+                                                <h:outputText value="#{audit.auditActionType.name}"/>
+                                            </p:column>
+                                            <p:column headerText="Detalle">
+                                                <h:outputText value="#{audit.detailAuditAction()}"/>
+                                            </p:column>
+                                            <p:column headerText="Usuario">
+                                                <h:outputText value="#{audit.user.email}"/>
+                                            </p:column>
+                                        </p:dataTable>
 
                                     </h:panelGroup>
                                 </p:dialog>

@@ -18,10 +18,9 @@
         <p:panel id="refsetsAdmin">
             <h:form id="formRefset">
 
-                <p:growl id="msg" showDetail="true" autoUpdate="true"></p:growl>
+                <p:growl id="msg" showDetail="true" autoUpdate="true"/>
 
                 <p:tabView>
-
 
                     <!--Pestaña crear RefSet-->
                     <p:tab title="Crear RefSet">
@@ -43,8 +42,8 @@
                                                   noSelectionOption="true"/>
                                     <f:selectItems value="#{refsetsBean.authenticationBean.loggedUser.institutions}"
                                                    var="institution" itemValue="#{institution}"
-                                                   itemLabel="#{institution.name}"></f:selectItems>
-                                    <p:column><h:outputText value="#{i.name}"></h:outputText></p:column>
+                                                   itemLabel="#{institution.name}"/>
+                                    <p:column><h:outputText value="#{i.name}"/></p:column>
                                 </p:selectOneMenu>
                             </div>
                         </div>

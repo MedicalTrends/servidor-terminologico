@@ -1012,7 +1012,9 @@ public class ConceptController {
         }
 
         for (Relationship relationship : relationshipManager.findRelationshipsLike(relationshipDefinition, GS1)) {
-            res = new ConceptIDByGTINResponse(relationship.getSourceConcept());
+            ConceptSMTK conceptSMTK = relationship.getSourceConcept();
+            conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
+            res = new ConceptIDByGTINResponse(conceptSMTK);
         }
 
         return res;

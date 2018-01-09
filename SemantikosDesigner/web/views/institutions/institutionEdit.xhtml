@@ -44,6 +44,10 @@
                                              disabled="#{ institutions.selectedInstitution.validityUntil != null or institutions.selectedInstitution.persistent }">
                                 </p:inputText>
 
+                                <p:outputPanel />
+
+                                <p:outputPanel />
+
                                 <p:outputLabel for="input-institution-name" value="Nombre *" styleClass="#{users.nameError} Wid20"  />
 
                                 <p:inputText id="input-institution-name" value="#{institutions.selectedInstitution.name}" styleClass="#{institutions.nameError} Wid90" autocomplete="off"

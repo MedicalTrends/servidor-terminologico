@@ -1,20 +1,27 @@
 package cl.minsal.semantikos.modelws.response;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Andrés Farías on 12/13/16.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "conceptIDByGS1", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "ConceptIDByGS1", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "respuestaConceptIDPorGTIN", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "RespuestaConceptIDPorGTIN", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class ConceptIDByGTINResponse implements Serializable {
 
+    @XmlElement(name="codeGTIN")
+    private int codeGTIN;
     @XmlElement(name="conceptID")
     private String conceptId;
     @XmlElement(name="descriptionPreferida")
@@ -27,6 +34,12 @@ public class ConceptIDByGTINResponse implements Serializable {
     public ConceptIDByGTINResponse() { }
 
     public ConceptIDByGTINResponse(@NotNull ConceptSMTK conceptSMTK) {
+        RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.GTINGS1).get(0);
+        List<Relationship> relationshipGS1 = conceptSMTK.getRelationshipsByRelationDefinition(relationshipDefinition);
+        if(!relationshipGS1.isEmpty()) {
+            BasicTypeValue codeGS1 = (BasicTypeValue) relationshipGS1.get(0).getTarget();
+            this.codeGTIN = (int) codeGS1.getValue();
+        }
         this.conceptId = conceptSMTK.getConceptID();
         this.categoryName = conceptSMTK.getCategory().getName();
         this.preferredTerm = conceptSMTK.getDescriptionFavorite().getTerm();
@@ -63,5 +76,13 @@ public class ConceptIDByGTINResponse implements Serializable {
 
     public void setPreferredTermId(String preferredTermId) {
         this.preferredTermId = preferredTermId;
+    }
+
+    public int getCodeGTIN() {
+        return codeGTIN;
+    }
+
+    public void setCodeGTIN(int codeGTIN) {
+        this.codeGTIN = codeGTIN;
     }
 }
