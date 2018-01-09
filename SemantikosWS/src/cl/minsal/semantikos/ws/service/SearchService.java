@@ -430,30 +430,30 @@ public class SearchService {
     }
 
     // REQ-WS-???
-    @WebResult(name = "respuestaGS1PorConceptID")
-    @WebMethod(operationName = "GS1PorConceptID")
-    public GS1ByConceptIDResponse gs1PorConceptID(
+    @WebResult(name = "respuestaGTINPorConceptID")
+    @WebMethod(operationName = "GTINPorConceptID")
+    public GTINByConceptIDResponse GTINPorConceptID(
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
-            @WebParam(name = "peticionGS1PorConceptID")
-                    GS1ByConceptIDRequest request
+            @WebParam(name = "peticionGTINPorConceptID")
+                    GTINByConceptIDRequest request
     ) throws NotFoundFault {
         try {
-            return this.conceptController.searchGS1ByConceptID(request);
+            return this.conceptController.searchGTINByConceptID(request);
         } catch (Exception e) {
             throw new NotFoundFault(e.getMessage());
         }
     }
 
     // REQ-WS-???
-    @WebResult(name = "respuestaConceptIDPorGS1")
-    @WebMethod(operationName = "ConceptIDPorGS1")
-    public ConceptIDByGS1Response conceptIDPorGS1(
+    @WebResult(name = "respuestaConceptIDPorGTIN")
+    @WebMethod(operationName = "ConceptIDPorGTIN")
+    public ConceptIDByGTINResponse conceptIDPorGTIN(
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
-            @WebParam(name = "peticionGS1PorConceptID")
-                    ConceptIDByGS1Request request
+            @WebParam(name = "peticionGTINPorConceptID")
+                    ConceptIDByGTINRequest request
     ) throws NotFoundFault {
         try {
-            return this.conceptController.searchConceptIDByGS1(request);
+            return this.conceptController.searchConceptIDByGTIN(request);
         } catch (Exception e) {
             throw new NotFoundFault(e.getMessage());
         }

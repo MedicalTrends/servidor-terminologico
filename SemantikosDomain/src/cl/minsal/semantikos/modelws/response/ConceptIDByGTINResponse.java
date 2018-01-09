@@ -13,7 +13,7 @@ import java.io.Serializable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "conceptIDByGS1", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "ConceptIDByGS1", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class ConceptIDByGS1Response implements Serializable {
+public class ConceptIDByGTINResponse implements Serializable {
 
     @XmlElement(name="conceptID")
     private String conceptId;
@@ -24,9 +24,9 @@ public class ConceptIDByGS1Response implements Serializable {
     @XmlElement(name="nombreCategoria")
     private String categoryName;
 
-    public ConceptIDByGS1Response() { }
+    public ConceptIDByGTINResponse() { }
 
-    public ConceptIDByGS1Response(@NotNull ConceptSMTK conceptSMTK) {
+    public ConceptIDByGTINResponse(@NotNull ConceptSMTK conceptSMTK) {
         this.conceptId = conceptSMTK.getConceptID();
         this.categoryName = conceptSMTK.getCategory().getName();
         this.preferredTerm = conceptSMTK.getDescriptionFavorite().getTerm();

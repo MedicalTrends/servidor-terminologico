@@ -8,9 +8,9 @@ import java.io.Serializable;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "peticionGS1PorConceptID", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "PeticionGS1PorConceptID", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class GS1ByConceptIDRequest extends Request implements Serializable {
+@XmlRootElement(name = "peticionGTINPorConceptID", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "PeticionGTINPorConceptID", namespace = "http://service.ws.semantikos.minsal.cl/")
+public class GTINByConceptIDRequest extends Request implements Serializable {
 
     @XmlElement(required = true, name = "conceptID")
     private String conceptID;

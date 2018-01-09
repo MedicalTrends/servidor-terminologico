@@ -18,7 +18,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "GS1ByConceptID", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "GS1ByConceptID", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class GS1ByConceptIDResponse implements Serializable {
+public class GTINByConceptIDResponse implements Serializable {
 
     @XmlElement(name="codeGS1")
     private int codeGS1;
@@ -29,9 +29,9 @@ public class GS1ByConceptIDResponse implements Serializable {
     @XmlElement(name="nombreCategoria")
     private String categoryName;
 
-    public GS1ByConceptIDResponse() { }
+    public GTINByConceptIDResponse() { }
 
-    public GS1ByConceptIDResponse(@NotNull ConceptSMTK conceptSMTK) {
+    public GTINByConceptIDResponse(@NotNull ConceptSMTK conceptSMTK) {
         RelationshipDefinition relationshipDefinition = conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.GTINGS1).get(0);
         List<Relationship> relationshipGS1 = conceptSMTK.getRelationshipsByRelationDefinition(relationshipDefinition);
         if(!relationshipGS1.isEmpty()) {

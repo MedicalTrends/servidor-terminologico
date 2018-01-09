@@ -12,12 +12,11 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
-import cl.minsal.semantikos.model.relationships.TargetType;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.modelws.request.ConceptIDByGS1Request;
+import cl.minsal.semantikos.modelws.request.ConceptIDByGTINRequest;
 import cl.minsal.semantikos.modelws.request.DescriptionIDorConceptIDRequest;
-import cl.minsal.semantikos.modelws.request.GS1ByConceptIDRequest;
+import cl.minsal.semantikos.modelws.request.GTINByConceptIDRequest;
 import cl.minsal.semantikos.modelws.request.NewTermRequest;
 import cl.minsal.semantikos.modelws.response.*;
 import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
@@ -36,7 +35,6 @@ import java.util.concurrent.ExecutionException;
 
 import static cl.minsal.semantikos.kernel.daos.ConceptDAOImpl.NO_VALID_CONCEPT;
 import static cl.minsal.semantikos.kernel.daos.ConceptDAOImpl.PENDING_CONCEPT;
-import static cl.minsal.semantikos.kernel.daos.DescriptionDAOImpl.NO_VALID_TERMS;
 
 /**
  * @author Alfonso Cornejo on 2016-11-17.
@@ -968,7 +966,7 @@ public class ConceptController {
      * @param request Nombres de las categorías en las que se desea realizar la búsqueda.
      * @return La lista de Conceptos Light que satisfacen la búsqueda.
      */
-    public GS1ByConceptIDResponse searchGS1ByConceptID(GS1ByConceptIDRequest request) throws NotFoundFault, IllegalInputFault {
+    public GTINByConceptIDResponse searchGTINByConceptID(GTINByConceptIDRequest request) throws NotFoundFault, IllegalInputFault {
 
         if ((request.getConceptID() == null || "".equals(request.getConceptID()))
                 && (request.getDescriptionID() == null || "".equals(request.getDescriptionID()))) {
@@ -981,12 +979,12 @@ public class ConceptController {
 
         //Si la categoría no tiene la definición de atributo GS1
         if(conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.GTINGS1).isEmpty()) {
-            throw new NotFoundFault("El concepto: "+ conceptSMTK +" perteneciente a categoría: "+conceptSMTK.getCategory()+" no tiene la definición de atributo GS1");
+            throw new NotFoundFault("El concepto: "+ conceptSMTK +" perteneciente a categoría: "+conceptSMTK.getCategory()+" no tiene la definición de atributo GTIN");
         }
 
         //Si esta ok, construir respuesta
 
-        GS1ByConceptIDResponse res = new GS1ByConceptIDResponse(conceptSMTK);
+        GTINByConceptIDResponse res = new GTINByConceptIDResponse(conceptSMTK);
 
         return res;
     }
@@ -994,18 +992,18 @@ public class ConceptController {
     /**
      * Este método es responsable de recuperar todos los conceptos en las categorías indicadas.
      *
-     * @param conceptIDByGS1Request Nombres de las categorías en las que se desea realizar la búsqueda.
+     * @param conceptIDByGTINRequest Nombres de las categorías en las que se desea realizar la búsqueda.
      * @return La lista de Conceptos Light que satisfacen la búsqueda.
      */
-    public ConceptIDByGS1Response searchConceptIDByGS1(ConceptIDByGS1Request conceptIDByGS1Request) throws NotFoundFault {
+    public ConceptIDByGTINResponse searchConceptIDByGTIN(ConceptIDByGTINRequest conceptIDByGTINRequest) throws NotFoundFault {
 
-        BasicTypeValue GS1 = new BasicTypeValue(conceptIDByGS1Request.getGS1());
+        BasicTypeValue GS1 = new BasicTypeValue(conceptIDByGTINRequest.getGTIN());
 
         Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Producto Comercial con Envase");
 
         RelationshipDefinition relationshipDefinition = category.findRelationshipDefinitionsByName(TargetDefinition.GTINGS1).get(0);
 
-        ConceptIDByGS1Response res = null;
+        ConceptIDByGTINResponse res = null;
 
         List<Relationship> relationships = relationshipManager.findRelationshipsLike(relationshipDefinition, GS1);
 
@@ -1014,7 +1012,7 @@ public class ConceptController {
         }
 
         for (Relationship relationship : relationshipManager.findRelationshipsLike(relationshipDefinition, GS1)) {
-            res = new ConceptIDByGS1Response(relationship.getSourceConcept());
+            res = new ConceptIDByGTINResponse(relationship.getSourceConcept());
         }
 
         return res;
