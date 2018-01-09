@@ -133,6 +133,14 @@
     color: #2f8ee5 !important;
 }
 
+.ui-inputfield {
+    padding: 6px !important;
+}
+
+.ui-inputfield.ui-state-focus {
+    padding: 6px !important;
+}
+
 
 /*
 .ui-widget, .ui-widget .ui-widget
