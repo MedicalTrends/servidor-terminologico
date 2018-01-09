@@ -449,7 +449,7 @@ public class SearchService {
     @WebMethod(operationName = "conceptIDPorGTIN")
     public ConceptIDByGTINResponse conceptIDPorGTIN(
             @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
-            @WebParam(name = "peticionGTINPorConceptID")
+            @WebParam(name = "peticionConceptIDPorGTIN")
                     ConceptIDByGTINRequest request
     ) throws NotFoundFault {
         try {

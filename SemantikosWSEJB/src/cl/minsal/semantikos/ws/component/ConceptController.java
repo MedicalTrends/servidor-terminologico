@@ -992,12 +992,16 @@ public class ConceptController {
     /**
      * Este método es responsable de recuperar todos los conceptos en las categorías indicadas.
      *
-     * @param conceptIDByGTINRequest Nombres de las categorías en las que se desea realizar la búsqueda.
+     * @param request Nombres de las categorías en las que se desea realizar la búsqueda.
      * @return La lista de Conceptos Light que satisfacen la búsqueda.
      */
-    public ConceptIDByGTINResponse searchConceptIDByGTIN(ConceptIDByGTINRequest conceptIDByGTINRequest) throws NotFoundFault {
+    public ConceptIDByGTINResponse searchConceptIDByGTIN(ConceptIDByGTINRequest request) throws NotFoundFault, IllegalInputFault {
 
-        BasicTypeValue GS1 = new BasicTypeValue(conceptIDByGTINRequest.getGTIN());
+        if (request.getGTIN() == 0 || "".equals(request.getGTIN())) {
+            throw new IllegalInputFault("Debe indicar número GTIN");
+        }
+
+        BasicTypeValue GS1 = new BasicTypeValue(request.getGTIN());
 
         Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Producto Comercial con Envase");
 

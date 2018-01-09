@@ -124,4 +124,6 @@ public interface RefSetManager {
     public List<RefSet> findByConcept(ConceptSMTK conceptSMTK);
 
     List<RefSet> getRefsetByInstitution(Institution institution);
+
+    List<RefSet> getRefsetByUser(User user);
 }

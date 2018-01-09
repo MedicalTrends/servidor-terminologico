@@ -2,6 +2,9 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.businessrules.*;
 import cl.minsal.semantikos.kernel.daos.RefSetDAO;
+import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
+import cl.minsal.semantikos.model.users.Profile;
+import cl.minsal.semantikos.model.users.ProfileFactory;
 import cl.minsal.semantikos.util.StringUtils;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.refsets.RefSet;
@@ -144,7 +147,23 @@ public class RefSetManagerImpl implements RefSetManager {
         } else {
             return refsetDAO.getRefsetBy(institution);
         }
+    }
 
+    @Override
+    public List<RefSet> getRefsetByUser(User user) {
+
+        if(!user.getProfiles().contains(ProfileFactory.REFSET_ADMIN_PROFILE) &&
+           !user.getProfiles().contains(ProfileFactory.ADMINISTRATOR_PROFILE)) {
+            throw new BusinessRuleException("BR-UNK", "El usuario debe poseer los perfiles de administración necesarios para realizar esta acción");
+        }
+
+        List<RefSet> refsets = new ArrayList<>();
+
+        for (Institution institution : user.getInstitutions()) {
+            refsets.addAll(getRefsetByInstitution(institution));
+        }
+
+        return refsets;
     }
 
     @Override

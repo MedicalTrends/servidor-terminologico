@@ -99,6 +99,10 @@ public class RefSetsBean implements Serializable {
 
         categories = categoryManager.getCategories();
         refSetList = refSetManager.getAllRefSets();
+        /**
+         * solo administrarán los refset de su establecimiento/institución.
+         */
+        refSetList = refSetManager.getRefsetByUser(authenticationBean.getLoggedUser());
         refsetHistoryConcept = new HashMap<>();
         conceptBindToRefsetHistory = new HashMap<>();
         selectInstitutionMINSAL();
