@@ -119,19 +119,19 @@
     display: none !important;
 }
 
-.ui-paginator .ui-paginator-pages .ui-paginator-page {
+#browserForm .ui-paginator .ui-paginator-pages .ui-paginator-page {
     color: #3F51B5 !important;
 }
 
-.ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+#browserForm .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
     color: #FFFFFF !important;
 }
 
-.conceptTable .ui-widget-header {
+#browserForm .conceptTable .ui-widget-header {
     background: rgba(56, 73, 162, 0) !important;
 }
 
-.ui-paginator .ui-paginator-first, body .ui-paginator .ui-paginator-prev, body .ui-paginator .ui-paginator-next, body .ui-paginator .ui-paginator-last {
+#browserForm .ui-paginator .ui-paginator-first, body .ui-paginator .ui-paginator-prev, #browserForm .ui-paginator .ui-paginator-next, #browserForm .ui-paginator .ui-paginator-last {
     color: #3F51B5 !important;
 }
 

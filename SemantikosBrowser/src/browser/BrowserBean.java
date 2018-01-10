@@ -4,9 +4,13 @@ import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
+import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.queries.BrowserQuery;
+import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.model.tags.Tag;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.model.LazyDataModel;
@@ -96,6 +100,9 @@ public class BrowserBean implements Serializable {
 
     //@EJB
     private DescriptionManager descriptionManager = (DescriptionManager) ServiceLocator.getInstance().getService(DescriptionManager.class);
+
+    //@EJB
+    private RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);
 
     @PostConstruct
     protected void initialize() {
@@ -362,6 +369,14 @@ public class BrowserBean implements Serializable {
         this.descriptionManager = descriptionManager;
     }
 
+    public RelationshipManager getRelationshipManager() {
+        return relationshipManager;
+    }
+
+    public void setRelationshipManager(RelationshipManager relationshipManager) {
+        this.relationshipManager = relationshipManager;
+    }
+
     public Description getDescriptionSelected() {
         return descriptionSelected;
     }
@@ -372,8 +387,9 @@ public class BrowserBean implements Serializable {
 
     public List<Description> getOtherDescriptions(ConceptSMTK concept) {
 
-        if(concept == null)
+        if(concept == null) {
             return null;
+        }
 
         List<Description> otherDescriptions = new ArrayList<Description>();
 
@@ -383,6 +399,111 @@ public class BrowserBean implements Serializable {
         }
 
         return otherDescriptions;
+    }
+
+    public List<Relationship> getSnomedCTRelationships() {
+
+        if(conceptSelected == null) {
+            return null;
+        }
+
+        if(!conceptSelected.isRelationshipsLoaded()) {
+            conceptSelected.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSelected));
+        }
+
+        List<Relationship> snomedCTRelationships = new ArrayList<Relationship>();
+
+        for (SnomedCTRelationship relationship : conceptSelected.getRelationshipsSnomedCT()) {
+            snomedCTRelationships.add(relationship);
+        }
+
+        return snomedCTRelationships;
+    }
+
+    public List<Relationship> getSMTKRelationships() {
+
+        if(conceptSelected == null) {
+            return null;
+        }
+
+        if(!conceptSelected.isRelationshipsLoaded()) {
+            conceptSelected.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSelected));
+        }
+
+        List<Relationship> smtkRelationships = new ArrayList<Relationship>();
+
+        for (Relationship relationship : conceptSelected.getRelationships()) {
+            if(!relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType() &&
+                    !relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType() &&
+                    !relationship.getRelationshipDefinition().getTargetDefinition().isGMDNType() ) {
+                smtkRelationships.add(relationship);
+            }
+        }
+
+        return smtkRelationships;
+    }
+
+    public List<Relationship> getDirectCrossmapsRelationships() {
+
+        if(conceptSelected == null) {
+            return null;
+        }
+
+        if(!conceptSelected.isRelationshipsLoaded()) {
+            conceptSelected.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSelected));
+        }
+
+        List<Relationship> smtkRelationships = new ArrayList<Relationship>();
+
+        for (Relationship relationship : conceptSelected.getRelationships()) {
+            if(relationship instanceof DirectCrossmap) {
+                smtkRelationships.add(relationship);
+            }
+        }
+
+        return smtkRelationships;
+    }
+
+    public List<Relationship> getIndirectCrossmapsRelationships() {
+
+        if(conceptSelected == null) {
+            return null;
+        }
+
+        if(!conceptSelected.isRelationshipsLoaded()) {
+            conceptSelected.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSelected));
+        }
+
+        List<Relationship> smtkRelationships = new ArrayList<Relationship>();
+
+        for (Relationship relationship : conceptSelected.getRelationships()) {
+            if(relationship instanceof IndirectCrossmap) {
+                smtkRelationships.add(relationship);
+            }
+        }
+
+        return smtkRelationships;
+    }
+
+    public List<Relationship> getGMDNRelationships() {
+
+        if(conceptSelected == null) {
+            return null;
+        }
+
+        if(!conceptSelected.isRelationshipsLoaded()) {
+            conceptSelected.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSelected));
+        }
+
+        List<Relationship> gmdnRelationships = new ArrayList<Relationship>();
+
+        for (Relationship relationship : conceptSelected.getRelationships()) {
+            if(relationship.getRelationshipDefinition().getTargetDefinition().isGMDNType()) {
+                gmdnRelationships.add(relationship);
+            }
+        }
+
+        return gmdnRelationships;
     }
 
 }  
