@@ -25,9 +25,7 @@ import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 
-import cl.minsal.semantikos.model.users.Profile;
-import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.model.users.UserFactory;
+import cl.minsal.semantikos.model.users.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import oracle.jdbc.OracleTypes;
 import oracle.jdbc.driver.OracleConnection;
@@ -75,6 +73,9 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     private QueryDAO queryDAO;
 
     @EJB
+    private DescriptionDAO descriptionDAO;
+
+    @EJB
     private CategoryDAO categoryDAO;
 
     @EJB
@@ -89,6 +90,9 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     @EJB
     private AuthDAO authDAO;
 
+    @EJB
+    private CrossmapsDAO crossmapDAO;
+
     @Resource(lookup = "java:jboss/OracleDS")
     private DataSource dataSource;
 
@@ -102,6 +106,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         }
         //this.testArrayOracle();
         this.refreshColumns();
+        this.refreshInstitutions();
         this.refreshCategories();
         this.refreshCrossmapSets();
         this.refreshQueries();
@@ -364,107 +369,32 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     @Override
     public DescriptionTypeFactory refreshDescriptionTypes() {
 
-        //ConnectionBD connect = new ConnectionBD();
-
-        List<DescriptionType> descriptionTypes = new ArrayList<>();
-
-        String sql = "begin ? := stk.stk_pck_description.get_description_types; end;";
-
-        try (Connection connection = dataSource.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.execute();
-
-            //ResultSet rs = call.getResultSet();
-            ResultSet rs = (ResultSet) call.getObject(1);
-
-            /* Se recuperan los description types */
-            while (rs.next()) {
-                descriptionTypes.add(createDescriptionTypeFromResultSet(rs));
-            }
-
-            /* Se setea la lista de Tipos de descripción */
-            DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypes);
-
-        } catch (SQLException e) {
-            String errorMsg = "Error al intentar recuperar Description Types de la BDD.";
-            logger.error(errorMsg, e);
-            throw new EJBException(errorMsg, e);
-        }
-
+        List<DescriptionType> descriptionTypes = descriptionDAO.getDescriptionTypes();
+        DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypes);
         return DescriptionTypeFactory.getInstance();
     }
 
     @Override
     public CrossmapSetFactory refreshCrossmapSets() {
 
-        //ConnectionBD connect = new ConnectionBD();
-
-        List<CrossmapSet> crossmapSets = new ArrayList<>();
-
-        String sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsets; end;";
-
-        try (Connection connection = dataSource.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.execute();
-
-            //ResultSet rs = call.getResultSet();
-            ResultSet rs = (ResultSet) call.getObject(1);
-
-            /* Se recuperan los description types */
-            while (rs.next()) {
-                crossmapSets.add(createCrossmapSetFromResultSet(rs));
-            }
-
-            /* Se setea la lista de Tipos de descripción */
-            CrossmapSetFactory.getInstance().setCrossmapSets(crossmapSets);
-
-        } catch (SQLException e) {
-            String errorMsg = "Error al intentar recuperar CrossmapsSets de la BDD.";
-            logger.error(errorMsg, e);
-            throw new EJBException(errorMsg, e);
-        }
-
+        List<CrossmapSet> crossmapSets = crossmapDAO.getCrossmapSets();
+        CrossmapSetFactory.getInstance().setCrossmapSets(crossmapSets);
         return CrossmapSetFactory.getInstance();
     }
 
     //@Override
     public UserFactory refreshUsers() {
 
-        ArrayList<User> users = new ArrayList<>();
-
-        User user = null;
-
-        String sql = "begin ? := stk.stk_pck_user.get_all_users; end;";
-
-        //String sql = "begin ? := stk.stk_pck_helper_table.get_all_helper_table_columns; end;";
-
-        try (Connection connection = dataSource.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.execute();
-
-            //ResultSet rs = call.getResultSet();
-            ResultSet rs = (ResultSet) call.getObject(1);
-
-            while (rs.next()) {
-                user = makeUserFromResult(rs);
-                users.add(user);
-            }
-
-        } catch (SQLException e) {
-            String errorMsg = "Error al recuperar usuario de la BDD.";
-            logger.error(errorMsg, e);
-            throw new EJBException(e);
-        }
-
+        List<User> users = authDAO.getAllUsers();
         UserFactory.getInstance().setUsers(users);
-
         return UserFactory.getInstance();
+    }
+
+    public InstitutionFactory refreshInstitutions() {
+
+        List<Institution> institutions = institutionDAO.getAllInstitution();
+        InstitutionFactory.getInstance().setInstitutions(institutions);
+        return InstitutionFactory.getInstance();
     }
 
     @Override

@@ -27,7 +27,7 @@ public class InstitutionAuditAction extends AuditAction implements Serializable 
 
         if (this.getAuditableEntity().getClass().equals(Institution.class)) {
             Institution institution = (Institution) this.getAuditableEntity();
-            detail = "Establecimiento: " + institution.getName();
+            detail = "Establecimiento: {código: " + institution.getCode() + ", nombre: " + institution.getName() + "}";
         }
 
         return detail;

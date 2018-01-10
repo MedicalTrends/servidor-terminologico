@@ -161,4 +161,6 @@ public interface DescriptionDAO {
     public ObservationNoValid getObservationNoValidBy(Description description);
 
     public List<ConceptSMTK> getSuggestedConceptsBy(Description description);
+
+    public List<DescriptionType> getDescriptionTypes();
 }

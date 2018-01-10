@@ -55,7 +55,7 @@ public interface UserManager {
 
     public void deleteUser(User user, User _user);
 
-    public void unlockUser(String email);
+    public void unlockUser(User user, User _user);
 
     public void lockUser(String email);
 

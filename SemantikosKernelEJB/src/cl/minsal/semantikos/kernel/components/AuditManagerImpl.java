@@ -326,6 +326,14 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    public void recordUserUnlocking(User user, User _user) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_UNLOCKING, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
     public void recordUserDelete(User user, User _user) {
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
         UserAuditAction userAuditAction = new UserAuditAction(user, USER_DELETE, now(), _user, user);

@@ -222,7 +222,7 @@ public class UserManagerImpl implements UserManager {
         user.setFailedAnswerAttempts(user.getFailedAnswerAttempts()+1);
         //user = authDAO.getUserByEmail(user.getEmail());
 
-        if (user.getFailedAnswerAttempts() >= MAX_FAILED_ANSWER_ATTEMPTS) {
+        if (user.getFailedAnswerAttempts() > MAX_FAILED_ANSWER_ATTEMPTS) {
             user.setLocked(true);
             authDAO.lockUser(user.getEmail());
         }
@@ -245,8 +245,14 @@ public class UserManagerImpl implements UserManager {
         auditManager.recordUserDelete(user, _user);
     }
 
-    public void unlockUser(String email) {
-        authDAO.unlockUser(email);
+    public void unlockUser(User user, User _user) {
+        authDAO.unlockUser(user.getEmail());
+        /**
+         * Se actualiza la cache de usuarios
+         */
+        UserFactory.getInstance().refresh(user);
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        auditManager.recordUserUnlocking(user, _user);
     }
 
     public void lockUser(String email) {

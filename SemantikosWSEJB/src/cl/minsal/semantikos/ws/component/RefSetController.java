@@ -229,6 +229,18 @@ public class RefSetController {
     public ConceptToRefSetResponse addConceptToRefSet(ConceptToRefSetRequest request, User user, Institution institution)
             throws NotFoundFault, IllegalInputFault {
 
+        List<RefSet> refSets = refSetManager.findRefsetsByName(request.getRefSetName());
+
+        if(refSets.isEmpty()) {
+            throw new NotFoundFault("No existe un RefSet de nombre: '"+ request.getRefSetName()+"'");
+        }
+
+        RefSet refSet = refSets.get(0);
+
+        if(!refSet.isValid()) {
+            throw new NotFoundFault("El refset: '"+ refSet +"' no está vigente");
+        }
+
         if ((request.getConceptID() == null || "".equals(request.getConceptID()))
                 && (request.getDescriptionID() == null || "".equals(request.getDescriptionID()))) {
             throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
@@ -236,20 +248,12 @@ public class RefSetController {
 
         ConceptSMTK conceptSMTK = getConcept(request.getConceptID(), request.getDescriptionID());
 
-        List<RefSet> refSets = refSetManager.findRefsetsByName(request.getRefSetName());
-
-        if(refSets.isEmpty()) {
-            throw new NotFoundFault("No existe un RefSet de nombre: '"+ request.getRefSetName()+"'");
-        }
-
         if(!conceptSMTK.isValid()) {
-            throw new NotFoundFault("El concepto: '"+ conceptSMTK +"' no es valido");
+            throw new NotFoundFault("El concepto: '"+ conceptSMTK +"' no está vigente");
         }
 
-        RefSet refSet = refSets.get(0);
-
-        if(!refSet.isValid()) {
-            throw new NotFoundFault("El refset: '"+ refSet +"' no es valido");
+        if(!conceptSMTK.isModeled()) {
+            throw new NotFoundFault("El concepto: '"+ conceptSMTK +"' está en borrador, por lo tanto no puede ser agregado al RefSet");
         }
 
         /*
@@ -280,6 +284,18 @@ public class RefSetController {
     public ConceptToRefSetResponse removeConceptFromRefSet(ConceptToRefSetRequest request, User user, Institution institution)
             throws NotFoundFault, IllegalInputFault {
 
+        List<RefSet> refSets = refSetManager.findRefsetsByName(request.getRefSetName());
+
+        if(refSets.isEmpty()) {
+            throw new NotFoundFault("No existe un RefSet de nombre: '"+ request.getRefSetName()+"'");
+        }
+
+        RefSet refSet = refSets.get(0);
+
+        if(!refSet.isValid()) {
+            throw new NotFoundFault("El refset: '"+ refSet +"' no está vigente");
+        }
+
         if ((request.getConceptID() == null || "".equals(request.getConceptID()))
                 && (request.getDescriptionID() == null || "".equals(request.getDescriptionID()))) {
             throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
@@ -287,20 +303,12 @@ public class RefSetController {
 
         ConceptSMTK conceptSMTK = getConcept(request.getConceptID(), request.getDescriptionID());
 
-        List<RefSet> refSets = refSetManager.findRefsetsByName(request.getRefSetName());
-
-        if(refSets.isEmpty()) {
-            throw new NotFoundFault("No existe un RefSet de nombre: '"+ request.getRefSetName()+"'");
-        }
-
         if(!conceptSMTK.isValid()) {
-            throw new NotFoundFault("El concepto: '"+ conceptSMTK +"' no es valido");
+            throw new NotFoundFault("El concepto: '"+ conceptSMTK +"' no está vigente");
         }
 
-        RefSet refSet = refSets.get(0);
-
-        if(!refSet.isValid()) {
-            throw new NotFoundFault("El refset: '"+ refSet +"' no es valido");
+        if(!conceptSMTK.isModeled()) {
+            throw new NotFoundFault("El concepto: '"+ conceptSMTK +"' está en borrador, por lo tanto no puede ser agregado al RefSet");
         }
 
         /*

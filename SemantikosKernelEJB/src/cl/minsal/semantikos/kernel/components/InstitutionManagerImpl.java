@@ -5,6 +5,7 @@ import cl.minsal.semantikos.kernel.businessrules.UserCreationBR;
 import cl.minsal.semantikos.kernel.daos.InstitutionDAO;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.InstitutionFactory;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.annotation.Resource;
@@ -60,6 +61,8 @@ public class InstitutionManagerImpl implements InstitutionManager {
             /* Se deja registro en la auditoría */
             auditManager.recordInstitutionCreation(institution, user);
 
+            InstitutionFactory.getInstance().refresh(institution);
+
             return institution.getId();
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,6 +81,9 @@ public class InstitutionManagerImpl implements InstitutionManager {
             institutionDAO.updateInstitution(updatedInstitution);
 
             auditManager.recordInstitutiuonUpgrade(updatedInstitution, user);
+
+            InstitutionFactory.getInstance().refresh(updatedInstitution);
+
             change = true;
         }
 

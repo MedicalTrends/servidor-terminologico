@@ -17,6 +17,8 @@ import java.sql.Timestamp;
  */
 public class UserAuditAction extends AuditAction implements Serializable {
 
+    private static String newline = System.getProperty("line.separator");
+
     public UserAuditAction(User subjectUser, AuditActionType auditActionType, Timestamp actionDate, User user, AuditableEntity auditableEntity) {
         super(auditActionType, actionDate, user, auditableEntity, subjectUser);
     }
@@ -32,7 +34,7 @@ public class UserAuditAction extends AuditAction implements Serializable {
 
         if (this.getAuditableEntity().getClass().equals(User.class)) {
             User user = (User) this.getAuditableEntity();
-            detail = "Usuario: " + user.getEmail();
+            detail = "Usuario: {email: " + user.getEmail() + ", nombres: " + user.getName() + ", apellidos" + user.getLastName() + " " + user.getSecondLastName() + "}";
         }
         if (this.getAuditableEntity().getClass().equals(Profile.class)) {
             Profile profile = (Profile) this.getAuditableEntity();

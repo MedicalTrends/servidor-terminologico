@@ -298,6 +298,14 @@ public interface AuditManager {
     public void recordUserLocking(User user, User _user);
 
     /**
+     * Este método es responsable de registrar en el log de auditoría el bloqueo de la cuenta de un usuario
+     *
+     * @param user          El usuario al cual se bloquea su cuenta
+     * @param _user         El usuario que hace el bloqueo
+     */
+    public void recordUserUnlocking(User user, User _user);
+
+    /**
      * Este método es responsable de registrar en el log de auditoría la eliminacion de un usuario
      *
      * @param user          El usuario al cual se elimina

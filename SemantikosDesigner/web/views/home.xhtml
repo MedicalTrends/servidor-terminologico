@@ -44,7 +44,7 @@
                         </div>
                     </div>
                 </p:outputPanel>
-                <p:outputPanel rendered="#{profilePermissionsBeans.admin}">
+                <p:outputPanel rendered="#{profilePermissionsBeans.admin or profilePermissionsBeans.refSetAdmin}">
                     <div class="ContainerIndent">
                         <div class="Card ShadowEffect HeiAutoOnMobile">
                             <h2 class="CardTopic"><i class="icon-google132 Fs20 Fleft MarRight10 OvHidden" /> Administradores
@@ -53,11 +53,11 @@
                             <h:form styleClass="mainMenu">
                                 <p:menu toggleable="false" style="width: 100%">
                                     <p:submenu label="Otros">
-                                        <p:menuitem value="Administración Usuarios" icon="fa fa-user Fs15" url="/views/users/users.xhtml" />
-                                        <p:menuitem value="Administración Establecimientos" icon="fa fa-bank Fs15" url="/views/institutions/institutions.xhtml" />
-                                        <p:menuitem value="Administración RefSets" icon="fa fa-dropbox Fs15" url="/views/refsets/admin_refsets.xhtml" />
-                                        <p:menuitem value="Administración Tablas" icon="ui-icon-disk fa fa-columns Fs15" url="/views/helpertables/helpertables.xhtml" />
-                                        <p:menuitem value="Extracción Fármacos" icon="fa fa-file-excel-o" url="/views/concept/extractor.xhtml" rendered="true" />
+                                        <p:menuitem value="Administración Usuarios" icon="fa fa-user Fs15" url="/views/users/users.xhtml" rendered="#{profilePermissionsBeans.admin}" />
+                                        <p:menuitem value="Administración Establecimientos" icon="fa fa-bank Fs15" url="/views/institutions/institutions.xhtml" rendered="#{profilePermissionsBeans.admin}" />
+                                        <p:menuitem value="Administración RefSets" icon="fa fa-dropbox Fs15" url="/views/refsets/admin_refsets.xhtml" rendered="#{profilePermissionsBeans.admin or profilePermissionsBeans.refSetAdmin}" />
+                                        <p:menuitem value="Administración Tablas" icon="ui-icon-disk fa fa-columns Fs15" url="/views/helpertables/helpertables.xhtml" rendered="#{profilePermissionsBeans.admin}" />
+                                        <p:menuitem value="Extracción Fármacos" icon="fa fa-file-excel-o" url="/views/concept/extractor.xhtml" rendered="#{profilePermissionsBeans.admin}" />
                                     </p:submenu>
                                 </p:menu>
                             </h:form>

@@ -48,7 +48,7 @@ public interface UserManager {
 
     public Profile getProfileById(long id);
 
-    public void unlockUser(String email);
+    public void unlockUser(User user, User _user);
 
     public void lockUser(String email, User user);
 

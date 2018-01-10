@@ -3,13 +3,10 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.kernel.businessrules.*;
 import cl.minsal.semantikos.kernel.daos.RefSetDAO;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
-import cl.minsal.semantikos.model.users.Profile;
-import cl.minsal.semantikos.model.users.ProfileFactory;
+import cl.minsal.semantikos.model.users.*;
 import cl.minsal.semantikos.util.StringUtils;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.refsets.RefSet;
-import cl.minsal.semantikos.model.users.Institution;
-import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -158,6 +155,12 @@ public class RefSetManagerImpl implements RefSetManager {
         }
 
         List<RefSet> refsets = new ArrayList<>();
+
+        List<Institution> institutions = user.getInstitutions();
+
+        if(!institutions.contains(InstitutionFactory.MINSAL)) {
+            institutions.add(InstitutionFactory.MINSAL);
+        }
 
         for (Institution institution : user.getInstitutions()) {
             refsets.addAll(getRefsetByInstitution(institution));

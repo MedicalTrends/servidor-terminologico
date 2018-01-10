@@ -25,7 +25,7 @@ public class ProfilePermissionsBeans {
 
     }
 
-    public boolean isModeler(){
+    public boolean isModeler() {
         for (Profile profile : authenticationBean.getLoggedUser().getProfiles()) {
             if(profile.equals(ProfileFactory.MODELER_PROFILE)){
                 return true;
@@ -34,7 +34,7 @@ public class ProfilePermissionsBeans {
         return false;
     }
 
-    public boolean isWsConsumer(){
+    public boolean isWsConsumer() {
         for (Profile profile : authenticationBean.getLoggedUser().getProfiles()) {
             if(profile.equals(ProfileFactory.WS_CONSUMER_PROFILE)){
                 return true;
@@ -42,7 +42,8 @@ public class ProfilePermissionsBeans {
         }
         return false;
     }
-    public boolean isAdmin(){
+
+    public boolean isAdmin() {
         for (Profile profile : authenticationBean.getLoggedUser().getProfiles()) {
             if(profile.equals(ProfileFactory.ADMINISTRATOR_PROFILE)){
                 return true;
@@ -51,7 +52,16 @@ public class ProfilePermissionsBeans {
         return false;
     }
 
-    public boolean isDesigner(){
+    public boolean isRefSetAdmin() {
+        for (Profile profile : authenticationBean.getLoggedUser().getProfiles()) {
+            if(profile.equals(ProfileFactory.REFSET_ADMIN_PROFILE)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isDesigner() {
         for (Profile profile : authenticationBean.getLoggedUser().getProfiles()) {
             if(profile.equals(ProfileFactory.DESIGNER_PROFILE)){
                 return true;

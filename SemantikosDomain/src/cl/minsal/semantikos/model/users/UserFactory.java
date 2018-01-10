@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.model.users;
 
+import cl.minsal.semantikos.model.categories.Category;
+
 import javax.ejb.Singleton;
 import java.io.Serializable;
 import java.util.ArrayList;

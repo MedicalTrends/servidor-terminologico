@@ -463,7 +463,7 @@ public class AuthDAOImpl implements AuthDAO {
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, Types.INTEGER);
-            call.setString(1, username);
+            call.setString(2, username);
             call.execute();
 
         } catch (SQLException e) {
@@ -502,7 +502,7 @@ public class AuthDAOImpl implements AuthDAO {
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.registerOutParameter (1, OracleTypes.INTEGER);
             call.setString(2, username);
             call.execute();
 

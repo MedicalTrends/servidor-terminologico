@@ -233,6 +233,7 @@ public class AccountRecovery {
         if(newPassword1.trim().equals("")) {
             newPassword1Error = "ui-state-error";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar una nueva contraseña"));
+            return;
         }
         else {
             newPassword1Error = "";
@@ -241,6 +242,7 @@ public class AccountRecovery {
         if(newPassword2.trim().equals("")) {
             newPassword2Error = "ui-state-error";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe confirmar la nueva contraseña"));
+            return;
         }
         else {
             newPassword2Error = "";
@@ -253,6 +255,7 @@ public class AccountRecovery {
         if(!newPassword1.equals(newPassword2)) {
             newPassword2Error = "ui-state-error";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La confirmación de contraseña no coincide con la original"));
+            return;
         }
         else {
             newPassword2Error = "";
@@ -263,11 +266,12 @@ public class AccountRecovery {
         }
 
         try {
-            authenticationManager.setUserPassword(user.getEmail(),newPassword1);
+            authenticationManager.setUserPassword(user.getEmail(), newPassword1);
         } catch (PasswordChangeException e) {
-            e.printStackTrace();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+            return;
         }
-        userManager.unlockUser(user.getEmail());
+        userManager.unlockUser(user, user);
         passwordChanged = true;
 
     }

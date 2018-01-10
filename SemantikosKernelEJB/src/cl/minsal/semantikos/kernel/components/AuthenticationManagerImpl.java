@@ -23,9 +23,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import static cl.minsal.semantikos.model.users.ProfileFactory.ADMINISTRATOR_PROFILE;
-import static cl.minsal.semantikos.model.users.ProfileFactory.DESIGNER_PROFILE;
-import static cl.minsal.semantikos.model.users.ProfileFactory.MODELER_PROFILE;
+import static cl.minsal.semantikos.model.users.ProfileFactory.*;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
 
@@ -78,7 +76,8 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
          */
         if( user.getProfiles().contains(ADMINISTRATOR_PROFILE) ||
                 user.getProfiles().contains(DESIGNER_PROFILE) ||
-                user.getProfiles().contains(MODELER_PROFILE) ) {
+                user.getProfiles().contains(MODELER_PROFILE) ||
+                user.getProfiles().contains(REFSET_ADMIN_PROFILE) ) {
             authDAO.markLogin(email);
             return true;
         }
@@ -113,7 +112,8 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
          */
         if( user.getProfiles().contains(ADMINISTRATOR_PROFILE) ||
                 user.getProfiles().contains(DESIGNER_PROFILE) ||
-                user.getProfiles().contains(MODELER_PROFILE) ) {
+                user.getProfiles().contains(MODELER_PROFILE) ||
+                user.getProfiles().contains(REFSET_ADMIN_PROFILE) ) {
             authDAO.markLogin(username);
             return true;
         }
@@ -201,8 +201,9 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
                 || (user.getLastPasswordHash2() != null && user.getLastPasswordHash2().equals(passwordHash))
                 || (user.getLastPasswordHash3() != null && user.getLastPasswordHash3().equals(passwordHash))
                 || (user.getLastPasswordHash4() != null && user.getLastPasswordHash4().equals(passwordHash))
-                )
+                ) {
             throw new PasswordChangeException("El password no puede ser igual a uno de los ultimos 5 passwords usados");
+        }
 
         user.setLastPasswordHash4(user.getLastPasswordHash3());
         user.setLastPasswordHash3(user.getLastPasswordHash2());

@@ -410,6 +410,38 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     }
 
     @Override
+    public List<DescriptionType> getDescriptionTypes() {
+        List<DescriptionType> descriptionTypes = new ArrayList<>();
+
+        String sql = "begin ? := stk.stk_pck_description.get_description_types; end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.execute();
+
+            //ResultSet rs = call.getResultSet();
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            /* Se recuperan los description types */
+            while (rs.next()) {
+                descriptionTypes.add(createDescriptionTypeFromResultSet(rs));
+            }
+
+            /* Se setea la lista de Tipos de descripción */
+            DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypes);
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al intentar recuperar Description Types de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return descriptionTypes;
+    }
+
+    @Override
     public void setInvalidDescription(NoValidDescription noValidDescription) {
         //ConnectionBD connect = new ConnectionBD();
 
@@ -887,6 +919,23 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         List<ConceptSMTK> suggestedConcepts = getSuggestedConceptsBy(description);
 
         return new NoValidDescription(description, observationNoValid, suggestedConcepts);
+    }
+
+    public DescriptionType createDescriptionTypeFromResultSet(ResultSet rs) {
+
+        DescriptionType descriptionType = new DescriptionType();
+
+        try {
+            descriptionType.setId(rs.getLong("id"));
+            descriptionType.setName(rs.getString("name"));
+            descriptionType.setDescription(rs.getString("description"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return descriptionType;
+
     }
 
 
