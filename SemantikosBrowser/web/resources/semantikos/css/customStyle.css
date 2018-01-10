@@ -1,3 +1,4 @@
+
 /*
 .topbar-left {
     background-color: #2f8ee5 !important;
@@ -119,7 +120,7 @@
 }
 
 .ui-paginator .ui-paginator-pages .ui-paginator-page {
-    color: #2f8ee5 !important;
+    color: #3F51B5 !important;
 }
 
 .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
@@ -131,7 +132,7 @@
 }
 
 .ui-paginator .ui-paginator-first, body .ui-paginator .ui-paginator-prev, body .ui-paginator .ui-paginator-next, body .ui-paginator .ui-paginator-last {
-    color: #2f8ee5 !important;
+    color: #3F51B5 !important;
 }
 
 .ui-inputfield {
