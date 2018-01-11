@@ -8,12 +8,15 @@ import cl.minsal.semantikos.model.audit.InstitutionAuditAction;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.users.AuthenticationBean;
 import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -49,6 +52,11 @@ public class InstitutionsBrowserBean {
     List<Institution> filteredInstitutions;
 
     Map<Long, List<InstitutionAuditAction>> auditActions = new HashMap<>();
+
+    @ManagedProperty(value = "#{authenticationBean}")
+    private AuthenticationBean authenticationBean;
+
+    String deleteCause;
 
     //Inicializacion del Bean
     @PostConstruct
@@ -153,5 +161,42 @@ public class InstitutionsBrowserBean {
             }
         }
         return "";
+    }
+
+    public String getDeleteCause() {
+        return deleteCause;
+    }
+
+    public void setDeleteCause(String deleteCause) {
+        this.deleteCause = deleteCause;
+    }
+
+    public AuthenticationBean getAuthenticationBean() {
+        return authenticationBean;
+    }
+
+    public void setAuthenticationBean(AuthenticationBean authenticationBean) {
+        this.authenticationBean = authenticationBean;
+    }
+
+    public void deleteInstitution() {
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+
+        try {
+            if(deleteCause == null || deleteCause.isEmpty()) {
+                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar un motivo de eliminación"));
+                return;
+            }
+            institutionManager.deleteInstitution(selectedInstitution, authenticationBean.getLoggedUser(), deleteCause);
+            selectedInstitution = institutionManager.getInstitutionById(selectedInstitution.getId());
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "El establecimiento se ha eliminado y queda en estado No Vigente."));
+            RequestContext reqCtx = RequestContext.getCurrentInstance();
+            reqCtx.execute("PF('dlg').hide();");
+            reqCtx.execute("PF('institutionsTable').filter();");
+        } catch (Exception e){
+            logger.error("error al eliminar establecimiento",e);
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+        }
     }
 }

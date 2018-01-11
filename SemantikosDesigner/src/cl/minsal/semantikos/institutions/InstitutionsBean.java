@@ -155,6 +155,7 @@ public class InstitutionsBean {
                     HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
 
                     selectedInstitution = institutionManager.getInstitutionById(institutionManager.createInstitution(selectedInstitution, authenticationBean.getLoggedUser()));
+                    getInstitution(selectedInstitution.getId());
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Establecimiento creado de manera exitosa!!"));
                 }
                 catch (EJBException e) {

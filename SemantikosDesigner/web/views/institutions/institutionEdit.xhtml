@@ -127,7 +127,9 @@
                         <p:outputPanel/>
                         <p:outputPanel>
                             <p:commandButton value="Aceptar" actionListener="#{institutions.deleteInstitution}"
-                                             update="mainForm, @(.breadUpdate)" styleClass="Fright" />
+                                             update="mainForm, @(.breadUpdate)" styleClass="Fright">
+                                <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar este establecimiento?" icon="ui-icon-alert"/>
+                            </p:commandButton>
                             <p:commandButton value="Cancelar" onclick="PF('dlg').hide();" styleClass="Fright" actionListener="#{institutions.setDeleteCause(null)}"/>
                         </p:outputPanel>
                     </p:panelGrid>

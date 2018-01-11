@@ -57,7 +57,7 @@ public class InstitutionCreationBRImpl implements InstitutionCreationBR {
 
         Institution found = institutionManager.getInstitutionByCode(institution.getCode());
 
-        if(found != null) {
+        if(found != null && found.getValidityUntil() == null) {
             throw new BusinessRuleException("BR-401-UniqueInstitutionCode", "Ya existe un establecimiento con este código en el sistema.");
         }
     }

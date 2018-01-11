@@ -177,8 +177,7 @@
                                                 <f:param name="idConcept" value="#{concept.id}" />
                                             </p:link>
 
-                                            <p:commandLink rendered="#{concept.modeled}" oncomplete="PF('dialogTC2-browser').show()" update="@(.conceptTranslate)" title="Trasladar" style="padding: 5px"
-                                                           >
+                                            <p:commandLink rendered="#{concept.modeled}" oncomplete="PF('dialogTC2-browser').show()" update="@(.conceptTranslate)" title="Trasladar" style="padding: 5px">
                                                 <i class="fa fa-exchange fa-lg"/>
                                                 <f:setPropertyActionListener value="#{concept}" target="#{transferConceptBean.conceptSMTKSelected}" />
 

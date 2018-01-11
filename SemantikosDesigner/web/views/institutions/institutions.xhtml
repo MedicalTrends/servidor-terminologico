@@ -83,6 +83,11 @@
                                                 <f:param name="idInstitution" value="#{institution.id}" />
                                             </p:link>
 
+                                            <p:commandLink onclick="PF('dlg').show();" update="@(.cause2)" action="#{institutionsBrowser.setSelectedInstitution(institution)}"
+                                                           rendered="#{institution.validityUntil eq null}" title="Eliminar" process="@this" style="padding: 5px">
+                                                <i class="fa fa-trash fa-lg"/>
+                                            </p:commandLink>
+
                                         </div>
                                     </p:column>
 
@@ -136,6 +141,38 @@
 
                                     </h:panelGroup>
                                 </p:dialog>
+
+                                <p:dialog header="Motivo eliminación" widgetVar="dlg" resizable="false">
+                                    <p:panelGrid id="deletePanel" columns="2" cellpadding="5" styleClass="ui-panelgrid-blank cause2">
+                                        <h:outputLabel for="cause" value="Motivo:" />
+                                        <p:selectOneMenu id="cause" value="#{institutionsBrowser.deleteCause}">
+                                            <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                            <f:selectItem itemLabel="Establecimiento dejó de funcionar" itemValue="Establecimiento dejó de funcionar" />
+                                            <f:selectItem itemLabel="No aplica ingresar en Semantikos" itemValue="No aplica ingresar en Semantikos" />
+                                            <f:selectItem itemLabel="Otro" itemValue="Otro" />
+                                            <p:ajax event="itemSelect" update="@(.cause2)" process="@this" />
+                                        </p:selectOneMenu>
+
+                                        <p:outputLabel for="cause2" value="Motivo:" rendered="#{institutionsBrowser.deleteCause.equals('Otro')}" />
+                                        <p:inputTextarea id="cause2" value="#{institutionsBrowser.deleteCause}" rendered="#{institutionsBrowser.deleteCause.equals('Otro')}" />
+
+                                        <p:outputPanel/>
+                                        <p:outputPanel>
+                                            <p:commandButton value="Aceptar" actionListener="#{institutionsBrowser.deleteInstitution}"
+                                                             update="form" styleClass="Fright">
+                                                <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar este establecimiento?" icon="ui-icon-alert"/>
+                                            </p:commandButton>
+                                            <p:commandButton value="Cancelar" onclick="PF('dlg').hide();" styleClass="Fright" actionListener="#{institutionsBrowser.setDeleteCause(null)}"/>
+                                        </p:outputPanel>
+                                    </p:panelGrid>
+                                </p:dialog>
+
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
+                                                     icon="ui-icon-check"/>
+                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                                                     icon="ui-icon-close"/>
+                                </p:confirmDialog>
 
                             </h:form>
                         </div>

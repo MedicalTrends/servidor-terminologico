@@ -60,8 +60,8 @@ public class RefSetCreationBR {
     private void brRefSet002(RefSet refSet) {
         RefSet other = refSetManager.getRefsetByName(refSet.getName());
 
-        if(other != null) {
-            throw new BusinessRuleException("BR-RefSet-002", "Ya existe un RefSet con este nombre. RefSet " + other);
+        if(other != null && other.getValidityUntil() == null) {
+            throw new BusinessRuleException("BR-RefSet-002", "Ya existe un RefSet vigente con este nombre. RefSet " + other);
         }
     }
 }
