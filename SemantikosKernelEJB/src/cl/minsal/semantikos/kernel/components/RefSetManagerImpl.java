@@ -34,8 +34,14 @@ public class RefSetManagerImpl implements RefSetManager {
     @EJB
     private AuditManager auditManager;
 
+    @EJB
+    private RefSetCreationBR refSetCreationBR;
+
     @Override
     public RefSet createRefSet(RefSet refSet, User user) {
+
+        refSetCreationBR.validatePreConditions(refSet, user);
+
         RefSet refsetPersist = createRefSet(refSet.getName(), refSet.getInstitution(), user);
 
         /* Se guardan los conceptos asignados al refset*/
@@ -49,9 +55,6 @@ public class RefSetManagerImpl implements RefSetManager {
 
     @Override
     public RefSet createRefSet(String name, Institution institution, User user) {
-
-        /* Se validan las pre-condiciones */
-        new RefSetCreationBR().validatePreConditions(institution, user);
 
         /* Se crea el RefSet y se persiste */
         RefSet refSet = new RefSet(name, institution, new Timestamp(currentTimeMillis()));

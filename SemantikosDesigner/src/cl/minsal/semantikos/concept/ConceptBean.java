@@ -601,18 +601,15 @@ public class ConceptBean implements Serializable {
 
         Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
         try {
-            if(concept.getRelationships().contains(relationship)){
+            if(concept.getRelationships().contains(relationship)) {
                 messageBean.messageError("No se puede agregar dos veces el mismo registro");
                 return;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            relationshipBindingBR.brSTK001(concept, relationship);
-            relationshipBindingBR.brSTK002(concept, relationship);
-            relationshipBindingBR.brSTK003(concept, relationship);
-            relationshipBindingBR.brSTK004(concept, relationship);
+        try {
+            relationshipBindingBR.verifyPreConditions(concept, relationship, user);
         } catch (EJBException e) {
             messageBean.messageError(e.getMessage());
             resetPlaceHolders();
@@ -648,8 +645,18 @@ public class ConceptBean implements Serializable {
         for (Relationship relationshipWeb : concept.getRelationshipsWeb()) {
             if (relationshipWeb.getRelationshipDefinition().equals(relationshipDefinition)) {
                 relationshipWeb.setTarget(target);
-                relationship = relationshipWeb;
+
                 isRelationshipFound = true;
+
+                try {
+                    relationshipBindingBR.verifyPreConditions(concept, relationshipWeb, user);
+                } catch (EJBException e) {
+                    messageBean.messageError(e.getMessage());
+                    resetPlaceHolders();
+                    return;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)
                     autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
@@ -669,6 +676,17 @@ public class ConceptBean implements Serializable {
         // Si no se encuentra la relación, se crea una nueva
         if (!isRelationshipFound) {
             relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+
+            try {
+                relationshipBindingBR.verifyPreConditions(concept, relationship, user);
+            } catch (EJBException e) {
+                messageBean.messageError(e.getMessage());
+                resetPlaceHolders();
+                return;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
             if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<Boolean>) target).getValue())
                 changeMultiplicityNotRequiredRelationshipDefinitionMC();

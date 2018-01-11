@@ -12,6 +12,16 @@ import java.sql.Timestamp;
  */
 public class InstitutionAuditAction extends AuditAction implements Serializable {
 
+    String detail;
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
     public InstitutionAuditAction(Institution subjectInstitution, AuditActionType auditActionType, Timestamp actionDate, User user, AuditableEntity auditableEntity) {
         super(auditActionType, actionDate, user, auditableEntity, subjectInstitution);
     }
@@ -27,7 +37,7 @@ public class InstitutionAuditAction extends AuditAction implements Serializable 
 
         if (this.getAuditableEntity().getClass().equals(Institution.class)) {
             Institution institution = (Institution) this.getAuditableEntity();
-            detail = "Establecimiento: {código: " + institution.getCode() + ", nombre: " + institution.getName() + "}";
+            detail = getDetail();
         }
 
         return detail;

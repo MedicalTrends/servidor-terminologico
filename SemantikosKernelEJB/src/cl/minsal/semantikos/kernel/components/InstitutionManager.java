@@ -31,7 +31,7 @@ public interface InstitutionManager {
 
     public void update(Institution originalInstitution, Institution updatedInstitution, User user);
 
-    public void deleteInstitution(Institution institution, User user);
+    public void deleteInstitution(Institution institution, User user, String deleteCause);
 
     /**
      * Método encargado de obtener una lista con todas las instituciones

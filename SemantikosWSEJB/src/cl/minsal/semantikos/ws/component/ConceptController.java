@@ -979,7 +979,7 @@ public class ConceptController {
 
         //Si la categoría no tiene la definición de atributo GS1
         if(conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.GTINGS1).isEmpty()) {
-            throw new NotFoundFault("El concepto: "+ conceptSMTK +" perteneciente a categoría: "+conceptSMTK.getCategory()+" no tiene la definición de atributo GTIN");
+            throw new NotFoundFault("El concepto: "+ conceptSMTK +" perteneciente a categoría: "+conceptSMTK.getCategory()+" no posee la definición de atributo GTIN");
         }
 
         //Si esta ok, construir respuesta

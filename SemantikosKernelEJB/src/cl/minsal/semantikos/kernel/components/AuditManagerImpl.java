@@ -354,14 +354,16 @@ public class AuditManagerImpl implements AuditManager {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
         InstitutionAuditAction institutionAuditAction = new InstitutionAuditAction(institution, INSTITUTION_CREATION, now(), user, institution);
+        institutionAuditAction.setDetail("Establecimiento: {código: " + institution.getCode() + ", nombre: " + institution.getName() + "}");
 
         auditDAO.recordAuditAction(institutionAuditAction);
     }
 
     @Override
-    public void recordInstitutionDelete(Institution institution, User user) {
+    public void recordInstitutionDelete(Institution institution, User user, String cause) {
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
         InstitutionAuditAction institutionAuditAction = new InstitutionAuditAction(institution, INSTITUTION_DELETE, now(), user, institution);
+        institutionAuditAction.setDetail("Motivo eliminación: "+cause);
 
         auditDAO.recordAuditAction(institutionAuditAction);
     }
@@ -371,6 +373,7 @@ public class AuditManagerImpl implements AuditManager {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
         InstitutionAuditAction institutionAuditAction = new InstitutionAuditAction(institution, INSTITUTION_ATTRIBUTE_CHANGE, now(), user, institution);
+        institutionAuditAction.setDetail("Establecimiento: {código: " + institution.getCode() + ", nombre: " + institution.getName() + "}");
 
         auditDAO.recordAuditAction(institutionAuditAction);
     }

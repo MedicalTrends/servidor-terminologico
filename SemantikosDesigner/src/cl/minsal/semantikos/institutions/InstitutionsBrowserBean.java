@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.audit.InstitutionAuditAction;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
+import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,6 +57,8 @@ public class InstitutionsBrowserBean {
         for (Institution institution : allInstitutions) {
             auditActions.put(institution.getId(),auditManager.getInstitutionAuditActions(institution));
         }
+        RequestContext reqCtx = RequestContext.getCurrentInstance();
+        reqCtx.execute("PF('institutionsTable').filter();");
     }
 
     public void newInstitution() {

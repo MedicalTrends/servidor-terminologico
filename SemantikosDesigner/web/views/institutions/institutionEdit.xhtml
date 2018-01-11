@@ -48,7 +48,7 @@
 
                                 <p:outputPanel />
 
-                                <p:outputLabel for="input-institution-name" value="Nombre *" styleClass="#{users.nameError} Wid20"  />
+                                <p:outputLabel for="input-institution-name" value="Nombre *" styleClass="#{institutions.nameError} Wid20"  />
 
                                 <p:inputText id="input-institution-name" value="#{institutions.selectedInstitution.name}" styleClass="#{institutions.nameError} Wid90" autocomplete="off"
                                              disabled="#{ institutions.selectedInstitution.validityUntil != null}" />
@@ -61,7 +61,7 @@
 
                                 <p:dataTable  rowIndexVar="rowIndex" id="historyDateTable" var="history"
                                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                                  value="#{institutions.auditAction}" paginator="true" rows="10">
+                                                  value="#{institutions.auditAction}" paginator="true" rows="5">
 
                                         <f:facet name="{Exporters}">
                                             <p:commandButton icon="fa fa-file-excel-o" styleClass="ui-priority-primary" ajax="false" value="Exportar">
@@ -88,16 +88,17 @@
 
                             <div class="SeparatorFull"></div>
 
-                            <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right">
-                                <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{institutions.saveInstitution}" styleClass="ui-priority-primary"
-                                                 disabled="#{ institutions.selectedInstitution.validityUntil != null }" update="mainForm, @(.breadUpdate)" />
 
-                                <p:commandButton value="Cancelar" icon="fa fa-undo" action="#{users.saveUser}" styleClass="ui-priority-primary" disabled="#{ not users.selectedUser.valid}"
-                                                 process="mainForm" update="mainForm, @(.breadUpdate)" rendered="false">
-                                    <p:confirm header="Confirmar Acción" message="¿Desea deshacer los cambios realizados?" icon="ui-icon-alert"/>
-                                </p:commandButton>
+                            <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{institutions.saveInstitution}" styleClass="ui-priority-primary Fright"
+                                             disabled="#{ institutions.selectedInstitution.validityUntil != null }" update="mainForm, @(.breadUpdate)" />
 
-                            </div>
+                            <p:commandButton value="Eliminar" icon="fa fa-trash"
+                                             rendered="#{institutions.selectedInstitution != null and institutions.selectedInstitution.persistent and institutions.selectedInstitution.validityUntil == null}"
+                                             styleClass="ui-priority-primary Fright" onclick="PF('dlg').show();" update="@(.cause2)"/>
+
+                            <p:commandButton value="Cancelar" icon="fa fa-undo" action="#{users.saveUser}" styleClass="ui-priority-primary Fright" disabled="#{ not users.selectedUser.valid}"
+                                             process="mainForm" update="mainForm, @(.breadUpdate)" rendered="false"/>
+
                         </div>
                     </div>
                 </div>
@@ -108,6 +109,29 @@
                     <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
                                      icon="ui-icon-close"/>
                 </p:confirmDialog>
+
+                <p:dialog header="Motivo eliminación" widgetVar="dlg" resizable="false">
+                    <p:panelGrid id="deletePanel" columns="2" cellpadding="5" styleClass="ui-panelgrid-blank cause2">
+                        <h:outputLabel for="cause" value="Motivo:" />
+                        <p:selectOneMenu id="cause" value="#{institutions.deleteCause}">
+                            <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItem itemLabel="Establecimiento dejó de funcionar" itemValue="Establecimiento dejó de funcionar" />
+                            <f:selectItem itemLabel="No aplica ingresar en Semantikos" itemValue="No aplica ingresar en Semantikos" />
+                            <f:selectItem itemLabel="Otro" itemValue="Otro" />
+                            <p:ajax event="itemSelect" update="@(.cause2)" process="@this" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="cause2" value="Motivo:" rendered="#{institutions.deleteCause.equals('Otro')}" />
+                        <p:inputTextarea id="cause2" value="#{institutions.deleteCause}" rendered="#{institutions.deleteCause.equals('Otro')}" />
+
+                        <p:outputPanel/>
+                        <p:outputPanel>
+                            <p:commandButton value="Aceptar" actionListener="#{institutions.deleteInstitution}"
+                                             update="mainForm, @(.breadUpdate)" styleClass="Fright" />
+                            <p:commandButton value="Cancelar" onclick="PF('dlg').hide();" styleClass="Fright" actionListener="#{institutions.setDeleteCause(null)}"/>
+                        </p:outputPanel>
+                    </p:panelGrid>
+                </p:dialog>
 
             </h:form>
 

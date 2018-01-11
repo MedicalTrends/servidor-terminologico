@@ -348,7 +348,7 @@ public interface AuditManager {
      * @param institution          El establecimiento al cual se elimina
      * @param user         El usuario que hace la eliminacion
      */
-    public void recordInstitutionDelete(Institution institution, User user);
+    public void recordInstitutionDelete(Institution institution, User user, String deleteCause);
 
     /**
      * Este método es responsable de obtener y agrupar en una lista todos los tipos de cambios existentes.

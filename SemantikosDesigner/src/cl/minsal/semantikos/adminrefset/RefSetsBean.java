@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.adminrefset;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
+import cl.minsal.semantikos.institutions.InstitutionsBean;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.users.AuthenticationBean;
@@ -13,13 +14,17 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.audit.AuditAction;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import org.primefaces.model.LazyDataModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -35,6 +40,8 @@ import static java.lang.System.currentTimeMillis;
 @ManagedBean(name = "refsetsBean")
 @ViewScoped
 public class RefSetsBean implements Serializable {
+
+    static private final Logger logger = LoggerFactory.getLogger(InstitutionsBean.class);
 
     private RefSet refSetToCreate;
 
@@ -94,6 +101,8 @@ public class RefSetsBean implements Serializable {
     RefSetManager refSetManager = (RefSetManager) ServiceLocator.getInstance().getService(RefSetManager.class);
 
 
+
+
     @PostConstruct
     public void init() {
 
@@ -136,15 +145,25 @@ public class RefSetsBean implements Serializable {
      *
      */
     public void createRefset() {
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+
         if (refSetToCreate.getInstitution() != null && refSetToCreate.getName().length() > 0) {
-            if(!existRefSetsEqualsInstitution(refSetToCreate)){
-                refSetToCreate = refSetManager.createRefSet(refSetToCreate, authenticationBean.getLoggedUser());
+            if(!existRefSetsEqualsInstitution(refSetToCreate)) {
+
+                try {
+                    refSetToCreate = refSetManager.createRefSet(refSetToCreate, authenticationBean.getLoggedUser());
+                }
+                catch (EJBException e) {
+                    logger.error("error al eliminar establecimiento",e);
+                    facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+                }
                 refSetToCreate = new RefSet(null, new Institution(), null);
                 conceptsToCategory = null;
                 conceptsToDescription = null;
                 refSetList = refSetManager.getAllRefSets();
-                messageBean.messageSuccess("Éxito", "El RefSet a sido guardado exitosamente.");
-            }else{
+                messageBean.messageSuccess("Éxito", "El RefSet ha sido guardado exitosamente.");
+            } else {
                 messageBean.messageError("No se pueden crear 2 RefSets con el mismo nombre y en la misma institución");
             }
 

@@ -48,7 +48,7 @@
 
                                     <p:column headerText="Estado" filterBy="#{institution.validityUntil eq null}" filterMatchMode="exact" sortBy="#{institution.validityUntil eq null}">
                                         <f:facet name="filter">
-                                            <p:selectOneMenu onchange="PF('institutionsTable').filter()">
+                                            <p:selectOneMenu onchange="PF('institutionsTable').filter()" value="true">
                                                 <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
                                                 <f:selectItem itemLabel="Vigentes" itemValue="#{true}" />
                                                 <f:selectItem itemLabel="No Vigentes" itemValue="#{false}" />

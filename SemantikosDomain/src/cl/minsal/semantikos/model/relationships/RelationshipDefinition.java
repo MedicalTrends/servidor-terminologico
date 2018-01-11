@@ -222,17 +222,11 @@ public class RelationshipDefinition implements Serializable {
     }
 
     public boolean isATC(){
-
         return this.getName().equalsIgnoreCase(TargetDefinition.ATC);
+    }
 
-        /*
-        if (!this.getTargetDefinition().isHelperTable()){
-            return false;
-        }
-
-        HelperTable helperTable = (HelperTable) this.targetDefinition;
-        return helperTable.getId() == HelperTableSearchBR.HT_ATC_ID;
-        */
+    public boolean isGTIN(){
+        return this.getName().equalsIgnoreCase(TargetDefinition.GTINGS1);
     }
 
     public boolean isBioequivalente() {

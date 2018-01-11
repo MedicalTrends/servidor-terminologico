@@ -133,7 +133,7 @@ public class ISPBean {
         this.ano = ano;
     }
 
-    public void fetchData(){
+    public void fetchData() {
 
         RequestContext context = RequestContext.getCurrentInstance();
         FacesContext fContext = FacesContext.getCurrentInstance();

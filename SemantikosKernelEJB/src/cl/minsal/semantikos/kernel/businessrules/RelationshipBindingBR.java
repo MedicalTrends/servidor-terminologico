@@ -22,12 +22,12 @@ public interface RelationshipBindingBR {
 
     public void brSCT001(ConceptSMTK concept, Relationship relationship) throws Exception;
 
-    public void brSTK001(ConceptSMTK concept, Relationship relationship) throws Exception;
+    public void brISP001(ConceptSMTK concept, Relationship relationship) throws Exception;
 
-    public void brSTK002(ConceptSMTK concept, Relationship relationship);
+    public void brISP002(ConceptSMTK concept, Relationship relationship);
 
-    public void brSTK003(ConceptSMTK concept, Relationship relationship) throws Exception;
+    public void brISP003(ConceptSMTK concept, Relationship relationship) throws Exception;
 
-    public void brSTK004(ConceptSMTK concept, Relationship relationship);
+    public void brISP004(ConceptSMTK concept, Relationship relationship);
 
 }

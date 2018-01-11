@@ -67,6 +67,8 @@ public class InstitutionsBean {
 
     long idInstitution;
 
+    String deleteCause;
+
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() {
@@ -128,7 +130,8 @@ public class InstitutionsBean {
 
         if(selectedInstitution.getCode() == null) {
             codeError = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar apellido paterno"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar código"));
+            return;
         }
         else {
             codeError = "";
@@ -136,7 +139,8 @@ public class InstitutionsBean {
 
         if(selectedInstitution.getName().trim().equals("")) {
             nameError = "ui-state-error";
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar nombres"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar nombre"));
+            return;
         }
         else {
             nameError = "";
@@ -178,10 +182,17 @@ public class InstitutionsBean {
     public void deleteInstitution() {
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
+
         try {
-            institutionManager.deleteInstitution(selectedInstitution, authenticationBean.getLoggedUser());
+            if(deleteCause == null || deleteCause.isEmpty()) {
+                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar un motivo de eliminación"));
+                return;
+            }
+            institutionManager.deleteInstitution(selectedInstitution, authenticationBean.getLoggedUser(), deleteCause);
             selectedInstitution = institutionManager.getInstitutionById(selectedInstitution.getId());
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "El establecimiento se ha eliminado y queda en estado No Vigente."));
+            RequestContext reqCtx = RequestContext.getCurrentInstance();
+            reqCtx.execute("PF('dlg').hide();");
         } catch (Exception e){
             logger.error("error al eliminar establecimiento",e);
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
@@ -237,5 +248,13 @@ public class InstitutionsBean {
 
     public void setNameError(String nameError) {
         this.nameError = nameError;
+    }
+
+    public String getDeleteCause() {
+        return deleteCause;
+    }
+
+    public void setDeleteCause(String deleteCause) {
+        this.deleteCause = deleteCause;
     }
 }

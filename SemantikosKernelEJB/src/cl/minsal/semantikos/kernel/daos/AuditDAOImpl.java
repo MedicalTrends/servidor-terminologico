@@ -307,7 +307,7 @@ public class AuditDAOImpl implements AuditDAO {
          * param 5: La entidad en la que se realizó la acción..
          */
         //TODO arreglar esto
-        String sql = "begin ? := stk.stk_pck_audit.create_institution_audit_actions(?,?,?,?,?); end;";
+        String sql = "begin ? := stk.stk_pck_audit.create_institution_audit_actions(?,?,?,?,?,?); end;";
 
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
@@ -325,6 +325,7 @@ public class AuditDAOImpl implements AuditDAO {
             call.setLong(4, subjectUser.getId());
             call.setLong(5, auditActionType.getId());
             call.setLong(6, auditableEntity.getId());
+            call.setString(7, institutionAuditAction.getDetail());
             call.execute();
 
             //ResultSet rs = (ResultSet) call.getObject(1);
@@ -448,6 +449,7 @@ public class AuditDAOImpl implements AuditDAO {
                 Timestamp date = rs.getTimestamp("date");
 
                 InstitutionAuditAction institutionAuditAction = new InstitutionAuditAction(institution, auditActionType, date, user, auditableEntityByID);
+                institutionAuditAction.setDetail(rs.getString("detail"));
                 institutionAuditActions.add(institutionAuditAction);
             }
         } catch (SQLException e) {

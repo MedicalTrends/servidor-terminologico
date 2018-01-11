@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -94,8 +95,11 @@ public class InstitutionManagerImpl implements InstitutionManager {
     }
 
     @Override
-    public void deleteInstitution(Institution institution, User user) {
-
+    public void deleteInstitution(Institution institution, User user, String deleteCause) {
+        institution.setValidityUntil(new Timestamp(System.currentTimeMillis()));
+        institutionDAO.updateInstitution(institution);
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        auditManager.recordInstitutionDelete(institution, user, deleteCause);
     }
 
     @Override
