@@ -1,0 +1,175 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewParam name="idConcept" value="#{concept.idConcept}" />
+        </f:metadata>
+
+        <div class="ui-g">
+
+            <div class="ui-g-0 ui-md-0 ui-lg-2"></div>
+
+            <div class="ui-g-12 ui-md-12 ui-lg-8">
+
+                <div class="card card-w-title">
+
+                    <h1>#{concept.selectedConcept.descriptionFavorite}</h1>
+
+                    <h:form id="browserForm">
+
+                        <div class="ui-g ui-fluid">
+
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                <h:outputText value="ConceptID" />
+                            </div>
+
+                            <div class="ui-g-12 ui-md-8 ui-lg-4">
+                                <p:inputText value="#{concept.selectedConcept.conceptID}"/>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                <h:outputText value="Categoría" />
+                            </div>
+
+                            <div class="ui-g-12 ui-md-8 ui-lg-4">
+                                <p:inputText value="#{concept.selectedConcept.category}"/>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                <h:outputText value="FSN" />
+                            </div>
+
+                            <div class="ui-g-12 ui-md-8 ui-lg-10">
+                                <p:inputText value="#{concept.selectedConcept.descriptionFSN}"/>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                <h:outputText value="Preferida" />
+                            </div>
+
+                            <div class="ui-g-12 ui-md-8 ui-lg-10">
+                                <p:inputText value="#{concept.selectedConcept.descriptionFavorite}"/>
+                            </div>
+
+                        </div>
+
+                        <br/>
+
+                        <p:tabView>
+                            <p:tab title="Otras Descripciones" rendered="#{not empty concept.getOtherDescriptions()}">
+                                <p:dataTable id="otherDescriptions"
+                                             rows="5"
+                                             paginator="true"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                             var="description"
+                                             value="#{concept.getOtherDescriptions()}"
+                                             editable="true"
+                                             reflow="true">
+
+                                    <p:column headerText="Tipo Descripción" style="width:25%;">
+                                        #{description.descriptionType.name}
+                                    </p:column>
+                                    <p:column headerText="Término">
+                                        #{description.term}
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+
+                            <p:tab title="Atributos" rendered="#{not empty concept.getSMTKRelationships()}">
+                                <p:dataTable id="smtkAttributes"
+                                             rows="5"
+                                             paginator="true"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                             var="attribute"
+                                             value="#{concept.getSMTKRelationships()}"
+                                             reflow="true">
+
+                                    <p:column headerText="Nombre" style="width:25%;">
+                                        #{attribute.relationshipDefinition.name}
+                                    </p:column>
+                                    <p:column headerText="Valor">
+                                        #{attribute.target}
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+
+                            <p:tab title="SNOMED-CT" rendered="#{not empty concept.getSnomedCTRelationships()}">
+                                <p:dataTable id="snomedAttributes"
+                                             rows="5"
+                                             paginator="true"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                             var="attribute"
+                                             value="#{concept.getSnomedCTRelationships()}"
+                                             reflow="true">
+
+                                    <p:column headerText="Nombre" style="width:25%;">
+                                        #{attribute.relationshipDefinition.name}
+                                    </p:column>
+                                    <p:column headerText="Valor">
+                                        #{attribute.target}
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+
+                            <p:tab title="RefSets" rendered="#{not empty concept.selectedConcept.refsets}">
+                                <p:dataTable id="refSets"
+                                             rows="5"
+                                             paginator="true"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                             var="refSet"
+                                             value="#{concept.selectedConcept.refsets}"
+                                             reflow="true">
+
+                                    <p:column headerText="Nombre" style="width:25%;">
+                                        #{refSet.name}
+                                    </p:column>
+                                    <p:column headerText="Establecimiento">
+                                        #{refSet.institution.name}
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+
+                            <p:tab title="Etiquetas" rendered="#{not empty concept.selectedConcept.tags}">
+                                <p:dataTable id="tags"
+                                             rows="5"
+                                             paginator="true"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                             var="tag"
+                                             value="#{concept.selectedConcept.tags}"
+                                             reflow="true">
+
+                                    <p:column>
+                                        <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" />
+                                    </p:column>
+
+                                </p:dataTable>
+                            </p:tab>
+
+                        </p:tabView>
+
+                    </h:form>
+
+                </div>
+            </div>
+
+            <div class="ui-g-0 ui-md-0 ui-lg-2"></div>
+
+        </div>
+
+        <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
+            <p:outputPanel styleClass="conceptDetail" style="width: 500px;">
+
+            </p:outputPanel>
+        </p:overlayPanel>
+
+
+    </ui:define>
+
+</ui:composition>
+

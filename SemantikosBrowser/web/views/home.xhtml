@@ -150,10 +150,9 @@
 
                                 <p:column headerText="Termino Preferido" sortBy="#{2}">
                                     <div style="margin-bottom: 28px;">
-                                        <p:commandLink value="#{conceptSMTK.descriptionFavorite.term}" oncomplete="PF('dialogC').show()" update=":browserForm:conceptTable,:browserForm:query-concept-sct"
-                                                       style="color:#1a0dab; font-size: 18px">
-                                            <f:setPropertyActionListener value="#{conceptSMTK}" target="#{browserBean.conceptSelected}"/>
-                                        </p:commandLink>
+                                        <p:link outcome="/views/concept" value="#{conceptSMTK.descriptionFavorite.term}" style="color:#1a0dab; font-size: 18px">
+                                            <f:param name="idConcept" value="#{conceptSMTK.id}" />
+                                        </p:link>
                                         <br/>
                                         <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: small; color: #006621" />
                                         <br/>
@@ -176,116 +175,124 @@
 
                         </p:outputPanel>
 
-                        <p:dialog id="dialogC" header="Ver Concepto" widgetVar="dialogC" global="true" width="700px" showEffect="fade" hideEffect="fade">
+                        <p:outputPanel id="query-concept-sct">
+                        <p:dialog id="dialogC" header="#{browserBean.conceptSelected.descriptionFavorite}" widgetVar="dialogC" global="true" showEffect="fade" hideEffect="fade" responsive="true">
 
-                            <p:outputPanel id="query-concept-sct">
-
-                                <p:panelGrid style="width:100%">
-                                    <f:facet name="header">
+                            <div class="ui-g-12">
+                                <div class="card card-w-title">
+                                    <p:panelGrid style="width:100%">
                                         <p:row>
-                                            <p:column colspan="2">
-                                                #{browserBean.conceptSelected.descriptionFavorite}
-                                            </p:column>
+                                            <p:column styleClass="BoldGray FontBold">ConceptID</p:column>
+                                            <p:column>#{browserBean.conceptSelected.conceptID}</p:column>
                                         </p:row>
-                                    </f:facet>
-                                    <p:row>
-                                        <p:column styleClass="BoldGray FontBold">ConceptID</p:column>
-                                        <p:column>#{browserBean.conceptSelected.conceptID}</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column styleClass="BoldGray FontBold">Categoría</p:column>
-                                        <p:column>#{browserBean.conceptSelected.category}</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column styleClass="BoldGray FontBold">FSN</p:column>
-                                        <p:column>#{browserBean.conceptSelected.descriptionFSN}</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column styleClass="BoldGray FontBold">Preferida</p:column>
-                                        <p:column>#{browserBean.conceptSelected.descriptionFavorite}</p:column>
-                                    </p:row>
-                                </p:panelGrid>
-                                <p:tabView>
-                                    <p:tab title="Otras Descripciones" rendered="#{not empty browserBean.getOtherDescriptions(browserBean.conceptSelected)}">
-                                        <p:dataTable id="otherDescriptions"
-                                                     var="description"
-                                                     value="#{browserBean.getOtherDescriptions(browserBean.conceptSelected)}"
-                                                     editable="true"
-                                                     reflow="true">
+                                        <p:row>
+                                            <p:column styleClass="BoldGray FontBold">Categoría</p:column>
+                                            <p:column>#{browserBean.conceptSelected.category}</p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column styleClass="BoldGray FontBold">FSN</p:column>
+                                            <p:column>#{browserBean.conceptSelected.descriptionFSN}</p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column styleClass="BoldGray FontBold">Preferida</p:column>
+                                            <p:column>#{browserBean.conceptSelected.descriptionFavorite}</p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                    <p:tabView>
+                                        <p:tab title="Otras Descripciones" rendered="#{not empty browserBean.getOtherDescriptions(browserBean.conceptSelected)}">
+                                            <p:dataTable id="otherDescriptions"
+                                                         rows="5"
+                                                         paginator="true"
+                                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                                         var="description"
+                                                         value="#{browserBean.getOtherDescriptions(browserBean.conceptSelected)}"
+                                                         editable="true"
+                                                         reflow="true">
 
-                                            <p:column headerText="Tipo Descripción">
-                                                #{description.descriptionType.name}
-                                            </p:column>
-                                            <p:column headerText="Término">
-                                                #{description.term}
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
+                                                <p:column headerText="Tipo Descripción" style="width:25%;">
+                                                    #{description.descriptionType.name}
+                                                </p:column>
+                                                <p:column headerText="Término">
+                                                    #{description.term}
+                                                </p:column>
+                                            </p:dataTable>
+                                        </p:tab>
 
-                                    <p:tab title="Atributos" rendered="#{not empty browserBean.getSMTKRelationships()}">
-                                        <p:dataTable id="smtkAttributes"
-                                                     rows="5"
-                                                     paginator="true"
-                                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                                     var="attribute"
-                                                     value="#{browserBean.getSMTKRelationships()}"
-                                                     reflow="true">
+                                        <p:tab title="Atributos" rendered="#{not empty browserBean.getSMTKRelationships()}">
+                                            <p:dataTable id="smtkAttributes"
+                                                         rows="5"
+                                                         paginator="true"
+                                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                                         var="attribute"
+                                                         value="#{browserBean.getSMTKRelationships()}"
+                                                         reflow="true">
 
-                                            <p:column headerText="Nombre">
-                                                #{attribute.relationshipDefinition.name}
-                                            </p:column>
-                                            <p:column headerText="Valor">
-                                                #{attribute.target}
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
+                                                <p:column headerText="Nombre" style="width:25%;">
+                                                    #{attribute.relationshipDefinition.name}
+                                                </p:column>
+                                                <p:column headerText="Valor">
+                                                    #{attribute.target}
+                                                </p:column>
+                                            </p:dataTable>
+                                        </p:tab>
 
-                                    <p:tab title="SNOMED-CT" rendered="#{not empty browserBean.getSnomedCTRelationships()}">
-                                        <p:dataTable id="snomedAttributes"
-                                                     var="attribute"
-                                                     value="#{browserBean.getSnomedCTRelationships()}"
-                                                     reflow="true">
+                                        <p:tab title="SNOMED-CT" rendered="#{not empty browserBean.getSnomedCTRelationships()}">
+                                            <p:dataTable id="snomedAttributes"
+                                                         rows="5"
+                                                         paginator="true"
+                                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                                         var="attribute"
+                                                         value="#{browserBean.getSnomedCTRelationships()}"
+                                                         reflow="true">
 
-                                            <p:column headerText="Nombre">
-                                                #{attribute.relationshipDefinition.name}
-                                            </p:column>
-                                            <p:column headerText="Valor">
-                                                #{attribute.target}
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
+                                                <p:column headerText="Nombre" style="width:25%;">
+                                                    #{attribute.relationshipDefinition.name}
+                                                </p:column>
+                                                <p:column headerText="Valor">
+                                                    #{attribute.target}
+                                                </p:column>
+                                            </p:dataTable>
+                                        </p:tab>
 
-                                    <p:tab title="RefSets" rendered="#{not empty browserBean.conceptSelected.refsets}">
-                                        <p:dataTable id="refSets"
-                                                     var="refSet"
-                                                     value="#{browserBean.conceptSelected.refsets}"
-                                                     reflow="true">
+                                        <p:tab title="RefSets" rendered="#{not empty browserBean.conceptSelected.refsets}">
+                                            <p:dataTable id="refSets"
+                                                         rows="5"
+                                                         paginator="true"
+                                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                                         var="refSet"
+                                                         value="#{browserBean.conceptSelected.refsets}"
+                                                         reflow="true">
 
-                                            <p:column headerText="Nombre">
-                                                #{refSet.name}
-                                            </p:column>
-                                            <p:column headerText="Establecimiento">
-                                                #{refSet.institution.name}
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
+                                                <p:column headerText="Nombre" style="width:25%;">
+                                                    #{refSet.name}
+                                                </p:column>
+                                                <p:column headerText="Establecimiento">
+                                                    #{refSet.institution.name}
+                                                </p:column>
+                                            </p:dataTable>
+                                        </p:tab>
 
-                                    <p:tab title="Etiquetas" rendered="#{not empty browserBean.conceptSelected.tags}">
-                                        <p:dataTable id="tags"
-                                                     var="tag"
-                                                     value="#{browserBean.conceptSelected.tags}"
-                                                     reflow="true">
+                                        <p:tab title="Etiquetas" rendered="#{not empty browserBean.conceptSelected.tags}">
+                                            <p:dataTable id="tags"
+                                                         rows="5"
+                                                         paginator="true"
+                                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                                         var="tag"
+                                                         value="#{browserBean.conceptSelected.tags}"
+                                                         reflow="true">
 
-                                            <p:column>
-                                                <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" />
-                                            </p:column>
+                                                <p:column>
+                                                    <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" />
+                                                </p:column>
 
-                                        </p:dataTable>
-                                    </p:tab>
+                                            </p:dataTable>
+                                        </p:tab>
 
-                                </p:tabView>
-                            </p:outputPanel>
+                                    </p:tabView>
+                                </div>
+                            </div>
                         </p:dialog>
+                        </p:outputPanel>
 
                     </h:form>
 

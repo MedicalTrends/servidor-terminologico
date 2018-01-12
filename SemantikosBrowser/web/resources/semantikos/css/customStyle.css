@@ -115,23 +115,23 @@
     border-bottom: 0;
 }
 
-#browserForm table thead {
+#browserForm\:conceptPanel table thead {
     display: none !important;
 }
 
-#browserForm .ui-paginator .ui-paginator-pages .ui-paginator-page {
+#browserForm\:conceptPanel .ui-paginator .ui-paginator-pages .ui-paginator-page {
     color: #3F51B5 !important;
 }
 
-#browserForm .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+#browserForm\:conceptPanel .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
     color: #FFFFFF !important;
 }
 
-#browserForm .conceptTable .ui-widget-header {
+#browserForm\:conceptPanel .conceptTable .ui-widget-header {
     background: rgba(56, 73, 162, 0) !important;
 }
 
-#browserForm .ui-paginator .ui-paginator-first, body .ui-paginator .ui-paginator-prev, #browserForm .ui-paginator .ui-paginator-next, #browserForm .ui-paginator .ui-paginator-last {
+#browserForm\:conceptPanel .ui-paginator .ui-paginator-first, #browserForm\:conceptPanel .ui-paginator .ui-paginator-prev, #browserForm\:conceptPanel .ui-paginator .ui-paginator-next, #browserForm\:conceptPanel .ui-paginator .ui-paginator-last {
     color: #3F51B5 !important;
 }
 
