@@ -12,6 +12,7 @@ import cl.minsal.semantikos.model.queries.BrowserQuery;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.model.tags.Tag;
+import cl.minsal.semantikos.modelws.request.Request;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -20,8 +21,13 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +37,7 @@ import static java.util.Collections.EMPTY_LIST;
 import static org.primefaces.util.Constants.EMPTY_STRING;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class BrowserBean implements Serializable {
 
     private static final long serialVersionUID = 20120925L;
@@ -50,12 +56,6 @@ public class BrowserBean implements Serializable {
      * Variables para el browser
      */
     static final Logger logger = LoggerFactory.getLogger(BrowserBean.class);
-
-    //@EJB
-    QueryManager queryManager;
-
-    //@EJB
-    TagManager tagManager;
 
     /**
      * Objeto de consulta: contiene todos los filtros y columnas necesarios para el despliegue de los resultados en el navegador
@@ -93,10 +93,16 @@ public class BrowserBean implements Serializable {
     private boolean showFilters = false;
 
     //@EJB
-    private CategoryManager categoryManager;
+    private QueryManager queryManager = (QueryManager) ServiceLocator.getInstance().getService(QueryManager.class);
 
     //@EJB
-    private ConceptManager conceptManager;
+    private TagManager tagManager = (TagManager) ServiceLocator.getInstance().getService(TagManager.class);
+
+    //@EJB
+    private CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
+
+    //@EJB
+    private ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
 
     //@EJB
     private DescriptionManager descriptionManager = (DescriptionManager) ServiceLocator.getInstance().getService(DescriptionManager.class);
@@ -104,16 +110,14 @@ public class BrowserBean implements Serializable {
     //@EJB
     private RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);
 
+    private boolean postback = false;
+
+    private static final String HOME_PAGE = "/views/home.xhtml";
+
     @PostConstruct
     protected void initialize() {
 
-        queryManager = (QueryManager) ServiceLocator.getInstance().getService(QueryManager.class);
-        tagManager = (TagManager) ServiceLocator.getInstance().getService(TagManager.class);
-        categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
-        conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
-
         //ServiceLocator.getInstance().closeContext();
-
         tags = tagManager.getAllTags();
         categories = categoryManager.getCategories();
 
@@ -159,6 +163,27 @@ public class BrowserBean implements Serializable {
         childEastOptions.setSouthOptions(eastSouth);
     }
 
+    public boolean isPostback() {
+        /*
+        FacesContext fc = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = fc.getExternalContext();
+        Map<String, String> headers = externalContext.getRequestHeaderMap();
+        boolean ajax = "XMLHttpRequest".equals(headers.get("X-Requested-With"));
+
+        HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+
+        if (origRequest.getRequestURI().equals(HOME_PAGE) && !ajax) {
+            // It's a reload event
+            System.out.println("hola");
+        }
+        */
+        return postback;
+    }
+
+    public void setPostback(boolean postback) {
+        this.postback = postback;
+    }
+
     /**
      * Este método es el responsable de ejecutar la consulta
      */
@@ -197,7 +222,7 @@ public class BrowserBean implements Serializable {
                 isFilterChanged = false;
 
                 browserQuery.setPageSize(pageSize);
-                browserQuery.setOrder(new Integer(sortField));
+                browserQuery.setOrder(new Integer(sortField==null?"1":sortField));
 
                 if(sortOrder.name().substring(0,3).toLowerCase().equals("asc")) {
                     browserQuery.setAsc(sortOrder.name().substring(0, 3).toLowerCase());

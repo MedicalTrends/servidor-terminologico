@@ -46,7 +46,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                <p:inputText value="#{concept.selectedConcept.descriptionFSN}"/>
+                                <p:inputTextarea rows="1" value="#{concept.selectedConcept.descriptionFSN}"/>
                             </div>
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
@@ -54,12 +54,10 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                <p:inputText value="#{concept.selectedConcept.descriptionFavorite}"/>
+                                <p:inputTextarea rows="1" value="#{concept.selectedConcept.descriptionFavorite}"/>
                             </div>
 
                         </div>
-
-                        <br/>
 
                         <p:tabView>
                             <p:tab title="Otras Descripciones" rendered="#{not empty concept.getOtherDescriptions()}">
@@ -152,6 +150,18 @@
                             </p:tab>
 
                         </p:tabView>
+
+                        <br/>
+
+                        <div class="ui-g ui-fluid">
+
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                <p:button outcome="home" value="Volver" styleClass="cyan-btn ui-priority-primary">
+                                    <f:param name="isPostback" value="#{false}" />
+                                </p:button>
+                            </div>
+
+                        </div>
 
                     </h:form>
 
