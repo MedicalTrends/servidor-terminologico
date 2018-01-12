@@ -241,6 +241,10 @@ public class RefSetController {
             throw new NotFoundFault("El refset: '"+ refSet +"' no está vigente");
         }
 
+        if(!institution.equals(refSet.getInstitution())) {
+            throw new NotFoundFault("El establecimiento dueño del RefSet: '"+refSet.getInstitution()+"' no corresponde al establecimiento de conexión: '"+institution+"'");
+        }
+
         if ((request.getConceptID() == null || "".equals(request.getConceptID()))
                 && (request.getDescriptionID() == null || "".equals(request.getDescriptionID()))) {
             throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
@@ -261,10 +265,6 @@ public class RefSetController {
             throw new NotFoundFault("El idEstablecimiento no correponde a ninguno de los establecimientos del usuario: '"+user+"'");
         }
         */
-
-        if(!institution.equals(refSet.getInstitution())) {
-            throw new NotFoundFault("El establecimiento dueño del RefSet: '"+refSet.getInstitution()+"' no corresponde al establecimiento de conexión: '"+institution+"'");
-        }
 
         if(refSet.getConcepts().contains(conceptSMTK)) {
             throw new NotFoundFault("El RefSet: '"+refSet+"' ya contiene el concepto: '"+conceptSMTK+"'");
@@ -296,6 +296,16 @@ public class RefSetController {
             throw new NotFoundFault("El refset: '"+ refSet +"' no está vigente");
         }
 
+        /*
+        if(!user.getInstitutions().contains(institution)) {
+            throw new NotFoundFault("El idEstablecimiento no correponde a ninguno de los establecimientos del usuario: '"+user+"'");
+        }
+        */
+
+        if(!institution.equals(refSet.getInstitution())) {
+            throw new NotFoundFault("El establecimiento dueño del RefSet: '"+refSet.getInstitution()+"' no corresponde al establecimiento de conexión: '"+institution+"'");
+        }
+
         if ((request.getConceptID() == null || "".equals(request.getConceptID()))
                 && (request.getDescriptionID() == null || "".equals(request.getDescriptionID()))) {
             throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
@@ -309,16 +319,6 @@ public class RefSetController {
 
         if(!conceptSMTK.isModeled()) {
             throw new NotFoundFault("El concepto: '"+ conceptSMTK +"' está en borrador, por lo tanto no puede ser agregado al RefSet");
-        }
-
-        /*
-        if(!user.getInstitutions().contains(institution)) {
-            throw new NotFoundFault("El idEstablecimiento no correponde a ninguno de los establecimientos del usuario: '"+user+"'");
-        }
-        */
-
-        if(!institution.equals(refSet.getInstitution())) {
-            throw new NotFoundFault("El establecimiento dueño del RefSet: '"+refSet.getInstitution()+"' no corresponde al establecimiento de conexión: '"+institution+"'");
         }
 
         if(!refSet.getConcepts().contains(conceptSMTK)) {
