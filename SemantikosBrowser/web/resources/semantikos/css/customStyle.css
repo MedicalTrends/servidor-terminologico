@@ -23,6 +23,7 @@
     position: absolute;
     top: 10px;
     left: 10px;
+    /*cursor: pointer;*/
 }
 
 .fa-lg {
@@ -157,11 +158,9 @@
     text-decoration: underline !important;
 }
 
-/*
-.ui-autocomplete-items:first-child {
+.ui-autocomplete-item:first-child {
     display: none !important;
 }
-*/
 
 /*
 .ui-widget, .ui-widget .ui-widget

@@ -117,47 +117,6 @@ public class BrowserBean implements Serializable {
         //ServiceLocator.getInstance().closeContext();
         tags = tagManager.getAllTags();
         categories = categoryManager.getCategories();
-
-        // 1. set options for first layout  
-        layoutOptionsOne = new LayoutOptions();
-
-        // options for all panes (center and west)  
-        LayoutOptions panes = new LayoutOptions();
-        panes.addOption("slidable", false);
-        panes.addOption("resizeWhileDragging", true);
-        layoutOptionsOne.setPanesOptions(panes);
-
-        // options for west pane  
-        LayoutOptions west = new LayoutOptions();
-        west.addOption("size", 300);
-        west.addOption("minSize", 0);
-        west.addOption("maxSize", 300);
-        layoutOptionsOne.setWestOptions(west);
-
-        // 2. set options for second layout  
-        layoutOptionsTwo = new LayoutOptions();
-
-        // options for all panes  
-        panes = new LayoutOptions();
-        panes.addOption("slidable", false);
-        panes.addOption("resizeWhileDragging", true);
-        layoutOptionsTwo.setPanesOptions(panes);
-
-        // options for east pane  
-        LayoutOptions east = new LayoutOptions();
-        //panes.addOption("resizable", false);
-        //panes.addOption("closable", false);
-        east.addOption("size", "50%");
-        layoutOptionsTwo.setEastOptions(west);
-
-        // options for nested east layout  
-        LayoutOptions childEastOptions = new LayoutOptions();
-        east.setChildOptions(childEastOptions);
-
-        // options for east-south pane  
-        LayoutOptions eastSouth = new LayoutOptions();
-        eastSouth.addOption("size", "50%");
-        childEastOptions.setSouthOptions(eastSouth);
     }
 
     /**
@@ -170,6 +129,13 @@ public class BrowserBean implements Serializable {
          */
         if(browserQuery == null) {
             browserQuery = queryManager.getDefaultBrowserQuery();
+        }
+
+        /**
+         * Si la consulta viene nula o vacía retornan inmediatamente
+         */
+        if(browserQuery.getQuery() == null || browserQuery.getQuery().isEmpty()) {
+            return;
         }
 
         if(!performSearch) {
@@ -190,6 +156,7 @@ public class BrowserBean implements Serializable {
 
                 if(isFilterChanged) {
                     browserQuery.setPageNumber(0);
+                    this.setRowIndex(0);
                 }
                 else {
                     browserQuery.setPageNumber(first);

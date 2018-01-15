@@ -58,13 +58,20 @@
 
 
                                             </p:autoComplete>
-                                            <i class="fa fa-search fa-lg"  />
+                                            <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
+                                                <i class="fa fa-search fa-lg"  />
+                                            </p:outputPanel>
+                                            <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
+                                                <p:commandLink process="@this" style="color: #aaa;"
+                                                               update="@(.search)"
+                                                               action="#{browserBean.setDescriptionSelected(null)}">
+                                                    <i class="fa fa-close fa-lg"  />
+                                                </p:commandLink>
+                                            </p:outputPanel>
                                         </p:outputPanel>
 
-                                        <p:commandButton value="Deshacer" id="btn" icon="fa fa-undo"
-                                                         actionListener="#{browserBean.invalidate}"
-                                                         process="@(.otherDescriptionsPanel)"
-                                                         update="@(.otherDescriptionsPanel)">
+                                        <p:commandButton value="Limpiar" id="btn" icon="fa fa-undo"
+                                                         actionListener="#{browserBean.invalidate}">
                                         </p:commandButton>
 
                                         <p:selectBooleanButton value="#{browserBean.showFilters}" onLabel="Filtros"
