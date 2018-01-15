@@ -30,7 +30,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-4">
-                                <p:inputText value="#{concept.selectedConcept.conceptID}"/>
+                                <p:inputText value="#{concept.selectedConcept.conceptID}" readonly="true"/>
                             </div>
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
@@ -38,7 +38,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-4">
-                                <p:inputText value="#{concept.selectedConcept.category}"/>
+                                <p:inputText value="#{concept.selectedConcept.category}" readonly="true"/>
                             </div>
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
@@ -46,7 +46,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                <p:inputTextarea rows="1" value="#{concept.selectedConcept.descriptionFSN}"/>
+                                <p:inputTextarea rows="1" value="#{concept.selectedConcept.descriptionFSN}" readonly="true"/>
                             </div>
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
@@ -54,7 +54,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                <p:inputTextarea rows="1" value="#{concept.selectedConcept.descriptionFavorite}"/>
+                                <p:inputTextarea rows="1" value="#{concept.selectedConcept.descriptionFavorite}" readonly="true"/>
                             </div>
 
                         </div>
@@ -156,9 +156,7 @@
                         <div class="ui-g ui-fluid">
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <p:button outcome="home" value="Volver" styleClass="cyan-btn ui-priority-primary">
-                                    <f:param name="isPostback" value="#{false}" />
-                                </p:button>
+                                <p:button outcome="home" value="Volver" styleClass="cyan-btn ui-priority-primary"/>
                             </div>
 
                         </div>

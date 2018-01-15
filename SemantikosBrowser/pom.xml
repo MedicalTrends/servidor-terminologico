@@ -145,10 +145,17 @@
             <version>2.4</version><!--Version soportoe para weld (TOMCAT)-->
             <!--version>2.1</version--><!--EAP-->
         </dependency>
+
+        <!-- for JSF 2.x -->
         <dependency>
-            <groupId>cl.minsal.semantikos</groupId>
-            <artifactId>SemantikosDomain</artifactId>
-            <version>0.9.9.6</version>
+            <groupId>org.ocpsoft.rewrite</groupId>
+            <artifactId>rewrite-servlet</artifactId>
+            <version>3.4.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ocpsoft.rewrite</groupId>
+            <artifactId>rewrite-config-prettyfaces</artifactId>
+            <version>3.4.1.Final</version>
         </dependency>
 
         <!--dependency>

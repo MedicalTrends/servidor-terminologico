@@ -28,6 +28,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,10 +111,6 @@ public class BrowserBean implements Serializable {
     //@EJB
     private RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);
 
-    private boolean postback = false;
-
-    private static final String HOME_PAGE = "/views/home.xhtml";
-
     @PostConstruct
     protected void initialize() {
 
@@ -161,27 +158,6 @@ public class BrowserBean implements Serializable {
         LayoutOptions eastSouth = new LayoutOptions();
         eastSouth.addOption("size", "50%");
         childEastOptions.setSouthOptions(eastSouth);
-    }
-
-    public boolean isPostback() {
-        /*
-        FacesContext fc = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = fc.getExternalContext();
-        Map<String, String> headers = externalContext.getRequestHeaderMap();
-        boolean ajax = "XMLHttpRequest".equals(headers.get("X-Requested-With"));
-
-        HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-
-        if (origRequest.getRequestURI().equals(HOME_PAGE) && !ajax) {
-            // It's a reload event
-            System.out.println("hola");
-        }
-        */
-        return postback;
-    }
-
-    public void setPostback(boolean postback) {
-        this.postback = postback;
     }
 
     /**
@@ -248,6 +224,7 @@ public class BrowserBean implements Serializable {
     }
 
     public List<Description> searchSuggestedDescriptions(String term) {
+        isFilterChanged = true;
         browserQuery.setQuery(term);
         List<Description> suggestedDescriptions = new ArrayList<>();
         DescriptionTypeFactory.DUMMY_DESCRIPTION.setTerm(EMPTY_STRING);
@@ -268,6 +245,13 @@ public class BrowserBean implements Serializable {
             //browserQuery.setQuery(descriptionSelected.getTerm());
             browserQuery.setQuery(descriptionSelected.getConceptSMTK().getConceptID());
         }
+    }
+
+    public void invalidate() throws IOException {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        request.getSession().invalidate();
+        context.getExternalContext().redirect(context.getExternalContext().getRequestContextPath());
     }
 
     public LazyDataModel<ConceptSMTK> getConcepts() {

@@ -30,6 +30,7 @@ public class AuthenticationFilter implements Filter {
         ((HttpServletResponse) response).setHeader("Pragma", "no-cache"); // HTTP 1.0.
         ((HttpServletResponse) response).setHeader("Expires", "0");
 
+
         /* Inició sesión e intenta volver atrás */
         /*
         if(isLoggedIn(req) && req.getRequestURI().contains(Constants.LOGIN_PAGE)) {
