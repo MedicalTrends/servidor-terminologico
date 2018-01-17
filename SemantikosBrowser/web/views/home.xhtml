@@ -145,6 +145,7 @@
                         <p:outputPanel id="conceptPanel" styleClass="conceptPanel">
 
                             <p:dataTable id="conceptTable" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
+                                         widgetVar="conceptTable"
                                          rendered="#{not empty browserBean.concepts}"
                                          multiViewState="true"
                                          rows="15"

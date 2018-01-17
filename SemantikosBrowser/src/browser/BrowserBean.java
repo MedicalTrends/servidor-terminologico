@@ -13,6 +13,7 @@ import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.modelws.request.Request;
+import org.primefaces.context.RequestContext;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -156,6 +157,8 @@ public class BrowserBean implements Serializable {
 
                 if(isFilterChanged) {
                     browserQuery.setPageNumber(0);
+                    RequestContext context = RequestContext.getCurrentInstance();
+                    context.execute("PF('conceptTable').getPaginator().setPage(0);");
                     this.setRowIndex(0);
                 }
                 else {
