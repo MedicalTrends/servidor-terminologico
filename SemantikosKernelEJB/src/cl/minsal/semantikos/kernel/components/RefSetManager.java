@@ -126,4 +126,12 @@ public interface RefSetManager {
     List<RefSet> getRefsetByInstitution(Institution institution);
 
     List<RefSet> getRefsetByUser(User user);
+
+    /**
+     * Determina si este refset puede ser modificado por este usuario
+     * @param user el usuario que desea modificar el refset
+     * @param refSet el refset que se desea modificar
+     * @return
+     */
+    public boolean canWrite(User user, RefSet refSet);
 }

@@ -21,7 +21,6 @@ public interface ProfileManager {
 
     public Profile getProfileById(long id);
 
-
     /**
      * Método encargado de obtener una lista con todas las instituciones
      * @return Lista de instituciones

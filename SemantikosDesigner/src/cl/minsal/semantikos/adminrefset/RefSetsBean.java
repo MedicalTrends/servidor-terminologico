@@ -26,6 +26,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.sql.Ref;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -107,7 +108,7 @@ public class RefSetsBean implements Serializable {
     public void init() {
 
         categories = categoryManager.getCategories();
-        refSetList = refSetManager.getAllRefSets();
+        //refSetList = refSetManager.getAllRefSets();
         /**
          * solo administrarán los refset de su establecimiento/institución.
          */
@@ -141,6 +142,10 @@ public class RefSetsBean implements Serializable {
         }
     }
 
+    public boolean canWrite(RefSet refSet) {
+        return refSetManager.canWrite(authenticationBean.getLoggedUser(), refSet);
+    }
+
     /**
      *
      */
@@ -157,11 +162,13 @@ public class RefSetsBean implements Serializable {
                 catch (EJBException e) {
                     logger.error("error al eliminar establecimiento",e);
                     facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+                    return;
                 }
                 refSetToCreate = new RefSet(null, new Institution(), null);
                 conceptsToCategory = null;
                 conceptsToDescription = null;
-                refSetList = refSetManager.getAllRefSets();
+                //refSetList = refSetManager.getAllRefSets();
+                refSetList = refSetManager.getRefsetByUser(authenticationBean.getLoggedUser());
                 messageBean.messageSuccess("Éxito", "El RefSet ha sido guardado exitosamente.");
             } else {
                 messageBean.messageError("No se pueden crear 2 RefSets con el mismo nombre y en la misma institución");

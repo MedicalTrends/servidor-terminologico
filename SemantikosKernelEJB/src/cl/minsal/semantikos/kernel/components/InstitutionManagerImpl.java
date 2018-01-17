@@ -14,6 +14,7 @@ import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,6 +50,19 @@ public class InstitutionManagerImpl implements InstitutionManager {
     @Override
     public List<Institution> getAllInstitution() {
         return institutionDAO.getAllInstitution();
+    }
+
+    @Override
+    public List<Institution> getValidInstitution() {
+        List<Institution> validInstitutions = new ArrayList<>();
+
+        for (Institution institution : institutionDAO.getAllInstitution()) {
+            if(institution.getValidityUntil() == null) {
+                validInstitutions.add(institution);
+            }
+        }
+
+        return validInstitutions;
     }
 
     public long createInstitution(Institution institution, User user) throws BusinessRuleException {

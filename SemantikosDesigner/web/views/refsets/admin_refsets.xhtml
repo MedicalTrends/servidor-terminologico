@@ -141,7 +141,7 @@
 
                             <p:column headerText="Acción">
                                 <div style="text-align: center">
-                                    <p:commandButton icon="fa fa-edit" update="@(.editRefset)"
+                                    <p:commandButton icon="fa fa-edit" update="@(.editRefset)" rendered="#{refsetsBean.canWrite(refset)}"
                                                      oncomplete="PF('editRefset').show()" title="Editar">
                                         <f:setPropertyActionListener value="#{refset}"
                                                                      target="#{refsetsBean.refSetEdit}"/>
@@ -155,7 +155,7 @@
 
                                     <p:commandButton title="Dejar no vigente" icon="fa fa-trash"
                                                      actionListener="#{refsetsBean.invalidRefset(refset)}"
-                                                     update="@(.listRefSets)" rendered="#{refset.valid}">
+                                                     update="@(.listRefSets)" rendered="#{refset.valid and refsetsBean.canWrite(refset)}">
                                         <p:confirm header="Confirmar Acción" message="¿Desea invalidar este RefSet?"
                                                    icon="ui-icon-alert"/>
 

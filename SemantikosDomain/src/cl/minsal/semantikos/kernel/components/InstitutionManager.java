@@ -33,6 +33,8 @@ public interface InstitutionManager {
      */
     public List<Institution> getAllInstitution();
 
+    public List<Institution> getValidInstitution();
+
     /**
      * Este método es responsable de asociar (agregar) un establecimiento a un usuario.
      *

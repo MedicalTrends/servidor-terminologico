@@ -164,7 +164,7 @@ public class UsersBean {
 
         List<Institution> availableInstitutions = new ArrayList<Institution>();
 
-        availableInstitutions.addAll(institutionManager.getAllInstitution());
+        availableInstitutions.addAll(institutionManager.getValidInstitution());
 
 
         for (Institution i: selectedUser.getInstitutions()){
@@ -400,7 +400,7 @@ public class UsersBean {
     }
 
     public String getURLWithContextPath(HttpServletRequest request) {
-        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()  + request.getContextPath();
     }
 
     public DualListModel<Institution> getSelectedUserInsitutionModel() {
@@ -420,11 +420,11 @@ public class UsersBean {
         return profileManager.getProfileById(profileId);
     }
 
-    public Institution getInstitutionById(long institutionId){
+    public Institution getInstitutionById(long institutionId) {
         return institutionManager.getInstitutionById(institutionId);
     }
 
-    public void unlockUser(){
+    public void unlockUser() {
         //userManager.unlockUser(selectedUser.getUsername());
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
@@ -438,7 +438,7 @@ public class UsersBean {
         }
     }
 
-    public void deleteUser(){
+    public void deleteUser() {
         //userManager.unlockUser(selectedUser.getUsername());
         FacesContext facesContext = FacesContext.getCurrentInstance();
         try {

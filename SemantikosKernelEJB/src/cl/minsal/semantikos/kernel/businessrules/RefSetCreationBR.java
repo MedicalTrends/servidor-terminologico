@@ -9,6 +9,8 @@ import cl.minsal.semantikos.model.users.User;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 
+import java.util.List;
+
 import static cl.minsal.semantikos.model.users.ProfileFactory.ADMINISTRATOR_PROFILE;
 import static cl.minsal.semantikos.model.users.ProfileFactory.REFSET_ADMIN_PROFILE;
 
@@ -47,7 +49,7 @@ public class RefSetCreationBR {
      * @param user El usuario que realiza la creación.
      */
     private void brRefSet001(User user) {
-        if (!user.getProfiles().contains(ADMINISTRATOR_PROFILE) && user.getProfiles().contains(REFSET_ADMIN_PROFILE)) {
+        if (!user.getProfiles().contains(ADMINISTRATOR_PROFILE) && !user.getProfiles().contains(REFSET_ADMIN_PROFILE)) {
             throw new BusinessRuleException("BR-RefSet-001", "El RefSet puede ser creado por un usuario con el perfil " + ADMINISTRATOR_PROFILE + " o " + REFSET_ADMIN_PROFILE);
         }
     }
@@ -58,10 +60,12 @@ public class RefSetCreationBR {
      * @param refSet El usuario que realiza la creación.
      */
     private void brRefSet002(RefSet refSet) {
-        RefSet other = refSetManager.getRefsetByName(refSet.getName());
+        List<RefSet> other = refSetManager.findRefsetsByName(refSet.getName());
 
-        if(other != null && other.getValidityUntil() == null) {
-            throw new BusinessRuleException("BR-RefSet-002", "Ya existe un RefSet vigente con este nombre. RefSet " + other);
+        for (RefSet set : other) {
+            if(set.getValidityUntil() == null) {
+                throw new BusinessRuleException("BR-RefSet-002", "Ya existe un RefSet vigente con este nombre. RefSet " + other);
+            }
         }
     }
 }

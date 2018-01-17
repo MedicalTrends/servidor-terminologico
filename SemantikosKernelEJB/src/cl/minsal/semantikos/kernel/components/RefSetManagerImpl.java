@@ -161,15 +161,27 @@ public class RefSetManagerImpl implements RefSetManager {
 
         List<Institution> institutions = user.getInstitutions();
 
-        if(!institutions.contains(InstitutionFactory.MINSAL)) {
-            institutions.add(InstitutionFactory.MINSAL);
+        if(institutions.contains(InstitutionFactory.MINSAL)) {
+            return getAllRefSets();
         }
+
+        institutions.add(InstitutionFactory.MINSAL);
 
         for (Institution institution : user.getInstitutions()) {
             refsets.addAll(getRefsetByInstitution(institution));
         }
 
         return refsets;
+    }
+
+    @Override
+    public boolean canWrite(User user, RefSet refSet) {
+        if(user.getInstitutions().contains(InstitutionFactory.MINSAL)) {
+            return true;
+        }
+        else {
+            return user.getInstitutions().contains(refSet.getInstitution());
+        }
     }
 
     @Override

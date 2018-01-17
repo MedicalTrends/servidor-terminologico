@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
