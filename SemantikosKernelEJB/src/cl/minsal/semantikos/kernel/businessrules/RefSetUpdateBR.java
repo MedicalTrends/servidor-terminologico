@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.businessrules;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.InstitutionFactory;
 import cl.minsal.semantikos.model.users.User;
 
 import static cl.minsal.semantikos.model.users.ProfileFactory.ADMINISTRATOR_PROFILE;
@@ -41,11 +42,13 @@ public class RefSetUpdateBR {
      * @param user   El usuario que realiza la operación.
      */
     protected void brRefSet002(RefSet refSet, User user) {
-        for (Institution institution: user.getInstitutions() ) {
-            if(institution.getId()==refSet.getInstitution().getId()) {
-                return;
-            }
-        } throw new BusinessRuleException("BR-RefSet-002", "Un usuario puede editar RefSets de instituciones a las que se encuentra asociado.");
+        if(user.getInstitutions().contains(InstitutionFactory.MINSAL)) {
+            return;
+        }
+
+        if(!user.getInstitutions().contains(refSet.getInstitution())) {
+            throw new BusinessRuleException("BR-RefSet-002", "Un usuario puede editar RefSets de instituciones a las que se encuentra asociado.");
+        }
 
     }
 }

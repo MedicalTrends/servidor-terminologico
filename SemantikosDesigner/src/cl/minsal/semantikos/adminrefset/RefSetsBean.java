@@ -196,7 +196,7 @@ public class RefSetsBean implements Serializable {
     public void invalidRefset(RefSet refSetSelected) {
         refSetSelected.setValidityUntil(new Timestamp(currentTimeMillis()));
         refSetManager.updateRefSet(refSetSelected, authenticationBean.getLoggedUser());
-        refSetList = refSetManager.getAllRefSets();
+        refSetList = refSetManager.getRefsetByUser(authenticationBean.getLoggedUser());
     }
 
     /**
@@ -206,7 +206,7 @@ public class RefSetsBean implements Serializable {
         try {
             refSetSelected.setValidityUntil(null);
             refSetManager.updateRefSet(refSetSelected, authenticationBean.getLoggedUser());
-            refSetList = refSetManager.getAllRefSets();
+            refSetList = refSetManager.getRefsetByUser(authenticationBean.getLoggedUser());
         }
         catch (EJBException e) {
             messageBean.messageError(e.getMessage());
