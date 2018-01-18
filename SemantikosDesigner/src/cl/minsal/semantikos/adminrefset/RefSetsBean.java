@@ -4,6 +4,8 @@ import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.institutions.InstitutionsBean;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.messages.MessageBean;
+import cl.minsal.semantikos.model.users.InstitutionFactory;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.concept.ConceptBean;
 
@@ -28,6 +30,7 @@ import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.sql.Ref;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,8 +105,6 @@ public class RefSetsBean implements Serializable {
     RefSetManager refSetManager = (RefSetManager) ServiceLocator.getInstance().getService(RefSetManager.class);
 
 
-
-
     @PostConstruct
     public void init() {
 
@@ -127,6 +128,21 @@ public class RefSetsBean implements Serializable {
     public void reloadRefsetByInstitution() {
         refSetListInstitution = refSetManager.getRefsetByInstitution((institutionSelected == null) ? new Institution() : institutionSelected);
 
+    }
+
+    public List<Institution> getInstitutionsByUser(User user) {
+        if(user.getInstitutions().contains(InstitutionFactory.MINSAL)) {
+            List<Institution> institutions = new ArrayList<>();
+            for (Institution institution : InstitutionFactory.getInstance().getInstitutions()) {
+                if(institution.getValidityUntil() == null) {
+                    institutions.add(institution);
+                }
+            }
+            return institutions;
+        }
+        else {
+            return user.getInstitutions();
+        }
     }
 
     /**

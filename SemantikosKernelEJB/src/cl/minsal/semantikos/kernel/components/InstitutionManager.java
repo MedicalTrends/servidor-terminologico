@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.InstitutionFactory;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
 
@@ -58,5 +59,7 @@ public interface InstitutionManager {
      * @param user            El usuario que realiza la eliminación.
      */
     public void unbindInstitutionFromUser(User user, Institution institution, User _user);
+
+    public InstitutionFactory getInstitutionFactory();
 }
 

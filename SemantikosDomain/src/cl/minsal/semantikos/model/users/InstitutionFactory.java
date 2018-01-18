@@ -88,4 +88,7 @@ public class InstitutionFactory implements Serializable {
 
     }
 
+    public List<Institution> getInstitutions() {
+        return institutions;
+    }
 }

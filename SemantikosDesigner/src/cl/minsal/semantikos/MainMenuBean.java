@@ -14,6 +14,7 @@ import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.users.InstitutionFactory;
 import cl.minsal.semantikos.model.users.UserFactory;
 import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
 import cl.minsal.semantikos.modelweb.RelationshipAttributeDefinitionWeb;
@@ -66,6 +67,8 @@ public class MainMenuBean implements Serializable {
 
     UserManager userManager = (UserManager) ServiceLocator.getInstance().getService(UserManager.class);
 
+    InstitutionManager institutionManager = (InstitutionManager) ServiceLocator.getInstance().getService(InstitutionManager.class);
+
     private TagSMTKFactory tagSMTKFactory;
 
     private DescriptionTypeFactory descriptionTypeFactory;
@@ -73,6 +76,8 @@ public class MainMenuBean implements Serializable {
     private Map<Long, RelationshipDefinitionWeb> relationshipDefinitiosnWeb = new HashMap<>();
 
     private UserFactory userFactory;
+
+    private InstitutionFactory institutionFactory;
 
     @PostConstruct
     public void init() {
@@ -91,6 +96,10 @@ public class MainMenuBean implements Serializable {
         DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypeFactory.getDescriptionTypes());
 
         UserFactory.getInstance().setUsersById(userFactory.getUsersById());
+
+        institutionFactory = institutionManager.getInstitutionFactory();
+
+        InstitutionFactory.getInstance().setInstitutions(institutionFactory.getInstitutions());
 
         categoryMenuModel = new DefaultMenuModel();
 

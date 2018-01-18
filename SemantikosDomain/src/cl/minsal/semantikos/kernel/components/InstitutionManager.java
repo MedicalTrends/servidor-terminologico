@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.InstitutionFactory;
 import cl.minsal.semantikos.model.users.User;
 
 import java.util.List;
@@ -52,5 +53,7 @@ public interface InstitutionManager {
      * @param user            El usuario que realiza la eliminación.
      */
     public void unbindInstitutionFromUser(User user, Institution institution, User _user);
+
+    public InstitutionFactory getInstitutionFactory();
 }
 

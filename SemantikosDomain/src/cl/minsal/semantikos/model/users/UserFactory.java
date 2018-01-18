@@ -57,6 +57,10 @@ public class UserFactory implements Serializable {
         return null;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
     /**
      * Este método es responsable de asignar un nuevo conjunto de tagsSMTJ. Al hacerlo, es necesario actualizar
      * los mapas.

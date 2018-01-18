@@ -40,7 +40,7 @@
                                                  converter="omnifaces.SelectItemsConverter">
                                     <f:selectItem itemValue="" itemLabel="Seleccione una institución"
                                                   noSelectionOption="true"/>
-                                    <f:selectItems value="#{refsetsBean.authenticationBean.loggedUser.institutions}"
+                                    <f:selectItems value="#{refsetsBean.getInstitutionsByUser(authenticationBean.loggedUser)}"
                                                    var="institution" itemValue="#{institution}"
                                                    itemLabel="#{institution.name}"/>
                                     <p:column><h:outputText value="#{i.name}"/></p:column>

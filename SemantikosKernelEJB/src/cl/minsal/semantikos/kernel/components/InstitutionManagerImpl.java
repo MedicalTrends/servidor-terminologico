@@ -1,12 +1,14 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.businessrules.InstitutionCreationBR;
+import cl.minsal.semantikos.kernel.businessrules.InstitutionDeletionBR;
 import cl.minsal.semantikos.kernel.businessrules.UserCreationBR;
 import cl.minsal.semantikos.kernel.daos.InstitutionDAO;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.InstitutionFactory;
 import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.model.users.UserFactory;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -31,6 +33,9 @@ public class InstitutionManagerImpl implements InstitutionManager {
 
     @EJB
     InstitutionCreationBR institutionCreationBR;
+
+    @EJB
+    InstitutionDeletionBR institutionDeletionBR;
 
     @Override
     public List<Institution> getInstitutionsBy(User user) {
@@ -110,6 +115,9 @@ public class InstitutionManagerImpl implements InstitutionManager {
 
     @Override
     public void deleteInstitution(Institution institution, User user, String deleteCause) {
+
+        institutionDeletionBR.verifyPreConditions(institution);
+
         institution.setValidityUntil(new Timestamp(System.currentTimeMillis()));
         institutionDAO.updateInstitution(institution);
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
@@ -134,5 +142,10 @@ public class InstitutionManagerImpl implements InstitutionManager {
 
         /* Registrar en el Historial si es preferida (Historial BR) */
         auditManager.recordUserInstitutionUnbinding(user, institution, _user);
+    }
+
+    @Override
+    public InstitutionFactory getInstitutionFactory() {
+        return InstitutionFactory.getInstance();
     }
 }

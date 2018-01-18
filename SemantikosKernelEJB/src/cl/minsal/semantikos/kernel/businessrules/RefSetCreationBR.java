@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.components.RefSetManager;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.InstitutionFactory;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.EJB;
@@ -38,6 +39,9 @@ public class RefSetCreationBR {
      * @param user              El usuario que crea el RefSet.
      */
     private void brRefSet005(Institution refSetInstitution, User user) {
+        if(user.getInstitutions().contains(InstitutionFactory.MINSAL)) {
+            return;
+        }
         if (!user.getInstitutions().contains(refSetInstitution)) {
             throw new BusinessRuleException("BR-RefSet-005", "Un Administrador sólo puede crear RefSets asociados a los establecimientos a los que pertenece el usuario");
         }
