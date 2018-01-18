@@ -96,6 +96,7 @@ public class QueryManagerImpl implements QueryManager {
             if(!query.getColumns().isEmpty()) {
 
                 conceptSMTK.setRelationships(queryDAO.getRelationshipsByColumns(conceptSMTK, query));
+                //conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
 
                 // Adding second order columns, if this apply
 

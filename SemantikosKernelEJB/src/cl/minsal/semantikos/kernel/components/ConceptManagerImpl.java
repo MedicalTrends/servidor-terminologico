@@ -5,6 +5,7 @@ import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.kernel.daos.ws.ConceptWSDAO;
+import cl.minsal.semantikos.kernel.daos.ws.RelationshipWSDAO;
 import cl.minsal.semantikos.kernel.util.ConceptUtils;
 import cl.minsal.semantikos.kernel.util.IDGenerator;
 import cl.minsal.semantikos.model.*;
@@ -66,6 +67,9 @@ public class ConceptManagerImpl implements ConceptManager {
     private RelationshipDAO relationshipDAO;
 
     @EJB
+    private RelationshipWSDAO relationshipWSDAO;
+
+    @EJB
     private TagManager tagManager;
 
     @EJB
@@ -104,6 +108,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         /* Se recupera el concepto base (sus atributos) sin sus relaciones ni descripciones */
         ConceptSMTK conceptSMTK = this.conceptDAO.getConceptByID(id);
+        //ConceptSMTK conceptSMTK = conceptWSDAO.getConceptByID(id);
 
         /* Se cargan las descripciones del concepto */
         //conceptSMTK.setDescriptions(descriptionDAO.getDescriptionsByConcept(conceptSMTK));
@@ -331,6 +336,7 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public List<Relationship> loadRelationships(ConceptSMTK concept) throws Exception {
         List<Relationship> relationships = relationshipDAO.getRelationshipsBySourceConcept(concept);
+        //List<Relationship> relationships = relationshipWSDAO.getRelationshipsBySourceConcept(concept);
         /* Se agregan las relaciones al componente */
         concept.setRelationships(relationships);
         /* Se agregan los crossmaps indirectos al componente */

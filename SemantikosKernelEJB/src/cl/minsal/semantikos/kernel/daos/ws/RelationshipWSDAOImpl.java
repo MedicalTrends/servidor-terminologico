@@ -13,6 +13,7 @@ import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.dtos.*;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
+import cl.minsal.semantikos.model.queries.Query;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.users.User;
