@@ -30,6 +30,11 @@ public class AuthenticationFilter implements Filter {
             req.getSession().invalidate();
         }
 
+        if(((HttpServletRequest) request).getRequestURI().equals("/views/home.xhtml") ||
+                ((HttpServletRequest) request).getRequestURI().equals(((HttpServletRequest) request).getContextPath())) {
+            req.getSession().invalidate();
+        }
+
         chain.doFilter(request, response);
     }
 

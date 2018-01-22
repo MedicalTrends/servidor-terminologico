@@ -112,12 +112,18 @@ public class BrowserBean implements Serializable {
     //@EJB
     private RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);
 
+    private List<String> images = new ArrayList();
+
     @PostConstruct
     protected void initialize() {
 
         //ServiceLocator.getInstance().closeContext();
         tags = tagManager.getAllTags();
         categories = categoryManager.getCategories();
+        images.add("image-1.jpg");
+        images.add("image-1.jpg");
+        //images.add("image-3.jpg");
+        //images.add("image-2.jpg");
     }
 
     /**
@@ -203,7 +209,7 @@ public class BrowserBean implements Serializable {
         return suggestedDescriptions;
     }
 
-    public void test() {
+    public void test() throws IOException {
         performSearch = true;
         /**
          * Si no se ha seleccionado ninguna descripción sugerida,
@@ -214,6 +220,13 @@ public class BrowserBean implements Serializable {
         else {
             //browserQuery.setQuery(descriptionSelected.getTerm());
             browserQuery.setQuery(descriptionSelected.getConceptSMTK().getConceptID());
+        }
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+
+        if(request.getRequestURI().equals("/views/home.xhtml")) {
+            ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+            eContext.redirect(eContext.getRequestContextPath() + "/views/search.xhtml");
         }
     }
 
@@ -485,4 +498,11 @@ public class BrowserBean implements Serializable {
         return gmdnRelationships;
     }
 
-}  
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+}
