@@ -29,6 +29,11 @@
         <param-value>rio</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
     <!-- melody -->
     <filter>
         <filter-name>javamelody</filter-name>

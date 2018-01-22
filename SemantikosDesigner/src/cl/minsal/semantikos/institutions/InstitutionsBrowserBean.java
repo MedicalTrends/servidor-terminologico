@@ -191,9 +191,11 @@ public class InstitutionsBrowserBean {
             institutionManager.deleteInstitution(selectedInstitution, authenticationBean.getLoggedUser(), deleteCause);
             selectedInstitution = institutionManager.getInstitutionById(selectedInstitution.getId());
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "El establecimiento se ha eliminado y queda en estado No Vigente."));
-            RequestContext reqCtx = RequestContext.getCurrentInstance();
-            reqCtx.execute("PF('dlg').hide();");
-            reqCtx.execute("PF('institutionsTable').filter();");
+            //RequestContext reqCtx = RequestContext.getCurrentInstance();
+            //reqCtx.execute("PF('dlg').hide();");
+            //reqCtx.execute("PF('institutionsTable').filter();");
+            ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+            eContext.redirect(eContext.getRequestContextPath() + "/views/institutions/institutions.xhtml");
         } catch (Exception e){
             logger.error("error al eliminar establecimiento",e);
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
