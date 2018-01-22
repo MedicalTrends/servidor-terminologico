@@ -28,72 +28,10 @@
         </dependency>
 
         <dependency>
-            <groupId>net.bull.javamelody</groupId>
-            <artifactId>javamelody-core</artifactId>
-            <version>1.59.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.intellij</groupId>
-            <artifactId>forms_rt</artifactId>
-            <version>5.0</version>
-        </dependency>
-
-        <!-- http://mvnrepository.com/artifact/org.primefaces/primefaces -->
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>6.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.21</version>
             <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>rio</artifactId>
-            <version>3.1.2</version>
-            <!--exclusions>
-                <exclusion>
-                    <groupId>org.glassfish</groupId>
-                    <artifactId>javax.faces</artifactId>
-                </exclusion>
-            </exclusions-->
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>3.14</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/net.sf.supercsv/super-csv -->
-        <dependency>
-            <groupId>net.sf.supercsv</groupId>
-            <artifactId>super-csv</artifactId>
-            <version>2.4.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cl.minsal.semantikos</groupId>
-            <artifactId>SemantikosDomain</artifactId>
-            <version>0.9.9.5</version>
-        </dependency>
-        <dependency>
-            <groupId>cl.minsal.semantikos</groupId>
-            <artifactId>SemantikosDomain</artifactId>
-            <version>0.9.9.5</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.ehcache/sizeof -->
-        <dependency>
-            <groupId>org.ehcache</groupId>
-            <artifactId>sizeof</artifactId>
-            <version>0.3.0</version>
         </dependency>
 
     </dependencies>
