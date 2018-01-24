@@ -226,7 +226,15 @@ public class BrowserBean implements Serializable {
 
         if(request.getRequestURI().equals("/views/home.xhtml")) {
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/views/search.xhtml");
+            eContext.redirect(eContext.getRequestContextPath() + "/search");
+        }
+    }
+
+    public void redirect() throws IOException {
+        ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+        if(browserQuery.getQuery() != null && browserQuery.getQuery().length() >= 3) {
+            performSearch = true;
+            eContext.redirect(eContext.getRequestContextPath() + "/search");
         }
     }
 

@@ -29,7 +29,7 @@
             <div class="Container30 Responsive30">
                 <div class="ContainerIndent">
                     <div class="Card ShadowEffect HeiAutoOnMobile">
-                        <h2 class="CardTopic"><i class="icon-timelapse Fs20 Fleft MarRight10"></i> SELECCIÓN CATEGORÍAS</h2>
+                        <h2 class="CardTopic"><i class="icon-timelapse Fs20 Fleft MarRight10"/> SELECCIÓN CATEGORÍAS</h2>
                         <div class="SeparatorFull"></div>
 
                             <p:selectManyCheckbox id="categories"
@@ -72,7 +72,7 @@
             <div class="Container50 Responsive50">
                 <div class="ContainerIndent">
                     <div class="Card ShadowEffect HeiAutoOnMobile">
-                        <h2 class="CardTopic"><i class="icon-timelapse Fs20 Fleft MarRight10"></i> PROGRESO EXTRACCIÓN</h2>
+                        <h2 class="CardTopic"><i class="icon-timelapse Fs20 Fleft MarRight10"/> PROGRESO EXTRACCIÓN</h2>
                         <p:outputPanel id="process-state">
                             <ce:forEach items="#{conceptExtractBean.selectedCategories}" var="cat">
                                 <p:dataTable var="concept" id="cat_#{cat.id}" value="#{conceptExtractBean.concepts.get(cat.id)}"

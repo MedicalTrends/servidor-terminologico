@@ -14,7 +14,7 @@
     </url-mapping>
 
     <url-mapping id="concept">
-        <pattern value="/concept/#{idConcept}" />
+        <pattern value="/concept/#{conceptID}" />
         <view-id value="/views/concept.xhtml" />
     </url-mapping>
 

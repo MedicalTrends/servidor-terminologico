@@ -4,6 +4,8 @@ import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,8 +32,7 @@ public class AuthenticationFilter implements Filter {
             req.getSession().invalidate();
         }
 
-        if(((HttpServletRequest) request).getRequestURI().equals("/views/home.xhtml") ||
-                ((HttpServletRequest) request).getRequestURI().equals(((HttpServletRequest) request).getContextPath())) {
+        if((req.getRequestURI().equals("/views/home.xhtml") || req.getRequestURI().equals("/")) && req.getParameterMap().isEmpty()) {
             req.getSession().invalidate();
         }
 

@@ -49,15 +49,15 @@ public class ConceptBean {
 
     ConceptSMTK selectedConcept;
 
-    long idConcept;
+    String conceptID;
 
-    public long getIdConcept() {
-        return idConcept;
+    public String getConceptID() {
+        return conceptID;
     }
 
-    public void setIdConcept(long idConcept) {
-        this.idConcept = idConcept;
-        selectedConcept = conceptManager.getConceptByID(idConcept);
+    public void setConceptID(String conceptID) {
+        this.conceptID = conceptID;
+        selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
         selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
     }
 

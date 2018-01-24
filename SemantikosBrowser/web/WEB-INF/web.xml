@@ -99,8 +99,6 @@
         <location>/views/errors/error.xhtml</location>
     </error-page>
 
-
-
     <mime-mapping>
         <extension>eot</extension>
         <mime-type>application/x-font-eot</mime-type>
@@ -132,6 +130,38 @@
         <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/views/*</url-pattern>
     </filter-mapping>
+
+    <filter>
+        <filter-name>HSTSFilter</filter-name>
+        <filter-class>browser.HSTSFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>HSTSFilter</filter-name>
+        <url-pattern>/views/*</url-pattern>
+    </filter-mapping>
+
+    <!-- Require HTTPS for everything except /img (favicon) and /css. -->
+    <!--security-constraint>
+        <web-resource-collection>
+            <web-resource-name>HTTPSOnly</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>HTTPSOrHTTP</web-resource-name>
+            <url-pattern>*.ico</url-pattern>
+            <url-pattern>/img/*</url-pattern>
+            <url-pattern>/css/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint-->
 
 
 </web-app>

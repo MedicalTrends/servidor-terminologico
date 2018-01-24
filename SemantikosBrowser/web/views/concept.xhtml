@@ -8,7 +8,7 @@
 
     <ui:define name="content">
         <f:metadata>
-            <f:viewParam name="idConcept" value="#{concept.idConcept}" />
+            <f:viewParam name="conceptID" value="#{concept.conceptID}" />
         </f:metadata>
 
         <div class="ui-g">
@@ -26,7 +26,7 @@
                         <div class="ui-g ui-fluid">
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="ConceptID" />
+                                <h:outputText value="ConceptID" style="font-weight: bold" />
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-4">
@@ -34,7 +34,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="Categoría" />
+                                <h:outputText value="Categoría" style="font-weight: bold" />
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-4">
@@ -42,7 +42,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="FSN" />
+                                <h:outputText value="FSN" style="font-weight: bold" />
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
@@ -50,7 +50,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="Preferida" />
+                                <h:outputText value="Preferida" style="font-weight: bold" />
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
@@ -70,7 +70,7 @@
                                              editable="true"
                                              reflow="true">
 
-                                    <p:column headerText="Tipo Descripción" style="width:25%;">
+                                    <p:column headerText="Tipo Descripción" style="font-weight: bold">
                                         #{description.descriptionType.name}
                                     </p:column>
                                     <p:column headerText="Término">
@@ -94,10 +94,10 @@
                                     <p:column>
                                         <h:outputText value="#{relationship.target}" rendered="#{not relationship.relationshipDefinition.targetDefinition.SMTKType}" />
                                         <p:link value="#{relationship.target.descriptionFavorite} - #{relationship.target.conceptID}" rendered="#{relationship.relationshipDefinition.targetDefinition.SMTKType}">
-                                            <f:param name="idConcept" value="#{relationship.target.id}" />
+                                            <f:param name="conceptID" value="#{relationship.target.conceptID}" />
                                         </p:link>
                                         <h:dataTable value="#{relationship.relationshipAttributes}" var="attribute" rendered="#{not empty relationship.relationshipAttributes}">
-                                            <h:column>
+                                            <h:column style="font-weight: bold">
                                                 #{attribute.relationAttributeDefinition.name}
                                             </h:column>
                                             <h:column>
@@ -113,15 +113,21 @@
                                              rows="5"
                                              paginator="true"
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                             var="attribute"
+                                             var="relationship"
                                              value="#{concept.getSnomedCTRelationships()}"
                                              reflow="true">
 
-                                    <p:column headerText="Nombre" style="width:25%;">
-                                        #{attribute.relationshipDefinition.name}
-                                    </p:column>
-                                    <p:column headerText="Valor">
-                                        #{attribute.target}
+                                    <p:column>
+                                        <p:link value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="#">
+                                        </p:link>
+                                        <h:dataTable value="#{relationship.target.getDescriptionSynonymous()}" var="description" rendered="#{not empty relationship.target.getDescriptionSynonymous()}">
+                                            <h:column>
+                                                <h:outputText value="#{description.descriptionType.name}" style="font-weight: bold"/>
+                                            </h:column>
+                                            <h:column>
+                                                <h:outputText value="#{description.term}"/>
+                                            </h:column>
+                                        </h:dataTable>
                                     </p:column>
                                 </p:dataTable>
                             </p:tab>
@@ -135,7 +141,7 @@
                                              value="#{concept.selectedConcept.refsets}"
                                              reflow="true">
 
-                                    <p:column headerText="Nombre" style="width:25%;">
+                                    <p:column headerText="Nombre" style="font-weight: bold">
                                         #{refSet.name}
                                     </p:column>
                                     <p:column headerText="Establecimiento">
@@ -167,7 +173,7 @@
                         <div class="ui-g ui-fluid">
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <p:button outcome="home" value="Volver" styleClass="cyan-btn ui-priority-primary"/>
+                                <p:button outcome="search" value="Volver" styleClass="cyan-btn ui-priority-primary" icon="fa fa-arrow-left"/>
                             </div>
 
                         </div>

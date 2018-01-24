@@ -3,7 +3,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
 
 <h:head>
     <f:facet name="first">
@@ -32,14 +33,14 @@
 
     <div class="ui-g">
 
-        <div class="ui-g-0 ui-md-0 ui-lg-4"></div>
+        <div class="ui-g-0 ui-md-2 ui-lg-4"></div>
 
-        <div class="ui-g-12 ui-md-12 ui-lg-4">
+        <div class="ui-g-12 ui-md-8 ui-lg-4">
 
             <!--div class="card card-w-title"-->
             <div class="">
 
-                <h:form id="browserForm">
+                <o:form id="browserForm">
 
                     <div class="ui-g ui-fluid">
 
@@ -55,9 +56,12 @@
                             </p:imageSwitch>
                         </div-->
 
-                        <div class="ui-g-12" style="padding-top: 20px; padding-bottom: 20px">
+                        <div class="ui-g-12" style="padding-top: 30px; padding-bottom: 30px">
                             <p:outputPanel styleClass="search">
-                                <p:autoComplete minQueryLength="3"
+                                <p:autoComplete id="search"
+                                                widgetVar="search_input"
+                                                styleClass="search-input"
+                                                minQueryLength="3"
                                                 emptyMessage="No se encontraron conceptos"
                                                 forceSelection="false"
                                                 scrollHeight="200" size="5"
@@ -82,11 +86,12 @@
                                             update="@(.conceptPanel),@(.search)"
                                             process="@this"/>
 
-
                                 </p:autoComplete>
+
                                 <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
                                     <i class="fa fa-search fa-lg"  />
                                 </p:outputPanel>
+
                                 <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
                                     <p:commandLink process="@this" style="color: #aaa;"
                                                    update="@(.search)"
@@ -97,24 +102,23 @@
                             </p:outputPanel>
                         </div>
 
-                        <div class="ui-g-0 ui-md-3 ui-lg-4"></div>
+                        <div class="ui-g-0 ui-md-3 ui-lg-4" style="padding: 0em"></div>
 
-                        <div class="ui-g-12 ui-md-6 ui-lg-4">
-                            <p:button outcome="/views/search" value="Buscar" id="search" icon="fa fa-search" />
+                        <div class="ui-g-12 ui-md-6 ui-lg-4" style="padding: 0em">
+                            <p:commandButton id="search_button" styleClass="search-button" value="Buscar" icon="fa fa-search"
+                            actionListener="#{browserBean.redirect()}"/>
                         </div>
 
-                        <div class="ui-g-0 ui-md-3 ui-lg-4"></div>
+                        <div class="ui-g-0 ui-md-3 ui-lg-4" style="padding: 0em"></div>
 
                     </div>
 
-                    <p:defaultCommand target="search" />
-
-                </h:form>
+                </o:form>
 
             </div>
         </div>
 
-        <div class="ui-g-0 ui-md-0 ui-lg-4"></div>
+        <div class="ui-g-0 ui-md-2 ui-lg-4"></div>
     </div>
 
     </div>
@@ -134,6 +138,10 @@
 
     <h:outputStylesheet name="css/ripple.css" library="ultima-layout" />
     <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" />
+
+    <script type="text/javascript">
+
+    </script>
 </h:body>
 
 </html>

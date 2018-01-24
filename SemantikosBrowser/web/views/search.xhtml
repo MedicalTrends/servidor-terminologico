@@ -76,9 +76,9 @@
 
                                     <div class="ui-g-12 ui-md-3 ui-lg-2">
 
-                                        <p:commandButton value="Limpiar" id="btn" icon="fa fa-undo"
-                                                         actionListener="#{browserBean.invalidate}">
-                                        </p:commandButton>
+                                        <p:commandButton value="Buscar" id="btn" icon="fa fa-search"
+                                                         process="@(.conceptPanel)"
+                                                         update="@(.conceptPanel)"/>
 
                                     </div>
 
@@ -178,7 +178,7 @@
                                 <p:column headerText="Termino Preferido" sortBy="#{2}">
                                     <div style="margin-bottom: 28px;">
                                         <p:link outcome="/views/concept" value="#{conceptSMTK.descriptionFavorite.term}" styleClass="myCustomLinkStyle" >
-                                            <f:param name="idConcept" value="#{conceptSMTK.id}" />
+                                            <f:param name="conceptID" value="#{conceptSMTK.conceptID}" />
                                         </p:link>
                                         <br/>
                                         <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: small; color: #006621" />
