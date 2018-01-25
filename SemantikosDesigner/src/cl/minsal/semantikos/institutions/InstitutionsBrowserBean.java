@@ -6,6 +6,7 @@ import cl.minsal.semantikos.kernel.components.InstitutionManager;
 import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.model.audit.InstitutionAuditAction;
 import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.InstitutionFactory;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.users.AuthenticationBean;
@@ -189,6 +190,7 @@ public class InstitutionsBrowserBean {
                 return;
             }
             institutionManager.deleteInstitution(selectedInstitution, authenticationBean.getLoggedUser(), deleteCause);
+            InstitutionFactory.getInstance().setInstitutions(institutionManager.getInstitutionFactory().getInstitutions());
             selectedInstitution = institutionManager.getInstitutionById(selectedInstitution.getId());
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "El establecimiento se ha eliminado y queda en estado No Vigente."));
             //RequestContext reqCtx = RequestContext.getCurrentInstance();

@@ -89,8 +89,6 @@
         <location>/views/errors/error.xhtml</location>
     </error-page>
 
-
-
     <mime-mapping>
         <extension>eot</extension>
         <mime-type>application/x-font-eot</mime-type>

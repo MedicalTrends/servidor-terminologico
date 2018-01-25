@@ -5,10 +5,7 @@ import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.audit.InstitutionAuditAction;
 import cl.minsal.semantikos.model.audit.UserAuditAction;
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
-import cl.minsal.semantikos.model.users.Institution;
-import cl.minsal.semantikos.model.users.Profile;
-import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.model.users.UserFactory;
+import cl.minsal.semantikos.model.users.*;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.util.StringUtils;
 import org.primefaces.context.RequestContext;
@@ -156,6 +153,8 @@ public class InstitutionsBean {
 
                     selectedInstitution = institutionManager.getInstitutionById(institutionManager.createInstitution(selectedInstitution, authenticationBean.getLoggedUser()));
                     getInstitution(selectedInstitution.getId());
+                    // Actualizar cache local
+                    InstitutionFactory.getInstance().setInstitutions(institutionManager.getInstitutionFactory().getInstitutions());
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Establecimiento creado de manera exitosa!!"));
                 }
                 catch (EJBException e) {
@@ -164,6 +163,8 @@ public class InstitutionsBean {
             }
             else {
                 institutionManager.update(originalInstitution, selectedInstitution, authenticationBean.getLoggedUser());
+                // Actualizar cache local
+                InstitutionFactory.getInstance().setInstitutions(institutionManager.getInstitutionFactory().getInstitutions());
                 getInstitution(selectedInstitution.getId());
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Establecimiento: "+selectedInstitution.getName()+" modificado de manera exitosa!!"));
             }
@@ -191,6 +192,8 @@ public class InstitutionsBean {
             }
             institutionManager.deleteInstitution(selectedInstitution, authenticationBean.getLoggedUser(), deleteCause);
             selectedInstitution = institutionManager.getInstitutionById(selectedInstitution.getId());
+            // Actualizar cache local
+            InstitutionFactory.getInstance().setInstitutions(institutionManager.getInstitutionFactory().getInstitutions());
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "El establecimiento se ha eliminado y queda en estado No Vigente."));
             RequestContext reqCtx = RequestContext.getCurrentInstance();
             reqCtx.execute("PF('dlg').hide();");

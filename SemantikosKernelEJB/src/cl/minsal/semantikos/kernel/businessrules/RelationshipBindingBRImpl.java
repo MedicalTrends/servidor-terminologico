@@ -406,7 +406,7 @@ public class RelationshipBindingBRImpl implements RelationshipBindingBR {
     /* BR-GTIN-001 Para agregar una relación a GTINGS1, su valor debe ser único */
     public void brGTIN001(ConceptSMTK concept, Relationship relationship) throws Exception {
         /* Verificar en un contexto persistente */
-        if (!concept.getCategory().findRelationshipDefinitionsByName(TargetDefinition.GTINGS1).isEmpty()) {
+        if (relationship.getTarget() != null && relationship.getRelationshipDefinition().isGTIN()) {
             for (Relationship relationship2 : relationshipManager.findRelationshipsLike(relationship.getRelationshipDefinition(), relationship.getTarget())) {
                 if(!relationship2.getSourceConcept().equals(concept)) {
                     throw new BusinessRuleException("BR-GTIN-001", "Ya existe un concepto con este númeto GTIN: "+relationship2.getSourceConcept());

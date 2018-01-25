@@ -122,6 +122,7 @@ public class InstitutionManagerImpl implements InstitutionManager {
         institutionDAO.updateInstitution(institution);
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
         auditManager.recordInstitutionDelete(institution, user, deleteCause);
+        InstitutionFactory.getInstance().refresh(institution);
     }
 
     @Override

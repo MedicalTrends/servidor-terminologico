@@ -27,7 +27,7 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String MC_SPECIAL = "Medicamento Clínico Especial";
 
-    public static final String GTINGS1 = "Número GTIN GS1";
+    public static final String GTINGS1 = "Número GTIN";
 
     /**
      * Este metodo es responsable de determinar si el target type es de tipo básico es o no.

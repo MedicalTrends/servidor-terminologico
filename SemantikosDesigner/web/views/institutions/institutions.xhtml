@@ -110,8 +110,8 @@
                                             <h:outputText value="#{institutionsBrowser.selectedInstitution.code}"/>
 
                                             <h:outputText value="Estado" style="font-weight: bold"/>
-                                            <h:outputText value="Vigente" rendered="#{institution.validityUntil == null}" />
-                                            <h:outputText value="No vigente" rendered="#{institution.validityUntil != null}" />
+                                            <h:outputText value="Vigente" rendered="#{institutionsBrowser.selectedInstitution.validityUntil == null}" />
+                                            <h:outputText value="No vigente" rendered="#{institutionsBrowser.selectedInstitution.validityUntil != null}" />
 
                                         </p:panelGrid>
 

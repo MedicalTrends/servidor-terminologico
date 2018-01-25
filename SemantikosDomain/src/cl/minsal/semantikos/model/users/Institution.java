@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Institution extends PersistentEntity implements Serializable, AuditableEntity {
 
-    public static final Institution DUMMY_INSTITUTION = new Institution();
+    //public static final Institution DUMMY_INSTITUTION = new Institution();
 
     /** BR-RefSet-003: Una Institución puede tener cero o más Usuarios Administradores de RefSets. */
     private List<User> administrators;
@@ -86,11 +86,15 @@ public class Institution extends PersistentEntity implements Serializable, Audit
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Institution institution = (Institution) o;
+        Institution that = (Institution) o;
 
-        if (name != null ? !name.equals(institution.name) : institution.name != null) return false;
+        /* Si ambas están persistidas comparar sus ids */
+        if (this.isPersistent() && that.isPersistent()) return (this.getId() == that.getId());
 
-        return true;
+        if (this.code == null || that.code == null) return false;
+
+        /* Si alguna de ellas no está persistida, comparamos 1. tabla auxiliar, 2. descripción del row, y 3. campos del row */
+        return name.equals(that.name) && code.equals(that.code);
     }
 
     @Override
@@ -102,5 +106,10 @@ public class Institution extends PersistentEntity implements Serializable, Audit
     @Override
     public String toString() {
         return name;
+    }
+
+
+    public boolean isValid() {
+        return (validityUntil != null);
     }
 }
