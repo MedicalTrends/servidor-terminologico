@@ -117,8 +117,13 @@
                                              value="#{concept.getSnomedCTRelationships()}"
                                              reflow="true">
 
+
+                                    <p:column style="font-weight: bold">
+                                        #{relationship.relationshipDefinition.name}
+                                    </p:column>
+
                                     <p:column>
-                                        <p:link value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="#">
+                                        <p:link value="#{relationship.target.descriptionFSN} - #{relationship.target.id}">
                                         </p:link>
                                         <h:dataTable value="#{relationship.target.getDescriptionSynonymous()}" var="description" rendered="#{not empty relationship.target.getDescriptionSynonymous()}">
                                             <h:column>

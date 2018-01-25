@@ -86,6 +86,10 @@
                                             update="@(.conceptPanel),@(.search)"
                                             process="@this"/>
 
+                                    <p:ajax event="change"
+                                            listener="#{browserBean.redirect()}"
+                                            process="@this"/>
+
                                 </p:autoComplete>
 
                                 <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
