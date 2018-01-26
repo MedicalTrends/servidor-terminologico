@@ -46,33 +46,26 @@
                             </li>
                         </ul>
                     </ui:fragment>
-                    
-                    <pu:menu widgetVar="me" id="menu1">
-                        <p:menuitem id="rm_home" value="Inicio" icon="fa fa-home" outcome="/views/home.xhtml" />
-                    </pu:menu>
 
-                    <pu:menu id="rm_categories" model="#{mainMenuBean.categoryMenuModel}" rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}" />
+                    <pu:menu widgetVar="me">
 
-                    <pu:menu id="rm_otros" rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}">
-                        <p:submenu id="rm_otros_sm" label="Otros" icon="fa fa-plus-square">
+                        <p:submenu id="rm_categories" model="#{mainMenuBean.categoryMenuModel}" rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}" />
+
+                        <p:submenu id="rm_otros_sm" label="Otros" icon="more" rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}">
                             <p:menuitem id="rm_descriptions" value="Descripciones" icon="fa fa-edit Fs15" url="/views/browser/descriptionBrowser.xhtml" />
                             <p:menuitem id="rm_drugs" value="Fármacos" icon="fa fa-medkit Fs15" url="/views/browser/drugsBrowser.xhtml" />
                             <p:menuitem id="rm_pendings" value="Pendientes" icon="fa fa-exclamation-triangle  Fs15" url="/views/browser/pendingBrowser.xhtml" />
                             <p:menuitem id="rm_no_valids" value="No Válidos" icon="fa fa-ban Fs15" url="/views/browser/noValidBrowser.xhtml" />
                         </p:submenu>
-                    </pu:menu>
 
-                    <pu:menu id="menu2">
-                        <p:menuitem id="rm_users_web" value="Administración Usuarios" icon="icon-two385" outcome="/views/users/users.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
-                        <p:menuitem id="rm_admin_refsets" value="Administración de RefSets" icon="fa fa-dropbox" outcome="/views/refsets/admin_refsets.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
-                        <p:menuitem id="rm_helpertables" value="Administración de Tablas" icon="fa fa-columns" outcome="/views/helpertables/helpertables.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
-                        <p:menuitem id="rm_snapshot" value="Snapshot" icon="fa fa-list-alt" outcome="/views/snapshot/snapshot.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
-                        <p:menuitem id="rm_extraction" value="Extracción Fármacos" icon="fa fa-file-excel-o" outcome="/views/concept/extractor.xhtml" rendered="true"/>
-                        <p:separator />
-                        <p:submenu id="rm_administracion" label="Administración" icon="icon-planet29" rendered="#{profilePermissionsBeans.modeler}">
-                            <p:menuitem id="rm_configuraciones" value="Configuaciones" icon="icon-planet29" outcome="/views/configuraciones.xhtml" update="" rendered="#{profilePermissionsBeans.modeler}" />
+                        <p:submenu id="rm_administradores_sm" label="Administracion" icon="settings" rendered="#{profilePermissionsBeans.admin}">
+                            <p:menuitem id="rm_users_web" value="Usuarios" icon="people" outcome="/views/users/users.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
+                            <p:menuitem id="rm_institutions" value="Establecimientos" icon="fa fa-bank Fs15" url="/views/institutions/institutions.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
+                            <p:menuitem id="rm_admin_refsets" value="RefSets" icon="fa fa-dropbox" outcome="/views/refsets/admin_refsets.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
+                            <p:menuitem id="rm_helpertables" value="Tablas" icon="fa fa-columns" outcome="/views/helpertables/helpertables.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
+                            <p:menuitem id="rm_snapshot" value="Snapshot" icon="fa fa-list-alt" outcome="/views/snapshot/snapshot.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
+                            <p:menuitem id="rm_extraction" value="Extracción Fármacos" icon="fa fa-file-excel-o" outcome="/views/concept/extractor.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
                         </p:submenu>
-                        <p:separator />
                     </pu:menu>
                 </div>
             </div>
