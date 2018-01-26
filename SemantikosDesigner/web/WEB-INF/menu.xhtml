@@ -1,0 +1,81 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pu="http://primefaces.org/ultima">
+    
+    <h:form id="menuform"> 
+        <div class="layout-menu #{guestPreferences.menuClass}">
+            <div class="nano">
+                <div class="nano-content menu-scroll-content">
+                    <ui:fragment rendered="#{guestPreferences.profileMode == 'inline' and guestPreferences.menuLayout != 'menu-layout-static menu-layout-horizontal'}">
+                        <div class="profile">
+                            <div class="profile-image"></div>
+                            <a id="profile-options" href="#">
+                                <span class="profile-name">#{authenticationBean.loggedUser.email}</span>
+                                <i class="material-icons">&#xE313;</i>
+                            </a>
+                        </div>
+                    
+                        <ul id="profile-menu" class="ultima-menu">
+                            <li role="menuitem">
+                                <a href="#" class="ripplelink">
+                                    <i class="material-icons">&#xE7FD;</i>
+                                    <span>Profile</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#" class="ripplelink">
+                                    <i class="material-icons">&#xE32A;</i>
+                                    <span>Privacy</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#" class="ripplelink">
+                                    <i class="material-icons">&#xE8B9;</i>
+                                    <span>Settings</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#" class="ripplelink">
+                                    <i class="material-icons">&#xE8AC;</i>
+                                    <span>Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </ui:fragment>
+                    
+                    <pu:menu widgetVar="me" id="menu1">
+                        <p:menuitem id="rm_home" value="Inicio" icon="fa fa-home" outcome="/views/home.xhtml" />
+                    </pu:menu>
+
+                    <pu:menu id="rm_categories" model="#{mainMenuBean.categoryMenuModel}" rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}" />
+
+                    <pu:menu id="rm_otros" rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}">
+                        <p:submenu id="rm_otros_sm" label="Otros" icon="fa fa-plus-square">
+                            <p:menuitem id="rm_descriptions" value="Descripciones" icon="fa fa-edit Fs15" url="/views/browser/descriptionBrowser.xhtml" />
+                            <p:menuitem id="rm_drugs" value="Fármacos" icon="fa fa-medkit Fs15" url="/views/browser/drugsBrowser.xhtml" />
+                            <p:menuitem id="rm_pendings" value="Pendientes" icon="fa fa-exclamation-triangle  Fs15" url="/views/browser/pendingBrowser.xhtml" />
+                            <p:menuitem id="rm_no_valids" value="No Válidos" icon="fa fa-ban Fs15" url="/views/browser/noValidBrowser.xhtml" />
+                        </p:submenu>
+                    </pu:menu>
+
+                    <pu:menu id="menu2">
+                        <p:menuitem id="rm_users_web" value="Administración Usuarios" icon="icon-two385" outcome="/views/users/users.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
+                        <p:menuitem id="rm_admin_refsets" value="Administración de RefSets" icon="fa fa-dropbox" outcome="/views/refsets/admin_refsets.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
+                        <p:menuitem id="rm_helpertables" value="Administración de Tablas" icon="fa fa-columns" outcome="/views/helpertables/helpertables.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
+                        <p:menuitem id="rm_snapshot" value="Snapshot" icon="fa fa-list-alt" outcome="/views/snapshot/snapshot.xhtml" rendered="#{profilePermissionsBeans.admin}"/>
+                        <p:menuitem id="rm_extraction" value="Extracción Fármacos" icon="fa fa-file-excel-o" outcome="/views/concept/extractor.xhtml" rendered="true"/>
+                        <p:separator />
+                        <p:submenu id="rm_administracion" label="Administración" icon="icon-planet29" rendered="#{profilePermissionsBeans.modeler}">
+                            <p:menuitem id="rm_configuraciones" value="Configuaciones" icon="icon-planet29" outcome="/views/configuraciones.xhtml" update="" rendered="#{profilePermissionsBeans.modeler}" />
+                        </p:submenu>
+                        <p:separator />
+                    </pu:menu>
+                </div>
+            </div>
+        </div>
+    </h:form>
+</ui:composition>

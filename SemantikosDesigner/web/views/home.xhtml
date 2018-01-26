@@ -3,64 +3,65 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="/WEB-INF/template/template.xhtml">
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Semantikos Diseñador</ui:define>
 
     <ui:define name="content">
-
-        <h:outputText value="${persistenceTestMBean.test}" rendered="false" />
-
-        <div class="Container100">
-            <div class="Container50 Responsive100">
-                <div class="ContainerIndent">
-                    <div class="Card ShadowEffect HeiAutoOnMobile" style="min-height:816px;">
-                        <h2 class="CardTopic"><i class="fa fa-list-alt Fs20 Fleft MarRight10 OvHidden" /> Categorías
-                        </h2>
-                        <div class="Separator"></div>
-                        <h:form styleClass="mainMenu">
-                            <p:menu toggleable="false"  model="#{mainMenuBean.categoryMenuModel}" style="width: 100%" />
-                        </h:form>
+        <div class="ui-g dashboard">
+            <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="card overview">
+                    <div class="overview-content clearfix">
+                        <span class="overview-title">Categorías</span>
+                        <!--span class="overview-badge">+%90</span-->
+                        <!--span class="overview-detail">$22,650 / week</span-->
                     </div>
+                    <h:form styleClass="mainMenu" style="padding-left: 15px; padding-right: 15px; padding-bottom: 15px">
+                        <p:menu toggleable="false"  model="#{mainMenuBean.categoryMenuModel}" style="width: 100%" />
+                    </h:form>
                 </div>
             </div>
-            <div class="Container50 Responsive100">
-                <div class="ContainerIndent">
-                    <div class="Card ShadowEffect HeiAutoOnMobile">
-                        <h2 class="CardTopic"><i class="fa fa-plus-square Fs20 Fleft MarRight10 OvHidden" /> Otros
-                        </h2>
-                        <div class="Separator"></div>
-                        <h:form styleClass="mainMenu">
-                            <p:menu toggleable="false" style="width: 100%">
-                                <p:submenu label="Otros">
-                                    <p:menuitem value="Descripciones" icon="ui-icon-disk fa fa-edit Fs15" url="/views/browser/descriptionBrowser.xhtml" />
-                                    <p:menuitem value="Fármacos" icon="ui-icon-disk fa fa-medkit Fs15" url="/views/browser/drugsBrowser.xhtml" />
-                                    <p:menuitem value="Pendientes" icon="ui-icon-disk fa fa-exclamation-triangle  Fs15" url="/views/browser/pendingBrowser.xhtml" />
-                                    <p:menuitem value="No Válidos" icon="ui-icon-disk fa fa-ban Fs15" url="/views/browser/noValidBrowser.xhtml" />
-                                </p:submenu>
-                            </p:menu>
-                        </h:form>
+            <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="card overview">
+                    <div class="overview-content clearfix">
+                        <span class="overview-title">Otros</span>
+                        <!--span class="overview-badge">+%90</span-->
+                        <!--span class="overview-detail">$22,650 / week</span-->
                     </div>
+                    <h:form styleClass="mainMenu" style="padding-left: 15px; padding-right: 15px; padding-bottom: 15px">
+                        <p:menu toggleable="false" style="width: 100%">
+                            <p:submenu label="Otros">
+                                <p:menuitem value="Descripciones" icon="ui-icon-disk fa fa-edit Fs15" url="/views/browser/descriptionBrowser.xhtml" />
+                                <p:menuitem value="Fármacos" icon="ui-icon-disk fa fa-medkit Fs15" url="/views/browser/drugsBrowser.xhtml" />
+                                <p:menuitem value="Pendientes" icon="ui-icon-disk fa fa-exclamation-triangle  Fs15" url="/views/browser/pendingBrowser.xhtml" />
+                                <p:menuitem value="No Válidos" icon="ui-icon-disk fa fa-ban Fs15" url="/views/browser/noValidBrowser.xhtml" />
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
                 </div>
 
-                <div class="ContainerIndent">
-                    <div class="Card ShadowEffect HeiAutoOnMobile">
-                        <h2 class="CardTopic"><i class="icon-google132 Fs20 Fleft MarRight10 OvHidden" /> Administradores
-                        </h2>
-                        <div class="Separator"></div>
-                        <h:form styleClass="mainMenu">
-                            <p:menu toggleable="false" style="width: 100%">
-                                <p:submenu label="Otros">
-                                    <p:menuitem value="Administración Usuarios" icon="fa fa-user Fs15" url="/views/users/users.xhtml" />
-                                    <p:menuitem value="Administración RefSets" icon="fa fa-dropbox Fs15" url="/views/refsets/admin_refsets.xhtml" />
-                                    <p:menuitem value="Administración Tablas" icon="ui-icon-disk fa fa-columns Fs15" url="/views/helpertables/helpertables.xhtml" />
-                                    <p:menuitem value="Extracción Fármacos" icon="fa fa-file-excel-o" url="/views/concept/extractor.xhtml" rendered="true" />
-                                </p:submenu>
-                            </p:menu>
-                        </h:form>
+                <br/>
+
+                <div class="card overview">
+                    <div class="overview-content clearfix">
+                        <span class="overview-title">Administradores</span>
+                        <!--span class="overview-badge">+%90</span-->
+                        <!--span class="overview-detail">$22,650 / week</span-->
                     </div>
+                    <h:form styleClass="mainMenu" style="padding-left: 15px; padding-right: 15px; padding-bottom: 15px">
+                        <p:menu toggleable="false" style="width: 100%">
+                            <p:submenu label="Administradores">
+                                <p:menuitem value="Administración Usuarios" icon="fa fa-user Fs15" url="/views/users/users.xhtml" />
+                                <p:menuitem value="Administración RefSets" icon="fa fa-dropbox Fs15" url="/views/refsets/admin_refsets.xhtml" />
+                                <p:menuitem value="Administración Tablas" icon="ui-icon-disk fa fa-columns Fs15" url="/views/helpertables/helpertables.xhtml" />
+                                <p:menuitem value="Extracción Fármacos" icon="fa fa-file-excel-o" url="/views/concept/extractor.xhtml" rendered="true" />
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
                 </div>
             </div>
+
         </div>
-
     </ui:define>
 
 </ui:composition>
