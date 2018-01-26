@@ -120,6 +120,10 @@
     display: none !important;
 }
 
+#browserForm\:conceptPanel .ui-paginator-current {
+    color: #3F51B5 !important;
+}
+
 #browserForm\:conceptPanel .ui-paginator .ui-paginator-pages .ui-paginator-page {
     color: #3F51B5 !important;
 }
@@ -160,6 +164,17 @@
 
 .ui-autocomplete-item:first-child {
     display: none !important;
+    /*visibility: hidden !important;*/
+}
+
+.ui-button.ui-button-icon-only.search-button-tiny {
+    border-radius: 20%;
+    width: 100%;
+    height: 100%;
+}
+
+.ui-paginator .ui-paginator-pages {
+    display: inline-block !important;
 }
 
 /*

@@ -94,8 +94,6 @@ public class BrowserBean implements Serializable {
 
     private boolean showFilters = false;
 
-    private String pattern;
-
     //@EJB
     private QueryManager queryManager = (QueryManager) ServiceLocator.getInstance().getService(QueryManager.class);
 
@@ -202,9 +200,9 @@ public class BrowserBean implements Serializable {
     }
 
     public List<Description> searchSuggestedDescriptions(String term) {
-        List<Description> suggestedDescriptions = new ArrayList<>();
         isFilterChanged = true;
         browserQuery.setQuery(term);
+        List<Description> suggestedDescriptions = new ArrayList<>();
         DescriptionTypeFactory.DUMMY_DESCRIPTION.setTerm(EMPTY_STRING);
         suggestedDescriptions.add(DescriptionTypeFactory.DUMMY_DESCRIPTION);
         suggestedDescriptions.addAll(descriptionManager.searchDescriptionsSuggested(term, categories, null));
@@ -228,7 +226,7 @@ public class BrowserBean implements Serializable {
 
         if(request.getRequestURI().equals("/views/home.xhtml")) {
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/search");
+            eContext.redirect(eContext.getRequestContextPath() + "/concepts");
         }
     }
 
@@ -236,7 +234,7 @@ public class BrowserBean implements Serializable {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
         if(browserQuery.getQuery() != null && browserQuery.getQuery().length() >= 3) {
             performSearch = true;
-            eContext.redirect(eContext.getRequestContextPath() + "/search");
+            eContext.redirect(eContext.getRequestContextPath() + "/concepts");
         }
     }
 
@@ -514,14 +512,5 @@ public class BrowserBean implements Serializable {
 
     public void setImages(List<String> images) {
         this.images = images;
-    }
-
-    public boolean isPerformSearch() {
-        return performSearch;
-    }
-
-    public void setPerformSearch(boolean performSearch) {
-        browserQuery.setQuery(pattern);
-        this.performSearch = performSearch;
     }
 }

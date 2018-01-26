@@ -9,8 +9,8 @@
     </url-mapping>
 
     <url-mapping id="search">
-        <pattern value="/search" />
-        <view-id value="/views/search.xhtml" />
+        <pattern value="/concepts" />
+        <view-id value="/views/concepts.xhtml" />
     </url-mapping>
 
     <url-mapping id="concept">

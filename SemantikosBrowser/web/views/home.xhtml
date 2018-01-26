@@ -31,99 +31,101 @@
 
     <div class="layout-main" style="padding: 95px 15px 15px">
 
-    <div class="ui-g">
+        <div class="ui-g">
 
-        <div class="ui-g-0 ui-md-2 ui-lg-4"></div>
+            <div class="ui-g-0 ui-md-2 ui-lg-4"></div>
 
-        <div class="ui-g-12 ui-md-8 ui-lg-4">
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-            <!--div class="card card-w-title"-->
-            <div class="">
+                <!--div class="card card-w-title"-->
+                <div class="">
 
-                <o:form id="browserForm">
+                    <o:form id="browserForm">
 
-                    <div class="ui-g ui-fluid">
+                        <div class="ui-g ui-fluid">
 
-                        <div class="ui-g-12" style="text-align: center">
-                            <p:graphicImage name="images/logo-22.png" library="semantikos" style="width:300px" />
-                        </div>
+                            <div class="ui-g-12" style="text-align: center">
+                                <p:graphicImage name="images/logo-22.png" library="semantikos" style="width:300px" />
+                            </div>
 
-                        <!--div class="ui-g-12" style="text-align: center">
-                            <p:imageSwitch effect="scrollLeft" speed="10000" slideshowSpeed="1000" rendered="false">
-                                <ui:repeat var="data" value="#{browserBean.images}">
-                                    <p:graphicImage name="images/#{data}" library="semantikos" id="image" style="width:200px"  />
-                                </ui:repeat>
-                            </p:imageSwitch>
-                        </div-->
+                            <!--div class="ui-g-12" style="text-align: center">
+                                <p:imageSwitch effect="scrollLeft" speed="10000" slideshowSpeed="1000" rendered="false">
+                                    <ui:repeat var="data" value="#{browserBean.images}">
+                                        <p:graphicImage name="images/#{data}" library="semantikos" id="image" style="width:200px"  />
+                                    </ui:repeat>
+                                </p:imageSwitch>
+                            </div-->
 
-                        <div class="ui-g-12" style="padding-top: 30px; padding-bottom: 30px">
-                            <p:outputPanel styleClass="search">
-                                <p:autoComplete id="search"
-                                                widgetVar="search_input"
-                                                styleClass="search-input"
-                                                minQueryLength="3"
-                                                emptyMessage="No se encontraron conceptos"
-                                                forceSelection="false"
-                                                scrollHeight="200" size="5"
-                                                completeMethod="#{browserBean.searchSuggestedDescriptions}"
-                                                placeholder="Buscar..."
-                                                converter="DescriptionConverter"
-                                                var="description"
-                                                value="#{browserBean.descriptionSelected}"
-                                                itemLabel="#{description.term}"
-                                                itemValue="#{description}">
+                            <div class="ui-g-10" style="padding-top: 30px; padding-bottom: 30px">
+                                <p:outputPanel styleClass="search">
+                                    <p:autoComplete id="search"
+                                                    widgetVar="search_input"
+                                                    styleClass="search-input"
+                                                    minQueryLength="3"
+                                                    emptyMessage="No se encontraron conceptos"
+                                                    forceSelection="false"
+                                                    scrollHeight="200" size="5"
+                                                    completeMethod="#{browserBean.searchSuggestedDescriptions}"
+                                                    placeholder="Buscar..."
+                                                    converter="DescriptionConverter"
+                                                    var="description"
+                                                    value="#{browserBean.descriptionSelected}"
+                                                    itemLabel="#{description.term}"
+                                                    itemValue="#{description}">
 
-                                    <p:outputPanel>
+                                        <p:outputPanel>
 
-                                        <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
-                                            <h:outputText value="#{description.term}" />
-                                        </p:column>
+                                            <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
+                                                <h:outputText value="#{description.term}" />
+                                            </p:column>
 
+                                        </p:outputPanel>
+
+                                        <p:ajax event="itemSelect"
+                                                listener="#{browserBean.test()}"
+                                                update="@(.conceptPanel),@(.search)"
+                                                process="@this"/>
+
+                                    </p:autoComplete>
+
+                                    <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
+                                        <i class="fa fa-search fa-lg"  />
                                     </p:outputPanel>
 
-                                    <p:ajax event="itemSelect"
-                                            listener="#{browserBean.test()}"
-                                            update="@(.conceptPanel),@(.search)"
-                                            process="@this"/>
-
-                                    <p:ajax event="change"
-                                            listener="#{browserBean.redirect()}"
-                                            process="@this"/>
-
-                                </p:autoComplete>
-
-                                <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
-                                    <i class="fa fa-search fa-lg"  />
+                                    <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
+                                        <p:commandLink process="@this" style="color: #aaa;"
+                                                       update="@(.search)"
+                                                       action="#{browserBean.setDescriptionSelected(null)}">
+                                            <i class="fa fa-close fa-lg"  />
+                                        </p:commandLink>
+                                    </p:outputPanel>
                                 </p:outputPanel>
+                            </div>
 
-                                <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
-                                    <p:commandLink process="@this" style="color: #aaa;"
-                                                   update="@(.search)"
-                                                   action="#{browserBean.setDescriptionSelected(null)}">
-                                        <i class="fa fa-close fa-lg"  />
-                                    </p:commandLink>
-                                </p:outputPanel>
-                            </p:outputPanel>
+                            <div class="ui-g-2" style="padding-top: 30px; padding-bottom: 30px">
+                                <p:commandButton id="search_button2" styleClass="search-button-tiny" icon="fa fa-search"
+                                                 actionListener="#{browserBean.redirect()}" rendered="true"/>
+                                <p:button id="search_button3" styleClass="search-button-tiny" icon="fa fa-search" outcome="/views/search" rendered="false"/>
+                            </div>
+
+                            <div class="ui-g-0 ui-md-3 ui-lg-4" style="padding: 0em"></div>
+
+                            <div class="ui-g-1 ui-md-6 ui-lg-4" style="padding: 0em">
+                                <p:commandButton id="search_button" styleClass="search-button" value="Buscar" icon="fa fa-search"
+                                                 actionListener="#{browserBean.redirect()}" rendered="false"/>
+                            </div>
+
+                            <div class="ui-g-0 ui-md-3 ui-lg-4" style="padding: 0em"></div>
+
                         </div>
 
-                        <div class="ui-g-0 ui-md-3 ui-lg-4" style="padding: 0em"></div>
+                    </o:form>
 
-                        <div class="ui-g-12 ui-md-6 ui-lg-4" style="padding: 0em">
-                            <p:commandButton id="search_button" styleClass="search-button" value="Buscar" icon="fa fa-search"
-                            actionListener="#{browserBean.redirect()}"/>
-                        </div>
-
-                        <div class="ui-g-0 ui-md-3 ui-lg-4" style="padding: 0em"></div>
-
-                    </div>
-
-                </o:form>
-
+                </div>
             </div>
-        </div>
 
-        <div class="ui-g-0 ui-md-2 ui-lg-4"></div>
-    </div>
+            <div class="ui-g-0 ui-md-2 ui-lg-4"></div>
+        </div>
 
     </div>
 
@@ -144,7 +146,13 @@
     <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" />
 
     <script type="text/javascript">
+        $('input[id$=search_input]').focus();
 
+        $('.search-button-tiny').click( function() {
+            $('input[id$=search_input]').trigger('keydown');
+            $('input[id$=search_input]').trigger('input');
+            $('div[id$=search_panel] .ui-autocomplete-item:first-child').trigger('click');
+        });
     </script>
 </h:body>
 
