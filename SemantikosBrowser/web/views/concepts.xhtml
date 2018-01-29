@@ -164,7 +164,6 @@
                                          rows="15"
                                          sortBy="#{1}"
                                          paginator="true" lazy="true" dynamic="true"
-                                         reflow="true"
                                          paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                          emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
@@ -177,25 +176,34 @@
                                 </f:facet>
 
                                 <p:column headerText="Termino Preferido" sortBy="#{2}">
-                                    <div style="margin-bottom: 28px;">
-                                        <p:link outcome="/views/concept" value="#{conceptSMTK.descriptionFavorite.term}" styleClass="myCustomLinkStyle" >
-                                            <f:param name="conceptID" value="#{conceptSMTK.conceptID}" />
-                                        </p:link>
-                                        <br/>
-                                        <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: small; color: #006621" />
-                                        <br/>
-                                        <h:outputText value="#{conceptSMTK.category.name}" style="font-size: small; color:#545454;" />
-                                        <p:repeat
-                                                offset="0"
-                                                size="#{conceptSMTK.tags.size()}"
-                                                step="1"
-                                                varStatus="var"
-                                                value="#{conceptSMTK.tags}"
-                                                var="tag">
+                                    <div class="ui-g dashboard">
+                                        <div class="ui-g-12">
+                                            <div class="card overview">
+                                                <div class="overview-content clearfix">
+                                                    <span class="overview-title">
+                                                        <p:link outcome="/views/concept" value="#{conceptSMTK.descriptionFavorite.term}" styleClass="myCustomLinkStyle" >
+                                                            <f:param name="conceptID" value="#{conceptSMTK.conceptID}" />
+                                                        </p:link>
+                                                    </span>
+                                                    <span class="overview-detail">
+                                                        <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: small; color: #006621" />
+                                                        <br/>
+                                                        <h:outputText value="#{conceptSMTK.category.name}" style="font-size: small; color:#545454;" />
+                                                        <p:repeat
+                                                                offset="0"
+                                                                size="#{conceptSMTK.tags.size()}"
+                                                                step="1"
+                                                                varStatus="var"
+                                                                value="#{conceptSMTK.tags}"
+                                                                var="tag">
 
-                                            <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+                                                            <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
 
-                                        </p:repeat>
+                                                        </p:repeat>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </p:column>
 

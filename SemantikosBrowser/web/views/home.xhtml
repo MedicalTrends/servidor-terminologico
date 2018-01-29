@@ -104,8 +104,8 @@
 
                             <div class="ui-g-2" style="padding-top: 30px; padding-bottom: 30px">
                                 <p:commandButton id="search_button2" styleClass="search-button-tiny" icon="fa fa-search"
-                                                 actionListener="#{browserBean.redirect()}" rendered="true"/>
-                                <p:button id="search_button3" styleClass="search-button-tiny" icon="fa fa-search" outcome="/views/search" rendered="false"/>
+                                                 actionListener="#{browserBean.redirect()}" rendered="false"/>
+                                <p:button id="search_button3" styleClass="search-button-tiny" icon="fa fa-search" outcome="/views/concepts"/>
                             </div>
 
                             <div class="ui-g-0 ui-md-3 ui-lg-4" style="padding: 0em"></div>
@@ -146,12 +146,11 @@
     <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" />
 
     <script type="text/javascript">
-        $('input[id$=search_input]').focus();
-
         $('.search-button-tiny').click( function() {
+            alert();
             $('input[id$=search_input]').trigger('keydown');
             $('input[id$=search_input]').trigger('input');
-            $('div[id$=search_panel] .ui-autocomplete-item:first-child').trigger('click');
+            $('div[id$=search_panel] .ui-autocomplete-item').trigger('click');
         });
     </script>
 </h:body>

@@ -108,7 +108,7 @@ PrimeFaces.widget.Ultima = PrimeFaces.widget.BaseWidget.extend({
                 $this.topbarItems.addClass('topbar-items-visible fadeInDown');
             }
             
-            $this.rightPanel.removeClass('layout-rightpanel-active');
+            //$this.rightPanel.removeClass('layout-rightpanel-active');
             $this.rightPanelButton.removeClass('rightpanel-btn-active');
             
             e.preventDefault();
@@ -305,7 +305,7 @@ PrimeFaces.widget.Ultima = PrimeFaces.widget.BaseWidget.extend({
             }
             
             if(!$this.rightPanelClick && !$this.rightPanelButtonClick && $this.rightPanel.hasClass('layout-rightpanel-active')) {
-                $this.rightPanel.removeClass('layout-rightpanel-active');
+                //$this.rightPanel.removeClass('layout-rightpanel-active');
                 $this.rightPanelButton.removeClass('rightpanel-btn-active');
             }
             

@@ -17,14 +17,18 @@
 <composite:implementation>
 
 
-    <div class="Container100">
-        <div class="ContainerIndent BoldGray FontBold">
-
+    <div class="ui-g-12">
+        <span>
             <h:outputText value="#{cc.attrs.relationshipDefinition.name}" />
+        </span>
+    </div>
+
+    <div class="ui-g-12">
 
             <p:selectOneMenu id="findHTRecords1" scrollHeight="200"
                              forceSelection="true"
                              autoWidth="false"
+                             style="width: 100%"
                              value="#{generalBrowserBean.helperTableRecord}"
                              rendered="#{cc.attrs.targets.isEmpty() and not cc.attrs.relationshipDefinition.ATC}"
                              var="r"
@@ -111,7 +115,6 @@
             </p:outputPanel>
 
         </div>
-    </div>
 
 </composite:implementation>
 </html>

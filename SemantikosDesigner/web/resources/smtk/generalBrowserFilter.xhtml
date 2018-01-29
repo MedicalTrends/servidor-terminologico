@@ -16,88 +16,74 @@
 </composite:interface>
 <composite:implementation>
 
-    <p:outputPanel id="browserFilters" styleClass="browserFilters">
-
-        <div class="ui-fluid">
-            <div class="Container">
-                <div class="Container100">
-                    <div class="ContainerIndent BoldGray FontBold">
-                        <span>
-                            Patrón
-                        </span>
-                        <p:outputPanel styleClass="search">
-                            <p:inputText value="#{cc.attrs.generalQuery.query}" placeholder="Buscar..." onkeyup="return (this.value.length >= 3 || this.value.length ==0)">
-                                <p:ajax event="keyup" delay="500" update="@(.browserTable)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" />
-                            </p:inputText>
-                            <i class="fa fa-search fa-lg" />
-                        </p:outputPanel>
-                    </div>
+    <h:form>
+    <p:panel id="filters" header="Filtros" style="height:100%">
+        <div class="activity-header">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <span>Patrón</span>
                 </div>
-
-                <div class="Container100">
-                    <div class="ContainerIndent BoldGray FontBold">
-                        <span>
-                            Revisar
-                        </span>
-                        <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeReviewed}" autoWidth="false">
-                            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
-                            <f:selectItem itemLabel="Sin Revisar" itemValue="false"/>
-                            <f:selectItem itemLabel="Revisar" itemValue="true"/>
-                            <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
-                        </p:selectOneMenu>
-                    </div>
+                <div class="ui-g-12">
+                    <p:outputPanel styleClass="search">
+                        <p:inputText value="#{cc.attrs.generalQuery.query}" placeholder="Buscar..." style="width: 100%">
+                            <p:ajax event="keyup" update="@(.browserTable)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" />
+                        </p:inputText>
+                        <i class="fa fa-search fa-lg" />
+                    </p:outputPanel>
                 </div>
-
-                <div class="Container100">
-                    <div class="ContainerIndent BoldGray FontBold">
-                        <span>
-                            Consultar
-                        </span>
-                        <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeConsulted}" autoWidth="false">
-                            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
-                            <f:selectItem itemLabel="Sin Consultar" itemValue="false"/>
-                            <f:selectItem itemLabel="Consultar" itemValue="true"/>
-                            <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
-                        </p:selectOneMenu>
-                    </div>
+                <div class="ui-g-12">
+                    <span>Revisar</span>
                 </div>
-
-                <div class="Container100">
-                    <div class="ContainerIndent BoldGray FontBold">
-                        <span>
-                            Estado
-                        </span>
-                        <p:selectOneMenu value="#{cc.attrs.generalQuery.modeled}" autoWidth="false">
-                            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
-                            <f:selectItem itemLabel="Borrador" itemValue="false"/>
-                            <f:selectItem itemLabel="Modelado" itemValue="true"/>
-                            <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
-                        </p:selectOneMenu>
-                    </div>
+                <div class="ui-g-12">
+                    <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeReviewed}" autoWidth="false" style="width: 100%">
+                        <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                        <f:selectItem itemLabel="Sin Revisar" itemValue="false"/>
+                        <f:selectItem itemLabel="Revisar" itemValue="true"/>
+                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                    </p:selectOneMenu>
                 </div>
+                <div class="ui-g-12">
+                    <span>Consultar</span>
+                </div>
+                <div class="ui-g-12">
+                    <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeConsulted}" autoWidth="false" style="width: 100%">
+                        <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                        <f:selectItem itemLabel="Sin Consultar" itemValue="false"/>
+                        <f:selectItem itemLabel="Consultar" itemValue="true"/>
+                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                    </p:selectOneMenu>
+                </div>
+                <div class="ui-g-12">
+                    <span>Estado</span>
+                </div>
+                <div class="ui-g-12">
+                    <p:selectOneMenu value="#{cc.attrs.generalQuery.modeled}" autoWidth="false" style="width: 100%">
+                        <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                        <f:selectItem itemLabel="Borrador" itemValue="false"/>
+                        <f:selectItem itemLabel="Modelado" itemValue="true"/>
+                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                    </p:selectOneMenu>
+                </div>
+                <div class="ui-g-12">
+                    <span>Etiquetas</span>
+                </div>
+                <div class="ui-g-12">
+                    <p:selectCheckboxMenu id="tags"
+                                          value="#{cc.attrs.generalQuery.tags}"
+                                          converter="omnifaces.SelectItemsConverter"
+                                          label="Seleccione..."
+                                          autoWidth="false"
+                                          style="width: 100%"
+                                          filter="true"
+                                          filterMatchMode="startsWith">
+                        <p:ajax event="change"
+                                listener="#{generalBrowserBean.setFilterChanged(true)}"
+                                update="@(.browserTable),@(.filterStatus)"
+                                process="@this" />
 
-                <div class="Container100">
-                    <div class="ContainerIndent BoldGray FontBold">
-                        <span>
-                            Etiquetas
-                        </span>
-                        <p:selectCheckboxMenu id="tags"
-                                              value="#{cc.attrs.generalQuery.tags}"
-                                              converter="omnifaces.SelectItemsConverter"
-                                              label="Seleccione..."
-                                              autoWidth="false"
-                                              filter="true"
-                                              filterMatchMode="startsWith">
-                            <p:ajax event="change"
-                                    listener="#{generalBrowserBean.setFilterChanged(true)}"
-                                    update="@(.browserTable),@(.filterStatus)"
-                                    process="@this" />
-                            <p:ajax event="toggleSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" />
-
-                            <f:selectItems value="#{generalBrowserBean.tags}" var="tag"
-                                           itemLabel="#{tag.name}" itemValue="#{tag}"/>
-                        </p:selectCheckboxMenu>
-                    </div>
+                        <f:selectItems value="#{generalBrowserBean.tags}" var="tag"
+                                       itemLabel="#{tag.name}" itemValue="#{tag}"/>
+                    </p:selectCheckboxMenu>
                 </div>
 
                 <p:repeat
@@ -159,14 +145,17 @@
                 <smtk:userTypeFilter user="#{cc.attrs.generalQuery.user}" name="Usuario"
                                      rendered="#{cc.attrs.generalQuery.customFilterable}" />
 
+
+
+                <p:outputPanel styleClass="filterStatus">
+
+                </p:outputPanel>
+
             </div>
         </div>
+    </p:panel>
 
-        <p:outputPanel styleClass="filterStatus">
-
-        </p:outputPanel>
-
-    </p:outputPanel>
+    </h:form>
 
 </composite:implementation>
 </html>

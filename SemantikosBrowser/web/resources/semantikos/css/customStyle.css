@@ -15,13 +15,13 @@
 
 .search .fa-search {
     position: absolute;
-    top: 10px;
+    top: 9px;
     left: 10px;
 }
 
 .search .fa.fa-close.fa-lg {
     position: absolute;
-    top: 10px;
+    top: 9px;
     left: 10px;
     /*cursor: pointer;*/
 }
@@ -140,6 +140,18 @@
     color: #3F51B5 !important;
 }
 
+#browserForm\:conceptPanel .ui-datatable tbody tr.ui-datatable-even {
+    background-color: transparent !important;
+}
+
+#browserForm\:conceptPanel .ui-datatable tbody tr td {
+    border: transparent !important;
+}
+
+#browserForm\:conceptPanel .ui-widget-header {
+    border: transparent !important;
+}
+
 .ui-inputfield {
     padding: 6px !important;
 }
@@ -168,7 +180,7 @@
 }
 
 .ui-button.ui-button-icon-only.search-button-tiny {
-    border-radius: 20%;
+    border-radius: 10%;
     width: 100%;
     height: 100%;
 }

@@ -27,7 +27,7 @@
             <p:menuitem id="rm_home" value="Inicio" icon="fa fa-home" outcome="/views/home.xhtml" />
         </pr:menu>
 
-        <pr:menu id="rm_categories" model="#{mainMenuBean.categoryMenuModel}" rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}" />
+        <pr:menu id="rm_categories" model="#{mainMenuBean.mainMenuModel}" rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}" />
 
         <pr:menu id="rm_otros" rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}">
             <p:submenu id="rm_otros_sm" label="Otros" icon="fa fa-plus-square">

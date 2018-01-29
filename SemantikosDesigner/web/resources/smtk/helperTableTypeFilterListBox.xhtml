@@ -17,15 +17,17 @@
 <composite:implementation>
 
 
-    <div class="Container100">
-        <div class="ContainerIndent BoldGray FontBold">
+        <div class="ui-g-12">
+            <span><h:outputText value="#{cc.attrs.relationshipDefinition.name}" /></span>
+        </div>
 
-            <h:outputText value="#{cc.attrs.relationshipDefinition.name}" />
-
+        <div class="ui-g-12">
             <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() }" styleClass="search">
 
                 <p:selectOneMenu id="findHTRecords1" scrollHeight="200"
                                  var="record"
+                                 autoWidth="false"
+                                 style="width: 100%"
                                  placeholder="Buscar..."
                                  converter="helperTableRecordConverter"
                                  value="#{generalBrowserBean.helperTableRecord}"
@@ -73,7 +75,6 @@
             </p:outputPanel>
 
         </div>
-    </div>
 
 </composite:implementation>
 </html>

@@ -15,11 +15,13 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container100">
-        <div class="ContainerIndent BoldGray FontBold">
-
+    <div class="ui-g-12">
+        <span>
             <h:outputText value="#{cc.attrs.name}" />
+        </span>
+    </div>
 
+    <div class="ui-g-12">
             <p:selectOneMenu value="#{cc.attrs.user}" converter="userConverter"
                              autoWidth="false">
                 <f:selectItem itemLabel="Usuario..." itemValue="#{null}"/>
@@ -28,9 +30,6 @@
 
                 <p:ajax event="itemSelect" process="@this" update="@(.browserTable)" />
             </p:selectOneMenu>
-
-        </div>
-
     </div>
 
     <h:outputStylesheet id="customCSS">

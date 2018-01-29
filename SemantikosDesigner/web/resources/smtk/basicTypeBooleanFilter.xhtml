@@ -16,51 +16,47 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container100">
-        <div class="ContainerIndent BoldGray FontBold">
-            <h:outputText value="#{cc.attrs.relationshipDefinition.name}" />
+    <div class="ui-g-12">
+        <span><h:outputText value="#{cc.attrs.relationshipDefinition.name}" /></span>
+    </div>
+    <div class="ui-g-12">
+        <p:selectOneMenu value="#{generalBrowserBean.basicTypeValue.value}"
+                         itemLabel="#{cc.attrs.relationshipDefinition.name}"
+                         converter="omnifaces.SelectItemsConverter"
+                         autoWidth="false"
+                         style="width: 100%"
+                         rendered="#{ empty cc.attrs.targets }" >
+            <f:selectItem itemLabel="Seleccione..."
+                          itemValue="#{null}"/>
+            <f:selectItem itemLabel="Si"
+                          itemValue="#{true}"/>
+            <f:selectItem itemLabel="No"
+                          itemValue="#{false}"/>
+            <p:ajax event="itemSelect"
+                    update="@(.browserFilters),@(.browserTable)"
+                    listener="#{generalBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, generalBrowserBean.basicTypeValue)}"
+                    process="@this"/>
+        </p:selectOneMenu>
+        <p:repeat  value="#{cc.attrs.targets}"
+                   offset="0"
+                   size="#{cc.attrs.targets.size()}"
+                   step="1"
+                   var="target"
+                   varStatus="var">
 
-            <p:selectOneMenu value="#{generalBrowserBean.basicTypeValue.value}"
-                             itemLabel="#{cc.attrs.relationshipDefinition.name}"
-                             converter="omnifaces.SelectItemsConverter"
-                             rendered="#{ empty cc.attrs.targets }" >
-                <f:selectItem itemLabel="Seleccione..."
-                              itemValue="#{null}"
-                />
-                <f:selectItem itemLabel="Si"
-                              itemValue="#{true}"
-                />
-                <f:selectItem itemLabel="No"
-                              itemValue="#{false}"
-                />
-                <p:ajax event="itemSelect"
-                        update="@(.browserFilters),@(.browserTable)"
-                        listener="#{generalBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, generalBrowserBean.basicTypeValue)}"
-                        process="@this" />
-            </p:selectOneMenu>
+            <p:outputPanel styleClass="search">
+                <p:inputText disabled="true" id="itemSelected" value="#{target.value?'Si':'No'}" />
+                <p:commandLink rendered="#{ not cc.attrs.targets.isEmpty() }"
+                               process="@this"
+                               update="@(.browserFilters),@(.browserTable)"
+                               action="#{generalBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
+                    <i class="fa fa-close fa-lg"  />
+                </p:commandLink>
 
-
-            <p:repeat  value="#{cc.attrs.targets}"
-                       offset="0"
-                       size="#{cc.attrs.targets.size()}"
-                       step="1"
-                       var="target"
-                       varStatus="var">
-
-                <p:outputPanel styleClass="search">
-                    <p:inputText disabled="true" id="itemSelected" value="#{target.value?'Si':'No'}" />
-                    <p:commandLink rendered="#{ not cc.attrs.targets.isEmpty() }"
-                                   process="@this"
-                                   update="@(.browserFilters),@(.browserTable)"
-                                   action="#{generalBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
-                        <i class="fa fa-close fa-lg"  />
-                    </p:commandLink>
-
-                </p:outputPanel>
+            </p:outputPanel>
 
 
-            </p:repeat>
-        </div>
+        </p:repeat>
     </div>
 
 
