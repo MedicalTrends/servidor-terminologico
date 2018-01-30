@@ -399,10 +399,10 @@ public class HelperTableBean implements Serializable {
         HelperTableRow someRow;
         someRow = manager.getRowBy(helperTable, id);
         helperTable.setRows(new ArrayList<HelperTableRow>());
-        if(someRow!=null){
+        if(someRow != null) {
             helperTable.getRows().add(someRow);
         }
-        if(id==0){
+        if(id==0) {
             chargeRow(helperTable);
         }
 

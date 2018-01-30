@@ -382,9 +382,9 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
     public HelperTableRow getRowBy(long tableId, long id) {
         //ConnectionBD connectionBD = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_helper_table.get_helper_table_row(?,?); end;";
+        String sql = "begin ? := stk.stk_pck_helper_table.get_helper_table_row_by_table(?,?); end;";
 
-        HelperTableRow helperTableRow;
+        HelperTableRow helperTableRow = null;
 
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
@@ -400,9 +400,11 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             if (rs.next()) {
                 helperTableRow = createHelperTableRowFromResultSet(rs);
             }
+            /* Puede darse este caso perfectamente sin ser una excepcion
             else {
                 throw new EJBException("Error imposible en HelperTableDAOImpl");
             }
+            */
 
             rs.close();
         } catch (SQLException e) {
