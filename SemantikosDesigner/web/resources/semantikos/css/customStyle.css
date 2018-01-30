@@ -128,13 +128,13 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 .search .fa-search {
     position: absolute;
-    top: 2px;
+    top: 6px;
     left: 10px;
 }
 
 .search .fa.fa-close.fa-lg {
     position: absolute;
-    top: 2px;
+    top: 6px;
     left: 10px;
 }
 
@@ -269,4 +269,12 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     border-top: 1px solid #DBDBDB;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.ui-inputfield.ui-inputtext {
+    padding: 6px !important;
+}
+
+.ui-inputfield.ui-state-focus {
+    padding: 6px !important;
 }

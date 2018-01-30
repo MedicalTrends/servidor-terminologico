@@ -33,33 +33,46 @@
             </p:outputPanel>
         </f:facet>
 
-        <h:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" width="100%" id="ispfetcherexisteinputs" rendered="#{cc.attrs.concept.editable}">
+        <p:outputPanel style="display:block" id="ispfetcherexisteinputs" rendered="#{cc.attrs.concept.editable}">
 
-            <p:outputLabel for="ispexistebooleanbutton">Existe ISP</p:outputLabel>
+            <div class="ui-fluid">
 
-            <p:selectBooleanButton  id="ispexistebooleanbutton" value="#{ispbean.existe}" offLabel="No" onLabel="Si" onIcon="ui-icon-check" offIcon="ui-icon-close" >
-                <p:ajax async="false" listener="#{ispbean.updateOptionality(cc.attrs.relationshipDefinition)}" update="ispfetcherinputs" process="ispexistebooleanbutton" />
-                <!-- Parámetros del buscador -->
-            </p:selectBooleanButton>
+                <div class="ui-g">
 
-        </h:panelGrid>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:outputLabel for="ispexistebooleanbutton">Existe ISP</p:outputLabel>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:selectBooleanButton  id="ispexistebooleanbutton" value="#{ispbean.existe}" offLabel="No" onLabel="Si" onIcon="ui-icon-check" offIcon="ui-icon-close" >
+                            <p:ajax async="false" listener="#{ispbean.updateOptionality(cc.attrs.relationshipDefinition)}" update="ispfetcherinputs" process="ispexistebooleanbutton" />
+                            <!-- Parámetros del buscador -->
+                        </p:selectBooleanButton>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </p:outputPanel>
+
         <p:spacer />
 
         <p:outputPanel style="display:block" id="ispfetcherinputs" rendered="#{cc.attrs.concept.editable}">
 
             <h:panelGrid columns="5" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-4" width="100%" rendered="#{ispbean.existe}">
 
-                    <p:outputLabel for="ispregnum">RegNum</p:outputLabel>
+                <p:outputLabel for="ispregnum">RegNum</p:outputLabel>
 
-                    <p:inputText id="ispregnum" value="#{ispbean.regnum}" />
+                <p:inputText id="ispregnum" value="#{ispbean.regnum}" />
 
-                    <p:outputLabel for="ispregano" >RegAño</p:outputLabel>
+                <p:outputLabel for="ispregano">RegAño</p:outputLabel>
 
-                    <p:inputText id="ispregano" value="#{ispbean.ano}" />
+                <p:inputText id="ispregano" value="#{ispbean.ano}" />
 
-                    <p:commandButton id="buttonispcargadatos" action="#{ispbean.fetchData}" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" value="Cargar Data" process="@this, ispregnum, ispregano" >
-                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                    </p:commandButton>
+                <p:commandButton id="buttonispcargadatos" action="#{ispbean.fetchData}" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" value="Cargar Data" process="@this, ispregnum, ispregano" >
+                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                </p:commandButton>
 
             </h:panelGrid>
 
@@ -153,10 +166,8 @@
                             process="@this"
                             immediate="true"
                             actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                            styleClass="relationships">
-                        <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
-                                   icon="ui-icon-alert"/>
-                    </p:commandButton>
+                            styleClass="relationships"
+                    />
                 </div>
             </p:column>
         </p:dataTable>

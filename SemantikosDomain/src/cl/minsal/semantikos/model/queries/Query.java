@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.model.queries;
 
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.queries.IQuery;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
@@ -89,6 +90,16 @@ public class Query implements IQuery, Serializable {
         List<QueryColumn> showableColumns = new ArrayList<>();
         for (QueryColumn column : columns) {
             if(column.isShowable()) {
+                showableColumns.add(column);
+            }
+        }
+        return showableColumns;
+    }
+
+    public List<QueryColumn> getShowableColumnsByConcept(ConceptSMTK conceptSMTK) {
+        List<QueryColumn> showableColumns = new ArrayList<>();
+        for (QueryColumn column : columns) {
+            if(column.isShowable() && !conceptSMTK.getRelationshipsByRelationDefinition(column.getRelationshipDefinition()).isEmpty()) {
                 showableColumns.add(column);
             }
         }

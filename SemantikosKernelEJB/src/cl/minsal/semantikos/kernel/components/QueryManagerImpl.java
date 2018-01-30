@@ -24,7 +24,6 @@ import java.util.List;
 @Stateless
 public class QueryManagerImpl implements QueryManager {
 
-
     @EJB
     QueryDAO queryDAO;
 
@@ -43,6 +42,8 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public GeneralQuery getDefaultGeneralQuery(Category category) {
         GeneralQuery query = QueryFactory.getInstance().findQueryByCategory(category);
+        query.setOrder(1);
+        query.setAsc("asc");
         query.resetQuery();
         return query;
     }

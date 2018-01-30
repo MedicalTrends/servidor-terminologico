@@ -12,7 +12,7 @@
 
     <ui:define name="content">
 
-        <p:breadCrumb>
+        <p:breadCrumb id="top-menu">
             <p:menuitem value="Inicio" url="/views/home.xhtml" />
             <p:menuitem value="#{generalBrowserBean.category.name}" url="#" />
         </p:breadCrumb>
@@ -26,6 +26,121 @@
             <div class="ui-g-12 ui-md-8 ui-lg-9">
                 <h:form id="browserForm" prependId="false">
 
+                    <p:panel id="filters" styleClass="filtros">
+
+                        <div class="ui-g ui-fluid">
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-8">
+
+                                <p:outputPanel styleClass="search">
+                                    <p:inputText value="#{generalBrowserBean.generalQuery.query}" placeholder="Buscar..." style="width: 100%">
+                                        <p:ajax event="keyup" update="@(.browserTable)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" />
+                                    </p:inputText>
+                                    <i class="fa fa-search fa-lg" />
+                                </p:outputPanel>
+
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3 ui-lg-2">
+
+                                <p:commandButton actionListener="#{generalBrowserBean.createConcept}" icon="ui-icon-create"
+                                                 value="Crear Nuevo" type="submit" process="browserForm"
+                                                 rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">
+                                </p:commandButton>
+
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3 ui-lg-2">
+
+                                <p:selectBooleanButton value="#{generalBrowserBean.showSettings}" onLabel="Herramientas"
+                                                       styleClass="settings-btn" id="settings-btn"
+                                                       offLabel="Herramientas" onIcon="ui-icon-settings" offIcon="ui-icon-settings">
+                                </p:selectBooleanButton>
+
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                                <p:outputLabel value="Revisar" />
+
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+
+                                <p:selectOneMenu value="#{generalBrowserBean.generalQuery.toBeReviewed}" autoWidth="false" style="width: 100%">
+                                    <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                    <f:selectItem itemLabel="Sin Revisar" itemValue="false"/>
+                                    <f:selectItem itemLabel="Revisar" itemValue="true"/>
+                                    <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                                </p:selectOneMenu>
+
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                                <p:outputLabel value="Consultar" />
+
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+
+                                <p:selectOneMenu value="#{generalBrowserBean.generalQuery.toBeConsulted}" autoWidth="false" style="width: 100%">
+                                    <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                    <f:selectItem itemLabel="Sin Consultar" itemValue="false"/>
+                                    <f:selectItem itemLabel="Consultar" itemValue="true"/>
+                                    <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                                </p:selectOneMenu>
+
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                                <p:outputLabel value="Estado" />
+
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+
+                                <p:selectOneMenu value="#{generalBrowserBean.generalQuery.modeled}" autoWidth="false" style="width: 100%">
+                                    <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                    <f:selectItem itemLabel="Borrador" itemValue="false"/>
+                                    <f:selectItem itemLabel="Modelado" itemValue="true"/>
+                                    <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                                </p:selectOneMenu>
+
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                                <p:outputLabel value="Etiquetas" />
+
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+
+                                <p:selectCheckboxMenu id="tags"
+                                                      value="#{generalBrowserBean.generalQuery.tags}"
+                                                      converter="omnifaces.SelectItemsConverter"
+                                                      label="Seleccione..."
+                                                      autoWidth="false"
+                                                      style="width: 100%"
+                                                      filter="true"
+                                                      filterMatchMode="startsWith">
+                                    <p:ajax event="change"
+                                            listener="#{generalBrowserBean.setFilterChanged(true)}"
+                                            update="@(.browserTable),@(.filterStatus)"
+                                            process="@this" />
+
+                                    <f:selectItems value="#{generalBrowserBean.tags}" var="tag"
+                                                   itemLabel="#{tag.name}" itemValue="#{tag}"/>
+                                </p:selectCheckboxMenu>
+
+                            </div>
+
+                        </div>
+
+                    </p:panel>
+
                     <p:outputPanel id="conceptPanel" styleClass="conceptPanel">
 
                     <p:dataTable id="browserTable"
@@ -35,18 +150,12 @@
                                  rows="30"
                                  sortBy="#{1}"
                                  paginator="true" lazy="true" dynamic="true" reflow="false"
-                                 paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {Exporters}"
+                                 paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}"
                                  emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
                         <p:growl id="growl" showDetail="true" showSummary="true"/>
 
                         <p:ajax event="rowToggle" listener="#{generalBrowserBean.onRowToggle}" />
-
-                        <f:facet name="{Exporters}">
-                            <p:commandButton actionListener="#{generalBrowserBean.createConcept}" icon="fa fa-plus"  styleClass="pink-btn"
-                                             value="Crear Nuevo" type="submit" process="browserForm" rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">
-                            </p:commandButton>
-                        </f:facet>
 
                         <p:column headerText="Término Preferido" sortBy="#{2}">
                             <div class="ui-g dashboard">
@@ -89,9 +198,9 @@
                                                     <h:outputText value="#{concept.category.name}" style="font-size: small; color:#545454;" />
                                                     <br/>
 
-                                                    <p:outputPanel rendered="#{not empty generalBrowserBean.generalQuery.showableColumns}">
+                                                    <p:outputPanel rendered="#{not empty generalBrowserBean.generalQuery.getShowableColumnsByConcept(concept)}">
                                                         <p:separator style="border-top: 0px solid rgb(219, 219, 219)"/>
-                                                        <h:dataTable value="#{generalBrowserBean.generalQuery.showableColumns}"
+                                                        <h:dataTable value="#{generalBrowserBean.generalQuery.getShowableColumnsByConcept(concept)}"
                                                                      var="column"
                                                                      columnIndexVar="colIndex">
                                                             <h:column>
@@ -179,8 +288,9 @@
         </div>
 
         <script type="text/javascript">
-            alert('hola');
-            $('.rightpanel-btn').trigger('click');
+            $('#settings-btn').on('click', function() {
+                $('.rightpanel-btn').trigger('click');
+            });
             //$('.layout-rightpanel').addClass('layout-rightpanel-active');
         </script>
 

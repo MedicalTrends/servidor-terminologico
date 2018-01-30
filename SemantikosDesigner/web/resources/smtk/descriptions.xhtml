@@ -24,56 +24,65 @@
         <p:growl id="growl" showDetail="true" showSummary="true"/>
         <p:growl id="editMsgs" showDetail="true"/>
 
-        <p:panel style="border: hidden" rendered="#{conceptBean.editable and profilePermissionsBeans.permissionsBy(conceptBean.category)}">
+        <p:outputPanel rendered="#{conceptBean.editable and profilePermissionsBeans.permissionsBy(conceptBean.category)}">
+
             <div class="ui-fluid">
 
-                <div class="Container ContainerIndentBottom">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
-                            <p:outputLabel for="otherTermino" value="Término *"/>
-                        </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                        <p:outputLabel value="Tipo Descriptor" />
+
                     </div>
 
-                    <div class="Container30 White Responsive">
-                        <div class="ContainerIndentRight">
-                            <p:inputText id="otherTermino" value="#{cc.attrs.otherTermino}" autocomplete="off"/>
-                        </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+
+                        <p:selectOneMenu value="#{cc.attrs.otherDescriptionType}"
+                                         converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="Seleccione tipo" itemValue=""/>
+                            <f:selectItems value="#{cc.attrs.descriptionTypes}" var="descriptionType"
+                                           itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
+                        </p:selectOneMenu>
+
                     </div>
 
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndentRight">
-                            <p:selectOneMenu id="console" value="#{cc.attrs.otherDescriptionType}"
-                                             converter="omnifaces.SelectItemsConverter">
-                                <f:selectItem itemLabel="Seleccione tipo" itemValue=""/>
-                                <f:selectItems value="#{cc.attrs.descriptionTypes}" var="descriptionType"
-                                               itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
-                            </p:selectOneMenu>
-                        </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                        <p:outputLabel value="Sensibilidad" />
+
                     </div>
 
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndentRight">
-                            <p:selectOneRadio id="radio4" value="#{cc.attrs.otherSensibilidad}"
-                                              style="padding-top: 0.5em; text-align: center">
-                                <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
-                                <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
-                            </p:selectOneRadio>
-                        </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+
+                        <p:selectOneRadio value="#{cc.attrs.otherSensibilidad}"
+                                          style="text-align: center">
+                            <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
+                            <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
+                        </p:selectOneRadio>
+
                     </div>
 
-                    <div class="Container10 White Responsive">
-                        <div class="ContainerIndentRight">
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-                            <p:commandButton value="Agregar" id="btn" action="#{descriptionBeans.addDescription()}"
-                                             process="@(.otherDescriptionsPanel)"
-                                             update="@(.otherDescriptionsPanel)"
-                                             style="float: right"/>
-                        </div>
+                        <p:outputLabel value="Término *" />
+
                     </div>
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-8">
+                        <p:inputText id="otherTermino" value="#{cc.attrs.otherTermino}" autocomplete="off"/>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:commandButton value="Agregar" id="btn" action="#{descriptionBeans.addDescription()}"
+                                         process="@(.otherDescriptionsPanel)"
+                                         update="@(.otherDescriptionsPanel)"/>
+                    </div>
+
                 </div>
             </div>
-        </p:panel>
+        </p:outputPanel>
+
         <p:spacer rendered="#{cc.attrs.editable}"/>
 
         <f:facet name="#{(not cc.attrs.editable)? 'footer':null}">
@@ -87,6 +96,7 @@
                      styleClass="otherDescriptions TextAlCenter"
                      emptyMessage="El concepto no tiene otras descripciones"
                      var="description"
+                     style="margin: 10px;"
                      rendered="#{cc.attrs.editable or not empty cc.attrs.descriptions}"
                      value="#{cc.attrs.descriptions}"
                      editable="true"
@@ -195,7 +205,7 @@
                                style="padding: 5px"
                                disabled="#{conceptBean.concept.modeled}">
                     <i class="fa fa-trash fa-lg"/>
-                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar esta descripción?"
+                    <p:confirm header="Confirmation" message="¿Desea eliminar esta descripción?"
                                icon="ui-icon-alert"/>
                 </p:commandLink>
 
@@ -289,15 +299,13 @@
                         </p:autoComplete>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-6">
-                        <p:selectCheckboxMenu style="width: 300px;" id="menu"
-                                              value="#{findConceptBean.selectedCategories}"
-                                              label="Filtro categorías"
-                                              converter="CategoryConverter"
+                        <p:selectCheckboxMenu style="width: 300px;" id="menu" converter="omnifaces.SelectItemsConverter"
+                                              value="#{findConceptBean.selectedCategories}" label="Filtro categorías"
                                               filter="true" filterMatchMode="startsWith"
                                               disabled="#{conceptBean.conceptSMTKTranslateDes!=null}">
 
                             <f:selectItems value="#{findConceptBean.categoryList}" var="category"
-                                           itemLabel="#{category.name}" itemValue="#{category}"/>
+                                           itemLabel="#{category.name}" itemValue="#{category.id}"/>
                             <p:ajax event="toggleSelect"
                                     listener="#{findConceptBean.getConceptSearchInputAndCategories}"
                                     update="inputFindConcept"/>
@@ -487,7 +495,7 @@
                         </div>
                         <div class="ui-g">
                             <div class="ui-g-12 ui-md-6 ui-lg-12">
-                                <p:dataTable styleClass="tableConceptSuggest"
+                                <p:dataTable styleClass="tableConceptSuggest" reflow="true"
                                              value="#{conceptBean.conceptSuggestedList}" var="conceptSuggest">
                                     <p:column headerText="Concept ID">
                                         <h:outputText value="#{conceptSuggest.conceptID}"></h:outputText>

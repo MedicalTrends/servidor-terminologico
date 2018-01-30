@@ -82,6 +82,9 @@ public class GeneralBrowserBean implements Serializable {
     private boolean isFilterChanged;
 
 
+    private boolean showSettings;
+
+
     // Placeholders para los targets de los filtros, dados como elementos seleccionables
     private BasicTypeValue basicTypeValue = new BasicTypeValue(null);
 
@@ -145,7 +148,6 @@ public class GeneralBrowserBean implements Serializable {
             public List<ConceptSMTK> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
-
                 if(isFilterChanged) {
                     generalQuery.setPageNumber(0);
                 }
@@ -156,14 +158,16 @@ public class GeneralBrowserBean implements Serializable {
                 isFilterChanged = false;
 
                 generalQuery.setPageSize(pageSize);
-                generalQuery.setOrder(new Integer(sortField));
+                //generalQuery.setOrder(new Integer(sortField));
 
+                /*
                 if(sortOrder.name().substring(0,3).toLowerCase().equals("asc")) {
                     generalQuery.setAsc(sortOrder.name().substring(0,3).toLowerCase());
                 }
                 else {
                     generalQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
                 }
+                */
 
                 List<ConceptSMTK> conceptSMTKs = null;
 
@@ -419,6 +423,14 @@ public class GeneralBrowserBean implements Serializable {
 
     public void setFilterChanged(boolean filterChanged) {
         isFilterChanged = filterChanged;
+    }
+
+    public boolean isShowSettings() {
+        return showSettings;
+    }
+
+    public void setShowSettings(boolean showSettings) {
+        this.showSettings = showSettings;
     }
 
 }

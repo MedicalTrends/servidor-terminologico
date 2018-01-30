@@ -529,6 +529,8 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
         this.user = null;
         this.creationDateSince = null;
         this.creationDateTo = null;
+        this.setOrder(1);
+        this.setAsc("asc");
         for (QueryFilter filter : filters) {
             filter.getTargets().clear();
         }
