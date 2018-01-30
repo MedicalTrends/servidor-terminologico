@@ -264,3 +264,9 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     height: 50px !important;
 }
 
+.dashboard .overview .overview-footer {
+    position: relative;
+    border-top: 1px solid #DBDBDB;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

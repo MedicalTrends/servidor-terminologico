@@ -12,6 +12,11 @@
 
     <ui:define name="content">
 
+        <p:breadCrumb>
+            <p:menuitem value="Inicio" url="/views/home.xhtml" />
+            <p:menuitem value="#{generalBrowserBean.category.name}" url="#" />
+        </p:breadCrumb>
+
         <f:metadata>
             <f:viewParam name="idCategory" value="#{generalBrowserBean.idCategory}" />
             <f:event type="preRenderView" listener="#{generalBrowserBean.executeQuery}" />
@@ -33,8 +38,6 @@
                                  paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {Exporters}"
                                  emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
-                        <f:facet name="header">#{generalBrowserBean.category.name}</f:facet>
-
                         <p:growl id="growl" showDetail="true" showSummary="true"/>
 
                         <p:ajax event="rowToggle" listener="#{generalBrowserBean.onRowToggle}" />
@@ -49,7 +52,7 @@
                             <div class="ui-g dashboard">
                                 <div class="ui-g-12">
                                     <div class="card overview">
-                                        <div class="overview-content clearfix">
+                                        <div class="overview-content clearfix task-list">
                                                 <span class="overview-title">
                                                     <p:link outcome="/views/concept/conceptEdit" value="#{concept.descriptionFavorite.term}" styleClass="myCustomLinkStyle">
                                                         <f:param name="editMode" value="#{false}" />
@@ -57,39 +60,55 @@
                                                     </p:link>
                                                 </span>
                                                 <span class="overview-badge">
-                                                    <p:link outcome="/views/concept/conceptEdit" title="Consultar" style="padding: 5px">
-                                                        <i class="fa fa-eye fa-lg"/>
+                                                    <p:button outcome="/views/concept/conceptEdit" icon="fa fa-search fa-lg" title="Consultar" style="padding: 5px">
                                                         <f:param name="editMode" value="#{false}" />
                                                         <f:param name="idConcept" value="#{concept.id}" />
-                                                    </p:link>
+                                                    </p:button>
 
-                                                    <p:link outcome="/views/concept/conceptEdit" title="Editar" style="padding: 5px">
-                                                        <i class="fa fa-edit fa-lg"/>
+                                                    <p:button outcome="/views/concept/conceptEdit" icon="fa fa-edit fa-lg" title="Editar" style="padding: 5px">
                                                         <f:param name="editMode" value="#{true}" />
                                                         <f:param name="idConcept" value="#{concept.id}" />
-                                                    </p:link>
+                                                    </p:button>
 
-                                                    <p:commandLink rendered="#{concept.modeled}" oncomplete="PF('dialogTC2-browser').show()" update="@(.conceptTranslate)" title="Trasladar" style="padding: 5px">
-                                                        <i class="fa fa-exchange fa-lg"/>
+                                                    <p:commandButton rendered="#{concept.modeled}" icon="fa fa-exchange fa-lg" oncomplete="PF('dialogTC2-browser').show()" update="@(.conceptTranslate)" title="Trasladar" style="padding: 5px">
                                                         <f:setPropertyActionListener value="#{concept}" target="#{transferConceptBean.conceptSMTKSelected}" />
+                                                    </p:commandButton>
 
-                                                    </p:commandLink>
-
-                                                    <p:commandLink action="#{generalBrowserBean.deleteConcept(concept)}"
-                                                                   ajax="true"
+                                                    <p:commandButton action="#{generalBrowserBean.deleteConcept(concept)}"
+                                                                   ajax="true" icon="fa fa-trash fa-lg"
                                                                    process="@this"
                                                                    rendered="#{not concept.modeled and profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}"
                                                                    update="@(.browserTable), growl" title="Eliminar" style="padding: 5px">
-                                                        <i class="fa fa-trash fa-lg"/>
                                                         <p:confirm header="Confirmar Acción" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
-                                                    </p:commandLink>
+                                                    </p:commandButton>
                                                 </span>
+
                                                 <span class="overview-detail">
                                                     <h:outputText value="#{concept.conceptID}" style="font-size: small; color: #006621" />
                                                     <br/>
                                                     <h:outputText value="#{concept.category.name}" style="font-size: small; color:#545454;" />
                                                     <br/>
-                                                    <p:outputPanel rendered="#{ not empty concept.tags}">
+
+                                                    <p:outputPanel rendered="#{not empty generalBrowserBean.generalQuery.showableColumns}">
+                                                        <p:separator style="border-top: 0px solid rgb(219, 219, 219)"/>
+                                                        <h:dataTable value="#{generalBrowserBean.generalQuery.showableColumns}"
+                                                                     var="column"
+                                                                     columnIndexVar="colIndex">
+                                                            <h:column>
+                                                                <h:outputText value="#{column.relationshipDefinition.name}" style="font-weight: bold; font-size: small; color:#545454;" />
+                                                            </h:column>
+                                                            <h:column>
+                                                                <p:outputPanel>
+                                                                    <smtk:basicTypeCell basicTypeDefinition="#{column.relationshipDefinition.targetDefinition}" relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.basicType}" />
+                                                                    <smtk:helperTableTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.helperTable}" />
+                                                                    <smtk:smtkTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.SMTKType}" />
+                                                                </p:outputPanel>
+                                                            </h:column>
+                                                        </h:dataTable>
+                                                    </p:outputPanel>
+
+                                                     <p:outputPanel rendered="#{ not empty concept.tags}">
+                                                         <p:separator style="border-top: 0px solid rgb(219, 219, 219)"/>
                                                         <i class="fa fa-tag" style="font-size: small"/>
                                                         <p:repeat
                                                                 offset="0"
@@ -109,21 +128,6 @@
                                                         <i class="ui-icon ui-icon-comment" style="font-size: small"/>
                                                         <h:outputText value=" #{concept.observation}" style="font-size: small; color: #006621"/>
                                                     </p:outputPanel>
-
-                                                    <h:dataTable value="#{generalBrowserBean.generalQuery.showableColumns}"
-                                                                 var="column" rendered="#{not empty generalBrowserBean.generalQuery.showableColumns}"
-                                                                 columnIndexVar="colIndex">
-                                                        <h:column>
-                                                            <h:outputText value="#{column.relationshipDefinition.name}" style="font-weight: bold; font-size: small; color:#545454;" />
-                                                        </h:column>
-                                                        <h:column>
-                                                            <p:outputPanel>
-                                                                <smtk:basicTypeCell basicTypeDefinition="#{column.relationshipDefinition.targetDefinition}" relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.basicType}" />
-                                                                <smtk:helperTableTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.helperTable}" />
-                                                                <smtk:smtkTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.SMTKType}" />
-                                                            </p:outputPanel>
-                                                        </h:column>
-                                                    </h:dataTable>
                                                 </span>
                                         </div>
                                     </div>
@@ -176,7 +180,8 @@
 
         <script type="text/javascript">
             alert('hola');
-            $('.layout-rightpanel').addClass('layout-rightpanel-active');
+            $('.rightpanel-btn').trigger('click');
+            //$('.layout-rightpanel').addClass('layout-rightpanel-active');
         </script>
 
     </ui:define>
