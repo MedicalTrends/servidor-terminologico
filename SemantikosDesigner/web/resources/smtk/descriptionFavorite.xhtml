@@ -19,38 +19,46 @@
     <p:fieldset legend="Preferida">
 
         <div class="ui-g">
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
                 <p:outputLabel value="DescriptionID" />
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                <p:inputText value="DESCID" rendered="#{not cc.attrs.description.persistent}" disabled="true" />
-                <p:inputText value="#{cc.attrs.description.descriptionId}" disabled="true" rendered="#{cc.attrs.description.persistent}" />
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
+                <p:inputText value="DESCID" rendered="#{not cc.attrs.description.persistent}" readonly="true" />
+                <p:inputText value="#{cc.attrs.description.descriptionId}" readonly="true" rendered="#{cc.attrs.description.persistent}" />
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
                 <p:outputLabel value="Sensibilidad" />
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
                 <p:selectOneRadio id="customRadio2" value="#{cc.attrs.description.caseSensitive}" layout="responsive" columns="2"
-                                  disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}">
+                                  rendered="#{not cc.attrs.description.conceptSMTK.modeled}">
                     <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
                     <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
                     <p:ajax/>
                 </p:selectOneRadio>
+
+                <p:inputText id="caseSensitive"
+                             value="#{cc.attrs.description.caseSensitive?'Sensible':'Insensible'}"
+                             readonly="true"
+                             rendered="#{cc.attrs.description.conceptSMTK.modeled}"
+                             filter="true" filterMatchMode="startsWith"
+                             autoWidth="false">
+                </p:inputText>
             </div>
         </div>
 
         <div class="ui-g">
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
                 <p:outputLabel value="Término *" />
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-10">
+            <div class="ui-g-12 ui-md-8 ui-lg-10">
                 <p:inputTextarea id="favorite"
                                  styleClass="terms"
                                  name="description"
                                  rows="1"
                                  validator="#{validatorBean.validateRequiredInput}"
                                  value="#{cc.attrs.description.term}"
-                                 disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
+                                 readonly="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
                                  autocomplete="off">
                     <p:ajax event="keyup" update="@(.FSN)" listener="#{descriptionBeans.updateFSNFromFavourite(cc.attrs.description)}" process="@this" />
                 </p:inputTextarea>

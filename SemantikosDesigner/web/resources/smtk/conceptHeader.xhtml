@@ -19,7 +19,7 @@
     <!-- Indicadores -->
     <div class="card card-w-title">
 
-    <h1>#{cc.attrs.concept.descriptionFavorite}</h1>
+    <h1>#{cc.attrs.concept.persistent?cc.attrs.concept.descriptionFavorite:'Nuevo Concepto Borrador'}</h1>
 
     <div class="ui-g ui-fluid">
 
@@ -68,7 +68,6 @@
 
             <p:selectOneMenu id="tagSemantikos"
                              value="#{cc.attrs.concept.tagSMTK}"
-                             style="width: 80%"
                              converter="omnifaces.SelectItemsConverter"
                              rendered="#{not cc.attrs.concept.modeled}"
                              filter="true" filterMatchMode="startsWith"
@@ -84,7 +83,6 @@
 
             <p:inputText id="tagSemantikos2"
                              value="#{cc.attrs.concept.tagSMTK.name}"
-                             style="width: 80%"
                              readonly="true"
                              rendered="#{cc.attrs.concept.modeled}"
                              filter="true" filterMatchMode="startsWith"

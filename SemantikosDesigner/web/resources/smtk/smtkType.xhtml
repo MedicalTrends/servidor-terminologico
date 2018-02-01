@@ -112,7 +112,7 @@
 
     </p:panel>
 
-    <p:panel id="multiplicityN_with_attributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
+    <p:fieldset id="multiplicityN_with_attributes" legend="#{cc.attrs.relationshipDefinition.name}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
@@ -172,8 +172,7 @@
                     </div>
                     <!-- Atributos de relación -->
                     <smtk:attributes concept="#{cc.attrs.concept}"
-                                     relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                    />
+                                     relationshipDefinition="#{cc.attrs.relationshipDefinition}"/>
                     <div class="ui-g-12 ui-md-6 ui-lg-1">
 
                         <p:commandButton
@@ -244,7 +243,7 @@
             </p:column>
         </p:dataTable>
 
-    </p:panel>
+    </p:fieldset>
 
     <p:panel id="multiplicityOne"
              styleClass="concept"

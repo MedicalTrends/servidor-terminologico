@@ -12,11 +12,6 @@
 
     <ui:define name="content">
 
-        <p:breadCrumb id="top-menu">
-            <p:menuitem value="Inicio" url="/views/home.xhtml" />
-            <p:menuitem value="#{generalBrowserBean.category.name}" url="#" />
-        </p:breadCrumb>
-
         <f:metadata>
             <f:viewParam name="idCategory" value="#{generalBrowserBean.idCategory}" />
             <f:event type="preRenderView" listener="#{generalBrowserBean.executeQuery}" />
@@ -25,6 +20,13 @@
         <div class="ui-g dashboard">
             <div class="ui-g-12 ui-md-8 ui-lg-9">
                 <h:form id="browserForm" prependId="false">
+
+                    <p:breadCrumb id="top-menu">
+                        <p:menuitem value="Inicio" url="/views/home.xhtml" />
+                        <p:menuitem value="#{generalBrowserBean.category.name}" url="#" />
+                    </p:breadCrumb>
+
+                    <br/>
 
                     <p:panel id="filters" styleClass="filtros">
 
@@ -142,6 +144,8 @@
                     </p:panel>
 
                     <p:outputPanel id="conceptPanel" styleClass="conceptPanel">
+
+                    <br/>
 
                     <p:dataTable id="browserTable"
                                  styleClass="browserTable conceptTable"

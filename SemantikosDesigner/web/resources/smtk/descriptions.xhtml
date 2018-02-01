@@ -26,17 +26,15 @@
 
         <p:outputPanel rendered="#{conceptBean.editable and profilePermissionsBeans.permissionsBy(conceptBean.category)}">
 
-            <div class="ui-fluid">
+            <div class="ui-g ui-fluid">
 
-                <div class="ui-g">
-
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel value="Tipo Descriptor" />
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                         <p:selectOneMenu value="#{cc.attrs.otherDescriptionType}"
                                          converter="omnifaces.SelectItemsConverter">
@@ -47,15 +45,15 @@
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel value="Sensibilidad" />
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                        <p:selectOneRadio value="#{cc.attrs.otherSensibilidad}"
+                        <p:selectOneRadio value="#{cc.attrs.otherSensibilidad}" layout="responsive" columns="2"
                                           style="text-align: center">
                             <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
                             <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
@@ -63,7 +61,7 @@
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel value="Término *" />
 
@@ -73,13 +71,12 @@
                         <p:inputText id="otherTermino" value="#{cc.attrs.otherTermino}" autocomplete="off"/>
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="ui-g-12 ui-md-2 ui-lg-2">
                         <p:commandButton value="Agregar" id="btn" action="#{descriptionBeans.addDescription()}"
                                          process="@(.otherDescriptionsPanel)"
                                          update="@(.otherDescriptionsPanel)"/>
                     </div>
 
-                </div>
             </div>
         </p:outputPanel>
 

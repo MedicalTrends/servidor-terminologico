@@ -31,11 +31,19 @@
             </div>
             <div class="ui-g-12 ui-md-8 ui-lg-4">
                 <p:selectOneRadio id="customRadio2" value="#{cc.attrs.description.caseSensitive}" layout="responsive" columns="2"
-                                  disabled="#{descriptionBeans.disableSensibilityFSN(cc.attrs.description) or not cc.attrs.editable}">
+                                  rendered="#{not descriptionBeans.disableSensibilityFSN(cc.attrs.description)}">
                     <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
                     <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
                     <p:ajax/>
                 </p:selectOneRadio>
+
+                <p:inputText id="caseSensitive"
+                             value="#{cc.attrs.description.caseSensitive?'Sensible':'Insensible'}"
+                             readonly="true"
+                             rendered="#{descriptionBeans.disableSensibilityFSN(cc.attrs.description)}"
+                             filter="true" filterMatchMode="startsWith"
+                             autoWidth="false">
+                </p:inputText>
             </div>
         </div>
 

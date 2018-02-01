@@ -45,6 +45,17 @@
 
                     <h:form id="mainForm" rendered="#{ not (conceptBean.concept eq null ) }" styleClass="#{conceptBean.editable? '' : 'consult'}">
 
+                        <p:breadCrumb id="top-menu">
+                            <p:menuitem value="Inicio" url="/views/home.xhtml" />
+                            <p:menuitem value="#{conceptBean.category.name}" url="/views/browser/generalBrowser.xhtml?idCategory=#{conceptBean.category.id}" />
+                            <p:menuitem value="#{conceptBean.concept.conceptID}" url="#"
+                                        rendered="#{conceptBean.concept.persistent}" />
+                            <p:menuitem value="Nuevo Concepto Borrador" url="#"
+                                        rendered="#{not conceptBean.concept.persistent}"/>
+                        </p:breadCrumb>
+
+                        <br/>
+
                         <smtk:changeMarketed />
 
                         <p:outputPanel>
@@ -239,13 +250,14 @@
                         <div style="text-align:right;">
 
                             <p:commandButton actionListener="#{conceptBean.saveConcept}" icon="fa fa-check"
-                                             rendered="#{conceptBean.concept.editable}" style="width: 150px"
-                                             value="Guardar"
+                                             rendered="#{conceptBean.concept.editable}"
+                                             value="Guardar" style="width: auto"
                                              update="growl, mainForm, @(.breadUpdate)">
                             </p:commandButton>
 
                             <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"
-                                             value="Eliminar" type="submit" process="mainForm" style="width: 150px"
+                                             value="Eliminar" type="submit" process="mainForm"
+                                             style="width: auto"
                                              rendered="#{conceptBean.concept.persistent and not conceptBean.concept.modeled and conceptBean.concept.editable}"
                                              update="growl, mainForm">
                                 <p:confirm header="Confirmation" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
@@ -255,8 +267,7 @@
                             <smtk:trasnferConcept rendered="#{conceptBean.concept.modeled and conceptBean.concept.editable}" conceptSMTK="#{conceptBean.concept}"/>
 
                             <p:commandButton actionListener="#{conceptBean.cancelConcept}" icon="fa fa-undo"
-                                             style="width: 150px"
-                                             value="Deshacer" type="submit" process="mainForm"
+                                             value="Deshacer" type="submit" process="mainForm" style="width: auto"
                                              rendered="#{conceptBean.concept.editable}"
                                              update="growl, mainForm">
                                 <p:confirm header="Confirmation"
@@ -264,13 +275,7 @@
                                            icon="ui-icon-alert"/>
                             </p:commandButton>
 
-
                             <smtk:export-xls rendered="#{conceptBean.concept.modeled}" />
-
-                            <p:button outcome="conceptEdit" value="Editar Concepto" style="width: 150px" rendered="#{ not conceptBean.editable}">
-                                <f:param name="editMode" value="#{true}" />
-                                <f:param name="idConcept" value="#{conceptBean.concept.id}" />
-                            </p:button>
 
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                 <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"

@@ -208,7 +208,7 @@
     </p:panel>
 
 
-    <p:commandButton  icon="fa fa-file-excel-o" styleClass="ui-priority-primary" ajax="false" value="Exportar"  rendered="#{conceptBean.concept.modeled}">
+    <p:commandButton  icon="fa fa-file-excel-o" styleClass="ui-priority-primary" ajax="false" value="Exportar"  rendered="#{conceptBean.concept.modeled}" style="width: auto">
         <ce:if test="#{ not empty conceptExport.getGMDNRelationships() }">
             <p:dataExporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,GMDNTable,crossMapsDirectosTable,crossMapsIndirectosTable,refsetsTable" type="xls" fileName="concepto" />
         </ce:if>
