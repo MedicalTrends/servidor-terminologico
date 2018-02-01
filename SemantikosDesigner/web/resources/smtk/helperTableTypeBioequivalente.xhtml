@@ -17,7 +17,7 @@
 <composite:implementation>
 
     <!-- Bioequivalente -->
-    <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500" collapsed="true"
+    <p:fieldset id="helperTableTypeCollection" legend="#{cc.attrs.relationshipDefinition.name}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and not cc.attrs.relationshipDefinition.ISP}">
 
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
@@ -166,7 +166,7 @@
             </p:column>
         </p:dataTable>
 
-    </p:panel>
+    </p:fieldset>
 
 </composite:implementation>
 </html>

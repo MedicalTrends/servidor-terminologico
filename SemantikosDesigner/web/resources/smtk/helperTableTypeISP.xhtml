@@ -17,7 +17,7 @@
 <composite:implementation>
 
     <!-- ISP -->
-    <p:panel id="helperTableTypeCollectionISP" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
+    <p:fieldset id="helperTableTypeCollectionISP" legend="#{cc.attrs.relationshipDefinition.name}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.ISP}">
 
         <p:spacer />
@@ -172,7 +172,7 @@
             </p:column>
         </p:dataTable>
 
-    </p:panel>
+    </p:fieldset>
 
     <p:dialog id="dialogISP" styleClass="dialogISP" widgetVar="dialogISP" header="Información de Registro ISP"  width="750px" height="300px">
         <p:dataTable value="#{ispbean.ispRecord.cells}" var="cell" rendered="#{not empty ispbean.ispRecord.cells}">

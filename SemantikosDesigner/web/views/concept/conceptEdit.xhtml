@@ -13,7 +13,7 @@
             <p:menuitem value="#{conceptBean.category}" url="/views/browser/generalBrowser.xhtml?idCategory=#{conceptBean.category.id}" />
             <p:menuitem value="#{conceptBean.concept.descriptionFavorite} (#{conceptBean.concept.conceptID }) [#{conceptBean.concept.modeled?'Modelado':'Borrador'}]" url="#"
                         rendered="#{conceptBean.concept.persistent}" />
-            <p:menuitem value="Nuevo Concepto Borrador" url="#"
+            <p:menuitem value="*" url="#"
                         rendered="#{not conceptBean.concept.persistent}"/>
         </p:breadCrumb>
     </ui:define>

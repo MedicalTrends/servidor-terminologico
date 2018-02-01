@@ -116,7 +116,7 @@
 
     <!-- Multiplicidad N con atributos-->
 
-    <p:panel id="helperTableTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
+    <p:fieldset id="helperTableTypeCollectionWithAttributes" legend="#{cc.attrs.relationshipDefinition.name}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
@@ -255,10 +255,10 @@
                 />
             </p:column>
         </p:dataTable>
-    </p:panel>
+    </p:fieldset>
 
     <!-- Multiplicidad N sin atributos-->
-    <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
+    <p:fieldset id="helperTableTypeCollection" legend="#{cc.attrs.relationshipDefinition.name}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and not cc.attrs.relationshipDefinition.ISP}">
 
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
@@ -360,7 +360,7 @@
             </p:column>
         </p:dataTable>
 
-    </p:panel>
+    </p:fieldset>
 
 
 </composite:implementation>

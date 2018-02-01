@@ -19,7 +19,7 @@
 <composite:implementation>
 
 
-    <p:panel id="multiplicityN_with_attributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true"  toggleSpeed="500" collapsed="true"
+    <p:fieldset id="multiplicityN_with_attributes" legend="#{cc.attrs.relationshipDefinition.name}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
@@ -169,7 +169,7 @@
             </p:column>
         </p:dataTable>
 
-    </p:panel>
+    </p:fieldset>
 
 
 </composite:implementation>

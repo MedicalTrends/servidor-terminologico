@@ -318,7 +318,7 @@
 
     <!-- Multiplicidad N con atributos-->
 
-    <p:panel id="helperTableTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.relationshipDefinition.required}"
+    <p:fieldset id="helperTableTypeCollectionWithAttributes" legend="#{cc.attrs.relationshipDefinition.name}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
@@ -336,13 +336,9 @@
 
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
-            <div class="ui-fluid">
+            <div class="ui-g ui-fluid">
 
-                <div class="Container">
-
-                    <div class="Container20 White Responsive">
-
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
 
                             <p:outputPanel styleClass="search">
 
@@ -374,14 +370,14 @@
                                 </p:autoComplete>
                                 <i class="fa fa-search fa-lg"  />
                             </p:outputPanel>
-                        </div>
+
                     </div>
 
                     <!-- Atributos de relación -->
                     <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
 
-                    <div class="Container20 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}" style="text-align: center">
+                <div class="ui-g-12 ui-md-6 ui-lg-1">
+
                             <p:commandButton
                                     process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                     action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
@@ -389,10 +385,10 @@
                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                     value="Agregar">
                             </p:commandButton>
-                        </div>
-                    </div>
                 </div>
+
             </div>
+
         </p:outputPanel>
 
 
@@ -448,7 +444,7 @@
                 </div>
             </p:column>
         </p:dataTable>
-    </p:panel>
+    </p:fieldset>
 
 </composite:implementation>
 </html>
