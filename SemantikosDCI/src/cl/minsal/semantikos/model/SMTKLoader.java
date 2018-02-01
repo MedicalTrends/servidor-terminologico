@@ -32,14 +32,13 @@ public class SMTKLoader {
     //public static final String PATH_PREFIX = "/resources/";
 
     private static final String ROOT = "/datafiles/";
-    //private static final String ENV_DRUGS = "test/";
     //private static final String ENV = "test/";
     private static final String ENV_DRUGS = "drugs/";
 
     private static final String SUBSTANCE = "substance/";
 
     /*Datafiles Sustancias*/
-    public static final String SUBSTANCE_PATH= ROOT+ENV_DRUGS+SUBSTANCE+"01_Sustancias.Base.txt";
+    public static final String SUBSTANCE_PATH= ROOT+ENV_DRUGS+SUBSTANCE+"01_Sustancias.Base_test.txt";
 
     private CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
     private TagSMTKManager tagSMTKManager = (TagSMTKManager) ServiceLocator.getInstance().getService(TagSMTKManager.class);
