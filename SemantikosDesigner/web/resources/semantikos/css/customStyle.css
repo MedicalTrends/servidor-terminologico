@@ -278,3 +278,11 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 .ui-inputfield.ui-state-focus {
     padding: 6px !important;
 }
+
+.ui-inputfield.ui-inputtextarea {
+    padding: 6px !important;
+}
+
+.ui-inputtextarea.ui-state-focus {
+    padding: 6px !important;
+}

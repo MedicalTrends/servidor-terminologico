@@ -23,7 +23,7 @@
 
     <div class="ui-g ui-fluid">
 
-        <div class="ui-g-12 ui-md-4 ui-lg-2" style="margin-top: 7px">
+        <div class="ui-g-12 ui-md-4 ui-lg-2">
 
             <p:outputLabel for="toBeReviewedCheck" value="Indicadores" />
 
@@ -40,7 +40,7 @@
 
         </div>
 
-        <div class="ui-g-12 ui-md-4 ui-lg-2" style="margin-top: 7px">
+        <div class="ui-g-12 ui-md-4 ui-lg-2">
 
             <p:outputLabel for="toBeReviewedCheck" value="Grado de Definición"  />
 
@@ -70,7 +70,7 @@
                              value="#{cc.attrs.concept.tagSMTK}"
                              style="width: 80%"
                              converter="omnifaces.SelectItemsConverter"
-                             disabled="#{not cc.attrs.concept.editable or cc.attrs.concept.modeled}"
+                             rendered="#{not cc.attrs.concept.modeled}"
                              filter="true" filterMatchMode="startsWith"
                              autoWidth="false">
                 <p:ajax event="itemSelect"
@@ -81,6 +81,15 @@
                 <f:selectItems value="#{conceptBean.tagSMTKs}" var="tag"
                                itemValue="#{tag}"/>
             </p:selectOneMenu>
+
+            <p:inputText id="tagSemantikos2"
+                             value="#{cc.attrs.concept.tagSMTK.name}"
+                             style="width: 80%"
+                             readonly="true"
+                             rendered="#{cc.attrs.concept.modeled}"
+                             filter="true" filterMatchMode="startsWith"
+                             autoWidth="false">
+            </p:inputText>
 
         </div>
 
@@ -95,6 +104,7 @@
 
             <p:inputTextarea id="observation"
                              name="observation"
+                             rows="1"
                              disabled="#{not cc.attrs.concept.editable}"
                              value="#{cc.attrs.concept.observation}">
                 <p:ajax />
@@ -104,12 +114,12 @@
 
         </div>
 
-        </div>
-
         <!--Descripciones FSN y Preferida -->
         <smtk:descriptionFSN description="#{cc.attrs.concept.getValidDescriptionFSN()}" editable="#{cc.attrs.concept.editable}" />
         <br/>
         <smtk:descriptionFavorite description="#{cc.attrs.concept.getValidDescriptionFavorite()}" editable="#{cc.attrs.concept.editable}" />
+
+        </div>
 
 
 </composite:implementation>

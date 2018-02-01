@@ -16,19 +16,20 @@
 <composite:implementation>
 
 
-    <p:panel header="FSN">
+    <p:fieldset legend="FSN">
+
         <div class="ui-g ui-fluid">
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
                 <p:outputLabel value="DescriptionID" />
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                <p:inputText value="DESCID" rendered="#{not cc.attrs.description.persistent}" disabled="true" />
-                <p:inputText value="#{cc.attrs.description.descriptionId}" rendered="#{cc.attrs.description.persistent}" disabled="true" />
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
+                <p:inputText value="DESCID" rendered="#{not cc.attrs.description.persistent}" readonly="true" />
+                <p:inputText value="#{cc.attrs.description.descriptionId}" rendered="#{cc.attrs.description.persistent}" readonly="true" />
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
                 <p:outputLabel value="Sensibilidad" />
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
                 <p:selectOneRadio id="customRadio2" value="#{cc.attrs.description.caseSensitive}" layout="responsive" columns="2"
                                   disabled="#{descriptionBeans.disableSensibilityFSN(cc.attrs.description) or not cc.attrs.editable}">
                     <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
@@ -39,23 +40,24 @@
         </div>
 
         <div class="ui-g">
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
                 <p:outputLabel value="Término *" />
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-10">
+            <div class="ui-g-12 ui-md-8 ui-lg-10">
                 <p:inputTextarea id="FSN"
                                  styleClass="terms FSN"
                                  name="description"
                                  rows="1"
                                  validator="#{validatorBean.validateRequiredInput}"
                                  value="#{cc.attrs.description.representation}"
-                                 disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
+                                 readonly="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
                                  autocomplete="off">
                     <p:ajax event="change" update="@this" process="@this" />
                 </p:inputTextarea>
             </div>
         </div>
-    </p:panel>
+
+    </p:fieldset>
 
 </composite:implementation>
 </html>
