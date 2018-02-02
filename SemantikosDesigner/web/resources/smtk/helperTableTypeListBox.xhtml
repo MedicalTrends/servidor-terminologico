@@ -26,14 +26,14 @@
 
             <div class="ui-g">
 
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                     <p:outputLabel for="findHTRecords1" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                     <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                     <p:outputPanel styleClass="search" rendered="#{cc.attrs.concept.editable}">
 
@@ -88,14 +88,14 @@
 
                 <div class="ui-g">
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel for="findHTRecords2" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                         <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <div class="ui-g-12 ui-md-8 ui-lg-3">
 
                         <p:outputPanel styleClass="search">
                             <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
@@ -138,7 +138,11 @@
 
                 <div class="ui-g">
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}"/>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                         <p:outputPanel styleClass="search">
 
@@ -177,18 +181,22 @@
                     <!-- Atributos de relación -->
                     <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                </div>
 
+                <div class="ui-g">
+
+                    <div class="ui-g-12 ui-md-12 ui-lg-12">
                         <p:commandButton
                                 process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                 action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
-                                style="max-width: 100px"
+                                style="width: auto; float: right"
                                 update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                 value="Agregar">
                         </p:commandButton>
-
                     </div>
+
                 </div>
+
             </div>
         </p:outputPanel>
 
@@ -205,7 +213,6 @@
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and not cc.attrs.concept.modeled}"
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                     style="width: 100%"
                      reflow="true">
 
             <!-- Parámetros del validador -->
@@ -242,17 +249,18 @@
                 <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
             </p:columns>
 
-            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
-                <p:commandButton
-                        icon="fa fa-trash"
-                        title="Eliminar"
-                        update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                        style="float: right"
-                        process="@this"
-                        immediate="true"
-                        actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                        styleClass="relationships"
-                />
+            <p:column rendered="#{cc.attrs.concept.editable}">
+                <div style="text-align: center">
+                    <p:commandButton
+                            icon="fa fa-trash"
+                            title="Eliminar"
+                            update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                            process="@this"
+                            immediate="true"
+                            actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                            styleClass="relationships"
+                    />
+                </div>
             </p:column>
         </p:dataTable>
     </p:fieldset>
@@ -278,7 +286,7 @@
 
                 <div class="ui-g">
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:selectOneMenu id="findHTRecords5"
                                          scrollHeight="200"
@@ -344,19 +352,18 @@
                 <h:outputText value="#{relationship.target.getColumnValue(column)}" />
             </p:columns>
 
-
-
-            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
-                <p:commandButton
-                        icon="fa fa-trash"
-                        title="Eliminar"
-                        update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.relationships_#{cc.attrs.relationshipDefinition.id})"
-                        style="float: right"
-                        process="@this"
-                        immediate="true"
-                        actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                        styleClass="relationships"
-                />
+            <p:column rendered="#{cc.attrs.concept.editable}">
+                <div style="text-align: center">
+                    <p:commandButton
+                            icon="fa fa-trash"
+                            style="width: auto"
+                            title="Eliminar"
+                            update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.relationships_#{cc.attrs.relationshipDefinition.id})"
+                            process="@this"
+                            immediate="true"
+                            actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                            styleClass="relationships"/>
+                </div>
             </p:column>
         </p:dataTable>
 

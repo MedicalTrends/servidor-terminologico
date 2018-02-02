@@ -25,19 +25,19 @@
     <div class="ui-g">
 
 
-            <div class="ui-g-12 ui-md-6 ui-lg-1">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
                 <h:outputText value="Cantidad: "/>
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
                 <h:outputText value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,69).target.value}"  >
                     <f:convertNumber locale="es_CL" minFractionDigits="0" maxFractionDigits="2" />
                 </h:outputText>
             </div>
 
-            <div class="ui-g-12 ui-md-6 ui-lg-1">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
                 <h:outputText value="Unidad Cantidad: "/>
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
                 <h:outputText
                         value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,69,12).description}"/>
             </div>

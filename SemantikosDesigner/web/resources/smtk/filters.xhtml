@@ -101,25 +101,25 @@
                                     <span><h:outputText value="Ordenar Por" /></span>
                                 </div>
                                 <div class="ui-g-12">
-                                    <p:selectOneButton value="#{cc.attrs.generalQuery.order}">
+                                    <p:selectOneRadio value="#{cc.attrs.generalQuery.order}" layout="responsive" columns="1">
                                         <f:selectItem itemLabel="ConceptID" itemValue="1" />
                                         <f:selectItem itemLabel="Término" itemValue="2" />
                                         <p:ajax event="change"
                                                 update="@(.browserFilters),@(.browserTable)"
                                                 process="@this"/>
-                                    </p:selectOneButton>
+                                    </p:selectOneRadio>
                                 </div>
                                 <div class="ui-g-12">
                                     <span><h:outputText value="Ascendente" /></span>
                                 </div>
                                 <div class="ui-g-12">
-                                    <p:selectOneButton value="#{cc.attrs.generalQuery.asc}">
+                                    <p:selectOneRadio value="#{cc.attrs.generalQuery.asc}" layout="responsive" columns="1">
                                         <f:selectItem itemLabel="Asc" itemValue="asc" />
                                         <f:selectItem itemLabel="Desc" itemValue="desc" />
                                         <p:ajax event="change"
                                                 update="@(.browserFilters),@(.browserTable)"
                                                 process="@this"/>
-                                    </p:selectOneButton>
+                                    </p:selectOneRadio>
                                 </div>
                             </div>
                         </p:panel>

@@ -18,7 +18,11 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="ui-g-12 ui-md-6 ui-lg-2">
+    <div class="ui-g-12 ui-md-4 ui-lg-2">
+        <p:outputLabel value="#{cc.attrs.relationshipAttributeDefinition.name}"/>
+    </div>
+
+    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
             <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.getAttributesByAttributeDefinition(cc.attrs.relationshipAttributeDefinition)}">
 

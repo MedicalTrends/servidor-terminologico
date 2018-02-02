@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="ui-g-12 ui-md-6 ui-lg-2">
-                        <p:selectBooleanButton  id="ispexistebooleanbutton" value="#{ispbean.existe}" offLabel="No" onLabel="Si" onIcon="ui-icon-check" offIcon="ui-icon-close" >
+                        <p:selectBooleanButton  id="ispexistebooleanbutton" value="#{ispbean.existe}" offLabel="No" onLabel="Si" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width: auto" >
                             <p:ajax async="false" listener="#{ispbean.updateOptionality(cc.attrs.relationshipDefinition)}" update="ispfetcherinputs" process="ispexistebooleanbutton" />
                             <!-- Parámetros del buscador -->
                         </p:selectBooleanButton>
@@ -70,7 +70,8 @@
 
                 <p:inputText id="ispregano" value="#{ispbean.ano}" />
 
-                <p:commandButton id="buttonispcargadatos" action="#{ispbean.fetchData}" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" value="Cargar Data" process="@this, ispregnum, ispregano" >
+                <p:commandButton id="buttonispcargadatos" action="#{ispbean.fetchData}" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" value="Cargar Data" process="@this, ispregnum, ispregano"
+                                 style="width: auto" >
                     <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
                 </p:commandButton>
 

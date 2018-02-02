@@ -97,16 +97,18 @@
                 <h:outputText value="#{rel.target.descriptionFavorite.term}"/>
             </p:column>
 
-
             <p:column headerText="Estado">
                 <h:outputText value="#{rel.target.modeled}"/>
             </p:column>
-            <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
-                <p:commandButton icon="fa fa-trash" title="Eliminar"
-                                 action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
-                                 update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                                 process="@this">
-                </p:commandButton>
+
+            <p:column headerText="Eliminar" rendered="#{cc.attrs.concept.editable}">
+                <div style="text-align: center">
+                    <p:commandButton icon="fa fa-trash" title="Eliminar"
+                                     action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
+                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                     process="@this">
+                    </p:commandButton>
+                </div>
             </p:column>
         </p:dataTable>
 
@@ -134,7 +136,11 @@
 
                 <div class="ui-g">
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}"/>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                         <p:outputPanel styleClass="search">
 
@@ -173,9 +179,15 @@
                     <!-- Atributos de relación -->
                     <smtk:attributes concept="#{cc.attrs.concept}"
                                      relationshipDefinition="#{cc.attrs.relationshipDefinition}"/>
-                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+
+                </div>
+
+                <div class="ui-g">
+
+                    <div class="ui-g-12 ui-md-12 ui-lg-12">
 
                         <p:commandButton
+                                style="width: auto; float: right"
                                 process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                 action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
                                 update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
@@ -183,7 +195,9 @@
                         </p:commandButton>
 
                     </div>
+
                 </div>
+
             </div>
         </p:outputPanel>
 
@@ -234,12 +248,14 @@
                 </p:outputPanel>
             </p:columns>
 
-            <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
-                <p:commandButton icon="fa fa-trash" title="Eliminar"
-                                 action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
-                                 update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                 process="@this">
-                </p:commandButton>
+            <p:column headerText="Eliminar" rendered="#{cc.attrs.concept.editable}">
+                <div style="text-align: center">
+                    <p:commandButton icon="fa fa-trash" title="Eliminar"
+                                     action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
+                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                                     process="@this">
+                    </p:commandButton>
+                </div>
             </p:column>
         </p:dataTable>
 
@@ -256,14 +272,14 @@
 
                 <div class="ui-g">
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"  value="#{cc.attrs.relationshipDefinition.name} " for="findConceptSMTK"/>
                         <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" value="#{cc.attrs.relationshipDefinition.name} *" for="findConceptSMTK"/>
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <div class="ui-g-12 ui-md-8 ui-lg-3">
 
                         <p:outputPanel styleClass="search">
 
@@ -316,7 +332,7 @@
 
                     <div class="ui-g">
 
-                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
                                            value="#{cc.attrs.relationshipDefinition.name}: " for="itemSelected"/>
@@ -325,7 +341,7 @@
 
                         </div>
 
-                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="itemSelected" value="#{relationship.target.descriptionFavorite.term}" />
@@ -346,7 +362,7 @@
 
                         </div>
 
-                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:inputText value="#{relationship.target.conceptID}" disabled="true" />
 

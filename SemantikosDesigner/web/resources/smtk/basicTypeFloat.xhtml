@@ -28,14 +28,14 @@
 
             <div class="ui-g">
 
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel for="basicTypeValue11" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
                                        value="#{cc.attrs.relationshipDefinition.name}"/>
                         <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                         <p:inputNumber id="basicTypeValue11"
                                        value="#{conceptBean.basicTypeValue.value}"
@@ -77,14 +77,14 @@
 
             <div class="ui-g ui-fluid">
 
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <p:outputLabel for="basicTypeValue" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                             <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
@@ -111,7 +111,7 @@
 
         <div class="ui-g ui-fluid">
 
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel for="basicTypeValue19"
                                        value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"/>
@@ -119,7 +119,7 @@
 
             </div>
 
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                         <p:inputNumber id="basicTypeValue19"
                                        value="#{conceptBean.basicTypeValue.value}"
@@ -162,14 +162,14 @@
 
             <div class="ui-g ui-fluid">
 
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <p:outputLabel for="basicTypeValue2" value="#{cc.attrs.relationshipDefinition.name}"/>
                             <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" />

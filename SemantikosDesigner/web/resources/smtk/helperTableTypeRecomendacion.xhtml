@@ -41,15 +41,16 @@
 
                 <div class="ui-g">
 
-
                     <!-- Atributo tipo recomendación -->
                     <smtk:attributeByName concept="#{cc.attrs.concept}"
                                           relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                          name="tipo recomendación"
-                    />
+                                          name="tipo recomendación"/>
 
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}"/>
+                    </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
 
                         <p:selectOneMenu id="findHTRecords6" scrollHeight="200"
                                          forceSelection="true"
@@ -98,15 +99,20 @@
                                           name="indicación"
                     />
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                </div>
+
+                <div class="ui-g">
+
+                    <div class="ui-g-12 ui-md-12 ui-lg-12">
                         <p:commandButton
                                 process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                 action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
-                                style="max-width: 100px"
+                                style="width: auto; float: right"
                                 update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                 value="Agregar">
                         </p:commandButton>
                     </div>
+
                 </div>
             </div>
         </p:outputPanel>

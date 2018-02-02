@@ -7,16 +7,6 @@
                 xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
                 template="/WEB-INF/template.xhtml">
 
-    <ui:define name="header">
-        <p:breadCrumb styleClass="breadUpdate">
-            <p:menuitem value="Inicio" url="/views/home.xhtml" />
-            <p:menuitem value="#{conceptBean.category}" url="/views/browser/generalBrowser.xhtml?idCategory=#{conceptBean.category.id}" />
-            <p:menuitem value="#{conceptBean.concept.descriptionFavorite} (#{conceptBean.concept.conceptID }) [#{conceptBean.concept.modeled?'Modelado':'Borrador'}]" url="#"
-                        rendered="#{conceptBean.concept.persistent}" />
-            <p:menuitem value="*" url="#"
-                        rendered="#{not conceptBean.concept.persistent}"/>
-        </p:breadCrumb>
-    </ui:define>
 
     <ui:define name="viewname">
         <p:link outcome="/views/browser/generalBrowser.xhtml?idCategory=#{conceptBean.category.id}" value="#{conceptBean.category}" />
@@ -50,7 +40,7 @@
                             <p:menuitem value="#{conceptBean.category.name}" url="/views/browser/generalBrowser.xhtml?idCategory=#{conceptBean.category.id}" />
                             <p:menuitem value="#{conceptBean.concept.conceptID}" url="#"
                                         rendered="#{conceptBean.concept.persistent}" />
-                            <p:menuitem value="Nuevo Concepto Borrador" url="#"
+                            <p:menuitem value="*" url="#"
                                         rendered="#{not conceptBean.concept.persistent}"/>
                         </p:breadCrumb>
 

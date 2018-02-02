@@ -27,14 +27,14 @@
 
             <div class="ui-g">
 
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                     <p:outputLabel for="findHTRecords1" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                     <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                     <p:outputPanel styleClass="search">
                         <p:autoComplete id="findHTRecords1" scrollHeight="200"
@@ -95,14 +95,14 @@
 
                 <div class="ui-g">
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel for="findHTRecords2" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                         <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-#{cc.attrs.relationshipDefinition.ATC?'5':'3'}">
+                    <div class="ui-g-12 ui-md-8 ui-lg-#{cc.attrs.relationshipDefinition.ATC?'8':'4'}">
 
                         <p:outputPanel styleClass="search">
                             <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
@@ -132,14 +132,14 @@
 
             <div class="ui-g">
 
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                     <p:outputLabel for="findHTRecords3" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                     <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                     <p:outputPanel styleClass="search">
 
@@ -197,14 +197,14 @@
 
                 <div class="ui-g">
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel for="findHTRecords4" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                         <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                         <p:outputPanel styleClass="search">
                             <p:inputText disabled="true" id="findHTRecords4" value="#{relationship.target.description}" />
@@ -243,7 +243,7 @@
 
             <div class="ui-g">
 
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                     <p:outputPanel styleClass="search">
 
@@ -338,7 +338,7 @@
 
             <div class="ui-g ui-fluid">
 
-                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:outputPanel styleClass="search">
 
@@ -376,17 +376,20 @@
                     <!-- Atributos de relación -->
                     <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
 
-                <div class="ui-g-12 ui-md-6 ui-lg-1">
+            </div>
 
-                            <p:commandButton
-                                    process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
-                                    action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
-                                    style="max-width: 100px"
-                                    update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                    value="Agregar">
-                            </p:commandButton>
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                    <p:commandButton
+                            process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                            action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
+                            style="width: auto"
+                            update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                            value="Agregar">
+                    </p:commandButton>
+
                 </div>
-
             </div>
 
         </p:outputPanel>
@@ -411,8 +414,7 @@
 
             <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
                        var="column"
-                       columnIndexVar="colIndex"
-            >
+                       columnIndexVar="colIndex">
                 <f:facet name="header">
                     <h:outputText value="#{column.name}" />
                 </f:facet>

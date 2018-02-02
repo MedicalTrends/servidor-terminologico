@@ -67,12 +67,13 @@
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-9">
+                    <div class="ui-g-12 ui-md-6 ui-lg-8">
                         <p:inputText id="otherTermino" value="#{cc.attrs.otherTermino}" autocomplete="off"/>
                     </div>
 
-                    <div class="ui-g-12 ui-md-2 ui-lg-1">
+                    <div class="ui-g-12 ui-md-2 ui-lg-2">
                         <p:commandButton value="Agregar" id="btn" action="#{descriptionBeans.addDescription()}"
+                                         style="width: auto"
                                          process="@(.otherDescriptionsPanel)"
                                          update="@(.otherDescriptionsPanel)"/>
                     </div>
