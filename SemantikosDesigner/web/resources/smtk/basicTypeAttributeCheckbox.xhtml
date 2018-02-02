@@ -18,45 +18,17 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="ui-g-12 ui-md-4 ui-lg-1">
+    <div class="ui-g-4 ui-md-2 ui-lg-1">
 
-            <p:outputPanel rendered="#{cc.attrs.relationshipAttributeDefinition.multiplicity.simple and empty cc.attrs.relationship.getAttributesByAttributeDefinition(cc.attrs.relationshipAttributeDefinition)}">
-
-                <p:selectBooleanCheckbox id="basicTypeValue16"
-                                         value="#{conceptBean.basicTypeValue.value}"
-                                         itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}"
-                                         disabled="#{not cc.attrs.concept.editable}"
-                                         rendered="#{cc.attrs.targetDefinition.type.typeName=='boolean'}">
-                    <p:ajax event="change"
-                            listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}"
-                            process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
-                </p:selectBooleanCheckbox>
-
-            </p:outputPanel>
-
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.relationship.getAttributesByAttributeDefinition(cc.attrs.relationshipAttributeDefinition)}">
-
-                <p:repeat
-                        offset="0"
-                        size="#{cc.attrs.relationship.getAttributesByAttributeDefinition(cc.attrs.relationshipAttributeDefinition).size()}"
-                        step="1"
-                        varStatus="var"
-                        value="#{cc.attrs.relationship.getAttributesByAttributeDefinition(cc.attrs.relationshipAttributeDefinition)}"
-                        var="relationshipAttribute">
-
-                    <p:selectBooleanCheckbox id="basicTypeValue26"
-                                             value="#{relationshipAttribute.target.value}"
-                                             itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}"
-                                             disabled="#{not cc.attrs.concept.editable}"
-                                             rendered="#{cc.attrs.targetDefinition.type.typeName=='boolean'}">
-                        <p:ajax event="change"
-                                listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, relationshipAttribute.target)}"
-                                process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
-                    </p:selectBooleanCheckbox>
-
-                </p:repeat>
-
-            </p:outputPanel>
+        <p:selectBooleanCheckbox id="basicTypeValue17"
+                                 value="#{conceptBean.basicTypeValue.value}"
+                                 itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}"
+                                 disabled="#{not cc.attrs.concept.editable}"
+                                 rendered="#{cc.attrs.targetDefinition.type.typeName=='boolean'}">
+            <p:ajax event="change"
+                    listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}"
+                    process="@this" />
+        </p:selectBooleanCheckbox>
 
     </div>
 

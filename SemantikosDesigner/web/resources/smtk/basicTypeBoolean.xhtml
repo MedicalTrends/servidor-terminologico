@@ -43,10 +43,9 @@
 
                 </div>
 
-                <div class="ui-g-12 ui-md-8 ui-lg-4">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                    <p:selectBooleanButton value="#{conceptBean.basicTypeValue.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg" offIcon="fa fa-close fa-lg"
-                                            style="width: auto">
+                    <p:selectBooleanButton value="#{conceptBean.basicTypeValue.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg" offIcon="fa fa-close fa-lg">
                         <p:ajax event="change"
                                 listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                 process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptMarketed)" />
@@ -92,14 +91,13 @@
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-8 ui-lg-4">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:selectBooleanButton value="#{relationship.target.value}"
                                                offLabel="No"
                                                onLabel="Si"
                                                onIcon="fa fa-check"
                                                offIcon="fa fa-close"
-                                               style="width: auto"
                                                disabled="#{(conceptBean.isMCSpecial(cc.attrs.relationshipDefinition) and conceptBean.concept.isModeled()) or conceptBean.editable eq false}">
                             <p:ajax event="change"
                                     listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,relationship.target)}"

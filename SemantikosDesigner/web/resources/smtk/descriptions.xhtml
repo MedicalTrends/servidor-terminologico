@@ -26,7 +26,9 @@
 
         <p:outputPanel rendered="#{conceptBean.editable and profilePermissionsBeans.permissionsBy(conceptBean.category)}">
 
-            <div class="ui-g ui-fluid">
+            <div class="ui-fluid">
+
+                <div class="ui-g">
 
                     <div class="ui-g-12 ui-md-4 ui-lg-2">
 
@@ -67,16 +69,22 @@
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-8">
+                    <div class="ui-g-12 ui-md-6 ui-lg-10">
                         <p:inputText id="otherTermino" value="#{cc.attrs.otherTermino}" autocomplete="off"/>
                     </div>
 
-                    <div class="ui-g-12 ui-md-2 ui-lg-2">
+                </div>
+
+                <div class="ui-g">
+
+                    <div class="ui-g-12 ui-md-12 ui-lg-12">
                         <p:commandButton value="Agregar" id="btn" action="#{descriptionBeans.addDescription()}"
-                                         style="width: auto"
+                                         style="width: auto; float: right;"
                                          process="@(.otherDescriptionsPanel)"
                                          update="@(.otherDescriptionsPanel)"/>
                     </div>
+
+                </div>
 
             </div>
         </p:outputPanel>
