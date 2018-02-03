@@ -18,7 +18,7 @@
         </f:metadata>
 
         <div class="ui-g dashboard">
-            <div class="ui-g-12 ui-md-12 ui-lg-10">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
                 <h:form id="browserForm" prependId="false">
 
                     <p:breadCrumb id="top-menu">
@@ -30,9 +30,17 @@
 
                     <p:panel id="filters" styleClass="filtros">
 
-                        <div class="ui-g ui-fluid">
+                        <div class="ui-fluid">
 
-                            <div class="ui-g-12 ui-md-6 ui-lg-8">
+                            <div class="ui-g">
+
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
+
+                                <p:outputLabel value="Patrón" />
+
+                            </div>
+
+                            <div class="ui-g-12 ui-md-8 ui-lg-10">
 
                                 <p:outputPanel styleClass="search">
                                     <p:inputText value="#{generalBrowserBean.generalQuery.query}" placeholder="Buscar..." style="width: 100%">
@@ -43,31 +51,13 @@
 
                             </div>
 
-                            <div class="ui-g-12 ui-md-3 ui-lg-2">
-
-                                <p:commandButton actionListener="#{generalBrowserBean.createConcept}" icon="ui-icon-create"
-                                                 value="Crear Nuevo" type="submit" process="browserForm"
-                                                 rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">
-                                </p:commandButton>
-
-                            </div>
-
-                            <div class="ui-g-12 ui-md-3 ui-lg-2">
-
-                                <p:selectBooleanButton value="#{generalBrowserBean.showSettings}" onLabel="Herramientas"
-                                                       styleClass="settings-btn" id="settings-btn"
-                                                       offLabel="Herramientas" onIcon="ui-icon-settings" offIcon="ui-icon-settings">
-                                </p:selectBooleanButton>
-
-                            </div>
-
-                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                                 <p:outputLabel value="Revisar" />
 
                             </div>
 
-                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                            <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                                 <p:selectOneMenu value="#{generalBrowserBean.generalQuery.toBeReviewed}" autoWidth="false" style="width: 100%">
                                     <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
@@ -78,13 +68,13 @@
 
                             </div>
 
-                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                                 <p:outputLabel value="Consultar" />
 
                             </div>
 
-                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                            <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                                 <p:selectOneMenu value="#{generalBrowserBean.generalQuery.toBeConsulted}" autoWidth="false" style="width: 100%">
                                     <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
@@ -95,13 +85,13 @@
 
                             </div>
 
-                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                                 <p:outputLabel value="Estado" />
 
                             </div>
 
-                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                            <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                                 <p:selectOneMenu value="#{generalBrowserBean.generalQuery.modeled}" autoWidth="false" style="width: 100%">
                                     <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
@@ -112,13 +102,13 @@
 
                             </div>
 
-                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                                 <p:outputLabel value="Etiquetas" />
 
                             </div>
 
-                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                            <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                                 <p:selectCheckboxMenu id="tags"
                                                       value="#{generalBrowserBean.generalQuery.tags}"
@@ -136,6 +126,26 @@
                                     <f:selectItems value="#{generalBrowserBean.tags}" var="tag"
                                                    itemLabel="#{tag.name}" itemValue="#{tag}"/>
                                 </p:selectCheckboxMenu>
+
+                            </div>
+
+                            </div>
+
+                            <div class="ui-g">
+
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
+
+                                    <p:commandButton actionListener="#{generalBrowserBean.createConcept}" icon="ui-icon-create"
+                                                     value="Crear Nuevo" type="submit" process="browserForm" style="width: auto; float: right"
+                                                     rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">
+                                    </p:commandButton>
+
+                                    <p:selectBooleanButton value="#{generalBrowserBean.showSettings}" onLabel="Herramientas"
+                                                           styleClass="settings-btn" id="settings-btn" style="width: auto; float: right"
+                                                           offLabel="Herramientas" onIcon="ui-icon-settings" offIcon="ui-icon-settings">
+                                    </p:selectBooleanButton>
+
+                                </div>
 
                             </div>
 

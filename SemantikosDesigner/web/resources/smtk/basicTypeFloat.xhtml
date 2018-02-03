@@ -130,7 +130,7 @@
                                        decimalSeparator=","
                                        thousandSeparator="."
                                        decimalPlaces="2"
-                                       disabled="#{not cc.attrs.concept.editable}"
+                                       readonly="#{not cc.attrs.concept.editable}"
                                        rendered="#{cc.attrs.targetDefinition.type.typeName=='float' and not cc.attrs.targetDefinition.discreteDomain}"
                                        styleClass="relationships">
                             <f:attribute name="concept" value="#{cc.attrs.concept}"  />
@@ -172,7 +172,7 @@
                 <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" />
+                                <p:inputText readonly="true" id="basicTypeValue2" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">

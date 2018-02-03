@@ -84,7 +84,7 @@
                 <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" />
+                                <p:inputText readonly="true" id="basicTypeValue" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">

@@ -26,7 +26,7 @@
 
         <div class="ui-g ui-fluid">
 
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel for="basicTypeValue11" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
                                        value="#{cc.attrs.relationshipDefinition.name}"/>
@@ -34,14 +34,14 @@
 
             </div>
 
-            <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                         <p:inputText id="basicTypeValue11"
                                      value="#{conceptBean.basicTypeValue.value}"
                                      var="value"
                                      minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                      maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
-                                     disabled="#{not cc.attrs.concept.editable}"
+                                     readonly="#{not cc.attrs.concept.editable}"
                                      rendered="#{cc.attrs.targetDefinition.type.typeName=='string' and not cc.attrs.targetDefinition.discreteDomain}"
                                      styleClass="relationships"
                                      autocomplete="off">
@@ -82,7 +82,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
 
                             <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" />
+                                <p:inputText readonly="true" id="basicTypeValue" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
                                                rendered="#{not conceptBean.isMCSpecial(cc.attrs.relationshipDefinition) }"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
@@ -107,7 +107,7 @@
 
         <div class="ui-g ui-fluid">
 
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel for="basicTypeValue19"
                                        value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"/>
@@ -115,7 +115,7 @@
 
             </div>
 
-            <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                         <p:inputText id="basicTypeValue19"
                                      value="#{conceptBean.basicTypeValue.value}"
@@ -123,7 +123,7 @@
                                      autocomplete="off"
                                      minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                      maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
-                                     disabled="#{not cc.attrs.concept.editable}"
+                                     readonly="#{not cc.attrs.concept.editable}"
                                      rendered="#{cc.attrs.targetDefinition.type.typeName=='string' and not cc.attrs.targetDefinition.discreteDomain}">
                             <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)" event="blur" />
@@ -152,17 +152,17 @@
 
             <div class="ui-g ui-fluid">
 
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <p:outputLabel for="basicTypeValue2" value="#{cc.attrs.relationshipDefinition.name}"/>
                             <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" />
+                                <p:inputText readonly="true" id="basicTypeValue2" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">

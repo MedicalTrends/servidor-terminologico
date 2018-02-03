@@ -15,8 +15,7 @@
 </composite:interface>
 <composite:implementation>
 
-    <p:panel header="Crossmaps Indirecto" toggleable="true"  toggleSpeed="500"
-             collapsed="true"
+    <p:fieldset legend="Crossmaps Indirecto"
              styleClass="crossmapindirect">
 
         <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
@@ -47,7 +46,7 @@
                 <h:outputText value=""/>
             </p:column>
         </p:dataTable>
-    </p:panel>
+    </p:fieldset>
 
 </composite:implementation>
 </html>

@@ -25,6 +25,36 @@
 
         <div class="ui-g-12 ui-md-4 ui-lg-2">
 
+            <p:outputLabel value="Indicadores" />
+
+        </div>
+
+        <div class="ui-g-12 ui-md-8 ui-lg-4">
+            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" style="width: 100%">
+                <p:selectBooleanCheckbox id="toBeReviewedCheck" itemLabel="Revisar" disabled="#{not cc.attrs.concept.editable}"
+                                         value="#{cc.attrs.concept.toBeReviewed}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
+                <p:selectBooleanCheckbox id="toBeConsultatedCheck" itemLabel="Consultar" disabled="#{not cc.attrs.concept.editable}"
+                                         value="#{cc.attrs.concept.toBeConsulted}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
+            </p:panelGrid>
+        </div>
+
+        <div class="ui-g-12 ui-md-4 ui-lg-2">
+
+            <p:outputLabel value="Grado de Definición" />
+
+        </div>
+
+        <div class="ui-g-12 ui-md-8 ui-lg-4">
+            <p:selectOneRadio value="#{conceptBean.fullyDefined}" layout="responsive" columns="2" style="width: 100%"
+                              disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept) or not conceptBean.editable}">
+                <f:selectItem itemValue="#{false}" itemLabel="Primitivo" />
+                <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>
+                <p:ajax event="change" listener="#{conceptBean.changeFullyDefined(conceptBean.concept)}" process="@this" update="@(.conceptHeader)" />
+            </p:selectOneRadio>
+        </div>
+
+        <div class="ui-g-12 ui-md-4 ui-lg-2">
+
             <p:outputLabel for="tagSemantikos" value="Tag Semantiko" />
 
         </div>
@@ -73,28 +103,6 @@
                 <p:ajax />
             </p:inputTextarea>
 
-        </div>
-
-        <div class="ui-g-12 ui-md-12 ui-lg-6">
-            <p:fieldset legend="Indicadores">
-                <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank">
-                    <p:selectBooleanCheckbox id="toBeReviewedCheck" itemLabel="Revisar" disabled="#{not cc.attrs.concept.editable}"
-                                             value="#{cc.attrs.concept.toBeReviewed}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
-                    <p:selectBooleanCheckbox id="toBeConsultatedCheck" itemLabel="Consultar" disabled="#{not cc.attrs.concept.editable}"
-                                             value="#{cc.attrs.concept.toBeConsulted}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
-                </p:panelGrid>
-            </p:fieldset>
-        </div>
-
-        <div class="ui-g-12 ui-md-12 ui-lg-6">
-            <p:fieldset legend="Grado de Definición">
-                <p:selectOneRadio value="#{conceptBean.fullyDefined}" layout="responsive" columns="1" style="padding-bottom: 6px; padding-top: 6px"
-                                  disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept) or not conceptBean.editable}">
-                    <f:selectItem itemValue="#{false}" itemLabel="Primitivo" />
-                    <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>
-                    <p:ajax event="change" listener="#{conceptBean.changeFullyDefined(conceptBean.concept)}" process="@this" update="@(.conceptHeader)" />
-                </p:selectOneRadio>
-            </p:fieldset>
         </div>
 
     </div>

@@ -29,7 +29,7 @@
 
         <div class="ui-g ui-fluid">
 
-            <div class="ui-g-12 ui-md-12 ui-lg-10">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
 
                     <p:outputPanel id="createEdit">
 
@@ -168,18 +168,18 @@
                             <!--Crossmaps -->
                             <p:tab title="Crossmaps" rendered="#{ conceptBean.concept.persistent and conceptBean.concept.modeled }">
 
-                                <h:panelGrid columns="1" styleClass="ui-panelgrid-blank otherDescriptions" style="width: 100%">
+                                <h:panelGrid columns="1" styleClass="otherDescriptions" style="width: 100%">
 
-                                    <p:panel id="indirectCrossmap"
+                                    <p:outputPanel id="indirectCrossmap"
                                              widgetVar="panelIndirectCrossmap"
                                              styleClass="attributes"
                                              rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
                                         <smtk:crossmapIndirect concept="#{conceptBean.concept}"/>
 
-                                    </p:panel>
+                                    </p:outputPanel>
 
-                                    <p:panel id="directCrossmap"
+                                    <p:outputPanel id="directCrossmap"
                                              widgetVar="panelDirectCrossmap"
                                              styleClass="attributes"
                                              rendered="#{conceptBean.category.hasRelationshipDefinitions}">
@@ -204,7 +204,7 @@
 
                                             </h:column>
                                         </h:dataTable>
-                                    </p:panel>
+                                    </p:outputPanel>
 
                                 </h:panelGrid>
 
@@ -212,8 +212,10 @@
 
                             <!--RefSets -->
                             <p:tab title="RefSets" rendered="#{conceptBean.concept.modeled}">
-                                <h:panelGrid columns="1" styleClass="ui-panelgrid-blank otherDescriptions">
-                                    <smtk:refset/>
+                                <h:panelGrid columns="1" style="width: 100%">
+                                    <p:outputPanel styleClass="ui-panelgrid-blank otherDescriptions">
+                                        <smtk:refset/>
+                                    </p:outputPanel>
                                 </h:panelGrid>
                             </p:tab>
 

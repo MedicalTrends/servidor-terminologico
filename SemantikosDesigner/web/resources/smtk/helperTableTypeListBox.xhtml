@@ -98,8 +98,8 @@
                     <div class="ui-g-12 ui-md-8 ui-lg-3">
 
                         <p:outputPanel styleClass="search">
-                            <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
-                            <p:inputTextarea disabled="true" id="findHTRecords2_" value="#{relationship.target.cells[1].stringValue}" rendered="#{cc.attrs.relationshipDefinition.ATC}"  />
+                            <p:inputText readonly="true" id="findHTRecords2" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
+                            <p:inputTextarea readonly="true" id="findHTRecords2_" value="#{relationship.target.cells[1].stringValue}" rendered="#{cc.attrs.relationshipDefinition.ATC}"  />
                             <p:commandLink process="@this"
                                            update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                            action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">

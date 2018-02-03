@@ -279,7 +279,7 @@
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-8 ui-lg-3">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                         <p:outputPanel styleClass="search">
 
@@ -292,7 +292,7 @@
                                             var="concept"
                                             value="#{conceptBean.conceptSelected}"
                                             itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
-                                            disabled="#{not cc.attrs.concept.editable}"
+                                            readonly="#{not cc.attrs.concept.editable}"
                                             rendered="#{conceptBean.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size()==0}">
 
                                 <!-- Parámetros del validador -->
@@ -344,7 +344,7 @@
                         <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="itemSelected" value="#{relationship.target.descriptionFavorite.term}" />
+                                <p:inputText readonly="true" id="itemSelected" value="#{relationship.target.descriptionFavorite.term}" />
 
                                 <p:commandLink process="@this"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
@@ -364,7 +364,7 @@
 
                         <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                            <p:inputText value="#{relationship.target.conceptID}" disabled="true" />
+                            <p:inputText value="#{relationship.target.conceptID}" readonly="true" />
 
                         </div>
                     </div>

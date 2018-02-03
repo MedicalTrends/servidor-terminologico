@@ -30,13 +30,13 @@
 
                 <div class="ui-g">
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel value="Grupo" />
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                         <p:inputNumber id="basicTypeValue12"
                                        value="#{sctBean.relationshipGroup}"
@@ -52,43 +52,48 @@
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel value="Tipo Relación" />
 
                     </div>
 
-                    <p:repeat
-                            offset="0"
-                            size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
-                            step="1"
-                            varStatus="var"
-                            value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                            var="relationshipAttributeDefinition">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                        <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                 concept="#{cc.attrs.concept}"
-                                                 relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                 targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                 rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()
-                                                             and not relationshipAttributeDefinition.groupSCT}"
-                        />
+                        <p:repeat
+                                offset="0"
+                                size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
+                                step="1"
+                                varStatus="var"
+                                value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
+                                var="relationshipAttributeDefinition">
 
-                        <smtk:helperTableTypeAttributeSCT relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                          concept="#{cc.attrs.concept}"
-                                                          relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
-                                                          targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                          rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
-                        />
-                    </p:repeat>
+                            <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                                     concept="#{cc.attrs.concept}"
+                                                     relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
+                                                     targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                                     rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()
+                                                                 and not relationshipAttributeDefinition.groupSCT}"
+                            />
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <smtk:helperTableTypeAttributeSCT relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                                              concept="#{cc.attrs.concept}"
+                                                              relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
+                                                              targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                                              rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
+                            />
+
+                        </p:repeat>
+
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel value="Término" />
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-8">
+                    <div class="ui-g-12 ui-md-8 ui-lg-10">
 
                         <p:outputPanel styleClass="search searchSCT">
 
@@ -138,18 +143,23 @@
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                </div>
 
+                <div class="ui-g">
+
+                    <div class="ui-g-12 ui-md-12 ui-lg-12">
                         <p:commandButton
                                 process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                                style="width: auto; float: right"
                                 action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
                                 update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader),@(.crossmapindirect)"
                                 disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept)}"
                                 value="Agregar">
                         </p:commandButton>
-
                     </div>
+
                 </div>
+
             </div>
         </p:outputPanel>
 
@@ -204,20 +214,19 @@
             </p:column>
 
             <p:column headerText="Acción">
-                <div class="ui-g">
-                    <div class="ui-g-12 ui-md-6 ui-lg-6">
-                        <p:commandButton title="Ver" oncomplete="PF('dialogC').show()" process="@this"
-                                         update="@(.query-concept-sct)" icon="fa fa-search">
-                            <f:setPropertyActionListener value="#{rel.target}" target="#{sctBean.conceptSelected}"/>
-                        </p:commandButton>
-                    </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-6">
-                        <p:commandButton rendered="#{profilePermissionsBeans.modeler and cc.attrs.concept.editable}" icon="fa fa-trash" title="Eliminar"
-                                         actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
-                                         update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}), @(.attributes),@(.crossmapindirect)"
-                                         process="@this">
-                        </p:commandButton>
-                    </div>
+                <div style="text-align: center">
+
+                    <p:commandButton title="Ver" oncomplete="PF('dialogC').show()" process="@this"
+                                     update="@(.query-concept-sct)" icon="fa fa-search">
+                        <f:setPropertyActionListener value="#{rel.target}" target="#{sctBean.conceptSelected}"/>
+                    </p:commandButton>
+
+                    <p:commandButton rendered="#{profilePermissionsBeans.modeler and cc.attrs.concept.editable}" icon="fa fa-trash" title="Eliminar"
+                                     actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
+                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}), @(.attributes),@(.crossmapindirect)"
+                                     process="@this">
+                    </p:commandButton>
+
                 </div>
             </p:column>
         </p:dataTable>

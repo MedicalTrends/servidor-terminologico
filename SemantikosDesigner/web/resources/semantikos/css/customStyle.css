@@ -275,6 +275,10 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     background: #283593 none repeat scroll 0% 0% !important;
 }
 
+.logo {
+    image-rendering:-webkit-optimize-contrast !important;
+}
+
 /*
 .ui-inputfield.ui-inputtext {
     padding: 6px !important;
