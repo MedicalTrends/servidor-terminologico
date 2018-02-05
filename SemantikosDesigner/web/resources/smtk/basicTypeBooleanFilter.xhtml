@@ -16,10 +16,10 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="ui-g-12">
+    <div class="ui-g-12 ui-md-4 ui-lg-2">
         <span><h:outputText value="#{cc.attrs.relationshipDefinition.name}" /></span>
     </div>
-    <div class="ui-g-12">
+    <div class="ui-g-12 ui-md-8 ui-lg-4">
         <p:selectOneMenu value="#{generalBrowserBean.basicTypeValue.value}"
                          itemLabel="#{cc.attrs.relationshipDefinition.name}"
                          converter="omnifaces.SelectItemsConverter"
@@ -45,7 +45,7 @@
                    varStatus="var">
 
             <p:outputPanel styleClass="search">
-                <p:inputText disabled="true" id="itemSelected" value="#{target.value?'Si':'No'}" />
+                <p:inputText readonly="true" id="itemSelected" value="#{target.value?'Si':'No'}" />
                 <p:commandLink rendered="#{ not cc.attrs.targets.isEmpty() }"
                                process="@this"
                                update="@(.browserFilters),@(.browserTable)"

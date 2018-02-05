@@ -17,13 +17,13 @@
 <composite:implementation>
 
 
-    <div class="ui-g-12">
+    <div class="ui-g-12 ui-md-4 ui-lg-2">
         <span>
             <h:outputText value="#{cc.attrs.relationshipDefinition.name}" />
         </span>
     </div>
 
-    <div class="ui-g-12">
+    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
             <p:selectOneMenu id="findHTRecords1" scrollHeight="200"
                              forceSelection="true"
@@ -104,7 +104,7 @@
                            var="target"
                            varStatus="var">
 
-                    <p:inputText disabled="true" id="itemSelected" value="#{target.description}" />
+                    <p:inputText readonly="true" id="itemSelected" value="#{target.description}" />
                     <p:commandLink
                             process="@this"
                             update="@(.browserFilters),@(.browserTable)"
