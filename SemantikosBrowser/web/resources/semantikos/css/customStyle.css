@@ -120,6 +120,7 @@
     display: none !important;
 }
 
+/*
 #browserForm\:conceptPanel .ui-paginator-current {
     color: #3F51B5 !important;
 }
@@ -139,6 +140,7 @@
 #browserForm\:conceptPanel .ui-paginator .ui-paginator-first, #browserForm\:conceptPanel .ui-paginator .ui-paginator-prev, #browserForm\:conceptPanel .ui-paginator .ui-paginator-next, #browserForm\:conceptPanel .ui-paginator .ui-paginator-last {
     color: #3F51B5 !important;
 }
+*/
 
 #browserForm\:conceptPanel .ui-datatable tbody tr.ui-datatable-even {
     background-color: transparent !important;

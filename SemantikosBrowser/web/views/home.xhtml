@@ -105,7 +105,8 @@
                             <div class="ui-g-2" style="padding-top: 30px; padding-bottom: 30px">
                                 <p:commandButton id="search_button2" styleClass="search-button-tiny" icon="fa fa-search"
                                                  actionListener="#{browserBean.redirect()}" rendered="false"/>
-                                <p:button id="search_button3" styleClass="search-button-tiny" icon="fa fa-search" outcome="/views/concepts"/>
+                                <p:button id="search_button3" styleClass="search-button-tiny" icon="fa fa-search" outcome="/views/concepts"
+                                />
                             </div>
 
                             <div class="ui-g-0 ui-md-3 ui-lg-4" style="padding: 0em"></div>
@@ -146,10 +147,37 @@
     <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" />
 
     <script type="text/javascript">
+
+        $('.search-button-tiny').prop('onclick',"");
+
+        $('input[id$=search_input]').on('input', function() {
+            if($('input[id$=search_hinput]').val().length >= 3) {
+                $('.search-button-tiny').prop('onclick',"window.open('/concepts','_self')");
+            }
+            else {
+                $('.search-button-tiny').prop('onclick',"");
+            }
+        });
+
+        $('input[id$=search_input]').on('keyup', function() {
+            if($('input[id$=search_hinput]').val().length >= 3) {
+                $('.search-button-tiny').prop('onclick',"window.open('/concepts','_self')");
+            }
+            else {
+                $('.search-button-tiny').prop('onclick',"");
+            }
+        });
+
         $('.search-button-tiny').click( function() {
-            $('input[id$=search_input]').trigger('keydown');
-            $('input[id$=search_input]').trigger('input');
-            $('div[id$=search_panel] .ui-autocomplete-item').trigger('click');
+            if($('input[id$=search_hinput]').val().length >= 3) {
+                $('input[id$=search_input]').trigger('keydown');
+                $('input[id$=search_input]').trigger('input');
+                $('div[id$=search_panel] .ui-autocomplete-item:first-child').trigger('click');
+            }
+            else {
+                return false;
+            }
+
         });
     </script>
 </h:body>
