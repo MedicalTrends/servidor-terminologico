@@ -55,8 +55,10 @@ public class ConceptDAOImpl implements ConceptDAO {
 
     public static ConceptSMTK PENDING_CONCEPT;
 
+    /*
     @PersistenceContext(unitName = "SEMANTIKOS_PU")
     private EntityManager em;
+    */
 
     @EJB
     private CategoryDAO categoryDAO;

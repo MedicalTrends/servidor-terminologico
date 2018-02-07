@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.kernel.factories;
 
+import cl.minsal.semantikos.model.users.User;
+
 import javax.mail.Session;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -40,9 +42,9 @@ public class EmailFactory {
      * @throws Exception
      */
 
-    public void send(String to, String password, String link, String link2) throws Exception
+    public void send(User user, String password, String link, String link2) throws Exception
     {
-        Runnable mailer = new Mailer(mySession, to, password, link, link2);
+        Runnable mailer = new Mailer(mySession, user, password, link, link2);
         executor.execute(mailer);
     }
 }

@@ -13,6 +13,7 @@ import javax.persistence.Query;
 @Stateless
 public class TestEJB {
 
+    /*
     @PersistenceContext(unitName = "SEMANTIKOS_PU")
     EntityManager em;
 
@@ -24,5 +25,6 @@ public class TestEJB {
         return ""+q.getFirstResult();
 
     }
+    */
 
 }

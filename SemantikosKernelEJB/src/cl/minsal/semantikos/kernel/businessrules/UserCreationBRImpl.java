@@ -181,7 +181,7 @@ public class UserCreationBRImpl implements UserCreationBR {
 
             String link = baseURL + "/views/users/activateAccount.xhtml?key="+user.getVerificationCode();
             String link2 = baseURL + "/views/login.xhtml";
-            EmailFactory.getInstance().send(user.getEmail(), user.getPassword(), link, link2);
+            EmailFactory.getInstance().send(user, user.getPassword(), link, link2);
         } catch (Exception e) {
             e.printStackTrace();
             throw new BusinessRuleException("BR-306-SendEmail", "No se pudo enviar correo a usuario. Contactar a desarrollo");
