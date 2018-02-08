@@ -229,6 +229,10 @@ public class RelationshipDefinition implements Serializable {
         return this.getName().equalsIgnoreCase(TargetDefinition.GTINGS1);
     }
 
+    public boolean isDCI(){
+        return this.getName().equalsIgnoreCase(TargetDefinition.DCI);
+    }
+
     public boolean isBioequivalente() {
         return this.getName().equalsIgnoreCase(TargetDefinition.BIOEQUIVALENTE);
     }
@@ -241,7 +245,7 @@ public class RelationshipDefinition implements Serializable {
 
     public boolean isCondicionDeVenta() { return this.getName().equalsIgnoreCase(TargetDefinition.CONDICION_DE_VENTA); }
 
-    public boolean isPedible(){
+    public boolean isPedible() {
 
         return this.getName().equalsIgnoreCase(TargetDefinition.PEDIBLE);
     }

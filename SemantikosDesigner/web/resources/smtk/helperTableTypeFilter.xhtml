@@ -26,7 +26,7 @@
                              forceSelection="true"
                              autoWidth="false"
                              value="#{generalBrowserBean.helperTableRecord}"
-                             rendered="#{cc.attrs.targets.isEmpty() and not cc.attrs.relationshipDefinition.ATC}"
+                             rendered="#{cc.attrs.targets.isEmpty() and not cc.attrs.relationshipDefinition.ATC and not cc.attrs.relationshipDefinition.DCI}"
                              var="r"
                              filter="true"
                              converter="omnifaces.SelectItemsConverter">
@@ -54,13 +54,13 @@
                 <!---->
             </p:selectOneMenu>
 
-            <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() and cc.attrs.relationshipDefinition.ATC }" styleClass="search">
+            <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() and ( cc.attrs.relationshipDefinition.ATC or cc.attrs.relationshipDefinition.DCI ) }" styleClass="search">
 
                 <p:autoComplete id="findHTRecords2" scrollHeight="200"
                                 completeMethod="#{helperTableBean.getRecordSearchInput}"
                                 forceSelection="true"
                                 var="record"
-                                minQueryLength="#{helperTableBean.getMinQueryLength(cc.attrs.targetDefinition)}"
+                                minQueryLength="#{2}"
                                 placeholder="Buscar..."
                                 converter="helperTableRecordConverter"
                                 value="#{generalBrowserBean.helperTableRecord}"
@@ -72,12 +72,20 @@
                     <!-- Parámetros del validador -->
                     <f:attribute name="helperTableRecord" value="#{generalBrowserBean.helperTableRecord}"  />
                     <!---->
-                    <p:column>
-                        <h:outputText value="#{record.getCellByColumnName('codigo atc')}" />
-                    </p:column>
-                    <p:column>
-                        <h:outputText value="#{record.getCellByColumnName('descripcion completa')}"/>
-                    </p:column>
+
+
+                        <p:column rendered="#{cc.attrs.relationshipDefinition.DCI}">
+                            <h:outputText value="#{record.description}" />
+                        </p:column>
+
+                        <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}">
+                            <h:outputText value="#{record.getCellByColumnName('codigo atc')}" />
+                        </p:column>
+
+                        <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}">
+                            <h:outputText value="#{record.getCellByColumnName('descripcion completa')}"/>
+                        </p:column>
+
 
                     <p:ajax event="itemSelect"
                             listener="#{generalBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, generalBrowserBean.helperTableRecord)}"

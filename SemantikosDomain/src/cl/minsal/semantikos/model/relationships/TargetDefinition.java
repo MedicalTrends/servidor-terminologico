@@ -29,6 +29,8 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String GTINGS1 = "Número GTIN";
 
+    public static final String DCI = "Mapear a DCI";
+
     /**
      * Este metodo es responsable de determinar si el target type es de tipo básico es o no.
      *
