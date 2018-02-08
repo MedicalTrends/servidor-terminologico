@@ -21,28 +21,28 @@
                     
                         <ul id="profile-menu" class="ultima-menu">
                             <li role="menuitem">
-                                <a href="#" class="ripplelink">
+                                <p:link styleClass="ripplelink" outcome="/views/users/userDetail">
                                     <i class="material-icons">&#xE7FD;</i>
-                                    <span>Profile</span>
-                                </a>
+                                    <span>Mi perfil</span>
+                                </p:link>
                             </li>
-                            <li role="menuitem">
+                            <li role="menuitem" style="display: none">
                                 <a href="#" class="ripplelink">
                                     <i class="material-icons">&#xE32A;</i>
                                     <span>Privacy</span>
                                 </a>
                             </li>
-                            <li role="menuitem">
+                            <li role="menuitem" style="display: none">
                                 <a href="#" class="ripplelink">
                                     <i class="material-icons">&#xE8B9;</i>
                                     <span>Settings</span>
                                 </a>
                             </li>
                             <li role="menuitem">
-                                <a href="#" class="ripplelink">
+                                <p:commandLink action="#{authenticationBean.logout}" styleClass="ripplelink">
                                     <i class="material-icons">&#xE8AC;</i>
                                     <span>Logout</span>
-                                </a>
+                                </p:commandLink>
                             </li>
                         </ul>
                     </ui:fragment>

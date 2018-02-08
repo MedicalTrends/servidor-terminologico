@@ -143,24 +143,28 @@
                                                                   targetDefinition="#{filter.definition.targetDefinition}"
                                                                   targets="#{filter.targets}"
                                                                   multiple="#{filter.multiple}"
+                                                                  rightpanel="#{false}"
                                                                   rendered="#{filter.definition.targetDefinition.basicType}" />
 
                                             <smtk:helperTableTypeFilter
                                                     relationshipDefinition="#{filter.definition}"
                                                     targetDefinition="#{filter.definition.targetDefinition}"
                                                     targets="#{filter.targets}"
+                                                    rightpanel="#{false}"
                                                     rendered="#{filter.definition.targetDefinition.helperTable and not filter.multiple }" />
 
                                             <smtk:helperTableTypeFilterListBox
                                                     relationshipDefinition="#{filter.definition}"
                                                     targetDefinition="#{filter.definition.targetDefinition}"
                                                     targets="#{filter.targets}"
+                                                    rightpanel="#{false}"
                                                     rendered="#{filter.definition.targetDefinition.helperTable and not filter.multiple and filter.composite eq 11 }" />
 
                                             <smtk:smtkTypeFilter relationshipDefinition="#{filter.definition}"
                                                                  targetDefinition="#{filter.definition.targetDefinition}"
                                                                  targets="#{filter.targets}"
                                                                  multiple="#{filter.multiple}"
+                                                                 rightpanel="#{false}"
                                                                  rendered="#{filter.definition.targetDefinition.SMTKType}" />
 
                                         </p:repeat>
@@ -177,17 +181,21 @@
                                                     relationshipAttributeDefinition="#{attributeFilter.definition}"
                                                     targetDefinition="#{attributeFilter.definition.targetDefinition}"
                                                     targets="#{attributeFilter.targets}"
+                                                    rightpanel="#{false}"
                                                     rendered="#{attributeFilter.definition.targetDefinition.helperTable and not attributeFilter.multiple}" />
 
                                         </p:repeat>
 
                                             <smtk:DateTypeFilter date="#{generalBrowserBean.generalQuery.creationDateSince}" name="Ingresados Desde"
                                                                  dateSince="#{true}"
+                                                                 rightpanel="#{false}"
                                                                  rendered="#{generalBrowserBean.generalQuery.customFilterable}" />
                                             <smtk:DateTypeFilter date="#{generalBrowserBean.generalQuery.creationDateTo}" name="Ingresados Hasta"
                                                                  dateSince="#{false}"
+                                                                 rightpanel="#{false}"
                                                                  rendered="#{generalBrowserBean.generalQuery.customFilterable}" />
                                             <smtk:userTypeFilter user="#{generalBrowserBean.generalQuery.user}" name="Usuario"
+                                                                 rightpanel="#{false}"
                                                                  rendered="#{generalBrowserBean.generalQuery.customFilterable}" />
 
                                         </div>
@@ -238,7 +246,7 @@
                                                      rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">
                                     </p:commandButton>
 
-                                    <p:selectBooleanButton value="#{generalBrowserBean.showSettings}" onLabel="Herramientas" rendered="false"
+                                    <p:selectBooleanButton value="#{generalBrowserBean.showSettings}" onLabel="Herramientas" rendered="true"
                                                            styleClass="settings-btn" id="settings-btn" style="width: auto; float: right"
                                                            offLabel="Herramientas" onIcon="ui-icon-settings" offIcon="ui-icon-settings">
                                     </p:selectBooleanButton>

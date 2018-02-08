@@ -18,12 +18,15 @@
 </h:head>
 
 <h:body styleClass="login-body">
+
     <div class="card login-panel ui-fluid">
+
         <h:form id="loginform">
+
         <p:messages id="login-form-messages" showDetail="true" autoUpdate="true" closable="false" rendered="false" />
         <p:growl id="login-form-messages-2" showDetail="true" showSummary="true"  />
         <div class="ui-g">
-            <div class="ui-g-12">
+            <div class="ui-g-12" style="padding: 0px">
                 <p:graphicImage name="images/logo-27.png" style="width:230px" library="semantikos" />
             </div>
             <div class="ui-g-12">
@@ -44,19 +47,16 @@
             </div>
         </div>
         </h:form>
-    </div>
 
-    <div class="login-footer">
-        <div class="card clearfix">
-            <span class="footer-text-left">
-                <span>
-                    <i class="fa fa-copyright" style="color: #5f666c" /><h:outputText value="2016" style="color: #5f666c" /><a href="" style="color: #5f666c">Ministerio de Salud</a>
-                </span>
-                <br/>
-                <span style="color: #5f666c">Version: <h:outputText value="${bpversion['version']} ${bpversion['build.date']}" />
-                </span>
+        <span class="footer-text-left">
+            <span>
+                <i class="fa fa-copyright" style="color: #5f666c" /><h:outputText value="2016" style="color: #5f666c" /><a href="" style="color: #5f666c">Ministerio de Salud</a>
             </span>
-        </div>
+            <br/>
+            <span style="color: #5f666c">Version: <h:outputText value="${bpversion['version']} ${bpversion['build.date']}" />
+            </span>
+        </span>
+
     </div>
 
     <h:outputStylesheet name="css/ripple.css" library="ultima-layout" />

@@ -13,16 +13,17 @@
     <composite:attribute name="date" type="java.util.Date"/>
     <composite:attribute name="dateSince" type="java.lang.Boolean"/>
     <composite:attribute name="name" type="java.lang.String"/>
+    <composite:attribute name="rightpanel" type="java.lang.Boolean"/>
 </composite:interface>
 <composite:implementation>
 
-    <div class="ui-g-12 ui-md-4 ui-lg-2">
+    <div class="ui-g-12 ui-md-#{cc.attrs.rightpanel?'12':'4'} ui-lg-#{cc.attrs.rightpanel?'12':'2'}">
         <span>
             <h:outputText value="#{cc.attrs.name}" />
         </span>
     </div>
 
-    <div class="ui-g-12 ui-md-8 ui-lg-4">
+    <div class="ui-g-12 ui-md-#{cc.attrs.rightpanel?'12':'8'} ui-lg-#{cc.attrs.rightpanel?'12':'4'}">
             <p:calendar id="creationDateSince" style="margin-right:10px; width: 90%"
                         value="#{cc.attrs.date}"
                         var="value" pattern="dd/MM/yyyy"

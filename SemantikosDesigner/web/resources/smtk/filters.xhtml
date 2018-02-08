@@ -27,8 +27,76 @@
 
                         <p:tabView>
 
-                        <p:tab title="Filtrar" rendered="#{not empty cc.attrs.generalQuery.filters}">
+                        <p:tab title="Filtrar" rendered="#{true}">
                             <div class="ui-g ui-fluid">
+
+                                <div class="ui-g-12">
+                                    <span>Patrón</span>
+                                </div>
+                                <div class="ui-g-12">
+                                    <p:outputPanel styleClass="search">
+                                        <p:inputText value="#{cc.attrs.generalQuery.query}" placeholder="Buscar..." style="width: 100%">
+                                            <p:ajax event="keyup" update="@(.browserTable)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" />
+                                        </p:inputText>
+                                        <i class="fa fa-search fa-lg" />
+                                    </p:outputPanel>
+                                </div>
+                                <div class="ui-g-12">
+                                    <span>Revisar</span>
+                                </div>
+                                <div class="ui-g-12">
+                                    <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeReviewed}" autoWidth="false" style="width: 100%">
+                                        <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                        <f:selectItem itemLabel="Sin Revisar" itemValue="false"/>
+                                        <f:selectItem itemLabel="Revisar" itemValue="true"/>
+                                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="ui-g-12">
+                                    <span>Consultar</span>
+                                </div>
+                                <div class="ui-g-12">
+                                    <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeConsulted}" autoWidth="false" style="width: 100%">
+                                        <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                        <f:selectItem itemLabel="Sin Consultar" itemValue="false"/>
+                                        <f:selectItem itemLabel="Consultar" itemValue="true"/>
+                                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="ui-g-12">
+                                    <span>Estado</span>
+                                </div>
+                                <div class="ui-g-12">
+                                    <p:selectOneMenu value="#{cc.attrs.generalQuery.modeled}" autoWidth="false" style="width: 100%">
+                                        <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                        <f:selectItem itemLabel="Borrador" itemValue="false"/>
+                                        <f:selectItem itemLabel="Modelado" itemValue="true"/>
+                                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="ui-g-12">
+                                    <span>Etiquetas</span>
+                                </div>
+                                <div class="ui-g-12">
+
+                                <p:selectCheckboxMenu id="tags"
+                                                      value="#{cc.attrs.generalQuery.tags}"
+                                                      converter="omnifaces.SelectItemsConverter"
+                                                      label="Seleccione..."
+                                                      autoWidth="false"
+                                                      style="width: 100%"
+                                                      filter="true"
+                                                      filterMatchMode="startsWith">
+                                    <p:ajax event="change"
+                                            listener="#{generalBrowserBean.setFilterChanged(true)}"
+                                            update="@(.browserTable),@(.filterStatus)"
+                                            process="@this" />
+
+                                    <f:selectItems value="#{generalBrowserBean.tags}" var="tag"
+                                                   itemLabel="#{tag.name}" itemValue="#{tag}"/>
+                                </p:selectCheckboxMenu>
+                            </div>
+
                                 <p:repeat
                                         offset="0"
                                         size="#{cc.attrs.generalQuery.filters.size()}"
@@ -41,23 +109,27 @@
                                                           targetDefinition="#{filter.definition.targetDefinition}"
                                                           targets="#{filter.targets}"
                                                           multiple="#{filter.multiple}"
+                                                          rightpanel="#{true}"
                                                           rendered="#{filter.definition.targetDefinition.basicType}" />
 
                                     <smtk:helperTableTypeFilter
                                             relationshipDefinition="#{filter.definition}"
                                             targetDefinition="#{filter.definition.targetDefinition}"
                                             targets="#{filter.targets}"
+                                            rightpanel="#{true}"
                                             rendered="#{filter.definition.targetDefinition.helperTable and not filter.multiple }" />
 
                                     <smtk:helperTableTypeFilterListBox
                                             relationshipDefinition="#{filter.definition}"
                                             targetDefinition="#{filter.definition.targetDefinition}"
                                             targets="#{filter.targets}"
+                                            rightpanel="#{true}"
                                             rendered="#{filter.definition.targetDefinition.helperTable and not filter.multiple and filter.composite eq 11 }" />
 
                                     <smtk:smtkTypeFilter relationshipDefinition="#{filter.definition}"
                                                          targetDefinition="#{filter.definition.targetDefinition}"
                                                          targets="#{filter.targets}"
+                                                         rightpanel="#{true}"
                                                          multiple="#{filter.multiple}"
                                                          rendered="#{filter.definition.targetDefinition.SMTKType}" />
 
@@ -75,17 +147,21 @@
                                             relationshipAttributeDefinition="#{attributeFilter.definition}"
                                             targetDefinition="#{attributeFilter.definition.targetDefinition}"
                                             targets="#{attributeFilter.targets}"
+                                            rightpanel="#{true}"
                                             rendered="#{attributeFilter.definition.targetDefinition.helperTable and not attributeFilter.multiple}" />
 
                                 </p:repeat>
 
                                 <smtk:DateTypeFilter date="#{cc.attrs.generalQuery.creationDateSince}" name="Ingresados Desde"
                                                      dateSince="#{true}"
+                                                     rightpanel="#{true}"
                                                      rendered="#{cc.attrs.generalQuery.customFilterable}" />
                                 <smtk:DateTypeFilter date="#{cc.attrs.generalQuery.creationDateTo}" name="Ingresados Hasta"
                                                      dateSince="#{false}"
+                                                     rightpanel="#{true}"
                                                      rendered="#{cc.attrs.generalQuery.customFilterable}" />
                                 <smtk:userTypeFilter user="#{cc.attrs.generalQuery.user}" name="Usuario"
+                                                     rightpanel="#{true}"
                                                      rendered="#{cc.attrs.generalQuery.customFilterable}" />
 
 

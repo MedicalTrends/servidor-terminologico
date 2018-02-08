@@ -13,17 +13,18 @@
     <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
     <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.helpertables.HelperTable" />
     <composite:attribute name="targets" type="java.util.List"/>
+    <composite:attribute name="rightpanel" type="java.lang.Boolean"/>
 </composite:interface>
 <composite:implementation>
 
 
-    <div class="ui-g-12 ui-md-4 ui-lg-2">
+    <div class="ui-g-12 ui-md-#{cc.attrs.rightpanel?'12':'4'} ui-lg-#{cc.attrs.rightpanel?'12':'2'}">
         <span>
             <h:outputText value="#{cc.attrs.relationshipDefinition.name}" />
         </span>
     </div>
 
-    <div class="ui-g-12 ui-md-8 ui-lg-4">
+    <div class="ui-g-12 ui-md-#{cc.attrs.rightpanel?'12':'8'} ui-lg-#{cc.attrs.rightpanel?'12':'4'}">
 
             <p:selectOneMenu id="findHTRecords1" scrollHeight="200"
                              forceSelection="true"
