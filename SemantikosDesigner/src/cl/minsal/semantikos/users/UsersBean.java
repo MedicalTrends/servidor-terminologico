@@ -437,7 +437,7 @@ public class UsersBean {
             return;
         }
 
-        if(!authenticationManager.checkPassword(selectedUser, selectedUser.getEmail(), oldPass)) {
+        if(!authenticationManager.checkPassword(authenticationBean.getLoggedUser(), authenticationBean.getLoggedUser().getEmail(), oldPass)) {
             oldPasswordError = "ui-state-error";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La contraseña actual no es correcta"));
             return;
@@ -460,7 +460,7 @@ public class UsersBean {
         }
 
         try {
-            authenticationManager.setUserPassword(selectedUser.getEmail(),newPass1);
+            authenticationManager.setUserPassword(authenticationBean.getLoggedUser().getEmail(),newPass1);
         } catch (PasswordChangeException e) {
             e.printStackTrace();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));

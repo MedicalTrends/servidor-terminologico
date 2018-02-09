@@ -554,9 +554,8 @@
       vertical-align: middle;
       width: 200px;
       height: 30px;
-      background: url("#{resource['semantikos/images/logo-25.png']}") top left no-repeat;
+      background: url("#{resource['semantikos/images/logo-31.png']}") top left no-repeat;
       /*background: url("#{resource['ultima-layout:images/logo2x.png']}") top left no-repeat;*/
-      background-size: 200px 30px;
       /*background: url("#{resource['ultima-layout:images/logo.png']}") top left no-repeat;*/
     }
     .landing-wrapper #header .header-top #menu {
@@ -827,7 +826,7 @@
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .landing-wrapper .header .header-top .logo {
     /*background: url("#{resource['ultima-layout:images/logo2x.png']}") top left no-repeat;*/
-    background: url("#{resource['semantikos/images/logo-25.png']}") top left no-repeat;
+    background: url("#{resource['semantikos/images/logo-31.png']}") top left no-repeat;
     /*background: url("#{resource['ultima-layout:images/logo2x.png']}") top left no-repeat;*/
     background-size: 200px 30px;
     /*background-size: 200px 30px;*/
@@ -873,9 +872,8 @@ body {
     vertical-align: middle;
     width: 200px;
     height: 30px;
-    background: url("#{resource['semantikos/images/logo-25.png']}") top left no-repeat;
+    background: url("#{resource['semantikos/images/logo-31.png']}") top left no-repeat;
     /*background: url("#{resource['ultima-layout:images/logo2x.png']}") top left no-repeat;*/
-    background-size: 200px 30px;
     /*background: url("#{resource['ultima-layout:images/logo.png']}") top left no-repeat;*/
   }
   .layout-wrapper .topbar .topbar-left {
@@ -1050,7 +1048,8 @@ body {
       width: 60px;
       height: 60px;
       margin: 0 auto 5px auto;
-      background: url("#{resource['ultima-layout:images/avatar2x.png']}") top left no-repeat;
+      /*background: url("#{resource['ultima-layout:images/avatar2x.png']}") top left no-repeat;*/
+      background: url("#{resource['semantikos/images/user-1.png']}") top left no-repeat;
       background-size: 60px 60px; }
     .layout-wrapper .layout-menu .profile .profile-name {
       display: inline-block;
@@ -1455,7 +1454,8 @@ body {
       .layout-wrapper .topbar-items > li.profile-item .profile-image {
         width: 36px;
         height: 36px;
-        background: url("#{resource['ultima-layout:images/avatar2x.png']}") top left no-repeat;
+        /*background: url("#{resource['ultima-layout:images/avatar2x.png']}") top left no-repeat;*/
+        background: url("#{resource['semantikos/images/user-1.png']}") top left no-repeat;
         background-size: 36px 36px; }
       .layout-wrapper .topbar-items > li > ul {
         position: absolute;
@@ -1888,7 +1888,8 @@ body {
       vertical-align: middle;
       width: 24px;
       height: 24px;
-      background: url("#{resource['ultima-layout:images/avatar2x.png']}") top left no-repeat;
+      /*background: url("#{resource['ultima-layout:images/avatar2x.png']}") top left no-repeat;*/
+      background: url("#{resource['semantikos/images/user-1.png']}") top left no-repeat;
       background-size: 24px 24px;
       margin-right: 14px; }
     .layout-wrapper .topbar .topbar-right .topbar-items > li.profile-item span {
@@ -1944,7 +1945,7 @@ body {
     margin-left: 0px; } }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .layout-wrapper .topbar .logo {
-    background: url("#{resource['semantikos/images/logo-25.png']}") top left no-repeat;
+    background: url("#{resource['semantikos/images/logo-31.png']}") top left no-repeat;
     /*background: url("#{resource['ultima-layout:images/logo2x.png']}") top left no-repeat;*/
     background-size: 200px 30px;
   }
