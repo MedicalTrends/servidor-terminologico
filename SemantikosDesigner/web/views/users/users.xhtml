@@ -35,29 +35,51 @@
                     </div>
 
                     <p:dataTable id="singleDT" var="user" value="#{usersBrowser.allUsers}" rowKey="#{user.id}" styleClass="users"
-                                 rows="30" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
-                                 emptyMessage="No hay usuarios en la Base de Datos" reflow="true">
+                                 sortBy="#{user.email}"
+                                 widgetVar="usersTable" rows="30" paginator="true" emptyMessage="No hay usuarios en la Base de Datos" reflow="true"
+                                 filteredValue="#{usersBrowser.filteredUsers}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
                         <p:ajax event="rowSelect" update=":form:user-detail" oncomplete="PF('userDialog').show()" />
 
-                        <p:column headerText="Email" sortBy="#{user.email}">
+                        <f:facet name="{Exporters}">
+                            <p:commandButton actionListener="#{usersBrowser.newUser()}" icon="fa fa-plus" type="submit" process="form"
+                                             value="Crear Nuevo">
+                            </p:commandButton>
+                        </f:facet>
+
+                        <p:column headerText="Email" filterBy="#{user.email}" filterMatchMode="contains" sortBy="#{user.email}">
                             <h:outputText value="#{user.email}" />
                         </p:column>
 
-                        <p:column headerText="N° Documento" sortBy="#{user.documentNumber}">
+                        <p:column headerText="N° Documento" filterBy="#{user.documentNumber}" filterMatchMode="contains" sortBy="#{user.documentNumber}">
                             <h:outputText value="#{user.documentNumber}" />
                         </p:column>
 
-                        <p:column headerText="Nombre" sortBy="#{user.name} #{user.lastName} #{user.secondLastName}">
+                        <p:column headerText="Nombre" filterBy="#{user.name} #{user.lastName} #{user.secondLastName}" filterMatchMode="contains" sortBy="#{user.name} #{user.lastName} #{user.secondLastName}">
                             <h:outputText value="#{user.name} #{user.lastName} #{user.secondLastName}" />
                         </p:column>
 
-                        <p:column headerText="Acceso" sortBy="#{user.locked}">
+                        <p:column headerText="Acceso" filterBy="#{user.locked}" filterMatchMode="exact" sortBy="#{user.locked}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('usersTable').filter()">
+                                    <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Bloqueados" itemValue="#{true}" />
+                                    <f:selectItem itemLabel="Desbloqueados" itemValue="#{false}" />
+                                </p:selectOneMenu>
+                            </f:facet>
                             <h:outputText value="Desbloqueado" rendered="#{not user.locked}" />
                             <h:outputText value="Bloqueado" rendered="#{user.locked}" />
                         </p:column>
 
-                        <p:column headerText="Estado" sortBy="#{user.valid}">
+                        <p:column headerText="Estado" filterBy="#{user.valid}" filterMatchMode="exact" sortBy="#{user.valid}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('usersTable').filter()" value="true">
+                                    <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Vigentes" itemValue="#{true}" />
+                                    <f:selectItem itemLabel="No Vigentes" itemValue="#{false}" />
+                                </p:selectOneMenu>
+                            </f:facet>
                             <h:outputText value="Vigente" rendered="#{user.valid}" />
                             <h:outputText value="No vigente" rendered="#{not user.valid}" />
                         </p:column>
@@ -69,15 +91,14 @@
                                                title="Ver" process="@this" style="padding: 5px" icon="fa fa-eye fa-lg">
                                 </p:commandButton>
 
-                                <p:commandButton outcome="/views/users/userEdit" title="Editar" style="padding: 5px" icon="fa fa-edit fa-lg">
+                                <p:button outcome="/views/users/userEdit" title="Editar" style="padding: 5px" icon="fa fa-edit fa-lg">
                                     <f:param name="idUser" value="#{user.id}" />
-                                </p:commandButton>
+                                </p:button>
 
                             </div>
                         </p:column>
 
                     </p:dataTable>
-
 
                     <p:dialog height="300" width="500" header="Detalles del Usuario" widgetVar="userDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="true" responsive="true">
 

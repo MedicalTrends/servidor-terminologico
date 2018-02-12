@@ -3,18 +3,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="/WEB-INF/template/template.xhtml">
-
-    <ui:define name="header">
-        <p:breadCrumb styleClass="breadUpdate">
-            <p:menuitem value="Inicio" url="/views/home.xhtml" />
-            <p:menuitem value="Administración de Establecimientos" url="/views/institutions/institutions.xhtml" />
-            <p:menuitem value="#{institutions.selectedInstitution.name} (#{institutions.selectedInstitution.validityUntil==null?'Vigente':'No Vigente'})" url="#"
-                        rendered="#{institutions.selectedInstitution.persistent}" />
-            <p:menuitem value="Nuevo Establecimiento" url="#"
-                        rendered="#{not institutions.selectedInstitution.persistent}"/>
-        </p:breadCrumb>
-    </ui:define>
+                template="/WEB-INF/template.xhtml">
 
     <ui:define name="content">
 
@@ -22,23 +11,34 @@
             <f:viewParam name="idInstitution" value="#{institutions.idInstitution}" />
         </f:metadata>
 
+        <div class="ui-g dashboard">
 
-        <h:form id="mainForm">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                <p:growl id="globalMessage" showDetail="true" showSummary="true" life="10000" autoUpdate="true" />
+                <h:form id="mainForm">
 
-                <p:growl showDetail="true" showSummary="true" autoUpdate="true" />
+                    <p:growl id="globalMessage" showDetail="true" showSummary="true" life="10000" autoUpdate="true" />
 
-                <div class="Container70 Responsive100">
-                    <div class="ContainerIndent">
-                        <div class="Card ShadowEffect HeiAutoOnMobile">
-                            <h2 class="CardTopic"><i class="icon-timelapse Fs20 Fleft MarRight10"/> DATOS DEL ESTABLECIMIENTO</h2>
+                    <p:growl showDetail="true" showSummary="true" autoUpdate="true" />
 
-                            <div class="SeparatorFull"></div>
+                    <p:breadCrumb styleClass="breadUpdate">
+                        <p:menuitem value="Inicio" url="/views/home.xhtml" />
+                        <p:menuitem value="Administración de Establecimientos" url="/views/institutions/institutions.xhtml" />
+                        <p:menuitem value="#{institutions.selectedInstitution.name} (#{institutions.selectedInstitution.validityUntil==null?'Vigente':'No Vigente'})" url="#"
+                                    rendered="#{institutions.selectedInstitution.persistent}" />
+                        <p:menuitem value="Nuevo Establecimiento" url="#"
+                                    rendered="#{not institutions.selectedInstitution.persistent}"/>
+                    </p:breadCrumb>
 
-                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank">
+                    <br/>
 
-                                <p:outputLabel for="input-institution-code" value="Código *" style="font-weight: bold" styleClass="#{institutions.codeError} Wid20 Label" />
+                    <div class="card card-w-title">
+
+                        <h1>DATOS DEL ESTABLECIMIENTO</h1>
+
+                        <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank">
+
+                                <p:outputLabel for="input-institution-code" value="Código *" styleClass="#{institutions.codeError} Wid20 Label" />
 
                                 <p:inputText id="input-institution-code" value="#{institutions.selectedInstitution.code}" styleClass="#{institutions.codeError} Wid90"
                                              disabled="#{ institutions.selectedInstitution.validityUntil != null or institutions.selectedInstitution.persistent }">
@@ -55,9 +55,9 @@
 
                             </p:panelGrid>
 
-                            <p:spacer/>
+                        <p:spacer/>
 
-                            <p:panel header="HISTORIAL">
+                        <p:panel header="HISTORIAL">
 
                                 <p:dataTable  rowIndexVar="rowIndex" id="historyDateTable" var="history"
                                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
@@ -86,22 +86,19 @@
 
                             </p:panel>
 
-                            <div class="SeparatorFull"></div>
+                        <div class="SeparatorFull"></div>
 
+                        <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{institutions.saveInstitution}" styleClass="ui-priority-primary Fright"
+                                         disabled="#{ institutions.selectedInstitution.validityUntil != null }" update="mainForm, @(.breadUpdate)" />
 
-                            <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{institutions.saveInstitution}" styleClass="ui-priority-primary Fright"
-                                             disabled="#{ institutions.selectedInstitution.validityUntil != null }" update="mainForm, @(.breadUpdate)" />
+                        <p:commandButton value="Eliminar" icon="fa fa-trash"
+                                         rendered="#{institutions.selectedInstitution != null and institutions.selectedInstitution.persistent and institutions.selectedInstitution.validityUntil == null}"
+                                         styleClass="ui-priority-primary Fright" onclick="PF('dlg').show();" update="@(.cause2)"/>
 
-                            <p:commandButton value="Eliminar" icon="fa fa-trash"
-                                             rendered="#{institutions.selectedInstitution != null and institutions.selectedInstitution.persistent and institutions.selectedInstitution.validityUntil == null}"
-                                             styleClass="ui-priority-primary Fright" onclick="PF('dlg').show();" update="@(.cause2)"/>
-
-                            <p:commandButton value="Cancelar" icon="fa fa-undo" action="#{users.saveUser}" styleClass="ui-priority-primary Fright" disabled="#{ not users.selectedUser.valid}"
-                                             process="mainForm" update="mainForm, @(.breadUpdate)" rendered="false"/>
+                        <p:commandButton value="Cancelar" icon="fa fa-undo" action="#{users.saveUser}" styleClass="ui-priority-primary Fright" disabled="#{ not users.selectedUser.valid}"
+                                         process="mainForm" update="mainForm, @(.breadUpdate)" rendered="false"/>
 
                         </div>
-                    </div>
-                </div>
 
                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                     <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
@@ -136,6 +133,9 @@
                 </p:dialog>
 
             </h:form>
+
+            </div>
+        </div>
 
     </ui:define>
 

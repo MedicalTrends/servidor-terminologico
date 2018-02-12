@@ -205,13 +205,13 @@ public class ConceptBean {
 
         List<Relationship> gmdnRelationships = new ArrayList<Relationship>();
 
-        /*
         for (Relationship relationship : selectedConcept.getRelationships()) {
+            /*
             if(relationship.getRelationshipDefinition().getTargetDefinition().isGMDNType()) {
                 gmdnRelationships.add(relationship);
             }
+            */
         }
-        */
 
         return gmdnRelationships;
     }
