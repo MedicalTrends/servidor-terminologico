@@ -128,13 +128,13 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 .search .fa-search {
     position: absolute;
-    top: 10px;
+    top: 0px;
     left: 10px;
 }
 
 .search .fa.fa-close.fa-lg {
     position: absolute;
-    top: 10px;
+    top: 0px;
     left: 10px;
 }
 
@@ -217,3 +217,82 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 .ui-datatable table tbody .ui-state-highlight.ui-row-editing > td {
     color: #108bd5;
 }
+
+
+.ui-treetable.collectiveTerms table thead {
+    display: none !important;
+}
+
+#conceptPanel table thead {
+    display: none !important;
+}
+/*
+#conceptPanel .ui-paginator-current {
+    color: #3F51B5 !important;
+}
+
+#conceptPanel .ui-paginator .ui-paginator-pages .ui-paginator-page {
+    color: #3F51B5 !important;
+}
+
+#conceptPanel .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+    color: #FFFFFF !important;
+}
+
+#conceptPanel .conceptTable .ui-paginator.ui-paginator-top.ui-widget-header {
+    background: rgba(56, 73, 162, 0) !important;
+}
+
+#conceptPanel .ui-paginator .ui-paginator-first, #conceptPanel .ui-paginator .ui-paginator-prev, #conceptPanel .ui-paginator .ui-paginator-next, #conceptPanel .ui-paginator .ui-paginator-last {
+    color: #3F51B5 !important;
+}
+*/
+
+#conceptPanel .ui-datatable tbody tr.ui-datatable-even {
+    background-color: transparent !important;
+}
+
+#conceptPanel .ui-datatable tbody tr td {
+    border: transparent !important;
+}
+
+#conceptPanel .ui-widget-header {
+    border: transparent !important;
+}
+
+.layout-rightpanel .layout-rightpanel-header {
+    height: 50px !important;
+}
+
+.dashboard .overview .overview-footer {
+    position: relative;
+    border-top: 1px solid #DBDBDB;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.layout-rightpanel .layout-rightpanel-header {
+    background: #283593 none repeat scroll 0% 0% !important;
+}
+
+.logo {
+    image-rendering:-webkit-optimize-contrast !important;
+}
+
+/*
+.ui-inputfield.ui-inputtext {
+    padding: 6px !important;
+}
+
+.ui-inputfield.ui-state-focus {
+    padding: 6px !important;
+}
+
+.ui-inputfield.ui-inputtextarea {
+    padding: 6px !important;
+}
+
+.ui-inputtextarea.ui-state-focus {
+    padding: 6px !important;
+}
+*/

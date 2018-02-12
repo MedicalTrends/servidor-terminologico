@@ -38,12 +38,12 @@
                 </div>
 
                 <div class="Container30 White Responsive">
-                    <div class="ContainerIndent">
 
                         <p:calendar id="basicTypeValue11"
                                     value="#{conceptBean.basicTypeValue.value}"
                                     var="value"
                                     showOn="button"
+                                    locale="es" pattern="dd/MM/yyyy"
                                     mindate="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                     maxdate="#{cc.attrs.targetDefinition.interval.upperBoundary}"
                                     disabled="#{not cc.attrs.concept.editable}"
@@ -54,7 +54,7 @@
                             <p:ajax event="dateSelect" listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id})"/>
                         </p:calendar>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -89,19 +89,21 @@
                     </div>
 
                     <div class="Container30 White Responsive">
-                        <div class="ContainerIndent">
 
                             <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" />
+                                <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target.value}">
+                                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                                </p:inputText>
                                 <p:commandLink process="@this"
                                                rendered="#{not conceptBean.isMCSpecial(cc.attrs.relationshipDefinition) and not conceptBean.concept.isModeled()}"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
                                     <i class="fa fa-close fa-lg"  />
+                                    <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar esta relación?"
+                                               icon="ui-icon-alert"/>
                                 </p:commandLink>
                             </p:outputPanel>
 
-                        </div>
                     </div>
                 </div>
             </div>
@@ -137,6 +139,7 @@
                                     value="#{conceptBean.basicTypeValue.value}"
                                     var="value"
                                     showOn="button"
+                                    locale="es" pattern="dd/MM/yyyy"
                                     mindate="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                     maxdate="#{cc.attrs.targetDefinition.interval.upperBoundary}"
                                     disabled="#{not cc.attrs.concept.editable}"
@@ -187,6 +190,8 @@
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
                                     <i class="fa fa-close fa-lg"  />
+                                    <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar esta relación?"
+                                               icon="ui-icon-alert"/>
                                 </p:commandLink>
                             </p:outputPanel>
                         </div>
@@ -204,7 +209,32 @@
     </p:panel>
 
     <script type="text/javascript">
-
+        PrimeFaces.locales['es'] = {
+            closeText: 'Cerrar',
+            prevText: 'Anterior',
+            nextText: 'Siguiente',
+            monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+            dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+            dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+            dayNamesMin: ['D','L','M','X','J','V','S'],
+            weekHeader: 'Semana',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            timeOnlyTitle: 'Sólo hora',
+            timeText: 'Tiempo',
+            hourText: 'Hora',
+            minuteText: 'Minuto',
+            secondText: 'Segundo',
+            currentText: 'Fecha actual',
+            ampm: false,
+            month: 'Mes',
+            week: 'Semana',
+            day: 'Día',
+            allDayText : 'Todo el día'
+        }
     </script>
 
     <h:outputStylesheet id="customCSS">

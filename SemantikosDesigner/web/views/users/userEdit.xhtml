@@ -22,163 +22,134 @@
             <f:viewParam name="idUser" value="#{users.idUser}" />
         </f:metadata>
 
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <div class="Card ShadowEffect  ">
+                    <div class="Container100 ">
+                        <div class="ContainerIndent">
 
-        <h:form id="mainForm">
+                            <h:form id="mainForm">
 
-                <p:growl id="globalMessage" showDetail="true" showSummary="true" life="10000" autoUpdate="true" />
-
-                <p:growl showDetail="true" showSummary="true" autoUpdate="true" />
-
-                <div class="Container70 Responsive100">
-                    <div class="ContainerIndent">
-                        <div class="Card ShadowEffect HeiAutoOnMobile">
-                            <h2 class="CardTopic"><i class="icon-timelapse Fs20 Fleft MarRight10"/> DATOS DEL USUARIO</h2>
-
-                            <div class="SeparatorFull"></div>
-
-                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank">
-
-                                <p:outputLabel for="input-user-document-type" value="Tipo documento" style="font-weight: bold" styleClass="Wid20" />
-
-                                <p:selectOneRadio id="input-user-document-type" value="#{users.selectedUser.documentRut}" layout="grid" columns="2"
-                                                  disabled="#{ not users.selectedUser.valid or users.selectedUser.persistent}">
-                                    <f:selectItem itemValue="#{true}" itemLabel="Cédula de identidad" />
-                                    <f:selectItem itemValue="#{false}" itemLabel="Pasaporte"/>
-                                </p:selectOneRadio>
-
-                                <p:outputPanel />
-
-                                <p:outputPanel />
-
-                                <p:outputLabel for="input-user-rut2" value="N° Documento *" style="font-weight: bold" styleClass="#{users.documentNumberError} Wid20 Label" />
-
-                                <p:inputText id="input-user-rut2" value="#{users.selectedUser.documentNumber}" styleClass="#{users.documentNumberError} Wid90" maxlength="12"
-                                             disabled="#{ not users.selectedUser.valid or users.selectedUser.persistent }">
-                                    <p:ajax event="blur" listener="#{users.formatRut}" update="@this" />
-                                </p:inputText>
-
-                                <p:outputLabel for="input-user-name2" value="Nombres *" styleClass="#{users.nameError} Wid20"  />
-
-                                <p:inputText id="input-user-name2" value="#{users.selectedUser.name}" styleClass="#{users.nameError} Wid90" autocomplete="off"
-                                             disabled="#{ not users.selectedUser.valid}" />
-
-                                <p:outputLabel for="input-user-lastname2" value="Apellido Paterno *" styleClass="#{users.lastNameError} Wid20"  />
-
-                                <p:inputText id="input-user-lastname2" value="#{users.selectedUser.lastName}" styleClass="#{users.lastNameError} Wid90" autocomplete="off"
-                                             disabled="#{ not users.selectedUser.valid}"/>
-
-                                <p:outputLabel for="input-user-secondlastname2" value="Apellido Materno" styleClass="Wid20" />
-
-                                <p:inputText id="input-user-secondlastname2" value="#{users.selectedUser.secondLastName}" styleClass="Wid90" autocomplete="off"
-                                             disabled="#{ not users.selectedUser.valid}" />
-
-                                <p:outputLabel for="input-user-email" value="Email *" style="font-weight: bold" styleClass="Wid20 #{users.emailError}" />
-
-                                <p:inputText id="input-user-email" value="#{users.selectedUser.email}" styleClass="Wid90 #{users.emailError}" autocomplete="off"
-                                             disabled="#{ not users.selectedUser.valid or users.selectedUser.persistent }"/>
-
-                                <p:outputLabel for="input-user-appointment" value="Cargo" style="font-weight: bold" styleClass="Wid20" />
-
-                                <p:inputText id="input-user-appointment" value="#{users.selectedUser.appointment}" styleClass="Wid90" autocomplete="off"
-                                             disabled="#{ not users.selectedUser.valid}" />
+                                <p:growl id="globalMessage" showDetail="true" showSummary="true" life="10000" autoUpdate="true" />
 
 
-                            </p:panelGrid>
+                                <p:growl showDetail="true" showSummary="true" autoUpdate="true" />
 
-                            <p:spacer/>
 
-                            <p:tabView>
+                                <div class="ui-fluid">
 
-                                <!-- Otras descripciones -->
-                                <p:tab title="Perfiles">
-                                    <p:pickList id="pickList1" value="#{users.selectedUserProfileModel}" var="profile" disabled="#{ not users.selectedUser.valid}"
-                                                itemLabel="#{profile.name}" itemValue="#{profile}"
-                                                responsive="true" converter="profileConverter" style="width: 100%" >
-                                        <f:facet name="sourceCaption">Disponibles</f:facet>
-                                        <f:facet name="targetCaption">Asignados</f:facet>
-                                        <p:ajax event="transfer" listener="#{users.setSelectedUserProfileModel(profile)}" update="pickList1" />
-                                    </p:pickList>
-                                </p:tab>
+                                <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
 
-                                <!-- Otras descripciones -->
-                                <p:tab title="Establecimientos">
-                                    <p:pickList id="pickList2" value="#{users.selectedUserInsitutionModel}" var="institution" disabled="#{ not users.selectedUser.valid}"
-                                                itemLabel="#{institution.name}" itemValue="#{institution}"
-                                                responsive="true" converter="institutionConverter" style="width: 100%" >
-                                        <f:facet name="sourceCaption">Disponibles</f:facet>
-                                        <f:facet name="targetCaption">Asignados</f:facet>
-                                    </p:pickList>
-                                </p:tab>
+                                        <p:outputPanel>
 
-                                <!-- Otras descripciones -->
-                                <p:tab title="Historial">
-                                    <p:dataTable  rowIndexVar="rowIndex" id="historyDateTable" var="history"
-                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                                  value="#{users.auditAction}" paginator="true" rows="10">
-                                        <f:facet name="{Exporters}">
-                                            <p:commandButton icon="fa fa-file-excel-o" styleClass="ui-priority-primary" ajax="false" value="Exportar">
-                                                <p:dataExporter type="xls" target="historyDateTable" fileName="history" />
-                                            </p:commandButton>
-                                        </f:facet>
+                                            <h2 class="BigTopic">Datos Personales</h2>
 
-                                        <p:column headerText="Fecha">
-                                            <h:outputText value="#{history.actionDateFormat}"/>
-                                        </p:column>
-                                        <p:column headerText="Tipo de cambio">
-                                            <h:outputText value="#{history.auditActionType.name}"/>
-                                        </p:column>
-                                        <p:column headerText="Detalle">
-                                            <h:outputText value="#{history.detailAuditAction()}"/>
-                                        </p:column>
-                                        <p:column headerText="Usuario">
-                                            <h:outputText value="#{history.user.email}"/>
-                                        </p:column>
+                                            <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank">
 
-                                    </p:dataTable>
-                                </p:tab>
+                                            <p:outputLabel for="input-user-document-type" value="Tipo documento" style="font-weight: bold" styleClass="Wid20" />
 
-                            </p:tabView>
+                                            <p:selectOneRadio id="input-user-document-type" value="#{users.selectedUser.documentRut}" layout="grid" columns="2"
+                                                              disabled="#{ not users.selectedUser.valid or users.selectedUser.persistent}">
+                                                <f:selectItem itemValue="#{true}" itemLabel="Cédula de identidad" />
+                                                <f:selectItem itemValue="#{false}" itemLabel="Pasaporte"/>
+                                            </p:selectOneRadio>
 
-                            <div class="SeparatorFull"></div>
+                                            <p:outputLabel for="input-user-rut2" value="N° Documento *" style="font-weight: bold" styleClass="#{users.documentNumberError} Wid20 Label" />
 
-                            <div class="ui-g-12 ui-md-6 ui-lg-6" style="text-align: left">
-                                <p:commandButton value="Resetear cuenta" icon="fa fa-unlock" action="#{users.unlockUser}" styleClass="ui-priority-primary CyanButton"
-                                                 disabled="#{not users.selectedUser.locked or users.selectedUser.verificationCode != null }"
-                                                 rendered="#{users.selectedUser != null and users.selectedUser.persistent}"
-                                                 update="mainForm, @(.breadUpdate)" />
+                                            <p:inputText id="input-user-rut2" value="#{users.selectedUser.documentNumber}" styleClass="#{users.documentNumberError} Wid90" maxlength="12"
+                                                         disabled="#{ not users.selectedUser.valid or users.selectedUser.persistent }">
+                                                <p:ajax event="blur" listener="#{users.formatRut}" update="@this" />
+                                            </p:inputText>
 
-                                <p:commandButton value="Eliminar" icon="fa fa-trash" action="#{users.deleteUser}"
-                                                 rendered="#{users.selectedUser != null and users.selectedUser.persistent and users.selectedUser.valid}"
-                                                 styleClass="ui-priority-primary"
-                                                 update="mainForm, @(.breadUpdate)">
-                                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este usuario?" icon="ui-icon-alert"/>
-                                </p:commandButton>
-                            </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-6" style="text-align: right">
-                                <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{users.saveUser}" styleClass="ui-priority-primary" disabled="#{ not users.selectedUser.valid}"
-                                                 update="mainForm, @(.breadUpdate)" />
+                                            <p:outputLabel for="input-user-name2" value="Nombres *" styleClass="#{users.nameError} Wid20"  />
 
-                                <p:commandButton value="Cancelar" icon="fa fa-undo" action="#{users.saveUser}" styleClass="ui-priority-primary" disabled="#{ not users.selectedUser.valid}"
-                                                 process="mainForm" update="mainForm, @(.breadUpdate)" rendered="false">
-                                    <p:confirm header="Confirmar Acción" message="¿Desea deshacer los cambios realizados?" icon="ui-icon-alert"/>
-                                </p:commandButton>
+                                            <p:inputText id="input-user-name2" value="#{users.selectedUser.name}" styleClass="#{users.nameError} Wid90" autocomplete="off"
+                                                         disabled="#{ not users.selectedUser.valid}" />
 
-                                <p:commandButton value="Historial de perfiles" icon="fa fa-history" action="#{users.showProfileHistory}" styleClass="ui-priority-primary"
-                                                 rendered="#{users.selectedUser != null and users.selectedUser.persistent}"
-                                                 process="mainForm" update="mainForm, @(.breadUpdate)" />
-                            </div>
+                                            <p:outputLabel for="input-user-lastname2" value="Apellido Paterno *" styleClass="#{users.lastNameError} Wid20"  />
+
+                                            <p:inputText id="input-user-lastname2" value="#{users.selectedUser.lastName}" styleClass="#{users.lastNameError} Wid90" autocomplete="off"
+                                                         disabled="#{ not users.selectedUser.valid}"/>
+
+                                            <p:outputLabel for="input-user-secondlastname2" value="Apellido Materno" styleClass="Wid20" />
+
+                                            <p:inputText id="input-user-secondlastname2" value="#{users.selectedUser.secondLastName}" styleClass="Wid90" autocomplete="off"
+                                                         disabled="#{ not users.selectedUser.valid}" />
+
+                                            <p:outputLabel for="input-user-email" value="Email *" style="font-weight: bold" styleClass="Wid20 #{users.emailError}" />
+
+                                            <p:inputText id="input-user-email" value="#{users.selectedUser.email}" styleClass="Wid90 #{users.emailError}" autocomplete="off"
+                                                         disabled="#{ not users.selectedUser.valid or users.selectedUser.persistent }"/>
+
+                                            <p:outputLabel for="input-user-appointment" value="Cargo" style="font-weight: bold" styleClass="Wid20" />
+
+                                            <p:inputText id="input-user-appointment" value="#{users.selectedUser.appointment}" styleClass="Wid90" autocomplete="off"
+                                                         disabled="#{ not users.selectedUser.valid}" />
+
+
+                                        </p:panelGrid>
+
+                                        </p:outputPanel>
+
+                                        <p:outputPanel header="Perfiles">
+
+                                            <h2 class="BigTopic">Perfiles</h2>
+
+                                            <p:pickList id="pickList1" value="#{users.selectedUserProfileModel}" var="profile3" disabled="#{ not users.selectedUser.valid}"
+                                                        itemLabel="#{profile3.name}" itemValue="#{profile3}"
+                                                        responsive="true" converter="profileConverter" style="width: 100%" >
+                                                <f:facet name="sourceCaption">Disponibles</f:facet>
+                                                <f:facet name="targetCaption">Asignados</f:facet>
+                                            </p:pickList>
+
+                                        </p:outputPanel>
+
+                                    </p:panelGrid>
+
+                                </div>
+
+                                <div class="ui-g">
+                                    <div class="ui-g-12 ui-md-6 ui-lg-6" style="text-align: left">
+                                        <p:commandButton value="Resetear cuenta" icon="fa fa-unlock" action="#{users.unlockUser}" styleClass="ui-priority-primary CyanButton"
+                                                         disabled="#{not users.selectedUser.locked or users.selectedUser.verificationCode != null }"
+                                                         rendered="#{users.selectedUser != null and users.selectedUser.persistent}"
+                                                         update="mainForm, @(.breadUpdate)" />
+
+                                        <p:commandButton value="Eliminar" icon="fa fa-trash" action="#{users.deleteUser}"
+                                                         rendered="#{users.selectedUser != null and users.selectedUser.persistent and users.selectedUser.valid}"
+                                                         styleClass="ui-priority-primary"
+                                                         update="mainForm, @(.breadUpdate)">
+                                            <p:confirm header="Confirmar Acción" message="¿Desea eliminar este usuario?" icon="ui-icon-alert"/>
+                                        </p:commandButton>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-6 ui-lg-6" style="text-align: right">
+                                        <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{users.saveUser}" styleClass="ui-priority-primary" disabled="#{ not users.selectedUser.valid}"
+                                                         update="mainForm, @(.breadUpdate)" />
+
+                                        <p:commandButton value="Cancelar" icon="fa fa-undo" action="#{users.saveUser}" styleClass="ui-priority-primary" disabled="#{ not users.selectedUser.valid}"
+                                                         process="mainForm" update="mainForm, @(.breadUpdate)" rendered="false">
+                                            <p:confirm header="Confirmar Acción" message="¿Desea deshacer los cambios realizados?" icon="ui-icon-alert"/>
+                                        </p:commandButton>
+
+                                        <p:commandButton value="Historial de perfiles" icon="fa fa-history" action="#{users.showProfileHistory}" styleClass="ui-priority-primary"
+                                                         rendered="#{users.selectedUser != null and users.selectedUser.persistent}"
+                                                         process="mainForm" update="mainForm, @(.breadUpdate)" />
+                                    </div>
+
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
+                                                         icon="ui-icon-check"/>
+                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                                                         icon="ui-icon-close"/>
+                                    </p:confirmDialog>
+                                </div>
+
+                            </h:form>
                         </div>
                     </div>
                 </div>
-
-                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
-                                     icon="ui-icon-check"/>
-                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
-                                     icon="ui-icon-close"/>
-                </p:confirmDialog>
-
-            </h:form>
+            </div>
+        </div>
 
     </ui:define>
 

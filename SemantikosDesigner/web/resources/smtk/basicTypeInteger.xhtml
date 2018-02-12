@@ -24,21 +24,17 @@
                          and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
 
-        <div class="ui-fluid">
+        <div class="ui-g ui-fluid">
 
-            <div class="Container">
-
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel for="basicTypeValue11" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
                                        value="#{cc.attrs.relationshipDefinition.name}"/>
                         <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
-                    </div>
-                </div>
+            </div>
 
-                <div class="Container30 White Responsive">
-                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
+
                         <p:inputNumber id="basicTypeValue11"
                                        value="#{conceptBean.basicTypeValue.value}"
                                        var="value"
@@ -55,8 +51,7 @@
                             <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
                         </p:inputNumber>
-                    </div>
-                </div>
+
             </div>
         </div>
     </p:panel>
@@ -77,23 +72,19 @@
                    var="relationship"
                    varStatus="var">
 
-            <div class="ui-fluid">
+            <div class="ui-g ui-fluid">
 
-                <div class="Container">
-
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <p:outputLabel for="basicTypeValue" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                             <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
-                        </div>
-                    </div>
+                </div>
 
-                    <div class="Container30 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
+
                             <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" />
+                                <p:inputText readonly="true" id="basicTypeValue" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
@@ -101,8 +92,7 @@
                                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?" icon="ui-icon-alert"/>
                                 </p:commandLink>
                             </p:outputPanel>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </p:repeat>
@@ -116,22 +106,18 @@
                           and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
 
-        <div class="ui-fluid">
+        <div class="ui-g ui-fluid">
 
-            <div class="Container">
-
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel for="basicTypeValue19"
                                        value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"/>
                         <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
-                    </div>
-                </div>
+            </div>
 
-                <div class="Container30 White Responsive">
-                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
+
                         <p:inputNumber id="basicTypeValue19"
                                        value="#{conceptBean.basicTypeValue.value}"
                                        var="value"
@@ -150,11 +136,11 @@
                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)" />
 
                         </p:inputNumber>
-                    </div>
+
                 </div>
                 <!-- Atributos de relación -->
                 <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
-            </div>
+
         </div>
     </p:panel>
 
@@ -172,19 +158,17 @@
                    var="relationship"
                    varStatus="var">
 
-            <div class="ui-fluid">
+            <div class="ui-g ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
                             <p:outputLabel for="basicTypeValue2" value="#{cc.attrs.relationshipDefinition.name}"/>
                             <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
-                        </div>
-                    </div>
 
-                    <div class="Container30 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                </div>
+
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
+
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
@@ -194,15 +178,15 @@
                                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?" icon="ui-icon-alert"/>
                                 </p:commandLink>
                             </p:outputPanel>
-                        </div>
-                    </div>
+
+                </div>
 
                     <!-- Atributos de relación -->
                     <smtk:attributes concept="#{cc.attrs.concept}"
                                      relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                      relationship="#{relationship}"
                     />
-                </div>
+
             </div>
         </p:repeat>
     </p:panel>

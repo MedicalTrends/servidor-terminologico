@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+    <composite:attribute name="relationshipDefinition"
+                         type="cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb"/>
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.basictypes.BasicTypeDefinition"/>
+    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb"/>
+</composite:interface>
+<composite:implementation>
+
+    <!-- Multiplicidad 1 + Nueva relacion + Sin atributos -->
+    <p:panel
+            id="basicTypeSimpleNew"
+            rendered="#{ true }"
+            widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
+
+        <div class="ui-fluid">
+
+            <div class="Container">
+
+                <div class="Container20 White Responsive">
+                    <div class="ContainerIndent">
+
+                        <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}">
+                                <span>
+                                    #{cc.attrs.relationshipDefinition.name}
+                                </span>
+                        </p:outputLabel>
+                        <p:outputLabel rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}">
+                                <span>
+                                    #{cc.attrs.relationshipDefinition.name} *
+                                </span>
+                        </p:outputLabel>
+
+                    </div>
+                </div>
+
+                <div class="Container80 White Responsive">
+                    <!-- Atributos de relación -->
+                    <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}" var="relationship">
+                        <p:selectBooleanCheckbox value="#{ not empty deviceControlBean.updateRelationship(relationship) }" disabled="true" style="display: none" />
+                        <smtk:attributes concept="#{cc.attrs.concept}" relationship="#{relationship}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
+                    </ui:repeat>
+                </div>
+            </div>
+        </div>
+    </p:panel>
+
+</composite:implementation>
+</html>

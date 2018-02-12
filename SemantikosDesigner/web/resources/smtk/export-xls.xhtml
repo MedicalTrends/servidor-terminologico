@@ -7,6 +7,7 @@
       xmlns:composite="http://java.sun.com/jsf/composite"
       xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:ce="http://java.sun.com/jsp/jstl/core"
       xmlns:pe="http://primefaces.org/ui/extensions"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 
@@ -104,6 +105,39 @@
 
         </p:dataTable>
 
+        <ce:if test="#{ not empty conceptExport.getGMDNRelationships() }">
+
+            <p:dataTable id="GMDNTable" var="relationship" value="#{ conceptExport.getGMDNRelationships() }"
+                         rendered="#{ not empty conceptExport.getGMDNRelationships() }"
+                         paginator="false">
+
+                <f:facet name="header">
+                    <h:outputText value="GMDN"/>
+                </f:facet>
+
+                    <p:column headerText="Marca" rendered="#{ not empty conceptExport.getGMDNRelationships() }">
+                        <h:outputText value="#{relationship.target.make}"/>
+                    </p:column>
+                    <p:column headerText="Modelo" rendered="#{ not empty conceptExport.getGMDNRelationships() }">
+                        <h:outputText value="#{relationship.target.model}"/>
+                    </p:column>
+                    <p:column headerText="Nombre Comercial" rendered="#{ not empty conceptExport.getGMDNRelationships() }">
+                        <h:outputText value="#{relationship.target.tradeName}"/>
+                    </p:column>
+                    <p:column headerText="Código Grupo de Dispositivo Genérico" rendered="#{ not empty conceptExport.getGMDNRelationships() }">
+                        <h:outputText value="#{relationship.target.genericDeviceGroup.code}"/>
+                    </p:column>
+                    <p:column headerText="Nombre Grupo de Dispositivo Genérico" rendered="#{ not empty conceptExport.getGMDNRelationships() }">
+                        <h:outputText value="#{relationship.target.genericDeviceGroup.termName}"/>
+                    </p:column>
+                    <p:column headerText="Definición Grupo de Dispositivo Genérico" rendered="#{ not empty conceptExport.getGMDNRelationships() }">
+                        <h:outputText value="#{relationship.target.genericDeviceGroup.termDefinition}"/>
+                    </p:column>
+
+            </p:dataTable>
+
+        </ce:if>
+
         <p:dataTable id="crossMapsDirectosTable" var="directCrossmap" value="#{conceptExport.getDirectCrossmapsRelationships()}"
                      rendered="#{ not empty conceptExport.getDirectCrossmapsRelationships() }"
                      paginator="false" rows="6">
@@ -174,8 +208,13 @@
     </p:panel>
 
 
-    <p:commandButton  icon="fa fa-file-excel-o" styleClass="ui-priority-primary" ajax="false" value="Exportar"  rendered="#{conceptBean.concept.modeled}">
-        <p:dataExporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,crossMapsDirectosTable,crossMapsIndirectosTable,refsetsTable"  type="xls" fileName="concepto" />
+    <p:commandButton  icon="fa fa-file-excel-o" styleClass="ui-priority-primary" ajax="false" value="Exportar"  rendered="#{conceptBean.concept.modeled}" style="width: auto">
+        <ce:if test="#{ not empty conceptExport.getGMDNRelationships() }">
+            <p:dataExporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,GMDNTable,crossMapsDirectosTable,crossMapsIndirectosTable,refsetsTable" type="xls" fileName="concepto" />
+        </ce:if>
+        <ce:if test="#{ empty conceptExport.getGMDNRelationships() }">
+            <p:dataExporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,crossMapsDirectosTable,crossMapsIndirectosTable,refsetsTable" type="xls" fileName="concepto" />
+        </ce:if>
         <!--pe:exporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,crossMapsDirectosTable,crossMapsInDirectosTable,refsetsTable" type="xlsx" fileName="concepto" /-->
     </p:commandButton>
 </composite:implementation>

@@ -1,190 +1,147 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 
-    <h:head>
-        <f:facet name="first">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-            <meta name="apple-mobile-web-app-capable" content="yes" />
-        </f:facet>
-        <title>Activación Cuenta Semantikos</title>
-        <ui:insert name="head" />
-    </h:head>
+<h:head>
+    <f:facet name="first">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+    </f:facet>
+    <title>Semantikos Minsal</title>
+    <h:outputScript name="js/ripple.js" library="ultima-layout" />
+    <h:outputScript name="js/layout.js" library="ultima-layout" />
+</h:head>
 
-    <p:outputPanel id="account-activation" rendered="#{accountActivation.valid}">
-        <h:body styleClass="loginbodyblue">
-        
-        <div class="Wid90 DispBlock MarAuto MarTopPerc5">
-            <div class="Wid50 MarAuto WidAutoOnMobile">
-                <div style="text-align: center">
-                    <h:graphicImage alt="Semantikos" width="180" library="semantikos" name="images/minsal.png" />
-                </div>
-                <div class="EmptyBox30"></div>
-                <div class="Card ShadowEffect">
-                    <div class="EmptyBox40"></div>
-                    <div class="Wid100 OvHidden Fs30 Blue"><div class="TexAlCenter"><i class="icon-users Fs40" />Activación de Cuenta</div>
+<p:outputPanel id="account-activation" rendered="#{accountActivation.valid}">
+
+    <h:body styleClass="login-body">
+
+    <div class="card card-w-title login-panel ui-fluid" style="width: 100%; max-width: 600px">
+
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <p:graphicImage name="images/logo-indigo.png" style="width:230px" library="semantikos" />
+            </div>
+
+            <div class="ui-g-12" style="padding: 0px">
+                <p:outputPanel styleClass="headerPanel">
+                    <div style="text-align: center;font-size: 24px; color: dimgray">Activación de cuenta</div>
                     <p:outputPanel rendered="#{not accountActivation.accountActive}">
-                        <div class="Wid100 OvHidden Fs20 BoldGray" style="text-align: center">Por favor, complete el siguiente formulario.</div>
+                        <div style="text-align: center; color: dimgray">Por favor, complete el siguiente formulario.</div>
                     </p:outputPanel>
                     <p:outputPanel rendered="#{accountActivation.accountActive}">
-                        <div class="Wid100 OvHidden Fs20 BoldGray" style="text-align: center">Su cuenta ha sido activada!! Para ingresar al sistema diríjase al login</div>
+                        <div style="text-align: center; color: dimgray">Su cuenta ha sido activada!!.</div>
+                        <p:button outcome="login" value="Ir al login" styleClass="cyan-btn" icon="fa fa-arrow-left"/>
                     </p:outputPanel>
-                    <div class="EmptyBox20"></div>
-                    <div class="Separator"></div>
-                    <div class="EmptyBox10"></div>
-                    <h:form id="mainForm" rendered="#{not accountActivation.accountActive}">
-                    <p:growl id="growl" showDetail="true" showSummary="true"/>
-                    <p:panel header="Paso 1: Cambio de contraseña">
-
-                        <f:facet name="footer">
-                            <p:outputPanel>
-                                <i class="fa  fa-info-circle fa-lg" style="padding-right:10px" />
-                                <h:outputText value="Actualice su contraseña a una que usted pueda recordar fácilmente" />
-                            </p:outputPanel>
-                        </f:facet>
-
-                        <p:panelGrid id="password" columns="2" columnClasses="label, value" styleClass="Wid100 ui-panelgrid-blank">
-
-                            <p:outputLabel value="Contraseña Actual *" style="font-weight: bold" styleClass="#{accountActivation.passwordError} Wid20" />
-
-                            <p:password id="default-password" value="#{accountActivation.password}" feedback="true"
-                                        promptLabel="Ingrese su contraseña actual" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
-                                        redisplay="true" autocomplete="off"
-                                        styleClass="#{accountActivation.passwordError} Wid90">
-                            </p:password>
-
-                            <p:outputLabel value="Nueva Contraseña *" style="font-weight: bold" styleClass="#{accountActivation.newPassword1Error} Wid20" />
-
-                            <p:password id="new-password" value="#{accountActivation.newPassword1}" feedback="true"
-                                        promptLabel="Ingrese su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
-                                        redisplay="true" autocomplete="off"
-                                        styleClass="#{accountActivation.newPassword1Error} Wid90">
-                            </p:password>
-
-                            <p:outputLabel value="Confirmar Contraseña *" style="font-weight: bold" styleClass="#{accountActivation.newPassword2Error} Wid20" />
-
-                            <p:password id="new-password2" value="#{accountActivation.newPassword2}" feedback="true"
-                                        promptLabel="Confirme su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
-                                        redisplay="true" autocomplete="off"
-                                        styleClass="#{accountActivation.newPassword2Error} Wid90">
-                            </p:password>
-
-                        </p:panelGrid>
-                        <div style="text-align: right">
-                            <p:commandButton actionListener="#{accountActivation.checkPassword}"
-                                             styleClass="ui-priority-primary"
-                                             value="Enviar" process="mainForm"
-                                             update="growl, mainForm, @(.headerPanel)">
-                            </p:commandButton>
-                        </div>
-                    </p:panel>
-
-                    <br />
-
-                    <p:outputPanel rendered="#{accountActivation.passwordValid}">
-                        <p:panel header="Paso 2: Preguntas de seguridad">
-
-                            <f:facet name="footer">
-                                <p:outputPanel>
-                                    <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                                    <h:outputText value="Si usted olvida su contraseña, puede responder 3 preguntas de seguridad para recuperarla" />
-                                </p:outputPanel>
-                            </f:facet>
-
-                            <h:dataTable id="questions" styleClass="questions" style="width: 100%;" value="#{accountActivation.questionList}"
-                                         var="question">
-
-                                <h:column>
-                                    <p:selectBooleanCheckbox value="#{question.selected}" disabled="#{accountActivation.user.answers.size() >= 3 and not question.selected}">
-                                        <p:ajax listener="#{accountActivation.updateAnswers(question)}" update="@(.questions)" process="@this" />
-                                    </p:selectBooleanCheckbox>
-                                </h:column>
-
-                                <h:column>
-                                    <p:outputLabel value="#{question.question}" />
-                                </h:column>
-
-                                <h:column>
-                                    <ui:repeat value="#{accountActivation.user.getAnswersByQuestion(question)}" var="answer">
-                                        <p:inputText value="#{answer.answer}" autocomplete="off" styleClass="Wid90">
-                                            <p:ajax event="blur" process="@(.questions)" update="@(.questions)" />
-                                        </p:inputText>
-                                    </ui:repeat>
-                                </h:column>
-
-                            </h:dataTable>
-
-                            <div style="text-align: right">
-                                <p:commandButton actionListener="#{accountActivation.activate}"
-                                                 styleClass="ui-priority-primary"
-                                                 value="Enviar" process="mainForm"
-                                                 update="growl, account-activation">
-                                </p:commandButton>
-                            </div>
-
-                        </p:panel>
-                    </p:outputPanel>
-                    </h:form>
-
-                    <p:outputPanel rendered="#{accountActivation.accountActive}">
-                        <div class="Wid100" style="text-align: center">
-                            <p:button value="Ir al Login" icon="fa a fa-sign-in" outcome="/views/login.xhtml"/>
-                        </div>
-                    </p:outputPanel>
-
-                </div>
-                <div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular WhiteBlue">
-                    <i class="fa fa-copyright" />  PrimeFaces RIO Theme And Layout <br/> All rights reserved.
-                </div>
+                </p:outputPanel>
             </div>
         </div>
-        </div>
-        
-        <h:outputStylesheet name="css/core-layout.css" library="rio-layout" />
-        <h:outputStylesheet name="css/animate.css" library="rio-layout" />
-        <h:outputStylesheet name="css/rio-font.css" library="rio-layout" />
-        <h:outputStylesheet name="css/ripple-effect.css" library="rio-layout" />
-        <h:outputStylesheet name="css/font-awesome.css" library="rio-layout" />
-        <h:outputStylesheet name="css/rio-layout.css" library="rio-layout" />
-    </h:body>
-    </p:outputPanel>
 
-    <p:outputPanel rendered="#{not accountActivation.valid}">
-        <h:body styleClass="loginbodyorange">
+        <h:form id="loginform" rendered="#{not accountActivation.accountActive}" style="margin-bottom: 40px">
+            <p:growl id="growl" showDetail="true" showSummary="true"/>
+            <p:fieldset legend="Paso 1: Cambio de contraseña">
 
-            <div class="Wid90 DispBlock MarAuto MarTopPerc10 TexAlCenter">
-                <div class="Wid33 MarAuto WidAutoOnMobile">
-                    <div class="EmptyBox30"></div>
-                    <div class="Card ShadowEffect">
-                        <div class="EmptyBox40"></div>
-                        <i class="icon-virtual2 Fs100 Orange" />
-                        <div class="Wid100 OvHidden Fs30 Orange">Acceso Denegado <br/>Por favor confirme sus permisos con el administrador</div>
-                        <div class="Wid100 OvHidden Fs20 BoldGray">Lo sentimos, pero usted no tiene acceso a esta página.</div>
-                        <div class="EmptyBox20"></div>
-                        <div class="Separator"></div>
-                        <div class="EmptyBox10"></div>
-                        <div class="Wid100"><p:button value="Back To Dashboard" icon="fa fa-dashboard" styleClass="OrangeButton Wid60 Fs18 White RaisedButton" href="dashboard.xhtml"/></div>
-                        <div class="EmptyBox20"></div>
-                    </div>
-                    <div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular WhiteBlue">
-                        <i class="fa fa-copyright" />  PrimeFaces RIO Theme And Layout <br/> All rights reserved.
-                    </div>
+                <i style="font-size: small">Actualice su contraseña a una que usted pueda recordar fácilmente</i>
+                <br/>
+
+                <p:panelGrid id="password" columns="2" columnClasses="label, value" styleClass="ui-panelgrid-blank" style="width: 100%">
+
+                    <p:outputLabel value="Contraseña Actual *" styleClass="#{accountActivation.passwordError} Wid20" />
+
+                    <p:password id="default-password" value="#{accountActivation.password}" feedback="true"
+                                promptLabel="Ingrese su contraseña actual" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
+                                redisplay="true" autocomplete="off"
+                                styleClass="#{accountActivation.passwordError}">
+                    </p:password>
+
+                    <p:outputLabel value="Nueva Contraseña *" styleClass="#{accountActivation.newPassword1Error} Wid20" />
+
+                    <p:password id="new-password" value="#{accountActivation.newPassword1}" feedback="true"
+                                promptLabel="Ingrese su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
+                                redisplay="true" autocomplete="off"
+                                styleClass="#{accountActivation.newPassword1Error}">
+                    </p:password>
+
+                    <p:outputLabel value="Confirmar Contraseña *" styleClass="#{accountActivation.newPassword2Error} Wid20" />
+
+                    <p:password id="new-password2" value="#{accountActivation.newPassword2}" feedback="true"
+                                promptLabel="Confirme su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
+                                redisplay="true" autocomplete="off"
+                                styleClass="#{accountActivation.newPassword2Error}">
+                    </p:password>
+
+                </p:panelGrid>
+                <div style="text-align: right">
+                    <p:commandButton actionListener="#{accountActivation.checkPassword}"
+                                     style="width: auto;float: right"
+                                     value="Enviar" process="loginform"
+                                     update="growl, loginform, @(.headerPanel)">
+                    </p:commandButton>
                 </div>
-            </div>
+            </p:fieldset>
 
-            <h:outputStylesheet name="css/core-layout.css" library="rio-layout" />
-            <h:outputStylesheet name="css/animate.css" library="rio-layout" />
-            <h:outputStylesheet name="css/rio-font.css" library="rio-layout" />
-            <h:outputStylesheet name="css/ripple-effect.css" library="rio-layout" />
-            <h:outputStylesheet name="css/font-awesome.css" library="rio-layout" />
-            <h:outputStylesheet name="css/rio-layout.css" library="rio-layout" />
-        </h:body>
-    </p:outputPanel>
+            <br />
 
+            <p:outputPanel rendered="#{accountActivation.passwordValid}">
+                <p:fieldset legend="Paso 2: Preguntas de seguridad">
+
+                    <i style="font-size: small">Si usted olvida su contraseña, puede responder 3 preguntas de seguridad para recuperarla</i>
+
+                    <h:dataTable id="questions" styleClass="questions" style="width: 100%;" value="#{accountActivation.questionList}"
+                                 var="question">
+
+                        <h:column>
+                            <p:selectBooleanCheckbox value="#{question.selected}" disabled="#{accountActivation.user.answers.size() >= 3 and not question.selected}">
+                                <p:ajax listener="#{accountActivation.updateAnswers(question)}" update="@(.questions)" process="@this" />
+                            </p:selectBooleanCheckbox>
+                        </h:column>
+
+                        <h:column>
+                            <p:outputLabel value="#{question.question}" />
+                        </h:column>
+
+                        <h:column>
+                            <ui:repeat value="#{accountActivation.user.getAnswersByQuestion(question)}" var="answer">
+                                <p:inputText value="#{answer.answer}" autocomplete="off" styleClass="Wid90">
+                                    <p:ajax event="blur" process="@(.questions)" update="@(.questions)" />
+                                </p:inputText>
+                            </ui:repeat>
+                        </h:column>
+
+                    </h:dataTable>
+
+                    <div style="text-align: right">
+                        <p:commandButton actionListener="#{accountActivation.activate}"
+                                         style="width: auto; float: right"
+                                         value="Enviar" process="loginform"
+                                         update="growl, account-activation">
+                        </p:commandButton>
+                    </div>
+
+                </p:fieldset>
+            </p:outputPanel>
+        </h:form>
+
+        <span class="footer-text-left">
+            <span>
+                <i class="fa fa-copyright" style="color: #5f666c" /><h:outputText value="2016" style="color: #5f666c" /><a href="" style="color: #5f666c">Ministerio de Salud</a>
+            </span>
+            <br/>
+            <span style="color: #5f666c">Version: <h:outputText value="${bpversion['version']} ${bpversion['build.date']}" />
+            </span>
+        </span>
+
+    </div>
+
+    <h:outputStylesheet name="css/ripple.css" library="ultima-layout" />
+    <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" />
+</h:body>
+
+</p:outputPanel>
 
 </html>

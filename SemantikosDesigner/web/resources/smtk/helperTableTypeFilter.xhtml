@@ -13,20 +13,25 @@
     <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
     <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.helpertables.HelperTable" />
     <composite:attribute name="targets" type="java.util.List"/>
+    <composite:attribute name="rightpanel" type="java.lang.Boolean"/>
 </composite:interface>
 <composite:implementation>
 
 
-    <div class="Container100">
-        <div class="ContainerIndent BoldGray FontBold">
-
+    <div class="ui-g-12 ui-md-#{cc.attrs.rightpanel?'12':'4'} ui-lg-#{cc.attrs.rightpanel?'12':'2'}">
+        <span>
             <h:outputText value="#{cc.attrs.relationshipDefinition.name}" />
+        </span>
+    </div>
+
+    <div class="ui-g-12 ui-md-#{cc.attrs.rightpanel?'12':'8'} ui-lg-#{cc.attrs.rightpanel?'12':'4'}">
 
             <p:selectOneMenu id="findHTRecords1" scrollHeight="200"
                              forceSelection="true"
                              autoWidth="false"
+                             style="width: 100%"
                              value="#{generalBrowserBean.helperTableRecord}"
-                             rendered="#{cc.attrs.targets.isEmpty() and not cc.attrs.relationshipDefinition.ATC and not cc.attrs.relationshipDefinition.DCI}"
+                             rendered="#{cc.attrs.targets.isEmpty() and not cc.attrs.relationshipDefinition.ATC}"
                              var="r"
                              filter="true"
                              converter="omnifaces.SelectItemsConverter">
@@ -54,13 +59,13 @@
                 <!---->
             </p:selectOneMenu>
 
-            <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() and ( cc.attrs.relationshipDefinition.ATC or cc.attrs.relationshipDefinition.DCI ) }" styleClass="search">
+            <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() and cc.attrs.relationshipDefinition.ATC }" styleClass="search">
 
                 <p:autoComplete id="findHTRecords2" scrollHeight="200"
                                 completeMethod="#{helperTableBean.getRecordSearchInput}"
                                 forceSelection="true"
                                 var="record"
-                                minQueryLength="#{2}"
+                                minQueryLength="#{helperTableBean.getMinQueryLength(cc.attrs.targetDefinition)}"
                                 placeholder="Buscar..."
                                 converter="helperTableRecordConverter"
                                 value="#{generalBrowserBean.helperTableRecord}"
@@ -72,20 +77,12 @@
                     <!-- Parámetros del validador -->
                     <f:attribute name="helperTableRecord" value="#{generalBrowserBean.helperTableRecord}"  />
                     <!---->
-
-
-                        <p:column rendered="#{cc.attrs.relationshipDefinition.DCI}">
-                            <h:outputText value="#{record.description}" />
-                        </p:column>
-
-                        <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}">
-                            <h:outputText value="#{record.getCellByColumnName('codigo atc')}" />
-                        </p:column>
-
-                        <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}">
-                            <h:outputText value="#{record.getCellByColumnName('descripcion completa')}"/>
-                        </p:column>
-
+                    <p:column>
+                        <h:outputText value="#{record.getCellByColumnName('codigo atc')}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{record.getCellByColumnName('descripcion completa')}"/>
+                    </p:column>
 
                     <p:ajax event="itemSelect"
                             listener="#{generalBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, generalBrowserBean.helperTableRecord)}"
@@ -108,7 +105,7 @@
                            var="target"
                            varStatus="var">
 
-                    <p:inputText disabled="true" id="itemSelected" value="#{target.description}" />
+                    <p:inputText readonly="true" id="itemSelected" value="#{target.description}" />
                     <p:commandLink
                             process="@this"
                             update="@(.browserFilters),@(.browserTable)"
@@ -119,7 +116,6 @@
             </p:outputPanel>
 
         </div>
-    </div>
 
 </composite:implementation>
 </html>

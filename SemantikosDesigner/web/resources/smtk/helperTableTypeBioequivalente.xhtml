@@ -17,7 +17,7 @@
 <composite:implementation>
 
     <!-- Bioequivalente -->
-    <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500" collapsed="true"
+    <p:fieldset id="helperTableTypeCollection" legend="#{cc.attrs.relationshipDefinition.name}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and not cc.attrs.relationshipDefinition.ISP}">
 
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
@@ -33,53 +33,50 @@
 
         <div class="ui-fluid">
 
-            <div class="Container">
+            <div class="ui-g">
 
-                <div class="Container20 White Responsive">
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-                    <div class="ContainerIndent">
+                    <p:outputPanel styleClass="search">
 
-                        <p:outputPanel styleClass="search">
+                        <p:growl showDetail="true" showSummary="true"/>
 
-                            <p:growl showDetail="true" showSummary="true"/>
+                        <p:autoComplete id="findHTRecords5" scrollHeight="200"
+                                        completeMethod="#{helperTableBean.getRecordSearchInput}"
+                                        minQueryLength="1"
+                                        forceSelection="true"
+                                        var="helperTableRecord"
+                                        placeholder="#{cc.attrs.relationshipDefinition.name}..."
+                                        converter="helperTableRecordConverter"
+                                        rendered="#{cc.attrs.concept.editable}"
+                                        disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
+                                        value="#{conceptBean.selectedHelperTableRecord}"
+                                        itemLabel="#{helperTableRecord.description}"
+                                        itemValue="#{helperTableRecord}">
 
-                            <p:autoComplete id="findHTRecords5" scrollHeight="200"
-                                            completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                            minQueryLength="1"
-                                            forceSelection="true"
-                                            var="helperTableRecord"
-                                            placeholder="#{cc.attrs.relationshipDefinition.name}..."
-                                            converter="helperTableRecordConverter"
-                                            rendered="#{cc.attrs.concept.editable}"
-                                            disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
-                                            value="#{conceptBean.selectedHelperTableRecord}"
-                                            itemLabel="#{helperTableRecord.description}"
-                                            itemValue="#{helperTableRecord}">
+                            <!-- Parámetros del buscador -->
+                            <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                            <!-- Parámetros del validador -->
+                            <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
+                            <!---->
+                            <p:column>
+                                <h:outputText value="#{helperTableRecord.description}"/>
+                            </p:column>
 
-                                <!-- Parámetros del buscador -->
-                                <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
-                                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                                <!-- Parámetros del validador -->
-                                <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
-                                <!---->
-                                <p:column>
-                                    <h:outputText value="#{helperTableRecord.description}"/>
-                                </p:column>
+                            <p:column width="500px" style="width: 500px">
+                                <h:outputText value="#{helperTableRecord.getCellByColumnName('nombre')}"/>
+                            </p:column>
 
-                                <p:column width="500px" style="width: 500px">
-                                    <h:outputText value="#{helperTableRecord.getCellByColumnName('nombre')}"/>
-                                </p:column>
+                            <p:ajax event="itemSelect"
+                                    update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@(.search)"
+                                    async="false"
+                                    listener="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
+                                    process="@this"/>
 
-                                <p:ajax event="itemSelect"
-                                        update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@(.search)"
-                                        async="false"
-                                        listener="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
-                                        process="@this"/>
-
-                            </p:autoComplete>
-                            <i class="fa fa-search fa-lg"  />
-                        </p:outputPanel>
-                    </div>
+                        </p:autoComplete>
+                        <i class="fa fa-search fa-lg"  />
+                    </p:outputPanel>
                 </div>
             </div>
         </div>
@@ -163,15 +160,13 @@
                             process="@this"
                             immediate="true"
                             actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                            styleClass="relationships">
-                        <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
-                                   icon="ui-icon-alert"/>
-                    </p:commandButton>
+                            styleClass="relationships"
+                    />
                 </div>
             </p:column>
         </p:dataTable>
 
-    </p:panel>
+    </p:fieldset>
 
 </composite:implementation>
 </html>

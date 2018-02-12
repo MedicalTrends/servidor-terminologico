@@ -37,47 +37,45 @@
 
         <div class="ui-fluid">
 
-            <div class="Container">
+            <div class="ui-g">
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-                        <p:outputPanel styleClass="search" >
+                    <p:outputPanel styleClass="search" >
 
-                            <p:autoComplete id="findConceptSMTK2" scrollHeight="200" size="5" style="width: 80%;"
-                                            inputStyle="width: 80%;"
-                                            completeMethod="#{smtkBean.getConceptSearchInput}"
-                                            converter="conceptConverter"
-                                            styleClass="fragments"
-                                            var="concept"
-                                            disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
-                                            rendered="#{cc.attrs.concept.editable}"
-                                            value="#{conceptBean.conceptSelected}"
-                                            itemLabel="#{concept.descriptionFavorite.term}"
-                                            itemValue="#{concept}">
-                                <!-- Parámetros del validador -->
-                                <f:attribute name="concept" value="#{cc.attrs.concept}"  />
-                                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                                <!---->
+                        <p:autoComplete id="findConceptSMTK2" scrollHeight="200" size="5" style="width: 80%;"
+                                        inputStyle="width: 80%;"
+                                        completeMethod="#{smtkBean.getConceptSearchInput}"
+                                        converter="conceptConverter"
+                                        styleClass="fragments"
+                                        var="concept"
+                                        disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
+                                        rendered="#{cc.attrs.concept.editable}"
+                                        value="#{conceptBean.conceptSelected}"
+                                        itemLabel="#{concept.descriptionFavorite.term}"
+                                        itemValue="#{concept}">
+                            <!-- Parámetros del validador -->
+                            <f:attribute name="concept" value="#{cc.attrs.concept}"  />
+                            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                            <!---->
 
-                                <p:column>
-                                    <h:outputText value="#{concept.conceptID}"/>
-                                </p:column>
+                            <p:column>
+                                <h:outputText value="#{concept.descriptionFavorite.id}"/>
+                            </p:column>
 
-                                <p:column>
-                                    <h:outputText value="#{concept.descriptionFavorite.term}"/>
-                                </p:column>
-                                <p:ajax update="@(.panel_#{cc.attrs.relationshipDefinition.id})" event="itemSelect"
-                                        listener="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition,conceptBean.conceptSelected)}"
-                                        process="@this"/>
+                            <p:column>
+                                <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                            </p:column>
+                            <p:ajax update="@(.panel_#{cc.attrs.relationshipDefinition.id})" event="itemSelect"
+                                    listener="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition,conceptBean.conceptSelected)}"
+                                    process="@this"/>
 
-                                <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
-                            </p:autoComplete>
-                            <i class="fa fa-search fa-lg"  />
+                            <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
+                        </p:autoComplete>
+                        <i class="fa fa-search fa-lg"  />
 
-                        </p:outputPanel>
+                    </p:outputPanel>
 
-                    </div>
                 </div>
             </div>
         </div>
@@ -91,32 +89,32 @@
                      value="#{conceptBean.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      var="rel">
 
-            <p:column headerText="ConceptID">
+            <p:column headerText="ID">
                 <h:outputText value="#{rel.target.id}"/>
             </p:column>
 
-            <p:column headerText="Término Preferida">
+            <p:column headerText="Descripción">
                 <h:outputText value="#{rel.target.descriptionFavorite.term}"/>
             </p:column>
-
 
             <p:column headerText="Estado">
                 <h:outputText value="#{rel.target.modeled}"/>
             </p:column>
-            <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
-                <p:commandButton icon="fa fa-trash" title="Eliminar"
-                                 action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
-                                 update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                                 process="@this">
-                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
-                               icon="ui-icon-alert"/>
-                </p:commandButton>
+
+            <p:column headerText="Eliminar" rendered="#{cc.attrs.concept.editable}">
+                <div style="text-align: center">
+                    <p:commandButton icon="fa fa-trash" title="Eliminar"
+                                     action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
+                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                     process="@this">
+                    </p:commandButton>
+                </div>
             </p:column>
         </p:dataTable>
 
     </p:panel>
 
-    <p:panel id="multiplicityN_with_attributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}"  toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
+    <p:fieldset id="multiplicityN_with_attributes" legend="#{cc.attrs.relationshipDefinition.name}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
@@ -136,64 +134,70 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}"/>
+                    </div>
 
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                            <p:outputPanel styleClass="search">
+                        <p:outputPanel styleClass="search">
 
-                                <p:autoComplete id="findConceptSMTK3" scrollHeight="200"
-                                                completeMethod="#{smtkBean.getConceptSearchInput}"
-                                                styleClass="fragments"
-                                                placeholder="Buscar..."
-                                                converter="conceptConverter"
-                                                var="concept"
-                                                disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
-                                                value="#{conceptBean.conceptSelected}"
-                                                itemLabel="#{concept.descriptionFavorite.term}"
-                                                itemValue="#{concept}">
-                                    <!-- Parámetros del validador -->
-                                    <f:attribute name="concept" value="#{cc.attrs.concept}"  />
-                                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                                    <!---->
+                            <p:autoComplete id="findConceptSMTK3" scrollHeight="200"
+                                            completeMethod="#{smtkBean.getConceptSearchInput}"
+                                            styleClass="fragments"
+                                            placeholder="Buscar..."
+                                            converter="conceptConverter"
+                                            var="concept"
+                                            disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
+                                            value="#{conceptBean.conceptSelected}"
+                                            itemLabel="#{concept.descriptionFavorite.term}"
+                                            itemValue="#{concept}">
+                                <!-- Parámetros del validador -->
+                                <f:attribute name="concept" value="#{cc.attrs.concept}"  />
+                                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                                <!---->
 
-                                    <p:column>
-                                        <h:outputText value="#{concept.conceptID}"/>
-                                    </p:column>
+                                <p:column>
+                                    <h:outputText value="#{concept.descriptionFavorite.id}"/>
+                                </p:column>
 
-                                    <p:column>
-                                        <h:outputText value="#{concept.descriptionFavorite.term}"/>
-                                    </p:column>
-                                    <p:ajax event="itemSelect"
-                                            listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition,conceptBean.conceptSelected)}"
-                                            process="@this"/>
+                                <p:column>
+                                    <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                </p:column>
+                                <p:ajax event="itemSelect"
+                                        listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition,conceptBean.conceptSelected)}"
+                                        process="@this"/>
 
-                                    <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
-                                </p:autoComplete>
-                                <i class="fa fa-search fa-lg"  />
-                            </p:outputPanel>
-
-                        </div>
+                                <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
+                            </p:autoComplete>
+                            <i class="fa fa-search fa-lg"  />
+                        </p:outputPanel>
 
                     </div>
                     <!-- Atributos de relación -->
                     <smtk:attributes concept="#{cc.attrs.concept}"
-                                     relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                     />
-                    <div class="Container20 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-                            <p:commandButton
-                                    process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
-                                    action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
-                                    update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                    style="max-width: 100px"
-                                    value="Agregar">
-                            </p:commandButton>
-                        </div>
-                    </div>
+                                     relationshipDefinition="#{cc.attrs.relationshipDefinition}"/>
+
                 </div>
+
+                <div class="ui-g">
+
+                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+
+                        <p:commandButton
+                                style="width: auto; float: right"
+                                process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                                action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
+                                update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                                value="Agregar">
+                        </p:commandButton>
+
+                    </div>
+
+                </div>
+
             </div>
         </p:outputPanel>
 
@@ -223,8 +227,8 @@
             </p:ajax>
             <f:attribute name="relationshipDefinitionRowEdit" value="#{cc.attrs.relationshipDefinition}" />
 
-            <p:column headerText="ConceptID">
-                <h:outputText value="#{rel.target.conceptID}"/>
+            <p:column headerText="ID">
+                <h:outputText value="#{rel.target.id}"/>
             </p:column>
 
             <p:column headerText="Descripción">
@@ -244,146 +248,134 @@
                 </p:outputPanel>
             </p:columns>
 
-            <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
-                <p:commandButton icon="fa fa-trash" title="Eliminar"
-                                 action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
-                                 update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                 process="@this">
-                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
-                               icon="ui-icon-alert"/>
-                </p:commandButton>
+            <p:column headerText="Eliminar" rendered="#{cc.attrs.concept.editable}">
+                <div style="text-align: center">
+                    <p:commandButton icon="fa fa-trash" title="Eliminar"
+                                     action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
+                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                                     process="@this">
+                    </p:commandButton>
+                </div>
             </p:column>
         </p:dataTable>
 
-    </p:panel>
+    </p:fieldset>
 
     <p:panel id="multiplicityOne"
              styleClass="concept"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple}">
 
-            <p:outputPanel id="panel_autocomplete" style="width: 100%"
-                           rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+        <p:outputPanel id="panel_autocomplete" style="width: 100%"
+                       rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+
+            <div class="ui-fluid">
+
+                <div class="ui-g">
+
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+
+                        <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"  value="#{cc.attrs.relationshipDefinition.name} " for="findConceptSMTK"/>
+                        <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" value="#{cc.attrs.relationshipDefinition.name} *" for="findConceptSMTK"/>
+
+                    </div>
+
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
+
+                        <p:outputPanel styleClass="search">
+
+                            <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
+                                            placeholder="#{cc.attrs.relationshipDefinition.name}..."
+                                            forceSelection="true"
+                                            id="findConceptSMTK" scrollHeight="200" size="5"
+                                            completeMethod="#{smtkBean.getConceptSearchInput}"
+                                            converter="conceptConverter"
+                                            var="concept"
+                                            value="#{conceptBean.conceptSelected}"
+                                            itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
+                                            readonly="#{not cc.attrs.concept.editable}"
+                                            rendered="#{conceptBean.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size()==0}">
+
+                                <!-- Parámetros del validador -->
+                                <f:attribute name="concept" value="#{cc.attrs.concept}"  />
+                                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                                <!---->
+                                <p:column>
+                                    <h:outputText value="#{concept.descriptionFavorite.id}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                </p:column>
+
+                                <p:ajax update="@(.concept), @(.conceptHeader),:mainForm:editMsgs" event="itemSelect"
+                                        listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.conceptSelected)}"
+                                        process="@this"/>
+
+                                <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
+                            </p:autoComplete>
+                            <i class="fa fa-search fa-lg"  />
+                        </p:outputPanel>
+
+                    </div>
+                </div>
+            </div>
+
+        </p:outputPanel>
+
+        <p:outputPanel id="panel_input" style="width: 100%" rendered="#{not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+
+            <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                       var="relationship"
+                       varStatus="var">
 
                 <div class="ui-fluid">
 
-                    <div class="Container">
+                    <div class="ui-g">
 
-                        <div class="Container20 White Responsive">
-                            <div class="ContainerIndent">
+                        <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                                <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"  value="#{cc.attrs.relationshipDefinition.name} " for="findConceptSMTK"/>
-                                <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" value="#{cc.attrs.relationshipDefinition.name} *" for="findConceptSMTK"/>
+                            <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
+                                           value="#{cc.attrs.relationshipDefinition.name}: " for="itemSelected"/>
+                            <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}"
+                                           value="#{cc.attrs.relationshipDefinition.name} *" for="itemSelected"/>
 
-                            </div>
                         </div>
 
-                        <div class="Container30 White Responsive">
+                        <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                            <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                            <p:outputPanel styleClass="search">
+                                <p:inputText readonly="true" id="itemSelected" value="#{relationship.target.descriptionFavorite.term}" />
 
-                                <p:outputPanel styleClass="search">
+                                <p:commandLink process="@this"
+                                               update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                                               rendered="#{conceptBean.concept.hasRelationships(cc.attrs.relationshipDefinition)}"
+                                               action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                                    <i class="fa fa-close fa-lg"  />
+                                </p:commandLink>
+                            </p:outputPanel>
 
-                                    <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
-                                                    placeholder="#{cc.attrs.relationshipDefinition.name}..."
-                                                    forceSelection="true"
-                                                    id="findConceptSMTK" scrollHeight="200" size="5"
-                                                    completeMethod="#{smtkBean.getConceptSearchInput}"
-                                                    converter="conceptConverter"
-                                                    var="concept"
-                                                    value="#{conceptBean.conceptSelected}"
-                                                    itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
-                                                    disabled="#{not cc.attrs.concept.editable}"
-                                                    rendered="#{conceptBean.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size()==0}">
+                        </div>
 
-                                        <!-- Parámetros del validador -->
-                                        <f:attribute name="concept" value="#{cc.attrs.concept}"  />
-                                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                                        <!---->
-                                        <p:column>
-                                            <h:outputText value="#{concept.conceptID}"/>
-                                        </p:column>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-                                        <p:column>
-                                            <h:outputText value="#{concept.descriptionFavorite.term}"/>
-                                        </p:column>
+                            <h:outputText value="Concept ID"/>
 
-                                        <p:ajax update="@(.concept), @(.conceptHeader),:mainForm:editMsgs" event="itemSelect"
-                                                listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.conceptSelected)}"
-                                                process="@this"/>
+                        </div>
 
-                                        <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
-                                    </p:autoComplete>
-                                    <i class="fa fa-search fa-lg"  />
-                                </p:outputPanel>
+                        <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                            </div>
+                            <p:inputText value="#{relationship.target.conceptID}" readonly="true" />
+
                         </div>
                     </div>
                 </div>
 
-            </p:outputPanel>
+                <smtk:compositeAditional relationshipDefinition="#{cc.attrs.relationshipDefinition}" concept="#{relationship.target}" />
 
-            <p:outputPanel id="panel_input" style="width: 100%" rendered="#{not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+            </ui:repeat>
 
-                    <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                               var="relationship"
-                               varStatus="var">
+        </p:outputPanel>
 
-                        <div class="ui-fluid">
-
-                            <div class="Container">
-
-                                <div class="Container20 White Responsive">
-                                    <div class="ContainerIndent">
-
-                                        <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
-                                                       value="#{cc.attrs.relationshipDefinition.name}: " for="itemSelected"/>
-                                        <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}"
-                                                       value="#{cc.attrs.relationshipDefinition.name} *" for="itemSelected"/>
-                                    </div>
-                                </div>
-
-                                <div class="Container30 White Responsive">
-
-                                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-                                        <p:outputPanel styleClass="search">
-                                            <p:inputText disabled="true" id="itemSelected" value="#{relationship.target.descriptionFavorite.term}" />
-
-                                            <p:commandLink process="@this"
-                                                           update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                                           rendered="#{conceptBean.concept.hasRelationships(cc.attrs.relationshipDefinition)}"
-                                                           action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
-                                                <i class="fa fa-close fa-lg" />
-                                                <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?" icon="ui-icon-alert"/>
-                                            </p:commandLink>
-                                        </p:outputPanel>
-
-                                    </div>
-
-                                </div>
-
-                                <div class="Container20 Responsive">
-                                    <div class="ContainerIndent">
-                                        <h:outputText value="Concept ID"/>
-                                    </div>
-                                </div>
-
-                                <div class="Container30 White Responsive">
-
-                                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-                                        <p:inputText value="#{relationship.target.conceptID}" disabled="true" />
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <smtk:compositeAditional relationshipDefinition="#{cc.attrs.relationshipDefinition}" concept="#{relationship.target}" />
-
-                    </ui:repeat>
-
-            </p:outputPanel>
 
 
     </p:panel>

@@ -3,7 +3,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="/WEB-INF/template/template.xhtml">
+                template="/WEB-INF/template.xhtml">
 
     <ui:define name="header">
         <p:breadCrumb styleClass="breadUpdate">
@@ -18,156 +18,166 @@
             <f:viewParam name="idUser" value="#{users.idUser}" />
         </f:metadata>
 
-        <div class="Container100">
-            <div class="ContainerIndent">
-                <div class="Card ShadowEffect  ">
-                    <div class="Container100 ">
-                        <div class="ContainerIndent">
+        <div class="ui-g dashboard">
 
-                            <h:form id="mainForm">
+                <h:form id="mainForm">
 
-                                <p:growl id="globalMessage" showDetail="true" showSummary="true" life="10000" />
+                    <p:growl id="globalMessage" showDetail="true" showSummary="true" life="10000" />
 
+                    <p:growl showDetail="true" showSummary="true"/>
 
-                                <p:growl showDetail="true" showSummary="true"/>
-
-
-                                <div class="ui-fluid">
-
-                                <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
-
-                                    <p:panelGrid columns="2" styleClass="Wid100" rendered="#{users.selectedUser != null}">
-                                        <f:facet name="header">
-                                            Datos Personales
-                                        </f:facet>
-
-                                        <h:outputText value="Nombre" style="font-weight: bold"/>
-                                        <h:outputText value="#{users.selectedUser.name}"/>
-
-                                        <h:outputText value="Apellido Paterno" style="font-weight: bold"/>
-                                        <h:outputText value="#{users.selectedUser.lastName}"/>
-
-                                        <h:outputText value="Apellido Materno" style="font-weight: bold"/>
-                                        <h:outputText value="#{users.selectedUser.secondLastName}"/>
-
-                                        <h:outputText value="Tipo Documento" style="font-weight: bold"/>
-                                        <h:outputText value="#{users.selectedUser.documentRut?'Rut':'Pasaporte'}"/>
-
-                                        <h:outputText value="N° Documento" style="font-weight: bold"/>
-                                        <h:outputText value="#{users.selectedUser.documentNumber}"/>
-
-                                        <h:outputText value="Email" style="font-weight: bold"/>
-                                        <h:outputText value="#{users.selectedUser.email}" />
-
-                                    </p:panelGrid>
-
-                                    <p:dataTable id="profiles"
-                                                 var="profile"
-                                                 value="#{users.selectedUser.profiles}"
-                                                 emptyMessage="Usuario no tiene Perfiles asignados"
-                                                 reflow="true">
-                                        <p:columnGroup type="header">
-                                            <p:row>
-                                                <p:column colspan="2" headerText="Perfiles"/>
-                                            </p:row>
-                                        </p:columnGroup>
-                                        <p:column styleClass="BoldGray FontBold">
-                                            #{profile.name}
-                                        </p:column>
-                                        <p:column>
-                                            #{profile.description}
-                                        </p:column>
-                                    </p:dataTable>
-
-                                    <p:panelGrid columns="2" styleClass="Wid100" rendered="#{users.selectedUser != null}">
-                                        <f:facet name="header">
-                                            Datos De acceso
-                                        </f:facet>
-                                        <h:outputText value="Fecha Ultimo acceso" style="font-weight: bold"/>
-                                        <h:outputText value="#{users.selectedUser.lastLogin}">
-                                            <f:convertDateTime type="date" pattern="dd-MM-yyyy hh:mm"/>
-                                        </h:outputText>
-
-                                        <h:outputText value="Fecha Ultimo cambio de contraseña" style="font-weight: bold"/>
-                                        <h:outputText value="#{users.selectedUser.lastPasswordChange}">
-                                            <f:convertDateTime type="date" pattern="dd-MM-yyyy hh:mm"/>
-                                        </h:outputText>
-
-                                        <h:outputText value="Bloqueado" style="font-weight: bold"/>
-                                        <h:outputText value="#{users.selectedUser.locked?'Si':'No'}"/>
-
-                                    </p:panelGrid>
-
-                                    <p:dataTable id="institutions"
-                                                 var="institution"
-                                                 value="#{users.selectedUser.institutions}"
-                                                 emptyMessage="Usuario no tiene Establecimientos asignados"
-                                                 reflow="true">
-                                        <p:columnGroup type="header">
-                                            <p:row>
-                                                <p:column colspan="1" headerText="Establecimientos"/>
-                                            </p:row>
-                                        </p:columnGroup>
-                                        <p:column styleClass="BoldGray FontBold">
-                                            #{institution.name}
-                                        </p:column>
-                                    </p:dataTable>
-
-                                </p:panelGrid>
-
+                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+                        <div class="card card-w-title">
+                            <h1>Datos Personales</h1>
+                            <div class="ui-fluid ui-g">
+                                <div class="ui-g-6 ui-md-4 ui-lg-2">
+                                    <h:outputText value="Nombre"/>
                                 </div>
+                                <div class="ui-g-6 ui-md-8 ui-lg-4">
+                                    <h:outputText value="#{authenticationBean.loggedUser.name}"/>
+                                </div>
+                                <div class="ui-g-6 ui-md-4 ui-lg-2">
+                                    <h:outputText value="Apellido Paterno"/>
+                                </div>
+                                <div class="ui-g-6 ui-md-8 ui-lg-4">
+                                    <h:outputText value="#{authenticationBean.loggedUser.lastName}"/>
+                                </div>
+                                <div class="ui-g-6 ui-md-4 ui-lg-2">
+                                    <h:outputText value="Apellido Materno"/>
+                                </div>
+                                <div class="ui-g-6 ui-md-8 ui-lg-4">
+                                    <h:outputText value="#{authenticationBean.loggedUser.secondLastName}"/>
+                                </div>
+                                <div class="ui-g-6 ui-md-4 ui-lg-2">
+                                    <h:outputText value="Tipo Documento"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-8 ui-lg-4">
+                                    <h:outputText value="#{authenticationBean.loggedUser.documentRut?'Rut':'Pasaporte'}"/>
+                                </div>
+                                <div class="ui-g-6 ui-md-4 ui-lg-2">
+                                    <h:outputText value="N° Documento"/>
+                                </div>
+                                <div class="ui-g-6 ui-md-8 ui-lg-4">
+                                    <h:outputText value="#{authenticationBean.loggedUser.documentNumber}"/>
+                                </div>
+                                <div class="ui-g-6 ui-md-4 ui-lg-2">
+                                    <h:outputText value="Email"/>
+                                </div>
+                                <div class="ui-g-6 ui-md-8 ui-lg-4">
+                                    <h:outputText value="#{authenticationBean.loggedUser.email}" />
+                                </div>
+                            </div>
+                        </div>
 
-                                <div class="ui-g">
-                                    <div style="text-align: right">
-                                        <p:commandButton value="Cambiar Password" styleClass="ui-priority-primary" rendered="#{users.selectedUser != null and users.selectedUser.id != -1}"
-                                                         actionListener="#{users.clean}"
-                                                         oncomplete="PF('passwordChangeDialog').show()" update=":mainForm:pcdialog" process="@this" />
+                        <div class="card card-w-title">
+                            <h1>Perfiles</h1>
+                            <h:dataTable id="profiles"
+                                         var="profile"
+                                         style="width: 100%"
+                                         value="#{authenticationBean.loggedUser.profiles}"
+                                         emptyMessage="Usuario no tiene Perfiles asignados"
+                                         reflow="true">
+                                <h:column styleClass="BoldGray FontBold">
+                                    #{profile.name}
+                                </h:column>
+                                <h:column>
+                                    #{profile.description}
+                                </h:column>
+                            </h:dataTable>
+                        </div>
+
+                        <div class="card card-w-title">
+                            <h1>Establecimientos</h1>
+                            <h:dataTable id="institutions"
+                                         var="institution"
+                                         style="width: 100%"
+                                         value="#{authenticationBean.loggedUser.institutions}"
+                                         emptyMessage="Usuario no tiene establecimientos asignados"
+                                         reflow="true">
+                                <h:column styleClass="BoldGray FontBold">
+                                    #{institution.name}
+                                </h:column>
+                            </h:dataTable>
+                        </div>
+
+                        <p:outputPanel rendered="#{authenticationBean.loggedUser != null}">
+                            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                <div class="card card-w-title">
+                                    <h1>Datos De acceso</h1>
+                                    <div class="ui-fluid ui-g">
+                                        <div class="ui-g-6 ui-md-4 ui-lg-2">
+                                            <h:outputText value="Último acceso"/>
+                                        </div>
+                                        <div class="ui-g-6 ui-md-8 ui-lg-4">
+                                            <h:outputText value="#{authenticationBean.loggedUser.lastLogin}">
+                                                <f:convertDateTime type="date" pattern="dd-MM-yyyy hh:mm"/>
+                                            </h:outputText>
+                                        </div>
+                                        <div class="ui-g-6 ui-md-4 ui-lg-2">
+                                            <h:outputText value="Último cambio contraseña"/>
+                                        </div>
+                                        <div class="ui-g-6 ui-md-8 ui-lg-4">
+                                            <h:outputText value="#{authenticationBean.loggedUser.lastPasswordChange}">
+                                                <f:convertDateTime type="date" pattern="dd-MM-yyyy hh:mm"/>
+                                            </h:outputText>
+                                        </div>
+                                        <div class="ui-g-6 ui-md-4 ui-lg-2">
+                                            <h:outputText value="Bloqueado"/>
+                                        </div>
+                                        <div class="ui-g-6 ui-md-8 ui-lg-4">
+                                            <h:outputText value="#{authenticationBean.loggedUser.locked?'Si':'No'}"/>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                        </p:outputPanel>
 
-                                <p:dialog id="pcdialog" height="200" width="600" header="Cambiar Password" widgetVar="passwordChangeDialog" modal="false" showEffect="fade" hideEffect="fade"
-                                          resizable="true" visible="#{ not users.oldPasswordError.concat(users.passwordError.concat(users.password2Error)).trim().equals('') }"
-                                          responsive="true" >
-
-                                    <p:growl showDetail="true" showSummary="true"/>
-
-                                    <p:panelGrid id="passwordChangeGrid" columns="2" styleClass="Wid100" >
-                                        <f:facet name="header">
-                                            Cambiar Password
-                                        </f:facet>
-
-                                        <p:outputLabel for="input-user-pass-old" value="Password Actual:" style="font-weight: bold" styleClass="#{users.oldPasswordError}"/>
-                                        <p:password id="input-user-pass-old" value="#{users.oldPass}" styleClass="#{users.oldPasswordError} Wid90" autocomplete="off"
-                                                    redisplay="true">
-                                        </p:password>
-
-                                        <p:outputLabel for="input-user-new-pass-1" value="Nuevo Password:" style="font-weight: bold" styleClass="#{users.passwordError}"/>
-                                        <p:password id="input-user-new-pass-1" value="#{users.newPass1}" styleClass="#{users.passwordError} Wid90" autocomplete="off"
-                                                    redisplay="true">
-                                        </p:password>
-
-                                        <p:outputLabel for="input-user-new-pass-2" value="Confirme Password" style="font-weight: bold" styleClass="#{users.password2Error}"/>
-                                        <p:password id="input-user-new-pass-2" value="#{users.newPass2}" styleClass="#{users.password2Error} Wid90" autocomplete="off"
-                                                    redisplay="true">
-                                        </p:password>
-
-                                    </p:panelGrid>
-
-                                    <p:commandButton process="pcdialog" value="Cambiar Password"
-                                                     rendered="#{users.selectedUser != null}"
-                                                     update="mainForm"
-                                                     action="#{users.changePass}">
-                                        <p:resetInput target="passwordChangeGrid" />
-                                    </p:commandButton>
-
-                                </p:dialog>
-
-                            </h:form>
+                        <div style="text-align: right">
+                            <p:commandButton value="Cambiar Password" styleClass="ui-priority-primary" rendered="#{authenticationBean.loggedUser != null and authenticationBean.loggedUser.id != -1}"
+                                             actionListener="#{users.clean}" style="width: auto;float: right"
+                                             oncomplete="PF('passwordChangeDialog').show()" update=":mainForm:pcdialog" process="@this" />
                         </div>
+
                     </div>
-                </div>
+
+                    <p:dialog id="pcdialog" height="200" width="600" header="Cambiar Password" widgetVar="passwordChangeDialog" modal="false" showEffect="fade" hideEffect="fade"
+                              resizable="true" visible="#{ not users.oldPasswordError.concat(users.passwordError.concat(users.password2Error)).trim().equals('') }"
+                              responsive="true" >
+
+                        <p:growl showDetail="true" showSummary="true"/>
+
+                        <p:panelGrid id="passwordChangeGrid" columns="2" columnClasses="label, value" styleClass="ui-panelgrid-blank" style="width: 100%">
+
+                            <p:outputLabel for="input-user-pass-old" value="Password Actual" styleClass="#{users.oldPasswordError}"/>
+                            <p:password id="input-user-pass-old" value="#{users.oldPass}" styleClass="#{users.oldPasswordError} Wid90" autocomplete="off"
+                                        redisplay="true">
+                            </p:password>
+
+                            <p:outputLabel for="input-user-new-pass-1" value="Nuevo Password" styleClass="#{users.passwordError}"/>
+                            <p:password id="input-user-new-pass-1" value="#{users.newPass1}" styleClass="#{users.passwordError} Wid90" autocomplete="off"
+                                        redisplay="true">
+                            </p:password>
+
+                            <p:outputLabel for="input-user-new-pass-2" value="Confirme Password" styleClass="#{users.password2Error}"/>
+                            <p:password id="input-user-new-pass-2" value="#{users.newPass2}" styleClass="#{users.password2Error} Wid90" autocomplete="off"
+                                        redisplay="true">
+                            </p:password>
+
+                        </p:panelGrid>
+
+                        <p:commandButton process="pcdialog" value="Cambiar Password"
+                                         rendered="#{users.selectedUser != null}"
+                                         update="mainForm" style="width: auto; float: right"
+                                         action="#{users.changePass}">
+                            <p:resetInput target="passwordChangeGrid" />
+                        </p:commandButton>
+
+                    </p:dialog>
+
+                </h:form>
+
             </div>
-        </div>
+
 
     </ui:define>
 

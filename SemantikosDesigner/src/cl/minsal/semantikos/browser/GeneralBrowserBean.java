@@ -82,6 +82,9 @@ public class GeneralBrowserBean implements Serializable {
     private boolean isFilterChanged;
 
 
+    private boolean showSettings;
+
+
     // Placeholders para los targets de los filtros, dados como elementos seleccionables
     private BasicTypeValue basicTypeValue = new BasicTypeValue(null);
 
@@ -419,6 +422,14 @@ public class GeneralBrowserBean implements Serializable {
 
     public void setFilterChanged(boolean filterChanged) {
         isFilterChanged = filterChanged;
+    }
+
+    public boolean isShowSettings() {
+        return showSettings;
+    }
+
+    public void setShowSettings(boolean showSettings) {
+        this.showSettings = showSettings;
     }
 
 }

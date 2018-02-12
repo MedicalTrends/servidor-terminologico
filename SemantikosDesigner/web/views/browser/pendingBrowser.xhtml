@@ -5,14 +5,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
-                template="/WEB-INF/template/template.xhtml">
+                template="/WEB-INF/template.xhtml">
 
-    <ui:define name="header">
-        <p:breadCrumb id="navigation">
-            <p:menuitem value="Inicio" url="/views/home.xhtml" />
-            <p:menuitem value="Pendientes" url="#" />
-        </p:breadCrumb>
-    </ui:define>
 
     <ui:define name="content">
 
@@ -20,369 +14,416 @@
             <f:event type="preRenderView" listener="#{pendingBrowserBean.executeQuery}" />
         </f:metadata>
 
-        <div class="Container100">
+            <div class="ui-g dashboard">
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-            <div class="ContainerIndent">
-                <div class="Card ShadowEffect  ">
-                    <div class="Container100">
-                        <div class="ContainerIndent">
+                    <h:form id="browserForm">
 
-                            <h:form id="browserForm">
+                        <p:breadCrumb id="navigation">
+                            <p:menuitem value="Inicio" url="/views/home.xhtml" />
+                            <p:menuitem value="Pendientes" url="#" />
+                        </p:breadCrumb>
 
-                                <p:dataTable id="pendingTable"
-                                             styleClass="browserTable"
-                                             value="#{pendingBrowserBean.pendingTerms}"
-                                             var="pendingTerm"
-                                             rows="30"
-                                             sortBy="#{1}"
-                                             paginator="true" lazy="true" dynamic="true"
-                                             paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                             emptyMessage="No se han encontrado términos pendientes con los criterios utilizados"
-                                             selection="#{pendingBrowserBean.termsSelected}">
+                        <p:panel id="filters" styleClass="filtros">
 
-                                    <p:growl id="growl" showDetail="true" showSummary="true"/>
+                            <div class="ui-fluid">
 
-                                    <p:ajax event="rowSelect" update="@(.globalActions)" />
-                                    <p:ajax event="rowUnselect" update="@(.globalActions)" />
-                                    <p:ajax event="rowSelectCheckbox" update="@(.globalActions)" />
-                                    <p:ajax event="rowUnselectCheckbox" update="@(.globalActions)" />
-                                    <p:ajax event="toggleSelect" update="@(.globalActions)" />
+                                <div class="ui-g">
 
-                                    <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+                                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                                    <p:column headerText="Categoría" sortBy="#{1}" >
-                                        <h:outputText value="#{pendingTerm.category.name}"/>
-                                    </p:column>
+                                        <p:outputLabel value="Patrón" />
 
-                                    <p:column headerText="Término" sortBy="#{2}">
-                                        <h:outputText value="#{pendingTerm.term}"/>
-                                    </p:column>
+                                    </div>
 
-                                    <p:column headerText="DESCID" style="width: 10%" sortBy="#{3}">
-                                        <h:outputText value="#{pendingTerm.relatedDescription.descriptionId}"/>
-                                    </p:column>
+                                    <div class="ui-g-12 ui-md-8 ui-lg-10">
 
-                                    <p:column headerText="Usos" style="width: 10%" sortBy="#{4}">
-                                        <h:outputText value="#{pendingTerm.relatedDescription.uses}"/>
-                                    </p:column>
-
-                                    <p:column headerText="Lugar" sortBy="#{5}">
-                                        <h:outputText value="#{pendingTerm.placeOrigin}"/>
-                                    </p:column>
-
-                                    <p:column headerText="Observación">
-                                        <h:outputText value="#{pendingTerm.observation}"/>
-                                    </p:column>
-
-                                    <p:column style="width: 10%">
-                                        <f:facet name="header">
-                                            <p:outputPanel styleClass="globalActions">
-                                                <p:outputPanel rendered="#{not empty pendingBrowserBean.termsSelected}">
-                                                    <p:commandLink title="Trasladar seleccionados a concepto" update="@(.browserTable),@(.pending-description)" oncomplete="PF('dialogTDP').show()" style="padding: 5px">
-                                                        <i class="fa fa-external-link fa-lg"/>
-                                                    </p:commandLink>
-                                                    <p:commandLink oncomplete="PF('dialogNC').show()" update="@(.browserTable),@(.create-concept)" title="Crear nuevo concepto" style="padding: 5px">
-                                                        <i class="fa fa-plus fa-lg"/>
-                                                    </p:commandLink>
-                                                </p:outputPanel>
-                                                <p:outputPanel rendered="#{ empty pendingBrowserBean.termsSelected}">
-                                                    <h:outputText value="Acciones" />
-                                                </p:outputPanel>
-                                            </p:outputPanel>
-                                        </f:facet>
-                                        <div style="text-align: center;">
-                                            <p:commandLink title="Trasladar a concepto" oncomplete="PF('dialogTDP').show()"
-                                                           update="@(.browserTable),@(.pending-description)" style="padding: 5px" rendered="#{profilePermissionsBeans.modeler}">
-                                                <i class="fa fa-external-link fa-lg"/>
-                                                <f:setPropertyActionListener value="#{pendingTerm}" target="#{pendingBrowserBean.termSelected}"/>
-                                                <f:setPropertyActionListener value="" target="#{pendingBrowserBean.conceptSelected}"/>
-                                                <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
-                                            </p:commandLink>
-
-                                            <p:commandLink oncomplete="PF('dialogNC').show()" title="Crear nuevo concepto" process="@this"
-                                                           update="@(.browserTable),@(.create-concept)" style="padding: 5px" rendered="#{profilePermissionsBeans.modeler}">
-                                                <i class="fa fa-plus fa-lg"/>
-                                                <f:setPropertyActionListener value="#{pendingTerm}" target="#{pendingBrowserBean.termSelected}"/>
-                                                <f:setPropertyActionListener value="#{pendingTerm.category}" target="#{pendingBrowserBean.categorySelected}" />
-                                            </p:commandLink>
-
-                                            <p:commandLink title="Consultar" oncomplete="PF('dialogC').show()" process="@this"
-                                                           update="@(.browserTable),@(.query-pending-description)" style="padding: 5px">
-                                                <i class="fa fa-search fa-lg"/>
-                                                <f:setPropertyActionListener value="#{pendingTerm}"
-                                                                             target="#{pendingBrowserBean.termSelected}"/>
-                                            </p:commandLink>
-                                        </div>
-                                    </p:column>
-                                </p:dataTable>
-
-                                <!-- Trasladar descripciones a conceptos -->
-                                <p:dialog id="dialogTDP" header="Trasladar descripción" widgetVar="dialogTDP" global="true" width="900px" height="350px"
-                                          showEffect="fade" hideEffect="fade">
-                                    <p:panel styleClass="pending-description">
-                                        <p:growl id="msgs" showDetail="true"/>
-
-                                        <p:ajax event="close" update="@(.pending-description)" />
-
-                                        <p:outputPanel rendered="#{pendingBrowserBean.termSelected != null and empty pendingBrowserBean.termsSelected}">
-
-                                            <h3>Descripción a trasladar</h3>
-                                            <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
-
-                                                <p:outputLabel id="transLabel" for="descidTrans" value="DESCID"/>
-                                                <h:outputText id="descidTrans"
-                                                              value="#{pendingBrowserBean.termSelected.relatedDescription.descriptionId}"/>
-
-                                                <p:outputLabel id="transLabelTerm" for="descidTransTerm" value="Termino"/>
-                                                <h:outputText id="descidTransTerm"
-                                                              value="#{pendingBrowserBean.termSelected.relatedDescription.term}"/>
-
-                                            </h:panelGrid>
-
-                                        </p:outputPanel>
-
-                                        <p:outputPanel rendered="#{ not empty pendingBrowserBean.termsSelected }">
-
-                                            <h3>Descripciones a trasladar</h3>
-                                            <p:dataTable value="#{pendingBrowserBean.termsSelected}" scrollable="true" scrollHeight="150" var="pendingTerm" style="width: 500px">
-                                                <p:column headerText="DESCID: ">
-                                                    <h:outputText value="#{pendingTerm.relatedDescription.descriptionId}"/>
-                                                </p:column>
-                                                <p:column headerText="Término: ">
-                                                    <h:outputText value="#{pendingTerm.relatedDescription.term}"/>
-                                                </p:column>
-                                            </p:dataTable>
-
-                                        </p:outputPanel>
-
-                                        <h3>Concepto Destino</h3>
-
-                                        <div class="ui-fluid">
-
-                                            <p:panelGrid columns="3"  style="width: 100%" styleClass="ui-panelgrid-blank"
-                                                         columnClasses="ui-grid-col-3,ui-grid-col-6,ui-grid-col-3" >
-
-                                                <p:autoComplete id="inputFindConcept" scrollHeight="200" size="5"
-                                                                style="width: 300px;margin: 10px;"
-                                                                inputStyle="width: 300px;margin: 10px;"
-                                                                converter="conceptConverter" var="concept"
-                                                                value="#{pendingBrowserBean.conceptSelected}"
-                                                                completeMethod="#{findConceptBean.getConceptSearchInputAndCategories}"
-                                                                itemLabel="#{concept.descriptionFavorite.term}"
-                                                                itemValue="#{concept}"
-                                                                emptyMessage="No se encontraron conceptos relacionados"
-                                                                placeholder="Buscar concepto por término"
-                                                                disabled="#{conceptBean.conceptSMTKTranslateDes!=null}">
-                                                    <p:ajax event="itemSelect" update="@(.pending-description)" />
-
-                                                </p:autoComplete>
-
-                                                <p:selectOneMenu  value="#{findConceptBean.categorySelected}"
-                                                                  converter="omnifaces.SelectItemsConverter" panelStyle="width:180px"
-                                                                  effect="fade" var="c" style="width:160px" filter="true"
-                                                                  filterMatchMode="startsWith"
-                                                                  disabled="#{pendingBrowserBean.conceptSelected!=null}">
-                                                    <p:ajax event="itemSelect" />
-                                                    <f:selectItem itemLabel="Seleccione una categoría" itemDisabled="true"/>
-                                                    <f:selectItems value="#{findConceptBean.categoryList}" var="category"
-                                                                   itemLabel="#{category.name}" itemValue="#{category}"/>
-                                                    <p:column>
-                                                        <h:outputText value="#{c.name}"/>
-                                                    </p:column>
-                                                </p:selectOneMenu>
-
-                                                <p:commandButton value="Limpiar selección" update="@(.pending-description)">
-                                                    <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
-                                                    <f:setPropertyActionListener value="" target="#{pendingBrowserBean.conceptSelected}"/>
-                                                </p:commandButton>
-
-                                            </p:panelGrid>
-                                        </div>
-
-                                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="6">
-
-                                            <p:outputLabel id="transLabelCID" for="descidTransCID" value="Concept ID"/>
-                                            <h:outputText id="descidTransCID"
-                                                          value="#{pendingBrowserBean.conceptSelected.conceptID}"/>
-
-
-                                            <p:outputLabel id="transLabelCDES" for="descidTransCDES" value="Descripción"/>
-                                            <h:outputText id="descidTransCDES"
-                                                          value="#{pendingBrowserBean.conceptSelected.descriptionFavorite.term}"/>
-
-                                            <p:outputLabel id="transLabelCC" for="descidTransCC" value="Categoría"/>
-                                            <h:outputText id="descidTransCC"
-                                                          value="#{pendingBrowserBean.conceptSelected.category.name}"/>
-
-                                        </h:panelGrid>
-                                        <div style="text-align: center">
-                                            <p:commandButton rendered="#{pendingBrowserBean.conceptSelected!=null}"
-                                                             update="@(.pending-description),@(.browserTable)"
-                                                             value="Trasladar Concepto"
-                                                             oncomplete="PF('dialogTDP').hide()"
-                                                             icon="fa fa-exchange"
-                                                             actionListener="#{pendingBrowserBean.translateDescription}">
-                                                <f:setPropertyActionListener value=""
-                                                                             target="#{pendingBrowserBean.conceptSelected}"/>
-                                                <p:confirm header="Confirmar Acción" message="¿Está seguro de Trasladar Término(s) Pendiente(s) a un concepto modelado?" icon="ui-icon-alert"/>
-                                            </p:commandButton>
-                                        </div>
-
-                                    </p:panel>
-                                </p:dialog>
-
-                                <!-- Consulta término pendiente -->
-                                <p:dialog id="dialogC" header="Consulta termino pendiente" widgetVar="dialogC" global="true"
-                                          showEffect="fade" hideEffect="fade">
-                                    <p:panel styleClass="query-pending-description">
-
-                                        <h:panelGrid columns="4" columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
-                                                     layout="grid" styleClass="ui-panelgrid-blank" width="100%">
-
-                                            <p:outputLabel id="termLabel" for="term" value="Término"/>
-                                            <p:inputText id="term" value="#{pendingBrowserBean.termSelected.term}" disabled="true"/>
-
-                                            <p:outputLabel id="dateLabel" for="date" value="Fecha"/>
-                                            <p:calendar id="date" value="#{pendingBrowserBean.termSelected.date}" disabled="true"/>
-
-                                            <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categoría propuesta"/>
-                                            <p:inputText id="categoryMenu" value="#{pendingBrowserBean.termSelected.category.name}"
-                                                         disabled="true">
+                                        <p:outputPanel styleClass="search">
+                                            <p:inputText value="#{pendingBrowserBean.pendingQuery.query}" placeholder="Buscar..." onkeyup="return (this.value.length >= 3 || this.value.length ==0)">
+                                                <p:ajax event="keyup" delay="500" update="@(.browserTable)" listener="#{pendingBrowserBean.setFilterChanged(true)}" process="@this" />
                                             </p:inputText>
-
-                                            <p:outputLabel id="nameProfessionLabel" for="nameProfessional" value="Nombre del Profesional"/>
-                                            <p:inputText type="text" id="nameProfessional"
-                                                         value="#{pendingBrowserBean.termSelected.nameProfessional}" disabled="true"/>
-
-                                            <p:outputLabel id="professionLabel" for="profession" value="Profesión"/>
-                                            <p:inputText type="text" id="profession"
-                                                         value="#{pendingBrowserBean.termSelected.profession}"
-                                                         disabled="true"/>
-
-                                            <p:outputLabel id="specialityLabel" for="speciality" value="Especialidad"/>
-                                            <p:inputText type="text" id="speciality"
-                                                         value="#{pendingBrowserBean.termSelected.speciality}"
-                                                         placeholder="Escriba su especialidad" disabled="true"/>
-
-                                            <p:outputLabel id="subspecialityLabel" for="subSpeciality" value="Sub-especialidad"/>
-                                            <p:inputText type="text" id="subSpeciality"
-                                                         value="#{pendingBrowserBean.termSelected.subSpeciality}" disabled="true"/>
-
-                                            <p:outputLabel id="mailLabel" for="mail" value="Mail"/>
-                                            <p:inputText type="mail" id="mail" value="#{pendingBrowserBean.termSelected.mail}"
-                                                         disabled="true"/>
-
-                                            <p:outputLabel id="placeLabel" for="place" value="Lugar de origen"/>
-                                            <p:inputText type="text" id="place"
-                                                         value="#{pendingBrowserBean.termSelected.placeOrigin}" disabled="true"/>
-
-                                            <p:outputLabel id="userLabel" for="uses" value="Usos"/>
-                                            <p:inputText type="text" id="uses"
-                                                         value="#{pendingBrowserBean.termSelected.relatedDescription.uses}" disabled="true"/>
-
-                                            <p:outputLabel id="sensibilityLabel" for="sensibility" value="Sensibilidad"
-                                                           rendered="#{pendingBrowserBean.termSelected.relatedDescription.caseSensitive}"/>
-                                            <p:inputText type="text" id="sensibility" value="Si"
-                                                         disabled="true" rendered="#{pendingBrowserBean.termSelected.relatedDescription.caseSensitive}"/>
-
-                                            <p:outputLabel id="noSensibilityLabel" for="noSensibility" value="Sensibilidad"
-                                                           rendered="#{not pendingBrowserBean.termSelected.relatedDescription.caseSensitive}"/>
-                                            <p:inputText type="text" id="noSensibility" value="No"
-                                                         disabled="true" rendered="#{not pendingBrowserBean.termSelected.relatedDescription.caseSensitive}"/>
-
-                                            <p:outputLabel id="observationLabel" for="observation" value="Observación"/>
-                                            <p:inputTextarea type="text" id="observation"
-                                                             value="#{pendingBrowserBean.termSelected.observation}" disabled="true"/>
-                                        </h:panelGrid>
-
-                                    </p:panel>
-                                </p:dialog>
-
-                                <!-- Crear nuevo concepto -->
-                                <p:dialog id="dialogNC" header="Crear Concepto" widgetVar="dialogNC" global="true"
-                                          showEffect="fade" hideEffect="fade">
-
-                                    <p:growl id="msgs2" showDetail="true"/>
-
-                                    <p:panel styleClass="create-concept">
-
-                                        <p:outputPanel rendered="#{pendingBrowserBean.termSelected != null and empty pendingBrowserBean.termsSelected}">
-
-                                            <h3>Descripcion a trasladar</h3>
-                                            <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
-
-                                                <p:outputLabel for="descidTrans2" value="DESCID"/>
-                                                <h:outputText id="descidTrans2"
-                                                              value="#{pendingBrowserBean.termSelected.relatedDescription.descriptionId}"/>
-
-                                                <p:outputLabel for="descidTransTerm2" value="Termino"/>
-                                                <h:outputText id="descidTransTerm2"
-                                                              value="#{pendingBrowserBean.termSelected.relatedDescription.term}"/>
-
-                                            </h:panelGrid>
-
+                                            <i class="fa fa-search fa-lg" />
                                         </p:outputPanel>
 
-                                        <p:outputPanel rendered="#{ not empty pendingBrowserBean.termsSelected }">
+                                    </div>
 
-                                            <h3>Descripciones a trasladar</h3>
-                                            <p:dataTable value="#{pendingBrowserBean.termsSelected}" scrollable="true" scrollHeight="150" var="pendingTerm" style="width: 500px">
-                                                <p:column headerText="DESCID">
-                                                    <h:outputText value="#{pendingTerm.relatedDescription.descriptionId}"/>
-                                                </p:column>
-                                                <p:column headerText="Termino">
-                                                    <h:outputText value="#{pendingTerm.relatedDescription.term}"/>
-                                                </p:column>
-                                            </p:dataTable>
+                                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
+                                        <p:outputLabel value="Categorías" />
+
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-8 ui-lg-4">
+
+                                        <p:selectCheckboxMenu id="categories"
+                                                              value="#{pendingBrowserBean.pendingQuery.categories}"
+                                                              converter="omnifaces.SelectItemsConverter"
+                                                              label="Seleccione..."
+                                                              filter="true"
+                                                              filterMatchMode="startsWith">
+
+                                            <p:ajax event="change" listener="#{pendingBrowserBean.setFilterChanged(true)}"
+                                                    update="@(.browserTable),@(.filterStatus)"
+                                                    process="@this" />
+
+                                            <f:selectItems value="#{pendingBrowserBean.categories}" var="category"
+                                                           itemLabel="#{category.name}" itemValue="#{category}"/>
+
+                                        </p:selectCheckboxMenu>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </p:panel>
+
+                        <p:dataTable id="pendingTable"
+                                     styleClass="browserTable"
+                                     value="#{pendingBrowserBean.pendingTerms}"
+                                     var="pendingTerm"
+                                     rows="30"
+                                     sortBy="#{1}"
+                                     paginator="true" lazy="true" dynamic="true"
+                                     paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     emptyMessage="No se han encontrado términos pendientes con los criterios utilizados"
+                                     selection="#{pendingBrowserBean.termsSelected}">
+
+                            <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+                            <p:ajax event="rowSelect" update="@(.globalActions)" />
+                            <p:ajax event="rowUnselect" update="@(.globalActions)" />
+                            <p:ajax event="rowSelectCheckbox" update="@(.globalActions)" />
+                            <p:ajax event="rowUnselectCheckbox" update="@(.globalActions)" />
+                            <p:ajax event="toggleSelect" update="@(.globalActions)" />
+
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+
+                            <p:column headerText="Categoría" sortBy="#{1}" >
+                                <h:outputText value="#{pendingTerm.category.name}"/>
+                            </p:column>
+
+                            <p:column headerText="Término" sortBy="#{2}">
+                                <h:outputText value="#{pendingTerm.term}"/>
+                            </p:column>
+
+                            <p:column headerText="DESCID" style="width: 10%" sortBy="#{3}">
+                                <h:outputText value="#{pendingTerm.relatedDescription.descriptionId}"/>
+                            </p:column>
+
+                            <p:column headerText="Usos" style="width: 10%" sortBy="#{4}">
+                                <h:outputText value="#{pendingTerm.relatedDescription.uses}"/>
+                            </p:column>
+
+                            <p:column headerText="Lugar" sortBy="#{5}">
+                                <h:outputText value="#{pendingTerm.placeOrigin}"/>
+                            </p:column>
+
+                            <p:column headerText="Observación">
+                                <h:outputText value="#{pendingTerm.observation}"/>
+                            </p:column>
+
+                            <p:column style="width: 10%">
+                                <f:facet name="header">
+                                    <p:outputPanel styleClass="globalActions">
+                                        <p:outputPanel rendered="#{not empty pendingBrowserBean.termsSelected}">
+                                            <p:commandLink title="Trasladar seleccionados a concepto" update="@(.browserTable),@(.pending-description)" oncomplete="PF('dialogTDP').show()" style="padding: 5px">
+                                                <i class="fa fa-external-link fa-lg"/>
+                                            </p:commandLink>
+                                            <p:commandLink oncomplete="PF('dialogNC').show()" update="@(.browserTable),@(.create-concept)" title="Crear nuevo concepto" style="padding: 5px">
+                                                <i class="fa fa-plus fa-lg"/>
+                                            </p:commandLink>
                                         </p:outputPanel>
+                                        <p:outputPanel rendered="#{ empty pendingBrowserBean.termsSelected}">
+                                            <h:outputText value="Acciones" />
+                                        </p:outputPanel>
+                                    </p:outputPanel>
+                                </f:facet>
+                                <div style="text-align: center;">
+                                    <p:commandLink title="Trasladar a concepto" oncomplete="PF('dialogTDP').show()"
+                                                   update="@(.browserTable),@(.pending-description)" style="padding: 5px" rendered="#{profilePermissionsBeans.modeler}">
+                                        <i class="fa fa-external-link fa-lg"/>
+                                        <f:setPropertyActionListener value="#{pendingTerm}" target="#{pendingBrowserBean.termSelected}"/>
+                                        <f:setPropertyActionListener value="" target="#{pendingBrowserBean.conceptSelected}"/>
+                                        <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
+                                    </p:commandLink>
 
-                                        <div class="ui-fluid">
-                                            <h3>Categoría Destino</h3>
-                                            <h:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" width="100%">
+                                    <p:commandLink oncomplete="PF('dialogNC').show()" title="Crear nuevo concepto" process="@this"
+                                                   update="@(.browserTable),@(.create-concept)" style="padding: 5px" rendered="#{profilePermissionsBeans.modeler}">
+                                        <i class="fa fa-plus fa-lg"/>
+                                        <f:setPropertyActionListener value="#{pendingTerm}" target="#{pendingBrowserBean.termSelected}"/>
+                                        <f:setPropertyActionListener value="#{pendingTerm.category}" target="#{pendingBrowserBean.categorySelected}" />
+                                    </p:commandLink>
 
-                                                <p:selectOneMenu id="parentTag" value="#{pendingBrowserBean.categorySelected}"
-                                                                 converter="omnifaces.SelectItemsConverter" style="min-width: 223px"
-                                                                 effect="fade" var="c" filter="true"
-                                                                 filterMatchMode="startsWith" >
-                                                    <p:ajax/>
-                                                    <f:selectItem itemLabel="Seleccione una categoría" itemDisabled="true"/>
-                                                    <f:selectItems value="#{pendingBrowserBean.categories}" var="category"
-                                                                   itemLabel="#{category.name}" itemValue="#{category}"/>
-                                                    <p:column>
-                                                        <h:outputText value="#{c.name}"/>
-                                                    </p:column>
-                                                </p:selectOneMenu>
+                                    <p:commandLink title="Consultar" oncomplete="PF('dialogC').show()" process="@this"
+                                                   update="@(.browserTable),@(.query-pending-description)" style="padding: 5px">
+                                        <i class="fa fa-search fa-lg"/>
+                                        <f:setPropertyActionListener value="#{pendingTerm}"
+                                                                     target="#{pendingBrowserBean.termSelected}"/>
+                                    </p:commandLink>
+                                </div>
+                            </p:column>
+                        </p:dataTable>
 
-                                            </h:panelGrid>
-                                        </div>
-                                        <p:commandButton value="Crear concepto" actionListener="#{pendingBrowserBean.createNewConcept}"
-                                                         update="@(.create-concept),@(.browserTable)" />
+                        <!-- Trasladar descripciones a conceptos -->
+                        <p:dialog id="dialogTDP" header="Trasladar descripción" widgetVar="dialogTDP" global="true" width="900px" height="350px"
+                                  showEffect="fade" hideEffect="fade">
+                            <p:panel styleClass="pending-description">
+                                <p:growl id="msgs" showDetail="true"/>
 
-                                    </p:panel>
-                                </p:dialog>
+                                <p:ajax event="close" update="@(.pending-description)" />
 
-                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
-                                                     icon="ui-icon-check"/>
-                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
-                                                     icon="ui-icon-close"/>
-                                </p:confirmDialog>
+                                <p:outputPanel rendered="#{pendingBrowserBean.termSelected != null and empty pendingBrowserBean.termsSelected}">
 
-                            </h:form>
-                        </div>
-                    </div>
+                                    <h3>Descripción a trasladar</h3>
+                                    <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
+
+                                        <p:outputLabel id="transLabel" for="descidTrans" value="DESCID"/>
+                                        <h:outputText id="descidTrans"
+                                                      value="#{pendingBrowserBean.termSelected.relatedDescription.descriptionId}"/>
+
+                                        <p:outputLabel id="transLabelTerm" for="descidTransTerm" value="Termino"/>
+                                        <h:outputText id="descidTransTerm"
+                                                      value="#{pendingBrowserBean.termSelected.relatedDescription.term}"/>
+
+                                    </h:panelGrid>
+
+                                </p:outputPanel>
+
+                                <p:outputPanel rendered="#{ not empty pendingBrowserBean.termsSelected }">
+
+                                    <h3>Descripciones a trasladar</h3>
+                                    <p:dataTable value="#{pendingBrowserBean.termsSelected}" scrollable="true" scrollHeight="150" var="pendingTerm" style="width: 500px">
+                                        <p:column headerText="DESCID: ">
+                                            <h:outputText value="#{pendingTerm.relatedDescription.descriptionId}"/>
+                                        </p:column>
+                                        <p:column headerText="Término: ">
+                                            <h:outputText value="#{pendingTerm.relatedDescription.term}"/>
+                                        </p:column>
+                                    </p:dataTable>
+
+                                </p:outputPanel>
+
+                                <h3>Concepto Destino</h3>
+
+                                <div class="ui-fluid">
+
+                                    <p:panelGrid columns="3"  style="width: 100%" styleClass="ui-panelgrid-blank"
+                                                 columnClasses="ui-grid-col-3,ui-grid-col-6,ui-grid-col-3" >
+
+                                        <p:autoComplete id="inputFindConcept" scrollHeight="200" size="5"
+                                                        style="width: 300px;margin: 10px;"
+                                                        inputStyle="width: 300px;margin: 10px;"
+                                                        converter="conceptConverter" var="concept"
+                                                        value="#{pendingBrowserBean.conceptSelected}"
+                                                        completeMethod="#{findConceptBean.getConceptSearchInputAndCategories}"
+                                                        itemLabel="#{concept.descriptionFavorite.term}"
+                                                        itemValue="#{concept}"
+                                                        emptyMessage="No se encontraron conceptos relacionados"
+                                                        placeholder="Buscar concepto por término"
+                                                        disabled="#{conceptBean.conceptSMTKTranslateDes!=null}">
+                                            <p:ajax event="itemSelect" update="@(.pending-description)" />
+
+                                        </p:autoComplete>
+
+                                        <p:selectOneMenu  value="#{findConceptBean.categorySelected}"
+                                                          converter="omnifaces.SelectItemsConverter" panelStyle="width:180px"
+                                                          effect="fade" var="c" style="width:160px" filter="true"
+                                                          filterMatchMode="startsWith"
+                                                          disabled="#{pendingBrowserBean.conceptSelected!=null}">
+                                            <p:ajax event="itemSelect" />
+                                            <f:selectItem itemLabel="Seleccione una categoría" itemDisabled="true"/>
+                                            <f:selectItems value="#{findConceptBean.categoryList}" var="category"
+                                                           itemLabel="#{category.name}" itemValue="#{category}"/>
+                                            <p:column>
+                                                <h:outputText value="#{c.name}"/>
+                                            </p:column>
+                                        </p:selectOneMenu>
+
+                                        <p:commandButton value="Limpiar selección" update="@(.pending-description)">
+                                            <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
+                                            <f:setPropertyActionListener value="" target="#{pendingBrowserBean.conceptSelected}"/>
+                                        </p:commandButton>
+
+                                    </p:panelGrid>
+                                </div>
+
+                                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="6">
+
+                                    <p:outputLabel id="transLabelCID" for="descidTransCID" value="Concept ID"/>
+                                    <h:outputText id="descidTransCID"
+                                                  value="#{pendingBrowserBean.conceptSelected.conceptID}"/>
+
+
+                                    <p:outputLabel id="transLabelCDES" for="descidTransCDES" value="Descripción"/>
+                                    <h:outputText id="descidTransCDES"
+                                                  value="#{pendingBrowserBean.conceptSelected.descriptionFavorite.term}"/>
+
+                                    <p:outputLabel id="transLabelCC" for="descidTransCC" value="Categoría"/>
+                                    <h:outputText id="descidTransCC"
+                                                  value="#{pendingBrowserBean.conceptSelected.category.name}"/>
+
+                                </h:panelGrid>
+                                <div style="text-align: center">
+                                    <p:commandButton rendered="#{pendingBrowserBean.conceptSelected!=null}"
+                                                     update="@(.pending-description),@(.browserTable)"
+                                                     value="Trasladar Concepto"
+                                                     oncomplete="PF('dialogTDP').hide()"
+                                                     icon="fa fa-exchange"
+                                                     actionListener="#{pendingBrowserBean.translateDescription}">
+                                        <f:setPropertyActionListener value=""
+                                                                     target="#{pendingBrowserBean.conceptSelected}"/>
+                                        <p:confirm header="Confirmar Acción" message="¿Está seguro de Trasladar Término(s) Pendiente(s) a un concepto modelado?" icon="ui-icon-alert"/>
+                                    </p:commandButton>
+                                </div>
+
+                            </p:panel>
+                        </p:dialog>
+
+                        <!-- Consulta término pendiente -->
+                        <p:dialog id="dialogC" header="Consulta termino pendiente" widgetVar="dialogC" global="true"
+                                  showEffect="fade" hideEffect="fade">
+                            <p:panel styleClass="query-pending-description">
+
+                                <h:panelGrid columns="4" columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
+                                             layout="grid" styleClass="ui-panelgrid-blank" width="100%">
+
+                                    <p:outputLabel id="termLabel" for="term" value="Término"/>
+                                    <p:inputText id="term" value="#{pendingBrowserBean.termSelected.term}" disabled="true"/>
+
+                                    <p:outputLabel id="dateLabel" for="date" value="Fecha"/>
+                                    <p:calendar id="date" value="#{pendingBrowserBean.termSelected.date}" disabled="true"/>
+
+                                    <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categoría propuesta"/>
+                                    <p:inputText id="categoryMenu" value="#{pendingBrowserBean.termSelected.category.name}"
+                                                 disabled="true">
+                                    </p:inputText>
+
+                                    <p:outputLabel id="nameProfessionLabel" for="nameProfessional" value="Nombre del Profesional"/>
+                                    <p:inputText type="text" id="nameProfessional"
+                                                 value="#{pendingBrowserBean.termSelected.nameProfessional}" disabled="true"/>
+
+                                    <p:outputLabel id="professionLabel" for="profession" value="Profesión"/>
+                                    <p:inputText type="text" id="profession"
+                                                 value="#{pendingBrowserBean.termSelected.profession}"
+                                                 disabled="true"/>
+
+                                    <p:outputLabel id="specialityLabel" for="speciality" value="Especialidad"/>
+                                    <p:inputText type="text" id="speciality"
+                                                 value="#{pendingBrowserBean.termSelected.speciality}"
+                                                 placeholder="Escriba su especialidad" disabled="true"/>
+
+                                    <p:outputLabel id="subspecialityLabel" for="subSpeciality" value="Sub-especialidad"/>
+                                    <p:inputText type="text" id="subSpeciality"
+                                                 value="#{pendingBrowserBean.termSelected.subSpeciality}" disabled="true"/>
+
+                                    <p:outputLabel id="mailLabel" for="mail" value="Mail"/>
+                                    <p:inputText type="mail" id="mail" value="#{pendingBrowserBean.termSelected.mail}"
+                                                 disabled="true"/>
+
+                                    <p:outputLabel id="placeLabel" for="place" value="Lugar de origen"/>
+                                    <p:inputText type="text" id="place"
+                                                 value="#{pendingBrowserBean.termSelected.placeOrigin}" disabled="true"/>
+
+                                    <p:outputLabel id="userLabel" for="uses" value="Usos"/>
+                                    <p:inputText type="text" id="uses"
+                                                 value="#{pendingBrowserBean.termSelected.relatedDescription.uses}" disabled="true"/>
+
+                                    <p:outputLabel id="sensibilityLabel" for="sensibility" value="Sensibilidad"
+                                                   rendered="#{pendingBrowserBean.termSelected.relatedDescription.caseSensitive}"/>
+                                    <p:inputText type="text" id="sensibility" value="Si"
+                                                 disabled="true" rendered="#{pendingBrowserBean.termSelected.relatedDescription.caseSensitive}"/>
+
+                                    <p:outputLabel id="noSensibilityLabel" for="noSensibility" value="Sensibilidad"
+                                                   rendered="#{not pendingBrowserBean.termSelected.relatedDescription.caseSensitive}"/>
+                                    <p:inputText type="text" id="noSensibility" value="No"
+                                                 disabled="true" rendered="#{not pendingBrowserBean.termSelected.relatedDescription.caseSensitive}"/>
+
+                                    <p:outputLabel id="observationLabel" for="observation" value="Observación"/>
+                                    <p:inputTextarea type="text" id="observation"
+                                                     value="#{pendingBrowserBean.termSelected.observation}" disabled="true"/>
+                                </h:panelGrid>
+
+                            </p:panel>
+                        </p:dialog>
+
+                        <!-- Crear nuevo concepto -->
+                        <p:dialog id="dialogNC" header="Crear Concepto" widgetVar="dialogNC" global="true"
+                                  showEffect="fade" hideEffect="fade">
+
+                            <p:growl id="msgs2" showDetail="true"/>
+
+                            <p:panel styleClass="create-concept">
+
+                                <p:outputPanel rendered="#{pendingBrowserBean.termSelected != null and empty pendingBrowserBean.termsSelected}">
+
+                                    <h3>Descripcion a trasladar</h3>
+                                    <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
+
+                                        <p:outputLabel for="descidTrans2" value="DESCID"/>
+                                        <h:outputText id="descidTrans2"
+                                                      value="#{pendingBrowserBean.termSelected.relatedDescription.descriptionId}"/>
+
+                                        <p:outputLabel for="descidTransTerm2" value="Termino"/>
+                                        <h:outputText id="descidTransTerm2"
+                                                      value="#{pendingBrowserBean.termSelected.relatedDescription.term}"/>
+
+                                    </h:panelGrid>
+
+                                </p:outputPanel>
+
+                                <p:outputPanel rendered="#{ not empty pendingBrowserBean.termsSelected }">
+
+                                    <h3>Descripciones a trasladar</h3>
+                                    <p:dataTable value="#{pendingBrowserBean.termsSelected}" scrollable="true" scrollHeight="150" var="pendingTerm" style="width: 500px">
+                                        <p:column headerText="DESCID">
+                                            <h:outputText value="#{pendingTerm.relatedDescription.descriptionId}"/>
+                                        </p:column>
+                                        <p:column headerText="Termino">
+                                            <h:outputText value="#{pendingTerm.relatedDescription.term}"/>
+                                        </p:column>
+                                    </p:dataTable>
+
+                                </p:outputPanel>
+
+                                <div class="ui-fluid">
+                                    <h3>Categoría Destino</h3>
+                                    <h:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" width="100%">
+
+                                        <p:selectOneMenu id="parentTag" value="#{pendingBrowserBean.categorySelected}"
+                                                         converter="omnifaces.SelectItemsConverter" style="min-width: 223px"
+                                                         effect="fade" var="c" filter="true"
+                                                         filterMatchMode="startsWith" >
+                                            <p:ajax/>
+                                            <f:selectItem itemLabel="Seleccione una categoría" itemDisabled="true"/>
+                                            <f:selectItems value="#{pendingBrowserBean.categories}" var="category"
+                                                           itemLabel="#{category.name}" itemValue="#{category}"/>
+                                            <p:column>
+                                                <h:outputText value="#{c.name}"/>
+                                            </p:column>
+                                        </p:selectOneMenu>
+
+                                    </h:panelGrid>
+                                </div>
+                                <p:commandButton value="Crear concepto" actionListener="#{pendingBrowserBean.createNewConcept}"
+                                                 update="@(.create-concept),@(.browserTable)" />
+
+                            </p:panel>
+                        </p:dialog>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
+                                             icon="ui-icon-check"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                                             icon="ui-icon-close"/>
+                        </p:confirmDialog>
+
+                    </h:form>
+
                 </div>
             </div>
-        </div>
 
-
-    </ui:define>
-
-    <ui:define name="nav">
-        <h:form>
-            <smtk:pendingBrowserFilter pendingQuery="#{pendingBrowserBean.pendingQuery}" />
-        </h:form>
     </ui:define>
 
 </ui:composition>

@@ -1,4 +1,35 @@
 
+/*
+.topbar-left {
+    background-color: #2f8ee5 !important;
+}
+*/
+
+.search {
+    position: relative;
+    color: #aaa;
+    font-size: 16px;
+}
+
+.search input { text-indent: 32px;}
+
+.search .fa-search {
+    position: absolute;
+    top: 9px;
+    left: 10px;
+}
+
+.search .fa.fa-close.fa-lg {
+    position: absolute;
+    top: 9px;
+    left: 10px;
+    /*cursor: pointer;*/
+}
+
+.fa-lg {
+    line-height: .5em !important;
+}
+
 .browserLayout .ui-widget-content {
     border: 1px solid #d5d5d5;
     background: #fff;
@@ -85,7 +116,80 @@
     border-bottom: 0;
 }
 
+#browserForm\:conceptPanel table thead {
+    display: none !important;
+}
 
+/*
+#browserForm\:conceptPanel .ui-paginator-current {
+    color: #3F51B5 !important;
+}
+
+#browserForm\:conceptPanel .ui-paginator .ui-paginator-pages .ui-paginator-page {
+    color: #3F51B5 !important;
+}
+
+#browserForm\:conceptPanel .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+    color: #FFFFFF !important;
+}
+
+#browserForm\:conceptPanel .conceptTable .ui-widget-header {
+    background: rgba(56, 73, 162, 0) !important;
+}
+
+#browserForm\:conceptPanel .ui-paginator .ui-paginator-first, #browserForm\:conceptPanel .ui-paginator .ui-paginator-prev, #browserForm\:conceptPanel .ui-paginator .ui-paginator-next, #browserForm\:conceptPanel .ui-paginator .ui-paginator-last {
+    color: #3F51B5 !important;
+}
+*/
+
+#browserForm\:conceptPanel .ui-datatable tbody tr.ui-datatable-even {
+    background-color: transparent !important;
+}
+
+#browserForm\:conceptPanel .ui-datatable tbody tr td {
+    border: transparent !important;
+}
+
+#browserForm\:conceptPanel .ui-widget-header {
+    border: transparent !important;
+}
+
+.ui-inputfield {
+    padding: 6px !important;
+}
+
+.ui-inputfield.ui-state-focus {
+    padding: 6px !important;
+}
+
+.myCustomLinkStyle:link {
+    color: #1a0dab;
+    font-size: 18px;
+}
+.myCustomLinkStyle:visited {
+    color: #6717ab !important;
+    font-size: 18px !important;
+}
+.myCustomLinkStyle:hover {
+    color: #1a0dab !important;
+    font-size: 18px !important;
+    text-decoration: underline !important;
+}
+
+.ui-autocomplete-item:first-child {
+    display: none !important;
+    /*visibility: hidden !important;*/
+}
+
+.ui-button.ui-button-icon-only.search-button-tiny {
+    border-radius: 10%;
+    width: 100%;
+    height: 100%;
+}
+
+.ui-paginator .ui-paginator-pages {
+    display: inline-block !important;
+}
 
 /*
 .ui-widget, .ui-widget .ui-widget

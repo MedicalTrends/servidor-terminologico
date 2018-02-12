@@ -12,14 +12,17 @@
 <composite:interface>
     <composite:attribute name="user" type="cl.minsal.semantikos.model.users.User"/>
     <composite:attribute name="name" type="java.lang.String"/>
+    <composite:attribute name="rightpanel" type="java.lang.Boolean"/>
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container100">
-        <div class="ContainerIndent BoldGray FontBold">
-
+    <div class="ui-g-12 ui-md-#{cc.attrs.rightpanel?'12':'4'} ui-lg-#{cc.attrs.rightpanel?'12':'2'}">
+        <span>
             <h:outputText value="#{cc.attrs.name}" />
+        </span>
+    </div>
 
+    <div class="ui-g-12 ui-md-#{cc.attrs.rightpanel?'12':'8'} ui-lg-#{cc.attrs.rightpanel?'12':'4'}">
             <p:selectOneMenu value="#{cc.attrs.user}" converter="userConverter"
                              autoWidth="false">
                 <f:selectItem itemLabel="Usuario..." itemValue="#{null}"/>
@@ -28,9 +31,6 @@
 
                 <p:ajax event="itemSelect" process="@this" update="@(.browserTable)" />
             </p:selectOneMenu>
-
-        </div>
-
     </div>
 
     <h:outputStylesheet id="customCSS">
