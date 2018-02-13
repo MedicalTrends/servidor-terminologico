@@ -1,19 +1,17 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.util.DaoTools;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.*;
 import oracle.jdbc.OracleTypes;
-import org.jboss.ejb3.annotation.TransactionTimeout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
-import javax.ejb.*;
+import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
 import javax.sql.DataSource;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.*;
@@ -37,8 +35,6 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
     @Override
     public List<HelperTable> getAllTables() {
-
-        //ConnectionBD connectionBD = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_helper_table.get_helper_tables; end;";
 
@@ -382,9 +378,9 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
     public HelperTableRow getRowBy(long tableId, long id) {
         //ConnectionBD connectionBD = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_helper_table.get_helper_table_row_by_table(?,?); end;";
+        String sql = "begin ? := stk.stk_pck_helper_table.get_helper_table_row(?,?); end;";
 
-        HelperTableRow helperTableRow = null;
+        HelperTableRow helperTableRow;
 
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
@@ -400,11 +396,9 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             if (rs.next()) {
                 helperTableRow = createHelperTableRowFromResultSet(rs);
             }
-            /* Puede darse este caso perfectamente sin ser una excepcion
             else {
                 throw new EJBException("Error imposible en HelperTableDAOImpl");
             }
-            */
 
             rs.close();
         } catch (SQLException e) {
@@ -685,6 +679,70 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         }
 
         return helperTableRows;
+    }
+
+    @Override
+    public List<HelperTableRow> getRelatedRows(HelperTableRow helperTableRow, HelperTableColumn helperTableColumn) {
+
+        String sql = "begin ? := stk.stk_pck_helper_table.get_related_rows(?,?); end;";
+
+        List<HelperTableRow> helperTableRows = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2,helperTableRow.getId());
+            call.setLong(3,helperTableColumn.getId());
+
+            /* Se prepara y realiza la consulta */
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while(rs.next()) {
+                helperTableRows.add(createHelperTableRowFromResultSet(rs));
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Hubo un error al acceder a la base de datos.", e);
+            throw new EJBException(e);
+        }
+
+        return helperTableRows;
+    }
+
+    @Override
+    public List<HelperTableColumn> getRelatedColumns(HelperTable helperTable) {
+
+        String sql = "begin ? := stk.stk_pck_helper_table.get_related_columns(?); end;";
+
+        List<HelperTableColumn> helperTableColumns = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2,helperTable.getId());
+
+            /* Se prepara y realiza la consulta */
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while(rs.next()) {
+                //helperTableColumns.add(createHelperTableColumnFromResultSet(rs));
+                helperTableColumns.add(HelperTableColumnFactory.getInstance().findColumnById(rs.getLong("id")));
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Hubo un error al acceder a la base de datos.", e);
+            throw new EJBException(e);
+        }
+
+        return helperTableColumns;
     }
 
     @Override

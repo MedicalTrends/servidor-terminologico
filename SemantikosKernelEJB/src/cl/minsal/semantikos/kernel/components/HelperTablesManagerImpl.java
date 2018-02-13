@@ -1,12 +1,12 @@
 package cl.minsal.semantikos.kernel.components;
 
 
+import cl.minsal.semantikos.kernel.businessrules.HelperTableSearchBRImpl;
 import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.exceptions.RowInUseException;
-import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.kernel.businessrules.HelperTableSearchBRImpl;
 import cl.minsal.semantikos.model.helpertables.*;
+import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -90,7 +90,7 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
        inserta una fila no persistida
         */
     @Override
-    public HelperTableRow insertRow(HelperTableRow newRow,String username) {
+    public HelperTableRow insertRow(HelperTableRow newRow, String username) {
 
 
         newRow.setCreationDate(new Timestamp(System.currentTimeMillis()));
@@ -107,8 +107,6 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
 
         return newRow;
     }
-
-
 
     private HelperTableData createCell(HelperTableColumn column, HelperTableRow row) {
         HelperTableData data = new HelperTableData();
@@ -197,6 +195,16 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
         new HelperTableSearchBRImpl().applyPostActions(foundRows);
 
         return foundRows;
+    }
+
+    @Override
+    public List<HelperTableRow> getRelatedRows(HelperTableRow parentRow, HelperTableColumn helperTableColumn) {
+        return dao.getRelatedRows(parentRow, helperTableColumn);
+    }
+
+    @Override
+    public List<HelperTableColumn> getRelatedColumns(HelperTable helperTable) {
+        return dao.getRelatedColumns(helperTable);
     }
 
     @Override

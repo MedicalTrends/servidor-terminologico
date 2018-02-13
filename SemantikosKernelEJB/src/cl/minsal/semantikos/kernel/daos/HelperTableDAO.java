@@ -1,7 +1,10 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.helpertables.*;
+import cl.minsal.semantikos.model.helpertables.HelperTable;
+import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
+import cl.minsal.semantikos.model.helpertables.HelperTableData;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 
 import java.util.List;
 
@@ -23,7 +26,7 @@ public interface HelperTableDAO {
 
     HelperTableRow getRowById(long id);
 
-    HelperTableRow getRowBy(long tableId,long id);
+    HelperTableRow getRowBy(long tableId, long id);
 
     List<HelperTableRow> getRowBy(long tableId, boolean valid);
 
@@ -40,6 +43,10 @@ public interface HelperTableDAO {
     List<HelperTableRow> searchAllRecords(HelperTable helperTable, String pattern);
 
     List<HelperTableRow> searchRecords(HelperTable helperTable, String pattern, String columnName);
+
+    List<HelperTableRow> getRelatedRows(HelperTableRow parentRow, HelperTableColumn helperTableColumn);
+
+    List<HelperTableColumn> getRelatedColumns(HelperTable helperTable);
 
     List<HelperTableRow> getValidTableRows(long id);
 

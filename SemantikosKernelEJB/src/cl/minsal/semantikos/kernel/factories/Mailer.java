@@ -80,7 +80,7 @@ public class Mailer implements Runnable {
                 // second part (the image)
                 messageBodyPart = new MimeBodyPart();
 
-                String fileName = "/logo-27.png";
+                String fileName = "/logo-indigo.png";
                 InputStream stream = this.getClass().getResourceAsStream(fileName);
 
                 if (stream == null) {

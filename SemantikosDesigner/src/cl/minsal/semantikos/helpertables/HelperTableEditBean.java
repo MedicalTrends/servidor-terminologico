@@ -31,9 +31,9 @@ import java.util.*;
 /**
  * Created by Blueprints on 1/27/2016.
  */
-@ManagedBean(name = "helperTableBean")
+@ManagedBean(name = "helperTableEditBean")
 @ViewScoped
-public class HelperTableBean implements Serializable {
+public class HelperTableEditBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -59,8 +59,24 @@ public class HelperTableBean implements Serializable {
 
     HelperTableSearchBR helperTableSearchBR = (HelperTableSearchBR) ServiceLocator.getInstance().getService(HelperTableSearchBR.class);
 
+    long idHelperTable;
+
     @PostConstruct
     protected void initialize() {
+    }
+
+    public void createOrUpdateHelperTable() {
+        if(idHelperTable == 0 /*&& selectedUser == null*/) {
+            //newHelperTable();
+        }
+        if(idHelperTable != 0 /*&& !selectedUser.isPersistent()*/ ) {
+            getHelperTable(idHelperTable);
+        }
+    }
+
+    public void getHelperTable(long idHelperTable) {
+        helperTableSelected = manager.getById(idHelperTable);
+        helperTableSelected.setRows(manager.getTableRows(helperTableSelected.getId()));
     }
 
     public AuthenticationBean getAuthenticationBean() {
@@ -184,7 +200,6 @@ public class HelperTableBean implements Serializable {
         //conceptSMTKs= manager.isRowUsed(rowSelected,10,page);
     }
 
-
     public void addRow(HelperTable table) {
 
         HelperTableRow newRow = createNewHelperTableRow(table);
@@ -214,7 +229,6 @@ public class HelperTableBean implements Serializable {
         return newRow;
     }
 
-
     private HelperTableData createCell(HelperTableColumn column, HelperTableRow row) {
         HelperTableData data = new HelperTableData();
         data.setId(-1);
@@ -222,7 +236,6 @@ public class HelperTableBean implements Serializable {
         data.setColumnId(column.getId());
         data.setRow(row);
         data.setRowId(row.getId());
-
 
         return data;
     }
@@ -479,5 +492,16 @@ public class HelperTableBean implements Serializable {
 
     public void setConceptSMTKs(LazyDataModel<ConceptSMTK> conceptSMTKs) {
         this.conceptSMTKs = conceptSMTKs;
+    }
+
+    public long getIdHelperTable() {
+        return idHelperTable;
+    }
+
+    public void setIdHelperTable(long idHelperTable) {
+        this.idHelperTable = idHelperTable;
+        if(helperTableSelected == null) {
+            createOrUpdateHelperTable();
+        }
     }
 }

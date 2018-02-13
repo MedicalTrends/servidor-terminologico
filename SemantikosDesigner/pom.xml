@@ -237,6 +237,18 @@
             <!--version>2.1</version--><!--EAP-->
         </dependency>
 
+        <!-- for JSF 2.x -->
+        <dependency>
+            <groupId>org.ocpsoft.rewrite</groupId>
+            <artifactId>rewrite-servlet</artifactId>
+            <version>3.4.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ocpsoft.rewrite</groupId>
+            <artifactId>rewrite-config-prettyfaces</artifactId>
+            <version>3.4.1.Final</version>
+        </dependency>
+
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
             <artifactId>primefaces-extensions</artifactId>
@@ -282,16 +294,6 @@
             <version>2.5</version>
         </dependency>
 
-        <dependency>
-            <groupId>cl.minsal.semantikos</groupId>
-            <artifactId>SemantikosDomain</artifactId>
-            <version>1.0.3</version>
-        </dependency>
-        <dependency>
-            <groupId>cl.minsal.semantikos</groupId>
-            <artifactId>SemantikosDomain</artifactId>
-            <version>1.0.3</version>
-        </dependency>
 
     </dependencies>
 

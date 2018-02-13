@@ -2,12 +2,10 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.exceptions.RowInUseException;
-import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.helpertables.*;
+import cl.minsal.semantikos.model.users.User;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
-import java.io.Reader;
 import java.util.List;
 
 /**
@@ -41,9 +39,9 @@ public interface HelperTablesManager {
 
     HelperTableRow getRowById(long idRow);
 
-    HelperTableRow getRowBy(HelperTable helperTable,long idRow);
+    HelperTableRow getRowBy(HelperTable helperTable, long idRow);
 
-    List<HelperTableRow> getRowBy(HelperTable helperTable,boolean valid);
+    List<HelperTableRow> getRowBy(HelperTable helperTable, boolean valid);
 
     HelperTableColumn getColumnById(long idColumn);
 
@@ -100,6 +98,24 @@ public interface HelperTablesManager {
      */
     HelperTableRow insertRow(HelperTableRow row, String username);
 
+    /**
+     * Este método es responsable de recuperar los registros hijos de un registro, dada una columna de búsqueda
+     *
+     * @param parentRow El registro padre
+     * @param helperTableColumn  La columna de búsqueda
+     *
+     * @return La lista de registros en la tabla <code>helperTable</code> que cumplen con el <code>pattern</code> de
+     * búsqueda.
+     */
+    List<HelperTableRow> getRelatedRows(HelperTableRow parentRow, HelperTableColumn helperTableColumn);
 
-
+    /**
+     * Este método es responsable de recuperar las columnas que referencian a otra tabla auxiliar, dada una tabla auxiliar
+     *
+     * @param helperTable La tabla auxiliar padre
+     *
+     * @return La lista de registros en la tabla <code>helperTable</code> que cumplen con el <code>pattern</code> de
+     * búsqueda.
+     */
+    List<HelperTableColumn> getRelatedColumns(HelperTable helperTable);
 }

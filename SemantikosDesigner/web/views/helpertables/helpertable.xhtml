@@ -44,7 +44,7 @@
 
                                 <div class="ui-g-12 ui-md-8 ui-lg-4">
                                     <p:inputText placeholder="ID" type="number" value="#{helperTableEditBean.id}" title="Búsqueda por ID">
-                                        <p:ajax event="keyup" update="@(.table-data-edit-#{varStatus1.index})"
+                                        <p:ajax event="keyup" update="@(.table-data-edit)"
                                                 process="@this"
                                                 listener="#{helperTableEditBean.getRecordSearchID(helperTableEditBean.helperTableSelected,helperTableEditBean.id)}"/>
                                     </p:inputText>
@@ -56,7 +56,7 @@
 
                                 <div class="ui-g-12 ui-md-8 ui-lg-4">
                                     <p:inputText placeholder="ID" type="number" value="#{helperTableEditBean.id}" title="Búsqueda por ID">
-                                        <p:ajax event="keyup" update="@(.table-data-edit-#{varStatus1.index})"
+                                        <p:ajax event="keyup" update="@(.table-data-edit)"
                                                 process="@this"
                                                 listener="#{helperTableEditBean.getRecordSearchID(helperTableEditBean.helperTableSelected,helperTableEditBean.id)}"/>
                                     </p:inputText>
@@ -71,7 +71,7 @@
                                         <f:selectItem itemLabel="Seleccione una opción" />
                                         <f:selectItem itemLabel="Si" itemValue="si"/>
                                         <f:selectItem itemLabel="No" itemValue="no"/>
-                                        <p:ajax event="itemSelect" update="@(.table-data-edit-#{varStatus1.index})"
+                                        <p:ajax event="itemSelect" update="@(.table-data-edit)"
                                                 process="@this"
                                                 listener="#{helperTableEditBean.getRecordSearchValid(helperTableEditBean.helperTableSelected,helperTableEditBean.valid)}"/>
 
@@ -86,12 +86,12 @@
                         <p:remoteCommand name="onRowEditCancel#{varStatus1.index}"
                                          update="@(.table-data-edit-#{varStatus1.index})"/>
                         <p:dataTable
-                                widgetVar="table-data-edit-wvar-#{varStatus1.index}"
-                                id="table-data-edit" styleClass="table-data-edit-#{varStatus1.index}"
+                                widgetVar="table-data-edit-wvar"
+                                id="table-data-edit" styleClass="table-data-edit"
                                 var="row"
+                                scrollable="true" scrollWidth="100%"
                                 rowKey="#{row.id}" value="#{helperTableEditBean.helperTableSelected.rows}"
-                                editable="true" paginator="true" rows="30"
-                                scrollable="true" scrollWidth="100%">
+                                editable="true" paginator="true" rows="30">
                             <f:facet name="header">
                                 Editor de datos Tabla: #{helperTableEditBean.helperTableSelected.name}
 
@@ -101,9 +101,9 @@
                                                  id="add-row-button"
                                                  alt="Agregar Fila"
                                                  action="#{helperTableEditBean.addRow(helperTableEditBean.helperTableSelected)}"
-                                                 update="@(.table-data-edit-#{varStatus1.index})"
+                                                 update="@(.table-data-edit)"
                                                  process="@this"
-                                                 oncomplete="jQuery('.table-data-edit-#{varStatus1.index} tbody tr').first().find('span.ui-icon-pencil').each(function(){jQuery(this).click()});"
+                                                 oncomplete="jQuery('.table-data-edit tbody tr').first().find('span.ui-icon-pencil').each(function(){jQuery(this).click()});"
                                 />
                             </f:facet>
 
@@ -111,11 +111,11 @@
                             <p:ajax event="rowEditCancel" listener="#{helperTableEditBean.onRowEditCancel}"
                                     oncomplete="onRowEditCancel#{varStatus1.index}()"/>
 
-                            <p:column headerText="ID" sortable="true">
+                            <p:column headerText="ID" sortable="true" width="100px">
                                 <h:outputText value="#{row.id}"/>
                             </p:column>
 
-                            <p:column headerText="Descripción" sortable="true">
+                            <p:column headerText="Descripción" sortable="true" width="200px">
                                 <div style="text-align: left">
                                     <p:cellEditor>
                                         <f:facet name="output">
@@ -129,7 +129,7 @@
 
                             </p:column>
 
-                            <p:columns columnIndexVar="columnIndex" var="column"
+                            <p:columns columnIndexVar="columnIndex" var="column" width="200px"
                                        value="#{helperTableEditBean.helperTableSelected.columns}"
                                        sortable="true">
                                 <f:facet name="header">
@@ -182,10 +182,10 @@
                                 </p:cellEditor>
                             </p:columns>
 
-                            <p:column headerText="ESTADO DE VIGENCIA" sortable="true">
+                            <p:column headerText="ESTADO DE VIGENCIA" sortable="true" width="200px">
                                 <f:facet name="filter">
                                     <p:selectOneMenu
-                                            onchange="PF('table-data-edit-wvar-#{varStatus1.index}').filter()">
+                                            onchange="PF('table-data-edit-wvar').filter()">
                                         <f:selectItem itemLabel="Elegir..." itemValue="#{null}"
                                                       noSelectionOption="true"/>
                                         <f:selectItem itemLabel="Si" itemValue="#{true}"/>
@@ -202,25 +202,24 @@
                                 </p:cellEditor>
                             </p:column>
 
-                            <p:column headerText="CREACIÓN" sortable="true">
+                            <p:column headerText="CREACIÓN" sortable="true" width="200px">
                                 <h:outputText value="#{row.creationDate}">
                                     <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
                                 </h:outputText>
                             </p:column>
-                            <p:column headerText="CREADO POR" sortable="true">
+                            <p:column headerText="CREADO POR" sortable="true" width="200px">
                                 <h:outputText value="#{row.creationUsername}"/>
                             </p:column>
-                            <p:column headerText="ULTIMA EDICIÓN" sortable="true">
+                            <p:column headerText="ULTIMA EDICIÓN" sortable="true" width="200px">
                                 <h:outputText value="#{row.lastEditDate}">
                                     <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
                                 </h:outputText>
                             </p:column>
-                            <p:column headerText="EDITADO POR" sortable="true">
+                            <p:column headerText="EDITADO POR" sortable="true" width="200px">
                                 <h:outputText value="#{row.lastEditUsername}"/>
                             </p:column>
 
-
-                            <p:column width="50" headerText="Acción">
+                            <p:column width="50" headerText="Acción" style="min-width: 150px; width: 500px; text-align: center;">
                                 <p:rowEditor editTitle="Editar" cancelTitle="Cancelar" saveTitle="Guardar"/>
                             </p:column>
 
@@ -251,10 +250,16 @@
 
                     </p:dialog>
 
+
                 </h:form>
 
             </div>
         </div>
+
+        <script type="text/javascript">
+
+
+        </script>
 
     </ui:define>
 
