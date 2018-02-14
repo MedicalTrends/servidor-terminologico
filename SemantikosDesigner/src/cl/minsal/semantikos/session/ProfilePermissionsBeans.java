@@ -21,7 +21,7 @@ public class ProfilePermissionsBeans {
     private AuthenticationBean authenticationBean;
 
     @PostConstruct
-    public void init(){
+    public void init() {
 
     }
 

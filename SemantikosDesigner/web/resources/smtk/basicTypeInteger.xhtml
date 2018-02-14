@@ -43,7 +43,6 @@
                                        decimalPlaces="0"
                                        decimalSeparator=","
                                        thousandSeparator="."
-                                       disabled="#{not cc.attrs.concept.editable}"
                                        rendered="#{cc.attrs.targetDefinition.type.typeName=='int' and not cc.attrs.targetDefinition.discreteDomain}"
                                        autocomplete="off">
                             <f:attribute name="concept" value="#{cc.attrs.concept}"  />
@@ -127,7 +126,6 @@
                                        autocomplete="off"
                                        decimalSeparator=","
                                        thousandSeparator="."
-                                       disabled="#{not cc.attrs.concept.editable}"
                                        rendered="#{cc.attrs.targetDefinition.type.typeName=='int' and not cc.attrs.targetDefinition.discreteDomain}"
                                        styleClass="relationships">
                             <f:attribute name="concept" value="#{cc.attrs.concept}"  />

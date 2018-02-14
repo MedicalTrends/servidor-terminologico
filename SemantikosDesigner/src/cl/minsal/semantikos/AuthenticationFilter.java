@@ -26,48 +26,25 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        ((HttpServletResponse) response).setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-        ((HttpServletResponse) response).setHeader("Pragma", "no-cache"); // HTTP 1.0.
-        ((HttpServletResponse) response).setHeader("Expires", "0");
+        if (req.getSession() == null) {
+            res.sendRedirect(req.getContextPath() + Constants.LOGIN_PAGE); // No logged-in user found, so redirect to login page.
+        } else {
+            if (req.getRequestURI().contains(Constants.ROOT) || req.getRequestURI().contains(Constants.LOGIN_PAGE) || req.getRequestURI().contains(Constants.LOGOUT_PAGE) ||
+                    req.getRequestURI().contains(Constants.ERRORS_FOLDER) || req.getRequestURI().contains(Constants.ACCOUNT_ACTIVATION_PAGE) ||
+                    req.getRequestURI().contains(Constants.FORGOT_PASS_PAGE) || hasPermission(req)) {
 
-        /* Inició sesión e intenta volver atrás */
-        /*
-        if(isLoggedIn(req) && req.getRequestURI().contains(Constants.LOGIN_PAGE)) {
-            logger.debug("Intento de acceso sin sesión: " + req);
-            res.sendRedirect(req.getContextPath() + Constants.HOME_PAGE);
-        }
-        */
+                /*
+                if(req.getRequestURI().contains(Constants.LOGOUT_PAGE)) {
+                    req.getSession().invalidate();
+                    res.sendRedirect(req.getContextPath() + Constants.LOGIN_PAGE);
+                }
+                */
 
-        if (req.getRequestURI().contains(Constants.ROOT) || req.getRequestURI().contains(Constants.LOGIN_PAGE) || req.getRequestURI().contains(Constants.ERRORS_FOLDER) ||
-            req.getRequestURI().contains(Constants.ACCOUNT_ACTIVATION_PAGE) || req.getRequestURI().contains(Constants.FORGOT_PASS_PAGE) ||
-            hasPermission(req)) {
-            /*
-            if(req.getRequestURI().contains(Constants.LOGIN_PAGE) || req.getRequestURI().contains(Constants.ACCOUNT_ACTIVATION_PAGE) ||
-                req.getRequestURI().contains(Constants.FORGOT_PASSWORD_PAGE)) {
-                ((HttpServletResponse) response).setHeader(CACHE_CONTROL, "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-                //((HttpServletResponse) response).addHeader(HEADER, "no-cache"); // HTTP 1.0.
-                ((HttpServletResponse) response).addHeader(EXPIRES, "0"); // Proxies.
+                res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+                res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+                res.setDateHeader("Expires", 0);
+                chain.doFilter(req, res);
             }
-            */
-            logger.debug("Request válido, se deja continuar: " + req);
-            chain.doFilter(request, response);
-        }
-        /* Perdió la sesión o está tratando de conectarse sin haberse logueado */
-        else if (!isLoggedIn(req)) {
-            logger.debug("Intento de acceso sin sesión: " + req);
-            res.sendRedirect(req.getContextPath() + "/" + Constants.VIEWS_FOLDER + "/" + Constants.LOGIN_PAGE + "?viewExpired=true&originalURI=" + req.getRequestURI());
-        }
-
-        /* No tiene permiso para acceder a la pagina solicitada */
-        else if (!hasPermission(req)) {
-            logger.debug("Intento de acceso sin sesión: " + req);
-            res.sendRedirect(req.getContextPath() + "/" + Constants.VIEWS_FOLDER + "/" + Constants.ERRORS_FOLDER + "/" + Constants.AUTH_ERROR_PAGE);
-        }
-
-        /* Otros casos que nunca deberían darse */
-        else {
-            logger.debug("Un caso que nunca debiera darse: " + req);
-            res.sendRedirect(req.getContextPath() + "/" + Constants.VIEWS_FOLDER + "/" + Constants.LOGIN_PAGE);
         }
     }
 

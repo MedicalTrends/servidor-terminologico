@@ -21,7 +21,7 @@
     <p:panel id="tags" styleClass="tags" >
         <p:growl id="msgs" showDetail="true"/>
 
-        <p:outputPanel style="width:100%" rendered="#{conceptBean.editable}">
+        <p:outputPanel style="width:100%">
 
             <div class="ui-fluid">
 
@@ -137,17 +137,9 @@
 
         </p:outputPanel>
 
-        <p:spacer rendered="#{conceptBean.editable}" />
-
-        <f:facet name="#{(not conceptBean.editable)? 'footer':null}">
-            <p:outputPanel rendered="#{empty conceptBean.concept.tags}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="El concepto no tiene etiquetas asociadas" />
-            </p:outputPanel>
-        </f:facet>
+        <p:spacer />
 
         <p:dataTable id="dataTableTag" var="tag" value="#{conceptBean.concept.tags}"
-                     rendered="#{cc.attrs.editable or not empty cc.attrs.tagslist}"
                      emptyMessage="El concepto no tiene etiquetas" tableStyle="font-size: 12px;"
                      style="font-size: 12px;">
             <p:column headerText="Etiquetas">
@@ -157,7 +149,7 @@
                 </div>
             </p:column>
 
-            <p:column headerText="Accion" rendered="#{cc.attrs.editable}">
+            <p:column headerText="Accion">
                 <div style="text-align: center;">
 
                     <p:commandButton process="@this" icon="fa fa-edit" title="Editar"

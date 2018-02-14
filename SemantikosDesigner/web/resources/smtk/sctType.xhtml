@@ -22,7 +22,8 @@
     <p:panel id="multiplicityN_with_attributes" styleClass="sctPanel"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
-        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}">
+        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%"
+                       rendered="#{profilePermissionsBeans.modeler}">
 
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
@@ -110,8 +111,7 @@
                                             maxResults="1000"
                                             value="#{conceptBean.conceptSCTSelected}"
                                             itemLabel="#{concept.descriptionFSN.term}"
-                                            itemValue="#{concept}"
-                                            disabled="#{not cc.attrs.concept.editable}">
+                                            itemValue="#{concept}">
 
                                 <!-- Parámetros del validador -->
                                 <f:attribute name="concept" value="#{cc.attrs.concept}"  />
@@ -163,19 +163,11 @@
             </div>
         </p:outputPanel>
 
-        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
-            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="El concepto no tiene Relaciones a SNOMED" />
-            </p:outputPanel>
-        </f:facet>
-
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
                      id="tableRelationship3"
                      reflow="true"
-                     rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
-                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and cc.attrs.concept.editable}"
+                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
                      style="margin: 10px;"
                      value="#{conceptBean.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      var="rel">
@@ -221,7 +213,7 @@
                         <f:setPropertyActionListener value="#{rel.target}" target="#{sctBean.conceptSelected}"/>
                     </p:commandButton>
 
-                    <p:commandButton rendered="#{profilePermissionsBeans.modeler and cc.attrs.concept.editable}" icon="fa fa-trash" title="Eliminar"
+                    <p:commandButton rendered="#{profilePermissionsBeans.modeler}" icon="fa fa-trash" title="Eliminar"
                                      actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                      update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}), @(.attributes),@(.crossmapindirect)"
                                      process="@this">

@@ -181,6 +181,11 @@ public class UserManagerImpl implements UserManager {
         authDAO.updateUser(user);
         /* Se deja registro en la auditoría */
         auditManager.recordUserActivation(user, _user);
+
+        /* Luego se persisten sus respuestas */
+        for (Answer answer : user.getAnswers()) {
+            questionManager.bindAnswerToUser(user, answer, _user);
+        }
         /**
          * Se actualiza la cache de usuarios
          */

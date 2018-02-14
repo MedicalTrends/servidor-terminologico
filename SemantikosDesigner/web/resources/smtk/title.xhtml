@@ -19,9 +19,9 @@
 
         <p:outputPanel>
             <h2>
-                <h:outputText value="Ver " rendered="#{not conceptBean.editable}"/>
-                <h:outputText value="Editar " rendered="#{conceptBean.editable and conceptBean.concept.persistent}" />
-                <h:outputText value="Crear " rendered="#{conceptBean.editable and not conceptBean.concept.persistent}"/>
+                <h:outputText value="Ver "/>
+                <h:outputText value="Editar " rendered="#{conceptBean.concept.persistent}" />
+                <h:outputText value="Crear " rendered="#{not conceptBean.concept.persistent}"/>
 
                 <h:outputText value="Nuevo Concepto Borrador, #{cc.attrs.concept.category.name}" rendered="#{ not cc.attrs.concept.persistent}" />
 
@@ -30,7 +30,7 @@
             </h2>
         </p:outputPanel>
 
-        <p:button outcome="conceptEdit" value="Editar Concepto" styleClass="CyanButton ui-priority-primary" style="float: right" rendered="#{ not conceptBean.editable}">
+        <p:button outcome="conceptEdit" value="Editar Concepto" styleClass="CyanButton ui-priority-primary" style="float: right">
             <f:param name="editMode" value="#{true}" />
             <f:param name="idConcept" value="#{cc.attrs.concept.id}" />
         </p:button>

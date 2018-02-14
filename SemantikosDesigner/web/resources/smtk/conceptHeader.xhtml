@@ -31,9 +31,9 @@
 
         <div class="ui-g-12 ui-md-8 ui-lg-4">
             <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" style="width: 100%">
-                <p:selectBooleanCheckbox id="toBeReviewedCheck" itemLabel="Revisar" disabled="#{not cc.attrs.concept.editable}"
+                <p:selectBooleanCheckbox id="toBeReviewedCheck" itemLabel="Revisar"
                                          value="#{cc.attrs.concept.toBeReviewed}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
-                <p:selectBooleanCheckbox id="toBeConsultatedCheck" itemLabel="Consultar" disabled="#{not cc.attrs.concept.editable}"
+                <p:selectBooleanCheckbox id="toBeConsultatedCheck" itemLabel="Consultar"
                                          value="#{cc.attrs.concept.toBeConsulted}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
             </p:panelGrid>
         </div>
@@ -46,7 +46,7 @@
 
         <div class="ui-g-12 ui-md-8 ui-lg-4">
             <p:selectOneRadio value="#{conceptBean.fullyDefined}" layout="responsive" columns="2" style="width: 100%"
-                              disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept) or not conceptBean.editable}">
+                              disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept)}">
                 <f:selectItem itemValue="#{false}" itemLabel="Primitivo" />
                 <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>
                 <p:ajax event="change" listener="#{conceptBean.changeFullyDefined(conceptBean.concept)}" process="@this" update="@(.conceptHeader)" />
@@ -98,7 +98,6 @@
             <p:inputTextarea id="observation"
                              name="observation"
                              rows="1"
-                             disabled="#{not cc.attrs.concept.editable}"
                              value="#{cc.attrs.concept.observation}">
                 <p:ajax />
             </p:inputTextarea>
@@ -108,9 +107,9 @@
     </div>
 
         <!--Descripciones FSN y Preferida -->
-        <smtk:descriptionFSN description="#{cc.attrs.concept.getValidDescriptionFSN()}" editable="#{cc.attrs.concept.editable}" />
+        <smtk:descriptionFSN description="#{cc.attrs.concept.getValidDescriptionFSN()}" />
         <br/>
-        <smtk:descriptionFavorite description="#{cc.attrs.concept.getValidDescriptionFavorite()}" editable="#{cc.attrs.concept.editable}" />
+        <smtk:descriptionFavorite description="#{cc.attrs.concept.getValidDescriptionFavorite()}" />
 
     </div>
 

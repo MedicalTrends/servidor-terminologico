@@ -282,29 +282,24 @@
                                         <div class="overview-content clearfix task-list">
                                                 <span class="overview-title">
                                                     <p:link outcome="/views/concept/conceptEdit" value="#{concept.descriptionFavorite.term} " styleClass="myCustomLinkStyle">
-                                                        <f:param name="editMode" value="#{true}" />
                                                         <f:param name="idConcept" value="#{concept.id}" />
                                                     </p:link>
                                                     <p:link rendered="#{concept.modeled}" outcome="/views/concept/conceptEdit" title="Modelado">
                                                         <i class="ui-icon ui-icon-public"/>
-                                                        <f:param name="editMode" value="#{true}" />
                                                         <f:param name="idConcept" value="#{concept.id}" />
                                                     </p:link>
                                                     <p:link rendered="#{not concept.modeled}" outcome="/views/concept/conceptEdit" title="Borrador">
                                                         <i class="fa fa-edit" style="color: #5C5C5C"/>
-                                                        <f:param name="editMode" value="#{true}" />
                                                         <f:param name="idConcept" value="#{concept.id}" />
                                                     </p:link>
 
                                                 </span>
                                                 <span class="overview-badge">
                                                     <p:button outcome="/views/concept/conceptEdit" icon="fa fa-search fa-lg" title="Consultar" style="padding: 5px">
-                                                        <f:param name="editMode" value="#{false}" />
                                                         <f:param name="idConcept" value="#{concept.id}" />
                                                     </p:button>
 
                                                     <p:button outcome="/views/concept/conceptEdit" icon="fa fa-edit fa-lg" title="Editar" style="padding: 5px">
-                                                        <f:param name="editMode" value="#{true}" />
                                                         <f:param name="idConcept" value="#{concept.id}" />
                                                     </p:button>
 

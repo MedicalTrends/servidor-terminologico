@@ -23,11 +23,20 @@ public interface QuestionManager {
 
     public Question getQuestionById(long id);
 
-
     /**
      * Método encargado de obtener una lista con todas las instituciones
      * @return Lista de instituciones
      */
     public List<Question> getAllQuestions();
+
+    /**
+     * Este método es responsable de asociar (agregar) una respuesta a un usuario.
+     *
+     * @param user     El usuario al cual se agrega el perfil.
+     * @param answer   El perfil que será asociado al usuario. Este puede o no estar persistido.
+     * @param _user        El usuario que agrega el perfil
+     * @return   El perfil creada a partir de la asociacion.
+     */
+    public Answer bindAnswerToUser(User user, Answer answer, User _user);
 }
 

@@ -24,5 +24,7 @@ public interface QuestionDAO {
 
     public void deleteUserAnswers(User user);
 
+    public void bindAnswerToUser(User user, Answer answer);
+
 
 }

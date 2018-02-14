@@ -20,17 +20,6 @@
     <p:fieldset id="helperTableTypeCollection" legend="#{cc.attrs.relationshipDefinition.name}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and not cc.attrs.relationshipDefinition.ISP}">
 
-        <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
-            <p:outputPanel rendered="#{cc.attrs.concept.editable and cc.attrs.relationshipDefinition.multiplicity.lowerBoundary>0}">
-                <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
-            </p:outputPanel>
-            <p:outputPanel rendered="#{cc.attrs.concept.editable and cc.attrs.relationshipDefinition.multiplicity.lowerBoundary eq 0}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Atributo opcional" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
-
         <div class="ui-fluid">
 
             <div class="ui-g">
@@ -48,7 +37,6 @@
                                         var="helperTableRecord"
                                         placeholder="#{cc.attrs.relationshipDefinition.name}..."
                                         converter="helperTableRecordConverter"
-                                        rendered="#{cc.attrs.concept.editable}"
                                         disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
                                         value="#{conceptBean.selectedHelperTableRecord}"
                                         itemLabel="#{helperTableRecord.description}"
@@ -80,13 +68,6 @@
                 </div>
             </div>
         </div>
-
-        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
-            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="El concepto no tiene #{cc.attrs.relationshipDefinition.name}" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
 
         <p:dataTable id="collectionValues12"
                      styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
@@ -155,7 +136,6 @@
                     <p:commandButton
                             icon="fa fa-trash"
                             title="Eliminar"
-                            rendered="#{cc.attrs.concept.editable}"
                             update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@(.search)"
                             process="@this"
                             immediate="true"

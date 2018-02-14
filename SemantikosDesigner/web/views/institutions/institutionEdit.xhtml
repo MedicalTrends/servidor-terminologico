@@ -90,17 +90,17 @@
 
                         </p:tabView>
 
-                        <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{institutions.saveInstitution}" style="width: auto; float: right"
-                                         disabled="#{ institutions.selectedInstitution.validityUntil != null }" update="mainForm, @(.breadUpdate)" />
+                    </div>
 
-                        <p:commandButton value="Eliminar" icon="fa fa-trash" style="width: auto; float: right"
-                                         rendered="#{institutions.selectedInstitution != null and institutions.selectedInstitution.persistent and institutions.selectedInstitution.validityUntil == null}"
-                                         onclick="PF('dlg').show();" update="@(.cause2)"/>
+                    <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{institutions.saveInstitution}" style="width: auto; float: right"
+                                     disabled="#{ institutions.selectedInstitution.validityUntil != null }" update="mainForm, @(.breadUpdate)" />
 
-                        <p:commandButton value="Cancelar" icon="fa fa-undo" action="#{users.saveUser}" style="width: auto; float: right" disabled="#{ not users.selectedUser.valid}"
-                                         process="mainForm" update="mainForm, @(.breadUpdate)" rendered="false"/>
+                    <p:commandButton value="Eliminar" icon="fa fa-trash" style="width: auto; float: right"
+                                     rendered="#{institutions.selectedInstitution != null and institutions.selectedInstitution.persistent and institutions.selectedInstitution.validityUntil == null}"
+                                     onclick="PF('dlg').show();" update="@(.cause2)"/>
 
-                        </div>
+                    <p:commandButton value="Cancelar" icon="fa fa-undo" action="#{users.saveUser}" style="width: auto; float: right" disabled="#{ not users.selectedUser.valid}"
+                                     process="mainForm" update="mainForm, @(.breadUpdate)" rendered="false"/>
 
                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                     <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"

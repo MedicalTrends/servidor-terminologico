@@ -24,7 +24,7 @@
         <p:growl id="growl" showDetail="true" showSummary="true"/>
         <p:growl id="editMsgs" showDetail="true"/>
 
-        <p:outputPanel rendered="#{conceptBean.editable and profilePermissionsBeans.permissionsBy(conceptBean.category)}">
+        <p:outputPanel rendered="#{profilePermissionsBeans.permissionsBy(conceptBean.category)}">
 
             <div class="ui-fluid">
 
@@ -88,19 +88,11 @@
             </div>
         </p:outputPanel>
 
-        <f:facet name="#{(not cc.attrs.editable)? 'footer':null}">
-            <p:outputPanel rendered="#{empty cc.attrs.descriptions}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="El concepto no tiene Otras Descripciones" />
-            </p:outputPanel>
-        </f:facet>
-
         <p:dataTable id="otherDescriptions"
                      styleClass="otherDescriptions TextAlCenter"
                      emptyMessage="El concepto no tiene otras descripciones"
                      var="description"
                      style="margin: 10px;"
-                     rendered="#{cc.attrs.editable or not empty cc.attrs.descriptions}"
                      value="#{cc.attrs.descriptions}"
                      editable="true"
                      reflow="true">
@@ -185,7 +177,7 @@
                 </div>
             </p:column>
 
-            <p:column headerText="Acción" rendered="#{cc.attrs.editable}">
+            <p:column headerText="Acción">
 
                 <div style="text-align: center">
 

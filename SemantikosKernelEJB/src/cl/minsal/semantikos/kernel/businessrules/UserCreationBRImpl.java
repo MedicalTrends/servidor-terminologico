@@ -179,8 +179,8 @@ public class UserCreationBRImpl implements UserCreationBR {
 
         try {
 
-            String link = baseURL + "/views/users/activateAccount.xhtml?key="+user.getVerificationCode();
-            String link2 = baseURL + "/views/login.xhtml";
+            String link = baseURL + "/accounts/activate/"+user.getVerificationCode();
+            String link2 = baseURL + "/login";
             EmailFactory.getInstance().send(user, user.getPassword(), link, link2);
         } catch (Exception e) {
             e.printStackTrace();

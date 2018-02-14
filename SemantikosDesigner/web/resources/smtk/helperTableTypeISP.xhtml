@@ -22,18 +22,7 @@
 
         <p:spacer />
 
-        <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
-            <p:outputPanel rendered="#{cc.attrs.concept.editable and cc.attrs.relationshipDefinition.multiplicity.lowerBoundary>0}">
-                <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
-            </p:outputPanel>
-            <p:outputPanel rendered="#{cc.attrs.concept.editable and cc.attrs.relationshipDefinition.multiplicity.lowerBoundary eq 0}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Atributo opcional" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
-
-        <p:outputPanel style="display:block" id="ispfetcherexisteinputs" rendered="#{cc.attrs.concept.editable}">
+        <p:outputPanel style="display:block" id="ispfetcherexisteinputs">
 
             <div class="ui-fluid">
 
@@ -58,7 +47,7 @@
 
         <p:spacer />
 
-        <p:outputPanel style="display:block" id="ispfetcherinputs" rendered="#{cc.attrs.concept.editable}">
+        <p:outputPanel style="display:block" id="ispfetcherinputs">
 
             <h:panelGrid columns="5" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-4" width="100%" rendered="#{ispbean.existe}">
 
@@ -97,13 +86,6 @@
         </p:dialog>
 
         <p:spacer />
-
-        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
-            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="El concepto no tiene #{cc.attrs.relationshipDefinition.name}" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
 
         <p:dataTable id="collectionValues123"
                      styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
@@ -162,7 +144,6 @@
                     <p:commandButton
                             icon="fa fa-trash"
                             title="Eliminar"
-                            rendered="#{cc.attrs.concept.editable}"
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                             process="@this"
                             immediate="true"

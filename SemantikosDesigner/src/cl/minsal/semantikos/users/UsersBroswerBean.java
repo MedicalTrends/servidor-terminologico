@@ -55,7 +55,7 @@ public class UsersBroswerBean {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
 
         try {
-            eContext.redirect(eContext.getRequestContextPath() + "/views/users/userEdit.xhtml?idUser=0");
+            eContext.redirect(eContext.getRequestContextPath() + "/users/new/0");
         } catch (IOException e) {
             e.printStackTrace();
         }

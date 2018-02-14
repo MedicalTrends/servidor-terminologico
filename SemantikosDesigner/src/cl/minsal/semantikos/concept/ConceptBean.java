@@ -188,8 +188,6 @@ public class ConceptBean implements Serializable {
 
     public User user;
 
-    private boolean editable;
-
     private int idCategory;
 
     /** id del concepto sobre la cual se esta editando. Usado como enlace entre la petición desde el ConceptBrowser y el
@@ -426,7 +424,6 @@ public class ConceptBean implements Serializable {
 
         // Se crea el concepto WEB a partir del concepto SMTK
         concept = initConcept(conceptSMTK, term);
-        concept.setEditable(editable);
 
         concept.getDescriptionFSN().setCaseSensitive(sensibilityDescriptionDefaultBean.sensibility(category.getId()));
         concept.getDescriptionFavorite().setCaseSensitive(sensibilityDescriptionDefaultBean.sensibility(category.getId()));
@@ -481,7 +478,6 @@ public class ConceptBean implements Serializable {
         _concept = new ConceptSMTKWeb(conceptSMTK);
 
         fullyDefined=concept.isFullyDefined();
-        concept.setEditable(editable);
         auditAction = auditManager.getConceptAuditActions(concept, true);
         category = concept.getCategory();
         conceptBeanExport.setConceptSMTK(conceptSMTK);
@@ -1359,14 +1355,6 @@ public class ConceptBean implements Serializable {
 
     public void setRefsetEditConcept(boolean refsetEditConcept) {
         this.refsetEditConcept = refsetEditConcept;
-    }
-
-    public boolean isEditable() {
-        return editable;
-    }
-
-    public void setEditable(boolean editable) {
-        this.editable = editable;
     }
 
     @ManagedProperty(value = "#{profilePermissionsBeans}")

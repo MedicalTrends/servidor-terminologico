@@ -22,7 +22,7 @@
     <p:fieldset id="crossmapTypeCollectionWithAttributes" legend="#{cc.attrs.relationshipDefinition.name}"
                 rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
-        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}" style="width:100%">
+        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" rendered="#{profilePermissionsBeans.modeler}" style="width:100%">
 
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
@@ -67,7 +67,6 @@
                                             var="crossmap"
                                             placeholder="#{cc.attrs.targetDefinition.abbreviatedName}"
                                             converter="crossmapSetMemberConverter"
-                                            rendered="#{cc.attrs.concept.editable}"
                                             disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
                                             value="#{conceptBean.crossmapSetMemberSelected}"
                                             itemLabel="#{crossmap.gloss}"
@@ -136,16 +135,8 @@
             </div>
         </p:outputPanel>
 
-        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
-            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="El concepto no tiene #{cc.attrs.relationshipDefinition.name}" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
-
         <p:dataTable id="collectionValuesWithAttributes"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
-                     rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
@@ -178,7 +169,7 @@
             </p:column>
 
 
-            <p:column headerText="Acción" style="width: 4%" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}">
+            <p:column headerText="Acción" rendered="#{profilePermissionsBeans.modeler}">
                 <p:commandButton
                         icon="fa fa-trash"
                         title="Eliminar"

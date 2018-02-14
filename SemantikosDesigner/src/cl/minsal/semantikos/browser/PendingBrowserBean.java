@@ -290,7 +290,7 @@ public class PendingBrowserBean implements Serializable {
 
         if(!termsSelected.isEmpty()){
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categorySelected.getId() +"&idConcept=0&favoriteDescription=&pendingTerms=true");
+            eContext.redirect(eContext.getRequestContextPath() + "/concepts/new/" + categorySelected.getId() +"/0/*/true");
 
         }else{
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se han seleccionado términos"));

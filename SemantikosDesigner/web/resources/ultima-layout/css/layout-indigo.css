@@ -449,7 +449,8 @@
     right: auto; }
 
 .login-body {
-  background: url("#{resource['ultima-layout:images/login/login.png']}") top left no-repeat #f7f7f7;
+  /*background: url("#{resource['ultima-layout:images/login/login.png']}") top left no-repeat #f7f7f7;*/
+  background: url("#{resource['semantikos/images/cropped-Fondo-ppt.png']}") top left no-repeat #f7f7f7;
   background-size: 100% auto; }
 
 .login-panel {

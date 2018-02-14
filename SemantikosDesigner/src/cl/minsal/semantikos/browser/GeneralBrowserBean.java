@@ -406,7 +406,11 @@ public class GeneralBrowserBean implements Serializable {
         if(generalQuery.getQuery() != null && concepts.getRowCount()==0) {
             query = generalQuery.getQuery();
         }
-        eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + idCategory +"&idConcept=0&favoriteDescription=" + query);
+        if(query == null || query.isEmpty()) {
+            query = "*";
+        }
+
+        eContext.redirect(eContext.getRequestContextPath() + "/concepts/new/" + idCategory + "/0/" + query);
     }
 
     public void onRowToggle(ToggleEvent event) {

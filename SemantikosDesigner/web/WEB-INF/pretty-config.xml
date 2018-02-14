@@ -9,6 +9,16 @@
         <view-id value="/views/login.xhtml" />
     </url-mapping>
 
+    <url-mapping id="recover-account">
+        <pattern value="/accounts/recover" />
+        <view-id value="/views/users/forgotPassword.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="activate-account">
+        <pattern value="/accounts/activate/#{key}" />
+        <view-id value="/views/users/activateAccount.xhtml" />
+    </url-mapping>
+
     <url-mapping id="home">
         <pattern value="/home" />
         <view-id value="/views/home.xhtml" />
@@ -17,6 +27,86 @@
     <url-mapping id="concepts">
         <pattern value="/concepts/#{idCategory}" />
         <view-id value="/views/browser/generalBrowser.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="new-concept">
+        <pattern value="/concepts/new/#{idCategory}/#{idConcept}/#{favoriteDescription}" />
+        <view-id value="/views/concept/conceptEdit.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="new-concept-2">
+        <pattern value="/concepts/new/#{idCategory}/#{idConcept}/#{favoriteDescription}/#{pendingTerms}" />
+        <view-id value="/views/concept/conceptEdit.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="edit-concept">
+        <pattern value="/concepts/edit/#{idConcept}" />
+        <view-id value="/views/concept/conceptEdit.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="users">
+        <pattern value="/users" />
+        <view-id value="/views/users/users.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="new-user">
+        <pattern value="/users/new/#{idUser}" />
+        <view-id value="/views/users/userEdit.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="edit-user">
+        <pattern value="/users/edit/#{idUser}" />
+        <view-id value="/views/users/userEdit.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="institutions">
+        <pattern value="/institutions" />
+        <view-id value="/views/institutions/institutions.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="new-institution">
+        <pattern value="/institutions/new/#{idInstitution}" />
+        <view-id value="/views/institutions/institutionEdit.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="edit-institution">
+        <pattern value="/institutions/edit/#{idInstitution}" />
+        <view-id value="/views/institutions/institutionEdit.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="helpertables">
+        <pattern value="/helpertables" />
+        <view-id value="/views/helpertables/helpertables.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="edit-helpertable">
+        <pattern value="/helpertables/edit/#{idHelperTable}" />
+        <view-id value="/views/helpertables/helpertable.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="descriptions">
+        <pattern value="/descriptions" />
+        <view-id value="/views/browser/descriptionBrowser.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="descriptions-pending">
+        <pattern value="/descriptions/pending" />
+        <view-id value="/views/browser/pendingBrowser.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="descriptions-not-valid">
+        <pattern value="/descriptions/not-valid" />
+        <view-id value="/views/browser/noValidBrowser.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="concepts-drugs">
+        <pattern value="/drugs" />
+        <view-id value="/views/browser/drugsBrowser.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="concepts-extract">
+        <pattern value="/extract" />
+        <view-id value="/views/concept/extractor.xhtml" />
     </url-mapping>
 
 </pretty-config>

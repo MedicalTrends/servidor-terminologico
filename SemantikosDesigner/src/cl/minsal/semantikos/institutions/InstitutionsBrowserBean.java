@@ -78,7 +78,7 @@ public class InstitutionsBrowserBean {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
 
         try {
-            eContext.redirect(eContext.getRequestContextPath() + "/views/institutions/institutionEdit.xhtml?idInstitution=0");
+            eContext.redirect(eContext.getRequestContextPath() + "/institutions/new/0");
         } catch (IOException e) {
             e.printStackTrace();
         }

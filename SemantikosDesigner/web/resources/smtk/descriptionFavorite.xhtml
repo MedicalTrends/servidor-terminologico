@@ -58,7 +58,7 @@
                                  rows="1"
                                  validator="#{validatorBean.validateRequiredInput}"
                                  value="#{cc.attrs.description.term}"
-                                 readonly="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
+                                 readonly="#{cc.attrs.description.conceptSMTK.modeled}"
                                  autocomplete="off">
                     <p:ajax event="keyup" update="@(.FSN)" listener="#{descriptionBeans.updateFSNFromFavourite(cc.attrs.description)}" process="@this" />
                 </p:inputTextarea>

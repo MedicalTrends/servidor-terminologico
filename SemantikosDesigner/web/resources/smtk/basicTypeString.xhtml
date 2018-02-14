@@ -41,7 +41,6 @@
                                      var="value"
                                      minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                      maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
-                                     readonly="#{not cc.attrs.concept.editable}"
                                      rendered="#{cc.attrs.targetDefinition.type.typeName=='string' and not cc.attrs.targetDefinition.discreteDomain}"
                                      styleClass="relationships"
                                      autocomplete="off">
@@ -123,7 +122,6 @@
                                      autocomplete="off"
                                      minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                      maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
-                                     readonly="#{not cc.attrs.concept.editable}"
                                      rendered="#{cc.attrs.targetDefinition.type.typeName=='string' and not cc.attrs.targetDefinition.discreteDomain}">
                             <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)" event="blur" />

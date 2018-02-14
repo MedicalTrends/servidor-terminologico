@@ -39,4 +39,15 @@ public class QuestionManagerImpl implements QuestionManager {
         return questionDAO.getAllQuestions();
     }
 
+    @Override
+    public Answer bindAnswerToUser(User user, Answer answer, User _user) {
+        questionDAO.bindAnswerToUser(user, answer);
+
+        /* Registrar en el Historial si es preferida (Historial BR) */
+        //auditManager.recordUserAnswerBinding(user, answer, _user);
+
+        /* Se retorna el establecimiento persistido */
+        return answer;
+    }
+
 }

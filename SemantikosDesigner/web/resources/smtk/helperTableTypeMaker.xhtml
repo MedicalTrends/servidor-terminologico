@@ -38,7 +38,7 @@
 
                     <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
-                        <p:outputPanel styleClass="search" rendered="#{cc.attrs.concept.editable}">
+                        <p:outputPanel styleClass="search">
 
                             <p:selectOneMenu id="findHTRecords1" scrollHeight="200"
                                              forceSelection="true"
@@ -69,7 +69,7 @@
                             </p:selectOneMenu>
 
                         </p:outputPanel>
-                        <p:outputPanel styleClass="search" rendered="#{not cc.attrs.concept.editable}">
+                        <p:outputPanel styleClass="search">
                             <p:inputText disabled="true" id="findHTRecords" value="#{relationship.target.fields['description']}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
                         </p:outputPanel>
                     </div>

@@ -81,7 +81,7 @@ public class AccountActivation {
         else {
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             try {
-                context.redirect(context.getRequestContextPath() + "/" + Constants.VIEWS_FOLDER+ "/" + Constants.LOGIN_PAGE );
+                context.redirect(context.getRequestContextPath() + Constants.LOGIN_PAGE );
             } catch (IOException e) {
                 e.printStackTrace();
             }

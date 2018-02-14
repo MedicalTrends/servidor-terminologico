@@ -131,6 +131,7 @@ public class AuthenticationBean {
     }
 
     public void logout() {
+
         logger.info("Usuario: " + email + " ha cerrado su sesión.");
 
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();

@@ -18,15 +18,8 @@
     <p:fieldset legend="Crossmaps Indirecto"
              styleClass="crossmapindirect">
 
-        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
-            <p:outputPanel>
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="El concepto no tiene Crossmaps Indirecto" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
-
         <p:dataTable value="#{crossmapBean.indirectCrossmaps}" var="crossmapsIndirect"
-                     rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+                     rendered="#{ not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
             <p:column headerText="Terminología">
                 <h:outputText value="#{crossmapsIndirect.target.crossmapSet.name}"/>
             </p:column>

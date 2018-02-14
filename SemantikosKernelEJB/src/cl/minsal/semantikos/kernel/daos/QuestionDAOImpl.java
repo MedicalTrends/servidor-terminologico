@@ -139,6 +139,30 @@ public class QuestionDAOImpl implements QuestionDAO {
         }
     }
 
+    public void bindAnswerToUser(User user, Answer answer) {
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_user.add_answer(?,?,?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, Types.INTEGER);
+            call.setLong(2, user.getId());
+            call.setLong(3,  answer.getQuestion().getId());
+            call.setString(4, answer.getAnswer());
+
+            call.execute();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al agregar respuesta a usuario de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+    }
+
     private Question createQuestionFromResultSet(ResultSet resultSet) {
         Question question = new Question();
         try {

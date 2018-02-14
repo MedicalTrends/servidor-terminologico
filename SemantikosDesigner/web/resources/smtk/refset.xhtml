@@ -20,7 +20,7 @@
 
         <p:growl id="msgRefSet" showDetail="true" showSummary="true"/>
 
-        <p:outputPanel rendered="#{conceptBean.editable and profilePermissionsBeans.modeler}">
+        <p:outputPanel rendered="#{profilePermissionsBeans.modeler}">
 
             <div class="ui-fluid">
 
@@ -85,13 +85,6 @@
             </div>
         </p:outputPanel>
 
-        <f:facet name="#{(not conceptBean.editable)? 'footer':null}">
-            <p:outputPanel rendered="#{empty refsetsBean.conceptRefSetList}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="El concepto no tiene Refsets asociados" />
-            </p:outputPanel>
-        </f:facet>
-
         <p:dataTable var="refset" value="#{refsetsBean.conceptRefSetList}"
                      rendered="#{true}">
             <p:column headerText="ID RefSet">
@@ -106,7 +99,7 @@
             <p:column headerText="Fecha ingreso">
                 <h:outputText value="#{refsetsBean.refsetHistoryConcept.get(refset.id).getActionDateFormat()}"/>
             </p:column>
-            <p:column rendered="#{conceptBean.editable}">
+            <p:column>
                 <div style="text-align: center">
                     <p:commandButton title="Eliminar RefSet" icon="fa fa-trash"
                                      actionListener="#{refsetsBean.removeConcept(refset,conceptBean.concept)}"

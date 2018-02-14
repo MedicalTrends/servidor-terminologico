@@ -45,7 +45,6 @@
                                         placeholder="#{cc.attrs.relationshipDefinition.name}..."
                                         converter="helperTableRecordConverter"
                                         value="#{conceptBean.selectedHelperTableRecord}"
-                                        disabled="#{not cc.attrs.concept.editable}"
                                         itemLabel="#{record.description}"
                                         itemValue="#{record}">
                             <!-- Parámetros del buscador -->
@@ -151,7 +150,6 @@
                                         var="record"
                                         placeholder="#{cc.attrs.relationshipDefinition.name}..."
                                         converter="helperTableRecordConverter"
-                                        disabled="#{not cc.attrs.concept.editable}"
                                         value="#{conceptBean.selectedHelperTableRecord}"
                                         itemLabel="#{record.description}"
                                         itemValue="#{record}">
@@ -225,19 +223,8 @@
     </p:panel>
 
     <!-- Multiplicidad N sin atributos-->
-    <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.relationshipDefinition.required}"
+    <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleSpeed="500" collapsed="#{cc.attrs.relationshipDefinition.required}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and not cc.attrs.relationshipDefinition.ISP}">
-
-        <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.required}">
-                <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
-            </p:outputPanel>
-            <p:outputPanel rendered="#{not cc.attrs.relationshipDefinition.required}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Atributo opcional" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
 
         <div class="ui-fluid">
 
@@ -256,7 +243,6 @@
                                         var="helperTableRecord"
                                         placeholder="#{cc.attrs.relationshipDefinition.name}..."
                                         converter="helperTableRecordConverter"
-                                        rendered="#{cc.attrs.concept.editable}"
                                         disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
                                         value="#{conceptBean.selectedHelperTableRecord}"
                                         itemLabel="#{helperTableRecord.description}"
@@ -299,7 +285,7 @@
             </p:columns>
 
 
-            <p:column headerText="Acción" rendered="#{cc.attrs.concept.editable}">
+            <p:column headerText="Acción">
                 <div style="text-align: center">
                     <p:commandButton
                             icon="fa fa-trash"
@@ -321,18 +307,7 @@
     <p:fieldset id="helperTableTypeCollectionWithAttributes" legend="#{cc.attrs.relationshipDefinition.name}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
-        <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.required}">
-                <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
-            </p:outputPanel>
-            <p:outputPanel rendered="#{not cc.attrs.relationshipDefinition.required}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Atributo opcional" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
-
-        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" rendered="#{cc.attrs.concept.editable}" style="width:100%">
+        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%">
 
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
@@ -431,7 +406,7 @@
                 <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
             </p:columns>
 
-            <p:column style="" rendered="#{cc.attrs.concept.editable}">
+            <p:column style="">
                 <div style="text-align: center">
                     <p:commandButton
                             icon="fa fa-trash"

@@ -5,8 +5,6 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
 
-
-
     <ui:define name="content">
 
         <f:metadata>
@@ -20,7 +18,8 @@
 
                     <p:breadCrumb>
                         <p:menuitem value="Inicio" url="/views/home.xhtml" />
-                        <p:menuitem value="Administración Tablas" url="#" />
+                        <p:menuitem value="Administración Tablas" url="/views/helpertables/helpertables.xhtml" />
+                        <p:menuitem value="#{helperTableEditBean.helperTableSelected.name}" url="#"/>
                     </p:breadCrumb>
 
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -74,8 +73,6 @@
                                         <p:ajax event="itemSelect" update="@(.table-data-edit)"
                                                 process="@this"
                                                 listener="#{helperTableEditBean.getRecordSearchValid(helperTableEditBean.helperTableSelected,helperTableEditBean.valid)}"/>
-
-
                                     </p:selectOneMenu>
                                 </div>
 
@@ -89,7 +86,7 @@
                                 widgetVar="table-data-edit-wvar"
                                 id="table-data-edit" styleClass="table-data-edit"
                                 var="row"
-                                scrollable="true" scrollWidth="100%"
+                                reflow="true"
                                 rowKey="#{row.id}" value="#{helperTableEditBean.helperTableSelected.rows}"
                                 editable="true" paginator="true" rows="30">
                             <f:facet name="header">

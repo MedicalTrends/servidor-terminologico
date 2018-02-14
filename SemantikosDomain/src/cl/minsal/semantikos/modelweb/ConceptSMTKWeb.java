@@ -33,7 +33,6 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
     List<RelationshipWeb> relationshipsWeb = new ArrayList<RelationshipWeb>();
 
 
-    boolean editable = false;
 
 
     //Este es el constructor mínimo
@@ -284,14 +283,6 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
         }
 
         addRelationshipWeb(new RelationshipWeb(this, r.getId(), r, r.getRelationshipAttributes()));
-    }
-
-    public boolean isEditable() {
-        return editable;
-    }
-
-    public void setEditable(boolean editable) {
-        this.editable = editable;
     }
 
     /**
