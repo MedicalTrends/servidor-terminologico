@@ -24,6 +24,13 @@
 
     <h:body styleClass="main-body #{guestPreferences.compact ? 'layout-compact' : null}">
 
+        <h:form>
+            <p:idleMonitor timeout="#{timeOutSessionBean.timeOut}">
+                <p:ajax event="idle" process="@this" listener="#{timeOutSessionBean.redirectSession}"/>
+                <p:ajax event="active" listener="#{timeOutSessionBean.redirectSession}"/>
+            </p:idleMonitor>
+        </h:form>
+
         <f:facet name="last">
             <h:outputStylesheet name="semantikos/css/customStyle.css"/>
         </f:facet>

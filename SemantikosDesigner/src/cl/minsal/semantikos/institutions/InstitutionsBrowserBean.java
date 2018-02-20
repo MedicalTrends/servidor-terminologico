@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.institutions;
 
+import cl.minsal.semantikos.Constants;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.AuditManager;
 import cl.minsal.semantikos.kernel.components.InstitutionManager;
@@ -78,7 +79,7 @@ public class InstitutionsBrowserBean {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
 
         try {
-            eContext.redirect(eContext.getRequestContextPath() + "/institutions/new/0");
+            eContext.redirect(eContext.getRequestContextPath() + Constants.VIEWS_FOLDER + "/institutions/new/0");
         } catch (IOException e) {
             e.printStackTrace();
         }

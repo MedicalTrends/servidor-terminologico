@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.browser;
 
+import cl.minsal.semantikos.Constants;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.users.AuthenticationBean;
 
@@ -410,7 +411,7 @@ public class GeneralBrowserBean implements Serializable {
             query = "*";
         }
 
-        eContext.redirect(eContext.getRequestContextPath() + "/concepts/new/" + idCategory + "/0/" + query);
+        eContext.redirect(eContext.getRequestContextPath() + Constants.VIEWS_FOLDER + "/concepts/new/" + idCategory + "/0/" + query);
     }
 
     public void onRowToggle(ToggleEvent event) {

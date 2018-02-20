@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.users;
 
+import cl.minsal.semantikos.Constants;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
@@ -55,7 +56,7 @@ public class UsersBroswerBean {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
 
         try {
-            eContext.redirect(eContext.getRequestContextPath() + "/users/new/0");
+            eContext.redirect(eContext.getRequestContextPath() + Constants.VIEWS_FOLDER +  "/users/new/0");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1262,6 +1262,9 @@ public class ConceptBean implements Serializable {
     }
 
     public void setFavoriteDescription(String favoriteDescription) {
+        if(favoriteDescription.equals("*")) {
+            favoriteDescription = EMPTY_STRING;
+        }
         this.favoriteDescription = favoriteDescription;
         if(concept==null) {
             createConcept();

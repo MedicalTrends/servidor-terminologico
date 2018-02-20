@@ -116,6 +116,7 @@
                     <!-- Otras descripciones -->
                     <p:tab title="Perfiles">
                         <p:pickList id="pickList1" value="#{users.selectedUserProfileModel}" var="profile" disabled="#{ not users.selectedUser.valid}"
+                                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains"
                                     itemLabel="#{profile.name}" itemValue="#{profile}"
                                     responsive="true" converter="profileConverter" style="width: 100%" >
                             <f:facet name="sourceCaption">Disponibles</f:facet>
@@ -127,6 +128,7 @@
                     <!-- Otras descripciones -->
                     <p:tab title="Establecimientos">
                         <p:pickList id="pickList2" value="#{users.selectedUserInsitutionModel}" var="institution" disabled="#{ not users.selectedUser.valid}"
+                                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains"
                                     itemLabel="#{institution.name}" itemValue="#{institution}"
                                     responsive="true" converter="institutionConverter" style="width: 100%" >
                             <f:facet name="sourceCaption">Disponibles</f:facet>
