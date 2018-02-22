@@ -35,6 +35,8 @@ public class CrossmapBean implements Serializable {
 
     private List<CrossmapSet> crossmapSets;
 
+    private CrossmapSet selectedCrossmapSet;
+
     private List<IndirectCrossmap> indirectCrossmaps;
 
     private String typeSearch;
@@ -52,20 +54,20 @@ public class CrossmapBean implements Serializable {
 
     public List<CrossmapSetMember> getCrossmapSearchInput(String patron) {
 
+        if(selectedCrossmapSet == null) {
+            return emptyList();
+        }
+
         /* Si el patrón viene vacío o es menor a tres caracteres, no se hace nada */
         if ( patron == null || patron.length() < 2 ) {
             return emptyList();
         }
 
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        CrossmapSet crossmapSet = (CrossmapSet) UIComponent.getCurrentComponent(context).getAttributes().get("crossmapSet");
-
         List<CrossmapSetMember> someCrossmapSetMembers;
         if(typeSearch.equals("1")){
-            someCrossmapSetMembers= crossmapsManager.findByPatternCode1(crossmapSet,patron);
+            someCrossmapSetMembers= crossmapsManager.findByPatternCode1(selectedCrossmapSet,patron);
         }else{
-            someCrossmapSetMembers =crossmapsManager.findByPattern(crossmapSet, patron);
+            someCrossmapSetMembers =crossmapsManager.findByPattern(selectedCrossmapSet, patron);
         }
 
         return someCrossmapSetMembers;
@@ -77,6 +79,14 @@ public class CrossmapBean implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public CrossmapSet getSelectedCrossmapSet() {
+        return selectedCrossmapSet;
+    }
+
+    public void setSelectedCrossmapSet(CrossmapSet selectedCrossmapSet) {
+        this.selectedCrossmapSet = selectedCrossmapSet;
     }
 
 

@@ -38,7 +38,8 @@
 
                     <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                        <p:selectOneMenu value="#{cc.attrs.targetDefinition}" autoWidth="false" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu value="#{crossmapBean.selectedCrossmapSet}" autoWidth="false" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="Seleccionar..." noSelectionOption="true" itemDisabled="true"/>
                             <f:selectItems itemLabel="#{crossmapSet.abbreviatedName}" value="#{crossmapBean.crossmapSets}" itemValue="#{crossmapSet}" var="crossmapSet" />
                             <p:ajax event="itemSelect" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
                         </p:selectOneMenu>
@@ -63,7 +64,7 @@
 
                             <p:autoComplete id="findCSM6" scrollHeight="200"
                                             completeMethod="#{crossmapBean.getCrossmapSearchInput}"
-                                            forceSelection="true"
+                                            forceSelection="true" minQueryLength="3"
                                             var="crossmap"
                                             placeholder="#{cc.attrs.targetDefinition.abbreviatedName}"
                                             converter="crossmapSetMemberConverter"
