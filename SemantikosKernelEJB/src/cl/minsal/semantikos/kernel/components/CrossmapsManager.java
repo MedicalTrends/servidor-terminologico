@@ -125,7 +125,7 @@ public interface CrossmapsManager {
      *
      * @return Una lista de registros
      */
-    public List<CrossmapSetMember> findByPattern(CrossmapSet crossmapSet, String pattern);
+    public List<ICrossmapSetRecord> findByPattern(CrossmapSet crossmapSet, String pattern);
     /**
      * Este método busca registros en las terminologías externas términos que cumplan con el código.
      *

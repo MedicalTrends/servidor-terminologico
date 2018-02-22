@@ -214,8 +214,8 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     }
 
     @Override
-    public List<CrossmapSetMember> findCrossmapSetMemberBy(CrossmapSet crossmapSet, String pattern) {
-        List<CrossmapSetMember> crossmapSetMembers = new ArrayList<CrossmapSetMember>();
+    public List<ICrossmapSetRecord> findCrossmapSetMemberBy(CrossmapSet crossmapSet, String pattern) {
+        List<ICrossmapSetRecord> crossmapSetMembers = new ArrayList<ICrossmapSetRecord>();
         //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_crossmap.find_crossmapsetmember_by_pattern_and_crossmapset(?,?); end;";
@@ -232,8 +232,13 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
-                CrossmapSetMember crossmapSetMember = createCrossmapSetMemberFromResultSet(rs, crossmapSet);
-                crossmapSetMembers.add(crossmapSetMember);
+                if(crossmapSet.getAbbreviatedName().equals(CrossmapSet.CIE10)) {
+                    CrossmapSetMember crossmapSetMember = createCrossmapSetMemberFromResultSet(rs, crossmapSet);
+                    crossmapSetMembers.add(crossmapSetMember);
+                }
+                if(crossmapSet.getName().equals(CrossmapSet.GMDN)) {
+
+                }
             }
             rs.close();
         } catch (SQLException e) {
@@ -509,6 +514,32 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         }
 
         return new CrossmapSetMember(id, id, crossmapSet, code, gloss);
+    }
+
+    /**
+     * Este método es responsable de crear un objeto <code>CrossmapSetMember</code> a partir de un ResultSet.
+     *
+     * @param rs El ResultSet a partir del cual se crea el crossmap.
+     *
+     * @return Un Crossmap Directo creado a partir del result set.
+     */
+    public GenericDeviceGroup createGenericDeviceGroupFromResultSet(ResultSet rs, CrossmapSet crossmapSet) throws SQLException {
+        // id bigint, id_concept bigint, id_crossmapset bigint, id_user bigint, id_validity_until timestamp
+        long id = rs.getLong("id");
+        long code = rs.getLong("code");
+        String termName  = rs.getString("term_name");
+        String termDefinition = rs.getString("term_definition");
+        String termStatus = rs.getString("term_status");
+        Timestamp createdDate = rs.getTimestamp("created_date");
+        Timestamp modifiedDate = rs.getTimestamp("modified_date");
+        Timestamp obsoletedDate = rs.getTimestamp("obsoleted_date");
+
+        if(crossmapSet == null) {
+            //crossmapSet = getCrossmapSetByID(rs.getLong("id_cross_map_set"));
+            crossmapSet = CrossmapSetFactory.getInstance().findCrossmapSetsById(rs.getLong("id_cross_map_set"));
+        }
+
+        return new GenericDeviceGroup(crossmapSet, id, code, termName, termDefinition, termStatus, createdDate, modifiedDate, obsoletedDate);
     }
 
     /**

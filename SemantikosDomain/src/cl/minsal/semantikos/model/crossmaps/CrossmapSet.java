@@ -18,6 +18,10 @@ public class CrossmapSet extends PersistentEntity implements TargetDefinition, S
 
     private String name;
 
+    public static final String CIE10 = "CIE-10";
+
+    public static final String GMDN = "GMDN";
+
     /** Año de la versión */
     private int version;
 

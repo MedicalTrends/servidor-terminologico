@@ -62,23 +62,24 @@ public class CrossmapBean implements Serializable {
         CrossmapSet crossmapSet = (CrossmapSet) UIComponent.getCurrentComponent(context).getAttributes().get("crossmapSet");
 
         List<CrossmapSetMember> someCrossmapSetMembers;
-        if(typeSearch.equals("1")){
-            someCrossmapSetMembers= crossmapsManager.findByPatternCode1(crossmapSet,patron);
-        }else{
-            someCrossmapSetMembers =crossmapsManager.findByPattern(crossmapSet, patron);
+
+        if(typeSearch.equals("1")) {
+            someCrossmapSetMembers = crossmapsManager.findByPatternCode1(crossmapSet,patron);
+        }
+        else {
+            someCrossmapSetMembers = crossmapsManager.findByPattern(crossmapSet, patron);
         }
 
         return someCrossmapSetMembers;
     }
 
-    public void refreshCrossmapIndirect(ConceptSMTK conceptSMTK){
+    public void refreshCrossmapIndirect(ConceptSMTK conceptSMTK) {
         try {
-            indirectCrossmaps= crossmapsManager.getIndirectCrossmaps(conceptSMTK);
+            indirectCrossmaps = crossmapsManager.getIndirectCrossmaps(conceptSMTK);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     public String getPattern() {
         return pattern;
