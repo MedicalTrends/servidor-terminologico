@@ -112,16 +112,16 @@
                 <h:outputText value="Crossmaps Directos"/>
             </f:facet>
 
-            <p:column headerText="CrossmapSet" rendered="#{ not empty conceptExport.getDirectCrossmapsRelationships() }">
+            <p:column headerText="CrossmapSet" rendered="#{directCrossmap.target.isCIE10Member()}">
                 <h:outputText value="#{directCrossmap.target.crossmapSet.name}"/>
             </p:column>
-            <p:column headerText="Version" rendered="#{ not empty conceptExport.getDirectCrossmapsRelationships() }">
+            <p:column headerText="Version" rendered="#{directCrossmap.target.isCIE10Member()}">
                 <h:outputText value="#{directCrossmap.target.crossmapSet.version}"/>
             </p:column>
-            <p:column headerText="CrossmapSetMember" rendered="#{ not empty conceptExport.getDirectCrossmapsRelationships() }">
+            <p:column headerText="CrossmapSetMember" rendered="#{directCrossmap.target.isCIE10Member()}">
                 <h:outputText value="#{directCrossmap.target.code1} #{directCrossmap.target.gloss}"/>
             </p:column>
-            <p:column headerText="Fecha en que se realizó" rendered="#{ not empty conceptExport.getDirectCrossmapsRelationships() }">
+            <p:column headerText="Fecha en que se realizó" rendered="#{directCrossmap.target.isCIE10Member()}">
                 <h:outputText value="#{directCrossmap.creationDate}"/>
             </p:column>
 

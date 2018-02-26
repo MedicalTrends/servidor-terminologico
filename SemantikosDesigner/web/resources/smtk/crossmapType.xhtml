@@ -19,8 +19,7 @@
 
     <!-- Multiplicidad N con atributos-->
 
-    <p:panel id="crossmapTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{true}"  toggleSpeed="500" collapsed="#{true}"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
+    <p:panel id="crossmapTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{true}"  toggleSpeed="500" collapsed="#{true}">
 
         <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}" style="width:100%">
 
@@ -33,21 +32,21 @@
                     <div class="Container20 White Responsive">
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
-                                <p:selectOneMenu value="#{cc.attrs.targetDefinition}" autoWidth="false" converter="omnifaces.SelectItemsConverter">
-                                    <f:selectItems itemLabel="#{crossmapSet.abbreviatedName}" value="#{crossmapBean.crossmapSets}" itemValue="#{crossmapSet}" var="crossmapSet" />
-                                    <p:ajax event="itemSelect" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
-                                </p:selectOneMenu>
+                            <p:selectOneMenu value="#{cc.attrs.targetDefinition}" autoWidth="false" converter="omnifaces.SelectItemsConverter">
+                                <f:selectItems itemLabel="#{crossmapSet.abbreviatedName}" value="#{crossmapBean.crossmapSets}" itemValue="#{crossmapSet}" var="crossmapSet" />
+                                <p:ajax event="itemSelect" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
+                            </p:selectOneMenu>
 
-                            </div>
                         </div>
+                    </div>
                     <div class="Container20 White Responsive">
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
 
                             <p:selectOneRadio value="#{crossmapBean.typeSearch}" autoWidth="false" layout="grid" columns="2" style="padding-top: 0.5em"
-                                              >
-                                <f:selectItem itemLabel="Búsqueda por descripción" itemValue="0"></f:selectItem>
-                                <f:selectItem itemLabel="Búsqueda por Cod-1 Crossmapset" itemValue="1"></f:selectItem>
+                            >
+                                <f:selectItem itemLabel="Búsqueda por descripción" itemValue="0"/>
+                                <f:selectItem itemLabel="Búsqueda por Cod-1 Crossmapset" itemValue="1"/>
                                 <p:ajax  />
                             </p:selectOneRadio>
 
@@ -69,7 +68,7 @@
                                                 rendered="#{cc.attrs.concept.editable}"
                                                 disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
                                                 value="#{conceptBean.crossmapSetMemberSelected}"
-                                                itemLabel="#{crossmap.gloss}"
+                                                itemLabel="#{crossmap.toString()}"
                                                 itemValue="#{crossmap}">
 
                                     <!-- Parámetros del buscador -->
@@ -79,7 +78,7 @@
                                     <f:attribute name="crossmap" value="#{conceptBean.crossmapSetMemberSelected}"  />
                                     <!---->
                                     <p:column style="width: 500px">
-                                        <h:outputText value="#{crossmap.gloss}"/>
+                                        <h:outputText value="#{crossmap.toString()}"/>
                                     </p:column>
 
                                     <p:ajax event="itemSelect"
@@ -143,8 +142,7 @@
 
         <p:dataTable id="collectionValuesWithAttributes"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
-                     rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
+                     rendered="#{cc.attrs.relationshipDefinition.CIE10}"
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      style="width: 100%"
@@ -156,7 +154,6 @@
 
             <p:ajax event="rowReorder" listener="#{conceptBean.onRowReorder}"
                     update="@(.conceptHeader),@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id})">
-
             </p:ajax>
 
             <p:column headerText="Terminología">
@@ -190,6 +187,59 @@
                 </p:commandButton>
             </p:column>
         </p:dataTable>
+
+        <p:dataTable id="collectionValuesWithAttributes2"
+                     styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
+                     rendered="#{cc.attrs.relationshipDefinition.GMDN}"
+                     var="relationship"
+                     value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     style="width: 100%"
+                     reflow="true">
+
+            <!-- Parámetros del validador -->
+            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+            <!---->
+
+            <p:ajax event="rowReorder" listener="#{conceptBean.onRowReorder}"
+                    update="@(.conceptHeader),@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id})">
+            </p:ajax>
+
+            <p:column headerText="Terminología">
+                <h:outputText value="#{relationship.target.crossmapSet.name}"/>
+            </p:column>
+
+            <p:column headerText="Code">
+                <h:outputText value="#{relationship.target.code}"/>
+            </p:column>
+
+            <p:column headerText="Term Name">
+                <h:outputText value="#{relationship.target.termName}"/>
+            </p:column>
+
+            <p:column headerText="Term Definition">
+                <h:outputText value="#{relationship.target.termDefinition}"/>
+            </p:column>
+
+            <p:column headerText="Fecha Creación">
+                <h:outputText value="#{relationship.getDateCreationFormat()}"/>
+            </p:column>
+
+            <p:column headerText="Acción" style="width: 4%" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}">
+                <p:commandButton
+                        icon="fa fa-trash"
+                        title="Eliminar"
+                        update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                        style="float: right"
+                        process="@this"
+                        immediate="true"
+                        actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                        styleClass="relationships">
+                    <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar este Crossmaps Directo?"
+                               icon="ui-icon-alert"/>
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+
     </p:panel>
 
 </composite:implementation>

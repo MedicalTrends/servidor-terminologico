@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.DaoTools;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.relationships.*;
 import oracle.jdbc.OracleTypes;
 import oracle.sql.NUMBER;
@@ -61,7 +62,7 @@ public class TargetDAOImpl implements TargetDAO {
     private DataSource dataSource;
 
     @Override
-    public Target getTargetByID(long idTarget) {
+    public Target getTargetByID(TargetDefinition targetDefinition, long idTarget) {
 
         Target target;
         //ConnectionBD connect = new ConnectionBD();
@@ -82,7 +83,7 @@ public class TargetDAOImpl implements TargetDAO {
             if (rs.next()) {
                 //String jsonResult = rs.getString(1);
                 //target = targetFactory.createTargetFromJSON(jsonResult);
-                target = createTargetFromResultSet(rs);
+                target = createTargetFromResultSet(targetDefinition, rs);
             } else {
                 String errorMsg = "Un error imposible acaba de ocurrir";
                 logger.error(errorMsg);
@@ -101,7 +102,7 @@ public class TargetDAOImpl implements TargetDAO {
     }
 
     @Override
-    public Target getDefaultTargetByID(long idTarget) {
+    public Target getDefaultTargetByID(TargetDefinition targetDefinition, long idTarget) {
 
         Target target;
         //ConnectionBD connect = new ConnectionBD();
@@ -120,7 +121,7 @@ public class TargetDAOImpl implements TargetDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-                target = createTargetFromResultSet(rs);
+                target = createTargetFromResultSet(targetDefinition, rs);
             } else {
                 String errorMsg = "Un error imposible acaba de ocurrir";
                 logger.error(errorMsg);
@@ -473,7 +474,7 @@ public class TargetDAOImpl implements TargetDAO {
      * @param rs Una expresión JSON de la forma {"id":1,"float_value":null,"date_value":null,"string_value":"strig","boolean_value":null,"int_value":null,"id_auxiliary":null,"id_extern":null,"id_concept_sct":null,"id_concept_stk":null,"id_target_type":null}
      * @return Una instancia fresca y completa
      */
-    public Target createTargetFromResultSet(ResultSet rs) {
+    public Target createTargetFromResultSet(TargetDefinition targetDefinition, ResultSet rs) {
 
         Target target = null;
 
@@ -487,7 +488,7 @@ public class TargetDAOImpl implements TargetDAO {
             if (idHelperTableRecord > 0) {
                 target = helperTableDAO.getRowById(idHelperTableRecord);
             } else if (idExtern > 0) {
-                target = crossmapsDAO.getCrossmapSetMemberById(idExtern);
+                target = crossmapsDAO.getCrossmapSetMemberById((CrossmapSet) targetDefinition, idExtern);
             } else if (idConceptSct > 0) {
                 target = snomedCTDAO.getConceptByID(idConceptSct);
             } else if (idConceptStk > 0) {

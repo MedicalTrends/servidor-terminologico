@@ -1,7 +1,11 @@
 package cl.minsal.semantikos.converters;
 
 import cl.minsal.semantikos.designer.CrossmapBean;
+import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetRecord;
+import cl.minsal.semantikos.model.crossmaps.ICrossmapSetRecord;
 
 import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
@@ -16,8 +20,8 @@ import javax.faces.convert.FacesConverter;
  */
 
 //@FacesConverter("helperTableRecordConverter")
-@FacesConverter(value="crossmapSetMemberConverter",forClass = CrossmapSetMember.class)
-public class CrossmapSetMemberConverter implements Converter{
+@FacesConverter(value="crossmapSetMemberConverter",forClass = CrossmapSetRecord.class)
+public class CrossmapSetMemberConverter implements Converter {
 
 
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
@@ -26,8 +30,11 @@ public class CrossmapSetMemberConverter implements Converter{
             try {
 
                 ELContext elContext = fc.getELContext();
+
+                CrossmapSet crossmapSet = (CrossmapSet) UIComponent.getCurrentComponent(fc).getAttributes().get("crossmapSet");
+
                 CrossmapBean bean = (CrossmapBean) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext, null, "crossmapBean");
-                return bean.getCrossmapsManager().getCrossmapSetMemberById(Long.parseLong(value));
+                return bean.getCrossmapsManager().getCrossmapSetMemberById(crossmapSet, Long.parseLong(value));
                 //return bean.getRecordById(helperTable, Long.parseLong(value));
 
             } catch(NumberFormatException e) {
@@ -41,7 +48,7 @@ public class CrossmapSetMemberConverter implements Converter{
 
     public String getAsString(FacesContext fc, UIComponent uic, Object object) {
         if(object != null) {
-            return String.valueOf(((CrossmapSetMember) object).getId());
+            return String.valueOf(((CrossmapSetRecord) object).getId());
         }
         else {
             return "";

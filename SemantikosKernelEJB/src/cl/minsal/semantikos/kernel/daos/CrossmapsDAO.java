@@ -24,17 +24,6 @@ public interface CrossmapsDAO {
      */
     public DirectCrossmap create(DirectCrossmap directCrossmap, User user);
 
-    /**
-     * Este método es responsable de recuperar un CrossMap Directo desde la base de datos.
-     *
-     * @param id El identificador único en la base de datos.
-     * @return Un CrossMap Directo fresco creado a partir de la base de datos.
-     */
-    public DirectCrossmap getDirectCrossmapById(long id);
-
-    public DirectCrossmap bindConceptSMTKToCrossmapSetMember(ConceptSMTK conceptSMTK, CrossmapSetMember
-            crossmapSetMember);
-
     public CrossmapSet getCrossmapSetByID(long id);
 
     /**
@@ -43,16 +32,7 @@ public interface CrossmapsDAO {
      * @param idCrossmapSetMember El ID del crossmapSet que se desea recuperar.
      * @return Un CrossmapSetMember fresco.
      */
-    public CrossmapSetMember getCrossmapSetMemberById(long idCrossmapSetMember);
-
-    /**
-     * Este método es responsable de recuperar todas las relaciones que van desde un concepto Snomed CT hacia registros
-     * en otras terminologías (CrossmapSetMembers).
-     *
-     * @param conceptSCT El concepto Snomed CT del cual salen las referencias a términos en otras terminologías.
-     * @return Una lista de terminos de terminologías externas asociadas al concepto Snomed <code>conceptSCT</code>.
-     */
-    List<CrossmapSetMember> getRelatedCrossMapSetMembers(ConceptSCT conceptSCT);
+    public CrossmapSetRecord getCrossmapSetMemberById(CrossmapSet crossmapSet, long idCrossmapSetMember);
 
     /**
      * Este método es responsable de recuperar un CrossmapSetMember dada su terminología y un patrón de búsqueda
@@ -105,5 +85,5 @@ public interface CrossmapsDAO {
      * @param crossmapSet El crossmap Set cuyos miembros se quieren recuperar.
      * @return La lista de los miembros del crossmap set indicado.
      */
-    List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize);
+    List<CrossmapSetRecord> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize);
 }

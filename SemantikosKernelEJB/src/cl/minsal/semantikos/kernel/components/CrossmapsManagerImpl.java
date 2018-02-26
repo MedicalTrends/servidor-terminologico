@@ -146,13 +146,13 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
-    public List<CrossmapSetMember> getDirectCrossmapsSetMembersOf(ConceptSMTK conceptSMTK) {
+    public List<CrossmapSetRecord> getDirectCrossmapsSetMembersOf(ConceptSMTK conceptSMTK) {
 
         /* Se obtienen los crossmaps directos del concepto */
         List<DirectCrossmap> directCrossmaps = this.getDirectCrossmaps(conceptSMTK);
 
         /* Luego se almacenan los crossmapSetMembers referenciados en una lista */
-        ArrayList<CrossmapSetMember> directCrossmapSetMembers = new ArrayList<>();
+        ArrayList<CrossmapSetRecord> directCrossmapSetMembers = new ArrayList<>();
         for (DirectCrossmap directCrossmap : directCrossmaps) {
             directCrossmapSetMembers.add(directCrossmap.getTarget());
         }
@@ -161,8 +161,8 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
-    public CrossmapSetMember getCrossmapSetMemberById(long id) {
-        return crossmapsDAO.getCrossmapSetMemberById(id);
+    public CrossmapSetRecord getCrossmapSetMemberById(CrossmapSet crossmapSet, long id) {
+        return crossmapsDAO.getCrossmapSetMemberById(crossmapSet, id);
     }
 
     @Override
@@ -173,7 +173,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
-    public List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize) {
+    public List<CrossmapSetRecord> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize) {
 
         /* Lo primero es recuperar el crossmapSet a partir de su nombre abreviado */
         return crossmapsDAO.getCrossmapSetMemberByCrossmapSet(crossmapSet, page, pageSize);
@@ -200,11 +200,6 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
 
         logger.debug("Se cargaron " + indirectCrossmaps.size() + " indirectos para el concepto " + conceptSMTK + ": " + indirectCrossmaps);
         return indirectCrossmaps;
-    }
-
-    @Override
-    public DirectCrossmap bind(ConceptSMTK conceptSMTK, CrossmapSetMember crossmapSetMember) {
-        return crossmapsDAO.bindConceptSMTKToCrossmapSetMember(conceptSMTK, crossmapSetMember);
     }
 
     @Override

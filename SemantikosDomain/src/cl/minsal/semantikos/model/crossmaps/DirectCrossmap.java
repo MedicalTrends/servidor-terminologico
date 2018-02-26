@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 public class DirectCrossmap extends Crossmap implements Target, Serializable {
 
 
-    public DirectCrossmap(ConceptSMTK sourceConcept, CrossmapSetMember target, RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
+    public DirectCrossmap(ConceptSMTK sourceConcept, CrossmapSetRecord target, RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
         super(sourceConcept, target, relationshipDefinition, validityUntil);
     }
     /**
@@ -28,7 +28,7 @@ public class DirectCrossmap extends Crossmap implements Target, Serializable {
      * @param relationshipDefinition La definición de la relación.
      * @param validityUntil          La fecha de vigencia.
      */
-    public DirectCrossmap(@NotNull long id, @NotNull ConceptSMTK sourceConcept, @NotNull CrossmapSetMember target, @NotNull RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
+    public DirectCrossmap(@NotNull long id, @NotNull ConceptSMTK sourceConcept, @NotNull CrossmapSetRecord target, @NotNull RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
         super(id, sourceConcept, target, relationshipDefinition, validityUntil);
     }
 
@@ -53,8 +53,8 @@ public class DirectCrossmap extends Crossmap implements Target, Serializable {
     }
 
     @Override
-    public CrossmapSetMember getTarget() {
-        return (CrossmapSetMember) super.getTarget();
+    public CrossmapSetRecord getTarget() {
+        return (CrossmapSetRecord) super.getTarget();
 
     }
 }

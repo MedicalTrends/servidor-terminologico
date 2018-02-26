@@ -145,8 +145,6 @@ public class MainMenuBean implements Serializable {
         eContext.redirect(eContext.getRequestContextPath() + "/views/browser/generalBrowser.xhtml?idCategory="+idCategory);
     }
 
-
-
     public List<Category> getCategories() {
         return categories;
     }

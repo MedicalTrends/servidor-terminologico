@@ -260,4 +260,12 @@ public class RelationshipDefinition implements Serializable {
         return this.getName().equalsIgnoreCase(SNOMEDCT);
     }
 
+    public boolean isCIE10() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.CIE10);
+    }
+
+    public boolean isGMDN() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.GMDN);
+    }
+
 }

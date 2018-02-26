@@ -1,18 +1,28 @@
-package cl.minsal.semantikos.model.crossmaps;
+package cl.minsal.semantikos.modelws.response;
 
+import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
+
 /**
  * Created by des01c7 on 20-11-17.
  */
-public class GenericDeviceGroup extends CrossmapSetRecord implements Serializable, ICrossmapSetRecord {
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "genericDeviceGroupResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "GenericDeviceGroupResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
+public class GenericDeviceGroupResponse extends CrossmapSetRecordResponse implements Serializable {
 
     /** Terminología a la que pertenece */
     private CrossmapSet crossmapSet;
@@ -39,23 +49,22 @@ public class GenericDeviceGroup extends CrossmapSetRecord implements Serializabl
 
     private Timestamp obsoletedDate;
 
-    /**
-     * Esta lista representa el mapping GMDN-SnomedCT
-     * TODO: Si es necesario, redefinir cuando Minsal envie los datafiles
-     */
+    public GenericDeviceGroupResponse() {
+    }
+
     private List<ConceptSCT> conceptSCTs = new ArrayList<>();
 
-    public GenericDeviceGroup(CrossmapSet crossmapSet, long id, long code, String termName, String termDefinition, String termStatus, Timestamp createdDate, Timestamp modifiedDate, Timestamp obsoletedDate) {
-        super(id);
-        this.crossmapSet = crossmapSet;
-        this.code = code;
-        this.termName = termName;
-        this.termDefinition = termDefinition;
-        this.termStatus = termStatus;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
-        this.obsoletedDate = obsoletedDate;
-        this.conceptSCTs = conceptSCTs;
+    public GenericDeviceGroupResponse(CrossmapSetRecord crossmapSetMember) {
+        if(crossmapSetMember instanceof GenericDeviceGroup) {
+
+            this.code = (((GenericDeviceGroup) crossmapSetMember).getCode());
+            //this.crossmapSet = new CrossmapSetResponse(crossmapSetMember.getCrossmapSet());
+            this.termName = ((GenericDeviceGroup) crossmapSetMember).getTermName();
+            this.termDefinition = ((GenericDeviceGroup) crossmapSetMember).getTermDefinition();
+
+            this.createdDate = ((GenericDeviceGroup) crossmapSetMember).getCreatedDate();
+
+        }
     }
 
     public long getCode() {
@@ -123,21 +132,6 @@ public class GenericDeviceGroup extends CrossmapSetRecord implements Serializabl
     }
 
     @Override
-    public TargetType getTargetType() {
-        return TargetType.CrossMap;
-    }
-
-    @Override
-    public String getRepresentation() {
-        return this.code + this.termName;
-    }
-
-    @Override
-    public Target copy() {
-        return new GenericDeviceGroup(this.crossmapSet, this.getId(), this.getCode(), this.getTermName(), this.getTermDefinition(), this.getTermStatus(), this.getCreatedDate(), this.getModifiedDate(), this.getObsoletedDate());
-    }
-
-    @Override
     public int hashCode() {
         return this.getClass().hashCode() + new Long(code).hashCode();
     }
@@ -147,13 +141,4 @@ public class GenericDeviceGroup extends CrossmapSetRecord implements Serializabl
         return getTermName();
     }
 
-    @Override
-    public boolean isCIE10Member() {
-        return false;
-    }
-
-    @Override
-    public boolean isGMDNMember() {
-        return true;
-    }
 }

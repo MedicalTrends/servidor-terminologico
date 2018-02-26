@@ -19,7 +19,6 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter(value="basicTypeConverter",forClass = BasicTypeValue.class)
 public class BasicTypeConverter implements Converter{
 
-
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
 
         BasicTypeDefinition basicTypeDefinition = (BasicTypeDefinition) UIComponent.getCurrentComponent(fc).getAttributes().get("basicTypeDefinition");

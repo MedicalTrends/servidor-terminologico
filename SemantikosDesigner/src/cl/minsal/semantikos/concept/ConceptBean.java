@@ -5,6 +5,7 @@ import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.description.AutogenerateBeans;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.messages.MessageBean;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetRecord;
 import cl.minsal.semantikos.relationship.RelationshipBeans;
 import cl.minsal.semantikos.session.ProfilePermissionsBeans;
 import cl.minsal.semantikos.snomed.SCTTypeBean;
@@ -228,7 +229,7 @@ public class ConceptBean implements Serializable {
 
     private ConceptSCT conceptSCTSelected;
 
-    private CrossmapSetMember crossmapSetMemberSelected;
+    private CrossmapSetRecord crossmapSetMemberSelected;
 
     private Map<Long, ConceptSMTK> targetSelected;
 
@@ -573,6 +574,10 @@ public class ConceptBean implements Serializable {
         }
 
         if(!isMCSpecialThisConcept() && concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0 && !relationshipDefinition.isSNOMEDCT())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+
+        // Se setea la definición pasada por parámetro, para rescatar posibles modificaciones a nivel de vista
+        relationship.setRelationshipDefinition(relationshipDefinition);
+
        // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
         if(!isMCSpecialThisConcept() && !relationshipDefinition.isSNOMEDCT()) {
@@ -1472,11 +1477,11 @@ public class ConceptBean implements Serializable {
         this.changeMarketedBean = changeMarketedBean;
     }
 
-    public CrossmapSetMember getCrossmapSetMemberSelected() {
+    public CrossmapSetRecord getCrossmapSetMemberSelected() {
         return crossmapSetMemberSelected;
     }
 
-    public void setCrossmapSetMemberSelected(CrossmapSetMember crossmapSetMemberSelected) {
+    public void setCrossmapSetMemberSelected(CrossmapSetRecord crossmapSetMemberSelected) {
         this.crossmapSetMemberSelected = crossmapSetMemberSelected;
     }
 

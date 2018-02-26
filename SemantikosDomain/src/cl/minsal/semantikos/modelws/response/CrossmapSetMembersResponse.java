@@ -1,6 +1,8 @@
 package cl.minsal.semantikos.modelws.response;
 
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetRecord;
+import cl.minsal.semantikos.model.crossmaps.GenericDeviceGroup;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
@@ -36,7 +38,7 @@ public class CrossmapSetMembersResponse implements Serializable{
     /** La lista de crossmaps indirectos (response) */
     @XmlElementWrapper(name = "crossmapSetMembers")
     @XmlElement(name = "crossmapSetMember")
-    private List<CrossmapSetMemberResponse> crossmapSetMemberResponses;
+    private List<CrossmapSetRecordResponse> crossmapSetMemberResponses;
 
     @XmlElement(name = "cantidadRegistros")
     private int quantity;
@@ -51,15 +53,20 @@ public class CrossmapSetMembersResponse implements Serializable{
      *
      * @param crossmapSetMembers La lista de crossmapSetMembers de negocio.
      */
-    public CrossmapSetMembersResponse(List<CrossmapSetMember> crossmapSetMembers) {
+    public CrossmapSetMembersResponse(List<CrossmapSetRecord> crossmapSetMembers) {
         this();
 
         if (crossmapSetMembers == null || crossmapSetMembers.isEmpty()){
             return;
         }
 
-        for (CrossmapSetMember crossmapSetMember : crossmapSetMembers) {
-            this.crossmapSetMemberResponses.add(new CrossmapSetMemberResponse(crossmapSetMember));
+        for (CrossmapSetRecord crossmapSetMember : crossmapSetMembers) {
+            if(crossmapSetMember instanceof  CrossmapSetMember) {
+                this.crossmapSetMemberResponses.add(new CrossmapSetMemberResponse(crossmapSetMember));
+            }
+            if(crossmapSetMember instanceof GenericDeviceGroup) {
+                this.crossmapSetMemberResponses.add(new GenericDeviceGroupResponse(crossmapSetMember));
+            }
         }
 
         this.quantity = crossmapSetMembers.size();
@@ -121,11 +128,11 @@ public class CrossmapSetMembersResponse implements Serializable{
         this.version = version;
     }
 
-    public List<CrossmapSetMemberResponse> getCrossmapSetMemberResponses() {
+    public List<CrossmapSetRecordResponse> getCrossmapSetMemberResponses() {
         return crossmapSetMemberResponses;
     }
 
-    public void setCrossmapSetMemberResponses(List<CrossmapSetMemberResponse> crossmapSetMemberResponses) {
+    public void setCrossmapSetMemberResponses(List<CrossmapSetRecordResponse> crossmapSetMemberResponses) {
         this.crossmapSetMemberResponses = crossmapSetMemberResponses;
     }
 

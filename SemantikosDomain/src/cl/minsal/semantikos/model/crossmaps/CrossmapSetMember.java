@@ -96,9 +96,9 @@ public class CrossmapSetMember extends CrossmapSetRecord implements Serializable
 
     @Override
     public String toString() {
-        return Long.toString(idCrossmapSetMember);
+        //return Long.toString(idCrossmapSetMember);
+        return gloss;
     }
-
 
     @Override
     public Target copy() {
@@ -111,5 +111,15 @@ public class CrossmapSetMember extends CrossmapSetRecord implements Serializable
 
     public void setCode1(String code1) {
         this.code1 = code1;
+    }
+
+    @Override
+    public boolean isCIE10Member() {
+        return true;
+    }
+
+    @Override
+    public boolean isGMDNMember() {
+        return false;
     }
 }

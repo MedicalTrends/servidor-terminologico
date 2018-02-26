@@ -6,10 +6,7 @@ import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
-import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
-import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.tags.Tag;
 
 
@@ -207,6 +204,26 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
         List<RelationshipWeb> someRelationships = new ArrayList<RelationshipWeb>();
         for (RelationshipWeb relationship : relationshipsWeb) {
             if (relationship.getRelationshipDefinition().equals(relationshipDefinition) && relationship.isValid()) {
+                someRelationships.add(relationship);
+            }
+        }
+        Collections.sort(someRelationships);
+        return someRelationships;
+    }
+
+    /**
+     * Este método es responsable de retornar todas las relaciones válidas de este concepto y que son de un cierto tipo
+     * de
+     * relación.
+     *
+     * @param targetDefinition El tipo de destino de relación al que pertenecen las relaciones a retornar.
+     *
+     * @return Una <code>java.util.List</code> de relaciones de tipo <code>relationshipDefinition</code>.
+     */
+    public List<RelationshipWeb> getValidRelationshipsWebByTargetDefinition(TargetDefinition targetDefinition) {
+        List<RelationshipWeb> someRelationships = new ArrayList<RelationshipWeb>();
+        for (RelationshipWeb relationship : relationshipsWeb) {
+            if (relationship.getRelationshipDefinition().getTargetDefinition().equals(targetDefinition) && relationship.isValid()) {
                 someRelationships.add(relationship);
             }
         }

@@ -4,10 +4,7 @@ import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.CrossmapsManager;
 import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.crossmaps.Crossmap;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
-import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
+import cl.minsal.semantikos.model.crossmaps.*;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -50,24 +47,23 @@ public class CrossmapBean implements Serializable {
         typeSearch="0";
     }
 
-    public List<CrossmapSetMember> getCrossmapSearchInput(String patron) {
+    public List<ICrossmapSetRecord> getCrossmapSearchInput(String patron) {
 
         /* Si el patrón viene vacío o es menor a tres caracteres, no se hace nada */
         if ( patron == null || patron.length() < 2 ) {
             return emptyList();
         }
 
+        List<ICrossmapSetRecord> someCrossmapSetMembers = null;
+
         FacesContext context = FacesContext.getCurrentInstance();
 
         CrossmapSet crossmapSet = (CrossmapSet) UIComponent.getCurrentComponent(context).getAttributes().get("crossmapSet");
 
-        List<CrossmapSetMember> someCrossmapSetMembers;
-
-        if(typeSearch.equals("1")) {
-            someCrossmapSetMembers = crossmapsManager.findByPatternCode1(crossmapSet,patron);
-        }
-        else {
-            someCrossmapSetMembers = crossmapsManager.findByPattern(crossmapSet, patron);
+        if(typeSearch.equals("1")){
+            //someCrossmapSetMembers= crossmapsManager.findByPatternCode1(selectedCrossmapSet,patron);
+        }else{
+            someCrossmapSetMembers =crossmapsManager.findByPattern(crossmapSet, patron);
         }
 
         return someCrossmapSetMembers;
@@ -128,4 +124,5 @@ public class CrossmapBean implements Serializable {
     public void setTypeSearch(String typeSearch) {
         this.typeSearch = typeSearch;
     }
+
 }

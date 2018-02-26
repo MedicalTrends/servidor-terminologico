@@ -75,7 +75,7 @@ public class ConceptResponse implements Serializable {
 
     @XmlElementWrapper(name = "crossmapsDirectos")
     @XmlElement(name = "crossmapDirecto")
-    private List<CrossmapSetMemberResponse> crossmapSetMember;
+    private List<CrossmapSetRecordResponse> crossmapSetMember;
 
     @XmlElementWrapper(name = "refSets")
     @XmlElement(name = "refSet")
@@ -313,11 +313,11 @@ public class ConceptResponse implements Serializable {
         this.indirectCrossMaps = indirectCrossMaps;
     }
 
-    public List<CrossmapSetMemberResponse> getCrossmapSetMember() {
+    public List<CrossmapSetRecordResponse> getCrossmapSetMember() {
         return crossmapSetMember;
     }
 
-    public void setCrossmapSetMember(List<CrossmapSetMemberResponse> crossmapSetMember) {
+    public void setCrossmapSetMember(List<CrossmapSetRecordResponse> crossmapSetMember) {
         this.crossmapSetMember = crossmapSetMember;
     }
 

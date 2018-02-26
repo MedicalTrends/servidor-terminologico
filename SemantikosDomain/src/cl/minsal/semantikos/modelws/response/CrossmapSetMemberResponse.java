@@ -1,6 +1,8 @@
 package cl.minsal.semantikos.modelws.response;
 
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetRecord;
+import cl.minsal.semantikos.model.crossmaps.GenericDeviceGroup;
 
 import javax.xml.bind.annotation.*;
 
@@ -12,7 +14,7 @@ import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "crossmapSetMember", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "CrossmapSetMember", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class CrossmapSetMemberResponse {
+public class CrossmapSetMemberResponse extends CrossmapSetRecordResponse {
 
     @XmlElement(name = "NombreCortoCrossmapSet")
     private String shortNameCrossmapSet;
@@ -40,16 +42,19 @@ public class CrossmapSetMemberResponse {
     public CrossmapSetMemberResponse() {
     }
 
-    public CrossmapSetMemberResponse(CrossmapSetMember crossmapSetMember) {
+    public CrossmapSetMemberResponse(CrossmapSetRecord crossmapSetMember) {
         this();
 
-        this.idCrossmapSetMember = crossmapSetMember.getIdCrossmapSetMember();
-        //this.crossmapSet = new CrossmapSetResponse(crossmapSetMember.getCrossmapSet());
-        this.code1 = crossmapSetMember.getCode()!=null?crossmapSetMember.getCode():EMPTY_STRING;
-        this.gloss = crossmapSetMember.getGloss();
+        if(crossmapSetMember instanceof CrossmapSetMember) {
 
-        this.shortNameCrossmapSet = crossmapSetMember.getCrossmapSet().getAbbreviatedName();
-        this.versionCrossmapSet = crossmapSetMember.getCrossmapSet().getVersion();
+            this.idCrossmapSetMember = ((CrossmapSetMember) crossmapSetMember).getIdCrossmapSetMember();
+            //this.crossmapSet = new CrossmapSetResponse(crossmapSetMember.getCrossmapSet());
+            this.code1 = ((CrossmapSetMember) crossmapSetMember).getCode()!=null?((CrossmapSetMember) crossmapSetMember).getCode():EMPTY_STRING;
+            this.gloss = ((CrossmapSetMember) crossmapSetMember).getGloss();
+
+            this.shortNameCrossmapSet = ((CrossmapSetMember) crossmapSetMember).getCrossmapSet().getAbbreviatedName();
+            this.versionCrossmapSet = ((CrossmapSetMember) crossmapSetMember).getCrossmapSet().getVersion();
+        }
     }
 
     public long getIdCrossmapSetMember() {

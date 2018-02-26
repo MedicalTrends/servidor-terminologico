@@ -31,6 +31,10 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String DCI = "Mapear a DCI";
 
+    public static final String CIE10 = "CIE-10";
+
+    public static final String GMDN = "GMDN";
+
     /**
      * Este metodo es responsable de determinar si el target type es de tipo básico es o no.
      *
