@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * @author Andrés Farías on 11/3/16.
  */
-public class CrossmapSetMember extends CrossmapSetRecord implements Serializable, ICrossmapSetRecord {
+public class CrossmapSetMember extends CrossmapSetRecord implements Serializable {
 
     /** ID de negocio */
     private long idCrossmapSetMember;

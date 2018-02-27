@@ -47,14 +47,14 @@ public class CrossmapBean implements Serializable {
         typeSearch="0";
     }
 
-    public List<ICrossmapSetRecord> getCrossmapSearchInput(String patron) {
+    public List<CrossmapSetRecord> getCrossmapSearchInput(String patron) {
 
         /* Si el patrón viene vacío o es menor a tres caracteres, no se hace nada */
         if ( patron == null || patron.length() < 2 ) {
             return emptyList();
         }
 
-        List<ICrossmapSetRecord> someCrossmapSetMembers = null;
+        List<CrossmapSetRecord> someCrossmapSetMembers = null;
 
         FacesContext context = FacesContext.getCurrentInstance();
 

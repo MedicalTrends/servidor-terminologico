@@ -89,7 +89,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         if(crossmapSet.getAbbreviatedName().equals(CrossmapSet.CIE10)) {
             sql = "begin ? := stk.stk_pck_crossmap.get_crossmapsetmember_by_id(?); end;";
         }
-        if(crossmapSet.getName().equals(CrossmapSet.GMDN)) {
+        if(crossmapSet.getAbbreviatedName().equals(CrossmapSet.GMDN)) {
             sql = "begin ? := stk.stk_pck_crossmap.get_genericdevicegroup_by_id(?); end;";
         }
 
@@ -107,7 +107,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
                 if(crossmapSet.getAbbreviatedName().equals(CrossmapSet.CIE10)) {
                     return createCrossmapSetMemberFromResultSet(rs, crossmapSet);
                 }
-                if(crossmapSet.getName().equals(CrossmapSet.GMDN)) {
+                if(crossmapSet.getAbbreviatedName().equals(CrossmapSet.GMDN)) {
                     return createGenericDeviceGroupFromResultSet(rs, crossmapSet);
                 }
             }
@@ -157,8 +157,8 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     }
 
     @Override
-    public List<ICrossmapSetRecord> findCrossmapSetMemberBy(CrossmapSet crossmapSet, String pattern) {
-        List<ICrossmapSetRecord> crossmapSetMembers = new ArrayList<ICrossmapSetRecord>();
+    public List<CrossmapSetRecord> findCrossmapSetMemberBy(CrossmapSet crossmapSet, String pattern) {
+        List<CrossmapSetRecord> crossmapSetMembers = new ArrayList<CrossmapSetRecord>();
         //ConnectionBD connect = new ConnectionBD();
 
         String sql = "";
@@ -166,7 +166,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         if(crossmapSet.getAbbreviatedName().equals(CrossmapSet.CIE10)) {
             sql = "begin ? := stk.stk_pck_crossmap.find_crossmapsetmember_by_pattern_and_crossmapset(?,?); end;";
         }
-        if(crossmapSet.getName().equals(CrossmapSet.GMDN)) {
+        if(crossmapSet.getAbbreviatedName().equals(CrossmapSet.GMDN)) {
             sql = "begin ? := stk.stk_pck_crossmap.find_genericdevicegroup_by_pattern_and_crossmapset(?,?); end;";
         }
 
@@ -186,7 +186,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
                     CrossmapSetMember crossmapSetMember = createCrossmapSetMemberFromResultSet(rs, crossmapSet);
                     crossmapSetMembers.add(crossmapSetMember);
                 }
-                if(crossmapSet.getName().equals(CrossmapSet.GMDN)) {
+                if(crossmapSet.getAbbreviatedName().equals(CrossmapSet.GMDN)) {
                     GenericDeviceGroup genericDeviceGroup = createGenericDeviceGroupFromResultSet(rs, crossmapSet);
                     crossmapSetMembers.add(genericDeviceGroup);
                 }

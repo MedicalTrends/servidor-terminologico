@@ -17,4 +17,8 @@ public abstract class CrossmapSetRecord extends PersistentEntity implements Targ
     public CrossmapSetRecord(long id) {
         super(id);
     }
+
+    public abstract boolean isCIE10Member();
+
+    public abstract boolean isGMDNMember();
 }

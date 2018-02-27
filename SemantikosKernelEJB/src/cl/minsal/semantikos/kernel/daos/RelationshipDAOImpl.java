@@ -1,13 +1,9 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.CacheFactory;
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetRecord;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
-import cl.minsal.semantikos.model.crossmaps.ICrossmapSetRecord;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 

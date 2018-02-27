@@ -32,7 +32,7 @@ public class IndirectCrossmap extends Crossmap implements Serializable {
 
     private boolean state;
 
-    public IndirectCrossmap(ConceptSMTK sourceConcept, CrossmapSetMember target, RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
+    public IndirectCrossmap(ConceptSMTK sourceConcept, CrossmapSetRecord target, RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
         super(sourceConcept, target, relationshipDefinition, validityUntil);
     }
 

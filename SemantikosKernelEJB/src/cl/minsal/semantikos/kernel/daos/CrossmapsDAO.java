@@ -41,7 +41,7 @@ public interface CrossmapsDAO {
      * @param pattern     El patrón de búsqueda
      * @return Un CrossmapSetMember fresco.
      */
-    public List<ICrossmapSetRecord> findCrossmapSetMemberBy(CrossmapSet crossmapSet, String pattern);
+    public List<CrossmapSetRecord> findCrossmapSetMemberBy(CrossmapSet crossmapSet, String pattern);
 
 
     /**

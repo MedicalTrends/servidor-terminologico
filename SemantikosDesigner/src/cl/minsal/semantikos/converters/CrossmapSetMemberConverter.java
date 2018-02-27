@@ -5,7 +5,6 @@ import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetRecord;
-import cl.minsal.semantikos.model.crossmaps.ICrossmapSetRecord;
 
 import javax.el.ELContext;
 import javax.faces.application.FacesMessage;

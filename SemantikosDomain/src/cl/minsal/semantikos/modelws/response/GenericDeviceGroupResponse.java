@@ -5,12 +5,10 @@ import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,30 +18,30 @@ import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
  * Created by des01c7 on 20-11-17.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "genericDeviceGroupResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "GenericDeviceGroupResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "genericDeviceGroup", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "GenericDeviceGroup", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class GenericDeviceGroupResponse extends CrossmapSetRecordResponse implements Serializable {
 
-    /** Terminología a la que pertenece */
-    private CrossmapSet crossmapSet;
+    @XmlElement(name = "NombreCortoCrossmapSet")
+    private String shortNameCrossmapSet;
 
+    @XmlElement(name = "VersionCrossmapSet")
+    private int versionCrossmapSet;
+
+    @XmlElement(name = "code")
     private long code;
 
+    @XmlElement(name = "termName")
     private String termName;
 
+    @XmlElement(name = "termDefinition")
     private String termDefinition;
 
+    @XmlElement(name = "termStatus")
     private String termStatus;
 
-    private Timestamp createdDate;
-
-    public CrossmapSet getCrossmapSet() {
-        return crossmapSet;
-    }
-
-    public void setCrossmapSet(CrossmapSet crossmapSet) {
-        this.crossmapSet = crossmapSet;
-    }
+    @XmlElement(name = "createdDate")
+    private String createdDate;
 
     private Timestamp modifiedDate;
 
@@ -62,7 +60,10 @@ public class GenericDeviceGroupResponse extends CrossmapSetRecordResponse implem
             this.termName = ((GenericDeviceGroup) crossmapSetMember).getTermName();
             this.termDefinition = ((GenericDeviceGroup) crossmapSetMember).getTermDefinition();
 
-            this.createdDate = ((GenericDeviceGroup) crossmapSetMember).getCreatedDate();
+            this.createdDate = new SimpleDateFormat("dd/MM/yyyy").format(((GenericDeviceGroup) crossmapSetMember).getCreatedDate());
+
+            this.shortNameCrossmapSet = ((GenericDeviceGroup) crossmapSetMember).getCrossmapSet().getAbbreviatedName();
+            this.versionCrossmapSet = ((GenericDeviceGroup) crossmapSetMember).getCrossmapSet().getVersion();
 
         }
     }
@@ -107,11 +108,11 @@ public class GenericDeviceGroupResponse extends CrossmapSetRecordResponse implem
         this.conceptSCTs = conceptSCTs;
     }
 
-    public Timestamp getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Timestamp createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -139,6 +140,22 @@ public class GenericDeviceGroupResponse extends CrossmapSetRecordResponse implem
     @Override
     public String toString() {
         return getTermName();
+    }
+
+    public String getShortNameCrossmapSet() {
+        return shortNameCrossmapSet;
+    }
+
+    public void setShortNameCrossmapSet(String shortNameCrossmapSet) {
+        this.shortNameCrossmapSet = shortNameCrossmapSet;
+    }
+
+    public int getVersionCrossmapSet() {
+        return versionCrossmapSet;
+    }
+
+    public void setVersionCrossmapSet(int versionCrossmapSet) {
+        this.versionCrossmapSet = versionCrossmapSet;
     }
 
 }

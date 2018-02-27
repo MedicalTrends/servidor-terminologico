@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by des01c7 on 20-11-17.
  */
-public class GenericDeviceGroup extends CrossmapSetRecord implements Serializable, ICrossmapSetRecord {
+public class GenericDeviceGroup extends CrossmapSetRecord implements Serializable {
 
     /** Terminología a la que pertenece */
     private CrossmapSet crossmapSet;

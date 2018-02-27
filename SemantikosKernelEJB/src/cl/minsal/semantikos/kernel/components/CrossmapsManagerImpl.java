@@ -203,7 +203,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
-    public List<ICrossmapSetRecord> findByPattern(CrossmapSet crossmapSet, String pattern) {
+    public List<CrossmapSetRecord> findByPattern(CrossmapSet crossmapSet, String pattern) {
         return crossmapsDAO.findCrossmapSetMemberBy(crossmapSet, pattern);
     }
 
