@@ -9,13 +9,18 @@
     </url-mapping>
 
     <url-mapping id="search">
-        <pattern value="/concepts" />
+        <pattern value="/views/concepts" />
         <view-id value="/views/concepts.xhtml" />
     </url-mapping>
 
     <url-mapping id="concept">
-        <pattern value="/concept/#{conceptID}" />
+        <pattern value="/views/concepts/view/#{conceptID}" />
         <view-id value="/views/concept.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="concept">
+        <pattern value="/views/concepts/snomed/view/#{conceptID}" />
+        <view-id value="/views/concept-snomed.xhtml" />
     </url-mapping>
 
 </pretty-config>

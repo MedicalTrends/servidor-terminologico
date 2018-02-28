@@ -18,11 +18,17 @@
 
             <div class="ui-g-12 ui-md-12 ui-lg-8">
 
+                <p:breadCrumb id="top-menu">
+                    <p:menuitem value="Inicio" url="/views/home.xhtml" />
+                    <p:menuitem value="Concepts" url="/views/concepts.xhtml" />
+                    <p:menuitem value="#{concept.selectedConcept.descriptionFavorite}" url="#" />
+                </p:breadCrumb>
+
+                <h:form id="browserForm">
+
                 <div class="card card-w-title">
 
                     <h1>#{concept.selectedConcept.descriptionFavorite}</h1>
-
-                    <h:form id="browserForm">
 
                         <div class="ui-g ui-fluid">
 
@@ -60,133 +66,133 @@
 
                         </div>
 
-                        <p:tabView>
-                            <p:tab title="Otras Descripciones" rendered="#{not empty concept.getOtherDescriptions()}">
-                                <p:dataTable id="otherDescriptions"
-                                             rows="5"
-                                             paginator="true"
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                             var="description"
-                                             value="#{concept.getOtherDescriptions()}"
-                                             editable="true"
-                                             reflow="true">
+                </div>
 
-                                    <p:column headerText="Tipo Descripción" style="font-weight: bold">
-                                        #{description.descriptionType.name}
-                                    </p:column>
-                                    <p:column headerText="Término">
-                                        #{description.term}
-                                    </p:column>
-                                </p:dataTable>
-                            </p:tab>
+                <p:tabView>
+                    <p:tab title="Otras Descripciones" rendered="#{not empty concept.getOtherDescriptions()}">
+                        <p:dataTable id="otherDescriptions"
+                                     rows="5"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     var="description"
+                                     value="#{concept.getOtherDescriptions()}"
+                                     editable="true"
+                                     reflow="true">
 
-                            <p:tab title="Atributos" rendered="#{not empty concept.getSMTKRelationships()}">
-                                <p:dataTable id="smtkAttributes"
-                                             rows="5"
-                                             paginator="true"
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                             var="relationship"
-                                             value="#{concept.getSMTKRelationships()}"
-                                             reflow="true">
+                            <p:column headerText="Tipo Descripción" style="font-weight: bold">
+                                #{description.descriptionType.name}
+                            </p:column>
+                            <p:column headerText="Término">
+                                #{description.term}
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
 
-                                    <p:column style="font-weight: bold">
-                                        <h:outputText value="#{relationship.relationshipDefinition.name}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <h:outputText value="#{relationship.target}" rendered="#{not relationship.relationshipDefinition.targetDefinition.SMTKType}" />
-                                        <p:link value="#{relationship.target.descriptionFavorite} - #{relationship.target.conceptID}" rendered="#{relationship.relationshipDefinition.targetDefinition.SMTKType}">
-                                            <f:param name="conceptID" value="#{relationship.target.conceptID}" />
-                                        </p:link>
-                                        <h:dataTable value="#{relationship.relationshipAttributes}" var="attribute" rendered="#{not empty relationship.relationshipAttributes}">
-                                            <h:column style="font-weight: bold">
-                                                #{attribute.relationAttributeDefinition.name}
-                                            </h:column>
-                                            <h:column>
-                                                #{attribute.target}
-                                            </h:column>
-                                        </h:dataTable>
-                                    </p:column>
-                                </p:dataTable>
-                            </p:tab>
+                    <p:tab title="Atributos" rendered="#{not empty concept.getSMTKRelationships()}">
+                        <p:dataTable id="smtkAttributes"
+                                     rows="5"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     var="relationship"
+                                     value="#{concept.getSMTKRelationships()}"
+                                     reflow="true">
 
-                            <p:tab title="SNOMED-CT" rendered="#{not empty concept.getSnomedCTRelationships()}">
-                                <p:dataTable id="snomedAttributes"
-                                             rows="5"
-                                             paginator="true"
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                             var="relationship"
-                                             value="#{concept.getSnomedCTRelationships()}"
-                                             reflow="true">
+                            <p:column style="font-weight: bold">
+                                <h:outputText value="#{relationship.relationshipDefinition.name}"/>
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{relationship.target}" rendered="#{not relationship.relationshipDefinition.targetDefinition.SMTKType}" />
+                                <p:link value="#{relationship.target.descriptionFavorite} - #{relationship.target.conceptID}" rendered="#{relationship.relationshipDefinition.targetDefinition.SMTKType}">
+                                    <f:param name="conceptID" value="#{relationship.target.conceptID}" />
+                                </p:link>
+                                <h:dataTable value="#{relationship.relationshipAttributes}" var="attribute" rendered="#{not empty relationship.relationshipAttributes}">
+                                    <h:column style="font-weight: bold">
+                                        #{attribute.relationAttributeDefinition.name}
+                                    </h:column>
+                                    <h:column>
+                                        #{attribute.target}
+                                    </h:column>
+                                </h:dataTable>
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+
+                    <p:tab title="SNOMED-CT" rendered="#{not empty concept.getSnomedCTRelationships()}">
+                        <p:dataTable id="snomedAttributes"
+                                     rows="5"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     var="relationship"
+                                     value="#{concept.getSnomedCTRelationships()}"
+                                     reflow="true">
 
 
-                                    <p:column style="font-weight: bold">
-                                        #{relationship.relationshipDefinition.name}
-                                    </p:column>
+                            <p:column style="font-weight: bold">
+                                #{relationship.relationshipDefinition.name}
+                            </p:column>
 
-                                    <p:column>
-                                        <p:link value="#{relationship.target.descriptionFSN} - #{relationship.target.id}">
-                                        </p:link>
-                                        <h:dataTable value="#{relationship.target.getDescriptionSynonymous()}" var="description" rendered="#{not empty relationship.target.getDescriptionSynonymous()}">
-                                            <h:column>
-                                                <h:outputText value="#{description.descriptionType.name}" style="font-weight: bold"/>
-                                            </h:column>
-                                            <h:column>
-                                                <h:outputText value="#{description.term}"/>
-                                            </h:column>
-                                        </h:dataTable>
-                                    </p:column>
-                                </p:dataTable>
-                            </p:tab>
+                            <p:column>
+                                <p:link value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="/views/concept-snomed">
+                                    <f:param name="conceptID" value="#{relationship.target.idSnomedCT}" />
+                                </p:link>
+                                <h:dataTable value="#{relationship.target.getDescriptionSynonymous()}" var="description" rendered="#{not empty relationship.target.getDescriptionSynonymous()}">
+                                    <h:column>
+                                        <h:outputText value="#{description.descriptionType.name}" style="font-weight: bold"/>
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText value="#{description.term}"/>
+                                    </h:column>
+                                </h:dataTable>
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
 
-                            <p:tab title="RefSets" rendered="#{not empty concept.selectedConcept.refsets}">
-                                <p:dataTable id="refSets"
-                                             rows="5"
-                                             paginator="true"
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                             var="refSet"
-                                             value="#{concept.selectedConcept.refsets}"
-                                             reflow="true">
+                    <p:tab title="RefSets" rendered="#{not empty concept.selectedConcept.refsets}">
+                        <p:dataTable id="refSets"
+                                     rows="5"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     var="refSet"
+                                     value="#{concept.selectedConcept.refsets}"
+                                     reflow="true">
 
-                                    <p:column headerText="Nombre" style="font-weight: bold">
-                                        #{refSet.name}
-                                    </p:column>
-                                    <p:column headerText="Establecimiento">
-                                        #{refSet.institution.name}
-                                    </p:column>
-                                </p:dataTable>
-                            </p:tab>
+                            <p:column headerText="Nombre" style="font-weight: bold">
+                                #{refSet.name}
+                            </p:column>
+                            <p:column headerText="Establecimiento">
+                                #{refSet.institution.name}
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
 
-                            <p:tab title="Etiquetas" rendered="#{not empty concept.selectedConcept.tags}">
-                                <p:dataTable id="tags"
-                                             rows="5"
-                                             paginator="true"
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                             var="tag"
-                                             value="#{concept.selectedConcept.tags}"
-                                             reflow="true">
+                    <p:tab title="Etiquetas" rendered="#{not empty concept.selectedConcept.tags}">
+                        <p:dataTable id="tags"
+                                     rows="5"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     var="tag"
+                                     value="#{concept.selectedConcept.tags}"
+                                     reflow="true">
 
-                                    <p:column>
-                                        <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" />
-                                    </p:column>
+                            <p:column>
+                                <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" />
+                            </p:column>
 
-                                </p:dataTable>
-                            </p:tab>
+                        </p:dataTable>
+                    </p:tab>
 
-                        </p:tabView>
+                </p:tabView>
 
-                        <br/>
+                <div class="ui-g ui-fluid">
 
-                        <div class="ui-g ui-fluid">
-
-                            <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <p:button outcome="concepts" value="Volver" styleClass="cyan-btn ui-priority-primary" icon="fa fa-arrow-left"/>
-                            </div>
-
-                        </div>
-
-                    </h:form>
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                        <p:button outcome="concepts" value="Volver" styleClass="cyan-btn ui-priority-primary" icon="fa fa-arrow-left"/>
+                    </div>
 
                 </div>
+
+                </h:form>
+
             </div>
 
             <div class="ui-g-0 ui-md-0 ui-lg-2"></div>

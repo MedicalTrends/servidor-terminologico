@@ -226,7 +226,7 @@ public class BrowserBean implements Serializable {
 
         if(request.getRequestURI().equals("/views/home.xhtml")) {
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/concepts");
+            eContext.redirect(eContext.getRequestContextPath() + "/views/concepts");
         }
     }
 
@@ -234,7 +234,7 @@ public class BrowserBean implements Serializable {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
         if(browserQuery.getQuery() != null && browserQuery.getQuery().length() >= 3) {
             performSearch = true;
-            eContext.redirect(eContext.getRequestContextPath() + "/concepts");
+            eContext.redirect(eContext.getRequestContextPath() + "/views/concepts");
         }
     }
 

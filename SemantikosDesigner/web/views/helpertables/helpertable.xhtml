@@ -108,11 +108,11 @@
                             <p:ajax event="rowEditCancel" listener="#{helperTableEditBean.onRowEditCancel}"
                                     oncomplete="onRowEditCancel#{varStatus1.index}()"/>
 
-                            <p:column headerText="ID" sortable="true" width="100px">
+                            <p:column headerText="ID" sortable="true">
                                 <h:outputText value="#{row.id}"/>
                             </p:column>
 
-                            <p:column headerText="Descripción" sortable="true" width="200px">
+                            <p:column headerText="Descripción" sortable="true">
                                 <div style="text-align: left">
                                     <p:cellEditor>
                                         <f:facet name="output">
@@ -126,7 +126,7 @@
 
                             </p:column>
 
-                            <p:columns columnIndexVar="columnIndex" var="column" width="200px"
+                            <p:columns columnIndexVar="columnIndex" var="column"
                                        value="#{helperTableEditBean.helperTableSelected.columns}"
                                        sortable="true">
                                 <f:facet name="header">
@@ -179,7 +179,7 @@
                                 </p:cellEditor>
                             </p:columns>
 
-                            <p:column headerText="ESTADO DE VIGENCIA" sortable="true" width="200px">
+                            <p:column headerText="ESTADO DE VIGENCIA" sortable="true">
                                 <f:facet name="filter">
                                     <p:selectOneMenu
                                             onchange="PF('table-data-edit-wvar').filter()">
@@ -199,24 +199,24 @@
                                 </p:cellEditor>
                             </p:column>
 
-                            <p:column headerText="CREACIÓN" sortable="true" width="200px">
+                            <p:column headerText="CREACIÓN" sortable="true">
                                 <h:outputText value="#{row.creationDate}">
                                     <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
                                 </h:outputText>
                             </p:column>
-                            <p:column headerText="CREADO POR" sortable="true" width="200px">
+                            <p:column headerText="CREADO POR" sortable="true">
                                 <h:outputText value="#{row.creationUsername}"/>
                             </p:column>
-                            <p:column headerText="ULTIMA EDICIÓN" sortable="true" width="200px">
+                            <p:column headerText="ULTIMA EDICIÓN" sortable="true">
                                 <h:outputText value="#{row.lastEditDate}">
                                     <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
                                 </h:outputText>
                             </p:column>
-                            <p:column headerText="EDITADO POR" sortable="true" width="200px">
+                            <p:column headerText="EDITADO POR" sortable="true">
                                 <h:outputText value="#{row.lastEditUsername}"/>
                             </p:column>
 
-                            <p:column width="50" headerText="Acción" style="min-width: 150px; width: 500px; text-align: center;">
+                            <p:column headerText="Acción" style="min-width: 150px; text-align: center;">
                                 <p:rowEditor editTitle="Editar" cancelTitle="Cancelar" saveTitle="Guardar"/>
                             </p:column>
 

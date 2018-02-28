@@ -378,7 +378,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
     public HelperTableRow getRowBy(long tableId, long id) {
         //ConnectionBD connectionBD = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_helper_table.get_helper_table_row(?,?); end;";
+        String sql = "begin ? := stk.stk_pck_helper_table.get_helper_table_row_by_table(?,?); end;";
 
         HelperTableRow helperTableRow;
 
@@ -395,9 +395,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
             if (rs.next()) {
                 helperTableRow = createHelperTableRowFromResultSet(rs);
-            }
-            else {
-                throw new EJBException("Error imposible en HelperTableDAOImpl");
+                return helperTableRow;
             }
 
             rs.close();
@@ -406,7 +404,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             throw new EJBException(e);
         }
 
-        return helperTableRow;
+        return null;
 
     }
 
