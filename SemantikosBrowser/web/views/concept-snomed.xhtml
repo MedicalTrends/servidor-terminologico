@@ -89,6 +89,29 @@
                         </p:dataTable>
                     </p:tab>
 
+                    <p:tab title="Relaciones" rendered="#{not empty conceptSCT.selectedConcept.getRelationships()}">
+                        <p:dataTable id="relationships"
+                                     rows="5"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     var="relationship"
+                                     value="#{conceptSCT.selectedConcept.getRelationships()}"
+                                     editable="true"
+                                     reflow="true">
+
+                            <p:column headerText="Tipo Relación" style="font-weight: bold">
+                                <p:link value="#{relationship.typeConcept.getRepresentation()}" outcome="/views/concept-snomed">
+                                    <f:param name="conceptID" value="#{relationship.typeConcept.idSnomedCT}" />
+                                </p:link>
+                            </p:column>
+                            <p:column headerText="Destino">
+                                <p:link value="#{relationship.destinationConcept.getRepresentation()}" outcome="/views/concept-snomed">
+                                    <f:param name="conceptID" value="#{relationship.destinationConcept.idSnomedCT}" />
+                                </p:link>
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+
                 </p:tabView>
 
                 <div class="ui-g ui-fluid">

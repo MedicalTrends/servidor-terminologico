@@ -140,7 +140,7 @@
                                     </f:facet>
                                     <f:facet name="input">
                                         <ui:repeat value="#{row.getCellsByColumn(column)}" var="cell">
-                                            <p:inputText disabled="#{!row.valid and row.persistent}" value="#{cell.stringValue}"
+                                            <p:inputTextarea disabled="#{!row.valid and row.persistent}" value="#{cell.stringValue}"
                                                          rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1 }"/>
 
                                             <p:selectOneMenu disabled="#{!row.valid and row.persistent}" value="#{cell.booleanValue}" autoWidth="false"
@@ -246,7 +246,6 @@
                         </p:outputPanel>
 
                     </p:dialog>
-
 
                 </h:form>
 

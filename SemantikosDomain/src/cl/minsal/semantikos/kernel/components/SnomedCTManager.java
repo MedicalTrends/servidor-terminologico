@@ -16,11 +16,11 @@ public interface SnomedCTManager {
     /**
      * Este método es responsable de recuperar las relaciones de un concepto SCT.
      *
-     * @param idConceptSCT El Identificador único del concepto SCT.
+     * @param conceptSCT El Identificador único del concepto SCT.
      *
      * @return Una lista de relaciones Snomed-CT donde el concepto Snomed-CT está en el origen de las relaciones.
      */
-    public List<RelationshipSCT> getRelationshipsFrom(long idConceptSCT);
+    public List<RelationshipSCT> getRelationshipsFrom(ConceptSCT conceptSCT);
 
     /**
      * Este método es responsable de buscar aquellos conceptos que posean al menos una descripción cuyo término

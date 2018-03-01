@@ -47,6 +47,7 @@ public class ConceptSCTBean {
     public void setConceptID(long conceptID) {
         this.conceptID = conceptID;
         selectedConcept = snomedCTManager.getConceptByID(conceptID);
+        selectedConcept.setRelationships(snomedCTManager.getRelationshipsFrom(selectedConcept));
     }
 
     //Inicializacion del Bean

@@ -111,6 +111,14 @@ public class ConceptSCT extends PersistentEntity implements Target, SnomedCTComp
         this.definitionStatusId = definitionStatusId;
     }
 
+    public List<RelationshipSCT> getRelationships() {
+        return relationships;
+    }
+
+    public void setRelationships(List<RelationshipSCT> relationships) {
+        this.relationships = relationships;
+    }
+
     @Override
     public TargetType getTargetType() {
         return TargetType.SnomedCT;

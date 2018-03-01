@@ -61,6 +61,8 @@ public class HelperTableEditBean implements Serializable {
 
     long idHelperTable;
 
+    String selectedColumnValue;
+
     @PostConstruct
     protected void initialize() {
     }
@@ -444,8 +446,12 @@ public class HelperTableEditBean implements Serializable {
         return someRow;
     }
 
-    public int getMinQueryLength(HelperTable helperTable) {
-        return helperTableSearchBR.getMinQueryLength(helperTable);
+    public String getSelectedColumnValue() {
+        return selectedColumnValue;
+    }
+
+    public void setSelectedColumnValue(String selectedColumnValue) {
+        this.selectedColumnValue = selectedColumnValue;
     }
 
     private String pattern;

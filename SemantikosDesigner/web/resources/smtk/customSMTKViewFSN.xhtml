@@ -29,14 +29,14 @@
 
                 <div class="ui-g">
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"  value="#{cc.attrs.relationshipDefinition.name} " for="findConceptSMTK"/>
                         <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" value="#{cc.attrs.relationshipDefinition.name} *" for="findConceptSMTK"/>
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                         <p:outputPanel styleClass="search">
 
@@ -88,7 +88,7 @@
 
                     <div class="ui-g">
 
-                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
                                            value="#{cc.attrs.relationshipDefinition.name}: " for="itemSelected"/>
@@ -96,10 +96,10 @@
                                            value="#{cc.attrs.relationshipDefinition.name} *" for="itemSelected"/>
                         </div>
 
-                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="itemSelected" value="#{relationship.target.descriptionFSN.term}" />
+                                <p:inputText readonly="true" id="itemSelected" value="#{relationship.target.descriptionFSN.term}" />
 
                                 <p:commandLink process="@this"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
@@ -111,15 +111,15 @@
 
                         </div>
 
-                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <h:outputText value="Concept ID"/>
 
                         </div>
 
-                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                            <p:inputText value="#{relationship.target.conceptID}" disabled="true" />
+                            <p:inputText value="#{relationship.target.conceptID}" readonly="true" />
 
                         </div>
                     </div>

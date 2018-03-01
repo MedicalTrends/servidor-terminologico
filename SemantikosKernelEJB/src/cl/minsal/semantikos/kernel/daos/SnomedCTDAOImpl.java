@@ -353,6 +353,67 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         return descriptionSCTs;
     }
 
+    @Override
+    public DescriptionSCT getDescriptionSCTBy(long idDescriptionSCT) {
+        //ConnectionBD connect = new ConnectionBD();
+        DescriptionSCT descriptionSCT = null;
+
+        String sql = "begin ? := stk.stk_pck_snomed.get_description_sct_by_id(?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idDescriptionSCT);
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                descriptionSCT = createDescriptionSCTFromResultSet(rs);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al buscar Concept Snomed CT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+        return descriptionSCT;
+    }
+
+    @Override
+    public List<RelationshipSCT> getRelationshipsBySourceConcept(ConceptSCT conceptSCT) {
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_snomed.get_relationships_sct_by_id(?); end;";
+
+        List<RelationshipSCT> relationships = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSCT.getId());
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while(rs.next()) {
+                relationships.add(createRelationshipSCTFromResultSet(rs, conceptSCT));
+            }
+
+            rs.close();
+            call.close();
+            connection.close();
+        } catch (SQLException e) {
+            throw new EJBException(e);
+        }
+
+        return relationships;
+    }
+
     private DescriptionSCT createDescriptionSCTFromResultSet(ResultSet resultSet) throws SQLException {
 
         long id = resultSet.getLong("id");
@@ -382,33 +443,21 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         return null;
     }
 
-    @Override
-    public DescriptionSCT getDescriptionSCTBy(long idDescriptionSCT) {
-        //ConnectionBD connect = new ConnectionBD();
-        DescriptionSCT descriptionSCT = null;
+    private RelationshipSCT createRelationshipSCTFromResultSet(ResultSet resultSet, ConceptSCT sourceConcept) throws SQLException {
 
-        String sql = "begin ? := stk.stk_pck_snomed.get_description_sct_by_id(?); end;";
+        long id = resultSet.getLong("id");
+        Timestamp effectiveTime = resultSet.getTimestamp("effectivetime");
+        boolean active = resultSet.getBoolean("active");
+        long moduleID = resultSet.getLong("moduleId");
+        long relationshipGroup = resultSet.getLong("relationshipGroup");
+        long characteristicTypeId = resultSet.getLong("characteristicTypeId");
+        long modifierId = resultSet.getLong("modifierId");
 
-        try (Connection connection = dataSource.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
+        ConceptSCT destinationConcept = getConceptByID(resultSet.getLong("destinationId"));
+        ConceptSCT typeConcept = getConceptByID(resultSet.getLong("typeId"));
 
-            call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.setLong(2, idDescriptionSCT);
-            call.execute();
-
-            ResultSet rs = (ResultSet) call.getObject(1);
-
-            while (rs.next()) {
-                descriptionSCT = createDescriptionSCTFromResultSet(rs);
-            }
-            rs.close();
-
-        } catch (SQLException e) {
-            String errorMsg = "Error al buscar Concept Snomed CT";
-            logger.error(errorMsg);
-            throw new EJBException(errorMsg, e);
-        }
-        return descriptionSCT;
+        return new RelationshipSCT(id, effectiveTime, active, moduleID, sourceConcept, destinationConcept, relationshipGroup, typeConcept, characteristicTypeId, modifierId);
     }
+
 
 }

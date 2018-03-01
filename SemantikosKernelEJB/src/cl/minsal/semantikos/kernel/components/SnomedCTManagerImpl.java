@@ -25,8 +25,8 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     private ConceptSCTSearchBR conceptSCTSearchBR;
 
     @Override
-    public List<RelationshipSCT> getRelationshipsFrom(long idConceptSCT) {
-        return emptyList();
+    public List<RelationshipSCT> getRelationshipsFrom(ConceptSCT conceptSCT) {
+        return snomedctDAO.getRelationshipsBySourceConcept(conceptSCT);
     }
 
     @Override
