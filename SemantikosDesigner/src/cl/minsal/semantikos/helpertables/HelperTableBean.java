@@ -61,6 +61,8 @@ public class HelperTableBean implements Serializable {
 
     @PostConstruct
     protected void initialize() {
+        RequestContext reqCtx = RequestContext.getCurrentInstance();
+        reqCtx.execute("PF('helperTablesTable').filter();");
     }
 
     public AuthenticationBean getAuthenticationBean() {

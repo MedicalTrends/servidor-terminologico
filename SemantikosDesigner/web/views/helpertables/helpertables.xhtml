@@ -25,24 +25,20 @@
 
                     <p:growl id="messages" showDetail="true" autoUpdate="true" escape="false"/>
 
-                    <p:dataTable rows="30" paginator="true" id="helperTablesTable"
-                                 value="#{helperTableBean.administrableTables}" var="helperTable"
+                    <p:dataTable rows="30" paginator="true" id="helperTablesTable" sortBy="#{helperTable.id}"
+                                 value="#{helperTableBean.administrableTables}" var="helperTable" widgetVar="helperTablesTable"
                                  rowIndexVar="rowIndex1" style="margin-top: 20px">
 
-                        <p:column headerText="ID">
+                        <p:column headerText="ID" filterBy="#{helperTable.id}" filterMatchMode="contains" sortBy="#{helperTable.id}">
                             <h:outputText value="#{helperTable.id}"/>
                         </p:column>
 
-                        <p:column headerText="Nombre Tabla">
-                            <div style="text-align: left;">
-                                <h:outputText value="#{helperTable.name}"/>
-                            </div>
+                        <p:column headerText="Nombre Tabla" filterBy="#{helperTable.name}" filterMatchMode="contains" sortBy="#{helperTable.name}">
+                            <h:outputText value="#{helperTable.name}"/>
                         </p:column>
 
-                        <p:column headerText="Descripción">
-                            <div style="text-align: left;">
-                                <h:outputText value="#{helperTable.description}"/>
-                            </div>
+                        <p:column headerText="Descripción" filterBy="#{helperTable.description}" filterMatchMode="contains" sortBy="#{helperTable.description}">
+                            <h:outputText value="#{helperTable.description}"/>
                         </p:column>
 
                         <p:column headerText="Acciones">

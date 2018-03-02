@@ -33,8 +33,6 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
     List<RelationshipWeb> relationshipsWeb = new ArrayList<RelationshipWeb>();
 
 
-
-
     //Este es el constructor mínimo
     public ConceptSMTKWeb(ConceptSMTK conceptSMTK) {
 

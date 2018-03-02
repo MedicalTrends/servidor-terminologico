@@ -38,7 +38,7 @@
                                  sortBy="#{user.email}"
                                  widgetVar="usersTable" rows="30" paginator="true" emptyMessage="No hay usuarios en la Base de Datos" reflow="true"
                                  filteredValue="#{usersBrowser.filteredUsers}"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
                         <p:ajax event="rowSelect" update=":form:user-detail" oncomplete="PF('userDialog').show()" />
 
