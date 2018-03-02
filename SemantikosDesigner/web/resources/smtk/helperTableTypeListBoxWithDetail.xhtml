@@ -107,6 +107,20 @@
                     </div>
 
                 </div>
+
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-12 ui-lg-6">
+                        <h:dataTable value="#{cc.attrs.relationshipDefinition.targetDefinition.columns}" var="column" width="100%">
+                            <h:column>
+                                <h:outputText value="#{column.name}"/>
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{relationship.target.getColumnValue(column)}"/>
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+                </div>
+
             </div>
         </ui:repeat>
     </p:panel>
