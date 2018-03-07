@@ -28,6 +28,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ import java.util.List;
 
 @ManagedBean(name = "concept")
 @ViewScoped
-public class ConceptBean {
+public class ConceptBean implements Serializable {
 
     static private final Logger logger = LoggerFactory.getLogger(ConceptBean.class);
 
