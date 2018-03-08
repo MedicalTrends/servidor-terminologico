@@ -45,7 +45,7 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                    <p:selectBooleanButton value="#{conceptBean.basicTypeValue.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg" offIcon="fa fa-close fa-lg">
+                    <p:selectBooleanButton id="basicTypeValue11" value="#{conceptBean.basicTypeValue.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg" offIcon="fa fa-close fa-lg">
                         <p:ajax event="change"
                                 listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                 process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptMarketed)" />
@@ -106,6 +106,82 @@
 
                     </div>
                 </div>
+            </div>
+        </p:repeat>
+    </p:panel>
+
+    <!-- Multiplicidad 1 + Nueva relacion + con atributos -->
+
+    <p:panel
+            id="basicTypeSimpleNewWithAttributes"
+            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
+                          and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
+            widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
+
+        <div class="ui-g ui-fluid">
+
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
+
+                <p:outputLabel for="basicTypeValue19"
+                               value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"/>
+                <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+
+            </div>
+
+            <div class="ui-g-12 ui-md-8 ui-lg-2">
+
+                <p:selectBooleanButton id="basicTypeValue19" value="#{conceptBean.basicTypeValue.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg" offIcon="fa fa-close fa-lg">
+                    <p:ajax event="change"
+                            listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
+                            process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptMarketed)" />
+                </p:selectBooleanButton>
+
+            </div>
+            <!-- Atributos de relación -->
+            <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
+
+        </div>
+    </p:panel>
+
+    <!-- Multiplicidad 1 + relacion existente + con atributos -->
+
+    <p:panel
+            id="basicTypeSimpleWithAttributes"
+            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
+                          and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
+            widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
+        <p:repeat  value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                   offset="0"
+                   size="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition).size()}"
+                   step="1"
+                   var="relationship"
+                   varStatus="var">
+
+            <div class="ui-g ui-fluid">
+
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
+
+                    <p:outputLabel for="basicTypeValue2" value="#{cc.attrs.relationshipDefinition.name}"/>
+                    <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+
+                </div>
+
+                <div class="ui-g-12 ui-md-8 ui-lg-2">
+
+                    <p:selectBooleanButton id="basicTypeValue20" value="#{relationship.target.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg" offIcon="fa fa-close fa-lg">
+                        <p:ajax event="change"
+                                listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
+                                process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptMarketed)" />
+                    </p:selectBooleanButton>
+
+                </div>
+
+                <!-- Atributos de relación -->
+                <smtk:attributes concept="#{cc.attrs.concept}"
+                                 relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                 relationship="#{relationship}"
+                />
+
             </div>
         </p:repeat>
     </p:panel>
