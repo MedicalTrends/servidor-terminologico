@@ -52,7 +52,13 @@
             concept="#{cc.attrs.concept}"/>
 
     <smtk:helperTableTypeListBoxWithDetail
-            rendered="#{cc.attrs.relationshipDefinition.compositeID eq 12}"
+            rendered="#{cc.attrs.relationshipDefinition.compositeID eq 12 and cc.attrs.targetDefinition.isHelperTable()}"
+            targetDefinition="#{cc.attrs.relationshipDefinition.targetDefinition}"
+            relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+            concept="#{cc.attrs.concept}"/>
+
+    <smtk:basicTypeCheckbox
+            rendered="#{cc.attrs.relationshipDefinition.compositeID eq 13}"
             targetDefinition="#{cc.attrs.relationshipDefinition.targetDefinition}"
             relationshipDefinition="#{cc.attrs.relationshipDefinition}"
             concept="#{cc.attrs.concept}"/>
