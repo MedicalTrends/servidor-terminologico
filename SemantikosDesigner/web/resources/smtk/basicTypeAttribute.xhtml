@@ -126,7 +126,7 @@
                             styleClass="relationships">
                     <f:attribute name="concept" value="#{cc.attrs.concept}"  />
                     <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                    <p:ajax event="blur"
+                    <p:ajax event="dateSelect"
                             listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}"
                             process="@this" />
                 </p:calendar>
@@ -245,7 +245,7 @@
                                 styleClass="relationships">
                         <f:attribute name="concept" value="#{cc.attrs.concept}"  />
                         <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                        <p:ajax event="blur"
+                        <p:ajax event="dateSelect"
                                 listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, relationshipAttribute.target)}"
                                 process="@this" />
                     </p:calendar>
@@ -305,7 +305,6 @@
                     <p:ajax event="blur" listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}" />
                 </p:inputNumber>
 
-
                 <p:inputNumber id="basicTypeValue13"
                                value="#{conceptBean.basicTypeValue.value}"
                                var="value"
@@ -350,7 +349,7 @@
                             styleClass="fragments">
                     <f:attribute name="concept" value="#{cc.attrs.concept}"  />
                     <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                    <p:ajax event="blur" listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}" />
+                    <p:ajax event="dateSelect" listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}" />
                 </p:calendar>
             </p:outputPanel>
         </div>

@@ -121,6 +121,117 @@
         </ui:repeat>
     </p:panel>
 
+    <!-- Multiplicidad 1 + Nueva relacion + Con atributos -->
+    <p:panel id="helperTableTypeSimpleWithAttributesNew"
+             widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
+             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
+                          and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }">
+
+        <div class="ui-fluid">
+
+            <div class="Container">
+
+                <div class="Container20 White Responsive">
+                    <div class="ContainerIndent">
+                        <p:outputLabel for="findHTRecords1" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                    </div>
+                </div>
+
+                <div class="Container30 White Responsive">
+
+                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                        <p:outputPanel styleClass="search" rendered="#{cc.attrs.concept.editable}">
+
+                            <p:selectOneMenu id="findHTRecords3" scrollHeight="200"
+                                             forceSelection="true"
+                                             value="#{conceptBean.selectedHelperTableRecord}"
+                                             var="r"
+                                             filter="true"
+
+                                             converter="omnifaces.SelectItemsConverter">
+
+                                <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..." noSelectionOption="true" itemDisabled="true"/>
+                                <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition)}"
+                                               var="record"
+                                               itemLabel="#{record.description}"
+                                               itemValue="#{record}"/>
+                                <p:column>
+                                    <h:outputText value="#{r.description}"/>
+                                </p:column>
+                                <p:ajax event="itemSelect"
+                                        listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
+                                        update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                        process="@this"/>
+                                <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                                <!-- Parámetros del validador -->
+                                <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
+                                <!---->
+                            </p:selectOneMenu>
+
+                        </p:outputPanel>
+                        <p:outputPanel styleClass="search" rendered="#{not cc.attrs.concept.editable}">
+                            <p:inputText disabled="true" id="findHTRecords4" value="#{relationship.target.fields['description']}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
+                        </p:outputPanel>
+                    </div>
+                </div>
+
+                <!-- Atributos de relación -->
+                <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
+            </div>
+        </div>
+    </p:panel>
+
+    <!-- Multiplicidad 1 + Relacion existente + Con atributos -->
+    <p:panel id="helperTableTypeSimpleWithAttributes"
+             widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
+                         and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }">
+
+        <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                   var="relationship"
+                   varStatus="var">
+
+            <div class="ui-fluid">
+
+                <div class="Container">
+
+                    <div class="Container20 White Responsive">
+                        <div class="ContainerIndent">
+
+                            <p:outputLabel for="findHTRecords2" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+
+                        </div>
+                    </div>
+
+                    <div class="Container30 White Responsive">
+
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                            <p:outputPanel styleClass="search">
+                                <p:inputText disabled="true" id="findHTRecords7" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
+                                <p:inputTextarea disabled="true" id="findHTRecords8" value="#{relationship.target.cells[1].stringValue}" rendered="#{cc.attrs.relationshipDefinition.ATC}"  />
+                                <p:commandLink process="@this"
+                                               update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                               action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                                    <i class="fa fa-close fa-lg"  />
+                                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?" icon="ui-icon-alert"/>
+                                </p:commandLink>
+                            </p:outputPanel>
+                        </div>
+                    </div>
+
+                    <!-- Atributos de relación -->
+                    <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
+
+                </div>
+            </div>
+        </ui:repeat>
+    </p:panel>
+
     <!-- Multiplicidad N con atributos-->
 
     <p:panel id="helperTableTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"

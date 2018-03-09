@@ -367,21 +367,22 @@ public class TargetDAOImpl implements TargetDAO {
                 BasicTypeDefinition basicTypeDefinition = (BasicTypeDefinition) relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition();
                 BasicTypeValue value = (BasicTypeValue) relationshipAttribute.getTarget();
 
-                if (value.isBoolean()) {
+                if (basicTypeDefinition.getType().equals(BasicTypeType.BOOLEAN_TYPE)) {
                     call.setBoolean(5, (Boolean) value.getValue());
                 }
 
-                if (value.isDate()) {
-                    call.setTimestamp(3, (Timestamp) value.getValue());
+                if (basicTypeDefinition.getType().equals(BasicTypeType.DATE_TYPE)) {
+                    java.util.Date d = (java.util.Date) value.getValue();
+                    call.setTimestamp(3, new Timestamp(d.getTime()));
                 }
 
-                if (value.isFloat()) {
-                    call.setFloat(2, (Float) value.getValue());
+                if (basicTypeDefinition.getType().equals(BasicTypeType.FLOAT_TYPE)) {
+                    call.setFloat(2, Float.parseFloat((String) value.getValue()));
                 }
-                if (value.isInteger()) {
-                    call.setInt(6, (Integer) value.getValue());
+                if (basicTypeDefinition.getType().equals(BasicTypeType.INTEGER_TYPE)) {
+                    call.setInt(6, Integer.parseInt((String) value.getValue()));
                 }
-                if (value.isString()) {
+                if (basicTypeDefinition.getType().equals(BasicTypeType.STRING_TYPE)) {
                     call.setString(4, (String) value.getValue());
                 }
 

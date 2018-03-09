@@ -713,6 +713,10 @@ public class ConceptBean implements Serializable {
      */
     public void addOrChangeRelationshipAttribute(RelationshipDefinition relationshipDefinition, RelationshipAttributeDefinition relationshipAttributeDefinition, Target target) {
 
+        if(target == null || target.getRepresentation().equals("null")) {
+            return;
+        }
+
         boolean isRelationshipFound = false;
         boolean isAttributeFound = false;
 
