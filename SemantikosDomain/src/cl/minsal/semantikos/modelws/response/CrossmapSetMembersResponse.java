@@ -15,7 +15,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "respuestaObtenerCrossmapsDirectos", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "RespuestaObtenerCrossmapsDirectos", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class CrossmapSetMembersResponse implements Serializable{
+public class CrossmapSetMembersResponse implements Serializable {
 
     @XmlElement(name="conceptID")
     private String conceptId;
