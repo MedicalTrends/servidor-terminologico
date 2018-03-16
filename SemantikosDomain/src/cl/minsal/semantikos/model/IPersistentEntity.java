@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.model;
 
+import java.sql.ResultSet;
+
 /**
  * @author Andrés Farías on 8/29/16.
  */
@@ -18,4 +20,6 @@ public interface IPersistentEntity {
     boolean isPersistent();
 
     String toString();
+
+    //Object createFromResultSet(ResultSet rs);
 }

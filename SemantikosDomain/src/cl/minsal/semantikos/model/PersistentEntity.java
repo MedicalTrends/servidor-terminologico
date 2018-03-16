@@ -29,6 +29,7 @@ public abstract class PersistentEntity implements IPersistentEntity, Serializabl
         this(NON_PERSISTED_ID);
     }
 
+
     /**
      * Este método es responsable de crear una lista de ID's de BDD a partir de una lista de entidades persistibles.
      *
