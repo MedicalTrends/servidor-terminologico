@@ -33,6 +33,9 @@ public class LoaderView {
     private JTextArea textArea2;
     private JTextField textField3;
     private JTextField textField4;
+    private JRadioButton conceptosRadioButton;
+    private JRadioButton tablasAuxiliaresRadioButton;
+    private JRadioButton tablasAnexasRadioButton;
 
     //private ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
     //private RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);
@@ -45,8 +48,15 @@ public class LoaderView {
 
         //conceptSMTK = conceptManager.getConceptByID(306551);
         //conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
+        ButtonGroup bG = new ButtonGroup();
 
-        smtkLoader = new SMTKLoader(textArea1, textArea2, textField1, textField2, textField3, textField4, progressBar1);
+        bG.add(conceptosRadioButton);
+        bG.add(tablasAuxiliaresRadioButton);
+        bG.add(tablasAnexasRadioButton);
+
+        conceptosRadioButton.setSelected(true);
+
+        smtkLoader = new SMTKLoader(textArea1, textArea2, textField1, textField2, textField3, textField4, progressBar1, bG);
 
         //textArea1.setRows(10);
 

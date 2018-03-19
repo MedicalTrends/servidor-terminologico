@@ -15,6 +15,8 @@ import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetFactory;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
+import cl.minsal.semantikos.model.externtables.ExternTableColumnFactory;
+import cl.minsal.semantikos.model.externtables.ExternTableFactory;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumnFactory;
 
@@ -93,6 +95,9 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     @EJB
     private CrossmapsDAO crossmapDAO;
 
+    @EJB
+    private ExternTableDAO externTableDAO;
+
     @Resource(lookup = "java:jboss/OracleDS")
     private DataSource dataSource;
 
@@ -113,6 +118,8 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         this.refreshDescriptionTypes();
         this.refreshTagsSMTK();
         this.refreshUsers();
+        this.refreshExternTables();
+        this.refreshExternColumns();
     }
 
     /**
@@ -399,7 +406,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
     @Override
     public HelperTableColumnFactory refreshColumns() {
-        //ConnectionBD connect = new ConnectionBD();
 
         List<HelperTableColumn> helperTableColumns = new ArrayList<>();
 
@@ -430,6 +436,20 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         }
 
         return HelperTableColumnFactory.getInstance();
+    }
+
+    public ExternTableFactory refreshExternTables() {
+
+        externTableDAO.getTables();
+        return ExternTableFactory.getInstance();
+
+    }
+
+    public ExternTableColumnFactory refreshExternColumns() {
+
+        externTableDAO.getColumns();
+        return ExternTableColumnFactory.getInstance();
+
     }
 
     @Override

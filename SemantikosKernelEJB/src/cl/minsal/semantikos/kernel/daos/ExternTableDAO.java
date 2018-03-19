@@ -18,9 +18,13 @@ public interface ExternTableDAO {
 
     List<ExternTableColumn> getColumns();
 
+    List<ExternTableColumn> getColumns(ExternTable externTable);
+
     List<ExternTableReference> getReferences(ExternTable externTable);
 
     List<ExternTableRow> getRows(ExternTable table);
+
+    List<ExternTableData> getCellsByRow(ExternTableRow externTableRow);
 
     List<ExternTableRelationship> getRelationships(ExternTableRow row);
 }

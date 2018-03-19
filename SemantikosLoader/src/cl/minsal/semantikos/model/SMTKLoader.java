@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -112,12 +113,17 @@ public class SMTKLoader extends SwingWorker<Void, String> {
     private JProgressBar progressBar;
 
     /**
+     * Que se esta cargando: Conceptos, Tablas Auxiliares, Tablas anexas
+     */
+    private ButtonGroup loadOption;
+
+    /**
      *
      * Errores
      */
     private List<LoadLog> logs = new ArrayList<>();
 
-    public SMTKLoader(JTextArea infoLogs, JTextArea errorLogs, JTextField conceptsTotal, JTextField conceptsProcessed, JTextField userName, JTextField timeStamp, JProgressBar progressBar) throws InterruptedException {
+    public SMTKLoader(JTextArea infoLogs, JTextArea errorLogs, JTextField conceptsTotal, JTextField conceptsProcessed, JTextField userName, JTextField timeStamp, JProgressBar progressBar, ButtonGroup buttonGroup) throws InterruptedException {
 
         this.infoLogs = infoLogs;
         this.errorLogs = errorLogs;
@@ -126,6 +132,7 @@ public class SMTKLoader extends SwingWorker<Void, String> {
         this.progressBar = progressBar;
         this.userName = userName;
         this.timeStamp = timeStamp;
+        this.loadOption = buttonGroup;
 
         setUser(userManager.getUser(2));
 
@@ -281,61 +288,79 @@ public class SMTKLoader extends SwingWorker<Void, String> {
         errorLogs.append("\n");
     }
 
+    public String getSelectedButtonText(ButtonGroup buttonGroup) {
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+
+        return null;
+    }
+
     @Override
     protected Void doInBackground() throws Exception {
         try {
 
-            Initializer initializer = new Initializer();
-            BasicConceptLoader basicConceptLoader = new BasicConceptLoader();
-            SubstanceConceptLoader substanceConceptLoader = new SubstanceConceptLoader();
-            MBConceptLoader mbConceptLoader = new MBConceptLoader();
-            MCConceptLoader mcConceptLoader = new MCConceptLoader();
-            MCCEConceptLoader mcceConceptLoader = new MCCEConceptLoader();
-            GFPConceptLoader gfpConceptLoader = new GFPConceptLoader();
-            FPConceptLoader fpConceptLoader = new FPConceptLoader();
-            PCConceptLoader pcConceptLoader = new PCConceptLoader();
-            PCCEConceptLoader pcceConceptLoader = new PCCEConceptLoader();
+            switch (getSelectedButtonText(loadOption).toUpperCase()) {
+                case "CONCEPTOS":
+                    Initializer initializer = new Initializer();
+                    BasicConceptLoader basicConceptLoader = new BasicConceptLoader();
+                    SubstanceConceptLoader substanceConceptLoader = new SubstanceConceptLoader();
+                    MBConceptLoader mbConceptLoader = new MBConceptLoader();
+                    MCConceptLoader mcConceptLoader = new MCConceptLoader();
+                    MCCEConceptLoader mcceConceptLoader = new MCCEConceptLoader();
+                    GFPConceptLoader gfpConceptLoader = new GFPConceptLoader();
+                    FPConceptLoader fpConceptLoader = new FPConceptLoader();
+                    PCConceptLoader pcConceptLoader = new PCConceptLoader();
+                    PCCEConceptLoader pcceConceptLoader = new PCCEConceptLoader();
 
-            /*
-            initializer.checkBasicConceptsDataFiles(this);
-            basicConceptLoader.processConcepts(this);
+                    /*
+                    initializer.checkBasicConceptsDataFiles(this);
+                    basicConceptLoader.processConcepts(this);
 
-            initializer.checkSubstanceDataFiles(this);
-            substanceConceptLoader.processConcepts(this);
-            */
+                    initializer.checkSubstanceDataFiles(this);
+                    substanceConceptLoader.processConcepts(this);
+                    */
 
-            /*
-            initializer.checkMBDataFiles(this);
-            mbConceptLoader.processConcepts(this);
-            */
+                    /*
+                    initializer.checkMBDataFiles(this);
+                    mbConceptLoader.processConcepts(this);
+                    */
 
-            /*
-            initializer.checkMCDataFiles(this);
-            mcConceptLoader.processConcepts(this);
-            */
+                    /*
+                    initializer.checkMCDataFiles(this);
+                    mcConceptLoader.processConcepts(this);
+                    */
 
-            /*
-            initializer.checkMCCEDataFiles(this);
-            mcceConceptLoader.processConcepts(this);
-            */
+                    /*
+                    initializer.checkMCCEDataFiles(this);
+                    mcceConceptLoader.processConcepts(this);
+                    */
 
-            /*
-            initializer.checkGFPDataFiles(this);
-            gfpConceptLoader.processConcepts(this);
-            */
+                    /*
+                    initializer.checkGFPDataFiles(this);
+                    gfpConceptLoader.processConcepts(this);
+                    */
 
-            /*
-            initializer.checkFPDataFiles(this);
-            fpConceptLoader.processConcepts(this);
-            */
+                    /*
+                    initializer.checkFPDataFiles(this);
+                    fpConceptLoader.processConcepts(this);
+                    */
 
-            /*
-            initializer.checkPCDataFiles(this);
-            pcConceptLoader.processConcepts(this);
-            */
+                    /*
+                    initializer.checkPCDataFiles(this);
+                    pcConceptLoader.processConcepts(this);
+                    */
 
-            initializer.checkPCCEDataFiles(this);
-            pcceConceptLoader.processConcepts(this);
+                    initializer.checkPCCEDataFiles(this);
+                    pcceConceptLoader.processConcepts(this);
+                    break;
+            }
+
+
 
             JOptionPane.showMessageDialog(null, "Carga de conceptos finalizada!");
         } catch (LoadException e1) {

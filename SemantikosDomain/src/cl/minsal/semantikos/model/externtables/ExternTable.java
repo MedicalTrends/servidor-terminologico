@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.model.externtables;
 
 import cl.minsal.semantikos.model.PersistentEntity;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
 import java.io.Serializable;
@@ -14,21 +15,20 @@ import java.util.List;
 public class ExternTable extends PersistentEntity implements TargetDefinition, Serializable {
 
     private String name;
+    private CrossmapSet crossmapSet;
     private List<ExternTableColumn> columns = new ArrayList<>();
     private List<ExternTableRow> rows = new ArrayList<>();
     private List<ExternTableReference> references = new ArrayList<>();
 
-    public ExternTable(long id, String name) {
-        super(id);
+    public ExternTable(String name, CrossmapSet crossmapSet) {
         this.name = name;
+        this.crossmapSet = crossmapSet;
     }
 
-    public ExternTable(long id, String name, List<ExternTableColumn> columns, List<ExternTableRow> rows, List<ExternTableReference> references) {
+    public ExternTable(long id, String name, CrossmapSet crossmapSet) {
         super(id);
         this.name = name;
-        this.columns = columns;
-        this.rows = rows;
-        this.references = references;
+        this.crossmapSet = crossmapSet;
     }
 
     @Override
@@ -42,6 +42,14 @@ public class ExternTable extends PersistentEntity implements TargetDefinition, S
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public CrossmapSet getCrossmapSet() {
+        return crossmapSet;
+    }
+
+    public void setCrossmapSet(CrossmapSet crossmapSet) {
+        this.crossmapSet = crossmapSet;
     }
 
     public List<ExternTableColumn> getColumns() {
@@ -92,7 +100,7 @@ public class ExternTable extends PersistentEntity implements TargetDefinition, S
 
     @Override
     public boolean isHelperTable() {
-        return true;
+        return false;
     }
 
     @Override
@@ -102,7 +110,7 @@ public class ExternTable extends PersistentEntity implements TargetDefinition, S
 
     @Override
     public boolean isCrossMapType() {
-        return false;
+        return true;
     }
 
     @Override

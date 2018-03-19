@@ -1,6 +1,8 @@
 package cl.minsal.semantikos.model.externtables;
 
 import cl.minsal.semantikos.model.PersistentEntity;
+import cl.minsal.semantikos.model.relationships.Multiplicity;
+import cl.minsal.semantikos.model.relationships.MultiplicityFactory;
 
 import java.io.Serializable;
 
@@ -12,16 +14,16 @@ public class ExternTableReference extends PersistentEntity implements Serializab
     ExternTable origin;
     ExternTable destiny;
     String name;
-    String cardinality;
+    Cardinality cardinality;
 
-    public ExternTableReference(ExternTable origin, ExternTable destiny, String name, String cardinality) {
+    public ExternTableReference(ExternTable origin, ExternTable destiny, String name, Cardinality cardinality) {
         this.origin = origin;
         this.destiny = destiny;
         this.name = name;
         this.cardinality = cardinality;
     }
 
-    public ExternTableReference(long id, ExternTable origin, ExternTable destiny, String name, String cardinality) {
+    public ExternTableReference(long id, ExternTable origin, ExternTable destiny, String name, Cardinality cardinality) {
         super(id);
         this.origin = origin;
         this.destiny = destiny;
@@ -53,11 +55,11 @@ public class ExternTableReference extends PersistentEntity implements Serializab
         this.name = name;
     }
 
-    public String getCardinality() {
+    public Cardinality getCardinality() {
         return cardinality;
     }
 
-    public void setCardinality(String cardinality) {
+    public void setCardinality(Cardinality cardinality) {
         this.cardinality = cardinality;
     }
 }

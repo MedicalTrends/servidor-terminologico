@@ -40,7 +40,7 @@ public class ExternTableRow extends PersistentEntity implements Target, Serializ
 
     @Override
     public TargetType getTargetType() {
-        return TargetType.HelperTable;
+        return TargetType.CrossMap;
     }
 
     @Override
@@ -53,7 +53,9 @@ public class ExternTableRow extends PersistentEntity implements Target, Serializ
         ExternTableRow copy = new ExternTableRow();
 
         copy.setId(getId());
+        copy.setTable(table);
         copy.setCells(cells);
+        copy.setRelationships(relationships);
 
         return copy;
 
