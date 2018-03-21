@@ -39,6 +39,17 @@
         <param-value>true</param-value>
     </context-param>
 
+    <!--register for a CAPTCHA key-->
+    <context-param>
+        <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+        <param-value>6LdKB04UAAAAAMDQ8CnTlGPgaYQYMiAmihHyPOiw</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+        <param-value>6LdKB04UAAAAALsNbWIZniW81lLNnwPT3CPayyY7</param-value>
+    </context-param>
+
     <!-- melody -->
     <filter>
         <filter-name>javamelody</filter-name>

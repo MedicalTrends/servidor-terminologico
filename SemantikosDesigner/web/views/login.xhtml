@@ -41,6 +41,9 @@
                     <label>Password</label>
                 </h:panelGroup>
             </div>
+            <div class="ui-g-12" style="padding: 0">
+                <p:captcha id="captcha" label="Captcha" language="es"/>
+            </div>
             <div class="ui-g-12">
                 <p:commandButton update="loginform" value="Ingresar" icon="ui-icon-person" actionListener="#{authenticationBean.login}" />
                 <p:button outcome="/views/users/forgotPassword.xhtml" value="Olvido de Clave" icon="ui-icon-help" styleClass="secondary"/>
@@ -61,6 +64,13 @@
 
     <h:outputStylesheet name="css/ripple.css" library="ultima-layout" />
     <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" />
+
+    <h:outputStylesheet id="customCSS">
+        div#loginform\:captcha div {
+            margin: 0px auto;
+        }
+    </h:outputStylesheet>
+
 </h:body>
 
 </html>
