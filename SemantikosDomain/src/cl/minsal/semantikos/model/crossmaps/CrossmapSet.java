@@ -42,7 +42,6 @@ public class CrossmapSet extends PersistentEntity implements TargetDefinition, S
 
     public boolean isState() {
         return state;
-
     }
 
     public void setState(boolean state) {

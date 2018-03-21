@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -146,13 +145,13 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
-    public List<CrossmapSetRecord> getDirectCrossmapsSetMembersOf(ConceptSMTK conceptSMTK) {
+    public List<CrossmapSetMember> getDirectCrossmapsSetMembersOf(ConceptSMTK conceptSMTK) {
 
         /* Se obtienen los crossmaps directos del concepto */
         List<DirectCrossmap> directCrossmaps = this.getDirectCrossmaps(conceptSMTK);
 
         /* Luego se almacenan los crossmapSetMembers referenciados en una lista */
-        ArrayList<CrossmapSetRecord> directCrossmapSetMembers = new ArrayList<>();
+        ArrayList<CrossmapSetMember> directCrossmapSetMembers = new ArrayList<>();
         for (DirectCrossmap directCrossmap : directCrossmaps) {
             directCrossmapSetMembers.add(directCrossmap.getTarget());
         }
@@ -161,7 +160,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
-    public CrossmapSetRecord getCrossmapSetMemberById(CrossmapSet crossmapSet, long id) {
+    public CrossmapSetMember getCrossmapSetMemberById(CrossmapSet crossmapSet, long id) {
         return crossmapsDAO.getCrossmapSetMemberById(crossmapSet, id);
     }
 
@@ -173,7 +172,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
-    public List<CrossmapSetRecord> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize) {
+    public List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize) {
 
         /* Lo primero es recuperar el crossmapSet a partir de su nombre abreviado */
         return crossmapsDAO.getCrossmapSetMemberByCrossmapSet(crossmapSet, page, pageSize);
@@ -203,7 +202,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
-    public List<CrossmapSetRecord> findByPattern(CrossmapSet crossmapSet, String pattern) {
+    public List<CrossmapSetMember> findByPattern(CrossmapSet crossmapSet, String pattern) {
         return crossmapsDAO.findCrossmapSetMemberBy(crossmapSet, pattern);
     }
 

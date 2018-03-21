@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.modelws.response;
 
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSetRecord;
 import cl.minsal.semantikos.model.crossmaps.GenericDeviceGroup;
 
 import javax.xml.bind.annotation.*;
@@ -53,14 +52,14 @@ public class CrossmapSetMembersResponse implements Serializable {
      *
      * @param crossmapSetMembers La lista de crossmapSetMembers de negocio.
      */
-    public CrossmapSetMembersResponse(List<CrossmapSetRecord> crossmapSetMembers) {
+    public CrossmapSetMembersResponse(List<CrossmapSetMember> crossmapSetMembers) {
         this();
 
         if (crossmapSetMembers == null || crossmapSetMembers.isEmpty()){
             return;
         }
 
-        for (CrossmapSetRecord crossmapSetMember : crossmapSetMembers) {
+        for (CrossmapSetMember crossmapSetMember : crossmapSetMembers) {
             if(crossmapSetMember instanceof  CrossmapSetMember) {
                 this.crossmapSetMemberResponses.add(new CrossmapSetMemberResponse(crossmapSetMember));
             }

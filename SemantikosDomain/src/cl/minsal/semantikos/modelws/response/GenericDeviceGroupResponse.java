@@ -1,8 +1,6 @@
 package cl.minsal.semantikos.modelws.response;
 
 import cl.minsal.semantikos.model.crossmaps.*;
-import cl.minsal.semantikos.model.relationships.Target;
-import cl.minsal.semantikos.model.relationships.TargetType;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.xml.bind.annotation.*;
@@ -11,8 +9,6 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 
 /**
  * Created by des01c7 on 20-11-17.
@@ -52,7 +48,7 @@ public class GenericDeviceGroupResponse extends CrossmapSetRecordResponse implem
 
     private List<ConceptSCT> conceptSCTs = new ArrayList<>();
 
-    public GenericDeviceGroupResponse(CrossmapSetRecord crossmapSetMember) {
+    public GenericDeviceGroupResponse(CrossmapSetMember crossmapSetMember) {
         if(crossmapSetMember instanceof GenericDeviceGroup) {
 
             this.code = (((GenericDeviceGroup) crossmapSetMember).getCode());

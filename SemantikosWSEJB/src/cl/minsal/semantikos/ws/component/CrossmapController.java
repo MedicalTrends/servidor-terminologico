@@ -2,10 +2,9 @@ package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSetRecord;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.modelws.request.DescriptionIDorConceptIDRequest;
 import cl.minsal.semantikos.modelws.response.CrossmapSetMembersResponse;
@@ -105,7 +104,7 @@ public class CrossmapController {
         }
 
         /* Luego se recuperan los crossmapSetMembers directos del concepto */
-        List<CrossmapSetRecord> directCrossmapsSetMembersOf = crossmapManager.getDirectCrossmapsSetMembersOf(conceptSMTK);
+        List<CrossmapSetMember> directCrossmapsSetMembersOf = crossmapManager.getDirectCrossmapsSetMembersOf(conceptSMTK);
 
         CrossmapSetMembersResponse res = new CrossmapSetMembersResponse(directCrossmapsSetMembersOf);
 
@@ -129,7 +128,7 @@ public class CrossmapController {
     public CrossmapSetMembersResponse getDirectCrossmapsSetMembersByDescriptionID(ConceptSMTK conceptSMTK) {
 
         /* Luego se recuperan los crossmapSetMembers directos del concepto */
-        List<CrossmapSetRecord> directCrossmapsSetMembersOf = crossmapManager.getDirectCrossmapsSetMembersOf(conceptSMTK);
+        List<CrossmapSetMember> directCrossmapsSetMembersOf = crossmapManager.getDirectCrossmapsSetMembersOf(conceptSMTK);
 
         CrossmapSetMembersResponse res = new CrossmapSetMembersResponse(directCrossmapsSetMembersOf);
 
@@ -177,7 +176,7 @@ public class CrossmapController {
             throw new NotFoundFault("Este CrossmapSet no está vigente");
         }
 
-        List<CrossmapSetRecord> crossmapSetByAbbreviatedName = crossmapManager.getCrossmapSetMemberByCrossmapSet(theCrossmapSet, page, pageSize);
+        List<CrossmapSetMember> crossmapSetByAbbreviatedName = crossmapManager.getCrossmapSetMemberByCrossmapSet(theCrossmapSet, page, pageSize);
         logger.debug("CrossmapController.getCrossmapSetMembersByCrossmapSetAbbreviatedName:: " +
                 "crossmapSetByAbbreviatedName=" + crossmapSetByAbbreviatedName);
 

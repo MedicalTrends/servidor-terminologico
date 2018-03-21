@@ -2,12 +2,10 @@ package cl.minsal.semantikos.designer;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.CrossmapsManager;
-import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.crossmaps.*;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
@@ -47,14 +45,14 @@ public class CrossmapBean implements Serializable {
         typeSearch="0";
     }
 
-    public List<CrossmapSetRecord> getCrossmapSearchInput(String patron) {
+    public List<CrossmapSetMember> getCrossmapSearchInput(String patron) {
 
         /* Si el patrón viene vacío o es menor a tres caracteres, no se hace nada */
         if ( patron == null || patron.length() < 2 ) {
             return emptyList();
         }
 
-        List<CrossmapSetRecord> someCrossmapSetMembers = null;
+        List<CrossmapSetMember> someCrossmapSetMembers = null;
 
         FacesContext context = FacesContext.getCurrentInstance();
 

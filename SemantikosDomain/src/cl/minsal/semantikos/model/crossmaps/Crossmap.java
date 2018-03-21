@@ -17,11 +17,11 @@ import java.util.ArrayList;
  */
 public abstract class Crossmap extends Relationship implements Serializable {
 
-    public Crossmap(ConceptSMTK sourceConcept, CrossmapSetRecord target, RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
+    public Crossmap(ConceptSMTK sourceConcept, CrossmapSetMember target, RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
         super(sourceConcept, target, relationshipDefinition,new ArrayList<RelationshipAttribute>(), validityUntil);
     }
 
-    public Crossmap(@NotNull long id, @NotNull ConceptSMTK sourceConcept, @NotNull CrossmapSetRecord target, @NotNull RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
+    public Crossmap(@NotNull long id, @NotNull ConceptSMTK sourceConcept, @NotNull CrossmapSetMember target, @NotNull RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
         super(id, sourceConcept, target, relationshipDefinition, validityUntil,new ArrayList<RelationshipAttribute>());
     }
 

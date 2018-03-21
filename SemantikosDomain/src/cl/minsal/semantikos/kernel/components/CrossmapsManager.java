@@ -88,7 +88,7 @@ public interface CrossmapsManager {
      *
      * @return La lista de CrossmapSetMembers asociados al concepto <code>conceptSMTK</code>.
      */
-    public CrossmapSetRecord getCrossmapSetMemberById(CrossmapSet crossmapSet, long id);
+    public CrossmapSetMember getCrossmapSetMemberById(CrossmapSet crossmapSet, long id);
 
     /**
      * Este método es repsonsable de recuperar los crossmapSetMembers de un crossmapSet dado por su nombre abreviado.
@@ -115,7 +115,7 @@ public interface CrossmapsManager {
      *
      * @return Una lista de registros
      */
-    public List<CrossmapSetRecord> findByPattern(CrossmapSet crossmapSet, String pattern);
+    public List<CrossmapSetMember> findByPattern(CrossmapSet crossmapSet, String pattern);
     /**
      * Este método busca registros en las terminologías externas términos que cumplan con el código.
      *

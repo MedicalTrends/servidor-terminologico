@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.modelws.response;
 
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSetRecord;
 import cl.minsal.semantikos.model.crossmaps.GenericDeviceGroup;
 
 import javax.xml.bind.annotation.*;
@@ -42,7 +41,7 @@ public class CrossmapSetMemberResponse extends CrossmapSetRecordResponse {
     public CrossmapSetMemberResponse() {
     }
 
-    public CrossmapSetMemberResponse(CrossmapSetRecord crossmapSetMember) {
+    public CrossmapSetMemberResponse(CrossmapSetMember crossmapSetMember) {
         this();
 
         if(crossmapSetMember instanceof CrossmapSetMember) {

@@ -5,8 +5,7 @@ import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.description.AutogenerateBeans;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.messages.MessageBean;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSetRecord;
-import cl.minsal.semantikos.relationship.RelationshipBeans;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.session.ProfilePermissionsBeans;
 import cl.minsal.semantikos.snomed.SCTTypeBean;
 import cl.minsal.semantikos.snomed.SnomedBeans;
@@ -23,7 +22,6 @@ import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.kernel.businessrules.ConceptDefinitionalGradeBR;
 import cl.minsal.semantikos.kernel.businessrules.RelationshipBindingBR;
 import cl.minsal.semantikos.model.categories.Category;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.descriptions.*;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
@@ -51,10 +49,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.ParseException;
 import java.util.*;
-
-import static org.primefaces.util.Constants.EMPTY_STRING;
 
 /**
  * Created by diego on 26/06/2016.
@@ -229,7 +224,7 @@ public class ConceptBean implements Serializable {
 
     private ConceptSCT conceptSCTSelected;
 
-    private CrossmapSetRecord crossmapSetMemberSelected;
+    private CrossmapSetMember crossmapSetMemberSelected;
 
     private Map<Long, ConceptSMTK> targetSelected;
 
@@ -1481,11 +1476,11 @@ public class ConceptBean implements Serializable {
         this.changeMarketedBean = changeMarketedBean;
     }
 
-    public CrossmapSetRecord getCrossmapSetMemberSelected() {
+    public CrossmapSetMember getCrossmapSetMemberSelected() {
         return crossmapSetMemberSelected;
     }
 
-    public void setCrossmapSetMemberSelected(CrossmapSetRecord crossmapSetMemberSelected) {
+    public void setCrossmapSetMemberSelected(CrossmapSetMember crossmapSetMemberSelected) {
         this.crossmapSetMemberSelected = crossmapSetMemberSelected;
     }
 

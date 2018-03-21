@@ -1,7 +1,10 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.crossmaps.*;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
+import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
+import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.model.users.User;
 
@@ -12,7 +15,7 @@ import java.util.List;
  * @author Andrés Farías
  */
 @Local
-public interface CrossmapsDAO {
+public interface CIE10DAO {
 
     /**
      * Este método es responsable de crear un Crossmap

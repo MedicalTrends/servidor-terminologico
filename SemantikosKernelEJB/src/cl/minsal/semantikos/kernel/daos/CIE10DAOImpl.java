@@ -1,11 +1,11 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.relationships.MultiplicityFactory;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.model.crossmaps.*;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ import static java.lang.System.currentTimeMillis;
  * @author Andrés Farías on 8/19/16.
  */
 @Stateless
-public class CrossmapsDAOImpl implements CrossmapsDAO {
+public class CIE10DAOImpl implements CrossmapsDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(ConceptDAOImpl.class);
 

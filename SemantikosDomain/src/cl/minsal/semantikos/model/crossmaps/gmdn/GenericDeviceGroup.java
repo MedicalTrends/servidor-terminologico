@@ -1,5 +1,7 @@
-package cl.minsal.semantikos.model.crossmaps;
+package cl.minsal.semantikos.model.crossmaps.gmdn;
 
+import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
@@ -12,9 +14,11 @@ import java.util.List;
 /**
  * Created by des01c7 on 20-11-17.
  */
-public class GenericDeviceGroup extends CrossmapSetRecord implements Serializable {
+public class GenericDeviceGroup extends CrossmapSetMember implements Serializable {
 
-    /** Terminología a la que pertenece */
+    /**
+     * Terminología a la que pertenece
+     */
     private CrossmapSet crossmapSet;
 
     private long code;
@@ -27,23 +31,11 @@ public class GenericDeviceGroup extends CrossmapSetRecord implements Serializabl
 
     private Timestamp createdDate;
 
-    public CrossmapSet getCrossmapSet() {
-        return crossmapSet;
-    }
-
-    public void setCrossmapSet(CrossmapSet crossmapSet) {
-        this.crossmapSet = crossmapSet;
-    }
-
     private Timestamp modifiedDate;
 
     private Timestamp obsoletedDate;
 
-    /**
-     * Esta lista representa el mapping GMDN-SnomedCT
-     * TODO: Si es necesario, redefinir cuando Minsal envie los datafiles
-     */
-    private List<ConceptSCT> conceptSCTs = new ArrayList<>();
+    private List<CollectiveTerm> collectiveTerms;
 
     public GenericDeviceGroup(CrossmapSet crossmapSet, long id, long code, String termName, String termDefinition, String termStatus, Timestamp createdDate, Timestamp modifiedDate, Timestamp obsoletedDate) {
         super(id);
@@ -55,7 +47,25 @@ public class GenericDeviceGroup extends CrossmapSetRecord implements Serializabl
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
         this.obsoletedDate = obsoletedDate;
-        this.conceptSCTs = conceptSCTs;
+    }
+
+    public GenericDeviceGroup(long id, long code, String termName, String termDefinition, String termStatus, Timestamp createdDate, Timestamp modifiedDate, Timestamp obsoletedDate) {
+        super(id);
+        this.code = code;
+        this.termName = termName;
+        this.termDefinition = termDefinition;
+        this.termStatus = termStatus;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
+        this.obsoletedDate = obsoletedDate;
+    }
+
+    public CrossmapSet getCrossmapSet() {
+        return crossmapSet;
+    }
+
+    public void setCrossmapSet(CrossmapSet crossmapSet) {
+        this.crossmapSet = crossmapSet;
     }
 
     public long getCode() {
@@ -90,14 +100,6 @@ public class GenericDeviceGroup extends CrossmapSetRecord implements Serializabl
         this.termStatus = termStatus;
     }
 
-    public List<ConceptSCT> getConceptSCTs() {
-        return conceptSCTs;
-    }
-
-    public void setConceptSCTs(List<ConceptSCT> conceptSCTs) {
-        this.conceptSCTs = conceptSCTs;
-    }
-
     public Timestamp getCreatedDate() {
         return createdDate;
     }
@@ -120,6 +122,14 @@ public class GenericDeviceGroup extends CrossmapSetRecord implements Serializabl
 
     public void setObsoletedDate(Timestamp obsoletedDate) {
         this.obsoletedDate = obsoletedDate;
+    }
+
+    public List<CollectiveTerm> getCollectiveTerms() {
+        return collectiveTerms;
+    }
+
+    public void setCollectiveTerms(List<CollectiveTerm> collectiveTerms) {
+        this.collectiveTerms = collectiveTerms;
     }
 
     @Override
@@ -145,15 +155,5 @@ public class GenericDeviceGroup extends CrossmapSetRecord implements Serializabl
     @Override
     public String toString() {
         return getTermName();
-    }
-
-    @Override
-    public boolean isCIE10Member() {
-        return false;
-    }
-
-    @Override
-    public boolean isGMDNMember() {
-        return true;
     }
 }

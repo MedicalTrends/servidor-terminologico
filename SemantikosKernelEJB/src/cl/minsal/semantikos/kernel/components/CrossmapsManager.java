@@ -4,7 +4,6 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.crossmaps.*;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import java.util.List;
 
@@ -70,7 +69,7 @@ public interface CrossmapsManager {
      *
      * @return La lista de crossmapSetMembers asociados al concepto <code>conceptSMTK</code>.
      */
-    public List<CrossmapSetRecord> getDirectCrossmapsSetMembersOf(ConceptSMTK conceptSMTK);
+    public List<CrossmapSetMember> getDirectCrossmapsSetMembersOf(ConceptSMTK conceptSMTK);
 
     /**
      * Este método es responsable de recuperar los crossmaps indirectos de un concepto y actualizarle su lista de
@@ -91,7 +90,7 @@ public interface CrossmapsManager {
      *
      * @return La lista de CrossmapSetMembers asociados al concepto <code>conceptSMTK</code>.
      */
-    public CrossmapSetRecord getCrossmapSetMemberById(CrossmapSet crossmapSet, long id);
+    public CrossmapSetMember getCrossmapSetMemberById(CrossmapSet crossmapSet, long id);
 
     /**
      * Este método es repsonsable de recuperar los crossmapSetMembers de un crossmapSet dado por su nombre abreviado.
@@ -105,7 +104,7 @@ public interface CrossmapsManager {
      * @param crossmapSet El crossmapSet que se quiere recuperar.
      * @return Una lista con los crossmapSetMembers del crossmapSet dado <code>crossmapSetAbbreviatedName</code>.
      */
-    public List<CrossmapSetRecord> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize);
+    public List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize);
 
     /**
      * Este método busca registros en las terminologías externas términos que cumplan con el patrón.
@@ -115,7 +114,7 @@ public interface CrossmapsManager {
      *
      * @return Una lista de registros
      */
-    public List<CrossmapSetRecord> findByPattern(CrossmapSet crossmapSet, String pattern);
+    public List<CrossmapSetMember> findByPattern(CrossmapSet crossmapSet, String pattern);
     /**
      * Este método busca registros en las terminologías externas términos que cumplan con el código.
      *

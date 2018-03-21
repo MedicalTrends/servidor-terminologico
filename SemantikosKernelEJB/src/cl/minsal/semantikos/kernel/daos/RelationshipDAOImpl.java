@@ -2,7 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSetRecord;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
@@ -515,7 +515,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         if (relationshipDefinition.getTargetDefinition().isCrossMapType()) {
             target = targetDAO.getTargetByID(relationshipDefinition.getTargetDefinition(), idTarget);
             //CrossmapSetMember crossmapSetMemberById = crossmapDAO.getCrossmapSetMemberById(idTarget);
-            return new DirectCrossmap(id, conceptSMTK, (CrossmapSetRecord) target, relationshipDefinition, validityUntil);
+            return new DirectCrossmap(id, conceptSMTK, (CrossmapSetMember) target, relationshipDefinition, validityUntil);
         }
 
         /* Sino, hay un nuevo tipo de target que no está siendo gestionado */
