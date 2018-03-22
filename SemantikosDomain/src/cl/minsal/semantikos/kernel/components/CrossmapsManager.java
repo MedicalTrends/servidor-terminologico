@@ -91,13 +91,6 @@ public interface CrossmapsManager {
     public CrossmapSetMember getCrossmapSetMemberById(CrossmapSet crossmapSet, long id);
 
     /**
-     * Este método es repsonsable de recuperar los crossmapSetMembers de un crossmapSet dado por su nombre abreviado.
-     * @param crossmapSetAbbreviatedName El nombre abreviado del crossmapSet que se quiere recuperar.
-     * @return Una lista con los crossmapSetMembers del crossmapSet dado <code>crossmapSetAbbreviatedName</code>.
-     */
-    public List<CrossmapSetMember> getCrossmapSetByAbbreviatedName(String crossmapSetAbbreviatedName);
-
-    /**
      * Este método es responsable de establecer un crossmap directo hacia un término de otra terminología.
      *
      * @param conceptSMTK       El concepto SMTK.

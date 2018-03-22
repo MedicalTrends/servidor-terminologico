@@ -94,13 +94,6 @@ public interface CrossmapsManager {
 
     /**
      * Este método es repsonsable de recuperar los crossmapSetMembers de un crossmapSet dado por su nombre abreviado.
-     * @param crossmapSetAbbreviatedName El nombre abreviado del crossmapSet que se quiere recuperar.
-     * @return Una lista con los crossmapSetMembers del crossmapSet dado <code>crossmapSetAbbreviatedName</code>.
-     */
-    public List<CrossmapSetMember> getCrossmapSetByAbbreviatedName(String crossmapSetAbbreviatedName);
-
-    /**
-     * Este método es repsonsable de recuperar los crossmapSetMembers de un crossmapSet dado por su nombre abreviado.
      * @param crossmapSet El crossmapSet que se quiere recuperar.
      * @return Una lista con los crossmapSetMembers del crossmapSet dado <code>crossmapSetAbbreviatedName</code>.
      */
@@ -115,15 +108,6 @@ public interface CrossmapsManager {
      * @return Una lista de registros
      */
     public List<CrossmapSetMember> findByPattern(CrossmapSet crossmapSet, String pattern);
-    /**
-     * Este método busca registros en las terminologías externas términos que cumplan con el código.
-     *
-     * @param crossmapSet La terminología donde se busca el código.
-     * @param code     El código de búsqueda.
-     *
-     * @return Una lista de registros
-     */
-    public List<CrossmapSetMember> findByPatternCode1(CrossmapSet crossmapSet, String code);
 
 
 }

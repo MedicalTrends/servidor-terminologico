@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model.crossmaps.cie10;
+package cl.minsal.semantikos.model.dtos;
 
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
@@ -10,23 +10,14 @@ import java.io.Serializable;
 /**
  * @author Andrés Farías on 11/3/16.
  */
-public class Disease extends CrossmapSetMember implements Serializable {
+public class DiseaseDTO extends CrossmapSetMemberDTO implements Serializable {
 
     private String code;
 
     private String gloss;
     private String code1;
 
-    public Disease(long idCrossmapSetMember, CrossmapSet crossmapSet, String code, String gloss) {
-        super(idCrossmapSetMember, crossmapSet);
-        this.code = code;
-        this.gloss = gloss;
-    }
-
-    public Disease(long id, long idCrossmapSetMember, CrossmapSet crossmapSet, String code, String gloss) {
-        super(id, crossmapSet);
-        this.code = code;
-        this.gloss = gloss;
+    public DiseaseDTO() {
     }
 
     public String getCode() {
@@ -45,23 +36,11 @@ public class Disease extends CrossmapSetMember implements Serializable {
         this.gloss = gloss;
     }
 
-    @Override
-    public TargetType getTargetType() {
-        return TargetType.CrossMap;
-    }
-
-    @Override
-    public String getRepresentation() {
-        //return this.getCrossmapSet().getAbbreviatedName()+" - Código Crossmap: ("+this.getCode()+") - "+this.getGloss();
-        return this.getGloss();
-
-    }
-
     // Métodos para soportar conversión automática
     @Override
     public boolean equals(Object other) {
-        return (other instanceof Disease) && (String.valueOf(getId()) != null)
-                ? String.valueOf(getId()).equals(String.valueOf(((Disease) other).getId()))
+        return (other instanceof DiseaseDTO) && (String.valueOf(getId()) != null)
+                ? String.valueOf(getId()).equals(String.valueOf(((DiseaseDTO) other).getId()))
                 : (other == this);
     }
 
@@ -74,11 +53,6 @@ public class Disease extends CrossmapSetMember implements Serializable {
     public String toString() {
         //return Long.toString(idCrossmapSetMember);
         return gloss;
-    }
-
-    @Override
-    public Target copy() {
-        return new Disease(this.getId(), this.getId(), this.getCrossmapSet(), this.getCode(), this.getGloss());
     }
 
     public String getCode1() {

@@ -1,5 +1,8 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetFactory;
+import cl.minsal.semantikos.model.crossmaps.cie10.Disease;
 import cl.minsal.semantikos.model.crossmaps.gmdn.CollectiveTerm;
 import cl.minsal.semantikos.model.crossmaps.gmdn.GenericDeviceGroup;
 import oracle.jdbc.OracleTypes;
@@ -26,7 +29,7 @@ public class GMDNDAOImpl implements GMDNDAO {
     private DataSource dataSource;
 
     @Override
-    public GenericDeviceGroup getGenericDeviceGroupByCode(long code) {
+    public GenericDeviceGroup getGenericDeviceGroupById(long code) {
 
         GenericDeviceGroup genericDeviceGroup;
 
@@ -39,7 +42,6 @@ public class GMDNDAOImpl implements GMDNDAO {
             call.setLong(2, code);
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
@@ -58,6 +60,91 @@ public class GMDNDAOImpl implements GMDNDAO {
     }
 
     @Override
+    public List<GenericDeviceGroup> findGenericDeviceGroupsByPattern(String pattern) {
+
+        List<GenericDeviceGroup> genericDeviceGroups = new ArrayList<>();
+
+        String sql = "begin ? := stk.stk_pck_gmdn.find_generic_device_groups_by_pattern(?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, pattern);
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                genericDeviceGroups.add(createGenericDeviceGroupFromResultSet(rs));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
+        return genericDeviceGroups;
+    }
+
+    @Override
+    public List<GenericDeviceGroup> getGenericDeviceGroups() {
+
+        List<GenericDeviceGroup> genericDeviceGroups = new ArrayList<>();
+
+        String sql = "begin ? := stk.stk_pck_gmdn.get_generic_device_groups; end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                genericDeviceGroups.add(createGenericDeviceGroupFromResultSet(rs));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
+        return genericDeviceGroups;
+    }
+
+    @Override
+    public List<GenericDeviceGroup> getGenericDeviceGroupsPaginated(int page, int pageSize) {
+
+        List<GenericDeviceGroup> genericDeviceGroups = new ArrayList<>();
+
+        String sql = "begin ? := stk.stk_pck_gmdn.get_generic_device_groups_paginated(?,?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setInt(2, page);
+            call.setInt(3, pageSize);
+
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                genericDeviceGroups.add(createGenericDeviceGroupFromResultSet(rs));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
+        return genericDeviceGroups;
+    }
+
+    @Override
     public CollectiveTerm getCollectiveTermByCode(long code) {
 
         CollectiveTerm collectiveTerm;
@@ -71,7 +158,6 @@ public class GMDNDAOImpl implements GMDNDAO {
             call.setLong(2, code);
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
@@ -91,6 +177,7 @@ public class GMDNDAOImpl implements GMDNDAO {
 
     @Override
     public List<CollectiveTerm> getParentsOf(CollectiveTerm collectiveTerm) {
+
         List<CollectiveTerm> collectiveTerms = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_gmdn.get_parents_of(?); end;";
@@ -102,7 +189,6 @@ public class GMDNDAOImpl implements GMDNDAO {
             call.setLong(2, collectiveTerm.getCode());
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
@@ -120,6 +206,7 @@ public class GMDNDAOImpl implements GMDNDAO {
 
     @Override
     public List<CollectiveTerm> getChildrenOf(CollectiveTerm collectiveTerm) {
+
         List<CollectiveTerm> collectiveTerms = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_gmdn.get_children_of(?); end;";
@@ -131,7 +218,6 @@ public class GMDNDAOImpl implements GMDNDAO {
             call.setLong(2, collectiveTerm.getCode());
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
@@ -149,6 +235,7 @@ public class GMDNDAOImpl implements GMDNDAO {
 
     @Override
     public List<CollectiveTerm> getParentLines(List<CollectiveTerm> nodes) {
+
         List<CollectiveTerm> allNodesParentNodes = new ArrayList<>();
         int parents = 0;
 
@@ -195,6 +282,7 @@ public class GMDNDAOImpl implements GMDNDAO {
 
     @Override
     public List<CollectiveTerm> getCollectiveTermsByGenericDeviceGroup(GenericDeviceGroup genericDeviceGroup) {
+
         List<CollectiveTerm> collectiveTerms= new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_gmdn.get_collective_terms_by_generic_device_group(?); end;";
@@ -234,8 +322,9 @@ public class GMDNDAOImpl implements GMDNDAO {
         Timestamp createdDate = rs.getTimestamp("created_date");
         Timestamp modifiedDate = rs.getTimestamp("modified_date");
         Timestamp obsoletedDate = rs.getTimestamp("obsoleted_date");
+        CrossmapSet crossmapSet = CrossmapSetFactory.getInstance().findCrossmapSetsById(rs.getLong("id_cross_map_set"));
 
-        GenericDeviceGroup genericDeviceGroup = new GenericDeviceGroup(code, code, termName, termDefinition, termStatus, createdDate, modifiedDate, obsoletedDate);
+        GenericDeviceGroup genericDeviceGroup = new GenericDeviceGroup(crossmapSet, code, code, termName, termDefinition, termStatus, createdDate, modifiedDate, obsoletedDate);
 
         List<CollectiveTerm> collectiveTerms = getCollectiveTermsByGenericDeviceGroup(genericDeviceGroup);
 
@@ -259,9 +348,7 @@ public class GMDNDAOImpl implements GMDNDAO {
         String termName = rs.getString("term_name");
         String termDefinition = rs.getString("term_definition");
 
-        CollectiveTerm collectiveTerm = new CollectiveTerm(code, termName, termDefinition);
-
-        return collectiveTerm;
+        return new CollectiveTerm(code, termName, termDefinition);
     }
 
 

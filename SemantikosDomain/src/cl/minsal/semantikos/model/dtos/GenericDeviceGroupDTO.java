@@ -1,21 +1,19 @@
-package cl.minsal.semantikos.model.crossmaps.gmdn;
+package cl.minsal.semantikos.model.dtos;
 
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
+import cl.minsal.semantikos.model.crossmaps.gmdn.CollectiveTerm;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
-import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by des01c7 on 20-11-17.
  */
-public class GenericDeviceGroup extends CrossmapSetMember implements Serializable {
-
+public class GenericDeviceGroupDTO extends CrossmapSetMemberDTO implements Serializable {
 
     private long code;
 
@@ -31,17 +29,9 @@ public class GenericDeviceGroup extends CrossmapSetMember implements Serializabl
 
     private Timestamp obsoletedDate;
 
-    private List<CollectiveTerm> collectiveTerms;
+    //private List<CollectiveTerm> collectiveTerms;
 
-    public GenericDeviceGroup(CrossmapSet crossmapSet, long id, long code, String termName, String termDefinition, String termStatus, Timestamp createdDate, Timestamp modifiedDate, Timestamp obsoletedDate) {
-        super(id, crossmapSet);
-        this.code = code;
-        this.termName = termName;
-        this.termDefinition = termDefinition;
-        this.termStatus = termStatus;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
-        this.obsoletedDate = obsoletedDate;
+    public GenericDeviceGroupDTO() {
     }
 
     public long getCode() {
@@ -98,29 +88,6 @@ public class GenericDeviceGroup extends CrossmapSetMember implements Serializabl
 
     public void setObsoletedDate(Timestamp obsoletedDate) {
         this.obsoletedDate = obsoletedDate;
-    }
-
-    public List<CollectiveTerm> getCollectiveTerms() {
-        return collectiveTerms;
-    }
-
-    public void setCollectiveTerms(List<CollectiveTerm> collectiveTerms) {
-        this.collectiveTerms = collectiveTerms;
-    }
-
-    @Override
-    public TargetType getTargetType() {
-        return TargetType.CrossMap;
-    }
-
-    @Override
-    public String getRepresentation() {
-        return this.code + this.termName;
-    }
-
-    @Override
-    public Target copy() {
-        return new GenericDeviceGroup(getCrossmapSet(), this.getId(), this.getCode(), this.getTermName(), this.getTermDefinition(), this.getTermStatus(), this.getCreatedDate(), this.getModifiedDate(), this.getObsoletedDate());
     }
 
     @Override

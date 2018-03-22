@@ -64,4 +64,8 @@ public class CrossmapSetFactory implements Serializable {
         }
     }
 
+    public List<CrossmapSet> getCrossmapSets() {
+        return crossmapSets;
+    }
+
 }

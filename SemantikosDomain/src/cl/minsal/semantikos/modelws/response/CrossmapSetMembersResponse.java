@@ -1,7 +1,8 @@
 package cl.minsal.semantikos.modelws.response;
 
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
-import cl.minsal.semantikos.model.crossmaps.GenericDeviceGroup;
+import cl.minsal.semantikos.model.crossmaps.cie10.Disease;
+import cl.minsal.semantikos.model.crossmaps.gmdn.GenericDeviceGroup;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
@@ -37,7 +38,7 @@ public class CrossmapSetMembersResponse implements Serializable {
     /** La lista de crossmaps indirectos (response) */
     @XmlElementWrapper(name = "crossmapSetRecords")
     @XmlElement(name = "crossmapSetRecord")
-    private List<CrossmapSetRecordResponse> crossmapSetMemberResponses;
+    private List<CrossmapSetMemberResponse> crossmapSetMemberResponses;
 
     @XmlElement(name = "cantidadRegistros")
     private int quantity;
@@ -60,8 +61,8 @@ public class CrossmapSetMembersResponse implements Serializable {
         }
 
         for (CrossmapSetMember crossmapSetMember : crossmapSetMembers) {
-            if(crossmapSetMember instanceof  CrossmapSetMember) {
-                this.crossmapSetMemberResponses.add(new CrossmapSetMemberResponse(crossmapSetMember));
+            if(crossmapSetMember instanceof Disease) {
+                this.crossmapSetMemberResponses.add(new DiseaseResponse(crossmapSetMember));
             }
             if(crossmapSetMember instanceof GenericDeviceGroup) {
                 this.crossmapSetMemberResponses.add(new GenericDeviceGroupResponse(crossmapSetMember));
@@ -127,11 +128,11 @@ public class CrossmapSetMembersResponse implements Serializable {
         this.version = version;
     }
 
-    public List<CrossmapSetRecordResponse> getCrossmapSetMemberResponses() {
+    public List<CrossmapSetMemberResponse> getCrossmapSetMemberResponses() {
         return crossmapSetMemberResponses;
     }
 
-    public void setCrossmapSetMemberResponses(List<CrossmapSetRecordResponse> crossmapSetMemberResponses) {
+    public void setCrossmapSetMemberResponses(List<CrossmapSetMemberResponse> crossmapSetMemberResponses) {
         this.crossmapSetMemberResponses = crossmapSetMemberResponses;
     }
 

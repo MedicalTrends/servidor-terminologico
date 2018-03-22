@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.modelws.response;
 
 import cl.minsal.semantikos.model.crossmaps.*;
+import cl.minsal.semantikos.model.crossmaps.gmdn.GenericDeviceGroup;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.xml.bind.annotation.*;
@@ -16,7 +17,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "genericDeviceGroup", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "GenericDeviceGroup", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class GenericDeviceGroupResponse extends CrossmapSetRecordResponse implements Serializable {
+public class GenericDeviceGroupResponse extends CrossmapSetMemberResponse implements Serializable {
 
     @XmlElement(name = "NombreCortoCrossmapSet")
     private String shortNameCrossmapSet;
@@ -50,6 +51,8 @@ public class GenericDeviceGroupResponse extends CrossmapSetRecordResponse implem
 
     public GenericDeviceGroupResponse(CrossmapSetMember crossmapSetMember) {
         if(crossmapSetMember instanceof GenericDeviceGroup) {
+
+            setId((crossmapSetMember).getId());
 
             this.code = (((GenericDeviceGroup) crossmapSetMember).getCode());
             //this.crossmapSet = new CrossmapSetResponse(crossmapSetMember.getCrossmapSet());

@@ -11,11 +11,30 @@ import java.io.Serializable;
  */
 public abstract class CrossmapSetMember extends PersistentEntity implements Target {
 
-    public CrossmapSetMember() {
-    }
+    CrossmapSet crossmapSet;
+
+    public CrossmapSetMember() {}
 
     public CrossmapSetMember(long id) {
         super(id);
     }
 
+    public CrossmapSetMember(long id, CrossmapSet crossmapSet) {
+        super(id);
+        this.crossmapSet = crossmapSet;
+    }
+
+    public CrossmapSetMember(CrossmapSet crossmapSet) {
+
+        this.crossmapSet = crossmapSet;
+    }
+
+    public CrossmapSet getCrossmapSet() {
+
+        return crossmapSet;
+    }
+
+    public void setCrossmapSet(CrossmapSet crossmapSet) {
+        this.crossmapSet = crossmapSet;
+    }
 }

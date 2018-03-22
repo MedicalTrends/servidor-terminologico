@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.kernel.daos.CrossmapsDAO;
 import cl.minsal.semantikos.kernel.factories.CrossmapFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.kernel.businessrules.CrossMapCreationBR;
 import cl.minsal.semantikos.kernel.businessrules.CrossMapRemovalBR;
@@ -39,15 +40,6 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     @EJB
     private CrossmapFactory crossmapFactory;
 
-    /** Caché de los crossmapSets */
-    private List<CrossmapSet> crossmapSetsCache;
-
-    /**
-     * Inicialización básica.
-     */
-    public CrossmapsManagerImpl() {
-        this.crossmapSetsCache = new ArrayList<>();
-    }
 
     @Override
     public Crossmap create(DirectCrossmap directCrossmap, User user) {
@@ -97,13 +89,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     @Override
     public List<CrossmapSet> getCrossmapSets() {
 
-        /* Se actualiza el caché si está vacío */
-        if (crossmapSetsCache.size() == 0){
-            this.crossmapSetsCache.addAll(crossmapsDAO.getCrossmapSets());
-        }
-
-        /* Se retorna el caché, que estamos seguro que fue actualizado */
-        return this.crossmapSetsCache;
+        return CrossmapSetFactory.getInstance().getCrossmapSets();
     }
 
     @Override
@@ -133,7 +119,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
                 if(relationship instanceof DirectCrossmap){
                     directCrossmap = (DirectCrossmap) relationship;
                 } else {
-                    directCrossmap = crossmapFactory.createDirectCrossmap(relationship);
+                    directCrossmap = createDirectCrossmap(relationship);
                 }
 
                 /* Y se agrega a la lista */
@@ -144,6 +130,19 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
         return directCrossmaps;
     }
 
+    public DirectCrossmap createDirectCrossmap(Relationship relationship) {
+
+        /* Se transforma el target a un CrossmapSetMember */
+        Target target = relationship.getTarget();
+        if (!(target instanceof CrossmapSetMember)){
+            throw new IllegalArgumentException("La relación no es de tipo DirectCrossmap.");
+        }
+        CrossmapSetMember crossmapSetMember = (CrossmapSetMember) target;
+
+        /* Se retorna una instancia fresca */
+        return new DirectCrossmap(relationship.getId(), relationship.getSourceConcept(), crossmapSetMember, relationship.getRelationshipDefinition(), relationship.getValidityUntil());
+    }
+
     @Override
     public List<CrossmapSetMember> getDirectCrossmapsSetMembersOf(ConceptSMTK conceptSMTK) {
 
@@ -152,6 +151,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
 
         /* Luego se almacenan los crossmapSetMembers referenciados en una lista */
         ArrayList<CrossmapSetMember> directCrossmapSetMembers = new ArrayList<>();
+
         for (DirectCrossmap directCrossmap : directCrossmaps) {
             directCrossmapSetMembers.add(directCrossmap.getTarget());
         }
@@ -165,17 +165,10 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
-    public List<CrossmapSetMember> getCrossmapSetByAbbreviatedName(String crossmapSetAbbreviatedName) {
-
-        /* Lo primero es recuperar el crossmapSet a partir de su nombre abreviado */
-        return crossmapsDAO.getCrossmapSetMemberByAbbreviatedName(crossmapSetAbbreviatedName);
-    }
-
-    @Override
     public List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize) {
 
         /* Lo primero es recuperar el crossmapSet a partir de su nombre abreviado */
-        return crossmapsDAO.getCrossmapSetMemberByCrossmapSet(crossmapSet, page, pageSize);
+        return crossmapsDAO.getCrossmapSetMembersPaginated(crossmapSet, page, pageSize);
     }
 
     @Override
@@ -203,11 +196,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
 
     @Override
     public List<CrossmapSetMember> findByPattern(CrossmapSet crossmapSet, String pattern) {
-        return crossmapsDAO.findCrossmapSetMemberBy(crossmapSet, pattern);
+        return crossmapsDAO.findCrossmapSetMemberByPattern(crossmapSet, pattern);
     }
 
-    @Override
-    public List<CrossmapSetMember> findByPatternCode1(CrossmapSet crossmapSet, String code) {
-        return crossmapsDAO.findCrossmapSetMemberByCod1(crossmapSet,code);
-    }
 }
