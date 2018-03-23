@@ -70,7 +70,7 @@ public class CIE10DAOImpl implements CIE10DAO {
 
         List<Disease> diseases = new ArrayList<>();
 
-        String sql = "begin ? := stk.stk_pck_cie10.find_disease_by_pattern(?); end;";
+        String sql = "begin ? := stk.stk_pck_cie10.find_diseases_by_pattern(?); end;";
 
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {

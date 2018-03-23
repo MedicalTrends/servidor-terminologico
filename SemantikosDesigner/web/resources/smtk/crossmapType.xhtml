@@ -29,31 +29,7 @@
 
                 <div class="Container">
 
-                    <div class="Container20 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-                            <p:selectOneMenu value="#{cc.attrs.targetDefinition}" autoWidth="false" converter="omnifaces.SelectItemsConverter">
-                                <f:selectItems itemLabel="#{crossmapSet.abbreviatedName}" value="#{crossmapBean.crossmapSets}" itemValue="#{crossmapSet}" var="crossmapSet" />
-                                <p:ajax event="itemSelect" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
-                            </p:selectOneMenu>
-
-                        </div>
-                    </div>
-                    <div class="Container20 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-
-                            <p:selectOneRadio value="#{crossmapBean.typeSearch}" autoWidth="false" layout="grid" columns="2" style="padding-top: 0.5em"
-                            >
-                                <f:selectItem itemLabel="Búsqueda por descripción" itemValue="0"/>
-                                <f:selectItem itemLabel="Búsqueda por Cod-1 Crossmapset" itemValue="1"/>
-                                <p:ajax  />
-                            </p:selectOneRadio>
-
-                        </div>
-                    </div>
-
-                    <div class="Container20 White Responsive">
+                    <div class="Container50 White Responsive">
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
                             <p:outputPanel styleClass="search">

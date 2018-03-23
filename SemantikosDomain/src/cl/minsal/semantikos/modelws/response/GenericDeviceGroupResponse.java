@@ -19,6 +19,10 @@ import java.util.List;
 @XmlType(name = "GenericDeviceGroup", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class GenericDeviceGroupResponse extends CrossmapSetMemberResponse implements Serializable {
 
+    /** ID de negocio */
+    @XmlElement(name = "idCrossmapSetMember")
+    private long idCrossmapSetMember;
+
     @XmlElement(name = "NombreCortoCrossmapSet")
     private String shortNameCrossmapSet;
 
@@ -52,7 +56,7 @@ public class GenericDeviceGroupResponse extends CrossmapSetMemberResponse implem
     public GenericDeviceGroupResponse(CrossmapSetMember crossmapSetMember) {
         if(crossmapSetMember instanceof GenericDeviceGroup) {
 
-            setId((crossmapSetMember).getId());
+            setIdCrossmapSetMember(crossmapSetMember.getId());
 
             this.code = (((GenericDeviceGroup) crossmapSetMember).getCode());
             //this.crossmapSet = new CrossmapSetResponse(crossmapSetMember.getCrossmapSet());
@@ -65,6 +69,14 @@ public class GenericDeviceGroupResponse extends CrossmapSetMemberResponse implem
             this.versionCrossmapSet = ((GenericDeviceGroup) crossmapSetMember).getCrossmapSet().getVersion();
 
         }
+    }
+
+    public long getIdCrossmapSetMember() {
+        return idCrossmapSetMember;
+    }
+
+    public void setIdCrossmapSetMember(long idCrossmapSetMember) {
+        this.idCrossmapSetMember = idCrossmapSetMember;
     }
 
     public long getCode() {
