@@ -1,9 +1,14 @@
 package cl.minsal.semantikos.description;
 
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.concept.ConceptBean;
+import cl.minsal.semantikos.designer.CrossmapBean;
+import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.MainMenuBean;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.descriptions.NoValidDescription;
@@ -12,13 +17,19 @@ import cl.minsal.semantikos.modelweb.DescriptionWeb;
 import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
+import javax.el.ELContext;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static org.primefaces.util.Constants.EMPTY_STRING;
 
 /**
  * @author Gustavo Punucura
@@ -36,6 +47,9 @@ public class DescriptionBeans {
 
     @ManagedProperty(value = "#{mainMenuBean}")
     MainMenuBean mainMenuBean;
+
+    //@EJB
+    private DescriptionManager descriptionManager = (DescriptionManager) ServiceLocator.getInstance().getService(DescriptionManager.class);
 
     DescriptionTypeFactory descriptionTypeFactory = DescriptionTypeFactory.getInstance();
 
@@ -61,9 +75,24 @@ public class DescriptionBeans {
 
     private String error = "";
 
+    private boolean descriptionSelected = false;
+
     @PostConstruct
     public void init() {
         descriptionEdit= new DescriptionWeb();
+    }
+
+    public List<String> searchSuggestedDescriptions(String term) {
+        List<String> suggestedDescriptions = new ArrayList<>();
+
+        FacesContext fc = FacesContext.getCurrentInstance();
+
+        Category category = (Category) UIComponent.getCurrentComponent(fc).getAttributes().get("category");
+
+        for (Description description : descriptionManager.searchDescriptionsSuggested(term, Arrays.asList(category), null)) {
+            suggestedDescriptions.add(description.getTerm());
+        }
+        return suggestedDescriptions;
     }
 
     /**
@@ -188,6 +217,23 @@ public class DescriptionBeans {
 
     }
 
+    public void updateFSNFromFavouriteAndMarkSelected(DescriptionWeb description) {
+
+        Matcher m = Pattern.compile("\\((.*?)\\)").matcher(description.getTerm());
+
+        while(m.find()) {
+            if(TagSMTKFactory.getInstance().findTagSMTKByName(m.group(1))!=null) {
+                description.getConceptSMTK().getDescriptionFSN().setTerm(description.getTerm().replace("("+m.group(1)+")","").trim());
+                return;
+            }
+        }
+
+        description.getConceptSMTK().getDescriptionFSN().setTerm(description.getTerm());
+
+        descriptionSelected = true;
+
+    }
+
     public void updateFSNFromTagSMTK(ConceptSMTK conceptSMTK) {
 
         Matcher m = Pattern.compile("\\((.*?)\\)").matcher(conceptSMTK.getDescriptionFSN().getTerm());
@@ -241,5 +287,13 @@ public class DescriptionBeans {
 
     public void setMainMenuBean(MainMenuBean mainMenuBean) {
         this.mainMenuBean = mainMenuBean;
+    }
+
+    public boolean isDescriptionSelected() {
+        return descriptionSelected;
+    }
+
+    public void setDescriptionSelected(boolean descriptionSelected) {
+        this.descriptionSelected = descriptionSelected;
     }
 }

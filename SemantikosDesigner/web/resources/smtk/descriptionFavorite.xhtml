@@ -16,7 +16,7 @@
 
 <composite:implementation>
 
-    <p:fieldset legend="Preferida">
+    <p:fieldset legend="Preferida" styleClass="favourite">
 
         <div class="ui-g">
             <div class="ui-g-12 ui-md-4 ui-lg-2">
@@ -52,15 +52,50 @@
                 <p:outputLabel value="Término *" />
             </div>
             <div class="ui-g-12 ui-md-8 ui-lg-10">
+                <p:autoComplete id="search"
+                                widgetVar="search_input"
+                                styleClass="search-input"
+                                minQueryLength="3"
+                                emptyMessage="No se encontraron elementos"
+                                forceSelection="false"
+                                scrollHeight="200" size="5"
+                                completeMethod="#{descriptionBeans.searchSuggestedDescriptions}"
+                                placeholder="Buscar..."
+                                validator="#{validatorBean.validateRequiredInput}"
+                                rendered="#{ not descriptionBeans.descriptionSelected}"
+                                var="description"
+                                value="#{cc.attrs.description.term}"
+                                itemLabel="#{description}"
+                                itemValue="#{description}">
+
+                    <p:outputPanel>
+
+                        <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
+                            <h:outputText value="#{description.term}" />
+                        </p:column>
+
+                    </p:outputPanel>
+
+                    <f:attribute name="category" value="#{cc.attrs.description.conceptSMTK.category}"  />
+
+                    <p:ajax event="itemSelect"
+                            listener="#{descriptionBeans.updateFSNFromFavouriteAndMarkSelected(cc.attrs.description)}"
+                            update="@(.FSN),@(.favourite)"
+                            process="@this"/>
+
+                    <p:ajax event="keyup" update="@(.FSN)" listener="#{descriptionBeans.updateFSNFromFavourite(cc.attrs.description)}" process="@this" async="true" />
+
+                </p:autoComplete>
+
                 <p:inputTextarea id="favorite"
                                  styleClass="terms"
                                  name="description"
                                  rows="1"
-                                 validator="#{validatorBean.validateRequiredInput}"
+                                 rendered="#{descriptionBeans.descriptionSelected}"
                                  value="#{cc.attrs.description.term}"
                                  readonly="#{cc.attrs.description.conceptSMTK.modeled}"
                                  autocomplete="off">
-                    <p:ajax event="keyup" update="@(.FSN)" listener="#{descriptionBeans.updateFSNFromFavourite(cc.attrs.description)}" process="@this" />
+                    <p:ajax event="keyup" update="@(.FSN),@(.favourite)" listener="#{descriptionBeans.setDescriptionSelected(false)}" process="@this" />
                 </p:inputTextarea>
             </div>
         </div>
