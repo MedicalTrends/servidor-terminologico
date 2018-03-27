@@ -61,6 +61,7 @@
                                     <p:autoComplete id="search"
                                                     widgetVar="search_input"
                                                     styleClass="search-input"
+                                                    autoHighlight="true"
                                                     minQueryLength="3"
                                                     emptyMessage="No se encontraron conceptos"
                                                     forceSelection="false"
@@ -70,7 +71,7 @@
                                                     converter="DescriptionConverter"
                                                     var="description"
                                                     value="#{browserBean.descriptionSelected}"
-                                                    itemLabel="#{description.term}"
+                                                    itemLabel="#{description.getRepresentation()}"
                                                     itemValue="#{description}">
 
                                         <p:outputPanel>

@@ -403,7 +403,12 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while(rs.next()) {
-                relationships.add(createRelationshipSCTFromResultSet(rs, conceptSCT));
+                try {
+                    relationships.add(createRelationshipSCTFromResultSet(rs, conceptSCT));
+                }
+                catch (EJBException e) {
+                    logger.warn(e.getMessage());
+                }
             }
 
             rs.close();

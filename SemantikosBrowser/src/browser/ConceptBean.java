@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
+import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.model.users.Institution;
@@ -29,6 +30,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +50,9 @@ public class ConceptBean implements Serializable {
 
     //@EJB
     RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);
+
+    //@EJB
+    RefSetManager refSetManager = (RefSetManager) ServiceLocator.getInstance().getService(RefSetManager.class);
 
     ConceptSMTK selectedConcept;
 
@@ -194,6 +200,10 @@ public class ConceptBean implements Serializable {
         return smtkRelationships;
     }
 
+    public List<RefSet> getConceptRefSetList() {
+        return refSetManager.getRefsetsBy(selectedConcept);
+    }
+
     public List<Relationship> getGMDNRelationships() {
 
         if(selectedConcept == null) {
@@ -215,6 +225,11 @@ public class ConceptBean implements Serializable {
         }
 
         return gmdnRelationships;
+    }
+
+    public String getDateCreationFormat(Timestamp timestamp) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(timestamp);
     }
 
 }

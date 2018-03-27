@@ -54,6 +54,7 @@
                             <p:column>
                                 <h:outputText value="#{concept.descriptionFavorite.term}"/>
                             </p:column>
+
                             <p:ajax update="@(.panel_#{cc.attrs.relationshipDefinition.id})" event="itemSelect"
                                     listener="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition,conceptBean.conceptSelected)}"
                                     process="@this"/>

@@ -48,7 +48,7 @@
                                                             converter="DescriptionConverter"
                                                             var="description"
                                                             value="#{browserBean.descriptionSelected}"
-                                                            itemLabel="#{description.term}"
+                                                            itemLabel="#{description.getRepresentation()}"
                                                             itemValue="#{description}">
 
                                                 <p:outputPanel>
@@ -194,17 +194,25 @@
                                                         <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: small; color: #006621" />
                                                         <br/>
                                                         <h:outputText value="#{conceptSMTK.category.name}" style="font-size: small; color:#545454;" />
-                                                        <p:repeat
-                                                                offset="0"
-                                                                size="#{conceptSMTK.tags.size()}"
-                                                                step="1"
-                                                                varStatus="var"
-                                                                value="#{conceptSMTK.tags}"
-                                                                var="tag">
 
-                                                            <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+                                                        <p:separator style="border-top: 0px solid rgb(219, 219, 219)" rendered="#{ not empty conceptSMTK.tags }"/>
 
-                                                        </p:repeat>
+                                                         <p:outputPanel rendered="#{ not empty conceptSMTK.tags}">
+                                                            <i class="fa fa-tags" style="font-size: small"/>
+                                                            <p:repeat
+                                                                    offset="0"
+                                                                    size="#{conceptSMTK.tags.size()}"
+                                                                    step="1"
+                                                                    varStatus="var"
+                                                                    value="#{conceptSMTK.tags}"
+                                                                    var="tag">
+
+                                                                <h:outputText value=" #{tag}" style="font-size: small; background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+                                                                <h:outputText value=", " style="font-size: small; color: #545454"/>
+
+                                                            </p:repeat>
+                                                        </p:outputPanel>
+
                                                     </span>
                                                 </div>
                                             </div>

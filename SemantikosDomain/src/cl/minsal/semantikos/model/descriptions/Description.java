@@ -260,6 +260,16 @@ public class Description extends PersistentEntity implements AuditableEntity, Se
         return this.term;
     }
 
+    public String getRepresentation() {
+
+        if(this.conceptSMTK != null) {
+            return this.term + " - " + this.conceptSMTK.getCategory().getName();
+        }
+        else {
+            return this.term;
+        }
+    }
+
     /**
      * Este método tiene como responsabilidad imprimir mayor detalle sobre la descripcion.
      * @return Un String con detalles.

@@ -136,7 +136,7 @@
                                 <p:link value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="/views/concept-snomed">
                                     <f:param name="conceptID" value="#{relationship.target.idSnomedCT}" />
                                 </p:link>
-                                <h:dataTable value="#{relationship.target.getDescriptionSynonymous()}" var="description" rendered="#{not empty relationship.target.getDescriptionSynonymous()}">
+                                <h:dataTable value="#{relationship.target.getDescriptionSynonymous()}" var="description" rendered="false">
                                     <h:column>
                                         <h:outputText value="#{description.descriptionType.name}" style="font-weight: bold"/>
                                     </h:column>
@@ -148,13 +148,80 @@
                         </p:dataTable>
                     </p:tab>
 
-                    <p:tab title="RefSets" rendered="#{not empty concept.selectedConcept.refsets}">
+                    <p:tab title="Crossmaps" rendered="#{not empty concept.getDirectCrossmapsRelationships()}">
+
+                        <p:fieldset legend="Crossmaps Directos">
+
+                            <p:dataTable id="directCrossmaps"
+                                         rows="5"
+                                         paginator="true"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                         var="crossmap"
+                                         value="#{concept.getDirectCrossmapsRelationships()}"
+                                         reflow="true">
+
+                                <p:column headerText="Terminología">
+                                    <h:outputText value="#{crossmap.target.crossmapSet.name}"/>
+                                </p:column>
+
+                                <p:column headerText="Cod-1 Crossmapset Member">
+                                    <h:outputText value="#{crossmap.target.code}"/>
+                                </p:column>
+
+                                <p:column headerText="Descripción">
+                                    <h:outputText value="#{crossmap.target.gloss}"/>
+                                </p:column>
+
+                                <p:column headerText="Fecha Creación">
+                                    <h:outputText value="#{concept.getDateCreationFormat(crossmap.creationDate)}"/>
+                                </p:column>
+
+                            </p:dataTable>
+
+                        </p:fieldset>
+
+                        <p:fieldset legend="Crossmaps Indirectos">
+
+                            <p:dataTable id="indirectCrossmaps"
+                                         rows="5"
+                                         paginator="true"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                         var="crossmap"
+                                         value="#{concept.getIndirectCrossmapsRelationships()}"
+                                         reflow="true">
+
+                                <p:column headerText="Terminología">
+                                    <h:outputText value="#{crossmap.target.crossmapSet.name}"/>
+                                </p:column>
+                                <p:column headerText="Cod-1 Crossmapset Member">
+                                    <h:outputText value="#{crossmap.target.code}"/>
+                                </p:column>
+                                <p:column headerText="Descripción">
+                                    <h:outputText value="#{crossmap.target.gloss}"/>
+                                </p:column>
+                                <p:column headerText="MapRule">
+                                    <h:outputText value="#{crossmap.mapRule}"/>
+                                </p:column>
+                                <p:column headerText="MapAdvice">
+                                    <h:outputText value="#{crossmap.mapAdvice}"/>
+                                </p:column>
+                                <p:column headerText="Origen">
+                                    <h:outputText value=""/>
+                                </p:column>
+
+                            </p:dataTable>
+
+                        </p:fieldset>
+
+                    </p:tab>
+
+                    <p:tab title="RefSets" rendered="#{not empty concept.conceptRefSetList}">
                         <p:dataTable id="refSets"
                                      rows="5"
                                      paginator="true"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      var="refSet"
-                                     value="#{concept.selectedConcept.refsets}"
+                                     value="#{concept.conceptRefSetList}"
                                      reflow="true">
 
                             <p:column headerText="Nombre" style="font-weight: bold">
