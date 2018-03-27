@@ -3,15 +3,21 @@ package cl.minsal.semantikos.description;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.concept.ConceptBean;
 import cl.minsal.semantikos.designer.CrossmapBean;
+import cl.minsal.semantikos.kernel.components.CrossmapsManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
+import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.MainMenuBean;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.descriptions.NoValidDescription;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import cl.minsal.semantikos.model.snomedct.DescriptionSCT;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.modelweb.DescriptionWeb;
 import org.primefaces.context.RequestContext;
@@ -51,6 +57,12 @@ public class DescriptionBeans {
     //@EJB
     private DescriptionManager descriptionManager = (DescriptionManager) ServiceLocator.getInstance().getService(DescriptionManager.class);
 
+    //@EJB
+    private SnomedCTManager snomedCTManager = (SnomedCTManager) ServiceLocator.getInstance().getService(SnomedCTManager.class);
+
+    //@EJB
+    private CrossmapsManager crossmapManager = (CrossmapsManager) ServiceLocator.getInstance().getService(CrossmapsManager.class);
+
     DescriptionTypeFactory descriptionTypeFactory = DescriptionTypeFactory.getInstance();
 
     public ConceptBean getConceptBean() {
@@ -83,16 +95,33 @@ public class DescriptionBeans {
     }
 
     public List<String> searchSuggestedDescriptions(String term) {
-        List<String> suggestedDescriptions = new ArrayList<>();
+
+        List<String> suggestions = new ArrayList<>();
 
         FacesContext fc = FacesContext.getCurrentInstance();
 
         Category category = (Category) UIComponent.getCurrentComponent(fc).getAttributes().get("category");
 
         for (Description description : descriptionManager.searchDescriptionsSuggested(term, Arrays.asList(category), null)) {
-            suggestedDescriptions.add(description.getTerm());
+            suggestions.add("Semantikos - " + description.getTerm());
         }
-        return suggestedDescriptions;
+
+        for (DescriptionSCT descriptionSCT : snomedCTManager.searchDescriptionsSuggested(term)) {
+                suggestions.add("Snomed-CT - " + descriptionSCT.getTerm());
+        }
+
+        /*
+        for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
+            if(relationshipDefinition.getTargetDefinition().isCrossMapType()) {
+                CrossmapSet crossmapSet = (CrossmapSet) relationshipDefinition.getTargetDefinition();
+                for (CrossmapSetMember crossmapSetMember : crossmapManager.findByPattern(crossmapSet, term)) {
+                    suggestions.add(crossmapSetMember.getCrossmapSet().getAbbreviatedName() + " - " + crossmapSetMember.toString());
+                }
+            }
+        }
+        */
+
+        return suggestions;
     }
 
     /**
@@ -217,9 +246,11 @@ public class DescriptionBeans {
 
     }
 
-    public void updateFSNFromFavouriteAndMarkSelected(DescriptionWeb description) {
+    public void updateFSNFromFavouriteAndMarkSelected(DescriptionWeb description, boolean descriptionSelected) {
 
         Matcher m = Pattern.compile("\\((.*?)\\)").matcher(description.getTerm());
+
+        this.descriptionSelected = descriptionSelected;
 
         while(m.find()) {
             if(TagSMTKFactory.getInstance().findTagSMTKByName(m.group(1))!=null) {
@@ -229,8 +260,6 @@ public class DescriptionBeans {
         }
 
         description.getConceptSMTK().getDescriptionFSN().setTerm(description.getTerm());
-
-        descriptionSelected = true;
 
     }
 
@@ -296,4 +325,10 @@ public class DescriptionBeans {
     public void setDescriptionSelected(boolean descriptionSelected) {
         this.descriptionSelected = descriptionSelected;
     }
+
+    public void test() {
+        System.out.println("me llamaron");
+    }
+
 }
+

@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.snomedct.*;
 
 import javax.ejb.Local;
@@ -101,5 +102,21 @@ public interface SnomedCTDAO {
     public DescriptionSCT getDescriptionSCTBy(long idDescriptionSCT);
 
     List<RelationshipSCT> getRelationshipsBySourceConcept(ConceptSCT conceptSCT);
+
+    /**
+     * Este método es responsable de buscar y retornar todas las descripciones que hagan perfect match con el término
+     * dado como parámetro en cada una de las categorías y refsets indicadas.
+     *
+     * @return
+     */
+    List<DescriptionSCT> searchDescriptionsPerfectMatch(String term, int page, int pageSize);
+
+    /**
+     * Este método es responsable de buscar y retornar todas las descripciones que hagan perfect match con el término
+     * dado como parámetro en cada una de las categorías y refsets indicadas.
+     *
+     * @return
+     */
+    List<DescriptionSCT> searchDescriptionsTruncateMatch(String term, int page, int pageSize);
 
 }

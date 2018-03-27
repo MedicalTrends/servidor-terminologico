@@ -57,7 +57,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     @EJB
     private DescriptionSearchBR descriptionSearchBR;
 
-    private static final int SUGGESTTION_SIZE = 50;
+    private static final int SUGGESTTION_SIZE = 10;
 
     @Override
     public void createDescription(Description description, boolean editionMode, User user) {

@@ -63,15 +63,16 @@
                                 placeholder="Buscar..."
                                 validator="#{validatorBean.validateRequiredInput}"
                                 rendered="#{ not descriptionBeans.descriptionSelected}"
-                                var="description"
+                                var="suggestion"
                                 value="#{cc.attrs.description.term}"
-                                itemLabel="#{description}"
-                                itemValue="#{description}">
+                                groupBy="#{suggestion.split(' - ')[0]}"
+                                itemLabel="#{suggestion.split(' - ')[1]}"
+                                itemValue="#{suggestion}">
 
                     <p:outputPanel>
 
-                        <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
-                            <h:outputText value="#{description.term}" />
+                        <p:column style="width: 500px;">
+                            <h:outputText value="#{suggestion}" />
                         </p:column>
 
                     </p:outputPanel>
@@ -79,11 +80,13 @@
                     <f:attribute name="category" value="#{cc.attrs.description.conceptSMTK.category}"  />
 
                     <p:ajax event="itemSelect"
-                            listener="#{descriptionBeans.updateFSNFromFavouriteAndMarkSelected(cc.attrs.description)}"
+                            listener="#{descriptionBeans.updateFSNFromFavouriteAndMarkSelected(cc.attrs.description, true)}"
                             update="@(.FSN),@(.favourite)"
                             process="@this"/>
 
-                    <p:ajax event="keyup" update="@(.FSN)" listener="#{descriptionBeans.updateFSNFromFavourite(cc.attrs.description)}" process="@this" async="true" />
+                    <p:ajax event="keyup" update="@(.FSN)"
+                            listener="#{descriptionBeans.updateFSNFromFavourite(cc.attrs.description)}"
+                            process="@this" />
 
                 </p:autoComplete>
 

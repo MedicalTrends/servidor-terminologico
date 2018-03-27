@@ -2,7 +2,9 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.snomedct.*;
+import oracle.jdbc.OracleConnection;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -412,6 +414,78 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         }
 
         return relationships;
+    }
+
+    @Override
+    public List<DescriptionSCT> searchDescriptionsPerfectMatch(String term, int page, int pageSize) {
+
+        List<DescriptionSCT> descriptions = new ArrayList<>();
+
+        String sql = "begin ? := stk.stk_pck_snomed.search_descriptions_perfect_match(?,?,?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, term.toLowerCase());
+
+            call.setInt(3, page);
+
+            call.setInt(4, pageSize);
+
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                DescriptionSCT description = createDescriptionSCTFromResultSet(rs);
+                descriptions.add(description);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar descripciones de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return descriptions;
+    }
+
+    @Override
+    public List<DescriptionSCT> searchDescriptionsTruncateMatch(String term, int page, int pageSize) {
+
+        List<DescriptionSCT> descriptions = new ArrayList<>();
+
+        String sql = "begin ? := stk.stk_pck_snomed.search_descriptions_truncate_match(?,?,?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, term.toLowerCase());
+
+            call.setInt(3, page);
+
+            call.setInt(4, pageSize);
+
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                DescriptionSCT description = createDescriptionSCTFromResultSet(rs);
+                descriptions.add(description);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar descripciones de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return descriptions;
     }
 
     private DescriptionSCT createDescriptionSCTFromResultSet(ResultSet resultSet) throws SQLException {
