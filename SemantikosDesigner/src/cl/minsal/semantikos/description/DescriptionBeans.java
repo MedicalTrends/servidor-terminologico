@@ -91,7 +91,11 @@ public class DescriptionBeans {
 
     @PostConstruct
     public void init() {
+
         descriptionEdit= new DescriptionWeb();
+        if(conceptBean.getConcept().getDescriptionFavorite().isPersistent()) {
+            descriptionSelected = true;
+        }
     }
 
     public List<String> searchSuggestedDescriptions(String term) {
@@ -251,6 +255,10 @@ public class DescriptionBeans {
         Matcher m = Pattern.compile("\\((.*?)\\)").matcher(description.getTerm());
 
         this.descriptionSelected = descriptionSelected;
+
+        if(!descriptionSelected) {
+            description.setTerm(EMPTY_STRING);
+        }
 
         while(m.find()) {
             if(TagSMTKFactory.getInstance().findTagSMTKByName(m.group(1))!=null) {

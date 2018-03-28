@@ -193,14 +193,6 @@ public class ConceptExportMBean extends UINamingContainer {
 
         List<Relationship> gmdnRelationships = new ArrayList<Relationship>();
 
-        for (Relationship relationship : conceptSMTK.getRelationships()) {
-            /*
-            if(relationship.getRelationshipDefinition().getTargetDefinition().isGMDNType()) {
-                gmdnRelationships.add(relationship);
-            }
-            */
-        }
-
         return gmdnRelationships;
     }
 

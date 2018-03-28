@@ -149,11 +149,15 @@
 
     <script type="text/javascript">
 
+        var ctx = "";
+
+        var redirect = ctx + '/views/concepts';
+
         $('.search-button-tiny').prop('onclick',"");
 
         $('input[id$=search_input]').on('input', function() {
             if($('input[id$=search_hinput]').val().length >= 3) {
-                $('.search-button-tiny').prop('onclick',"window.open('/views/concepts','_self')");
+                $('.search-button-tiny').prop('onclick',"window.open('"+redirect+"','_self')");
             }
             else {
                 $('.search-button-tiny').prop('onclick',"");
@@ -162,7 +166,7 @@
 
         $('input[id$=search_input]').on('keyup', function() {
             if($('input[id$=search_hinput]').val().length >= 3) {
-                $('.search-button-tiny').prop('onclick',"window.open('/views/concepts','_self')");
+                $('.search-button-tiny').prop('onclick',"window.open('"+redirect+"','_self')");
             }
             else {
                 $('.search-button-tiny').prop('onclick',"");

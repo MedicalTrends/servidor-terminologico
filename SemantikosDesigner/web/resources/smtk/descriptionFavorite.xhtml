@@ -61,13 +61,13 @@
                                 scrollHeight="200" size="5"
                                 completeMethod="#{descriptionBeans.searchSuggestedDescriptions}"
                                 placeholder="Buscar..."
-                                validator="#{validatorBean.validateRequiredInput}"
-                                rendered="#{ not descriptionBeans.descriptionSelected}"
+                                validator="#{ validatorBean.validateRequiredInput }"
+                                rendered="#{ not descriptionBeans.descriptionSelected }"
                                 var="suggestion"
                                 value="#{cc.attrs.description.term}"
                                 groupBy="#{suggestion.split(' - ')[0]}"
                                 itemLabel="#{suggestion.split(' - ')[1]}"
-                                itemValue="#{suggestion}">
+                                itemValue="#{suggestion.split(' - ')[1]}">
 
                     <p:outputPanel>
 
@@ -90,16 +90,22 @@
 
                 </p:autoComplete>
 
-                <p:inputTextarea id="favorite"
-                                 styleClass="terms"
-                                 name="description"
-                                 rows="1"
-                                 rendered="#{descriptionBeans.descriptionSelected}"
-                                 value="#{cc.attrs.description.term}"
-                                 readonly="#{cc.attrs.description.conceptSMTK.modeled}"
-                                 autocomplete="off">
-                    <p:ajax event="keyup" update="@(.FSN),@(.favourite)" listener="#{descriptionBeans.setDescriptionSelected(false)}" process="@this" />
-                </p:inputTextarea>
+                <p:outputPanel styleClass="search" rendered="#{descriptionBeans.descriptionSelected}">
+                    <p:inputTextarea id="favorite"
+                                     styleClass="terms"
+                                     name="description"
+                                     rows="1"
+                                     value="#{cc.attrs.description.term}"
+                                     readonly="#{cc.attrs.description.conceptSMTK.modeled}"
+                                     autocomplete="off">
+                        <p:ajax event="keyup" update="@(.FSN)" listener="#{descriptionBeans.updateFSNFromFavourite(cc.attrs.description)}" process="@this" />
+                    </p:inputTextarea>
+                    <p:commandLink process="@this" style="color: #aaa;"
+                                   update="@(.FSN),@(.favourite)"
+                                   action="#{descriptionBeans.updateFSNFromFavouriteAndMarkSelected(cc.attrs.description, false)}">
+                        <i class="fa fa-close fa-lg"  />
+                    </p:commandLink>
+                </p:outputPanel>
             </div>
         </div>
 
