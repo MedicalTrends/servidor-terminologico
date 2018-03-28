@@ -34,8 +34,9 @@ public class SnomedCTSnapshotFactory {
 
         String[] tokens = string.split("\\t");
 
-        if (tokens.length != 5)
+        if (tokens.length != 5) {
             throw new RuntimeException();
+        }
 
         long idSnomedCT = Long.parseLong(tokens[0]);
 
@@ -280,8 +281,8 @@ public class SnomedCTSnapshotFactory {
                 try {
                     RelationshipSCT relationshipSCT = createRelationshipSCTFromString(line);
                     snapshotPreprocessingRequest.getRegisters().put(relationshipSCT.getId(), relationshipSCT);
-                    snapshotPreprocessingRequest.getReferencesFrom().put(relationshipSCT.getId(), relationshipSCT.getSourceId());
-                    snapshotPreprocessingRequest.getReferencesTo().put(relationshipSCT.getId(), relationshipSCT.getDestinationId());
+                    snapshotPreprocessingRequest.getReferencesFrom().put(relationshipSCT.getId(), relationshipSCT.getSourceConcept().getId());
+                    snapshotPreprocessingRequest.getReferencesTo().put(relationshipSCT.getId(), relationshipSCT.getDestinationConcept().getId());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

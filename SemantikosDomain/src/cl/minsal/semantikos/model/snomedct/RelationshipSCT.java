@@ -41,30 +41,53 @@ public class RelationshipSCT extends PersistentEntity implements SnomedCTCompone
     /** Concepto destino de la relación */
     private long destinationId;
 
+    private long typeId;
+
+    /** Concepto origen de la relación */
+    private ConceptSCT sourceConcept;
+
+    /** Concepto destino de la relación */
+    private ConceptSCT destinationConcept;
+
     private long relationshipGroup;
 
-    private long typeId;
+    private ConceptSCT typeConcept;
 
     private long characteristicTypeId;
 
     private long modifierId;
 
-    /**
-     * Este es el constructor completo para la clase relationshipSCT
-     */
-    public RelationshipSCT(long idRelationship, Timestamp effectiveTime, boolean active, long moduleId, long sourceId, long destinationId, long relationshipGroup, long typeId, long characteristicTypeId, long modifierId) {
-        super(idRelationship);
+    public RelationshipSCT(long idRelationship, Timestamp effectiveTime, boolean active, long moduleId, long sourceId, long destinationId, long typeId, long characteristicTypeId, long modifierId, long relationshipGroup) {
         this.idRelationship = idRelationship;
         this.effectiveTime = effectiveTime;
         this.active = active;
         this.moduleId = moduleId;
         this.sourceId = sourceId;
         this.destinationId = destinationId;
-        this.relationshipGroup = relationshipGroup;
         this.typeId = typeId;
         this.characteristicTypeId = characteristicTypeId;
         this.modifierId = modifierId;
+        this.relationshipGroup = relationshipGroup;
     }
+
+    public RelationshipSCT(long idRelationship, Timestamp effectiveTime, boolean active, long moduleId, ConceptSCT sourceConcept, ConceptSCT destinationConcept, long relationshipGroup, ConceptSCT typeConcept, long characteristicTypeId, long modifierId) {
+        this.idRelationship = idRelationship;
+        this.effectiveTime = effectiveTime;
+        this.active = active;
+        this.moduleId = moduleId;
+        this.sourceConcept = sourceConcept;
+        this.destinationConcept = destinationConcept;
+        this.relationshipGroup = relationshipGroup;
+        this.typeConcept = typeConcept;
+        this.characteristicTypeId = characteristicTypeId;
+        this.modifierId = modifierId;
+    }
+
+    /**
+     * Este es el constructor completo para la clase relationshipSCT
+     */
+
+
 
     @Override
     public boolean isPersistent() {
@@ -104,36 +127,12 @@ public class RelationshipSCT extends PersistentEntity implements SnomedCTCompone
         this.moduleId = moduleId;
     }
 
-    public long getSourceId() {
-        return sourceId;
-    }
-
-    public void setSourceId(long sourceId) {
-        this.sourceId = sourceId;
-    }
-
-    public long getDestinationId() {
-        return destinationId;
-    }
-
-    public void setDestinationId(long destinationId) {
-        this.destinationId = destinationId;
-    }
-
     public long getRelationshipGroup() {
         return relationshipGroup;
     }
 
     public void setRelationshipGroup(long relationshipGroup) {
         this.relationshipGroup = relationshipGroup;
-    }
-
-    public long getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(long typeId) {
-        this.typeId = typeId;
     }
 
     public long getCharacteristicTypeId() {
@@ -150,6 +149,30 @@ public class RelationshipSCT extends PersistentEntity implements SnomedCTCompone
 
     public void setModifierId(long modifierId) {
         this.modifierId = modifierId;
+    }
+
+    public ConceptSCT getSourceConcept() {
+        return sourceConcept;
+    }
+
+    public void setSourceConcept(ConceptSCT sourceConcept) {
+        this.sourceConcept = sourceConcept;
+    }
+
+    public ConceptSCT getDestinationConcept() {
+        return destinationConcept;
+    }
+
+    public void setDestinationConcept(ConceptSCT destinationConcept) {
+        this.destinationConcept = destinationConcept;
+    }
+
+    public ConceptSCT getTypeConcept() {
+        return typeConcept;
+    }
+
+    public void setTypeConcept(ConceptSCT typeConcept) {
+        this.typeConcept = typeConcept;
     }
 
     @Override

@@ -100,6 +100,7 @@ public interface SnomedCTDAO {
 
     public DescriptionSCT getDescriptionSCTBy(long idDescriptionSCT);
 
+    List<RelationshipSCT> getRelationshipsBySourceConcept(ConceptSCT conceptSCT);
 
 
 }

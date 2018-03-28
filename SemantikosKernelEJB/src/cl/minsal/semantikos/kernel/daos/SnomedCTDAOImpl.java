@@ -411,4 +411,56 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         return descriptionSCT;
     }
 
+    @Override
+    public List<RelationshipSCT> getRelationshipsBySourceConcept(ConceptSCT conceptSCT) {
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_snomed.get_relationships_sct_by_id(?); end;";
+
+        List<RelationshipSCT> relationships = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSCT.getId());
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while(rs.next()) {
+                try {
+                    relationships.add(createRelationshipSCTFromResultSet(rs, conceptSCT));
+                }
+                catch (EJBException e) {
+                    logger.warn(e.getMessage());
+                }
+            }
+
+            rs.close();
+            call.close();
+            connection.close();
+        } catch (SQLException e) {
+            throw new EJBException(e);
+        }
+
+        return relationships;
+    }
+
+    private RelationshipSCT createRelationshipSCTFromResultSet(ResultSet resultSet, ConceptSCT sourceConcept) throws SQLException {
+
+        long id = resultSet.getLong("id");
+        Timestamp effectiveTime = resultSet.getTimestamp("effectivetime");
+        boolean active = resultSet.getBoolean("active");
+        long moduleID = resultSet.getLong("moduleId");
+        long relationshipGroup = resultSet.getLong("relationshipGroup");
+        long characteristicTypeId = resultSet.getLong("characteristicTypeId");
+        long modifierId = resultSet.getLong("modifierId");
+
+        ConceptSCT destinationConcept = getConceptByID(resultSet.getLong("destinationId"));
+        ConceptSCT typeConcept = getConceptByID(resultSet.getLong("typeId"));
+
+        return new RelationshipSCT(id, effectiveTime, active, moduleID, sourceConcept, destinationConcept, relationshipGroup, typeConcept, characteristicTypeId, modifierId);
+    }
 }

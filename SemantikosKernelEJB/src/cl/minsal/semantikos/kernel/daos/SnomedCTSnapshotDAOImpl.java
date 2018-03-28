@@ -87,10 +87,10 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
                     call.setTimestamp(2, relationshipSCT.getEffectiveTime());
                     call.setBoolean(3, relationshipSCT.isActive());
                     call.setLong(4, relationshipSCT.getModuleId());
-                    call.setLong(5, relationshipSCT.getSourceId());
-                    call.setLong(6, relationshipSCT.getDestinationId());
+                    //call.setLong(5, relationshipSCT.getSourceId());
+                    //call.setLong(6, relationshipSCT.getDestinationId());
                     call.setLong(7, relationshipSCT.getRelationshipGroup());
-                    call.setLong(8, relationshipSCT.getTypeId());
+                    //call.setLong(8, relationshipSCT.getTypeId());
                     call.setLong(9, relationshipSCT.getCharacteristicTypeId());
                     call.setLong(10, relationshipSCT.getModifierId());
                     call.addBatch();
@@ -150,7 +150,7 @@ public class SnomedCTSnapshotDAOImpl implements SnomedCTSnapshotDAO {
                 persistedSnomedCTComponent = snomedCTDAO.getConceptByID(snomedCTComponent.getId());
             if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof DescriptionSCT)
                 persistedSnomedCTComponent = snomedCTDAO.getDescriptionSCTBy(snomedCTComponent.getId());
-            //if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof RelationshipSCT)
+                //if (!snomedCTComponents.isEmpty() && snomedCTComponents.get(0) instanceof RelationshipSCT)
                 //persistedSnomedCTComponent = snomedCTDAO.getRelationshipSCTBy(snomedCTComponent.getId());
             else
                 continue;
