@@ -1,16 +1,7 @@
-package browser;
+package cl.minsal.semantikos.browser;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
-import cl.minsal.semantikos.kernel.components.ConceptManager;
-import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.components.SnomedCTManager;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
-import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
-import cl.minsal.semantikos.model.descriptions.Description;
-import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
-import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.snomedct.DescriptionSCT;
 import cl.minsal.semantikos.model.snomedct.DescriptionSCTType;

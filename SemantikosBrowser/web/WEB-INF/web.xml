@@ -123,7 +123,7 @@
 
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
-        <filter-class>browser.AuthenticationFilter</filter-class>
+        <filter-class>cl.minsal.semantikos.filters.AuthenticationFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -133,12 +133,21 @@
 
     <filter>
         <filter-name>HSTSFilter</filter-name>
-        <filter-class>browser.HSTSFilter</filter-class>
+        <filter-class>cl.minsal.semantikos.filters.HSTSFilter</filter-class>
     </filter>
 
     <filter-mapping>
         <filter-name>HSTSFilter</filter-name>
         <url-pattern>/views/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>x-frame-header</filter-name>
+        <filter-class>cl.minsal.semantikos.filters.XFrameHeaderFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>x-frame-header</filter-name>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <!-- Require HTTPS for everything except /img (favicon) and /css. -->

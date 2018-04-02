@@ -1,18 +1,13 @@
-package browser;
+package cl.minsal.semantikos.browser;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.categories.Category;
-import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
-import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.queries.BrowserQuery;
-import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.model.tags.Tag;
-import cl.minsal.semantikos.modelws.request.Request;
 import org.primefaces.context.RequestContext;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.model.LazyDataModel;
@@ -23,8 +18,6 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -35,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Collections.EMPTY_LIST;
 import static org.primefaces.util.Constants.EMPTY_STRING;
 
 @ManagedBean

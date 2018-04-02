@@ -1,11 +1,10 @@
-package browser;
+package cl.minsal.semantikos.filters;
 
+import cl.minsal.semantikos.browser.AuthenticationBean;
 import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

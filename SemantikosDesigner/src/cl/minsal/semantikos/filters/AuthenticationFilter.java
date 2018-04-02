@@ -1,20 +1,17 @@
-package cl.minsal.semantikos;
+package cl.minsal.semantikos.filters;
 
+import cl.minsal.semantikos.Constants;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static cl.minsal.semantikos.users.AuthenticationBean.AUTH_KEY;
-import static javax.ws.rs.core.HttpHeaders.CACHE_CONTROL;
-import static javax.ws.rs.core.HttpHeaders.EXPIRES;
 
 
 /**

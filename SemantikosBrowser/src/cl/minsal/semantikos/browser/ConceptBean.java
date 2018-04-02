@@ -1,4 +1,4 @@
-package browser;
+package cl.minsal.semantikos.browser;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.*;
@@ -7,28 +7,15 @@ import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
-import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
-import cl.minsal.semantikos.model.users.Institution;
-import cl.minsal.semantikos.model.users.Profile;
-import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.model.users.UserFactory;
-import cl.minsal.semantikos.util.StringUtils;
-import org.primefaces.context.RequestContext;
-import org.primefaces.model.DualListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJBException;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;

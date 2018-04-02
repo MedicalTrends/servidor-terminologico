@@ -1,4 +1,4 @@
-package browser;
+package cl.minsal.semantikos.browser;
 
 /**
  * Created by Francisco Mendez on 19-05-2016.

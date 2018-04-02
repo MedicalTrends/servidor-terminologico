@@ -1,7 +1,7 @@
-package converters;
+package cl.minsal.semantikos.converters;
 
 
-import browser.BrowserBean;
+import cl.minsal.semantikos.browser.BrowserBean;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 

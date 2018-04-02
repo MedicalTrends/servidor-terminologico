@@ -1,4 +1,4 @@
-package browser;
+package cl.minsal.semantikos.filters;
 
 import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;

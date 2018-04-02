@@ -1,4 +1,4 @@
-package browser;
+package cl.minsal.semantikos.browser;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
