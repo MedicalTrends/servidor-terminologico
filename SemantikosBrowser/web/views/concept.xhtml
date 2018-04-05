@@ -20,12 +20,12 @@
 
                 <p:breadCrumb id="top-menu">
                     <p:menuitem value="Inicio" url="/views/home.xhtml" />
-                    <p:menuitem value="Concepts" url="/views/concepts.xhtml" />
-                    <p:menuitem value="#{concept.selectedConcept.category.name}" url="#" />
+                    <p:menuitem value="Conceptos" url="/views/concepts.xhtml" />
+                    <p:menuitem value="#{concept.selectedConcept.category.name}" url="#" rendered="false" />
                     <p:menuitem value="#{concept.selectedConcept.descriptionFavorite}" url="#" />
                 </p:breadCrumb>
 
-                <h:form id="browserForm">
+                <h:form id="conceptForm">
 
                 <div class="card card-w-title">
 
@@ -92,7 +92,7 @@
                     <p:tab title="Atributos" rendered="#{not empty concept.getSMTKRelationships()}">
                         <p:dataTable id="smtkAttributes"
                                      rows="5"
-                                     paginator="true"
+                                     paginator="false"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      var="relationship"
                                      value="#{concept.getSMTKRelationships()}"
@@ -121,21 +121,28 @@
                     <p:tab title="SNOMED-CT" rendered="#{not empty concept.getSnomedCTRelationships()}">
                         <p:dataTable id="snomedAttributes"
                                      rows="5"
-                                     paginator="true"
+                                     paginator="false"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      var="relationship"
                                      value="#{concept.getSnomedCTRelationships()}"
                                      reflow="true">
 
+                            <p:columns value="#{concept.selectedConcept.category.findRelationshipDefinitionsById(101).get(0).relationshipAttributeDefinitions}"
+                                       var="attributeDefinition"
+                                       columnIndexVar="colIndex">
+                                <f:facet name="header">
+                                    <h:outputText value="#{attributeDefinition.name}" />
+                                </f:facet>
+                                <p:repeat value="#{relationship.getAttributesByAttributeDefinition(attributeDefinition)}" var="attribute">
+                                    <p:outputLabel value="#{attribute.target}"/>
+                                </p:repeat>
+                            </p:columns>
 
-                            <p:column style="font-weight: bold">
-                                #{relationship.relationshipDefinition.name}
-                            </p:column>
-
-                            <p:column>
-                                <p:link value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="/views/concept-snomed">
+                            <p:column headerText="Concepto Snomed">
+                                <p:link value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="/views/concept-snomed" rendered="false">
                                     <f:param name="conceptID" value="#{relationship.target.idSnomedCT}" />
                                 </p:link>
+                                <p:outputLabel value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="/views/concept-snomed"/>
                                 <h:dataTable value="#{relationship.target.getDescriptionSynonymous()}" var="description" rendered="false">
                                     <h:column>
                                         <h:outputText value="#{description.descriptionType.name}" style="font-weight: bold"/>
@@ -154,7 +161,7 @@
 
                             <p:dataTable id="directCrossmaps"
                                          rows="5"
-                                         paginator="true"
+                                         paginator="false"
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                          var="crossmap"
                                          value="#{concept.getDirectCrossmapsRelationships()}"
@@ -184,7 +191,7 @@
 
                             <p:dataTable id="indirectCrossmaps"
                                          rows="5"
-                                         paginator="true"
+                                         paginator="false"
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                          var="crossmap"
                                          value="#{concept.getIndirectCrossmapsRelationships()}"
@@ -218,7 +225,7 @@
                     <p:tab title="RefSets" rendered="#{not empty concept.conceptRefSetList}">
                         <p:dataTable id="refSets"
                                      rows="5"
-                                     paginator="true"
+                                     paginator="false"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      var="refSet"
                                      value="#{concept.conceptRefSetList}"
@@ -236,7 +243,7 @@
                     <p:tab title="Etiquetas" rendered="#{not empty concept.selectedConcept.tags}">
                         <p:dataTable id="tags"
                                      rows="5"
-                                     paginator="true"
+                                     paginator="false"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      var="tag"
                                      value="#{concept.selectedConcept.tags}"
