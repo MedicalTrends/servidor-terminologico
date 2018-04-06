@@ -72,7 +72,6 @@
                 <p:tabView>
                     <p:tab title="Otras Descripciones" rendered="#{not empty concept.getOtherDescriptions()}">
                         <p:dataTable id="otherDescriptions"
-                                     rows="5"
                                      paginator="false"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      var="description"
@@ -91,7 +90,6 @@
 
                     <p:tab title="Atributos" rendered="#{not empty concept.getSMTKRelationships()}">
                         <p:dataTable id="smtkAttributes"
-                                     rows="5"
                                      paginator="false"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      var="relationship"
@@ -125,7 +123,6 @@
 
                     <p:tab title="SNOMED-CT" rendered="#{not empty concept.getSnomedCTRelationships()}">
                         <p:dataTable id="snomedAttributes"
-                                     rows="5"
                                      paginator="false"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      var="relationship"
@@ -160,12 +157,12 @@
                         </p:dataTable>
                     </p:tab>
 
-                    <p:tab title="Crossmaps" rendered="#{not empty concept.getDirectCrossmapsRelationships()}">
+                    <p:tab title="Crossmaps"
+                           rendered="#{not empty concept.getDirectCrossmapsRelationships() or not empty concept.getIndirectCrossmapsRelationships()}">
 
-                        <p:fieldset legend="Crossmaps Directos">
+                        <p:fieldset legend="Crossmaps Directos" rendered="#{ not empty concept.getDirectCrossmapsRelationships() }">
 
                             <p:dataTable id="directCrossmaps"
-                                         rows="5"
                                          paginator="false"
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                          var="crossmap"
@@ -192,10 +189,9 @@
 
                         </p:fieldset>
 
-                        <p:fieldset legend="Crossmaps Indirectos">
+                        <p:fieldset legend="Crossmaps Indirectos" rendered="#{ not empty concept.getIndirectCrossmapsRelationships() }">
 
                             <p:dataTable id="indirectCrossmaps"
-                                         rows="5"
                                          paginator="false"
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                          var="crossmap"
@@ -229,7 +225,6 @@
 
                     <p:tab title="RefSets" rendered="#{not empty concept.conceptRefSetList}">
                         <p:dataTable id="refSets"
-                                     rows="5"
                                      paginator="false"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      var="refSet"
@@ -247,7 +242,6 @@
 
                     <p:tab title="Etiquetas" rendered="#{not empty concept.selectedConcept.tags}">
                         <p:dataTable id="tags"
-                                     rows="5"
                                      paginator="false"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      var="tag"

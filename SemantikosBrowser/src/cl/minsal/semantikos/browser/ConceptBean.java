@@ -41,9 +41,14 @@ public class ConceptBean implements Serializable {
     //@EJB
     RefSetManager refSetManager = (RefSetManager) ServiceLocator.getInstance().getService(RefSetManager.class);
 
+    //@EJB
+    CrossmapsManager crossmapsManager = (CrossmapsManager) ServiceLocator.getInstance().getService(CrossmapsManager.class);
+
     ConceptSMTK selectedConcept;
 
     String conceptID;
+
+    List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
 
     public String getConceptID() {
         return conceptID;
@@ -174,6 +179,11 @@ public class ConceptBean implements Serializable {
 
         if(!selectedConcept.isRelationshipsLoaded()) {
             selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
+        }
+
+        if(indirectCrossmaps.isEmpty()) {
+            indirectCrossmaps = crossmapsManager.getIndirectCrossmaps(selectedConcept);
+            selectedConcept.getRelationships().addAll(indirectCrossmaps);
         }
 
         List<Relationship> smtkRelationships = new ArrayList<Relationship>();

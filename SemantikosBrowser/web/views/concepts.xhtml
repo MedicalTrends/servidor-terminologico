@@ -93,14 +93,14 @@
                                                          process="@(.conceptPanel)"
                                                          update="@(.conceptPanel)"/>
 
-                                        <p:commandButton value="Excel" icon="fa fa-file-excel-o" ajax="false"
+                                        <p:commandButton value="Exportar" icon="fa fa-file-excel-o" ajax="false"
                                                                style="width: auto; float: left; min-width: 100px">
                                             <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
                                         </p:commandButton>
 
                                         <p:selectBooleanButton value="#{browserBean.showFilters}" onLabel="Filtrar"
                                                                style="width: auto; float: left; min-width: 100px"
-                                                               offLabel="Filtros" onIcon="ui-icon-check" offIcon="ui-icon-close">
+                                                               offLabel="Filtrar" onIcon="fa fa-filter" offIcon="fa fa-filter">
                                             <p:ajax update="browserForm" />
                                         </p:selectBooleanButton>
 
