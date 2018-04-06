@@ -9,6 +9,7 @@ import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.queries.BrowserQuery;
 import cl.minsal.semantikos.model.tags.Tag;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.data.PageEvent;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -235,6 +236,12 @@ public class BrowserBean implements Serializable {
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         request.getSession().invalidate();
         context.getExternalContext().redirect(context.getExternalContext().getRequestContextPath());
+    }
+
+    public void updatePage(PageEvent event) {
+        int pageindex = event.getPage();
+        RequestContext reqCtx = RequestContext.getCurrentInstance();
+        reqCtx.execute("PF('conceptTableExcel').getPaginator().setPage("+pageindex+")");
     }
 
     public LazyDataModel<ConceptSMTK> getConcepts() {

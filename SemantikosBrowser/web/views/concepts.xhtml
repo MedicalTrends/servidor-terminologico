@@ -29,14 +29,14 @@
 
                         <p:outputPanel>
 
-                            <div class="ui-g ui-fluid">
+                            <div class="ui-fluid">
 
-                                <div class="ui-g-12">
+                                <div class="ui-g">
 
                                     <!--p:panelGrid columns="3" columnClasses="ui-grid-col-6,ui-grid-col-3,ui-grid-col-3" layout="grid"
                                                  styleClass="ui-panelgrid-blank form-group"-->
 
-                                    <div class="ui-g-12 ui-md-6 ui-lg-8">
+                                    <div class="ui-g-12 ui-md-12 ui-lg-12">
 
                                         <p:outputPanel styleClass="search">
                                             <p:autoComplete minQueryLength="3"
@@ -80,24 +80,31 @@
 
                                     </div>
 
-                                    <div class="ui-g-12 ui-md-3 ui-lg-2">
+                                    <!--/p:panelGrid-->
+
+                                </div>
+
+                                <div class="ui-g">
+
+                                    <div class="ui-g-12 ui-md-12 ui-lg-12">
 
                                         <p:commandButton value="Buscar" id="btn" icon="fa fa-search"
+                                                         style="width: auto; float: right; min-width: 100px"
                                                          process="@(.conceptPanel)"
                                                          update="@(.conceptPanel)"/>
 
-                                    </div>
+                                        <p:commandButton value="Excel" icon="fa fa-file-excel-o" ajax="false"
+                                                               style="width: auto; float: left; min-width: 100px">
+                                            <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
+                                        </p:commandButton>
 
-                                    <div class="ui-g-12 ui-md-3 ui-lg-2">
-
-                                        <p:selectBooleanButton value="#{browserBean.showFilters}" onLabel="Filtros"
+                                        <p:selectBooleanButton value="#{browserBean.showFilters}" onLabel="Filtrar"
+                                                               style="width: auto; float: left; min-width: 100px"
                                                                offLabel="Filtros" onIcon="ui-icon-check" offIcon="ui-icon-close">
                                             <p:ajax update="browserForm" />
                                         </p:selectBooleanButton>
 
                                     </div>
-
-                                    <!--/p:panelGrid-->
 
                                 </div>
 
@@ -169,16 +176,10 @@
                                          rows="15"
                                          sortBy="#{1}"
                                          paginator="true" lazy="true" dynamic="true"
-                                         paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                         paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                          emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
-                                <f:facet name="{Exporters}">
-                                    <p:commandButton ajax="false" value="Exportar a Excel" process="@this" update="@this"
-                                                     icon="fa fa-file-excel-o">
-                                        <p:dataExporter type="xls" target="conceptTable"
-                                                        fileName="conceptos"/>
-                                    </p:commandButton>
-                                </f:facet>
+                                <p:ajax event="page" listener="#{browserBean.updatePage}" />
 
                                 <p:column headerText="Termino Preferido" sortBy="#{2}">
                                     <div class="ui-g dashboard">
@@ -218,6 +219,53 @@
                                             </div>
                                         </div>
                                     </div>
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <p:dataTable id="conceptTableExcel" widgetVar="conceptTableExcel" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
+                                         style="display: none"
+                                         rows="15"
+                                         sortBy="#{1}"
+                                         paginator="true" lazy="true" dynamic="true"
+                                         reflow="true"
+                                         paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                         emptyMessage="No se han encontrado conceptos con los criterios utilizados">
+                                <f:facet name="{Exporters}">
+                                    <p:commandButton ajax="false" value="Exportar a Excel" process="@this" update="@this"
+                                                     icon="fa fa-file-excel-o">
+                                        <p:dataExporter type="xls" target="conceptTable"
+                                                        fileName="conceptos"/>
+                                    </p:commandButton>
+                                </f:facet>
+
+                                <p:column headerText="Concept ID" sortBy="#{1}">
+                                    <h:outputText value="#{conceptSMTK.conceptID}"/>
+                                </p:column>
+
+                                <p:column headerText="Termino Preferido" sortBy="#{2}">
+                                    <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
+                                </p:column>
+
+                                <p:column headerText="Categoría">
+                                    <h:outputText value="#{conceptSMTK.category.name}"/>
+                                </p:column>
+
+                                <p:column headerText="Etiquetas" styleClass="tags" exportable="false">
+
+                                    <p:repeat
+                                            offset="0"
+                                            size="#{conceptSMTK.tags.size()}"
+                                            step="1"
+                                            varStatus="var"
+                                            value="#{conceptSMTK.tags}"
+                                            var="tag">
+
+                                        <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+                                        <h:outputText value=", " rendered="#{conceptSMTK.tags.size() > 1}" />
+
+                                    </p:repeat>
+
                                 </p:column>
 
                             </p:dataTable>

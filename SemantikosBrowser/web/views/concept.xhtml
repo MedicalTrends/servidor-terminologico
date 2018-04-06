@@ -73,7 +73,7 @@
                     <p:tab title="Otras Descripciones" rendered="#{not empty concept.getOtherDescriptions()}">
                         <p:dataTable id="otherDescriptions"
                                      rows="5"
-                                     paginator="true"
+                                     paginator="false"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      var="description"
                                      value="#{concept.getOtherDescriptions()}"
@@ -102,7 +102,12 @@
                                 <h:outputText value="#{relationship.relationshipDefinition.name}"/>
                             </p:column>
                             <p:column>
-                                <h:outputText value="#{relationship.target}" rendered="#{not relationship.relationshipDefinition.targetDefinition.SMTKType}" />
+                                <h:outputText value="#{relationship.target}" rendered="#{relationship.relationshipDefinition.targetDefinition.basicType}" />
+                                <p:outputPanel value="#{relationship.target}" rendered="#{relationship.relationshipDefinition.targetDefinition.helperTable}">
+                                    <h:outputText value="#{relationship.target}" rendered="#{not relationship.relationshipDefinition.ATC}" />
+                                    <h:outputText value="#{relationship.target.getCellByColumnName('codigo atc')} #{relationship.target.getCellByColumnName('descripcion completa')}"
+                                                  rendered="#{relationship.relationshipDefinition.ATC}" />
+                                </p:outputPanel>
                                 <p:link value="#{relationship.target.descriptionFavorite} - #{relationship.target.conceptID}" rendered="#{relationship.relationshipDefinition.targetDefinition.SMTKType}">
                                     <f:param name="conceptID" value="#{relationship.target.conceptID}" />
                                 </p:link>
