@@ -217,3 +217,7 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 .ui-datatable table tbody .ui-state-highlight.ui-row-editing > td {
     color: #108bd5;
 }
+
+.ui-fluid .ui-inputtext[size], .ui-fluid .ui-inputfield[size] {
+    width: inherit !important;
+}
