@@ -19,6 +19,8 @@ public class RelationshipAttributeDefinition implements Serializable {
     /** Multiplicidad */
     private Multiplicity multiplicity;
 
+    private static final String AUTOGENERATE_ATTRIBUTE = "autogenerado";
+
     private static final String ORDER_ATTRIBUTE = "orden";
 
     private static final String RELATIONSHIP_TYPE_ATTRIBUTE = "tipo de relación";
@@ -72,7 +74,9 @@ public class RelationshipAttributeDefinition implements Serializable {
         return this.getName().equalsIgnoreCase(RELATIONSHIP_TYPE_ATTRIBUTE);
     }
 
-
+    public boolean isAutogenerateAttribute(){
+        return this.getName().equalsIgnoreCase(AUTOGENERATE_ATTRIBUTE);
+    }
 
     public boolean isGroupSCT(){
         return this.id==GRUOUP_SCT;

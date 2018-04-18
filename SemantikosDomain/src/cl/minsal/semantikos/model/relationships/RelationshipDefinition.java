@@ -78,7 +78,6 @@ public class RelationshipDefinition implements Serializable {
 
     private int idCategoryDes;
 
-
     private String order;
 
     public long getId() {
@@ -169,8 +168,6 @@ public class RelationshipDefinition implements Serializable {
         return "id: " + id + ". [" + name + "]";
     }
 
-
-
     public RelationshipAttributeDefinition getOrderAttributeDefinition() {
         for (RelationshipAttributeDefinition relationshipAttributeDefinition : getRelationshipAttributeDefinitions()) {
             if (relationshipAttributeDefinition.isOrderAttribute()) {
@@ -187,6 +184,15 @@ public class RelationshipDefinition implements Serializable {
             }
         }
         return null;
+    }
+
+    public boolean isAutogenerable() {
+        for (RelationshipAttributeDefinition relationshipAttributeDefinition : getRelationshipAttributeDefinitions()) {
+            if (relationshipAttributeDefinition.isAutogenerateAttribute()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<RelationshipAttributeDefinition> findRelationshipAttributeDefinitionsByName(String name) {
