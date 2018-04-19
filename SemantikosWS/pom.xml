@@ -28,6 +28,14 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Implementación JSF provista por EAP -->
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>javax.faces-api</artifactId>
+            <version>2.2</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!--dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosDomain</artifactId>
@@ -60,6 +68,26 @@
             <version>1.7.21</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- http://mvnrepository.com/artifact/org.primefaces/primefaces -->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>6.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>ultima</artifactId>
+            <version>1.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.glassfish</groupId>
+                    <artifactId>javax.faces</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
 
         <!--dependency>
             <groupId>cl.minsal.semantikos</groupId>
