@@ -256,6 +256,8 @@ public class RelationshipDefinition implements Serializable {
         return this.getName().equalsIgnoreCase(TargetDefinition.PEDIBLE);
     }
 
+    public boolean isFFA() { return this.getName().equalsIgnoreCase(TargetDefinition.FFA); }
+
     public boolean isMCSpecial() {
         return this.getName().equalsIgnoreCase(TargetDefinition.MC_SPECIAL);
     }

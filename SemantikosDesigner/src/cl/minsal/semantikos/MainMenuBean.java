@@ -3,6 +3,7 @@ package cl.minsal.semantikos;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.kernel.componentsweb.ViewAugmenter;
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
@@ -197,6 +198,19 @@ public class MainMenuBean implements Serializable {
                             }
 
                             ra = new RelationshipAttribute(attDef, rel, relationshipTypes.get(0));
+                            rel.getRelationshipAttributes().add(ra);
+                        }
+                    }
+                }
+
+                // Si esta definición de relación es autogenerable, Se agrega el atributo autogenerable = "TRUE" (por defecto)
+                if (relationshipDefinition.isAutogenerable()) {
+                    for (RelationshipAttributeDefinition attDef : relationshipDefinition.getRelationshipAttributeDefinitions()) {
+                        if (attDef.isAutogenerateAttribute()) {
+                            Relationship rel = relationshipPlaceholders.get(relationshipDefinition.getId());
+                            BasicTypeValue basicTypeValue = new BasicTypeValue(true);
+
+                            RelationshipAttribute ra = new RelationshipAttribute(attDef, rel, basicTypeValue);
                             rel.getRelationshipAttributes().add(ra);
                         }
                     }

@@ -21,6 +21,8 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String PEDIBLE = "Pedible";
 
+    public static final String FFA = "FFA";
+
     public static final String SNOMED_CT = "SNOMED CT";
 
     public static final String SUSTANCIA = "Sustancia";

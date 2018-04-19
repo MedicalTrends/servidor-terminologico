@@ -112,9 +112,6 @@ public class ConceptBean implements Serializable {
     @ManagedProperty(value = "#{messageBean}")
     MessageBean messageBean;
 
-    @ManagedProperty( value = "#{autogenerateBeans}")
-    private AutogenerateBeans autogenerateBeans;
-
     @ManagedProperty( value = "#{snomedBean}")
     private SnomedBeans snomedBeans;
 
@@ -144,10 +141,6 @@ public class ConceptBean implements Serializable {
 
     public void setSnomedBeans(SnomedBeans snomedBeans) {
         this.snomedBeans = snomedBeans;
-    }
-
-    public void setAutogenerateBeans(AutogenerateBeans autogenerateBeans) {
-        this.autogenerateBeans = autogenerateBeans;
     }
 
     private List<Category> categoryList;
@@ -500,6 +493,7 @@ public class ConceptBean implements Serializable {
      * Definition. Este método es utilizado por el componente BasicType, el cual agrega relaciones con target sin valor
      */
     public void addRelationshipWithAttributes(RelationshipDefinition relationshipDefinition) {
+
         if (snomedBeans.existRelationshipISAMapping(concept,relationshipDefinition) ) {
             messageBean.messageError("Cuando existe una relación 'Es un mapeo de', no se pueden agregar más relaciones.");
             return;
@@ -567,17 +561,13 @@ public class ConceptBean implements Serializable {
                 return;
             }
         }
-
-        if(!isMCSpecialThisConcept() && concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0 && !relationshipDefinition.isSNOMEDCT())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
-
         // Se setea la definición pasada por parámetro, para rescatar posibles modificaciones a nivel de vista
         relationship.setRelationshipDefinition(relationshipDefinition);
 
        // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
-        if(!isMCSpecialThisConcept() && !relationshipDefinition.isSNOMEDCT()) {
-            autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
-        }
+
+        AutogenerateBean.load(concept, orderedRelationshipDefinitionsList);
 
         // Resetear placeholder relacion
         mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
@@ -658,13 +648,10 @@ public class ConceptBean implements Serializable {
                     e.printStackTrace();
                 }
 
-                if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)
-                    autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
-
                 if(relationshipDefinition.isComercializado())
                     changeMarketedBean.changeMarketedEvent(concept, relationshipDefinition, target);
 
-                autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+                AutogenerateBean.load(concept, orderedRelationshipDefinitionsList);
 
                 if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<Boolean>) target).getValue())
                     changeMultiplicityNotRequiredRelationshipDefinitionMC();
@@ -694,11 +681,7 @@ public class ConceptBean implements Serializable {
                 changeMultiplicityToRequiredRelationshipDefinitionMC();
         }
         //Autogenerado
-        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0) {
-            autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
-        }
-
-        autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+        AutogenerateBean.load(concept, orderedRelationshipDefinitionsList);
         // Se resetean los placeholder para los target de las relaciones
         resetPlaceHolders();
     }
@@ -723,9 +706,6 @@ public class ConceptBean implements Serializable {
                     if (attribute.getRelationAttributeDefinition().equals(relationshipAttributeDefinition)) {
                         attribute.setTarget(target);
                         isAttributeFound = true;
-                        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
-
-                        autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
                         break;
                     }
                 }
@@ -733,12 +713,11 @@ public class ConceptBean implements Serializable {
                 if (!isAttributeFound) {
                     RelationshipAttribute attribute = new RelationshipAttribute(relationshipAttributeDefinition, relationship, target);
                     relationship.getRelationshipAttributes().add(attribute);
-                    if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
-
-                    autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
                 }
             }
         }
+
+        AutogenerateBean.load(concept, orderedRelationshipDefinitionsList);
 
         // Si no se encuentra la relación, se crea una nueva relación con el atributo y target vacio
         if (!isRelationshipFound) {
@@ -798,15 +777,7 @@ public class ConceptBean implements Serializable {
             }
         }
 
-        autogenerateMCCE = new AutogenerateMCCE();
-
-        if(concept.isPersistent() && !concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0) {
-            autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
-        }
-
-        if(!isMCSpecialThisConcept()) {
-            autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
-        }
+        AutogenerateBean.load(concept, orderedRelationshipDefinitionsList);
 
         crossmapBean.refreshCrossmapIndirect(concept);
 
@@ -817,10 +788,7 @@ public class ConceptBean implements Serializable {
      */
     public void removeRelationshipAttribute(Relationship r, RelationshipAttribute ra) {
         r.getRelationshipAttributes().remove(ra);
-        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
-
-        autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
-
+        AutogenerateBean.load(concept, orderedRelationshipDefinitionsList);
     }
 
     /**
@@ -1136,7 +1104,6 @@ public class ConceptBean implements Serializable {
     public void onRowReorder(ReorderEvent event) {
 
         FacesContext context = FacesContext.getCurrentInstance();
-        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
         RelationshipDefinition relationshipDefinition = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinition");
 
@@ -1153,7 +1120,7 @@ public class ConceptBean implements Serializable {
         RelationshipDefinition relationshipDefinitionRowEdit = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinitionRowEdit");
         if(relationshipDefinitionRowEdit==null)relationshipDefinitionRowEdit=relationshipDefinition;
 
-        autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+        AutogenerateBean.load(concept, orderedRelationshipDefinitionsList);
 
     }
 

@@ -83,7 +83,9 @@
                                                  relationship="#{relationship}"
                                                  concept="#{cc.attrs.concept}"
                                                  targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                 rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()}"
+                                                 rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and
+                                                                not relationshipAttributeDefinition.isOrderAttribute() and
+                                                                not relationshipAttributeDefinition.isAutogenerateAttribute() }"
                         />
                         <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                                        relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
