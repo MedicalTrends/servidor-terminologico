@@ -202,19 +202,6 @@ public class MainMenuBean implements Serializable {
                         }
                     }
                 }
-
-                // Si esta definición de relación es autogenerable, Se agrega el atributo autogenerable = "TRUE" (por defecto)
-                if (relationshipDefinition.isAutogenerable()) {
-                    for (RelationshipAttributeDefinition attDef : relationshipDefinition.getRelationshipAttributeDefinitions()) {
-                        if (attDef.isAutogenerateAttribute()) {
-                            Relationship rel = relationshipPlaceholders.get(relationshipDefinition.getId());
-                            BasicTypeValue basicTypeValue = new BasicTypeValue(true);
-
-                            RelationshipAttribute ra = new RelationshipAttribute(attDef, rel, basicTypeValue);
-                            rel.getRelationshipAttributes().add(ra);
-                        }
-                    }
-                }
             }
         }
         //return relationshipPlaceholders;

@@ -48,6 +48,7 @@ public class ViewAugmenterImpl implements ViewAugmenter {
                 new RelationshipDefinitionWeb(relDef.getId(), relDef.getName(), relDef.getDescription(), relDef.getTargetDefinition(), relDef.getMultiplicity(), extendedRelationshipDefinitionInfo.getIdComposite(), extendedRelationshipDefinitionInfo.getOrder());
         relationshipDefinitionWeb.setRelationshipAttributeDefinitions(relDef.getRelationshipAttributeDefinitions());
         relationshipDefinitionWeb.setDefaultValue(extendedRelationshipDefinitionInfo.getDefaultValue());
+        relationshipDefinitionWeb.setAutogenerate(extendedRelationshipDefinitionInfo.isAutogenerate());
         List<RelationshipAttributeDefinitionWeb> attributeDefinitionWebs = new ArrayList<>();
 
         for (RelationshipAttributeDefinition relationshipAttributeDefinition : relDef.getRelationshipAttributeDefinitions()) {

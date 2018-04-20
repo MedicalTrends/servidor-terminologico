@@ -16,8 +16,18 @@ public class ExtendedRelationshipDefinitionInfo {
     /** El orden de la relación */
     private final int order;
 
+    /** El orden de la relación */
+    private boolean autogenerate;
+
     /** El valor por defecto de la relación */
     private final Target defaultValue;
+
+    public ExtendedRelationshipDefinitionInfo(long idComposite, int order, boolean autogenerate, Target defaultValue) {
+        this.idComposite = idComposite;
+        this.order = order;
+        this.autogenerate = autogenerate;
+        this.defaultValue = defaultValue;
+    }
 
     public ExtendedRelationshipDefinitionInfo(long idComposite, int order, Target defaultValue) {
         this.idComposite = idComposite;
@@ -41,5 +51,9 @@ public class ExtendedRelationshipDefinitionInfo {
 
     public Target getDefaultValue() {
         return defaultValue;
+    }
+
+    public boolean isAutogenerate() {
+        return autogenerate;
     }
 }

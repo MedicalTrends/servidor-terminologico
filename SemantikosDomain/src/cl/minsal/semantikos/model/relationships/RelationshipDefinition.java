@@ -186,14 +186,6 @@ public class RelationshipDefinition implements Serializable {
         return null;
     }
 
-    public boolean isAutogenerable() {
-        for (RelationshipAttributeDefinition relationshipAttributeDefinition : getRelationshipAttributeDefinitions()) {
-            if (relationshipAttributeDefinition.isAutogenerateAttribute()) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public List<RelationshipAttributeDefinition> findRelationshipAttributeDefinitionsByName(String name) {
         List<RelationshipAttributeDefinition> someRelationshipAttributeDefinitions = new ArrayList<>();
@@ -257,6 +249,8 @@ public class RelationshipDefinition implements Serializable {
     }
 
     public boolean isFFA() { return this.getName().equalsIgnoreCase(TargetDefinition.FFA); }
+
+    public boolean isMCCE() { return this.getName().equalsIgnoreCase(TargetDefinition.MCCE); }
 
     public boolean isMCSpecial() {
         return this.getName().equalsIgnoreCase(TargetDefinition.MC_SPECIAL);

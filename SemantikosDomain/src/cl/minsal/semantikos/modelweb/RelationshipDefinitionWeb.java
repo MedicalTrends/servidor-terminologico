@@ -20,6 +20,9 @@ public class RelationshipDefinitionWeb extends RelationshipDefinition implements
     /** Establece el orden o posición */
     private int order;
 
+    /** Establece si esta definición participa en la autogeneración del término preferido */
+    private boolean autogenerate;
+
     /** Establece el estilo para el estado de error */
     private boolean isMultiplicitySatisfied = true;
 
@@ -43,6 +46,13 @@ public class RelationshipDefinitionWeb extends RelationshipDefinition implements
         return order;
     }
 
+    public boolean isAutogenerate() {
+        return autogenerate;
+    }
+
+    public void setAutogenerate(boolean autogenerate) {
+        this.autogenerate = autogenerate;
+    }
 
     public Target getDefaultValue() {
         return defaultValue;

@@ -52,6 +52,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
         long idComposite;
         int order;
         long idTarget;
+        boolean isAutogenerate;
         Target defaultValue = null;
 
         try (Connection connection = dataSource.getConnection();
@@ -69,6 +70,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
                 order = rs.getInt(1);
                 idComposite = rs.getLong(2);
                 idTarget = rs.getLong(3);
+                isAutogenerate = rs.getBoolean(8);
                 if(idTarget!=0)
                     defaultValue = targetDAO.getDefaultTargetByID(relationshipDefinition.getTargetDefinition(), idTarget);
             } else {
@@ -80,7 +82,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
             throw new EJBException(e);
         }
 
-        return new ExtendedRelationshipDefinitionInfo(idComposite, order, defaultValue);
+        return new ExtendedRelationshipDefinitionInfo(idComposite, order, isAutogenerate, defaultValue);
     }
 
     @Override
