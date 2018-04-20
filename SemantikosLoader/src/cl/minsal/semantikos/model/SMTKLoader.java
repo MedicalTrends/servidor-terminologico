@@ -31,10 +31,10 @@ public class SMTKLoader extends SwingWorker<Void, String> {
     //public static final String PATH_PREFIX = "/resources/";
 
     private static final String ROOT = "/datafiles/";
-    //private static final String ENV_DRUGS = "test/";
-    //private static final String ENV = "test/";
-    private static final String ENV = "basic/";
-    private static final String ENV_DRUGS = "drugs/";
+    private static final String ENV_DRUGS = "test/";
+    private static final String ENV = "test/";
+    //private static final String ENV = "basic/";
+    //private static final String ENV_DRUGS = "drugs/";
 
     private static final String SUBSTANCE = "substance/";
     private static final String MB = "MB/";
@@ -309,10 +309,8 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             mbConceptLoader.processConcepts(this);
             */
 
-            /*
             initializer.checkMCDataFiles(this);
             mcConceptLoader.processConcepts(this);
-            */
 
             /*
             initializer.checkMCCEDataFiles(this);
@@ -334,8 +332,10 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             pcConceptLoader.processConcepts(this);
             */
 
+            /*
             initializer.checkPCCEDataFiles(this);
             pcceConceptLoader.processConcepts(this);
+            */
 
             JOptionPane.showMessageDialog(null, "Carga de conceptos finalizada!");
         } catch (LoadException e1) {
