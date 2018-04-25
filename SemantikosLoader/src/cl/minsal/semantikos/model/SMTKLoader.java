@@ -12,11 +12,11 @@ import cl.minsal.semantikos.utils.ExtendedAscii;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -79,7 +79,7 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
     private DescriptionTypeFactory descriptionTypeFactory;
 
-    private static final Logger logger = java.util.logging.Logger.getLogger(SMTKLoader.class.getName() );
+    private static final Logger logger = Logger.getLogger(SMTKLoader.class.getName() );
 
     private static JTextArea infoLogs;
 
@@ -110,6 +110,9 @@ public class SMTKLoader extends SwingWorker<Void, String> {
     private JTextField conceptsTotal;
     private JTextField conceptsProcessed;
     private JProgressBar progressBar;
+
+    private int total = 0;
+    private int processed = 0;
 
     /**
      *
@@ -145,6 +148,22 @@ public class SMTKLoader extends SwingWorker<Void, String> {
         DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypeFactory.getDescriptionTypes());
     }
 
+    public SMTKLoader() {
+
+        setUser(userManager.getUser(2));
+
+        categoryFactory =  categoryManager.getCategoryFactory();
+        tagSMTKFactory = tagSMTKManager.getTagSMTKFactory();
+        descriptionTypeFactory = descriptionManager.getDescriptionTypeFactory();
+
+        TagSMTKFactory.getInstance().setTagsSMTK(tagSMTKFactory.getTagsSMTK());
+        TagSMTKFactory.getInstance().setTagsSMTKByName(tagSMTKFactory.getTagsSMTKByName());
+
+        CategoryFactory.getInstance().setCategories(categoryFactory.getCategories());
+        CategoryFactory.getInstance().setCategoriesByName(categoryFactory.getCategoriesByName());
+
+        DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypeFactory.getDescriptionTypes());
+    }
 
 
     public Timestamp getDate() {
@@ -259,30 +278,67 @@ public class SMTKLoader extends SwingWorker<Void, String> {
         this.errorLogs = errorLogs;
     }
 
-    public static void logInfo(LoadLog log) {
+    public static void printInfo(LoadLog log) {
         logger.info(log.toString());
-        infoLogs.append(log.toString());
+    }
+
+    public int getProcessed() {
+        return processed;
+    }
+
+    public void setProcessed(int processed) {
+        this.processed = processed;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public static void printTick() {
+        logger.info(ExtendedAscii.printChar(10004));
+    }
+
+    public static void printError(LoadLog log) {
+        logger.log(Level.SEVERE, log.toString());
+    }
+
+    public static void printWarning(LoadLog log) {
+        logger.log(Level.WARNING, log.toString());
+    }
+
+    public void printIncrementConceptsProcessed(int n) {
+        int processedBefore = (int)(((float)this.processed/(float)total)*100);
+        this.processed = this.processed + n;
+        int processedAfter = (int)(((float)this.processed/(float)total)*100);
+
+        if(processedBefore < processedAfter ) {
+            logger.log(Level.INFO, "Procesados: "+ processedAfter+ " %");
+        }
+    }
+
+    public static void logInfo(LoadLog log) {
+        logger.log(Level.INFO, log.toString());
     }
 
     public static void logTick() {
-        infoLogs.append(ExtendedAscii.printChar(10004));
-        infoLogs.append("\n");
+        logger.log(Level.INFO, ExtendedAscii.printChar(10004));
     }
 
     public static void logError(LoadLog log) {
-        logger.info(log.toString());
-        errorLogs.append(log.toString());
-        errorLogs.append("\n");
+        logger.log(Level.SEVERE, log.toString());
     }
 
     public static void logWarning(LoadLog log) {
-        logger.info(log.toString());
-        errorLogs.append(log.toString());
-        errorLogs.append("\n");
+        logger.log(Level.WARNING, log.toString());
     }
 
     @Override
     protected Void doInBackground() throws Exception {
+
         try {
 
             Initializer initializer = new Initializer();
@@ -302,9 +358,7 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
             initializer.checkSubstanceDataFiles(this);
             substanceConceptLoader.processConcepts(this);
-            */
 
-            /*
             initializer.checkMBDataFiles(this);
             mbConceptLoader.processConcepts(this);
             */
@@ -350,6 +404,71 @@ public class SMTKLoader extends SwingWorker<Void, String> {
     @Override
     protected void process(List<String> chunks) {
         infoLogs.append(chunks.get(0));
+    }
+
+    public void process() throws Exception {
+
+        try {
+
+            Initializer initializer = new Initializer();
+            BasicConceptLoader basicConceptLoader = new BasicConceptLoader();
+            SubstanceConceptLoader substanceConceptLoader = new SubstanceConceptLoader();
+            MBConceptLoader mbConceptLoader = new MBConceptLoader();
+            MCConceptLoader mcConceptLoader = new MCConceptLoader();
+            MCCEConceptLoader mcceConceptLoader = new MCCEConceptLoader();
+            GFPConceptLoader gfpConceptLoader = new GFPConceptLoader();
+            FPConceptLoader fpConceptLoader = new FPConceptLoader();
+            PCConceptLoader pcConceptLoader = new PCConceptLoader();
+            PCCEConceptLoader pcceConceptLoader = new PCCEConceptLoader();
+
+            /*
+            initializer.checkBasicConceptsDataFiles(this);
+            basicConceptLoader.processConcepts(this);
+
+            initializer.checkSubstanceDataFiles(this);
+            substanceConceptLoader.processConcepts(this);
+            */
+
+            initializer.checkMBDataFiles(this);
+            mbConceptLoader.processConcepts(this);
+
+            /*
+            initializer.checkMCDataFiles(this);
+            mcConceptLoader.processConcepts(this);
+            */
+
+            /*
+            initializer.checkMCCEDataFiles(this);
+            mcceConceptLoader.processConcepts(this);
+
+
+            initializer.checkGFPDataFiles(this);
+            gfpConceptLoader.processConcepts(this);
+
+            initializer.checkFPDataFiles(this);
+            fpConceptLoader.processConcepts(this);
+            */
+
+            /*
+            initializer.checkPCDataFiles(this);
+            pcConceptLoader.processConcepts(this);
+            */
+
+            /*
+            initializer.checkPCCEDataFiles(this);
+            pcceConceptLoader.processConcepts(this);
+            */
+
+            //JOptionPane.showMessageDialog(null, "Carga de conceptos finalizada!");
+            logger.info("Carga de conceptos finalizada!");
+
+        } catch (LoadException e1) {
+            //JOptionPane.showMessageDialog(null, e1.getMessage());
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
     }
 
 }

@@ -1,39 +1,35 @@
 package cl.minsal.semantikos.concept;
 
-import cl.minsal.semantikos.MainMenuBean;
-import cl.minsal.semantikos.clients.ServiceLocator;
-import cl.minsal.semantikos.description.AutogenerateBeans;
-import cl.minsal.semantikos.kernel.components.*;
-import cl.minsal.semantikos.messages.MessageBean;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
-import cl.minsal.semantikos.session.ProfilePermissionsBeans;
-import cl.minsal.semantikos.snomed.SCTTypeBean;
-import cl.minsal.semantikos.snomed.SnomedBeans;
 import cl.minsal.semantikos.CompoundSpecialty;
-import cl.minsal.semantikos.users.AuthenticationBean;
+import cl.minsal.semantikos.MainMenuBean;
 import cl.minsal.semantikos.browser.PendingBrowserBean;
-import cl.minsal.semantikos.designer.*;
-
-import cl.minsal.semantikos.kernel.componentsweb.ViewAugmenter;
-import cl.minsal.semantikos.model.tags.TagSMTKFactory;
-import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.audit.ConceptAuditAction;
-import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.clients.ServiceLocator;
+import cl.minsal.semantikos.designer.AutogenerateBean;
+import cl.minsal.semantikos.designer.CompositeAditional;
+import cl.minsal.semantikos.designer.CrossmapBean;
 import cl.minsal.semantikos.kernel.businessrules.ConceptDefinitionalGradeBR;
 import cl.minsal.semantikos.kernel.businessrules.RelationshipBindingBR;
+import cl.minsal.semantikos.kernel.components.*;
+import cl.minsal.semantikos.kernel.componentsweb.ViewAugmenter;
+import cl.minsal.semantikos.messages.MessageBean;
+import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.audit.ConceptAuditAction;
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.descriptions.*;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.tags.TagSMTK;
+import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
-import cl.minsal.semantikos.modelweb.DescriptionWeb;
-import cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb;
-import cl.minsal.semantikos.modelweb.RelationshipWeb;
-import cl.minsal.semantikos.modelweb.Pair;
+import cl.minsal.semantikos.modelweb.*;
+import cl.minsal.semantikos.session.ProfilePermissionsBeans;
+import cl.minsal.semantikos.snomed.SCTTypeBean;
+import cl.minsal.semantikos.snomed.SnomedBeans;
+import cl.minsal.semantikos.users.AuthenticationBean;
 import org.primefaces.event.ReorderEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,6 +122,17 @@ public class ConceptBean implements Serializable {
 
     @ManagedProperty( value="#{mainMenuBean}")
     MainMenuBean mainMenuBean;
+
+    @ManagedProperty( value = "#{autogenerateBean}")
+    private AutogenerateBean autogenerateBean;
+
+    public AutogenerateBean getAutogenerateBean() {
+        return autogenerateBean;
+    }
+
+    public void setAutogenerateBean(AutogenerateBean autogenerateBean) {
+        this.autogenerateBean = autogenerateBean;
+    }
 
     public void setPendingBrowserBean(PendingBrowserBean pendingBrowserBean) {
         this.pendingBrowserBean = pendingBrowserBean;
@@ -254,12 +261,6 @@ public class ConceptBean implements Serializable {
         this.descriptionPending = descriptionPending;
     }
 
-    private AutogenerateMCCE autogenerateMCCE = new AutogenerateMCCE();
-
-    private AutogenerateMC autogenerateMC;
-
-    private AutogeneratePCCE autogeneratePCCE;
-
     /**
      * Un map para almacenar localmente las relaciones aumentadas
      */
@@ -326,9 +327,6 @@ public class ConceptBean implements Serializable {
     @PostConstruct
     public void initialize() {
         user = authenticationBean.getLoggedUser();
-        autogenerateMCCE = new AutogenerateMCCE();
-        autogenerateMC = new AutogenerateMC();
-        autogeneratePCCE = new AutogeneratePCCE();
         noValidDescriptions = new ArrayList<>();
         observationNoValids = descriptionManager.getObservationsNoValid();
         categoryList = categoryManager.getCategories();
@@ -567,7 +565,7 @@ public class ConceptBean implements Serializable {
        // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
 
-        AutogenerateBean.load(concept, orderedRelationshipDefinitionsList);
+        autogenerateBean.load(concept);
 
         // Resetear placeholder relacion
         mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
@@ -651,7 +649,7 @@ public class ConceptBean implements Serializable {
                 if(relationshipDefinition.isComercializado())
                     changeMarketedBean.changeMarketedEvent(concept, relationshipDefinition, target);
 
-                AutogenerateBean.load(concept, orderedRelationshipDefinitionsList);
+                autogenerateBean.load(concept);
 
                 if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<Boolean>) target).getValue())
                     changeMultiplicityNotRequiredRelationshipDefinitionMC();
@@ -681,7 +679,7 @@ public class ConceptBean implements Serializable {
                 changeMultiplicityToRequiredRelationshipDefinitionMC();
         }
         //Autogenerado
-        AutogenerateBean.load(concept, orderedRelationshipDefinitionsList);
+        autogenerateBean.load(concept);
         // Se resetean los placeholder para los target de las relaciones
         resetPlaceHolders();
     }
@@ -717,7 +715,7 @@ public class ConceptBean implements Serializable {
             }
         }
 
-        AutogenerateBean.load(concept, orderedRelationshipDefinitionsList);
+        autogenerateBean.load(concept);
 
         // Si no se encuentra la relación, se crea una nueva relación con el atributo y target vacio
         if (!isRelationshipFound) {
@@ -777,7 +775,7 @@ public class ConceptBean implements Serializable {
             }
         }
 
-        AutogenerateBean.load(concept, orderedRelationshipDefinitionsList);
+        autogenerateBean.load(concept);
 
         crossmapBean.refreshCrossmapIndirect(concept);
 
@@ -788,7 +786,7 @@ public class ConceptBean implements Serializable {
      */
     public void removeRelationshipAttribute(Relationship r, RelationshipAttribute ra) {
         r.getRelationshipAttributes().remove(ra);
-        AutogenerateBean.load(concept, orderedRelationshipDefinitionsList);
+        autogenerateBean.load(concept);
     }
 
     /**
@@ -1120,7 +1118,7 @@ public class ConceptBean implements Serializable {
         RelationshipDefinition relationshipDefinitionRowEdit = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinitionRowEdit");
         if(relationshipDefinitionRowEdit==null)relationshipDefinitionRowEdit=relationshipDefinition;
 
-        AutogenerateBean.load(concept, orderedRelationshipDefinitionsList);
+        autogenerateBean.load(concept);
 
     }
 

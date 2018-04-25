@@ -1,18 +1,10 @@
 package cl.minsal.semantikos.loaders;
 
 import cl.minsal.semantikos.model.LoadException;
-import cl.minsal.semantikos.model.SMTKLoader;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.IllegalFormatException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -23,13 +15,19 @@ import static cl.minsal.semantikos.model.LoadLog.ERROR;
  */
 public class EntityLoader {
 
-    private static final Logger logger = java.util.logging.Logger.getLogger(EntityLoader.class.getName() );
+    private static final Logger logger = Logger.getLogger(EntityLoader.class.getName() );
 
     Path path;
 
     BufferedReader reader;
 
-    String separator = ";";
+    FileWriter fw;
+
+    BufferedWriter writer;
+
+    public static String separator = ";";
+
+    private static String newline = System.getProperty("line.separator");
 
     public Path getPath() {
         return path;
@@ -83,6 +81,46 @@ public class EntityLoader {
 
         }
         return true;
+    }
+
+    public void initWriter(String path) throws LoadException {
+
+        try {
+            fw = new FileWriter(path);
+
+            writer = new BufferedWriter(fw);
+            writer.write("ID_CONCEPT;CAUSA");
+            writer.write(newline);
+            writer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void haltWriter() {
+        try {
+            writer.close();
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void log(LoadException ex) {
+        try {
+            if(ex.getLoadMessage()!=null) {
+                writer.write(ex.getIdConcept() + separator + ex.getMessage());
+            }
+            else {
+                writer.write(ex.getIdConcept() + separator + ex.getMessage());
+            }
+
+            writer.write(newline);
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

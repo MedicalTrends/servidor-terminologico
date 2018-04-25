@@ -7,9 +7,6 @@ import cl.minsal.semantikos.model.SMTKLoader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,7 +22,8 @@ public class Initializer extends EntityLoader {
 
         try {
 
-            smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles Conceptos Básicos", INFO));
+            //smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles Conceptos Básicos", INFO));
+            smtkLoader.printInfo(new LoadLog("Comprobando estructura DataFiles Conceptos Básicos", INFO));
 
             //this.path = Paths.get(smtkLoader.BASIC_CONCEPTS_PATH);
             reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.BASIC_CONCEPTS_PATH)));
@@ -74,10 +72,14 @@ public class Initializer extends EntityLoader {
                 throw new LoadException(smtkLoader.BASIC_RELATIONSHIPS_PATH, null, "El encabezado del archivo no es válido", ERROR);
             }
 
-            smtkLoader.setConceptsTotal(lines-1);
-            smtkLoader.setConceptsProcessed(0);
+            //smtkLoader.setConceptsTotal(lines-1);
+            //smtkLoader.setConceptsProcessed(0);
 
-            smtkLoader.logTick();
+            smtkLoader.setTotal(lines-1);
+            smtkLoader.setProcessed(0);
+
+            //smtkLoader.logTick();
+            smtkLoader.printTick();
 
         } catch (IOException e) {
             throw e;
@@ -86,7 +88,8 @@ public class Initializer extends EntityLoader {
                 throw e;
             }
             else {
-                smtkLoader.logError(e);
+                //smtkLoader.logError(e);
+                smtkLoader.printError(e);
             }
         }
     }
@@ -95,7 +98,8 @@ public class Initializer extends EntityLoader {
 
         try {
 
-            smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles Sustancias", INFO));
+            //smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles Sustancias", INFO));
+            smtkLoader.printInfo(new LoadLog("Comprobando estructura DataFiles Sustancias", INFO));
 
             //this.path = Paths.get(smtkLoader.SUBSTANCE_PATH);
             reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.SUBSTANCE_PATH)));
@@ -116,10 +120,14 @@ public class Initializer extends EntityLoader {
             while (reader.readLine() != null) lines++;
             reader.close();
 
-            smtkLoader.setConceptsTotal(lines-1);
-            smtkLoader.setConceptsProcessed(0);
+            //smtkLoader.setConceptsTotal(lines-1);
+            //smtkLoader.setConceptsProcessed(0);
 
-            smtkLoader.logTick();
+            smtkLoader.setTotal(lines-1);
+            smtkLoader.setProcessed(0);
+
+            //smtkLoader.logTick();
+            smtkLoader.printTick();
 
         } catch (IOException e) {
             throw e;
@@ -128,7 +136,8 @@ public class Initializer extends EntityLoader {
                 throw e;
             }
             else {
-                smtkLoader.logError(e);
+                //smtkLoader.logError(e);
+                smtkLoader.printError(e);
             }
         }
     }
@@ -137,7 +146,8 @@ public class Initializer extends EntityLoader {
 
         try {
 
-            smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles MB", INFO));
+            //smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles MB", INFO));
+            smtkLoader.printInfo(new LoadLog("Comprobando estructura DataFiles MB", INFO));
 
             //this.path = Paths.get(smtkLoader.MB_PATH);
             reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.MB_PATH)));
@@ -158,10 +168,14 @@ public class Initializer extends EntityLoader {
             while (reader.readLine() != null) lines++;
             reader.close();
 
-            smtkLoader.setConceptsTotal(lines-1);
-            smtkLoader.setConceptsProcessed(0);
+            //smtkLoader.setConceptsTotal(lines-1);
+            //smtkLoader.setConceptsProcessed(0);
 
-            smtkLoader.logTick();
+            smtkLoader.setTotal(lines-1);
+            smtkLoader.setProcessed(0);
+
+            //smtkLoader.logTick();
+            smtkLoader.printTick();
 
         } catch (IOException e) {
             throw e;
@@ -170,7 +184,8 @@ public class Initializer extends EntityLoader {
                 throw e;
             }
             else {
-                smtkLoader.logError(e);
+                //smtkLoader.logError(e);
+                smtkLoader.printError(e);
             }
         }
     }
@@ -179,7 +194,8 @@ public class Initializer extends EntityLoader {
 
         try {
 
-            smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles MC", INFO));
+            //smtkLoader.logInfo(new LoadLog("Comprobando estructura DataFiles MC", INFO));
+            smtkLoader.printInfo(new LoadLog("Comprobando estructura DataFiles MC", INFO));
 
             //this.path = Paths.get(smtkLoader.MC_PATH);
             reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(smtkLoader.MC_PATH)));
@@ -214,10 +230,14 @@ public class Initializer extends EntityLoader {
                 throw new LoadException(smtkLoader.MC_VIAS_ADM_PATH, null, "El encabezado del archivo no es válido", ERROR);
             }
 
-            smtkLoader.setConceptsTotal(lines-1);
-            smtkLoader.setConceptsProcessed(0);
+            //smtkLoader.setConceptsTotal(lines-1);
+            //smtkLoader.setConceptsProcessed(0);
 
-            smtkLoader.logTick();
+            smtkLoader.setTotal(lines-1);
+            smtkLoader.setProcessed(0);
+
+            //smtkLoader.logTick();
+            smtkLoader.printTick();
 
         } catch (IOException e) {
             throw e;
@@ -226,7 +246,8 @@ public class Initializer extends EntityLoader {
                 throw e;
             }
             else {
-                smtkLoader.logError(e);
+                //smtkLoader.logError(e);
+                smtkLoader.printError(e);
             }
         }
     }
@@ -256,8 +277,10 @@ public class Initializer extends EntityLoader {
             while (reader.readLine() != null) lines++;
             reader.close();
 
-            smtkLoader.setConceptsTotal(lines-1);
-            smtkLoader.setConceptsProcessed(0);
+            //smtkLoader.setConceptsTotal(lines-1);
+            //smtkLoader.setConceptsProcessed(0);
+            smtkLoader.setTotal(lines-1);
+            smtkLoader.setProcessed(0);
 
             smtkLoader.logTick();
 
@@ -382,8 +405,11 @@ public class Initializer extends EntityLoader {
             while (reader.readLine() != null) lines++;
             reader.close();
 
-            smtkLoader.setConceptsTotal(lines-1);
-            smtkLoader.setConceptsProcessed(0);
+            //smtkLoader.setConceptsTotal(lines-1);
+            //smtkLoader.setConceptsProcessed(0);
+
+            smtkLoader.setTotal(lines-1);
+            smtkLoader.setProcessed(0);
 
             smtkLoader.logTick();
 
@@ -424,8 +450,11 @@ public class Initializer extends EntityLoader {
             while (reader.readLine() != null) lines++;
             reader.close();
 
-            smtkLoader.setConceptsTotal(lines-1);
-            smtkLoader.setConceptsProcessed(0);
+            //smtkLoader.setConceptsTotal(lines-1);
+            //smtkLoader.setConceptsProcessed(0);
+
+            smtkLoader.setTotal(lines-1);
+            smtkLoader.setProcessed(0);
 
             smtkLoader.logTick();
 

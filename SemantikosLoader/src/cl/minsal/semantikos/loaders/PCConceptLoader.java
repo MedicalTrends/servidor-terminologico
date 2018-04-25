@@ -31,7 +31,6 @@ import java.util.*;
 import static cl.minsal.semantikos.model.LoadLog.ERROR;
 import static cl.minsal.semantikos.model.LoadLog.INFO;
 import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN;
-import static java.util.Collections.EMPTY_LIST;
 
 /**
  * Created by root on 15-06-17.
@@ -84,6 +83,8 @@ public class PCConceptLoader extends EntityLoader {
     private HelperTableRow ispRecord = null;
 
     private Map<String,String> fetchedData;
+
+    private static String PC_LOG = "Fármacos - Producto Comercial";
 
     public void loadConceptFromFileLine(String line, User user) throws LoadException {
 
@@ -476,7 +477,7 @@ public class PCConceptLoader extends EntityLoader {
                         if(!fetchedRecord.get(s).trim().isEmpty()) {
                             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                             Date parsedDate = dateFormat.parse(fetchedRecord.get(s));
-                            cell.setDateValue(new java.sql.Timestamp(parsedDate.getTime()));
+                            cell.setDateValue(new Timestamp(parsedDate.getTime()));
                         }
                     }
                     else {
@@ -566,49 +567,61 @@ public class PCConceptLoader extends EntityLoader {
 
     public void loadAllConcepts(SMTKLoader smtkLoader) {
 
-        smtkLoader.logInfo(new LoadLog("Comprobando Conceptos PC", INFO));
-        smtkLoader.setConceptsProcessed(0);
+        //smtkLoader.logInfo(new LoadLog("Comprobando Conceptos PC", INFO));
+        smtkLoader.printInfo(new LoadLog("Comprobando Conceptos PC", INFO));
+        //smtkLoader.setConceptsProcessed(0);
 
         try {
 
             initReader(smtkLoader.PC_PATH);
+            initWriter(PC_LOG);
 
             String line;
 
             while ((line = reader.readLine()) != null) {
                 try {
                     loadConceptFromFileLine(line, smtkLoader.getUser());
-                    smtkLoader.incrementConceptsProcessed(1);
+                    //smtkLoader.incrementConceptsProcessed(1);
+                    smtkLoader.printIncrementConceptsProcessed(1);
                 }
                 catch (LoadException e) {
-                    smtkLoader.logError(e);
-                    e.printStackTrace();
+                    //smtkLoader.logError(e);
+                    //smtkLoader.printError(e);
+                    //e.printStackTrace();
+                    log(e);
                 }
             }
 
             haltReader();
 
-            smtkLoader.setConceptsProcessed(0);
+            //smtkLoader.setConceptsProcessed(0);
+            //smtkLoader.setProcessed(0);
 
             initReader(smtkLoader.PC_PATH);
 
             while ((line = reader.readLine()) != null) {
                 try {loadBioequivalents(line);
-                    smtkLoader.incrementConceptsProcessed(1);
+                    //smtkLoader.incrementConceptsProcessed(1);
+                    smtkLoader.printIncrementConceptsProcessed(1);
                 }
                 catch (LoadException e) {
-                    smtkLoader.logError(e);
-                    e.printStackTrace();
+                    //smtkLoader.logError(e);
+                    //smtkLoader.printError(e);
+                    //e.printStackTrace();
+                    log(e);
                 }
             }
 
             haltReader();
 
-            smtkLoader.logTick();
+            //smtkLoader.logTick();
+            smtkLoader.printTick();
 
         } catch (Exception e) {
-            smtkLoader.logError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
-            e.printStackTrace();
+            //smtkLoader.logError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            //smtkLoader.printError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            //e.printStackTrace();
+            log(new LoadException(path.toString(), null, e.getMessage(), ERROR));
         } catch (LoadException e) {
             e.printStackTrace();
         }
@@ -616,9 +629,11 @@ public class PCConceptLoader extends EntityLoader {
 
     public void persistAllConcepts(SMTKLoader smtkLoader) {
 
-        smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos PC", INFO));
+        //smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos PC", INFO));
+        smtkLoader.printInfo(new LoadLog("Persisitiendo Conceptos PC", INFO));
 
-        smtkLoader.setConceptsProcessed(0);
+        //smtkLoader.setConceptsProcessed(0);
+        smtkLoader.setProcessed(0);
 
         Iterator it = conceptSMTKMap.entrySet().iterator();
 
@@ -628,20 +643,26 @@ public class PCConceptLoader extends EntityLoader {
 
             try {
                 conceptManager.persist((ConceptSMTK)pair.getValue(), smtkLoader.getUser());
-                smtkLoader.incrementConceptsProcessed(1);
+                //smtkLoader.incrementConceptsProcessed(1);
+                smtkLoader.printIncrementConceptsProcessed(1);
             }
             catch (Exception e) {
-                smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
-                e.printStackTrace();
+                //smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
+                //smtkLoader.printError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
+                //e.printStackTrace();
+                log(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
             }
 
             it.remove(); // avoids a ConcurrentModificationException
         }
 
-        smtkLoader.logTick();
+        smtkLoader.printTick();
+        haltWriter();
+        //smtkLoader.logTick();
     }
 
     public void processConcepts(SMTKLoader smtkLoader) {
+        smtkLoader.setProcessed(0);
         loadAllConcepts(smtkLoader);
         persistAllConcepts(smtkLoader);
     }

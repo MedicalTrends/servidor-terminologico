@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 public class LoadLog extends Throwable {
 
     Timestamp timestamp;
-    String message;
+    String loadMessage;
     String type;
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -27,12 +27,20 @@ public class LoadLog extends Throwable {
 
     public LoadLog(String message, String type) {
         this.timestamp = new Timestamp(System.currentTimeMillis());
-        this.message = message;
+        this.loadMessage = message;
         this.type = type;
     }
 
     @Override
     public String toString() {
-        return "["+format.format(timestamp)+"]"+type+": "+message;
+        return "["+format.format(timestamp)+"]"+type+": "+loadMessage;
+    }
+
+    public String getLoadMessage() {
+        return loadMessage;
+    }
+
+    public void setLoadMessage(String loadMessage) {
+        this.loadMessage = loadMessage;
     }
 }

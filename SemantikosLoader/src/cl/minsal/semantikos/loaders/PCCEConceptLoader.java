@@ -26,7 +26,6 @@ import java.util.*;
 import static cl.minsal.semantikos.model.LoadLog.ERROR;
 import static cl.minsal.semantikos.model.LoadLog.INFO;
 import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN;
-import static java.util.Collections.EMPTY_LIST;
 
 /**
  * Created by root on 15-06-17.
@@ -72,6 +71,8 @@ public class PCCEConceptLoader extends EntityLoader {
     Map<Long, ConceptSMTK> conceptSMTKMap = new HashMap<>();
 
     Map<String, Description> descriptionMap = new HashMap<>();
+
+    private static String PCCE_LOG = "Fármacos - Producto Comercial con Envase.log";
 
     public void loadConceptFromFileLine(String line, User user) throws LoadException {
 
@@ -296,7 +297,7 @@ public class PCCEConceptLoader extends EntityLoader {
             /* Generando Existe GS1 */
 
             basicTypeValue = new BasicTypeValue(false);
-            relationshipDefinition = category.findRelationshipDefinitionsByName("Existe GS1").get(0);
+            relationshipDefinition = category.findRelationshipDefinitionsByName("Existe en GS1").get(0);
 
             Relationship relationshipExistGS1 = new Relationship(conceptSMTK, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
@@ -312,32 +313,40 @@ public class PCCEConceptLoader extends EntityLoader {
 
     public void loadAllConcepts(SMTKLoader smtkLoader) {
 
-        smtkLoader.logInfo(new LoadLog("Comprobando Conceptos PCCE", INFO));
+        //smtkLoader.logInfo(new LoadLog("Comprobando Conceptos PCCE", INFO));
+        smtkLoader.printInfo(new LoadLog("Comprobando Conceptos PCCE", INFO));
 
         try {
 
             initReader(smtkLoader.PCCE_PATH);
+            initWriter(PCCE_LOG);
 
             String line;
 
             while ((line = reader.readLine()) != null) {
                 try {
                     loadConceptFromFileLine(line, smtkLoader.getUser());
-                    smtkLoader.incrementConceptsProcessed(1);
+                    //smtkLoader.incrementConceptsProcessed(1);
+                    smtkLoader.printIncrementConceptsProcessed(1);
                 }
                 catch (LoadException e) {
-                    smtkLoader.logError(e);
-                    e.printStackTrace();
+                    //smtkLoader.logError(e);
+                    //smtkLoader.printError(e);
+                    //e.printStackTrace();
+                    log(e);
                 }
             }
 
             haltReader();
 
-            smtkLoader.logTick();
+            //smtkLoader.logTick();
+            smtkLoader.printTick();
 
         } catch (Exception e) {
-            smtkLoader.logError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
-            e.printStackTrace();
+            //smtkLoader.logError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            //smtkLoader.printError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            //e.printStackTrace();
+            log(new LoadException(path.toString(), null, e.getMessage(), ERROR));
         } catch (LoadException e) {
             e.printStackTrace();
         }
@@ -345,9 +354,11 @@ public class PCCEConceptLoader extends EntityLoader {
 
     public void persistAllConcepts(SMTKLoader smtkLoader) {
 
-        smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos PCCE", INFO));
+        //smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos PCCE", INFO));
+        smtkLoader.printInfo(new LoadLog("Persisitiendo Conceptos PCCE", INFO));
 
-        smtkLoader.setConceptsProcessed(0);
+        //smtkLoader.setConceptsProcessed(0);
+        smtkLoader.setProcessed(0);
 
         Iterator it = conceptSMTKMap.entrySet().iterator();
 
@@ -357,22 +368,29 @@ public class PCCEConceptLoader extends EntityLoader {
 
             try {
                 conceptManager.persist((ConceptSMTK)pair.getValue(), smtkLoader.getUser());
-                smtkLoader.incrementConceptsProcessed(1);
+                //smtkLoader.incrementConceptsProcessed(1);
+                smtkLoader.printIncrementConceptsProcessed(1);
             }
             catch (Exception e) {
-                smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
-                e.printStackTrace();
+                //smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
+                //smtkLoader.printError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
+                //e.printStackTrace();
+                log(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
             }
 
             it.remove(); // avoids a ConcurrentModificationException
         }
 
-        smtkLoader.logTick();
+        //smtkLoader.logTick();
+        haltWriter();
+        smtkLoader.printTick();
     }
 
     public void processConcepts(SMTKLoader smtkLoader) {
+        smtkLoader.setProcessed(0);
         loadAllConcepts(smtkLoader);
         persistAllConcepts(smtkLoader);
     }
 
 }
+

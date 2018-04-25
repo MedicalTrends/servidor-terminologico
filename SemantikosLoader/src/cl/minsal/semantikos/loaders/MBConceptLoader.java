@@ -6,7 +6,6 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.LoadException;
 import cl.minsal.semantikos.model.LoadLog;
 import cl.minsal.semantikos.model.SMTKLoader;
-import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
@@ -28,7 +27,6 @@ import java.util.*;
 import static cl.minsal.semantikos.model.LoadLog.ERROR;
 import static cl.minsal.semantikos.model.LoadLog.INFO;
 import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN;
-import static java.util.Collections.EMPTY_LIST;
 
 /**
  * Created by root on 15-06-17.
@@ -66,6 +64,7 @@ public class MBConceptLoader extends EntityLoader {
 
     Map<String, Description> descriptionMap = new HashMap<>();
 
+    private static String MB_LOG = "Fármacos - Medicamento Básico.log";
 
     public void loadConceptFromFileLine(String line, User user) throws LoadException {
 
@@ -142,6 +141,7 @@ public class MBConceptLoader extends EntityLoader {
                     }
 
                     term = StringUtils.normalizeSpaces(synonymsToken.split("-")[1]).trim();
+
                     descriptionType = DescriptionType.SYNONYMOUS;
 
                     Description description = new Description(conceptSMTK, term, descriptionType);
@@ -301,44 +301,51 @@ public class MBConceptLoader extends EntityLoader {
 
     public void loadAllConcepts(SMTKLoader smtkLoader) {
 
-        smtkLoader.logInfo(new LoadLog("Comprobando Conceptos MB", INFO));
-
-        smtkLoader.setConceptsProcessed(0);
+        //smtkLoader.logInfo(new LoadLog("Comprobando Conceptos MB", INFO));
+        smtkLoader.printInfo(new LoadLog("Comprobando Conceptos MB", INFO));
 
         try {
 
             initReader(smtkLoader.MB_PATH);
+            initWriter(MB_LOG);
 
             String line;
 
             while ((line = reader.readLine()) != null) {
+
                 try {
                     loadConceptFromFileLine(line, smtkLoader.getUser());
-                    smtkLoader.incrementConceptsProcessed(1);
+                    //smtkLoader.incrementConceptsProcessed(1);
+                    smtkLoader.printIncrementConceptsProcessed(1);
                 }
                 catch (LoadException e) {
-                    smtkLoader.logError(e);
+                    //smtkLoader.logError(e);
+                    //smtkLoader.printError(e);
+                    log(e);
                     e.printStackTrace();
                 }
             }
 
             haltReader();
 
-            smtkLoader.logTick();
+            //smtkLoader.logTick();
+            smtkLoader.printTick();
 
         } catch (Exception e) {
-            smtkLoader.logError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
-            e.printStackTrace();
+            //smtkLoader.logError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            //smtkLoader.printError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            log(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            //e.printStackTrace();
         } catch (LoadException e) {
-            e.printStackTrace();
+            log(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            //e.printStackTrace();
         }
     }
 
     public void persistAllConcepts(SMTKLoader smtkLoader) {
 
-        smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos Fármacos - MB", INFO));
-
-        smtkLoader.setConceptsProcessed(0);
+        //smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos Fármacos - MB", INFO));
+        smtkLoader.printInfo(new LoadLog("Persisitiendo Conceptos Fármacos - MB", INFO));
 
         Iterator it = conceptSMTKMap.entrySet().iterator();
 
@@ -348,17 +355,21 @@ public class MBConceptLoader extends EntityLoader {
 
             try {
                 conceptManager.persist((ConceptSMTK)pair.getValue(), smtkLoader.getUser());
-                smtkLoader.incrementConceptsProcessed(1);
+                //smtkLoader.incrementConceptsProcessed(1);
+                smtkLoader.printIncrementConceptsProcessed(1);
             }
             catch (Exception e) {
-                smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
+                //smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
+                log(new LoadException(path.toString(), null, e.getMessage(), ERROR));
                 e.printStackTrace();
             }
 
             it.remove(); // avoids a ConcurrentModificationException
         }
 
-        smtkLoader.logTick();
+        //smtkLoader.logTick();
+        smtkLoader.printTick();
+        haltWriter();
     }
 
     public void processConcepts(SMTKLoader smtkLoader) {
