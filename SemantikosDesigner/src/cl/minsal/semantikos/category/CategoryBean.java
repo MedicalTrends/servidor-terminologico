@@ -4,6 +4,7 @@ import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.componentsweb.ViewAugmenter;
 import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb;
 
@@ -42,8 +43,31 @@ public class CategoryBean {
             this.relationshipDefinitionsWeb.put(category.getId(), relationshipDefinitionsWeb);
         }
     }
+
     public List<RelationshipDefinitionWeb> getRelationshipDefinitionsByCategory(Category category) {
         return relationshipDefinitionsWeb.get(category.getId());
+    }
+
+    public RelationshipDefinitionWeb getRelationshipDefinitionById(Category category, RelationshipDefinition relationshipDefinition) {
+        for (RelationshipDefinitionWeb relationshipDefinitionWeb : getRelationshipDefinitionsByCategory(category)) {
+            if(relationshipDefinition.getId() == relationshipDefinitionWeb.getId()) {
+                return relationshipDefinitionWeb;
+            }
+        }
+        return null;
+    }
+
+    public List<RelationshipDefinitionWeb> getCrossmapTypeDefinitionsByCategory(Category category) {
+
+        List<RelationshipDefinitionWeb> relationshipDefinitions = new ArrayList();
+
+        for (RelationshipDefinitionWeb relationshipDefinitionWeb : relationshipDefinitionsWeb.get(category.getId())) {
+            if(relationshipDefinitionWeb.getTargetDefinition().isCrossMapType()) {
+                relationshipDefinitions.add(relationshipDefinitionWeb);
+            }
+        }
+
+        return relationshipDefinitions;
     }
 
 }

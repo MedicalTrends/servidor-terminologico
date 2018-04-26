@@ -2,6 +2,7 @@ package cl.minsal.semantikos.model.crossmaps.gmdn;
 
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
+import cl.minsal.semantikos.model.crossmaps.cie10.Disease;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
@@ -131,5 +132,12 @@ public class GenericDeviceGroup extends CrossmapSetMember implements Serializabl
     @Override
     public String toString() {
         return getTermName();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof GenericDeviceGroup
+                ? String.valueOf(getId()).equals(String.valueOf(((GenericDeviceGroup) other).getId()))
+                : other == this;
     }
 }

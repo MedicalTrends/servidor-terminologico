@@ -565,7 +565,7 @@ public class ConceptBean implements Serializable {
        // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
 
-        autogenerateBean.load(concept);
+        autogenerateBean.load(concept, relationshipDefinition);
 
         // Resetear placeholder relacion
         mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
@@ -649,7 +649,7 @@ public class ConceptBean implements Serializable {
                 if(relationshipDefinition.isComercializado())
                     changeMarketedBean.changeMarketedEvent(concept, relationshipDefinition, target);
 
-                autogenerateBean.load(concept);
+                autogenerateBean.load(concept, relationshipDefinition);
 
                 if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<Boolean>) target).getValue())
                     changeMultiplicityNotRequiredRelationshipDefinitionMC();
@@ -679,7 +679,7 @@ public class ConceptBean implements Serializable {
                 changeMultiplicityToRequiredRelationshipDefinitionMC();
         }
         //Autogenerado
-        autogenerateBean.load(concept);
+        autogenerateBean.load(concept, relationshipDefinition);
         // Se resetean los placeholder para los target de las relaciones
         resetPlaceHolders();
     }
@@ -715,7 +715,7 @@ public class ConceptBean implements Serializable {
             }
         }
 
-        autogenerateBean.load(concept);
+        autogenerateBean.load(concept, relationshipDefinition);
 
         // Si no se encuentra la relación, se crea una nueva relación con el atributo y target vacio
         if (!isRelationshipFound) {
@@ -775,7 +775,7 @@ public class ConceptBean implements Serializable {
             }
         }
 
-        autogenerateBean.load(concept);
+        autogenerateBean.load(concept, rd);
 
         crossmapBean.refreshCrossmapIndirect(concept);
 
@@ -786,7 +786,7 @@ public class ConceptBean implements Serializable {
      */
     public void removeRelationshipAttribute(Relationship r, RelationshipAttribute ra) {
         r.getRelationshipAttributes().remove(ra);
-        autogenerateBean.load(concept);
+        autogenerateBean.load(concept, r.getRelationshipDefinition());
     }
 
     /**
@@ -1118,7 +1118,7 @@ public class ConceptBean implements Serializable {
         RelationshipDefinition relationshipDefinitionRowEdit = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinitionRowEdit");
         if(relationshipDefinitionRowEdit==null)relationshipDefinitionRowEdit=relationshipDefinition;
 
-        autogenerateBean.load(concept);
+        autogenerateBean.load(concept, relationshipDefinition);
 
     }
 

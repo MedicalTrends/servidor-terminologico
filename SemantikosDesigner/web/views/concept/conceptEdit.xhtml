@@ -169,14 +169,13 @@
                                                  styleClass="attributes"
                                                  rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
-                                            <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
+                                            <h:dataTable style="width: 100%;" value="#{categoryBean.getCrossmapTypeDefinitionsByCategory(conceptBean.category)}"
                                                          var="relationshipDefinition">
 
                                                 <h:column>
 
                                                     <p:outputPanel
                                                             id="panelRelationshipDefinitonCrossmap"
-                                                            style="border:0px; margin: 0px; padding: 0px;"
                                                             styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}">
 
                                                         <smtk:crossmapType
@@ -188,6 +187,7 @@
                                                     </p:outputPanel>
 
                                                 </h:column>
+
                                             </h:dataTable>
                                         </p:panel>
                                     </p:tab>
