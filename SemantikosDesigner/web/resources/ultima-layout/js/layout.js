@@ -464,6 +464,8 @@ PrimeFaces.widget.Ultima = PrimeFaces.widget.BaseWidget.extend({
         if (inlineProfileCookie) {
             this.profileMenu.show().prev('.profile').addClass('profile-expanded');
         }
+
+        var scrollCookie = $.cookie('scroll_status', $(window).scrollTop());
     },
     
     enableModal: function() {
