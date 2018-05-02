@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface >
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.helpertables.HelperTable" />
+    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
+</composite:interface>
+<composite:implementation>
+
+    <!-- ISP -->
+    <p:panel id="helperTableTypeCollectionISP" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
+
+        <p:spacer />
+
+        <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
+            <p:outputPanel rendered="#{cc.attrs.concept.editable and cc.attrs.relationshipDefinition.multiplicity.lowerBoundary>0}">
+                <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
+                <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
+            </p:outputPanel>
+            <p:outputPanel rendered="#{cc.attrs.concept.editable and cc.attrs.relationshipDefinition.multiplicity.lowerBoundary eq 0}">
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="Atributo opcional" style="font-size: small;" />
+            </p:outputPanel>
+        </f:facet>
+
+        <h:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" width="100%" id="ispfetcherexisteinputs" rendered="#{cc.attrs.concept.editable}">
+
+            <p:outputLabel for="ispexistebooleanbutton" value="Requiere esterilización antes del uso?"/>
+
+            <p:selectBooleanButton  id="ispexistebooleanbutton" value="#{ispbean.existe}" offLabel="No" onLabel="Si" onIcon="ui-icon-check" offIcon="ui-icon-close">
+                <p:ajax async="false" listener="#{ispbean.updateOptionality(cc.attrs.relationshipDefinition)}" update="helperTableTypeCollectionISP" process="ispexistebooleanbutton" />
+                <!-- Parámetros del buscador -->
+            </p:selectBooleanButton>
+
+        </h:panelGrid>
+
+        <p:outputPanel style="display:block" id="ispfetcherinputs" rendered="#{ispbean.existe}">
+
+            <div class="ui-fluid">
+
+                <div class="Container">
+
+                    <div class="Container20 White Responsive">
+
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                            <p:selectOneMenu id="findHTRecords5"
+                                             scrollHeight="200"
+                                             autoWidth="false"
+                                             forceSelection="true"
+                                             value="#{conceptBean.selectedHelperTableRecord}"
+                                             var="r"
+                                             rendered="#{cc.attrs.concept.editable}"
+                                             filter="true"
+                                             converter="helperTableRecordConverter">
+
+                                <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
+                                <f:selectItems value="#{helperTableBean.getValidTableRowsRD(cc.attrs.targetDefinition,cc.attrs.relationshipDefinition.id)}"
+                                               var="record"
+                                               itemLabel="#{record.description}"
+                                               itemValue="#{record}"/>
+                                <p:column>
+                                    <h:outputText value="#{r.description}"/>
+                                </p:column>
+
+                                <p:ajax event="itemSelect"
+                                        update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@this,@(.msgUpdate)"
+                                        listener="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
+                                        process="@this"/>
+
+                                <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                                <!-- Parámetros del validador -->
+                                <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
+                                <!---->
+                            </p:selectOneMenu>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p:dataTable id="collectionValues12"
+                         styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
+                         rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                         var="relationship"
+                         value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                         reflow="true">
+                <p:column headerText="Descripción"
+                          var="column"
+                          columnIndexVar="colIndex" rendered="#{ not cc.attrs.relationshipDefinition.bioequivalente}">
+                    <h:outputText value="#{relationship.target.description}" />
+                </p:column>
+                <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
+                           var="column"
+                           columnIndexVar="colIndex" rendered="#{ not cc.attrs.relationshipDefinition.bioequivalente}">
+                    <f:facet name="header">
+                        <h:outputText value="#{column.name}" />
+                    </f:facet>
+                    <h:outputText value="#{relationship.target.getColumnValue(column)}" />
+                </p:columns>
+
+                <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
+                    <p:commandButton
+                            icon="fa fa-trash"
+                            title="Eliminar"
+                            update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.relationships_#{cc.attrs.relationshipDefinition.id})"
+                            style="float: right"
+                            process="@this"
+                            immediate="true"
+                            actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                            styleClass="relationships">
+                        <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
+                                   icon="ui-icon-alert"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+
+        </p:outputPanel>
+
+    </p:panel>
+
+</composite:implementation>
+</html>

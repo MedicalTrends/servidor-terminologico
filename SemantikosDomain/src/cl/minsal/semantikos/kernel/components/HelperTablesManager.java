@@ -11,6 +11,7 @@ import java.util.List;
  * Created by BluePrints Developer on 09-01-2017.
  */
 public interface HelperTablesManager {
+
     HelperTable getById(long id);
 
     List<HelperTable> findAll();
@@ -98,6 +99,25 @@ public interface HelperTablesManager {
      */
     HelperTableRow insertRow(HelperTableRow row, String username);
 
+    /**
+     * Este método es responsable de recuperar los registros hijos de un registro, dada una columna de búsqueda
+     *
+     * @param parentRow El registro padre
+     * @param helperTableColumn  La columna de búsqueda
+     *
+     * @return La lista de registros en la tabla <code>helperTable</code> que cumplen con el <code>pattern</code> de
+     * búsqueda.
+     */
+    List<HelperTableRow> getRelatedRows(HelperTableRow parentRow, HelperTableColumn helperTableColumn);
 
+    /**
+     * Este método es responsable de recuperar las columnas que referencian a otra tabla auxiliar, dada una tabla auxiliar
+     *
+     * @param helperTable La tabla auxiliar padre
+     *
+     * @return La lista de registros en la tabla <code>helperTable</code> que cumplen con el <code>pattern</code> de
+     * búsqueda.
+     */
+    List<HelperTableColumn> getRelatedColumns(HelperTable helperTable);
 
 }

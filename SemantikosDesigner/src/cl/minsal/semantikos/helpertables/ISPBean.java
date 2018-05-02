@@ -3,6 +3,7 @@ package cl.minsal.semantikos.helpertables;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.concept.ConceptBean;
 import cl.minsal.semantikos.kernel.components.UserManager;
+import cl.minsal.semantikos.modelweb.RelationshipWeb;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
@@ -80,9 +81,9 @@ public class ISPBean {
         for (RelationshipDefinition rd : conceptBean.getCategory().getRelationshipDefinitions()) {
             if(rd.isISP()) {
                 rd.getMultiplicity().setLowerBoundary(0);
-                if(conceptBean.getConcept().isPersistent()){
+                if(conceptBean.getConcept().isPersistent()) {
                     List<Relationship> relationshipList =conceptBean.getConcept().getRelationshipsByRelationDefinition(rd);
-                    if(relationshipList.size()>0){
+                    if(relationshipList.size() > 0) {
                         existe=true;
                     }
                 }
@@ -235,14 +236,17 @@ public class ISPBean {
         context.execute("PF('dialogISP').show();");
     }
 
-
     public void updateOptionality(RelationshipDefinition relationshipDefinition){
-        if(existe)
+        if(existe) {
             relationshipDefinition.getMultiplicity().setLowerBoundary(1);
-        else
+        }
+        else {
             relationshipDefinition.getMultiplicity().setLowerBoundary(0);
+            for (Relationship r : conceptBean.getConcept().getRelationshipsByRelationDefinition(relationshipDefinition)) {
+                conceptBean.removeRelationship(relationshipDefinition, r);
+            }
+        }
     }
-
 
     public List<String> getMapKeys(){
 

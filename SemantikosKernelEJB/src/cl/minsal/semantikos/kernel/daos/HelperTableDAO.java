@@ -9,6 +9,7 @@ import java.util.List;
  * Created by BluePrints Developer on 09-01-2017.
  */
 public interface HelperTableDAO {
+
     List<HelperTable> getAllTables();
 
     HelperTableColumn updateColumn(HelperTableColumn column);
@@ -41,6 +42,10 @@ public interface HelperTableDAO {
 
     List<HelperTableRow> searchRecords(HelperTable helperTable, String pattern, String columnName);
 
+    List<HelperTableRow> getRelatedRows(HelperTableRow parentRow, HelperTableColumn helperTableColumn);
+
+    List<HelperTableColumn> getRelatedColumns(HelperTable helperTable);
+
     List<HelperTableRow> getValidTableRows(long id);
 
     List<ConceptSMTK> isRowUsed(HelperTableRow row);
@@ -48,4 +53,5 @@ public interface HelperTableDAO {
     List<ConceptSMTK> isRowUser(HelperTableRow row, int size, int page);
 
     int countIsRowUser(HelperTableRow row);
+
 }

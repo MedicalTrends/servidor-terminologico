@@ -101,6 +101,7 @@ public class HelperTableRow implements Target, Serializable {
                 return Arrays.asList(cell);
             }
         }
+
         return someCells;
     }
 
