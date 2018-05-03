@@ -44,17 +44,24 @@
                                              value="#{conceptBean.selectedHelperTableRecord}"
                                              var="r"
                                              filter="true"
-
+                                             filterMatchMode="contains"
                                              converter="omnifaces.SelectItemsConverter">
 
                                 <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..." noSelectionOption="true" itemDisabled="true"/>
+
                                 <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition)}"
                                                var="record"
                                                itemLabel="#{record.description}"
                                                itemValue="#{record}"/>
+
                                 <p:column>
                                     <h:outputText value="#{r.description}"/>
                                 </p:column>
+
+                                <p:column rendered="#{cc.attrs.relationshipDefinition.clasificacionDeRiesgo}">
+                                    <h:outputText value="#{r.getCellByColumnName('código riesgo')}"/><!--codigo-->
+                                </p:column>
+
                                 <p:ajax event="itemSelect"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
                                         update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
@@ -281,7 +288,7 @@
                                     </p:column>
                                     <p:ajax event="itemSelect"
                                             listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
-
+                                            update="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                             process="@this"/>
                                     <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
                                     <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
@@ -295,7 +302,7 @@
                     </div>
 
                     <!-- Atributos de relación -->
-                    <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
+                    <smtk:attributes concept="#{cc.attrs.concept}" relationship="#{conceptBean.relationshipPlaceholders.get(cc.attrs.relationshipDefinition.id)}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
                     
                     <div class="Container20 White Responsive">
 
@@ -347,7 +354,8 @@
                 </f:facet>
                 <h:outputText value="#{relationship.target.description}" />
             </p:column>
-            <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
+
+            <p:columns value="#{cc.attrs.targetDefinition.showableColumnsButFK}"
                        var="column"
                        columnIndexVar="colIndex">
                 <f:facet name="header">
@@ -458,16 +466,18 @@
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      reflow="true">
+
             <p:column headerText="Descripción"
                        var="column"
                        columnIndexVar="colIndex" rendered="#{ not cc.attrs.relationshipDefinition.bioequivalente}">
                 <h:outputText value="#{relationship.target.description}" />
             </p:column>
-            <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
+
+            <p:columns value="#{cc.attrs.targetDefinition.showableColumnsButFK}"
                        var="column"
                        columnIndexVar="colIndex" rendered="#{ not cc.attrs.relationshipDefinition.bioequivalente}">
                 <f:facet name="header">
-                    <h:outputText value="#{column.name}" />
+                    <h:outputText value="#{column.description}" />
                 </f:facet>
                 <h:outputText value="#{relationship.target.getColumnValue(column)}" />
             </p:columns>

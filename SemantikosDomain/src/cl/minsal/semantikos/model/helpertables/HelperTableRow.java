@@ -34,9 +34,13 @@ public class HelperTableRow implements Target, Serializable {
     private List<HelperTableData> cells = new ArrayList<>();
     private long helperTableId;
 
-
-    public HelperTableRow(){
+    public HelperTableRow() {
         super();
+    }
+
+    public HelperTableRow(String description) {
+        super();
+        this.description = description;
     }
 
     /*
@@ -55,7 +59,6 @@ public class HelperTableRow implements Target, Serializable {
         this.helperTableId=helperTable.getId();
         this.cells = cells;
     }
-
 
     public long getId() {
         return id;
@@ -290,7 +293,6 @@ public class HelperTableRow implements Target, Serializable {
     public boolean isPersistent() {
         return id != -1;
     }
-
 
     public String getColumnValue(HelperTableColumn column){
 

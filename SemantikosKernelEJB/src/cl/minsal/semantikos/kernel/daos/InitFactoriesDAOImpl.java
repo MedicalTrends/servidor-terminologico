@@ -500,10 +500,10 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
             helperTableColumn.setForeignKey(rs.getBoolean("foreign_key"));
             helperTableColumn.setDescription(rs.getString("description"));
             helperTableColumn.setSearchable(rs.getBoolean("searchable"));
-            helperTableColumn.setSearchable(rs.getBoolean("showable"));
-            helperTableColumn.setSearchable(rs.getBoolean("editable"));
-            helperTableColumn.setSearchable(rs.getBoolean("sortable"));
-            helperTableColumn.setSearchable(rs.getBoolean("required"));
+            helperTableColumn.setShowable(rs.getBoolean("showable"));
+            helperTableColumn.setEditable(rs.getBoolean("editable"));
+            helperTableColumn.setSortable(rs.getBoolean("sortable"));
+            helperTableColumn.setRequired(rs.getBoolean("required"));
 
         } catch (SQLException e) {
             e.printStackTrace();

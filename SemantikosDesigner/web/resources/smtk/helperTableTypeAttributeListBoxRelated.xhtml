@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
+    <composite:attribute name="relationshipAttributeDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.helpertables.HelperTable" />
+    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
+    <composite:attribute name="relationship" type="cl.minsal.semantikos.model.relationships.Relationship" />
+</composite:interface>
+
+<composite:implementation>
+
+    <ui:repeat var="column" value="#{helperTableBean.getRelatedColumns(cc.attrs.relationshipDefinition.targetDefinition)}">
+
+        <div class="Container20 White Responsive">
+
+        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+            <p:outputPanel rendered="#{ cc.attrs.relationshipDefinition.multiplicity.collection and not cc.attrs.relationshipAttributeDefinition.multiplicity.collection }" styleClass="search">
+
+                <p:selectOneMenu id="helperTableTypeAttributeCollection" scrollHeight="200"
+                                 forceSelection="true"
+                                 value="#{conceptBean.selectedHelperTableRecord}"
+                                 var="r"
+                                 autoWidth="false"
+                                 filter="true"
+                                 converter="omnifaces.SelectItemsConverter">
+
+                    <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..." itemValue="#{null}" noSelectionOption="true" itemDisabled="true"/>
+
+                    <f:selectItems value="#{helperTableBean.getRelatedRows(cc.attrs.relationship.target, column)}"
+                                   var="record"
+                                   itemLabel="#{record.description}"
+                                   itemValue="#{record}"/>
+
+                    <p:column>
+                        <h:outputText value="#{r.description}"/>
+                    </p:column>
+
+                    <p:ajax event="itemSelect"
+                            listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.selectedHelperTableRecord)}"
+                            process="@this"/>
+
+                    <!-- Parámetros del buscador -->
+                    <f:attribute name="helperTable" value="#{cc.attrs.relationshipAttributeDefinition.targetDefinition}"  />
+                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                    <!-- Parámetros del validador -->
+                    <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
+                    <!---->
+                </p:selectOneMenu>
+
+            </p:outputPanel>
+
+        </div>
+
+    </div>
+
+    </ui:repeat>
+
+    <h:outputStylesheet id="customCSS">
+    </h:outputStylesheet>
+
+
+</composite:implementation>
+</html>

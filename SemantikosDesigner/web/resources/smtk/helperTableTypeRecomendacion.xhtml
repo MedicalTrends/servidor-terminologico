@@ -147,7 +147,7 @@
 
             <p:ajax event="rowEdit" listener="#{relationshipBean.onRowEdit}"/>
 
-            <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
+            <p:columns value="#{cc.attrs.targetDefinition.showableColumnsButFK}"
                        var="column"
                        columnIndexVar="colIndex">
                 <f:facet name="header">

@@ -58,6 +58,14 @@
                                                   rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable and
                                                               relationshipAttributeDefinition.compositeID eq 6}"
         />
+        <smtk:helperTableTypeAttributeListBoxRelated relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                                     relationship="#{cc.attrs.relationship}"
+                                                     relationshipAttributeDefinition="#{relationshipAttributeDefinition.relationshipAttributeDefinition}"
+                                                     targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                                     concept="#{cc.attrs.concept}"
+                                                     rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable and
+                                                                  relationshipAttributeDefinition.compositeID eq 15}"
+        />
         <smtk:helperTableTypeAttributeListBox relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                               relationship="#{cc.attrs.relationship}"
                                               relationshipAttributeDefinition="#{relationshipAttributeDefinition.relationshipAttributeDefinition}"

@@ -256,6 +256,10 @@ public class RelationshipDefinition implements Serializable {
         return this.getName().equalsIgnoreCase(TargetDefinition.MC_SPECIAL);
     }
 
+    public boolean isClasificacionDeRiesgo() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.CLASIFICACION_DE_RIESGO);
+    }
+
     private final String SNOMEDCT="SNOMED CT";
 
     public boolean isSNOMEDCT(){

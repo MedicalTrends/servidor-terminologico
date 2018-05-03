@@ -125,42 +125,6 @@
 
     </div>
 
-    <p:dataTable id="collectionValues12"
-                 styleClass="attributes_#{cc.attrs.relationshipAttributeDefinition.id}"
-                 rendered="#{cc.attrs.relationshipAttributeDefinition.multiplicity.collection}"
-                 var="relationshipAttribute"
-                 value="#{cc.attrs.relationship.relationshipAttributes}"
-                 reflow="true">
-        <p:column headerText="Descripción"
-                  var="column"
-                  columnIndexVar="colIndex">
-            <h:outputText value="#{relationshipAttribute.target.description}" />
-        </p:column>
-        <p:columns value="#{cc.attrs.relationshipAttributeDefinition.targetDefinition.showableColumns}"
-                   var="column"
-                   columnIndexVar="colIndex">
-            <f:facet name="header">
-                <h:outputText value="#{column.name}" />
-            </f:facet>
-            <h:outputText value="#{relationshipAttribute.target.getColumnValue(column)}" />
-        </p:columns>
-
-        <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
-            <p:commandButton
-                    icon="fa fa-trash"
-                    title="Eliminar"
-                    update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipAttributeDefinition.id}),@(.relationships_#{cc.attrs.relationshipDefinition.id})"
-                    style="float: right"
-                    process="@this"
-                    immediate="true"
-                    actionListener="#{conceptBean.removeRelationshipAttribute(cc.attrs.relationshipDefinition, relationshipAttribute)}"
-                    styleClass="relationships">
-                <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
-                           icon="ui-icon-alert"/>
-            </p:commandButton>
-        </p:column>
-    </p:dataTable>
-
     <h:outputStylesheet id="customCSS">
     </h:outputStylesheet>
 

@@ -26,6 +26,8 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.*;
 
+import static java.util.Collections.EMPTY_LIST;
+
 /**
  * Created by Blueprints on 1/27/2016.
  */
@@ -56,6 +58,8 @@ public class HelperTableBean implements Serializable {
     HelperTablesManager manager = (HelperTablesManager) ServiceLocator.getInstance().getService(HelperTablesManager.class);
 
     HelperTableSearchBR helperTableSearchBR = (HelperTableSearchBR) ServiceLocator.getInstance().getService(HelperTableSearchBR.class);
+
+    HelperTableRow dummyRow = new HelperTableRow("Seleccionar...");
 
     @PostConstruct
     protected void initialize() {
@@ -288,7 +292,16 @@ public class HelperTableBean implements Serializable {
 
     public List<HelperTableRow> getRelatedRows(HelperTableRow helperTableRow, HelperTableColumn helperTableColumn) {
 
-        return manager.getRelatedRows(helperTableRow, helperTableColumn);
+        List<HelperTableRow> relatedRows = new ArrayList<>();
+
+        if(helperTableRow == null) {
+            return relatedRows;
+        }
+
+        relatedRows.add(dummyRow);
+        relatedRows.addAll(manager.getRelatedRows(helperTableRow, helperTableColumn));
+
+        return relatedRows;
     }
 
     public List<HelperTableColumn> getRelatedColumns(HelperTable helperTable) {

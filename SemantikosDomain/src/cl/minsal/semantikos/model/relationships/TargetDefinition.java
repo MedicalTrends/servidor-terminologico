@@ -39,6 +39,8 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String GMDN = "GMDN";
 
+    public static final String CLASIFICACION_DE_RIESGO = "Clasificación de Riesgo";
+
     /**
      * Este metodo es responsable de determinar si el target type es de tipo básico es o no.
      *

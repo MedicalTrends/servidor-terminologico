@@ -59,7 +59,6 @@
 
 
     <!-- Multiplicidad 1 + Relacion existente + Sin atributos -->
-
     <p:panel
             id="basicTypeSimple"
             rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
@@ -106,7 +105,6 @@
     </p:panel>
 
     <!-- Multiplicidad 1 + Nueva relacion + con atributos -->
-
     <p:panel
             id="basicTypeSimpleNewWithAttributes"
             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
@@ -149,7 +147,6 @@
     </p:panel>
 
     <!-- Multiplicidad 1 + relacion existente + con atributos -->
-
     <p:panel
             id="basicTypeSimpleWithAttributes"
             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
@@ -190,11 +187,99 @@
                     <!-- Atributos de relación -->
                     <smtk:attributes concept="#{cc.attrs.concept}"
                                      relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                     relationship="#{relationship}"
-                    />
+                                     relationship="#{relationship}"/>
                 </div>
             </div>
         </p:repeat>
+    </p:panel>
+
+    <!-- Multiplicidad N sin atributos-->
+    <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
+
+        <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
+            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.required}">
+                <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
+                <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
+            </p:outputPanel>
+            <p:outputPanel rendered="#{not cc.attrs.relationshipDefinition.required}">
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="Atributo opcional" style="font-size: small;" />
+            </p:outputPanel>
+        </f:facet>
+
+        <p:outputPanel rendered="#{cc.attrs.concept.editable}" style="width:100%" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}">
+
+            <div class="ui-fluid">
+
+                <div class="Container">
+
+                    <div class="Container20 White Responsive">
+
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                            <p:inputText id="basicTypeValue22" value="#{conceptBean.basicTypeValue.value}" />
+
+                        </div>
+
+                    </div>
+
+                    <div class="Container20 White Responsive">
+
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                            <p:commandButton
+                                    process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                                    action="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition, conceptBean.basicTypeValue)}"
+                                    style="max-width: 100px"
+                                    update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                                    value="Agregar">
+                            </p:commandButton>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </p:outputPanel>
+
+        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
+            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="El concepto no tiene #{cc.attrs.relationshipDefinition.name}" style="font-size: small;" />
+            </p:outputPanel>
+        </f:facet>
+
+        <p:dataTable id="collectionValues12"
+                     styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
+                     rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     var="relationship"
+                     value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     reflow="true">
+
+            <p:column headerText="Descripción"
+                      var="column"
+                      columnIndexVar="colIndex">
+                <h:outputText value="#{relationship.target.value}" />
+            </p:column>
+
+            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
+                <p:commandButton
+                        icon="fa fa-trash"
+                        title="Eliminar"
+                        update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.relationships_#{cc.attrs.relationshipDefinition.id})"
+                        style="float: right"
+                        process="@this"
+                        immediate="true"
+                        actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                        styleClass="relationships">
+                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
+                               icon="ui-icon-alert"/>
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+
     </p:panel>
 
     <script type="text/javascript">
