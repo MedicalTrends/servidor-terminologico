@@ -179,7 +179,7 @@
                                          paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                          emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
-                                <p:ajax event="page" listener="#{browserBean.updatePage}" />
+                                <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop();" />
 
                                 <p:column headerText="Termino Preferido" sortBy="#{2}">
                                     <div class="ui-g dashboard">
@@ -295,20 +295,17 @@
                 window.scroll(0, $.cookie('myCookie'));
                 // Unset cookie after setting scroll position.
                 $.removeCookie('myCookie');
-
-                // Make this class objects keep page scroll position.
-                $('.myCustomLinkStyle').each(function(){
-                    $(this).click(function() {
-                        $.cookie('myCookie', getPageScroll());
-                    });
-                });
+                listenOnClickEvent();
             });
 
-            $("#browserForm\:conceptTable_data").load(function() {
-                alert("hola");
-                $(document).scrollTop(0);
-            });
+            function scrollTop() {
+                setTimeout(
+                    function() {
+                        window.scroll(0, 0);
+                        listenOnClickEvent();
+                    }, 10);
 
+            }
 
             // This function simply gets the window scroll position, works in all browsers.
             function getPageScroll() {
@@ -323,6 +320,16 @@
                 }
                 return yScroll;
             }
+
+            function listenOnClickEvent() {
+                // Make this class objects keep page scroll position.
+                $('.myCustomLinkStyle').each(function() {
+                    $(this).on('click', function() {
+                        $.cookie('myCookie', getPageScroll());
+                    });
+                });
+            }
+
         </script>
 
 
