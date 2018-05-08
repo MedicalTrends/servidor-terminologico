@@ -98,6 +98,7 @@
                     <div class="Container10 White Responsive">
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
                             <p:selectBooleanButton value="#{relationship.target.value}"
+                                                   id="basicTypeValue"
                                                    offLabel="No"
                                                    onLabel="Si"
                                                    onIcon="fa fa-check"
@@ -144,7 +145,7 @@
 
                         <p:selectBooleanButton id="basicTypeValue19" value="#{conceptBean.basicTypeValue.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg" offIcon="fa fa-close fa-lg">
                             <p:ajax event="change"
-                                    listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
+                                    listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.basicTypeValue)}"
                                     process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptMarketed)" />
                         </p:selectBooleanButton>
 
@@ -166,6 +167,7 @@
             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                           and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
+
         <p:repeat  value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                    offset="0"
                    size="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition).size()}"
@@ -193,7 +195,7 @@
 
                             <p:selectBooleanButton id="basicTypeValue20" value="#{relationship.target.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg" offIcon="fa fa-close fa-lg">
                                 <p:ajax event="change"
-                                        listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
+                                        listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,relationship.target)}"
                                         process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptMarketed)" />
                             </p:selectBooleanButton>
 

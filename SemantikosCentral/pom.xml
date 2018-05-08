@@ -101,6 +101,8 @@
 
                 <configuration>
                     <resourcesDir>src/main/resources</resourcesDir>
+                    <!--applicationXml>${artifactId}/application.xml</applicationXml-->
+                    <!--jboss>${artifactId}/src/main/resources/jboss-app.xml</jboss-->
                     <filtering>true</filtering>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
                     <earSourceDirectory>src/main/java</earSourceDirectory>

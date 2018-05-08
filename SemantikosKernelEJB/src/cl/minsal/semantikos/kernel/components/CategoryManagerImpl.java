@@ -10,9 +10,13 @@ import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.users.User;
+import org.jboss.ejb3.annotation.SecurityDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -27,6 +31,8 @@ import static java.util.Collections.EMPTY_LIST;
  * @author Andrés Farías on 27-05-16.
  */
 @Stateless
+//@DeclareRoles("Administrador")
+//@PermitAll
 public class CategoryManagerImpl implements CategoryManager {
 
     private static final Logger logger = LoggerFactory.getLogger(CategoryManagerImpl.class);
@@ -100,6 +106,7 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
+    //@RolesAllowed("Administrador")
     public List<Category> getCategories() {
 
         logger.debug("Recuperando todas las categorías.");

@@ -132,6 +132,7 @@ public class ConceptManagerImpl implements ConceptManager {
         /* En este momento se está listo para persistir el concepto (sus atributos básicos) */
         conceptDAO.persistConceptAttributes(conceptSMTK, user);
         conceptSMTK.setConceptID(IDGenerator.generator(String.valueOf(conceptSMTK.getId()),IDGenerator.TYPE_CONCEPT));
+        new ConceptCreationBR().br105DIN(conceptSMTK);
         conceptDAO.update(conceptSMTK);
 
         /* Y se persisten sus descripciones */
@@ -141,6 +142,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         /* Y sus relaciones */
         for (Relationship relationship : conceptSMTK.getRelationships()) {
+            //relationshipManager.bindRelationshipToConcept(conceptSMTK, relationship, user);
             relationshipManager.createRelationship(relationship);
             /* Se realizan las acciones asociadas a la asociación */
             relationshipBindingBR.postActions(relationship, user);

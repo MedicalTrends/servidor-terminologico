@@ -2,6 +2,8 @@ package cl.minsal.semantikos.clients; /**
  * Created by root on 15-05-17.
  */
 
+import cl.minsal.semantikos.kernel.components.AuthenticationManager;
+import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import org.jboss.ejb.client.ContextSelector;
 import org.jboss.ejb.client.EJBClientConfiguration;
 import org.jboss.ejb.client.EJBClientContext;
@@ -66,10 +68,16 @@ public class ServiceLocator {
 
         props = new Properties();
         props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+        //props.put(InitialContext.SECURITY_PRINCIPAL, "user@admin.cl");
+        //props.put(InitialContext.SECURITY_CREDENTIALS, "1234567z");
+        //props.put("jboss.naming.client.ejb.context", "true");
 
         try {
             context = new InitialContext(props);
             //context = new InitialContext(properties);
+            //Autenticar usuario guest para la posterior invocacion de componentes durante despliegue
+            //AuthenticationManager authManager = (AuthenticationManager) getService(AuthenticationManager.class);
+            //authManager.
         } catch (NamingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

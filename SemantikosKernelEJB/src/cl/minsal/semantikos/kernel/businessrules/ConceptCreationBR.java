@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.businessrules;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.*;
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 import static cl.minsal.semantikos.model.users.ProfileFactory.MODELER_PROFILE;
+import static java.util.Collections.EMPTY_LIST;
 
 /**
  * Este componente es responsable de almacenar las reglas de negocio relacionadas a la persistencia de conceptos.
@@ -148,7 +150,6 @@ public class ConceptCreationBR implements BusinessRulesContainer {
          */
         conceptSMTK.setFullyDefined(false);
         conceptSMTK.setInherited(false);
-
     }
 
     /**
@@ -174,6 +175,16 @@ public class ConceptCreationBR implements BusinessRulesContainer {
                         throw new BusinessRuleException("BR-UNK", "La relación "+relationship.toString()+" perteneciente al concepto "+conceptSMTK.toString()+" viola la multiplicidad para la definición "+attributeDefinition.toString());
                     }
                 }
+            }
+        }
+    }
+
+    /* BR--001 Para agregar una relación a GTINGS1, su valor debe ser único */
+    public void br105DIN(ConceptSMTK concept) throws Exception {
+
+        for (RelationshipDefinition relationshipDefinition : concept.getCategory().getRelationshipDefinitions()) {
+            if(relationshipDefinition.isDIPrimario()) {
+                concept.addRelationship(new Relationship(concept, new BasicTypeValue(concept.getConceptID()), relationshipDefinition, EMPTY_LIST, null));
             }
         }
     }

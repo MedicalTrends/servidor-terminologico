@@ -636,6 +636,10 @@ public class ConceptBean implements Serializable {
 
                 isRelationshipFound = true;
 
+                if(relationshipDefinition.getTargetDefinition().isBasicType() && relationshipDefinition.hasRelationshipAttributeDefinitions()) {
+                    removeRelationship(relationshipDefinition, relationshipWeb);
+                }
+
                 try {
                     relationshipBindingBR.verifyPreConditions(concept, relationshipWeb, user);
                 } catch (EJBException e) {

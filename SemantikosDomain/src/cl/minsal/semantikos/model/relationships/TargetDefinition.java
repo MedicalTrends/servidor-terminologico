@@ -41,6 +41,8 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String CLASIFICACION_DE_RIESGO = "Clasificación de Riesgo";
 
+    public static final String DI_PRIMARIO = "DI Primario";
+
     /**
      * Este metodo es responsable de determinar si el target type es de tipo básico es o no.
      *

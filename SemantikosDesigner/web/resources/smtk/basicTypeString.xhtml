@@ -44,7 +44,7 @@
                                      var="value"
                                      minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                      maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
-                                     disabled="#{not cc.attrs.concept.editable}"
+                                     disabled="#{not cc.attrs.concept.editable or cc.attrs.relationshipDefinition.DIPrimario}"
                                      rendered="#{cc.attrs.targetDefinition.type.typeName=='string' and not cc.attrs.targetDefinition.discreteDomain}"
                                      styleClass="relationships"
                                      autocomplete="off">

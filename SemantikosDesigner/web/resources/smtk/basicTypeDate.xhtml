@@ -92,7 +92,9 @@
                         <div class="ContainerIndent">
 
                             <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" />
+                                <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target.value}">
+                                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                                </p:inputText>
                                 <p:commandLink process="@this"
                                                rendered="#{not conceptBean.isMCSpecial(cc.attrs.relationshipDefinition) and not conceptBean.concept.isModeled()}"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"

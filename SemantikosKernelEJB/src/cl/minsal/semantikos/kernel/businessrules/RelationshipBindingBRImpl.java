@@ -5,6 +5,7 @@ import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.Relationship;
@@ -68,7 +69,7 @@ public class RelationshipBindingBRImpl implements RelationshipBindingBR {
 
         brISP004(concept, relationship);
 
-        brGTIN001(concept, relationship);
+        brGTIN005(concept, relationship);
 
     }
 
@@ -404,7 +405,7 @@ public class RelationshipBindingBRImpl implements RelationshipBindingBR {
     }
 
     /* BR-GTIN-001 Para agregar una relación a GTINGS1, su valor debe ser único */
-    public void brGTIN001(ConceptSMTK concept, Relationship relationship) throws Exception {
+    public void brGTIN005(ConceptSMTK concept, Relationship relationship) throws Exception {
         /* Verificar en un contexto persistente */
         if (relationship.getTarget() != null && relationship.getRelationshipDefinition().isGTIN()) {
             for (Relationship relationship2 : relationshipManager.findRelationshipsLike(relationship.getRelationshipDefinition(), relationship.getTarget())) {
@@ -414,6 +415,7 @@ public class RelationshipBindingBRImpl implements RelationshipBindingBR {
             }
         }
     }
+
 
     /**
      * <p>Este método implementa la post-acción definida por la regla de negocio BR-CON-003.</p>

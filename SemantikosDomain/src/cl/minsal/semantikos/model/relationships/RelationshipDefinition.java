@@ -260,6 +260,10 @@ public class RelationshipDefinition implements Serializable {
         return this.getName().equalsIgnoreCase(TargetDefinition.CLASIFICACION_DE_RIESGO);
     }
 
+    public boolean isDIPrimario() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.DI_PRIMARIO);
+    }
+
     private final String SNOMEDCT="SNOMED CT";
 
     public boolean isSNOMEDCT(){
