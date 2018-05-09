@@ -78,7 +78,9 @@ public class DescriptionSearchBR {
         pattern = Normalizer.normalize(pattern, Normalizer.Form.NFD);
         //pattern = pattern.toLowerCase();
         pattern = pattern.replaceAll("[^\\p{ASCII}]", "");
-        pattern = pattern.replaceAll("\\p{Punct}+", "");
+
+        //pattern = pattern.replaceAll(" \\p{Punct}+ ", "");
+        pattern = pattern.replaceAll(" \\p{Punct} +", " ");
 
         return pattern;
     }
