@@ -359,15 +359,15 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
             initializer.checkSubstanceDataFiles(this);
             substanceConceptLoader.processConcepts(this);
+            */
 
+            /*
             initializer.checkMBDataFiles(this);
             mbConceptLoader.processConcepts(this);
-            */
 
             initializer.checkMCDataFiles(this);
             mcConceptLoader.processConcepts(this);
 
-            /*
             initializer.checkMCCEDataFiles(this);
             mcceConceptLoader.processConcepts(this);
             */
@@ -382,10 +382,8 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             fpConceptLoader.processConcepts(this);
             */
 
-            /*
             initializer.checkPCDataFiles(this);
             pcConceptLoader.processConcepts(this);
-            */
 
             /*
             initializer.checkPCCEDataFiles(this);

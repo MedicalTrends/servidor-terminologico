@@ -516,7 +516,7 @@ public class PCConceptLoader extends EntityLoader {
             ConceptSMTK conceptSMTK = conceptSMTKMap.get(idConceptSMTK);
 
             if(conceptSMTK == null) {
-                throw new LoadException(path.toString(), id, "Relación referencia a concepto SMTK inexistente", ERROR);
+                throw new LoadException(path.toString(), id, "Relación Bioequivalente referencia a concepto 'CONCEPTO_ID' = " +idConceptSMTK+ " inexistente en datafile", ERROR);
             }
 
             /*Recuperando bioequivalentes*/
@@ -560,7 +560,8 @@ public class PCConceptLoader extends EntityLoader {
             }
         }
         catch (Exception e) {
-            throw new LoadException(path.toString(), id, "Error desconocido: "+e.toString(), ERROR);
+            throw new LoadException(path.toString(), id, "Error desconocido: " + e.toString(), ERROR);
+            //throw new LoadException(path.toString(), id, "Error desconocido en línea: " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " : " + e.toString(), ERROR);
         }
     }
 
