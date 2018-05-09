@@ -239,13 +239,16 @@ public class SubstanceConceptLoader extends EntityLoader {
 
     public void loadAllConcepts(SMTKLoader smtkLoader) {
 
-        smtkLoader.logInfo(new LoadLog("Comprobando Conceptos Fármacos - Sustancia", INFO));
+        //smtkLoader.logInfo(new LoadLog("Comprobando Conceptos Fármacos - Sustancia", INFO));
+
+        smtkLoader.printInfo(new LoadLog("Comprobando Conceptos Fármacos - Sustancia", INFO));
 
         smtkLoader.setConceptsProcessed(0);
 
         try {
 
             initReader(smtkLoader.SUBSTANCE_PATH);
+            initWriter("Fármacos - Sustancia");
 
             String line;
 
@@ -262,10 +265,12 @@ public class SubstanceConceptLoader extends EntityLoader {
 
             haltReader();
 
-            smtkLoader.logTick();
+            //smtkLoader.logTick();
+            smtkLoader.printTick();
 
         } catch (Exception e) {
-            smtkLoader.logError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            //smtkLoader.logError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            smtkLoader.printError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
             e.printStackTrace();
         } catch (LoadException e) {
             e.printStackTrace();
@@ -274,7 +279,8 @@ public class SubstanceConceptLoader extends EntityLoader {
 
     public void persistAllConcepts(SMTKLoader smtkLoader) {
 
-        smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos Fármacos - Sustancia", INFO));
+        //smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos Fármacos - Sustancia", INFO));
+        smtkLoader.printInfo(new LoadLog("Persisitiendo Conceptos Fármacos - Sustancia", INFO));
 
         smtkLoader.setConceptsProcessed(0);
 
@@ -289,17 +295,20 @@ public class SubstanceConceptLoader extends EntityLoader {
                 smtkLoader.incrementConceptsProcessed(1);
             }
             catch (Exception e) {
-                smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
+                //smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
+                smtkLoader.printError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
                 e.printStackTrace();
             }
 
             it.remove(); // avoids a ConcurrentModificationException
         }
 
-        smtkLoader.logTick();
+        //smtkLoader.logTick();
+        smtkLoader.printTick();
     }
 
     public void processConcepts(SMTKLoader smtkLoader) {
+        smtkLoader.setProcessed(0);
         loadAllConcepts(smtkLoader);
         persistAllConcepts(smtkLoader);
     }

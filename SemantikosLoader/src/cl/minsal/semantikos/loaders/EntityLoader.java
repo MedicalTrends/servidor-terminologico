@@ -109,7 +109,7 @@ public class EntityLoader {
 
     public void log(LoadException ex) {
         try {
-            if(ex.getLoadMessage()!=null) {
+            if(ex.getMessage()!=null) {
                 writer.write(ex.getIdConcept() + separator + ex.getMessage());
             }
             else {

@@ -171,11 +171,12 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>cl.minsal.semantikos.LoaderView</mainClass>
+                            <!--mainClass>cl.minsal.semantikos.LoaderView</mainClass-->
+                            <mainClass>cl.minsal.semantikos.main.Main</mainClass>
                         </manifest>
-                        <manifestEntries>
+                        <!--manifestEntries>
                             <Premain-Class>cl.minsal.semantikos.utils.ObjectSizeFetcher</Premain-Class>
-                        </manifestEntries>
+                        </manifestEntries-->
                     </archive>
                     <finalName>SemantikosLoader</finalName>
                     <appendAssemblyId>false</appendAssemblyId>

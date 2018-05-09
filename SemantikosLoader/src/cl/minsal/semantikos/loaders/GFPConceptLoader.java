@@ -234,7 +234,8 @@ public class GFPConceptLoader extends EntityLoader {
 
     public void loadAllConcepts(SMTKLoader smtkLoader) {
 
-        smtkLoader.logInfo(new LoadLog("Comprobando Conceptos GFP", INFO));
+        //smtkLoader.logInfo(new LoadLog("Comprobando Conceptos GFP", INFO));
+        smtkLoader.printInfo(new LoadLog("Comprobando Conceptos GFP", INFO));
         smtkLoader.setConceptsProcessed(0);
 
         try {
@@ -249,17 +250,20 @@ public class GFPConceptLoader extends EntityLoader {
                     smtkLoader.incrementConceptsProcessed(1);
                 }
                 catch (LoadException e) {
-                    smtkLoader.logError(e);
+                    //smtkLoader.logError(e);
+                    smtkLoader.printError(e);
                     e.printStackTrace();
                 }
             }
 
             haltReader();
 
-            smtkLoader.logTick();
+            //smtkLoader.logTick();
+            smtkLoader.printTick();
 
         } catch (Exception e) {
-            smtkLoader.logError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            //smtkLoader.logError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            smtkLoader.printError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
             e.printStackTrace();
         } catch (LoadException e) {
             e.printStackTrace();
@@ -268,7 +272,8 @@ public class GFPConceptLoader extends EntityLoader {
 
     public void persistAllConcepts(SMTKLoader smtkLoader) {
 
-        smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos GFP", INFO));
+        //smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos GFP", INFO));
+        smtkLoader.printInfo(new LoadLog("Persisitiendo Conceptos GFP", INFO));
         smtkLoader.setConceptsProcessed(0);
 
         Iterator it = conceptSMTKMap.entrySet().iterator();
@@ -282,7 +287,8 @@ public class GFPConceptLoader extends EntityLoader {
                 smtkLoader.incrementConceptsProcessed(1);
             }
             catch (Exception e) {
-                smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
+                //smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
+                smtkLoader.printError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
                 e.printStackTrace();
             }
 
@@ -291,6 +297,7 @@ public class GFPConceptLoader extends EntityLoader {
     }
 
     public void processConcepts(SMTKLoader smtkLoader) {
+        smtkLoader.setProcessed(0);
         loadAllConcepts(smtkLoader);
         persistAllConcepts(smtkLoader);
     }

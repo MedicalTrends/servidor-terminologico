@@ -8,10 +8,10 @@ import java.text.SimpleDateFormat;
  */
 public class LoadLog extends Throwable {
 
-    Timestamp timestamp;
-    String loadMessage;
-    String type;
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public Timestamp timestamp;
+    public String message;
+    public String type;
+    public SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static final String ERROR = "ERROR";
 
@@ -25,22 +25,23 @@ public class LoadLog extends Throwable {
 
     public static final String INFO = "INFO";
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public LoadLog(String message, String type) {
         this.timestamp = new Timestamp(System.currentTimeMillis());
-        this.loadMessage = message;
+        this.message = message;
+
         this.type = type;
     }
 
     @Override
     public String toString() {
-        return "["+format.format(timestamp)+"]"+type+": "+loadMessage;
-    }
-
-    public String getLoadMessage() {
-        return loadMessage;
-    }
-
-    public void setLoadMessage(String loadMessage) {
-        this.loadMessage = loadMessage;
+        return "["+format.format(timestamp)+"]"+type+": "+ message;
     }
 }

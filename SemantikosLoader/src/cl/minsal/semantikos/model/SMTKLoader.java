@@ -12,6 +12,7 @@ import cl.minsal.semantikos.utils.ExtendedAscii;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -432,16 +433,13 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             initializer.checkMBDataFiles(this);
             mbConceptLoader.processConcepts(this);
 
-            /*
             initializer.checkMCDataFiles(this);
             mcConceptLoader.processConcepts(this);
-            */
 
-            /*
             initializer.checkMCCEDataFiles(this);
             mcceConceptLoader.processConcepts(this);
 
-
+            /*
             initializer.checkGFPDataFiles(this);
             gfpConceptLoader.processConcepts(this);
 
@@ -449,15 +447,11 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             fpConceptLoader.processConcepts(this);
             */
 
-            /*
             initializer.checkPCDataFiles(this);
             pcConceptLoader.processConcepts(this);
-            */
 
-            /*
             initializer.checkPCCEDataFiles(this);
             pcceConceptLoader.processConcepts(this);
-            */
 
             //JOptionPane.showMessageDialog(null, "Carga de conceptos finalizada!");
             logger.info("Carga de conceptos finalizada!");
