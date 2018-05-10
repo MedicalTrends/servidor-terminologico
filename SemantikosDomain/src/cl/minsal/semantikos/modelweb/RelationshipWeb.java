@@ -84,14 +84,6 @@ public class RelationshipWeb extends Relationship implements Comparable<Relation
         return new Relationship(this.getSourceConcept(), this.getTarget(), this.getRelationshipDefinition(), this.getRelationshipAttributes(), null);
     }
 
-    public String getDateCreationFormat() {
-        if(this.getCreationDate()!=null){
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            return format.format(this.getCreationDate());
-        }return "";
-
-    }
-
     @Override
     public int compareTo(RelationshipWeb o) {
         return this.getOrder() - o.getOrder();

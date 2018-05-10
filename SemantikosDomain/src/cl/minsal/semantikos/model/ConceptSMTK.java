@@ -859,6 +859,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         conceptSMTK.setTagSMTK(this.getTagSMTK());
         conceptSMTK.setDescriptions(this.getDescriptions());
         conceptSMTK.setRelationships(this.relationships);
+        conceptSMTK.relationshipsLoaded = false;
 
         return conceptSMTK;
     }

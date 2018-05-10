@@ -65,6 +65,7 @@ public class AuthenticationBean {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         request.getSession().setMaxInactiveInterval(timeOutWeb.getTimeOut());
+
         try {
             //valida user y pass
             if(email.trim().equals("")) {

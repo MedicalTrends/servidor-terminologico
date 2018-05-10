@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -355,6 +356,15 @@ public class Relationship extends PersistentEntity implements AuditableEntity, S
 
         /* 3. Se compara el target */
         return this.getTarget().equals(relationship.getTarget());
+
+    }
+
+    public String getDateCreationFormat() {
+        if(this.getCreationDate() != null) {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return format.format(this.getCreationDate());
+        }
+        return "";
 
     }
 

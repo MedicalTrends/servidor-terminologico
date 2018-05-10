@@ -30,6 +30,7 @@ import cl.minsal.semantikos.session.ProfilePermissionsBeans;
 import cl.minsal.semantikos.snomed.SCTTypeBean;
 import cl.minsal.semantikos.snomed.SnomedBeans;
 import cl.minsal.semantikos.users.AuthenticationBean;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.ReorderEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -500,77 +501,73 @@ public class ConceptBean implements Serializable {
         Relationship relationship = relationshipPlaceholders.get(relationshipDefinition.getId());
 
         try {
-            if(concept.getRelationships().contains(relationship)){
-                messageBean.messageError("No se puede agregar dos veces el mismo registro");
-                return;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try{
             relationshipBindingBR.brSCT001(concept, relationship);
-        }catch (EJBException e) {
-            messageBean.messageError(e.getMessage());
-            resetPlaceHolders();
-            return;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            if(CompoundSpecialty.existCompounSpeciality(concept.getRelationships(),relationship)){
-                messageBean.messageError("Solo puede existir una especialidad compuesta con este nombre");
-                return;
+
+            if(relationshipDefinition.isSNOMEDCT()) {
+                BasicTypeValue<Integer> targetGroup = new BasicTypeValue<Integer>(sctTypeBean.getRelationshipGroup());
+                relationship.getRelationshipAttributes().add(new RelationshipAttribute( relationshipDefinition.getGroupAttributeDefinition(),relationship,targetGroup));
+                //Collections.reverse(relationship.getRelationshipAttributes());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        if(relationshipDefinition.isSNOMEDCT()) {
-            BasicTypeValue<Integer> targetGroup = new BasicTypeValue<Integer>(sctTypeBean.getRelationshipGroup());
-            relationship.getRelationshipAttributes().add(new RelationshipAttribute( relationshipDefinition.getGroupAttributeDefinition(),relationship,targetGroup));
-            //Collections.reverse(relationship.getRelationshipAttributes());
-        }
-
-        // Validar placeholders de targets de relacion
-        if (relationship.getTarget() == null) {
-            messageBean.messageError("Debe seleccionar un valor para el atributo " + relationshipDefinition.getName());
-            mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
-            resetPlaceHolders();
-            return;
-        }
-        if (snomedBeans.existRelationshipToSCT(concept)) crossmapBean.refreshCrossmapIndirect(concept);
-        if (snomedBeans.isMapping(relationship)) {
-            ConceptSCT conceptSCT = (ConceptSCT) relationship.getTarget();
-            fullyDefined = (conceptSCT.isCompletelyDefined()) ? true : false;
-            concept.setFullyDefined(fullyDefined);
-            concept.setInherited(true);
-        } else {
-            concept.setInherited(false);
-        }
-        if (relationshipDefinition.getOrderAttributeDefinition() != null) {
-            RelationshipAttribute attribute = new RelationshipAttribute(relationshipDefinition.getOrderAttributeDefinition(), relationship, new BasicTypeValue(concept.getValidRelationshipsByRelationDefinition(relationshipDefinition).size() + 1));
-            relationship.getRelationshipAttributes().add(attribute);
-        }
-        for (RelationshipAttributeDefinition attributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
-            if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) || changeIndirectMultiplicity(relationship, relationshipDefinition, attributeDefinition)) {
-                messageBean.messageError("Información incompleta para agregar " + relationshipDefinition.getName());
+            // Validar placeholders de targets de relacion
+            if (relationship.getTarget() == null) {
+                messageBean.messageError("Debe seleccionar un valor para el atributo " + relationshipDefinition.getName());
                 mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
                 resetPlaceHolders();
                 return;
             }
+
+            if (snomedBeans.existRelationshipToSCT(concept)) {
+                crossmapBean.refreshCrossmapIndirect(concept);
+            }
+
+            if (snomedBeans.isMapping(relationship)) {
+                ConceptSCT conceptSCT = (ConceptSCT) relationship.getTarget();
+                fullyDefined = (conceptSCT.isCompletelyDefined()) ? true : false;
+                concept.setFullyDefined(fullyDefined);
+                concept.setInherited(true);
+            } else {
+                concept.setInherited(false);
+            }
+
+            if (relationshipDefinition.getOrderAttributeDefinition() != null) {
+                RelationshipAttribute attribute = new RelationshipAttribute(relationshipDefinition.getOrderAttributeDefinition(), relationship, new BasicTypeValue(concept.getValidRelationshipsByRelationDefinition(relationshipDefinition).size() + 1));
+                relationship.getRelationshipAttributes().add(attribute);
+            }
+
+            for (RelationshipAttributeDefinition attributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
+                if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) || changeIndirectMultiplicity(relationship, relationshipDefinition, attributeDefinition)) {
+                    messageBean.messageError("Información incompleta para agregar " + relationshipDefinition.getName());
+                    mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
+                    resetPlaceHolders();
+                    return;
+                }
+            }
+
+            // Se setea la definición pasada por parámetro, para rescatar posibles modificaciones a nivel de vista
+            relationship.setRelationshipDefinition(relationshipDefinition);
+
+            // Se utiliza el constructor mínimo (sin id)
+            this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
+
+            autogenerateBean.load(concept, relationshipDefinition);
+
+            // Resetear placeholder relacion
+            mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
+            // Resetear placeholder targets
+            resetPlaceHolders();
+
+
+        } catch (EJBException e) {
+            messageBean.messageError(e.getMessage());
+            resetPlaceHolders();
+        } catch (BusinessRuleException e) {
+            messageBean.messageError(e.getMessage());
+            resetPlaceHolders();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        // Se setea la definición pasada por parámetro, para rescatar posibles modificaciones a nivel de vista
-        relationship.setRelationshipDefinition(relationshipDefinition);
 
-       // Se utiliza el constructor mínimo (sin id)
-        this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
-
-        autogenerateBean.load(concept, relationshipDefinition);
-
-        // Resetear placeholder relacion
-        mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
-        // Resetear placeholder targets
-        resetPlaceHolders();
     }
 
     public void resetPlaceHolders() {
@@ -588,34 +585,30 @@ public class ConceptBean implements Serializable {
     public void addRelationship(RelationshipDefinition relationshipDefinition, Target target) {
 
         Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
-        try {
-            if(concept.getRelationships().contains(relationship)) {
-                messageBean.messageError("No se puede agregar dos veces el mismo registro");
-                return;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         try {
             relationshipBindingBR.verifyPreConditions(concept, relationship, user);
+            this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
+            // Resetear placeholder targets
+            resetPlaceHolders();
+        }
+        catch (BusinessRuleException e) {
+            messageBean.messageError(e.getMessage());
+            resetPlaceHolders();
         } catch (EJBException e) {
             messageBean.messageError(e.getMessage());
             resetPlaceHolders();
-            return;
         } catch (Exception e) {
             e.printStackTrace();
+            resetPlaceHolders();
         }
-
-        // Se utiliza el constructor mínimo (sin id)
-        this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
-        // Resetear placeholder targets
-        resetPlaceHolders();
     }
 
     /**
      * Este método se encarga de agregar o cambiar la relación para el caso de multiplicidad 1.
      */
     public void addOrChangeRelationship(RelationshipDefinition relationshipDefinition, Target target) {
+
         Relationship relationship = null;
         boolean isRelationshipFound = false;
 
@@ -668,7 +661,12 @@ public class ConceptBean implements Serializable {
 
             try {
                 relationshipBindingBR.verifyPreConditions(concept, relationship, user);
+                this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
             } catch (EJBException e) {
+                messageBean.messageError(e.getMessage());
+                resetPlaceHolders();
+                return;
+            } catch(BusinessRuleException e) {
                 messageBean.messageError(e.getMessage());
                 resetPlaceHolders();
                 return;
@@ -676,7 +674,6 @@ public class ConceptBean implements Serializable {
                 e.printStackTrace();
             }
 
-            this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
             if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<Boolean>) target).getValue())
                 changeMultiplicityNotRequiredRelationshipDefinitionMC();
             if (relationshipDefinition.getId() == 74 && !((BasicTypeValue<Boolean>) target).getValue())
@@ -684,6 +681,13 @@ public class ConceptBean implements Serializable {
         }
         //Autogenerado
         autogenerateBean.load(concept, relationshipDefinition);
+
+        //Heredar crossmaps directos
+        if(autogenerateBean.canInheritDirectCrossmaps(concept)) {
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('inheritDirectCrossmaps').show();");
+        }
+
         // Se resetean los placeholder para los target de las relaciones
         resetPlaceHolders();
     }

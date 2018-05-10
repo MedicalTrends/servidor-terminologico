@@ -257,7 +257,10 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
      *
      * @param relationship La relación que es agregada.
      */
-    public void addRelationshipWeb(RelationshipWeb relationship) {
+    public void addRelationshipWeb(RelationshipWeb relationship) throws BusinessRuleException {
+        if(getRelationships().contains(relationship)) {
+            throw new BusinessRuleException("BR-UNK", "No se puede agregar dos veces la misma relación");
+        }
         this.addRelationship(relationship);
         this.relationshipsWeb.add(relationship);
     }

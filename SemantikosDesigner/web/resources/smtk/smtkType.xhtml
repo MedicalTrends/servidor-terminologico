@@ -381,12 +381,77 @@
 
                         <smtk:compositeAditional relationshipDefinition="#{cc.attrs.relationshipDefinition}" concept="#{relationship.target}" />
 
+                        <p:dialog id="inheritDirectCrossmaps" header="Agregar Crossmap Directos" widgetVar="inheritDirectCrossmaps"
+                                  styleClass="conceptMarketed" global="true" width="800px"
+                                  showEffect="fade" hideEffect="fade" >
+
+                            <p:panel id="panelConceptMarketed" style="border: hidden;">
+
+                                <p:outputLabel value="Se ha detectado que el #{cc.attrs.relationshipDefinition.name} '#{relationship.target.descriptionFavorite.term}' posee #{autogenerateBean.getHeritableDirectCrossmaps(cc.attrs.concept).size()} Crossmap Directos. ¿Desea agregarlos al concepto actual?"/>
+
+                                <p:dataTable id="collectionValuesWithAttributes3"
+                                             rendered="false"
+                                             var="relationship"
+                                             value="#{autogenerateBean.getHeritableDirectCrossmaps(cc.attrs.concept)}"
+                                             style="width: 100%"
+                                             reflow="true">
+
+                                    <!-- Parámetros del validador -->
+                                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                                    <!---->
+
+                                    <p:column headerText="Terminología">
+                                        <h:outputText value="#{relationship.target.crossmapSet.name}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Code">
+                                        <h:outputText value="#{relationship.target.code}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Term Name">
+                                        <h:outputText value="#{relationship.target.termName}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Term Definition">
+                                        <h:outputText value="#{relationship.target.termDefinition}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Fecha Creación">
+                                        <h:outputText value="#{relationship.getDateCreationFormat()}"/>
+                                    </p:column>
+
+                                    <f:facet name="footer">
+
+                                        <p:commandButton  oncomplete="PF('inheritDirectCrossmaps').hide()"
+                                                          value="Cancelar" />
+
+                                        <p:commandButton  actionListener="#{autogenerateBean.inheritDirectCrossmaps(cc.attrs.concept)}"
+                                                          update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes)"
+                                                          value="Aceptar" oncomplete="PF('inheritDirectCrossmaps').hide()" />
+
+                                    </f:facet>
+
+                                </p:dataTable>
+
+                                <div class="SeparatorFull"></div>
+
+                                <p:commandButton  actionListener="#{autogenerateBean.inheritDirectCrossmaps(cc.attrs.concept)}"
+                                                  update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes)"
+                                                  value="Si" oncomplete="PF('inheritDirectCrossmaps').hide()" style="float: right" />
+
+                                <p:commandButton  oncomplete="PF('inheritDirectCrossmaps').hide()" style="float: right;"
+                                                  value="No" />
+
+                            </p:panel>
+
+                        </p:dialog>
+
                     </ui:repeat>
 
             </p:outputPanel>
 
-
     </p:panel>
+
 
 </composite:implementation>
 </html>

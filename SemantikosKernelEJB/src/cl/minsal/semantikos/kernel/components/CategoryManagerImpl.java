@@ -14,13 +14,11 @@ import org.jboss.ejb3.annotation.SecurityDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
+import javax.ejb.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +30,7 @@ import static java.util.Collections.EMPTY_LIST;
  */
 @Stateless
 //@DeclareRoles("Administrador")
+//@SecurityDomain("SemantikosDomain")
 //@PermitAll
 public class CategoryManagerImpl implements CategoryManager {
 
@@ -45,6 +44,9 @@ public class CategoryManagerImpl implements CategoryManager {
 
     @EJB
     private DescriptionManager descriptionManager;
+
+    @Resource
+    private EJBContext context;
 
     @Override
     public void addAttribute(RelationshipDefinition attributeCategory, int idCategory) {
@@ -107,7 +109,10 @@ public class CategoryManagerImpl implements CategoryManager {
 
     @Override
     //@RolesAllowed("Administrador")
+    //@PermitAll
     public List<Category> getCategories() {
+
+        System.out.println(context.getCallerPrincipal().getName());
 
         logger.debug("Recuperando todas las categorías.");
 

@@ -10,6 +10,11 @@
     <file url="file://$PROJECT_DIR$/SemantikosKernelEJB" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosLoader" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosLoader/resources/datafiles/drugs/GFP/05_Grupo_Familia_Producto.Base.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SemantikosLoader/resources/datafiles/test/MB/02_Medicamento_Basico.Base.txt" charset="UTF-16" />
+    <file url="file://$PROJECT_DIR$/SemantikosLoader/resources/datafiles/test/MC/03_Medicamento_Clinico.Base.txt" charset="UTF-16" />
+    <file url="file://$PROJECT_DIR$/SemantikosLoader/resources/datafiles/test/MCCE/04_Medicamento_Clinico_Con_Envase.Base.txt" charset="UTF-16" />
+    <file url="file://$PROJECT_DIR$/SemantikosLoader/resources/datafiles/test/PC/07_Producto_Comercial.Base.txt" charset="UTF-16" />
+    <file url="file://$PROJECT_DIR$/SemantikosLoader/resources/datafiles/test/PCCE/08_Producto_Comercial_Con_Envase.Base.txt" charset="UTF-16" />
     <file url="file://$PROJECT_DIR$/SemantikosWS" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosWSEJB" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosWebEAR" charset="UTF-8" />
