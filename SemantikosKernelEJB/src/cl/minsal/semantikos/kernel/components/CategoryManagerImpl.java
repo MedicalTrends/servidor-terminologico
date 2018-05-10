@@ -29,8 +29,8 @@ import static java.util.Collections.EMPTY_LIST;
  * @author Andrés Farías on 27-05-16.
  */
 @Stateless
-//@DeclareRoles("Administrador")
-//@SecurityDomain("SemantikosDomain")
+@DeclareRoles("Administrador")
+@SecurityDomain("SemantikosDomain")
 //@PermitAll
 public class CategoryManagerImpl implements CategoryManager {
 
@@ -108,7 +108,7 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
-    //@RolesAllowed("Administrador")
+    @RolesAllowed("Administrador")
     //@PermitAll
     public List<Category> getCategories() {
 
