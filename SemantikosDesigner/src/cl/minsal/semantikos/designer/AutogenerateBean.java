@@ -4,8 +4,10 @@ import cl.minsal.semantikos.category.CategoryBean;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.componentsweb.ViewAugmenter;
+import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
+import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
@@ -19,6 +21,7 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +38,17 @@ public class AutogenerateBean {
 
     @ManagedProperty( value="#{categoryBean}")
     CategoryBean categoryBean;
+
+    @ManagedProperty(value = "#{messageBean}")
+    MessageBean messageBean;
+
+    public MessageBean getMessageBean() {
+        return messageBean;
+    }
+
+    public void setMessageBean(MessageBean messageBean) {
+        this.messageBean = messageBean;
+    }
 
     public CategoryBean getCategoryBean() {
         return categoryBean;
@@ -223,28 +237,35 @@ public class AutogenerateBean {
         return directCrossmaps;
     }
 
-    public void inheritDirectCrossmaps(ConceptSMTKWeb concept) {
+    public void inheritDirectCrossmaps(ConceptSMTKWeb concept) throws BusinessRuleException {
 
         List<RelationshipWeb> directCrossmaps = new ArrayList<>();
 
-        for (Relationship relationship : concept.getRelationships()) {
-            if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
-                ConceptSMTK targetConcept = (ConceptSMTK) relationship.getTarget();
-                if(!targetConcept.isRelationshipsLoaded()) {
-                    targetConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(targetConcept));
-                }
-                for (Relationship targetRelationship : targetConcept.getRelationships()) {
-                    if(targetRelationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
-                        if(targetRelationship.getRelationshipDefinition().isGMDN()) {
-                            directCrossmaps.add(new RelationshipWeb(targetRelationship, targetRelationship.getRelationshipAttributes()));
+        try {
+
+            for (Relationship relationship : concept.getRelationships()) {
+                if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
+                    ConceptSMTK targetConcept = (ConceptSMTK) relationship.getTarget();
+                    if(!targetConcept.isRelationshipsLoaded()) {
+                        targetConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(targetConcept));
+                    }
+                    for (Relationship targetRelationship : targetConcept.getRelationships()) {
+                        if(targetRelationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
+                            if(targetRelationship.getRelationshipDefinition().isGMDN()) {
+                                directCrossmaps.add(new RelationshipWeb(targetRelationship, targetRelationship.getRelationshipAttributes()));
+                            }
                         }
                     }
                 }
             }
-        }
 
-        for (RelationshipWeb directCrossmap : directCrossmaps) {
-            concept.addRelationshipWeb(directCrossmap);
+            for (RelationshipWeb directCrossmap : directCrossmaps) {
+                concept.addRelationshipWeb(directCrossmap);
+            }
+
+        }
+        catch(BusinessRuleException e) {
+            messageBean.messageError(e.getMessage());
         }
     }
 
