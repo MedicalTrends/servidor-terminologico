@@ -8,6 +8,7 @@ import cl.minsal.semantikos.kernel.components.InstitutionManager;
 import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
 import cl.minsal.semantikos.model.users.User;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,10 +47,10 @@ public class AuthenticationBean {
     private User loggedUser;
 
     //@EJB(name = "AuthenticationManagerEJB")
-    AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
+    //AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
 
     //@EJB
-    TimeOutWeb timeOutWeb = (TimeOutWeb) ServiceLocator.getInstance().getService(TimeOutWeb.class);
+    //TimeOutWeb timeOutWeb = (TimeOutWeb) ServiceLocator.getInstance().getService(TimeOutWeb.class);
 
 
     public boolean isLoggedIn() {
@@ -64,7 +65,6 @@ public class AuthenticationBean {
 
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        request.getSession().setMaxInactiveInterval(timeOutWeb.getTimeOut());
 
         try {
             //valida user y pass
@@ -100,9 +100,12 @@ public class AuthenticationBean {
                 return;
             }
 
+            ServiceLocator.setCredentals(email, password);
 
             //authenticationManager.authenticate(email,password,request);
-            authenticationManager.authenticate(email,password);
+            AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
+            TimeOutWeb timeOutWeb = (TimeOutWeb) ServiceLocator.getInstance().getService(TimeOutWeb.class);
+            request.getSession().setMaxInactiveInterval(timeOutWeb.getTimeOut());
 
             //quitar password de la memoria
             password=null;

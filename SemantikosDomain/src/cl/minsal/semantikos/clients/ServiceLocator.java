@@ -4,6 +4,7 @@ package cl.minsal.semantikos.clients; /**
 
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
+import org.apache.commons.configuration.*;
 import org.jboss.ejb.client.ContextSelector;
 import org.jboss.ejb.client.EJBClientConfiguration;
 import org.jboss.ejb.client.EJBClientContext;
@@ -21,7 +22,7 @@ public class ServiceLocator {
 
     private static final ServiceLocator instance = new ServiceLocator();
     private static Context context;
-    private static Properties props;
+    private Properties props = new Properties();
 
     /** Mapa de interfaces por su nombre. */
     private Map<String, Object> servicesByName;
@@ -66,17 +67,19 @@ public class ServiceLocator {
 
     private ServiceLocator() {
 
-        props = new Properties();
+        //props = new Properties();
         props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-        //props.put(InitialContext.SECURITY_PRINCIPAL, "user@admin.cl");
-        //props.put(InitialContext.SECURITY_CREDENTIALS, "1234567z");
+        props.put(InitialContext.SECURITY_PRINCIPAL, "user@admin.cl");
+        props.put(InitialContext.SECURITY_CREDENTIALS, "1234567z");
         props.put("remote.connection.default.username", "user@admin.cl");
         props.put("remote.connection.default.password", "1234567z");
         props.put("jboss.naming.client.ejb.context", "true");
-        //props.setProperty("org.jboss.ejb.client.scoped.context", "true");
 
         try {
             context = new InitialContext(props);
+            EJBClientConfiguration cc = new PropertiesBasedEJBClientConfiguration(props);
+            ContextSelector<EJBClientContext> selector = new ConfigBasedEJBClientContextSelector(cc);
+            EJBClientContext.setSelector(selector);
             //context = new InitialContext(properties);
             //Autenticar usuario guest para la posterior invocacion de componentes durante despliegue
             //AuthenticationManager authManager = (AuthenticationManager) getService(AuthenticationManager.class);
@@ -89,9 +92,16 @@ public class ServiceLocator {
         this.servicesByName = new ConcurrentHashMap<>();
     }
 
-
     public static ServiceLocator getInstance() {
         return instance;
+    }
+
+    public static void setCredentals(String email, String password) throws org.apache.commons.configuration.ConfigurationException {
+
+        PropertiesConfiguration conf = new PropertiesConfiguration("jboss-ejb-client.properties");
+        conf.setProperty("remote.connection.default.username", email);
+        conf.setProperty("remote.connection.default.password", password);
+        conf.save();
     }
 
     /**

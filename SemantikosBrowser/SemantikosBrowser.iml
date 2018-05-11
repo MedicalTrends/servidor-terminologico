@@ -80,6 +80,12 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-configuration:commons-configuration:1.6" level="project" />
+    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-digester:commons-digester:1.8" level="project" />
+    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.7.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils-core:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: net.bull.javamelody:javamelody-core:1.51.0" level="project" />
     <orderEntry type="library" name="Maven: org.jrobin:jrobin:1.5.9" level="project" />
     <orderEntry type="library" name="Maven: org.primefaces:primefaces:6.0" level="project" />
