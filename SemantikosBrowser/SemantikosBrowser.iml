@@ -26,7 +26,6 @@
     <orderEntry type="library" name="Maven: org.omnifaces:omnifaces:2.1" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish:javax.faces:2.3.0" level="project" />
     <orderEntry type="library" name="Maven: org.primefaces:primefaces:6.1" level="project" />
-    <orderEntry type="library" name="Maven: org.primefaces.themes:ultima:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-servlet:3.4.1.Final" level="project" />
     <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-config-prettyfaces:3.4.1.Final" level="project" />
     <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-integration-faces:3.4.1.Final" level="project" />

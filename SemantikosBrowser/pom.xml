@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>SemantikosBrowser</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <packaging>war</packaging>
 
     <parent>
         <groupId>cl.minsal.semantikos</groupId>
         <artifactId>Semantikos</artifactId>
-        <version>1.1</version>
+        <version>1.2</version>
     </parent>
 
     <properties>
@@ -53,14 +53,14 @@
         <!--dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosKernelEJB</artifactId>
-            <version>1.1</version>
+            <version>1.2</version>
             <scope>provided</scope>
         </dependency-->
 
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosDomain</artifactId>
-            <version>1.1</version>
+            <version>1.2</version>
             <type>jar</type>
         </dependency>
 
@@ -117,13 +117,13 @@
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosDomain</artifactId>
-            <version>1.1</version>
+            <version>1.2</version>
         </dependency>
 
         <!--dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosDomain</artifactId>
-            <version>1.1</version>
+            <version>1.2</version>
         </dependency-->
 
     </dependencies>
