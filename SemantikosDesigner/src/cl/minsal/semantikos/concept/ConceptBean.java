@@ -416,8 +416,8 @@ public class ConceptBean implements Serializable {
         concept = initConcept(conceptSMTK, term);
         concept.setEditable(editable);
 
-        concept.getDescriptionFSN().setCaseSensitive(sensibilityDescriptionDefaultBean.sensibility(category.getId()));
-        concept.getDescriptionFavorite().setCaseSensitive(sensibilityDescriptionDefaultBean.sensibility(category.getId()));
+        //concept.getDescriptionFSN().setCaseSensitive(sensibilityDescriptionDefaultBean.sensibility(category.getId()));
+        //concept.getDescriptionFavorite().setCaseSensitive(sensibilityDescriptionDefaultBean.sensibility(category.getId()));
         // Se crea una copia con la imagen original del concepto
         _concept = initConcept(conceptSMTK, term);
 
