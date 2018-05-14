@@ -288,16 +288,13 @@ public class TargetDAOImpl implements TargetDAO {
                 BasicTypeDefinition basicTypeDefinition = (BasicTypeDefinition) relationship.getRelationshipDefinition().getTargetDefinition();
                 BasicTypeValue value = (BasicTypeValue) relationship.getTarget();
 
-
                 //TODO: FIX
                 if (value.isBoolean()) {
                     call.setBoolean(5, (Boolean) value.getValue());
                 }
-
                 if (value.isDate()) {
                     call.setTimestamp(3, (Timestamp) value.getValue());
                 }
-
                 if (value.isFloat()) {
                     call.setFloat(2, (Float) value.getValue());
                 }
