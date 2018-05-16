@@ -382,7 +382,7 @@
                         <smtk:compositeAditional relationshipDefinition="#{cc.attrs.relationshipDefinition}" concept="#{relationship.target}" />
 
                         <p:dialog id="inheritDirectCrossmaps" header="Agregar Crossmap Directos" widgetVar="inheritDirectCrossmaps"
-                                  styleClass="conceptMarketed" global="true" width="800px"
+                                  styleClass="conceptMarketed" global="true" width="800px" rendered="#{not autogenerateBean.inheritedCrossmaps}"
                                   showEffect="fade" hideEffect="fade" >
 
                             <p:panel id="panelConceptMarketed" style="border: hidden;">
@@ -419,17 +419,6 @@
                                     <p:column headerText="Fecha Creación">
                                         <h:outputText value="#{relationship.getDateCreationFormat()}"/>
                                     </p:column>
-
-                                    <f:facet name="footer">
-
-                                        <p:commandButton  oncomplete="PF('inheritDirectCrossmaps').hide()"
-                                                          value="Cancelar" />
-
-                                        <p:commandButton  actionListener="#{autogenerateBean.inheritDirectCrossmaps(cc.attrs.concept)}"
-                                                          update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes)"
-                                                          value="Aceptar" oncomplete="PF('inheritDirectCrossmaps').hide()" />
-
-                                    </f:facet>
 
                                 </p:dataTable>
 

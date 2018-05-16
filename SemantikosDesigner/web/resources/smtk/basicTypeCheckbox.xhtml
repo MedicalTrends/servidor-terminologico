@@ -103,7 +103,7 @@
                             <p:selectBooleanCheckbox value="#{relationship.target.value}"
                                                      itemLabel="#{cc.attrs.relationshipDefinition.targetDefinition.name}"
                                                      style="padding-top: 0.6em;font-size: small"
-                                                   disabled="#{(conceptBean.isMCSpecial(cc.attrs.relationshipDefinition) and conceptBean.concept.isModeled()) or conceptBean.editable eq false}">
+                                                   disabled="#{(cc.attrs.relationshipDefinition.MCSpecial and conceptBean.concept.isModeled()) or conceptBean.editable eq false}">
                                 <p:ajax event="change"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,relationship.target)}"
                                         process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.attributes),@(.conceptMarketed)" />

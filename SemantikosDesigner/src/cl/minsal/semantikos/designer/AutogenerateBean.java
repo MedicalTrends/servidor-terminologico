@@ -2,15 +2,19 @@ package cl.minsal.semantikos.designer;
 
 import cl.minsal.semantikos.category.CategoryBean;
 import cl.minsal.semantikos.clients.ServiceLocator;
+import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.componentsweb.ViewAugmenter;
 import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
+import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
 import cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb;
@@ -26,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN_MAPEO_DE;
+
 /**
  * Created by des01c7 on 14-10-16.
  */
@@ -35,6 +41,9 @@ public class AutogenerateBean {
 
     //@EJB
     RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);
+
+    //@EJB
+    HelperTablesManager helperTablesManager = (HelperTablesManager) ServiceLocator.getInstance().getService(HelperTablesManager.class);
 
     @ManagedProperty( value="#{categoryBean}")
     CategoryBean categoryBean;
@@ -56,6 +65,16 @@ public class AutogenerateBean {
 
     public void setCategoryBean(CategoryBean categoryBean) {
         this.categoryBean = categoryBean;
+    }
+
+    private boolean inheritedCrossmaps = false;
+
+    public boolean isInheritedCrossmaps() {
+        return inheritedCrossmaps;
+    }
+
+    public void setInheritedCrossmaps(boolean inheritedCrossmaps) {
+        this.inheritedCrossmaps = inheritedCrossmaps;
     }
 
     public void load(ConceptSMTKWeb concept, RelationshipDefinition relationshipDefinition) {
@@ -252,7 +271,9 @@ public class AutogenerateBean {
                     for (Relationship targetRelationship : targetConcept.getRelationships()) {
                         if(targetRelationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
                             if(targetRelationship.getRelationshipDefinition().isGMDN()) {
-                                directCrossmaps.add(new RelationshipWeb(targetRelationship, targetRelationship.getRelationshipAttributes()));
+                                RelationshipWeb relationshipWeb = new RelationshipWeb(targetRelationship, targetRelationship.getRelationshipAttributes());
+                                relationshipWeb.setSourceConcept(concept);
+                                directCrossmaps.add(relationshipWeb);
                             }
                         }
                     }
@@ -263,10 +284,68 @@ public class AutogenerateBean {
                 concept.addRelationshipWeb(directCrossmap);
             }
 
+            inheritedCrossmaps = true;
+
         }
         catch(BusinessRuleException e) {
             messageBean.messageError(e.getMessage());
         }
+    }
+
+    public void addRelationshipType(ConceptSMTKWeb concept) {
+
+        for (RelationshipWeb relationshipWeb : concept.getRelationshipsWeb()) {
+            // Si esta definición de relación es de tipo CROSSMAP, Se agrega el atributo tipo de relacion = "ES_UN_MAPEO_DE" (por defecto)
+            if (relationshipWeb.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
+
+                //Ya se agregó el atributo en la capa controlador
+                if(relationshipWeb.getRelationshipTypeAttribute() != null) {
+                    return;
+                }
+
+                for (RelationshipAttributeDefinition attDef : relationshipWeb.getRelationshipDefinition().getRelationshipAttributeDefinitions()) {
+                    if (attDef.isRelationshipTypeAttribute()) {
+
+                        HelperTable helperTable = (HelperTable) attDef.getTargetDefinition();
+
+                        List<HelperTableRow> relationshipTypes = helperTablesManager.searchRows(helperTable, ES_UN_MAPEO_DE);
+
+                        RelationshipAttribute ra = new RelationshipAttribute(attDef, relationshipWeb, relationshipTypes.get(0));
+                        relationshipWeb.getRelationshipAttributes().add(ra);
+                    }
+                }
+            }
+        }
+    }
+
+    public void evaluateMCSpecial(ConceptSMTKWeb concept) {
+
+        if(concept.getCategory().hasAttributeSpecial()) {
+
+            for (Relationship relationship : concept.getRelationships()) {
+
+                if (relationship.getRelationshipDefinition().isAttributeSpecial()) {
+
+                    BasicTypeValue isMCSpecial = (BasicTypeValue<Boolean>) relationship.getTarget();
+                    int lowerBoundary;
+
+                    if((Boolean) isMCSpecial.getValue()) {
+                        lowerBoundary = 1;
+                    }
+                    else {
+                        lowerBoundary = 0;
+                    }
+
+                    for (RelationshipDefinition relationshipDefinition : concept.getCategory().getRelationshipDefinitions()) {
+                        if(relationshipDefinition.isSubstance() || relationshipDefinition.isMB() || relationshipDefinition.isFFA() ||
+                                relationshipDefinition.isDB() || relationshipDefinition.isFFADisp()) {
+                            relationshipDefinition.getMultiplicity().setLowerBoundary(lowerBoundary);
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
 }

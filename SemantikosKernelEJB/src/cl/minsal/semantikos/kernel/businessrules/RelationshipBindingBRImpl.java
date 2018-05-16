@@ -31,10 +31,13 @@ public class RelationshipBindingBRImpl implements RelationshipBindingBR {
 
     @EJB
     private RelationshipManager relationshipManager;
+
     @EJB
     private ConceptManager conceptManager;
+
     @EJB
     private ConceptDAO conceptDAO;
+
     @EJB
     private DescriptionDAO descriptionDAO;
 

@@ -81,6 +81,7 @@
                                                        rendered="#{ not empty conceptBean.orderedSMTKRelationshipDefinitions }">
 
                                             <h:dataTable style="width: 100%;" value="#{conceptBean.orderedSMTKRelationshipDefinitions}"
+                                                         collectionType="java.util.ArrayList"
                                                          var="relationshipDefinition">
 
                                                 <h:column>
@@ -131,6 +132,7 @@
                                                        rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
                                             <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
+                                                         collectionType="java.util.ArrayList"
                                                          var="relationshipDefinition">
 
                                                 <h:column>
@@ -170,6 +172,7 @@
                                                  rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
                                             <h:dataTable style="width: 100%;" value="#{categoryBean.getCrossmapTypeDefinitionsByCategory(conceptBean.category)}"
+                                                         collectionType="java.util.ArrayList"
                                                          var="relationshipDefinition">
 
                                                 <h:column>

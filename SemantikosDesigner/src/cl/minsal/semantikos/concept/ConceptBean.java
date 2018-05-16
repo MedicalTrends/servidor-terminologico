@@ -367,10 +367,6 @@ public class ConceptBean implements Serializable {
 
             setCategory(categoryManager.getCategoryById(idCategory));
 
-            if (category.getId() == 34) {
-                changeMultiplicityToRequiredRelationshipDefinitionMC();
-            }
-
             ConceptSMTK aConcept = categoryManager.categoryContains(category, favoriteDescription);
 
             /* Se valida que el término propuesto no exista previamente */
@@ -380,17 +376,15 @@ public class ConceptBean implements Serializable {
             } else {
                 newConcept(category, favoriteDescription);
             }
+
         } else {
             getConceptById(idConcept);
-            if (category.getId() == 34) {
-                changeMCSpecial();
-            }
         }
 
         // Una vez que se ha inicializado el concepto, inicializar los placeholders para las relaciones
         mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
 
-        changeMCSpecial();
+        autogenerateBean.evaluateMCSpecial(concept);
 
     }
 
@@ -609,7 +603,7 @@ public class ConceptBean implements Serializable {
      */
     public void addOrChangeRelationship(RelationshipDefinition relationshipDefinition, Target target) {
 
-        Relationship relationship = null;
+        RelationshipWeb theRelationshipWeb = null;
         boolean isRelationshipFound = false;
 
         if(target == null || target.getRepresentation().equals("null")) {
@@ -623,62 +617,49 @@ public class ConceptBean implements Serializable {
         }
 
         // Se busca la relación
-        for (Relationship relationshipWeb : concept.getRelationshipsWeb()) {
+        for (RelationshipWeb relationshipWeb : concept.getRelationshipsWeb()) {
+
             if (relationshipWeb.getRelationshipDefinition().equals(relationshipDefinition)) {
-                relationshipWeb.setTarget(target);
-
                 isRelationshipFound = true;
-
-                if(relationshipDefinition.getTargetDefinition().isBasicType() && relationshipDefinition.hasRelationshipAttributeDefinitions()) {
-                    removeRelationship(relationshipDefinition, relationshipWeb);
-                }
-
-                try {
-                    relationshipBindingBR.verifyPreConditions(concept, relationshipWeb, user);
-                } catch (EJBException e) {
-                    messageBean.messageError(e.getMessage());
-                    resetPlaceHolders();
-                    return;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                if(relationshipDefinition.isComercializado())
-                    changeMarketedBean.changeMarketedEvent(concept, relationshipDefinition, target);
-
-                autogenerateBean.load(concept, relationshipDefinition);
-
-                if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<Boolean>) target).getValue())
-                    changeMultiplicityNotRequiredRelationshipDefinitionMC();
-                if (relationshipDefinition.getId() == 74 && !((BasicTypeValue<Boolean>) target).getValue())
-                    changeMultiplicityToRequiredRelationshipDefinitionMC();
+                theRelationshipWeb = relationshipWeb;
                 break;
             }
         }
         // Si no se encuentra la relación, se crea una nueva
         if (!isRelationshipFound) {
-            relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
-
-            try {
-                relationshipBindingBR.verifyPreConditions(concept, relationship, user);
-                this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
-            } catch (EJBException e) {
-                messageBean.messageError(e.getMessage());
-                resetPlaceHolders();
-                return;
-            } catch(BusinessRuleException e) {
-                messageBean.messageError(e.getMessage());
-                resetPlaceHolders();
-                return;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<Boolean>) target).getValue())
-                changeMultiplicityNotRequiredRelationshipDefinitionMC();
-            if (relationshipDefinition.getId() == 74 && !((BasicTypeValue<Boolean>) target).getValue())
-                changeMultiplicityToRequiredRelationshipDefinitionMC();
+            Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+            theRelationshipWeb = new RelationshipWeb(relationship, relationship.getRelationshipAttributes());
         }
+
+        try {
+            relationshipBindingBR.verifyPreConditions(concept, theRelationshipWeb, user);
+        } catch (EJBException e) {
+            messageBean.messageError(e.getMessage());
+            resetPlaceHolders();
+            return;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(isRelationshipFound) {
+            theRelationshipWeb.setTarget(target);
+        }
+        else {
+            this.concept.addRelationshipWeb(theRelationshipWeb);
+        }
+
+        if(relationshipDefinition.getTargetDefinition().isBasicType() && relationshipDefinition.hasRelationshipAttributeDefinitions()) {
+            removeRelationship(relationshipDefinition, theRelationshipWeb);
+        }
+
+        if(relationshipDefinition.isComercializado()) {
+            changeMarketedBean.changeMarketedEvent(concept, relationshipDefinition, target);
+        }
+
+        autogenerateBean.addRelationshipType(concept);
+
+        autogenerateBean.evaluateMCSpecial(concept);
+
         //Autogenerado
         autogenerateBean.load(concept, relationshipDefinition);
 
@@ -1083,10 +1064,6 @@ public class ConceptBean implements Serializable {
         changeMarketedBean.conceptSelected.clear();
         resetPlaceHolders();
         messageBean.messageSuccess("Acción exitosa", "Los cambios se han descartado");
-    }
-
-    public void updateFSN(Description d) {
-        concept.getValidDescriptionFSN().setTerm(d.getTerm());
     }
 
     public boolean containDescriptionToTranslate(Description description) {
@@ -1496,71 +1473,6 @@ public class ConceptBean implements Serializable {
             }
         }
         return smtkRelationshipDefinitions;
-    }
-
-    public void changeMultiplicityNotRequiredRelationshipDefinitionMC() {
-        for (RelationshipDefinition relationshipDefinition : orderedRelationshipDefinitionsList) {
-            if (relationshipDefinition.getId() == 46) relationshipDefinition.getMultiplicity().setLowerBoundary(0);
-            if (relationshipDefinition.getId() == 58) relationshipDefinition.getMultiplicity().setLowerBoundary(0);
-            if (relationshipDefinition.getId() == 47) relationshipDefinition.getMultiplicity().setLowerBoundary(0);
-        }
-        if(concept != null) {
-            for (RelationshipDefinition relationshipDefinition : concept.getCategory().getRelationshipDefinitions()) {
-                if (relationshipDefinition.getId() == 46) relationshipDefinition.getMultiplicity().setLowerBoundary(0);
-                if (relationshipDefinition.getId() == 58) relationshipDefinition.getMultiplicity().setLowerBoundary(0);
-                if (relationshipDefinition.getId() == 47) relationshipDefinition.getMultiplicity().setLowerBoundary(0);
-            }
-        }
-    }
-
-    public void changeMultiplicityToRequiredRelationshipDefinitionMC() {
-        for (RelationshipDefinition relationshipDefinition : orderedRelationshipDefinitionsList) {
-            if (relationshipDefinition.getId() == 46) relationshipDefinition.getMultiplicity().setLowerBoundary(1);
-            if (relationshipDefinition.getId() == 58) relationshipDefinition.getMultiplicity().setLowerBoundary(1);
-            if (relationshipDefinition.getId() == 47) relationshipDefinition.getMultiplicity().setLowerBoundary(1);
-        }
-        if(concept != null) {
-            for (RelationshipDefinition relationshipDefinition : concept.getCategory().getRelationshipDefinitions()) {
-                if (relationshipDefinition.getId() == 46) relationshipDefinition.getMultiplicity().setLowerBoundary(1);
-                if (relationshipDefinition.getId() == 58) relationshipDefinition.getMultiplicity().setLowerBoundary(1);
-                if (relationshipDefinition.getId() == 47) relationshipDefinition.getMultiplicity().setLowerBoundary(1);
-            }
-        }
-    }
-
-    public boolean isMCSpecial(RelationshipDefinition relationshipDefinition) {
-        if(relationshipDefinition.getId()==74){
-            return true;
-        }return false;
-    }
-
-    public boolean isMCSpecialRendered(RelationshipDefinition relationshipDefinition) {
-        if(relationshipDefinition.getId()==74 && concept.isModeled()){
-            return true;
-        }return false;
-    }
-    public boolean isMCSpecialThisConcept() {
-        for (Relationship relationship : concept.getValidRelationships()) {
-            if (relationship.getRelationshipDefinition().getId() == 74) {
-                if (((BasicTypeValue<Boolean>) relationship.getTarget()).getValue()){
-                   return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public void changeMCSpecial() {
-        for (Relationship relationship : concept.getValidRelationships()) {
-            if (relationship.getRelationshipDefinition().getId() == 74) {
-                if (!((BasicTypeValue<Boolean>) relationship.getTarget()).getValue()){
-                    changeMultiplicityToRequiredRelationshipDefinitionMC();
-                }
-                else{
-                    changeMultiplicityNotRequiredRelationshipDefinitionMC();
-                }
-            }
-        }
     }
 
     public boolean changeDirectMultiplicity(RelationshipDefinition relationshipDefinition) {

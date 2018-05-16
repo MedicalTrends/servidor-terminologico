@@ -1,9 +1,6 @@
 package cl.minsal.semantikos.kernel.components;
 
-import cl.minsal.semantikos.kernel.businessrules.ConceptCreationBR;
-import cl.minsal.semantikos.kernel.businessrules.RelationshipBindingBR;
-import cl.minsal.semantikos.kernel.businessrules.RelationshipEditionBR;
-import cl.minsal.semantikos.kernel.businessrules.RelationshipRemovalBR;
+import cl.minsal.semantikos.kernel.businessrules.*;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
@@ -60,6 +57,9 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
     @EJB
     private RelationshipBindingBR relationshipBindingBR;
+
+    @EJB
+    private RelationshipCreationBR relationshipCreationBR;
 
     @EJB
     RelationshipWSDAO relationshipWSDAO;

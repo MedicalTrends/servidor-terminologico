@@ -55,7 +55,8 @@ public class ChangeMarketedBean {
     }
 
     public void changeMarketedEvent(ConceptSMTK conceptSMTK, RelationshipDefinition relationshipDefinition, Target target) {
-        if(relationshipDefinition.getId()==ID_MARKETED && conceptSMTK.isModeled()){
+
+        if(relationshipDefinition.getId()==ID_MARKETED && conceptSMTK.isModeled()) {
             targetSelected=target;
             conceptSMTKList = conceptManager.getRelatedConcepts(conceptSMTK);
             RequestContext context = RequestContext.getCurrentInstance();
@@ -64,14 +65,14 @@ public class ChangeMarketedBean {
     }
 
 
-    public void changeMarketed(){
+    public void changeMarketed() {
         Relationship lateastRelationship;
 
         for (ConceptSMTK concept: conceptSelected) {
             concept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(concept));
             try {
                 for (Relationship relationship: concept.getRelationships()) {
-                    if(relationship.getRelationshipDefinition().getId()==ID_MARKETED){
+                    if(relationship.getRelationshipDefinition().getId()==ID_MARKETED) {
                         BasicTypeValue basicTypeValue = (BasicTypeValue)targetSelected;
                         lateastRelationship = new Relationship(concept,new BasicTypeValue(basicTypeValue.getValue()),relationship.getRelationshipDefinition(), new ArrayList<RelationshipAttribute>(), null);
                         lateastRelationship.setCreationDate(relationship.getCreationDate());

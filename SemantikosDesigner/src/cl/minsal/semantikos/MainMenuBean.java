@@ -176,7 +176,8 @@ public class MainMenuBean implements Serializable {
                 relationshipPlaceholders.put(relationshipDefinition.getId(), r);
 
                 for (RelationshipAttributeDefinitionWeb relAttrDefWeb : relationshipDefinitionWeb.getRelationshipAttributeDefinitionWebs()) {
-                    if(relAttrDefWeb.getDefaultValue()!=null) {
+
+                    if(relAttrDefWeb.getDefaultValue() != null) {
                         RelationshipAttribute ra = new RelationshipAttribute(relAttrDefWeb.getRelationshipAttributeDefinition(), r, relAttrDefWeb.getDefaultValue());
                         r.getRelationshipAttributes().add(ra);
                     }

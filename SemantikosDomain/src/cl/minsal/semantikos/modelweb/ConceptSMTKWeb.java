@@ -259,7 +259,7 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
      */
     public void addRelationshipWeb(RelationshipWeb relationship) throws BusinessRuleException {
         if(getRelationships().contains(relationship)) {
-            throw new BusinessRuleException("BR-UNK", "No se puede agregar dos veces la misma relación");
+            throw new BusinessRuleException("BR-UNK", "No se puede agregar dos veces la misma relación en la definición " + relationship.getRelationshipDefinition().getName());
         }
         this.addRelationship(relationship);
         this.relationshipsWeb.add(relationship);
@@ -547,7 +547,7 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
         return null;
     }
 
-    public boolean isMultiplicitySatisfied(RelationshipDefinition relationshipDefinition){
+    public boolean isMultiplicitySatisfied(RelationshipDefinition relationshipDefinition) {
         for (RelationshipWeb relationshipWeb : getValidRelationshipsWebByRelationDefinition(relationshipDefinition)) {
             if(relationshipDefinition.getTargetDefinition().isSMTKType()) {
                 if(relationshipWeb.getTarget()==null) {

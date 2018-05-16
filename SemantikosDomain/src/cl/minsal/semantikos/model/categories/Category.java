@@ -131,6 +131,17 @@ public class Category extends PersistentEntity implements TargetDefinition, Audi
         return someRelationshipDefinitions;
     }
 
+    public boolean hasAttributeSpecial() {
+
+        for (RelationshipDefinition relationshipDefinition : relationshipDefinitions) {
+            if(relationshipDefinition.getName().contains("Especial")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public String toString() {
         return this.name;

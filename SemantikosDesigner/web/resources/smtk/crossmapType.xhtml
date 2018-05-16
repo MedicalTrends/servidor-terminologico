@@ -16,12 +16,113 @@
 </composite:interface>
 <composite:implementation>
 
+    <p:panel id="crossmapTypeSimpleNew"
+             widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
+             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+
+        <div class="ui-fluid">
+
+            <div class="Container">
+
+                <div class="Container20 White Responsive">
+                    <div class="ContainerIndent">
+                        <p:outputLabel for="findCSM5" value="Crossmap Directo" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                        <p:outputLabel value="Crossmap Directo *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                    </div>
+                </div>
+
+                <div class="Container30 White Responsive">
+                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                        <p:outputPanel styleClass="search">
+                            <p:autoComplete id="findCSM5" scrollHeight="200"
+                                            completeMethod="#{crossmapBean.getCrossmapSearchInput}"
+                                            minQueryLength="3"
+                                            forceSelection="true"
+                                            var="crossmap"
+                                            placeholder="#{cc.attrs.targetDefinition.abbreviatedName}"
+                                            converter="crossmapSetMemberConverter"
+                                            rendered="#{cc.attrs.concept.editable}"
+                                            disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
+                                            value="#{conceptBean.crossmapSetMemberSelected}"
+                                            itemLabel="#{crossmap.toString()}"
+                                            itemValue="#{crossmap}">
+
+                                <!-- Parámetros del buscador -->
+                                <f:attribute name="crossmapSet" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                                <!-- Parámetros del validador -->
+                                <f:attribute name="crossmap" value="#{conceptBean.crossmapSetMemberSelected}"  />
+                                <!---->
+                                <p:column style="width: 500px">
+                                    <h:outputText value="#{crossmap.toString()}"/>
+                                </p:column>
+
+                                <p:ajax event="itemSelect" update="@(.panel_#{cc.attrs.relationshipDefinition.id}), @(.conceptHeader)"
+                                        listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.crossmapSetMemberSelected)}"
+                                        process="@this"/>
+
+                                <f:attribute name="targetDef" value="#{cc.attrs.targetDefinition}" />
+
+                            </p:autoComplete>
+                            <i class="fa fa-search fa-lg"  />
+                        </p:outputPanel>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </p:panel>
+
+    <!-- Multiplicidad 1 + Relacion existente + Sin atributos -->
+
+    <p:panel id="helperTableTypeSimple"
+             widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+
+        <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                   var="relationship"
+                   varStatus="var">
+
+            <div class="ui-fluid">
+
+                <div class="Container">
+
+                    <div class="Container20 White Responsive">
+                        <div class="ContainerIndent">
+
+                            <p:outputLabel value="Crossmap Directo" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                            <p:outputLabel value="Crossmap Directo *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+
+                        </div>
+                    </div>
+
+                    <div class="Container#{cc.attrs.relationshipDefinition.ATC?'50':'30'} White Responsive">
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                            <p:outputPanel styleClass="search">
+                                <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target}" />
+                                <p:commandLink process="@this"
+                                               update="@(.panel_#{cc.attrs.relationshipDefinition.id}), @(.conceptHeader)"
+                                               action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                                    <i class="fa fa-close fa-lg"  />
+                                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
+                                               icon="ui-icon-alert"/>
+                                </p:commandLink>
+                            </p:outputPanel>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </ui:repeat>
+    </p:panel>
 
     <!-- Multiplicidad N con atributos-->
 
-    <p:panel id="crossmapTypeCollectionWithAttributes" header="Crossmaps Directos" toggleable="#{true}"  toggleSpeed="500" collapsed="#{true}">
+    <p:panel id="crossmapTypeCollectionWithAttributes" header="Crossmaps Directos" toggleable="#{true}"  toggleSpeed="500" collapsed="#{true}"
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
-        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}" style="width:100%">
+        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}"
+                       rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}"
+                       style="width:100%">
 
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
