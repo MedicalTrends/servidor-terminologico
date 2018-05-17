@@ -64,7 +64,7 @@
 
                                 <p:ajax event="itemSelect"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
-                                        update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                        update="@(.panel_#{cc.attrs.relationshipDefinition.id}), @(.conceptHeader)"
                                         process="@this"/>
                                 <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
                                 <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
@@ -114,7 +114,7 @@
                                 <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
                                 <p:inputTextarea disabled="true" id="findHTRecords2_" value="#{relationship.target.cells[1].stringValue}" rendered="#{cc.attrs.relationshipDefinition.ATC}"  />
                                 <p:commandLink process="@this"
-                                               update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                               update="@(.panel_#{cc.attrs.relationshipDefinition.id}), @(.conceptHeader)"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
                                     <i class="fa fa-close fa-lg"  />
                                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?" icon="ui-icon-alert"/>

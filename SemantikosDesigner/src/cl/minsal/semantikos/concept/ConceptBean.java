@@ -3,6 +3,7 @@ package cl.minsal.semantikos.concept;
 import cl.minsal.semantikos.CompoundSpecialty;
 import cl.minsal.semantikos.MainMenuBean;
 import cl.minsal.semantikos.browser.PendingBrowserBean;
+import cl.minsal.semantikos.category.CategoryBean;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.designer.AutogenerateBean;
 import cl.minsal.semantikos.designer.CompositeAditional;
@@ -127,12 +128,23 @@ public class ConceptBean implements Serializable {
     @ManagedProperty( value = "#{autogenerateBean}")
     private AutogenerateBean autogenerateBean;
 
+    @ManagedProperty( value = "#{categoryBean}")
+    private CategoryBean categoryBean;
+
     public AutogenerateBean getAutogenerateBean() {
         return autogenerateBean;
     }
 
     public void setAutogenerateBean(AutogenerateBean autogenerateBean) {
         this.autogenerateBean = autogenerateBean;
+    }
+
+    public CategoryBean getCategoryBean() {
+        return categoryBean;
+    }
+
+    public void setCategoryBean(CategoryBean categoryBean) {
+        this.categoryBean = categoryBean;
     }
 
     public void setPendingBrowserBean(PendingBrowserBean pendingBrowserBean) {
@@ -162,8 +174,6 @@ public class ConceptBean implements Serializable {
     private List<Description> selectedDescriptions = new ArrayList<Description>();
 
     private List<TagSMTK> tagSMTKs = new ArrayList<TagSMTK>();
-
-    private List<RelationshipDefinitionWeb> orderedRelationshipDefinitionsList = new ArrayList<>();
 
     private List<ConceptAuditAction> auditAction;
 
@@ -334,7 +344,6 @@ public class ConceptBean implements Serializable {
         descriptionTypes = descriptionTypeFactory.getDescriptionTypesButFSNandFavorite();
         descriptionTypesEdit = descriptionTypeFactory.getDescriptionTypesButFSN();
         tagSMTKs = tagSMTKManager.getAllTagSMTKs();
-        orderedRelationshipDefinitionsList = new ArrayList<>();
         descriptionsToTraslate = new ArrayList<>();
         conceptSMTKNotValid = conceptManager.getNoValidConcept();
         conceptSuggestedList = new ArrayList<>();
@@ -394,7 +403,7 @@ public class ConceptBean implements Serializable {
 
         fullyDefined = concept.isFullyDefined();
 
-        return viewAugmenter.augmentConcept(category, conceptWeb);
+        return viewAugmenter.augmentConcept(conceptWeb, categoryBean.getRelationshipDefinitionsByCategory(category));
     }
 
     //Este método es responsable de pasarle a la vista un concepto plantilla
@@ -648,9 +657,11 @@ public class ConceptBean implements Serializable {
             this.concept.addRelationshipWeb(theRelationshipWeb);
         }
 
+        /*
         if(relationshipDefinition.getTargetDefinition().isBasicType() && relationshipDefinition.hasRelationshipAttributeDefinitions()) {
             removeRelationship(relationshipDefinition, theRelationshipWeb);
         }
+        */
 
         if(relationshipDefinition.isComercializado()) {
             changeMarketedBean.changeMarketedEvent(concept, relationshipDefinition, target);
@@ -785,7 +796,7 @@ public class ConceptBean implements Serializable {
      * @return
      */
     public boolean validateRelationships() {
-        for (RelationshipDefinitionWeb relationshipDefinition : getOrderedRelationshipDefinitions()) {
+        for (RelationshipDefinitionWeb relationshipDefinition : categoryBean.getRelationshipDefinitionsByCategory(category)) {
             boolean isMultiplicitySatisfied = concept.isMultiplicitySatisfied(relationshipDefinition);
             relationshipDefinition.setMultiplicitySatisfied(isMultiplicitySatisfied);
 
@@ -1432,47 +1443,6 @@ public class ConceptBean implements Serializable {
 
     public void setCrossmapSetMemberSelected(CrossmapSetMember crossmapSetMemberSelected) {
         this.crossmapSetMemberSelected = crossmapSetMemberSelected;
-    }
-
-    /**
-     * Este método retorna una lista ordenada de relaciones.
-     *
-     * @return Una lista ordenada de las relaciones de la categoría.
-     */
-    public List<RelationshipDefinitionWeb> getOrderedRelationshipDefinitions() {
-        if (orderedRelationshipDefinitionsList.isEmpty()) {
-            for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
-                RelationshipDefinitionWeb relationshipDefinitionWeb =
-                        viewAugmenter.augmentRelationshipDefinition(category, relationshipDefinition);
-                orderedRelationshipDefinitionsList.add(relationshipDefinitionWeb);
-            }
-            Collections.sort(orderedRelationshipDefinitionsList);
-        }
-        return orderedRelationshipDefinitionsList;
-    }
-
-    /**
-     * Este método retorna una lista ordenada de definiciones propias de semantikos.
-     *
-     * @return Una lista ordenada de las relaciones de la categoría.
-     */
-    public List<RelationshipDefinitionWeb> getOrderedSMTKRelationshipDefinitions() {
-        if (orderedRelationshipDefinitionsList.isEmpty() && category != null) {
-            for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
-                RelationshipDefinitionWeb relationshipDefinitionWeb = viewAugmenter.augmentRelationshipDefinition(category, relationshipDefinition);
-                orderedRelationshipDefinitionsList.add(relationshipDefinitionWeb);
-            }
-            Collections.sort(orderedRelationshipDefinitionsList);
-        }
-
-        List<RelationshipDefinitionWeb> smtkRelationshipDefinitions = new ArrayList<>();
-
-        for (RelationshipDefinitionWeb relationshipDefinition : orderedRelationshipDefinitionsList) {
-            if(!relationshipDefinition.getTargetDefinition().isSnomedCTType() && !relationshipDefinition.getTargetDefinition().isCrossMapType()) {
-                smtkRelationshipDefinitions.add(relationshipDefinition);
-            }
-        }
-        return smtkRelationshipDefinitions;
     }
 
     public boolean changeDirectMultiplicity(RelationshipDefinition relationshipDefinition) {

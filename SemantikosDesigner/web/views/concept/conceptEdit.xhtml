@@ -74,13 +74,13 @@
                                     </p:tab>
 
                                     <!--Relaciones -->
-                                    <p:tab title="Atributos" rendered="#{not empty conceptBean.orderedSMTKRelationshipDefinitions}">
+                                    <p:tab title="Atributos" rendered="#{not empty categoryBean.getSMTKDefinitionsByCategory(conceptBean.category)}">
                                         <p:outputPanel id="atributos"
                                                        widgetVar="panelAtributos"
                                                        styleClass="attributes"
-                                                       rendered="#{ not empty conceptBean.orderedSMTKRelationshipDefinitions }">
+                                                       rendered="#{ not empty categoryBean.getSMTKDefinitionsByCategory(conceptBean.category) }">
 
-                                            <h:dataTable style="width: 100%;" value="#{conceptBean.orderedSMTKRelationshipDefinitions}"
+                                            <h:dataTable style="width: 100%;" value="#{categoryBean.getSMTKDefinitionsByCategory(conceptBean.category)}"
                                                          collectionType="java.util.ArrayList"
                                                          var="relationshipDefinition">
 
@@ -131,7 +131,7 @@
                                                        styleClass="attributes"
                                                        rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
-                                            <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
+                                            <h:dataTable style="width: 100%;" value="#{categoryBean.getSnomedDefinitionsByCategory(conceptBean.category)}"
                                                          collectionType="java.util.ArrayList"
                                                          var="relationshipDefinition">
 

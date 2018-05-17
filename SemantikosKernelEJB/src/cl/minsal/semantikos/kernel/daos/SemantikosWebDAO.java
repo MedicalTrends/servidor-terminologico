@@ -37,5 +37,5 @@ public interface SemantikosWebDAO {
     public ExtendedRelationshipAttributeDefinitionInfo getCompositeOf(Category category, RelationshipAttributeDefinition relationshipAttributeDefinition);
 
 
-    public ConceptSMTKWeb augmentConcept(Category category, ConceptSMTKWeb concept);
+    public ConceptSMTKWeb augmentConcept(ConceptSMTKWeb concept);
 }

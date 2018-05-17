@@ -23,11 +23,17 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String FFA = "FFA";
 
+    public static final String FFA_DISP = "FFA del Dispositivo";
+
     public static final String MCCE = "Medicamento Clínico con Envase";
 
     public static final String SNOMED_CT = "SNOMED CT";
 
     public static final String SUSTANCIA = "Sustancia";
+
+    public static final String MB = "Medicamento Básico";
+
+    public static final String DB = "Dispositivo Básico";
 
     public static final String MC_SPECIAL = "Medicamento Clínico Especial";
 

@@ -200,7 +200,6 @@ public class DescriptionBeans {
         }
 
         conceptSMTK.getDescriptionFSN().setTerm(conceptSMTK.getDescriptionFSN().getTerm());
-
     }
 
     public boolean disableSensibilityFSN(Description description){

@@ -215,6 +215,18 @@ public class RelationshipDefinition implements Serializable {
         return getMultiplicity().getLowerBoundary() > 0;
     }
 
+    public boolean isSubstance() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.SUSTANCIA);
+    }
+
+    public boolean isMB() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.MB);
+    }
+
+    public boolean isDB() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.DB);
+    }
+
     public boolean isISP() {
         return this.getName().equalsIgnoreCase(TargetDefinition.ISP);
     }
@@ -250,6 +262,8 @@ public class RelationshipDefinition implements Serializable {
 
     public boolean isFFA() { return this.getName().equalsIgnoreCase(TargetDefinition.FFA); }
 
+    public boolean isFFADisp() { return this.getName().equalsIgnoreCase(TargetDefinition.FFA_DISP); }
+
     public boolean isMCCE() { return this.getName().equalsIgnoreCase(TargetDefinition.MCCE); }
 
     public boolean isMCSpecial() {
@@ -276,6 +290,28 @@ public class RelationshipDefinition implements Serializable {
 
     public boolean isGMDN() {
         return this.getName().equalsIgnoreCase(TargetDefinition.GMDN);
+    }
+
+    public boolean isAttributeSpecial() {
+
+        for (String s : name.split(" ")) {
+            if(s.equalsIgnoreCase("Especial")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isAttributeLaboratory() {
+
+        for (String s : name.split(" ")) {
+            if(s.equalsIgnoreCase("Laboratorio")) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

@@ -127,7 +127,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
     }
 
     @Override
-    public ConceptSMTKWeb augmentConcept(Category category, ConceptSMTKWeb concept) {
+    public ConceptSMTKWeb augmentConcept(ConceptSMTKWeb concept) {
 
         //ConnectionBD connect = new ConnectionBD();
 
@@ -140,7 +140,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.setLong(2, category.getId());
+            call.setLong(2, concept.getCategory().getId());
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);

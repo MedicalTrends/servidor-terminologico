@@ -134,7 +134,21 @@ public class Category extends PersistentEntity implements TargetDefinition, Audi
     public boolean hasAttributeSpecial() {
 
         for (RelationshipDefinition relationshipDefinition : relationshipDefinitions) {
-            if(relationshipDefinition.getName().contains("Especial")) {
+
+            for (String s : relationshipDefinition.getName().split(" ")) {
+                if(s.equalsIgnoreCase("Especial")) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isCommercial() {
+
+        for (String s : getName().split(" ")) {
+            if(s.equalsIgnoreCase("Comercial")) {
                 return true;
             }
         }

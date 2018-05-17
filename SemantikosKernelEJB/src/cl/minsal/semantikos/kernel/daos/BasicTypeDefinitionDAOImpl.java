@@ -5,6 +5,8 @@ import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 
+import cl.minsal.semantikos.model.basictypes.CloseInterval;
+import cl.minsal.semantikos.model.basictypes.Interval;
 import cl.minsal.semantikos.model.relationships.BasicTypeType;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import javax.ejb.Stateless;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import static java.util.Arrays.asList;
 
@@ -107,12 +110,19 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
 
                 case BOOLEAN_TYPE:
                     return new BasicTypeDefinition<Boolean>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
+
                 case INTEGER_TYPE:
-                    return new BasicTypeDefinition<Integer>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
+                    BasicTypeDefinition<Integer> integerBasicTypeDefinition = new BasicTypeDefinition<>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
+                    integerBasicTypeDefinition.setInterval(buildInterval(interval));
+
+                    return integerBasicTypeDefinition;
+
                 case FLOAT_TYPE:
                     return new BasicTypeDefinition<Float>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
+
                 case DATE_TYPE:
                     return new BasicTypeDefinition<Timestamp>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
+
                 default:
                     throw new IllegalArgumentException("TODO");
             }
@@ -121,5 +131,26 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
         }
 
         return null;
+    }
+
+    CloseInterval buildInterval(Array array) throws SQLException {
+
+        List<String> intervalElements = asList((String[]) array.getArray());
+
+        if(intervalElements.isEmpty()) {
+            return null;
+        }
+
+        CloseInterval interval = new CloseInterval();
+
+        if(intervalElements.get(0) != null) {
+            interval.setLowerBoundary(Integer.parseInt(intervalElements.get(0)));
+        }
+
+        if(intervalElements.get(1) != null) {
+            interval.setUpperBoundary(Integer.parseInt(intervalElements.get(1)));
+        }
+
+        return interval;
     }
 }

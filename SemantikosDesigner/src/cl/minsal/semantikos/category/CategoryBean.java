@@ -11,6 +11,7 @@ import cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,8 +21,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by des01c7 on 14-10-16.
  */
-@ManagedBean(name = "categoryBean", eager = true)
-@ApplicationScoped
+@ManagedBean(name = "categoryBean")
+@SessionScoped
 public class CategoryBean {
 
     //@EJB
@@ -68,6 +69,35 @@ public class CategoryBean {
         }
 
         return relationshipDefinitions;
+    }
+
+    /**
+     * Este método retorna una lista ordenada de definiciones propias de semantikos.
+     *
+     * @return Una lista ordenada de las relaciones de la categoría.
+     */
+    public List<RelationshipDefinitionWeb> getSMTKDefinitionsByCategory(Category category) {
+
+        List<RelationshipDefinitionWeb> smtkRelationshipDefinitions = new ArrayList<>();
+
+        for (RelationshipDefinitionWeb relationshipDefinition : getRelationshipDefinitionsByCategory(category)) {
+            if(!relationshipDefinition.getTargetDefinition().isSnomedCTType() && !relationshipDefinition.getTargetDefinition().isCrossMapType()) {
+                smtkRelationshipDefinitions.add(relationshipDefinition);
+            }
+        }
+        return smtkRelationshipDefinitions;
+    }
+
+    public List<RelationshipDefinitionWeb> getSnomedDefinitionsByCategory(Category category) {
+
+        List<RelationshipDefinitionWeb> snomedRelationshipDefinitions = new ArrayList<>();
+
+        for (RelationshipDefinitionWeb relationshipDefinition : getRelationshipDefinitionsByCategory(category)) {
+            if(relationshipDefinition.getTargetDefinition().isSnomedCTType()) {
+                snomedRelationshipDefinitions.add(relationshipDefinition);
+            }
+        }
+        return snomedRelationshipDefinitions;
     }
 
 }

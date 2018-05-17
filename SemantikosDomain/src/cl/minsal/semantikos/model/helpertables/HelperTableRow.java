@@ -110,7 +110,8 @@ public class HelperTableRow implements Target, Serializable {
 
     public HelperTableData getCellByColumnName(String columnName) {
         for (HelperTableData cell : cells) {
-            if(cell.getColumn().getDescription().toLowerCase().equals(columnName.toLowerCase())) {
+            if(cell.getColumn().getDescription().toLowerCase().equals(columnName.toLowerCase()) ||
+                    cell.getColumn().getName().toLowerCase().equals(columnName.toLowerCase())) {
                 return cell;
             }
         }
