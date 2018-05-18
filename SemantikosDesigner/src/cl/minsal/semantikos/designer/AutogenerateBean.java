@@ -358,7 +358,9 @@ public class AutogenerateBean {
                     for (RelationshipDefinitionWeb relationshipDefinition : categoryBean.getRelationshipDefinitionsByCategory(concept.getCategory())) {
                         if(relationshipDefinition.isSubstance() || relationshipDefinition.isMB() || relationshipDefinition.isFFA() ||
                                 relationshipDefinition.isDB() || relationshipDefinition.isFFADisp()) {
+
                             relationshipDefinition.getMultiplicity().setLowerBoundary(lowerBoundary);
+                            concept.getCategory().findRelationshipDefinitionsById(relationshipDefinition.getId()).get(0).getMultiplicity().setLowerBoundary(lowerBoundary);
                         }
                     }
                 }

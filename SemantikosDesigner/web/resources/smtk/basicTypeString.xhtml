@@ -42,6 +42,7 @@
                         <p:inputText id="basicTypeValue11"
                                      value="#{conceptBean.basicTypeValue.value}"
                                      var="value"
+                                     placeholder="Ingrese #{cc.attrs.relationshipDefinition.description}..."
                                      minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                      maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
                                      disabled="#{not cc.attrs.concept.editable or cc.attrs.relationshipDefinition.DIPrimario}"
@@ -130,7 +131,7 @@
                         <p:inputText id="basicTypeValue19"
                                      value="#{conceptBean.basicTypeValue.value}"
                                      var="value"
-                                     placeholder="Ingrese #{cc.attrs.targetDefinition.name}..."
+                                     placeholder="Ingrese #{cc.attrs.relationshipDefinition.description}..."
                                      autocomplete="off"
                                      minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                      maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
@@ -219,9 +220,8 @@
 
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
-                            <p:inputText id="basicTypeValue22"
-                                         placeholder="Ingrese #{cc.attrs.targetDefinition.name}..."
-                                         value="#{conceptBean.basicTypeValue.value}"  />
+                            <p:inputText id="basicTypeValue22" value="#{conceptBean.basicTypeValue.value}"
+                                         placeholder="Ingrese #{cc.attrs.relationshipDefinition.description}..."  />
 
                         </div>
 
@@ -266,6 +266,113 @@
                       columnIndexVar="colIndex">
                 <h:outputText value="#{relationship.target.value}" />
             </p:column>
+
+            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
+                <p:commandButton
+                        icon="fa fa-trash"
+                        title="Eliminar"
+                        update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.relationships_#{cc.attrs.relationshipDefinition.id})"
+                        style="float: right"
+                        process="@this"
+                        immediate="true"
+                        actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                        styleClass="relationships">
+                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
+                               icon="ui-icon-alert"/>
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+
+    </p:panel>
+
+    <!-- Multiplicidad N con atributos-->
+    <p:panel id="helperTableTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
+
+        <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
+            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.required}">
+                <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
+                <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
+            </p:outputPanel>
+            <p:outputPanel rendered="#{not cc.attrs.relationshipDefinition.required}">
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="Atributo opcional" style="font-size: small;" />
+            </p:outputPanel>
+        </f:facet>
+
+        <p:outputPanel rendered="#{cc.attrs.concept.editable}" style="width:100%" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}">
+
+            <div class="ui-fluid">
+
+                <div class="Container">
+
+                    <div class="Container20 White Responsive">
+
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                            <p:inputText id="basicTypeValue32" value="#{conceptBean.basicTypeValue.value}"
+                                         placeholder="Ingrese #{cc.attrs.relationshipDefinition.description}...">
+                                <p:ajax listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.basicTypeValue)}"
+                                        update="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                                        process="@this"/>
+                            </p:inputText>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Atributos de relación -->
+                    <smtk:attributes concept="#{cc.attrs.concept}" relationship="#{conceptBean.relationshipPlaceholders.get(cc.attrs.relationshipDefinition.id)}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
+
+                    <div class="Container20 White Responsive">
+
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                            <p:commandButton
+                                    process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                                    action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
+                                    style="max-width: 100px"
+                                    update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                                    value="Agregar">
+                            </p:commandButton>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </p:outputPanel>
+
+        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
+            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="El concepto no tiene #{cc.attrs.relationshipDefinition.name}" style="font-size: small;" />
+            </p:outputPanel>
+        </f:facet>
+
+        <p:dataTable id="collectionValues22"
+                     styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
+                     rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     var="relationship"
+                     value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     reflow="true">
+
+            <p:column headerText="Descripción"
+                      var="column"
+                      columnIndexVar="colIndex">
+                <h:outputText value="#{relationship.target.value}" />
+            </p:column>
+
+            <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
+                       var="attribute"
+                       columnIndexVar="colIndex">
+                <f:facet name="header">
+                    <h:outputText value="#{attribute.name}" />
+                </f:facet>
+                <smtk:basicTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.basicType}" />
+                <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
+            </p:columns>
 
             <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
                 <p:commandButton

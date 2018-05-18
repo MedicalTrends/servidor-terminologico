@@ -429,7 +429,8 @@
                                                   value="Si" oncomplete="PF('inheritDirectCrossmaps').hide()" style="float: right" />
 
                                 <p:commandButton  oncomplete="PF('inheritDirectCrossmaps').hide()" style="float: right;"
-                                                  value="No" />
+                                                  update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes)"
+                                                  value="No" actionListener="#{autogenerateBean.setInheritedCrossmaps(true)}" />
 
                             </p:panel>
 

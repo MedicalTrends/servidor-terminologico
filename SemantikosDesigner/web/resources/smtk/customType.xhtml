@@ -69,6 +69,11 @@
             relationshipDefinition="#{cc.attrs.relationshipDefinition}"
             concept="#{cc.attrs.concept}"/>
 
-
+    <smtk:basicTypeStringPaddingNumber
+            rendered="#{cc.attrs.relationshipDefinition.compositeID eq 16}"
+            targetDefinition="#{cc.attrs.relationshipDefinition.targetDefinition}"
+            relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+            concept="#{cc.attrs.concept}"/>
+    
 </composite:implementation>
 </html>

@@ -33,7 +33,7 @@
                                  targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
                                  concept="#{cc.attrs.concept}"
                                  rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not
-                                             relationshipAttributeDefinition.isOrderAttribute() }"
+                                             relationshipAttributeDefinition.isOrderAttribute() and relationshipAttributeDefinition.compositeID eq -1 }"
         />
         <smtk:smtkTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                 relationship="#{cc.attrs.relationship}"
@@ -65,6 +65,14 @@
                                                      concept="#{cc.attrs.concept}"
                                                      rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable and
                                                                   relationshipAttributeDefinition.compositeID eq 15}"
+        />
+        <smtk:basicTypeAttributePaddingNumber relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                                     relationship="#{cc.attrs.relationship}"
+                                                     relationshipAttributeDefinition="#{relationshipAttributeDefinition.relationshipAttributeDefinition}"
+                                                     targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                                     concept="#{cc.attrs.concept}"
+                                                     rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and
+                                                                  relationshipAttributeDefinition.compositeID eq 16}"
         />
         <smtk:helperTableTypeAttributeListBox relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                               relationship="#{cc.attrs.relationship}"

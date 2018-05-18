@@ -151,7 +151,6 @@ public class CIE10DAOImpl implements CIE10DAO {
         return diseases;
     }
 
-
     /**
      * Este método es responsable de crear un objeto <code>CrossmapSetMember</code> a partir de un ResultSet.
      *

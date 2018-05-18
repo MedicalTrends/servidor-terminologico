@@ -15,6 +15,7 @@ import cl.minsal.semantikos.kernel.componentsweb.ViewAugmenter;
 import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
+import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
@@ -657,11 +658,17 @@ public class ConceptBean implements Serializable {
             this.concept.addRelationshipWeb(theRelationshipWeb);
         }
 
-        /*
         if(relationshipDefinition.getTargetDefinition().isBasicType() && relationshipDefinition.hasRelationshipAttributeDefinitions()) {
-            removeRelationship(relationshipDefinition, theRelationshipWeb);
+            BasicTypeDefinition basicTypeDefinition = (BasicTypeDefinition)relationshipDefinition.getTargetDefinition();
+
+            if(basicTypeDefinition.getType().equals(BasicTypeType.BOOLEAN_TYPE)) {
+                BasicTypeValue basicTypeValue = (BasicTypeValue)target;
+                Boolean value = (Boolean)basicTypeValue.getValue();
+                if(!value) {
+                    removeRelationship(relationshipDefinition, theRelationshipWeb);
+                }
+            }
         }
-        */
 
         if(relationshipDefinition.isComercializado()) {
             changeMarketedBean.changeMarketedEvent(concept, relationshipDefinition, target);
