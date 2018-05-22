@@ -236,6 +236,9 @@ public class HelperTableBean implements Serializable {
 
     public List<HelperTableRow> getValidTableRows(HelperTable table, RelationshipAttributeDefinition relationshipAttributeDefinition) {
         List<HelperTableRow> helperTableRows = getReferencedTableRows(table.getId());
+        if(!helperTableRows.contains(dummyRow)) {
+            helperTableRows.add(0, dummyRow);
+        }
         List<HelperTableRow> helperTableRowsFiltered;
 
         switch ((int)relationshipAttributeDefinition.getId()) {
@@ -350,13 +353,16 @@ public class HelperTableBean implements Serializable {
 
 
     public List<HelperTableRow> getReferencedTableRows(Long tableId) {
+
+        List<HelperTableRow> validTableRows = new ArrayList<>();
+
         if(validRow==null){
             validRow= new HashMap<>();
         }
         if(validRow.get(tableId)!=null){
             return validRow.get(tableId);
         }
-        List<HelperTableRow> validTableRows = manager.getValidTableRows(tableId);
+        validTableRows.addAll(manager.getValidTableRows(tableId));
         validRow.put(tableId,validTableRows);
         return validTableRows;
     }

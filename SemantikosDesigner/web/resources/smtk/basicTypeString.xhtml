@@ -313,7 +313,6 @@
                             <p:inputText id="basicTypeValue32" value="#{conceptBean.basicTypeValue.value}"
                                          placeholder="Ingrese #{cc.attrs.relationshipDefinition.description}...">
                                 <p:ajax listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.basicTypeValue)}"
-                                        update="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                         process="@this"/>
                             </p:inputText>
 
@@ -352,7 +351,7 @@
         </f:facet>
 
         <p:dataTable id="collectionValues22"
-                     styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
+                     styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
                      rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"

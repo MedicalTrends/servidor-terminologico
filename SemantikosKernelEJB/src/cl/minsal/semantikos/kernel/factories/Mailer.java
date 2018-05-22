@@ -12,8 +12,10 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * @author Diego Soto
@@ -30,13 +32,16 @@ public class Mailer implements Runnable {
 
     //private static String body = "<b>Bienvenido a Semantikos</b><br><br>Una cuenta asociada a este correo ha sido creada. <ul><li>Para activar su cuenta, por favor pinche el siguiente link: <br>%link%</li><li>Su contraseña inicial es: %password%</li><li>Cambie su contraseña inicial</li><li>Configure sus preguntas de seguridad</li></ul>El Equipo Semantikos";
 
-    private static String body = "<table style='border-collapse:collapse;table-layout:fixed;min-width:320px;width:100%;background-color:#f5f7fa;' cellpadding='0' cellspacing='0'><tr><td><table style='background:white;border-collapse:collapse;table-layout:fixed;max-width:600px;min-width:320px;width:100%;font-family:Impact, Charcoal, sans-serif;color:#283593' align='center' cellpadding='0' cellspacing='0'><tr><td align='center' style='width:100%' colspan='3'><img src=\"cid:image2\" style='width:230px'></td></tr><tr><td colspan=3 style='padding-left:2em;padding-right:2em'><hr style='padding: 2px; background: #283593;' /><br/><br/>Estimado(a) %username%, una cuenta asociada a este correo ha sido creada en el Sistema.</p><ul><li>Su contraseña inicial es: %password%</li><li>Cambie su contraseña inicial</li><li>Configure sus preguntas de seguridad</li></ul><p>El equipo Semantikos</p><br/></td></tr><tr><td style='width:30%'></td><td style='background: #283593;width:40%;text-align:center;font-family:arial;font-size:13px;border-radius: 15px;-moz-border-radius: 15px;' align='center' height=31><a style='color: white;text-decoration:none;text-align:center' href='%link%'><strong>Activar Cuenta</strong></a></td><td></td></tr><tr><td colspan='3' align='center'><br/><div>©2016 Ministerio de Salud</div></td></tr></table></td></tr></table>";
+    private static String body; //= "<table style='border-collapse:collapse;table-layout:fixed;min-width:320px;width:100%;background-color:#f5f7fa;' cellpadding='0' cellspacing='0'><tr><td><table style='background:white;border-collapse:collapse;table-layout:fixed;max-width:600px;min-width:320px;width:100%;font-family:Impact, Charcoal, sans-serif;color:#283593' align='center' cellpadding='0' cellspacing='0'><tr><td align='center' style='width:100%' colspan='3'><img src=\"cid:image2\" style='width:230px'></td></tr><tr><td colspan=3 style='padding-left:2em;padding-right:2em'><hr style='padding: 2px; background: #283593;' /><br/><br/>Estimado(a) %username%, una cuenta asociada a este correo ha sido creada en el Sistema.</p><ul><li>Su contraseña inicial es: %password%</li><li>Cambie su contraseña inicial</li><li>Configure sus preguntas de seguridad</li></ul><p>El equipo Semantikos</p><br/></td></tr><tr><td style='width:30%'></td><td style='background: #283593;width:40%;text-align:center;font-family:arial;font-size:13px;border-radius: 15px;-moz-border-radius: 15px;' align='center' height=31><a style='color: white;text-decoration:none;text-align:center' href='%link%'><strong>Activar Cuenta</strong></a></td><td></td></tr><tr><td colspan='3' align='center'><br/><div>©2016 Ministerio de Salud</div></td></tr></table></td></tr></table>";
+
+    BufferedReader reader;
 
     private static final Logger logger = LoggerFactory.getLogger(Mailer.class);
 
-    protected Mailer(Session session, User user, String password, String link, String link2) {
+    protected Mailer(Session session, User user, String password, String link, String link2) throws IOException {
         mySession = session;
         this.user = user;
+        loadMailBody();
         this.body = this.body.replace("%username%", user.getFullName());
         this.body = this.body.replace("%password%", password);
         this.body = this.body.replace("%link%", link);
@@ -80,7 +85,7 @@ public class Mailer implements Runnable {
                 // second part (the image)
                 messageBodyPart = new MimeBodyPart();
 
-                String fileName = "/logo-27.png";
+                String fileName = "/img/logo-minsal.png";
                 InputStream stream = this.getClass().getResourceAsStream(fileName);
 
                 if (stream == null) {
@@ -93,6 +98,29 @@ public class Mailer implements Runnable {
                 }
 
                 DataSource ds = new ByteArrayDataSource(stream, "image/*");
+
+                messageBodyPart.setDataHandler(new DataHandler(ds));
+                messageBodyPart.setHeader("Content-ID","<image1>");
+
+                // add it
+                multipart.addBodyPart(messageBodyPart);
+
+                // third part (the other image)
+                messageBodyPart = new MimeBodyPart();
+
+                fileName = "/img/logo-semantikos.png";
+                stream = this.getClass().getResourceAsStream(fileName);
+
+                if (stream == null) {
+                    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                    if (classLoader == null) {
+                        classLoader = this.getClass().getClassLoader();
+                    }
+
+                    stream = classLoader.getResourceAsStream(fileName);
+                }
+
+                ds = new ByteArrayDataSource(stream, "image/*");
 
                 messageBodyPart.setDataHandler(new DataHandler(ds));
                 messageBodyPart.setHeader("Content-ID","<image2>");
@@ -124,5 +152,11 @@ public class Mailer implements Runnable {
                 }
             }
         }
+    }
+
+    private void loadMailBody() throws IOException {
+        reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/mail/body.html")));
+        body = reader.readLine();
+        reader.close();
     }
 }
