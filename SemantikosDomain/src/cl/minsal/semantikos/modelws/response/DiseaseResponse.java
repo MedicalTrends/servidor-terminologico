@@ -13,8 +13,8 @@ import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
  * @author Andrés Farías on 12/15/16.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "crossmapSetMember", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "CrossmapSetMember", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "disease", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "Disease", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class DiseaseResponse extends CrossmapSetMemberResponse implements Serializable {
 
     /** ID de negocio */

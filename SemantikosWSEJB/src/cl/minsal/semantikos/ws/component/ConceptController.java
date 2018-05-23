@@ -493,6 +493,37 @@ public class ConceptController {
         return res;
     }
 
+    public ConceptResponse conceptByConceptID(String conceptId)
+            throws Exception {
+        ConceptSMTK conceptSMTK;
+        try {
+            conceptSMTK = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
+        } catch (Exception e) {
+            throw new NotFoundFault("Concepto no encontrado: " + conceptId);
+        }
+
+        ConceptResponse res = new ConceptResponse(conceptSMTK);
+        this.loadSnomedCTRelationships(res, conceptSMTK);
+        this.loadAttributes(res, conceptSMTK);
+        this.loadRefSets(res, conceptSMTK);
+        this.loadIndirectCrossmaps(res, conceptSMTK);
+        this.loadDirectCrossmaps(res, conceptSMTK);
+        res.setForREQWS028();
+        res.setCreationDate(auditManager.getConceptCreationAuditAction(conceptSMTK, true).getActionDate());
+
+        for (DescriptionResponse descriptionResponse : res.getDescriptions()) {
+            descriptionResponse.setValid(null);
+            descriptionResponse.setValidityUntil(null);
+            descriptionResponse.setCreationDate(null);
+        }
+
+        for (RefSetResponse refSetResponse : res.getRefsets()) {
+            refSetResponse.setConcepts(null);
+        }
+
+        return res;
+    }
+
     /**
      * Este metodo recupera los conceptos de una categoria
      *
