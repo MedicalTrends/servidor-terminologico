@@ -11,8 +11,12 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.Profile;
+import cl.minsal.semantikos.model.users.Roles;
 import cl.minsal.semantikos.model.users.User;
+import org.jboss.ejb3.annotation.SecurityDomain;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.sql.Timestamp;
@@ -26,12 +30,15 @@ import static cl.minsal.semantikos.model.audit.AuditActionType.*;
  * @author Andrés Farías
  */
 @Stateless
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class AuditManagerImpl implements AuditManager {
 
     @EJB
     private AuditDAO auditDAO;
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordNewConcept(ConceptSMTK conceptSMTK, User user) {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
@@ -41,6 +48,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordUpdateConcept(ConceptSMTK conceptSMTK, User user) {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
@@ -53,6 +61,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordDescriptionMovement(ConceptSMTK sourceConcept, ConceptSMTK targetConcept, Description description, User user) {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
@@ -73,6 +82,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordConceptPublished(ConceptSMTK conceptSMTK, User user) {
 
         ConceptAuditAction auditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_PUBLICATION, now(), user, conceptSMTK);
@@ -83,6 +93,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordFavouriteDescriptionUpdate(ConceptSMTK conceptSMTK, Description originalDescription, User user) {
 
         /* Condición sobre la cual se debe registrar el cambio */
@@ -98,6 +109,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordConceptCategoryChange(ConceptSMTK conceptSMTK, Category originalCategory, User user) {
 
         /* Se validan las reglas de negocio para realizar el registro */
@@ -108,6 +120,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordAttributeChange(ConceptSMTK conceptSMTK, Relationship originalRelationship, User user) {
         /* Se validan las reglas de negocio para realizar el registro */
         //ConceptAuditAction auditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_ATTRIBUTE_CHANGE, now(), user, originalRelationship);
@@ -118,6 +131,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordRelationshipCreation(Relationship relationship, User user) {
 
         /* Se validan las reglas de negocio para realizar el registro */
@@ -128,6 +142,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordRelationshipRemoval(Relationship relationship, User user) {
         /* Se validan las reglas de negocio para realizar el registro */
         ConceptAuditAction auditAction = new ConceptAuditAction(relationship.getSourceConcept(), CONCEPT_RELATIONSHIP_REMOVAL, now(), user, relationship);
@@ -137,6 +152,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordCrossMapCreation(Crossmap crossmap, User user) {
         /* Se validan las reglas de negocio para realizar el registro */
         ConceptAuditAction auditAction = new ConceptAuditAction(crossmap.getSourceConcept(), CONCEPT_RELATIONSHIP_CROSSMAP_CREATION, now(), user, crossmap);
@@ -146,6 +162,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordCrossMapRemoval(Crossmap crossmap, User user) {
         /* Se validan las reglas de negocio para realizar el registro */
         ConceptAuditAction auditAction = new ConceptAuditAction(crossmap.getSourceConcept(), CONCEPT_RELATIONSHIP_CROSSMAP_REMOVAL, now(), user, crossmap);
@@ -155,6 +172,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordDescriptionCreation(Description description, User user) {
 
         /* Se validan las reglas de negocio para realizar el registro */
@@ -166,6 +184,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordDescriptionDeletion(ConceptSMTK conceptSMTK, Description description, User user) {
               /* Se validan las reglas de negocio para realizar el registro */
         ConceptAuditAction auditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_DESCRIPTION_DELETION, now(), user, description);
@@ -175,6 +194,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordConceptInvalidation(ConceptSMTK conceptSMTK, User user) {
         /* Se crea el registro de historial */
         ConceptAuditAction conceptAuditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_INVALIDATION, now(), user, conceptSMTK);
@@ -184,6 +204,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.REFSET_ADMIN_ROLE})
     public void recordRefSetCreation(RefSet refSet, User user) {
         /* Se crea el registro de historial */
         RefSetAuditAction refSetAuditAction = new RefSetAuditAction(refSet, REFSET_CREATION, now(), user);
@@ -195,6 +216,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.REFSET_ADMIN_ROLE})
     public void recordRefSetUpdate(RefSet refSet, User user) {
         /* Se crea el registro de historial */
         RefSetAuditAction refSetAuditAction = new RefSetAuditAction(refSet, REFSET_UPDATE, now(), user);
@@ -206,6 +228,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.REFSET_ADMIN_ROLE})
     public void recordRefSetBinding(RefSet refSet, ConceptSMTK conceptSMTK, User user) {
 
         /* Se crea el registro de historial */
@@ -218,6 +241,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.REFSET_ADMIN_ROLE})
     public void recordRefSetUnbinding(RefSet refSet, ConceptSMTK conceptSMTK, User user) {
         /* Se crea el registro de historial */
         RefSetAuditAction refSetAuditAction = new RefSetAuditAction(refSet, REFSET_UPDATE, now(), user, conceptSMTK);
@@ -229,6 +253,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.REFSET_ADMIN_ROLE})
     public void recordRefSetInvalidate(RefSet refSet, User user) {
         /* Se crea el registro de historial */
         RefSetAuditAction refSetAuditAction = new RefSetAuditAction(refSet, REFSET_UPDATE, now(), user);

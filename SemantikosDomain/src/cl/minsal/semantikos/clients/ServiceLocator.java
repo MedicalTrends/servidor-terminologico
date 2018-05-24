@@ -25,11 +25,6 @@ public class ServiceLocator {
     private static String APP_NAME = "SemantikosCentral/";
     private static String MODULE_NAME = "SemantikosKernelEJB/";
 
-    /*
-    * The name of the file which will contain the login configurations
-    */
-    final String authFile = "/auth.conf";
-
 
     private void lookupRemoteStatelessEJB(Type type) throws NamingException {
 
@@ -77,10 +72,10 @@ public class ServiceLocator {
 
         //props = new Properties();
         props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-        props.put(InitialContext.SECURITY_PRINCIPAL, "user@admin.cl");
-        props.put(InitialContext.SECURITY_CREDENTIALS, "1234567z");
-        props.put("remote.connection.default.username", "user@admin.cl");
-        props.put("remote.connection.default.password", "1234567z");
+        //props.put(InitialContext.SECURITY_PRINCIPAL, "user@admin.cl");
+        //props.put(InitialContext.SECURITY_CREDENTIALS, "1234567z");
+        //props.put("remote.connection.default.username", "diego.abelardo.soto@gmail.cl");
+        //props.put("remote.connection.default.password", "1234567z");
         props.put("jboss.naming.client.ejb.context", "true");
 
         try {

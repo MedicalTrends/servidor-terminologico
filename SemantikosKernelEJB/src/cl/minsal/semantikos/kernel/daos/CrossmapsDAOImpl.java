@@ -89,7 +89,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
             case CrossmapSet.GMDN:
                 return gmdndao.getGenericDeviceGroupById(idCrossmapSetMember);
             default:
-                throw new IllegalArgumentException("CrossmapSet"+crossmapSet+" no soportado");
+                throw new IllegalArgumentException("CrossmapSet: '"+crossmapSet+"' no soportado");
         }
 
     }
@@ -103,7 +103,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
             case CrossmapSet.GMDN:
                 return (List<CrossmapSetMember>) (Object) gmdndao.findGenericDeviceGroupsByPattern(pattern);
             default:
-                throw new IllegalArgumentException("CrossmapSet"+crossmapSet+" no soportado");
+                throw new IllegalArgumentException("CrossmapSet: '"+crossmapSet+"' no soportado");
         }
 
     }

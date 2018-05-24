@@ -267,7 +267,7 @@ public class GMDNDAOImpl implements GMDNDAO {
 
         }
 
-        if(parents==0) {
+        if(parents == 0) {
             return allNodesParentNodes;
         }
         else {

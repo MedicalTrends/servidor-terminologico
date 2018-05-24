@@ -9,6 +9,8 @@ import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.users.Roles;
+import cl.minsal.semantikos.model.users.ProfileFactory;
 import cl.minsal.semantikos.model.users.User;
 import org.jboss.ejb3.annotation.SecurityDomain;
 import org.slf4j.Logger;
@@ -17,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,9 +30,8 @@ import static java.util.Collections.EMPTY_LIST;
  * @author Andrés Farías on 27-05-16.
  */
 @Stateless
-@DeclareRoles("Administrador")
 @SecurityDomain("SemantikosDomain")
-//@PermitAll
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class CategoryManagerImpl implements CategoryManager {
 
     private static final Logger logger = LoggerFactory.getLogger(CategoryManagerImpl.class);
@@ -49,11 +49,12 @@ public class CategoryManagerImpl implements CategoryManager {
     private EJBContext context;
 
     @Override
+    @PermitAll
     public void addAttribute(RelationshipDefinition attributeCategory, int idCategory) {
-
     }
 
     @Override
+    @PermitAll
     public Category createCategory(Category category, User user) {
 
         logger.debug("Persistiendo la categoría: " + category);
@@ -76,6 +77,7 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
+    @PermitAll
     public ConceptSMTK categoryContains(Category category, String term) {
 
         List<Description> descriptions = descriptionManager.searchDescriptionsByTerm(term, Arrays.asList(category), EMPTY_LIST);
@@ -90,12 +92,14 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
+    @PermitAll
     public Category getCategoryById(long id) {
         return CategoryFactory.getInstance().findCategoryById(id);
         //return categoryDAO.getCategoryById(id);
     }
 
     @Override
+    @PermitAll
     public Category getCategoryByName(String name) throws IllegalArgumentException {
         Category category= CategoryFactory.getInstance().findCategoryByName(name);
         if(category!=null) {
@@ -108,8 +112,7 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
-    @RolesAllowed("Administrador")
-    //@PermitAll
+    @PermitAll
     public List<Category> getCategories() {
 
         System.out.println(context.getCallerPrincipal().getName());
@@ -124,11 +127,13 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
+    @PermitAll
     public List<Category> getRelatedCategories(Category category) {
         return categoryDAO.getRelatedCategories(category);
     }
 
     @Override
+    @PermitAll
     public List<Category> findCategories(List<String> categoriesNames) {
 
         List<Category> res = new ArrayList<>();
@@ -152,6 +157,7 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
+    @PermitAll
     public CategoryFactory getCategoryFactory() {
         return CategoryFactory.getInstance();
     }

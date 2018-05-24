@@ -175,7 +175,9 @@ public class StringUtils {
 
     public static boolean validatePasswordFormat(String password) {
 
-        return password.matches("^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$");
+        //return password.matches("^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$");
+
+        return password.matches("^[a-zA-Z0-9_-]*$");
 
     }
 
