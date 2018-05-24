@@ -374,13 +374,15 @@ public class TargetDAOImpl implements TargetDAO {
                 }
 
                 if (basicTypeDefinition.getType().equals(BasicTypeType.FLOAT_TYPE)) {
-                    call.setFloat(2, Float.parseFloat((String) value.getValue()));
+                    call.setFloat(2, Float.parseFloat(value.getValue().toString()));
                 }
+
                 if (basicTypeDefinition.getType().equals(BasicTypeType.INTEGER_TYPE)) {
-                    call.setInt(6, Integer.parseInt((String) value.getValue()));
+                    call.setInt(6, Integer.parseInt(value.getValue().toString()));
                 }
+
                 if (basicTypeDefinition.getType().equals(BasicTypeType.STRING_TYPE)) {
-                    call.setString(4, (String) value.getValue());
+                    call.setString(4, value.getValue().toString());
                 }
 
             }

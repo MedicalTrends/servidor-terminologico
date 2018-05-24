@@ -49,6 +49,8 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String DI_PRIMARIO = "DI Primario";
 
+    public static final String CANTIDAD_PP = "Cantidad partido por";
+
     /**
      * Este metodo es responsable de determinar si el target type es de tipo básico es o no.
      *

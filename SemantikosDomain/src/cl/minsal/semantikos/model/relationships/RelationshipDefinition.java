@@ -186,6 +186,15 @@ public class RelationshipDefinition implements Serializable {
         return null;
     }
 
+    public RelationshipAttributeDefinition getPPAttributeDefinition() {
+        for (RelationshipAttributeDefinition relationshipAttributeDefinition : getRelationshipAttributeDefinitions()) {
+            if (relationshipAttributeDefinition.isUnidadPPAttribute()) {
+                return relationshipAttributeDefinition;
+            }
+        }
+        return null;
+    }
+
 
     public List<RelationshipAttributeDefinition> findRelationshipAttributeDefinitionsByName(String name) {
         List<RelationshipAttributeDefinition> someRelationshipAttributeDefinitions = new ArrayList<>();
@@ -278,6 +287,10 @@ public class RelationshipDefinition implements Serializable {
         return this.getName().equalsIgnoreCase(TargetDefinition.DI_PRIMARIO);
     }
 
+    public boolean isCantidadPP() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.CANTIDAD_PP);
+    }
+
     private final String SNOMEDCT="SNOMED CT";
 
     public boolean isSNOMEDCT(){
@@ -308,6 +321,20 @@ public class RelationshipDefinition implements Serializable {
         for (String s : name.split(" ")) {
             if(s.equalsIgnoreCase("Laboratorio")) {
                 return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean hasAttributePP() {
+
+        for (RelationshipAttributeDefinition relationshipAttributeDefinition : relationshipAttributeDefinitions) {
+
+            for (String s : relationshipAttributeDefinition.getName().split(" ")) {
+                if(s.equalsIgnoreCase("PP")) {
+                    return true;
+                }
             }
         }
 
