@@ -2,16 +2,10 @@ package cl.minsal.semantikos.clients; /**
  * Created by root on 15-05-17.
  */
 
-import cl.minsal.semantikos.kernel.components.AuthenticationManager;
-import cl.minsal.semantikos.kernel.components.DescriptionManager;
-import org.apache.commons.configuration.*;
-import org.jboss.ejb.client.ContextSelector;
-import org.jboss.ejb.client.EJBClientConfiguration;
-import org.jboss.ejb.client.EJBClientContext;
-import org.jboss.ejb.client.PropertiesBasedEJBClientConfiguration;
-import org.jboss.ejb.client.remoting.ConfigBasedEJBClientContextSelector;
-
 import javax.naming.*;
+import javax.security.auth.login.Configuration;
+import javax.security.auth.login.LoginContext;
+import javax.security.auth.login.LoginException;
 
 import java.lang.reflect.Type;
 import java.util.*;
@@ -22,6 +16,7 @@ public class ServiceLocator {
 
     private static final ServiceLocator instance = new ServiceLocator();
     private static Context context;
+    private static LoginContext loginContext;
     private Properties props = new Properties();
 
     /** Mapa de interfaces por su nombre. */
@@ -29,6 +24,12 @@ public class ServiceLocator {
 
     private static String APP_NAME = "SemantikosCentral/";
     private static String MODULE_NAME = "SemantikosKernelEJB/";
+
+    /*
+    * The name of the file which will contain the login configurations
+    */
+    final String authFile = "/auth.conf";
+
 
     private void lookupRemoteStatelessEJB(Type type) throws NamingException {
 
@@ -64,8 +65,15 @@ public class ServiceLocator {
      * Constructor privado para el Singleton del Factory.
      * EJBClientContext using EJBClientAPI
      */
-
     private ServiceLocator() {
+
+        Configuration.setConfiguration(new DefaultJaasConfiguration());
+
+        /*
+       * Set the filename above, as part of system property, so that while doing a login,
+       * this file will be used to check the login configurations
+       */
+        //System.setProperty("java.security.auth.login.config", authFile);
 
         //props = new Properties();
         props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
@@ -77,9 +85,9 @@ public class ServiceLocator {
 
         try {
             context = new InitialContext(props);
-            EJBClientConfiguration cc = new PropertiesBasedEJBClientConfiguration(props);
-            ContextSelector<EJBClientContext> selector = new ConfigBasedEJBClientContextSelector(cc);
-            EJBClientContext.setSelector(selector);
+            //EJBClientConfiguration cc = new PropertiesBasedEJBClientConfiguration(props);
+            //ContextSelector<EJBClientContext> selector = new ConfigBasedEJBClientContextSelector(cc);
+            //EJBClientContext.setSelector(selector);
             //context = new InitialContext(properties);
             //Autenticar usuario guest para la posterior invocacion de componentes durante despliegue
             //AuthenticationManager authManager = (AuthenticationManager) getService(AuthenticationManager.class);
@@ -96,12 +104,51 @@ public class ServiceLocator {
         return instance;
     }
 
-    public static void setCredentals(String email, String password) throws org.apache.commons.configuration.ConfigurationException {
+    public static boolean login(String userName, String password) {
+        /*
+       * During the login process(i.e. when the login() method on the LoginContext is called),
+       * the control will be transferred to a CallbackHandler. The CallbackHandler will be
+       * responsible for populating the Callback object with the username and password, which
+       * will be later on used by the login process
+       *
+       * The "MyCallbackHandler" is your own class and you can give any name to it. MyCallbackHandler
+       * expects the username and password to be passed through its constructor, but this is NOT
+       * mandatory when you are writing your own callback handler.
+       *
+       *
+       */
+        MyCallbackHandler handler = new MyCallbackHandler(userName, password);
 
-        PropertiesConfiguration conf = new PropertiesConfiguration("jboss-ejb-client.properties");
-        conf.setProperty("remote.connection.default.username", email);
-        conf.setProperty("remote.connection.default.password", password);
-        conf.save();
+        try {
+
+           /*
+            * Create a login context. Here, as the first parameter, you will specify which
+            * configuration(mentioned in the "authFile" above) will be used. Here we are specifying
+            * "someXYZLogin" as the configuration to be used. Note: This has to match the configuration
+            * specified in the someFilename.someExtension authFile above.
+            * The login context expects a CallbackHandler as the second parameter. Here we are specifying
+            * the instance of MyCallbackHandler created earlier. The "handle()" method of this handler
+            * will be called during the login process.
+            */
+            loginContext= new LoginContext(Configuration.getConfiguration().getClass().getName(), handler);
+
+           /*
+            * Do the login
+            */
+            loginContext.login();
+
+            System.out.println("Successfully logged in user: " + userName);
+
+            return true;
+
+
+        } catch (LoginException le) {
+
+            System.out.println("Login failed");
+            le.printStackTrace();
+            return false;
+        }
+
     }
 
     /**

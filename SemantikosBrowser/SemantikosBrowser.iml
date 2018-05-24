@@ -62,30 +62,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.xml.ws:jboss-jaxws-api_2.2_spec:2.0.2.Final" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish:javax.faces:2.2.4" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.weld.servlet:weld-servlet:2.3.5.Final" level="project" />
-    <orderEntry type="module" module-name="SemantikosDomain" />
-    <orderEntry type="library" name="Maven: org.jboss:jboss-ejb-client:1.0.39.Final-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss:jboss-remote-naming:1.0.13.Final-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.1.4.GA-redhat-2" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.marshalling:jboss-marshalling:1.4.10.SP3-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.marshalling:jboss-marshalling-river:1.4.10.SP3-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.remoting3:jboss-remoting:3.3.10.Final-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.sasl:jboss-sasl:1.0.5.Final-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec:1.0.1.Final-redhat-3" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.spec.javax.ejb:jboss-ejb-api_3.1_spec:1.0.2.Final-redhat-3" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.xnio:xnio-api:3.0.16.GA-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.xnio:xnio-nio:3.0.16.GA-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.as:jboss-as-build-config:7.5.17.Final-redhat-4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-collections4:4.0" level="project" />
-    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.0" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.1" level="project" />
-    <orderEntry type="library" name="Maven: commons-configuration:commons-configuration:1.6" level="project" />
-    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
-    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
-    <orderEntry type="library" name="Maven: commons-digester:commons-digester:1.8" level="project" />
-    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.7.0" level="project" />
-    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils-core:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: net.bull.javamelody:javamelody-core:1.51.0" level="project" />
     <orderEntry type="library" name="Maven: org.jrobin:jrobin:1.5.9" level="project" />
     <orderEntry type="library" name="Maven: org.primefaces:primefaces:6.0" level="project" />
@@ -99,5 +75,30 @@
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.2.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.1" level="project" />
     <orderEntry type="library" name="Maven: org.omnifaces:omnifaces:2.4" level="project" />
+    <orderEntry type="module" module-name="SemantikosDomain" />
+    <orderEntry type="library" name="Maven: org.jboss:jboss-ejb-client:1.0.39.Final-redhat-1" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss:jboss-remote-naming:1.0.13.Final-redhat-1" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.1.4.GA-redhat-2" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.marshalling:jboss-marshalling:1.4.10.SP3-redhat-1" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.marshalling:jboss-marshalling-river:1.4.10.SP3-redhat-1" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.remoting3:jboss-remoting:3.3.10.Final-redhat-1" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.sasl:jboss-sasl:1.0.5.Final-redhat-1" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec:1.0.1.Final-redhat-3" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.spec.javax.ejb:jboss-ejb-api_3.1_spec:1.0.2.Final-redhat-3" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.xnio:xnio-api:3.0.16.GA-redhat-1" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.xnio:xnio-nio:3.0.16.GA-redhat-1" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.as:jboss-as-build-config:7.5.17.Final-redhat-4" level="project" />
+    <orderEntry type="library" name="Maven: jboss:jbosssx-client:4.2.2.GA" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-collections4:4.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-configuration:commons-configuration:1.6" level="project" />
+    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-digester:commons-digester:1.8" level="project" />
+    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.7.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils-core:1.8.0" level="project" />
   </component>
 </module>

@@ -8,9 +8,12 @@ import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.ProfileFactory;
 import cl.minsal.semantikos.model.users.User;
+import org.jboss.ejb3.annotation.SecurityDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.naming.AuthenticationException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +34,8 @@ import static java.util.concurrent.TimeUnit.MINUTES;
  * @author Francisco Méndez on 19-05-2016.
  */
 @Stateless
+@DeclareRoles("Administrador")
+@SecurityDomain("SemantikosDomain")
 //@SecurityDomain("semantikos")
 public class AuthenticationManagerImpl implements AuthenticationManager{
 
@@ -181,16 +186,13 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
         return institution;
     }
 
-    @PermitAll
+    @RolesAllowed("Administrador")
     public User getUserDetails(String email) {
         return this.getUser(email);
     }
 
-
-
-
     //@RolesAllowed("Administrador")
-    @PermitAll()
+    @PermitAll
     public void setUserPassword(String username, String password) throws PasswordChangeException {
         User user = authDAO.getUserByEmail(username);
 

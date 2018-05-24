@@ -100,7 +100,7 @@ public class AuthenticationBean {
                 return;
             }
 
-            ServiceLocator.setCredentals(email, password);
+            ServiceLocator.login(email, password);
 
             //authenticationManager.authenticate(email,password,request);
             AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);

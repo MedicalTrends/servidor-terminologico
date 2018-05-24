@@ -58,13 +58,6 @@
         </dependency-->
 
         <dependency>
-            <groupId>cl.minsal.semantikos</groupId>
-            <artifactId>SemantikosDomain</artifactId>
-            <version>1.0.3</version>
-            <type>jar</type>
-        </dependency>
-
-        <dependency>
             <groupId>net.bull.javamelody</groupId>
             <artifactId>javamelody-core</artifactId>
             <version>1.51.0</version>

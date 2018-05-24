@@ -31,6 +31,7 @@
     <orderEntry type="library" name="Maven: org.jboss.xnio:xnio-api:3.0.16.GA-redhat-1" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.xnio:xnio-nio:3.0.16.GA-redhat-1" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.as:jboss-as-build-config:7.5.17.Final-redhat-4" level="project" />
+    <orderEntry type="library" name="Maven: jboss:jbosssx-client:4.2.2.GA" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.7.21" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.21" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
