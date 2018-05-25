@@ -18,8 +18,9 @@ import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 
@@ -71,6 +72,10 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
             String errorMsg = "No se pudo mapear el resultSet a BasicTypeDefinition para id = "+idBasicTypeDefinition;
             logger.error(errorMsg);
             throw new EJBException(errorMsg, e);
+        } catch (ParseException e) {
+            String errorMsg = "Error al parsear el tipo fecha para intervalo = "+idBasicTypeDefinition;
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
         }
 
         return basicTypeDefinition;
@@ -83,7 +88,7 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
      *
      * @return Un BasicTypeDefinition básico, sin dominio ni intervalos.
      */
-    public BasicTypeDefinition createBasicTypeDefinitionFromResultSet(ResultSet rs) {
+    public BasicTypeDefinition createBasicTypeDefinitionFromResultSet(ResultSet rs) throws ParseException {
 
         try {
             long idBasicType = rs.getLong("id");
@@ -95,17 +100,23 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
             Array domain = rs.getArray("domain");
             Array interval = rs.getArray("interval");
 
+            Interval interval1 = buildInterval(interval, basicTypeType);
+
+            List<String> domain1 = new ArrayList<>();
+
+            if (domain != null) {
+                domain1 = asList((String[])domain.getArray());
+            }
+
             switch (basicTypeType) {
 
                 case STRING_TYPE:
                     BasicTypeDefinition<String> stringBasicTypeDefinition;
                     stringBasicTypeDefinition = new BasicTypeDefinition<>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
 
-                    if (domain != null) {
-                        stringBasicTypeDefinition.setDomain(asList((String[])domain.getArray()));
-                    } else {
-                        stringBasicTypeDefinition.setDomain(new ArrayList<String>());
-                    }
+                    stringBasicTypeDefinition.setDomain(domain1);
+                    stringBasicTypeDefinition.setInterval(interval1);
+
                     return stringBasicTypeDefinition;
 
                 case BOOLEAN_TYPE:
@@ -113,12 +124,16 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
 
                 case INTEGER_TYPE:
                     BasicTypeDefinition<Integer> integerBasicTypeDefinition = new BasicTypeDefinition<>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
-                    integerBasicTypeDefinition.setInterval(buildInterval(interval));
+                    integerBasicTypeDefinition.setInterval(interval1);
 
                     return integerBasicTypeDefinition;
 
                 case FLOAT_TYPE:
-                    return new BasicTypeDefinition<Float>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
+                    BasicTypeDefinition<Float> floatBasicTypeDefinition = new BasicTypeDefinition<>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
+
+                    floatBasicTypeDefinition.setInterval(interval1);
+
+                    return floatBasicTypeDefinition;
 
                 case DATE_TYPE:
                     return new BasicTypeDefinition<Timestamp>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
@@ -133,7 +148,7 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
         return null;
     }
 
-    CloseInterval buildInterval(Array array) throws SQLException {
+    CloseInterval buildInterval(Array array, BasicTypeType basicTypeType) throws SQLException, ParseException {
 
         List<String> intervalElements = asList((String[]) array.getArray());
 
@@ -144,11 +159,47 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
         CloseInterval interval = new CloseInterval();
 
         if(intervalElements.get(0) != null) {
-            interval.setLowerBoundary(Integer.parseInt(intervalElements.get(0)));
+            switch (basicTypeType.getTypeName()) {
+                case "string":
+                    interval.setLowerBoundary(intervalElements.get(0));
+                    break;
+                case "boolean":
+                    interval.setLowerBoundary(Boolean.parseBoolean(intervalElements.get(0)));
+                    break;
+                case "int":
+                    interval.setLowerBoundary(Integer.parseInt(intervalElements.get(0)));
+                    break;
+                case "float":
+                    interval.setLowerBoundary(Float.parseFloat(intervalElements.get(0)));
+                    break;
+                case "date":
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    interval.setLowerBoundary(Timestamp.valueOf(format.format(intervalElements.get(0))));
+                    break;
+            }
         }
 
         if(intervalElements.get(1) != null) {
-            interval.setUpperBoundary(Integer.parseInt(intervalElements.get(1)));
+            switch (basicTypeType.getTypeName()) {
+                case "string":
+                    interval.setUpperBoundary(intervalElements.get(1));
+                    break;
+                case "boolean":
+                    interval.setUpperBoundary(Boolean.parseBoolean(intervalElements.get(1)));
+                    break;
+                case "int":
+                    interval.setUpperBoundary(Integer.parseInt(intervalElements.get(1)));
+                    break;
+                case "float":
+                    interval.setUpperBoundary(Float.parseFloat(intervalElements.get(1)));
+                    break;
+                case "date":
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    java.util.Date parsedDate = dateFormat.parse((intervalElements.get(1)));
+                    //return new java.sql.Timestamp(parsedDate.getTime());
+                    interval.setUpperBoundary(new java.sql.Timestamp(parsedDate.getTime()));
+                    break;
+            }
         }
 
         return interval;

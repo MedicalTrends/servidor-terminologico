@@ -319,11 +319,11 @@ public class RelationshipBindingBRImpl implements RelationshipBindingBR {
         List<SnomedCTRelationship> relationshipsSnomedCT = concept.getRelationshipsSnomedCT();
 
         for (SnomedCTRelationship snomedCTRelationship:relationshipsSnomedCT) {
-            if(snomedCTRelationship.isES_UN() || snomedCTRelationship.isES_UN_MAPEO()){
+            if(snomedCTRelationship.isES_UN() || snomedCTRelationship.isES_UN_MAPEO()) {
                 countRelationshipSCT++;
             }
         }
-        if(countRelationshipSCT==0){
+        if(countRelationshipSCT==0) {
             throw new BusinessRuleException("BR-SCT-005", "Para que un Concepto Semantiko pueda ser publicado para su uso, deberá estar Modelado con al menos un tipo de relación “Es un” ó “Es un Mapeo”");
 
         }
@@ -333,9 +333,11 @@ public class RelationshipBindingBRImpl implements RelationshipBindingBR {
     public void brISP001(ConceptSMTK concept, Relationship relationship) throws Exception {
 
         /* Verificar en un contexto no persistente */
+        /*
         if (relationship.getRelationshipDefinition().isISP() && concept.contains(relationship)) {
             throw new BusinessRuleException("BR-ISP-001", "Para agregar una relación a ISP, la dupla ProductoComercial-Regnum/RegAño deben ser únicos. Registro referenciado por 'Nuevo Concepto Borrador'");
         }
+        */
 
         /* Verificar en un contexto persistente */
         if (relationship.getRelationshipDefinition().isISP()) {
@@ -391,14 +393,15 @@ public class RelationshipBindingBRImpl implements RelationshipBindingBR {
         boolean isPairUnique = true;
         ConceptSMTK conceptIssue = null;
 
-        /* Verificar en un contexto no persistente */
-        for (Relationship relationship2 : concept.getValidRelationships()) {
-            if(relationship2.getRelationshipDefinition().isISP() && relationship2.getTarget().equals(relationship.getTarget())) {
-                throw new BusinessRuleException("BR-ISP-004", "Para agregar una relación a Bioequivalente, el par ProductoComercial-RegNumRegAño no debe existir como ISP. Registro referenciado por 'Nuevo Concepto Borrador'");
-            }
-        }
-
         if (relationship.getRelationshipDefinition().isBioequivalente()) {
+
+            /* Verificar en un contexto no persistente */
+            for (Relationship relationship2 : concept.getValidRelationships()) {
+                if(relationship2.getRelationshipDefinition().isISP() && relationship2.getTarget().equals(relationship.getTarget())) {
+                    throw new BusinessRuleException("BR-ISP-004", "Para agregar una relación a Bioequivalente, el par ProductoComercial-RegNumRegAño no debe existir como ISP. Registro referenciado por 'Nuevo Concepto Borrador'");
+                }
+            }
+
             for (Relationship relationship2 : relationshipManager.findRelationshipsLike(relationship.getRelationshipDefinition(), relationship.getTarget())) {
                 if(relationship2.getRelationshipDefinition().isISP() && relationship2.getSourceConcept().equals(concept)) {
                     throw new BusinessRuleException("BR-ISP-004", "Para agregar una relación a Bioequivalente, el par ProductoComercial-RegNumRegAño no debe existir como ISP. Registro referenciado por concepto "+relationship2.getSourceConcept());

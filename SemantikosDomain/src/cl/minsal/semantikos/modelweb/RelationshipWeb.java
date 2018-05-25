@@ -14,8 +14,9 @@ import java.util.List;
 
 public class RelationshipWeb extends Relationship implements Comparable<RelationshipWeb>, Serializable {
 
-    public boolean hasBeenModified;
+    private boolean hasBeenModified;
 
+    private boolean inherited = false;
 
     public RelationshipWeb(Relationship r) {
         super(r.getSourceConcept(),  r.getRelationshipDefinition(), new ArrayList<RelationshipAttribute>());
@@ -96,5 +97,13 @@ public class RelationshipWeb extends Relationship implements Comparable<Relation
         }
 
         return null;
+    }
+
+    public boolean isInherited() {
+        return inherited;
+    }
+
+    public void setInherited(boolean inherited) {
+        this.inherited = inherited;
     }
 }

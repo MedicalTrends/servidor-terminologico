@@ -42,6 +42,7 @@
                         <p:inputText id="basicTypeValue11"
                                      value="#{conceptBean.basicTypeValue.value}"
                                      var="value"
+                                     maxlength="#{cc.attrs.targetDefinition.interval.upperBoundary!=null?cc.attrs.targetDefinition.interval.upperBoundary:'524288'}"
                                      placeholder="Ingrese #{cc.attrs.relationshipDefinition.description}..."
                                      minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                      maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
@@ -131,6 +132,7 @@
                         <p:inputText id="basicTypeValue19"
                                      value="#{conceptBean.basicTypeValue.value}"
                                      var="value"
+                                     maxlength="#{cc.attrs.targetDefinition.interval.upperBoundary!=null?cc.attrs.targetDefinition.interval.upperBoundary:'524288'}"
                                      placeholder="Ingrese #{cc.attrs.relationshipDefinition.description}..."
                                      autocomplete="off"
                                      minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
@@ -221,6 +223,7 @@
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
                             <p:inputText id="basicTypeValue22" value="#{conceptBean.basicTypeValue.value}"
+                                         maxlength="#{cc.attrs.targetDefinition.interval.upperBoundary!=null?cc.attrs.targetDefinition.interval.upperBoundary:'524288'}"
                                          placeholder="Ingrese #{cc.attrs.relationshipDefinition.description}..."  />
 
                         </div>
@@ -311,6 +314,7 @@
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
                             <p:inputText id="basicTypeValue32" value="#{conceptBean.basicTypeValue.value}"
+                                         maxlength="#{cc.attrs.targetDefinition.interval.upperBoundary!=null?cc.attrs.targetDefinition.interval.upperBoundary:'524288'}"
                                          placeholder="Ingrese #{cc.attrs.relationshipDefinition.description}...">
                                 <p:ajax listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.basicTypeValue)}"
                                         process="@this"/>

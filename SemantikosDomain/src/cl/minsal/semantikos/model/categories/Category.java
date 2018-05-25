@@ -156,6 +156,11 @@ public class Category extends PersistentEntity implements TargetDefinition, Audi
         return false;
     }
 
+    public boolean isOnlyCommercial() {
+
+        return getName().endsWith("Comercial");
+    }
+
     @Override
     public String toString() {
         return this.name;
