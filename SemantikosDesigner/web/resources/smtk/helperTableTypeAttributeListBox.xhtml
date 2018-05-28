@@ -39,6 +39,7 @@
 
                     <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
                     <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition,cc.attrs.relationshipAttributeDefinition)}"
+                                   itemDisabled="#{record.description.contains('Seleccionar...')}"
                                    var="record"
                                    itemLabel="#{record.description}"
                                    itemValue="#{record}"/>
@@ -101,6 +102,7 @@
 
                     <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..." value="#{null}" itemValue="#{ null }"  noSelectionOption="true" itemDisabled="true"/>
                     <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition,cc.attrs.relationshipAttributeDefinition)}"
+                                   itemDisabled="#{record.description.contains('Seleccionar...')}"
                                    var="record"
                                    itemLabel="#{record.description}"
                                    itemValue="#{record}"/>

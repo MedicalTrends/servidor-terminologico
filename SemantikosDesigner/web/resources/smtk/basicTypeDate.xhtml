@@ -53,6 +53,8 @@
                             <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
                             <p:ajax event="dateSelect" listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id})"/>
+                            <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
+                                    update="@(.panel_#{cc.attrs.relationshipDefinition.id})"/>
                         </p:calendar>
                     </div>
                 </div>

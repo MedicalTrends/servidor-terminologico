@@ -305,6 +305,8 @@
 
         <p:outputPanel rendered="#{cc.attrs.concept.editable}" style="width:100%" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}">
 
+            <p:growl id="growl" showDetail="true" showSummary="true"/>
+
             <div class="ui-fluid">
 
                 <div class="Container">
@@ -361,7 +363,7 @@
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      reflow="true">
 
-            <p:column headerText="Descripción"
+            <p:column headerText="#{cc.attrs.relationshipDefinition.name}"
                       var="column"
                       columnIndexVar="colIndex">
                 <h:outputText value="#{relationship.target.value}" />

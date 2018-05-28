@@ -68,8 +68,12 @@ public class HelperTable implements TargetDefinition, Serializable {
         List<HelperTableColumn> showableColumns = new ArrayList<>();
 
         for (HelperTableColumn column: getColumns()) {
-            if(column.isShowable() && !column.isForeignKey())
+            if(column.isShowable() && !column.isForeignKey()) {
+                if(column.getName().toUpperCase().contains("VISIBLE")) {
+                    continue;
+                }
                 showableColumns.add(column);
+            }             
         }
         return showableColumns;
     }

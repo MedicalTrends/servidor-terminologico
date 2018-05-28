@@ -245,7 +245,7 @@
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary>0}">
+            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary > 0}">
                 <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
                 <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
             </p:outputPanel>
@@ -280,7 +280,7 @@
 
                                     <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
                                     <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition)}"
-                                                   var="record"
+                                                   var="record" itemDisabled="#{record.description.contains('Seleccionar...')}"
                                                    itemLabel="#{record.description}"
                                                    itemValue="#{record}"/>
                                     <p:column>
@@ -364,14 +364,14 @@
                 <h:outputText value="#{relationship.target.getColumnValue(column)}" />
             </p:columns>
 
-            <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
+            <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitionWebs}"
                        var="attribute"
                        columnIndexVar="colIndex">
                 <f:facet name="header">
                     <h:outputText value="#{attribute.name}" />
                 </f:facet>
-                <smtk:basicTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.basicType}" />
-                <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
+                <smtk:basicTypeAttributeCell attribute="#{attribute.relationshipAttributeDefinition}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.basicType}" />
+                <smtk:helperTableTypeAttributeCell attribute="#{attribute.relationshipAttributeDefinition}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
             </p:columns>
 
             <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">

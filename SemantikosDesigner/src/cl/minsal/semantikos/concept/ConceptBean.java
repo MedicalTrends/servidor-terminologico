@@ -682,7 +682,7 @@ public class ConceptBean implements Serializable {
         autogenerateBean.load(concept, relationshipDefinition);
 
         //Heredar crossmaps directos
-        if(autogenerateBean.canInheritDirectCrossmaps(concept)) {
+        if(relationshipDefinition.getTargetDefinition().isSMTKType() && autogenerateBean.canInheritDirectCrossmaps(concept)) {
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('inheritDirectCrossmaps').show();");
         }
