@@ -51,6 +51,8 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String CANTIDAD_PP = "Cantidad partido por";
 
+    public static final String CANTIDAD_VOLUMEN_TOTAL = "Cantidad de Volumen Total";
+
     /**
      * Este metodo es responsable de determinar si el target type es de tipo básico es o no.
      *

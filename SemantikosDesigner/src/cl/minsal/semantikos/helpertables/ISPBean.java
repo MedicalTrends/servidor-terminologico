@@ -36,7 +36,7 @@ public class ISPBean {
 
     static private final long ISP_TABLE_ID=9;
 
-    private Boolean existe;
+    private Boolean existe = false;
     private String regnum;
     private Integer ano = null;
 
@@ -77,19 +77,23 @@ public class ISPBean {
     @PostConstruct
     public void init() {
 
-        // Se setea en duro la opcionalidad de la relación, esta debería ser opcional.
-        for (RelationshipDefinition rd : conceptBean.getCategory().getRelationshipDefinitions()) {
-            if(rd.isISP()) {
-                rd.getMultiplicity().setLowerBoundary(0);
-                if(conceptBean.getConcept().isPersistent()) {
-                    List<Relationship> relationshipList =conceptBean.getConcept().getRelationshipsByRelationDefinition(rd);
-                    if(relationshipList.size() > 0) {
-                        existe=true;
-                    }
-                }
-            }
+        // Se setea en duro la opcionalidad de la relación, esta debería ser opcional.}
+
+    }
+
+    public void setOptionality(RelationshipDefinition relationshipDefinition) {
+
+        if(existe) {
+            return;
         }
 
+        if (conceptBean.getConcept().getValidRelationshipsWebByRelationDefinition(relationshipDefinition).isEmpty()) {
+            relationshipDefinition.getMultiplicity().setLowerBoundary(0);
+            existe = false;
+        } else {
+            relationshipDefinition.getMultiplicity().setLowerBoundary(1);
+            existe = true;
+        }
     }
 
 
@@ -241,6 +245,11 @@ public class ISPBean {
             relationshipDefinition.getMultiplicity().setLowerBoundary(1);
         }
         else {
+            if(!conceptBean.getConcept().getRelationshipsByRelationDefinition(relationshipDefinition).isEmpty()) {
+                setExiste(true);
+                conceptBean.getMessageBean().messageError("Existen relaciones para la definición: '" + relationshipDefinition.getName() + "'");
+                return;
+            }
             relationshipDefinition.getMultiplicity().setLowerBoundary(0);
             for (Relationship r : conceptBean.getConcept().getRelationshipsByRelationDefinition(relationshipDefinition)) {
                 conceptBean.removeRelationship(relationshipDefinition, r);

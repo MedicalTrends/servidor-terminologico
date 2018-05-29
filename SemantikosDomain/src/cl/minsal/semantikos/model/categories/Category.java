@@ -157,8 +157,15 @@ public class Category extends PersistentEntity implements TargetDefinition, Audi
     }
 
     public boolean isOnlyCommercial() {
-
         return getName().endsWith("Comercial");
+    }
+
+    public boolean isDeviceDomain() {
+        return getName().contains("Dispositivo");
+    }
+
+    public boolean isMC() {
+        return getName().equalsIgnoreCase("Fármacos - Medicamento Clínico");
     }
 
     @Override

@@ -291,6 +291,10 @@ public class RelationshipDefinition implements Serializable {
         return this.getName().equalsIgnoreCase(TargetDefinition.CANTIDAD_PP);
     }
 
+    public boolean isCantidadVolumenTotal() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.CANTIDAD_VOLUMEN_TOTAL);
+    }
+
     private final String SNOMEDCT="SNOMED CT";
 
     public boolean isSNOMEDCT(){

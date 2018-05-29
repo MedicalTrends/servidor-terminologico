@@ -156,7 +156,7 @@
                                     </p:tab>
 
                                     <!--Crossmaps -->
-                                    <p:tab title="Crossmaps" rendered="#{ true }">
+                                    <p:tab title="Crossmaps" rendered="#{ conceptBean.category.isDeviceDomain() or conceptBean.concept.modeled }">
 
                                         <p:panel id="indirectCrossmap"
                                                  widgetVar="panelIndirectCrossmap"

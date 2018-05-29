@@ -35,7 +35,9 @@
                                  filter="true"
                                  converter="omnifaces.SelectItemsConverter">
 
-                    <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..." itemValue="#{null}" noSelectionOption="true" itemDisabled="true"/>
+                    <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..." itemValue="#{null}"
+                                  noSelectionOption="true"
+                                  itemDisabled="true"/>
 
                     <f:selectItems value="#{helperTableBean.getRelatedRows(cc.attrs.relationship.target, column)}"
                                    var="record"

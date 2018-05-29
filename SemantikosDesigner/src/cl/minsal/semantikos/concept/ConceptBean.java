@@ -348,6 +348,7 @@ public class ConceptBean implements Serializable {
         descriptionsToTraslate = new ArrayList<>();
         conceptSMTKNotValid = conceptManager.getNoValidConcept();
         conceptSuggestedList = new ArrayList<>();
+        categoryBean.refreshDefinitions(category);
     }
 
     public void addSuggest() {
@@ -392,8 +393,8 @@ public class ConceptBean implements Serializable {
         }
 
         // Una vez que se ha inicializado el concepto, inicializar los placeholders para las relaciones
-        mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
-
+        categoryBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
+        categoryBean.refreshDefinitions(category);
         autogenerateBean.evaluateMCSpecial(concept);
 
     }
@@ -516,7 +517,7 @@ public class ConceptBean implements Serializable {
             // Validar placeholders de targets de relacion
             if (relationship.getTarget() == null) {
                 messageBean.messageError("Debe seleccionar un valor para el atributo " + relationshipDefinition.getName());
-                mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
+                categoryBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
                 resetPlaceHolders();
                 return;
             }
@@ -542,7 +543,7 @@ public class ConceptBean implements Serializable {
             for (RelationshipAttributeDefinition attributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
                 if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) || changeIndirectMultiplicity(relationship, relationshipDefinition, attributeDefinition)) {
                     messageBean.messageError("Información incompleta para agregar " + relationshipDefinition.getName());
-                    mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
+                    categoryBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
                     resetPlaceHolders();
                     return;
                 }
@@ -557,7 +558,7 @@ public class ConceptBean implements Serializable {
             autogenerateBean.load(concept, relationshipDefinition);
 
             // Resetear placeholder relacion
-            mainMenuBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
+            categoryBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
             // Resetear placeholder targets
             resetPlaceHolders();
 

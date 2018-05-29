@@ -41,7 +41,7 @@
                                     <h:outputText value="Color Fondo: "/>
                                 </div>
                                 <div class="ui-g-12 ui-md-6 ui-lg-1">
-                                    <p:colorPicker value="#{tagBean.tagCreate.colorBackground}"/>
+                                    <p:colorPicker value="#{tagBean.tagCreate.colorBackground}" />
                                 </div>
                                 <div class="ui-g-12 ui-md-6 ui-lg-1">
                                     <h:outputText value="Color Texto: "/>
@@ -97,7 +97,7 @@
                                              converter="tagConverter" panelStyle="width:180px"
                                              effect="fade" var="t" style="width:160px" filter="true"
                                              filterMatchMode="startsWith">
-                                <p:ajax event="itemSelect"></p:ajax>
+                                <p:ajax event="itemSelect" />
                                 <f:selectItem itemLabel="Seleccione una etiqueta" itemDisabled="true"/>
                                 <f:selectItems value="#{tagBean.tagListToConcept}" var="tag"
                                                itemLabel="#{tag.name}" itemValue="#{tag}"

@@ -85,7 +85,7 @@ public class TagBean implements Serializable{
         tagListToConcept=  tagManager.getAllTags();
         findSonTagList=tagManager.getAllTagsWithoutParent();
         listTagSon=tagManager.getAllTagsWithoutParent();
-        tagCreate= new Tag(-1,null,null,null,null);
+        tagCreate= new Tag(-1,null,"#00ffffff","black",null);
         parentTagToCreate= new Tag(-1,null,null,null,null);
         tagEdit= new Tag(-1,null,null,null,null);
 
@@ -251,7 +251,7 @@ public class TagBean implements Serializable{
             tagList= tagManager.getAllTags();
             findSonTagList=tagManager.getAllTagsWithoutParent();
             listTagSon=tagManager.getAllTagsWithoutParent();
-            tagCreate= new Tag(-1,null,null,null,null);
+            tagCreate= new Tag(-1,null,"#00ffffff","black",null);
             parentTagSelect= null;
             parentTagToCreate= new Tag(-1,null,null,null,null);
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Etiqueta creada", "La etiqueta se creó exitosamente");

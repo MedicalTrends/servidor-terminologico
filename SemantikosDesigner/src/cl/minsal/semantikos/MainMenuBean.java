@@ -1,5 +1,6 @@
 package cl.minsal.semantikos;
 
+import cl.minsal.semantikos.category.CategoryBean;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.kernel.componentsweb.ViewAugmenter;
@@ -28,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -158,54 +160,5 @@ public class MainMenuBean implements Serializable {
         return categoryMenuModel;
     }
 
-    public void augmentRelationshipPlaceholders(Category category, ConceptSMTKWeb concept, Map<Long, Relationship> relationshipPlaceholders) {
-
-        for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
-
-            if (!relationshipDefinition.getRelationshipAttributeDefinitions().isEmpty() && relationshipDefinition.getMultiplicity().isCollection()) {
-
-                if(!relationshipDefinitiosnWeb.containsKey(relationshipDefinition.getId())) {
-                    relationshipDefinitiosnWeb.put(relationshipDefinition.getId(), viewAugmenter.augmentRelationshipDefinition(category, relationshipDefinition));
-                }
-
-                RelationshipDefinitionWeb relationshipDefinitionWeb = relationshipDefinitiosnWeb.get(relationshipDefinition.getId());
-
-                Relationship r;
-
-                r = new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
-                relationshipPlaceholders.put(relationshipDefinition.getId(), r);
-
-                for (RelationshipAttributeDefinitionWeb relAttrDefWeb : relationshipDefinitionWeb.getRelationshipAttributeDefinitionWebs()) {
-
-                    if(relAttrDefWeb.getDefaultValue() != null) {
-                        RelationshipAttribute ra = new RelationshipAttribute(relAttrDefWeb.getRelationshipAttributeDefinition(), r, relAttrDefWeb.getDefaultValue());
-                        r.getRelationshipAttributes().add(ra);
-                    }
-                }
-
-                // Si esta definición de relación es de tipo CROSSMAP, Se agrega el atributo tipo de relacion = "ES_UN_MAPEO_DE" (por defecto)
-                if (relationshipDefinition.getTargetDefinition().isCrossMapType()) {
-                    for (RelationshipAttributeDefinition attDef : relationshipDefinition.getRelationshipAttributeDefinitions()) {
-                        if (attDef.isRelationshipTypeAttribute()) {
-                            Relationship rel = relationshipPlaceholders.get(relationshipDefinition.getId());
-                            HelperTable helperTable = (HelperTable) attDef.getTargetDefinition();
-
-                            List<HelperTableRow> relationshipTypes = helperTablesManager.searchRows(helperTable, ES_UN_MAPEO_DE);
-
-                            RelationshipAttribute ra;
-
-                            if (relationshipTypes.size() == 0) {
-                                logger.error("No hay datos en la tabla de TIPOS DE RELACIONES.");
-                            }
-
-                            ra = new RelationshipAttribute(attDef, rel, relationshipTypes.get(0));
-                            rel.getRelationshipAttributes().add(ra);
-                        }
-                    }
-                }
-            }
-        }
-        //return relationshipPlaceholders;
-    }
 }
 

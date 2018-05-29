@@ -261,6 +261,14 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
         if(getRelationships().contains(relationship)) {
             throw new BusinessRuleException("BR-UNK", "No se puede agregar dos veces la misma relación en la definición " + relationship.getRelationshipDefinition().getName());
         }
+        for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
+            if(relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition().isHelperTable()) {
+                if(relationshipAttribute.getTarget().getId() == PersistentEntity.NON_PERSISTED_ID ||
+                        relationshipAttribute.getTarget().getId() == 0) {
+                    throw new BusinessRuleException("BR-UNK", "Valor para el atributo de relación '" + relationshipAttribute.getRelationAttributeDefinition().getName() + "' no válido");
+                }
+            }
+        }
         this.addRelationship(relationship);
         this.relationshipsWeb.add(relationship);
     }

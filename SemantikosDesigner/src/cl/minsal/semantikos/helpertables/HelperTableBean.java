@@ -236,6 +236,7 @@ public class HelperTableBean implements Serializable {
 
     public List<HelperTableRow> getValidTableRows(HelperTable table, RelationshipAttributeDefinition relationshipAttributeDefinition) {
         List<HelperTableRow> helperTableRows = getReferencedTableRows(table.getId());
+
         if(!helperTableRows.contains(dummyRow)) {
             helperTableRows.add(0, dummyRow);
         }
