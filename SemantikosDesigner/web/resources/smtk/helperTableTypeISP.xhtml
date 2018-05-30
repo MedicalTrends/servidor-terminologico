@@ -73,23 +73,6 @@
 
         </p:outputPanel>
 
-        <p:dialog id="ispfetcheddialog" styleClass="dialogISP" widgetVar="ispfetcheddialog" header="Confirmar datos recuperados del Registro ISP"  width="750px" height="300px">
-            <p:outputLabel rendered="#{ not empty ispbean.ispRecord.cells}">Se han recuperado los siguientes datos desde el ISP:</p:outputLabel>
-            <p:panel id="ispfetcheddialogcontent" >
-
-                <p:dataTable value="#{ispbean.ispRecord.cells}" var="cell" rendered="#{not empty ispbean.ispRecord.cells}">
-                    <p:column width="200" styleClass="FontBold Fs13">#{cell.column.description}</p:column>
-                    <p:column width="400">#{cell}</p:column>
-                </p:dataTable>
-
-                <p:outputLabel rendered="#{empty ispbean.ispRecord.cells}" value="No se pudo recuperar datos del ISP" />
-                <p:commandButton rendered="#{not empty ispbean.ispRecord.cells}" value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                <p:commandButton value="Cancelar" type="button" onclick="PF('ispfetcheddialog').hide()" />
-
-            </p:panel>
-
-        </p:dialog>
-
         <p:spacer />
 
         <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
@@ -153,6 +136,7 @@
                             process="@this">
                         <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
                     </p:commandButton>
+
                     <p:commandButton
                             icon="fa fa-trash"
                             title="Eliminar"
@@ -170,6 +154,23 @@
         </p:dataTable>
 
     </p:panel>
+
+    <p:dialog id="ispfetcheddialog" styleClass="dialogISP" widgetVar="ispfetcheddialog" header="Confirmar datos recuperados del Registro ISP"  width="750px" height="300px">
+        <p:outputLabel rendered="#{ not empty ispbean.ispRecord.cells}">Se han recuperado los siguientes datos desde el ISP:</p:outputLabel>
+        <p:panel id="ispfetcheddialogcontent" >
+
+            <p:dataTable value="#{ispbean.ispRecord.cells}" var="cell" rendered="#{not empty ispbean.ispRecord.cells}">
+                <p:column width="200" styleClass="FontBold Fs13">#{cell.column.description}</p:column>
+                <p:column width="400">#{cell}</p:column>
+            </p:dataTable>
+
+            <p:outputLabel rendered="#{empty ispbean.ispRecord.cells}" value="No se pudo recuperar datos del ISP" />
+            <p:commandButton rendered="#{not empty ispbean.ispRecord.cells}" value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+            <p:commandButton value="Cancelar" type="button" onclick="PF('ispfetcheddialog').hide()" />
+
+        </p:panel>
+
+    </p:dialog>
 
     <p:dialog id="dialogISP" styleClass="dialogISP" widgetVar="dialogISP" header="Información de Registro ISP"  width="750px" height="300px">
         <p:dataTable value="#{ispbean.ispRecord.cells}" var="cell" rendered="#{not empty ispbean.ispRecord.cells}">

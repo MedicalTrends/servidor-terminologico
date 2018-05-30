@@ -27,6 +27,8 @@ public class RelationshipAttributeDefinition implements Serializable {
 
     private static final String UNIDAD_POTENCIA_ATTRIBUE = "unidad potencia";
 
+    private static final String CANTIDAD_PP_ATTRIBUE = "cantidad pp";
+
     private static final String UNIDAD_PP_ATTRIBUE = "unidad pp";
 
     private static final String UNIDAD_ATTRIBUE = "unidad";
@@ -34,6 +36,8 @@ public class RelationshipAttributeDefinition implements Serializable {
     private static final String UNIDAD_PACK_MULTI_ATTRIBUE = "unidad pack multi";
 
     private static final String UNIDAD_VOLUMEN_TOTAL_ATTRIBUE = "unidad volumen total";
+
+    private static final String UNIDAD_VOLUMEN_ATTRIBUE = "unidad de volumen";
 
     private static final long GRUOUP_SCT = 29;
 
@@ -88,6 +92,10 @@ public class RelationshipAttributeDefinition implements Serializable {
         return this.getName().equalsIgnoreCase(UNIDAD_POTENCIA_ATTRIBUE);
     }
 
+    public boolean isCantidadPPAttribute(){
+        return this.getName().equalsIgnoreCase(CANTIDAD_PP_ATTRIBUE);
+    }
+
     public boolean isUnidadPPAttribute(){
         return this.getName().equalsIgnoreCase(UNIDAD_PP_ATTRIBUE);
     }
@@ -102,6 +110,10 @@ public class RelationshipAttributeDefinition implements Serializable {
 
     public boolean isUnidadVolumenTotalAttribute(){
         return this.getName().equalsIgnoreCase(UNIDAD_VOLUMEN_TOTAL_ATTRIBUE);
+    }
+
+    public boolean isUnidadVolumenAttribute(){
+        return this.getName().equalsIgnoreCase(UNIDAD_VOLUMEN_ATTRIBUE);
     }
 
     public boolean isGroupSCT(){

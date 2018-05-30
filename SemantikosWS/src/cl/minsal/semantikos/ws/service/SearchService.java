@@ -45,7 +45,6 @@ import java.util.concurrent.ExecutionException;
  * Created by Development on 2016-11-18.
  */
 
-
 @WebService(serviceName = "ServicioDeBusqueda")
 public class SearchService {
 
@@ -472,6 +471,26 @@ public class SearchService {
         } catch (Exception e) {
             throw new NotFoundFault(e.getMessage());
         }
+    }
+
+    // REQ-WS-STK-ME014
+    @WebResult(name = "respuestaBuscarTerminoSnomed")
+    @WebMethod(operationName = "buscarTerminoSnomedPerfectMatch")
+    public SnomedTermSearchResponse buscarTerminoSnomed( //GenericTermSearchResponse buscarTermino(
+                                                    @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+                                                    @WebParam(name = "peticionBuscarTerminoSnomed")
+                                                            String request
+    ) throws IllegalInputFault, NotFoundFault, ExecutionException, InterruptedException {
+
+        /* Se hace una validación de los parámetros */
+        if(request == null || request.isEmpty() || request.length() < 3) {
+            throw new IllegalInputFault("El termino a buscar debe tener minimo 3 caracteres de largo");
+        }
+
+        SnomedTermSearchResponse response = this.conceptController.searchTermSnomed(request);
+
+        return  response;
+
     }
 
 }

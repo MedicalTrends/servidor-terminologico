@@ -117,7 +117,7 @@
 
     <!-- Multiplicidad N con atributos-->
 
-    <p:panel id="crossmapTypeCollectionWithAttributes" header="Crossmaps Directos" toggleable="#{true}"  toggleSpeed="500" collapsed="#{true}"
+    <p:panel id="crossmapTypeCollectionWithAttributes" header="Crossmaps Directos" toggleable="#{true}"  toggleSpeed="500" collapsed="#{false}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
         <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}"
