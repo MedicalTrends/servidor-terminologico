@@ -404,7 +404,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
     @Override
     public int countDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets) {
-        long init = currentTimeMillis();
+
+        term = descriptionSearchBR.escapeSpecialCharacters(term);
         //int count = descriptionDAO.countDescriptionsSuggested(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
         long count = descriptionDAO.countDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
 

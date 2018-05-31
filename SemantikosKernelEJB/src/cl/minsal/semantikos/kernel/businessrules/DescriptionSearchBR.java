@@ -82,6 +82,14 @@ public class DescriptionSearchBR {
         //pattern = pattern.replaceAll(" \\p{Punct}+ ", "");
         pattern = pattern.replaceAll(" \\p{Punct} +", " ");
 
+        if(pattern.endsWith(" -")) {
+            pattern = pattern.substring(0, pattern.length()-1);
+        }
+
+        if(pattern.startsWith("-")) {
+            pattern = pattern.substring(1, pattern.length());
+        }
+
         return pattern;
     }
 
