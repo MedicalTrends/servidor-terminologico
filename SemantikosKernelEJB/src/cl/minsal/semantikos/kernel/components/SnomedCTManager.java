@@ -1,5 +1,8 @@
 package cl.minsal.semantikos.kernel.components;
 
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.snomedct.*;
 
 import javax.ejb.Local;
@@ -12,7 +15,6 @@ import java.util.Map;
  */
 @Remote
 public interface SnomedCTManager {
-
 
     /**
      * Este método es responsable de recuperar las relaciones de un concepto SCT.
@@ -92,6 +94,30 @@ public interface SnomedCTManager {
      * @return El Concepto cuyo CONCEPT_ID corresponde a <code>conceptID</code>.
      */
     public ConceptSCT getConceptByID(long conceptID);
+
+    /**
+     * Este método es responsable de buscar y retornar todas las descripciones SNOMED que contienen el término dado como
+     * parámetro.
+     *
+     * @return Una lista con descripciones que hacen perfect match.
+     */
+    public List<DescriptionSCT> searchDescriptionsPerfectMatch(String term, int page, int pageSize);
+
+    /**
+     * Este método es responsable de buscar y retornar todas las descripciones SNOMED que contienen parte del término
+     * dado como parámetro.
+     *
+     * @return Una lista con descripciones que hacen truncate match.
+     */
+    public List<DescriptionSCT> searchDescriptionsTruncateMatch(String term, int page, int pageSize);
+
+    /**
+     * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
+     * parámetro en cada una de las categorías y refsets indicadas.
+     *
+     * @return Una lista con descripciones que hacen truncate match.
+     */
+    public List<DescriptionSCT> searchDescriptionsSuggested(String term);
 
 
 }

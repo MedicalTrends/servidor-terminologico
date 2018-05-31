@@ -306,25 +306,6 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
     }
 
-    private ConceptSCT createConceptSCTFromResultSet(ResultSet resultSet) throws SQLException {
-
-        long id = resultSet.getLong("id");
-        Timestamp effectiveTime = resultSet.getTimestamp("effectiveTime");
-        boolean active = resultSet.getBoolean("active");
-        long moduleID = resultSet.getLong("moduleId");
-        long definitionStatusID = resultSet.getLong("definitionStatusId");
-
-        ConceptSCT conceptSCT = new ConceptSCT(id, effectiveTime, active, moduleID, definitionStatusID);
-
-        conceptSCT.setId(id);
-
-        /* Se recuperan las descripciones del concepto */
-        List<DescriptionSCT> descriptions = getDescriptionsSCTByConcept(id);
-        conceptSCT.setDescriptions(descriptions);
-
-        return conceptSCT;
-    }
-
     private List<DescriptionSCT> getDescriptionsSCTByConcept(long id) {
         List<DescriptionSCT> descriptionSCTs = new ArrayList<>();
         //ConnectionBD connect = new ConnectionBD();
@@ -351,35 +332,6 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         }
 
         return descriptionSCTs;
-    }
-
-    private DescriptionSCT createDescriptionSCTFromResultSet(ResultSet resultSet) throws SQLException {
-
-        long id = resultSet.getLong("id");
-        Timestamp effectiveTime = resultSet.getTimestamp("effectivetime");
-        boolean active = resultSet.getBoolean("active");
-        long moduleID = resultSet.getLong("moduleId");
-        long conceptID = resultSet.getLong("conceptId");
-        String languageCode = resultSet.getString("languageCode");
-        long typeID = resultSet.getLong("typeId");
-        String term = resultSet.getString("term");
-        long caseSignificanceID = resultSet.getLong("caseSignificanceId");
-        long acceptabilityID = resultSet.getLong("acceptabilityId");
-
-        /**
-         * Identifies whether the description is an FSN, Synonym or other description type.
-         * This field is set to a child of 900000000000446008 | Description type | in the Metadata hierarchy.
-         */
-        try {
-            DescriptionSCT descriptionSCT = new DescriptionSCT(id, DescriptionSCTType.valueOf(typeID), effectiveTime, active, moduleID, conceptID, languageCode, term, caseSignificanceID);
-
-            descriptionSCT.setFavourite(DescriptionSCTType.valueOf(acceptabilityID).equals(DescriptionSCTType.PREFERRED));
-
-            return descriptionSCT;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Override
@@ -447,6 +399,127 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
         return relationships;
     }
+
+    @Override
+    public List<DescriptionSCT> searchDescriptionsPerfectMatch(String term, int page, int pageSize) {
+
+        List<DescriptionSCT> descriptions = new ArrayList<>();
+
+        String sql = "begin ? := stk.stk_pck_snomed.search_descriptions_perfect_match(?,?,?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, term.toLowerCase());
+
+            call.setInt(3, page);
+
+            call.setInt(4, pageSize);
+
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                DescriptionSCT description = createDescriptionSCTFromResultSet(rs);
+                descriptions.add(description);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar descripciones de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return descriptions;
+    }
+
+    @Override
+    public List<DescriptionSCT> searchDescriptionsTruncateMatch(String term, int page, int pageSize) {
+
+        List<DescriptionSCT> descriptions = new ArrayList<>();
+
+        String sql = "begin ? := stk.stk_pck_snomed.search_descriptions_truncate_match(?,?,?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setString(2, term.toLowerCase());
+
+            call.setInt(3, page);
+
+            call.setInt(4, pageSize);
+
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                DescriptionSCT description = createDescriptionSCTFromResultSet(rs);
+                descriptions.add(description);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar descripciones de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return descriptions;
+    }
+
+    private ConceptSCT createConceptSCTFromResultSet(ResultSet resultSet) throws SQLException {
+
+        long id = resultSet.getLong("id");
+        Timestamp effectiveTime = resultSet.getTimestamp("effectiveTime");
+        boolean active = resultSet.getBoolean("active");
+        long moduleID = resultSet.getLong("moduleId");
+        long definitionStatusID = resultSet.getLong("definitionStatusId");
+
+        ConceptSCT conceptSCT = new ConceptSCT(id, effectiveTime, active, moduleID, definitionStatusID);
+
+        conceptSCT.setId(id);
+
+        /* Se recuperan las descripciones del concepto */
+        List<DescriptionSCT> descriptions = getDescriptionsSCTByConcept(id);
+        conceptSCT.setDescriptions(descriptions);
+
+        return conceptSCT;
+    }
+
+    private DescriptionSCT createDescriptionSCTFromResultSet(ResultSet resultSet) throws SQLException {
+
+        long id = resultSet.getLong("id");
+        Timestamp effectiveTime = resultSet.getTimestamp("effectivetime");
+        boolean active = resultSet.getBoolean("active");
+        long moduleID = resultSet.getLong("moduleId");
+        long conceptID = resultSet.getLong("conceptId");
+        String languageCode = resultSet.getString("languageCode");
+        long typeID = resultSet.getLong("typeId");
+        String term = resultSet.getString("term");
+        long caseSignificanceID = resultSet.getLong("caseSignificanceId");
+        long acceptabilityID = resultSet.getLong("acceptabilityId");
+
+        /**
+         * Identifies whether the description is an FSN, Synonym or other description type.
+         * This field is set to a child of 900000000000446008 | Description type | in the Metadata hierarchy.
+         */
+        try {
+            DescriptionSCT descriptionSCT = new DescriptionSCT(id, DescriptionSCTType.valueOf(typeID), effectiveTime, active, moduleID, conceptID, languageCode, term, caseSignificanceID);
+
+            descriptionSCT.setFavourite(DescriptionSCTType.valueOf(acceptabilityID).equals(DescriptionSCTType.PREFERRED));
+
+            return descriptionSCT;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     private RelationshipSCT createRelationshipSCTFromResultSet(ResultSet resultSet, ConceptSCT sourceConcept) throws SQLException {
 

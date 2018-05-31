@@ -11,10 +11,7 @@ import cl.minsal.semantikos.modelweb.Pair;
 import cl.minsal.semantikos.modelws.fault.NotFoundFault;
 import cl.minsal.semantikos.modelws.request.*;
 import cl.minsal.semantikos.modelws.response.*;
-import cl.minsal.semantikos.ws.component.CategoryController;
-import cl.minsal.semantikos.ws.component.ConceptController;
-import cl.minsal.semantikos.ws.component.CrossmapController;
-import cl.minsal.semantikos.ws.component.RefSetController;
+import cl.minsal.semantikos.ws.component.*;
 import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
 
 
@@ -55,6 +52,9 @@ public class SearchService {
     private ConceptController conceptController;
 
     @EJB
+    private SnomedController snomedController;
+
+    @EJB
     private CategoryController categoryController;
 
     @EJB
@@ -92,7 +92,7 @@ public class SearchService {
             return ctx.proceed();
         }
         catch (Exception e) {
-            logger.error("El web service ha arrojado el siguiente error: "+e.getMessage(),e);
+            logger.error("El web service ha arrojado el siguiente error: " + e.getMessage(), e);
             throw new NotFoundFault(e.getMessage());
             //return ctx.proceed();
             //webMethodStatus = "1";
@@ -476,21 +476,52 @@ public class SearchService {
     // REQ-WS-STK-ME014
     @WebResult(name = "respuestaBuscarTerminoSnomed")
     @WebMethod(operationName = "buscarTerminoSnomedPerfectMatch")
-    public SnomedTermSearchResponse buscarTerminoSnomed( //GenericTermSearchResponse buscarTermino(
+    public SnomedTermSearchResponse buscarTerminoSnomedPerfectMatch( //GenericTermSearchResponse buscarTermino(
                                                     @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
                                                     @WebParam(name = "peticionBuscarTerminoSnomed")
-                                                            String request
+                                                            SnomedSearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault, ExecutionException, InterruptedException {
 
         /* Se hace una validación de los parámetros */
-        if(request == null || request.isEmpty() || request.length() < 3) {
-            throw new IllegalInputFault("El termino a buscar debe tener minimo 3 caracteres de largo");
-        }
+        UtilsWS.validate(request);
 
-        SnomedTermSearchResponse response = this.conceptController.searchTermSnomed(request);
+        SnomedTermSearchResponse response = this.snomedController.searchTermPerfectMatchSnomed(request);
 
-        return  response;
+        return response;
 
+    }
+
+
+    // REQ-WS-STK-ME014
+    @WebResult(name = "respuestaBuscarTerminoSnomed")
+    @WebMethod(operationName = "buscarTerminoSnomedTruncatePerfect")
+    public SnomedTermSearchResponse buscarTerminoSnomedTruncatePerfect(
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionBuscarTermino")
+                    SnomedSearchTermRequest request
+    ) throws IllegalInputFault, NotFoundFault, ExecutionException, InterruptedException {
+
+        /* Se hace una validación de los parámetros */
+        UtilsWS.validate(request);
+
+        SnomedTermSearchResponse response = this.snomedController.searchTermTruncatePerfectSnomed(request);
+
+        return response;
+    }
+
+    // REQ-WS-STK-ME014
+    @WebResult(name = "respuestaBuscarTerminoSnomed")
+    @WebMethod(operationName = "sugerenciasDeDescripcionesSnomed")
+    public SnomedTermSearchResponse sugerenciasDeDescripcionesSnomed(
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionSugerenciasDeDescripciones")
+                    SnomedSuggestionsRequest request
+    ) throws IllegalInputFault, NotFoundFault, ExecutionException, InterruptedException {
+
+        UtilsWS.validate(request);
+
+        return this.snomedController.searchTermSuggested(request);
+        //return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames());
     }
 
 }

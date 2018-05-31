@@ -11,33 +11,33 @@ import java.util.List;
  * @author Alfonso Cornejo on 2016-10-11.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "respuestaDescripcionesPerfectMatch", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "RespuestaDescripcionesPerfectMatch", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "respuestaDescripcionesSnomedPerfectMatch", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "RespuestaDescripcionesSnomedPerfectMatch", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class SnomedMatchDescriptionsResponse implements Serializable {
 
     @XmlElementWrapper(name = "descripcionesEncontradas")
     @XmlElement(name = "DescripcionEncontrada")
-    private List<SnomedMatchDescriptionResponse> perfectMatchDescriptionsResponse;
+    private List<SnomedMatchDescriptionResponse> matchDescriptionsResponse;
 
     @XmlElement(name = "cantidadRegistros")
     private int quantity;
 
     public SnomedMatchDescriptionsResponse() {
-        this.perfectMatchDescriptionsResponse = new ArrayList<>();
+        this.matchDescriptionsResponse = new ArrayList<>();
         this.quantity = 0;
     }
 
-    public SnomedMatchDescriptionsResponse(List<SnomedMatchDescriptionResponse> perfectMatchDescriptionsResponse) {
-        this.perfectMatchDescriptionsResponse = perfectMatchDescriptionsResponse;
-        this.quantity = perfectMatchDescriptionsResponse.size();
+    public SnomedMatchDescriptionsResponse(List<SnomedMatchDescriptionResponse> matchDescriptionsResponse) {
+        this.matchDescriptionsResponse = matchDescriptionsResponse;
+        this.quantity = matchDescriptionsResponse.size();
     }
 
-    public List<SnomedMatchDescriptionResponse> getPerfectMatchDescriptionsResponse() {
-        return perfectMatchDescriptionsResponse;
+    public List<SnomedMatchDescriptionResponse> getMatchDescriptionsResponse() {
+        return matchDescriptionsResponse;
     }
 
-    public void setPerfectMatchDescriptionsResponse(List<SnomedMatchDescriptionResponse> perfectMatchDescriptionsResponse) {
-        this.perfectMatchDescriptionsResponse = perfectMatchDescriptionsResponse;
+    public void setMatchDescriptionsResponse(List<SnomedMatchDescriptionResponse> matchDescriptionsResponse) {
+        this.matchDescriptionsResponse = matchDescriptionsResponse;
     }
 
     public int getQuantity() {

@@ -2,9 +2,7 @@ package cl.minsal.semantikos.ws.utils;
 
 import cl.minsal.semantikos.modelweb.Pair;
 import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
-import cl.minsal.semantikos.modelws.request.DescriptionsSuggestionsRequest;
-import cl.minsal.semantikos.modelws.request.RequestableConceptsRequest;
-import cl.minsal.semantikos.modelws.request.SimpleSearchTermRequest;
+import cl.minsal.semantikos.modelws.request.*;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.xml.ws.WebServiceContext;
@@ -21,6 +19,7 @@ import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 public class UtilsWS {
 
     public static Pair<String, String> getCredentials(MessageContext mctx) throws Exception {
+
         Map http_headers = (Map) mctx.get(MessageContext.HTTP_REQUEST_HEADERS);
 
         ArrayList list = (ArrayList) http_headers.get("Authorization");
@@ -83,5 +82,19 @@ public class UtilsWS {
 
     public static boolean isEmpty(List<String> list) {
         return list.isEmpty() || (list.size() == 1 && list.contains(EMPTY_STRING));
+    }
+
+    public static void validate(SnomedSearchTermRequest request) throws IllegalInputFault {
+        /* Se hace una validación de los parámetros */
+        if(request.getTerm() == null || request.getTerm().isEmpty() || request.getTerm().length() < 3) {
+            throw new IllegalInputFault("El termino a buscar debe tener minimo 3 caracteres de largo");
+        }
+    }
+
+    public static void validate(SnomedSuggestionsRequest request) throws IllegalInputFault {
+        /* Se hace una validación de los parámetros */
+        if(request.getTerm() == null || request.getTerm().isEmpty() || request.getTerm().length() < 3) {
+            throw new IllegalInputFault("El termino a buscar debe tener minimo 3 caracteres de largo");
+        }
     }
 }

@@ -1,7 +1,12 @@
 package cl.minsal.semantikos.kernel.components;
 
+import cl.minsal.semantikos.kernel.businessrules.DescriptionSearchBR;
 import cl.minsal.semantikos.kernel.daos.SnomedCTDAO;
+import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.businessrules.ConceptSCTSearchBR;
+import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.snomedct.*;
 
 import javax.ejb.EJB;
@@ -10,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.System.currentTimeMillis;
+import static java.util.Collections.EMPTY_LIST;
 import static java.util.Collections.emptyList;
 
 /**
@@ -23,6 +30,11 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
 
     @EJB
     private ConceptSCTSearchBR conceptSCTSearchBR;
+
+    @EJB
+    private DescriptionSearchBR descriptionSearchBR;
+
+    private static final int SUGGESTTION_SIZE = 10;
 
     @Override
     public List<RelationshipSCT> getRelationshipsFrom(ConceptSCT conceptSCT) {
@@ -141,4 +153,53 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
 
     }
 
+    @Override
+    public List<DescriptionSCT> searchDescriptionsPerfectMatch(String term, int page, int pageSize) {
+
+        term = descriptionSearchBR.escapeSpecialCharacters(term);
+
+        if(term.isEmpty()) {
+            return EMPTY_LIST;
+        }
+
+        return snomedctDAO.searchDescriptionsPerfectMatch(term, page, pageSize);
     }
+
+    @Override
+    public List<DescriptionSCT> searchDescriptionsTruncateMatch(String term, int page, int pageSize) {
+
+        term = descriptionSearchBR.escapeSpecialCharacters(term);
+
+        if(term.isEmpty()) {
+            return EMPTY_LIST;
+        }
+
+        List<DescriptionSCT> descriptions = snomedctDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.truncatePattern(term), page, pageSize);
+
+        if (descriptions.isEmpty()) {
+            descriptions = snomedctDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.truncatePattern(descriptionSearchBR.removeStopWords(term)), page, pageSize);
+        }
+
+        return descriptions;
+    }
+
+    @Override
+    public List<DescriptionSCT> searchDescriptionsSuggested(String term) {
+
+        List<DescriptionSCT> descriptions;
+
+        descriptions = snomedctDAO.searchDescriptionsPerfectMatch(term, 0, SUGGESTTION_SIZE);
+
+        if (descriptions.isEmpty()) {
+            descriptions = snomedctDAO.searchDescriptionsTruncateMatch(term, 0, SUGGESTTION_SIZE);
+        }
+
+        if (descriptions.isEmpty()) {
+            descriptions = snomedctDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.removeStopWords(term), 0, SUGGESTTION_SIZE);
+        }
+
+        return descriptions;
+    }
+
+
+}

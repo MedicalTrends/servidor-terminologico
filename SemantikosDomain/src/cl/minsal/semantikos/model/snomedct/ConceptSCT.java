@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static cl.minsal.semantikos.model.snomedct.DescriptionSCTType.FSN;
+import static cl.minsal.semantikos.model.snomedct.DescriptionSCTType.PREFERRED;
 import static cl.minsal.semantikos.model.snomedct.DescriptionSCTType.SYNONYM;
 import static java.util.Collections.emptyList;
 

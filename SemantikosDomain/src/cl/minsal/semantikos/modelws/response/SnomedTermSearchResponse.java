@@ -7,15 +7,15 @@ import java.io.Serializable;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "respuestaBuscarTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "RespuestaBuscarTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "respuestaBuscarTerminoSnomed", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "RespuestaBuscarTerminoSnomed", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class SnomedTermSearchResponse implements Serializable {
 
     @XmlElement(name="terminoBuscar")
     private String pattern;
 
     @XmlElement(name="descripcionesEncontradas")
-    private SnomedMatchDescriptionsResponse perfectMatchDescriptions;
+    private SnomedMatchDescriptionsResponse matchDescriptions;
 
     public String getPattern() {
         return pattern;
@@ -25,12 +25,11 @@ public class SnomedTermSearchResponse implements Serializable {
         this.pattern = pattern;
     }
 
-    public SnomedMatchDescriptionsResponse getPerfectMatchDescriptions() {
-        return perfectMatchDescriptions;
+    public SnomedMatchDescriptionsResponse getMatchDescriptions() {
+        return matchDescriptions;
     }
 
-    public void setPerfectMatchDescriptions(SnomedMatchDescriptionsResponse perfectMatchDescriptions) {
-        this.perfectMatchDescriptions = perfectMatchDescriptions;
+    public void setMatchDescriptions(SnomedMatchDescriptionsResponse matchDescriptions) {
+        this.matchDescriptions = matchDescriptions;
     }
-
 }
