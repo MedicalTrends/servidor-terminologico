@@ -386,16 +386,23 @@ public class DescriptionManagerImpl implements DescriptionManager {
         List<Description> descriptions; //= descriptionDAO.searchDescriptionsSuggested(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
         //logger.info("searchDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
         //logger.info("searchDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+
         term = descriptionSearchBR.escapeSpecialCharacters(term);
 
         descriptions = descriptionDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets), 0, SUGGESTTION_SIZE);
 
-        if (descriptions.isEmpty()) {
-            descriptions = descriptionDAO.searchDescriptionsTruncateMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets), 0, SUGGESTTION_SIZE);
-        }
+        if(descriptions.size() < SUGGESTTION_SIZE) {
 
-        if (descriptions.isEmpty()) {
-            descriptions = descriptionDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.removeStopWords(term), PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets), 0, SUGGESTTION_SIZE);
+            int offSet = SUGGESTTION_SIZE - descriptions.size();
+
+            descriptions.addAll(descriptionDAO.searchDescriptionsTruncateMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets), 0, offSet));
+
+            if (descriptions.size() < SUGGESTTION_SIZE) {
+
+                offSet = SUGGESTTION_SIZE - descriptions.size();
+
+                descriptions.addAll(descriptionDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.removeStopWords(term), PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets), 0, offSet));
+            }
         }
 
         return descriptions;
