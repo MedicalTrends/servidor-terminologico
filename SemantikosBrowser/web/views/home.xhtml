@@ -1,149 +1,188 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:pe="http://primefaces.org/ui/extensions"
-                template="/WEB-INF/template/template.xhtml">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
 
-    <ui:define name="content">
-        <f:metadata>
-            <f:event type="preRenderView" listener="#{browserBean.executeQuery}" />
-        </f:metadata>
+<h:head>
+    <f:facet name="first">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+    </f:facet>
+    <title>Semantikos</title>
+    <h:outputScript name="js/ripple.js" library="ultima-layout" />
+    <h:outputScript name="js/layout.js" library="ultima-layout" />
+</h:head>
 
-        <div class="Container100">
+<!--h:body styleClass="login-body"-->
+<h:body>
 
-            <div class="ContainerIndent">
-                <div class="Card ShadowEffect">
+    <f:facet name="last">
+        <h:outputStylesheet name="semantikos/css/customStyle.css"/>
+    </f:facet>
 
-                    <div class="Container100">
-                        <div class="ContainerIndent">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{browserBean.executeQuery}" />
+    </f:metadata>
 
-                            <h:form id="browserForm">
+    <div class="layout-main" style="padding: 95px 15px 15px">
 
-                                <p:dataTable id="conceptTable" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
-                                 rows="15"
-                                 sortBy="#{1}"
-                                 paginator="true" lazy="true" dynamic="true"
-                                 reflow="true"
-                                 paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                 emptyMessage="No se han encontrado conceptos con los criterios utilizados">
-                        <f:facet name="{Exporters}">
-                            <p:commandButton ajax="false" value="Exportar a Excel" process="@this" update="@this"
-                                             icon="fa fa-file-excel-o">
-                                <p:dataExporter type="xls" target="conceptTable"
-                                                fileName="conceptos"/>
-                            </p:commandButton>
-                        </f:facet>
+        <div class="ui-g">
 
+            <div class="ui-g-0 ui-md-2 ui-lg-4"></div>
 
-                        <p:column headerText="Concept ID" sortBy="#{1}">
-                            <h:outputText value="#{conceptSMTK.conceptID}"/>
-                        </p:column>
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                        <p:column headerText="Termino Preferido" sortBy="#{2}">
-                            <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
-                        </p:column>
+                <!--div class="card card-w-title"-->
+                <div class="">
 
-                        <p:column headerText="Categoría">
-                            <h:outputText value="#{conceptSMTK.category.name}"/>
-                        </p:column>
+                    <o:form id="browserForm">
 
-                        <p:column headerText="Etiquetas" styleClass="tags" exportable="false">
+                        <div class="ui-g ui-fluid">
 
-                            <p:repeat
-                                    offset="0"
-                                    size="#{conceptSMTK.tags.size()}"
-                                    step="1"
-                                    varStatus="var"
-                                    value="#{conceptSMTK.tags}"
-                                    var="tag">
+                            <div class="ui-g-12" style="text-align: center">
+                                <p:graphicImage name="images/logo-indigo.png" library="semantikos" style="width:250px; padding-top: 109px" />
+                            </div>
 
-                                <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
-                                <h:outputText value=", " rendered="#{conceptSMTK.tags.size() > 1}" />
+                            <!--div class="ui-g-12" style="text-align: center">
+                                <p:imageSwitch effect="scrollLeft" speed="10000" slideshowSpeed="1000" rendered="false">
+                                    <ui:repeat var="data" value="#{browserBean.images}">
+                                        <p:graphicImage name="images/#{data}" library="semantikos" id="image" style="width:200px"  />
+                                    </ui:repeat>
+                                </p:imageSwitch>
+                            </div-->
 
-                            </p:repeat>
+                            <div class="ui-g-10" style="padding-top: 30px; padding-bottom: 30px">
+                                <p:outputPanel styleClass="search">
+                                    <p:autoComplete id="search"
+                                                    widgetVar="search_input"
+                                                    styleClass="search-input"
+                                                    autoHighlight="true"
+                                                    minQueryLength="3"
+                                                    emptyMessage="No se encontraron conceptos"
+                                                    forceSelection="false"
+                                                    scrollHeight="200" size="5"
+                                                    completeMethod="#{browserBean.searchSuggestedDescriptions}"
+                                                    placeholder="Buscar..."
+                                                    converter="DescriptionConverter"
+                                                    var="description"
+                                                    value="#{browserBean.descriptionSelected}"
+                                                    itemLabel="#{description.getRepresentation()}"
+                                                    itemValue="#{description}">
 
-                        </p:column>
+                                        <p:outputPanel>
 
-                        <p:column exportable="false" style="text-align: center">
-
-                            <p:commandLink oncomplete="PF('dialogC').show()" update=":browserForm:conceptTable,:browserForm:query-concept-sct" title="Ver Concepto">
-                                <i class="fa fa-search fa-lg" />
-                                <f:setPropertyActionListener value="#{conceptSMTK}" target="#{browserBean.conceptSelected}"/>
-                            </p:commandLink>
-
-                        </p:column>
-
-                    </p:dataTable>
-
-                                <p:dialog id="dialogC" header="Ver Concepto" widgetVar="dialogC" global="true" width="700px" showEffect="fade" hideEffect="fade">
-
-                                    <p:outputPanel id="query-concept-sct">
-                                        <p:panelGrid style="width:100%">
-                                            <f:facet name="header">
-                                                <p:row>
-                                                    <p:column colspan="2">
-                                                        #{browserBean.conceptSelected.descriptionFavorite}
-                                                    </p:column>
-                                                </p:row>
-                                            </f:facet>
-                                            <p:row>
-                                                <p:column styleClass="BoldGray FontBold">ConceptID</p:column>
-                                                <p:column>#{browserBean.conceptSelected.conceptID}</p:column>
-                                            </p:row>
-                                            <p:row>
-                                                <p:column styleClass="BoldGray FontBold">Categoría</p:column>
-                                                <p:column>#{browserBean.conceptSelected.category}</p:column>
-                                            </p:row>
-                                            <p:row>
-                                                <p:column styleClass="BoldGray FontBold">FSN</p:column>
-                                                <p:column>#{browserBean.conceptSelected.descriptionFSN}</p:column>
-                                            </p:row>
-                                            <p:row>
-                                                <p:column styleClass="BoldGray FontBold">Preferida</p:column>
-                                                <p:column>#{browserBean.conceptSelected.descriptionFavorite}</p:column>
-                                            </p:row>
-                                        </p:panelGrid>
-                                        <p:dataTable id="otherDescriptions"
-                                                     var="description"
-                                                     value="#{browserBean.getOtherDescriptions(browserBean.conceptSelected)}"
-                                                     rendered="#{not empty browserBean.getOtherDescriptions(browserBean.conceptSelected)}"
-                                                     editable="true"
-                                                     reflow="true">
-                                            <p:columnGroup type="header">
-
-                                                <p:row>
-                                                    <p:column colspan="2" headerText="Otras Descripciones"/>
-                                                </p:row>
-
-                                            </p:columnGroup>
-                                            <p:column style="width: 25%" styleClass="BoldGray FontBold">
-                                                #{description.descriptionType.name}
+                                            <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
+                                                <h:outputText value="#{description.term}" />
                                             </p:column>
-                                            <p:column>
-                                                #{description.term}
-                                            </p:column>
-                                        </p:dataTable>
+
+                                        </p:outputPanel>
+
+                                        <p:ajax event="itemSelect"
+                                                listener="#{browserBean.test()}"
+                                                update="@(.conceptPanel),@(.search)"
+                                                process="@this"/>
+
+                                    </p:autoComplete>
+
+                                    <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
+                                        <i class="fa fa-search fa-lg"  />
                                     </p:outputPanel>
-                                </p:dialog>
 
-                            </h:form>
+                                    <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
+                                        <p:commandLink process="@this" style="color: #aaa;"
+                                                       update="@(.search)"
+                                                       action="#{browserBean.setDescriptionSelected(null)}">
+                                            <i class="fa fa-close fa-lg"  />
+                                        </p:commandLink>
+                                    </p:outputPanel>
+                                </p:outputPanel>
+                            </div>
+
+                            <div class="ui-g-2" style="padding-top: 30px; padding-bottom: 30px">
+                                <p:commandButton id="search_button2" styleClass="search-button-tiny" icon="fa fa-search"
+                                                 actionListener="#{browserBean.redirect()}" rendered="false"/>
+                                <p:button id="search_button3" styleClass="search-button-tiny" icon="fa fa-search" outcome="/views/concepts"/>
+                            </div>
+
+                            <div class="ui-g-0 ui-md-3 ui-lg-4" style="padding: 0em"></div>
+
+                            <div class="ui-g-1 ui-md-6 ui-lg-4" style="padding: 0em">
+                                <p:commandButton id="search_button" styleClass="search-button" value="Buscar" icon="fa fa-search"
+                                                 actionListener="#{browserBean.redirect()}" rendered="false"/>
+                            </div>
+
+                            <div class="ui-g-0 ui-md-3 ui-lg-4" style="padding: 0em"></div>
 
                         </div>
-                    </div>
+
+                    </o:form>
+
                 </div>
             </div>
+
+            <div class="ui-g-0 ui-md-2 ui-lg-4"></div>
         </div>
 
-        <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
-            <p:outputPanel styleClass="conceptDetail" style="width: 500px;">
+    </div>
 
-            </p:outputPanel>
-        </p:overlayPanel>
+    <div class="login-footer">
+        <div class="card clearfix">
+            <span class="footer-text-left">
+                <span>
+                    <i class="fa fa-copyright" style="color: #5f666c" /><h:outputText value="2016" style="color: #5f666c" /><a href="" style="color: #5f666c">Ministerio de Salud</a>
+                </span>
+                <br/>
+                <span style="color: #5f666c">Version: <h:outputText value="${bpversion['version']} ${bpversion['build.date']}" />
+                </span>
+            </span>
+        </div>
+    </div>
 
+    <h:outputStylesheet name="css/ripple.css" library="ultima-layout" />
+    <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" />
 
-    </ui:define>
+    <script type="text/javascript">
 
-</ui:composition>
+        var ctx = "";
 
+        var redirect = ctx + '/views/concepts';
+
+        $('.search-button-tiny').prop('onclick',"");
+
+        $('input[id$=search_input]').on('input', function() {
+            if($('input[id$=search_hinput]').val().length >= 3) {
+                $('.search-button-tiny').prop('onclick',"window.open('"+redirect+"','_self')");
+            }
+            else {
+                $('.search-button-tiny').prop('onclick',"");
+            }
+        });
+
+        $('input[id$=search_input]').on('keyup', function() {
+            if($('input[id$=search_hinput]').val().length >= 3) {
+                $('.search-button-tiny').prop('onclick',"window.open('"+redirect+"','_self')");
+            }
+            else {
+                $('.search-button-tiny').prop('onclick',"");
+            }
+        });
+
+        $('.search-button-tiny').click( function() {
+            if($('input[id$=search_hinput]').val().length >= 3) {
+                $('input[id$=search_input]').trigger('keydown');
+                $('input[id$=search_input]').trigger('input');
+                $('div[id$=search_panel] .ui-autocomplete-item:first-child').trigger('click');
+            }
+            else {
+                return false;
+            }
+        });
+    </script>
+</h:body>
+
+</html>

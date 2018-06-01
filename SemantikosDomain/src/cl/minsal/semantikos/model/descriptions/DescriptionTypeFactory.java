@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
+
+
 /**
  * @author Andrés Farías
  */
@@ -15,6 +18,8 @@ public class DescriptionTypeFactory implements Serializable {
     private static final DescriptionTypeFactory instance = new DescriptionTypeFactory();
 
     public static final DescriptionType TYPELESS_DESCRIPTION_TYPE = new DescriptionType(-1, "Sin Tipo", "El tipo de descripcion sin tipo :).");
+
+    public static final Description DUMMY_DESCRIPTION = new Description(null, EMPTY_STRING, TYPELESS_DESCRIPTION_TYPE);
 
     public static final String FAVOURITE_DESCRIPTION_TYPE_NAME = "preferida";
 

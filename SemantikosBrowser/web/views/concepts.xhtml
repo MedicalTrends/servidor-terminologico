@@ -1,0 +1,350 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{browserBean.executeQuery}" />
+        </f:metadata>
+
+        <div class="ui-g">
+
+            <div class="ui-g-0 ui-md-0 ui-lg-2"></div>
+
+            <div class="ui-g-12 ui-md-12 ui-lg-8">
+
+                <p:breadCrumb id="top-menu">
+                    <p:menuitem value="Inicio" url="/views/home.xhtml" />
+                    <p:menuitem value="Conceptos" url="#" />
+                </p:breadCrumb>
+
+                <div class="card card-w-title">
+
+                    <h:form id="browserForm">
+
+                        <p:outputPanel>
+
+                            <div class="ui-fluid">
+
+                                <div class="ui-g">
+
+                                    <!--p:panelGrid columns="3" columnClasses="ui-grid-col-6,ui-grid-col-3,ui-grid-col-3" layout="grid"
+                                                 styleClass="ui-panelgrid-blank form-group"-->
+
+                                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+
+                                        <p:outputPanel styleClass="search">
+                                            <p:autoComplete minQueryLength="3"
+                                                            id="search"
+                                                            emptyMessage="No se encontraron conceptos"
+                                                            forceSelection="false"
+                                                            scrollHeight="200" size="5"
+                                                            completeMethod="#{browserBean.searchSuggestedDescriptions}"
+                                                            placeholder="Buscar..."
+                                                            converter="DescriptionConverter"
+                                                            var="description"
+                                                            value="#{browserBean.descriptionSelected}"
+                                                            itemLabel="#{description.getRepresentation()}"
+                                                            itemValue="#{description}">
+
+                                                <p:outputPanel>
+
+                                                    <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
+                                                        <h:outputText value="#{description.term}" />
+                                                    </p:column>
+
+                                                </p:outputPanel>
+
+                                                <p:ajax event="itemSelect"
+                                                            listener="#{browserBean.test()}"
+                                                            update="@(.conceptPanel),@(.search)"
+                                                            process="@this"/>
+
+
+                                            </p:autoComplete>
+                                            <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
+                                                <p:commandLink style="color: #0000EE" styleClass="search-button-tiny">
+                                                    <i class="fa fa-search fa-lg"  />
+                                                </p:commandLink>
+                                            </p:outputPanel>
+                                            <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
+                                                <p:commandLink process="@this" style="color: #aaa;"
+                                                               update="@(.search)" oncomplete="listenSearchOnClickEvent();"
+                                                               action="#{browserBean.setDescriptionSelected(null)}">
+                                                    <i class="fa fa-close fa-lg"  />
+                                                </p:commandLink>
+                                            </p:outputPanel>
+                                        </p:outputPanel>
+
+                                    </div>
+
+                                    <!--/p:panelGrid-->
+
+                                </div>
+
+                                <div class="ui-g">
+
+                                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+
+                                        <p:commandButton value="Exportar" icon="fa fa-file-excel-o" ajax="false"
+                                                               style="width: auto; float: left; min-width: 100px">
+                                            <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
+                                        </p:commandButton>
+
+                                        <p:selectBooleanButton value="#{browserBean.showFilters}" onLabel="Filtrar"
+                                                               style="width: auto; float: left; min-width: 100px"
+                                                               offLabel="Filtrar" onIcon="fa fa-filter" offIcon="fa fa-filter">
+                                            <p:ajax update="browserForm" />
+                                        </p:selectBooleanButton>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <p:panel id="filters" rendered="#{browserBean.showFilters}" styleClass="filtros">
+
+                                <div class="ui-g">
+
+                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                                        <p:outputLabel value="Categorías" />
+
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+
+                                        <p:selectCheckboxMenu id="menu2"
+                                                              converter="omnifaces.SelectItemsConverter"
+                                                              value="#{browserBean.browserQuery.categories}"
+                                                              label="Seleccione..." style="width: 95%"
+                                                              filter="true" filterMatchMode="startsWith">
+                                            <f:selectItems value="#{browserBean.categories}" var="category"
+                                                           itemLabel="#{category.name}" itemValue="#{category}"/>
+                                            <p:ajax event="toggleSelect" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+                                            <p:ajax update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+                                        </p:selectCheckboxMenu>
+
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                                        <p:outputLabel value="Etiquetas" />
+
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+
+                                        <p:selectCheckboxMenu id="tags2"
+                                                              value="#{browserBean.browserQuery.tags}"
+                                                              converter="omnifaces.SelectItemsConverter"
+                                                              label="Seleccione..."
+                                                              style="width: 95%"
+                                                              filter="true"
+                                                              filterMatchMode="startsWith">
+                                            <p:ajax event="change" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+                                            <p:ajax event="toggleSelect" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+
+                                            <f:selectItems value="#{browserBean.tags}" var="tag"
+                                                           itemLabel="#{tag.name}" itemValue="#{tag}"/>
+                                        </p:selectCheckboxMenu>
+
+                                    </div>
+
+                                </div>
+
+                            </p:panel>
+
+                        </p:outputPanel>
+
+                        <br/>
+
+                        <p:outputPanel id="conceptPanel" styleClass="conceptPanel">
+
+                            <p:dataTable id="conceptTable" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
+                                         widgetVar="conceptTable"
+                                         rendered="#{not empty browserBean.concepts}"
+                                         multiViewState="true"
+                                         rows="15"
+                                         sortBy="#{1}"
+                                         paginator="true" lazy="true" dynamic="true"
+                                         paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                         emptyMessage="No se han encontrado conceptos con los criterios utilizados">
+
+                                <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop();" />
+
+                                <p:column headerText="Termino Preferido" sortBy="#{2}">
+                                    <div class="ui-g dashboard">
+                                        <div class="ui-g-12">
+                                            <div class="card overview">
+                                                <div class="overview-content clearfix">
+                                                    <span class="overview-title">
+                                                        <p:link outcome="/views/concept" value="#{conceptSMTK.descriptionFavorite.term}" styleClass="myCustomLinkStyle" >
+                                                            <f:param name="conceptID" value="#{conceptSMTK.conceptID}" />
+                                                        </p:link>
+                                                    </span>
+                                                    <span class="overview-detail">
+                                                        <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: small; color: #006621" />
+                                                        <br/>
+                                                        <h:outputText value="#{conceptSMTK.category.name}" style="font-size: small; color:#545454;" />
+
+                                                        <p:separator style="border-top: 0px solid rgb(219, 219, 219)" rendered="#{ not empty conceptSMTK.tags }"/>
+
+                                                         <p:outputPanel rendered="#{ not empty conceptSMTK.tags}">
+                                                            <i class="fa fa-tags" style="font-size: small"/>
+                                                            <p:repeat
+                                                                    offset="0"
+                                                                    size="#{conceptSMTK.tags.size()}"
+                                                                    step="1"
+                                                                    varStatus="var"
+                                                                    value="#{conceptSMTK.tags}"
+                                                                    var="tag">
+
+                                                                <h:outputText value=" #{tag}" style="font-size: small; background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+                                                                <h:outputText value=", " style="font-size: small; color: #545454"/>
+
+                                                            </p:repeat>
+                                                        </p:outputPanel>
+
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <p:dataTable id="conceptTableExcel" widgetVar="conceptTableExcel" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
+                                         style="display: none"
+                                         rows="15"
+                                         sortBy="#{1}"
+                                         paginator="true" lazy="true" dynamic="true"
+                                         reflow="true"
+                                         paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                         emptyMessage="No se han encontrado conceptos con los criterios utilizados">
+                                <f:facet name="{Exporters}">
+                                    <p:commandButton ajax="false" value="Exportar a Excel" process="@this" update="@this"
+                                                     icon="fa fa-file-excel-o">
+                                        <p:dataExporter type="xls" target="conceptTable"
+                                                        fileName="conceptos"/>
+                                    </p:commandButton>
+                                </f:facet>
+
+                                <p:column headerText="Concept ID" sortBy="#{1}">
+                                    <h:outputText value="#{conceptSMTK.conceptID}"/>
+                                </p:column>
+
+                                <p:column headerText="Termino Preferido" sortBy="#{2}">
+                                    <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
+                                </p:column>
+
+                                <p:column headerText="Categoría">
+                                    <h:outputText value="#{conceptSMTK.category.name}"/>
+                                </p:column>
+
+                                <p:column headerText="Etiquetas" styleClass="tags" exportable="false">
+
+                                    <p:repeat
+                                            offset="0"
+                                            size="#{conceptSMTK.tags.size()}"
+                                            step="1"
+                                            varStatus="var"
+                                            value="#{conceptSMTK.tags}"
+                                            var="tag">
+
+                                        <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+                                        <h:outputText value=", " rendered="#{conceptSMTK.tags.size() > 1}" />
+
+                                    </p:repeat>
+
+                                </p:column>
+
+                            </p:dataTable>
+
+                        </p:outputPanel>
+
+                    </h:form>
+
+                </div>
+            </div>
+
+            <div class="ui-g-0 ui-md-0 ui-lg-2"></div>
+
+        </div>
+
+        <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
+            <p:outputPanel styleClass="conceptDetail" style="width: 500px;">
+
+            </p:outputPanel>
+        </p:overlayPanel>
+
+        <script type="text/javascript">
+
+            $(function() {
+
+                // Set window scroll position if cookie is set.
+                window.scroll(0, $.cookie('myCookie'));
+                // Unset cookie after setting scroll position.
+                $.removeCookie('myCookie');
+                listenPageOnClickEvent();
+            });
+
+            function scrollTop() {
+                setTimeout(
+                    function() {
+                        window.scroll(0, 0);
+                        listenPageOnClickEvent();
+                    }, 10);
+
+            }
+
+            // This function simply gets the window scroll position, works in all browsers.
+            function getPageScroll() {
+                var yScroll;
+                if (self.pageYOffset) {
+                    yScroll = self.pageYOffset;
+                } //else if (document.documentElement document.documentElement.scrollTop) {
+//                    yScroll = document.documentElement.scrollTop;
+                //}
+                else if (document.body) {
+                    yScroll = document.body.scrollTop;
+                }
+                return yScroll;
+            }
+
+            function listenPageOnClickEvent() {
+                // Make this class objects keep page scroll position.
+                $('.myCustomLinkStyle').each(function() {
+                    $(this).on('click', function() {
+                        $.cookie('myCookie', getPageScroll());
+                    });
+                });
+            }
+
+            function listenSearchOnClickEvent() {
+                $('.search-button-tiny').on("click", function () {
+                    if ($('input[id$=search_hinput]').val().length >= 3) {
+                        $('input[id$=search_input]').trigger('keydown');
+                        $('input[id$=search_input]').trigger('input');
+                        $('div[id$=search_panel] .ui-autocomplete-item:first-child').trigger('click');
+                    }
+                    else {
+                        return false;
+                    }
+                });
+            }
+
+        </script>
+
+
+    </ui:define>
+
+</ui:composition>
+

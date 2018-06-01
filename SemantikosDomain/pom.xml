@@ -138,7 +138,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>src.cl.minsal.semantikos.clients.ServiceLocator</mainClass>
+                            <mainClass>src.cl.minsal.cl.minsal.semantikos.clients.ServiceLocator</mainClass>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>

@@ -2,8 +2,8 @@
     <authentication>
         <login-module code="org.jboss.security.auth.spi.DatabaseServerLoginModule" flag="required">
             <module-option name="dsJndiName" value="java:jboss/PostgresDS"/>
-            <module-option name="principalsQuery" value="select password_hash from semantikos.smtk_user where username = ?"/>
-            <module-option name="rolesQuery" value="select  p.name as role, 'Roles' as rolegroup from semantikos.smtk_user u, semantikos.smtk_profile p, semantikos.smtk_user_profile up where  u.username = ? and u.id = up.id_user and up.id_profile = p.id"/>
+            <module-option name="principalsQuery" value="select password_hash from cl.minsal.semantikos.smtk_user where username = ?"/>
+            <module-option name="rolesQuery" value="select  p.name as role, 'Roles' as rolegroup from cl.minsal.semantikos.smtk_user u, cl.minsal.semantikos.smtk_profile p, cl.minsal.semantikos.smtk_user_profile up where  u.username = ? and u.id = up.id_user and up.id_profile = p.id"/>
             <module-option name="hashAlgorithm" value="MD5"/>
             <module-option name="hashEncoding" value="base64"/>
             <module-option name="unauthenticatedIdentity" value="guest"/>

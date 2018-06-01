@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.ws.semantikos.minsal.cl/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="ServicioDeRelacionados" targetNamespace="http://service.ws.semantikos.minsal.cl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.ws.semantikos.minsal.cl/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="ServicioDeRelacionados" targetNamespace="http://service.ws.cl.minsal.semantikos.minsal.cl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
-    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.ws.semantikos.minsal.cl/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.ws.cl.minsal.semantikos.minsal.cl/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="atributo" type="tns:Atributo" />
       <xs:element name="atributoRelacion" type="tns:AtributoRelacion" />
       <xs:element name="categoria" type="tns:Categoria" />

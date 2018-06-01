@@ -1,6 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ws.semantikos.minsal.cl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="ServicioDeBusqueda" targetNamespace="http://service.ws.semantikos.minsal.cl/">
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ws.semantikos.minsal.cl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="ServicioDeBusqueda" targetNamespace="http://service.ws.cl.minsal.semantikos.minsal.cl/">
   <wsdl:types>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.ws.semantikos.minsal.cl/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.ws.semantikos.minsal.cl/">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.ws.semantikos.minsal.cl/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.ws.cl.minsal.semantikos.minsal.cl/">
   <xs:import namespace="http://service.ws.semantikos.minsal.cl/"/>
   <xs:element name="atributo" type="tns:Atributo"/>
   <xs:element name="atributoRelacion" type="tns:AtributoRelacion"/>
@@ -712,7 +712,7 @@
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://service.ws.semantikos.minsal.cl/" targetNamespace="http://service.ws.semantikos.minsal.cl/" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://service.ws.semantikos.minsal.cl/" targetNamespace="http://service.ws.cl.minsal.semantikos.minsal.cl/" version="1.0">
 
   <xs:import namespace="http://service.ws.semantikos.minsal.cl/"/>
 
