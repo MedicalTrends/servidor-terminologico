@@ -172,7 +172,7 @@
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
                             <!--mainClass>cl.minsal.semantikos.LoaderView</mainClass-->
-                            <mainClass>cl.minsal.cl.minsal.semantikos.main.Main</mainClass>
+                            <mainClass>cl.minsal.semantikos.main.Main</mainClass>
                         </manifest>
                         <!--manifestEntries>
                             <Premain-Class>cl.minsal.semantikos.utils.ObjectSizeFetcher</Premain-Class>

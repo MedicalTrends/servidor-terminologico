@@ -11,9 +11,9 @@
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <composite:interface>
-    <composite:attribute name="relationshipDefinition" type="cl.minsal.cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb"/>
-    <composite:attribute name="targetDefinition" type="cl.minsal.cl.minsal.semantikos.model.categories.Category"/>
-    <composite:attribute name="concept" type="cl.minsal.cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb"/>
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.categories.Category"/>
+    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
 </composite:interface>
 
 <composite:implementation>
@@ -271,7 +271,7 @@
                         <div class="Container20 White Responsive">
                             <div class="ContainerIndent">
 
-                                <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"  value="#{cc.attrs.relationshipDefinition.name} " for="findConceptSMTK"/>
+                                <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" value="#{cc.attrs.relationshipDefinition.name} " for="findConceptSMTK"/>
                                 <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" value="#{cc.attrs.relationshipDefinition.name} *" for="findConceptSMTK"/>
 
                             </div>
@@ -425,11 +425,11 @@
                                 <div class="SeparatorFull"></div>
 
                                 <p:commandButton  actionListener="#{autogenerateBean.inheritDirectCrossmaps(cc.attrs.concept)}"
-                                                  update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes)"
+                                                  update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.directCrossmaps)"
                                                   value="Si" oncomplete="PF('inheritDirectCrossmaps').hide()" style="float: right" />
 
                                 <p:commandButton  oncomplete="PF('inheritDirectCrossmaps').hide()" style="float: right;"
-                                                  update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes)"
+                                                  update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.directCrossmaps)"
                                                   value="No" actionListener="#{autogenerateBean.setInheritedCrossmaps(true)}" />
 
                             </p:panel>

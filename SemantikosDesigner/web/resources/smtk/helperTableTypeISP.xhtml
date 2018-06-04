@@ -10,9 +10,9 @@
       xmlns:p="http://primefaces.org/ui">
 
 <composite:interface >
-    <composite:attribute name="relationshipDefinition" type="cl.minsal.cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
-    <composite:attribute name="targetDefinition" type="cl.minsal.cl.minsal.semantikos.model.helpertables.HelperTable" />
-    <composite:attribute name="concept" type="cl.minsal.cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.helpertables.HelperTable" />
+    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
 </composite:interface>
 <composite:implementation>
 
@@ -51,6 +51,7 @@
             </p:selectBooleanButton>
 
         </h:panelGrid>
+
         <p:spacer />
 
         <p:outputPanel style="display:block" id="ispfetcherinputs" rendered="#{cc.attrs.concept.editable}">

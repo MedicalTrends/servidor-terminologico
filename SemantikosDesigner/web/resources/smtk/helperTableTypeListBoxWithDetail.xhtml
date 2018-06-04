@@ -10,9 +10,9 @@
       xmlns:p="http://primefaces.org/ui">
 
 <composite:interface >
-    <composite:attribute name="relationshipDefinition" type="cl.minsal.cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb" />
-    <composite:attribute name="targetDefinition" type="cl.minsal.cl.minsal.semantikos.model.helpertables.HelperTable" />
-    <composite:attribute name="concept" type="cl.minsal.cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.helpertables.HelperTable" />
+    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
 </composite:interface>
 <composite:implementation>
 
@@ -122,10 +122,6 @@
                             </p:outputPanel>
                         </div>
                     </div>
-
-                </div>
-
-                <div class="Container ContainerIndent">
 
                     <ui:repeat value="#{relationship.relationshipDefinition.targetDefinition.columns}"
                                var="column"

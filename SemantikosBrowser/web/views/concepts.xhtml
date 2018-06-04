@@ -331,9 +331,10 @@
             function listenSearchOnClickEvent() {
                 $('.search-button-tiny').on("click", function () {
                     if ($('input[id$=search_hinput]').val().length >= 3) {
-                        $('input[id$=search_input]').trigger('keydown');
-                        $('input[id$=search_input]').trigger('input');
+                        //$('input[id$=search_input]').trigger('keydown');
+                        //$('input[id$=search_input]').trigger('input');
                         $('div[id$=search_panel] .ui-autocomplete-item:first-child').trigger('click');
+                        //$('input[id$=search_input]').parent().trigger('click');
                     }
                     else {
                         return false;
