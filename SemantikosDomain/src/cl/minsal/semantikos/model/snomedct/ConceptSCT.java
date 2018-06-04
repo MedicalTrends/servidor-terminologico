@@ -34,6 +34,7 @@ public class ConceptSCT extends PersistentEntity implements Target, SnomedCTComp
     /** Descripciones del Concepto */
     private List<DescriptionSCT> descriptions;
 
+    /** Relaciones del Concepto */
     private List<RelationshipSCT> relationships;
 
     /**

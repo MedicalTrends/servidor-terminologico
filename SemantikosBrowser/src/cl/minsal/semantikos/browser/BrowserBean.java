@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.queries.BrowserQuery;
 import cl.minsal.semantikos.model.tags.Tag;
+import org.omnifaces.util.Ajax;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.data.PageEvent;
 import org.primefaces.extensions.model.layout.LayoutOptions;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.System.currentTimeMillis;
 import static org.primefaces.util.Constants.EMPTY_STRING;
 
 @ManagedBean
@@ -87,6 +89,12 @@ public class BrowserBean implements Serializable {
 
     private boolean showFilters = false;
 
+    private int results;
+
+    private float seconds;
+
+    private long init;
+
     //@EJB
     private QueryManager queryManager = (QueryManager) ServiceLocator.getInstance().getService(QueryManager.class);
 
@@ -119,10 +127,28 @@ public class BrowserBean implements Serializable {
         //images.add("image-2.jpg");
     }
 
+    public int getResults() {
+        return results;
+    }
+
+    public void setResults(int results) {
+        this.results = results;
+    }
+
+    public float getSeconds() {
+        return seconds;
+    }
+
+    public void setSeconds(float seconds) {
+        this.seconds = seconds;
+    }
+
     /**
      * Este método es el responsable de ejecutar la consulta
      */
     public void executeQuery() {
+
+        init = currentTimeMillis();
 
         /**
          * Si el objeto de consulta no está inicializado, inicializarlo
@@ -178,17 +204,21 @@ public class BrowserBean implements Serializable {
 
                 List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(browserQuery);
 
-                if(conceptSMTKs.isEmpty()) {
+                //if(conceptSMTKs.isEmpty()) {
                     browserQuery.setTruncateMatch(true);
-                    conceptSMTKs = queryManager.executeQuery(browserQuery);;
-                }
+                    conceptSMTKs.addAll(queryManager.executeQuery(browserQuery));
+                //}
 
                 this.setRowCount(queryManager.countQueryResults(browserQuery));
+
+                results = this.getRowCount();
+                seconds = (float) ((currentTimeMillis() - init)/1000.0);
 
                 return conceptSMTKs;
             }
 
         };
+
 
     }
 

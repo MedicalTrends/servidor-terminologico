@@ -270,6 +270,8 @@ public class Description extends PersistentEntity implements AuditableEntity, Se
         }
     }
 
+
+
     /**
      * Este método tiene como responsabilidad imprimir mayor detalle sobre la descripcion.
      * @return Un String con detalles.

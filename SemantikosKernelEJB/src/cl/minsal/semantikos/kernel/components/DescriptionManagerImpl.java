@@ -401,7 +401,14 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
                 offSet = SUGGESTTION_SIZE - descriptions.size();
 
-                descriptions.addAll(descriptionDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.removeStopWords(term), PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets), 0, offSet));
+                List<Description> otherDescriptions = descriptionDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.removeStopWords(term), PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets), 0, offSet);
+
+                for (Description otherDescription : otherDescriptions) {
+                    if(!descriptions.contains(otherDescription)) {
+                        descriptions.add(otherDescription);
+                    }
+                }
+
             }
         }
 

@@ -429,21 +429,6 @@ public class SearchService {
     }
 
     // REQ-WS-???
-    @WebResult(name = "respuestaConceptoPorConceptID")
-    @WebMethod(operationName = "conceptoPorConceptID")
-    public ConceptResponse conceptoPorConceptID(
-            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
-            @WebParam(name = "peticionConceptoPorIdDescripcion")
-                    ConceptByConceptIDRequest request
-    ) throws NotFoundFault {
-        try {
-            return this.conceptController.conceptByConceptID(request.getConceptID());
-        } catch (Exception e) {
-            throw new NotFoundFault(e.getMessage());
-        }
-    }
-
-    // REQ-WS-???
     @WebResult(name = "respuestaGTINPorConceptID")
     @WebMethod(operationName = "GTINPorConceptID")
     public GTINByConceptIDResponse GTINPorConceptID(
@@ -468,6 +453,21 @@ public class SearchService {
     ) throws NotFoundFault {
         try {
             return this.conceptController.searchConceptIDByGTIN(request);
+        } catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
+    }
+
+    // REQ-WS-STK-ME013
+    @WebResult(name = "respuestaConceptoPorConceptID")
+    @WebMethod(operationName = "conceptoPorConceptID")
+    public ConceptResponse conceptoPorConceptID(
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionConceptoPorConceptID")
+                    ConceptByConceptIDRequest request
+    ) throws NotFoundFault {
+        try {
+            return this.conceptController.conceptByConceptID(request.getConceptID());
         } catch (Exception e) {
             throw new NotFoundFault(e.getMessage());
         }
@@ -523,5 +523,7 @@ public class SearchService {
         return this.snomedController.searchTermSuggested(request);
         //return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames());
     }
+
+
 
 }

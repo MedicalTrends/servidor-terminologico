@@ -221,7 +221,7 @@ public class QueryManagerImpl implements QueryManager {
 
         //query.setQuery(conceptSearchBR.standardizationPattern(query.getQuery()));
 
-        Principal principal = ctx.getCallerPrincipal();
+        //Principal principal = ctx.getCallerPrincipal();
 
         List<ConceptSMTK> concepts = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
 

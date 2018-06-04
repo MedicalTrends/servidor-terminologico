@@ -92,12 +92,12 @@
                                     <div class="ui-g-12 ui-md-12 ui-lg-12">
 
                                         <p:commandButton value="Exportar" icon="fa fa-file-excel-o" ajax="false"
-                                                               style="width: auto; float: left; min-width: 100px">
+                                                               style="width: auto; float: right; min-width: 100px">
                                             <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
                                         </p:commandButton>
 
                                         <p:selectBooleanButton value="#{browserBean.showFilters}" onLabel="Filtrar"
-                                                               style="width: auto; float: left; min-width: 100px"
+                                                               style="width: auto; float: right; min-width: 100px"
                                                                offLabel="Filtrar" onIcon="fa fa-filter" offIcon="fa fa-filter">
                                             <p:ajax update="browserForm" />
                                         </p:selectBooleanButton>
@@ -107,6 +107,7 @@
                                 </div>
 
                             </div>
+
 
                             <p:panel id="filters" rendered="#{browserBean.showFilters}" styleClass="filtros">
 
@@ -160,6 +161,19 @@
                                 </div>
 
                             </p:panel>
+
+                            <div class="ui-g">
+
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                    <p:outputPanel styleClass="search">
+                                        <p:outputLabel id="summary" value="#{browserBean.results} resultados (#{browserBean.seconds} segundos)"/>
+                                        <p:remoteCommand name="onload" update="summary"
+                                                         autoRun="true" />
+                                    </p:outputPanel>
+
+                                </div>
+
+                            </div>
 
                         </p:outputPanel>
 
