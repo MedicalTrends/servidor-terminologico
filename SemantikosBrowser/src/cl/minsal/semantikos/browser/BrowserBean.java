@@ -2,6 +2,7 @@ package cl.minsal.semantikos.browser;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.*;
+import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
@@ -95,6 +96,8 @@ public class BrowserBean implements Serializable {
 
     private long init;
 
+    private int page = 1;
+
     //@EJB
     private QueryManager queryManager = (QueryManager) ServiceLocator.getInstance().getService(QueryManager.class);
 
@@ -113,10 +116,17 @@ public class BrowserBean implements Serializable {
     //@EJB
     private RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);
 
+    //@EJB
+    private TimeOutWeb timeOutWeb = (TimeOutWeb) ServiceLocator.getInstance().getService(TimeOutWeb.class);
+
     private List<String> images = new ArrayList();
 
     @PostConstruct
     protected void initialize() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        request.getSession().setMaxInactiveInterval(timeOutWeb.getTimeOut());
 
         //ServiceLocator.getInstance().closeContext();
         tags = tagManager.getAllTags();
@@ -156,6 +166,8 @@ public class BrowserBean implements Serializable {
         if(browserQuery == null) {
             browserQuery = queryManager.getDefaultBrowserQuery();
         }
+
+        browserQuery.setTruncateMatch(false);
 
         /**
          * Si la consulta viene nula o vacía retornan inmediatamente
@@ -277,6 +289,7 @@ public class BrowserBean implements Serializable {
 
     public void updatePage(PageEvent event) {
         int pageindex = event.getPage();
+        page = pageindex + 1;
         RequestContext reqCtx = RequestContext.getCurrentInstance();
         reqCtx.execute("PF('conceptTableExcel').getPaginator().setPage("+pageindex+")");
     }
@@ -427,5 +440,13 @@ public class BrowserBean implements Serializable {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
     }
 }

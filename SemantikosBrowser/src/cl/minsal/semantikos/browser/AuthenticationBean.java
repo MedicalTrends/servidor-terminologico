@@ -28,8 +28,8 @@ public class AuthenticationBean {
 
     static private final Logger logger = LoggerFactory.getLogger(AuthenticationBean.class);
 
-    private String email;
-    private String password;
+    private String email = "semantikos.minsal@gmail.com";
+    private String password = "1234567z";
 
     private String emailError = "";
 
@@ -54,48 +54,14 @@ public class AuthenticationBean {
 
     public void login() {
 
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        request.getSession().setMaxInactiveInterval(timeOutWeb.getTimeOut());
         try {
-            //valida user y pass
-            if(email.trim().equals("")) {
-                emailError = "ui-state-error";
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar 'e-mail'"));
-            }
-            else {
-                emailError = "";
-            }
-
-            if(password.trim().equals("")) {
-                passwordError = "ui-state-error";
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar 'Contraseña'"));
-            }
-            else {
-                passwordError = "";
-            }
-
-            if(!emailError.concat(passwordError).trim().isEmpty()) {
-                return;
-            }
-
-            if(!isValidEmailAddress(email)) {
-                emailError = "ui-state-error";
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El formato del 'e-mail' no es válido"));
-            }
-            else {
-                emailError = "";
-            }
-
-            if(!emailError.concat(passwordError).trim().isEmpty()) {
-                return;
-            }
 
             //authenticationManager.authenticate(email,password,request);
             authenticationManager.authenticate(email,password);
 
-            //quitar password de la memoria
-            password = null;
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+            request.getSession().setMaxInactiveInterval(timeOutWeb.getTimeOut());
 
             //poner datos de usuario en sesión
             loggedUser = authenticationManager.getUserDetails(email);

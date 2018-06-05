@@ -185,7 +185,11 @@ public class ConceptBean implements Serializable {
         }
 
         if(indirectCrossmaps.isEmpty()) {
-            indirectCrossmaps = crossmapsManager.getIndirectCrossmaps(selectedConcept);
+            try {
+                indirectCrossmaps = crossmapsManager.getIndirectCrossmaps(selectedConcept);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             selectedConcept.getRelationships().addAll(indirectCrossmaps);
         }
 

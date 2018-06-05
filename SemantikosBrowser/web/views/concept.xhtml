@@ -245,10 +245,18 @@
                     <p:tab title="Etiquetas" rendered="#{not empty concept.selectedConcept.tags}">
                         <p:dataTable id="tags"
                                      paginator="false"
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {CustomPreviousPageLink} {PageLinks} {CustomNextPageLink} {LastPageLink}"
                                      var="tag"
                                      value="#{concept.selectedConcept.tags}"
                                      reflow="true">
+
+                            <f:facet name="{CustomPreviousPageLink}">
+                                Anterior
+                            </f:facet>
+
+                            <f:facet name="{CustomNextPageLink}">
+                                Siguiente
+                            </f:facet>
 
                             <p:column>
                                 <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" />

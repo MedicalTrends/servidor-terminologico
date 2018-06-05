@@ -124,7 +124,24 @@
     display: none !important;
 }
 
-/*
+
+#browserForm\:conceptPanel .ui-datatable tbody tr.ui-datatable-even {
+    background-color: transparent !important;
+}
+
+#browserForm\:conceptPanel .ui-datatable tbody tr td {
+    border: transparent !important;
+}
+
+#browserForm\:conceptPanel .ui-widget-header {
+    border: transparent !important;
+}
+
+#browserForm\:conceptTable_paginator_top {
+    display: none !important;
+}
+
+/* */
 #browserForm\:conceptPanel .ui-paginator-current {
     color: #3F51B5 !important;
 }
@@ -144,23 +161,15 @@
 #browserForm\:conceptPanel .ui-paginator .ui-paginator-first, #browserForm\:conceptPanel .ui-paginator .ui-paginator-prev, #browserForm\:conceptPanel .ui-paginator .ui-paginator-next, #browserForm\:conceptPanel .ui-paginator .ui-paginator-last {
     color: #3F51B5 !important;
 }
-*/
 
-#browserForm\:conceptPanel .ui-datatable tbody tr.ui-datatable-even {
-    background-color: transparent !important;
+#browserForm\:conceptPanel #browserForm\:conceptTable_paginator_bottom {
+    background: #FFF none repeat scroll 0% 0% !important;
+    border-bottom: 1px solid #BDBDBD !important;
+    border-left: 1px solid #BDBDBD !important;
+    border-right: 1px solid #BDBDBD !important;
+    boorder-top: 0px !important;
 }
-
-#browserForm\:conceptPanel .ui-datatable tbody tr td {
-    border: transparent !important;
-}
-
-#browserForm\:conceptPanel .ui-widget-header {
-    border: transparent !important;
-}
-
-#browserForm\:conceptTable_paginator_top {
-    display: none !important;
-}
+/* */
 
 .ui-inputfield {
     padding: 6px !important;

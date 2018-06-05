@@ -36,8 +36,8 @@ public class CrossmapSetMembersResponse implements Serializable {
     private Integer version;
 
     /** La lista de crossmaps indirectos (response) */
-    @XmlElementWrapper(name = "crossmapSetRecords")
-    @XmlElement(name = "crossmapSetRecord")
+    @XmlElementWrapper(name = "crossmapSetMembers")
+    @XmlElement(name = "crossmapSetMember")
     private List<CrossmapSetMemberResponse> crossmapSetMemberResponses;
 
     @XmlElement(name = "cantidadRegistros")

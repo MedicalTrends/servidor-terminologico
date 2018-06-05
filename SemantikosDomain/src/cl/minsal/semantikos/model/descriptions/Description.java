@@ -270,7 +270,22 @@ public class Description extends PersistentEntity implements AuditableEntity, Se
         }
     }
 
+    @Override
+    public boolean equals(Object other) {
 
+        /* Si son el mismo objeto */
+        if (other == this) return true;
+
+        if (!(other instanceof Description)) return false;
+
+        Description description = (Description) other;
+
+        if (!this.descriptionID.equals(description.descriptionID)) return false;
+
+        if (!this.getDescriptionType().equals(description.getDescriptionType())) return false;
+
+        return this.getTerm().equals(description.getTerm()) && this.getConceptSMTK().equals(description.conceptSMTK);
+    }
 
     /**
      * Este método tiene como responsabilidad imprimir mayor detalle sobre la descripcion.

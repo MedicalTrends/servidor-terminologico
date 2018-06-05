@@ -119,7 +119,7 @@ public class GMDNDAOImpl implements GMDNDAO {
 
         List<GenericDeviceGroup> genericDeviceGroups = new ArrayList<>();
 
-        String sql = "begin ? := stk.stk_pck_gmdn.get_generic_device_groups_paginated(?,?); end;";
+        String sql = "begin ? := stk.stk_pck_gmdn.get_generic_device_group_paginated(?,?); end;";
 
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {

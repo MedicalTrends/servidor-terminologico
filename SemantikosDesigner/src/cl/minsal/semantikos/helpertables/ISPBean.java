@@ -24,6 +24,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.sql.Timestamp;
+import java.text.Collator;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -171,7 +174,12 @@ public class ISPBean {
             fetchedData = ispFetcher.getISPData(regnum + "/" + ano);
 
             if(!fetchedData.isEmpty()) {
-                mapIspRecord(ispHelperTable, ispRecord, fetchedData);
+                try {
+                    mapIspRecord(ispHelperTable, ispRecord, fetchedData);
+                } catch (ParseException e) {
+                    conceptBean.getMessageBean().messageError(e.getMessage());
+                    return;
+                }
             }
 
         }
@@ -190,6 +198,7 @@ public class ISPBean {
         context.execute("PF('ispfetcheddialog').show();");
     }
 
+    /*
     public void mapIspRecord(HelperTable ispHelperTable, HelperTableRow ispRecord, Map<String,String> fetchedRecord){
 
         for (HelperTableColumn helperTableColumn : ispHelperTable.getColumns()) {
@@ -211,6 +220,39 @@ public class ISPBean {
                 }
             }
         }
+    }
+    */
+
+    public void mapIspRecord(HelperTable ispHelperTable, HelperTableRow ispRecord, Map<String,String> fetchedRecord) throws ParseException {
+
+        final Collator instance = Collator.getInstance();
+
+        // This strategy mean it'll ignore the accents
+        instance.setStrength(Collator.NO_DECOMPOSITION);
+
+        for (HelperTableColumn helperTableColumn : ispHelperTable.getColumns()) {
+            for (String s : fetchedRecord.keySet()) {
+                if(instance.compare(helperTableColumn.getDescription().trim().toLowerCase(), s.trim().toLowerCase()) == 0) {
+                    HelperTableData cell = new HelperTableData();
+                    cell.setColumn(helperTableColumn);
+                    if(helperTableColumn.getDescription().toLowerCase().contains("fecha") ||
+                            helperTableColumn.getDescription().toLowerCase().contains("ultima") ) {
+                        if(!fetchedRecord.get(s).trim().isEmpty()) {
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                            Date parsedDate = dateFormat.parse(fetchedRecord.get(s));
+                            cell.setDateValue(new Timestamp(parsedDate.getTime()));
+                        }
+                    }
+                    else {
+                        cell.setStringValue(fetchedRecord.get(s));
+                    }
+                    ispRecord.getCells().add(cell);
+                    break;
+                }
+            }
+        }
+        ispRecord.setDescription(ispRecord.getCellByColumnName("registro").toString());
+        ispRecord.setValid(true);
     }
 
     public void fetchData(String registro){
