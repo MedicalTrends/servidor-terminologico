@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.daos.CrossmapsDAO;
 import cl.minsal.semantikos.kernel.factories.CrossmapFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.Target;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.kernel.businessrules.CrossMapCreationBR;
 import cl.minsal.semantikos.kernel.businessrules.CrossMapRemovalBR;
@@ -192,6 +193,11 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
 
         logger.debug("Se cargaron " + indirectCrossmaps.size() + " indirectos para el concepto " + conceptSMTK + ": " + indirectCrossmaps);
         return indirectCrossmaps;
+    }
+
+    @Override
+    public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSCT conceptSCT) throws Exception {
+        return crossmapsDAO.getCrossmapsBySCT(conceptSCT);
     }
 
     @Override

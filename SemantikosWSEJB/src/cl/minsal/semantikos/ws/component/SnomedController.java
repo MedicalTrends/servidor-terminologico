@@ -5,6 +5,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
+import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.NoValidDescription;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;
@@ -51,34 +52,11 @@ public class SnomedController {
     private static final Logger logger = LoggerFactory.getLogger(SnomedController.class);
 
     @EJB
-    private ConceptManager conceptManager;
-    @EJB
     private SnomedCTManager snomedCTManager;
     @EJB
-    private RelationshipManager relationshipManager;
-    @EJB
-    private DescriptionManager descriptionManager;
-    @EJB
-    private RefSetManager refSetManager;
-    @EJB
-    private TagManager tagManager;
-    @EJB
-    private CategoryManager categoryManager;
-    @EJB
-    private AuditManager auditManager;
-    @EJB
-    private PaginationController paginationController;
-    @EJB
-    private CategoryController categoryController;
-    @EJB
-    private RefSetController refSetController;
-    @EJB
-    private PendingTermsManager pendingTermManager;
-    @EJB
-    private CrossmapController crossmapController;
+    private CrossmapsManager crossmapsManager;
     @EJB
     private UserManager userManager;
-
 
     /**
      * REQ-WS-001
@@ -179,6 +157,50 @@ public class SnomedController {
 
         res.setPattern(request.getTerm());
         res.setMatchDescriptions(perfectMatchDescriptionsResponse);
+
+        return res;
+    }
+
+    public ConceptSCTResponse conceptSCTByConceptID(long conceptId) throws Exception {
+
+        ConceptSCT conceptSCT;
+
+        ConceptSCTResponse res;
+
+        try {
+            conceptSCT = this.snomedCTManager.getConceptByID(conceptId);
+
+            conceptSCT.setRelationships(this.snomedCTManager.getRelationshipsFrom(conceptSCT));
+
+            List<IndirectCrossmap> indirectCrossmaps = this.crossmapsManager.getIndirectCrossmaps(conceptSCT);
+
+            res = new ConceptSCTResponse(conceptSCT, indirectCrossmaps);
+
+        } catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
+
+        return res;
+    }
+
+    public ConceptSCTResponse conceptSCTByDescriptionID(long descriptionId) throws Exception {
+
+        ConceptSCT conceptSCT;
+
+        ConceptSCTResponse res;
+
+        try {
+            conceptSCT = this.snomedCTManager.getConceptByDescriptionID(descriptionId);
+
+            conceptSCT.setRelationships(this.snomedCTManager.getRelationshipsFrom(conceptSCT));
+
+            List<IndirectCrossmap> indirectCrossmaps = this.crossmapsManager.getIndirectCrossmaps(conceptSCT);
+
+            res = new ConceptSCTResponse(conceptSCT, indirectCrossmaps);
+
+        } catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
 
         return res;
     }

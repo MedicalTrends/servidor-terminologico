@@ -216,10 +216,13 @@ public class BrowserBean implements Serializable {
 
                 List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(browserQuery);
 
-                //if(conceptSMTKs.isEmpty()) {
-                    browserQuery.setTruncateMatch(true);
-                    conceptSMTKs.addAll(queryManager.executeQuery(browserQuery));
-                //}
+                browserQuery.setTruncateMatch(true);
+
+                for (ConceptSMTK conceptSMTK : queryManager.executeQuery(browserQuery)) {
+                    if(!conceptSMTKs.contains(conceptSMTK)) {
+                        conceptSMTKs.add(conceptSMTK);
+                    }
+                }
 
                 this.setRowCount(queryManager.countQueryResults(browserQuery));
 

@@ -93,6 +93,15 @@ public interface SnomedCTManager {
     public ConceptSCT getConceptByID(long conceptID);
 
     /**
+     * Este método es responsable de recuperar un concepto por su CONCEPT_ID.
+     *
+     * @param descriptionID El CONCEPT_ID de negocio.
+     *
+     * @return El Concepto cuyo CONCEPT_ID corresponde a <code>conceptID</code>.
+     */
+    public ConceptSCT getConceptByDescriptionID(long descriptionID);
+
+    /**
      * Este método es responsable de buscar y retornar todas las descripciones SNOMED que contienen el término dado como
      * parámetro.
      *

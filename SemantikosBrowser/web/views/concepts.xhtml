@@ -290,11 +290,20 @@
 
                 </h:form>
 
+                <div class="ui-g ui-fluid">
+
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                        <p:button outcome="home" value="Inicio" styleClass="cyan-btn ui-priority-primary" icon="fa fa-arrow-left"/>
+                    </div>
+
+                </div>
+
             </div>
 
             <div class="ui-g-0 ui-md-0 ui-lg-2"></div>
 
         </div>
+
 
         <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
             <p:outputPanel styleClass="conceptDetail" style="width: 500px;">
@@ -318,7 +327,7 @@
                     function() {
                         window.scroll(0, 0);
                         listenPageOnClickEvent();
-                    }, 10);
+                    }, 0);
 
             }
 

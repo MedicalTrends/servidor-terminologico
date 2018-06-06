@@ -68,6 +68,10 @@ public class DescriptionSCT extends PersistentEntity implements SnomedCTComponen
 
     private boolean favourite;
 
+    public static final long CASE_SENSITIVE = 900000000000017005l;
+
+    public static final long CASE_INSENSITIVE = 900000000000448009l;
+
     /**
      * Este es el constructor completo para la clase descriptionSCT
      */

@@ -9,18 +9,18 @@ import java.io.Serializable;
  * @author Alonso Cornejo
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "peticionConceptoPorConceptID", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "PeticionConceptoPorConceptID", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class ConceptByConceptIDRequest extends Request implements Serializable {
+@XmlRootElement(name = "peticionConceptoSCTPorConceptID", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "PeticionConceptoSCTPorConceptID", namespace = "http://service.ws.semantikos.minsal.cl/")
+public class ConceptSCTByConceptIDRequest extends Request implements Serializable {
 
     @XmlElement(required = true, name = "conceptID")
-    private String conceptID;
+    private long conceptID;
 
-    public String getConceptID() {
+    public long getConceptID() {
         return conceptID;
     }
 
-    public void setConceptID(String conceptID) {
+    public void setConceptID(long conceptID) {
         this.conceptID = conceptID;
     }
 }

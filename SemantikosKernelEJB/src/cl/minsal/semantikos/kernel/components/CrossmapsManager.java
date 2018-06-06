@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.crossmaps.*;
 
@@ -81,6 +82,17 @@ public interface CrossmapsManager {
      * @return La lista de Crossmaps asociados al concepto <code>conceptSMTK</code>.
      */
     public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSMTK conceptSMTK) throws Exception;
+
+    /**
+     * Este método es responsable de recuperar los crossmaps indirectos de un concepto y actualizarle su lista de
+     * crossmaps. Si el <code>conceptSMTK</code> no es persistente, se recuperan los crossmaps asociados a su
+     * <code>CONCEPT_ID</code>.
+     ** todo: Este método es temporal. Se debe definir un modelo que tenga sentido para los mapeos entre snomed y otras terminologías
+     * @param conceptSCT El concepto cuyos Crossmaps se desea recuperar.
+     *
+     * @return La lista de Crossmaps asociados al concepto <code>conceptSMTK</code>.
+     */
+    public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSCT conceptSCT) throws Exception;
 
     /**
      * Este método es responsable de recuperar un crossmapSetMember dado su

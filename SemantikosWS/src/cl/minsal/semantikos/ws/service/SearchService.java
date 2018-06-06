@@ -524,6 +524,35 @@ public class SearchService {
         //return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames());
     }
 
+    // REQ-WS-STK-ME014
+    @WebResult(name = "respuestaConceptoSCTPorConceptID")
+    @WebMethod(operationName = "conceptoSCTPorConceptID")
+    public ConceptSCTResponse conceptoSCTPorConceptID(
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionConceptoSCTPorConceptID")
+                    ConceptSCTByConceptIDRequest request
+    ) throws NotFoundFault {
+        try {
+            return this.snomedController.conceptSCTByConceptID(request.getConceptID());
+        } catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
+    }
+
+    // REQ-WS-STK-ME014
+    @WebResult(name = "respuestaConceptoSCTPorDescriptionID")
+    @WebMethod(operationName = "conceptoSCTPorDescriptionID")
+    public ConceptSCTResponse conceptoSCTPorDescriptionID(
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionConceptoSCTPorDescriptionID")
+                    ConceptSCTByDescriptionIDRequest request
+    ) throws NotFoundFault {
+        try {
+            return this.snomedController.conceptSCTByDescriptionID(request.getDescriptionID());
+        } catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
+    }
 
 
 }
