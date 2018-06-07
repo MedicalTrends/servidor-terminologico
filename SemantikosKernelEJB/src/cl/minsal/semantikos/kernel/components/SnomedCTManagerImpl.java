@@ -106,8 +106,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
 
     @Override
     public ConceptSCT getConceptByDescriptionID(long descriptionID) {
-        DescriptionSCT descriptionSCT = snomedctDAO.getDescriptionSCTBy(descriptionID);
-        return snomedctDAO.getConceptByID(descriptionSCT.getConceptId());
+        return snomedctDAO.getConceptByDescriptionID(descriptionID);
     }
 
     private void validateDescriptionSCT(List<ConceptSCT> conceptSCTs, List<DescriptionSCT> descriptionSCTs) {

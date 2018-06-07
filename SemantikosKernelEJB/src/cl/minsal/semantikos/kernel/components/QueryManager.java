@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.NoValidDescription;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import org.jboss.ejb3.annotation.SecurityDomain;
 
 import javax.annotation.security.RolesAllowed;
@@ -54,6 +55,12 @@ public interface QueryManager {
     public BrowserQuery getDefaultBrowserQuery();
 
     /**
+     * Este método es responsable de inicializar un objeto de consulta para snomed,
+     *
+     */
+    public SnomedQuery getDefaultSnomedQuery();
+
+    /**
      * Este método es responsable de ejecutar una consulta en el navegador de categorías,
      * Dado el objeto de consulta correspondiente
      *
@@ -92,6 +99,14 @@ public interface QueryManager {
      * @param query El objeto de consulta para el browser
      */
     public List<ConceptSMTK> executeQuery(BrowserQuery query);
+
+    /**
+     * Este método es responsable de ejecutar una consulta en el browser,
+     * Dado el objeto de consulta correspondiente
+     *
+     * @param query El objeto de consulta para el browser
+     */
+    public List<ConceptSCT> executeQuery(SnomedQuery query);
 
     /**
      * Este método es responsable de contabilizar los resultados de una consulta

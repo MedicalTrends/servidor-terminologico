@@ -6,6 +6,8 @@ import cl.minsal.semantikos.model.snapshots.AuditActionType;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
+
 /**
  * Esta clase representa una descripcion Snomed-CT.
  *
@@ -71,6 +73,39 @@ public class DescriptionSCT extends PersistentEntity implements SnomedCTComponen
     public static final long CASE_SENSITIVE = 900000000000017005l;
 
     public static final long CASE_INSENSITIVE = 900000000000448009l;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DescriptionSCT that = (DescriptionSCT) o;
+
+        /* Si ambas están persistidas y no tienen el mismo ID, entonces son distintas */
+        if (this.isPersistent() && that.isPersistent() && this.getId() != that.getId()) return false;
+
+        /* Si alguna de ellas no está persistida, comparamos 1. tipo de descripción, 2. término */
+        if (!this.getDescriptionType().equals(that.getDescriptionType())) return false;
+
+        return this.getTerm().equals(that.getTerm()) && this.getConceptId() == that.getConceptId();
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = descriptionType.hashCode();
+        result = 31 * result + effectiveTime.hashCode();
+        result = 31 * result + (active ? 1 : 0);
+        result = 31 * result + (int) (moduleId ^ (moduleId >>> 32));
+        result = 31 * result + (int) (conceptId ^ (conceptId >>> 32));
+        result = 31 * result + languageCode.hashCode();
+        result = 31 * result + (int) (caseSignificanceId ^ (caseSignificanceId >>> 32));
+        result = 31 * result + term.hashCode();
+        result = 31 * result + (favourite ? 1 : 0);
+        return result;
+    }
+
+    public static final DescriptionSCT DUMMY_DESCRIPTION_SCT = new DescriptionSCT(-1L, DescriptionSCTType.ACCEPTABLE, null, false, 0L, 0L, EMPTY_STRING, EMPTY_STRING, 0L);
 
     /**
      * Este es el constructor completo para la clase descriptionSCT
@@ -157,6 +192,11 @@ public class DescriptionSCT extends PersistentEntity implements SnomedCTComponen
 
     @Override
     public String toString() {
+        return term;
+    }
+
+    public String getRepresentation() {
+
         return term;
     }
 

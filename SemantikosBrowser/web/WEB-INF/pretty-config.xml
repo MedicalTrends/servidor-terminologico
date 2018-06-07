@@ -8,7 +8,7 @@
         <view-id value="/views/home.xhtml" />
     </url-mapping>
 
-    <url-mapping id="search">
+    <url-mapping id="concepts">
         <pattern value="/views/concepts" />
         <view-id value="/views/concepts.xhtml" />
     </url-mapping>
@@ -18,8 +18,13 @@
         <view-id value="/views/concept.xhtml" />
     </url-mapping>
 
-    <url-mapping id="concept">
-        <pattern value="/views/concepts/snomed/view/#{conceptID}" />
+    <url-mapping id="concepts">
+        <pattern value="/views/snomed/concepts" />
+        <view-id value="/views/concepts-snomed.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="conceptSCT">
+        <pattern value="/views/snomed/concepts/view/#{conceptID}" />
         <view-id value="/views/concept-snomed.xhtml" />
     </url-mapping>
 

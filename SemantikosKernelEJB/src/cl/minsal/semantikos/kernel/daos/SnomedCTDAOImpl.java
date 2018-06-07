@@ -235,6 +235,39 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     }
 
     @Override
+    public ConceptSCT getConceptByDescriptionID(long descriptionID) {
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_snomed.get_sct_by_description_id(?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, descriptionID);
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            ConceptSCT conceptSCTFromResultSet;
+            if (rs.next()) {
+                conceptSCTFromResultSet = createConceptSCTFromResultSet(rs);
+            } else {
+                throw new EJBException("No se encontró un concepto con descripción de ID=" + descriptionID);
+            }
+            rs.close();
+            call.close();
+            connection.close();
+            return conceptSCTFromResultSet;
+        } catch (SQLException e) {
+            String errorMsg = "Error al buscar Snomed CT por DESCRIPTION_ID: " + descriptionID;
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+    }
+
+    @Override
     public List<ConceptSCT> findConceptsByConceptID(long conceptIdPattern, Integer group) {
 
         List<ConceptSCT> conceptSCTs = new ArrayList<>();

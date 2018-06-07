@@ -11,6 +11,7 @@ import cl.minsal.semantikos.model.descriptions.NoValidDescription;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;
 import cl.minsal.semantikos.model.queries.*;
 import cl.minsal.semantikos.model.relationships.*;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import org.jboss.ejb3.annotation.SecurityDomain;
 
 import javax.annotation.Resource;
@@ -81,6 +82,11 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public BrowserQuery getDefaultBrowserQuery() {
         return new BrowserQuery();
+    }
+
+    @Override
+    public SnomedQuery getDefaultSnomedQuery() {
+        return new SnomedQuery();
     }
 
     @Override
@@ -234,6 +240,26 @@ public class QueryManagerImpl implements QueryManager {
 
         return concepts;
     }
+
+    @Override
+    public List<ConceptSCT> executeQuery(SnomedQuery query) {
+
+        //query.setQuery(conceptSearchBR.standardizationPattern(query.getQuery()));
+
+        //Principal principal = ctx.getCallerPrincipal();
+
+        List<ConceptSCT> concepts = (List<ConceptSCT>) (Object) queryDAO.executeQuery(query);
+
+        /*
+        if(concepts.isEmpty()) {
+            query.setTruncateMatch(true);
+            concepts = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
+        }
+        */
+
+        return concepts;
+    }
+
 
     @Override
     public int countQueryResults(Query query) {

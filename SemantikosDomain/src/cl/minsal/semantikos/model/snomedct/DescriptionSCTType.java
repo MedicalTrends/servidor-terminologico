@@ -7,7 +7,10 @@ import java.io.Serializable;
  */
 public enum DescriptionSCTType implements Serializable {
 
-    SYNONYM(900000000000013009L,"Sinónimo"), FSN(900000000000003001L,"FSN"), PREFERRED(900000000000548007L,"Preferida"), ACCEPTABLE(900000000000549004L,"Aceptable");
+    SYNONYM(900000000000013009L,"Sinónimo"),
+    FSN(900000000000003001L,"FSN"),
+    PREFERRED(900000000000548007L,"Preferida"),
+    ACCEPTABLE(900000000000549004L,"Aceptable");
 
     private long typeId;
 

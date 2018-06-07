@@ -32,6 +32,15 @@ public interface SnomedCTDAO {
     public ConceptSCT getConceptByID(long conceptID);
 
     /**
+     * Este método es responsable de recuperar un concepto por su DESCRIPTION_ID.
+     *
+     * @param descriptionID El DESCRIPTION_ID de negocio.
+     *
+     * @return El Concepto cuyo DESCRIPTION_ID corresponde a <code>descriptionID</code>.
+     */
+    public ConceptSCT getConceptByDescriptionID(long descriptionID);
+
+    /**
      * Este método es responsable de buscar aquellos conceptos que posean un CONCEPT_ID que coincida con el
      * <code>conceptIdPattern</code> dado como parámetro. El patron
      *

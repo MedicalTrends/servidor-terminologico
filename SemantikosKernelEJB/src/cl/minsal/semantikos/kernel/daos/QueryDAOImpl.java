@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.components.PendingTermsManager;
+import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
@@ -45,6 +46,9 @@ public class QueryDAOImpl implements QueryDAO {
     ConceptManager conceptManager;
 
     @EJB
+    SnomedCTManager snomedCTManager;
+
+    @EJB
     DescriptionManager descriptionManager;
 
     @EJB
@@ -85,6 +89,8 @@ public class QueryDAOImpl implements QueryDAO {
             QUERY = "begin ? := stk.stk_pck_query.get_pending_term_by_pending_query(?,?,?,?,?,?,?); end;";
         if(  query instanceof  BrowserQuery )
             QUERY = "begin ? := stk.stk_pck_query.get_concept_by_browser_query(?,?,?,?,?,?,?,?); end;";
+        if(  query instanceof  SnomedQuery )
+            QUERY = "begin ? := stk.stk_pck_query.get_concept_sct_by_snomed_query(?,?,?,?,?,?,?,?); end;";
 
         try (Connection connection = dataSource.getConnection();
 
@@ -131,6 +137,10 @@ public class QueryDAOImpl implements QueryDAO {
                     ConceptSMTK recoveredConcept = conceptManager.getConceptByID( rs.getLong(1));
                     queryResult.add(recoveredConcept);
                 }
+                if(  query instanceof  SnomedQuery ) {
+                    ConceptSCT recoveredConcept = snomedCTManager.getConceptByID( rs.getLong(1));
+                    queryResult.add(recoveredConcept);
+                }
 
             }
             rs.close();
@@ -161,6 +171,8 @@ public class QueryDAOImpl implements QueryDAO {
             QUERY = "begin ? := stk.stk_pck_query.count_pending_term_by_pending_query(?,?,?,?,?,?,?); end;";
         if(  query instanceof  BrowserQuery )
             QUERY = "begin ? := stk.stk_pck_query.count_concept_by_browser_query(?,?,?,?,?,?,?,?); end;";
+        if(  query instanceof  SnomedQuery )
+            QUERY = "begin ? := stk.stk_pck_query.count_concept_sct_by_snomed_query(?,?,?,?,?,?,?,?); end;";
 
         try (Connection connection = dataSource.getConnection();
 
