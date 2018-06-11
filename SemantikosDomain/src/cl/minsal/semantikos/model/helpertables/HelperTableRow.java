@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.model.helpertables;
 
+import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,9 +20,8 @@ import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
  * Created by BluePrints Developer on 14-12-2016.
  */
 
-public class HelperTableRow implements Target, Serializable {
+public class HelperTableRow extends PersistentEntity implements Target, Serializable {
 
-    private long id;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss", timezone="America/Buenos_Aires")
     private Timestamp creationDate;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss", timezone="America/Buenos_Aires")
@@ -47,7 +47,6 @@ public class HelperTableRow implements Target, Serializable {
     crea fila placeholder a partir de la tabla
      */
     public HelperTableRow(HelperTable helperTable) {
-        this.id=-1;
         this.helperTableId=helperTable.getId();
     }
 
@@ -55,13 +54,8 @@ public class HelperTableRow implements Target, Serializable {
     crea fila placeholder a partir de la tabla y data adicional
      */
     public HelperTableRow(HelperTable helperTable, List<HelperTableData> cells) {
-        this.id=-1;
         this.helperTableId=helperTable.getId();
         this.cells = cells;
-    }
-
-    public long getId() {
-        return id;
     }
 
     @Override
@@ -71,14 +65,14 @@ public class HelperTableRow implements Target, Serializable {
 
     @Override
     public String getRepresentation() {
-        return id +" ¦ "+description;
+        return getId() +" ¦ "+description;
     }
 
     @Override
     public Target copy() {
         HelperTableRow copy = new HelperTableRow();
 
-        copy.setId(id);
+        copy.setId(getId());
         copy.setDescription(description);
         copy.setLastEditUsername(lastEditUsername);
         copy.setCells(cells);
@@ -130,7 +124,7 @@ public class HelperTableRow implements Target, Serializable {
 
 
     public void setId(long id) {
-        this.id = id;
+        super.setId(id);
     }
 
     @JsonProperty("creation_date")
@@ -282,17 +276,13 @@ public class HelperTableRow implements Target, Serializable {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = (int) (getId() ^ (getId() >>> 32));
         result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
         result = 31 * result + (lastEditDate != null ? lastEditDate.hashCode() : 0);
         result = 31 * result + (valid ? 1 : 0);
         result = 31 * result + (validityUntil != null ? validityUntil.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
-    }
-
-    public boolean isPersistent() {
-        return id != -1;
     }
 
     public String getColumnValue(HelperTableColumn column){

@@ -88,6 +88,7 @@ public class SearchService {
             Pair credentials = UtilsWS.getCredentials(wsctx.getMessageContext());
             authenticationManager.authenticateWS(credentials.getFirst().toString(), credentials.getSecond().toString());
             authenticationManager.validateInstitution(request.getIdStablishment());
+            request.validate();
 
             return ctx.proceed();
         }
@@ -116,9 +117,6 @@ public class SearchService {
             @WebParam(name = "peticionBuscarTermino")
                     SimpleSearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault, ExecutionException, InterruptedException {
-
-        /* Se hace una validación de los parámetros */
-        UtilsWS.validateAtLeastOneCategoryOrOneRefSet(request);
 
         logger.debug("ws-req-001: " + request.getTerm() + ", " + request.getCategoryNames() + " " + request
                 .getRefSetNames());
@@ -191,9 +189,6 @@ public class SearchService {
                     SimpleSearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault {
 
-        /* Se hace una validación de los parámetros */
-        UtilsWS.validateAtLeastOneCategoryOrOneRefSet(request);
-
         return this.conceptController.searchTermGeneric2(request.getTerm(), request.getCategoryNames(), request
                 .getRefSetNames());
     }
@@ -228,12 +223,6 @@ public class SearchService {
             @WebParam(name = "peticionSugerenciasDeDescripciones")
                     DescriptionsSuggestionsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-
-        UtilsWS.validateAtLeastOneCategory(request);
-
-        if ( request.getTerm().length() < 3 ) {
-            throw new IllegalInputFault("El termino a buscar debe tener minimo 3 caracteres de largo");
-        }
 
         return this.conceptController.searchSuggestedDescriptions(request.getTerm(), request.getCategoryNames());
         //return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames());
@@ -282,13 +271,9 @@ public class SearchService {
                     RefSetsByDescriptionIdRequest request
     ) throws NotFoundFault, IllegalInputFault {
 
-            List<String> descriptionIds = request.getDescriptionId();
-            Boolean includeInstitutions = request.getIncludeInstitutions();
-            String idStablishment = request.getIdStablishment();
-
-            if (descriptionIds == null || descriptionIds.isEmpty()) {
-                throw new IllegalInputFault("Debe ingresar por lo menos un idDescripcion");
-            }
+        List<String> descriptionIds = request.getDescriptionId();
+        Boolean includeInstitutions = request.getIncludeInstitutions();
+        String idStablishment = request.getIdStablishment();
 
         return this.refSetController.findRefSetsByDescriptions(descriptionIds, includeInstitutions, idStablishment);
 
@@ -482,9 +467,6 @@ public class SearchService {
                                                             SnomedSearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault, ExecutionException, InterruptedException {
 
-        /* Se hace una validación de los parámetros */
-        UtilsWS.validate(request);
-
         SnomedTermSearchResponse response = this.snomedController.searchTermPerfectMatchSnomed(request);
 
         return response;
@@ -501,9 +483,6 @@ public class SearchService {
                     SnomedSearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault, ExecutionException, InterruptedException {
 
-        /* Se hace una validación de los parámetros */
-        UtilsWS.validate(request);
-
         SnomedTermSearchResponse response = this.snomedController.searchTermTruncatePerfectSnomed(request);
 
         return response;
@@ -517,8 +496,6 @@ public class SearchService {
             @WebParam(name = "peticionSugerenciasDeDescripciones")
                     SnomedSuggestionsRequest request
     ) throws IllegalInputFault, NotFoundFault, ExecutionException, InterruptedException {
-
-        UtilsWS.validate(request);
 
         return this.snomedController.searchTermSuggested(request);
         //return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames());

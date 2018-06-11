@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.modelws.request;
 
+import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
+
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.List;
@@ -43,5 +45,14 @@ public class SimpleSearchTermRequest extends Request implements Serializable {
         this.refSetNames = refSetNames;
     }
 
-
+    public void validate() throws IllegalInputFault {
+        super.validate();
+        if (isEmpty(getCategoryNames()) /*&& isEmpty(request.getRefSetNames())*/) {
+            //throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet.");
+            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría.");
+        }
+        if (getTerm() == null || getTerm().trim().isEmpty()) {
+            throw new IllegalInputFault("Debe ingresar un Termino a buscar");
+        }
+    }
 }

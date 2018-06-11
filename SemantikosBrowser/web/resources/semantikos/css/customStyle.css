@@ -200,8 +200,13 @@
 
 .ui-button.ui-button-icon-only.search-button-tiny {
     border-radius: 10%;
-    width: 100%;
-    height: 100%;
+    /*width: 100%;*/
+    /*height: 100%;*/
+    height: 34px !important;
+}
+
+.ui-fluid .ui-inputtext[size], .ui-fluid .ui-inputfield[size] {
+    width: inherit !important;
 }
 
 /*

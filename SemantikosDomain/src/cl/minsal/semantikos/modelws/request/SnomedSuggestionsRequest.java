@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.modelws.request;
 
+import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
+
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.List;
@@ -22,6 +24,13 @@ public class SnomedSuggestionsRequest extends Request implements Serializable {
 
     public void setTerm(String term) {
         this.term = term;
+    }
+
+    public void validate() throws IllegalInputFault {
+        super.validate();
+        if(getTerm() == null || getTerm().isEmpty() || getTerm().length() < 3) {
+            throw new IllegalInputFault("El termino a buscar debe tener minimo 3 caracteres de largo");
+        }
     }
 
 }

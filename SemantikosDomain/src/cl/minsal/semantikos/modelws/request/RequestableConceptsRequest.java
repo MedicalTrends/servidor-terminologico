@@ -43,4 +43,6 @@ public class RequestableConceptsRequest extends Request implements Serializable 
     public void setRequestable(boolean requestable) {
         this.requestable = requestable;
     }
+
+
 }

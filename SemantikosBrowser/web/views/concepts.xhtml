@@ -38,7 +38,11 @@
 
                                     <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                                        <p:outputPanel styleClass="search">
+                                        <div class="ui-inputgroup">
+
+                                            <p:commandButton style="color: #0000EE" styleClass="search-button-tiny"
+                                                             icon="fa fa-search"/>
+
                                             <p:autoComplete minQueryLength="3"
                                                             id="search"
                                                             emptyMessage="No se encontraron conceptos"
@@ -65,21 +69,13 @@
                                                             update="@(.conceptPanel),@(.search)"
                                                             process="@this"/>
 
-
                                             </p:autoComplete>
-                                            <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
-                                                <p:commandLink style="color: #0000EE" styleClass="search-button-tiny">
-                                                    <i class="fa fa-search fa-lg"  />
-                                                </p:commandLink>
-                                            </p:outputPanel>
-                                            <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
-                                                <p:commandLink process="@this" style="color: #aaa;"
-                                                               update="@(.search)" oncomplete="listenSearchOnClickEvent();"
-                                                               action="#{browserBean.setDescriptionSelected(null)}">
-                                                    <i class="fa fa-close fa-lg"  />
-                                                </p:commandLink>
-                                            </p:outputPanel>
-                                        </p:outputPanel>
+
+                                            <p:commandButton process="@this" style="color: #aaa;" icon="fa fa-search" styleClass="search-button-tiny"
+                                                             update="@(.search)" oncomplete="listenSearchOnClickEvent();"
+                                                             action="#{browserBean.setDescriptionSelected(null)}"/>
+
+                                        </div>
 
                                     </div>
 
@@ -190,14 +186,13 @@
                                  rendered="#{not empty browserBean.concepts}"
                                  multiViewState="true"
                                  rows="15"
-                                 sortBy="#{1}"
                                  paginator="true" lazy="true" dynamic="true"
                                  paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                  emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
                         <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop();" update="@(.search)" />
 
-                        <p:column headerText="Termino Preferido" sortBy="#{2}">
+                        <p:column headerText="Termino Preferido">
                             <div class="ui-g dashboard">
                                 <div class="ui-g-12">
                                     <div class="card overview">
@@ -242,7 +237,6 @@
                     <p:dataTable id="conceptTableExcel" widgetVar="conceptTableExcel" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
                                  style="display: none"
                                  rows="15"
-                                 sortBy="#{1}"
                                  paginator="true" lazy="true" dynamic="true"
                                  reflow="true"
                                  paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
@@ -255,11 +249,11 @@
                             </p:commandButton>
                         </f:facet>
 
-                        <p:column headerText="Concept ID" sortBy="#{1}">
+                        <p:column headerText="Concept ID">
                             <h:outputText value="#{conceptSMTK.conceptID}"/>
                         </p:column>
 
-                        <p:column headerText="Termino Preferido" sortBy="#{2}">
+                        <p:column headerText="Termino Preferido">
                             <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
                         </p:column>
 

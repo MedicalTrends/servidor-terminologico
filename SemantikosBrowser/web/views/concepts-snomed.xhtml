@@ -63,9 +63,8 @@
 
                                                 <p:ajax event="itemSelect"
                                                             listener="#{browserSCTBean.test()}"
-                                                            update="@(.conceptPanel),@(.search)"
+                                                            update="@(.conceptSnomedPanel),@(.search)"
                                                             process="@this"/>
-
 
                                             </p:autoComplete>
                                             <p:outputPanel rendered="#{browserSCTBean.descriptionSelected eq null}">
@@ -162,6 +161,7 @@
                                 <div class="ui-g-12 ui-md-12 ui-lg-12">
                                     <p:outputPanel styleClass="search">
                                         <p:outputLabel id="summary" style="font-size: 14px; color: #545454;"
+                                                       rendered="#{not empty browserSCTBean.concepts}"
                                                        value="Página #{browserSCTBean.page} de #{browserSCTBean.results} resultados (#{browserSCTBean.seconds} segundos)"/>
                                         <p:remoteCommand name="onload" update="summary"
                                                          autoRun="true" />

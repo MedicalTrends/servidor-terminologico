@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.modelws.request;
 
+import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
+
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.List;
@@ -47,4 +49,14 @@ public class DescriptionsSuggestionsRequest extends Request implements Serializa
         this.refSetNames = refSetNames;
     }
     */
+
+    public void validate() throws IllegalInputFault {
+        super.validate();
+        if (isEmpty(getCategoryNames())) {
+            throw new IllegalInputFault("Debe ingresar por lo menos una Categoría.");
+        }
+        if ( getTerm().length() < 3 ) {
+            throw new IllegalInputFault("El termino a buscar debe tener minimo 3 caracteres de largo");
+        }
+    }
 }

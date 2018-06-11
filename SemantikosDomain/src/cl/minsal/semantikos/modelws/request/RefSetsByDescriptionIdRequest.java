@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.modelws.request;
 
+import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
+
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.List;
@@ -31,6 +33,14 @@ public class RefSetsByDescriptionIdRequest extends Request implements Serializab
     }
     public void setDescriptionId(List<String> descriptionId) {
         this.descriptionId = descriptionId;
+    }
+
+    public void validate() throws IllegalInputFault {
+        super.validate();
+        if (descriptionId == null || descriptionId.isEmpty()) {
+            throw new IllegalInputFault("Debe ingresar por lo menos un idDescripcion");
+        }
+
     }
 
 }

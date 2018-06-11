@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.modelws.request;
 
+import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
+
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.List;
@@ -14,7 +16,6 @@ import java.util.List;
 public class SnomedSearchTermRequest extends Request implements Serializable {
 
     private String term;
-
 
     private int pageNumber;
 
@@ -44,5 +45,12 @@ public class SnomedSearchTermRequest extends Request implements Serializable {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public void validate() throws IllegalInputFault {
+        super.validate();
+        if(getTerm() == null || getTerm().isEmpty() || getTerm().length() < 3) {
+            throw new IllegalInputFault("El termino a buscar debe tener minimo 3 caracteres de largo");
+        }
     }
 }

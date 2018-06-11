@@ -56,8 +56,9 @@
                                 </p:imageSwitch>
                             </div-->
 
-                            <div class="ui-g-10" style="padding-top: 30px; padding-bottom: 30px">
-                                <p:outputPanel styleClass="search">
+                            <div class="ui-g-12" style="padding-top: 30px; padding-bottom: 30px">
+
+                                <div class="ui-inputgroup">
                                     <p:autoComplete id="search"
                                                     widgetVar="search_input"
                                                     styleClass="search-input"
@@ -89,24 +90,9 @@
 
                                     </p:autoComplete>
 
-                                    <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
-                                        <i class="fa fa-search fa-lg"  />
-                                    </p:outputPanel>
+                                    <p:button id="search_button4" styleClass="search-button-tiny" icon="fa fa-search" outcome="/views/concepts"/>
 
-                                    <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
-                                        <p:commandLink process="@this" style="color: #aaa;"
-                                                       update="@(.search)"
-                                                       action="#{browserBean.setDescriptionSelected(null)}">
-                                            <i class="fa fa-close fa-lg"  />
-                                        </p:commandLink>
-                                    </p:outputPanel>
-                                </p:outputPanel>
-                            </div>
-
-                            <div class="ui-g-2" style="padding-top: 30px; padding-bottom: 30px">
-                                <p:commandButton id="search_button2" styleClass="search-button-tiny" icon="fa fa-search"
-                                                 actionListener="#{browserBean.redirect()}" rendered="false"/>
-                                <p:button id="search_button3" styleClass="search-button-tiny" icon="fa fa-search" outcome="/views/concepts"/>
+                                </div>
                             </div>
 
                             <div class="ui-g-0 ui-md-3 ui-lg-4" style="padding: 0em"></div>
