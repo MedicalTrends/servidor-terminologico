@@ -150,14 +150,6 @@ public class CrossmapController {
     public CrossmapSetMembersResponse getCrossmapSetMembersByCrossmapSetAbbreviatedName(String crossmapSetAbbreviatedName, int page, int pageSize)
             throws NotFoundFault, IllegalArgumentException {
 
-        if(crossmapSetAbbreviatedName == null || crossmapSetAbbreviatedName.trim().isEmpty()) {
-            throw new NotFoundFault("Debe ingresar el nombre abreviado del CrossmapSet");
-        }
-
-        if(pageSize > 100) {
-            throw new NotFoundFault("Tamaño de página excede máximo permitido de 100 registros");
-        }
-
         List<CrossmapSet> crossmapSets = crossmapManager.getCrossmapSets();
         CrossmapSet theCrossmapSet = null;
 

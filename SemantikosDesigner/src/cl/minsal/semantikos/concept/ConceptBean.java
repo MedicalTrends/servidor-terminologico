@@ -481,17 +481,6 @@ public class ConceptBean implements Serializable {
         conceptBeanExport.loadConcept();
     }
 
-
-    public ConceptSMTK getTargetForRD(RelationshipDefinition relationshipDefinition, ConceptSMTK conceptSel) {
-        if (targetSelected == null) {
-            targetSelected = new HashMap<Long, ConceptSMTK>();
-        }
-        if (!targetSelected.containsKey(relationshipDefinition.getId())) {
-            targetSelected.put(relationshipDefinition.getId(), conceptSel);
-        }
-        return targetSelected.get(relationshipDefinition.getId());
-    }
-
     /**
      * Este método es el encargado de agregar relaciones al concepto recibiendo como parámetro un Relationship
      * Definition. Este método es utilizado por el componente BasicType, el cual agrega relaciones con target sin valor

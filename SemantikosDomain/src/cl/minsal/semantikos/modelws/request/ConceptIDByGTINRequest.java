@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.modelws.request;
 
+import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
+
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
@@ -22,4 +24,11 @@ public class ConceptIDByGTINRequest extends Request implements Serializable {
     public void setGTIN(int GTIN) {
         this.GTIN = GTIN;
     }
+
+    public void validate() throws IllegalInputFault {
+        super.validate();
+        if (getGTIN() == 0 || "".equals(String.valueOf(getGTIN()))) {
+            throw new IllegalInputFault("Debe indicar número GTIN");
+        }
+    };
 }

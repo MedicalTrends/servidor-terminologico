@@ -690,6 +690,7 @@ public class ConceptController {
      * @throws NotFoundFault Arrojada si...
      */
     public RefSetLightResponse conceptsLightByRefset(String refSetName) throws NotFoundFault {
+
         RefSet refSet = this.refSetManager.getRefsetByName(refSetName);
 
         if(refSet == null) {
@@ -974,24 +975,6 @@ public class ConceptController {
     }
 
     /**
-     * Este método es responsable de retornar el atributo 'Pedible' de la categoría dada.
-     *
-     * @param aCategory La categoría cuyo atributo 'Pedible' se busca.
-     * @return El atributo 'Pedible' de la categoría.
-     */
-    private RelationshipDefinition getRequestableAttribute(Category aCategory) {
-
-        List<RelationshipDefinition> relationshipDefinitions = aCategory.getRelationshipDefinitions();
-        for (RelationshipDefinition relationshipDefinition : relationshipDefinitions) {
-            if (relationshipDefinition.getName().equalsIgnoreCase("Pedible")) {
-                return relationshipDefinition;
-            }
-        }
-
-        throw new IllegalArgumentException("La categoría solicitada no posee un atributo 'Pedible'");
-    }
-
-    /**
      * Este método es responsable de recuperar todos los conceptos en las categorías indicadas.
      *
      * @param request Nombres de las categorías en las que se desea realizar la búsqueda.
@@ -999,18 +982,13 @@ public class ConceptController {
      */
     public GTINByConceptIDResponse searchGTINByConceptID(GTINByConceptIDRequest request) throws NotFoundFault, IllegalInputFault {
 
-        if ((request.getConceptID() == null || "".equals(request.getConceptID()))
-                && (request.getDescriptionID() == null || "".equals(request.getDescriptionID()))) {
-            throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
-        }
-
         ConceptSMTK conceptSMTK = getConcept(request.getConceptID(), request.getDescriptionID());
 
         conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
 
         //Si la categoría no tiene la definición de atributo GS1
         if(conceptSMTK.getCategory().findRelationshipDefinitionsByName(TargetDefinition.GTINGS1).isEmpty()) {
-            throw new NotFoundFault("El concepto: "+ conceptSMTK +" perteneciente a categoría: "+conceptSMTK.getCategory()+" no posee la definición de atributo GTIN");
+            throw new NotFoundFault("El concepto: "+ conceptSMTK +" perteneciente a categoría: "+conceptSMTK.getCategory()+" no posee la definición GTIN");
         }
 
         //Si esta ok, construir respuesta
@@ -1027,10 +1005,6 @@ public class ConceptController {
      * @return La lista de Conceptos Light que satisfacen la búsqueda.
      */
     public ConceptIDByGTINResponse searchConceptIDByGTIN(ConceptIDByGTINRequest request) throws NotFoundFault, IllegalInputFault {
-
-        if (request.getGTIN() == 0 || "".equals(request.getGTIN())) {
-            throw new IllegalInputFault("Debe indicar número GTIN");
-        }
 
         BasicTypeValue GS1 = new BasicTypeValue(request.getGTIN());
 

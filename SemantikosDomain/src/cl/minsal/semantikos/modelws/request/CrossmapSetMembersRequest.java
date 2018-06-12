@@ -1,5 +1,8 @@
 package cl.minsal.semantikos.modelws.request;
 
+import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
+import cl.minsal.semantikos.modelws.fault.NotFoundFault;
+
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
@@ -45,4 +48,15 @@ public class CrossmapSetMembersRequest extends Request implements Serializable {
     public void setCrossmapSetAbbreviatedName(String crossmapSetAbbreviatedName) {
         this.crossmapSetAbbreviatedName = crossmapSetAbbreviatedName;
     }
+
+    public void validate() throws IllegalInputFault {
+        super.validate();
+        if(crossmapSetAbbreviatedName == null || crossmapSetAbbreviatedName.trim().isEmpty()) {
+            throw new IllegalInputFault("Debe ingresar el nombre abreviado del CrossmapSet");
+        }
+
+        if(pageSize > 100) {
+            throw new IllegalInputFault("Tamaño de página excede máximo permitido de 100 registros");
+        }
+    };
 }

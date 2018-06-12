@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.modelws.request;
 
+import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
+
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
@@ -33,4 +35,11 @@ public class GTINByConceptIDRequest extends Request implements Serializable {
     public void setDescriptionID(String descriptionID) {
         this.descriptionID = descriptionID;
     }
+
+    public void validate() throws IllegalInputFault {
+        super.validate();
+        if ((getConceptID() == null || "".equals(getConceptID())) && (getDescriptionID() == null || "".equals(getDescriptionID()))) {
+            throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
+        }
+    };
 }

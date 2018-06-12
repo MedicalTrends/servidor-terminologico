@@ -259,17 +259,17 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
      */
     public void addRelationshipWeb(RelationshipWeb relationship) throws BusinessRuleException {
         if(relationship.getTarget() == null || relationship.getTarget().toString().isEmpty() || relationship.getTarget().getRepresentation().equals("null")) {
-            throw new BusinessRuleException("BR-UNK", "Deve ingresar un valor para la definición '" + relationship.getRelationshipDefinition().getName());
+            throw new BusinessRuleException("Error", "Debe ingresar un valor para la definición '" + relationship.getRelationshipDefinition().getName());
         }
 
         if(getRelationships().contains(relationship)) {
-            throw new BusinessRuleException("BR-UNK", "No se puede agregar dos veces la misma relación en la definición " + relationship.getRelationshipDefinition().getName());
+            throw new BusinessRuleException("Error", "No se puede agregar dos veces la misma relación en la definición " + relationship.getRelationshipDefinition().getName());
         }
         for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
             if(relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition().isHelperTable()) {
                 if(relationshipAttribute.getTarget().getId() == PersistentEntity.NON_PERSISTED_ID ||
                         relationshipAttribute.getTarget().getId() == 0) {
-                    throw new BusinessRuleException("BR-UNK", "Valor para el atributo de relación '" + relationshipAttribute.getRelationAttributeDefinition().getName() + "' no válido");
+                    throw new BusinessRuleException("Error", "Valor para el atributo de relación '" + relationshipAttribute.getRelationAttributeDefinition().getName() + "' no válido");
                 }
             }
         }

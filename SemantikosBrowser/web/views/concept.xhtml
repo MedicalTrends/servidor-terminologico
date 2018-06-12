@@ -96,16 +96,15 @@
                                      value="#{concept.getSMTKRelationships()}"
                                      reflow="true">
 
-                            <p:column style="font-weight: bold">
+                            <p:column headerText="Atributo">
                                 <h:outputText value="#{relationship.relationshipDefinition.name}"/>
                             </p:column>
-                            <p:column>
+                            <p:column headerText="Valor">
                                 <h:outputText value="#{relationship.target}" rendered="#{relationship.relationshipDefinition.targetDefinition.basicType}" />
-                                <p:outputPanel value="#{relationship.target}" rendered="#{relationship.relationshipDefinition.targetDefinition.helperTable}">
-                                    <h:outputText value="#{relationship.target}" rendered="#{not relationship.relationshipDefinition.ATC}" />
-                                    <h:outputText value="#{relationship.target.getCellByColumnName('codigo atc')} #{relationship.target.getCellByColumnName('descripcion completa')}"
-                                                  rendered="#{relationship.relationshipDefinition.ATC}" />
-                                </p:outputPanel>
+                                <h:outputText value="#{relationship.target}"
+                                              rendered="#{relationship.relationshipDefinition.targetDefinition.helperTable and not relationship.relationshipDefinition.ATC}" />
+                                <h:outputText value="#{relationship.target.getCellByColumnName('codigo atc')} #{relationship.target.getCellByColumnName('descripcion completa')}"
+                                              rendered="#{relationship.relationshipDefinition.targetDefinition.helperTable and relationship.relationshipDefinition.ATC}" />
                                 <p:link value="#{relationship.target.descriptionFavorite} - #{relationship.target.conceptID}" rendered="#{relationship.relationshipDefinition.targetDefinition.SMTKType}">
                                     <f:param name="conceptID" value="#{relationship.target.conceptID}" />
                                 </p:link>

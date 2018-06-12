@@ -40,40 +40,51 @@
 
                                         <div class="ui-inputgroup">
 
-                                            <p:commandButton style="color: #0000EE" styleClass="search-button-tiny"
-                                                             icon="fa fa-search"/>
+                                            <p:outputPanel styleClass="search" style="width: 100%">
 
-                                            <p:autoComplete minQueryLength="3"
-                                                            id="search"
-                                                            emptyMessage="No se encontraron conceptos"
-                                                            forceSelection="false"
-                                                            scrollHeight="200" size="5"
-                                                            completeMethod="#{browserBean.searchSuggestedDescriptions}"
-                                                            placeholder="Buscar..."
-                                                            converter="DescriptionConverter"
-                                                            var="description"
-                                                            value="#{browserBean.descriptionSelected}"
-                                                            itemLabel="#{description.getRepresentation()}"
-                                                            itemValue="#{description}">
+                                                <p:autoComplete minQueryLength="3"
+                                                                id="search"
+                                                                emptyMessage="No se encontraron conceptos"
+                                                                forceSelection="false"
+                                                                scrollHeight="200" size="5"
+                                                                completeMethod="#{browserBean.searchSuggestedDescriptions}"
+                                                                placeholder="Buscar..."
+                                                                converter="DescriptionConverter"
+                                                                var="description"
+                                                                value="#{browserBean.descriptionSelected}"
+                                                                itemLabel="#{description.getRepresentation()}"
+                                                                itemValue="#{description}">
 
-                                                <p:outputPanel>
+                                                    <p:outputPanel>
 
-                                                    <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
-                                                        <h:outputText value="#{description.term}" />
-                                                    </p:column>
+                                                        <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
+                                                            <h:outputText value="#{description.term}" />
+                                                        </p:column>
 
+                                                    </p:outputPanel>
+
+                                                    <p:ajax event="itemSelect"
+                                                                listener="#{browserBean.test()}"
+                                                                update="@(.conceptPanel),@(.search)"
+                                                                process="@this"/>
+
+                                                </p:autoComplete>
+
+                                                <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
+                                                    <i class="fa fa-search fa-lg"  />
                                                 </p:outputPanel>
 
-                                                <p:ajax event="itemSelect"
-                                                            listener="#{browserBean.test()}"
-                                                            update="@(.conceptPanel),@(.search)"
-                                                            process="@this"/>
+                                                <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
+                                                    <p:commandLink process="@this" style="color: #aaa;"
+                                                                   update="@(.search)" oncomplete="listenSearchOnClickEvent();"
+                                                                   action="#{browserBean.setDescriptionSelected(null)}">
+                                                        <i class="fa fa-close fa-lg"  />
+                                                    </p:commandLink>
+                                                </p:outputPanel>
 
-                                            </p:autoComplete>
+                                            </p:outputPanel>
 
-                                            <p:commandButton process="@this" style="color: #aaa;" icon="fa fa-search" styleClass="search-button-tiny"
-                                                             update="@(.search)" oncomplete="listenSearchOnClickEvent();"
-                                                             action="#{browserBean.setDescriptionSelected(null)}"/>
+                                            <p:commandButton styleClass="search-button-tiny" icon="fa fa-search" />
 
                                         </div>
 
@@ -308,7 +319,6 @@
         <script type="text/javascript">
 
             $(function() {
-
                 // Set window scroll position if cookie is set.
                 window.scroll(0, $.cookie('myCookie'));
                 // Unset cookie after setting scroll position.
@@ -353,7 +363,7 @@
                     if ($('input[id$=search_hinput]').val().length >= 3) {
                         //$('input[id$=search_input]').trigger('keydown');
                         //$('input[id$=search_input]').trigger('input');
-                        $('div[id$=search_panel] .ui-autocomplete-item:first-child').trigger('click');
+                        $('span[id$=search_panel] .ui-autocomplete-item:first-child').trigger('click');
                         //$('input[id$=search_input]').parent().trigger('click');
                     }
                     else {

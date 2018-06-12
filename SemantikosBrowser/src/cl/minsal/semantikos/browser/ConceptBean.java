@@ -205,6 +205,9 @@ public class ConceptBean implements Serializable {
     }
 
     public List<RefSet> getConceptRefSetList() {
+        if(selectedConcept == null) {
+            return null;
+        }
         return refSetManager.getRefsetsBy(selectedConcept);
     }
 
