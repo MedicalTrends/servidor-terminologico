@@ -153,7 +153,7 @@ public class SnomedController {
 
         SnomedMatchDescriptionsResponse perfectMatchDescriptionsResponse = new SnomedMatchDescriptionsResponse();
         perfectMatchDescriptionsResponse.setMatchDescriptionsResponse(perfectMatchDescriptions);
-        perfectMatchDescriptionsResponse.setQuantity(perfectMatchDescriptions.size());
+        perfectMatchDescriptionsResponse.setQuantity(snomedCTManager.countDescriptionsSuggested(request.getTerm(), null));
 
         res.setPattern(request.getTerm());
         res.setMatchDescriptions(perfectMatchDescriptionsResponse);

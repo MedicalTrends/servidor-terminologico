@@ -34,7 +34,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     @EJB
     private DescriptionSearchBR descriptionSearchBR;
 
-    private static final int SUGGESTTION_SIZE = 10;
+    private static final int SUGGESTTION_SIZE = 5;
 
     @Override
     public List<RelationshipSCT> getRelationshipsFrom(ConceptSCT conceptSCT) {
@@ -203,6 +203,23 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
         }
 
         return descriptions;
+    }
+
+    @Override
+    public int countDescriptionsSuggested(String term, Integer group) {
+
+        term = descriptionSearchBR.escapeSpecialCharacters(term);
+        //int count = descriptionDAO.countDescriptionsSuggested(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
+        long count = snomedctDAO.countPerfectMatch(term, group);
+
+        //logger.info("countDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): " + count);
+        //logger.info("countDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+
+        if (count != 0) {
+            return (int)count;
+        } else {
+            return (int) snomedctDAO.countTruncateMatch(term, group);
+        }
     }
 
 

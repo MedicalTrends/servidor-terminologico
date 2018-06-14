@@ -129,4 +129,12 @@ public interface SnomedCTManager {
     public List<DescriptionSCT> searchDescriptionsSuggested(String term);
 
 
+    /**
+     * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
+     * parámetro en cada una de las categorías y refsets indicadas.
+     *
+     * @return Una lista con descripciones que hacen truncate match.
+     */
+    public int countDescriptionsSuggested(String term, Integer group);
+
 }

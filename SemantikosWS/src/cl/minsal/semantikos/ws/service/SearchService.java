@@ -510,7 +510,7 @@ public class SearchService {
                     ConceptSCTByConceptIDRequest request
     ) throws NotFoundFault {
         try {
-            return this.snomedController.conceptSCTByConceptID(request.getConceptID());
+            return this.snomedController.conceptSCTByConceptID(Long.parseLong(request.getConceptID()));
         } catch (Exception e) {
             throw new NotFoundFault(e.getMessage());
         }
@@ -525,7 +525,7 @@ public class SearchService {
                     ConceptSCTByDescriptionIDRequest request
     ) throws NotFoundFault {
         try {
-            return this.snomedController.conceptSCTByDescriptionID(request.getDescriptionID());
+            return this.snomedController.conceptSCTByDescriptionID(Long.parseLong(request.getDescriptionID()));
         } catch (Exception e) {
             throw new NotFoundFault(e.getMessage());
         }
