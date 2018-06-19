@@ -52,5 +52,8 @@ public class SnomedSearchTermRequest extends Request implements Serializable {
         if(getTerm() == null || getTerm().isEmpty() || getTerm().length() < 3) {
             throw new IllegalInputFault("El termino a buscar debe tener minimo 3 caracteres de largo");
         }
+        if(pageSize > 100) {
+            throw new IllegalInputFault("Tamaño de página excede máximo permitido de 100 registros");
+        }
     }
 }

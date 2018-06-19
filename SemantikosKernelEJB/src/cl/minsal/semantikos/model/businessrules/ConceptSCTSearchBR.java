@@ -6,10 +6,7 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.validation.constraints.NotNull;
 import java.text.Normalizer;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Andrés Farías on 11/24/16.

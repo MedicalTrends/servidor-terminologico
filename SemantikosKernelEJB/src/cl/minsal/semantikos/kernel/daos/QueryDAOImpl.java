@@ -90,7 +90,7 @@ public class QueryDAOImpl implements QueryDAO {
         if(  query instanceof  BrowserQuery )
             QUERY = "begin ? := stk.stk_pck_query.get_concept_by_browser_query(?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  SnomedQuery )
-            QUERY = "begin ? := stk.stk_pck_query.get_concept_sct_by_snomed_query(?,?,?,?,?,?,?,?); end;";
+            QUERY = "begin ? := stk.stk_pck_query.get_concept_sct_by_snomed_query(?,?,?,?,?,?); end;";
 
         try (Connection connection = dataSource.getConnection();
 
@@ -172,7 +172,7 @@ public class QueryDAOImpl implements QueryDAO {
         if(  query instanceof  BrowserQuery )
             QUERY = "begin ? := stk.stk_pck_query.count_concept_by_browser_query(?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  SnomedQuery )
-            QUERY = "begin ? := stk.stk_pck_query.count_concept_sct_by_snomed_query(?,?,?,?,?,?,?,?); end;";
+            QUERY = "begin ? := stk.stk_pck_query.count_concept_sct_by_snomed_query(?,?,?,?,?,?); end;";
 
         try (Connection connection = dataSource.getConnection();
 

@@ -58,7 +58,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
             results = snomedctDAO.findTruncateMatch(patternStandard, group, page, pageSize);
         }
 
-        new ConceptSCTSearchBR().applyPostActions(results);
+        //new ConceptSCTSearchBR().applyPostActions(results);
 
         return results;
     }
@@ -109,6 +109,11 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
         return snomedctDAO.getConceptByDescriptionID(descriptionID);
     }
 
+    @Override
+    public DescriptionSCT getDescriptionByID(long id) {
+        return snomedctDAO.getDescriptionBy(id);
+    }
+
     private void validateDescriptionSCT(List<ConceptSCT> conceptSCTs, List<DescriptionSCT> descriptionSCTs) {
         List<DescriptionSCT> descriptionSCTsWithConcept = new ArrayList<>();
         List<Long> idsConcept = new ArrayList<>();
@@ -133,7 +138,6 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
                 descriptionSCTsDeprecated.add(descriptionSCT);
             }
         }
-
 
     }
 
@@ -206,11 +210,11 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     }
 
     @Override
-    public int countDescriptionsSuggested(String term, Integer group) {
+    public int countDescriptionsSuggested(String term) {
 
         term = descriptionSearchBR.escapeSpecialCharacters(term);
         //int count = descriptionDAO.countDescriptionsSuggested(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
-        long count = snomedctDAO.countPerfectMatch(term, group);
+        long count = snomedctDAO.countDescriptionsPerfectMatch(term);
 
         //logger.info("countDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): " + count);
         //logger.info("countDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
@@ -218,7 +222,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
         if (count != 0) {
             return (int)count;
         } else {
-            return (int) snomedctDAO.countTruncateMatch(term, group);
+            return (int) snomedctDAO.countDescriptionsTruncateMatch(term);
         }
     }
 

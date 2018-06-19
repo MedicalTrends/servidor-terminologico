@@ -12,6 +12,7 @@ import cl.minsal.semantikos.model.queries.SnomedQuery;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.snomedct.DescriptionSCT;
 import cl.minsal.semantikos.model.tags.Tag;
+import cl.minsal.semantikos.view.components.GuestPreferences;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.data.PageEvent;
 import org.primefaces.extensions.model.layout.LayoutOptions;
@@ -22,6 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -51,6 +53,9 @@ public class BrowserSCTBean implements Serializable {
 
     private LayoutOptions layoutOptionsOne;
     private LayoutOptions layoutOptionsTwo;
+
+    @ManagedProperty(value = "#{guestPreferences}")
+    GuestPreferences guestPreferences;
 
     /**
      * Variables para el browser
@@ -98,7 +103,7 @@ public class BrowserSCTBean implements Serializable {
 
     @PostConstruct
     protected void initialize() {
-
+        //guestPreferences.setTheme("blue");
     }
 
     public int getResults() {
@@ -258,7 +263,7 @@ public class BrowserSCTBean implements Serializable {
         int pageindex = event.getPage();
         page = pageindex + 1;
         RequestContext reqCtx = RequestContext.getCurrentInstance();
-        reqCtx.execute("PF('conceptSnomedTableExcel').getPaginator().setPage("+pageindex+")");
+        reqCtx.execute("PF('conceptTableExcel').getPaginator().setPage("+pageindex+")");
     }
 
     public LazyDataModel<ConceptSCT> getConcepts() {
@@ -363,5 +368,13 @@ public class BrowserSCTBean implements Serializable {
 
     public void setPage(int page) {
         this.page = page;
+    }
+
+    public GuestPreferences getGuestPreferences() {
+        return guestPreferences;
+    }
+
+    public void setGuestPreferences(GuestPreferences guestPreferences) {
+        this.guestPreferences = guestPreferences;
     }
 }

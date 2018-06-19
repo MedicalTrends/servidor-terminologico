@@ -38,7 +38,7 @@ public class ConceptIDByGTINResponse implements Serializable {
         List<Relationship> relationshipGS1 = conceptSMTK.getRelationshipsByRelationDefinition(relationshipDefinition);
         if(!relationshipGS1.isEmpty()) {
             BasicTypeValue codeGS1 = (BasicTypeValue) relationshipGS1.get(0).getTarget();
-            this.codeGTIN = (int) codeGS1.getValue();
+            this.codeGTIN = Integer.parseInt(codeGS1.getValue().toString());
         }
         this.conceptId = conceptSMTK.getConceptID();
         this.categoryName = conceptSMTK.getCategory().getName();

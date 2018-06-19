@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/SemantikosKernelEJB/src/cl/minsal/semantikos/kernel/daos/AuthDAOImpl.java" dialect="Oracle" />
     <file url="file://$PROJECT_DIR$/SemantikosKernelEJB/src/cl/minsal/semantikos/kernel/daos/CIE10DAOImpl.java" dialect="Oracle" />
     <file url="file://$PROJECT_DIR$/SemantikosKernelEJB/src/cl/minsal/semantikos/kernel/daos/CrossmapsDAOImpl.java" dialect="Oracle" />
+    <file url="file://$PROJECT_DIR$/SemantikosKernelEJB/src/cl/minsal/semantikos/kernel/daos/DescriptionDAOImpl.java" dialect="OracleSqlPlus" />
     <file url="file://$PROJECT_DIR$/SemantikosKernelEJB/src/cl/minsal/semantikos/kernel/daos/GMDNDAOImpl.java" dialect="Oracle" />
     <file url="file://$PROJECT_DIR$/SemantikosKernelEJB/src/cl/minsal/semantikos/kernel/daos/QueryDAOImpl.java" dialect="OracleSqlPlus" />
     <file url="file://$PROJECT_DIR$/SemantikosKernelEJB/src/cl/minsal/semantikos/kernel/daos/SnomedCTDAOImpl.java" dialect="OracleSqlPlus" />

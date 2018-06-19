@@ -95,6 +95,8 @@ public interface SnomedCTManager {
      */
     public ConceptSCT getConceptByID(long conceptID);
 
+    public DescriptionSCT getDescriptionByID(long id);
+
     /**
      * Este método es responsable de recuperar un concepto por su CONCEPT_ID.
      *
@@ -135,6 +137,6 @@ public interface SnomedCTManager {
      *
      * @return Una lista con descripciones que hacen truncate match.
      */
-    public int countDescriptionsSuggested(String term, Integer group);
+    public int countDescriptionsSuggested(String term);
 
 }

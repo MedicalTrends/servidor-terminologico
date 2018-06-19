@@ -63,7 +63,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @Override
     public NoValidDescription getNoValidDescriptionByID(long id) {
-        //ConnectionBD connect = new ConnectionBD();
 
         NoValidDescription noValidDescription = null;
 
@@ -95,7 +94,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     @Override
     public Description getDescriptionBy(long id) {
 
-        //ConnectionBD connect = new ConnectionBD();
         Description description = null;
 
         String sql = "begin ? := stk.stk_pck_description.get_description_by_id(?); end;";
@@ -125,7 +123,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @Override
     public Description getDescriptionByDescriptionID(String descriptionId) {
-        //ConnectionBD connect = new ConnectionBD();
+
         Description description= null;
 
         //conceptSMTKMap = new HashMap<>();
@@ -160,7 +158,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     @Override
     public List<Description> getDescriptionsByConcept(ConceptSMTK conceptSMTK) {
 
-        //ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
 
         //conceptSMTKMap = new HashMap<>();
@@ -198,7 +195,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     @Override
     public Description persist(Description description, User user) {
 
-        //ConnectionBD connect = new ConnectionBD();
         /*
          * param1: ID
          * param 2: DesType ID
@@ -263,7 +259,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @Override
     public void deleteDescription(Description description) {
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_description.delete_description(?); end;";
 
@@ -282,8 +277,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @Override
     public void update(Description description) {
-
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_description.update_description(?,?,?,?,?,?,?,?,?,?,?,?); end;";
 
@@ -321,7 +314,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @Override
     public List<ObservationNoValid> getObservationsNoValid() {
-        //ConnectionBD connect = new ConnectionBD();
+
         List<ObservationNoValid> observationNoValids= new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_description.get_all_not_valid_observation; end;";
@@ -351,7 +344,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @Override
     public ObservationNoValid getObservationNoValidBy(Description description) {
-        //ConnectionBD connect = new ConnectionBD();
+
         ObservationNoValid observationNoValid= null;
 
         String sql = "begin ? := stk.stk_pck_description.get_observation_no_valid_by_description(?); end;";
@@ -443,7 +436,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @Override
     public void setInvalidDescription(NoValidDescription noValidDescription) {
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql1 = "begin ? := stk.stk_pck_description.persist_observation_to_description_no_valid(?,?); end;";
         String sql2 = "begin ? := stk.stk_pck_description.persist_concept_suggested_to_description_no_valid(?,?); end;";
@@ -481,7 +473,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         /* Se registra el tiempo de inicio */
         long init = currentTimeMillis();
 
-        //ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_description.search_descriptions(?,?,?); end;";
@@ -530,8 +521,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         /* Se registra el tiempo de inicio */
         //long init = currentTimeMillis();
-
-        //ConnectionBD connect = new ConnectionBD();
 
         conceptSMTKMap = new HashMap<>();
 
@@ -602,8 +591,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         /* Se registra el tiempo de inicio */
         long init = currentTimeMillis();
 
-        //ConnectionBD connect = new ConnectionBD();
-
         conceptSMTKMap = new HashMap<>();
 
         List<Description> descriptions = new ArrayList<>();
@@ -671,7 +658,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         conceptSMTKMap = new HashMap<>();
 
-        //ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_description.search_descriptions_truncate_match(?,?,?,?,?); end;";
@@ -726,7 +712,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         /* Se registra el tiempo de inicio */
         long init = currentTimeMillis();
 
-        //ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
         int count = 0;
 
@@ -773,7 +758,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         /* Se registra el tiempo de inicio */
         long init = currentTimeMillis();
 
-        //ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
         int count = 0;
 

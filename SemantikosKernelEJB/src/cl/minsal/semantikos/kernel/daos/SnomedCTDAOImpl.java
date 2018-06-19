@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.snomedct.*;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
@@ -29,11 +30,11 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
     @Override
     public List<ConceptSCT> findConceptsBy(String pattern, Integer group) {
+
         List<ConceptSCT> concepts = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_snomed.find_sct_by_pattern(?,?); end;";
 
-        //ConnectionBD connect = new ConnectionBD();
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -65,11 +66,11 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
     @Override
     public List<ConceptSCT> findPerfectMatch(String pattern, Integer group, int page, int pageSize) {
+
         List<ConceptSCT> concepts = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_snomed.find_sct_perfect_match(?,?,?,?); end;";
 
-        //ConnectionBD connect = new ConnectionBD();
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -104,11 +105,11 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
     @Override
     public List<ConceptSCT> findTruncateMatch(String pattern, Integer group, int page, int pageSize) {
+
         List<ConceptSCT> concepts = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_snomed.find_sct_truncate_match(?,?,?,?); end;";
 
-        //ConnectionBD connect = new ConnectionBD();
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -143,11 +144,11 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
     @Override
     public long countPerfectMatch(String pattern, Integer group) {
+
         long concepts = 0;
 
         String sql = "begin ? := stk.stk_pck_snomed.count_sct_perfect_match(?,?); end;";
 
-        //ConnectionBD connect = new ConnectionBD();
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -173,11 +174,11 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
     @Override
     public long countTruncateMatch(String pattern, Integer group) {
+
         long concepts = 0;
 
         String sql = "begin ? := stk.stk_pck_snomed.count_sct_truncate_match(?,?); end;";
 
-        //ConnectionBD connect = new ConnectionBD();
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -202,9 +203,59 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     }
 
     @Override
-    public ConceptSCT getConceptByID(long conceptID) {
+    public long countDescriptionsPerfectMatch(String pattern) {
 
-        //ConnectionBD connect = new ConnectionBD();
+        long concepts = 0;
+
+        String sql = "begin ? := stk.stk_pck_snomed.count_descriptions_perfect_match(?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, Types.NUMERIC);
+            call.setString(2, pattern);
+
+            call.execute();
+
+            concepts = call.getLong(1);
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al buscar Snomed CT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return concepts;
+    }
+
+    @Override
+    public long countDescriptionsTruncateMatch(String pattern) {
+
+        long concepts = 0;
+
+        String sql = "begin ? := stk.stk_pck_snomed.count_descriptions_truncate_match(?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, Types.NUMERIC);
+            call.setString(2, pattern);
+
+            call.execute();
+
+            concepts = call.getLong(1);
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al buscar Snomed CT";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return concepts;
+    }
+
+    @Override
+    public ConceptSCT getConceptByID(long conceptID) {
 
         String sql = "begin ? := stk.stk_pck_snomed.get_sct_by_concept_id(?); end;";
 
@@ -237,8 +288,6 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     @Override
     public ConceptSCT getConceptByDescriptionID(long descriptionID) {
 
-        //ConnectionBD connect = new ConnectionBD();
-
         String sql = "begin ? := stk.stk_pck_snomed.get_sct_by_description_id(?); end;";
 
         try (Connection connection = dataSource.getConnection();
@@ -268,13 +317,42 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     }
 
     @Override
+    public DescriptionSCT getDescriptionBy(long id) {
+
+        DescriptionSCT description = null;
+
+        String sql = "begin ? := stk.stk_pck_snomed.get_description_sct_by_id(?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, id);
+            call.execute();
+
+            logger.debug("Descripciones SCT recuperadas con ID=" + id);
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                description = createDescriptionSCTFromResultSet(rs);
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar la descripción SCT de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return description;
+    }
+
+    @Override
     public List<ConceptSCT> findConceptsByConceptID(long conceptIdPattern, Integer group) {
 
         List<ConceptSCT> conceptSCTs = new ArrayList<>();
 
         String sql = "begin ? := stk.stk_pck_snomed.get_concepts_sct_by_id(?,?); end;";
 
-        //ConnectionBD connect = new ConnectionBD();
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -308,7 +386,6 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     public Map<DescriptionSCT, ConceptSCT> findDescriptionsByPattern(String pattern) {
 
         Map<DescriptionSCT, ConceptSCT> result = new HashMap<>();
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_snomed.find_descriptions_sct_by_pattern(?); end;";
 
@@ -340,8 +417,8 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     }
 
     private List<DescriptionSCT> getDescriptionsSCTByConcept(long id) {
+
         List<DescriptionSCT> descriptionSCTs = new ArrayList<>();
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_snomed.get_descriptions_sct_by_id(?); end;";
 
@@ -369,7 +446,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
     @Override
     public DescriptionSCT getDescriptionSCTBy(long idDescriptionSCT) {
-        //ConnectionBD connect = new ConnectionBD();
+
         DescriptionSCT descriptionSCT = null;
 
         String sql = "begin ? := stk.stk_pck_snomed.get_description_sct_by_id(?); end;";
@@ -398,8 +475,6 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
     @Override
     public List<RelationshipSCT> getRelationshipsBySourceConcept(ConceptSCT conceptSCT) {
-
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_snomed.get_relationships_sct_by_id(?); end;";
 

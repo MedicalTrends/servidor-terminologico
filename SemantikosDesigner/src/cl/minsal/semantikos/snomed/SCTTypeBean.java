@@ -88,6 +88,7 @@ public class SCTTypeBean implements Serializable {
      */
     public List<ConceptSCT> getConceptSearchInput(String patron) {
 
+        /*
         if(!patron.equals(pattern)) {
             endReached = false;
             pageSize = 100;
@@ -95,6 +96,7 @@ public class SCTTypeBean implements Serializable {
         else {
             pageSize=pageSize+100;
         }
+        */
 
         pattern = patron;
 

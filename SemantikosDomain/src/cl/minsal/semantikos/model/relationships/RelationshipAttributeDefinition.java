@@ -100,8 +100,12 @@ public class RelationshipAttributeDefinition implements Serializable {
         return this.getName().equalsIgnoreCase(UNIDAD_PP_ATTRIBUE);
     }
 
-    public boolean isUnidadAttribute(){
+    public boolean isUnidadAttribute() {
         return this.getName().equalsIgnoreCase(UNIDAD_ATTRIBUE);
+    }
+
+    public boolean isUnidadLike() {
+        return this.getName().toLowerCase().contains("unidad") && this.getName().toLowerCase().contains("medida");
     }
 
     public boolean isUnidadPackMultiAttribute(){

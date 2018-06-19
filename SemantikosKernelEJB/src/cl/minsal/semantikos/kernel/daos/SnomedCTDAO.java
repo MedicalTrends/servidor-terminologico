@@ -41,6 +41,15 @@ public interface SnomedCTDAO {
     public ConceptSCT getConceptByDescriptionID(long descriptionID);
 
     /**
+     * Este método es responsable de recuperar un concepto por su DESCRIPTION_ID.
+     *
+     * @param descriptionID El DESCRIPTION_ID de negocio.
+     *
+     * @return El Concepto cuyo DESCRIPTION_ID corresponde a <code>descriptionID</code>.
+     */
+    public DescriptionSCT getDescriptionBy(long descriptionID);
+
+    /**
      * Este método es responsable de buscar aquellos conceptos que posean un CONCEPT_ID que coincida con el
      * <code>conceptIdPattern</code> dado como parámetro. El patron
      *
@@ -105,6 +114,26 @@ public interface SnomedCTDAO {
      * @return La lista de conceptos que satisfacen el criterio de búsqueda.
      */
     long countTruncateMatch(String pattern, Integer group);
+
+    /**
+     * Este método es responsable de buscar aquellos conceptos que posean un CONCEPT_ID que coincida con el
+     * <code>conceptIdPattern</code> dado como parámetro. El patron
+     *
+     * @param pattern El patrón por el cual se realiza la búsqueda.
+     *
+     * @return La lista de conceptos que satisfacen el criterio de búsqueda.
+     */
+    long countDescriptionsPerfectMatch(String pattern);
+
+    /**
+     * Este método es responsable de buscar aquellos conceptos que posean un CONCEPT_ID que coincida con el
+     * <code>conceptIdPattern</code> dado como parámetro. El patron
+     *
+     * @param pattern El patrón por el cual se realiza la búsqueda.
+     *
+     * @return La lista de conceptos que satisfacen el criterio de búsqueda.
+     */
+    long countDescriptionsTruncateMatch(String pattern);
 
 
     public DescriptionSCT getDescriptionSCTBy(long idDescriptionSCT);

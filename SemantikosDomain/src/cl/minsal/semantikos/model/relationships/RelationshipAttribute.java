@@ -1,5 +1,9 @@
 package cl.minsal.semantikos.model.relationships;
 
+import cl.minsal.semantikos.model.PersistentEntity;
+import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
+
 import java.io.Serializable;
 
 /**
@@ -58,6 +62,13 @@ public class RelationshipAttribute implements Serializable {
     }
 
     public void setTarget(Target target) {
+        /*
+        if(target instanceof HelperTableRow) {
+            if(target.getId() == PersistentEntity.NON_PERSISTED_ID || target.getId() == 0) {
+                throw new BusinessRuleException("Error", "Valor para el atributo de relación '" + getRelationAttributeDefinition().getName() + "' no válido");
+            }
+        }
+        */
         this.target = target;
     }
 

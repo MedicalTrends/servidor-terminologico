@@ -24,7 +24,7 @@
                     <p:menuitem value="Conceptos" url="#" />
                 </p:breadCrumb>
 
-                <h:form id="browserSnomedForm">
+                <h:form id="browserForm">
 
                     <div class="card card-w-title">
 
@@ -39,7 +39,10 @@
 
                                     <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                                        <p:outputPanel styleClass="search">
+                                        <div class="ui-inputgroup">
+
+                                            <p:outputPanel styleClass="search" style="width: 100%">
+
                                             <p:autoComplete minQueryLength="3"
                                                             id="search"
                                                             emptyMessage="No se encontraron conceptos"
@@ -63,15 +66,15 @@
 
                                                 <p:ajax event="itemSelect"
                                                             listener="#{browserSCTBean.test()}"
-                                                            update="@(.conceptSnomedPanel),@(.search)"
+                                                            update="@(.conceptPanel),@(.search)"
                                                             process="@this"/>
 
                                             </p:autoComplete>
+
                                             <p:outputPanel rendered="#{browserSCTBean.descriptionSelected eq null}">
-                                                <p:commandLink style="color: #0000EE" styleClass="search-button-tiny">
-                                                    <i class="fa fa-search fa-lg"  />
-                                                </p:commandLink>
+                                                <i class="fa fa-search fa-lg"  />
                                             </p:outputPanel>
+
                                             <p:outputPanel rendered="#{browserSCTBean.descriptionSelected != null}">
                                                 <p:commandLink process="@this" style="color: #aaa;"
                                                                update="@(.search)" oncomplete="listenSearchOnClickEvent();"
@@ -80,6 +83,10 @@
                                                 </p:commandLink>
                                             </p:outputPanel>
                                         </p:outputPanel>
+
+                                            <p:commandButton styleClass="search-button-tiny" icon="fa fa-search" />
+
+                                        </div>
 
                                     </div>
 
@@ -92,7 +99,7 @@
                                     <div class="ui-g-12 ui-md-6 ui-lg-2">
 
                                         <p:commandButton value="Exportar" icon="fa fa-file-excel-o" ajax="false">
-                                            <p:dataExporter target="conceptSnomedTableExcel" type="xls" fileName="concepts" />
+                                            <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
                                         </p:commandButton>
 
                                     </div>
@@ -175,27 +182,26 @@
 
                     </div>
 
-                <p:outputPanel id="conceptSnomedPanel" styleClass="conceptSnomedPanel">
+                <p:outputPanel id="conceptPanel" styleClass="conceptPanel">
 
-                    <p:dataTable id="conceptSnomedTable" value="#{browserBean.concepts}" var="conceptSCT" styleClass="conceptSnomedTable"
-                                 widgetVar="conceptSnomedTable"
+                    <p:dataTable id="conceptTable" value="#{browserSCTBean.concepts}" var="conceptSCT" styleClass="conceptTable"
+                                 widgetVar="conceptTable"
                                  rendered="#{not empty browserSCTBean.concepts}"
                                  multiViewState="true"
                                  rows="15"
-                                 sortBy="#{1}"
                                  paginator="true" lazy="true" dynamic="true"
                                  paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                  emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
                         <p:ajax event="page" listener="#{browserSCTBean.updatePage}" oncomplete="scrollTop();" update="@(.search)" />
 
-                        <p:column headerText="Termino Preferido" sortBy="#{2}">
+                        <p:column headerText="Termino Preferido">
                             <div class="ui-g dashboard">
                                 <div class="ui-g-12">
                                     <div class="card overview">
                                         <div class="overview-content clearfix">
                                                     <span class="overview-title">
-                                                        <p:link outcome="/views/concept-snomed" value="#{conceptSCT.descriptionFavorite.term}" styleClass="myCustomLinkStyle" >
+                                                        <p:link outcome="/views/concept-snomed" value="#{conceptSCT.getDescriptionFSN().term}" styleClass="myCustomLinkStyle" >
                                                             <f:param name="conceptID" value="#{conceptSCT.id}" />
                                                         </p:link>
                                                     </span>
@@ -212,10 +218,9 @@
 
                     </p:dataTable>
 
-                    <p:dataTable id="conceptSnomedTableExcel" widgetVar="conceptTableExcel" value="#{browserSCTBean.concepts}" var="conceptSCT" styleClass="conceptTable"
+                    <p:dataTable id="conceptTableExcel" widgetVar="conceptTableExcel" value="#{browserSCTBean.concepts}" var="conceptSCT" styleClass="conceptTable"
                                  style="display: none"
                                  rows="15"
-                                 sortBy="#{1}"
                                  paginator="true" lazy="true" dynamic="true"
                                  reflow="true"
                                  paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
@@ -228,12 +233,12 @@
                             </p:commandButton>
                         </f:facet>
 
-                        <p:column headerText="Concept ID" sortBy="#{1}">
+                        <p:column headerText="Concept ID">
                             <h:outputText value="#{conceptSCT.id}"/>
                         </p:column>
 
-                        <p:column headerText="Termino Preferido" sortBy="#{2}">
-                            <h:outputText value="#{conceptSCT.descriptionFSN.term}"/>
+                        <p:column headerText="Termino Preferido">
+                            <h:outputText value="#{conceptSCT.getDescriptionFSN().term}"/>
                         </p:column>
 
                     </p:dataTable>
@@ -311,7 +316,7 @@
                     if ($('input[id$=search_hinput]').val().length >= 3) {
                         //$('input[id$=search_input]').trigger('keydown');
                         //$('input[id$=search_input]').trigger('input');
-                        $('div[id$=search_panel] .ui-autocomplete-item:first-child').trigger('click');
+                        $('span[id$=search_panel] .ui-autocomplete-item:first-child').trigger('click');
                         //$('input[id$=search_input]').parent().trigger('click');
                     }
                     else {

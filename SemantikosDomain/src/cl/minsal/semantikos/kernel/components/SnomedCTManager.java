@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.components;
 
+import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.snomedct.DescriptionSCT;
 import cl.minsal.semantikos.model.snomedct.RelationshipSCT;
@@ -101,6 +102,9 @@ public interface SnomedCTManager {
      */
     public ConceptSCT getConceptByDescriptionID(long descriptionID);
 
+
+    public DescriptionSCT getDescriptionByID(long id);
+
     /**
      * Este método es responsable de buscar y retornar todas las descripciones SNOMED que contienen el término dado como
      * parámetro.
@@ -131,5 +135,5 @@ public interface SnomedCTManager {
      *
      * @return Una lista con descripciones que hacen truncate match.
      */
-    public int countDescriptionsSuggested(String term, Integer group);
+    public int countDescriptionsSuggested(String term);
 }

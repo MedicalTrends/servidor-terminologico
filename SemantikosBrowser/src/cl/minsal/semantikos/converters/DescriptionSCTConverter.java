@@ -35,7 +35,7 @@ public class DescriptionSCTConverter implements Converter {
 
                 ELContext elContext = facesContext.getELContext();
                 BrowserSCTBean bean = (BrowserSCTBean) FacesContext.getCurrentInstance().getApplication() .getELResolver().getValue(elContext, null, "browserSCTBean");
-                return bean.getSnomedCTManager().getConceptByDescriptionID(Long.parseLong(s));
+                return bean.getSnomedCTManager().getDescriptionByID(Long.parseLong(s));
 
             } catch(NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Descripción no valida"));
