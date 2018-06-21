@@ -196,14 +196,29 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
 
         List<DescriptionSCT> descriptions;
 
+        term = descriptionSearchBR.escapeSpecialCharacters(term);
+
         descriptions = snomedctDAO.searchDescriptionsPerfectMatch(term, 0, SUGGESTTION_SIZE);
 
-        if (descriptions.isEmpty()) {
-            descriptions = snomedctDAO.searchDescriptionsTruncateMatch(term, 0, SUGGESTTION_SIZE);
-        }
+        if(descriptions.size() < SUGGESTTION_SIZE) {
 
-        if (descriptions.isEmpty()) {
-            descriptions = snomedctDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.removeStopWords(term), 0, SUGGESTTION_SIZE);
+            int offSet = SUGGESTTION_SIZE - descriptions.size();
+
+            descriptions.addAll(snomedctDAO.searchDescriptionsTruncateMatch(term, 0, offSet));
+
+            if (descriptions.size() < SUGGESTTION_SIZE) {
+
+                offSet = SUGGESTTION_SIZE - descriptions.size();
+
+                List<DescriptionSCT> otherDescriptions = snomedctDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.removeStopWords(term), 0, offSet);
+
+                for (DescriptionSCT otherDescription : otherDescriptions) {
+                    if(!descriptions.contains(otherDescription)) {
+                        descriptions.add(otherDescription);
+                    }
+                }
+
+            }
         }
 
         return descriptions;

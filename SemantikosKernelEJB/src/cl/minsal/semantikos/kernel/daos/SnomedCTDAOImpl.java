@@ -90,7 +90,9 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
             while (rs.next()) {
                 ConceptSCT recoveredConcept = createConceptSCTFromResultSet(rs);
-                concepts.add(recoveredConcept);
+                if(!concepts.contains(recoveredConcept)) {
+                    concepts.add(recoveredConcept);
+                }
             }
             rs.close();
 
@@ -129,7 +131,9 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
             while (rs.next()) {
                 ConceptSCT recoveredConcept = createConceptSCTFromResultSet(rs);
-                concepts.add(recoveredConcept);
+                if(!concepts.contains(recoveredConcept)) {
+                    concepts.add(recoveredConcept);
+                }
             }
             rs.close();
 

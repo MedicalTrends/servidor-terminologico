@@ -71,14 +71,14 @@
                                                 </p:autoComplete>
 
                                                 <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
-                                                    <i class="fa fa-search fa-lg"  />
+                                                    <i class="fa fa-search fa-lg" />
                                                 </p:outputPanel>
 
                                                 <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
                                                     <p:commandLink process="@this" style="color: #aaa;"
                                                                    update="@(.search)" oncomplete="listenSearchOnClickEvent();"
                                                                    action="#{browserBean.setDescriptionSelected(null)}">
-                                                        <i class="fa fa-close fa-lg"  />
+                                                        <i class="fa fa-close fa-lg" />
                                                     </p:commandLink>
                                                 </p:outputPanel>
 
@@ -324,6 +324,7 @@
                 // Unset cookie after setting scroll position.
                 $.removeCookie('myCookie');
                 listenPageOnClickEvent();
+                listenSearchOnClickEvent();
             });
 
             function scrollTop() {

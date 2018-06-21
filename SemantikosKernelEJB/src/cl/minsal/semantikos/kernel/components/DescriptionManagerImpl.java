@@ -327,7 +327,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         }
 
         return descriptionDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,DESCRIPTION_SIZE);
-        //return descriptionWSDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
+        //return descriptionWSDAO.searchDescriptionsPerfectMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,DESCRIPTION_SIZE);
     }
 
     @Override
