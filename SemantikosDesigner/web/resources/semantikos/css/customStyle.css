@@ -211,7 +211,7 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 }
 
 .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon-closethick {
-    background-image: url("#{resource['primefaces-rio/images/delete-white.svg']}");;
+    background-image: url("#{resource['primefaces-rio/images/delete-white.svg']}");
 }
 
 .ui-datatable table tbody .ui-state-highlight.ui-row-editing > td {
@@ -221,3 +221,15 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 .ui-fluid .ui-inputtext[size], .ui-fluid .ui-inputfield[size] {
     width: inherit !important;
 }
+
+#gwd-reCAPTCHA_2, #rc-imageselect {
+    transform: scale(0.84) !important;
+    transform-origin: 0 !important;
+}
+
+@media screen and (min-width: 319px) and (max-width: 320px) {
+#captc {
+    transform:scale(0.79);-webkit-transform:scale(0.79);
+    transform-origin:0 0;-webkit-transform-origin:0 0;
+}}
+

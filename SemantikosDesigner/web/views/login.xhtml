@@ -1,101 +1,107 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 
-    <h:head>
-        <f:facet name="first">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-            <meta name="apple-mobile-web-app-capable" content="yes" />
-            <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
-        </f:facet>
-        <h:outputScript name="js/layout.js" library="rio-layout" />
-        <title>Semantikos - Consola de Administración</title>
-        <ui:insert name="head" />
-    </h:head>
+<h:head>
+    <f:facet name="first">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+    </f:facet>
+    <title>Semantikos Minsal</title>
+    <h:outputScript name="js/ripple.js" library="ultima-layout" />
+    <h:outputScript name="js/layout.js" library="ultima-layout" />
+</h:head>
 
-    <h:body styleClass="loginbodyblue">
-        
-        <div class="Wid90 DispBlock MarAuto MarTopPerc5 TexAlCenter">
-            <div class="Wid33 MarAuto WidAutoOnMobile">
-                <h:graphicImage alt="Semantikos" width="180" library="semantikos" name="images/minsal.png" />
-                <div class="EmptyBox30"></div>
-                <h:form id="loginform">
-                <div class="Card ShadowEffect">
+<h:body styleClass="login-body">
 
-                    <div class="EmptyBox20"></div>
-                    <div class="Wid100 OvHidden BigTopic Fs30"><i class="icon-users Fs40" />Ingreso</div>
-                    <div class="EmptyBox20"></div>
+    <div class="card login-panel ui-fluid ui-shadow-3">
 
-                    <p:messages id="login-form-messages" showDetail="true" autoUpdate="true" closable="false" />
-                    <p:growl id="login-form-messages-2" showDetail="true" showSummary="true"  />
+        <h:form id="loginform">
 
-                    <div class="Wid100">
-                        <p:inputText placeholder="E-mail" value="#{authenticationBean.email}"
-                                     styleClass="Wid80 TexAlCenter Fs18 #{authenticationBean.emailError}"/>
-                    </div>
-
-                    <div class="EmptyBox10"></div>
-
-                    <div class="Wid100">
-                        <p:inputText type="password" placeholder="Contraseña" value="#{authenticationBean.password}"
-                                     styleClass="Wid80 TexAlCenter Fs18 #{authenticationBean.passwordError}"/>
-                    </div>
-
-                    <div class="EmptyBox30"></div>
-
-                    <div class="Wid100">
-                        <p:captcha id="captcha" label="Captcha" language="es"/>
-                    </div>
-
-                    <div class="EmptyBox30"></div>
-
-                    <div class="Wid100">
-                        <p:commandButton update="loginform"
-                                         value="Ingresar"
-                                         icon="fa fa-sign-in"
-                                         styleClass="Wid60 Fs18 White RaisedButton"
-                                         action="#{authenticationBean.login}"
-                                         ajax="false"/>
-                    </div>
-
-                    <div class="EmptyBox20"></div>
-                    <div class="Wid100">
-                        <p:link value="¿Olvidó su contraseña?" href="/views/users/forgotPassword.xhtml"/>
-                    </div>
-
-                    <div class="EmptyBox20"></div>
-                </div>
-
-                </h:form>
-                <div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular WhiteBlue">
-                    <i class="fa fa-copyright" />2016 <a class="WhiteBlue" href="http://www.semantikos.cl">Ministerio de Salud.</a><br/>
-                    <span>Version: <h:outputText value="${bpversion['version']} ${bpversion['build.date']}" /></span>
-                </div>
+        <p:messages id="login-form-messages" showDetail="true" autoUpdate="true" closable="false" rendered="false" />
+        <p:growl id="login-form-messages-2" showDetail="true" showSummary="true"  />
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <p:graphicImage name="images/logo-indigo.png" style="width:230px" library="semantikos" />
+            </div>
+            <div class="ui-g-12">
+                <h:panelGroup styleClass="md-inputfield">
+                    <p:inputText value="#{authenticationBean.email}" styleClass="#{authenticationBean.emailError}"/>
+                    <label>Email</label>
+                </h:panelGroup>
+            </div>
+            <div class="ui-g-12">
+                <h:panelGroup styleClass="md-inputfield">
+                    <p:password value="#{authenticationBean.password}" styleClass="#{authenticationBean.passwordError}" autocomplete="off"/>
+                    <label>Password</label>
+                </h:panelGroup>
+            </div>
+            <div id="div_captcha" class="ui-g-12" style="padding: 0;">
+                <p:captcha id="captcha" label="Captcha" language="es"/>
+            </div>
+            <div class="ui-g-12">
+                <p:commandButton update="loginform" value="Ingresar" icon="ui-icon-person" actionListener="#{authenticationBean.login}" />
+                <p:button outcome="/views/users/forgotPassword.xhtml" value="Olvido de Clave" icon="ui-icon-help" styleClass="secondary"/>
             </div>
         </div>
+        </h:form>
 
-        <h:outputStylesheet name="css/animate.css" library="rio-layout" />
-        <h:outputStylesheet name="css/rio-font.css" library="rio-layout" />
-        <h:outputStylesheet name="css/ripple-effect.css" library="rio-layout" />
-        <h:outputStylesheet name="css/font-awesome.css" library="rio-layout" />
-        <h:outputStylesheet name="css/rio-layout.css" library="rio-layout" />
-        <h:outputStylesheet name="css/core-layout.css" library="rio-layout" />
+        <span class="footer-text-left">
+            <span>
+                <i class="fa fa-copyright" style="color: #5f666c" /><h:outputText value="2016" style="color: #5f666c" /><a href="" style="color: #5f666c">Ministerio de Salud</a>
+            </span>
+            <br/>
+            <span style="color: #5f666c">Version: <h:outputText value="${bpversion['version']} ${bpversion['build.date']}" />
+            </span>
+        </span>
 
-        <script type="text/javascript">
-            Rio.clearMenuState();
-        </script>
+    </div>
 
-        <h:outputStylesheet id="customCSS">
-            div#loginform\:captcha div {
-                margin: 0px auto;
+    <h:outputStylesheet name="css/ripple.css" library="ultima-layout" />
+    <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" />
+
+    <h:outputStylesheet id="customCSS">
+        div#loginform\:captcha div {
+            margin: 0px auto;
+        }
+    </h:outputStylesheet>
+
+    <script type="text/javascript">
+
+        function changeCapthaSize() {
+            var reCaptchaWidth = 302;
+            var containerWidth = $("#div_captcha").width();
+
+            if(reCaptchaWidth > containerWidth) {
+                //var reCaptchaScale = containerWidth / reCaptchaWidth;
+                $("#div_captcha").css({
+                "transform":"scale(0.84)",
+                "transform-origin":"left top"
+                });
             }
-        </h:outputStylesheet>
+            else {
+                $("#div_captcha").css({
+                    "transform":"scale(1)",
+                    "transform-origin":"left top"
+                });
+            }
+        };
 
-    </h:body>
+        $(window).ready(function(){
+            changeCapthaSize();
+        });
+
+        $(window).resize(function(){
+            changeCapthaSize();
+        });
+
+    </script>
+
+</h:body>
 
 </html>

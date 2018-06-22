@@ -55,6 +55,8 @@ public class MainMenuBean implements Serializable {
 
     private List<Category> categories;
 
+    private transient MenuModel mainMenuModel;
+
     private transient MenuModel categoryMenuModel;
 
     //@EJB
@@ -100,13 +102,20 @@ public class MainMenuBean implements Serializable {
 
         UserFactory.getInstance().setUsersById(userFactory.getUsersById());
 
-        institutionFactory = institutionManager.getInstitutionFactory();
-
-        InstitutionFactory.getInstance().setInstitutions(institutionFactory.getInstitutions());
+        mainMenuModel = new DefaultMenuModel();
 
         categoryMenuModel = new DefaultMenuModel();
 
-        //First submenu
+        //Inicio
+        DefaultMenuItem item0 = new DefaultMenuItem("Inicio");
+        item0.setUrl("/views/home.xhtml");
+        item0.setIcon("home");
+        item0.setId("rm_home");
+        item0.setUpdate("mainContent");
+
+        mainMenuModel.addElement(item0);
+
+        //Categorias
         DefaultSubMenu categorySubmenu = new DefaultSubMenu("Categorías");
         categorySubmenu.setIcon("fa fa-list-alt");
         categorySubmenu.setId("rm_categories");
@@ -124,8 +133,92 @@ public class MainMenuBean implements Serializable {
             categorySubmenu.addElement(item);
         }
 
+        mainMenuModel.addElement(categorySubmenu);
         categoryMenuModel.addElement(categorySubmenu);
 
+        //Otros
+        DefaultSubMenu otherSubmenu = new DefaultSubMenu("Otros");
+        otherSubmenu.setIcon("more");
+        otherSubmenu.setId("rm_others");
+
+        DefaultMenuItem item1 = new DefaultMenuItem("Descripciones");
+        item1.setUrl("/views/browser/descriptionBrowser.xhtml");
+        item1.setIcon("fa fa-edit");
+        item1.setId("rm_descriptions");
+        item1.setUpdate("mainContent");
+        otherSubmenu.addElement(item1);
+
+        DefaultMenuItem item2 = new DefaultMenuItem("Fármacos");
+        item2.setUrl("/views/browser/drugsBrowser.xhtml");
+        item2.setIcon("fa fa-medkit");
+        item2.setId("rm_drugs");
+        item2.setUpdate("mainContent");
+        otherSubmenu.addElement(item2);
+
+        DefaultMenuItem item3 = new DefaultMenuItem("Pendientes");
+        item3.setUrl("/views/browser/pendingBrowser.xhtml");
+        item3.setIcon("fa fa-exclamation-triangle");
+        item3.setId("rm_pending");
+        item3.setUpdate("mainContent");
+        otherSubmenu.addElement(item3);
+
+        DefaultMenuItem item4 = new DefaultMenuItem("No Válidos");
+        item4.setUrl("/views/browser/noValidBrowser.xhtml");
+        item4.setIcon("fa fa-ban");
+        item4.setId("rm_no_valids");
+        item4.setUpdate("mainContent");
+        otherSubmenu.addElement(item4);
+
+        mainMenuModel.addElement(otherSubmenu);
+
+        //Admin
+        DefaultSubMenu adminSubmenu = new DefaultSubMenu("Administracion");
+        adminSubmenu.setIcon("settings");
+        adminSubmenu.setId("rm_admin");
+
+        DefaultMenuItem item5 = new DefaultMenuItem("Usuarios");
+        item5.setUrl("/views/users/users.xhtml");
+        item5.setIcon("people");
+        item5.setId("rm_users_web");
+        item5.setUpdate("mainContent");
+        adminSubmenu.addElement(item5);
+
+        DefaultMenuItem item6 = new DefaultMenuItem("Establecimientos");
+        item6.setUrl("/views/institutions/institutions.xhtml");
+        item6.setIcon("fa fa-bank");
+        item6.setId("rm_institutions");
+        item6.setUpdate("mainContent");
+        adminSubmenu.addElement(item6);
+
+        DefaultMenuItem item7 = new DefaultMenuItem("RefSets");
+        item7.setUrl("/views/refsets/admin_refsets.xhtml");
+        item7.setIcon("fa fa-dropbox");
+        item7.setId("rm_admin_refsets");
+        item7.setUpdate("mainContent");
+        adminSubmenu.addElement(item7);
+
+        DefaultMenuItem item8 = new DefaultMenuItem("Tablas");
+        item8.setUrl("/views/helpertables/helpertables.xhtml");
+        item8.setIcon("fa fa-columns");
+        item8.setId("rm_helpertables");
+        item8.setUpdate("mainContent");
+        adminSubmenu.addElement(item8);
+
+        DefaultMenuItem item9 = new DefaultMenuItem("Snapshot");
+        item9.setUrl("/views/snapshot/snapshot.xhtml");
+        item9.setIcon("fa fa-list-alt");
+        item9.setId("rm_snapshot");
+        item9.setUpdate("mainContent");
+        adminSubmenu.addElement(item9);
+
+        DefaultMenuItem item10 = new DefaultMenuItem("Extracción Fármacos");
+        item10.setUrl("/views/concept/extractor.xhtml");
+        item10.setIcon("fa fa-file-excel-o");
+        item10.setId("rm_extraction");
+        item10.setUpdate("mainContent");
+        adminSubmenu.addElement(item10);
+
+        mainMenuModel.addElement(adminSubmenu);
     }
 
     public TagSMTKFactory getTagSMTKFactory() {
@@ -160,5 +253,8 @@ public class MainMenuBean implements Serializable {
         return categoryMenuModel;
     }
 
+    public MenuModel getMainMenuModel() {
+        return mainMenuModel;
+    }
 }
 
