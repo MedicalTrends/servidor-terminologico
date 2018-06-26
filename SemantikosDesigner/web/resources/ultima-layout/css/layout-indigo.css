@@ -474,8 +474,8 @@
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .login-body {
-    /*background: url("#{resource['ultima-layout:images/login/login2x.png']}") top left no-repeat #f7f7f7;*/
     background: url("#{resource['semantikos/images/cropped-Fondo-ppt.png']}") top left no-repeat #f7f7f7 !important;
+    /*background: url("#{resource['ultima-layout:images/login/login2x.png']}") top left no-repeat #f7f7f7;*/
     background-size: 100% auto; } }
 @media (max-width: 1024px) {
   .login-panel {
@@ -492,7 +492,7 @@
     .login-panel .ui-g .ui-g-12 {
       padding: 20px 20px; }
       .login-panel .ui-g .ui-g-12 .ui-button {
-        margin-top: 30px; } }
+        margin-top: 0px; } }
 .exception-body {
   background-color: #f7f7f7; }
   .exception-body .exception-type {

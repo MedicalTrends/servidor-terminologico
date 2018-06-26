@@ -32,7 +32,7 @@ import java.text.ParseException;
 @SessionScoped
 public class AuthenticationBean {
 
-    static public final String AUTH_KEY = "bp.session.user";
+    static public final String AUTH_KEY = "cl.minsal.semantikos.session.user";
 
     static private final Logger logger = LoggerFactory.getLogger(AuthenticationBean.class);
 
@@ -113,7 +113,7 @@ public class AuthenticationBean {
             eContext.getSessionMap().put(AUTH_KEY, email);
 
             //redirigir a pagina de inicio
-            eContext.redirect(eContext.getRequestContextPath() + Constants.HOME_PAGE);
+            eContext.redirect(eContext.getRequestContextPath() + Constants.VIEWS_FOLDER + Constants.HOME_PAGE);
 
             logger.info("Usuario [{}] ha iniciado sesión.", email);
 
@@ -142,7 +142,8 @@ public class AuthenticationBean {
         loggedUser = null;
 
         try {
-            context.redirect(context.getRequestContextPath() + "/" +Constants.VIEWS_FOLDER+ "/" + Constants.LOGIN_PAGE );
+            //context.redirect(context.getRequestContextPath() + "/" +Constants.VIEWS_FOLDER+ "/" + Constants.LOGIN_PAGE );
+            context.redirect(context.getRequestContextPath() + Constants.VIEWS_FOLDER + Constants.LOGIN_PAGE );
         } catch (IOException e) {
             logger.error("Error en logout", e);
         }

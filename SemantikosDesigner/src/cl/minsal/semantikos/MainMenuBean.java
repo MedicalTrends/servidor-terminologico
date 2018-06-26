@@ -122,7 +122,7 @@ public class MainMenuBean implements Serializable {
 
         for (Category category : categories) {
             DefaultMenuItem item = new DefaultMenuItem(category.getName());
-            item.setUrl("/views/browser/generalBrowser.xhtml?idCategory="+category.getId());
+            item.setUrl("/views/concepts/"+category.getId());
             //item.setUrl("#");
             item.setIcon("fa fa-list-alt");
             item.setId("rm_"+category.getName());
@@ -142,28 +142,28 @@ public class MainMenuBean implements Serializable {
         otherSubmenu.setId("rm_others");
 
         DefaultMenuItem item1 = new DefaultMenuItem("Descripciones");
-        item1.setUrl("/views/browser/descriptionBrowser.xhtml");
+        item1.setUrl("/views/descriptions");
         item1.setIcon("fa fa-edit");
         item1.setId("rm_descriptions");
         item1.setUpdate("mainContent");
         otherSubmenu.addElement(item1);
 
         DefaultMenuItem item2 = new DefaultMenuItem("Fármacos");
-        item2.setUrl("/views/browser/drugsBrowser.xhtml");
+        item2.setUrl("/views/drugs");
         item2.setIcon("fa fa-medkit");
         item2.setId("rm_drugs");
         item2.setUpdate("mainContent");
         otherSubmenu.addElement(item2);
 
         DefaultMenuItem item3 = new DefaultMenuItem("Pendientes");
-        item3.setUrl("/views/browser/pendingBrowser.xhtml");
+        item3.setUrl("/views/descriptions/pending");
         item3.setIcon("fa fa-exclamation-triangle");
         item3.setId("rm_pending");
         item3.setUpdate("mainContent");
         otherSubmenu.addElement(item3);
 
         DefaultMenuItem item4 = new DefaultMenuItem("No Válidos");
-        item4.setUrl("/views/browser/noValidBrowser.xhtml");
+        item4.setUrl("/views/descriptions/not-valid");
         item4.setIcon("fa fa-ban");
         item4.setId("rm_no_valids");
         item4.setUpdate("mainContent");
@@ -177,28 +177,28 @@ public class MainMenuBean implements Serializable {
         adminSubmenu.setId("rm_admin");
 
         DefaultMenuItem item5 = new DefaultMenuItem("Usuarios");
-        item5.setUrl("/views/users/users.xhtml");
+        item5.setUrl("/views/users");
         item5.setIcon("people");
         item5.setId("rm_users_web");
         item5.setUpdate("mainContent");
         adminSubmenu.addElement(item5);
 
         DefaultMenuItem item6 = new DefaultMenuItem("Establecimientos");
-        item6.setUrl("/views/institutions/institutions.xhtml");
+        item6.setUrl("/views/institutions");
         item6.setIcon("fa fa-bank");
         item6.setId("rm_institutions");
         item6.setUpdate("mainContent");
         adminSubmenu.addElement(item6);
 
         DefaultMenuItem item7 = new DefaultMenuItem("RefSets");
-        item7.setUrl("/views/refsets/admin_refsets.xhtml");
+        item7.setUrl("/views/refsets");
         item7.setIcon("fa fa-dropbox");
         item7.setId("rm_admin_refsets");
         item7.setUpdate("mainContent");
         adminSubmenu.addElement(item7);
 
         DefaultMenuItem item8 = new DefaultMenuItem("Tablas");
-        item8.setUrl("/views/helpertables/helpertables.xhtml");
+        item8.setUrl("/views/helpertables");
         item8.setIcon("fa fa-columns");
         item8.setId("rm_helpertables");
         item8.setUpdate("mainContent");
@@ -212,7 +212,7 @@ public class MainMenuBean implements Serializable {
         adminSubmenu.addElement(item9);
 
         DefaultMenuItem item10 = new DefaultMenuItem("Extracción Fármacos");
-        item10.setUrl("/views/concept/extractor.xhtml");
+        item10.setUrl("/views/extract");
         item10.setIcon("fa fa-file-excel-o");
         item10.setId("rm_extraction");
         item10.setUpdate("mainContent");

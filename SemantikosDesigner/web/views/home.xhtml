@@ -27,10 +27,10 @@
                     <h:form styleClass="mainMenu" style="padding-left: 15px; padding-right: 15px; padding-bottom: 15px">
                         <p:menu toggleable="false" style="width: 100%">
                             <p:submenu label="Otros">
-                                <p:menuitem value="Descripciones" icon="ui-icon-disk fa fa-edit Fs15" url="/views/browser/descriptionBrowser.xhtml" />
-                                <p:menuitem value="Fármacos" icon="ui-icon-disk fa fa-medkit Fs15" url="/views/browser/drugsBrowser.xhtml" />
-                                <p:menuitem value="Pendientes" icon="ui-icon-disk fa fa-exclamation-triangle  Fs15" url="/views/browser/pendingBrowser.xhtml" />
-                                <p:menuitem value="No Válidos" icon="ui-icon-disk fa fa-ban Fs15" url="/views/browser/noValidBrowser.xhtml" />
+                                <p:menuitem value="Descripciones" icon="ui-icon-disk fa fa-edit Fs15" url="/views/descriptions" />
+                                <p:menuitem value="Fármacos" icon="ui-icon-disk fa fa-medkit Fs15" url="/views/drugs" />
+                                <p:menuitem value="Pendientes" icon="ui-icon-disk fa fa-exclamation-triangle Fs15" url="/views/descriptions/pending" />
+                                <p:menuitem value="No Válidos" icon="ui-icon-disk fa fa-ban Fs15" url="/views/descriptions/not-valid" />
                             </p:submenu>
                         </p:menu>
                     </h:form>
@@ -45,10 +45,10 @@
                     <h:form styleClass="mainMenu" style="padding-left: 15px; padding-right: 15px; padding-bottom: 15px">
                         <p:menu toggleable="false" style="width: 100%">
                             <p:submenu label="Administración">
-                                <p:menuitem value="Usuarios" icon="ui-icon ui-icon-people" url="/views/users/users.xhtml" />
-                                <p:menuitem value="RefSets" icon="fa fa-dropbox Fs15" url="/views/refsets/admin_refsets.xhtml" />
-                                <p:menuitem value="Tablas" icon="ui-icon-disk fa fa-columns Fs15" url="/views/helpertables/helpertables.xhtml" />
-                                <p:menuitem value="Extracción Fármacos" icon="fa fa-file-excel-o" url="/views/concept/extractor.xhtml" rendered="true" />
+                                <p:menuitem value="Usuarios" icon="ui-icon ui-icon-people" url="/views/users" />
+                                <p:menuitem value="RefSets" icon="fa fa-dropbox Fs15" url="/views/refsets" />
+                                <p:menuitem value="Tablas" icon="ui-icon-disk fa fa-columns Fs15" url="/views/helpertables" />
+                                <p:menuitem value="Extracción Fármacos" icon="fa fa-file-excel-o" url="/views/extract" rendered="true" />
                             </p:submenu>
                         </p:menu>
                     </h:form>

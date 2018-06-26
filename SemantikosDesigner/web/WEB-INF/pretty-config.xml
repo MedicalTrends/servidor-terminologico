@@ -1,0 +1,112 @@
+<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
+                      http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
+
+
+    <url-mapping id="login">
+        <pattern value="/views/login" />
+        <view-id value="/views/login.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="recover-account">
+        <pattern value="/views/accounts/recover" />
+        <view-id value="/views/users/forgotPassword.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="activate-account">
+        <pattern value="/views/accounts/activate/#{key}" />
+        <view-id value="/views/users/activateAccount.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="home">
+        <pattern value="/views/home" />
+        <view-id value="/views/home.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="concepts">
+        <pattern value="/views/concepts/#{idCategory}" />
+        <view-id value="/views/browser/generalBrowser.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="new-concept">
+        <pattern value="/views/concepts/new/#{idCategory}/#{idConcept}/#{favoriteDescription}" />
+        <view-id value="/views/concept/conceptEdit.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="new-concept-2">
+        <pattern value="/views/concepts/new/#{idCategory}/#{idConcept}/#{favoriteDescription}/#{pendingTerms}" />
+        <view-id value="/views/concept/conceptEdit.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="edit-concept">
+        <pattern value="/views/concepts/edit/#{idConcept}" />
+        <view-id value="/views/concept/conceptEdit.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="users">
+        <pattern value="/views/users" />
+        <view-id value="/views/users/users.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="new-user">
+        <pattern value="/views/users/new/#{idUser}" />
+        <view-id value="/views/users/userEdit.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="edit-user">
+        <pattern value="/views/users/edit/#{idUser}" />
+        <view-id value="/views/users/userEdit.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="institutions">
+        <pattern value="/views/institutions" />
+        <view-id value="/views/institutions/institutions.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="new-institution">
+        <pattern value="/views/institutions/new/#{idInstitution}" />
+        <view-id value="/views/institutions/institutionEdit.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="edit-institution">
+        <pattern value="/views/institutions/edit/#{idInstitution}" />
+        <view-id value="/views/institutions/institutionEdit.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="helpertables">
+        <pattern value="/views/helpertables" />
+        <view-id value="/views/helpertables/helpertables.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="edit-helpertable">
+        <pattern value="/views/helpertables/edit/#{idHelperTable}" />
+        <view-id value="/views/helpertables/helpertable.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="descriptions">
+        <pattern value="/views/descriptions" />
+        <view-id value="/views/browser/descriptionBrowser.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="descriptions-pending">
+        <pattern value="/views/descriptions/pending" />
+        <view-id value="/views/browser/pendingBrowser.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="descriptions-not-valid">
+        <pattern value="/views/descriptions/not-valid" />
+        <view-id value="/views/browser/noValidBrowser.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="concepts-drugs">
+        <pattern value="/views/drugs" />
+        <view-id value="/views/browser/drugsBrowser.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="concepts-extract">
+        <pattern value="/views/extract" />
+        <view-id value="/views/concept/extractor.xhtml" />
+    </url-mapping>
+
+</pretty-config>

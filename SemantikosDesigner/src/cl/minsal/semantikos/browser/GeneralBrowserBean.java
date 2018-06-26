@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.browser;
 
+import cl.minsal.semantikos.Constants;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.users.AuthenticationBean;
 
@@ -81,6 +82,7 @@ public class GeneralBrowserBean implements Serializable {
      */
     private boolean isFilterChanged;
 
+    private boolean showSettings;
 
     // Placeholders para los targets de los filtros, dados como elementos seleccionables
     private BasicTypeValue basicTypeValue = new BasicTypeValue(null);
@@ -403,7 +405,11 @@ public class GeneralBrowserBean implements Serializable {
         if(generalQuery.getQuery() != null && concepts.getRowCount()==0) {
             query = generalQuery.getQuery();
         }
-        eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + idCategory +"&idConcept=0&favoriteDescription=" + query);
+        if(query == null || query.isEmpty()) {
+            query = "*";
+        }
+
+        eContext.redirect(eContext.getRequestContextPath() + Constants.VIEWS_FOLDER + "/concepts/new/" + idCategory + "/0/" + query);
     }
 
     public void onRowToggle(ToggleEvent event) {
@@ -419,6 +425,14 @@ public class GeneralBrowserBean implements Serializable {
 
     public void setFilterChanged(boolean filterChanged) {
         isFilterChanged = filterChanged;
+    }
+
+    public boolean isShowSettings() {
+        return showSettings;
+    }
+
+    public void setShowSettings(boolean showSettings) {
+        this.showSettings = showSettings;
     }
 
 }

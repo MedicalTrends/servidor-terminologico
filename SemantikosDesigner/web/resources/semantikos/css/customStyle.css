@@ -128,13 +128,13 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 .search .fa-search {
     position: absolute;
-    top: 10px;
+    top: 7px;
     left: 10px;
 }
 
 .search .fa.fa-close.fa-lg {
     position: absolute;
-    top: 10px;
+    top: 9px;
     left: 10px;
 }
 
@@ -222,14 +222,78 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     width: inherit !important;
 }
 
-#gwd-reCAPTCHA_2, #rc-imageselect {
-    transform: scale(0.84) !important;
-    transform-origin: 0 !important;
+#conceptPanel table thead {
+    display: none !important;
 }
 
-@media screen and (min-width: 319px) and (max-width: 320px) {
-#captc {
-    transform:scale(0.79);-webkit-transform:scale(0.79);
-    transform-origin:0 0;-webkit-transform-origin:0 0;
-}}
+/*
+#browserTable_paginator_top {
+    display: none !important;
+}
+*/
 
+#conceptPanel .ui-datatable tbody tr.ui-datatable-even {
+    background-color: transparent !important;
+}
+
+#conceptPanel .ui-datatable tbody tr td {
+    border: transparent !important;
+}
+
+#conceptPanel .ui-widget-header {
+    border: transparent !important;
+}
+
+#browserTable_paginator_top {
+    display: none !important;
+}
+
+.layout-rightpanel .layout-rightpanel-header {
+    height: 50px !important;
+}
+
+.dashboard .overview .overview-footer {
+    position: relative;
+    border-top: 1px solid #DBDBDB;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.layout-rightpanel .layout-rightpanel-header {
+    background: #283593 none repeat scroll 0% 0% !important;
+}
+
+.logo {
+    image-rendering:-webkit-optimize-contrast !important;
+}
+
+.ui-button.ui-button-icon-only.search-button-tiny {
+    border-radius: 10%;
+    width: 100%;
+    /*height: 100%;*/
+    height: 34px !important;
+}
+
+.ui-inputfield.search {
+    padding: 6px !important;
+}
+
+.ui-inputfield.search.ui-state-focus {
+    padding: 6px !important;
+}
+
+.myCustomLinkStyle:link {
+    color: #1a0dab;
+    font-size: 18px;
+}
+
+.myCustomLinkStyle:visited {
+    color: #6717ab !important;
+    font-size: 18px !important;
+}
+
+.myCustomLinkStyle:hover {
+    color: #1a0dab !important;
+    font-size: 18px !important;
+    text-decoration: underline !important;
+}
