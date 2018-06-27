@@ -45,7 +45,8 @@
                 <p:captcha id="captcha" label="Captcha" language="es"/>
             </div>
             <div class="ui-g-12">
-                <p:commandButton update="loginform" value="Ingresar" icon="ui-icon-person" actionListener="#{authenticationBean.login}" />
+                <p:commandButton update="loginform" value="Ingresar" icon="ui-icon-person" actionListener="#{authenticationBean.login}"
+                                 oncomplete="changeCapthaSize();" />
                 <p:button outcome="/views/users/forgotPassword.xhtml" value="Olvido de Clave" icon="ui-icon-help" styleClass="secondary"/>
             </div>
         </div>

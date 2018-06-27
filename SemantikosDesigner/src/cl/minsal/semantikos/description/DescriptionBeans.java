@@ -1,12 +1,18 @@
 package cl.minsal.semantikos.description;
 
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.concept.ConceptBean;
+import cl.minsal.semantikos.kernel.components.CrossmapsManager;
+import cl.minsal.semantikos.kernel.components.DescriptionManager;
+import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.MainMenuBean;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.descriptions.NoValidDescription;
+import cl.minsal.semantikos.model.snomedct.DescriptionSCT;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.modelweb.DescriptionWeb;
 import org.primefaces.context.RequestContext;
@@ -15,10 +21,15 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static org.primefaces.util.Constants.EMPTY_STRING;
 
 /**
  * @author Gustavo Punucura
@@ -36,6 +47,15 @@ public class DescriptionBeans {
 
     @ManagedProperty(value = "#{mainMenuBean}")
     MainMenuBean mainMenuBean;
+
+    //@EJB
+    private DescriptionManager descriptionManager = (DescriptionManager) ServiceLocator.getInstance().getService(DescriptionManager.class);
+
+    //@EJB
+    private SnomedCTManager snomedCTManager = (SnomedCTManager) ServiceLocator.getInstance().getService(SnomedCTManager.class);
+
+    //@EJB
+    private CrossmapsManager crossmapManager = (CrossmapsManager) ServiceLocator.getInstance().getService(CrossmapsManager.class);
 
     DescriptionTypeFactory descriptionTypeFactory = DescriptionTypeFactory.getInstance();
 
@@ -61,9 +81,44 @@ public class DescriptionBeans {
 
     private String error = "";
 
+    private boolean descriptionSelected = false;
+
     @PostConstruct
     public void init() {
         descriptionEdit= new DescriptionWeb();
+        if(conceptBean.getConcept().getDescriptionFavorite().isPersistent()) {
+            descriptionSelected = true;
+        }
+    }
+
+    public List<String> searchSuggestedDescriptions(String term) {
+
+        List<String> suggestions = new ArrayList<>();
+
+        FacesContext fc = FacesContext.getCurrentInstance();
+
+        Category category = (Category) UIComponent.getCurrentComponent(fc).getAttributes().get("category");
+
+        for (Description description : descriptionManager.searchDescriptionsSuggested(term, Arrays.asList(category), null)) {
+            suggestions.add("Semantikos - " + description.getTerm());
+        }
+
+        for (DescriptionSCT descriptionSCT : snomedCTManager.searchDescriptionsSuggested(term)) {
+                suggestions.add("Snomed-CT - " + descriptionSCT.getTerm());
+        }
+
+        /*
+        for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
+            if(relationshipDefinition.getTargetDefinition().isCrossMapType()) {
+                CrossmapSet crossmapSet = (CrossmapSet) relationshipDefinition.getTargetDefinition();
+                for (CrossmapSetMember crossmapSetMember : crossmapManager.findByPattern(crossmapSet, term)) {
+                    suggestions.add(crossmapSetMember.getCrossmapSet().getAbbreviatedName() + " - " + crossmapSetMember.toString());
+                }
+            }
+        }
+        */
+
+        return suggestions;
     }
 
     /**
@@ -188,6 +243,27 @@ public class DescriptionBeans {
 
     }
 
+    public void updateFSNFromFavouriteAndMarkSelected(DescriptionWeb description, boolean descriptionSelected) {
+
+        Matcher m = Pattern.compile("\\((.*?)\\)").matcher(description.getTerm());
+
+        this.descriptionSelected = descriptionSelected;
+
+        if(!descriptionSelected) {
+            description.setTerm(EMPTY_STRING);
+        }
+
+        while(m.find()) {
+            if(TagSMTKFactory.getInstance().findTagSMTKByName(m.group(1))!=null) {
+                description.getConceptSMTK().getDescriptionFSN().setTerm(description.getTerm().replace("("+m.group(1)+")","").trim());
+                return;
+            }
+        }
+
+        description.getConceptSMTK().getDescriptionFSN().setTerm(description.getTerm());
+
+    }
+
     public void updateFSNFromTagSMTK(ConceptSMTK conceptSMTK) {
 
         Matcher m = Pattern.compile("\\((.*?)\\)").matcher(conceptSMTK.getDescriptionFSN().getTerm());
@@ -241,4 +317,18 @@ public class DescriptionBeans {
     public void setMainMenuBean(MainMenuBean mainMenuBean) {
         this.mainMenuBean = mainMenuBean;
     }
+
+    public boolean isDescriptionSelected() {
+        return descriptionSelected;
+    }
+
+    public void setDescriptionSelected(boolean descriptionSelected) {
+        this.descriptionSelected = descriptionSelected;
+    }
+
+    public void test() {
+        System.out.println("me llamaron");
+    }
+
 }
+

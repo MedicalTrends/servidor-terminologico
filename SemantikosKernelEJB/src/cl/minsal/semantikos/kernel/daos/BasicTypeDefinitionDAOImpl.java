@@ -41,7 +41,6 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
 
     @Override
     public BasicTypeDefinition getBasicTypeDefinitionById(long idBasicTypeDefinition) {
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_basic_type.get_basic_type_definition_by_id(?); end;";
 
@@ -81,6 +80,76 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
         return basicTypeDefinition;
     }
 
+    public Interval getBasicTypeInterval(long idBasicTypeDefinition) {
+
+        String sql = "begin ? := stk.stk_pck_basic_type.get_basic_type_interval(?); end;";
+
+        Interval interval = null;
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            /* Se invoca la consulta para recuperar las relaciones */
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idBasicTypeDefinition);
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            if (rs.next()) {
+                interval = createBasicTypeIntervalFromResultSet(rs);
+            } 
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "No se pudo mapear el resultSet a Interval para id = "+idBasicTypeDefinition;
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        } catch (ParseException e) {
+            String errorMsg = "Error al parsear el tipo fecha para intervalo = "+idBasicTypeDefinition;
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return interval;
+    }
+
+    public List getBasicTypeDomain(long idBasicTypeDefinition) {
+
+        String sql = "begin ? := stk.stk_pck_basic_type.get_basic_type_domain(?); end;";
+
+        List domain = new ArrayList();
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            /* Se invoca la consulta para recuperar las relaciones */
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, idBasicTypeDefinition);
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            while (rs.next()) {
+                domain.add(createBasicTypeDomainFromResultSet(rs));
+            } 
+            
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "No se pudo mapear el resultSet a Interval para id = "+idBasicTypeDefinition;
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        } catch (ParseException e) {
+            String errorMsg = "Error al parsear el tipo fecha para dominio = "+idBasicTypeDefinition;
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return domain;
+    }
+
+
     /**
      * Crea un BasicTypeDefinition en su forma básica: sin dominio ni intervalos
      *
@@ -97,46 +166,62 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
             BasicTypeType basicTypeType = null;
             basicTypeType = BasicTypeType.valueOf(rs.getLong("id_type"));
 
-            Array domain = rs.getArray("domain");
-            Array interval = rs.getArray("interval");
+            BasicTypeDefinition basicTypeDefinition = new BasicTypeDefinition(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
 
-            Interval interval1 = buildInterval(interval, basicTypeType);
+            basicTypeDefinition.setInterval(getBasicTypeInterval(idBasicType));
+            basicTypeDefinition.setDomain(getBasicTypeDomain(idBasicType));
 
-            List<String> domain1 = new ArrayList<>();
+            return  basicTypeDefinition;
 
-            if (domain != null) {
-                domain1 = asList((String[])domain.getArray());
-            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Crea un BasicTypeDefinition en su forma básica: sin dominio ni intervalos
+     *
+     * @param rs El JSON a partir del cual se crea el dominio.
+     *
+     * @return Un BasicTypeDefinition básico, sin dominio ni intervalos.
+     */
+    public Interval createBasicTypeIntervalFromResultSet(ResultSet rs) throws ParseException {
+
+        try {
+            BasicTypeType basicTypeType = null;
+            basicTypeType = BasicTypeType.valueOf(rs.getLong("id_type"));
+
+            CloseInterval interval = new CloseInterval();
 
             switch (basicTypeType) {
 
                 case STRING_TYPE:
-                    BasicTypeDefinition<String> stringBasicTypeDefinition;
-                    stringBasicTypeDefinition = new BasicTypeDefinition<>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
-
-                    stringBasicTypeDefinition.setDomain(domain1);
-                    stringBasicTypeDefinition.setInterval(interval1);
-
-                    return stringBasicTypeDefinition;
+                    interval.setLowerBoundary(rs.getString("lower_bound_string_value"));
+                    interval.setUpperBoundary(rs.getString("upper_bound_string_value"));
+                    return interval;
 
                 case BOOLEAN_TYPE:
-                    return new BasicTypeDefinition<Boolean>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
+                    interval.setLowerBoundary(rs.getBoolean("lower_bound_boolean_value"));
+                    interval.setUpperBoundary(rs.getBoolean("upper_bound_boolean_value"));
+                    return interval;
 
                 case INTEGER_TYPE:
-                    BasicTypeDefinition<Integer> integerBasicTypeDefinition = new BasicTypeDefinition<>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
-                    integerBasicTypeDefinition.setInterval(interval1);
-
-                    return integerBasicTypeDefinition;
+                    interval.setLowerBoundary(rs.getInt("lower_bound_int_value"));
+                    interval.setUpperBoundary(rs.getInt("upper_bound_int_value"));
+                    return interval;
 
                 case FLOAT_TYPE:
-                    BasicTypeDefinition<Float> floatBasicTypeDefinition = new BasicTypeDefinition<>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
-
-                    floatBasicTypeDefinition.setInterval(interval1);
-
-                    return floatBasicTypeDefinition;
+                    interval.setLowerBoundary(rs.getFloat("lower_bound_float_value"));
+                    interval.setUpperBoundary(rs.getFloat("upper_bound_float_value"));
+                    return interval;
 
                 case DATE_TYPE:
-                    return new BasicTypeDefinition<Timestamp>(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
+                    interval.setLowerBoundary(rs.getTimestamp("lower_bound_date_value"));
+                    interval.setUpperBoundary(rs.getTimestamp("upper_bound_date_value"));
+                    return interval;
 
                 default:
                     throw new IllegalArgumentException("TODO");
@@ -148,60 +233,44 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
         return null;
     }
 
-    CloseInterval buildInterval(Array array, BasicTypeType basicTypeType) throws SQLException, ParseException {
+    /**
+     * Crea un BasicTypeDefinition en su forma básica: sin dominio ni intervalos
+     *
+     * @param rs El JSON a partir del cual se crea el dominio.
+     *
+     * @return Un BasicTypeDefinition básico, sin dominio ni intervalos.
+     */
+    public Comparable createBasicTypeDomainFromResultSet(ResultSet rs) throws ParseException {
 
-        List<String> intervalElements = asList((String[]) array.getArray());
+        try {
+            BasicTypeType basicTypeType = null;
+            basicTypeType = BasicTypeType.valueOf(rs.getLong("id_type"));
 
-        if(intervalElements.isEmpty()) {
-            return null;
-        }
+            switch (basicTypeType) {
 
-        CloseInterval interval = new CloseInterval();
+                case STRING_TYPE:
+                    return rs.getString("string_value");
 
-        if(intervalElements.get(0) != null) {
-            switch (basicTypeType.getTypeName()) {
-                case "string":
-                    interval.setLowerBoundary(intervalElements.get(0));
-                    break;
-                case "boolean":
-                    interval.setLowerBoundary(Boolean.parseBoolean(intervalElements.get(0)));
-                    break;
-                case "int":
-                    interval.setLowerBoundary(Integer.parseInt(intervalElements.get(0)));
-                    break;
-                case "float":
-                    interval.setLowerBoundary(Float.parseFloat(intervalElements.get(0)));
-                    break;
-                case "date":
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    interval.setLowerBoundary(Timestamp.valueOf(format.format(intervalElements.get(0))));
-                    break;
+                case BOOLEAN_TYPE:
+                    return rs.getBoolean("boolean_value");
+
+                case INTEGER_TYPE:
+                    return rs.getInt("int_value");
+
+                case FLOAT_TYPE:
+                    return rs.getFloat("float_value");
+
+                case DATE_TYPE:
+                    return rs.getTimestamp("date_value");
+
+                default:
+                    throw new IllegalArgumentException("TODO");
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-        if(intervalElements.get(1) != null) {
-            switch (basicTypeType.getTypeName()) {
-                case "string":
-                    interval.setUpperBoundary(intervalElements.get(1));
-                    break;
-                case "boolean":
-                    interval.setUpperBoundary(Boolean.parseBoolean(intervalElements.get(1)));
-                    break;
-                case "int":
-                    interval.setUpperBoundary(Integer.parseInt(intervalElements.get(1)));
-                    break;
-                case "float":
-                    interval.setUpperBoundary(Float.parseFloat(intervalElements.get(1)));
-                    break;
-                case "date":
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    java.util.Date parsedDate = dateFormat.parse((intervalElements.get(1)));
-                    //return new java.sql.Timestamp(parsedDate.getTime());
-                    interval.setUpperBoundary(new java.sql.Timestamp(parsedDate.getTime()));
-                    break;
-            }
-        }
-
-        return interval;
+        return null;
     }
+
 }

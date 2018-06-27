@@ -28,6 +28,7 @@
                         <p:tabView>
 
                         <p:tab title="Filtrar" rendered="#{true}">
+
                             <div class="ui-g ui-fluid">
 
                                 <div class="ui-g-12">
@@ -193,6 +194,18 @@
 
                         </p:tabView>
 
+                        <div class="ui-fluid">
+
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                    <p:commandButton value="Cerrar" oncomplete="listenOnClick();"
+                                                     actionListener="#{generalBrowserBean.setShowSettings(false)}"
+                                                     update="@(.filter-btn)"/>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </h:form>
 
 
@@ -203,4 +216,12 @@
     </div>
 
 </composite:implementation>
+
+<script type="text/javascript">
+
+    function listenOnClick() {
+        $('.rightpanel-btn').trigger('click');
+    }
+
+</script>
 </html>

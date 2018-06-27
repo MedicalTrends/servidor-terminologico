@@ -50,6 +50,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
+import static org.primefaces.util.Constants.EMPTY_STRING;
+
 /**
  * Created by diego on 26/06/2016.
  */
@@ -1228,6 +1230,9 @@ public class ConceptBean implements Serializable {
     }
 
     public void setFavoriteDescription(String favoriteDescription) {
+        if(favoriteDescription.equals("*")) {
+            favoriteDescription = EMPTY_STRING;
+        }
         this.favoriteDescription = favoriteDescription;
         if(concept==null) {
             createConcept();

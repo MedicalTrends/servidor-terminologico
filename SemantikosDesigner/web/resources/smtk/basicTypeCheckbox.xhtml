@@ -24,12 +24,11 @@
                          and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
 
-            <div class="ui-fluid">
+                <div class="ui-fluid">
 
-                <div class="Container">
+                    <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+                        <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <p:outputLabel for="basicTypeValue11" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}">
                                 <span>
@@ -43,10 +42,9 @@
                             </p:outputLabel>
 
                         </div>
-                    </div>
 
-                    <div class="Container10 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                        <div class="ui-g-12 ui-md-4 ui-lg-2">
                             <p:selectBooleanCheckbox id="basicTypeValue11"
                                                      itemLabel="#{cc.attrs.relationshipDefinition.targetDefinition.name}"
                                                      style="padding-top: 0.6em;font-size: small"
@@ -56,9 +54,10 @@
                                         process="@this" update="#{cc.attrs.relationshipDefinition.isMCSpecial()}?'@(.attributes)':'@(.panel_'#{cc.attrs.relationshipDefinition.id}')',@(.conceptMarketed)}" />
                             </p:selectBooleanCheckbox>
                         </div>
+
                     </div>
                 </div>
-            </div>
+
     </p:panel>
 
 
@@ -79,10 +78,9 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <p:outputLabel for="basicTypeValue" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}">
                                 <span class="">
@@ -95,11 +93,10 @@
                                 </span>
                             </p:outputLabel>
 
-                        </div>
                     </div>
 
-                    <div class="Container10 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+
                             <p:selectBooleanCheckbox value="#{relationship.target.value}"
                                                      itemLabel="#{cc.attrs.relationshipDefinition.targetDefinition.name}"
                                                      style="padding-top: 0.6em;font-size: small"
@@ -108,7 +105,7 @@
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,relationship.target)}"
                                         process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.attributes),@(.conceptMarketed)" />
                             </p:selectBooleanCheckbox>
-                        </div>
+
                     </div>
 
                 </div>
@@ -126,33 +123,27 @@
 
         <div class="ui-fluid">
 
-            <div class="Container">
+            <div class="ui-g">
 
-                <div class="Container20 White Responsive">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                    <div class="ContainerIndent">
-
-                        <p:outputLabel for="basicTypeValue19"
-                                       value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"/>
-                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
-
-                    </div>
+                    <p:outputLabel for="basicTypeValue19"
+                                   value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"/>
+                    <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
                 </div>
 
-                <div class="Container10 White Responsive">
-                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                        <p:selectBooleanCheckbox id="basicTypeValue19"
-                                                 itemLabel="#{cc.attrs.relationshipDefinition.targetDefinition.name}"
-                                                 style="padding-top: 0.6em;font-size: small"
-                                                 value="#{conceptBean.basicTypeValue.value}">
-                            <p:ajax event="change"
-                                    listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
-                                    process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptMarketed)" />
-                        </p:selectBooleanCheckbox>
+                    <p:selectBooleanCheckbox id="basicTypeValue19"
+                                             itemLabel="#{cc.attrs.relationshipDefinition.targetDefinition.name}"
+                                             style="padding-top: 0.6em;font-size: small"
+                                             value="#{conceptBean.basicTypeValue.value}">
+                        <p:ajax event="change"
+                                listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
+                                process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptMarketed)" />
+                    </p:selectBooleanCheckbox>
 
-                    </div>
                 </div>
 
                 <!-- Atributos de relación -->
@@ -179,32 +170,26 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                        <div class="ContainerIndent">
-
-                            <p:outputLabel for="basicTypeValue20" value="#{cc.attrs.relationshipDefinition.name}"/>
-                            <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
-
-                        </div>
+                        <p:outputLabel for="basicTypeValue20" value="#{cc.attrs.relationshipDefinition.name}"/>
+                        <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
                     </div>
 
-                    <div class="Container10 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                            <p:selectBooleanCheckbox id="basicTypeValue20"
-                                                     itemLabel="#{cc.attrs.relationshipDefinition.targetDefinition.name}"
-                                                     style="padding-top: 0.6em;font-size: small"
-                                                     value="#{relationship.target.value}">
-                                <p:ajax event="change"
-                                        listener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                                        process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptMarketed)" />
-                            </p:selectBooleanCheckbox>
+                        <p:selectBooleanCheckbox id="basicTypeValue20"
+                                                 itemLabel="#{cc.attrs.relationshipDefinition.targetDefinition.name}"
+                                                 style="padding-top: 0.6em;font-size: small"
+                                                 value="#{relationship.target.value}">
+                            <p:ajax event="change"
+                                    listener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                                    process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptMarketed)" />
+                        </p:selectBooleanCheckbox>
 
-                        </div>
                     </div>
 
                     <!-- Atributos de relación -->
