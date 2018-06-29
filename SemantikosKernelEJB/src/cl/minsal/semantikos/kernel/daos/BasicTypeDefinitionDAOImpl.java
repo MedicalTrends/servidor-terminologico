@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.factories.BasicTypeDefinitionFactory;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DaoTools;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 
 import cl.minsal.semantikos.model.basictypes.CloseInterval;
@@ -168,8 +169,17 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
 
             BasicTypeDefinition basicTypeDefinition = new BasicTypeDefinition(idBasicType, nameBasicType, descriptionBasicType, basicTypeType);
 
-            basicTypeDefinition.setInterval(getBasicTypeInterval(idBasicType));
-            basicTypeDefinition.setDomain(getBasicTypeDomain(idBasicType));
+            Interval interval = getBasicTypeInterval(idBasicType);
+
+            if(interval != null) {
+                basicTypeDefinition.setInterval(interval);
+            }
+
+            List domain = getBasicTypeDomain(idBasicType);
+
+            if(domain != null) {
+                basicTypeDefinition.setDomain(domain);
+            }
 
             return  basicTypeDefinition;
 
@@ -209,13 +219,17 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
                     return interval;
 
                 case INTEGER_TYPE:
-                    interval.setLowerBoundary(rs.getInt("lower_bound_int_value"));
-                    interval.setUpperBoundary(rs.getInt("upper_bound_int_value"));
+                    Integer lowerBound = DaoTools.getInteger(rs,"lower_bound_int_value");
+                    Integer upperBound = DaoTools.getInteger(rs,"upper_bound_int_value");
+                    interval.setLowerBoundary(lowerBound==null?Integer.MIN_VALUE:lowerBound);
+                    interval.setUpperBoundary(upperBound==null?Integer.MAX_VALUE:upperBound);
                     return interval;
 
                 case FLOAT_TYPE:
-                    interval.setLowerBoundary(rs.getFloat("lower_bound_float_value"));
-                    interval.setUpperBoundary(rs.getFloat("upper_bound_float_value"));
+                    Float lowerBound2 = DaoTools.getFloat(rs,"lower_bound_float_value");
+                    Float upperBound2 = DaoTools.getFloat(rs,"upper_bound_float_value");
+                    interval.setLowerBoundary(lowerBound2==null?Float.MIN_VALUE:lowerBound2);
+                    interval.setUpperBoundary(upperBound2==null?Float.MAX_VALUE:upperBound2);
                     return interval;
 
                 case DATE_TYPE:

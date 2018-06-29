@@ -114,7 +114,6 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 .search {
     position: relative;
-    color: #aaa;
     font-size: 16px;
 }
 
@@ -128,13 +127,14 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 .search .fa-search {
     position: absolute;
-    top: 1px;
+    top: 0px;
     left: 10px;
+    color: #aaa;
 }
 
 .search .fa.fa-close.fa-lg {
     position: absolute;
-    top: 1px;
+    top: 0px;
     left: 10px;
 }
 

@@ -31,7 +31,6 @@
                                  var="value1"
                                  converter="omnifaces.SelectItemsConverter"
                                  rendered="#{cc.attrs.targetDefinition.discreteDomain}"
-                                 disabled="#{not cc.attrs.concept.editable }"
                                  styleClass="relationships">
                     <p:ajax event="itemSelect"
                             listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}"
@@ -150,7 +149,6 @@
                                      var="value1"
                                      converter="omnifaces.SelectItemsConverter"
                                      rendered="#{cc.attrs.targetDefinition.discreteDomain}"
-                                     disabled="#{not cc.attrs.concept.editable }"
                                      styleClass="relationships">
                         <p:ajax event="itemSelect"
                                 listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, relationshipAttribute.target)}"
@@ -280,7 +278,6 @@
                                          value="#{conceptBean.basicTypeValue.value}"
                                          itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}"
                                          style="padding-top: 0.6em; padding-bottom: 0.6em"
-                                         disabled="#{not cc.attrs.concept.editable }"
                                          rendered="#{cc.attrs.targetDefinition.type.typeName=='boolean'}">
                     <p:ajax event="change"
                             listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}"

@@ -29,7 +29,7 @@
 
                 <p:selectOneMenu value="#{conceptBean.selectedHelperTableRecord}" var="helperT"
                                  converter="omnifaces.SelectItemsConverter"
-                                 disabled="#{not cc.attrs.concept.editable }" autoWidth="false"
+                                 autoWidth="false"
                                  filter="true" >
                     <p:ajax event="itemSelect"/>
                     <f:selectItem itemLabel="Tipo de relación" value="#{null}" itemDisabled="true" />

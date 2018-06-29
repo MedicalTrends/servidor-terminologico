@@ -28,7 +28,7 @@
 
             <p:outputPanel id="helperTableTypeAttributeNew" styleClass="search">
 
-                <p:selectOneRadio id="helperTableTypeAttributeSimpleCustom"  style="padding-top: 0.9em; width: 100%" value="#{conceptBean.selectedHelperTableRecord}" layout="grid" columns="3" converter="omnifaces.SelectItemsConverter">
+                <p:selectOneRadio id="helperTableTypeAttributeSimpleCustom"  style="padding-top: 0.9em; width: 100%" value="#{conceptBean.selectedHelperTableRecord}" layout="responsive" columns="3" converter="omnifaces.SelectItemsConverter">
                     <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition)}"
                                    var="record"
                                    itemLabel="#{record.description}"
@@ -47,7 +47,6 @@
 
 
             </p:outputPanel>
-
 
     </div>
 

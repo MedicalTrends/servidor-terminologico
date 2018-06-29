@@ -88,7 +88,7 @@
                 <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                     <p:outputPanel styleClass="search">
-                        <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" />
+                        <p:inputText readonly="true" id="basicTypeValue" value="#{relationship.target}" />
                         <p:commandLink process="@this"
                                        rendered="#{not cc.attrs.relationshipDefinition.MCSpecial and not conceptBean.concept.isModeled()}"
                                        update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
@@ -173,7 +173,7 @@
                 <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" />
+                                <p:inputText readonly="true" id="basicTypeValue2" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">

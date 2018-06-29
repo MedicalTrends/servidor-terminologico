@@ -238,7 +238,7 @@
                 <div class="ui-g">
 
                     <div class="ui-g-12 ui-md-4 ui-lg-2">
-                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.targetDefinition.name}"/>
+                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}"/>
                     </div>
 
                     <div class="ui-g-12 ui-md-8 ui-lg-4">
@@ -279,6 +279,8 @@
                     <!-- Atributos de relación -->
                     <smtk:attributes concept="#{cc.attrs.concept}" relationship="#{conceptBean.relationshipPlaceholders.get(cc.attrs.relationshipDefinition.id)}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
 
+                    </div>
+
                     <div class="ui-g">
 
                         <div class="ui-g-12 ui-md-12 ui-lg-12">
@@ -293,20 +295,12 @@
 
                     </div>
                 </div>
-            </div>
-        </p:outputPanel>
 
-        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
-            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="No tiene #{cc.attrs.relationshipDefinition.name}" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
+        </p:outputPanel>
 
         <p:dataTable id="collectionValuesWithAttributes"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
-                     rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and not cc.attrs.concept.modeled}"
+                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      style="width: 100%"

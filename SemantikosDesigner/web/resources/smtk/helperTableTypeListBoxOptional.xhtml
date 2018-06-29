@@ -30,17 +30,6 @@
 
         <p:growl id="growl" showDetail="true" showSummary="true"/>
 
-        <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
-            <p:outputPanel rendered="#{cc.attrs.concept.editable and cc.attrs.relationshipDefinition.multiplicity.lowerBoundary>0}">
-                <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
-            </p:outputPanel>
-            <p:outputPanel rendered="#{cc.attrs.concept.editable and cc.attrs.relationshipDefinition.multiplicity.lowerBoundary eq 0}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Atributo opcional" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
-
         <h:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" width="100%" id="ispfetcherexisteinputs">
 
             <p:outputLabel for="ispexistebooleanbutton" value="Requiere esterilización antes del uso?"/>
@@ -57,11 +46,13 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.targetDefinition.name}"/>
+                    </div>
 
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:selectOneMenu id="findHTRecords5"
                                              scrollHeight="200"
@@ -92,8 +83,6 @@
                                 <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
                                 <!---->
                             </p:selectOneMenu>
-
-                        </div>
                     </div>
                 </div>
             </div>
