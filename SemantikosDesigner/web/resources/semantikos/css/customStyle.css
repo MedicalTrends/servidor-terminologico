@@ -128,13 +128,13 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 .search .fa-search {
     position: absolute;
-    top: 7px;
+    top: 1px;
     left: 10px;
 }
 
 .search .fa.fa-close.fa-lg {
     position: absolute;
-    top: 9px;
+    top: 1px;
     left: 10px;
 }
 

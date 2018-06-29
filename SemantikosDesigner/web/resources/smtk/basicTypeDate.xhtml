@@ -44,7 +44,6 @@
                                     showOn="button"
                                     mindate="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                     maxdate="#{cc.attrs.targetDefinition.interval.upperBoundary}"
-                                    disabled="#{not cc.attrs.concept.editable}"
                                     rendered="#{cc.attrs.targetDefinition.type.typeName=='date' and not cc.attrs.targetDefinition.discreteDomain}"
                                     styleClass="relationships">
                             <f:attribute name="concept" value="#{cc.attrs.concept}"  />
@@ -129,7 +128,6 @@
                                     showOn="button"
                                     mindate="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                     maxdate="#{cc.attrs.targetDefinition.interval.upperBoundary}"
-                                    disabled="#{not cc.attrs.concept.editable}"
                                     rendered="#{cc.attrs.targetDefinition.type.typeName=='date' and not cc.attrs.targetDefinition.discreteDomain}">
                             <f:attribute name="concept" value="#{cc.attrs.concept}"  />
                             <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />

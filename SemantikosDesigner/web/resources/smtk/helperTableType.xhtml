@@ -45,7 +45,6 @@
                                             placeholder="#{cc.attrs.relationshipDefinition.name}..."
                                             converter="helperTableRecordConverter"
                                             value="#{conceptBean.selectedHelperTableRecord}"
-                                            disabled="#{not cc.attrs.concept.editable}"
                                             itemLabel="#{record.description}"
                                             itemValue="#{record}">
                                 <!-- Parámetros del buscador -->
@@ -152,7 +151,6 @@
                                             var="record"
                                             placeholder="#{cc.attrs.relationshipDefinition.name}..."
                                             converter="helperTableRecordConverter"
-                                            disabled="#{not cc.attrs.concept.editable}"
                                             value="#{conceptBean.selectedHelperTableRecord}"
                                             itemLabel="#{record.description}"
                                             itemValue="#{record}">
