@@ -24,20 +24,18 @@
 
         <div class="ui-fluid">
 
-            <div class="Container">
+            <div class="ui-g">
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
+
                         <p:outputLabel for="findHTRecords1" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                         <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
-                    </div>
+
                 </div>
 
-                <div class="Container30 White Responsive">
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-                        <p:outputPanel styleClass="search" rendered="#{cc.attrs.concept.editable}">
+                        <p:outputPanel styleClass="search">
 
                             <p:selectOneMenu id="findHTRecords1" scrollHeight="200"
                                              forceSelection="true"
@@ -77,7 +75,7 @@
                         <p:outputPanel styleClass="search" rendered="#{not cc.attrs.concept.editable}">
                             <p:inputText disabled="true" id="findHTRecords" value="#{relationship.target.fields['description']}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
                         </p:outputPanel>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -95,20 +93,16 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <p:outputLabel for="findHTRecords2" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                             <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
-                        </div>
                     </div>
 
-                    <div class="Container30 White Responsive">
-
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
@@ -120,7 +114,6 @@
                                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?" icon="ui-icon-alert"/>
                                 </p:commandLink>
                             </p:outputPanel>
-                        </div>
                     </div>
 
                 </div>
@@ -149,7 +142,7 @@
 
                     <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
-                        <p:outputPanel styleClass="search" rendered="#{cc.attrs.concept.editable}">
+                        <p:outputPanel styleClass="search">
 
                             <p:selectOneMenu id="findHTRecords3" scrollHeight="200"
                                              forceSelection="true"
@@ -203,20 +196,16 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <p:outputLabel for="findHTRecords2" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                             <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
-                        </div>
                     </div>
 
-                    <div class="Container30 White Responsive">
-
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="findHTRecords7" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
@@ -228,7 +217,7 @@
                                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?" icon="ui-icon-alert"/>
                                 </p:commandLink>
                             </p:outputPanel>
-                        </div>
+
                     </div>
 
                     <!-- Atributos de relación -->
@@ -240,32 +229,22 @@
     </p:panel>
 
     <!-- Multiplicidad N con atributos-->
+    <p:fieldset id="helperTableTypeCollectionWithAttributes" legend="#{cc.attrs.relationshipDefinition.name}"
+                rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
-    <p:panel id="helperTableTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
-
-        <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary > 0}">
-                <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
-            </p:outputPanel>
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary eq 0}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Atributo opcional" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
-
-        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" rendered="#{cc.attrs.concept.editable}" style="width:100%">
+        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%">
 
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
             <div class="ui-fluid">
 
-                <div class="Container ContainerIndent">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.targetDefinition.name}"/>
+                    </div>
 
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:outputPanel styleClass="search">
 
@@ -275,7 +254,6 @@
                                                  var="r"
                                                  autoWidth="false"
                                                  filter="true"
-                                                 rendered="#{cc.attrs.concept.editable}"
                                                  converter="omnifaces.SelectItemsConverter">
 
                                     <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
@@ -298,24 +276,22 @@
                                 </p:selectOneMenu>
 
                             </p:outputPanel>
-                        </div>
+
                     </div>
 
                     <!-- Atributos de relación -->
                     <smtk:attributes concept="#{cc.attrs.concept}" relationship="#{conceptBean.relationshipPlaceholders.get(cc.attrs.relationshipDefinition.id)}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
-                    
-                    <div class="Container20 White Responsive">
 
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g">
 
+                        <div class="ui-g-12 ui-md-12 ui-lg-12">
                             <p:commandButton
                                     process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                     action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
-                                    style="max-width: 100px"
+                                    style="width: auto; float: right"
                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                     value="Agregar">
                             </p:commandButton>
-
                         </div>
 
                     </div>
@@ -374,7 +350,7 @@
                 <smtk:helperTableTypeAttributeCell attribute="#{attribute.relationshipAttributeDefinition}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
             </p:columns>
 
-            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
+            <p:column style="width: 4%">
                 <p:commandButton
                         icon="fa fa-trash"
                         title="Eliminar"
@@ -388,32 +364,20 @@
                 </p:commandButton>
             </p:column>
         </p:dataTable>
-    </p:panel>
+
+    </p:fieldset>
 
     <!-- Multiplicidad N sin atributos-->
-    <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and not cc.attrs.relationshipDefinition.ISP}">
+    <p:fieldset id="helperTableTypeCollection" legend="#{cc.attrs.relationshipDefinition.name}"
+                rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and not cc.attrs.relationshipDefinition.ISP}">
 
-        <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.required}">
-                <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
-            </p:outputPanel>
-            <p:outputPanel rendered="#{not cc.attrs.relationshipDefinition.required}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Atributo opcional" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
-
-        <p:outputPanel rendered="#{cc.attrs.concept.editable}" style="width:100%">
+        <p:outputPanel style="width:100%">
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
-
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <p:selectOneMenu id="findHTRecords5"
                                              scrollHeight="200"
@@ -421,7 +385,6 @@
                                              forceSelection="true"
                                              value="#{conceptBean.selectedHelperTableRecord}"
                                              var="r"
-                                             rendered="#{cc.attrs.concept.editable}"
                                              filter="true"
                                              converter="helperTableRecordConverter">
 
@@ -445,20 +408,11 @@
                                 <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
                                 <!---->
                             </p:selectOneMenu>
-
-                        </div>
                     </div>
                 </div>
             </div>
 
         </p:outputPanel>
-
-        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
-            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="El concepto no tiene #{cc.attrs.relationshipDefinition.name}" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
 
         <p:dataTable id="collectionValues12"
                      styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
@@ -482,7 +436,7 @@
                 <h:outputText value="#{relationship.target.getColumnValue(column)}" />
             </p:columns>
 
-            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
+            <p:column style="width: 4%">
                 <p:commandButton
                         icon="fa fa-trash"
                         title="Eliminar"
@@ -498,7 +452,7 @@
             </p:column>
         </p:dataTable>
 
-    </p:panel>
+    </p:fieldset>
 
 
 </composite:implementation>

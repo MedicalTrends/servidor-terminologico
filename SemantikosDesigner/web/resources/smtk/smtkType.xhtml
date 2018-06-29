@@ -51,7 +51,6 @@
                                             styleClass="fragments"
                                             var="concept"
                                             disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
-                                            rendered="#{cc.attrs.concept.editable}"
                                             value="#{conceptBean.conceptSelected}"
                                             itemLabel="#{concept.descriptionFavorite.term}"
                                             itemValue="#{concept}">
@@ -103,7 +102,7 @@
             <p:column headerText="Estado">
                 <h:outputText value="#{rel.target.modeled}"/>
             </p:column>
-            <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
+            <p:column headerText="Eliminar" style="width:60px;text-align: center;">
                 <p:commandButton icon="fa fa-trash" title="Eliminar"
                                  action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                  update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
@@ -130,7 +129,7 @@
             </p:outputPanel>
         </f:facet>
 
-        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%" rendered="#{cc.attrs.concept.editable}">
+        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%">
 
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
@@ -244,7 +243,7 @@
                 </p:outputPanel>
             </p:columns>
 
-            <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
+            <p:column headerText="Eliminar" style="width:60px;text-align: center;">
                 <p:commandButton icon="fa fa-trash" title="Eliminar"
                                  action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                  update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"

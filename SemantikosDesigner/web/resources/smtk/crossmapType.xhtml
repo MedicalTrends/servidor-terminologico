@@ -20,19 +20,17 @@
              widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
              rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
 
-        <div class="ui-fluid">
+        <div class="ui-g ui-fluid">
 
-            <div class="Container">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
                         <p:outputLabel for="findCSM5" value="Crossmap Directo" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                         <p:outputLabel value="Crossmap Directo *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
-                    </div>
-                </div>
 
-                <div class="Container30 White Responsive">
-                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+            </div>
+
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
+
                         <p:outputPanel styleClass="search">
                             <p:autoComplete id="findCSM5" scrollHeight="200"
                                             completeMethod="#{crossmapBean.getCrossmapSearchInput}"
@@ -41,7 +39,6 @@
                                             var="crossmap"
                                             placeholder="#{cc.attrs.targetDefinition.abbreviatedName}"
                                             converter="crossmapSetMemberConverter"
-                                            rendered="#{cc.attrs.concept.editable}"
                                             disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
                                             value="#{conceptBean.crossmapSetMemberSelected}"
                                             itemLabel="#{crossmap.toString()}"
@@ -66,10 +63,9 @@
                             </p:autoComplete>
                             <i class="fa fa-search fa-lg"  />
                         </p:outputPanel>
-                    </div>
-                </div>
             </div>
         </div>
+
     </p:panel>
 
     <!-- Multiplicidad 1 + Relacion existente + Sin atributos -->
@@ -82,21 +78,17 @@
                    var="relationship"
                    varStatus="var">
 
-            <div class="ui-fluid">
+            <div class="ui-g ui-fluid">
 
-                <div class="Container">
-
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <p:outputLabel value="Crossmap Directo" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                             <p:outputLabel value="Crossmap Directo *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
-                        </div>
-                    </div>
+                </div>
 
-                    <div class="Container#{cc.attrs.relationshipDefinition.ATC?'50':'30'} White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
+
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
@@ -107,18 +99,16 @@
                                                icon="ui-icon-alert"/>
                                 </p:commandLink>
                             </p:outputPanel>
-                        </div>
-                    </div>
-
                 </div>
             </div>
+
         </ui:repeat>
     </p:panel>
 
     <!-- Multiplicidad N con atributos-->
 
-    <p:panel id="crossmapTypeCollectionWithAttributes" header="Crossmaps Directos" toggleable="#{true}"  toggleSpeed="500" collapsed="#{false}"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
+    <p:fieldset id="crossmapTypeCollectionWithAttributes" legend="#{cc.attrs.relationshipDefinition.name}"
+                rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
         <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}"
                        rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}"
@@ -128,10 +118,9 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container50 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <p:outputPanel styleClass="search">
 
@@ -142,7 +131,6 @@
                                                 var="crossmap"
                                                 placeholder="#{cc.attrs.targetDefinition.abbreviatedName}"
                                                 converter="crossmapSetMemberConverter"
-                                                rendered="#{cc.attrs.concept.editable}"
                                                 disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
                                                 value="#{conceptBean.crossmapSetMemberSelected}"
                                                 itemLabel="#{crossmap.toString()}"
@@ -167,7 +155,7 @@
                                 </p:autoComplete>
                                 <i class="fa fa-search fa-lg"  />
                             </p:outputPanel>
-                        </div>
+
                     </div>
 
                     <!-- Atributos de relación -->
@@ -196,19 +184,21 @@
                         />
                     </p:repeat>
 
-                    <div class="Container20 Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-                            <p:commandButton
-                                    process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
-                                    action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
-                                    update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                    style="max-width: 100px"
-                                    value="Agregar">
-                            </p:commandButton>
-                        </div>
+                    </div>
+
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+                        <p:commandButton
+                                process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                                action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
+                                update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                                style="width: auto; float: right"
+                                value="Agregar">
+                        </p:commandButton>
                     </div>
                 </div>
             </div>
+
         </p:outputPanel>
 
         <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
@@ -318,7 +308,7 @@
             </p:column>
         </p:dataTable>
 
-    </p:panel>
+    </p:fieldset>
 
 </composite:implementation>
 </html>

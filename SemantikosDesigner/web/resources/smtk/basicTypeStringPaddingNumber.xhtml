@@ -211,7 +211,7 @@
             </p:outputPanel>
         </f:facet>
 
-        <p:outputPanel rendered="#{cc.attrs.concept.editable}" style="width:100%" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}">
+        <p:outputPanel style="width:100%" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}">
 
             <div class="ui-fluid">
 
@@ -269,7 +269,7 @@
                 <h:outputText value="#{relationship.target.value}" />
             </p:column>
 
-            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
+            <p:column style="width: 4%">
                 <p:commandButton
                         icon="fa fa-trash"
                         title="Eliminar"

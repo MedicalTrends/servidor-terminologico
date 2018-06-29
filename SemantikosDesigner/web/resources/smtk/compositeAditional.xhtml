@@ -20,29 +20,27 @@
 
 
     <p:panel style="width: 100%" rendered="#{cc.attrs.relationshipDefinition.compositeID==2}">
-    <p:panel style="border: hidden;" rendered="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,69)!=null}">
+        <p:panel style="border: hidden;" rendered="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,69)!=null}">
 
-    <div class="ui-g">
+            <div class="ui-g">
 
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                    <h:outputText value="Cantidad: "/>
+                </div>
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
+                    <h:outputText value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,69).target.value}"  >
+                        <f:convertNumber locale="es_CL" minFractionDigits="0" maxFractionDigits="2" />
+                    </h:outputText>
+                </div>
 
-            <div class="ui-g-12 ui-md-6 ui-lg-1">
-                <h:outputText value="Cantidad: "/>
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                    <h:outputText value="Unidad Cantidad: "/>
+                </div>
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
+                    <h:outputText value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,69,12).description}"/>
+                </div>
+
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <h:outputText value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,69).target.value}"  >
-                    <f:convertNumber locale="es_CL" minFractionDigits="0" maxFractionDigits="2" />
-                </h:outputText>
-            </div>
-
-            <div class="ui-g-12 ui-md-6 ui-lg-1">
-                <h:outputText value="Unidad Cantidad: "/>
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <h:outputText
-                        value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,69,12).description}"/>
-            </div>
-
-        </div>
         </p:panel>
 
     </p:panel>
@@ -57,8 +55,7 @@
                 <h:outputText value="Tipo de MCCE: "/>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <h:outputText
-                        value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,75).target.description}"/>
+                <h:outputText value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,75).target.description}"/>
             </div>
 
         </div>
@@ -83,47 +80,47 @@
 
         </div>
         <p:panel style="border: hidden;" rendered="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,77)!=null}">
-        <div class="ui-g">
+            <div class="ui-g">
 
-            <div class="ui-g-12 ui-md-6 ui-lg-1">
-                <h:outputText value="Pack Multi Cant: "/>
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <h:outputText
-                        value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,77).target}"/>
-            </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                    <h:outputText value="Pack Multi Cant: "/>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <h:outputText
+                            value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,77).target}"/>
+                </div>
 
-            <div class="ui-g-12 ui-md-6 ui-lg-1">
-                <h:outputText value="Pack multi unidad: "/>
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <h:outputText
-                        value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,77,16).description}"/>
-            </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                    <h:outputText value="Pack multi unidad: "/>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <h:outputText
+                            value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,77,16).description}"/>
+                </div>
 
-        </div>
+            </div>
         </p:panel>
         <p:panel style="border: hidden;" rendered="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,93)!=null}">
-        <div class="ui-g">
+            <div class="ui-g">
 
-            <div class="ui-g-12 ui-md-6 ui-lg-1">
-                <h:outputText value="Volumen Total Cantidad: "/>
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <h:outputText
-                        value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,93).target}"/>
-            </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                    <h:outputText value="Volumen Total Cantidad: "/>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <h:outputText
+                            value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,93).target}"/>
+                </div>
 
-            <div class="ui-g-12 ui-md-6 ui-lg-1">
-                <h:outputText value="Volumen total unidad: "/>
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <h:outputText
-                        value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,93,17).description}"/>
-            </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                    <h:outputText value="Volumen total unidad: "/>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <h:outputText
+                            value="#{compositeAditionalBean.getAditionalInfo(cc.attrs.concept,93,17).description}"/>
+                </div>
 
-        </div>
-            </p:panel>
+            </div>
+        </p:panel>
     </p:panel>
 
 

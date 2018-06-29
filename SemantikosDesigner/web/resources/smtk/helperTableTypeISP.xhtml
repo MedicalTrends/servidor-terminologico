@@ -21,26 +21,14 @@
                      autoRun="true" />
 
     <!-- ISP -->
-    <p:panel id="helperTableTypeCollectionISP" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500"
-             collapsed="#{false}"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.ISP}">
+    <p:fieldset id="helperTableTypeCollectionISP" legend="#{cc.attrs.relationshipDefinition.name}"
+                rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.ISP}">
 
         <p:spacer />
 
         <p:growl id="growl" showDetail="true" showSummary="true"/>
 
-        <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
-            <p:outputPanel rendered="#{cc.attrs.concept.editable and cc.attrs.relationshipDefinition.multiplicity.lowerBoundary>0}">
-                <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
-            </p:outputPanel>
-            <p:outputPanel rendered="#{cc.attrs.concept.editable and cc.attrs.relationshipDefinition.multiplicity.lowerBoundary eq 0}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Atributo opcional" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
-
-        <h:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" width="100%" id="ispfetcherexisteinputs" rendered="#{cc.attrs.concept.editable}">
+        <h:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" width="100%" id="ispfetcherexisteinputs">
 
             <p:outputLabel for="ispexistebooleanbutton">Existe ISP</p:outputLabel>
 
@@ -54,7 +42,7 @@
 
         <p:spacer />
 
-        <p:outputPanel style="display:block" id="ispfetcherinputs" rendered="#{cc.attrs.concept.editable}">
+        <p:outputPanel style="display:block" id="ispfetcherinputs">
 
             <h:panelGrid columns="5" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-4" width="100%" rendered="#{ispbean.existe}">
 
@@ -141,7 +129,6 @@
                     <p:commandButton
                             icon="fa fa-trash"
                             title="Eliminar"
-                            rendered="#{cc.attrs.concept.editable}"
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                             process="@this"
                             immediate="true"
@@ -154,7 +141,7 @@
             </p:column>
         </p:dataTable>
 
-    </p:panel>
+    </p:fieldset>
 
     <p:dialog id="ispfetcheddialog" styleClass="dialogISP" widgetVar="ispfetcheddialog" header="Confirmar datos recuperados del Registro ISP"  width="750px" height="300px">
         <p:outputLabel rendered="#{ not empty ispbean.ispRecord.cells}">Se han recuperado los siguientes datos desde el ISP:</p:outputLabel>

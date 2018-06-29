@@ -18,11 +18,11 @@
 <composite:implementation>
 
 
-        <div class="ui-g-12 ui-md-#{cc.attrs.rightpanel?'12':'4'} ui-lg-#{cc.attrs.rightpanel?'12':'2'}">
+        <div class="ui-g-12 ui-md-12 ui-lg-12">
             <span><h:outputText value="#{cc.attrs.relationshipDefinition.name}" /></span>
         </div>
 
-        <div class="ui-g-12 ui-md-#{cc.attrs.rightpanel?'12':'8'} ui-lg-#{cc.attrs.rightpanel?'12':'4'}">
+        <div class="ui-g-12 ui-md-12 ui-lg-12">
             <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() }" styleClass="search">
 
                 <p:selectOneMenu id="findHTRecords1" scrollHeight="200"

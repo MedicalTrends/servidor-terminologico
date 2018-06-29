@@ -41,7 +41,7 @@
             </p:outputPanel>
         </f:facet>
 
-        <h:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" width="100%" id="ispfetcherexisteinputs" rendered="#{cc.attrs.concept.editable}">
+        <h:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" width="100%" id="ispfetcherexisteinputs">
 
             <p:outputLabel for="ispexistebooleanbutton" value="Requiere esterilización antes del uso?"/>
 
@@ -69,7 +69,6 @@
                                              forceSelection="true"
                                              value="#{conceptBean.selectedHelperTableRecord}"
                                              var="r"
-                                             rendered="#{cc.attrs.concept.editable}"
                                              filter="true"
                                              converter="helperTableRecordConverter">
 
@@ -119,7 +118,7 @@
                     <h:outputText value="#{relationship.target.getColumnValue(column)}" />
                 </p:columns>
 
-                <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
+                <p:column style="width: 4%">
                     <p:commandButton
                             icon="fa fa-trash"
                             title="Eliminar"
