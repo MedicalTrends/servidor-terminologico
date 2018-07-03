@@ -22,25 +22,30 @@
                      autoRun="true" />
 
     <!-- ISP -->
-    <p:panel id="helperTableTypeCollectionISP" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500"
-             collapsed="#{ false }"
+    <p:fieldset id="helperTableTypeCollectionISP" legend="#{cc.attrs.relationshipDefinition.name}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
         <p:spacer />
 
         <p:growl id="growl" showDetail="true" showSummary="true"/>
 
-        <h:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" width="100%" id="ispfetcherexisteinputs">
+        <div class="ui-fluid">
 
-            <p:outputLabel for="ispexistebooleanbutton" value="Requiere esterilización antes del uso?"/>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                    <p:outputLabel for="ispexistebooleanbutton" value="Requiere esterilización antes del uso?"/>
+                </div>
 
-            <p:selectBooleanButton  id="ispexistebooleanbutton" value="#{ispbean.existe}" offLabel="No" onLabel="Si" onIcon="ui-icon-check" offIcon="ui-icon-close">
-                <p:ajax async="false" listener="#{ispbean.updateOptionality(cc.attrs.relationshipDefinition)}"
-                        update="helperTableTypeCollectionISP" process="ispexistebooleanbutton" />
-                <!-- Parámetros del buscador -->
-            </p:selectBooleanButton>
+                <div class="ui-g-12 ui-md-8 ui-lg-2">
+                    <p:selectBooleanButton  id="ispexistebooleanbutton" value="#{ispbean.existe}" offLabel="No" onLabel="Si" onIcon="ui-icon-check" offIcon="ui-icon-close">
+                        <p:ajax async="false" listener="#{ispbean.updateOptionality(cc.attrs.relationshipDefinition)}"
+                                update="helperTableTypeCollectionISP" process="ispexistebooleanbutton" />
+                        <!-- Parámetros del buscador -->
+                    </p:selectBooleanButton>
+                </div>
+            </div>
 
-        </h:panelGrid>
+        </div>
 
         <p:outputPanel style="display:block" id="ispfetcherinputs" rendered="#{ispbean.existe}">
 
@@ -89,7 +94,6 @@
 
             <p:dataTable id="collectionValues12"
                          styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
-                         rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                          var="relationship"
                          value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                          reflow="true">
@@ -125,7 +129,7 @@
 
         </p:outputPanel>
 
-    </p:panel>
+    </p:fieldset>
 
 </composite:implementation>
 </html>

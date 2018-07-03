@@ -111,7 +111,7 @@
                 rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
         <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}"
-                       rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}"
+                       rendered="#{ profilePermissionsBeans.modeler}"
                        style="width:100%">
 
             <p:growl id="growl" showDetail="true" showSummary="true"/>
@@ -121,6 +121,12 @@
                 <div class="ui-g">
 
                     <div class="ui-g-12 ui-md-4 ui-lg-2">
+
+                        <p:outputLabel value="Término" />
+
+                    </div>
+
+                    <div class="ui-g-12 ui-md-8 ui-lg-10">
 
                             <p:outputPanel styleClass="search">
 
@@ -200,13 +206,6 @@
             </div>
 
         </p:outputPanel>
-
-        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
-            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="El concepto no tiene #{cc.attrs.relationshipDefinition.name}" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
 
         <p:dataTable id="collectionValuesWithAttributes"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"

@@ -43,7 +43,7 @@
                                      placeholder="Ingrese #{cc.attrs.relationshipDefinition.description}..."
                                      minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                      maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
-                                     disabled="#{not cc.attrs.concept.editable or cc.attrs.relationshipDefinition.DIPrimario}"
+                                     disabled="#{cc.attrs.relationshipDefinition.DIPrimario}"
                                      rendered="#{cc.attrs.targetDefinition.type.typeName=='string' and not cc.attrs.targetDefinition.discreteDomain}"
                                      styleClass="relationships"
                                      autocomplete="off">
@@ -83,7 +83,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
 
                             <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" />
+                                <p:inputText readonly="true" id="basicTypeValue" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
                                                rendered="#{not cc.attrs.relationshipDefinition.MCSpecial }"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
@@ -162,7 +162,7 @@
                 <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" />
+                                <p:inputText readonly="true" id="basicTypeValue2" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
@@ -186,65 +186,49 @@
     <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
-        <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.required}">
-                <i class="fa fa-exclamation-triangle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
-            </p:outputPanel>
-            <p:outputPanel rendered="#{not cc.attrs.relationshipDefinition.required}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Atributo opcional" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
-
         <p:outputPanel style="width:100%" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}">
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-                            <p:inputText id="basicTypeValue22" value="#{conceptBean.basicTypeValue.value}"
-                                         maxlength="#{cc.attrs.targetDefinition.interval.upperBoundary!=null?cc.attrs.targetDefinition.interval.upperBoundary:'524288'}"
-                                         placeholder="Ingrese #{cc.attrs.relationshipDefinition.description}..."  />
-
-                        </div>
+                        <p:outputLabel for="basicTypeValue22" value="#{cc.attrs.relationshipDefinition.name}"/>
+                        <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
                     </div>
 
-                    <div class="Container20 White Responsive">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-                            <p:commandButton
-                                    process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
-                                    action="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition, conceptBean.basicTypeValue)}"
-                                    style="max-width: 100px"
-                                    update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                    value="Agregar">
-                            </p:commandButton>
-
-                        </div>
+                        <p:inputText id="basicTypeValue22" value="#{conceptBean.basicTypeValue.value}"
+                                     maxlength="#{cc.attrs.targetDefinition.interval.upperBoundary!=null?cc.attrs.targetDefinition.interval.upperBoundary:'524288'}"
+                                     placeholder="Ingrese #{cc.attrs.relationshipDefinition.description}..."  />
 
                     </div>
+
                 </div>
+
+            </div>
+
+            <div class="ui-g">
+
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:commandButton
+                            process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                            action="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition, conceptBean.basicTypeValue)}"
+                            style="max-width: 100px"
+                            update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                            value="Agregar">
+                    </p:commandButton>
+                </div>
+
             </div>
 
         </p:outputPanel>
 
-        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
-            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="El concepto no tiene #{cc.attrs.relationshipDefinition.name}" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
-
         <p:dataTable id="collectionValues12"
                      styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
-                     rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      reflow="true">
@@ -277,28 +261,22 @@
     <p:panel id="helperTableTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
-        <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
-            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.required}">
-                <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
-            </p:outputPanel>
-            <p:outputPanel rendered="#{not cc.attrs.relationshipDefinition.required}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="Atributo opcional" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
-
         <p:outputPanel style="width:100%" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}">
 
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                        <p:outputLabel for="basicTypeValue32" value="#{cc.attrs.relationshipDefinition.name}"/>
+                        <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+
+                    </div>
+
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:inputText id="basicTypeValue32" value="#{conceptBean.basicTypeValue.value}"
                                          maxlength="#{cc.attrs.targetDefinition.interval.upperBoundary!=null?cc.attrs.targetDefinition.interval.upperBoundary:'524288'}"
@@ -307,43 +285,34 @@
                                         process="@this"/>
                             </p:inputText>
 
-                        </div>
-
                     </div>
 
                     <!-- Atributos de relación -->
                     <smtk:attributes concept="#{cc.attrs.concept}" relationship="#{conceptBean.relationshipPlaceholders.get(cc.attrs.relationshipDefinition.id)}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
 
-                    <div class="Container20 White Responsive">
-
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-                            <p:commandButton
-                                    process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
-                                    action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
-                                    style="max-width: 100px"
-                                    update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id})"
-                                    value="Agregar">
-                            </p:commandButton>
-
-                        </div>
-
-                    </div>
                 </div>
+            </div>
+
+            <div class="ui-g">
+
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
+
+                <p:commandButton
+                        process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                        action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
+                        style="max-width: 100px"
+                        update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                        value="Agregar">
+                </p:commandButton>
+
+            </div>
+
             </div>
 
         </p:outputPanel>
 
-        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
-            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="El concepto no tiene #{cc.attrs.relationshipDefinition.name}" style="font-size: small;" />
-            </p:outputPanel>
-        </f:facet>
-
         <p:dataTable id="collectionValues22"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
-                     rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      reflow="true">

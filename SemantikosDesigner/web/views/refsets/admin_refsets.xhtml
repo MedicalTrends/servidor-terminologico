@@ -18,9 +18,10 @@
         <p:panel id="refsetsAdmin">
             <h:form id="formRefset">
 
-                <p:growl id="msg" showDetail="true" autoUpdate="true"/>
+                <p:growl id="msg" showDetail="true" autoUpdate="true"></p:growl>
 
                 <p:tabView>
+
 
                     <!--Pestaña crear RefSet-->
                     <p:tab title="Crear RefSet">
@@ -40,10 +41,10 @@
                                                  converter="omnifaces.SelectItemsConverter">
                                     <f:selectItem itemValue="" itemLabel="Seleccione una institución"
                                                   noSelectionOption="true"/>
-                                    <f:selectItems value="#{refsetsBean.getInstitutionsByUser(authenticationBean.loggedUser)}"
+                                    <f:selectItems value="#{refsetsBean.authenticationBean.loggedUser.institutions}"
                                                    var="institution" itemValue="#{institution}"
-                                                   itemLabel="#{institution.name}"/>
-                                    <p:column><h:outputText value="#{i.name}"/></p:column>
+                                                   itemLabel="#{institution.name}"></f:selectItems>
+                                    <p:column><h:outputText value="#{i.name}"></h:outputText></p:column>
                                 </p:selectOneMenu>
                             </div>
                         </div>
@@ -141,7 +142,7 @@
 
                             <p:column headerText="Acción">
                                 <div style="text-align: center">
-                                    <p:commandButton icon="fa fa-edit" update="@(.editRefset)" rendered="#{refsetsBean.canWrite(refset)}"
+                                    <p:commandButton icon="fa fa-edit" update="@(.editRefset)"
                                                      oncomplete="PF('editRefset').show()" title="Editar">
                                         <f:setPropertyActionListener value="#{refset}"
                                                                      target="#{refsetsBean.refSetEdit}"/>
@@ -155,7 +156,7 @@
 
                                     <p:commandButton title="Dejar no vigente" icon="fa fa-trash"
                                                      actionListener="#{refsetsBean.invalidRefset(refset)}"
-                                                     update="@(.listRefSets)" rendered="#{refset.valid and refsetsBean.canWrite(refset)}">
+                                                     update="@(.listRefSets)" rendered="#{refset.valid}">
                                         <p:confirm header="Confirmar Acción" message="¿Desea invalidar este RefSet?"
                                                    icon="ui-icon-alert"/>
 

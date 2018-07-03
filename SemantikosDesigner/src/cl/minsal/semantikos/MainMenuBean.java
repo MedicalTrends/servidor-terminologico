@@ -108,7 +108,7 @@ public class MainMenuBean implements Serializable {
 
         //Inicio
         DefaultMenuItem item0 = new DefaultMenuItem("Inicio");
-        item0.setUrl("/views/home.xhtml");
+        item0.setUrl("/views/home");
         item0.setIcon("home");
         item0.setId("rm_home");
         item0.setUpdate("mainContent");

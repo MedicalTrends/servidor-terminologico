@@ -3,288 +3,267 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="/WEB-INF/template/template.xhtml">
-
-
-    <ui:define name="header">
-        <p:breadCrumb>
-            <p:menuitem value="Inicio" url="/views/home.xhtml" />
-            <p:menuitem value="Administración Tablas" url="#" />
-        </p:breadCrumb>
-    </ui:define>
+                template="/WEB-INF/template.xhtml">
 
     <ui:define name="content">
-        <div class="Container100">
-            <div class="ContainerIndent">
-                <div class="Card ShadowEffect TexAlCenter">
-                    <h:form id="form">
+        <div class="ui-g dashboard">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes"
-                                             icon="ui-icon-check"/>
-                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
-                                             icon="ui-icon-close"/>
-                        </p:confirmDialog>
+                <h:form id="form">
 
-                        <p:growl id="messages" showDetail="true" autoUpdate="true" escape="false"/>
+                    <p:breadCrumb>
+                        <p:menuitem value="Inicio" url="/views/home.xhtml" />
+                        <p:menuitem value="Administración Tablas" url="#" />
+                    </p:breadCrumb>
 
-                        <p:dataTable rows="50" paginator="true" id="helperTablesTable"
-                                     value="#{helperTableBean.administrableTables}" var="helperTable"
-                                     rowIndexVar="rowIndex1" style="margin-top: 20px">
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes"
+                                         icon="ui-icon-check"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                                         icon="ui-icon-close"/>
+                    </p:confirmDialog>
 
-                            <p:column headerText="ID" width="30">
-                                <h:outputText value="#{helperTable.id}"/>
-                            </p:column>
+                    <p:growl id="messages" showDetail="true" autoUpdate="true" escape="false"/>
 
-                            <p:column headerText="Nombre Tabla">
-                                <div style="text-align: left;">
-                                    <h:outputText value="#{helperTable.name}"/>
+                    <p:dataTable rows="30" paginator="true" id="helperTablesTable" sortBy="#{helperTable.id}"
+                                 value="#{helperTableBean.administrableTables}" var="helperTable" widgetVar="helperTablesTable"
+                                 rowIndexVar="rowIndex1" style="margin-top: 20px">
+
+                        <p:column headerText="ID" filterBy="#{helperTable.id}" filterMatchMode="contains" sortBy="#{helperTable.id}">
+                            <h:outputText value="#{helperTable.id}"/>
+                        </p:column>
+
+                        <p:column headerText="Nombre Tabla" filterBy="#{helperTable.name}" filterMatchMode="contains" sortBy="#{helperTable.name}">
+                            <h:outputText value="#{helperTable.name}"/>
+                        </p:column>
+
+                        <p:column headerText="Descripción" filterBy="#{helperTable.description}" filterMatchMode="contains" sortBy="#{helperTable.description}">
+                            <h:outputText value="#{helperTable.description}"/>
+                        </p:column>
+
+                        <p:column headerText="Acciones">
+                            <div style="text-align: center">
+                                <p:button outcome="/views/helpertables/helpertable" title="Editar" style="padding: 5px"
+                                          icon="fa fa-edit fa-lg">
+                                    <f:param name="idHelperTable" value="#{helperTable.id}" />
+                                </p:button>
+                            </div>
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <p:dialog id="dialog-concept-related"
+                              header="Conceptos relacionados" widgetVar="dialog-concept-related"
+                              global="true" showEffect="fade" hideEffect="fade" height="400" width="900"
+                              positionType="absolute">
+                        <p:outputPanel styleClass="dialog-concept-related-panel">
+
+                            <div class="Container">
+                                <div class="Container100">
+                                    El dato está relacionado con los siguientes conceptos
                                 </div>
+                            </div>
 
-                            </p:column>
+                            <p:dataTable id="conceptRelated" styleClass="conceptRelatedTable" rows="10" value="#{helperTableBean.conceptSMTKs}" paginator="true" var="concept" lazy="true">
+                                <p:column headerText="Concept ID">
+                                    <h:outputText value="#{concept.conceptID}"/>
+                                </p:column>
+                                <p:column headerText="Preferido">
+                                    <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:outputPanel>
 
-                            <p:column headerText="Descripción">
-                                <div style="text-align: left;">
-                                    <h:outputText value="#{helperTable.description}"/>
+                    </p:dialog>
+
+                    <p:dialog id="edit-data-dialog-var"
+                              header="Editar Datos" widgetVar="edit-data-dialog-var"
+                              global="true" showEffect="fade" hideEffect="fade" height="400" width="900"
+                              positionType="absolute" >
+                        <p:outputPanel styleClass="edit-data-panel">
+
+                            <div class="Container">
+                                <div class="Container20">
+                                    <h3>Filtros:</h3>
                                 </div>
-
-                            </p:column>
-
-                            <p:column headerText="Acciones" width="150">
-
-                                <p:commandButton icon="ui-icon-pencil"
-                                                 update="@(.edit-data-panel)"
-                                                 id="edit-data"
-                                                 title="Editar Datos"
-                                                 actionListener="#{helperTableBean.chargeRow(helperTable)}"
-                                                 oncomplete="PF('edit-data-dialog-var').show()">
-                                    <f:setPropertyActionListener value="#{helperTable}"
-                                                                 target="#{helperTableBean.helperTableSelected}"/>
-                                    <f:setPropertyActionListener value=""
-                                                                 target="#{helperTableBean.pattern}"/>
-                                    <f:setPropertyActionListener value=""
-                                                                 target="#{helperTableBean.id}"/>
-
-                                </p:commandButton>
-                            </p:column>
-
-                        </p:dataTable>
-
-                        <p:dialog id="dialog-concept-related"
-                                  header="Conceptos relacionados" widgetVar="dialog-concept-related"
-                                  global="true" showEffect="fade" hideEffect="fade" height="400" width="900"
-                                  positionType="absolute">
-                            <p:outputPanel styleClass="dialog-concept-related-panel">
-
-                                <div class="Container">
-                                    <div class="Container100">
-                                        El dato está relacionado con los siguientes conceptos
-                                    </div>
-
+                                <div class="Container20">
+                                    <p:inputText placeholder="ID" type="number" value="#{helperTableBean.id}" title="Búsqueda por ID">
+                                        <p:ajax event="keyup" update="@(.table-data-edit-#{varStatus1.index})"
+                                                process="@this"
+                                                listener="#{helperTableBean.getRecordSearchID(helperTableBean.helperTableSelected,helperTableBean.id)}"/>
+                                    </p:inputText>
                                 </div>
+                                <div class="Container30">
+                                    <p:inputText placeholder="Descripción" value="#{helperTableBean.pattern}" title="Busqueda por descripción">
+                                        <p:ajax event="keyup" update="@(.table-data-edit-#{varStatus1.index})"
+                                                process="@this"
+                                                listener="#{helperTableBean.getRecordSearchInput(helperTableBean.helperTableSelected,helperTableBean.pattern)}"/>
 
-                                <p:dataTable id="conceptRelated" styleClass="conceptRelatedTable" rows="10" value="#{helperTableBean.conceptSMTKs}" paginator="true" var="concept" lazy="true">
-                                    <p:column headerText="Concept ID">
-                                        <h:outputText value="#{concept.conceptID}"/>
-                                    </p:column>
-                                    <p:column headerText="Preferido">
-                                        <h:outputText value="#{concept.descriptionFavorite.term}"/>
-                                    </p:column>
-                                </p:dataTable>
-                            </p:outputPanel>
-
-                        </p:dialog>
-
-                        <p:dialog id="edit-data-dialog-var"
-                                  header="Editar Datos" widgetVar="edit-data-dialog-var"
-                                  global="true" showEffect="fade" hideEffect="fade" height="400" width="900"
-                                  positionType="absolute" >
-                            <p:outputPanel styleClass="edit-data-panel">
-
-                                <div class="Container">
-                                    <div class="Container20">
-                                        <h3>Filtros:</h3>
-                                    </div>
-                                    <div class="Container20">
-                                        <p:inputText placeholder="ID" type="number" value="#{helperTableBean.id}" title="Búsqueda por ID">
-                                            <p:ajax event="keyup" update="@(.table-data-edit-#{varStatus1.index})"
-                                                    process="@this"
-                                                    listener="#{helperTableBean.getRecordSearchID(helperTableBean.helperTableSelected,helperTableBean.id)}"/>
-                                        </p:inputText>
-                                    </div>
-                                    <div class="Container30">
-                                        <p:inputText placeholder="Descripción" value="#{helperTableBean.pattern}" title="Busqueda por descripción">
-                                            <p:ajax event="keyup" update="@(.table-data-edit-#{varStatus1.index})"
-                                                    process="@this"
-                                                    listener="#{helperTableBean.getRecordSearchInput(helperTableBean.helperTableSelected,helperTableBean.pattern)}"/>
-
-                                        </p:inputText>
-                                    </div>
-                                    <div class="Container20">
-                                        <p:selectOneMenu value="#{helperTableBean.valid}" title="Búsqueda por vigencia">
-                                            <f:selectItem itemLabel="Seleccione una opción" />
-                                            <f:selectItem itemLabel="Si" itemValue="si"/>
-                                            <f:selectItem itemLabel="No" itemValue="no"/>
-                                            <p:ajax event="itemSelect" update="@(.table-data-edit-#{varStatus1.index})"
-                                                    process="@this"
-                                                    listener="#{helperTableBean.getRecordSearchValid(helperTableBean.helperTableSelected,helperTableBean.valid)}"/>
-
-
-                                        </p:selectOneMenu>
-                                    </div>
+                                    </p:inputText>
                                 </div>
+                                <div class="Container20">
+                                    <p:selectOneMenu value="#{helperTableBean.valid}" title="Búsqueda por vigencia">
+                                        <f:selectItem itemLabel="Seleccione una opción" />
+                                        <f:selectItem itemLabel="Si" itemValue="si"/>
+                                        <f:selectItem itemLabel="No" itemValue="no"/>
+                                        <p:ajax event="itemSelect" update="@(.table-data-edit-#{varStatus1.index})"
+                                                process="@this"
+                                                listener="#{helperTableBean.getRecordSearchValid(helperTableBean.helperTableSelected,helperTableBean.valid)}"/>
 
-                                <p:remoteCommand name="onRowEditCancel#{varStatus1.index}"
-                                                 update="@(.table-data-edit-#{varStatus1.index})"/>
-                                <p:dataTable
-                                             widgetVar="table-data-edit-wvar-#{varStatus1.index}"
-                                             id="table-data-edit" styleClass="table-data-edit-#{varStatus1.index}"
-                                             var="row"
-                                             rowKey="#{row.id}" value="#{helperTableBean.helperTableSelected.rows}"
-                                             editable="true" paginator="true" rows="20"
-                                             scrollable="true" scrollWidth="100%" scrollHeight="200">
+
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+
+                            <p:remoteCommand name="onRowEditCancel#{varStatus1.index}"
+                                             update="@(.table-data-edit-#{varStatus1.index})"/>
+                            <p:dataTable
+                                         widgetVar="table-data-edit-wvar-#{varStatus1.index}"
+                                         id="table-data-edit" styleClass="table-data-edit-#{varStatus1.index}"
+                                         var="row"
+                                         rowKey="#{row.id}" value="#{helperTableBean.helperTableSelected.rows}"
+                                         editable="true" paginator="true" rows="20"
+                                         scrollable="true" scrollWidth="100%" scrollHeight="200">
+                                <f:facet name="header">
+                                    Editor de datos Tabla: #{helperTableBean.helperTableSelected.name}
+
+                                    <p:commandButton icon="ui-icon-plus"
+                                                     value="Agregar Fila"
+                                                     ajax="true"
+                                                     id="add-row-button"
+                                                     alt="Agregar Fila"
+                                                     action="#{helperTableBean.addRow(helperTableBean.helperTableSelected)}"
+                                                     update="@(.table-data-edit-#{varStatus1.index})"
+                                                     process="@this"
+                                                     oncomplete="jQuery('.table-data-edit-#{varStatus1.index} tbody tr').first().find('span.ui-icon-pencil').each(function(){jQuery(this).click()});"
+                                    />
+                                </f:facet>
+
+                                <p:ajax event="rowEdit" listener="#{helperTableBean.onRowEdit}" update="@(.conceptRelatedTable)"/>
+                                <p:ajax event="rowEditCancel" listener="#{helperTableBean.onRowEditCancel}"
+                                        oncomplete="onRowEditCancel#{varStatus1.index}()"/>
+
+                                <p:column headerText="ID" sortable="true" width="30">
+                                    <h:outputText value="#{row.id}"/>
+                                </p:column>
+
+                                <p:column headerText="Descripción" sortable="true" width="200">
+                                    <div style="text-align: left">
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <h:outputText value="#{row.description}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputText disabled="#{!row.valid and row.persistent}" value="#{row.description}"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </div>
+
+                                </p:column>
+
+                                <p:columns columnIndexVar="columnIndex" var="column"
+                                           value="#{helperTableBean.helperTableSelected.columns}"
+                                           sortable="true" width="250">
                                     <f:facet name="header">
-                                        Editor de datos Tabla: #{helperTableBean.helperTableSelected.name}
-
-                                        <p:commandButton icon="ui-icon-plus"
-                                                         value="Agregar Fila"
-                                                         ajax="true"
-                                                         id="add-row-button"
-                                                         alt="Agregar Fila"
-                                                         action="#{helperTableBean.addRow(helperTableBean.helperTableSelected)}"
-                                                         update="@(.table-data-edit-#{varStatus1.index})"
-                                                         process="@this"
-                                                         oncomplete="jQuery('.table-data-edit-#{varStatus1.index} tbody tr').first().find('span.ui-icon-pencil').each(function(){jQuery(this).click()});"
-                                        />
+                                        <h:outputText value="#{column.description}" />
                                     </f:facet>
-
-                                    <p:ajax event="rowEdit" listener="#{helperTableBean.onRowEdit}" update="@(.conceptRelatedTable)"/>
-                                    <p:ajax event="rowEditCancel" listener="#{helperTableBean.onRowEditCancel}"
-                                            oncomplete="onRowEditCancel#{varStatus1.index}()"/>
-
-                                    <p:column headerText="ID" sortable="true" width="30">
-                                        <h:outputText value="#{row.id}"/>
-                                    </p:column>
-
-                                    <p:column headerText="Descripción" sortable="true" width="200">
-                                        <div style="text-align: left">
-                                            <p:cellEditor>
-                                                <f:facet name="output">
-                                                    <h:outputText value="#{row.description}"/>
-                                                </f:facet>
-                                                <f:facet name="input">
-                                                    <p:inputText disabled="#{!row.valid and row.persistent}" value="#{row.description}"/>
-                                                </f:facet>
-                                            </p:cellEditor>
-                                        </div>
-
-                                    </p:column>
-
-                                    <p:columns columnIndexVar="columnIndex" var="column"
-                                               value="#{helperTableBean.helperTableSelected.columns}"
-                                               sortable="true" width="250">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{column.description}" />
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{row.getColumnValue(column)}" rendered="#{not column.foreignKey}" />
+                                            <h:outputText value="#{helperTableBean.getRow(row.getColumnValue(column)).description}"
+                                                          rendered="#{column.foreignKey}"/>
                                         </f:facet>
-                                        <p:cellEditor>
-                                            <f:facet name="output">
-                                                <h:outputText value="#{row.getColumnValue(column)}" rendered="#{not column.foreignKey}" />
-                                                <h:outputText value="#{helperTableBean.getRow(row.getColumnValue(column)).description}"
-                                                              rendered="#{column.foreignKey}"/>
-                                            </f:facet>
-                                            <f:facet name="input">
-                                                <ui:repeat value="#{row.getCellsByColumn(column)}" var="cell">
-                                                    <p:inputText disabled="#{!row.valid and row.persistent}" value="#{cell.stringValue}"
-                                                                 rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1 }"/>
+                                        <f:facet name="input">
+                                            <ui:repeat value="#{row.getCellsByColumn(column)}" var="cell">
+                                                <p:inputText disabled="#{!row.valid and row.persistent}" value="#{cell.stringValue}"
+                                                             rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1 }"/>
 
-                                                    <p:selectOneMenu disabled="#{!row.valid and row.persistent}" value="#{cell.booleanValue}" autoWidth="false"
-                                                                     style="width: 70%"
-                                                                     rendered="#{!column.foreignKey and column.helperTableDataTypeId == 2}">
+                                                <p:selectOneMenu disabled="#{!row.valid and row.persistent}" value="#{cell.booleanValue}" autoWidth="false"
+                                                                 style="width: 70%"
+                                                                 rendered="#{!column.foreignKey and column.helperTableDataTypeId == 2}">
+                                                    <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                                    <f:selectItem itemLabel="false" itemValue="false"/>
+                                                    <f:selectItem itemLabel="true" itemValue="true"/>
+                                                </p:selectOneMenu>
+
+                                                <p:inputNumber disabled="#{!row.valid and row.persistent}" value="#{cell.intValue}" thousandSeparator=""
+                                                               rendered="#{!column.foreignKey and column.helperTableDataTypeId == 3 }"
+                                                               decimalPlaces="0"/>
+
+                                                <p:inputNumber disabled="#{!row.valid and row.persistent}" value="#{cell.floatValue}"
+                                                               rendered="#{!column.foreignKey and column.helperTableDataTypeId == 4}"/>
+
+                                                <p:calendar disabled="#{!row.valid and row.persistent}" value="#{cell.dateValue}"
+                                                            rendered="#{!column.foreignKey and column.helperTableDataTypeId == 5}"
+                                                            locale="es" navigator="true" pattern="dd-MM-yyyy"
+                                                            mask="true"/>
+
+                                                <p:outputPanel rendered="#{column.foreignKey}">
+                                                    <p:selectOneMenu disabled="#{!row.valid and row.persistent}" value="#{cell.foreignKeyValue}"
+                                                                     rendered="#{column.foreignKey }">
                                                         <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
-                                                        <f:selectItem itemLabel="false" itemValue="false"/>
-                                                        <f:selectItem itemLabel="true" itemValue="true"/>
+                                                        <f:selectItems
+                                                                value="#{helperTableBean.getReferencedTableRows(column.foreignKeyHelperTableId)}"
+                                                                var="fkTableRow" itemValue="#{fkTableRow.id}"
+                                                                itemLabel="#{fkTableRow.description}">
+                                                        </f:selectItems>
                                                     </p:selectOneMenu>
-
-                                                    <p:inputNumber disabled="#{!row.valid and row.persistent}" value="#{cell.intValue}" thousandSeparator=""
-                                                                   rendered="#{!column.foreignKey and column.helperTableDataTypeId == 3 }"
-                                                                   decimalPlaces="0"/>
-
-                                                    <p:inputNumber disabled="#{!row.valid and row.persistent}" value="#{cell.floatValue}"
-                                                                   rendered="#{!column.foreignKey and column.helperTableDataTypeId == 4}"/>
-
-                                                    <p:calendar disabled="#{!row.valid and row.persistent}" value="#{cell.dateValue}"
-                                                                rendered="#{!column.foreignKey and column.helperTableDataTypeId == 5}"
-                                                                locale="es" navigator="true" pattern="dd-MM-yyyy"
-                                                                mask="true"/>
-
-                                                    <p:outputPanel rendered="#{column.foreignKey}">
-                                                        <p:selectOneMenu disabled="#{!row.valid and row.persistent}" value="#{cell.foreignKeyValue}"
-                                                                         rendered="#{column.foreignKey }">
-                                                            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
-                                                            <f:selectItems
-                                                                    value="#{helperTableBean.getReferencedTableRows(column.foreignKeyHelperTableId)}"
-                                                                    var="fkTableRow" itemValue="#{fkTableRow.id}"
-                                                                    itemLabel="#{fkTableRow.description}">
-                                                            </f:selectItems>
-                                                        </p:selectOneMenu>
-                                                    </p:outputPanel>
-                                                </ui:repeat>
-                                            </f:facet>
-                                        </p:cellEditor>
-                                    </p:columns>
-
-                                    <p:column headerText="ESTADO DE VIGENCIA" sortable="true" width="200">
-                                        <f:facet name="filter">
-                                            <p:selectOneMenu
-                                                    onchange="PF('table-data-edit-wvar-#{varStatus1.index}').filter()">
-                                                <f:selectItem itemLabel="Elegir..." itemValue="#{null}"
-                                                              noSelectionOption="true"/>
-                                                <f:selectItem itemLabel="Si" itemValue="#{true}"/>
-                                                <f:selectItem itemLabel="No" itemValue="#{false}"/>
-                                            </p:selectOneMenu>
+                                                </p:outputPanel>
+                                            </ui:repeat>
                                         </f:facet>
-                                        <p:cellEditor>
-                                            <f:facet name="output">
-                                                <h:outputText value="#{row.valid?'Si':'No'}"/>
-                                            </f:facet>
-                                            <f:facet name="input">
-                                                <p:selectBooleanButton  offLabel="No" onLabel="Si" value="#{row.valid}"/>
-                                            </f:facet>
-                                        </p:cellEditor>
-                                    </p:column>
+                                    </p:cellEditor>
+                                </p:columns>
 
-                                    <p:column headerText="CREACIÓN" sortable="true" width="200" >
-                                        <h:outputText value="#{row.creationDate}">
-                                            <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
-                                        </h:outputText>
-                                    </p:column>
-                                    <p:column headerText="CREADO POR" sortable="true" width="200" >
-                                        <h:outputText value="#{row.creationUsername}"/>
-                                    </p:column>
-                                    <p:column headerText="ULTIMA EDICIÓN" sortable="true" width="200" >
-                                        <h:outputText value="#{row.lastEditDate}">
-                                            <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
-                                        </h:outputText>
-                                    </p:column>
-                                    <p:column headerText="EDITADO POR" sortable="true" width="200" >
-                                        <h:outputText value="#{row.lastEditUsername}"/>
-                                    </p:column>
+                                <p:column headerText="ESTADO DE VIGENCIA" sortable="true" width="200">
+                                    <f:facet name="filter">
+                                        <p:selectOneMenu
+                                                onchange="PF('table-data-edit-wvar-#{varStatus1.index}').filter()">
+                                            <f:selectItem itemLabel="Elegir..." itemValue="#{null}"
+                                                          noSelectionOption="true"/>
+                                            <f:selectItem itemLabel="Si" itemValue="#{true}"/>
+                                            <f:selectItem itemLabel="No" itemValue="#{false}"/>
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{row.valid?'Si':'No'}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:selectBooleanButton  offLabel="No" onLabel="Si" value="#{row.valid}"/>
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="CREACIÓN" sortable="true" width="200" >
+                                    <h:outputText value="#{row.creationDate}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="CREADO POR" sortable="true" width="200" >
+                                    <h:outputText value="#{row.creationUsername}"/>
+                                </p:column>
+                                <p:column headerText="ULTIMA EDICIÓN" sortable="true" width="200" >
+                                    <h:outputText value="#{row.lastEditDate}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="EDITADO POR" sortable="true" width="200" >
+                                    <h:outputText value="#{row.lastEditUsername}"/>
+                                </p:column>
 
 
-                                    <p:column width="50" headerText="Acción">
-                                        <p:rowEditor editTitle="Editar" cancelTitle="Cancelar" saveTitle="Guardar"/>
-                                    </p:column>
+                                <p:column width="50" headerText="Acción">
+                                    <p:rowEditor editTitle="Editar" cancelTitle="Cancelar" saveTitle="Guardar"/>
+                                </p:column>
 
-                                </p:dataTable>
-                            </p:outputPanel>
+                            </p:dataTable>
+                        </p:outputPanel>
 
 
-                        </p:dialog>
+                    </p:dialog>
 
-                    </h:form>
+                </h:form>
 
-                    <br/><br/>
-                </div>
             </div>
         </div>
 

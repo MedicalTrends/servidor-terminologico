@@ -561,6 +561,7 @@ public class ConceptBean implements Serializable {
             messageBean.messageError(e.getMessage());
             resetPlaceHolders();
         } catch (Exception e) {
+            messageBean.messageError(e.getMessage());
             e.printStackTrace();
         }
 

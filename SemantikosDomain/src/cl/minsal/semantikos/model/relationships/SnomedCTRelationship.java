@@ -2,6 +2,7 @@ package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
@@ -117,7 +118,7 @@ public class SnomedCTRelationship extends Relationship implements Serializable {
             }
         }
 
-        throw new Exception("Esta relación no posee un tipo de relación Snomed-CT");
+        throw new BusinessRuleException("BR-UNK","Esta relación no posee un tipo de relación Snomed-CT");
     }
 
     /**

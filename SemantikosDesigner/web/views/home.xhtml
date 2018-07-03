@@ -7,6 +7,38 @@
 
     <ui:define name="title">Semantikos Diseñador</ui:define>
 
+    <ui:define name="head">
+        <style type="text/css">
+            .cars-datalist .text-column p:last-child{
+                color:#757575;
+            }
+
+            .cars-datalist .car-item i, .cars-datalist .car-item .car-details {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .cars-datalist .car-item button {
+                float: right;
+            }
+
+            .cars-datalist ul {
+                margin: 0;
+                padding: 0;
+            }
+
+            .ui-car-display td:last-child {
+                font-weight: 700;
+            }
+
+            @media (max-width:640px) {
+                .cars-datalist .text-column {
+                    text-align: center;
+                }
+            }
+        </style>
+    </ui:define>
+
     <ui:define name="content">
         <div class="ui-g dashboard">
             <div class="ui-g-12 ui-md-6 ui-lg-6">
@@ -15,7 +47,7 @@
                         <span class="overview-title">Categorías</span>
                     </div>
                     <h:form styleClass="mainMenu" style="padding-left: 15px; padding-right: 15px; padding-bottom: 15px">
-                        <p:menu toggleable="false" model="#{mainMenuBean.categoryMenuModel}" style="width: 100%" />
+                        <p:menu toggleable="false" model="#{mainMenuBean.categoryMenuModel}" style="width: 100%" rendered="true" />
                     </h:form>
                 </div>
             </div>

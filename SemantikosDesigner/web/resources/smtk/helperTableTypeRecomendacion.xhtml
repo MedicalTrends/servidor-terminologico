@@ -79,7 +79,7 @@
                 <div class="ui-g">
 
                     <div class="ui-g-12 ui-md-6 ui-lg-2">
-                        <p:outputLabel value="Clasificación"/>
+                        <p:outputLabel value="Indicadores"/>
                     </div>
 
                     <!-- Atributos: receta, gestión, indicación -->
@@ -132,7 +132,7 @@
                     update="@(.conceptHeader),@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id})">
             </p:ajax>
 
-            <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
+            <p:columns value="#{cc.attrs.targetDefinition.showableColumnsButFK}"
                        var="column"
                        columnIndexVar="colIndex">
                 <f:facet name="header">

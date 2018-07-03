@@ -74,6 +74,11 @@
         <view-id value="/views/institutions/institutionEdit.xhtml" />
     </url-mapping>
 
+    <url-mapping id="refsets">
+        <pattern value="/views/refsets" />
+        <view-id value="/views/refsets/admin_refsets.xhtml" />
+    </url-mapping>
+
     <url-mapping id="helpertables">
         <pattern value="/views/helpertables" />
         <view-id value="/views/helpertables/helpertables.xhtml" />
