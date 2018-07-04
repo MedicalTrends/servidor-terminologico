@@ -19,7 +19,9 @@
         <h:outputScript name="js/layout.js" library="ultima-layout" />
         <h:outputScript name="js/ripple.js" library="ultima-layout" />
         <h:outputScript name="js/swipe.js" library="ultima-layout" />
-        <ui:insert name="head"/>
+        <h:outputScript name="js/jquery.toast.js" library="semantikos" />
+        <ui:insert name="head">
+        </ui:insert>
     </h:head>
 
     <h:body styleClass="main-body #{guestPreferences.compact ? 'layout-compact' : null}">
@@ -64,6 +66,22 @@
         <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" />
 
         <script type="text/javascript">
+
+            $('.loader-trigger').click(function() {
+                $.Toast.showToast({
+                    // toast message
+                    "title": "Un momento por favor...",
+                    // "success", "none", "error"
+                    "icon": "Cargando",
+                    // default: 1500
+                    "duration": 10000
+                });
+            });
+
+            $(document).ready(function() {
+                $.Toast.hideToast();
+            });
+
             /*
             if (navigator.userAgent.search("Chrome")) {
                 $('.logo').css('image-rendering', '-webkit-optimize-contrast');

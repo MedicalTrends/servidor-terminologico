@@ -22,8 +22,8 @@
                 <h:form id="browserForm" prependId="false">
 
                     <p:breadCrumb id="top-menu">
-                        <p:menuitem value="Inicio" url="/views/home.xhtml" />
-                        <p:menuitem value="#{generalBrowserBean.category.name}" url="#" />
+                        <p:menuitem value="Inicio" url="/views/home.xhtml" styleClass="loader-trigger" />
+                        <p:menuitem value="#{generalBrowserBean.category.name}" url="#" styleClass="loader-trigger" />
                     </p:breadCrumb>
 
                     <p:panel id="filters" styleClass="filtros browserFilters">
@@ -70,7 +70,7 @@
                                 <div class="ui-g-12 ui-md-6 ui-lg-2" style="padding: 0em">
 
                                     <p:commandButton actionListener="#{generalBrowserBean.createConcept}" icon="ui-icon-create"
-                                                     value="Crear Nuevo" type="submit" process="browserForm"
+                                                     value="Crear Nuevo" type="submit" process="browserForm" styleClass="loader-trigger"
                                                      rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">
                                     </p:commandButton>
 
@@ -106,25 +106,30 @@
                                         <div class="card overview">
                                             <div class="overview-content clearfix task-list">
                                                 <span class="overview-title">
-                                                    <p:link outcome="/views/concept/conceptEdit" value="#{concept.descriptionFavorite.term} " styleClass="myCustomLinkStyle">
+                                                    <p:link outcome="/views/concept/conceptEdit" value="#{concept.descriptionFavorite.term} "
+                                                            styleClass="myCustomLinkStyle loader-trigger">
                                                         <f:param name="idConcept" value="#{concept.id}" />
                                                     </p:link>
-                                                    <p:link rendered="#{concept.modeled}" outcome="/views/concept/conceptEdit" title="Modelado">
+                                                    <p:link rendered="#{concept.modeled}" outcome="/views/concept/conceptEdit" title="Modelado"
+                                                            styleClass="loader-trigger">
                                                         <i class="ui-icon ui-icon-public"/>
                                                         <f:param name="idConcept" value="#{concept.id}" />
                                                     </p:link>
-                                                    <p:link rendered="#{not concept.modeled}" outcome="/views/concept/conceptEdit" title="Borrador">
+                                                    <p:link rendered="#{not concept.modeled}" outcome="/views/concept/conceptEdit" title="Borrador"
+                                                            styleClass="loader-trigger">
                                                         <i class="fa fa-edit" style="color: #5C5C5C"/>
                                                         <f:param name="idConcept" value="#{concept.id}" />
                                                     </p:link>
 
                                                 </span>
                                                 <span class="overview-badge">
-                                                    <p:button outcome="/views/concept/conceptEdit" icon="fa fa-search fa-lg" title="Consultar" style="padding: 5px">
+                                                    <p:button outcome="/views/concept/conceptEdit" icon="fa fa-search fa-lg" title="Consultar" style="padding: 5px"
+                                                              styleClass="myCustomLinkStyle loader-trigger">
                                                         <f:param name="idConcept" value="#{concept.id}" />
                                                     </p:button>
 
-                                                    <p:button outcome="/views/concept/conceptEdit" icon="fa fa-edit fa-lg" title="Editar" style="padding: 5px">
+                                                    <p:button outcome="/views/concept/conceptEdit" icon="fa fa-edit fa-lg" title="Editar" style="padding: 5px"
+                                                              styleClass="myCustomLinkStyle loader-trigger">
                                                         <f:param name="idConcept" value="#{concept.id}" />
                                                     </p:button>
 

@@ -15,6 +15,7 @@
     <title>Semantikos Minsal</title>
     <h:outputScript name="js/ripple.js" library="ultima-layout" />
     <h:outputScript name="js/layout.js" library="ultima-layout" />
+    <h:outputScript name="js/jquery.toast.js" library="semantikos" />
 </h:head>
 
 <h:body styleClass="login-body">
@@ -46,7 +47,7 @@
             </div>
             <div class="ui-g-12">
                 <p:commandButton update="loginform" value="Ingresar" icon="ui-icon-person" actionListener="#{authenticationBean.login}"
-                                 oncomplete="changeCapthaSize();" />
+                                 oncomplete="changeCapthaSize();" styleClass="loader-trigger" />
                 <p:button outcome="/views/users/forgotPassword.xhtml" value="Olvido de Clave" icon="ui-icon-help" styleClass="secondary"/>
             </div>
         </div>
@@ -73,6 +74,21 @@
     </h:outputStylesheet>
 
     <script type="text/javascript">
+
+        $('.loader-trigger').click(function() {
+            $.Toast.showToast({
+                // toast message
+                "title": "Un momento por favor...",
+                // "success", "none", "error"
+                "icon": "Cargando",
+                // default: 1500
+                "duration": 10000
+            });
+        });
+
+        $(document).ready(function() {
+            $.Toast.hideToast();
+        });
 
         function changeCapthaSize() {
             var reCaptchaWidth = 302;

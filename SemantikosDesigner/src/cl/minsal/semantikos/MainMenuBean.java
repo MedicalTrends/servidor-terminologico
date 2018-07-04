@@ -125,6 +125,7 @@ public class MainMenuBean implements Serializable {
             item.setUrl("/views/concepts/"+category.getId());
             //item.setUrl("#");
             item.setIcon("fa fa-list-alt");
+            item.setStyleClass("loader-trigger");
             item.setId("rm_"+category.getName());
             //item.setCommand("#{mainMenuBean.redirect}");
             //item.setParam("idCategory",category.getId());
@@ -144,6 +145,7 @@ public class MainMenuBean implements Serializable {
         DefaultMenuItem item1 = new DefaultMenuItem("Descripciones");
         item1.setUrl("/views/descriptions");
         item1.setIcon("fa fa-edit");
+        item1.setStyleClass("loader-trigger");
         item1.setId("rm_descriptions");
         item1.setUpdate("mainContent");
         otherSubmenu.addElement(item1);
@@ -151,6 +153,7 @@ public class MainMenuBean implements Serializable {
         DefaultMenuItem item2 = new DefaultMenuItem("Fármacos");
         item2.setUrl("/views/drugs");
         item2.setIcon("fa fa-medkit");
+        item2.setStyleClass("loader-trigger");
         item2.setId("rm_drugs");
         item2.setUpdate("mainContent");
         otherSubmenu.addElement(item2);
@@ -158,6 +161,7 @@ public class MainMenuBean implements Serializable {
         DefaultMenuItem item3 = new DefaultMenuItem("Pendientes");
         item3.setUrl("/views/descriptions/pending");
         item3.setIcon("fa fa-exclamation-triangle");
+        item3.setStyleClass("loader-trigger");
         item3.setId("rm_pending");
         item3.setUpdate("mainContent");
         otherSubmenu.addElement(item3);
@@ -165,6 +169,7 @@ public class MainMenuBean implements Serializable {
         DefaultMenuItem item4 = new DefaultMenuItem("No Válidos");
         item4.setUrl("/views/descriptions/not-valid");
         item4.setIcon("fa fa-ban");
+        item4.setStyleClass("loader-trigger");
         item4.setId("rm_no_valids");
         item4.setUpdate("mainContent");
         otherSubmenu.addElement(item4);
@@ -179,6 +184,7 @@ public class MainMenuBean implements Serializable {
         DefaultMenuItem item5 = new DefaultMenuItem("Usuarios");
         item5.setUrl("/views/users");
         item5.setIcon("people");
+        item5.setStyleClass("loader-trigger");
         item5.setId("rm_users_web");
         item5.setUpdate("mainContent");
         adminSubmenu.addElement(item5);
@@ -186,6 +192,7 @@ public class MainMenuBean implements Serializable {
         DefaultMenuItem item6 = new DefaultMenuItem("Establecimientos");
         item6.setUrl("/views/institutions");
         item6.setIcon("fa fa-bank");
+        item6.setStyleClass("loader-trigger");
         item6.setId("rm_institutions");
         item6.setUpdate("mainContent");
         adminSubmenu.addElement(item6);
@@ -194,6 +201,7 @@ public class MainMenuBean implements Serializable {
         item7.setUrl("/views/refsets");
         item7.setIcon("fa fa-dropbox");
         item7.setId("rm_admin_refsets");
+        item7.setStyleClass("loader-trigger");
         item7.setUpdate("mainContent");
         adminSubmenu.addElement(item7);
 
@@ -201,11 +209,13 @@ public class MainMenuBean implements Serializable {
         item8.setUrl("/views/helpertables");
         item8.setIcon("fa fa-columns");
         item8.setId("rm_helpertables");
+        item8.setStyleClass("loader-trigger");
         item8.setUpdate("mainContent");
         adminSubmenu.addElement(item8);
 
         DefaultMenuItem item9 = new DefaultMenuItem("Snapshot");
         item9.setUrl("/views/snapshot/snapshot.xhtml");
+        item9.setStyleClass("loader-trigger");
         item9.setIcon("fa fa-list-alt");
         item9.setId("rm_snapshot");
         item9.setUpdate("mainContent");
@@ -214,6 +224,7 @@ public class MainMenuBean implements Serializable {
         DefaultMenuItem item10 = new DefaultMenuItem("Extracción Fármacos");
         item10.setUrl("/views/extract");
         item10.setIcon("fa fa-file-excel-o");
+        item10.setStyleClass("loader-trigger");
         item10.setId("rm_extraction");
         item10.setUpdate("mainContent");
         adminSubmenu.addElement(item10);
