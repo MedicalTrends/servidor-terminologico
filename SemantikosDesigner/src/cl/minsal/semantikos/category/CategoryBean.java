@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN_MAPEO_DE;
+import static java.util.Collections.EMPTY_LIST;
 
 /**
  * Created by des01c7 on 14-10-16.
@@ -63,6 +64,9 @@ public class CategoryBean {
     }
 
     public List<RelationshipDefinitionWeb> getRelationshipDefinitionsByCategory(Category category) {
+        if(category == null) {
+            return EMPTY_LIST;
+        }
         return relationshipDefinitionsWeb.get(category.getId());
     }
 

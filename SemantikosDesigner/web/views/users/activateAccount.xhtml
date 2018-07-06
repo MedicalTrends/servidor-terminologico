@@ -49,78 +49,103 @@
                 <i style="font-size: small">Actualice su contraseña a una que usted pueda recordar fácilmente</i>
                 <br/>
 
-                <p:panelGrid id="password" columns="2" columnClasses="label, value" styleClass="ui-panelgrid-blank" style="width: 100%">
+                <div class="ui-fluid">
 
-                    <p:outputLabel value="Contraseña Actual *" styleClass="#{accountActivation.passwordError} Wid20" />
+                    <div class="ui-g">
 
-                    <p:password id="default-password" value="#{accountActivation.password}" feedback="true"
-                                promptLabel="Ingrese su contraseña actual" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
-                                redisplay="true" autocomplete="off"
-                                styleClass="#{accountActivation.passwordError}">
-                    </p:password>
+                        <div class="ui-g-12 ui-md-6 ui-lg-6">
+                            <p:outputLabel value="Contraseña Actual *" styleClass="#{accountActivation.passwordError}" />
+                        </div>
 
-                    <p:outputLabel value="Nueva Contraseña *" styleClass="#{accountActivation.newPassword1Error} Wid20" />
+                        <div class="ui-g-12 ui-md-6 ui-lg-6">
+                            <p:password id="default-password" value="#{accountActivation.password}" feedback="true"
+                                        promptLabel="Ingrese su contraseña actual" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
+                                        redisplay="true" autocomplete="off"
+                                        styleClass="#{accountActivation.passwordError}">
+                            </p:password>
+                        </div>
 
-                    <p:password id="new-password" value="#{accountActivation.newPassword1}" feedback="true"
-                                promptLabel="Ingrese su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
-                                redisplay="true" autocomplete="off"
-                                styleClass="#{accountActivation.newPassword1Error}">
-                    </p:password>
+                        <div class="ui-g-12 ui-md-6 ui-lg-6">
+                            <p:outputLabel value="Nueva Contraseña *" styleClass="#{accountActivation.newPassword1Error}" />
+                        </div>
 
-                    <p:outputLabel value="Confirmar Contraseña *" styleClass="#{accountActivation.newPassword2Error} Wid20" />
+                        <div class="ui-g-12 ui-md-6 ui-lg-6">
+                            <p:password id="new-password" value="#{accountActivation.newPassword1}" feedback="true"
+                                        promptLabel="Ingrese su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
+                                        redisplay="true" autocomplete="off"
+                                        styleClass="#{accountActivation.newPassword1Error}">
+                            </p:password>
+                        </div>
 
-                    <p:password id="new-password2" value="#{accountActivation.newPassword2}" feedback="true"
-                                promptLabel="Confirme su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
-                                redisplay="true" autocomplete="off"
-                                styleClass="#{accountActivation.newPassword2Error}">
-                    </p:password>
+                        <div class="ui-g-12 ui-md-6 ui-lg-6">
+                            <p:outputLabel value="Confirmar Contraseña *" styleClass="#{accountActivation.newPassword2Error} Wid20" />
+                        </div>
 
-                </p:panelGrid>
-                <div style="text-align: right">
-                    <p:commandButton actionListener="#{accountActivation.checkPassword}"
-                                     style="width: auto;float: right"
-                                     value="Enviar" process="loginform"
-                                     update="growl, loginform, @(.headerPanel)">
-                    </p:commandButton>
+                        <div class="ui-g-12 ui-md-6 ui-lg-6">
+                            <p:password id="new-password2" value="#{accountActivation.newPassword2}" feedback="true"
+                                        promptLabel="Confirme su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
+                                        redisplay="true" autocomplete="off"
+                                        styleClass="#{accountActivation.newPassword2Error}">
+                            </p:password>
+                        </div>
+
+                    </div>
+
+                    <div class="ui-g">
+
+                        <div class="ui-g-12 ui-md-12 ui-lg-12">
+                            <p:commandButton actionListener="#{accountActivation.checkPassword}"
+                                             style="width: auto;float: right"
+                                             value="Enviar" process="loginform"
+                                             update="growl, loginform, @(.headerPanel)">
+                            </p:commandButton>
+                        </div>
+
+                    </div>
+
                 </div>
+
             </p:fieldset>
 
             <br />
 
             <p:outputPanel rendered="#{accountActivation.passwordValid}">
-                <p:fieldset legend="Paso 2: Preguntas de seguridad">
+                <p:fieldset legend="Paso 2: Preguntas de seguridad" styleClass="questions">
 
                     <i style="font-size: small">Si usted olvida su contraseña, puede responder 3 preguntas de seguridad para recuperarla</i>
 
-                    <h:dataTable id="questions" styleClass="questions" style="width: 100%;" value="#{accountActivation.questionList}"
-                                 var="question">
+                    <div class="ui-fluid">
 
-                        <h:column>
-                            <p:selectBooleanCheckbox value="#{question.selected}" disabled="#{accountActivation.user.answers.size() >= 3 and not question.selected}">
-                                <p:ajax listener="#{accountActivation.updateAnswers(question)}" update="@(.questions)" process="@this" />
-                            </p:selectBooleanCheckbox>
-                        </h:column>
+                        <div class="ui-g">
+                            <p:repeat value="#{accountActivation.questionList}" var="question">
+                                <div class="ui-g-4 ui-md-3 ui-lg-3">
+                                    <p:selectBooleanCheckbox value="#{question.selected}" disabled="#{accountActivation.user.answers.size() >= 3 and not question.selected}">
+                                        <p:ajax listener="#{accountActivation.updateAnswers(question)}" update="@(.questions)" process="@this" />
+                                    </p:selectBooleanCheckbox>
+                                </div>
 
-                        <h:column>
-                            <p:outputLabel value="#{question.question}" />
-                        </h:column>
+                                <div class="ui-g-9 ui-md-9 ui-lg-9">
+                                    <p:outputLabel value="#{question.question}" />
+                                </div>
 
-                        <h:column>
-                            <ui:repeat value="#{accountActivation.user.getAnswersByQuestion(question)}" var="answer">
-                                <p:inputText value="#{answer.answer}" autocomplete="off" styleClass="Wid90">
-                                    <p:ajax event="blur" process="@(.questions)" update="@(.questions)" />
-                                </p:inputText>
-                            </ui:repeat>
-                        </h:column>
+                                <div class="ui-g-#{question.selected?'12':'0'}">
+                                    <ui:repeat value="#{accountActivation.user.getAnswersByQuestion(question)}" var="answer">
+                                        <p:inputText value="#{answer.answer}" autocomplete="off" styleClass="Wid90">
+                                            <p:ajax event="blur" process="@(.questions)" update="@(.questions)" />
+                                        </p:inputText>
+                                    </ui:repeat>
+                                </div>
+                            </p:repeat>
+                        </div>
 
-                    </h:dataTable>
+                        <div class="ui-g">
+                            <p:commandButton actionListener="#{accountActivation.activate}"
+                                             style="width: auto; float: right"
+                                             value="Enviar" process="loginform"
+                                             update="growl, account-activation">
+                            </p:commandButton>
+                        </div>
 
-                    <div style="text-align: right">
-                        <p:commandButton actionListener="#{accountActivation.activate}"
-                                         style="width: auto; float: right"
-                                         value="Enviar" process="loginform"
-                                         update="growl, account-activation">
-                        </p:commandButton>
                     </div>
 
                 </p:fieldset>
