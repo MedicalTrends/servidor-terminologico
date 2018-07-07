@@ -439,4 +439,15 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
     public static User getDummyUser() {
         return dummyUser;
     }
+
+    public void setAnswer(Question question, Answer newAnswer) {
+        if(!getAnswersByQuestion(question).isEmpty()) {
+            for (Answer answer : getAnswersByQuestion(question)) {
+                getAnswers().remove(answer);
+            }
+        }
+        if(!newAnswer.getAnswer().trim().isEmpty()) {
+            getAnswers().add(newAnswer);
+        }
+    }
 }

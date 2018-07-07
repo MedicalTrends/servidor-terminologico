@@ -187,12 +187,21 @@ public class AccountActivation {
 
     public void updateAnswers(Question question) {
 
+        if(question.isSelected()) {
+            user.getAnswers().add(new Answer(question));
+        }
+        else {
+            user.getAnswers().removeAll(user.getAnswersByQuestion(question));
+        }
+
+        /*
         if(user.getAnswersByQuestion(question).isEmpty()) {
             user.getAnswers().add(new Answer(question));
         }
         else {
             user.getAnswers().removeAll(user.getAnswersByQuestion(question));
         }
+        */
     }
 
     public boolean isAccountActive() {

@@ -118,32 +118,36 @@
 
                         <div class="ui-g">
                             <p:repeat value="#{accountActivation.questionList}" var="question">
-                                <div class="ui-g-4 ui-md-3 ui-lg-3">
-                                    <p:selectBooleanCheckbox value="#{question.selected}" disabled="#{accountActivation.user.answers.size() >= 3 and not question.selected}">
-                                        <p:ajax listener="#{accountActivation.updateAnswers(question)}" update="@(.questions)" process="@this" />
+                                <div class="ui-g-2 ui-md-3 ui-lg-3">
+                                    <p:selectBooleanCheckbox value="#{question.selected}"
+                                                             disabled="#{accountActivation.user.answers.size() >= 3 and not question.selected}">
+                                        <p:ajax listener="#{accountActivation.updateAnswers(question)}" update="@(.questions)" />
                                     </p:selectBooleanCheckbox>
                                 </div>
 
-                                <div class="ui-g-9 ui-md-9 ui-lg-9">
+                                <div class="ui-g-10 ui-md-9 ui-lg-9">
                                     <p:outputLabel value="#{question.question}" />
                                 </div>
 
                                 <div class="ui-g-#{question.selected?'12':'0'}">
-                                    <ui:repeat value="#{accountActivation.user.getAnswersByQuestion(question)}" var="answer">
-                                        <p:inputText value="#{answer.answer}" autocomplete="off" styleClass="Wid90">
-                                            <p:ajax event="blur" process="@(.questions)" update="@(.questions)" />
+                                    <p:repeat value="#{accountActivation.user.getAnswersByQuestion(question)}" var="answer">
+                                        <p:inputText value="#{answer.answer}" autocomplete="off" styleClass="answers"
+                                                     rendered="#{question.selected}" onkeyup="listenOnKeyupEvent()">
+                                            <p:ajax event="blur" process="@this" update="@(.answers)" async="true" />
                                         </p:inputText>
-                                    </ui:repeat>
+                                    </p:repeat>
                                 </div>
                             </p:repeat>
                         </div>
 
                         <div class="ui-g">
-                            <p:commandButton actionListener="#{accountActivation.activate}"
-                                             style="width: auto; float: right"
-                                             value="Enviar" process="loginform"
-                                             update="growl, account-activation">
-                            </p:commandButton>
+                            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                <p:commandButton actionListener="#{accountActivation.activate}"
+                                                 style="width: auto; float: right"
+                                                 value="Enviar" process="loginform"
+                                                 update="growl, account-activation">
+                                </p:commandButton>
+                            </div>
                         </div>
 
                     </div>
@@ -165,7 +169,23 @@
 
     <h:outputStylesheet name="css/ripple.css" library="ultima-layout" />
     <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" />
-</h:body>
+
+        <script type="text/javascript">
+
+
+            function listenOnKeyupEvent() {
+                $('.answers').each( function() {
+                    $(this).trigger('keydown');
+                    $(this).trigger('input');
+                    //$('input[id$=search_input]').trigger('keydown');
+                    //$('input[id$=search_input]').trigger('input');
+                });
+            }
+
+        </script>
+
+
+    </h:body>
 
 </p:outputPanel>
 
