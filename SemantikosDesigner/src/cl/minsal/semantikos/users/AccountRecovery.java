@@ -7,12 +7,14 @@ import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
 import cl.minsal.semantikos.model.users.Answer;
 import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.model.users.UserFactory;
 import cl.minsal.semantikos.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -56,6 +58,9 @@ public class AccountRecovery {
 
     //@EJB
     AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
+
+    @ManagedProperty(value = "#{authenticationBean}")
+    private AuthenticationBean authenticationBean;
 
     @PostConstruct
     public void init() {
@@ -193,6 +198,11 @@ public class AccountRecovery {
         }
     }
 
+    public void refreshUserFactory() {
+        UserFactory.getInstance().setUsersById(userManager.getUserFactory().getUsersById());
+        authenticationBean.refreshLoggedUser(user);
+    }
+
     public void checkAnswers() {
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -276,5 +286,12 @@ public class AccountRecovery {
 
     }
 
+    public AuthenticationBean getAuthenticationBean() {
+        return authenticationBean;
+    }
+
+    public void setAuthenticationBean(AuthenticationBean authenticationBean) {
+        this.authenticationBean = authenticationBean;
+    }
 
 }

@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.audit.RefSetAuditAction;
 import cl.minsal.semantikos.model.users.Answer;
+import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.Question;
 import cl.minsal.semantikos.model.users.User;
 
@@ -24,5 +25,6 @@ public interface QuestionDAO {
 
     public void deleteUserAnswers(User user);
 
+    public void bindAnswerToUser(User user, Answer answer);
 
 }

@@ -1,9 +1,6 @@
 package cl.minsal.semantikos.kernel.components;
 
-import cl.minsal.semantikos.model.users.Answer;
-import cl.minsal.semantikos.model.users.Profile;
-import cl.minsal.semantikos.model.users.Question;
-import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.model.users.*;
 
 import javax.ejb.Remote;
 import java.util.List;
@@ -29,5 +26,15 @@ public interface QuestionManager {
      * @return Lista de instituciones
      */
     public List<Question> getAllQuestions();
+
+    /**
+     * Este método es responsable de asociar (agregar) un establecimiento a un usuario.
+     *
+     * @param user     El usuario al cual se agrega el establecimiento.
+     * @param answer El establecimiento que será asociado al usuario. Este puede o no estar persistido.
+     * @param _user        El usuario que agrega el establecimiento
+     * @return El establecimiento creada a partir de la asociacion.
+     */
+    public Answer bindAnswerToUser(User user, Answer answer, User _user);
 }
 

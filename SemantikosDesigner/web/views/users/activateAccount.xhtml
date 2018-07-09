@@ -21,6 +21,10 @@
 
     <h:body styleClass="login-body">
 
+    <f:facet name="last">
+        <h:outputStylesheet name="semantikos/css/customStyle.css"/>
+    </f:facet>
+
     <div class="card card-w-title login-panel ui-fluid" style="width: 100%; max-width: 600px">
 
         <div class="ui-g">
@@ -30,19 +34,19 @@
 
             <div class="ui-g-12" style="padding: 0px">
                 <p:outputPanel styleClass="headerPanel">
-                    <div style="text-align: center;font-size: 24px; color: dimgray">Activación de cuenta</div>
+                    <div style="text-align: center;font-size: 24px; color: #009688">Activación de cuenta</div>
                     <p:outputPanel rendered="#{not accountActivation.accountActive}">
-                        <div style="text-align: center; color: dimgray">Por favor, complete el siguiente formulario.</div>
+                        <div style="text-align: center; color: #607D8B">Por favor, complete el siguiente formulario.</div>
                     </p:outputPanel>
                     <p:outputPanel rendered="#{accountActivation.accountActive}">
-                        <div style="text-align: center; color: dimgray">Su cuenta ha sido activada!!.</div>
-                        <p:button outcome="/views/login.xhtml" value="Ir al login" styleClass="cyan-btn" icon="fa fa-arrow-left" style="width: auto"/>
+                        <div style="text-align: center; color: #4CAF50">Su cuenta ha sido activada!</div>
+                        <p:button outcome="/views/login.xhtml" value="Ir al login" styleClass="cyan-btn" icon="fa fa-arrow-left" style="width: auto; margin: 2em"/>
                     </p:outputPanel>
                 </p:outputPanel>
             </div>
         </div>
 
-        <h:form id="loginform" rendered="#{not accountActivation.accountActive}" style="margin-bottom: 40px">
+        <h:form id="loginform" rendered="#{not accountActivation.accountActive}" style="margin-bottom: 40px" onkeypress="return event.keyCode != 13">
             <p:growl id="growl" showDetail="true" showSummary="true"/>
             <p:fieldset legend="Paso 1: Cambio de contraseña">
 
@@ -58,7 +62,7 @@
                         </div>
 
                         <div class="ui-g-12 ui-md-6 ui-lg-6">
-                            <p:password id="default-password" value="#{accountActivation.password}" feedback="true"
+                            <p:password id="default-password" value="#{accountActivation.password}" feedback="true" inline="true"
                                         promptLabel="Ingrese su contraseña actual" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
                                         redisplay="true" autocomplete="off"
                                         styleClass="#{accountActivation.passwordError}">
@@ -70,7 +74,7 @@
                         </div>
 
                         <div class="ui-g-12 ui-md-6 ui-lg-6">
-                            <p:password id="new-password" value="#{accountActivation.newPassword1}" feedback="true"
+                            <p:password id="new-password" value="#{accountActivation.newPassword1}" feedback="true" inline="true"
                                         promptLabel="Ingrese su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
                                         redisplay="true" autocomplete="off"
                                         styleClass="#{accountActivation.newPassword1Error}">
@@ -82,7 +86,7 @@
                         </div>
 
                         <div class="ui-g-12 ui-md-6 ui-lg-6">
-                            <p:password id="new-password2" value="#{accountActivation.newPassword2}" feedback="true"
+                            <p:password id="new-password2" value="#{accountActivation.newPassword2}" feedback="true" inline="true"
                                         promptLabel="Confirme su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
                                         redisplay="true" autocomplete="off"
                                         styleClass="#{accountActivation.newPassword2Error}">
@@ -121,7 +125,7 @@
                                 <div class="ui-g-2 ui-md-3 ui-lg-3">
                                     <p:selectBooleanCheckbox value="#{question.selected}"
                                                              disabled="#{accountActivation.user.answers.size() >= 3 and not question.selected}">
-                                        <p:ajax listener="#{accountActivation.updateAnswers(question)}" update="@(.questions)" />
+                                        <p:ajax update="@(.questions)" listener="#{accountActivation.updateAnswers(question)}" />
                                     </p:selectBooleanCheckbox>
                                 </div>
 
@@ -130,12 +134,28 @@
                                 </div>
 
                                 <div class="ui-g-#{question.selected?'12':'0'}">
-                                    <p:repeat value="#{accountActivation.user.getAnswersByQuestion(question)}" var="answer">
-                                        <p:inputText value="#{answer.answer}" autocomplete="off" styleClass="answers"
-                                                     rendered="#{question.selected}" onkeyup="listenOnKeyupEvent()">
-                                            <p:ajax event="blur" process="@this" update="@(.answers)" async="true" />
-                                        </p:inputText>
-                                    </p:repeat>
+                                    <p:outputPanel styleClass="answers">
+                                        <p:outputPanel rendered="#{ question.selected and empty accountActivation.user.getAnswersByQuestion(question) }">
+                                            <p:inputText value="#{accountActivation.answerPlaceholder.answer}" autocomplete="off">
+                                                <p:ajax process="@(.answers)"
+                                                        update="@(.questions)" event="blur"
+                                                        listener="#{accountActivation.addOrChangeAnswer(question, accountActivation.answerPlaceholder)}" />
+                                            </p:inputText>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{ question.selected and not empty accountActivation.user.getAnswersByQuestion(question) }"
+                                                       styleClass="answers">
+                                            <p:repeat value="#{accountActivation.user.getAnswersByQuestion(question)}" var="answer">
+                                                <p:outputPanel styleClass="search">
+                                                    <p:inputText value="#{answer.answer}" autocomplete="off" readonly="true"/>
+                                                    <p:commandLink process="@(.answers)"
+                                                                   update="@(.questions)"
+                                                                   action="#{accountActivation.user.answers.remove(answer)}">
+                                                        <i class="fa fa-close fa-lg" />
+                                                    </p:commandLink>
+                                                </p:outputPanel>
+                                            </p:repeat>
+                                        </p:outputPanel>
+                                    </p:outputPanel>
                                 </div>
                             </p:repeat>
                         </div>
@@ -172,15 +192,6 @@
 
         <script type="text/javascript">
 
-
-            function listenOnKeyupEvent() {
-                $('.answers').each( function() {
-                    $(this).trigger('keydown');
-                    $(this).trigger('input');
-                    //$('input[id$=search_input]').trigger('keydown');
-                    //$('input[id$=search_input]').trigger('input');
-                });
-            }
 
         </script>
 

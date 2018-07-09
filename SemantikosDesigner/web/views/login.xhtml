@@ -24,7 +24,7 @@
 
         <h:form id="loginform">
 
-        <p:messages id="login-form-messages" showDetail="true" autoUpdate="true" closable="false" rendered="false" />
+        <p:messages id="login-form-messages" showDetail="true" autoUpdate="true" closable="false" rendered="false"  />
         <p:growl id="login-form-messages-2" showDetail="true" showSummary="true"  />
         <div class="ui-g">
             <div class="ui-g-12">
@@ -47,7 +47,7 @@
             </div>
             <div class="ui-g-12">
                 <p:commandButton update="loginform" value="Ingresar" icon="ui-icon-person" actionListener="#{authenticationBean.login}"
-                                 oncomplete="changeCapthaSize();" styleClass="loader-trigger" />
+                                 oncomplete="changeCapthaSize();hideLoader();listenOnClick();" styleClass="loader-trigger" />
                 <p:button outcome="/views/users/forgotPassword.xhtml" value="Olvido de Clave" icon="ui-icon-help" styleClass="secondary"/>
             </div>
         </div>
@@ -75,19 +75,25 @@
 
     <script type="text/javascript">
 
-        $('.loader-trigger').click(function() {
-            $.Toast.showToast({
-                // toast message
-                "title": "Un momento por favor...",
-                // "success", "none", "error"
-                "icon": "Cargando",
-                // default: 1500
-                "duration": 10000
+        function listenOnClick() {
+            $('.loader-trigger').click(function() {
+                $.Toast.showToast({
+                    // toast message
+                    "title": "Un momento por favor...",
+                    // "success", "none", "error"
+                    "icon": "Cargando",
+                    // default: 1500
+                    "duration": 10000
+                });
             });
-        });
+        }
+
+        function hideLoader() {
+            $.Toast.hideToast();
+        }
 
         $(document).ready(function() {
-            $.Toast.hideToast();
+            listenOnClick();
         });
 
         function changeCapthaSize() {

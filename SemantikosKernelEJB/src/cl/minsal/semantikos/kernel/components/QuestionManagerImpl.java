@@ -2,10 +2,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.ProfileDAO;
 import cl.minsal.semantikos.kernel.daos.QuestionDAO;
-import cl.minsal.semantikos.model.users.Answer;
-import cl.minsal.semantikos.model.users.Profile;
-import cl.minsal.semantikos.model.users.Question;
-import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.model.users.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -37,6 +34,18 @@ public class QuestionManagerImpl implements QuestionManager {
     @Override
     public List<Question> getAllQuestions() {
         return questionDAO.getAllQuestions();
+    }
+
+    @Override
+    public Answer bindAnswerToUser(User user, Answer answer, User _user) {
+
+        questionDAO.bindAnswerToUser(user, answer);
+
+        /* Registrar en el Historial si es preferida (Historial BR) */
+        auditManager.recordUserActivation(user, _user);
+
+        /* Se retorna el establecimiento persistido */
+        return answer;
     }
 
 }

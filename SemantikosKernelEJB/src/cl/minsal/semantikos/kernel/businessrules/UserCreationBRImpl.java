@@ -214,10 +214,6 @@ public class UserCreationBRImpl implements UserCreationBR {
         UserFactory.getInstance().refresh(user);
     }
 
-    public String getURLWithContextPath(HttpServletRequest request) {
-        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-    }
-
     @Override
     public void verifyPreConditions(User user) throws BusinessRuleException {
         br301UniqueDocumentNumber(user);
