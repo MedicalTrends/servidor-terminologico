@@ -89,7 +89,7 @@
             <p:column headerText="Estado">
                 <h:outputText value="#{rel.target.modeled}"/>
             </p:column>
-            <p:column headerText="Eliminar" style="width:60px;text-align: center;">
+            <p:column headerText="Eliminar" style="text-align: center;">
                 <p:commandButton icon="fa fa-trash" title="Eliminar"
                                  action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                  update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
@@ -217,7 +217,7 @@
                 </p:outputPanel>
             </p:columns>
 
-            <p:column headerText="Eliminar" style="width:60px;text-align: center;">
+            <p:column headerText="Eliminar" style="text-align: center;">
                 <p:commandButton icon="fa fa-trash" title="Eliminar"
                                  action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                  update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"

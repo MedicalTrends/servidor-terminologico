@@ -3,6 +3,8 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:ce="http://java.sun.com/jsp/jstl/core"
                 template="/WEB-INF/template.xhtml">
 
     <ui:define name="content">
@@ -85,7 +87,7 @@
                         <p:dataTable
                                 widgetVar="table-data-edit-wvar"
                                 id="table-data-edit" styleClass="table-data-edit"
-                                var="row"
+                                var="row" rendered="false"
                                 reflow="true"
                                 rowKey="#{row.id}" value="#{helperTableEditBean.helperTableSelected.rows}"
                                 editable="true" paginator="true" rows="30">
@@ -216,11 +218,80 @@
                                 <h:outputText value="#{row.lastEditUsername}"/>
                             </p:column>
 
-                            <p:column headerText="Acción" style="min-width: 150px; text-align: center;">
+                            <p:column headerText="Acción" style=" text-align: center;">
                                 <p:rowEditor editTitle="Editar" cancelTitle="Cancelar" saveTitle="Guardar"/>
                             </p:column>
 
                         </p:dataTable>
+
+                        <pe:sheet id="sheet" widgetVar="sheetWidget" value="#{helperTableEditBean.helperTableSelected.rows}"
+                                  var="row"
+                                  height="400" rowKey="#{row.id}" showRowHeaders="true"
+                                  resizableCols="true" resizableRows="false"
+                                  sortBy="#{row.id}" sortOrder="ascending">
+
+                            <f:facet name="header">
+                                <h:outputText value="#{helperTableEditBean.helperTableSelected.description}" style="color: white" />
+                            </f:facet>
+
+                            <f:facet name="footer">
+                                <h:outputText id="footer" value="#{helperTableEditBean.helperTableSelected.rows.size()} Records" style="color: white" />
+                            </f:facet>
+
+                            <pe:sheetcolumn headerText="CREACIÓN" value="#{row.creationDate}" colType="date" dateFormat="DD/MM/YYYY" readOnly="true">
+                                <f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+                            </pe:sheetcolumn>
+
+                            <pe:sheetcolumn headerText="CREADO POR" value="#{row.creationUsername}" colType="text" readOnly="true" />
+
+                            <pe:sheetcolumn headerText="EDITADO POR" value="#{row.lastEditUsername}" colType="text" readOnly="true" />
+
+                            <pe:sheetcolumn headerText="ULTIMA EDICIÓN" value="#{row.lastEditDate}" colType="date" dateFormat="DD/MM/YYYY" readOnly="true" />
+
+                            <pe:sheetcolumn headerText="VIGENTE" value="#{row.valid}" colType="checkbox" />
+
+                            <pe:sheetcolumn headerText="DESCRIPCIÓN" value="#{row.description}" colType="text"/>
+
+                            <ce:forEach items="#{helperTableEditBean.helperTableSelected.columns}" var="column" varStatus="status">
+
+                                <pe:sheetcolumn readonly="true"
+                                                headerText="#{column.description}"
+                                                value="#{row.getCellByColumnName(column.name).stringValue}"
+                                                readonlyCell="#{true}" rendered="#{column.helperTableDataTypeId eq 1}"
+                                                colType="text">
+                                </pe:sheetcolumn>
+
+                                <pe:sheetcolumn readonly="true"
+                                                headerText="#{column.description}"
+                                                value="#{row.getCellByColumnName(column.name).booleanValue}"
+                                                readonlyCell="#{true}" rendered="#{column.helperTableDataTypeId eq 2}"
+                                                colType="checkbox">
+                                </pe:sheetcolumn>
+
+                                <pe:sheetcolumn readonly="true"
+                                                headerText="#{column.description}"
+                                                value="#{row.getCellByColumnName(column.name).foreignKeyValue}"
+                                                readonlyCell="#{true}" rendered="#{column.helperTableDataTypeId eq 3}"
+                                                colType="numeric">
+                                </pe:sheetcolumn>
+
+                                <pe:sheetcolumn readonly="true"
+                                                headerText="#{column.description}"
+                                                value="#{row.getCellByColumnName(column.name).intValue}"
+                                                readonlyCell="#{true}" rendered="#{column.helperTableDataTypeId eq 4}"
+                                                colType="numeric">
+                                </pe:sheetcolumn>
+
+                                <pe:sheetcolumn readonly="true"
+                                                headerText="#{column.description}"
+                                                value="#{row.getCellByColumnName(column.name).dateValue}"
+                                                readonlyCell="#{true}" rendered="#{column.helperTableDataTypeId eq 5}"
+                                                colType="date">
+                                </pe:sheetcolumn>
+                            </ce:forEach>
+
+                        </pe:sheet>
+
                     </p:outputPanel>
 
                     <p:dialog id="dialog-concept-related"

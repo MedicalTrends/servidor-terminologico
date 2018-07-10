@@ -27,7 +27,6 @@ public class HelperTableData implements Serializable {
     private HelperTableRow row;
     private HelperTableColumn column;
 
-
     public long getId() {
         return id;
     }

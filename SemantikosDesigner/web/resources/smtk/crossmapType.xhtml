@@ -239,12 +239,11 @@
                 <h:outputText value="#{relationship.getDateCreationFormat()}"/>
             </p:column>
 
-            <p:column headerText="Acción" style="width: 4%" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}">
+            <p:column headerText="Acción" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}" style="text-align: center;">
                 <p:commandButton
                         icon="fa fa-trash"
                         title="Eliminar"
                         update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                        style="float: right"
                         process="@this"
                         immediate="true"
                         actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
@@ -291,12 +290,11 @@
                 <h:outputText value="#{relationship.getDateCreationFormat()}"/>
             </p:column>
 
-            <p:column headerText="Acción" style="width: 4%" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}">
+            <p:column headerText="Acción" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}" style="text-align: center;">
                 <p:commandButton
                         icon="fa fa-trash"
                         title="Eliminar"
                         update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                        style="float: right"
                         process="@this"
                         immediate="true"
                         actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"

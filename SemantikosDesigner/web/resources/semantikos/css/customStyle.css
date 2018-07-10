@@ -297,3 +297,7 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     font-size: 18px !important;
     text-decoration: underline !important;
 }
+
+.nano {
+    height: 90% !important;
+}

@@ -86,7 +86,7 @@
     <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-servlet:3.4.1.Final" level="project" />
     <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-config-prettyfaces:3.4.1.Final" level="project" />
     <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-integration-faces:3.4.1.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.primefaces.extensions:primefaces-extensions:6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.primefaces.extensions:primefaces-extensions:6.2.7" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.5" level="project" />
     <orderEntry type="library" name="Maven: org.apache.poi:poi:3.16" level="project" />

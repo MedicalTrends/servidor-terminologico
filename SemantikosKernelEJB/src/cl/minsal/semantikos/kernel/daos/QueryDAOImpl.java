@@ -73,8 +73,6 @@ public class QueryDAOImpl implements QueryDAO {
 
         List<Object> queryResult = new ArrayList<Object>();
 
-        //ConnectionBD connect = new ConnectionBD();
-
         List<Description> descriptions; //= descriptionDAO.searchDescriptionsSuggested(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
 
         String QUERY = "";
@@ -157,8 +155,6 @@ public class QueryDAOImpl implements QueryDAO {
 
         long resultCount = 0;
 
-        //ConnectionBD connect = new ConnectionBD();
-
         String QUERY = "";
 
         if(  query instanceof  GeneralQuery )
@@ -203,8 +199,6 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public List<RelationshipDefinition> getSearchableAttributesByCategory(Category category) {
 
-        //ConnectionBD connect = new ConnectionBD();
-
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_definition(?,?); end;";
 
         List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
@@ -243,7 +237,6 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public List<RelationshipDefinition> getSecondOrderSearchableAttributesByCategory(Category category) {
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_second_order_view_info_by_relationship_definition(?,?); end;";
 
@@ -283,7 +276,6 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public List<RelationshipAttributeDefinition> getSecondDerivateSearchableAttributesByCategory(Category category) {
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_attribute_definition(?,?); end;";
 
@@ -328,7 +320,6 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public List<QueryColumn> getShowableAttributesByCategory(Category category) {
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_definition(?,?); end;";
 
@@ -371,7 +362,6 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public List<RelationshipDefinition> getSecondOrderShowableAttributesByCategory(Category category) {
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_second_order_view_info_by_relationship_definition(?,?); end;";
 
@@ -412,8 +402,6 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public boolean getCustomFilteringValue(Category category) {
 
-        //ConnectionBD connect = new ConnectionBD();
-
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_category(?); end;";
 
         boolean customFilteringValue = false;
@@ -446,8 +434,6 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public boolean getShowableRelatedConceptsValue(Category category) {
 
-        //ConnectionBD connect = new ConnectionBD();
-
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_category(?); end;";
 
         boolean showableRelatedConcepts = false;
@@ -479,8 +465,6 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public boolean getShowableValue(Category category) {
-
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_category(?); end;";
 
@@ -515,8 +499,6 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public boolean getMultipleFilteringValue(Category category, RelationshipDefinition relationshipDefinition) {
 
-        //ConnectionBD connect = new ConnectionBD();
-
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_definition(?,?); end;";
 
         boolean multipleFilteringValue = false;
@@ -550,8 +532,6 @@ public class QueryDAOImpl implements QueryDAO {
     @Override
     public int getCompositeValue(Category category, RelationshipDefinition relationshipDefinition) {
 
-        //ConnectionBD connect = new ConnectionBD();
-
         String sql = "begin ? := stk.stk_pck_query.get_view_info_by_relationship_definition(?,?); end;";
 
         int compositeValue = -1;
@@ -582,8 +562,6 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public List<Relationship> getRelationshipsByColumns(ConceptSMTK conceptSMTK, Query query) {
-
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship.get_relationships_by_source_concept_id(?); end;";
 
@@ -617,8 +595,6 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public List<Relationship> getRelationshipsBySecondOrderColumns(ConceptSMTK conceptSMTK, Query query) {
-
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_relationship.get_relationships_by_source_concept_id(?); end;";
 

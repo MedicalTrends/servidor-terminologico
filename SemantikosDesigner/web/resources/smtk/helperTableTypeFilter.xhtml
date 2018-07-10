@@ -31,7 +31,7 @@
                              autoWidth="false"
                              style="width: 100%"
                              value="#{generalBrowserBean.helperTableRecord}"
-                             rendered="#{cc.attrs.targets.isEmpty() and not cc.attrs.relationshipDefinition.ATC}"
+                             rendered="#{cc.attrs.targets.isEmpty() and not cc.attrs.relationshipDefinition.attributeHelperTableCode}"
                              var="r"
                              filter="true"
                              converter="omnifaces.SelectItemsConverter">
@@ -59,7 +59,7 @@
                 <!---->
             </p:selectOneMenu>
 
-            <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() and cc.attrs.relationshipDefinition.ATC }" styleClass="search">
+            <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() and cc.attrs.relationshipDefinition.attributeHelperTableCode }" styleClass="search">
 
                 <p:autoComplete id="findHTRecords2" scrollHeight="200"
                                 completeMethod="#{helperTableBean.getRecordSearchInput}"
@@ -77,11 +77,16 @@
                     <!-- Parámetros del validador -->
                     <f:attribute name="helperTableRecord" value="#{generalBrowserBean.helperTableRecord}"  />
                     <!---->
-                    <p:column>
+                    <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}">
                         <h:outputText value="#{record.getCellByColumnName('codigo atc')}" />
                     </p:column>
-                    <p:column>
+
+                    <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}">
                         <h:outputText value="#{record.getCellByColumnName('descripcion completa')}"/>
+                    </p:column>
+
+                    <p:column rendered="#{cc.attrs.relationshipDefinition.DCI}">
+                        <h:outputText value="#{record.description}"/>
                     </p:column>
 
                     <p:ajax event="itemSelect"
@@ -96,7 +101,7 @@
 
             </p:outputPanel>
 
-                        <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() }" styleClass="search">
+            <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() }" styleClass="search">
 
                 <p:repeat  value="#{cc.attrs.targets}"
                            offset="0"

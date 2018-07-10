@@ -81,6 +81,10 @@ public class CategoryBean {
 
     public List<RelationshipDefinitionWeb> getCrossmapTypeDefinitionsByCategory(Category category) {
 
+        if(category == null) {
+            return EMPTY_LIST;
+        }
+
         List<RelationshipDefinitionWeb> relationshipDefinitions = new ArrayList();
 
         for (RelationshipDefinitionWeb relationshipDefinitionWeb : relationshipDefinitionsWeb.get(category.getId())) {
@@ -99,6 +103,10 @@ public class CategoryBean {
      */
     public List<RelationshipDefinitionWeb> getSMTKDefinitionsByCategory(Category category) {
 
+        if(category == null) {
+            return EMPTY_LIST;
+        }
+
         List<RelationshipDefinitionWeb> smtkRelationshipDefinitions = new ArrayList<>();
 
         for (RelationshipDefinitionWeb relationshipDefinition : getRelationshipDefinitionsByCategory(category)) {
@@ -110,6 +118,10 @@ public class CategoryBean {
     }
 
     public List<RelationshipDefinitionWeb> getSnomedDefinitionsByCategory(Category category) {
+
+        if(category == null) {
+            return EMPTY_LIST;
+        }
 
         List<RelationshipDefinitionWeb> snomedRelationshipDefinitions = new ArrayList<>();
 

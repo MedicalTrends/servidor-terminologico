@@ -331,6 +331,13 @@ public class RelationshipDefinition implements Serializable {
         return false;
     }
 
+    public boolean isAttributeHelperTableCode() {
+
+        return this.isATC() || this.isDCI();
+
+    }
+
+
     public boolean hasAttributePP() {
 
         for (RelationshipAttributeDefinition relationshipAttributeDefinition : relationshipAttributeDefinitions) {

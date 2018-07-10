@@ -325,7 +325,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         String sql = "begin ? := stk.stk_pck_helper_table.get_helper_table_row(?); end;";
 
-        HelperTableRow helperTableRow;
+        HelperTableRow helperTableRow = null;
 
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
@@ -339,11 +339,14 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
             if (rs.next()) {
                 helperTableRow = createHelperTableRowFromResultSet(rs);
-            } else {
+            }
+            /* Puede darse este caso perfectamente sin ser una excepcion
+            else {
                 String errorMsg = "Un error imposible acaba de ocurrir";
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
+            */
             rs.close();
             call.close();
             connection.close();

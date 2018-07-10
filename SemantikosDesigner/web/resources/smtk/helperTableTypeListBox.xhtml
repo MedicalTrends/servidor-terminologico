@@ -342,12 +342,11 @@
                 <smtk:helperTableTypeAttributeCell attribute="#{attribute.relationshipAttributeDefinition}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
             </p:columns>
 
-            <p:column style="width: 4%">
+            <p:column style="text-align: center;" headerText="Eliminar">
                 <p:commandButton
                         icon="fa fa-trash"
                         title="Eliminar"
                         update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                        style="float: right"
                         process="@this"
                         immediate="true"
                         actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
@@ -431,12 +430,11 @@
                 <h:outputText value="#{relationship.target.getColumnValue(column)}" />
             </p:columns>
 
-            <p:column style="width: 4%">
+            <p:column style="text-align: center" headerText="Eliminar">
                 <p:commandButton
                         icon="fa fa-trash"
                         title="Eliminar"
                         update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.relationships_#{cc.attrs.relationshipDefinition.id})"
-                        style="float: right"
                         process="@this"
                         immediate="true"
                         actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"

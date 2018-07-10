@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 
 public class HelperTableDataType implements Serializable {
+
     private long id;
     private String name;
 

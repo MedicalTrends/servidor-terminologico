@@ -236,41 +236,44 @@
 
                         <br/>
 
-                        <div style="text-align:right;">
+                        <div class="ui-fluid ui-g">
 
-                            <p:commandButton actionListener="#{conceptBean.saveConcept}" icon="fa fa-check"
-                                             value="Guardar" style="width: auto"
-                                             update="growl, mainForm, @(.breadUpdate)">
-                            </p:commandButton>
+                            <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right">
 
-                            <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"
-                                             value="Eliminar" type="submit" process="mainForm"
-                                             style="width: auto"
-                                             rendered="#{conceptBean.concept.persistent and not conceptBean.concept.modeled}"
-                                             update="growl, mainForm">
-                                <p:confirm header="Confirmar Acción" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
-                            </p:commandButton>
+                                <p:commandButton actionListener="#{conceptBean.saveConcept}" icon="fa fa-check"
+                                                 value="Guardar" style="width: auto"
+                                                 update="growl, mainForm, @(.breadUpdate)">
+                                </p:commandButton>
 
-                            <!-- Botón para Trasladar el concepto modelado -->
-                            <smtk:trasnferConcept rendered="#{conceptBean.concept.modeled}" conceptSMTK="#{conceptBean.concept}"/>
+                                <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"
+                                                 value="Eliminar" type="submit" process="mainForm" style="width: auto"
+                                                 rendered="#{conceptBean.concept.persistent and not conceptBean.concept.modeled}"
+                                                 update="growl, mainForm">
+                                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
+                                </p:commandButton>
 
-                            <p:commandButton actionListener="#{conceptBean.cancelConcept}" icon="fa fa-undo"
-                                             value="Deshacer" type="submit" process="mainForm" style="width: auto"
-                                             update="growl, mainForm">
-                                <p:confirm header="Confirmar Acción"
-                                           message="¿Desea deshacer los cambios realizados en esta sesión?"
-                                           icon="ui-icon-alert"/>
-                            </p:commandButton>
+                                <!-- Botón para Trasladar el concepto modelado -->
+                                <smtk:trasnferConcept rendered="#{conceptBean.concept.modeled}" conceptSMTK="#{conceptBean.concept}"/>
 
-                            <smtk:export-xls rendered="#{conceptBean.concept.modeled}" />
+                                <p:commandButton actionListener="#{conceptBean.cancelConcept}" icon="fa fa-undo"
+                                                 value="Deshacer" type="submit" process="mainForm" style="width: auto"
+                                                 update="growl, mainForm">
+                                    <p:confirm header="Confirmar Acción"
+                                               message="¿Desea deshacer los cambios realizados en esta sesión?"
+                                               icon="ui-icon-alert"/>
+                                </p:commandButton>
 
-                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
-                                                 icon="ui-icon-check"/>
-                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
-                                                 icon="ui-icon-close"/>
-                            </p:confirmDialog>
+                                <smtk:export-xls rendered="#{conceptBean.concept.modeled}" />
+                            </div>
+
                         </div>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
+                                             icon="ui-icon-check"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                                             icon="ui-icon-close"/>
+                        </p:confirmDialog>
 
                     </h:form>
 
