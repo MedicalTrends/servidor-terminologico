@@ -6,24 +6,31 @@ import cl.minsal.semantikos.kernel.businessrules.HelperTableSearchBR;
 import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.exceptions.RowInUseException;
 import cl.minsal.semantikos.model.helpertables.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.data.PageEvent;
+import org.primefaces.extensions.component.sheet.Sheet;
+import org.primefaces.extensions.event.SheetEvent;
+import org.primefaces.extensions.model.sheet.SheetUpdate;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.*;
@@ -63,8 +70,12 @@ public class HelperTableEditBean implements Serializable {
 
     String selectedColumnValue;
 
+    List<SelectItem> filterOptionsBoolean = new ArrayList<>();
+
     @PostConstruct
     protected void initialize() {
+        filterOptionsBoolean.add(new SelectItem(true));
+        filterOptionsBoolean.add(new SelectItem(false));
     }
 
     public void createOrUpdateHelperTable() {
@@ -510,4 +521,40 @@ public class HelperTableEditBean implements Serializable {
             createOrUpdateHelperTable();
         }
     }
+
+    public List<SelectItem> getFilterOptionsBoolean() {
+        return filterOptionsBoolean;
+    }
+
+    public void setFilterOptionsBoolean(List<SelectItem> filterOptionsBoolean) {
+        this.filterOptionsBoolean = filterOptionsBoolean;
+    }
+
+    public void cellChangeEvent(final SheetEvent event) {
+        final Sheet sheet = event.getSheet();
+        final List<SheetUpdate> updates = sheet.getUpdates();
+        // A SheetUpdate exists for each column updated, the same row may
+        // appear more than once. For this reason we will track those we already persisted
+        final HashSet<HelperTableRow> processed = new HashSet<HelperTableRow>();
+
+        User user = authenticationBean.getLoggedUser();
+
+        int rowUpdates = 0;
+        for (final SheetUpdate update : updates) {
+            final HelperTableRow helperTableRow = (HelperTableRow) update.getRowData();
+            if (processed.contains(helperTableRow)) {
+                continue;
+            }
+            try {
+                manager.updateRow(helperTableRow, user.getUsername());
+            } catch (RowInUseException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Registro " + helperTableRow.getDescription() + " actualizado.");
+            rowUpdates++;
+        }
+        sheet.commitUpdates();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Actualización exitosa", Integer.toString(rowUpdates) + " registros actualizados"));
+    }
+
 }

@@ -49,7 +49,6 @@
                                                 var="concept"
                                                 value="#{conceptBean.conceptSelected}"
                                                 itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
-                                                disabled="#{not cc.attrs.concept.editable}"
                                                 rendered="#{conceptBean.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size()==0}">
 
                                     <!-- Parámetros del validador -->

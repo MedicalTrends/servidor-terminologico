@@ -28,17 +28,18 @@
 
         <p:growl id="growl" showDetail="true" showSummary="true"/>
 
-        <h:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" width="100%" id="ispfetcherexisteinputs">
-
-            <p:outputLabel for="ispexistebooleanbutton">Existe ISP</p:outputLabel>
-
-            <p:selectBooleanButton  id="ispexistebooleanbutton" value="#{ispbean.existe}" offLabel="No" onLabel="Si" onIcon="ui-icon-check" offIcon="ui-icon-close" >
-                <p:ajax async="false" listener="#{ispbean.updateOptionality(cc.attrs.relationshipDefinition)}"
-                        update="helperTableTypeCollectionISP" process="ispexistebooleanbutton" />
-                <!-- Parámetros del buscador -->
-            </p:selectBooleanButton>
-
-        </h:panelGrid>
+        <div class="ui-fluid ui-g">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                <p:outputLabel for="ispexistebooleanbutton" value="Existe ISP"/>
+            </div>
+            <div class="ui-g-12 ui-md-8 ui-lg-3">
+                <p:selectBooleanButton  id="ispexistebooleanbutton" value="#{ispbean.existe}" offLabel="No" onLabel="Si" onIcon="ui-icon-check" offIcon="ui-icon-close" >
+                    <p:ajax async="false" listener="#{ispbean.updateOptionality(cc.attrs.relationshipDefinition)}"
+                            update="helperTableTypeCollectionISP" process="ispexistebooleanbutton" />
+                    <!-- Parámetros del buscador -->
+                </p:selectBooleanButton>
+            </div>
+        </div>
 
         <p:spacer />
 

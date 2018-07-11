@@ -415,6 +415,8 @@
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      reflow="true">
 
+            <p:growl id="growl2" showDetail="true" showSummary="true"/>
+
             <p:column headerText="Descripción"
                        var="column"
                        columnIndexVar="colIndex" rendered="#{ not cc.attrs.relationshipDefinition.bioequivalente}">

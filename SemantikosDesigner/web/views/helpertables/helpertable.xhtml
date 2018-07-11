@@ -5,6 +5,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions"
                 xmlns:ce="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/WEB-INF/template.xhtml">
 
     <ui:define name="content">
@@ -33,54 +34,9 @@
 
                     <p:growl id="messages" showDetail="true" autoUpdate="true" escape="false"/>
 
+                    <br/>
+
                     <p:outputPanel styleClass="edit-data-panel">
-
-                        <div class="ui-fluid">
-
-                            <div class="ui-g">
-
-                                <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                    <p:outputLabel value="ID"/>
-                                </div>
-
-                                <div class="ui-g-12 ui-md-8 ui-lg-4">
-                                    <p:inputText placeholder="ID" type="number" value="#{helperTableEditBean.id}" title="Búsqueda por ID">
-                                        <p:ajax event="keyup" update="@(.table-data-edit)"
-                                                process="@this"
-                                                listener="#{helperTableEditBean.getRecordSearchID(helperTableEditBean.helperTableSelected,helperTableEditBean.id)}"/>
-                                    </p:inputText>
-                                </div>
-
-                                <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                    <p:outputLabel value="Descripción"/>
-                                </div>
-
-                                <div class="ui-g-12 ui-md-8 ui-lg-4">
-                                    <p:inputText placeholder="ID" type="number" value="#{helperTableEditBean.id}" title="Búsqueda por ID">
-                                        <p:ajax event="keyup" update="@(.table-data-edit)"
-                                                process="@this"
-                                                listener="#{helperTableEditBean.getRecordSearchID(helperTableEditBean.helperTableSelected,helperTableEditBean.id)}"/>
-                                    </p:inputText>
-                                </div>
-
-                                <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                    <p:outputLabel value="Vigencia"/>
-                                </div>
-
-                                <div class="ui-g-12 ui-md-8 ui-lg-4">
-                                    <p:selectOneMenu value="#{helperTableEditBean.valid}" title="Búsqueda por vigencia">
-                                        <f:selectItem itemLabel="Seleccione una opción" />
-                                        <f:selectItem itemLabel="Si" itemValue="si"/>
-                                        <f:selectItem itemLabel="No" itemValue="no"/>
-                                        <p:ajax event="itemSelect" update="@(.table-data-edit)"
-                                                process="@this"
-                                                listener="#{helperTableEditBean.getRecordSearchValid(helperTableEditBean.helperTableSelected,helperTableEditBean.valid)}"/>
-                                    </p:selectOneMenu>
-                                </div>
-
-                            </div>
-
-                        </div>
 
                         <p:remoteCommand name="onRowEditCancel#{varStatus1.index}"
                                          update="@(.table-data-edit-#{varStatus1.index})"/>
@@ -238,54 +194,99 @@
                                 <h:outputText id="footer" value="#{helperTableEditBean.helperTableSelected.rows.size()} Records" style="color: white" />
                             </f:facet>
 
-                            <pe:sheetcolumn headerText="CREACIÓN" value="#{row.creationDate}" colType="date" dateFormat="DD/MM/YYYY" readOnly="true">
-                                <f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+                            <p:ajax event="change" listener="#{helperTableEditBean.cellChangeEvent}" />
+
+                            <pe:sheetcolumn headerText="CREACIÓN"
+                                            value="#{row.creationDate}"
+                                            dateFormat="DD/MM/YYYY"
+                                            readonlyCell="true"
+                                            sortBy="#{row.creationDate}"
+                                            filterBy="#{row.creationDate}"
+                                            colType="date">
+                                <f:convertDateTime type="date" pattern="dd/MM/yyyy HH:MM:ss.SSS"/>
                             </pe:sheetcolumn>
 
-                            <pe:sheetcolumn headerText="CREADO POR" value="#{row.creationUsername}" colType="text" readOnly="true" />
+                            <pe:sheetcolumn headerText="CREADO POR"
+                                            value="#{row.creationUsername}"
+                                            colType="text"
+                                            readonlyCell="true"
+                                            sortBy="#{row.creationUsername}"
+                                            filterBy="#{row.creationUsername}"/>
 
-                            <pe:sheetcolumn headerText="EDITADO POR" value="#{row.lastEditUsername}" colType="text" readOnly="true" />
+                            <pe:sheetcolumn headerText="EDITADO POR"
+                                            value="#{row.lastEditUsername}"
+                                            colType="text"
+                                            readonlyCell="true"
+                                            sortBy="#{row.lastEditUsername}"
+                                            filterBy="#{row.lastEditUsername}"/>
 
-                            <pe:sheetcolumn headerText="ULTIMA EDICIÓN" value="#{row.lastEditDate}" colType="date" dateFormat="DD/MM/YYYY" readOnly="true" />
+                            <pe:sheetcolumn headerText="ULTIMA EDICIÓN"
+                                            value="#{row.lastEditDate}"
+                                            sortBy="#{row.creationDate}"
+                                            filterBy="#{row.creationDate}"
+                                            colType="date"
+                                            dateFormat="DD/MM/YYYY"
+                                            readonlyCell="true">
+                                <f:convertDateTime type="date" pattern="dd/MM/yyyy HH:MM:ss"/>
+                            </pe:sheetcolumn>
 
-                            <pe:sheetcolumn headerText="VIGENTE" value="#{row.valid}" colType="checkbox" />
+                            <pe:sheetcolumn headerText="VIGENTE"
+                                            value="#{row.valid}"
+                                            colType="checkbox"
+                                            filterOptions="#{helperTableEditBean.filterOptionsBoolean}"
+                                            sortBy="#{row.valid}"
+                                            filterBy="#{row.valid}"/>
 
-                            <pe:sheetcolumn headerText="DESCRIPCIÓN" value="#{row.description}" colType="text"/>
+                            <pe:sheetcolumn headerText="DESCRIPCIÓN"
+                                            value="#{row.description}"
+                                            colType="text"
+                                            sortBy="#{row.description}"
+                                            filterBy="#{row.description}"/>
 
                             <ce:forEach items="#{helperTableEditBean.helperTableSelected.columns}" var="column" varStatus="status">
 
                                 <pe:sheetcolumn readonly="true"
                                                 headerText="#{column.description}"
                                                 value="#{row.getCellByColumnName(column.name).stringValue}"
-                                                readonlyCell="#{true}" rendered="#{column.helperTableDataTypeId eq 1}"
+                                                sortBy="#{row.getCellByColumnName(column.name).stringValue}"
+                                                filterBy="#{row.getCellByColumnName(column.name).stringValue}"
+                                                rendered="#{column.helperTableDataTypeId eq 1}"
                                                 colType="text">
                                 </pe:sheetcolumn>
 
                                 <pe:sheetcolumn readonly="true"
                                                 headerText="#{column.description}"
                                                 value="#{row.getCellByColumnName(column.name).booleanValue}"
-                                                readonlyCell="#{true}" rendered="#{column.helperTableDataTypeId eq 2}"
+                                                sortBy="#{row.getCellByColumnName(column.name).booleanValue}"
+                                                filterBy="#{row.getCellByColumnName(column.name).booleanValue}"
+                                                rendered="#{column.helperTableDataTypeId eq 2}"
                                                 colType="checkbox">
                                 </pe:sheetcolumn>
 
                                 <pe:sheetcolumn readonly="true"
                                                 headerText="#{column.description}"
                                                 value="#{row.getCellByColumnName(column.name).foreignKeyValue}"
-                                                readonlyCell="#{true}" rendered="#{column.helperTableDataTypeId eq 3}"
+                                                sortBy="#{row.getCellByColumnName(column.name).foreignKeyValue}"
+                                                filterBy="#{row.getCellByColumnName(column.name).foreignKeyValue}"
+                                                rendered="#{column.helperTableDataTypeId eq 3}"
                                                 colType="numeric">
                                 </pe:sheetcolumn>
 
                                 <pe:sheetcolumn readonly="true"
                                                 headerText="#{column.description}"
                                                 value="#{row.getCellByColumnName(column.name).intValue}"
-                                                readonlyCell="#{true}" rendered="#{column.helperTableDataTypeId eq 4}"
+                                                sortBy="#{row.getCellByColumnName(column.name).intValue}"
+                                                filterBy="#{row.getCellByColumnName(column.name).intValue}"
+                                                rendered="#{column.helperTableDataTypeId eq 4}"
                                                 colType="numeric">
                                 </pe:sheetcolumn>
 
                                 <pe:sheetcolumn readonly="true"
                                                 headerText="#{column.description}"
                                                 value="#{row.getCellByColumnName(column.name).dateValue}"
-                                                readonlyCell="#{true}" rendered="#{column.helperTableDataTypeId eq 5}"
+                                                sortBy="#{row.getCellByColumnName(column.name).intValue}"
+                                                filterBy="#{row.getCellByColumnName(column.name).intValue}"
+                                                rendered="#{column.helperTableDataTypeId eq 5}"
                                                 colType="date">
                                 </pe:sheetcolumn>
                             </ce:forEach>
