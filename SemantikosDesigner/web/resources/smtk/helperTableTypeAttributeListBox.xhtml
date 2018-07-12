@@ -30,6 +30,8 @@
                            rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes }"
                            styleClass="search">
 
+                <p:focus context="helperTableTypeAttributeNew" rendered="#{cc.attrs.relationship != null}" />
+
                 <p:selectOneMenu id="helperTableTypeAttributeSimple" scrollHeight="200"
                                  forceSelection="true"
                                  value="#{conceptBean.selectedHelperTableRecord}"
@@ -75,7 +77,7 @@
 
                     <p:outputPanel styleClass="search">
 
-                        <p:inputText disabled="true" id="helperTableRecord" value="#{relationshipAttribute.target.description}" />
+                        <p:inputText readonly="true" id="helperTableRecord" value="#{relationshipAttribute.target.description}" />
                         <p:commandLink process="@this"
                                        update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                        action="#{conceptBean.removeRelationshipAttribute(cc.attrs.relationship,relationshipAttribute)}">

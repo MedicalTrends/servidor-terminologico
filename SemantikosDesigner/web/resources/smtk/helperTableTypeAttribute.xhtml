@@ -70,7 +70,7 @@
 
                     <p:outputPanel styleClass="search">
 
-                        <p:inputText disabled="true" id="helperTableRecord" value="#{relationshipAttribute.target.description}" />
+                        <p:inputText readonly="true" id="helperTableRecord" value="#{relationshipAttribute.target.description}" />
                         <p:commandLink process="@this"
                                        update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                        action="#{conceptBean.removeRelationshipAttribute(cc.attrs.relationship,relationshipAttribute)}">

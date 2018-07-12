@@ -99,7 +99,7 @@
                         <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                                 <p:outputPanel styleClass="search">
-                                    <p:inputText disabled="true" id="itemSelected" value="#{relationship.target.descriptionFSN.term}" />
+                                    <p:inputText readonly="true" id="itemSelected" value="#{relationship.target.descriptionFSN.term}" />
 
                                     <p:commandLink process="@this"
                                                    update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"

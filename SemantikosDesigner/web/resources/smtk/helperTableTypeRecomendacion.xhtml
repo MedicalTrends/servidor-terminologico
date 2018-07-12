@@ -118,55 +118,90 @@
 
         <p:dataTable id="collectionValuesWithAttributes"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
-                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                     style="width: 100%; margin: 10px"
-                     reflow="true">
+                     style="width: 100%"
+                     editable="true">
 
             <!-- Parámetros del validador -->
-            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"/>
             <!---->
 
-            <p:ajax event="rowReorder" listener="#{conceptBean.onRowReorder}"
-                    update="@(.conceptHeader),@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id})">
-            </p:ajax>
+            <p:ajax event="rowEdit" listener="#{relationshipBean.onRowEdit}"/>
 
             <p:columns value="#{cc.attrs.targetDefinition.showableColumnsButFK}"
                        var="column"
                        columnIndexVar="colIndex">
                 <f:facet name="header">
-                    <h:outputText value="#{column.name}" />
+                    <h:outputText value="#{column.name}"/>
                 </f:facet>
-                <h:outputText value="#{relationship.target.getColumnValue(column)}" />
+                <h:outputText value="#{relationship.target.getColumnValue(column)}"/>
             </p:columns>
 
             <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitionWebs}"
                        var="attribute"
                        columnIndexVar="colIndex">
                 <f:facet name="header">
-                    <h:outputText value="#{attribute.name}" />
+                    <h:outputText value="#{attribute.name}"/>
                 </f:facet>
-                <smtk:basicTypeAttributeCell attribute="#{attribute.relationshipAttributeDefinition}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.basicType}" />
-                <smtk:helperTableTypeAttributeCell attribute="#{attribute.relationshipAttributeDefinition}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
+
+                <p:repeat
+                        offset="0"
+                        size="#{relationship.getAttributesByAttributeDefinition(attribute.relationshipAttributeDefinition).size()}"
+                        step="1"
+                        varStatus="var"
+                        value="#{relationship.getAttributesByAttributeDefinition(attribute.relationshipAttributeDefinition)}"
+                        var="relationshipattribute">
+                    <p:cellEditor rendered="#{attribute.targetDefinition.basicType}">
+                        <f:facet name="output">
+                            <h:outputText value="Si" rendered="#{relationshipattribute.target.value}" />
+                            <h:outputText value="No" rendered="#{not relationshipattribute.target.value}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:selectBooleanButton rendered="#{attribute.targetDefinition.basicType}"
+                                                   value="#{relationshipattribute.target.value}"
+                                                   offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg"
+                                                   offIcon="fa fa-close fa-lg">
+                            </p:selectBooleanButton>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:repeat>
+
+                <p:repeat
+                        offset="0"
+                        size="#{relationship.getAttributesByAttributeDefinition(attribute.relationshipAttributeDefinition).size()}"
+                        step="1"
+                        varStatus="var"
+                        value="#{relationship.getAttributesByAttributeDefinition(attribute.relationshipAttributeDefinition)}"
+                        var="attribute2">
+
+                    <h:outputText value="#{attribute2.target.description}" rendered="#{attribute.targetDefinition.helperTable}" />
+
+                </p:repeat>
+
             </p:columns>
 
             <p:column headerText="Descripción">
+
                 <h:outputText value="#{relationship.target.description}"/>
             </p:column>
 
             <p:column headerText="Acción">
-                <div style="text-align: center">
-                    <p:commandButton
-                            icon="fa fa-trash"
-                            title="Eliminar"
-                            update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                            process="@this"
-                            immediate="true"
-                            actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                            styleClass="relationships"
-                    />
-                </div>
+
+                <p:rowEditor/>
+
+                <p:commandButton
+                        icon="fa fa-trash"
+                        title="Eliminar"
+                        update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                        process="@this"
+                        immediate="true"
+                        actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                        styleClass="relationships">
+                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar esta recomendacion?"
+                               icon="ui-icon-alert"/>
+                </p:commandButton>
+
             </p:column>
         </p:dataTable>
     </p:fieldset>

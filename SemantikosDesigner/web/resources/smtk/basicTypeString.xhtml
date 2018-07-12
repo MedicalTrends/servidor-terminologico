@@ -217,7 +217,7 @@
                     <p:commandButton
                             process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                             action="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition, conceptBean.basicTypeValue)}"
-                            style="max-width: 100px"
+                            style="width: auto; float: right"
                             update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                             value="Agregar">
                     </p:commandButton>
@@ -300,7 +300,7 @@
                 <p:commandButton
                         process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                         action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
-                        style="max-width: 100px"
+                        style="width: auto; float: right"
                         update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                         value="Agregar">
                 </p:commandButton>

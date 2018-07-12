@@ -3,181 +3,192 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="/WEB-INF/template/template.xhtml">
+                template="/WEB-INF/template.xhtml">
 
-    <ui:define name="header">
-        <p:breadCrumb>
-            <p:menuitem value="Inicio" url="/views/home.xhtml" />
-            <p:menuitem value="Administración Establecimientos" url="#" />
-        </p:breadCrumb>
-    </ui:define>
 
     <ui:define name="content">
 
-        <div class="Container100">
-            <div class="ContainerIndent">
-                <div class="Card ShadowEffect  ">
-                    <div class="Container100">
-                        <div class="ContainerIndent">
+        <div class="ui-g dashboard">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                            <h:form id="form">
+                <h:form id="form">
 
-                                <p:growl id="globalMessage" showDetail="true" autoUpdate="true" showSummary="true"/>
+                    <p:breadCrumb>
+                        <p:menuitem value="Inicio" url="/views/home.xhtml" />
+                        <p:menuitem value="Administración Establecimientos" url="#" />
+                    </p:breadCrumb>
 
-                                <p:dataTable id="singleDT" var="institution" value="#{institutionsBrowser.allInstitutions}" rowKey="#{institution.id}"
-                                             styleClass="institutions" sortBy="#{institution.code}"
-                                             widgetVar="institutionsTable" rows="30" paginator="true" emptyMessage="No hay establecimientos en la Base de Datos" reflow="true"
-                                             filteredValue="#{institutionsBrowser.filteredInstitutions}"
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}">
+                    <p:growl id="globalMessage" showDetail="true" autoUpdate="true" showSummary="true"/>
 
-                                    <p:ajax event="rowSelect" update=":form:institution-detail" oncomplete="PF('institutionDialog').show()" />
+                    <div class="ui-fluid">
 
-                                    <f:facet name="{Exporters}">
-                                        <p:commandButton actionListener="#{institutionsBrowser.newInstitution()}" icon="fa fa-plus" type="submit" process="form"
-                                                         value="Crear Nuevo">
-                                        </p:commandButton>
-                                    </f:facet>
+                        <div class="ui-g">
 
-                                    <p:column headerText="Código" filterBy="#{institution.code}" filterMatchMode="contains" sortBy="#{institution.code}">
-                                        <h:outputText value="#{institution.code}" />
-                                    </p:column>
+                            <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                                    <p:column headerText="Establecimiento" filterBy="#{institution.name}" filterMatchMode="contains" sortBy="#{institution.name}">
-                                        <h:outputText value="#{institution.name}" />
-                                    </p:column>
+                                <p:commandButton actionListener="#{institutionsBrowser.newInstitution()}" icon="fa fa-plus" type="submit" process="form"
+                                                 style="width: auto; float: right" value="Crear Nuevo">
+                                </p:commandButton>
 
-                                    <p:column headerText="Estado" filterBy="#{institution.validityUntil eq null}" filterMatchMode="exact" sortBy="#{institution.validityUntil eq null}">
-                                        <f:facet name="filter">
-                                            <p:selectOneMenu onchange="PF('institutionsTable').filter()" value="true">
-                                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
-                                                <f:selectItem itemLabel="Vigentes" itemValue="#{true}" />
-                                                <f:selectItem itemLabel="No Vigentes" itemValue="#{false}" />
-                                            </p:selectOneMenu>
-                                        </f:facet>
-                                        <h:outputText value="Vigente" rendered="#{institution.validityUntil == null}" />
-                                        <h:outputText value="No vigente" rendered="#{institution.validityUntil != null}" />
-                                    </p:column>
+                            </div>
 
-                                    <p:column headerText="Fecha ingreso">
-                                        <h:outputText value="#{institutionsBrowser.getCreationDate(institutionsBrowser.auditActions.get(institution.id))}" />
-                                    </p:column>
-
-                                    <p:column headerText="Última modificación">
-                                        <h:outputText value="#{institutionsBrowser.getLastUpgradeDate(institutionsBrowser.auditActions.get(institution.id))}" />
-                                    </p:column>
-
-                                    <p:column headerText="Usuario que modifica">
-                                        <h:outputText value="#{institutionsBrowser.getLastUpgradeUser(institutionsBrowser.auditActions.get(institution.id))}" />
-                                    </p:column>
-
-                                    <p:column exportable="false" headerText="Acción">
-                                        <div style="text-align: center;">
-
-                                            <p:commandLink action="#{institutionsBrowser.setSelectedInstitution(institution)}" update=":form:institution-detail" oncomplete="PF('institutionDialog').show()"
-                                                           title="Ver" process="@this" style="padding: 5px">
-                                                <i class="fa fa-eye fa-lg"/>
-                                            </p:commandLink>
-
-                                            <p:link outcome="/views/institutions/institutionEdit" title="Editar" style="padding: 5px">
-                                                <i class="fa fa-edit fa-lg"/>
-                                                <f:param name="idInstitution" value="#{institution.id}" />
-                                            </p:link>
-
-                                            <p:commandLink onclick="PF('dlg').show();" update="@(.cause2)" action="#{institutionsBrowser.setSelectedInstitution(institution)}"
-                                                           rendered="#{institution.validityUntil eq null}" title="Eliminar" process="@this" style="padding: 5px">
-                                                <i class="fa fa-trash fa-lg"/>
-                                            </p:commandLink>
-
-                                        </div>
-                                    </p:column>
-
-                                </p:dataTable>
-
-
-                                <p:dialog height="300" width="500" header="Detalles del Establecimiento" widgetVar="institutionDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="true" responsive="true">
-
-                                    <h:panelGroup layout="block" id="institution-detail" styleClass="Container100">
-
-                                        <p:panelGrid columns="2" styleClass="Wid100" rendered="#{institutionsBrowser.selectedInstitution != null}">
-                                            <f:facet name="header">
-                                                Información General
-                                            </f:facet>
-
-                                            <h:outputText value="Nombre" style="font-weight: bold"/>
-                                            <h:outputText value="#{institutionsBrowser.selectedInstitution.name}"/>
-
-                                            <h:outputText value="Código" style="font-weight: bold"/>
-                                            <h:outputText value="#{institutionsBrowser.selectedInstitution.code}"/>
-
-                                            <h:outputText value="Estado" style="font-weight: bold"/>
-                                            <h:outputText value="Vigente" rendered="#{institutionsBrowser.selectedInstitution.validityUntil == null}" />
-                                            <h:outputText value="No vigente" rendered="#{institutionsBrowser.selectedInstitution.validityUntil != null}" />
-
-                                        </p:panelGrid>
-
-                                        <p:dataTable id="audits"
-                                                     var="audit"
-                                                     value="#{institutionsBrowser.auditActions.get(institutionsBrowser.selectedInstitution.id)}"
-                                                     emptyMessage="Usuario no tiene Perfiles asignados"
-                                                     reflow="true">
-                                            <p:columnGroup type="header">
-                                                <p:row>
-                                                    <p:column colspan="4" headerText="Historial"/>
-                                                </p:row>
-                                            </p:columnGroup>
-                                            <p:column headerText="Fecha">
-                                                <h:outputText value="#{audit.actionDateFormat}"/>
-                                            </p:column>
-                                            <p:column headerText="Tipo de cambio">
-                                                <h:outputText value="#{audit.auditActionType.name}"/>
-                                            </p:column>
-                                            <p:column headerText="Detalle">
-                                                <h:outputText value="#{audit.detailAuditAction()}"/>
-                                            </p:column>
-                                            <p:column headerText="Usuario">
-                                                <h:outputText value="#{audit.user.email}"/>
-                                            </p:column>
-                                        </p:dataTable>
-
-                                    </h:panelGroup>
-                                </p:dialog>
-
-                                <p:dialog header="Motivo eliminación" widgetVar="dlg" resizable="false">
-                                    <p:panelGrid id="deletePanel" columns="2" cellpadding="5" styleClass="ui-panelgrid-blank cause2">
-                                        <h:outputLabel for="cause" value="Motivo:" />
-                                        <p:selectOneMenu id="cause" value="#{institutionsBrowser.deleteCause}">
-                                            <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
-                                            <f:selectItem itemLabel="Establecimiento dejó de funcionar" itemValue="Establecimiento dejó de funcionar" />
-                                            <f:selectItem itemLabel="No aplica ingresar en Semantikos" itemValue="No aplica ingresar en Semantikos" />
-                                            <f:selectItem itemLabel="Otro" itemValue="Otro" />
-                                            <p:ajax event="itemSelect" update="@(.cause2)" process="@this" />
-                                        </p:selectOneMenu>
-
-                                        <p:outputLabel for="cause2" value="Motivo:" rendered="#{institutionsBrowser.deleteCause.equals('Otro')}" />
-                                        <p:inputTextarea id="cause2" value="#{institutionsBrowser.deleteCause}" rendered="#{institutionsBrowser.deleteCause.equals('Otro')}" />
-
-                                        <p:outputPanel/>
-                                        <p:outputPanel>
-                                            <p:commandButton value="Aceptar" actionListener="#{institutionsBrowser.deleteInstitution}"
-                                                             update="form:singleDT" styleClass="Fright">
-                                                <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar este establecimiento?" icon="ui-icon-alert"/>
-                                            </p:commandButton>
-                                            <p:commandButton value="Cancelar" onclick="PF('dlg').hide();" styleClass="Fright" actionListener="#{institutionsBrowser.setDeleteCause(null)}"/>
-                                        </p:outputPanel>
-                                    </p:panelGrid>
-                                </p:dialog>
-
-                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
-                                                     icon="ui-icon-check"/>
-                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
-                                                     icon="ui-icon-close"/>
-                                </p:confirmDialog>
-
-                            </h:form>
                         </div>
+
                     </div>
-                </div>
+
+                    <p:dataTable id="singleDT" var="institution" value="#{institutionsBrowser.allInstitutions}" rowKey="#{institution.id}"
+                                 styleClass="institutions" sortBy="#{institution.code}"
+                                 widgetVar="institutionsTable" rows="30" paginator="true" emptyMessage="No hay establecimientos en la Base de Datos" reflow="true"
+                                 filteredValue="#{institutionsBrowser.filteredInstitutions}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+                        <p:ajax event="rowSelect" update=":form:institution-detail" oncomplete="PF('institutionDialog').show()" />
+
+                        <f:facet name="{Exporters}">
+                            <p:commandButton actionListener="#{institutionsBrowser.newInstitution()}" icon="fa fa-plus" type="submit" process="form"
+                                             value="Crear Nuevo">
+                            </p:commandButton>
+                        </f:facet>
+
+                        <p:column headerText="Código" filterBy="#{institution.code}" filterMatchMode="contains" sortBy="#{institution.code}">
+                            <h:outputText value="#{institution.code}" />
+                        </p:column>
+
+                        <p:column headerText="Establecimiento" filterBy="#{institution.name}" filterMatchMode="contains" sortBy="#{institution.name}">
+                            <h:outputText value="#{institution.name}" />
+                        </p:column>
+
+                        <p:column headerText="Estado" filterBy="#{institution.validityUntil eq null}" filterMatchMode="exact" sortBy="#{institution.validityUntil eq null}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('institutionsTable').filter()" value="true">
+                                    <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Vigentes" itemValue="#{true}" />
+                                    <f:selectItem itemLabel="No Vigentes" itemValue="#{false}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="Vigente" rendered="#{institution.validityUntil == null}" />
+                            <h:outputText value="No vigente" rendered="#{institution.validityUntil != null}" />
+                        </p:column>
+
+                        <p:column headerText="Fecha ingreso">
+                            <h:outputText value="#{institutionsBrowser.getCreationDate(institutionsBrowser.auditActions.get(institution.id))}" />
+                        </p:column>
+
+                        <p:column headerText="Última modificación">
+                            <h:outputText value="#{institutionsBrowser.getLastUpgradeDate(institutionsBrowser.auditActions.get(institution.id))}" />
+                        </p:column>
+
+                        <p:column headerText="Usuario que modifica">
+                            <h:outputText value="#{institutionsBrowser.getLastUpgradeUser(institutionsBrowser.auditActions.get(institution.id))}" />
+                        </p:column>
+
+                        <p:column exportable="false" headerText="Acción">
+                            <div style="text-align: center;">
+
+                                <p:commandButton action="#{institutionsBrowser.setSelectedInstitution(institution)}"
+                                                 update=":form:institution-detail" oncomplete="PF('institutionDialog').show()"
+                                                 icon="fa fa-eye fa-lg"
+                                               title="Ver" process="@this" style="padding: 5px"/>
+
+                                <p:button outcome="/views/institutions/institutionEdit" title="Editar"
+                                          icon="fa fa-edit fa-lg" style="padding: 5px" >
+                                    <f:param name="idInstitution" value="#{institution.id}" />
+                                </p:button>
+
+                                <p:commandButton onclick="PF('dlg').show();" update="@(.cause2)"
+                                                 action="#{institutionsBrowser.setSelectedInstitution(institution)}"
+                                                 icon="fa fa-trash fa-lg"
+                                                 rendered="#{institution.validityUntil eq null}" title="Eliminar"
+                                                 process="@this" style="padding: 5px"/>
+
+                            </div>
+                        </p:column>
+
+                    </p:dataTable>
+
+
+                    <p:dialog height="300" width="500" header="Detalles del Establecimiento" widgetVar="institutionDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="true" responsive="true">
+
+                        <h:panelGroup layout="block" id="institution-detail" styleClass="Container100">
+
+                            <p:panelGrid columns="2" styleClass="Wid100" rendered="#{institutionsBrowser.selectedInstitution != null}">
+                                <f:facet name="header">
+                                    Información General
+                                </f:facet>
+
+                                <h:outputText value="Nombre" style="font-weight: bold"/>
+                                <h:outputText value="#{institutionsBrowser.selectedInstitution.name}"/>
+
+                                <h:outputText value="Código" style="font-weight: bold"/>
+                                <h:outputText value="#{institutionsBrowser.selectedInstitution.code}"/>
+
+                                <h:outputText value="Estado" style="font-weight: bold"/>
+                                <h:outputText value="Vigente" rendered="#{institutionsBrowser.selectedInstitution.validityUntil == null}" />
+                                <h:outputText value="No vigente" rendered="#{institutionsBrowser.selectedInstitution.validityUntil != null}" />
+
+                            </p:panelGrid>
+
+                            <p:dataTable id="audits"
+                                         var="audit"
+                                         value="#{institutionsBrowser.auditActions.get(institutionsBrowser.selectedInstitution.id)}"
+                                         emptyMessage="Usuario no tiene Perfiles asignados"
+                                         reflow="true">
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                        <p:column colspan="4" headerText="Historial"/>
+                                    </p:row>
+                                </p:columnGroup>
+                                <p:column headerText="Fecha">
+                                    <h:outputText value="#{audit.actionDateFormat}"/>
+                                </p:column>
+                                <p:column headerText="Tipo de cambio">
+                                    <h:outputText value="#{audit.auditActionType.name}"/>
+                                </p:column>
+                                <p:column headerText="Detalle">
+                                    <h:outputText value="#{audit.detailAuditAction()}"/>
+                                </p:column>
+                                <p:column headerText="Usuario">
+                                    <h:outputText value="#{audit.user.email}"/>
+                                </p:column>
+                            </p:dataTable>
+
+                        </h:panelGroup>
+                    </p:dialog>
+
+                    <p:dialog header="Motivo eliminación" widgetVar="dlg" resizable="false">
+                        <p:panelGrid id="deletePanel" columns="2" cellpadding="5" styleClass="ui-panelgrid-blank cause2">
+                            <h:outputLabel for="cause" value="Motivo:" />
+                            <p:selectOneMenu id="cause" value="#{institutionsBrowser.deleteCause}">
+                                <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Establecimiento dejó de funcionar" itemValue="Establecimiento dejó de funcionar" />
+                                <f:selectItem itemLabel="No aplica ingresar en Semantikos" itemValue="No aplica ingresar en Semantikos" />
+                                <f:selectItem itemLabel="Otro" itemValue="Otro" />
+                                <p:ajax event="itemSelect" update="@(.cause2)" process="@this" />
+                            </p:selectOneMenu>
+
+                            <p:outputLabel for="cause2" value="Motivo:" rendered="#{institutionsBrowser.deleteCause.equals('Otro')}" />
+                            <p:inputTextarea id="cause2" value="#{institutionsBrowser.deleteCause}" rendered="#{institutionsBrowser.deleteCause.equals('Otro')}" />
+
+                            <p:outputPanel/>
+                            <p:outputPanel>
+                                <p:commandButton value="Aceptar" actionListener="#{institutionsBrowser.deleteInstitution}"
+                                                 update="form:singleDT" styleClass="Fright">
+                                    <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar este establecimiento?" icon="ui-icon-alert"/>
+                                </p:commandButton>
+                                <p:commandButton value="Cancelar" onclick="PF('dlg').hide();" styleClass="Fright" actionListener="#{institutionsBrowser.setDeleteCause(null)}"/>
+                            </p:outputPanel>
+                        </p:panelGrid>
+                    </p:dialog>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
+                                         icon="ui-icon-check"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                                         icon="ui-icon-close"/>
+                    </p:confirmDialog>
+
+                </h:form>
+
             </div>
         </div>
 

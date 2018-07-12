@@ -37,6 +37,7 @@ import java.util.Map;
 
 import static cl.minsal.semantikos.model.audit.AuditActionType.REFSET_UPDATE;
 import static java.lang.System.currentTimeMillis;
+import static java.util.Collections.EMPTY_LIST;
 
 /**
  * @author Gustavo Punucura on 20-09-16.
@@ -444,6 +445,9 @@ public class RefSetsBean implements Serializable {
     }
 
     public List<RefSet> getConceptRefSetList() {
+        if(conceptBean.getConcept() == null) {
+            return EMPTY_LIST;
+        }
         conceptRefSetList = refSetManager.getRefsetsBy(conceptBean.getConcept());
         loadHistoryConcept();
         return conceptRefSetList;

@@ -214,9 +214,11 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     background-image: url("#{resource['primefaces-rio/images/delete-white.svg']}");
 }
 
+/*
 .ui-datatable table tbody .ui-state-highlight.ui-row-editing > td {
     color: #108bd5;
 }
+*/
 
 .ui-fluid .ui-inputtext[size], .ui-fluid .ui-inputfield[size] {
     width: inherit !important;
@@ -302,14 +304,7 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     height: 90% !important;
 }
 
-.loading {
-    border: 3px solid rgb(233, 30, 99) !important;
-    height: 30px !important;
-    width: 30px !important;
-}
-
-.toast-content {
-    background: white none repeat scroll 0% 0% !important;
-    border: 1px solid rgb(189, 189, 189) !important;
-    padding: 1em !important;
+.hoverful:hover {
+    border: 1px solid #E91E63 !important;
+    background-color: rgba(0, 0, 0, 0.3);
 }

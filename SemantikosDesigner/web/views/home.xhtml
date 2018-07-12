@@ -47,67 +47,118 @@
 
     <ui:define name="content">
 
-        <p:outputPanel rendered="false">
-        <div class="ui-g">
-            <p:repeat value="#{mainMenuBean.categories}" var="category">
-                <div class="ui-g-12 ui-md-4 ui-lg-3">
-                    <div class="ui-g card colorbox">
-                        <div class="ui-g-2">
-                            <i class="material-icons" style="margin-top: 0px; font-size: 28px">&#xE8A1;</i>
-                        </div>
-                        <div class="ui-g-10">
-                            <span class="colorbox-name" style="height: 1.5em; font-size: 18px">#{category.name}</span>
-                        </div>
-                    </div>
-                </div>
-            </p:repeat>
-        </div>
-        </p:outputPanel>
-
         <div class="ui-g dashboard">
-            <div class="ui-g-12 ui-md-6 ui-lg-6">
-                <div class="card overview">
-                    <div class="overview-content clearfix">
-                        <span class="overview-title">Categorías</span>
-                    </div>
-                    <h:form styleClass="mainMenu" style="padding-left: 15px; padding-right: 15px; padding-bottom: 15px">
-                        <p:menu toggleable="false" model="#{mainMenuBean.categoryMenuModel}" style="width: 100%" rendered="true" />
-                    </h:form>
+
+            <div class="ui-g-12">
+                <!-- Left Side -->
+                <div class="card card-w-title">
+                    <h1>CATEGORÍAS</h1>
+
+                    <p:dataGrid var="category" value="#{mainMenuBean.categories}" columns="4" layout="grid"
+                                paginator="false"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,16"
+                                id="categories">
+
+                        <p:ajax event="page" oncomplete="loader();" />
+
+                        <p:panel header="#{category.name}" style="text-align:center" styleClass="hoverful">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:button icon="ui-icon-search" styleClass="AquaButton" rendered="false"
+                                          outcome="/views/browser/generalBrowser.xhtml?idCategory=#{category.getId()}"/>
+                                <p:button icon="fa fa-list-alt fa-lg" styleClass="loader-trigger"
+                                          outcome="/views/browser/generalBrowser.xhtml?idCategory=#{category.getId()}"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                    </p:dataGrid>
                 </div>
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-6">
-                <div class="card overview">
-                    <div class="overview-content clearfix">
-                        <span class="overview-title">Otros</span>
-                    </div>
-                    <h:form styleClass="mainMenu" style="padding-left: 15px; padding-right: 15px; padding-bottom: 15px">
-                        <p:menu toggleable="false" style="width: 100%">
-                            <p:submenu label="Otros">
-                                <p:menuitem value="Descripciones" icon="ui-icon-disk fa fa-edit Fs15" url="/views/descriptions" />
-                                <p:menuitem value="Fármacos" icon="ui-icon-disk fa fa-medkit Fs15" url="/views/drugs" />
-                                <p:menuitem value="Pendientes" icon="ui-icon-disk fa fa-exclamation-triangle Fs15" url="/views/descriptions/pending" />
-                                <p:menuitem value="No Válidos" icon="ui-icon-disk fa fa-ban Fs15" url="/views/descriptions/not-valid" />
-                            </p:submenu>
-                        </p:menu>
-                    </h:form>
+
+            <div class="ui-g-12">
+                <!-- Left Side -->
+                <div class="card card-w-title">
+                    <h1>OTROS</h1>
+
+                    <p:panelGrid columns="4" layout="grid"
+                                paginator="false" id="otros">
+
+                        <p:panel header="Descripciones" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:button icon="fa fa-edit fa-lg" style="background: #E91E63" styleClass="loader-trigger"
+                                          outcome="/views/browser/descriptionBrowser.xhtml"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:panel header="Fármacos" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:button icon="fa fa-medkit fa-lg" style="background: #E91E63" styleClass="loader-trigger"
+                                          outcome="/views/browser/drugsBrowser.xhtml"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:panel header="Pendientes" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:button icon="fa fa-exclamation-triangle fa-lg" style="background: #E91E63" styleClass="loader-trigger"
+                                          outcome="/views/browser/pendingBrowser.xhtml"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:panel header="No Válidos" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:button icon="fa fa-ban fa-lg" style="background: #E91E63" styleClass="loader-trigger"
+                                          outcome="/views/browser/noValidBrowser.xhtml"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                    </p:panelGrid>
                 </div>
+            </div>
 
-                <br/>
+            <div class="ui-g-12">
+                <!-- Left Side -->
+                <div class="card card-w-title">
+                    <h1>ADMINISTRADORES</h1>
 
-                <div class="card overview">
-                    <div class="overview-content clearfix">
-                        <span class="overview-title">Administradores</span>
-                    </div>
-                    <h:form styleClass="mainMenu" style="padding-left: 15px; padding-right: 15px; padding-bottom: 15px">
-                        <p:menu toggleable="false" style="width: 100%">
-                            <p:submenu label="Administración">
-                                <p:menuitem value="Usuarios" icon="ui-icon ui-icon-people" url="/views/users" />
-                                <p:menuitem value="RefSets" icon="fa fa-dropbox Fs15" url="/views/refsets" />
-                                <p:menuitem value="Tablas" icon="ui-icon-disk fa fa-columns Fs15" url="/views/helpertables" />
-                                <p:menuitem value="Extracción Fármacos" icon="fa fa-file-excel-o" url="/views/extract" rendered="true" />
-                            </p:submenu>
-                        </p:menu>
-                    </h:form>
+                    <p:panelGrid columns="4" layout="grid"
+                                 paginator="false" id="managers">
+
+                        <p:panel header="Usuarios" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:button icon="ui-icon ui-icon-people" style="background: #E91E63" styleClass="loader-trigger"
+                                          outcome="/views/users/users.xhtml"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:panel header="Establecimientos" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:button icon="fa fa-bank fa-lg" style="background: #E91E63" styleClass="loader-trigger"
+                                          outcome="/views/institutions/institutions.xhtml"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:panel header="RefSets" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:button icon="fa fa-dropbox fa-lg" style="background: #E91E63" styleClass="loader-trigger"
+                                          outcome="/views/refsets/admin_refsets.xhtml"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:panel header="Tablas Auxiliares" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:button icon="fa fa-columns fa-lgh" style="background: #E91E63" styleClass="loader-trigger"
+                                          outcome="/views/helpertables/helpertables.xhtml"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:panel header="Extracción Fármacos" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:button icon="fa fa-file-excel-o fa-lg" style="background: #E91E63" styleClass="loader-trigger"
+                                          outcome="/views/concept/extractor.xhtml"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                    </p:panelGrid>
                 </div>
             </div>
 

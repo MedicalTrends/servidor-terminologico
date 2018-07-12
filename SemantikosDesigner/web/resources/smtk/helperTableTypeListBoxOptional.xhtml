@@ -111,12 +111,11 @@
                     <h:outputText value="#{relationship.target.getColumnValue(column)}" />
                 </p:columns>
 
-                <p:column>
+                <p:column style="text-align: center" headerText="Eliminar">
                     <p:commandButton
                             icon="fa fa-trash"
                             title="Eliminar"
                             update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.relationships_#{cc.attrs.relationshipDefinition.id})"
-                            style="float: right"
                             process="@this"
                             immediate="true"
                             actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"

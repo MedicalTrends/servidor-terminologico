@@ -25,6 +25,7 @@ import java.util.List;
 import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_CREATION;
 import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_PUBLICATION;
 import static cl.minsal.semantikos.model.audit.AuditActionType.REFSET_BINDING;
+import static java.util.Collections.EMPTY_LIST;
 
 /**
  * @author Francisco Mendez
@@ -140,6 +141,10 @@ public class ConceptExportMBean extends UINamingContainer {
      */
     public List<SnomedCTRelationshipDTO> getSnomedCTRelationships() {
 
+        if(conceptSMTK == null) {
+            return EMPTY_LIST;
+        }
+
         List<SnomedCTRelationshipDTO> snomedCTRelationships = new ArrayList<SnomedCTRelationshipDTO>();
 
         for (SnomedCTRelationship relationship : conceptSMTK.getRelationshipsSnomedCT()) {
@@ -150,6 +155,10 @@ public class ConceptExportMBean extends UINamingContainer {
     }
 
     public List<Relationship> getSMTKRelationships() {
+
+        if(conceptSMTK == null) {
+            return EMPTY_LIST;
+        }
 
         List<Relationship> smtkRelationships = new ArrayList<Relationship>();
 
@@ -165,6 +174,10 @@ public class ConceptExportMBean extends UINamingContainer {
 
     public List<Relationship> getDirectCrossmapsRelationships() {
 
+        if(conceptSMTK == null) {
+            return EMPTY_LIST;
+        }
+
         List<Relationship> smtkRelationships = new ArrayList<Relationship>();
 
         for (Relationship relationship : conceptSMTK.getRelationships()) {
@@ -177,6 +190,10 @@ public class ConceptExportMBean extends UINamingContainer {
     }
 
     public List<Relationship> getIndirectCrossmapsRelationships() {
+
+        if(conceptSMTK == null) {
+            return EMPTY_LIST;
+        }
 
         List<Relationship> smtkRelationships = new ArrayList<Relationship>();
 
