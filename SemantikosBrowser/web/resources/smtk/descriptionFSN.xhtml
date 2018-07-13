@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<composite:interface>
+    <composite:attribute name="editable" type="java.lang.Boolean"/>
+    <composite:attribute name="description" type="cl.minsal.semantikos.modelweb.DescriptionWeb"/>
+</composite:interface>
+
+<composite:implementation>
+
+
+    <p:fieldset legend="FSN">
+
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                <p:outputLabel value="DescriptionID" />
+            </div>
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
+                <p:inputText value="DESCID" rendered="#{not cc.attrs.description.persistent}" readonly="true" />
+                <p:inputText value="#{cc.attrs.description.descriptionId}" rendered="#{cc.attrs.description.persistent}" readonly="true" />
+            </div>
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                <p:outputLabel value="Sensibilidad" />
+            </div>
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
+                <p:selectOneRadio id="customRadio2" value="#{cc.attrs.description.caseSensitive}" layout="responsive" columns="2"
+                                  rendered="#{not descriptionBeans.disableSensibilityFSN(cc.attrs.description)}">
+                    <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
+                    <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
+                    <p:ajax/>
+                </p:selectOneRadio>
+
+                <p:inputText id="caseSensitive"
+                             value="#{cc.attrs.description.caseSensitive?'Sensible':'Insensible'}"
+                             readonly="true"
+                             rendered="#{descriptionBeans.disableSensibilityFSN(cc.attrs.description)}"
+                             filter="true" filterMatchMode="startsWith"
+                             autoWidth="false">
+                </p:inputText>
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                <p:outputLabel value="Término *" />
+            </div>
+            <div class="ui-g-12 ui-md-8 ui-lg-10">
+                <p:inputTextarea id="FSN"
+                                 styleClass="terms FSN"
+                                 name="description"
+                                 rows="1"
+                                 validator="#{validatorBean.validateRequiredInput}"
+                                 value="#{cc.attrs.description.representation}"
+                                 readonly="#{cc.attrs.description.conceptSMTK.modeled}"
+                                 autocomplete="off">
+                    <p:ajax event="change" update="@this" process="@this" />
+                </p:inputTextarea>
+            </div>
+        </div>
+
+    </p:fieldset>
+
+</composite:implementation>
+</html>

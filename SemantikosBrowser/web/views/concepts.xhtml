@@ -14,9 +14,7 @@
 
         <div class="ui-g">
 
-            <div class="ui-g-0 ui-md-0 ui-lg-0"></div>
-
-            <div class="ui-g-12 ui-md-12 ui-lg-12">
+            <div class="ui-g-12 ui-md-12 ui-lg-12" style="max-width: 1200px">
 
                 <p:breadCrumb id="top-menu">
                     <p:menuitem value="Inicio" url="/views/home.xhtml" />
@@ -46,7 +44,7 @@
                                                                 id="search"
                                                                 emptyMessage="No se encontraron conceptos"
                                                                 forceSelection="false"
-                                                                scrollHeight="200" size="5"
+                                                                size="5"
                                                                 completeMethod="#{browserBean.searchSuggestedDescriptions}"
                                                                 placeholder="Buscar..."
                                                                 converter="DescriptionConverter"
@@ -55,13 +53,25 @@
                                                                 itemLabel="#{description.getRepresentation()}"
                                                                 itemValue="#{description}">
 
-                                                    <p:outputPanel>
+                                                    <p:outputPanel rendered="false">
 
                                                         <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
                                                             <h:outputText value="#{description.term}" />
                                                         </p:column>
 
                                                     </p:outputPanel>
+
+                                                    <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px">
+                                                        <h:outputText value="#{description.term}" style="font-weight: bold; color: #545454" />
+                                                    </p:column>
+
+                                                    <p:column style="width: 90%; float: left; ; border: 0px; padding: 0px 10px">
+                                                        <h:outputText value="#{description.conceptSMTK.category.name}" style="font-size: small; color: #545454" />
+                                                    </p:column>
+
+                                                    <p:column style="width: 90%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 10px">
+                                                        <h:outputText value="#{description.descriptionType.name}" style="font-size: small;  color: #545454" />
+                                                    </p:column>
 
                                                     <p:ajax event="itemSelect"
                                                                 listener="#{browserBean.test()}"
@@ -91,27 +101,6 @@
                                     </div>
 
                                     <!--/p:panelGrid-->
-
-                                </div>
-
-                                <div class="ui-g">
-
-                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
-
-                                        <p:commandButton value="Exportar" icon="fa fa-file-excel-o" ajax="false">
-                                            <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
-                                        </p:commandButton>
-
-                                    </div>
-
-                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
-
-                                        <p:selectBooleanButton value="#{browserBean.showFilters}" onLabel="Filtrar"
-                                                               offLabel="Filtrar" onIcon="fa fa-filter" offIcon="fa fa-filter">
-                                            <p:ajax update="browserForm" />
-                                        </p:selectBooleanButton>
-
-                                    </div>
 
                                 </div>
 
@@ -304,8 +293,6 @@
                 </div>
 
             </div>
-
-            <div class="ui-g-0 ui-md-0 ui-lg-0"></div>
 
         </div>
 

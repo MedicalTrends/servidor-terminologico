@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<composite:interface>
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
+    <composite:attribute name="relationshipAttributeDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.categories.Category" />
+    <composite:attribute name="relationship" type="cl.minsal.semantikos.model.relationships.Relationship" />
+    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
+</composite:interface>
+
+<composite:implementation>
+
+    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+            <p:outputPanel id="smtkTypeAttributeNew"  styleClass="search">
+                <p:autoComplete id="smtkTypeAttributeSimple" scrollHeight="200"
+
+                                completeMethod="#{findConceptBean.getConceptSearchInputCategoryContext}"
+                                forceSelection="true"
+                                var="smtk"
+                                placeholder="#{cc.attrs.relationshipAttributeDefinition.name}..."
+                                converter="conceptConverter"
+                                value="#{conceptBean.conceptSMTKAttributeSelected}"
+                                itemLabel="#{smtk.descriptionFavorite.term}"
+                                itemValue="#{smtk}">
+                    <!-- Parámetros del validador -->
+                    <f:attribute name="category" value="#{cc.attrs.relationshipAttributeDefinition.targetDefinition}" />
+
+                    <!---->
+                    <p:column>
+                        <h:outputText value="#{smtk.descriptionFavorite.term}"/>
+                    </p:column>
+                    <p:ajax event="itemSelect"
+                            listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.conceptSMTKAttributeSelected)}"
+                            process="@this" >
+                    </p:ajax>
+
+                </p:autoComplete>
+                <i class="fa fa-search fa-lg"  />
+            </p:outputPanel>
+
+        </div>
+    </div>
+
+    <h:outputStylesheet id="customCSS">
+    </h:outputStylesheet>
+
+
+
+</composite:implementation>
+</html>

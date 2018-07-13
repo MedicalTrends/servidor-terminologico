@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.basictypes.BasicTypeDefinition" />
+    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
+</composite:interface>
+<composite:implementation>
+
+
+    <!-- Multiplicidad 1 + Nueva relacion + Sin atributos -->
+    <p:panel
+            id="basicTypeSimpleNew"
+            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
+                         and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
+            widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
+
+        <div class="ui-fluid">
+
+            <div class="Container">
+
+                <div class="Container20 White Responsive">
+                    <div class="ContainerIndent">
+
+                        <p:outputLabel for="basicTypeValue11" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
+                                       value="#{cc.attrs.relationshipDefinition.name}"/>
+                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                    </div>
+                </div>
+
+                <div class="Container30 White Responsive">
+                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                        <p:inputText id="basicTypeValue11"
+                                     value="#{conceptBean.basicTypeValue.value}"
+                                     var="value"
+                                     converter="numberPaddingConverter"
+                                     minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
+                                     maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
+                                     disabled="#{not cc.attrs.concept.editable or cc.attrs.relationshipDefinition.DIPrimario}"
+                                     rendered="#{cc.attrs.targetDefinition.type.typeName=='string' and not cc.attrs.targetDefinition.discreteDomain}"
+                                     styleClass="relationships"
+                                     autocomplete="off">
+                            <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
+                                    update="@(.panel_#{cc.attrs.relationshipDefinition.id})"/>
+                        </p:inputText>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </p:panel>
+
+
+    <!-- Multiplicidad 1 + Relacion existente + Sin atributos -->
+    <p:panel
+            id="basicTypeSimple"
+            rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
+                        and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
+            widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
+
+        <p:repeat  value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                   offset="0"
+                   size="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition).size()}"
+                   step="1"
+                   var="relationship"
+                   varStatus="var">
+
+            <div class="ui-fluid">
+
+                <div class="Container">
+
+                    <div class="Container20 White Responsive">
+                        <div class="ContainerIndent">
+
+                            <p:outputLabel for="basicTypeValue" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+
+                        </div>
+                    </div>
+
+                    <div class="Container30 White Responsive">
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                            <p:outputPanel styleClass="search">
+                                <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" />
+                                <p:commandLink process="@this"
+                                               rendered="#{not cc.attrs.relationshipDefinition.MCSpecial }"
+                                               update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                               action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                                    <i class="fa fa-close fa-lg"  />
+                                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?" icon="ui-icon-alert"/>
+                                </p:commandLink>
+                            </p:outputPanel>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </p:repeat>
+    </p:panel>
+
+    <!-- Multiplicidad 1 + Nueva relacion + con atributos -->
+    <p:panel
+            id="basicTypeSimpleNewWithAttributes"
+            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
+                          and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
+            widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
+
+        <div class="ui-fluid">
+
+            <div class="Container">
+
+                <div class="Container20 White Responsive">
+                    <div class="ContainerIndent">
+
+                        <p:outputLabel for="basicTypeValue19"
+                                       value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"/>
+                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+
+                    </div>
+                </div>
+
+                <div class="Container30 White Responsive">
+                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                        <p:inputText id="basicTypeValue19"
+                                     value="#{conceptBean.basicTypeValue.value}"
+                                     var="value"
+                                     placeholder="Ingrese #{cc.attrs.targetDefinition.name}..."
+                                     autocomplete="off"
+                                     minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
+                                     maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
+                                     rendered="#{cc.attrs.targetDefinition.type.typeName=='string' and not cc.attrs.targetDefinition.discreteDomain}">
+                            <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
+                                    update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)" />
+                        </p:inputText>
+                    </div>
+                </div>
+                <!-- Atributos de relación -->
+                <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
+            </div>
+        </div>
+    </p:panel>
+
+    <!-- Multiplicidad 1 + relacion existente + con atributos -->
+    <p:panel
+            id="basicTypeSimpleWithAttributes"
+            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
+                          and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
+            widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
+        <p:repeat  value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                   offset="0"
+                   size="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition).size()}"
+                   step="1"
+                   var="relationship"
+                   varStatus="var">
+
+            <div class="ui-fluid">
+
+                <div class="Container">
+
+                    <div class="Container20 White Responsive">
+                        <div class="ContainerIndent">
+                            <p:outputLabel for="basicTypeValue2" value="#{cc.attrs.relationshipDefinition.name}"/>
+                            <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                        </div>
+                    </div>
+
+                    <div class="Container30 White Responsive">
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                            <p:outputPanel styleClass="search">
+                                <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" />
+                                <p:commandLink process="@this"
+                                               update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                                               action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                                    <i class="fa fa-close fa-lg"  />
+                                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?" icon="ui-icon-alert"/>
+                                </p:commandLink>
+                            </p:outputPanel>
+                        </div>
+                    </div>
+
+                    <!-- Atributos de relación -->
+                    <smtk:attributes concept="#{cc.attrs.concept}"
+                                     relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                     relationship="#{relationship}"/>
+                </div>
+            </div>
+        </p:repeat>
+    </p:panel>
+
+    <!-- Multiplicidad N sin atributos-->
+    <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
+
+        <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
+            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.required}">
+                <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
+                <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"/>
+            </p:outputPanel>
+            <p:outputPanel rendered="#{not cc.attrs.relationshipDefinition.required}">
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="Atributo opcional" style="font-size: small;" />
+            </p:outputPanel>
+        </f:facet>
+
+        <p:outputPanel style="width:100%" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}">
+
+            <div class="ui-fluid">
+
+                <div class="Container">
+
+                    <div class="Container20 White Responsive">
+
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                            <p:inputText id="basicTypeValue22"
+                                         value="#{conceptBean.basicTypeValue.value}"
+                                         placeholder="Ingrese #{cc.attrs.targetDefinition.name}..."  />
+
+                        </div>
+
+                    </div>
+
+                    <div class="Container20 White Responsive">
+
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
+                            <p:commandButton
+                                    process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                                    action="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition, conceptBean.basicTypeValue)}"
+                                    style="max-width: 100px"
+                                    update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                                    value="Agregar">
+                            </p:commandButton>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </p:outputPanel>
+
+        <f:facet name="#{(not cc.attrs.concept.editable)? 'footer':null}">
+            <p:outputPanel rendered="#{empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
+                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
+                <h:outputText value="El concepto no tiene #{cc.attrs.relationshipDefinition.name}" style="font-size: small;" />
+            </p:outputPanel>
+        </f:facet>
+
+        <p:dataTable id="collectionValues12"
+                     styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
+                     rendered="#{cc.attrs.concept.editable or not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     var="relationship"
+                     value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     reflow="true">
+
+            <p:column headerText="Descripción"
+                      var="column"
+                      columnIndexVar="colIndex">
+                <h:outputText value="#{relationship.target.value}" />
+            </p:column>
+
+            <p:column title="Eliminar" style="text-align: center;">
+                <p:commandButton
+                        icon="fa fa-trash"
+                        title="Eliminar"
+                        update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.relationships_#{cc.attrs.relationshipDefinition.id})"
+                        process="@this"
+                        immediate="true"
+                        actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                        styleClass="relationships">
+                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
+                               icon="ui-icon-alert"/>
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+
+    </p:panel>
+
+    <script type="text/javascript">
+
+    </script>
+
+    <h:outputStylesheet id="customCSS">
+        .ui-selectonemenu .ui-selectonemenu-label {
+            overflow: visible;
+        }
+
+
+    </h:outputStylesheet>
+
+
+</composite:implementation>
+</html>

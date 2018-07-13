@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+<composite:interface>
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.basictypes.BasicTypeDefinition" />
+    <composite:attribute name="targets" type="java.util.List"/>
+    <composite:attribute name="multiple" type="java.lang.Boolean"/>
+    <composite:attribute name="rightpanel" type="java.lang.Boolean"/>
+</composite:interface>
+<composite:implementation>
+
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <span><h:outputText value="#{cc.attrs.relationshipDefinition.name}" /></span>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <p:selectOneMenu value="#{generalBrowserBean.basicTypeValue.value}"
+                         itemLabel="#{cc.attrs.relationshipDefinition.name}"
+                         converter="omnifaces.SelectItemsConverter"
+                         autoWidth="false"
+                         style="width: 100%"
+                         rendered="#{ empty cc.attrs.targets }" >
+            <f:selectItem itemLabel="Seleccione..."
+                          itemValue="#{null}"/>
+            <f:selectItem itemLabel="Si"
+                          itemValue="#{true}"/>
+            <f:selectItem itemLabel="No"
+                          itemValue="#{false}"/>
+            <p:ajax event="itemSelect"
+                    update="@(.browserFilters),@(.browserTable)"
+                    listener="#{generalBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, generalBrowserBean.basicTypeValue)}"
+                    process="@this"/>
+        </p:selectOneMenu>
+        <p:repeat  value="#{cc.attrs.targets}"
+                   offset="0"
+                   size="#{cc.attrs.targets.size()}"
+                   step="1"
+                   var="target"
+                   varStatus="var">
+
+            <p:outputPanel styleClass="search">
+                <p:inputText readonly="true" id="itemSelected" value="#{target.value?'Si':'No'}" />
+                <p:commandLink rendered="#{ not cc.attrs.targets.isEmpty() }"
+                               process="@this"
+                               update="@(.browserFilters),@(.browserTable)"
+                               action="#{generalBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
+                    <i class="fa fa-close fa-lg"  />
+                </p:commandLink>
+
+            </p:outputPanel>
+
+
+        </p:repeat>
+    </div>
+
+
+    <h:outputStylesheet id="customCSS">
+        .ui-selectonemenu .ui-selectonemenu-label {
+            overflow: visible;
+        }
+    </h:outputStylesheet>
+
+
+</composite:implementation>
+</html>

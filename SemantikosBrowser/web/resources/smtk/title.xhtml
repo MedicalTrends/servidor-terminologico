@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<composite:interface>
+    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb"/>
+</composite:interface>
+
+<composite:implementation>
+
+    <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-10,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+
+        <p:outputPanel>
+            <h2>
+                <h:outputText value="Ver " rendered="#{not conceptBean.editable}"/>
+                <h:outputText value="Editar " rendered="#{conceptBean.editable and conceptBean.concept.persistent}" />
+                <h:outputText value="Crear " rendered="#{conceptBean.editable and not conceptBean.concept.persistent}"/>
+
+                <h:outputText value="Nuevo Concepto Borrador, #{cc.attrs.concept.category.name}" rendered="#{ not cc.attrs.concept.persistent}" />
+
+                <h:outputText value="Concepto Borrador #{cc.attrs.concept.conceptID}, #{cc.attrs.concept.category.name}" rendered="#{ cc.attrs.concept.persistent and not cc.attrs.concept.modeled}" />
+                <h:outputText value="Concepto Modelado #{cc.attrs.concept.conceptID}, #{cc.attrs.concept.category.name}" rendered="#{ cc.attrs.concept.persistent and cc.attrs.concept.modeled}" />
+            </h2>
+        </p:outputPanel>
+
+        <p:button outcome="conceptEdit" value="Editar Concepto" styleClass="CyanButton ui-priority-primary" style="float: right" rendered="#{ not conceptBean.editable}">
+            <f:param name="editMode" value="#{true}" />
+            <f:param name="idConcept" value="#{cc.attrs.concept.id}" />
+        </p:button>
+
+    </h:panelGrid>
+
+</composite:implementation>
+</html>

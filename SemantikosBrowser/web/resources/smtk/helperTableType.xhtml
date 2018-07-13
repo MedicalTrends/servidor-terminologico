@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface >
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.helpertables.HelperTable" />
+    <composite:attribute name="concept" type="cl.minsal.semantikos.model.ConceptSMTK" />
+</composite:interface>
+<composite:implementation>
+
+
+    <!-- Multiplicidad 1 + Relacion existente + Con atributos -->
+    <p:panel id="helperTableTypeSimpleWithAttributes"
+             widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}">
+
+        <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                   var="relationship"
+                   varStatus="var">
+
+            <div class="ui-fluid">
+
+                <div class="ui-g">
+
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+
+                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}" />
+
+                    </div>
+
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
+
+                        <p:inputText readonly="true" id="findHTRecords7" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
+                        <p:inputTextarea readonly="true" id="findHTRecords8" value="#{relationship.target.cells[1].stringValue}" rendered="#{cc.attrs.relationshipDefinition.ATC}"  />
+
+                    </div>
+
+                    <!-- Atributos de relación -->
+                    <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
+
+                </div>
+            </div>
+        </ui:repeat>
+    </p:panel>
+
+    <!-- Multiplicidad N con atributos-->
+    <p:fieldset id="helperTableTypeCollectionWithAttributes" legend="#{cc.attrs.relationshipDefinition.name}"
+                rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}">
+
+        <p:dataTable id="collectionValuesWithAttributes"
+                     styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
+                     var="relationship"
+                     value="#{cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     style="width: 100%"
+                     reflow="true">
+
+            <p:column>
+                <f:facet name="header">
+                <h:outputText value="Descripcion" />
+                </f:facet>
+                <h:outputText value="#{relationship.target.description}" />
+            </p:column>
+
+            <p:columns value="#{cc.attrs.targetDefinition.showableColumnsButFK}"
+                       var="column"
+                       columnIndexVar="colIndex">
+                <f:facet name="header">
+                    <h:outputText value="#{column.name}" />
+                </f:facet>
+                <h:outputText value="#{relationship.target.getColumnValue(column)}" />
+            </p:columns>
+
+            <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitionWebs}"
+                       var="attribute"
+                       columnIndexVar="colIndex">
+                <f:facet name="header">
+                    <h:outputText value="#{attribute.name}" />
+                </f:facet>
+                <smtk:basicTypeAttributeCell attribute="#{attribute.relationshipAttributeDefinition}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.basicType}" />
+                <smtk:helperTableTypeAttributeCell attribute="#{attribute.relationshipAttributeDefinition}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
+            </p:columns>
+
+            <p:column headerText="Registro" rendered="#{cc.attrs.relationshipDefinition.ISP}">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.getCellByColumnName('registro')}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Nombre" rendered="#{cc.attrs.relationshipDefinition.ISP}">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.getCellByColumnName('nombre')}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Titular" rendered="#{cc.attrs.relationshipDefinition.ISP}">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.getCellByColumnName('titular')}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Vigencia ISP" rendered="#{cc.attrs.relationshipDefinition.ISP}">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.getCellByColumnName('estado del registro')}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Usuario" rendered="#{cc.attrs.relationshipDefinition.ISP}">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.creationUsername}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Fecha ingreso" rendered="#{cc.attrs.relationshipDefinition.ISP}">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.getDateCreationFormat()}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Fecha modificación" rendered="#{cc.attrs.relationshipDefinition.ISP}">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.getCellByColumnName('fecha próxima renovación')}"/>
+                </div>
+            </p:column>
+
+        </p:dataTable>
+
+    </p:fieldset>
+
+</composite:implementation>
+</html>

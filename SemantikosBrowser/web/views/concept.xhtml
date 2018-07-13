@@ -4,6 +4,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
                 template="/WEB-INF/template.xhtml">
 
     <ui:define name="content">
@@ -13,8 +14,6 @@
         </f:metadata>
 
         <div class="ui-g">
-
-            <div class="ui-g-0 ui-md-0 ui-lg-0"></div>
 
             <div class="ui-g-12 ui-md-12 ui-lg-12">
 
@@ -89,8 +88,47 @@
                     </p:tab>
 
                     <p:tab title="Atributos" rendered="#{not empty concept.getSMTKRelationships()}">
+
+                        <h:dataTable style="width: 100%;"
+                                     value="#{categoryBean.getNotEmptySMTKDefinitionsByCategory(concept.selectedConcept)}"
+                                     var="relationshipDefinition">
+
+                            <h:column>
+
+                                <p:outputPanel
+                                        id="panelRelationshipDefiniton"
+                                        styleClass="panel_#{relationshipDefinition.id}"
+                                        rendered="#{not relationshipDefinition.targetDefinition.crossMapType}">
+
+                                    <p:growl id="growlAttributes" showDetail="true" showSummary="true"/>
+
+                                    <smtk:smtkType
+                                            rendered="#{relationshipDefinition.targetDefinition.SMTKType}"
+                                            targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                            relationshipDefinition="#{relationshipDefinition}"
+                                            concept="#{concept.selectedConcept}"/>
+
+                                    <smtk:helperTableType
+                                            rendered="#{relationshipDefinition.targetDefinition.helperTable}"
+                                            relationshipDefinition="#{relationshipDefinition}"
+                                            targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                            concept="#{concept.selectedConcept}"/>
+
+                                    <smtk:basicType
+                                            targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                            relationshipDefinition="#{relationshipDefinition}"
+                                            concept="#{concept.selectedConcept}"
+                                            rendered="#{relationshipDefinition.targetDefinition.basicType}"/>
+
+
+                                </p:outputPanel>
+
+                            </h:column>
+
+                        </h:dataTable>
+
                         <p:dataTable id="smtkAttributes"
-                                     paginator="false"
+                                     paginator="false" rendered="false"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      var="relationship"
                                      value="#{concept.getSMTKRelationships()}"
@@ -277,8 +315,6 @@
                 </h:form>
 
             </div>
-
-            <div class="ui-g-0 ui-md-0 ui-lg-0"></div>
 
         </div>
 

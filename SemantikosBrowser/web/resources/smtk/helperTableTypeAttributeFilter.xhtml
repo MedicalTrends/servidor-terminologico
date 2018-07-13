@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface >
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
+    <composite:attribute name="relationshipAttributeDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.helpertables.HelperTable" />
+    <composite:attribute name="targets" type="java.util.List"/>
+    <composite:attribute name="rightpanel" type="java.lang.Boolean"/>
+</composite:interface>
+<composite:implementation>
+
+
+    <div class="ui-g-12 ui-md-12 ui-lg-12}">
+        <span>
+            <h:outputText value="#{cc.attrs.relationshipAttributeDefinition.name}" />
+        </span>
+    </div>
+
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+            <p:selectOneMenu id="findHTRecords1" scrollHeight="200"
+                             forceSelection="true"
+                             autoWidth="false"
+                             value="#{generalBrowserBean.helperTableRecord}"
+                             rendered="#{cc.attrs.targets.isEmpty()}"
+                             var="r"
+                             filter="true"
+                             converter="omnifaces.SelectItemsConverter">
+
+                <f:selectItem itemLabel="Seleccione..." noSelectionOption="true" itemDisabled="true"/>
+                <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition,cc.attrs.relationshipAttributeDefinition)}"
+                               var="record"
+                               itemLabel="#{record.description}"
+                               itemValue="#{record}"/>
+                <p:column>
+                    <h:outputText value="#{r.description}"/>
+                </p:column>
+
+                <p:ajax event="itemSelect"
+                        listener="#{generalBrowserBean.setSimpleSelection(cc.attrs.relationshipAttributeDefinition, generalBrowserBean.helperTableRecord)}"
+                        update="@(.browserFilters)"
+                        process="@this" />
+
+                <p:ajax event="itemSelect" update="@(.browserTable)" />
+                <!-- Parámetros del buscador -->
+                <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                <!-- Parámetros del validador -->
+                <f:attribute name="helperTableRecord" value="#{generalBrowserBean.helperTableRecord}"  />
+                <!---->
+            </p:selectOneMenu>
+
+            <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() }" styleClass="search">
+
+                <p:repeat  value="#{cc.attrs.targets}"
+                           offset="0"
+                           size="#{cc.attrs.targets.size()}"
+                           step="1"
+                           var="target"
+                           varStatus="var">
+
+                    <p:inputText disabled="true" id="itemSelected" value="#{target.description}" />
+                    <p:commandLink
+                            process="@this"
+                            update="@(.browserFilters),@(.browserTable)"
+                            action="#{generalBrowserBean.removeTarget(cc.attrs.relationshipAttributeDefinition,target)}">
+                        <i class="fa fa-close fa-lg"  />
+                    </p:commandLink>
+                </p:repeat>
+            </p:outputPanel>
+
+        </div>
+
+</composite:implementation>
+</html>

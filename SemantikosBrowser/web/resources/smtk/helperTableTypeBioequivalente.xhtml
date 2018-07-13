@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface >
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.helpertables.HelperTable" />
+    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
+</composite:interface>
+<composite:implementation>
+
+    <!-- Bioequivalente -->
+    <p:fieldset id="helperTableTypeCollection" legend="#{cc.attrs.relationshipDefinition.name}"
+                rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and not cc.attrs.relationshipDefinition.ISP}">
+
+        <div class="ui-fluid">
+
+            <div class="ui-g">
+
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                    <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}"/>
+                </div>
+
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
+
+                        <p:outputPanel styleClass="search">
+
+                            <p:growl showDetail="true" showSummary="true"/>
+
+                            <p:autoComplete id="findHTRecords5" scrollHeight="200"
+                                            completeMethod="#{helperTableBean.getRecordSearchInput}"
+                                            minQueryLength="1"
+                                            forceSelection="true"
+                                            var="helperTableRecord"
+                                            placeholder="#{cc.attrs.relationshipDefinition.name}..."
+                                            converter="helperTableRecordConverter"
+                                            disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
+                                            value="#{conceptBean.selectedHelperTableRecord}"
+                                            itemLabel="#{helperTableRecord.description}"
+                                            itemValue="#{helperTableRecord}">
+
+                                <!-- Parámetros del buscador -->
+                                <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                                <!-- Parámetros del validador -->
+                                <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
+                                <!---->
+                                <p:column>
+                                    <h:outputText value="#{helperTableRecord.description}"/>
+                                </p:column>
+
+                                <p:column width="500px" style="width: 500px">
+                                    <h:outputText value="#{helperTableRecord.getCellByColumnName('nombre')}"/>
+                                </p:column>
+
+                                <p:ajax event="itemSelect"
+                                        update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@(.search)"
+                                        async="false"
+                                        listener="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
+                                        process="@this"/>
+
+                            </p:autoComplete>
+                            <i class="fa fa-search fa-lg"  />
+                        </p:outputPanel>
+
+                </div>
+            </div>
+        </div>
+
+        <p:dataTable id="collectionValues12"
+                     styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
+                     var="relationship"
+                     value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     reflow="true">
+
+            <p:column headerText="RegNum/RegAño" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.getCellByColumnName('registro')}"/>
+                </div>
+            </p:column>
+
+            <p:column headerText="Nombre" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.getCellByColumnName('nombre')}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Titular" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.getCellByColumnName('titular')}"/>
+                </div>
+            </p:column>
+
+            <p:column headerText="Producto Comercial" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                <div style="text-align: center;">
+                    <p:repeat
+                            offset="0"
+                            size="#{ispbean.findRelationshipsLike(relationship, cc.attrs.concept.getCategory().findRelationshipDefinitionsByName('ISP').get(0)).size()}"
+                            step="1"
+                            varStatus="var"
+                            value="#{ispbean.findRelationshipsLike(relationship, cc.attrs.concept.getCategory().findRelationshipDefinitionsByName('ISP').get(0))}"
+                            var="relationshipLike">
+                        <h:outputText value="#{relationshipLike.sourceConcept.descriptionFavorite}"/>
+                    </p:repeat>
+                </div>
+            </p:column>
+
+            <p:column headerText="Usuario" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.creationUsername}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Fecha ingreso" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.getDateCreationFormat()}"/>
+                </div>
+            </p:column>
+            <p:column headerText="Fecha modificación" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                <div style="text-align: center;">
+                    <h:outputText value="#{relationship.target.getCellByColumnName('fecha próxima renovación')}"/>
+                </div>
+            </p:column>
+
+            <p:column headerText="Acción" >
+                <div style="text-align: center">
+                    <p:commandButton
+                            icon="fa fa-search"
+                            title="Ver"
+                            update="@(.dialogISP)"
+                            actionListener="#{ispbean.fetchData(relationship.target.getCellByColumnName('registro'))}"
+                            process="@this"
+                            rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                    </p:commandButton>
+                    <p:commandButton
+                            icon="fa fa-trash"
+                            title="Eliminar"
+                            update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@(.search)"
+                            process="@this"
+                            immediate="true"
+                            actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                            styleClass="relationships">
+                        <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
+                                   icon="ui-icon-alert"/>
+                    </p:commandButton>
+                </div>
+            </p:column>
+        </p:dataTable>
+
+    </p:fieldset>
+
+</composite:implementation>
+</html>

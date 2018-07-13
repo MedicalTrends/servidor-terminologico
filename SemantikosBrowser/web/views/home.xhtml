@@ -65,22 +65,26 @@
                                                     minQueryLength="3"
                                                     emptyMessage="No se encontraron conceptos"
                                                     forceSelection="false"
-                                                    scrollHeight="200" size="5"
+                                                    scrollHeight="300" size="5"
                                                     completeMethod="#{browserBean.searchSuggestedDescriptions}"
                                                     placeholder="Buscar..."
                                                     converter="DescriptionConverter"
                                                     var="description"
                                                     value="#{browserBean.descriptionSelected}"
-                                                    itemLabel="#{description.getRepresentation()}"
+                                                    itemLabel="#{description}"
                                                     itemValue="#{description}">
 
-                                        <p:outputPanel>
+                                        <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px">
+                                            <h:outputText value="#{description.term}" />
+                                        </p:column>
 
-                                            <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
-                                                <h:outputText value="#{description.term}" />
-                                            </p:column>
+                                        <p:column style="width: 90%; float: left; ; border: 0px; padding: 0px 10px">
+                                            <h:outputText value="#{description.conceptSMTK.category.name}" style="font-size: small;" />
+                                        </p:column>
 
-                                        </p:outputPanel>
+                                        <p:column style="width: 90%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 12px">
+                                            <h:outputText value="#{description.descriptionType.name}" style="font-size: small" />
+                                        </p:column>
 
                                         <p:ajax event="itemSelect"
                                                 listener="#{browserBean.test()}"

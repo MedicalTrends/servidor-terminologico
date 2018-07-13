@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface >
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.helpertables.HelperTable" />
+    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
+</composite:interface>
+<composite:implementation>
+
+    <!-- Multiplicidad N con atributos-->
+
+    <p:fieldset id="helperTableTypeCollectionWithAttributes" legend="#{cc.attrs.relationshipDefinition.name}"
+                rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
+
+        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%">
+
+            <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+            <div class="ui-fluid">
+
+                <div class="ui-g">
+
+                    <!-- Atributo tipo recomendación -->
+                    <smtk:attributeByName concept="#{cc.attrs.concept}"
+                                          relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                          name="tipo recomendación"/>
+
+                </div>
+
+                <div class="ui-g">
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}"/>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+
+                        <p:selectOneMenu id="findHTRecords6" scrollHeight="200"
+                                         forceSelection="true"
+                                         styleClass="recomendacion  "
+                                         value="#{conceptBean.selectedHelperTableRecord}"
+                                         var="r"
+                                         autoWidth="false"
+                                         filter="true"
+                                         converter="omnifaces.SelectItemsConverter">
+
+                            <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
+                            <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition, cc.attrs.relationshipDefinition.getRelationshipAttributeDefinitionByName('tipo recomendación'), cc.attrs.relationshipDefinition)}"
+                                           var="record"
+                                           itemLabel="#{record.description}"
+                                           itemValue="#{record}"/>
+                            <p:column>
+                                <h:outputText value="#{r.description}"/>
+                            </p:column>
+                            <p:ajax event="itemSelect"
+                                    listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
+
+                                    process="@this"/>
+                            <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
+                            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                            <!-- Parámetros del validador -->
+                            <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
+                            <!---->
+                        </p:selectOneMenu>
+
+                    </div>
+
+                </div>
+
+                <div class="ui-g">
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:outputLabel value="Indicadores"/>
+                    </div>
+
+                    <!-- Atributos: receta, gestión, indicación -->
+                    <smtk:attributeByName concept="#{cc.attrs.concept}"
+                                          relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                          name="receta"
+                    />
+
+                    <smtk:attributeByName concept="#{cc.attrs.concept}"
+                                          relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                          name="gestión"
+                    />
+
+                    <smtk:attributeByName concept="#{cc.attrs.concept}"
+                                          relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                          name="indicación"
+                    />
+
+                </div>
+
+                <div class="ui-g">
+
+                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+                        <p:commandButton
+                                process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                                action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
+                                style="width: auto; float: right"
+                                update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                                value="Agregar">
+                        </p:commandButton>
+                    </div>
+
+                </div>
+            </div>
+        </p:outputPanel>
+
+        <p:dataTable id="collectionValuesWithAttributes"
+                     styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
+                     var="relationship"
+                     value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     style="width: 100%"
+                     editable="true">
+
+            <!-- Parámetros del validador -->
+            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"/>
+            <!---->
+
+            <p:ajax event="rowEdit" listener="#{relationshipBean.onRowEdit}"/>
+
+            <p:columns value="#{cc.attrs.targetDefinition.showableColumnsButFK}"
+                       var="column"
+                       columnIndexVar="colIndex">
+                <f:facet name="header">
+                    <h:outputText value="#{column.name}"/>
+                </f:facet>
+                <h:outputText value="#{relationship.target.getColumnValue(column)}"/>
+            </p:columns>
+
+            <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitionWebs}"
+                       var="attribute"
+                       columnIndexVar="colIndex">
+                <f:facet name="header">
+                    <h:outputText value="#{attribute.name}"/>
+                </f:facet>
+
+                <p:repeat
+                        offset="0"
+                        size="#{relationship.getAttributesByAttributeDefinition(attribute.relationshipAttributeDefinition).size()}"
+                        step="1"
+                        varStatus="var"
+                        value="#{relationship.getAttributesByAttributeDefinition(attribute.relationshipAttributeDefinition)}"
+                        var="relationshipattribute">
+                    <p:cellEditor rendered="#{attribute.targetDefinition.basicType}">
+                        <f:facet name="output">
+                            <h:outputText value="Si" rendered="#{relationshipattribute.target.value}" />
+                            <h:outputText value="No" rendered="#{not relationshipattribute.target.value}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:selectBooleanButton rendered="#{attribute.targetDefinition.basicType}"
+                                                   value="#{relationshipattribute.target.value}"
+                                                   offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg"
+                                                   offIcon="fa fa-close fa-lg">
+                            </p:selectBooleanButton>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:repeat>
+
+                <p:repeat
+                        offset="0"
+                        size="#{relationship.getAttributesByAttributeDefinition(attribute.relationshipAttributeDefinition).size()}"
+                        step="1"
+                        varStatus="var"
+                        value="#{relationship.getAttributesByAttributeDefinition(attribute.relationshipAttributeDefinition)}"
+                        var="attribute2">
+
+                    <h:outputText value="#{attribute2.target.description}" rendered="#{attribute.targetDefinition.helperTable}" />
+
+                </p:repeat>
+
+            </p:columns>
+
+            <p:column headerText="Descripción">
+
+                <h:outputText value="#{relationship.target.description}"/>
+            </p:column>
+
+            <p:column headerText="Acción">
+
+                <p:rowEditor/>
+
+                <p:commandButton
+                        icon="fa fa-trash"
+                        title="Eliminar"
+                        update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                        process="@this"
+                        immediate="true"
+                        actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                        styleClass="relationships">
+                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar esta recomendacion?"
+                               icon="ui-icon-alert"/>
+                </p:commandButton>
+
+            </p:column>
+        </p:dataTable>
+    </p:fieldset>
+
+</composite:implementation>
+</html>
