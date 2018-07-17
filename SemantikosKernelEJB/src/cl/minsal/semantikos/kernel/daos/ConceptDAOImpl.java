@@ -622,7 +622,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             }
 
             if(modeled == null) {
-                call.setNull(5, Types.BOOLEAN);
+                call.setNull(5, Types.NUMERIC);
             }
             else {
                 call.setBoolean(5, modeled);

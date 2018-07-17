@@ -206,5 +206,8 @@ public class FindConcept implements Serializable{
         if(selectedCategories != null) {
             this.selectedCategories = selectedCategories;
         }
+        else {
+            this.selectedCategories = EMPTY_LIST;
+        }
     }
 }

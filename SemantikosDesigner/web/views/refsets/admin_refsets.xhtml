@@ -4,7 +4,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
-                template="/WEB-INF/template/template.xhtml">
+                template="/WEB-INF/template.xhtml">
 
     <ui:define name="header">
         <p:breadCrumb>
@@ -16,7 +16,13 @@
     <ui:define name="content">
 
         <p:panel id="refsetsAdmin">
+
             <h:form id="formRefset">
+
+                <p:breadCrumb>
+                    <p:menuitem value="Inicio" url="/views/home.xhtml" />
+                    <p:menuitem value="RefSets" url="#" />
+                </p:breadCrumb>
 
                 <p:growl id="msg" showDetail="true" autoUpdate="true"/>
 
@@ -50,13 +56,11 @@
 
                         <p:fieldset legend="Conceptos" toggleable="true">
 
-                            <div class="Container">
+                            <div class="ui-g ui-fluid">
 
+                                <div class="ui-g-12">
 
-                                <div class="Fright Container100 MarAuto Responsive" style="text-align: right;">
-
-                                    <p:commandButton style="width: 150 px"
-
+                                    <p:commandButton style="width: auto; right: right"
                                                      icon="fa fa-plus"
                                                      title="Agregar Conceptos"
                                                      value="Agregar Conceptos"
@@ -75,31 +79,21 @@
 
                                     </p:commandButton>
 
-
-                                    <br/>
-
-                                </div>
-
-                                <div class="EmptyBox10"></div>
-
-                                <div class="Fleft Container100 MarAuto Responsive">
-                                    <smtk:conceptRefset scroll="false" refset="#{refsetsBean.refSetToCreate}"/>
-
-                                </div>
-
-                                <div class="EmptyBox10"></div>
-                                <div class="Fleft SoftBlue White  Container100 MarAuto Responsive"
-                                     style="text-align: right;">
-                                    <br/>
-                                    <i class="fa fa-info-circle  SoftBlue"/> El RefSet puede ser creado sin conceptos
-                                    <br/>
                                 </div>
 
                             </div>
 
+                            <smtk:conceptRefset scroll="false" refset="#{refsetsBean.refSetToCreate}"/>
+
+                            <div class="Fleft SoftBlue White  Container100 MarAuto Responsive"
+                                 style="text-align: right;">
+                                <br/>
+                                <i class="fa fa-info-circle  SoftBlue"/> El RefSet puede ser creado sin conceptos
+                                <br/>
+                            </div>
+
 
                         </p:fieldset>
-
 
                         <br/>
 

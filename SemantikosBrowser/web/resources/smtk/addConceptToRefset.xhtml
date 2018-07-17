@@ -22,58 +22,55 @@
 
         <p:outputPanel id="selectConceptPanel" styleClass="selectConcept">
 
+            <div class="ui-fluid">
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+                        <h3>#{cc.attrs.refset.name}</h3>
+                    </div>
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                        <p:outputLabel value="Filtrar"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
+                        <p:selectOneMenu value="#{findConceptBean.categorySelected}"
+                                         converter="omnifaces.SelectItemsConverter"
+                                         effect="fade" var="c" filter="true"
+                                         filterMatchMode="startsWith">
+                            <p:ajax event="itemSelect" listener="#{findConceptBean.getConceptByCategory}"
+                                    update="@(.findConcept)"></p:ajax>
+                            <f:selectItem itemLabel="Categorías" itemDisabled="true"/>
+                            <f:selectItems value="#{findConceptBean.categoryList}" var="category"
+                                           itemLabel="#{category.name}" itemValue="#{category}"/>
+                            <p:column>
+                                <h:outputText value="#{c.name}"/>
+                            </p:column>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                        <p:outputLabel value="Concepto"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
+                        <p:inputText value="#{findConceptBean.pattern}" style="width:90%;"
+                                     placeholder="Buscar...">
+                            <p:ajax event="keyup" update="@(.findConcept)" process="@this"
+                                    listener="#{findConceptBean.getConceptSearchInputAndCategories(findConceptBean.pattern)}"></p:ajax>
+                        </p:inputText>
+                    </div>
 
-            <div class="Container100">
-                <div class="ContainerIndent">
-                    <div class="Card ShadowEffect ui-fluid">
-                        <div class="Container25 Responsive50">
-                            <div class="ContainerIndent">
-                                <h3>#{cc.attrs.refset.name}</h3>
-                            </div>
-                        </div>
-                        <div class="Container25 Responsive50">
-                            <div class="ContainerIndent">
-                                <p:inputText value="#{findConceptBean.pattern}" style="width:90%;"
-                                             placeholder="Buscar...">
-                                    <p:ajax event="keyup" update="@(.findConcept)" process="@this"
-                                            listener="#{findConceptBean.getConceptSearchInputAndCategories(findConceptBean.pattern)}"></p:ajax>
-                                </p:inputText>
-                            </div>
-                        </div>
-                        <div class="Container25 Responsive50">
-                            <div class="ContainerIndent">
-                                <p:selectOneMenu value="#{findConceptBean.categorySelected}"
-                                                 converter="omnifaces.SelectItemsConverter"
-                                                 effect="fade" var="c" filter="true"
-                                                 filterMatchMode="startsWith">
-                                    <p:ajax event="itemSelect" listener="#{findConceptBean.getConceptByCategory}"
-                                            update="@(.findConcept)"></p:ajax>
-                                    <f:selectItem itemLabel="Categorías" itemDisabled="true"/>
-                                    <f:selectItems value="#{findConceptBean.categoryList}" var="category"
-                                                   itemLabel="#{category.name}" itemValue="#{category}"/>
-                                    <p:column>
-                                        <h:outputText value="#{c.name}"/>
-                                    </p:column>
-                                </p:selectOneMenu>
-                            </div>
-                        </div>
-                        <div class="Container25 Responsive50">
-                            <div class="ContainerIndent">
-                                <p:commandButton value="Agregar" update="@(.conceptBindRefset),@(.editRefset)"
-                                                 actionListener="#{refsetsBean.addConcept(cc.attrs.refset)}"
-                                                 disabled="#{not cc.attrs.refset.valid}"
-                                                 oncomplete="PF('selectConcept').hide()">
-                                    <f:setPropertyActionListener value="" target="#{refsetsBean.conceptSMTK}"/>
-                                    <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-12 ui-lg-12">
+                            <p:commandButton value="Agregar" update="@(.conceptBindRefset),@(.editRefset)"
+                                             actionListener="#{refsetsBean.addConcept(cc.attrs.refset)}"
+                                             disabled="#{not cc.attrs.refset.valid}"
+                                             oncomplete="PF('selectConcept').hide()">
+                                <f:setPropertyActionListener value="" target="#{refsetsBean.conceptSMTK}"/>
+                                <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
 
-                                </p:commandButton>
-                            </div>
+                            </p:commandButton>
                         </div>
-
-
                     </div>
                 </div>
             </div>
+
             <div class="Container100">
                 <div class="ContainerIndent">
 
