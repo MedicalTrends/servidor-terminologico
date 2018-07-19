@@ -18,7 +18,6 @@
 
 <composite:implementation>
 
-
     <p:fieldset id="multiplicityN_with_attributes" legend="#{cc.attrs.relationshipDefinition.name}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}">
 
@@ -27,16 +26,22 @@
                      id="tableRelationship3"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
-                     style="margin: 0px;"
+                     style="margin: 0px;" reflow="true"
                      value="#{concept.selectedConcept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      var="rel">
 
-            <p:column headerText="ConceptID">
+            <p:column headerText="ConceptID" rendered="false">
                 <h:outputText value="#{rel.target.conceptID}"/>
             </p:column>
 
-            <p:column headerText="Descripción">
+            <p:column headerText="Descripción" rendered="false">
                 <h:outputText value="#{rel.target.descriptionFavorite.term}"/>
+            </p:column>
+
+            <p:column headerText="Concepto">
+                <p:link outcome="/views/concept" value="#{rel.target.descriptionFSN} - #{rel.target.id}" styleClass="value" >
+                    <f:param name="conceptID" value="#{rel.target.conceptID}" />
+                </p:link>
             </p:column>
 
             <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
@@ -56,7 +61,7 @@
 
     </p:fieldset>
 
-    <p:panel id="multiplicityOne"
+    <p:outputPanel id="multiplicityOne"
              styleClass="concept"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}">
 
@@ -73,38 +78,31 @@
 
                                         <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} "/>
+                                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}:" styleClass="label"/>
 
                                         </div>
 
-                                        <div class="ui-g-12 ui-md-8 ui-lg-4">
+                                        <div class="ui-g-12 ui-md-8 ui-lg-10">
 
-                                            <p:inputText readonly="true" id="itemSelected" value="#{relationship.target.descriptionFavorite.term}" />
-
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-6 ui-lg-2">
-
-                                            <h:outputText value="Concept ID"/>
+                                            <p:link outcome="/views/concept" value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" styleClass="value" >
+                                                <f:param name="conceptID" value="#{relationship.target.conceptID}" />
+                                            </p:link>
 
                                         </div>
 
-                                        <div class="ui-g-12 ui-md-8 ui-lg-4">
-
-                                            <p:inputText value="#{relationship.target.conceptID}" readonly="true" />
-
-                                        </div>
                                     </div>
                                 </div>
 
-                                <smtk:compositeAditional relationshipDefinition="#{cc.attrs.relationshipDefinition}" concept="#{relationship.target}" />
+                                <smtk:compositeAditional relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                                         concept="#{relationship.target}"
+                                                         rendered="false" />
 
                             </ui:repeat>
 
 
             </p:outputPanel>
 
-    </p:panel>
+    </p:outputPanel>
 
 
 </composite:implementation>

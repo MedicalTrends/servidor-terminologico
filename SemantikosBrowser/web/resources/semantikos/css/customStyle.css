@@ -213,6 +213,32 @@
     width: inherit !important;
 }
 
+.first-heading {
+    font-size: 1.8em !important;
+    margin: 10px !important;
+    line-height: 24px !important;
+}
+
+.second-heading {
+    margin: 10px !important;
+}
+
+.heading-separator {
+    border-top: 0px solid rgb(219, 219, 219) !important;
+    border-bottom: 1px solid darkgrey !important;
+    margin: 10px !important;
+    margin-bottom: 1.5em !important;
+}
+
+.value {
+    font-style: italic !important;
+}
+
+.label {
+    /*color: #3F51B5 !important;*/
+}
+
+
 /*
 .ui-paginator .ui-paginator-pages {
     display: inline-block !important;

@@ -19,7 +19,7 @@
 
     <!-- Multiplicidad 1 + relacion existente + con atributos -->
 
-    <p:panel
+    <p:outputPanel
             id="basicTypeSimpleWithAttributes"
             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
@@ -35,13 +35,13 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                    <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}"/>
+                    <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}:"/>
 
                 </div>
 
                 <div class="ui-g-12 ui-md-8 ui-lg-2">
 
-                    <p:inputText readonly="true" value="#{relationship.target.value?'Sí':'No'}"/>
+                    <h:outputText value="#{relationship.target.value?'Sí':'No'}" styleClass="value"/>
 
                 </div>
 
@@ -54,7 +54,7 @@
             </div>
 
         </p:repeat>
-    </p:panel>
+    </p:outputPanel>
 
     <script type="text/javascript">
 

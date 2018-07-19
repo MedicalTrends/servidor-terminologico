@@ -13,11 +13,13 @@ import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
+import cl.minsal.semantikos.view.components.GuestPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -53,6 +55,9 @@ public class ConceptBean implements Serializable {
 
     List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
 
+    @ManagedProperty(value = "#{guestPreferences}")
+    GuestPreferences guestPreferences;
+
     public String getConceptID() {
         return conceptID;
     }
@@ -66,7 +71,7 @@ public class ConceptBean implements Serializable {
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() {
-
+        guestPreferences.setTheme("indigo");
     }
 
     public RelationshipManager getRelationshipManager() {
@@ -237,6 +242,14 @@ public class ConceptBean implements Serializable {
     public String getDateCreationFormat(Timestamp timestamp) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(timestamp);
+    }
+
+    public GuestPreferences getGuestPreferences() {
+        return guestPreferences;
+    }
+
+    public void setGuestPreferences(GuestPreferences guestPreferences) {
+        this.guestPreferences = guestPreferences;
     }
 
 }

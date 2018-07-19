@@ -18,7 +18,7 @@
 
 
     <!-- Multiplicidad 1 + Relacion existente + Con atributos -->
-    <p:panel id="helperTableTypeSimpleWithAttributes"
+    <p:outputPanel id="helperTableTypeSimpleWithAttributes"
              widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}">
 
@@ -32,14 +32,13 @@
 
                     <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}" />
+                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}:" styleClass="label" />
 
                     </div>
 
                     <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                        <p:inputText readonly="true" id="findHTRecords7" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
-                        <p:inputTextarea readonly="true" id="findHTRecords8" value="#{relationship.target.cells[1].stringValue}" rendered="#{cc.attrs.relationshipDefinition.ATC}"  />
+                        <h:outputText readonly="true" id="findHTRecords7" value="#{relationship.target.description}" styleClass="value" />
 
                     </div>
 
@@ -49,7 +48,7 @@
                 </div>
             </div>
         </ui:repeat>
-    </p:panel>
+    </p:outputPanel>
 
     <!-- Multiplicidad N con atributos-->
     <p:fieldset id="helperTableTypeCollectionWithAttributes" legend="#{cc.attrs.relationshipDefinition.name}"

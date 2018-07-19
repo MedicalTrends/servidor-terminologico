@@ -18,7 +18,7 @@
 
 
     <!-- Multiplicidad 1 + Nueva relacion + Sin atributos -->
-    <p:panel
+    <p:outputPanel
             id="basicTypeSimpleNew"
             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                          and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
@@ -30,9 +30,7 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                        <p:outputLabel for="basicTypeValue11" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
-                                       value="#{cc.attrs.relationshipDefinition.name}"/>
-                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                        <p:outputLabel for="basicTypeValue11" value="#{cc.attrs.relationshipDefinition.name}" styleClass="label"/>
 
                 </div>
 
@@ -57,7 +55,7 @@
                 </div>
             </div>
         </div>
-    </p:panel>
+    </p:outputPanel>
 
     <!-- Multiplicidad 1 + Relacion existente + Sin atributos -->
 

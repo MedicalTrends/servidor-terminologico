@@ -5,11 +5,13 @@ import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.snomedct.DescriptionSCT;
 import cl.minsal.semantikos.model.snomedct.DescriptionSCTType;
+import cl.minsal.semantikos.view.components.GuestPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,9 @@ public class ConceptSCTBean {
 
     long conceptID;
 
+    @ManagedProperty(value = "#{guestPreferences}")
+    GuestPreferences guestPreferences;
+
     public long getConceptID() {
         return conceptID;
     }
@@ -44,7 +49,7 @@ public class ConceptSCTBean {
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() {
-
+        guestPreferences.setTheme("teal");
     }
 
     public ConceptSCT getSelectedConcept() {
@@ -72,6 +77,14 @@ public class ConceptSCTBean {
         }
 
         return otherDescriptions;
+    }
+
+    public GuestPreferences getGuestPreferences() {
+        return guestPreferences;
+    }
+
+    public void setGuestPreferences(GuestPreferences guestPreferences) {
+        this.guestPreferences = guestPreferences;
     }
 
 }
