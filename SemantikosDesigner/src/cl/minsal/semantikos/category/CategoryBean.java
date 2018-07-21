@@ -5,6 +5,7 @@ import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.kernel.componentsweb.ViewAugmenter;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
@@ -184,6 +185,24 @@ public class CategoryBean {
             }
         }
         //return relationshipPlaceholders;
+    }
+
+    public List<RelationshipDefinitionWeb> getNotEmptySMTKDefinitionsByCategory(ConceptSMTK conceptSMTK) {
+
+        if(conceptSMTK == null) {
+            return EMPTY_LIST;
+        }
+
+        List<RelationshipDefinitionWeb> smtkRelationshipDefinitions = new ArrayList<>();
+
+        for (RelationshipDefinitionWeb relationshipDefinition : getRelationshipDefinitionsByCategory(conceptSMTK.getCategory())) {
+            if(!relationshipDefinition.getTargetDefinition().isSnomedCTType() && !relationshipDefinition.getTargetDefinition().isCrossMapType()) {
+                if(!conceptSMTK.getValidRelationshipsByRelationDefinition(relationshipDefinition).isEmpty()) {
+                    smtkRelationshipDefinitions.add(relationshipDefinition);
+                }
+            }
+        }
+        return smtkRelationshipDefinitions;
     }
 
 }

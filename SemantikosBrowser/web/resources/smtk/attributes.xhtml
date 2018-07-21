@@ -27,27 +27,18 @@
             value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitionWebs}"
             var="relationshipAttributeDefinition">
 
-        <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+        <smtk:basicTypeAttributeCellView
                                  relationship="#{cc.attrs.relationship}"
-                                 relationshipAttributeDefinition="#{relationshipAttributeDefinition.relationshipAttributeDefinition}"
-                                 targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                 concept="#{cc.attrs.concept}"
                                  rendered="#{relationshipAttributeDefinition.targetDefinition.basicType }"
         />
 
-        <smtk:smtkTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+        <smtk:smtkTypeAttributeCellView
                                 relationship="#{cc.attrs.relationship}"
-                                relationshipAttributeDefinition="#{relationshipAttributeDefinition.relationshipAttributeDefinition}"
-                                targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                concept="#{cc.attrs.concept}"
                                 rendered="#{relationshipAttributeDefinition.targetDefinition.SMTKType}"
         />
 
-        <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+        <smtk:helperTableTypeAttributeCellView
                                        relationship="#{cc.attrs.relationship}"
-                                       relationshipAttributeDefinition="#{relationshipAttributeDefinition.relationshipAttributeDefinition}"
-                                       targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                       concept="#{cc.attrs.concept}"
                                        rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable }"
         />
 

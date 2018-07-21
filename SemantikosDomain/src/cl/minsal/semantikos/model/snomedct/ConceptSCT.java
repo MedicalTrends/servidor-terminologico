@@ -129,7 +129,7 @@ public class ConceptSCT extends PersistentEntity implements Target, SnomedCTComp
     @Override
     public String getRepresentation() {
 
-        return this.idSnomedCT + " ¦ " + this.getDescriptionFavouriteSynonymous();
+        return this.idSnomedCT + " ¦ " + this.getDescriptionFSN();
     }
 
     /**

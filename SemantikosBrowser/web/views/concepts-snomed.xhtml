@@ -45,7 +45,7 @@
                                                             id="search"
                                                             emptyMessage="No se encontraron conceptos"
                                                             forceSelection="false"
-                                                            scrollHeight="200" size="5"
+                                                            size="5"
                                                             completeMethod="#{browserSCTBean.searchSuggestedDescriptions}"
                                                             placeholder="Buscar..."
                                                             converter="DescriptionSCTConverter"
@@ -54,13 +54,24 @@
                                                             itemLabel="#{description.getRepresentation()}"
                                                             itemValue="#{description}">
 
-                                                <p:outputPanel>
+                                                <p:outputPanel rendered="false">
 
                                                     <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
                                                         <h:outputText value="#{description.term}" />
                                                     </p:column>
 
                                                 </p:outputPanel>
+
+                                                <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px">
+                                                    <h:outputText value="#{description.term}" style="font-weight: bold;" />
+                                                    <p:outputLabel rendered="#{description.favourite}">
+                                                        <i class="ui-icon ui-icon-star" style="font-size: small; color: #FFC107"/>
+                                                    </p:outputLabel>
+                                                </p:column>
+
+                                                <p:column style="width: 90%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 10px">
+                                                    <h:outputText value="#{description.descriptionType.name}" style="font-size: small;" />
+                                                </p:column>
 
                                                 <p:ajax event="itemSelect"
                                                             listener="#{browserSCTBean.test()}"

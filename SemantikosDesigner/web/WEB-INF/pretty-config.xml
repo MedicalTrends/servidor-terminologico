@@ -31,17 +31,22 @@
 
     <url-mapping id="new-concept">
         <pattern value="/views/concepts/new/#{idCategory}/#{idConcept}/#{favoriteDescription}" />
-        <view-id value="/views/concept/conceptEdit.xhtml" />
+        <view-id value="/views/concepts/conceptEdit.xhtml" />
     </url-mapping>
 
     <url-mapping id="new-concept-2">
         <pattern value="/views/concepts/new/#{idCategory}/#{idConcept}/#{favoriteDescription}/#{pendingTerms}" />
-        <view-id value="/views/concept/conceptEdit.xhtml" />
+        <view-id value="/views/concepts/conceptEdit.xhtml" />
     </url-mapping>
 
     <url-mapping id="edit-concept">
         <pattern value="/views/concepts/edit/#{idConcept}" />
-        <view-id value="/views/concept/conceptEdit.xhtml" />
+        <view-id value="/views/concepts/conceptEdit.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="view-concept">
+        <pattern value="/views/concepts/view/#{conceptID}" />
+        <view-id value="/views/concepts/conceptView.xhtml" />
     </url-mapping>
 
     <url-mapping id="users">

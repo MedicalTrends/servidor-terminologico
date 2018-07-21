@@ -70,7 +70,10 @@ public class ProfilePermissionsBeans {
         return false;
     }
 
-    public boolean permissionsBy(Category category){
+    public boolean permissionsBy(Category category) {
+        if(category == null) {
+            return false;
+        }
         if(!category.isRestriction() && isDesigner() ){
             return true;
         }
