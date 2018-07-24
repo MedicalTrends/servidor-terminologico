@@ -14,9 +14,9 @@ import java.io.IOException;
 /**
  * @author Francisco Mendez on 19-05-2016.
  */
-public class AuthenticationFilter implements Filter {
+public class AuthFilterBrowser implements Filter {
 
-    static private final Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
+    static private final Logger logger = LoggerFactory.getLogger(AuthFilterBrowser.class);
 
     static public final String AUTH_KEY = "bp.session.user";
 
@@ -27,16 +27,18 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        ((HttpServletResponse) response).setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-        ((HttpServletResponse) response).setHeader("Pragma", "no-cache"); // HTTP 1.0.
-        ((HttpServletResponse) response).setHeader("Expires", "0");
+        if(!req.getContextPath().equals("/designer")) {
 
-        if(req.getSession().isNew()) {
-            req.getSession().invalidate();
-        }
+            if(req.getSession().isNew()) {
+                req.getSession().invalidate();
+            }
 
-        if((req.getRequestURI().equals("/views/home.xhtml") || req.getRequestURI().equals("/")) && req.getParameterMap().isEmpty()) {
-            req.getSession().invalidate();
+            if((req.getRequestURI().equals("/views/home.xhtml") || req.getRequestURI().equals("/")) && req.getParameterMap().isEmpty()) {
+                ((HttpServletResponse) response).setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+                ((HttpServletResponse) response).setHeader("Pragma", "no-cache"); // HTTP 1.0.
+                ((HttpServletResponse) response).setHeader("Expires", "0");
+                req.getSession().invalidate();
+            }
         }
 
         chain.doFilter(request, response);

@@ -129,7 +129,7 @@
 
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
-        <filter-class>cl.minsal.semantikos.filters.AuthenticationFilter</filter-class>
+        <filter-class>cl.minsal.semantikos.filters.AuthFilterBrowser</filter-class>
     </filter>
 
     <filter-mapping>
@@ -138,12 +138,12 @@
     </filter-mapping>
 
     <filter>
-        <filter-name>HSTSFilter</filter-name>
-        <filter-class>cl.minsal.semantikos.filters.HSTSFilter</filter-class>
+        <filter-name>HSTSFilterBrowser</filter-name>
+        <filter-class>cl.minsal.semantikos.filters.HSTSFilterBrowser</filter-class>
     </filter>
 
     <filter-mapping>
-        <filter-name>HSTSFilter</filter-name>
+        <filter-name>HSTSFilterBrowser</filter-name>
         <url-pattern>/views/*</url-pattern>
     </filter-mapping>
 

@@ -73,21 +73,21 @@
     </listener>
 
     <filter>
-        <filter-name>AuthenticationFilter</filter-name>
-        <filter-class>cl.minsal.semantikos.filters.AuthenticationFilter</filter-class>
+        <filter-name>AuthFilterDesigner</filter-name>
+        <filter-class>cl.minsal.semantikos.filters.AuthFilterDesigner</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>AuthenticationFilter</filter-name>
+        <filter-name>AuthFilterDesigner</filter-name>
         <url-pattern>/views/*</url-pattern>
     </filter-mapping>
 
     <filter>
-        <filter-name>HSTSFilter</filter-name>
-        <filter-class>cl.minsal.semantikos.filters.HSTSFilter</filter-class>
+        <filter-name>HSTSFilterDesigner</filter-name>
+        <filter-class>cl.minsal.semantikos.filters.HSTSFilterDesigner</filter-class>
     </filter>
 
     <filter-mapping>
-        <filter-name>HSTSFilter</filter-name>
+        <filter-name>HSTSFilterDesigner</filter-name>
         <url-pattern>/views/*</url-pattern>
     </filter-mapping>
 
