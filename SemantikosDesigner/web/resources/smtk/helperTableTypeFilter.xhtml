@@ -47,10 +47,9 @@
 
                 <p:ajax event="itemSelect"
                         listener="#{generalBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, generalBrowserBean.helperTableRecord)}"
-                        update="@(.browserFilters)"
+                        update="@(.browserFilters),@(.browserTable)"
                         process="@this" />
 
-                <p:ajax event="itemSelect" update="@(.browserTable)" />
                 <!-- Parámetros del buscador -->
                 <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
                 <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
@@ -91,10 +90,8 @@
 
                     <p:ajax event="itemSelect"
                             listener="#{generalBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, generalBrowserBean.helperTableRecord)}"
-                            update="@(.browserFilters)"
+                            update="@(.browserFilters),@(.browserTable)"
                             process="@this" />
-
-                    <p:ajax event="itemSelect" update="@(.browserTable)" />
 
                 </p:autoComplete>
                 <i class="fa fa-search fa-lg" />
