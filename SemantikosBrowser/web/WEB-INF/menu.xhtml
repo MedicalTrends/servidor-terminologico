@@ -14,7 +14,11 @@
 
                     </ui:fragment>
 
-                    <pu:menu widgetVar="me" style="margin-top: 14px">
+                    <pu:menu widgetVar="me" model="#{browserBean.menu}" rendered="#{not request.requestURI.contains('snomed')}"/>
+
+                    <pu:menu widgetVar="me" model="#{browserSCTBean.menu}" rendered="#{request.requestURI.contains('snomed')}"/>
+
+                    <pu:menu widgetVar="me" style="margin-top: 14px" rendered="false">
                         <p:menuitem id="um_dashboard" value="Inicio" icon="fa fa-home" outcome="/views/home" />
                         <p:menuitem id="um_back" value="Volver" icon="fa fa-arrow-left" outcome="/views/concepts" rendered="#{request.requestURI.contains('concept.')}" />
                         <p:submenu id="themes" label="Themes" icon="&#xE40A;" rendered="false">

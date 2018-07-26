@@ -74,17 +74,25 @@
 
                     <div class="ui-g ui-fluid">
 
-                        <p:repeat value="#{conceptSCT.selectedConcept.getRelationships()}" var="relationship">
-                            <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <p:link value="#{relationship.typeConcept.getRepresentation()}" outcome="/views/concept-snomed">
-                                    <f:param name="conceptID" value="#{relationship.typeConcept.idSnomedCT}" />
-                                </p:link>
-                            </div>
-                            <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                <p:link value="#{relationship.destinationConcept.getRepresentation()}" outcome="/views/concept-snomed">
-                                    <f:param name="conceptID" value="#{relationship.destinationConcept.idSnomedCT}" />
-                                </p:link>
-                            </div>
+                        <p:repeat value="#{conceptSCT.getRelationshipDefinitions()}" var="relationshipDefinition">
+
+                            <p:fieldset legend="#{relationshipDefinition.getDescriptionFSN()}" style="width: 100%">
+
+                                <p:repeat value="#{conceptSCT.getRelationshipsByRelationshipDefinition(relationshipDefinition)}"
+                                          var="rel">
+
+                                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+
+                                        <p:link value="#{rel.destinationConcept.getRepresentation()}" outcome="/views/concept-snomed">
+                                            <f:param name="conceptID" value="#{rel.destinationConcept.idSnomedCT}" />
+                                        </p:link>
+
+                                    </div>
+
+                                </p:repeat>
+
+                            </p:fieldset>
+
                         </p:repeat>
 
                     </div>

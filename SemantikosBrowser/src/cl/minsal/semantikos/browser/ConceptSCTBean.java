@@ -2,10 +2,14 @@ package cl.minsal.semantikos.browser;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.SnomedCTManager;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.snomedct.DescriptionSCT;
 import cl.minsal.semantikos.model.snomedct.DescriptionSCTType;
+import cl.minsal.semantikos.model.snomedct.RelationshipSCT;
 import cl.minsal.semantikos.view.components.GuestPreferences;
+import org.apache.commons.collections4.queue.CircularFifoQueue;
+import org.primefaces.model.menu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +18,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -36,20 +41,15 @@ public class ConceptSCTBean {
     @ManagedProperty(value = "#{guestPreferences}")
     GuestPreferences guestPreferences;
 
-    public long getConceptID() {
-        return conceptID;
-    }
+    @ManagedProperty(value = "#{browserSCTBean}")
 
-    public void setConceptID(long conceptID) {
-        this.conceptID = conceptID;
-        selectedConcept = snomedCTManager.getConceptByID(conceptID);
-        selectedConcept.setRelationships(snomedCTManager.getRelationshipsFrom(selectedConcept));
-    }
+    BrowserSCTBean browserBean;
 
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() {
         guestPreferences.setTheme("teal");
+
     }
 
     public ConceptSCT getSelectedConcept() {
@@ -79,12 +79,86 @@ public class ConceptSCTBean {
         return otherDescriptions;
     }
 
+    public List<ConceptSCT> getRelationshipDefinitions() {
+
+        List<ConceptSCT> relationshipDefinitions = new ArrayList<>();
+
+        if(selectedConcept == null) {
+            return  relationshipDefinitions;
+        }
+
+        for (RelationshipSCT relationshipDefinition : selectedConcept.getRelationships()) {
+            if(!relationshipDefinitions.contains(relationshipDefinition.getTypeConcept())) {
+                relationshipDefinitions.add(relationshipDefinition.getTypeConcept());
+            }
+        }
+
+        return relationshipDefinitions;
+    }
+    
+    public List<RelationshipSCT> getRelationshipsByRelationshipDefinition(ConceptSCT concept) {
+        
+        List<RelationshipSCT> relationships = new ArrayList<>();
+
+        if(concept == null) {
+            return relationships;
+        }
+
+        for (RelationshipSCT relationshipSCT : selectedConcept.getRelationships()) {
+            if(relationshipSCT.isActive() && relationshipSCT.getTypeConcept().equals(concept)) {
+                relationships.add(relationshipSCT);
+            }
+        }
+
+        return relationships;
+    }
+
     public GuestPreferences getGuestPreferences() {
         return guestPreferences;
     }
 
     public void setGuestPreferences(GuestPreferences guestPreferences) {
         this.guestPreferences = guestPreferences;
+    }
+
+    public long getConceptID() {
+        return conceptID;
+    }
+
+    public void setConceptID(long conceptID) {
+        this.conceptID = conceptID;
+        selectedConcept = snomedCTManager.getConceptByID(conceptID);
+        selectedConcept.setRelationships(snomedCTManager.getRelationshipsFrom(selectedConcept));
+
+        if(!browserBean.getCircularFifoQueue().contains(selectedConcept)) {
+            browserBean.getCircularFifoQueue().add(selectedConcept);
+        }
+
+        for (MenuElement menuElement : browserBean.getMenu().getElements()) {
+            if(menuElement.getId().equals("2")) {
+                DefaultSubMenu conceptSubmenu = (DefaultSubMenu) menuElement;
+                conceptSubmenu.getElements().clear();
+                for (Object o : Arrays.asList(browserBean.getCircularFifoQueue().toArray())) {
+                    ConceptSCT concept = (ConceptSCT) o;
+                    DefaultMenuItem item = new DefaultMenuItem(concept.getDescriptionFSN());
+                    item.setUrl("/views/snomed/concept/"+concept.getId());
+                    //item.setIcon("fa fa-list-alt");
+                    item.setStyleClass("loader-trigger");
+                    item.setId("rm_"+concept.getId());
+                    if(!conceptSubmenu.getElements().contains(item)) {
+                        conceptSubmenu.addElement(item);
+                    }
+                }
+            }
+        }
+    }
+
+    public BrowserSCTBean getBrowserBean() {
+        return browserBean;
+    }
+
+    public void setBrowserBean(BrowserSCTBean browserBean) {
+        this.browserBean = browserBean;
     }
 
 }

@@ -14,6 +14,9 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.view.components.GuestPreferences;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +28,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -58,15 +62,8 @@ public class ConceptBean implements Serializable {
     @ManagedProperty(value = "#{guestPreferences}")
     GuestPreferences guestPreferences;
 
-    public String getConceptID() {
-        return conceptID;
-    }
-
-    public void setConceptID(String conceptID) {
-        this.conceptID = conceptID;
-        selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
-        selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
-    }
+    @ManagedProperty(value = "#{browserBean}")
+    BrowserBean browserBean;
 
     //Inicializacion del Bean
     @PostConstruct
@@ -244,6 +241,39 @@ public class ConceptBean implements Serializable {
         return format.format(timestamp);
     }
 
+    public String getConceptID() {
+        return conceptID;
+    }
+
+    public void setConceptID(String conceptID) {
+        this.conceptID = conceptID;
+        selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
+        selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
+
+        if(!browserBean.getCircularFifoQueue().contains(selectedConcept)) {
+            browserBean.getCircularFifoQueue().add(selectedConcept);
+        }
+
+        for (MenuElement menuElement : browserBean.getMenu().getElements()) {
+            if(menuElement.getId().equals("2")) {
+                DefaultSubMenu conceptSubmenu = (DefaultSubMenu) menuElement;
+                conceptSubmenu.getElements().clear();
+                for (Object o : Arrays.asList(browserBean.getCircularFifoQueue().toArray())) {
+                    ConceptSMTK concept = (ConceptSMTK) o;
+                    DefaultMenuItem item = new DefaultMenuItem(concept.getDescriptionFavorite());
+                    item.setUrl("/views/concept/"+concept.getConceptID());
+                    //item.setIcon("fa fa-list-alt");
+                    item.setStyleClass("loader-trigger");
+                    item.setId("rm_"+concept.getConceptID());
+                    if(!conceptSubmenu.getElements().contains(item)) {
+                        conceptSubmenu.addElement(item);
+                    }
+                }
+            }
+        }
+
+    }
+
     public GuestPreferences getGuestPreferences() {
         return guestPreferences;
     }
@@ -251,5 +281,14 @@ public class ConceptBean implements Serializable {
     public void setGuestPreferences(GuestPreferences guestPreferences) {
         this.guestPreferences = guestPreferences;
     }
+
+    public BrowserBean getBrowserBean() {
+        return browserBean;
+    }
+
+    public void setBrowserBean(BrowserBean browserBean) {
+        this.browserBean = browserBean;
+    }
+
 
 }

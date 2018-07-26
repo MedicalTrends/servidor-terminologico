@@ -9,12 +9,16 @@ import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.queries.BrowserQuery;
 import cl.minsal.semantikos.model.tags.Tag;
-import org.omnifaces.util.Ajax;
+import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.data.PageEvent;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -119,9 +123,14 @@ public class BrowserBean implements Serializable {
     //@EJB
     private TimeOutWeb timeOutWeb = (TimeOutWeb) ServiceLocator.getInstance().getService(TimeOutWeb.class);
 
-    private List<String> images = new ArrayList();
+
+    private transient MenuModel menu;
+
+    private CircularFifoQueue circularFifoQueue;
+
 
     @PostConstruct
+
     protected void initialize() {
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -131,10 +140,34 @@ public class BrowserBean implements Serializable {
         //ServiceLocator.getInstance().closeContext();
         tags = tagManager.getAllTags();
         categories = categoryManager.getCategories();
-        images.add("image-1.jpg");
-        images.add("image-1.jpg");
-        //images.add("image-3.jpg");
-        //images.add("image-2.jpg");
+
+        menu = new DefaultMenuModel();
+
+        //Inicio
+
+        DefaultMenuItem item0 = new DefaultMenuItem("Inicio");
+        item0.setUrl("/views/home.xhtml");
+        item0.setIcon("fa fa-home");
+        item0.setId("rm_home");
+
+        menu.addElement(item0);
+
+        //Volver
+        DefaultMenuItem item1 = new DefaultMenuItem("Conceptos");
+        item1.setUrl("/views/concepts.xhtml");
+        item1.setIcon("fa fa-list-alt");
+        item1.setId("rm_volver");
+
+        menu.addElement(item1);
+
+        //Últimos visitados
+        DefaultSubMenu conceptSubmenu = new DefaultSubMenu("Últimos vistos");
+        conceptSubmenu.setIcon("fa fa-list");
+        conceptSubmenu.setId("rm_concepts");
+
+        menu.addElement(conceptSubmenu);
+
+        circularFifoQueue = new CircularFifoQueue(5);
     }
 
     public int getResults() {
@@ -437,19 +470,27 @@ public class BrowserBean implements Serializable {
         this.descriptionSelected = descriptionSelected;
     }
 
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
-
     public int getPage() {
         return page;
     }
 
     public void setPage(int page) {
         this.page = page;
+    }
+
+    public CircularFifoQueue getCircularFifoQueue() {
+        return circularFifoQueue;
+    }
+
+    public void setCircularFifoQueue(CircularFifoQueue circularFifoQueue) {
+        this.circularFifoQueue = circularFifoQueue;
+    }
+
+    public MenuModel getMenu() {
+        return menu;
+    }
+
+    public void setMenu(MenuModel menu) {
+        this.menu = menu;
     }
 }
