@@ -418,7 +418,7 @@ public class AutogenerateBean {
 
             for (Relationship relationship : concept.getRelationships()) {
 
-                if (relationship.getRelationshipDefinition().isAttributeSpecial()) {
+                if (relationship.getRelationshipDefinition().isMCSpecial()) {
 
                     BasicTypeValue isMCSpecial = (BasicTypeValue<Boolean>) relationship.getTarget();
                     int lowerBoundary;
