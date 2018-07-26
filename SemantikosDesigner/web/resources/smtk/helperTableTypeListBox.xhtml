@@ -227,7 +227,8 @@
     </p:panel>
 
     <!-- Multiplicidad N con atributos-->
-    <p:fieldset id="helperTableTypeCollectionWithAttributes" legend="#{cc.attrs.relationshipDefinition.name}"
+    <p:fieldset id="helperTableTypeCollectionWithAttributes"
+                legend="#{cc.attrs.relationshipDefinition.optional?cc.attrs.relationshipDefinition.name:cc.attrs.relationshipDefinition.name.concat(' *')}"
                 rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
         <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%">
