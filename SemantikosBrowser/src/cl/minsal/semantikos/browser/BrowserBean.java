@@ -9,12 +9,15 @@ import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.queries.BrowserQuery;
 import cl.minsal.semantikos.model.tags.Tag;
+import cl.minsal.semantikos.view.components.GuestPreferences;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.data.PageEvent;
 import org.primefaces.extensions.model.layout.LayoutOptions;
+import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.primefaces.model.TreeNode;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
@@ -24,6 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -102,6 +106,9 @@ public class BrowserBean implements Serializable {
 
     private int page = 1;
 
+    @ManagedProperty(value = "#{guestPreferences}")
+    GuestPreferences guestPreferences;
+
     //@EJB
     private QueryManager queryManager = (QueryManager) ServiceLocator.getInstance().getService(QueryManager.class);
 
@@ -126,12 +133,14 @@ public class BrowserBean implements Serializable {
 
     private transient MenuModel menu;
 
+    private transient MenuModel navegation;
+
     private CircularFifoQueue circularFifoQueue;
 
-
     @PostConstruct
-
     protected void initialize() {
+
+        guestPreferences.setTheme("indigo");
 
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -144,7 +153,6 @@ public class BrowserBean implements Serializable {
         menu = new DefaultMenuModel();
 
         //Inicio
-
         DefaultMenuItem item0 = new DefaultMenuItem("Inicio");
         item0.setUrl("/views/home.xhtml");
         item0.setIcon("fa fa-home");
@@ -152,22 +160,33 @@ public class BrowserBean implements Serializable {
 
         menu.addElement(item0);
 
-        //Volver
+        //Conceptos
         DefaultMenuItem item1 = new DefaultMenuItem("Conceptos");
         item1.setUrl("/views/concepts.xhtml");
-        item1.setIcon("fa fa-list-alt");
+        item1.setIcon("fa fa-search");
         item1.setId("rm_volver");
 
         menu.addElement(item1);
 
+        //Snomed
+        DefaultMenuItem item2 = new DefaultMenuItem("Snomed-CT");
+        item2.setUrl("/views/snomed/concepts");
+        item2.setIcon("fa fa-arrow-left");
+        item2.setId("rm_snomed");
+
+        menu.addElement(item2);
+
+
         //Últimos visitados
-        DefaultSubMenu conceptSubmenu = new DefaultSubMenu("Últimos vistos");
+        DefaultSubMenu conceptSubmenu = new DefaultSubMenu("Recientes");
         conceptSubmenu.setIcon("fa fa-list");
         conceptSubmenu.setId("rm_concepts");
+        conceptSubmenu.setExpanded(true);
 
         menu.addElement(conceptSubmenu);
 
         circularFifoQueue = new CircularFifoQueue(5);
+
     }
 
     public int getResults() {
@@ -190,6 +209,8 @@ public class BrowserBean implements Serializable {
      * Este método es el responsable de ejecutar la consulta
      */
     public void executeQuery() {
+
+        resetNavigation();
 
         init = currentTimeMillis();
 
@@ -267,7 +288,25 @@ public class BrowserBean implements Serializable {
 
         };
 
+    }
 
+    public void resetNavigation() {
+
+        navegation = new DefaultMenuModel();
+
+        //Inicio
+        DefaultMenuItem item0 = new DefaultMenuItem("Inicio");
+        item0.setUrl("/views/home.xhtml");
+        item0.setId("rm_home");
+
+        navegation.addElement(item0);
+
+        //Volver
+        DefaultMenuItem item1 = new DefaultMenuItem("Conceptos");
+        item1.setUrl("/views/concepts.xhtml");
+        item1.setId("rm_volver");
+
+        navegation.addElement(item1);
     }
 
     public List<Description> searchSuggestedDescriptions(String term) {
@@ -493,4 +532,21 @@ public class BrowserBean implements Serializable {
     public void setMenu(MenuModel menu) {
         this.menu = menu;
     }
+
+    public MenuModel getNavegation() {
+        return navegation;
+    }
+
+    public void setNavegation(MenuModel navegation) {
+        this.navegation = navegation;
+    }
+
+    public GuestPreferences getGuestPreferences() {
+        return guestPreferences;
+    }
+
+    public void setGuestPreferences(GuestPreferences guestPreferences) {
+        this.guestPreferences = guestPreferences;
+    }
+
 }

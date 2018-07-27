@@ -6,6 +6,7 @@ import cl.minsal.semantikos.kernel.components.CrossmapsManager;
 import cl.minsal.semantikos.kernel.components.RefSetManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
@@ -14,6 +15,8 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.view.components.GuestPreferences;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuElement;
@@ -29,6 +32,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -250,17 +254,22 @@ public class ConceptBean implements Serializable {
         selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
         selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
 
+        updateMainMenu();
+        updateNavigationMenu();
+    }
+
+    public void updateMainMenu() {
         if(!browserBean.getCircularFifoQueue().contains(selectedConcept)) {
             browserBean.getCircularFifoQueue().add(selectedConcept);
         }
 
         for (MenuElement menuElement : browserBean.getMenu().getElements()) {
-            if(menuElement.getId().equals("2")) {
+            if(menuElement.getId().equals("3")) {
                 DefaultSubMenu conceptSubmenu = (DefaultSubMenu) menuElement;
                 conceptSubmenu.getElements().clear();
                 for (Object o : Arrays.asList(browserBean.getCircularFifoQueue().toArray())) {
                     ConceptSMTK concept = (ConceptSMTK) o;
-                    DefaultMenuItem item = new DefaultMenuItem(concept.getDescriptionFavorite());
+                    DefaultMenuItem item = new DefaultMenuItem(concept.getDescriptionFSN());
                     item.setUrl("/views/concept/"+concept.getConceptID());
                     //item.setIcon("fa fa-list-alt");
                     item.setStyleClass("loader-trigger");
@@ -270,6 +279,35 @@ public class ConceptBean implements Serializable {
                     }
                 }
             }
+        }
+    }
+
+    public void updateNavigationMenu() {
+        DefaultMenuItem item = new DefaultMenuItem(selectedConcept.getConceptID());
+        item.setUrl("/views/concept/"+selectedConcept.getConceptID());
+        /*
+        boolean flag = false;
+
+        Iterator<MenuElement> it = browserBean.getNavegation().getElements().iterator();
+
+        while (it.hasNext()) {
+            MenuElement element = it.next();
+            DefaultMenuItem defaultMenuItem = (DefaultMenuItem) element;
+            if(defaultMenuItem.getValue().equals(selectedConcept.getDescriptionFSN())) {
+                flag = true;
+            }
+            if(flag) {
+                it.remove();
+            }
+        }
+        browserBean.getNavegation().addElement(item);
+        */
+
+        if(browserBean.getNavegation().getElements().size() > 2) {
+            browserBean.getNavegation().getElements().set(2, item);
+        }
+        else {
+            browserBean.getNavegation().addElement(item);
         }
 
     }
@@ -289,6 +327,5 @@ public class ConceptBean implements Serializable {
     public void setBrowserBean(BrowserBean browserBean) {
         this.browserBean = browserBean;
     }
-
 
 }

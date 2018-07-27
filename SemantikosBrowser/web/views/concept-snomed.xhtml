@@ -76,7 +76,8 @@
 
                         <p:repeat value="#{conceptSCT.getRelationshipDefinitions()}" var="relationshipDefinition">
 
-                            <p:fieldset legend="#{relationshipDefinition.getDescriptionFSN()}" style="width: 100%">
+                            <p:fieldset legend="#{relationshipDefinition.getDescriptionFSN()}" style="width: 100%"
+                            rendered="#{ not empty conceptSCT.getRelationshipsByRelationshipDefinition(relationshipDefinition)}">
 
                                 <p:repeat value="#{conceptSCT.getRelationshipsByRelationshipDefinition(relationshipDefinition)}"
                                           var="rel">

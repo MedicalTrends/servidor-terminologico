@@ -135,7 +135,7 @@ public class ConceptSCTBean {
         }
 
         for (MenuElement menuElement : browserBean.getMenu().getElements()) {
-            if(menuElement.getId().equals("2")) {
+            if(menuElement.getId().equals("3")) {
                 DefaultSubMenu conceptSubmenu = (DefaultSubMenu) menuElement;
                 conceptSubmenu.getElements().clear();
                 for (Object o : Arrays.asList(browserBean.getCircularFifoQueue().toArray())) {

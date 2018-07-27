@@ -127,15 +127,24 @@ public class BrowserSCTBean implements Serializable {
         //Volver
         DefaultMenuItem item1 = new DefaultMenuItem("Conceptos");
         item1.setUrl("/views/snomed/concepts");
-        item1.setIcon("fa fa-list-alt");
+        item1.setIcon("fa fa-search");
         item1.setId("rm_volver");
 
         menu.addElement(item1);
 
+        //Snomed
+        DefaultMenuItem item2 = new DefaultMenuItem("Semantikos");
+        item2.setUrl("/views/concepts");
+        item2.setIcon("fa fa-arrow-left");
+        item2.setId("rm_snomed");
+
+        menu.addElement(item2);
+
         //Últimos visitados
-        DefaultSubMenu conceptSubmenu = new DefaultSubMenu("Últimos vistos");
+        DefaultSubMenu conceptSubmenu = new DefaultSubMenu("Recientes");
         conceptSubmenu.setIcon("fa fa-list");
         conceptSubmenu.setId("rm_concepts");
+        conceptSubmenu.setExpanded(true);
 
         menu.addElement(conceptSubmenu);
 

@@ -17,12 +17,14 @@
 
             <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                <p:breadCrumb id="top-menu">
+                <p:breadCrumb id="top-menu" rendered="false">
                     <p:menuitem value="Inicio" url="/views/home.xhtml" />
                     <p:menuitem value="Conceptos" url="/views/concepts.xhtml" />
                     <p:menuitem value="#{concept.selectedConcept.category.name}" url="#" rendered="false" />
                     <p:menuitem value="#{concept.selectedConcept.conceptID}" url="#" />
                 </p:breadCrumb>
+
+                <p:breadCrumb id="top-menu2" model="#{browserBean.navegation}"/>
 
                 <h:form id="conceptForm">
 
