@@ -17,7 +17,8 @@
 <composite:implementation>
 
     <!-- Bioequivalente -->
-    <p:fieldset id="helperTableTypeCollection" legend="#{cc.attrs.relationshipDefinition.name}"
+    <p:fieldset id="helperTableTypeCollection"
+                legend="#{cc.attrs.relationshipDefinition.optional?cc.attrs.relationshipDefinition.name:cc.attrs.relationshipDefinition.name.concat(' *')}"
                 rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and not cc.attrs.relationshipDefinition.ISP}">
 
         <div class="ui-fluid">

@@ -85,9 +85,8 @@
                     <p:treeTable id="treeDocs" value="#{drugsBrowserBean.root}" var="concept" paginator="true" rows="10">
 
                         <p:column headerText="Término" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}">
-                            <p:link outcome="/views/concept/conceptEdit" value="#{concept.descriptionFavorite.term} ">
-                                <f:param name="editMode" value="#{true}" />
-                                <f:param name="idConcept" value="#{concept.id}" />
+                            <p:link outcome="/views/concepts/conceptView" value="#{concept.descriptionFavorite.term} ">
+                                <f:param name="conceptID" value="#{concept.conceptID}" />
                             </p:link>
                             <h:outputText value="(#{concept.conceptID})" style="font-size: small; color: #006621" />
                             <h:outputText value=" - #{concept.category.name}" style="font-size: small; color:#545454;" />

@@ -258,7 +258,9 @@
     </p:panel>
 
     <!-- Multiplicidad N con atributos-->
-    <p:panel id="helperTableTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
+    <p:fieldset id="helperTableTypeCollectionWithAttributes"
+                legend="#{cc.attrs.relationshipDefinition.optional?cc.attrs.relationshipDefinition.name:cc.attrs.relationshipDefinition.name.concat(' *')}"
+                toggleable="#{cc.attrs.concept.editable}" toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
         <p:outputPanel style="width:100%" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}">
@@ -348,7 +350,7 @@
             </p:column>
         </p:dataTable>
 
-    </p:panel>
+    </p:fieldset>
 
     <script type="text/javascript">
 

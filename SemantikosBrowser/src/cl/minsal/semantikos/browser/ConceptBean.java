@@ -263,23 +263,7 @@ public class ConceptBean implements Serializable {
             browserBean.getCircularFifoQueue().add(selectedConcept);
         }
 
-        for (MenuElement menuElement : browserBean.getMenu().getElements()) {
-            if(menuElement.getId().equals("3")) {
-                DefaultSubMenu conceptSubmenu = (DefaultSubMenu) menuElement;
-                conceptSubmenu.getElements().clear();
-                for (Object o : Arrays.asList(browserBean.getCircularFifoQueue().toArray())) {
-                    ConceptSMTK concept = (ConceptSMTK) o;
-                    DefaultMenuItem item = new DefaultMenuItem(concept.getDescriptionFSN());
-                    item.setUrl("/views/concept/"+concept.getConceptID());
-                    //item.setIcon("fa fa-list-alt");
-                    item.setStyleClass("loader-trigger");
-                    item.setId("rm_"+concept.getConceptID());
-                    if(!conceptSubmenu.getElements().contains(item)) {
-                        conceptSubmenu.addElement(item);
-                    }
-                }
-            }
-        }
+        browserBean.refreshLastVisitedMenu();
     }
 
     public void updateNavigationMenu() {

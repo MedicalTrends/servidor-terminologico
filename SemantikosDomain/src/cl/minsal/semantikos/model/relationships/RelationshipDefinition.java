@@ -323,7 +323,7 @@ public class RelationshipDefinition implements Serializable {
     public boolean isAttributeLaboratory() {
 
         for (String s : name.split(" ")) {
-            if(s.equalsIgnoreCase("Laboratorio")) {
+            if(s.equalsIgnoreCase("Laboratorio") || s.equalsIgnoreCase("Fabricante")) {
                 return true;
             }
         }

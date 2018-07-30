@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+</composite:interface>
+<composite:implementation>
+
+    <div class="layout-rightpanel">
+        <div class="nano">
+            <div class="nano-content right-panel-scroll-content">
+
+                <div class="layout-rightpanel-header" style="display: none">
+                    <div class="weather-day">Filtros</div>
+                </div>
+
+                <div class="layout-rightpanel-content" style="padding: 0px">
+
+                    <h:form>
+
+                        <h:form>
+                            <p:fieldset legend="Filtrar" style="margin-left: 0.5em; margin-right: 0.5em"
+                                        styleClass="filterStatus">
+
+                                <div class="ui-g ui-fluid">
+                                    <div class="ui-g-12">
+                                        <span>Categorías</span>
+                                    </div>
+                                    <div class="ui-g-12">
+                                        <p:selectCheckboxMenu id="menu2"
+                                                              converter="omnifaces.SelectItemsConverter"
+                                                              value="#{browserBean.browserQuery.categories}"
+                                                              label="Seleccione..." style="width: 95%"
+                                                              filter="true" filterMatchMode="startsWith">
+                                            <f:selectItems value="#{browserBean.categories}" var="category"
+                                                           itemLabel="#{category.name}" itemValue="#{category}"/>
+                                            <p:ajax event="toggleSelect" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+                                            <p:ajax update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+                                        </p:selectCheckboxMenu>
+                                    </div>
+                                    <div class="ui-g-12">
+                                        <span>Etiquetas</span>
+                                    </div>
+                                    <div class="ui-g-12">
+                                        <p:selectCheckboxMenu id="tags2"
+                                                              value="#{browserBean.browserQuery.tags}"
+                                                              converter="omnifaces.SelectItemsConverter"
+                                                              label="Seleccione..."
+                                                              style="width: 95%"
+                                                              filter="true"
+                                                              filterMatchMode="startsWith">
+                                            <p:ajax event="change" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+                                            <p:ajax event="toggleSelect" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+
+                                            <f:selectItems value="#{browserBean.tags}" var="tag"
+                                                           itemLabel="#{tag.name}" itemValue="#{tag}"/>
+                                        </p:selectCheckboxMenu>
+                                    </div>
+
+                                    <p:repeat value="#{browserBean.browserQuery.categories}" var="category">
+                                        <div class="ui-g-12">
+                                        <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
+                                            <p:commandLink actionListener="#{browserBean.browserQuery.categories.remove(category)}"
+                                                           update="@(.conceptTable),@(.filterStatus)" style="float: right">
+                                                <i class="ui-icon ui-icon-close" />
+                                            </p:commandLink>
+                                            <span class="ui-autocomplete-token-label" style="font-size: small;">#{category.name}</span>
+                                        </span>
+                                        </div>
+                                    </p:repeat>
+                                </div>
+                            </p:fieldset>
+                            <p:fieldset legend="Ordenar" style="margin-left: 0.5em; margin-right: 0.5em"
+                                        rendered="#{request.requestURI.contains('concepts')}">
+
+                                <div class="ui-g ui-fluid">
+                                    <div class="ui-g-12">
+                                        <span><h:outputText value="Criterio" /></span>
+                                    </div>
+                                    <div class="ui-g-12">
+                                        <p:selectOneRadio value="#{browserBean.browserQuery.order}" layout="responsive" columns="1">
+                                            <f:selectItem itemLabel="Largo" itemValue="0" />
+                                            <f:selectItem itemLabel="ConceptID" itemValue="1" />
+                                            <f:selectItem itemLabel="Término" itemValue="2" />
+                                            <p:ajax event="change"
+                                                    update="@(.browserFilters),@(.conceptTable)"
+                                                    process="@this"/>
+                                        </p:selectOneRadio>
+                                    </div>
+                                    <div class="ui-g-12">
+                                        <span><h:outputText value="Orden" /></span>
+                                    </div>
+                                    <div class="ui-g-12">
+                                        <p:selectOneRadio value="#{browserBean.browserQuery.asc}" layout="responsive" columns="1">
+                                            <f:selectItem itemLabel="Asc" itemValue="asc" />
+                                            <f:selectItem itemLabel="Desc" itemValue="desc" />
+                                            <p:ajax event="change"
+                                                    update="@(.browserFilters),@(.conceptTable)"
+                                                    process="@this"/>
+                                        </p:selectOneRadio>
+                                    </div>
+                                </div>
+                            </p:fieldset>
+
+                        </h:form>
+
+                        <div class="ui-fluid">
+
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                    <p:commandButton value="Cerrar" oncomplete="listenOnClick();"
+                                                     update="@(.filter-btn)"/>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </h:form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</composite:implementation>
+
+<script type="text/javascript">
+
+    function listenOnClick() {
+        $('.rightpanel-btn').trigger('click');
+    }
+
+</script>
+</html>

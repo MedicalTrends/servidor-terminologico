@@ -21,7 +21,8 @@
                      autoRun="true" />
 
     <!-- ISP -->
-    <p:fieldset id="helperTableTypeCollectionISP" legend="#{cc.attrs.relationshipDefinition.name}"
+    <p:fieldset id="helperTableTypeCollectionISP"
+                legend="#{cc.attrs.relationshipDefinition.optional?cc.attrs.relationshipDefinition.name:cc.attrs.relationshipDefinition.name.concat(' *')}"
                 rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.ISP}">
 
         <p:spacer />

@@ -19,6 +19,11 @@ public class BrowserQuery extends Query implements IQuery, Serializable {
 
     private List<Tag> tags = new ArrayList<>();
 
+    public BrowserQuery() {
+        setOrder(0);
+        setAsc("asc");
+    }
+
     public List<Category> getCategories() {
         return categories;
     }
@@ -73,7 +78,7 @@ public class BrowserQuery extends Query implements IQuery, Serializable {
         }
     }
 
-    public boolean isFiltered(){
+    public boolean isFiltered() {
         return ( getCategoryValues() != null || getTagValues() != null  || (getQuery() != null && !getQuery().isEmpty()) );
     }
 

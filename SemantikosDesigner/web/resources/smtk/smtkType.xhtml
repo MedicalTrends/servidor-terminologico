@@ -18,8 +18,9 @@
 
 <composite:implementation>
 
-    <p:panel id="multiplicityN"
-             style="margin:20px;" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500" collapsed="true"
+    <p:fieldset id="multiplicityN"
+                legend="#{cc.attrs.relationshipDefinition.optional?cc.attrs.relationshipDefinition.name:cc.attrs.relationshipDefinition.name.concat(' *')}"
+             style="margin:20px;" toggleable="true" toggleSpeed="500" collapsed="true"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
         <p:spacer />
@@ -100,9 +101,11 @@
             </p:column>
         </p:dataTable>
 
-    </p:panel>
+    </p:fieldset>
 
-    <p:fieldset id="multiplicityN_with_attributes" legend="#{cc.attrs.relationshipDefinition.name}" toggleable="#{cc.attrs.concept.editable}"  toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
+    <p:fieldset id="multiplicityN_with_attributes"
+                legend="#{cc.attrs.relationshipDefinition.optional?cc.attrs.relationshipDefinition.name:cc.attrs.relationshipDefinition.name.concat(' *')}"
+                toggleable="#{cc.attrs.concept.editable}"  toggleSpeed="500" collapsed="#{cc.attrs.concept.editable and not cc.attrs.relationshipDefinition.required}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
         <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%">

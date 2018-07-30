@@ -41,9 +41,8 @@ public class ConceptSCTBean {
     @ManagedProperty(value = "#{guestPreferences}")
     GuestPreferences guestPreferences;
 
-    @ManagedProperty(value = "#{browserSCTBean}")
-
-    BrowserSCTBean browserBean;
+    @ManagedProperty(value = "#{browserBean}")
+    BrowserBean browserBean;
 
     //Inicializacion del Bean
     @PostConstruct
@@ -134,30 +133,14 @@ public class ConceptSCTBean {
             browserBean.getCircularFifoQueue().add(selectedConcept);
         }
 
-        for (MenuElement menuElement : browserBean.getMenu().getElements()) {
-            if(menuElement.getId().equals("3")) {
-                DefaultSubMenu conceptSubmenu = (DefaultSubMenu) menuElement;
-                conceptSubmenu.getElements().clear();
-                for (Object o : Arrays.asList(browserBean.getCircularFifoQueue().toArray())) {
-                    ConceptSCT concept = (ConceptSCT) o;
-                    DefaultMenuItem item = new DefaultMenuItem(concept.getDescriptionFSN());
-                    item.setUrl("/views/snomed/concept/"+concept.getId());
-                    //item.setIcon("fa fa-list-alt");
-                    item.setStyleClass("loader-trigger");
-                    item.setId("rm_"+concept.getId());
-                    if(!conceptSubmenu.getElements().contains(item)) {
-                        conceptSubmenu.addElement(item);
-                    }
-                }
-            }
-        }
+        browserBean.refreshLastVisitedMenu();
     }
 
-    public BrowserSCTBean getBrowserBean() {
+    public BrowserBean getBrowserBean() {
         return browserBean;
     }
 
-    public void setBrowserBean(BrowserSCTBean browserBean) {
+    public void setBrowserBean(BrowserBean browserBean) {
         this.browserBean = browserBean;
     }
 

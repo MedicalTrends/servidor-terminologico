@@ -12,6 +12,15 @@ public class QueryParameter implements Serializable {
     Object value;
     boolean array;
 
+    @Override
+    public String toString() {
+        return "QueryParameter{" +
+                "type=" + type +
+                ", value=" + value +
+                ", array=" + array +
+                '}';
+    }
+
     public QueryParameter(Type type, Object value, boolean array) {
         this.type = type;
         this.value = value;

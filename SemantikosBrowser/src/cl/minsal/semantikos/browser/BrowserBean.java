@@ -8,6 +8,8 @@ import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.queries.BrowserQuery;
+import cl.minsal.semantikos.model.relationships.Target;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.view.components.GuestPreferences;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
@@ -18,10 +20,7 @@ import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.TreeNode;
-import org.primefaces.model.menu.DefaultMenuItem;
-import org.primefaces.model.menu.DefaultMenuModel;
-import org.primefaces.model.menu.DefaultSubMenu;
-import org.primefaces.model.menu.MenuModel;
+import org.primefaces.model.menu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -130,12 +130,11 @@ public class BrowserBean implements Serializable {
     //@EJB
     private TimeOutWeb timeOutWeb = (TimeOutWeb) ServiceLocator.getInstance().getService(TimeOutWeb.class);
 
-
     private transient MenuModel menu;
 
     private transient MenuModel navegation;
 
-    private CircularFifoQueue circularFifoQueue;
+    private CircularFifoQueue<Target> circularFifoQueue;
 
     @PostConstruct
     protected void initialize() {
@@ -149,6 +148,12 @@ public class BrowserBean implements Serializable {
         //ServiceLocator.getInstance().closeContext();
         tags = tagManager.getAllTags();
         categories = categoryManager.getCategories();
+
+        initMenu();
+
+    }
+
+    public void initMenu() {
 
         menu = new DefaultMenuModel();
 
@@ -185,8 +190,7 @@ public class BrowserBean implements Serializable {
 
         menu.addElement(conceptSubmenu);
 
-        circularFifoQueue = new CircularFifoQueue(5);
-
+        circularFifoQueue = new CircularFifoQueue<Target>(5);
     }
 
     public int getResults() {
@@ -211,6 +215,8 @@ public class BrowserBean implements Serializable {
     public void executeQuery() {
 
         resetNavigation();
+
+        resetTheme();
 
         init = currentTimeMillis();
 
@@ -259,14 +265,16 @@ public class BrowserBean implements Serializable {
                 isFilterChanged = false;
 
                 browserQuery.setPageSize(pageSize);
-                browserQuery.setOrder(new Integer(sortField==null?"1":sortField));
+                //browserQuery.setOrder(new Integer(sortField==null?"0":sortField));
 
+                /*
                 if(sortOrder.name().substring(0,3).toLowerCase().equals("asc")) {
                     browserQuery.setAsc(sortOrder.name().substring(0, 3).toLowerCase());
                 }
                 else {
                     browserQuery.setAsc(sortOrder.name().substring(0, 4).toLowerCase());
                 }
+                */
 
                 List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(browserQuery);
 
@@ -307,6 +315,55 @@ public class BrowserBean implements Serializable {
         item1.setId("rm_volver");
 
         navegation.addElement(item1);
+    }
+
+    public void resetTheme() {
+        getGuestPreferences().setTheme("indigo");
+    }
+
+    public void refreshLastVisitedMenu() {
+
+        for (MenuElement menuElement : getMenu().getElements()) {
+            if (menuElement.getId().equals("3")) {
+                DefaultSubMenu conceptSubmenu = (DefaultSubMenu) menuElement;
+                conceptSubmenu.getElements().clear();
+                for (Object o : Arrays.asList(getCircularFifoQueue().toArray())) {
+                    enqueque((Target) o, conceptSubmenu);
+                }
+            }
+        }
+    }
+
+    public void enqueque(Target target, DefaultSubMenu subMenu) {
+
+        if(target instanceof ConceptSMTK) {
+            enqueueConcept((ConceptSMTK) target, subMenu);
+        }
+        if(target instanceof ConceptSCT) {
+            enqueueConceptSCT((ConceptSCT) target, subMenu);
+        }
+    }
+
+    public void enqueueConcept(ConceptSMTK conceptSMTK, DefaultSubMenu subMenu) {
+        DefaultMenuItem item = new DefaultMenuItem(conceptSMTK.getDescriptionFSN());
+        item.setUrl("/views/concept/"+conceptSMTK.getConceptID());
+        //item.setIcon("fa fa-list-alt");
+        item.setStyleClass("loader-trigger");
+        item.setId("rm_"+conceptSMTK.getConceptID());
+        if(!subMenu.getElements().contains(item)) {
+            subMenu.addElement(item);
+        }
+    }
+
+    public void enqueueConceptSCT(ConceptSCT conceptSCT, DefaultSubMenu subMenu) {
+        DefaultMenuItem item = new DefaultMenuItem(conceptSCT.getDescriptionFSN());
+        item.setUrl("/views/snomed/concept/"+conceptSCT.getId());
+        //item.setIcon("fa fa-list-alt");
+        item.setStyleClass("loader-trigger");
+        item.setId("rm_"+conceptSCT.getId());
+        if(!subMenu.getElements().contains(item)) {
+            subMenu.addElement(item);
+        }
     }
 
     public List<Description> searchSuggestedDescriptions(String term) {

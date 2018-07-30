@@ -98,6 +98,16 @@
 
                                         </div>
 
+                                        <p:menubar style="margin-top: 10px">
+                                            <p:menuitem value="Exportar" ajax="false" icon="fa fa-file-excel-o">
+                                                <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
+                                            </p:menuitem>
+
+                                            <p:menuitem value="Filtrar" icon="fa fa-filter" onclick="listenOnClick();">
+                                            </p:menuitem>
+                                        </p:menubar>
+
+
                                     </div>
 
                                     <!--/p:panelGrid-->
@@ -358,6 +368,10 @@
                         return false;
                     }
                 });
+            }
+
+            function listenOnClick() {
+                $('.rightpanel-btn').trigger('click');
             }
 
         </script>

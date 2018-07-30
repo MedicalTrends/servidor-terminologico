@@ -113,6 +113,9 @@ public class BrowserSCTBean implements Serializable {
     @PostConstruct
     protected void initialize() {
         guestPreferences.setTheme("teal");
+    }
+
+    public void initMenu() {
 
         menu = new DefaultMenuModel();
 
