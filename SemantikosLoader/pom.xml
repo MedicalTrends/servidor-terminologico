@@ -40,11 +40,11 @@
         </dependency>
 
         <!-- http://mvnrepository.com/artifact/org.primefaces/primefaces -->
-        <dependency>
+        <!--dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>6.0</version>
-        </dependency>
+        </dependency-->
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -53,17 +53,17 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
+        <!--dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>rio</artifactId>
             <version>3.1.2</version>
-            <!--exclusions>
+            <exclusions>
                 <exclusion>
                     <groupId>org.glassfish</groupId>
                     <artifactId>javax.faces</artifactId>
                 </exclusion>
-            </exclusions-->
-        </dependency>
+            </exclusions>
+        </dependency-->
 
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -76,17 +76,6 @@
             <groupId>net.sf.supercsv</groupId>
             <artifactId>super-csv</artifactId>
             <version>2.4.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cl.minsal.semantikos</groupId>
-            <artifactId>SemantikosDomain</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>cl.minsal.semantikos</groupId>
-            <artifactId>SemantikosDomain</artifactId>
-            <version>1.2</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.ehcache/sizeof -->
