@@ -41,11 +41,12 @@ public class Mailer implements Runnable {
     protected Mailer(Session session, User user, String password, String link, String link2) throws IOException {
         mySession = session;
         this.user = user;
+        this.body = "";
         loadMailBody();
         this.body = this.body.replace("%username%", user.getFullName());
         this.body = this.body.replace("%password%", password);
         this.body = this.body.replace("%link%", link);
-        this.body = this.body.replace("%link2%", link2);
+        this.body = this.body.replace("%email%", user.getEmail());
     }
 
     @Override
@@ -82,51 +83,12 @@ public class Mailer implements Runnable {
                 // add it
                 multipart.addBodyPart(messageBodyPart);
 
-                // second part (the image)
-                messageBodyPart = new MimeBodyPart();
-
-                String fileName = "/img/logo-minsal.png";
-                InputStream stream = this.getClass().getResourceAsStream(fileName);
-
-                if (stream == null) {
-                    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-                    if (classLoader == null) {
-                        classLoader = this.getClass().getClassLoader();
-                    }
-
-                    stream = classLoader.getResourceAsStream(fileName);
-                }
-
-                DataSource ds = new ByteArrayDataSource(stream, "image/*");
-
-                messageBodyPart.setDataHandler(new DataHandler(ds));
-                messageBodyPart.setHeader("Content-ID","<image1>");
-
-                // add it
-                multipart.addBodyPart(messageBodyPart);
-
-                // third part (the other image)
-                messageBodyPart = new MimeBodyPart();
-
-                fileName = "/img/logo-semantikos.png";
-                stream = this.getClass().getResourceAsStream(fileName);
-
-                if (stream == null) {
-                    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-                    if (classLoader == null) {
-                        classLoader = this.getClass().getClassLoader();
-                    }
-
-                    stream = classLoader.getResourceAsStream(fileName);
-                }
-
-                ds = new ByteArrayDataSource(stream, "image/*");
-
-                messageBodyPart.setDataHandler(new DataHandler(ds));
-                messageBodyPart.setHeader("Content-ID","<image2>");
-
-                // add it
-                multipart.addBodyPart(messageBodyPart);
+                // attach images
+                attachImage(multipart, "<image1>", "/img/image-1.png");
+                attachImage(multipart, "<image2>", "/img/image-2.png");
+                attachImage(multipart, "<image3>", "/img/image-3.png");
+                attachImage(multipart, "<image4>", "/img/image-4.png");
+                attachImage(multipart, "<image5>", "/img/image-5.png");
 
                 // put everything together
                 message.setContent(multipart);
@@ -146,17 +108,56 @@ public class Mailer implements Runnable {
                 } catch (MessagingException e1) {
                     logger.error("Error: "+e1.getMessage());
                     e1.printStackTrace();
-                } catch (IOException e1) {
-                    logger.error("Error: "+e1.getMessage());
-                    e1.printStackTrace();
                 }
             }
         }
     }
 
+    private void attachImage(MimeMultipart multipart, String cid, String fileName) {
+
+        try {
+
+            // second part (the image)
+            BodyPart messageBodyPart = new MimeBodyPart();
+
+            InputStream stream = this.getClass().getResourceAsStream(fileName);
+
+            if (stream == null) {
+                ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                if (classLoader == null) {
+                    classLoader = this.getClass().getClassLoader();
+                }
+
+                stream = classLoader.getResourceAsStream(fileName);
+            }
+
+            DataSource ds = new ByteArrayDataSource(stream, "image/*");
+
+            messageBodyPart.setDataHandler(new DataHandler(ds));
+            messageBodyPart.setHeader("Content-ID", cid);
+
+            // add it
+            multipart.addBodyPart(messageBodyPart);
+        }
+        catch (MessagingException e1) {
+            logger.error("Error: "+e1.getMessage());
+            e1.printStackTrace();
+        }
+        catch (IOException e1) {
+            logger.error("Error: "+e1.getMessage());
+            e1.printStackTrace();
+        }
+    }
+
     private void loadMailBody() throws IOException {
         reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/mail/body.html")));
-        body = reader.readLine();
+        String line = "";
+        while ((line = reader.readLine()) != null) {
+            if(line.trim().isEmpty()) {
+                continue;
+            }
+            body = body + line;
+        }
         reader.close();
     }
 }
