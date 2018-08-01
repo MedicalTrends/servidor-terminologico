@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Created by des01c7 on 29-03-18.
  */
-public class XFrameHeaderFilter implements Filter {
+public class XFrameHeaderFilterBrowser implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -15,7 +15,7 @@ public class XFrameHeaderFilter implements Filter {
     }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        ((HttpServletResponse) resp).setHeader("x-frame-options", "allow");
+        ((HttpServletResponse) resp).setHeader("x-frame-options", "deny");
         chain.doFilter(req, resp);
     }
 

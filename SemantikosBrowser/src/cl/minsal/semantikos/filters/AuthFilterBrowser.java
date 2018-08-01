@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.filters;
 
 import cl.minsal.semantikos.browser.AuthenticationBean;
-import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,9 +13,9 @@ import java.io.IOException;
 /**
  * @author Francisco Mendez on 19-05-2016.
  */
-public class AuthenticationFilter implements Filter {
+public class AuthFilterBrowser implements Filter {
 
-    static private final Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
+    static private final Logger logger = LoggerFactory.getLogger(AuthFilterBrowser.class);
 
     static public final String AUTH_KEY = "bp.session.user";
 

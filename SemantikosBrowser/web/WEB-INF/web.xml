@@ -21,8 +21,15 @@
 
     <context-param>
         <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
-        <param-value>true</param-value>
+        <param-value>true</param-value>>
     </context-param>
+
+    <session-config>
+        <cookie-config>
+            <secure>true</secure>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
 
     <!--context-param>
         <param-name>primefaces.THEME</param-name>
@@ -60,6 +67,7 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>ASYNC</dispatcher>
     </filter-mapping>
+
     <listener>
         <listener-class>net.bull.javamelody.SessionListener</listener-class>
     </listener>
@@ -69,6 +77,7 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
@@ -109,7 +118,6 @@
         <mime-type>application/x-font-ttf</mime-type>
     </mime-mapping>
 
-
     <mime-mapping>
         <extension>wof</extension>
         <mime-type>application/x-font-woff2</mime-type>
@@ -123,7 +131,7 @@
 
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
-        <filter-class>cl.minsal.semantikos.filters.AuthenticationFilter</filter-class>
+        <filter-class>cl.minsal.semantikos.filters.AuthFilterBrowser</filter-class>
     </filter>
 
     <filter-mapping>
@@ -133,7 +141,7 @@
 
     <filter>
         <filter-name>HSTSFilter</filter-name>
-        <filter-class>cl.minsal.semantikos.filters.HSTSFilter</filter-class>
+        <filter-class>cl.minsal.semantikos.filters.HSTSFilterBrowser</filter-class>
     </filter>
 
     <filter-mapping>
@@ -143,15 +151,15 @@
 
     <filter>
         <filter-name>x-frame-header</filter-name>
-        <filter-class>cl.minsal.semantikos.filters.XFrameHeaderFilter</filter-class>
+        <filter-class>cl.minsal.semantikos.filters.XFrameHeaderFilterBrowser</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>x-frame-header</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/views/*</url-pattern>
     </filter-mapping>
 
     <!-- Require HTTPS for everything except /img (favicon) and /css. -->
-    <!--security-constraint>
+    <security-constraint>
         <web-resource-collection>
             <web-resource-name>HTTPSOnly</web-resource-name>
             <url-pattern>/*</url-pattern>
@@ -160,17 +168,6 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>HTTPSOrHTTP</web-resource-name>
-            <url-pattern>*.ico</url-pattern>
-            <url-pattern>/img/*</url-pattern>
-            <url-pattern>/css/*</url-pattern>
-        </web-resource-collection>
-        <user-data-constraint>
-            <transport-guarantee>NONE</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint-->
 
 
 </web-app>

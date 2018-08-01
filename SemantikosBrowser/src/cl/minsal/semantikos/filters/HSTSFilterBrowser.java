@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class HSTSFilter implements Filter {
+public class HSTSFilterBrowser implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -15,9 +15,9 @@ public class HSTSFilter implements Filter {
                          FilterChain chain) throws IOException, ServletException {
         HttpServletResponse resp = (HttpServletResponse) res;
 
-        if (req.isSecure()) {
+        //if (req.isSecure()) {
             resp.setHeader("Strict-Transport-Security", "max-age=31622400; includeSubDomains");
-        }
+        //}
 
         chain.doFilter(req, resp);
     }
