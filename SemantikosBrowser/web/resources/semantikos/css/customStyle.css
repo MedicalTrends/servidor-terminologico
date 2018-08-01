@@ -15,13 +15,13 @@
 
 .search .fa-search {
     position: absolute;
-    top: 5px;
+    top: 7px;
     left: 10px;
 }
 
 .search .fa.fa-close.fa-lg {
     position: absolute;
-    top: 5px;
+    top: 7px;
     left: 10px;
     /*cursor: pointer;*/
 }
@@ -171,15 +171,14 @@
 }
 /* */
 
-/*
+
 .ui-inputfield {
-    padding: 6px !important;
+    padding: 4px !important;
 }
 
 .ui-inputfield.ui-state-focus {
-    padding: 6px !important;
+    padding: 4px !important;
 }
-*/
 
 .myCustomLinkStyle:link {
     color: #1a0dab;
@@ -242,6 +241,13 @@
     float: right !important;
 }
 
+.layout-rightpanel .layout-rightpanel-header {
+    height: 50px !important;
+}
+
+.layout-rightpanel .layout-rightpanel-header {
+    background: #283593 none repeat scroll 0% 0% !important;
+}
 
 /*
 .ui-paginator .ui-paginator-pages {

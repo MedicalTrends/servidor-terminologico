@@ -158,14 +158,16 @@ public class GeneralBrowserBean implements Serializable {
                 isFilterChanged = false;
 
                 generalQuery.setPageSize(pageSize);
-                generalQuery.setOrder(new Integer(sortField));
+                //generalQuery.setOrder(new Integer(sortField));
 
+                /*
                 if(sortOrder.name().substring(0,3).toLowerCase().equals("asc")) {
                     generalQuery.setAsc(sortOrder.name().substring(0,3).toLowerCase());
                 }
                 else {
                     generalQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
                 }
+                */
 
                 List<ConceptSMTK> conceptSMTKs = null;
 

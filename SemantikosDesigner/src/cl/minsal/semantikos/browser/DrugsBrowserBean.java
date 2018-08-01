@@ -88,8 +88,9 @@ public class DrugsBrowserBean implements Serializable {
 
         ConceptSMTK conceptData = (ConceptSMTK)treeNode.getData();
 
-        if(conceptData.equals(conceptSelected))
+        if(conceptData.equals(conceptSelected)) {
             expanded = false;
+        }
 
         treeNode.setExpanded(expanded);
 

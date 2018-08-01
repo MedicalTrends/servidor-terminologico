@@ -18,7 +18,7 @@
     <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-10,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
 
         <p:outputPanel>
-            <h2>
+            <h1 class="first-heading">
                 <h:outputText value="Ver " rendered="#{not conceptBean.editable}"/>
                 <h:outputText value="Editar " rendered="#{conceptBean.editable and conceptBean.concept.persistent}" />
                 <h:outputText value="Crear " rendered="#{conceptBean.editable and not conceptBean.concept.persistent}"/>
@@ -27,7 +27,7 @@
 
                 <h:outputText value="Concepto Borrador #{cc.attrs.concept.conceptID}, #{cc.attrs.concept.category.name}" rendered="#{ cc.attrs.concept.persistent and not cc.attrs.concept.modeled}" />
                 <h:outputText value="Concepto Modelado #{cc.attrs.concept.conceptID}, #{cc.attrs.concept.category.name}" rendered="#{ cc.attrs.concept.persistent and cc.attrs.concept.modeled}" />
-            </h2>
+            </h1>
         </p:outputPanel>
 
         <p:button outcome="conceptEdit" value="Editar Concepto" styleClass="CyanButton ui-priority-primary" style="float: right" rendered="#{ not conceptBean.editable}">

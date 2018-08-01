@@ -159,7 +159,7 @@ public class BrowserBean implements Serializable {
 
         //Inicio
         DefaultMenuItem item0 = new DefaultMenuItem("Inicio");
-        item0.setUrl("/views/home.xhtml");
+        item0.setUrl("/");
         item0.setIcon("fa fa-home");
         item0.setId("rm_home");
 

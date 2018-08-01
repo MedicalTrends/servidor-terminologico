@@ -58,7 +58,8 @@
                                                 <h:outputText value="#{concept.category.name}"/>
                                             </p:column>
 
-                                            <p:ajax event="itemSelect" async="false" listener="#{drugsBrowserBean.setConceptSelected(concept)}" update=":browserForm,@(.drugsFinder)" process="@this" />
+                                            <p:ajax event="itemSelect" async="false" listener="#{drugsBrowserBean.setConceptSelected(concept)}"
+                                                    update=":browserForm,@(.drugsFinder)" process="@this" oncomplete="indentTreeElements();" />
 
                                         </p:autoComplete>
                                         <i class="fa fa-search fa-lg"  />
@@ -82,14 +83,30 @@
 
                     </p:panel>
 
-                    <p:treeTable id="treeDocs" value="#{drugsBrowserBean.root}" var="concept" paginator="true" rows="10">
+                    <p:treeTable id="treeDocs" value="#{drugsBrowserBean.root}" var="concept" paginator="false" rows="10">
 
-                        <p:column headerText="Término" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}">
+                        <p:ajax event="expand" oncomplete="indentTreeElements();" />
+
+                        <p:column headerText="Término"
+                                  styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''} nodes"
+                                  style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px">
                             <p:link outcome="/views/concepts/conceptView" value="#{concept.descriptionFavorite.term} ">
                                 <f:param name="conceptID" value="#{concept.conceptID}" />
                             </p:link>
-                            <h:outputText value="(#{concept.conceptID})" style="font-size: small; color: #006621" />
-                            <h:outputText value=" - #{concept.category.name}" style="font-size: small; color:#545454;" />
+                            <br/>
+                            <h:outputText value="#{concept.conceptID}" style="font-size: small; color: #006621" styleClass="more-info" />
+                            <br/>
+                            <h:outputText value="#{concept.category.name}" style="font-size: small; color:#545454;" styleClass="more-info" />
+                        </p:column>
+
+                        <p:column headerText="ConceptID" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}"
+                                  style="width: 90%; float: left; ; border: 0px; padding: 0px 10px;" rendered="false">
+                            <h:outputText value="#{concept.conceptID}" style="font-size: small; color: #006621" />
+                        </p:column>
+
+                        <p:column headerText="Categoría" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}"
+                                  style="width: 90%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 12px" rendered="false">
+                            <h:outputText value="#{concept.category.name}" style="font-size: small; color:#545454;" />
                         </p:column>
 
                     </p:treeTable>
@@ -97,6 +114,26 @@
 
             </div>
         </div>
+
+        <script type="text/javascript">
+
+            function indentTreeElements() {
+
+                var indentFactor = 20;
+
+                $('.nodes').each(function() {
+
+                   var offSet = $(this).find(".ui-treetable-indent").length;
+
+                    //alert(indentFactor);
+
+                    $(this).find(".more-info").each(function() {
+                       $(this).css("padding-left",indentFactor*(offSet+1));
+                    });
+                });
+            }
+
+        </script>
 
     </ui:define>
 
