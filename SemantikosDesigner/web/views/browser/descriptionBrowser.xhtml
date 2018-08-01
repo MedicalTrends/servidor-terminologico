@@ -195,12 +195,14 @@
 
                             <div style="text-align: center;">
 
-                                <p:button outcome="/views/concept/conceptEdit" title="Consultar" style="padding: 5px"
+
+
+                                <p:button outcome="/views/concepts/conceptView" title="Consultar" style="padding: 5px"
                                 icon="fa fa-eye fa-lg">
-                                    <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
+                                    <f:param name="conceptID" value="#{description.conceptSMTK.conceptID}" />
                                 </p:button>
 
-                                <p:button outcome="/views/concept/conceptEdit" title="Editar" style="padding: 5px"
+                                <p:button outcome="/views/concepts/conceptEdit" title="Editar" style="padding: 5px"
                                           rendered="#{profilePermissionsBeans.modeler}" icon="fa fa-edit fa-lg">
                                     <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
                                 </p:button>

@@ -98,12 +98,12 @@
 
                                         </div>
 
-                                        <p:menubar style="margin-top: 10px">
-                                            <p:menuitem value="Exportar" ajax="false" icon="fa fa-file-excel-o">
+                                        <p:menubar style="margin-top: 10px; background: #F2F2F2" styleClass="browser-options">
+                                            <p:menuitem value="Exportar" ajax="false" icon="fa fa-file-excel-o" style="border-left: 1px solid rgb(189, 189, 189)">
                                                 <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
                                             </p:menuitem>
 
-                                            <p:menuitem value="Filtrar" icon="fa fa-filter" onclick="listenOnClick();">
+                                            <p:menuitem value="Filtrar" icon="fa fa-filter" onclick="listenOnClick();" style="border-left: 1px solid rgb(189, 189, 189)">
                                             </p:menuitem>
                                         </p:menubar>
 

@@ -238,6 +238,10 @@
     /*color: #3F51B5 !important;*/
 }
 
+.browser-options .ui-menuitem {
+    float: right !important;
+}
+
 
 /*
 .ui-paginator .ui-paginator-pages {

@@ -190,11 +190,11 @@
                                     <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
                                 </p:commandButton>
 
-                                <p:button outcome="/views/concept/conceptEdit" title="Consultar" style="padding: 5px"
+                                <p:button outcome="/views/concepts/conceptView" title="Consultar" style="padding: 5px"
                                             icon="fa fa-eye fa-lg">
-                                    <f:param name="editMode" value="#{false}" />
-                                    <f:param name="idConcept" value="#{noValidDescription.noValidDescription.conceptSMTK.id}" />
+                                    <f:param name="conceptID" value="#{noValidDescription.noValidDescription.conceptSMTK.conceptID}" />
                                 </p:button>
+
                             </div>
                         </p:column>
 
@@ -210,10 +210,8 @@
                                     <h:outputText value="#{concept.descriptionFavorite}" />
                                 </p:column>
                                 <p:column headerText="Consultar">
-                                    <p:link outcome="/views/concept/conceptEdit" style="padding: 5px">
-                                        <i class="fa fa-eye fa-lg"/>
-                                        <f:param name="editMode" value="#{false}" />
-                                        <f:param name="idConcept" value="#{concept.id}" />
+                                    <p:link outcome="/views/concepts/conceptView" value="#{concept.descriptionFavorite.term} ">
+                                        <f:param name="conceptID" value="#{concept.conceptID}" />
                                     </p:link>
                                 </p:column>
                             </p:dataTable>
