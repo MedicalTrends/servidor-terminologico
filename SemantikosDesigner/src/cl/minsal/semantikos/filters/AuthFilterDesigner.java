@@ -1,5 +1,6 @@
-package cl.minsal.semantikos;
+package cl.minsal.semantikos.filters;
 
+import cl.minsal.semantikos.Constants;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import org.slf4j.Logger;
@@ -10,16 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static javax.ws.rs.core.HttpHeaders.CACHE_CONTROL;
-import static javax.ws.rs.core.HttpHeaders.EXPIRES;
-
 
 /**
  * @author Francisco Mendez on 19-05-2016.
  */
-public class AuthenticationFilter implements Filter {
+public class AuthFilterDesigner implements Filter {
 
-    static private final Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
+    static private final Logger logger = LoggerFactory.getLogger(AuthFilterDesigner.class);
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 

@@ -183,17 +183,17 @@ public class ISPBean {
             }
 
         }
+        /*
         else {
-        /**
-         * Si se encuentra, se verifica que no exista actualmente una relación con este destino
-         */
+            // Si se encuentra, se verifica que no exista actualmente una relación con este destino
             for (Relationship relationship : relationshipManager.findRelationshipsLike(relationshipDefinition,ispRecord)) {
-                if(relationship.getRelationshipDefinition().isISP()) {
+                if(relationship.isPersistent() && relationship.getRelationshipDefinition().isISP()) {
                     conceptBean.getMessageBean().messageError("Para agregar una relación a ISP, la dupla ProductoComercial-Regnum/RegAño deben ser únicos. Registro referenciado por concepto " + relationship.getSourceConcept().getDescriptionFavorite());
                     return;
                 }
             }
         }
+        */
 
         context.execute("PF('ispfetcheddialog').show();");
     }

@@ -45,6 +45,14 @@
         <param-value>6LcI2FMUAAAAAJjeN45UnzgCmokD5S1A8jaVpRrc</param-value>
     </context-param>
 
+    <!--secure cookies-->
+    <!--session-config>
+        <cookie-config>
+            <secure>true</secure>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config-->
+
     <!-- melody -->
     <filter>
         <filter-name>javamelody</filter-name>
@@ -63,7 +71,7 @@
 
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
-        <filter-class>cl.minsal.semantikos.AuthenticationFilter</filter-class>
+        <filter-class>cl.minsal.semantikos.filters.AuthFilterDesigner</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>
@@ -88,6 +96,26 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
+
+    <filter>
+        <filter-name>HSTSFilter</filter-name>
+        <filter-class>cl.minsal.semantikos.filters.HSTSFilterDesigner</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>HSTSFilter</filter-name>
+        <url-pattern>/views/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>x-frame-header</filter-name>
+        <filter-class>cl.minsal.semantikos.filters.XFrameHeaderFilterDesigner</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>x-frame-header</filter-name>
+        <url-pattern>/views/*</url-pattern>
+    </filter-mapping>
 
 
     <!--security-constraint>
@@ -153,5 +181,16 @@
         <extension>ico</extension>
         <mime-type>image/x-icon</mime-type>
     </mime-mapping>
+
+    <!-- Require HTTPS for everything except /img (favicon) and /css. -->
+    <!--security-constraint>
+        <web-resource-collection>
+            <web-resource-name>HTTPSOnly</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint-->
 
 </web-app>
