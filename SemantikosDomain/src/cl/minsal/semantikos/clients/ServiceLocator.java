@@ -11,6 +11,9 @@ import org.jboss.ejb.client.PropertiesBasedEJBClientConfiguration;
 import org.jboss.ejb.client.remoting.ConfigBasedEJBClientContextSelector;
 
 import javax.naming.*;
+import javax.security.auth.login.Configuration;
+import javax.security.auth.login.LoginContext;
+import javax.security.auth.login.LoginException;
 
 import java.lang.reflect.Type;
 import java.util.*;
@@ -21,6 +24,7 @@ public class ServiceLocator {
 
     private static final ServiceLocator instance = new ServiceLocator();
     private static Context context;
+    private static LoginContext loginContext;
     private static Properties props;
 
     /** Mapa de interfaces por su nombre. */
@@ -66,6 +70,8 @@ public class ServiceLocator {
 
     private ServiceLocator() {
 
+        Configuration.setConfiguration(new DefaultJaasConfiguration());
+
         props = new Properties();
         props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
         //props.put(InitialContext.SECURITY_PRINCIPAL, "user@admin.cl");
@@ -74,13 +80,14 @@ public class ServiceLocator {
         //props.put("remote.connection.default.password", "1234567z");
         //props.put("jboss.naming.client.ejb.context", "true");
         //props.setProperty("org.jboss.ejb.client.scoped.context", "true");
+        props.put("jboss.naming.client.ejb.context", "true");
 
         try {
             context = new InitialContext(props);
             //context = new InitialContext(properties);
             //Autenticar usuario guest para la posterior invocacion de componentes durante despliegue
             //AuthenticationManager authManager = (AuthenticationManager) getService(AuthenticationManager.class);
-            //authManager.
+            login("user@admin.cl", "1234567z");
         } catch (NamingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -152,6 +159,53 @@ public class ServiceLocator {
         } catch (NamingException e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean login(String userName, String password) {
+        /*
+       * During the login process(i.e. when the login() method on the LoginContext is called),
+       * the control will be transferred to a CallbackHandler. The CallbackHandler will be
+       * responsible for populating the Callback object with the username and password, which
+       * will be later on used by the login process
+       *
+       * The "MyCallbackHandler" is your own class and you can give any name to it. MyCallbackHandler
+       * expects the username and password to be passed through its constructor, but this is NOT
+       * mandatory when you are writing your own callback handler.
+       *
+       *
+       */
+        MyCallbackHandler handler = new MyCallbackHandler(userName, password);
+
+        try {
+
+           /*
+            * Create a login context. Here, as the first parameter, you will specify which
+            * configuration(mentioned in the "authFile" above) will be used. Here we are specifying
+            * "someXYZLogin" as the configuration to be used. Note: This has to match the configuration
+            * specified in the someFilename.someExtension authFile above.
+            * The login context expects a CallbackHandler as the second parameter. Here we are specifying
+            * the instance of MyCallbackHandler created earlier. The "handle()" method of this handler
+            * will be called during the login process.
+            */
+            loginContext= new LoginContext(Configuration.getConfiguration().getClass().getName(), handler);
+
+           /*
+            * Do the login
+            */
+            loginContext.login();
+
+            System.out.println("Successfully logged in user: " + userName);
+
+            return true;
+
+
+        } catch (LoginException le) {
+
+            System.out.println("Login failed");
+            le.printStackTrace();
+            return false;
+        }
+
     }
 
 }
