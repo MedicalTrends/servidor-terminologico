@@ -241,16 +241,16 @@
 
                         <div class="ui-fluid ui-g">
 
-                            <div class="ui-g-12 ui-md-3 ui-lg-1" style="padding: 1px">
+                            <div class="ui-g-12 ui-md-4 ui-lg-2" style="padding: 1px">
                                 <p:button outcome="/views/browser/generalBrowser.xhtml?idCategory=#{conceptBean.category.id}"
                                           styleClass="cyan-btn"
                                           value="Volver" icon="fa fa-arrow-left"/>
                             </div>
 
-                            <p:outputPanel class="ui-g-0 ui-md-0 ui-lg-#{not conceptBean.concept.persistent?'9':conceptBean.concept.modeled?'7':'7'}"
+                            <p:outputPanel class="ui-g-0 ui-md-0 ui-lg-#{not conceptBean.concept.persistent?'6':conceptBean.concept.modeled?'2':'4'}"
                                            style="padding: 0px" />
 
-                            <div class="ui-g-12 ui-md-3 ui-lg-1" style="padding: 1px">
+                            <div class="ui-g-12 ui-md-4 ui-lg-2" style="padding: 1px">
 
                                 <p:commandButton actionListener="#{conceptBean.saveConcept}" icon="fa fa-check"
                                                  value="Guardar" style="padding: 1px"
@@ -260,7 +260,7 @@
                             </div>
 
                             <p:outputPanel rendered="#{conceptBean.concept.persistent and not conceptBean.concept.modeled}"
-                                           styleClass="ui-g-12 ui-md-3 ui-lg-1" style="padding: 1px">
+                                           styleClass="ui-g-12 ui-md-4 ui-lg-2" style="padding: 1px">
 
                                 <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"
                                                  value="Eliminar" type="submit" process="mainForm" style="padding: 1px"
@@ -270,14 +270,14 @@
 
                             </p:outputPanel>
 
-                            <p:outputPanel rendered="#{conceptBean.concept.modeled}" styleClass="ui-g-12 ui-md-3 ui-lg-1" style="padding: 1px">
+                            <p:outputPanel rendered="#{conceptBean.concept.modeled}" styleClass="ui-g-12 ui-md-4 ui-lg-2" style="padding: 1px">
 
                                 <!-- Botón para Trasladar el concepto modelado -->
                                 <smtk:trasnferConcept conceptSMTK="#{conceptBean.concept}"/>
 
                             </p:outputPanel>
 
-                            <div class="ui-g-12 ui-md-3 ui-lg-1" style="padding: 1px">
+                            <div class="ui-g-12 ui-md-4 ui-lg-2" style="padding: 1px">
 
                                 <p:commandButton actionListener="#{conceptBean.cancelConcept}" icon="fa fa-undo"
                                                  value="Deshacer" type="submit" process="mainForm"
@@ -289,7 +289,7 @@
 
                             </div>
 
-                            <div class="ui-g-12 ui-md-3 ui-lg-1" style="padding: 1px">
+                            <div class="ui-g-12 ui-md-4 ui-lg-2" style="padding: 1px">
                                 <smtk:export-xls rendered="#{conceptBean.concept.modeled}" />
                             </div>
 

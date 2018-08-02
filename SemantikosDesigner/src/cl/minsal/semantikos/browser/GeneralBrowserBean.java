@@ -15,6 +15,7 @@ import cl.minsal.semantikos.model.queries.QueryFilterAttribute;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.users.User;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -82,6 +83,12 @@ public class GeneralBrowserBean implements Serializable {
      */
     private boolean isFilterChanged;
 
+    /**
+     * Indica si cambió la categoría. Se utiliza para resetear el estado del lazyDataModel
+     */
+    private boolean isCategoryChanged = false;
+
+
     private boolean showSettings;
 
     // Placeholders para los targets de los filtros, dados como elementos seleccionables
@@ -137,6 +144,7 @@ public class GeneralBrowserBean implements Serializable {
          */
         if(generalQuery == null) {
             generalQuery = queryManager.getDefaultGeneralQuery(category);
+            isCategoryChanged = true;
         }
 
         /**
@@ -147,6 +155,13 @@ public class GeneralBrowserBean implements Serializable {
             public List<ConceptSMTK> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
+
+                if(isCategoryChanged) {
+                    first = 0;
+                    RequestContext reqCtx = RequestContext.getCurrentInstance();
+                    reqCtx.execute("PF('conceptTable').getPaginator().setPage(0)");
+                    isCategoryChanged = false;
+                }
 
                 if(isFilterChanged) {
                     generalQuery.setPageNumber(0);

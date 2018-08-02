@@ -119,7 +119,8 @@
 
             function indentTreeElements() {
 
-                var indentFactor = 20;
+                var indentFactor = 16;
+                var lastIndent = 28;
 
                 $('.nodes').each(function() {
 
@@ -128,7 +129,7 @@
                     //alert(indentFactor);
 
                     $(this).find(".more-info").each(function() {
-                       $(this).css("padding-left",indentFactor*(offSet+1));
+                       $(this).css("margin-left",indentFactor*offSet+lastIndent);
                     });
                 });
             }
