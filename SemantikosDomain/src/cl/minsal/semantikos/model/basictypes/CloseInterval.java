@@ -7,6 +7,10 @@ import java.io.Serializable;
  */
 public class CloseInterval<T extends Comparable> extends Interval<T> implements Serializable {
 
+    public CloseInterval() {
+        super();
+    }
+
     public CloseInterval(T bottomBoundary, T upperBoundary) {
         super(bottomBoundary, upperBoundary);
     }
