@@ -30,6 +30,13 @@
         <param-value>true</param-value>
     </context-param>
 
+    <!--session-config>
+        <cookie-config>
+            <secure>true</secure>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config-->
+
     <!--context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>rio</param-value>
@@ -161,17 +168,6 @@
         <web-resource-collection>
             <web-resource-name>HTTPSOnly</web-resource-name>
             <url-pattern>/*</url-pattern>
-        </web-resource-collection>
-        <user-data-constraint>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>HTTPSOrHTTP</web-resource-name>
-            <url-pattern>*.ico</url-pattern>
-            <url-pattern>/img/*</url-pattern>
-            <url-pattern>/css/*</url-pattern>
         </web-resource-collection>
         <user-data-constraint>
             <transport-guarantee>NONE</transport-guarantee>

@@ -15,9 +15,9 @@ public class HSTSFilterBrowser implements Filter {
                          FilterChain chain) throws IOException, ServletException {
         HttpServletResponse resp = (HttpServletResponse) res;
 
-        if (req.isSecure()) {
+        //if (req.isSecure()) {
             resp.setHeader("Strict-Transport-Security", "max-age=31622400; includeSubDomains");
-        }
+        //}
 
         chain.doFilter(req, resp);
     }
