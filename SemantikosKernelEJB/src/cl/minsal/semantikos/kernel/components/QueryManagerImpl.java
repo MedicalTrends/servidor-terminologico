@@ -12,9 +12,12 @@ import cl.minsal.semantikos.model.descriptions.PendingTerm;
 import cl.minsal.semantikos.model.queries.*;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import cl.minsal.semantikos.model.users.Roles;
 import org.jboss.ejb3.annotation.SecurityDomain;
 
 import javax.annotation.Resource;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
@@ -28,6 +31,8 @@ import java.util.List;
  * Created by BluePrints Developer on 21-09-2016.
  */
 @Stateless
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class QueryManagerImpl implements QueryManager {
 
 
@@ -50,6 +55,7 @@ public class QueryManagerImpl implements QueryManager {
     private SessionContext ctx;
 
     @Override
+    @PermitAll
     public GeneralQuery getDefaultGeneralQuery(Category category) {
         GeneralQuery query = QueryFactory.getInstance().findQueryByCategory(category);
         query.resetQuery();
@@ -57,6 +63,7 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    @PermitAll
     public DescriptionQuery getDefaultDescriptionQuery() {
 
         DescriptionQuery query = new DescriptionQuery();
@@ -65,6 +72,7 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    @PermitAll
     public NoValidQuery getDefaultNoValidQuery() {
 
         NoValidQuery noValidQuery = new NoValidQuery();
@@ -73,6 +81,7 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    @PermitAll
     public PendingQuery getDefaultPendingQuery() {
         PendingQuery pendingQuery = new PendingQuery();
 
@@ -80,16 +89,19 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    @PermitAll
     public BrowserQuery getDefaultBrowserQuery() {
         return new BrowserQuery();
     }
 
     @Override
+    @PermitAll
     public SnomedQuery getDefaultSnomedQuery() {
         return new SnomedQuery();
     }
 
     @Override
+    @PermitAll
     public List<ConceptSMTK> executeQuery(GeneralQuery query) {
 
         List<ConceptSMTK> conceptSMTKs = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
@@ -145,6 +157,7 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    @PermitAll
     public List<Description> executeQuery(DescriptionQuery query) throws Exception {
 
         List<Description> descriptions = (List<Description>) (Object) queryDAO.executeQuery(query);
@@ -193,6 +206,7 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    @PermitAll
     public List<NoValidDescription> executeQuery(NoValidQuery query) {
 
         List<NoValidDescription> noValidDescriptions = (List<NoValidDescription>) (Object) queryDAO.executeQuery(query);
@@ -208,6 +222,7 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    @PermitAll
     public List<PendingTerm> executeQuery(PendingQuery query) {
 
         List<PendingTerm> pendingTerms = (List<PendingTerm>) (Object) queryDAO.executeQuery(query);
@@ -223,6 +238,7 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    @PermitAll
     public List<ConceptSMTK> executeQuery(BrowserQuery query) {
 
         //query.setQuery(conceptSearchBR.standardizationPattern(query.getQuery()));
@@ -242,6 +258,7 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    @PermitAll
     public List<ConceptSCT> executeQuery(SnomedQuery query) {
 
         //query.setQuery(conceptSearchBR.standardizationPattern(query.getQuery()));
@@ -260,8 +277,8 @@ public class QueryManagerImpl implements QueryManager {
         return concepts;
     }
 
-
     @Override
+    @PermitAll
     public int countQueryResults(Query query) {
         int quantity = (int)queryDAO.countByQuery(query);
         query.setTruncateMatch(false);
@@ -269,11 +286,13 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    @PermitAll
     public List<QueryColumn> getShowableAttributesByCategory(Category category) {
         return queryDAO.getShowableAttributesByCategory(category);
     }
 
     @Override
+    @PermitAll
     public List<RelationshipDefinition> getSearchableAttributesByCategory(Category category) {
         return queryDAO.getSearchableAttributesByCategory(category);
     }

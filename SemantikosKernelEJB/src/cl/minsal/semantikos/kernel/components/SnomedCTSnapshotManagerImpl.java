@@ -3,7 +3,11 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.kernel.daos.SnomedCTSnapshotDAO;
 import cl.minsal.semantikos.model.businessrules.ConceptSCTSearchBR;
 import cl.minsal.semantikos.model.snapshots.*;
+import cl.minsal.semantikos.model.users.Roles;
+import org.jboss.ejb3.annotation.SecurityDomain;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -13,6 +17,8 @@ import javax.ejb.TransactionAttributeType;
  * @author Diego Soto
  */
 @Stateless
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
 
     @EJB
@@ -28,6 +34,7 @@ public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
     private static int BUFFER_SIZE = 100000;
 
     @Override
+    @PermitAll
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public void updateSnapshot(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
 
@@ -107,6 +114,7 @@ public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
     }
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    @PermitAll
     private void processRequest(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
         //Se preprocesan los cambios: Esto es, extraer los elementos a insertar, a actualizar y errores
         snapshotProcessingRequest = snomedCTSnapshotDAO.preprocessRequest(snapshotPreprocessingRequest);
@@ -121,6 +129,7 @@ public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
     }
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    @PermitAll
     private void postProcessRequest(SnomedCTSnapshotUpdate snomedCTSnapshotUpdate) {
         //Se pushean los cambios a la BD
         snomedCTSnapshotUpdate.setSnomedCTSnapshotUpdateDetails(snomedCTSnapshotDAO.postProcessRequest(snomedCTSnapshotUpdate));
@@ -131,6 +140,5 @@ public class SnomedCTSnapshotManagerImpl implements SnomedCTSnapshotManager {
         snapshotPreprocessingRequest.clear();
         snapshotProcessingRequest.clear();
     }
-
 
 }

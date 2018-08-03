@@ -14,7 +14,10 @@ import cl.minsal.semantikos.model.users.*;
 import cl.minsal.semantikos.kernel.businessrules.UserCreationBR;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.modelweb.Pair;
+import org.jboss.ejb3.annotation.SecurityDomain;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -30,6 +33,8 @@ import static cl.minsal.semantikos.model.audit.AuditActionType.USER_ATTRIBUTE_CH
  */
 
 @Stateless
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class UserManagerImpl implements UserManager {
 
     @EJB
@@ -56,28 +61,34 @@ public class UserManagerImpl implements UserManager {
     @EJB
     AuditManager auditManager;
 
-
+    @PermitAll
     public List<User> getAllUsers() {
 
         return authDAO.getAllUsers();
 
     }
 
+    @PermitAll
     public User getUser(long idUser) {
         return authDAO.getUserById(idUser);
     }
 
+    @PermitAll
     public User getUserByDocumentNumber(String documentNumber) { return authDAO.getUserByDocumentNumber(documentNumber); }
 
+    @PermitAll
     public User getUserByUsername(String username) { return authDAO.getUserByUsername(username); }
 
+    @PermitAll
     public User getUserByEmail(String username) {
         //return UserFactory.getInstance().findUserByEmail(email);
         return authDAO.getUserByEmail(username);
     }
 
+    @PermitAll
     public User getUserByVerificationCode(String key) { return authDAO.getUserByVerificationCode(key); }
 
+    @PermitAll
     public void updateUser(User user) {
         /* Se persisten los atributos basicos del usuario*/
         authDAO.updateUser(user);
@@ -92,6 +103,7 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
+    @PermitAll
     public void updateFields(@NotNull User originalUser, @NotNull User updatedUser, User user) {
 
         /* Se actualiza con el DAO */
@@ -101,6 +113,7 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
+    @PermitAll
     public void update(@NotNull User originalUser, @NotNull User updatedUser, User user) {
 
         boolean change = false;
@@ -144,10 +157,12 @@ public class UserManagerImpl implements UserManager {
         }
     }
 
+    @PermitAll
     public List<Question> getAllQuestions() {
         return questionDAO.getAllQuestions();
     }
 
+    @PermitAll
     public long createUser(User user, String baseURL, User _user) throws BusinessRuleException {
 
         /* Se validan las pre-condiciones para crear un usuario */
@@ -175,6 +190,7 @@ public class UserManagerImpl implements UserManager {
         }
     }
 
+    @PermitAll
     public void activateAccount(User originalUser, User updatedUser, User user) {
 
         /* Se validan las pre-condiciones para crear un usuario */
@@ -195,6 +211,7 @@ public class UserManagerImpl implements UserManager {
 
     }
 
+    @PermitAll
     public boolean checkActivationCode(String key) {
 
         /* Se validan las pre-condiciones para crear un usuario */
@@ -208,6 +225,7 @@ public class UserManagerImpl implements UserManager {
         }
     }
 
+    @PermitAll
     public boolean checkAnswers(User user) {
 
         User persistedUser = getUserByEmail(user.getEmail());
@@ -223,6 +241,7 @@ public class UserManagerImpl implements UserManager {
         return true;
     }
 
+    @PermitAll
     private void failAnswer(User user) {
 
         authDAO.markAnswerFail(user.getEmail());
@@ -236,6 +255,7 @@ public class UserManagerImpl implements UserManager {
 
     }
 
+    @PermitAll
     public void resetAccount(User user, String baseURL, User _user) {
         user = userCreationBR.preActions(user);
         user = userCreationBR.postActions(user, baseURL);
@@ -245,6 +265,7 @@ public class UserManagerImpl implements UserManager {
         auditManager.recordUserAccountReset(user, _user);
     }
 
+    @PermitAll
     public void deleteUser(User user, User _user) {
         user.setValid(false);
         authDAO.updateUser(user);
@@ -252,6 +273,7 @@ public class UserManagerImpl implements UserManager {
         auditManager.recordUserDelete(user, _user);
     }
 
+    @PermitAll
     public void unlockUser(User user, User _user) {
         authDAO.unlockUser(user.getEmail());
         /**
@@ -262,10 +284,12 @@ public class UserManagerImpl implements UserManager {
         auditManager.recordUserUnlocking(user, _user);
     }
 
+    @PermitAll
     public void lockUser(String email) {
         authDAO.lockUser(email);
     }
 
+    @PermitAll
     public UserFactory getUserFactory() {
         return UserFactory.getInstance();
     }

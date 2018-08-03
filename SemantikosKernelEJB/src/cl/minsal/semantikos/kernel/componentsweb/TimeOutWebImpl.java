@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class TimeOutWebImpl implements TimeOutWeb {
+
     @EJB
     private TimeOutWebDAO timeOutWeb;
 

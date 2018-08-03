@@ -9,10 +9,14 @@ import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.*;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.refsets.RefSet;
+import cl.minsal.semantikos.model.users.Roles;
 import cl.minsal.semantikos.model.users.User;
+import org.jboss.ejb3.annotation.SecurityDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.ejb.*;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
@@ -29,6 +33,8 @@ import static java.util.Collections.EMPTY_LIST;
  * @author Andrés Farías
  */
 @Stateless
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class DescriptionManagerImpl implements DescriptionManager {
 
     private static final Logger logger = LoggerFactory.getLogger(DescriptionManagerImpl.class);
@@ -62,6 +68,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     private static final int DESCRIPTION_SIZE = 100;
 
     @Override
+    @PermitAll
     public void createDescription(Description description, boolean editionMode, User user) {
 
         /* Reglas de negocio previas */
@@ -84,6 +91,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     public Description bindDescriptionToConcept(ConceptSMTK concept, String term, boolean caseSensitive, DescriptionType descriptionType, User user) {
 
         /* Se aplican las reglas de negocio para crear la Descripción*/
@@ -108,6 +116,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     public Description bindDescriptionToConcept(ConceptSMTK concept, Description description, boolean editionMode, User user) {
 
         /*
@@ -144,6 +153,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     public Description unbindDescriptionToConcept(ConceptSMTK concept, Description description, User user) {
 
         /* Si la descripción no se encontraba persistida, se persiste primero */
@@ -163,6 +173,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     public void updateDescription(@NotNull ConceptSMTK conceptSMTK, @NotNull Description initDescription, @NotNull Description finalDescription, @NotNull User user) {
 
         logger.info("Se actualizan descripciones. \nOriginal: " + initDescription + "\nFinal: " + finalDescription);
@@ -186,6 +197,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
 
     @Override
+    @PermitAll
     public void deleteDescription(Description description, User user) {
 
         ConceptSMTK concept = description.getConceptSMTK();
@@ -205,6 +217,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     public void moveDescriptionToConcept(ConceptSMTK sourceConcept, Description description, User user) {
 
         ConceptSMTK targetConcept = description.getConceptSMTK();
@@ -240,6 +253,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     public String getIdDescription(String tipoDescription) {
 
 /*      TODO: Reparar esto.
@@ -266,6 +280,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     public List<DescriptionType> getAllTypes() {
 
         return DescriptionTypeFactory.getInstance().getDescriptionTypes();
@@ -274,6 +289,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
 
     @Override
+    @PermitAll
     public List<Description> findDescriptionsByConcept(int idConcept) {
 
         /*
@@ -288,26 +304,31 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     public DescriptionType getTypeFSN() {
         return DescriptionTypeFactory.getInstance().getFSNDescriptionType();
     }
 
     @Override
+    @PermitAll
     public DescriptionType getTypeFavorite() {
         return DescriptionTypeFactory.getInstance().getFavoriteDescriptionType();
     }
 
     @Override
+    @PermitAll
     public List<Description> getDescriptionsOf(ConceptSMTK concept) {
         return descriptionDAO.getDescriptionsByConcept(concept);
     }
 
     @Override
+    @PermitAll
     public String generateDescriptionId(long id) {
         return IDGenerator.generator(String.valueOf(id),IDGenerator.TYPE_DESCRIPTION);
     }
 
     @Override
+    @PermitAll
     public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
         List<Description> descriptions = descriptionDAO.searchDescriptionsByTerm(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
@@ -317,6 +338,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     //@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<Description> searchDescriptionsPerfectMatch(String term, List<Category> categories, List<RefSet> refSets) {
         //long init = currentTimeMillis();
@@ -360,6 +382,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     public List<Description> searchDescriptionsTruncateMatch(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
         //List<Description> descriptions = descriptionWSDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.truncatePattern(term), PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
@@ -381,6 +404,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     public List<Description> searchDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets) {
 
         List<Description> descriptions; //= descriptionDAO.searchDescriptionsSuggested(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
@@ -416,6 +440,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     public int countDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets) {
 
         term = descriptionSearchBR.escapeSpecialCharacters(term);
@@ -433,6 +458,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     public void invalidateDescription(ConceptSMTK conceptSMTK, NoValidDescription noValidDescription, User user) {
 
         /* Se aplican las reglas de negocio para el traslado */
@@ -451,6 +477,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     public Description getDescriptionByDescriptionID(String descriptionId) {
 
         /* Validación de integridad */
@@ -462,21 +489,25 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     public List<ObservationNoValid> getObservationsNoValid() {
         return descriptionDAO.getObservationsNoValid();
     }
 
     @Override
+    @PermitAll
     public Description getDescriptionByID(long id) {
         return descriptionDAO.getDescriptionBy(id);
     }
 
     @Override
+    @PermitAll
     public NoValidDescription getNoValidDescriptionByID(long id) {
         return descriptionDAO.getNoValidDescriptionByID(id);
     }
 
     @Override
+    @PermitAll
     public Description incrementDescriptionHits(String descriptionId) {
 
         /* Primero se recupera la descripción */
@@ -500,6 +531,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
+    @PermitAll
     public DescriptionTypeFactory getDescriptionTypeFactory() {
         return DescriptionTypeFactory.getInstance();
     }

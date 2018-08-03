@@ -4,13 +4,12 @@ import cl.minsal.semantikos.kernel.auth.Base64Encoder;
 
 import cl.minsal.semantikos.kernel.daos.AuthDAO;
 import cl.minsal.semantikos.model.exceptions.PasswordChangeException;
-import cl.minsal.semantikos.model.users.Institution;
-import cl.minsal.semantikos.model.users.Profile;
-import cl.minsal.semantikos.model.users.ProfileFactory;
-import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.model.users.*;
+import org.jboss.ejb3.annotation.SecurityDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.DeclareRoles;
 import javax.naming.AuthenticationException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +30,8 @@ import static java.util.concurrent.TimeUnit.MINUTES;
  * @author Francisco Méndez on 19-05-2016.
  */
 @Stateless
-//@SecurityDomain("semantikos")
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class AuthenticationManagerImpl implements AuthenticationManager{
 
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationManagerImpl.class);

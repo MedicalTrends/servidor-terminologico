@@ -8,7 +8,11 @@ import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.snomedct.*;
+import cl.minsal.semantikos.model.users.Roles;
+import org.jboss.ejb3.annotation.SecurityDomain;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.ArrayList;
@@ -23,6 +27,8 @@ import static java.util.Collections.emptyList;
  * @author Andrés Farías on 9/26/16.
  */
 @Stateless
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class SnomedCTManagerImpl implements SnomedCTManager {
 
     @EJB
@@ -37,16 +43,19 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     private static final int SUGGESTTION_SIZE = 5;
 
     @Override
+    @PermitAll
     public List<RelationshipSCT> getRelationshipsFrom(ConceptSCT conceptSCT) {
         return snomedctDAO.getRelationshipsBySourceConcept(conceptSCT);
     }
 
     @Override
+    @PermitAll
     public List<ConceptSCT> findConceptsByPattern(String pattern) {
         return this.findConceptsByPattern(pattern, null, 0, 100);
     }
 
     @Override
+    @PermitAll
     public List<ConceptSCT> findConceptsByPattern(String pattern, Integer group, int page, int pageSize) {
 
         String patternStandard = conceptSCTSearchBR.standardizationPattern(pattern);
@@ -64,6 +73,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     }
 
     @Override
+    @PermitAll
     public long countConceptByPattern(String pattern, Integer group) {
         String patternStandard = conceptSCTSearchBR.standardizationPattern(pattern);
 
@@ -85,31 +95,37 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     }
 
     @Override
+    @PermitAll
     public List<ConceptSCT> findConceptsByConceptID(long conceptIdPattern) {
         return this.findConceptsByConceptID(conceptIdPattern, null);
     }
 
     @Override
+    @PermitAll
     public List<ConceptSCT> findConceptsByConceptID(long conceptIdPattern, Integer group) {
         return snomedctDAO.findConceptsByConceptID(conceptIdPattern, group);
     }
 
     @Override
+    @PermitAll
     public Map<DescriptionSCT, ConceptSCT> findDescriptionsByPattern(String patternID) {
         return snomedctDAO.findDescriptionsByPattern(patternID);
     }
 
     @Override
+    @PermitAll
     public ConceptSCT getConceptByID(long conceptID) {
         return snomedctDAO.getConceptByID(conceptID);
     }
 
     @Override
+    @PermitAll
     public ConceptSCT getConceptByDescriptionID(long descriptionID) {
         return snomedctDAO.getConceptByDescriptionID(descriptionID);
     }
 
     @Override
+    @PermitAll
     public DescriptionSCT getDescriptionByID(long id) {
         return snomedctDAO.getDescriptionBy(id);
     }
@@ -162,6 +178,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     }
 
     @Override
+    @PermitAll
     public List<DescriptionSCT> searchDescriptionsPerfectMatch(String term, int page, int pageSize) {
 
         term = descriptionSearchBR.escapeSpecialCharacters(term);
@@ -174,6 +191,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     }
 
     @Override
+    @PermitAll
     public List<DescriptionSCT> searchDescriptionsTruncateMatch(String term, int page, int pageSize) {
 
         term = descriptionSearchBR.escapeSpecialCharacters(term);
@@ -192,6 +210,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     }
 
     @Override
+    @PermitAll
     public List<DescriptionSCT> searchDescriptionsSuggested(String term) {
 
         List<DescriptionSCT> descriptions;
@@ -225,6 +244,7 @@ public class SnomedCTManagerImpl implements SnomedCTManager {
     }
 
     @Override
+    @PermitAll
     public int countDescriptionsSuggested(String term) {
 
         term = descriptionSearchBR.escapeSpecialCharacters(term);

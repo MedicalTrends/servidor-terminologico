@@ -4,8 +4,12 @@ import cl.minsal.semantikos.kernel.daos.InstitutionDAO;
 import cl.minsal.semantikos.kernel.daos.ProfileDAO;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.Profile;
+import cl.minsal.semantikos.model.users.Roles;
 import cl.minsal.semantikos.model.users.User;
+import org.jboss.ejb3.annotation.SecurityDomain;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.ArrayList;
@@ -15,6 +19,8 @@ import java.util.List;
  * Created by des01c7 on 16-12-16.
  */
 @Stateless
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class ProfileManagerImpl implements ProfileManager {
 
     @EJB
@@ -22,7 +28,6 @@ public class ProfileManagerImpl implements ProfileManager {
 
     @EJB
     private AuditManager auditManager;
-
 
     @Override
     public List<Profile> getProfilesBy(User user) {
@@ -40,6 +45,7 @@ public class ProfileManagerImpl implements ProfileManager {
     }
 
     @Override
+    @PermitAll
     public Profile bindProfileToUser(User user, Profile profile, User _user) {
         profileDAO.bindProfileToUser(user, profile);
 
@@ -51,6 +57,7 @@ public class ProfileManagerImpl implements ProfileManager {
     }
 
     @Override
+    @PermitAll
     public void unbindProfileFromUser(User user, Profile profile, User _user) {
         profileDAO.unbindProfileFromUser(user, profile);
 

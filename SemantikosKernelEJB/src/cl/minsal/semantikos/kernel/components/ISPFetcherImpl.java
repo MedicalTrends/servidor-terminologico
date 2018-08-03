@@ -1,10 +1,14 @@
 package cl.minsal.semantikos.kernel.components;
 
+import cl.minsal.semantikos.model.users.Roles;
+import org.jboss.ejb3.annotation.SecurityDomain;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,9 +18,12 @@ import java.util.Map;
  * Created by BluePrints Developer on 15-11-2016.
  */
 @Stateless
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class ISPFetcherImpl implements ISPFetcher {
 
     @Override
+    @PermitAll
     public Map<String,String> getISPData(String registro){
 
         Map<String,String> ret = new HashMap<String, String>();
@@ -25,11 +32,7 @@ public class ISPFetcherImpl implements ISPFetcher {
         try {
             doc = Jsoup.connect("http://registrosanitario.ispch.gob.cl/Ficha.aspx?RegistroISP=" + registro).get();
 
-
-
             Elements filas = doc.select("#ctl00_ContentPlaceHolder1_cpProducto table tbody tr");
-
-
 
             for (Element e: filas) {
 

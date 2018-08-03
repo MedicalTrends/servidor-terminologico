@@ -5,9 +5,13 @@ import cl.minsal.semantikos.kernel.daos.TagDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.kernel.businessrules.TagCreationBR;
+import cl.minsal.semantikos.model.users.Roles;
+import org.jboss.ejb3.annotation.SecurityDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -19,7 +23,8 @@ import java.util.StringTokenizer;
  * @author Andrés Farías on 8/26/16.
  */
 @Stateless
-@Remote(TagManager.class)
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class TagManagerImpl implements TagManager {
 
     /**
@@ -34,18 +39,21 @@ public class TagManagerImpl implements TagManager {
     private ConceptDAO conceptDAO;
 
     @Override
+    @PermitAll
     public List<Tag> getAllTags() {
         logger.debug("Obteniendo todos los Tags del sistema.");
         return tagDAO.getAllTags();
     }
 
     @Override
+    @PermitAll
     public List<Tag> getAllTagsWithoutParent() {
         logger.debug("Obteniendo todos los Tags sin padres.");
         return tagDAO.getAllTagsWithoutParent();
     }
 
     @Override
+    @PermitAll
     public Tag findTagByID(long id) {
         logger.debug("Buscando tag con ID=" + id);
 
@@ -56,6 +64,7 @@ public class TagManagerImpl implements TagManager {
     }
 
     @Override
+    @PermitAll
     public List<Tag> findTagByNamePattern(String pattern) {
         logger.debug("Buscando tags por patrón: " + pattern);
 
@@ -69,6 +78,7 @@ public class TagManagerImpl implements TagManager {
 
 
     @Override
+    @PermitAll
     public List<Tag> findTag(Tag tag, String pattern) {
         List<Tag> tagList = findTagByNamePattern(pattern);
 
@@ -94,8 +104,8 @@ public class TagManagerImpl implements TagManager {
         return tagList;
     }
 
-
     @Override
+    @PermitAll
     public void removeTag(Tag tag) {
         logger.debug("Eliminando Tag: " + tag);
         tagDAO.remove(tag);
@@ -103,6 +113,7 @@ public class TagManagerImpl implements TagManager {
     }
 
     @Override
+    @PermitAll
     public List<ConceptSMTK> findConceptsByTag(Tag tag) {
         logger.debug("Buscando conceptos por Tag: " + tag);
 
@@ -113,6 +124,7 @@ public class TagManagerImpl implements TagManager {
     }
 
     @Override
+    @PermitAll
     public List<Tag> getOtherTags(Tag tag) {
 
         List<Tag> allTags = getAllTagsWithoutParent();
@@ -127,11 +139,13 @@ public class TagManagerImpl implements TagManager {
     }
 
     @Override
+    @PermitAll
     public List<Tag> getTagByConcept(ConceptSMTK conceptSMTK) {
         return tagDAO.getTagsByConcept(conceptSMTK);
     }
 
     @Override
+    @PermitAll
     public void assignTag(ConceptSMTK conceptSMTK, Tag tag) {
         logger.debug("Asociando el tag " + tag + " al concepto " + conceptSMTK);
 
@@ -140,6 +154,7 @@ public class TagManagerImpl implements TagManager {
     }
 
     @Override
+    @PermitAll
     public void unassignTag(ConceptSMTK conceptSMTK, Tag tag) {
         logger.debug("Desasociando el tag " + tag + " al concepto " + conceptSMTK);
 
@@ -148,6 +163,7 @@ public class TagManagerImpl implements TagManager {
     }
 
     @Override
+    @PermitAll
     public long persist(Tag tag) {
         logger.debug("Creando concepto " + tag);
 
@@ -181,6 +197,7 @@ public class TagManagerImpl implements TagManager {
     }
 
     @Override
+    @PermitAll
     public void update(Tag tag) {
         logger.debug("Actualizando tag " + tag);
         tagDAO.update(tag);
@@ -188,6 +205,7 @@ public class TagManagerImpl implements TagManager {
     }
 
     @Override
+    @PermitAll
     public void link(Tag tag, Tag tagLink) {
         logger.debug("Asociación de Tags:" + tag + " --> " + tagLink);
 
@@ -196,6 +214,7 @@ public class TagManagerImpl implements TagManager {
     }
 
     @Override
+    @PermitAll
     public void unlink(Tag tag, Tag tagUnlink) {
         logger.debug("Desasociación de Tags:" + tag + " --> " + tagUnlink);
 
@@ -222,11 +241,13 @@ public class TagManagerImpl implements TagManager {
     }
 
     @Override
+    @PermitAll
     public long conceptContain(Tag tag) {
         return tagDAO.countConceptContainTag(tag);
     }
 
     @Override
+    @PermitAll
     public boolean containTag(String nameTag) {
         return tagDAO.containTag(nameTag);
     }

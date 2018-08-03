@@ -5,15 +5,19 @@ import cl.minsal.semantikos.kernel.factories.CrossmapFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import cl.minsal.semantikos.model.users.Roles;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.kernel.businessrules.CrossMapCreationBR;
 import cl.minsal.semantikos.kernel.businessrules.CrossMapRemovalBR;
 import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
+import org.jboss.ejb3.annotation.SecurityDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.sql.Timestamp;
@@ -24,6 +28,8 @@ import java.util.List;
  * @author Andrés Farías on 8/30/16.
  */
 @Stateless
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class CrossmapsManagerImpl implements CrossmapsManager {
 
     /** El logger de la clase */
@@ -43,6 +49,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
 
 
     @Override
+    @PermitAll
     public Crossmap create(DirectCrossmap directCrossmap, User user) {
 
         /* Se aplican las reglas de negocio */
@@ -61,6 +68,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
+    @PermitAll
     public Crossmap remove(Crossmap crossmap, User user) {
 
         /* Se aplican las reglas de negocio */
@@ -78,6 +86,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
+    @PermitAll
     public List<Crossmap> getCrossmaps(ConceptSMTK conceptSMTK) throws Exception {
 
         List<Crossmap> allCrossmaps = new ArrayList<>();
@@ -88,12 +97,14 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
+    @PermitAll
     public List<CrossmapSet> getCrossmapSets() {
 
         return CrossmapSetFactory.getInstance().getCrossmapSets();
     }
 
     @Override
+    @PermitAll
     public List<DirectCrossmap> getDirectCrossmaps(ConceptSMTK conceptSMTK) {
 
         /* Se recuperan todas las relaciones del concepto, dentro de las cuales estarán los crossmaps directos */
@@ -145,6 +156,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
+    @PermitAll
     public List<CrossmapSetMember> getDirectCrossmapsSetMembersOf(ConceptSMTK conceptSMTK) {
 
         /* Se obtienen los crossmaps directos del concepto */
@@ -161,11 +173,13 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
+    @PermitAll
     public CrossmapSetMember getCrossmapSetMemberById(CrossmapSet crossmapSet, long id) {
         return crossmapsDAO.getCrossmapSetMemberById(crossmapSet, id);
     }
 
     @Override
+    @PermitAll
     public List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize) {
 
         /* Lo primero es recuperar el crossmapSet a partir de su nombre abreviado */
@@ -173,6 +187,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
+    @PermitAll
     public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSMTK conceptSMTK) throws Exception {
 
         /* Se valida si el concepto tiene cargada sus relaciones */
@@ -196,11 +211,13 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
+    @PermitAll
     public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSCT conceptSCT) throws Exception {
         return crossmapsDAO.getCrossmapsBySCT(conceptSCT);
     }
 
     @Override
+    @PermitAll
     public List<CrossmapSetMember> findByPattern(CrossmapSet crossmapSet, String pattern) {
         return crossmapsDAO.findCrossmapSetMemberByPattern(crossmapSet, pattern);
     }

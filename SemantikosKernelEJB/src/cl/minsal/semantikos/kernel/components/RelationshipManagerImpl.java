@@ -12,11 +12,15 @@ import cl.minsal.semantikos.kernel.factories.ThreadFactory;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.*;
+import cl.minsal.semantikos.model.users.Roles;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import org.jboss.ejb3.annotation.SecurityDomain;
 
 import javax.annotation.Resource;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -37,6 +41,8 @@ import static java.lang.System.currentTimeMillis;
  * @author Andrés Farías.
  */
 @Stateless
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class RelationshipManagerImpl implements RelationshipManager {
 
     /** El gestor de relaciones con la base de datos */
@@ -65,6 +71,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
     RelationshipWSDAO relationshipWSDAO;
 
     @Override
+    @PermitAll
     public Relationship bindRelationshipToConcept(ConceptSMTK concept, Relationship relationship, User user) throws Exception {
 
         /* Primero se validan las reglas de negocio asociadas a la eliminación de un concepto */
@@ -88,6 +95,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
+    @PermitAll
     public Relationship createRelationship(Relationship relationship) {
         // Se setea la fecha de creación de esta relación
         relationship.setCreationDate(new Timestamp(currentTimeMillis()));
@@ -125,11 +133,13 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
+    @PermitAll
     public RelationshipDefinition createRelationshipDefinition(RelationshipDefinition relationshipDefinition) {
         return relationshipDAO.persist(relationshipDefinition);
     }
 
     @Override
+    @PermitAll
     public Relationship removeRelationship(ConceptSMTK conceptSMTK,Relationship relationship, User user) throws Exception {
 
         /* Primero se validan las reglas de negocio asociadas a la eliminación de un concepto */
@@ -148,6 +158,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
+    @PermitAll
     public void updateRelationship(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship originalRelationship, @NotNull Relationship editedRelationship, @NotNull User user) throws Exception {
 
         /* Se aplican las reglas de negocio */
@@ -247,6 +258,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
+    @PermitAll
     public Relationship invalidate(Relationship relationship) {
         relationship.setValidityUntil(new Timestamp(currentTimeMillis()));
         relationshipDAO.invalidate(relationship);
@@ -255,17 +267,20 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
+    @PermitAll
     public List<Relationship> getRelationshipsLike(RelationshipDefinition relationshipDefinition, Target target) {
         return relationshipDAO.getRelationshipsLike(relationshipDefinition, target);
     }
 
     @Override
+    @PermitAll
     public List<Relationship> findRelationshipsLike(RelationshipDefinition relationshipDefinition, Target target) {
         return relationshipDAO.findRelationshipsLike(relationshipDefinition, target);
         //return relationshipWSDAO.findRelationshipsLike(relationshipDefinition, target);
     }
 
     @Override
+    @PermitAll
     public List<Relationship> findRelationshipsLike(Relationship relationship) {
 
         List<Relationship> relationshipsLike = new ArrayList<>();
@@ -280,6 +295,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
+    @PermitAll
     public List<Relationship> findRelationshipsLike(Relationship relationship, RelationshipDefinition relationshipDefinition) {
 
         List<Relationship> relationshipsLike = new ArrayList<>();
@@ -294,17 +310,20 @@ public class RelationshipManagerImpl implements RelationshipManager {
     }
 
     @Override
+    @PermitAll
     public List<Relationship> getRelationshipsBySourceConcept(ConceptSMTK concept) {
         return relationshipDAO.getRelationshipsBySourceConcept(concept);
         //return relationshipWSDAO.getRelationshipsBySourceConcept(concept);
     }
 
     @Override
+    @PermitAll
     public List<Relationship> getRelationshipsBySourceConceptAndTargetType(ConceptSMTK concept, TargetType targetType) {
         return relationshipDAO.getRelationshipsBySourceConcept(concept, targetType);
     }
 
     @Override
+    @PermitAll
     public RelationshipDefinitionFactory getRelationshipDefinitionFactory() {
         return RelationshipDefinitionFactory.getInstance();
     }

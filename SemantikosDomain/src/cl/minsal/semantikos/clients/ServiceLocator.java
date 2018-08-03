@@ -87,7 +87,7 @@ public class ServiceLocator {
             //context = new InitialContext(properties);
             //Autenticar usuario guest para la posterior invocacion de componentes durante despliegue
             //AuthenticationManager authManager = (AuthenticationManager) getService(AuthenticationManager.class);
-            login("user@admin.cl", "1234567z");
+            //login("user@admin.cl", "1234567z");
         } catch (NamingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -161,7 +161,7 @@ public class ServiceLocator {
         }
     }
 
-    public static boolean login(String userName, String password) {
+    public static void login(String userName, String password) throws LoginException {
         /*
        * During the login process(i.e. when the login() method on the LoginContext is called),
        * the control will be transferred to a CallbackHandler. The CallbackHandler will be
@@ -176,36 +176,23 @@ public class ServiceLocator {
        */
         MyCallbackHandler handler = new MyCallbackHandler(userName, password);
 
-        try {
+       /*
+        * Create a login context. Here, as the first parameter, you will specify which
+        * configuration(mentioned in the "authFile" above) will be used. Here we are specifying
+        * "someXYZLogin" as the configuration to be used. Note: This has to match the configuration
+        * specified in the someFilename.someExtension authFile above.
+        * The login context expects a CallbackHandler as the second parameter. Here we are specifying
+        * the instance of MyCallbackHandler created earlier. The "handle()" method of this handler
+        * will be called during the login process.
+        */
+        loginContext = new LoginContext(Configuration.getConfiguration().getClass().getName(), handler);
 
-           /*
-            * Create a login context. Here, as the first parameter, you will specify which
-            * configuration(mentioned in the "authFile" above) will be used. Here we are specifying
-            * "someXYZLogin" as the configuration to be used. Note: This has to match the configuration
-            * specified in the someFilename.someExtension authFile above.
-            * The login context expects a CallbackHandler as the second parameter. Here we are specifying
-            * the instance of MyCallbackHandler created earlier. The "handle()" method of this handler
-            * will be called during the login process.
-            */
-            loginContext= new LoginContext(Configuration.getConfiguration().getClass().getName(), handler);
+       /*
+        * Do the login
+        */
+        loginContext.login();
 
-           /*
-            * Do the login
-            */
-            loginContext.login();
-
-            System.out.println("Successfully logged in user: " + userName);
-
-            return true;
-
-
-        } catch (LoginException le) {
-
-            System.out.println("Login failed");
-            le.printStackTrace();
-            return false;
-        }
-
+        System.out.println("Successfully logged in user: " + userName);
     }
 
 }

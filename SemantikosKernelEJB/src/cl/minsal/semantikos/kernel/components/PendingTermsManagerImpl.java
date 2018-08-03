@@ -7,10 +7,14 @@ import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
+import cl.minsal.semantikos.model.users.Roles;
 import cl.minsal.semantikos.model.users.User;
+import org.jboss.ejb3.annotation.SecurityDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.EJBTransactionRolledbackException;
@@ -24,6 +28,8 @@ import java.util.List;
  * @author Andrés Farías on 11/23/16.
  */
 @Stateless
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class PendingTermsManagerImpl implements PendingTermsManager {
 
     @EJB
@@ -63,6 +69,7 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
     */
 
     @Override
+    @PermitAll
     public Description addPendingTerm(PendingTerm pendingTerm, User loggedUser) throws EJBTransactionRolledbackException {
 
         try {
@@ -95,11 +102,13 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
     }
 
     @Override
+    @PermitAll
     public List<PendingTerm> getAllPendingTerms() {
         return pendingTermDAO.getAllPendingTerms();
     }
 
     @Override
+    @PermitAll
     public PendingTerm getPendingTermById(long id) {
         return pendingTermDAO.getPendingTermById(id);
     }

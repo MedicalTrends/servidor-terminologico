@@ -11,8 +11,13 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.Profile;
+import cl.minsal.semantikos.model.users.Roles;
 import cl.minsal.semantikos.model.users.User;
+import org.jboss.ejb3.annotation.SecurityDomain;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.sql.Timestamp;
@@ -26,12 +31,15 @@ import static cl.minsal.semantikos.model.audit.AuditActionType.*;
  * @author Andrés Farías
  */
 @Stateless
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class AuditManagerImpl implements AuditManager {
 
     @EJB
     private AuditDAO auditDAO;
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordNewConcept(ConceptSMTK conceptSMTK, User user) {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
@@ -41,6 +49,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordUpdateConcept(ConceptSMTK conceptSMTK, User user) {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
@@ -53,6 +62,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordDescriptionMovement(ConceptSMTK sourceConcept, ConceptSMTK targetConcept, Description description, User user) {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
@@ -73,6 +83,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordConceptPublished(ConceptSMTK conceptSMTK, User user) {
 
         ConceptAuditAction auditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_PUBLICATION, now(), user, conceptSMTK);
@@ -83,6 +94,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordFavouriteDescriptionUpdate(ConceptSMTK conceptSMTK, Description originalDescription, User user) {
 
         /* Condición sobre la cual se debe registrar el cambio */
@@ -98,6 +110,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordConceptCategoryChange(ConceptSMTK conceptSMTK, Category originalCategory, User user) {
 
         /* Se validan las reglas de negocio para realizar el registro */
@@ -108,6 +121,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordAttributeChange(ConceptSMTK conceptSMTK, Relationship originalRelationship, User user) {
         /* Se validan las reglas de negocio para realizar el registro */
         //ConceptAuditAction auditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_ATTRIBUTE_CHANGE, now(), user, originalRelationship);
@@ -118,6 +132,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordRelationshipCreation(Relationship relationship, User user) {
 
         /* Se validan las reglas de negocio para realizar el registro */
@@ -128,6 +143,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordRelationshipRemoval(Relationship relationship, User user) {
         /* Se validan las reglas de negocio para realizar el registro */
         ConceptAuditAction auditAction = new ConceptAuditAction(relationship.getSourceConcept(), CONCEPT_RELATIONSHIP_REMOVAL, now(), user, relationship);
@@ -137,6 +153,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordCrossMapCreation(Crossmap crossmap, User user) {
         /* Se validan las reglas de negocio para realizar el registro */
         ConceptAuditAction auditAction = new ConceptAuditAction(crossmap.getSourceConcept(), CONCEPT_RELATIONSHIP_CROSSMAP_CREATION, now(), user, crossmap);
@@ -146,6 +163,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordCrossMapRemoval(Crossmap crossmap, User user) {
         /* Se validan las reglas de negocio para realizar el registro */
         ConceptAuditAction auditAction = new ConceptAuditAction(crossmap.getSourceConcept(), CONCEPT_RELATIONSHIP_CROSSMAP_REMOVAL, now(), user, crossmap);
@@ -155,6 +173,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordDescriptionCreation(Description description, User user) {
 
         /* Se validan las reglas de negocio para realizar el registro */
@@ -166,6 +185,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordDescriptionDeletion(ConceptSMTK conceptSMTK, Description description, User user) {
               /* Se validan las reglas de negocio para realizar el registro */
         ConceptAuditAction auditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_DESCRIPTION_DELETION, now(), user, description);
@@ -175,6 +195,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.DESIGNER_ROLE, Roles.MODELER_ROLE})
     public void recordConceptInvalidation(ConceptSMTK conceptSMTK, User user) {
         /* Se crea el registro de historial */
         ConceptAuditAction conceptAuditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_INVALIDATION, now(), user, conceptSMTK);
@@ -184,6 +205,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.REFSET_ADMIN_ROLE})
     public void recordRefSetCreation(RefSet refSet, User user) {
         /* Se crea el registro de historial */
         RefSetAuditAction refSetAuditAction = new RefSetAuditAction(refSet, REFSET_CREATION, now(), user);
@@ -195,6 +217,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.REFSET_ADMIN_ROLE})
     public void recordRefSetUpdate(RefSet refSet, User user) {
         /* Se crea el registro de historial */
         RefSetAuditAction refSetAuditAction = new RefSetAuditAction(refSet, REFSET_UPDATE, now(), user);
@@ -206,6 +229,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.REFSET_ADMIN_ROLE})
     public void recordRefSetBinding(RefSet refSet, ConceptSMTK conceptSMTK, User user) {
 
         /* Se crea el registro de historial */
@@ -218,6 +242,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.REFSET_ADMIN_ROLE})
     public void recordRefSetUnbinding(RefSet refSet, ConceptSMTK conceptSMTK, User user) {
         /* Se crea el registro de historial */
         RefSetAuditAction refSetAuditAction = new RefSetAuditAction(refSet, REFSET_UPDATE, now(), user, conceptSMTK);
@@ -229,6 +254,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.REFSET_ADMIN_ROLE})
     public void recordRefSetInvalidate(RefSet refSet, User user) {
         /* Se crea el registro de historial */
         RefSetAuditAction refSetAuditAction = new RefSetAuditAction(refSet, REFSET_UPDATE, now(), user);
@@ -240,6 +266,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordUserCreation(User user, User _user) {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
@@ -249,6 +276,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordUserUpgrade(User user, User _user) {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
@@ -258,6 +286,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordUserProfileBinding(User user, Profile profile, User _user) {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
@@ -267,6 +296,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordUserProfileUnbinding(User user, Profile profile, User _user) {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
@@ -276,6 +306,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordUserInstitutionBinding(User user, Institution institution, User _user) {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
@@ -285,6 +316,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordUserInstitutionUnbinding(User user, Institution institution, User _user) {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
@@ -294,6 +326,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordUserActivation(User user, User _user) {
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
         UserAuditAction userAuditAction = new UserAuditAction(user, USER_ACTIVATION, now(), _user, user);
@@ -302,6 +335,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordUserPasswordChange(User user, User _user) {
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
         UserAuditAction userAuditAction = new UserAuditAction(user, USER_PASSWORD_CHANGE, now(), _user, user);
@@ -310,6 +344,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordUserPasswordRecover(User user, User _user) {
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
         UserAuditAction userAuditAction = new UserAuditAction(user, USER_PASSWORD_RECOVER, now(), _user, user);
@@ -318,6 +353,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordUserLocking(User user, User _user) {
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
         UserAuditAction userAuditAction = new UserAuditAction(user, USER_LOCKING, now(), _user, user);
@@ -326,6 +362,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordUserUnlocking(User user, User _user) {
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
         UserAuditAction userAuditAction = new UserAuditAction(user, USER_UNLOCKING, now(), _user, user);
@@ -334,6 +371,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordUserDelete(User user, User _user) {
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
         UserAuditAction userAuditAction = new UserAuditAction(user, USER_DELETE, now(), _user, user);
@@ -342,6 +380,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordUserAccountReset(User user, User _user) {
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
         UserAuditAction userAuditAction = new UserAuditAction(user, USER_ACCOUNT_RESET, now(), _user, user);
@@ -350,6 +389,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordInstitutionCreation(Institution institution, User user) {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
@@ -360,6 +400,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordInstitutionDelete(Institution institution, User user, String cause) {
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
         InstitutionAuditAction institutionAuditAction = new InstitutionAuditAction(institution, INSTITUTION_DELETE, now(), user, institution);
@@ -369,6 +410,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE})
     public void recordInstitutiuonUpgrade(Institution institution, User user) {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */
@@ -379,26 +421,31 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @PermitAll
     public List<AuditActionType> getAllAuditActionTypes() {
         return Arrays.asList(AuditActionType.values());
     }
 
     @Override
+    @PermitAll
     public List<ConceptAuditAction> getConceptAuditActions(ConceptSMTK conceptSMTK, boolean changes) {
         return auditDAO.getConceptAuditActions(conceptSMTK, changes);
     }
 
     @Override
+    @PermitAll
     public List<UserAuditAction> getUserAuditActions(User user) {
         return auditDAO.getUserAuditActions(user);
     }
 
     @Override
+    @PermitAll
     public List<InstitutionAuditAction> getInstitutionAuditActions(Institution institution) {
         return auditDAO.getInstitutionAuditActions(institution);
     }
 
     @Override
+    @PermitAll
     public ConceptAuditAction getConceptCreationAuditAction(ConceptSMTK conceptSMTK, boolean changes) {
         for (ConceptAuditAction conceptAuditAction : auditDAO.getConceptAuditActions(conceptSMTK, changes)) {
             if(conceptAuditAction.getAuditActionType().equals(AuditActionType.CONCEPT_CREATION)) {
@@ -409,6 +456,7 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    @PermitAll
     public ConceptAuditAction getConceptPublicationAuditAction(ConceptSMTK conceptSMTK, boolean changes) {
         for (ConceptAuditAction conceptAuditAction : auditDAO.getConceptAuditActions(conceptSMTK, changes)) {
             if(conceptAuditAction.getAuditActionType().equals(AuditActionType.CONCEPT_PUBLICATION)) {

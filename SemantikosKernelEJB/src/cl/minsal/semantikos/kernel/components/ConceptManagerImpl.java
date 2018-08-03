@@ -20,11 +20,15 @@ import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.tags.TagSMTK;
+import cl.minsal.semantikos.model.users.Roles;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.modelweb.Pair;
+import org.jboss.ejb3.annotation.SecurityDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -41,6 +45,8 @@ import static cl.minsal.semantikos.model.PersistentEntity.getIdArray;
  * @author Andrés Farías
  */
 @Stateless
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class ConceptManagerImpl implements ConceptManager {
 
     /**
@@ -91,6 +97,7 @@ public class ConceptManagerImpl implements ConceptManager {
     private ConceptSearchBR conceptSearchBR;
 
     @Override
+    @PermitAll
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptId) {
 
         /* Se recupera el concepto base (sus atributos) sin sus relaciones ni descripciones */
@@ -104,6 +111,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    @PermitAll
     public ConceptSMTK getConceptByID(long id) {
 
         /* Se recupera el concepto base (sus atributos) sin sus relaciones ni descripciones */
@@ -117,6 +125,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    @PermitAll
     public long persist(@NotNull ConceptSMTK conceptSMTK, User user) throws Exception {
         logger.debug("El concepto " + conceptSMTK + " será persistido.");
 
@@ -172,6 +181,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    @PermitAll
     public void updateFields(@NotNull ConceptSMTK originalConcept, @NotNull ConceptSMTK updatedConcept, User user) {
 
         /* Se actualiza con el DAO */
@@ -183,6 +193,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    @PermitAll
     public void update(@NotNull ConceptSMTK originalConcept, @NotNull ConceptSMTK updatedConcept, User user) throws Exception {
 
         boolean change = false;
@@ -231,6 +242,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    @PermitAll
     public void publish(@NotNull ConceptSMTK conceptSMTK, User user) {
         conceptSMTK.setPublished(true);
         conceptDAO.update(conceptSMTK);
@@ -241,6 +253,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    @PermitAll
     public void delete(@NotNull ConceptSMTK conceptSMTK, User user) {
 
         /* Se validan las pre-condiciones para eliminar un concepto */
@@ -257,6 +270,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    @PermitAll
     public void invalidate(@NotNull ConceptSMTK conceptSMTK, @NotNull User user) {
 
         logger.info("Se dejará no vigente el concepto: " + conceptSMTK);
@@ -277,6 +291,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    @PermitAll
     public void changeCategory(@NotNull ConceptSMTK conceptSMTK, @NotNull Category targetCategory, User user) {
         /* TODO: Validar reglas de negocio */
 
@@ -292,11 +307,13 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    @PermitAll
     public void bindRelationshipToConcept(@NotNull ConceptSMTK conceptSMTK, @NotNull Relationship relationship, @NotNull User user) throws Exception {
         relationshipManager.bindRelationshipToConcept(conceptSMTK, relationship, user);
     }
 
     @Override
+    @PermitAll
     public void changeTagSMTK(@NotNull ConceptSMTK conceptSMTK, @NotNull TagSMTK tagSMTK, User user) {
         /* Se realizan las validaciones básicas */
         new ConceptEditionBusinessRuleContainer().preconditionsConceptEditionTag(conceptSMTK);
@@ -320,22 +337,26 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    @PermitAll
     public String generateConceptId(long id) {
         return IDGenerator.generator(String.valueOf(id),IDGenerator.TYPE_CONCEPT);
     }
 
     @Override
+    @PermitAll
     public List<Description> getDescriptionsBy(ConceptSMTK concept) {
         return descriptionDAO.getDescriptionsByConcept(concept);
     }
 
     @Override
+    @PermitAll
     public ConceptSMTK getConceptByDescriptionID(String descriptionId) {
         /* Se hace delegación sobre el DescriptionManager */
         return descriptionManager.getDescriptionByDescriptionID(descriptionId).getConceptSMTK();
     }
 
     @Override
+    @PermitAll
     public List<Relationship> loadRelationships(ConceptSMTK concept) throws Exception {
         List<Relationship> relationships = relationshipDAO.getRelationshipsBySourceConcept(concept);
         //List<Relationship> relationships = relationshipWSDAO.getRelationshipsBySourceConcept(concept);
@@ -350,16 +371,19 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    @PermitAll
     public List<Relationship> getRelationships(ConceptSMTK concept) {
         return relationshipDAO.getRelationshipsBySourceConcept(concept);
     }
 
     @Override
+    @PermitAll
     public ConceptSMTK getNoValidConcept() {
         return conceptDAO.getNoValidConcept();
     }
 
     @Override
+    @PermitAll
     public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category, User user) throws Exception {
 
         /* Validacion de pre-condiciones */
@@ -378,25 +402,30 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    @PermitAll
     public ConceptSMTK getPendingConcept() {
         return conceptDAO.getPendingConcept();
     }
 
     @Override
+    @PermitAll
     public List<ConceptSMTK> perfectMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean isModeled) {
         return conceptDAO.findPerfectMatch(pattern, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refsets), isModeled);
     }
 
     @Override
+    @PermitAll
     public List<ConceptSMTK> truncateMatch(String pattern, List<Category> categories, List<RefSet> refsets, Boolean isModeled) {
         return conceptDAO.findTruncateMatch(pattern, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refsets), isModeled);
     }
 
     @Override
+    @PermitAll
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK) {
         return conceptDAO.getRelatedConcepts(conceptSMTK);
     }
     @Override
+    @PermitAll
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK, Category... categories) {
 
         /* Se recuperan los conceptos relacionados: 1o se intenta con los conceptos padres */
@@ -440,6 +469,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    @PermitAll
     public List<ConceptSMTK> findConcepts(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled) {
 
         String patternStandard = conceptSearchBR.standardizationPattern(pattern);
@@ -459,6 +489,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    @PermitAll
     public int countConcepts(String pattern, List<Category> categories, List<RefSet> refsets, Boolean modeled) {
         String patternStandard = conceptSearchBR.standardizationPattern(pattern);
 
@@ -480,12 +511,14 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    @PermitAll
     public List<ConceptSMTK> findConceptsPaginated(Category category, int pageSize, int pageNumber, Boolean modeled) {
         return this.conceptDAO.getConceptsPaginated(category.getId(), pageSize, pageNumber, modeled);
         //return this.conceptWSDAO.getConceptsPaginated(category.getId(), pageSize, pageNumber, modeled);
     }
 
     @Override
+    @PermitAll
     public List<ConceptSMTK> findConceptsWithTarget(Relationship relationship) {
         return conceptDAO.findConceptsWithTarget(relationship);
     }

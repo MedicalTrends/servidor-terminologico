@@ -7,9 +7,12 @@ import cl.minsal.semantikos.model.users.*;
 import cl.minsal.semantikos.util.StringUtils;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.refsets.RefSet;
+import org.jboss.ejb3.annotation.SecurityDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.sql.Timestamp;
@@ -24,6 +27,8 @@ import static java.lang.System.currentTimeMillis;
  * @author Andrés Farías on 9/20/16.
  */
 @Stateless
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class RefSetManagerImpl implements RefSetManager {
 
     private static final Logger logger = LoggerFactory.getLogger(RefSetManagerImpl.class);
@@ -38,6 +43,7 @@ public class RefSetManagerImpl implements RefSetManager {
     private RefSetCreationBR refSetCreationBR;
 
     @Override
+    @PermitAll
     public RefSet createRefSet(RefSet refSet, User user) {
 
         refSetCreationBR.validatePreConditions(refSet, user);
@@ -54,6 +60,7 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
+    @PermitAll
     public RefSet createRefSet(String name, Institution institution, User user) {
 
         /* Se crea el RefSet y se persiste */
@@ -70,6 +77,7 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
+    @PermitAll
     public RefSet updateRefSet(RefSet refSet, User user) {
 
         /* Se validan las pre-condiciones */
@@ -89,6 +97,7 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
+    @PermitAll
     public void bindConceptToRefSet(ConceptSMTK conceptSMTK, RefSet refSet, User user) {
 
         /* Se validan las pre-condiciones */
@@ -102,6 +111,7 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
+    @PermitAll
     public void unbindConceptToRefSet(ConceptSMTK conceptSMTK, RefSet refSet, User user) {
 
         /* Se validan las pre-condiciones */
@@ -115,6 +125,7 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
+    @PermitAll
     public void invalidate(RefSet refSet, User user) {
 
         /* Se validan las pre-condiciones */
@@ -129,18 +140,21 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
+    @PermitAll
     public List<RefSet> getAllRefSets() {
 
         return refsetDAO.getReftsets();
     }
 
     @Override
+    @PermitAll
     public List<RefSet> getValidRefSets() {
 
         return refsetDAO.getValidRefsets();
     }
 
     @Override
+    @PermitAll
     public List<RefSet> getRefsetByInstitution(Institution institution) {
         if (institution.getId() == -1) {
             return Collections.emptyList();
@@ -150,6 +164,7 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
+    @PermitAll
     public List<RefSet> getRefsetByUser(User user) {
 
         if(!user.getProfiles().contains(ProfileFactory.REFSET_ADMIN_PROFILE) &&
@@ -175,6 +190,7 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
+    @PermitAll
     public boolean canWrite(User user, RefSet refSet) {
         if(user.getInstitutions().contains(InstitutionFactory.MINSAL)) {
             return true;
@@ -185,6 +201,7 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
+    @PermitAll
     public List<RefSet> getRefsetsBy(ConceptSMTK conceptSMTK) {
         return refsetDAO.getRefsetsBy(conceptSMTK);
     }
@@ -196,11 +213,13 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
+    @PermitAll
     public List<RefSet> findRefsetsByName(String pattern) {
         return this.refsetDAO.findRefsetsByName(StringUtils.toSQLLikePattern(pattern));
     }
 
     @Override
+    @PermitAll
     public RefSet getRefsetByName(String pattern) {
         List<RefSet> found = this.findRefsetsByName(pattern);
         if (!found.isEmpty()) {
@@ -210,6 +229,7 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
+    @PermitAll
     public List<RefSet> findRefSetsByName(List<String> refSetNames) {
 
         /* Logging */
@@ -241,6 +261,7 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
+    @PermitAll
     public void loadConceptRefSets(ConceptSMTK conceptSMTK) {
         if (conceptSMTK != null) {
             conceptSMTK.setRefsets(this.findByConcept(conceptSMTK));
@@ -248,6 +269,7 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
+    @PermitAll
     public List<RefSet> findByConcept(ConceptSMTK conceptSMTK) {
         return this.refsetDAO.findByConcept(conceptSMTK);
     }
