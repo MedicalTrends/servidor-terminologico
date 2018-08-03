@@ -22,6 +22,7 @@ import javax.faces.context.FacesContext;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.naming.AuthenticationException;
+import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.ParseException;
@@ -124,7 +125,7 @@ public class AuthenticationBean {
         } catch (IOException e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error intentando redirigir usuario a página de Inicio.", e.getMessage()));
             logger.error("Error intentando redirigir usuario a página de inicio {}", Constants.HOME_PAGE , e);
-        } catch (Exception e) {
+        } catch (LoginException e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al Ingresar!", e.getMessage()));
             logger.error("Error trying to login", e);
         }

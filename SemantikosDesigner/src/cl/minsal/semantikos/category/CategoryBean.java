@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by des01c7 on 14-10-16.
  */
-@ManagedBean(name = "categoryBean", eager = true)
+@ManagedBean(name = "categoryBean", eager = false)
 @ApplicationScoped
 public class CategoryBean {
 

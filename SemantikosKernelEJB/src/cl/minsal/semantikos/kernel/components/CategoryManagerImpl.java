@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,12 +50,12 @@ public class CategoryManagerImpl implements CategoryManager {
     private EJBContext context;
 
     @Override
-    @PermitAll
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
     public void addAttribute(RelationshipDefinition attributeCategory, int idCategory) {
     }
 
     @Override
-    @PermitAll
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
     public Category createCategory(Category category, User user) {
 
         logger.debug("Persistiendo la categoría: " + category);
@@ -77,7 +78,7 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
-    @PermitAll
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
     public ConceptSMTK categoryContains(Category category, String term) {
 
         List<Description> descriptions = descriptionManager.searchDescriptionsByTerm(term, Arrays.asList(category), EMPTY_LIST);
@@ -92,14 +93,14 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
-    @PermitAll
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
     public Category getCategoryById(long id) {
         return CategoryFactory.getInstance().findCategoryById(id);
         //return categoryDAO.getCategoryById(id);
     }
 
     @Override
-    @PermitAll
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
     public Category getCategoryByName(String name) throws IllegalArgumentException {
         Category category= CategoryFactory.getInstance().findCategoryByName(name);
         if(category!=null) {
@@ -112,7 +113,7 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
-    @PermitAll
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
     public List<Category> getCategories() {
 
         System.out.println(context.getCallerPrincipal().getName());
@@ -127,13 +128,13 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
-    @PermitAll
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
     public List<Category> getRelatedCategories(Category category) {
         return categoryDAO.getRelatedCategories(category);
     }
 
     @Override
-    @PermitAll
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
     public List<Category> findCategories(List<String> categoriesNames) {
 
         List<Category> res = new ArrayList<>();
@@ -157,7 +158,7 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
-    @PermitAll
+    @RolesAllowed({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
     public CategoryFactory getCategoryFactory() {
         return CategoryFactory.getInstance();
     }
