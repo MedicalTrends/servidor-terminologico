@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Created by des01c7 on 29-03-18.
  */
-public class XFrameHeaderFilter implements Filter {
+public class XFrameHeaderFilterDesigner implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

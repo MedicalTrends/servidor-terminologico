@@ -57,7 +57,7 @@
     </context-param>
 
     <!-- melody -->
-    <filter>
+    <!--filter>
         <filter-name>javamelody</filter-name>
         <filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
         <async-supported>true</async-supported>
@@ -70,7 +70,7 @@
     </filter-mapping>
     <listener>
         <listener-class>net.bull.javamelody.SessionListener</listener-class>
-    </listener>
+    </listener-->
 
     <filter>
         <filter-name>AuthFilterDesigner</filter-name>
@@ -91,14 +91,14 @@
         <url-pattern>/views/*</url-pattern>
     </filter-mapping>
 
-    <!--filter>
+    <filter>
         <filter-name>x-frame-header</filter-name>
-        <filter-class>cl.minsal.semantikos.filters.XFrameHeaderFilter</filter-class>
+        <filter-class>cl.minsal.semantikos.filters.XFrameHeaderFilterDesigner</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>x-frame-header</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping-->
+    </filter-mapping>
 
 
     <filter>
