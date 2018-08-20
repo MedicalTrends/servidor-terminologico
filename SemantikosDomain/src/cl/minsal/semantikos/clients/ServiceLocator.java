@@ -186,7 +186,6 @@ public class ServiceLocator {
         * will be called during the login process.
         */
         loginContext = new LoginContext(Configuration.getConfiguration().getClass().getName(), handler);
-
        /*
         * Do the login
         */

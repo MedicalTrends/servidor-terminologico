@@ -2,7 +2,6 @@ package cl.minsal.semantikos.kernel.businessrules;
 
 import cl.minsal.semantikos.model.users.User;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * TODO: Eliminar esta interfaz, no es necesaria.
@@ -21,7 +20,5 @@ public interface UserCreationBR {
     public void verifyPreConditions(User user);
 
     public void preActions(User user);
-
-    public void postActions(User user, HttpServletRequest request);
 
 }

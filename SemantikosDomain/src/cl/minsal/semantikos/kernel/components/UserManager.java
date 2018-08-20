@@ -5,7 +5,6 @@ import cl.minsal.semantikos.model.users.Question;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.users.UserFactory;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**

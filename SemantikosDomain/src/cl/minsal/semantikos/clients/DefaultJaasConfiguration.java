@@ -14,9 +14,14 @@ public class DefaultJaasConfiguration extends Configuration {
         AppConfigurationEntry[] entries =
                 {
                         new AppConfigurationEntry(
+                                "org.jboss.security.srp.jaas.SRPLoginModule",
+                                AppConfigurationEntry.LoginModuleControlFlag.REQUIRED,
+                                options),
+                        new AppConfigurationEntry(
                                 "org.jboss.security.ClientLoginModule",
                                 AppConfigurationEntry.LoginModuleControlFlag.REQUIRED,
-                                options)};
+                                options)
+                };
         return entries;
     }
     public void refresh() {}

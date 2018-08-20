@@ -5,7 +5,6 @@ import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.naming.AuthenticationException;
-import javax.servlet.http.HttpServletRequest;
 import javax.xml.ws.handler.MessageContext;
 
 /**
@@ -14,8 +13,6 @@ import javax.xml.ws.handler.MessageContext;
 public interface AuthenticationManager {
 
     public static final int MAX_FAILED_ANSWER_ATTEMPTS = 2;
-
-    public boolean authenticate(String email, String password, HttpServletRequest request) throws AuthenticationException;
 
     public boolean authenticate(String email, String password) throws AuthenticationException;
 

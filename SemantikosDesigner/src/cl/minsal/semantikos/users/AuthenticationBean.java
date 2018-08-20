@@ -64,8 +64,6 @@ public class AuthenticationBean {
     public void login() {
 
         FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        request.getSession().setMaxInactiveInterval(timeOutWeb.getTimeOut());
 
         try {
             //valida user y pass
@@ -102,6 +100,9 @@ public class AuthenticationBean {
             }
 
             ServiceLocator.login(email, password);
+
+            HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+            request.getSession().setMaxInactiveInterval(timeOutWeb.getTimeOut());
 
             //authenticationManager.authenticate(email,password,request);
             //authenticationManager.authenticate(email,password);
