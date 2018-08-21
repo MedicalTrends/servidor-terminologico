@@ -74,10 +74,8 @@ public class ServiceLocator {
 
         props = new Properties();
         props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-        //props.put(InitialContext.SECURITY_PRINCIPAL, "user@admin.cl");
-        //props.put(InitialContext.SECURITY_CREDENTIALS, "1234567z");
-        //props.put("remote.connection.default.username", "user@admin.cl");
-        //props.put("remote.connection.default.password", "1234567z");
+        props.put("remote.connection.default.username", "user@admin.cl");
+        props.put("remote.connection.default.password", "1234567z");
         //props.put("jboss.naming.client.ejb.context", "true");
         //props.setProperty("org.jboss.ejb.client.scoped.context", "true");
         props.put("jboss.naming.client.ejb.context", "true");
@@ -190,6 +188,9 @@ public class ServiceLocator {
         * Do the login
         */
         loginContext.login();
+
+        //props.put(InitialContext.SECURITY_PRINCIPAL, "user@admin.cl");
+        //props.put(InitialContext.SECURITY_CREDENTIALS, "1234567z");
 
         System.out.println("Successfully logged in user: " + userName);
     }

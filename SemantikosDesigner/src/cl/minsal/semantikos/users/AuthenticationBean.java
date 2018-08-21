@@ -127,9 +127,6 @@ public class AuthenticationBean {
         } catch (LoginException e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al Ingresar!", e.getMessage()));
             logger.error("Error trying to login", e);
-        } catch (NamingException e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al Ingresar!", e.getMessage()));
-            logger.error("Error trying to login", e);
         }
     }
 
