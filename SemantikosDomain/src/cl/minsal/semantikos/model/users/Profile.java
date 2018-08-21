@@ -37,6 +37,13 @@ public class Profile extends PersistentEntity implements Serializable, Auditable
         this.description = description;
     }
 
+    public Profile(Profile profile) {
+        super(profile.getId());
+        setName(profile.getName());
+        setDescription(profile.getDescription());
+        setPermissions(profile.getPermissions());
+    }
+
     public String getName() {
         return name;
     }

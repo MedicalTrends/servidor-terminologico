@@ -328,7 +328,7 @@ public class Relationship extends PersistentEntity implements AuditableEntity, S
         /* Ahora comparamos con otra relacion */
         Relationship relationship = (Relationship) o;
 
-        /* Se comparan las relaciones excepto por su concepto destino */
+        /* Se comparan las relaciones excepto por su concepto origen */
         if (!equalsButConceptSource(relationship)) return false;
 
         /* Se compara el concepto origen */

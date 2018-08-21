@@ -102,7 +102,6 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
         setPassword(user.getPassword());
         setPasswordHash(user.getPasswordHash());
         setPasswordSalt(user.getPasswordSalt());
-        setProfiles(user.getProfiles());
         setLastLogin(user.getLastLogin());
         setLastPasswordChange(user.getLastPasswordChange());
         setLocked(user.isLocked());
@@ -118,8 +117,16 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
         setLastPasswordHash4(user.getLastPasswordHash4());
         setLastPasswordSalt4(user.getLastPasswordSalt4());
         setVerificationCode(user.getVerificationCode());
-        setInstitutions(user.getInstitutions());
-        setAnswers(user.getAnswers());
+
+        for (Profile profile : user.getProfiles()) {
+            getProfiles().add(new Profile(profile));
+        }
+        for (Institution institution : user.getInstitutions()) {
+            getInstitutions().add(new Institution(institution));
+        }
+        for (Answer answer : answers) {
+            getAnswers().add(new Answer(answer));
+        }
     }
 
     public String getUsername() {
@@ -374,7 +381,8 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
         return Objects.equals(this.name, user.name)
                 && Objects.equals(this.lastName, user.lastName)
                 && Objects.equals(this.secondLastName, user.secondLastName)
-                && Objects.equals(this.appointment, user.appointment);
+                && Objects.equals(this.appointment, user.appointment)
+                && Objects.equals(this.isLocked(), user.locked);
     }
 
     @Override

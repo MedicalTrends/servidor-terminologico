@@ -4,6 +4,8 @@ import cl.minsal.semantikos.model.PersistentEntity;
 
 import java.io.Serializable;
 
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
+
 /**
  * @author Diego Soto
  */
@@ -28,6 +30,15 @@ public class Answer extends PersistentEntity implements Serializable {
 
     public Answer(Question question) {
         this.question = question;
+        this.answer = EMPTY_STRING;
+
+    }
+
+    public Answer(Answer answer) {
+        super(answer.getId());
+        setQuestion(answer.getQuestion());
+        setAnswer(answer.getAnswer());
+        setIdUser(answer.getIdUser());
     }
 
     @Override
