@@ -13,10 +13,10 @@ public class DefaultJaasConfiguration extends Configuration {
         Map options = new HashMap();
         AppConfigurationEntry[] entries =
                 {
-                        new AppConfigurationEntry(
-                                "org.jboss.security.srp.jaas.SRPLoginModule",
+                        /*new AppConfigurationEntry(
+                                "org.jboss.as.security.remoting.RemotingLoginModule",
                                 AppConfigurationEntry.LoginModuleControlFlag.REQUIRED,
-                                options),
+                                options),*/
                         new AppConfigurationEntry(
                                 "org.jboss.security.ClientLoginModule",
                                 AppConfigurationEntry.LoginModuleControlFlag.REQUIRED,
