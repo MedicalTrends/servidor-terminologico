@@ -29,5 +29,15 @@ public interface QuestionManager {
      * @return Lista de instituciones
      */
     public List<Question> getAllQuestions();
+
+    /**
+     * Este método es responsable de asociar (agregar) un establecimiento a un usuario.
+     *
+     * @param user     El usuario al cual se agrega el establecimiento.
+     * @param answer El establecimiento que será asociado al usuario. Este puede o no estar persistido.
+     * @param _user        El usuario que agrega el establecimiento
+     * @return El establecimiento creada a partir de la asociacion.
+     */
+    public Answer bindAnswerToUser(User user, Answer answer, User _user);
 }
 

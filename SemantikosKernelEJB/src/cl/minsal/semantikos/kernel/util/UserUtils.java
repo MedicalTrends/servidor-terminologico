@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.util;
 
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.users.Answer;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.modelweb.Pair;
@@ -34,5 +35,15 @@ public class UserUtils {
     public static List<Institution> getRemovedInstitutions(List<Institution> oldEntities, List<Institution> newEntities) {
 
         return (List<Institution>) CollectionUtils.subtract(oldEntities, newEntities);
+    }
+
+    public static List<Answer> getNewAnswers(List<Answer> oldEntities, List<Answer> newEntities) {
+
+        return (List<Answer>) CollectionUtils.subtract(newEntities, oldEntities);
+    }
+
+    public static List<Answer> getRemovedAnswers(List<Answer> oldEntities, List<Answer> newEntities) {
+
+        return (List<Answer>) CollectionUtils.subtract(oldEntities, newEntities);
     }
 }

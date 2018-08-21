@@ -132,6 +132,12 @@ public class UserManagerImpl implements UserManager {
             change = true;
         }
 
+        /* Luego para cada respuesta se realiza la acción correspondiente */
+        for (Answer answer : UserUtils.getNewAnswers(originalUser.getAnswers(), updatedUser.getAnswers())) {
+            questionManager.bindAnswerToUser(updatedUser, answer, user);
+            change = true;
+        }
+
         if(!change) {
             throw new EJBException("No es posible actualizar un usuario con una instancia idéntica!!");
         }
@@ -168,19 +174,19 @@ public class UserManagerImpl implements UserManager {
         }
     }
 
-    public void activateAccount(User user, User _user) {
+    public void activateAccount(User originalUser, User updatedUser, User user) {
 
         /* Se validan las pre-condiciones para crear un usuario */
         try {
-            user.setPasswordHash(authenticationManager.createUserPassword(user,user.getEmail(),user.getPassword()));
+            updatedUser.setPasswordHash(authenticationManager.createUserPassword(updatedUser, updatedUser.getEmail(), updatedUser.getPassword()));
         } catch (PasswordChangeException e) {
             e.printStackTrace();
         }
         user.setLocked(false);
         user.setVerificationCode(null);
-        authDAO.updateUser(user);
+        update(originalUser, updatedUser, user);
         /* Se deja registro en la auditoría */
-        auditManager.recordUserActivation(user, _user);
+        auditManager.recordUserActivation(updatedUser, user);
         /**
          * Se actualiza la cache de usuarios
          */

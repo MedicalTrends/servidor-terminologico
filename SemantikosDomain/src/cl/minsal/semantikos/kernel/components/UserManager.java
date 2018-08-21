@@ -33,7 +33,7 @@ public interface UserManager {
 
     public long createUser(User user, String baseURL, User _user);
 
-    public void activateAccount(User user, User _user);
+    public void activateAccount(User originalUser, User updatedUser, User user);
 
     public boolean checkActivationCode(String key);
 
