@@ -90,6 +90,7 @@ public class SubstanceConceptLoader extends EntityLoader {
             List<Description> descriptions = descriptionManager.searchDescriptionsPerfectMatch(term, Arrays.asList(new Category[]{category}), null);
 
             if(!descriptions.isEmpty()) {
+
                 ConceptSMTK concept = descriptions.get(0).getConceptSMTK();
                 concept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(concept));
 
@@ -180,7 +181,7 @@ public class SubstanceConceptLoader extends EntityLoader {
             Map.Entry pair = (Map.Entry) it.next();
 
             try {
-                Pair<ConceptSMTK, ConceptSMTK> concepts = (Pair<ConceptSMTK, ConceptSMTK>)pair.getValue();
+                Pair<ConceptSMTK, ConceptSMTK> concepts = (Pair<ConceptSMTK, ConceptSMTK>) pair.getValue();
 
                 conceptManager.update(concepts.getFirst(), concepts.getSecond(), smtkLoader.getUser());
 
