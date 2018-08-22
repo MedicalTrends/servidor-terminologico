@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.loaders;
 
+import cl.minsal.semantikos.core.loaders.BaseLoader;
 import cl.minsal.semantikos.model.LoadException;
 import cl.minsal.semantikos.model.LoadLog;
 import cl.minsal.semantikos.model.SMTKLoader;
@@ -41,7 +42,7 @@ public class Initializer extends EntityLoader {
 
             if(!assertHeader((List<String>) (Object) Arrays.asList(BasicConceptLoader.basicConceptFields.keySet().toArray()),
                     Arrays.asList(header.split(separator)))) {
-                throw new LoadException(smtkLoader.BASIC_CONCEPTS_PATH, null, "El encabezado del archivo no es válido", ERROR);
+                throw new LoadException(smtkLoader.BASIC_CONCEPTS_PATH, "", "El encabezado del archivo no es válido", ERROR);
             }
 
             while ( reader.readLine() != null) lines++;
@@ -58,7 +59,7 @@ public class Initializer extends EntityLoader {
 
             if(!assertHeader((List<String>) (Object) Arrays.asList(BasicConceptLoader.basicDescriptionFields.keySet().toArray()),
                     Arrays.asList(header.split(separator)))) {
-                throw new LoadException(smtkLoader.BASIC_DESCRIPTIONS_PATH, null, "El encabezado del archivo no es válido", ERROR);
+                throw new LoadException(smtkLoader.BASIC_DESCRIPTIONS_PATH, "", "El encabezado del archivo no es válido", ERROR);
             }
 
             //this.path = Paths.get(smtkLoader.BASIC_RELATIONSHIPS_PATH);
@@ -72,7 +73,7 @@ public class Initializer extends EntityLoader {
 
             if(!assertHeader((List<String>) (Object) Arrays.asList(BasicConceptLoader.basicRelationshipFields.keySet().toArray()),
                     Arrays.asList(header.split(separator)))) {
-                throw new LoadException(smtkLoader.BASIC_RELATIONSHIPS_PATH, null, "El encabezado del archivo no es válido", ERROR);
+                throw new LoadException(smtkLoader.BASIC_RELATIONSHIPS_PATH, "", "El encabezado del archivo no es válido", ERROR);
             }
 
             //smtkLoader.setConceptsTotal(lines-1);
@@ -117,7 +118,7 @@ public class Initializer extends EntityLoader {
 
             if(!assertHeader((List<String>) (Object) Arrays.asList(SubstanceConceptLoader.substanceConceptFields.keySet().toArray()),
                     Arrays.asList(header.split(separator)))) {
-                throw new LoadException(smtkLoader.SUBSTANCE_PATH, null, "El encabezado del archivo no es válido", ERROR);
+                throw new LoadException(smtkLoader.SUBSTANCE_PATH, "", "El encabezado del archivo no es válido", ERROR);
             }
 
             while (reader.readLine() != null) lines++;
@@ -165,7 +166,7 @@ public class Initializer extends EntityLoader {
 
             if(!assertHeader((List<String>) (Object) Arrays.asList(MBConceptLoader.mbConceptFields.keySet().toArray()),
                     Arrays.asList(header.split(separator)))) {
-                throw new LoadException(smtkLoader.MB_PATH, null, "El encabezado del archivo no es válido", ERROR);
+                throw new LoadException(smtkLoader.MB_PATH, "", "El encabezado del archivo no es válido", ERROR);
             }
 
             while (reader.readLine() != null) lines++;
@@ -213,7 +214,7 @@ public class Initializer extends EntityLoader {
 
             if(!assertHeader((List<String>) (Object) Arrays.asList(MCConceptLoader.mcConceptFields.keySet().toArray()),
                     Arrays.asList(header.split(separator)))) {
-                throw new LoadException(smtkLoader.MC_PATH, null, "El encabezado del archivo no es válido", ERROR);
+                throw new LoadException(smtkLoader.MC_PATH, "", "El encabezado del archivo no es válido", ERROR);
             }
 
             while (reader.readLine() != null) lines++;
@@ -230,7 +231,7 @@ public class Initializer extends EntityLoader {
 
             if(!assertHeader((List<String>) (Object) Arrays.asList(MCConceptLoader.admViasFields.keySet().toArray()),
                     Arrays.asList(header.split(separator)))) {
-                throw new LoadException(smtkLoader.MC_VIAS_ADM_PATH, null, "El encabezado del archivo no es válido", ERROR);
+                throw new LoadException(smtkLoader.MC_VIAS_ADM_PATH, "", "El encabezado del archivo no es válido", ERROR);
             }
 
             //smtkLoader.setConceptsTotal(lines-1);
@@ -274,7 +275,7 @@ public class Initializer extends EntityLoader {
 
             if(!assertHeader((List<String>) (Object) Arrays.asList(MCCEConceptLoader.mcceConceptFields.keySet().toArray()),
                     Arrays.asList(header.split(separator)))) {
-                throw new LoadException(smtkLoader.MCCE_PATH, null, "El encabezado del archivo no es válido", ERROR);
+                throw new LoadException(smtkLoader.MCCE_PATH, "", "El encabezado del archivo no es válido", ERROR);
             }
 
             while (reader.readLine() != null) lines++;
@@ -318,7 +319,7 @@ public class Initializer extends EntityLoader {
 
             if(!assertHeader((List<String>) (Object) Arrays.asList(GFPConceptLoader.gfpConceptFields.keySet().toArray()),
                     Arrays.asList(header.split(separator)))) {
-                throw new LoadException(smtkLoader.GFP_PATH, null, "El encabezado del archivo no es válido", ERROR);
+                throw new LoadException(smtkLoader.GFP_PATH, "", "El encabezado del archivo no es válido", ERROR);
             }
 
             while (reader.readLine() != null) lines++;
@@ -360,7 +361,7 @@ public class Initializer extends EntityLoader {
 
             if(!assertHeader((List<String>) (Object) Arrays.asList(FPConceptLoader.fpConceptFields.keySet().toArray()),
                     Arrays.asList(header.split(separator)))) {
-                throw new LoadException(smtkLoader.FP_PATH, null, "El encabezado del archivo no es válido", ERROR);
+                throw new LoadException(smtkLoader.FP_PATH, "", "El encabezado del archivo no es válido", ERROR);
             }
 
             while (reader.readLine() != null) lines++;
@@ -402,7 +403,7 @@ public class Initializer extends EntityLoader {
 
             if(!assertHeader((List<String>) (Object) Arrays.asList(PCConceptLoader.pcConceptFields.keySet().toArray()),
                     Arrays.asList(header.split(separator)))) {
-                throw new LoadException(smtkLoader.PC_PATH, null, "El encabezado del archivo no es válido", ERROR);
+                throw new LoadException(smtkLoader.PC_PATH, "", "El encabezado del archivo no es válido", ERROR);
             }
 
             while (reader.readLine() != null) lines++;
@@ -447,7 +448,7 @@ public class Initializer extends EntityLoader {
 
             if(!assertHeader((List<String>) (Object) Arrays.asList(PCCEConceptLoader.pcceConceptFields.keySet().toArray()),
                     Arrays.asList(header.split(separator)))) {
-                throw new LoadException(smtkLoader.PCCE_PATH, null, "El encabezado del archivo no es válido", ERROR);
+                throw new LoadException(smtkLoader.PCCE_PATH, "", "El encabezado del archivo no es válido", ERROR);
             }
 
             while (reader.readLine() != null) lines++;

@@ -32,36 +32,45 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
  */
 public class SubstanceLoader extends BaseLoader {
 
-    public static final Map<String, Integer> substanceFields;
+    static int OFFSET = 0;
+
     static
     {
-        substanceFields = new HashMap<String, Integer>();
-        substanceFields.put("CONCEPTO_ID", 0);
-        substanceFields.put("DESCRIPCION", 1);
-        substanceFields.put("TIPO", 2);
-        substanceFields.put("DESC_ABREVIADA", 3);
-        substanceFields.put("SENSIBLE_MAYUSCULA", 4);
-        substanceFields.put("CREAC_NOMBRE", 5);
-        substanceFields.put("ESTADO", 6);
-        substanceFields.put("REVISADO", 7);
-        substanceFields.put("SCT_ID", 8);
-        substanceFields.put("SCT_TERMINO", 9);
+        //fields = new HashMap<String, Integer>();
+        fields.put("CONCEPTO_ID", 0);
+        fields.put("DESCRIPCION", 1);
+        fields.put("TIPO", 2);
+        fields.put("DESC_ABREVIADA", 3);
+        fields.put("SENSIBLE_MAYUSCULA", 4);
+        fields.put("CREAC_NOMBRE", 5);
+        fields.put("ESTADO", 6);
+        fields.put("REVISADO", 7);
+        fields.put("CONSULTAR", 8);
+        fields.put("OBSERVACION", 9);
+        fields.put("SINONIMO", 10);
+        fields.put("SCT_ID", 11);
+        fields.put("SCT_TERMINO", 12);
+        fields.put("DCI_DID", 13);
+        fields.put("DCI_TERMINO", 14);
+        fields.put("GRUPOS_JERARQUICOS", 15);
+        fields.put("RIESGO_TERATOGENICO", 16);
     }
 
-    Map<Long, ConceptSMTK> conceptSMTKMap = new HashMap<>();
+    public SubstanceLoader(User user) {
+        super(user);
+        Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia");
 
+        //nonUpdateableDefinitions.add(category.findRelationshipDefinitionsByName());
+    }
 
-    public void loadConceptFromFileLine(String line, User user) throws LoadException {
+    public void loadConceptFromFileLine(String line) throws LoadException {
 
         tokens = line.split(separator,-1);
 
         /*Recuperando datos Concepto*/
 
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
-        long id = Long.parseLong(tokens[substanceFields.get("CONCEPTO_ID")]);
-
-        //ConceptSMTK oldConcept;
-        //ConceptSMTK newConcept;
+        String id = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
 
         try {
 
@@ -69,20 +78,17 @@ public class SubstanceLoader extends BaseLoader {
             Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia");
 
             /*Recuperando tipo*/
-            String type = tokens[substanceFields.get("TIPO")];
-
-            /*Recuperando ConceptID*/
-            String conceptID = StringUtils.normalizeSpaces(tokens[substanceFields.get("CONCEPTO_ID")]).trim();
+            String type = tokens[fields.get("TIPO")];
 
             /*Recuperando descripcion preferida*/
-            String term = StringUtils.normalizeSpaces(tokens[substanceFields.get("DESCRIPCION")]).trim();
+            String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
 
-            init(type, category, term, substanceFields);
+            init(type, category, term);
 
             RelationshipDefinition relationshipDefinition;
 
             /*Recuperando datos Relaciones*/
-            String idConceptSCTName = tokens[substanceFields.get("SCT_ID")];
+            String idConceptSCTName = tokens[fields.get("SCT_ID")];
 
             /*Por defecto se mapea a un concepto SNOMED Genérico*/
             long idConceptSCT = 373873005;
@@ -133,100 +139,23 @@ public class SubstanceLoader extends BaseLoader {
                 RelationshipAttribute ra = new RelationshipAttribute(attDef, relationshipSnomed, group);
                 relationshipSnomed.getRelationshipAttributes().add(ra);
 
-                newConcept.addRelationship(relationshipSnomed);
+                addRelationship(relationshipSnomed, type);
 
             }
 
+            /**Obteniendo Comercializado**/
             BasicTypeValue basicTypeValue = new BasicTypeValue(true);
             relationshipDefinition = newConcept.getCategory().findRelationshipDefinitionsByName(TargetDefinition.COMERCIALIZADO).get(0);
 
             Relationship relationshipMarketed = new Relationship(newConcept, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
-            newConcept.addRelationship(relationshipMarketed);
+            addRelationship(relationshipMarketed, type);
 
-            addConcept();
-
-            conceptSMTKMap.put(id, conceptSMTK);
+            addConcept(type);
         }
         catch (Exception e) {
             throw new LoadException(path.toString(), id, "Error desconocido: "+e.toString(), ERROR);
         }
-    }
-
-    public void loadAllConcepts(SMTKLoader smtkLoader) {
-
-        //smtkLoader.logInfo(new LoadLog("Comprobando Conceptos Fármacos - Sustancia", INFO));
-
-        smtkLoader.printInfo(new LoadLog("Comprobando Conceptos Fármacos - Sustancia", INFO));
-
-        smtkLoader.setConceptsProcessed(0);
-
-        try {
-
-            initReader(smtkLoader.SUBSTANCE_PATH);
-            initWriter("Fármacos - Sustancia");
-
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                try {
-                    loadConceptFromFileLine(line, smtkLoader.getUser());
-                    smtkLoader.incrementConceptsProcessed(1);
-                }
-                catch (LoadException e) {
-                    smtkLoader.logError(e);
-                    e.printStackTrace();
-                }
-            }
-
-            haltReader();
-
-            //smtkLoader.logTick();
-            smtkLoader.printTick();
-
-        } catch (Exception e) {
-            //smtkLoader.logError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
-            smtkLoader.printError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
-            e.printStackTrace();
-        } catch (LoadException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void persistAllConcepts(SMTKLoader smtkLoader) {
-
-        //smtkLoader.logInfo(new LoadLog("Persisitiendo Conceptos Fármacos - Sustancia", INFO));
-        smtkLoader.printInfo(new LoadLog("Persisitiendo Conceptos Fármacos - Sustancia", INFO));
-
-        smtkLoader.setConceptsProcessed(0);
-
-        Iterator it = conceptSMTKMap.entrySet().iterator();
-
-        while (it.hasNext()) {
-
-            Map.Entry pair = (Map.Entry) it.next();
-
-            try {
-                conceptManager.persist((ConceptSMTK)pair.getValue(), smtkLoader.getUser());
-                smtkLoader.incrementConceptsProcessed(1);
-            }
-            catch (Exception e) {
-                //smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
-                smtkLoader.printError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
-                e.printStackTrace();
-            }
-
-            it.remove(); // avoids a ConcurrentModificationException
-        }
-
-        //smtkLoader.logTick();
-        smtkLoader.printTick();
-    }
-
-    public void processConcepts(SMTKLoader smtkLoader) {
-        smtkLoader.setProcessed(0);
-        loadAllConcepts(smtkLoader);
-        persistAllConcepts(smtkLoader);
     }
 
 }

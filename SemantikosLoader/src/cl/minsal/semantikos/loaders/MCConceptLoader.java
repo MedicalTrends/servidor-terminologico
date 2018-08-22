@@ -747,11 +747,11 @@ public class MCConceptLoader extends EntityLoader {
         } catch (Exception e) {
             //smtkLoader.logError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
             //smtkLoader.printError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
-            log(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            log(new LoadException(path.toString(), "", e.getMessage(), ERROR));
             //e.printStackTrace();
         } catch (LoadException e) {
             //e.printStackTrace();
-            log(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            log(new LoadException(path.toString(), "", e.getMessage(), ERROR));
         }
     }
 
@@ -778,7 +778,7 @@ public class MCConceptLoader extends EntityLoader {
                 //smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
                 //smtkLoader.printError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
                 //e.printStackTrace();
-                log(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+                log(new LoadException(path.toString(), "", e.getMessage(), ERROR));
             }
 
             it.remove(); // avoids a ConcurrentModificationException

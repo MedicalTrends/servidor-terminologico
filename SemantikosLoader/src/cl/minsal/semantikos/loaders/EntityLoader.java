@@ -57,7 +57,7 @@ public class EntityLoader {
             String line = reader.readLine();
 
             if(line == null) {
-                throw new LoadException(path, null, "Archivo sin cabecera!!", ERROR);
+                throw new LoadException(path, "", "Archivo sin cabecera!!", ERROR);
             }
 
         } catch (IOException e) {
@@ -109,7 +109,7 @@ public class EntityLoader {
 
     public void log(LoadException ex) {
         try {
-            if(ex.getMessage()!=null) {
+            if(ex.getMessage() != null) {
                 writer.write(ex.getIdConcept() + separator + ex.getMessage());
             }
             else {

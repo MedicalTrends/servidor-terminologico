@@ -423,10 +423,10 @@ public class MCCEConceptLoader extends EntityLoader {
             //smtkLoader.logError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
             //smtkLoader.printError(new LoadException(path.toString(), null, e.getMessage(), ERROR));
             //e.printStackTrace();
-            log(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            log(new LoadException(path.toString(), "", e.getMessage(), ERROR));
         } catch (LoadException e) {
             //e.printStackTrace();
-            log(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+            log(new LoadException(path.toString(), "", e.getMessage(), ERROR));
         }
     }
 
@@ -453,7 +453,7 @@ public class MCCEConceptLoader extends EntityLoader {
                 //smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
                 //smtkLoader.printError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
                 //e.printStackTrace();
-                log(new LoadException(path.toString(), null, e.getMessage(), ERROR));
+                log(new LoadException(path.toString(), "", e.getMessage(), ERROR));
             }
 
             it.remove(); // avoids a ConcurrentModificationException

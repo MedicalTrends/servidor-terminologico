@@ -1,8 +1,10 @@
 package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
+import cl.minsal.semantikos.core.loaders.*;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.loaders.*;
+import cl.minsal.semantikos.loaders.Initializer;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinitionFactory;
@@ -12,7 +14,6 @@ import cl.minsal.semantikos.utils.ExtendedAscii;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -114,6 +115,7 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
     private int total = 0;
     private int processed = 0;
+    private int updated = 0;
 
     /**
      *
@@ -234,9 +236,23 @@ public class SMTKLoader extends SwingWorker<Void, String> {
     }
 
     public void incrementConceptsProcessed(int n) {
-        int conceptsProcessed = Integer.parseInt(this.getConceptsProcessed().getText())+n;
-        this.conceptsProcessed.setText(String.valueOf(conceptsProcessed));
-        this.progressBar.setValue(conceptsProcessed);
+        int processedBefore = (int)(((float)this.processed/(float)total)*100);
+        this.processed = this.processed + n;
+        int processedAfter = (int)(((float)this.processed/(float)total)*100);
+
+        if(processedBefore < processedAfter ) {
+            logger.log(Level.INFO, "Procesados: "+ processedAfter+ " %");
+        }
+    }
+
+    public void incrementConceptsUpdated(int n) {
+        int updatedBefore = (int)(((float)this.updated/(float)total)*100);
+        this.updated = this.updated + n;
+        int updatedAfter = (int)(((float)this.updated/(float)total)*100);
+
+        if(updatedBefore < updatedAfter ) {
+            logger.log(Level.INFO, "Actualizados: "+ updatedAfter+ " %");
+        }
     }
 
     public JTextField getTimeStamp() {
@@ -450,6 +466,35 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
             initializer.checkPCCEDataFiles(this);
             pcceConceptLoader.processConcepts(this);
+
+            //JOptionPane.showMessageDialog(null, "Carga de conceptos finalizada!");
+            logger.info("Carga de conceptos finalizada!");
+
+        } catch (LoadException e1) {
+            //JOptionPane.showMessageDialog(null, e1.getMessage());
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+    }
+
+    public void processMaster() throws Exception {
+
+        try {
+
+            Checker checker = new Checker(user);
+
+            SubstanceLoader substanceLoader = new SubstanceLoader(user);
+            MBLoader mbLoader = new MBLoader(user);
+
+            checker.checkDataFile(this, substanceLoader);
+            substanceLoader.processConcepts(this);
+
+            /*
+            checker.checkDataFile(this, mbLoader);
+            mbLoader.processConcepts(this);
+            */
 
             //JOptionPane.showMessageDialog(null, "Carga de conceptos finalizada!");
             logger.info("Carga de conceptos finalizada!");

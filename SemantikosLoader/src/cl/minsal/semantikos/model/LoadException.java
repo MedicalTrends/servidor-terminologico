@@ -6,21 +6,36 @@ package cl.minsal.semantikos.model;
 public class LoadException extends LoadLog {
 
     String dataFilePath;
-    Long idConcept;
+    String idConcept;
+    String action;
+
     boolean severe = false;
 
     public LoadException(String dataFilePath, Long idConcept, String errorMessage, String type) {
         super(errorMessage, type);
         this.dataFilePath = dataFilePath;
-        this.idConcept = idConcept;
+        this.idConcept = idConcept.toString();
     }
 
     public LoadException(String dataFilePath, Long idConcept, String errorMessage, String type, boolean severe) {
         super(errorMessage, type);
         this.dataFilePath = dataFilePath;
-        this.idConcept = idConcept;
+        this.idConcept = idConcept.toString();
         this.severe = severe;
 
+    }
+
+    public LoadException(String dataFilePath, String idConcept, String errorMessage, String type) {
+        super(errorMessage, type);
+        this.dataFilePath = dataFilePath;
+        this.idConcept = idConcept;
+    }
+
+    public LoadException(String dataFilePath, String idConcept, String errorMessage, String type, String action) {
+        super(errorMessage, type);
+        this.dataFilePath = dataFilePath;
+        this.idConcept = idConcept;
+        this.action = action;
     }
 
     public String getDataFilePath() {
@@ -31,11 +46,11 @@ public class LoadException extends LoadLog {
         this.dataFilePath = dataFilePath;
     }
 
-    public Long getIdConcept() {
+    public String getIdConcept() {
         return idConcept;
     }
 
-    public void setIdConcept(Long idConcept) {
+    public void setIdConcept(String idConcept) {
         this.idConcept = idConcept;
     }
 
@@ -45,6 +60,14 @@ public class LoadException extends LoadLog {
 
     public void setSevere(boolean severe) {
         this.severe = severe;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 
     @Override
