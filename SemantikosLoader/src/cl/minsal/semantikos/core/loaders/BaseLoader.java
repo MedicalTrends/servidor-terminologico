@@ -173,10 +173,15 @@ public abstract class BaseLoader {
             writer.write(newline);
             writer.flush();
 
-            Level level;
+            Level level = null;
 
             switch (ex.getType()) {
-
+                case LoadException.ERROR:
+                    level = Level.SEVERE;
+                    break;
+                case LoadException.INFO:
+                    level = Level.INFO;
+                    break;
             }
 
             logger.log(level, ex.getIdConcept() + separator + ex.getAction() + separator + ex.getType() + separator + ex.getMessage());
@@ -337,18 +342,18 @@ public abstract class BaseLoader {
                 // Si la multiplicidad es 1
                 if(relationship.getRelationshipDefinition().getMultiplicity().isSimple()) {
                     // Si existen relaciones para esta definición
-                    List<Relationship> relationships = newConcept.getRelationshipsByRelationDefinition(relationship.getRelationshipDefinition();
+                    List<Relationship> relationships = newConcept.getRelationshipsByRelationDefinition(relationship.getRelationshipDefinition());
 
                     if(!relationships.isEmpty()) {
                         // Modificar el target de la relación
                         relationships.get(0).setTarget(relationship.getTarget());
                         String msg = "Se modifica destinto de relación para la definición '" + relationship.getRelationshipDefinition().getName() + "' de '" + relationships.get(0).getTarget().toString() + "' a '" + relationship.getTarget().toString() +"'";
-                        log(new LoadException(dataFile, conceptID, msg, LoadLog.INFO, type));
+                        log(new LoadException(dataFile, conceptID, msg, INFO, type));
                     }
                     else {
                         // Agregar la relación
                         String msg = "Se agrega relación '" + relationship.toString() + "'";
-                        log(new LoadException(dataFile, conceptID, msg, LoadLog.INFO, type));
+                        log(new LoadException(dataFile, conceptID, msg, INFO, type));
                         newConcept.getRelationships().add(relationship);
                     }
                 }
@@ -357,11 +362,11 @@ public abstract class BaseLoader {
                     if(!newConcept.getRelationships().contains(relationship)) {
                         if(!isUpdateable(relationship)) {
                             String message = "Relación '" + relationship.toString() + "' la definición no es actualizable";
-                            throw new LoadException(dataFile, conceptID, message, LoadLog.ERROR, type);
+                            throw new LoadException(dataFile, conceptID, message, ERROR, type);
                         }
                     }
                     String msg = "Se agrega relación '" + relationship.toString() + "'";
-                    log(new LoadException(dataFile, conceptID, msg, LoadLog.INFO, type));
+                    log(new LoadException(dataFile, conceptID, msg, INFO, type));
                     newConcept.getRelationships().add(relationship);
                 }
                 break;
@@ -369,11 +374,11 @@ public abstract class BaseLoader {
                 if(!newConcept.getRelationshipsByRelationDefinition(relationship.getRelationshipDefinition()).isEmpty()) {
                     // Si ya existe una relacion para esta definicion lanzar excepción
                     String message = "Ya existe una relación para la definición: '" + relationship.getRelationshipDefinition().getName() + "'";
-                    throw new LoadException(dataFile, conceptID, message, LoadException.ERROR, type);
+                    throw new LoadException(dataFile, conceptID, message, ERROR, type);
                 }
                 // Agregar la relación
                 String msg = "Se agrega relación '" + relationship.toString() + "'";
-                log(new LoadException(dataFile, conceptID, msg, LoadLog.INFO, type));
+                log(new LoadException(dataFile, conceptID, msg, INFO, type));
                 newConcept.getRelationships().add(relationship);
                 break;
         }
@@ -424,7 +429,8 @@ public abstract class BaseLoader {
                     smtkLoader.incrementConceptsProcessed(1);
                 }
                 catch (LoadException e) {
-                    smtkLoader.logError(e);
+                    //smtkLoader.logError(e);
+                    log(e);
                     e.printStackTrace();
                 }
             }
@@ -434,10 +440,12 @@ public abstract class BaseLoader {
             smtkLoader.printTick();
 
         } catch (Exception e) {
-            smtkLoader.printError(new LoadException(path.toString(), "", e.getMessage(), ERROR));
-            e.printStackTrace();
+            //smtkLoader.printError(new LoadException(path.toString(), "", e.getMessage(), ERROR));
+            log(new LoadException(path.toString(), "", e.getMessage(), ERROR));
+            //e.printStackTrace();
         } catch (LoadException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            log(e);
         }
     }
 
@@ -479,7 +487,8 @@ public abstract class BaseLoader {
                 smtkLoader.incrementConceptsUpdated(1);
             }
             catch (Exception e) {
-                smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
+                //smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
+                log(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
                 e.printStackTrace();
             }
 
