@@ -26,7 +26,7 @@ public class RelationshipWeb extends Relationship implements Comparable<Relation
 
     }
 
-    public RelationshipWeb(Relationship r, List<RelationshipAttribute> ra){
+    public RelationshipWeb(Relationship r, List<RelationshipAttribute> ra) {
         this(r);
         for (RelationshipAttribute attr : ra) {
             this.getRelationshipAttributes().add(new RelationshipAttribute(attr.getIdRelationshipAttribute(), attr.getRelationAttributeDefinition(), attr.getRelationship(), attr.getTarget()));

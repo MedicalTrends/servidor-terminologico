@@ -9,6 +9,8 @@ import cl.minsal.semantikos.model.users.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +21,6 @@ import static cl.minsal.semantikos.model.LoadLog.INFO;
  * Created by root on 12-06-17.
  */
 public class Checker extends BaseLoader {
-
 
     public Checker(User user) {
         super(user);
@@ -35,14 +36,29 @@ public class Checker extends BaseLoader {
 
             int lines = 1;
 
+            // 1a Línea contiene la categoría, saltar a la siguiente línea
+            reader.readLine();
+
+            lines = 2;
+
             /**
              * Recuperar el header del archivo
              */
             String header = reader.readLine();
 
-            if(!assertHeader((List<String>) (Object) Arrays.asList(loader.fields.keySet().toArray()),
-                    Arrays.asList(header.split(separator)))) {
-                throw new LoadException(loader.dataFile, "", "El encabezado del archivo no es válido", ERROR);
+            List<String> cleanHeader = new ArrayList<>();
+            List<String> fields = (List<String>) (Object) Arrays.asList(loader.fields.keySet().toArray());
+
+            //Se remueven añadidos a los nombres de los campos para evitar inconsistencias
+            for (String field : header.split(";")) {
+                cleanHeader.add(field.split(" ")[0]);
+            }
+
+            try {
+                assertHeader(fields, cleanHeader);
+            }
+            catch (LoadException ex) {
+                throw ex;
             }
 
             while (reader.readLine() != null) lines++;
@@ -56,12 +72,7 @@ public class Checker extends BaseLoader {
         } catch (IOException e) {
             throw e;
         } catch (LoadException e) {
-            if(e.isSevere()) {
-                throw e;
-            }
-            else {
-                smtkLoader.printError(e);
-            }
+            throw e;
         }
     }
 

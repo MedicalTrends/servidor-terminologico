@@ -37,6 +37,7 @@ public class MBLoader extends BaseLoader {
 
     static
     {
+        fields = new HashMap<String, Integer>();
         fields.put("CONCEPTO_ID", OFFSET + 0);
         fields.put("DESCRIPCION", OFFSET + 1);
         fields.put("TIPO", OFFSET + 2);
@@ -53,10 +54,8 @@ public class MBLoader extends BaseLoader {
         fields.put("SUSTANCIAS", OFFSET + 13);
     }
 
-    public MBLoader(User user) {
-        super(user);
-
-        Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia");
+    public MBLoader(Category category, User user) {
+        super(category, user);
         nonUpdateableDefinitions.add(category.findRelationshipDefinitionsByName(TargetDefinition.SUSTANCIA).get(0));
     }
 

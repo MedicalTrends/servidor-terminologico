@@ -60,10 +60,9 @@ public class MCCELoader extends BaseLoader {
         fields.put("PACK_MULTI_UNIDAD_DESC", OFFSET + 21);
     }
 
-    public MCCELoader(User user) {
-        super(user);
+    public MCCELoader(Category category, User user) {
+        super(category, user);
 
-        Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico con Envase");
         nonUpdateableDefinitions.add(category.findRelationshipDefinitionsByName("Medicamento Clínico").get(0));
     }
 

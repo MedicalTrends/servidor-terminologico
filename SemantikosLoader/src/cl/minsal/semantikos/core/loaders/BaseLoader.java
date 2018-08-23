@@ -16,8 +16,10 @@ import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
 import cl.minsal.semantikos.modelweb.Pair;
+import cl.minsal.semantikos.modelweb.RelationshipWeb;
 import cl.minsal.semantikos.util.StringUtils;
 
+import javax.ejb.EJBException;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,19 +43,19 @@ public abstract class BaseLoader {
 
     FileWriter fw;
 
-    BufferedWriter writer;
+    static BufferedWriter writer;
 
     public static String separator = ";";
 
     private static String newline = System.getProperty("line.separator");
 
-    protected ConceptSMTK oldConcept;
+    protected ConceptSMTKWeb oldConcept;
 
-    protected ConceptSMTK newConcept;
+    protected ConceptSMTKWeb newConcept;
 
-    protected Map<String, ConceptSMTK> conceptsForPersist;
+    protected Map<String, ConceptSMTK> conceptsForPersist = new HashMap<>();
 
-    protected Map<String, Pair<ConceptSMTK, ConceptSMTK>> conceptsForUpdate;
+    protected Map<String, Pair<ConceptSMTKWeb, ConceptSMTKWeb>> conceptsForUpdate = new HashMap<>();
 
     protected String[] tokens;
 
@@ -73,6 +75,11 @@ public abstract class BaseLoader {
 
     public BaseLoader(User user) {
         this.user = user;
+    }
+
+    public BaseLoader(Category category, User user) {
+        this.user = user;
+        this.category = category;
     }
 
     protected User user;
@@ -105,6 +112,10 @@ public abstract class BaseLoader {
         try {
             //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
             reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(path)));
+
+            // 1a Línea contiene la categoría, saltar a la siguiente línea
+            reader.readLine();
+
             /**
              * Descartar header
              */
@@ -127,14 +138,14 @@ public abstract class BaseLoader {
         }
     }
 
-    public boolean assertHeader(List<String> fields, List<String> header) {
+    public void assertHeader(List<String> fields, List<String> header) throws LoadException {
         for (String field : fields) {
             if(!header.contains(field)) {
-                return false;
+                String msg = "El encabezado no contiene el campo '" + field + "'";
+                LoadException ex = new LoadException(dataFile, "", msg, ERROR);
+                throw ex;
             }
-
         }
-        return true;
     }
 
     public void initWriter(String path) throws LoadException {
@@ -143,7 +154,7 @@ public abstract class BaseLoader {
             fw = new FileWriter(path);
 
             writer = new BufferedWriter(fw);
-            writer.write("CONCEPTO_ID;STATUS;MENSAJE");
+            writer.write("CONCEPTO_ID;TIPO;STATUS;MENSAJE");
             writer.write(newline);
             writer.flush();
 
@@ -161,7 +172,8 @@ public abstract class BaseLoader {
         }
     }
 
-    public void log(LoadException ex) {
+    public static void log(LoadException ex) {
+
         try {
             if(ex.getMessage() != null) {
                 writer.write(ex.getIdConcept() + separator + ex.getAction() + separator + ex.getType() + separator + ex.getMessage() );
@@ -184,7 +196,7 @@ public abstract class BaseLoader {
                     break;
             }
 
-            logger.log(level, ex.getIdConcept() + separator + ex.getAction() + separator + ex.getType() + separator + ex.getMessage());
+            logger.log(level, ex.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -193,54 +205,67 @@ public abstract class BaseLoader {
     public void verifyGeneralMARules(String type) throws LoadException {
 
         String conceptID = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
-        ConceptSMTK conceptSMTK = conceptManager.getConceptByCONCEPT_ID(conceptID);
 
-        if(conceptManager.getConceptByCONCEPT_ID(conceptID) == null) {
-            String message = "No existe un concepto de conceptID = " + conceptID;
-            throw new LoadException(dataFile, conceptID, message, LoadException.ERROR, type);
-        }
-        else {
+        try {
+            ConceptSMTK conceptSMTK = conceptManager.getConceptByCONCEPT_ID(conceptID);
+
+            String msg = "Verificando Concepto '" + conceptSMTK.toString() + "'";
+            log(new LoadException(dataFile, conceptID, msg, LoadException.INFO));
+
             /*Recuperando descripcion preferida*/
             String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
 
             if(conceptSMTK.getDescriptionFavorite().getTerm().equals(term)) {
                 String message = "La descripción '" + term + "' no coincide con la descripción preferida '" + conceptSMTK.getDescriptionFavorite().getTerm() + "'";
-                throw new LoadException(dataFile, conceptID, message, LoadException.ERROR, type);
+                throw new LoadException(dataFile, conceptID, message, ERROR, type);
             }
         }
+        catch (EJBException e) {
+            throw new LoadException(dataFile, conceptID, e.getMessage(), ERROR, type);
+        }
+
+        String msg = "Concepto '" + conceptID + "' OK";
+        log(new LoadException(dataFile, conceptID, msg, LoadException.INFO));
     }
 
     public void init(String type, Category category, String term) throws LoadException {
 
         this.category = category;
+        String conceptID = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
 
         switch (type) {
             case "M":
                 //...solo Verificar concepto y salir
-                verifyGeneralMARules(type);
+                //verifyGeneralMARules(type);
                 break;
             case "A":
                 /*Si es una actualización*/
-                verifyGeneralMARules(type);
+                //verifyGeneralMARules(type);
+
+                String msg = "Cargando actualización concepto '" + conceptID + "'";
+                log(new LoadException(dataFile, conceptID, msg, LoadException.INFO, type));
 
                 //Se buscan descripciones con glosa suministrada
                 List<Description> descriptions = descriptionManager.searchDescriptionsPerfectMatch(term, Arrays.asList(new Category[]{category}), null);
 
                 if(!descriptions.isEmpty()) {
-                    oldConcept = descriptions.get(0).getConceptSMTK();
-                    oldConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(oldConcept));
+                    ConceptSMTK conceptSMTK = descriptions.get(0).getConceptSMTK();
+                    conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
 
+                    oldConcept = new ConceptSMTKWeb(conceptSMTK);
                     //Se crea una copia idéntica del concepto original
                     newConcept = new ConceptSMTKWeb(oldConcept);
                 }
                 else {
                     // Si no se encuentran Lanzar excepción
                     String message = "No existe un concepto con descripción preferida '" + term + "'";
-                    String conceptID = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
-                    throw new LoadException(dataFile, conceptID, message, LoadException.ERROR);
+                    throw new LoadException(dataFile, conceptID, message, LoadException.ERROR, type);
                 }
                 break;
             case "N":
+                msg = "Creando nuevo concepto '" + conceptID + "'";
+                log(new LoadException(dataFile, conceptID, msg, LoadException.INFO, type));
+
                 boolean toBeReviewed = tokens[fields.get("REVISADO")].equals("Si");
                 boolean toBeConsulted = tokens[fields.get("CONSULTAR")].equals("Si");
                 boolean autogenerated = tokens[fields.get("CREAC_NOMBRE")].equals("Autogenerado");
@@ -253,17 +278,19 @@ public abstract class BaseLoader {
                     tagSMTK = TagSMTKFactory.getInstance().findTagSMTKByName("producto");
                 }
 
-                newConcept = new ConceptSMTK(category);
-                newConcept.setToBeConsulted(toBeConsulted);
-                newConcept.setToBeReviewed(toBeReviewed);
-                newConcept.setCategory(category);
-                newConcept.setTagSMTK(tagSMTK);
+                ConceptSMTK conceptSMTK = new ConceptSMTK(category);
+
+                conceptSMTK.setFullyDefined(false);
+                conceptSMTK.setToBeConsulted(toBeConsulted);
+                conceptSMTK.setToBeReviewed(toBeReviewed);
+                conceptSMTK.setCategory(category);
+                conceptSMTK.setTagSMTK(tagSMTK);
 
                 /*Recuperando datos Descripciones*/
                 boolean caseSensitive = tokens[fields.get("SENSIBLE_MAYUSCULA")].equals("Sensible");
                 DescriptionType descriptionType = DescriptionType.PREFERIDA;
 
-                Description descriptionFavourite = new Description(newConcept, term, descriptionType);
+                Description descriptionFavourite = new Description(conceptSMTK, term, descriptionType);
                 descriptionFavourite.setCaseSensitive(caseSensitive);
                 descriptionFavourite.setCreatorUser(user);
                 descriptionFavourite.setAutogeneratedName(autogenerated);
@@ -273,14 +300,14 @@ public abstract class BaseLoader {
                 }
                 else {
                     descriptionMap.put(descriptionFavourite.getTerm(), descriptionFavourite);
-                    newConcept.addDescription(descriptionFavourite);
+                    conceptSMTK.addDescription(descriptionFavourite);
                 }
 
                 /*Recuperando descripcion FSN*/
                 term = descriptionFavourite.getTerm() + " (" + tagSMTK.getName() + ")";
                 descriptionType = DescriptionType.FSN;
 
-                Description descriptionFSN = new Description(newConcept, term, descriptionType);
+                Description descriptionFSN = new Description(conceptSMTK, term, descriptionType);
                 descriptionFSN.setCaseSensitive(caseSensitive);
                 descriptionFSN.setCreatorUser(user);
                 descriptionFSN.setAutogeneratedName(autogenerated);
@@ -290,7 +317,7 @@ public abstract class BaseLoader {
                 }
                 else {
                     descriptionMap.put(descriptionFSN.getTerm(), descriptionFSN);
-                    newConcept.addDescription(descriptionFSN);
+                    conceptSMTK.addDescription(descriptionFSN);
                 }
 
                 /*Recuperando Sinónimos*/
@@ -309,7 +336,7 @@ public abstract class BaseLoader {
                         term = StringUtils.normalizeSpaces(synonymsToken.split("-")[1]).trim();
                         descriptionType = DescriptionType.SYNONYMOUS;
 
-                        Description description = new Description(newConcept, term, descriptionType);
+                        Description description = new Description(conceptSMTK, term, descriptionType);
                         description.setCaseSensitive(caseSensitive);
                         description.setCreatorUser(user);
                         description.setAutogeneratedName(autogenerated);
@@ -319,12 +346,15 @@ public abstract class BaseLoader {
                         }
                         else {
                             descriptionMap.put(description.getTerm(), description);
-                            newConcept.addDescription(description);
+                            conceptSMTK.addDescription(description);
                         }
                     }
                 }
 
                 descriptionMap.clear();
+
+                newConcept = new ConceptSMTKWeb(conceptSMTK);
+
                 break;
         }
     }
@@ -342,19 +372,25 @@ public abstract class BaseLoader {
                 // Si la multiplicidad es 1
                 if(relationship.getRelationshipDefinition().getMultiplicity().isSimple()) {
                     // Si existen relaciones para esta definición
-                    List<Relationship> relationships = newConcept.getRelationshipsByRelationDefinition(relationship.getRelationshipDefinition());
+                    List<RelationshipWeb> relationships = newConcept.getValidRelationshipsWebByRelationDefinition(relationship.getRelationshipDefinition());
 
                     if(!relationships.isEmpty()) {
-                        // Modificar el target de la relación
-                        relationships.get(0).setTarget(relationship.getTarget());
-                        String msg = "Se modifica destinto de relación para la definición '" + relationship.getRelationshipDefinition().getName() + "' de '" + relationships.get(0).getTarget().toString() + "' a '" + relationship.getTarget().toString() +"'";
-                        log(new LoadException(dataFile, conceptID, msg, INFO, type));
+                        if(!relationships.contains(relationship)) {
+                            // Modificar el target de la relación
+                            relationships.get(0).setTarget(relationship.getTarget());
+                            String msg = "Se modifica destino de relación para la definición '" + relationship.getRelationshipDefinition().getName() + "' de '" + relationships.get(0).getTarget().toString() + "' a '" + relationship.getTarget().toString() +"'";
+                            log(new LoadException(dataFile, conceptID, msg, INFO, type));
+                        }
+                        else {
+                            String msg = "Relación '" + relationship.toString() + "' se mantiene";
+                            log(new LoadException(dataFile, conceptID, msg, INFO, type));
+                        }
                     }
                     else {
                         // Agregar la relación
                         String msg = "Se agrega relación '" + relationship.toString() + "'";
                         log(new LoadException(dataFile, conceptID, msg, INFO, type));
-                        newConcept.getRelationships().add(relationship);
+                        newConcept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
                     }
                 }
                 // Si la multiplicidad es N
@@ -364,14 +400,14 @@ public abstract class BaseLoader {
                             String message = "Relación '" + relationship.toString() + "' la definición no es actualizable";
                             throw new LoadException(dataFile, conceptID, message, ERROR, type);
                         }
+                        String msg = "Se agrega relación '" + relationship.toString() + "'";
+                        log(new LoadException(dataFile, conceptID, msg, INFO, type));
+                        newConcept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
                     }
-                    String msg = "Se agrega relación '" + relationship.toString() + "'";
-                    log(new LoadException(dataFile, conceptID, msg, INFO, type));
-                    newConcept.getRelationships().add(relationship);
                 }
                 break;
             case "N": // Si es de tipo creación
-                if(!newConcept.getRelationshipsByRelationDefinition(relationship.getRelationshipDefinition()).isEmpty()) {
+                if(!newConcept.getValidRelationshipsWebByRelationDefinition(relationship.getRelationshipDefinition()).isEmpty()) {
                     // Si ya existe una relacion para esta definicion lanzar excepción
                     String message = "Ya existe una relación para la definición: '" + relationship.getRelationshipDefinition().getName() + "'";
                     throw new LoadException(dataFile, conceptID, message, ERROR, type);
@@ -379,7 +415,7 @@ public abstract class BaseLoader {
                 // Agregar la relación
                 String msg = "Se agrega relación '" + relationship.toString() + "'";
                 log(new LoadException(dataFile, conceptID, msg, INFO, type));
-                newConcept.getRelationships().add(relationship);
+                newConcept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
                 break;
         }
     }
@@ -400,9 +436,13 @@ public abstract class BaseLoader {
             case "M": // Si es de tipo mantención no se hace nada
                 break;
             case "A": // Si es de tipo actualización
+                String msg = "Carga Actualización Concepto '" + conceptID + "' OK";
+                log(new LoadException(dataFile, conceptID, msg, LoadException.INFO, type));
                 conceptsForUpdate.put(conceptID, new Pair<>(oldConcept, newConcept));
                 break;
             case "N": // Si es de tipo creación
+                msg = "Carga Nuevo Concepto '" + conceptID + "' OK";
+                log(new LoadException(dataFile, conceptID, msg, LoadException.INFO, type));
                 conceptsForPersist.put(conceptID, newConcept);
                 break;
         }
@@ -414,12 +454,16 @@ public abstract class BaseLoader {
 
         smtkLoader.printInfo(new LoadLog("Comprobando Conceptos " + category, INFO));
 
+        String conceptID = "";
+
         smtkLoader.setConceptsProcessed(0);
 
         try {
 
-            initReader(smtkLoader.SUBSTANCE_PATH);
+            initReader(dataFile);
             initWriter(category.getName());
+
+            //conceptID = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
 
             String line;
 
@@ -441,7 +485,7 @@ public abstract class BaseLoader {
 
         } catch (Exception e) {
             //smtkLoader.printError(new LoadException(path.toString(), "", e.getMessage(), ERROR));
-            log(new LoadException(path.toString(), "", e.getMessage(), ERROR));
+            log(new LoadException(path.toString(), conceptID, e.getMessage(), ERROR));
             //e.printStackTrace();
         } catch (LoadException e) {
             //e.printStackTrace();
@@ -452,6 +496,8 @@ public abstract class BaseLoader {
     public void persistAllConcepts(SMTKLoader smtkLoader) {
 
         smtkLoader.printInfo(new LoadLog("Persisitiendo Conceptos " + category, INFO));
+        String conceptID = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
+        String type = StringUtils.normalizeSpaces(tokens[fields.get("TIPO")]).trim();
 
         smtkLoader.setConceptsProcessed(0);
 
@@ -462,12 +508,16 @@ public abstract class BaseLoader {
             Map.Entry pair = (Map.Entry) it.next();
 
             try {
+                String msg = "Persistiendo Concepto '" + conceptID + "'";
+                log(new LoadException(dataFile, conceptID, msg, INFO, "N"));
                 conceptManager.persist((ConceptSMTK)pair.getValue(), smtkLoader.getUser());
                 smtkLoader.incrementConceptsProcessed(1);
             }
             catch (Exception e) {
-                smtkLoader.printError(new LoadException(path.toString(), pair.getKey().toString(), e.getMessage(), ERROR));
-                e.printStackTrace();
+                LoadException ex = new LoadException(path.toString(), pair.getKey().toString(), e.getMessage(), ERROR, "N");
+                log(ex);
+                smtkLoader.printError(ex);
+                //e.printStackTrace();
             }
 
             it.remove(); // avoids a ConcurrentModificationException
@@ -480,6 +530,9 @@ public abstract class BaseLoader {
             Map.Entry pair = (Map.Entry) it.next();
 
             try {
+                String msg = "Actualizando Concepto '" + conceptID + "'";
+                log(new LoadException(dataFile, conceptID, msg, INFO, "A"));
+
                 Pair<ConceptSMTK, ConceptSMTK> concepts = (Pair<ConceptSMTK, ConceptSMTK>)pair.getValue();
 
                 conceptManager.update(concepts.getFirst(), concepts.getSecond(), smtkLoader.getUser());
@@ -488,8 +541,8 @@ public abstract class BaseLoader {
             }
             catch (Exception e) {
                 //smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
-                log(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
-                e.printStackTrace();
+                log(new LoadException(path.toString(), conceptID, e.getMessage(), ERROR, "A"));
+                //e.printStackTrace();
             }
 
             it.remove(); // avoids a ConcurrentModificationException

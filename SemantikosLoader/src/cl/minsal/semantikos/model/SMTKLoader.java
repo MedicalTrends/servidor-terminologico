@@ -5,6 +5,7 @@ import cl.minsal.semantikos.core.loaders.*;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.loaders.*;
 import cl.minsal.semantikos.loaders.Initializer;
+import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinitionFactory;
@@ -232,7 +233,8 @@ public class SMTKLoader extends SwingWorker<Void, String> {
     }
 
     public void setConceptsProcessed(int conceptsProcessed) {
-        this.getConceptsProcessed().setText(String.valueOf(conceptsProcessed));
+        this.processed = 0;
+        //this.getConceptsProcessed().setText(String.valueOf(conceptsProcessed));
     }
 
     public void incrementConceptsProcessed(int n) {
@@ -485,8 +487,13 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
             Checker checker = new Checker(user);
 
-            SubstanceLoader substanceLoader = new SubstanceLoader(user);
-            MBLoader mbLoader = new MBLoader(user);
+            Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia");
+
+            SubstanceLoader substanceLoader = new SubstanceLoader(category, user);
+
+            category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Básico");
+
+            //MBLoader mbLoader = new MBLoader(category, user);
 
             checker.checkDataFile(this, substanceLoader);
             substanceLoader.processConcepts(this);
@@ -501,6 +508,7 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
         } catch (LoadException e1) {
             //JOptionPane.showMessageDialog(null, e1.getMessage());
+            //BaseLoader.log(e1);
             e1.printStackTrace();
         } catch (IOException e1) {
             e1.printStackTrace();

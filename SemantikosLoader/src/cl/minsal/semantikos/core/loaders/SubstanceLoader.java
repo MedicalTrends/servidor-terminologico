@@ -36,7 +36,7 @@ public class SubstanceLoader extends BaseLoader {
 
     static
     {
-        //fields = new HashMap<String, Integer>();
+        fields = new HashMap<String, Integer>();
         fields.put("CONCEPTO_ID", 0);
         fields.put("DESCRIPCION", 1);
         fields.put("TIPO", 2);
@@ -56,10 +56,8 @@ public class SubstanceLoader extends BaseLoader {
         fields.put("RIESGO_TERATOGENICO", 16);
     }
 
-    public SubstanceLoader(User user) {
-        super(user);
-        Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia");
-
+    public SubstanceLoader(Category category, User user) {
+        super(category, user);
         //nonUpdateableDefinitions.add(category.findRelationshipDefinitionsByName());
     }
 
@@ -93,7 +91,7 @@ public class SubstanceLoader extends BaseLoader {
             /*Por defecto se mapea a un concepto SNOMED Genérico*/
             long idConceptSCT = 373873005;
 
-            if(!idConceptSCTName.isEmpty()) {
+            if(!idConceptSCTName.isEmpty() && !idConceptSCTName.equals("NA")) {
                 idConceptSCT = Long.parseLong(idConceptSCTName);
             }
 
@@ -154,7 +152,7 @@ public class SubstanceLoader extends BaseLoader {
             addConcept(type);
         }
         catch (Exception e) {
-            throw new LoadException(path.toString(), id, "Error desconocido: "+e.toString(), ERROR);
+            throw new LoadException(path.toString(), id, e.toString(), ERROR);
         }
     }
 
