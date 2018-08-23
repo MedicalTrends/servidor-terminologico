@@ -37,8 +37,12 @@ public class SMTKLoader {
 
     private static final String SUBSTANCE = "substance/";
 
+    private static final String ISP = "isp/";
+
     /*Datafiles Sustancias*/
     public static final String SUBSTANCE_PATH= ROOT+ENV_DRUGS+SUBSTANCE+"01_Sustancias.Base.txt";
+
+    public static final String ISP_PATH= ROOT+ENV_DRUGS+SUBSTANCE+"isp.txt";
 
     private CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
     private TagSMTKManager tagSMTKManager = (TagSMTKManager) ServiceLocator.getInstance().getService(TagSMTKManager.class);
@@ -178,9 +182,13 @@ public class SMTKLoader {
         try {
             Initializer initializer = new Initializer();
             SubstanceConceptLoader substanceConceptLoader = new SubstanceConceptLoader();
+            PCConceptLoader pcConceptLoader = new PCConceptLoader();
 
             initializer.checkSubstanceDataFiles(this);
-            substanceConceptLoader.processConcepts(this);
+            //substanceConceptLoader.processConcepts(this);
+
+            initializer.checkISPDataFiles(this);
+            pcConceptLoader.processConcepts(this);
 
             logger.info("Proceso finalizado!");
         } catch (LoadException e1) {
