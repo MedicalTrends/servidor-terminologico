@@ -15,6 +15,9 @@
 </composite:interface>
 
 <composite:implementation>
+
+    <p:growl id="growl" showDetail="true" showSummary="true"/>
+
     <p:panel id="exportConcept" style="display: none">
         <p:dataTable id="conceptBasicsTable" var="conceptBasics" value="#{conceptExport.conceptBasics}"
                      paginator="false">
@@ -174,9 +177,67 @@
         </p:dataTable>
     </p:panel>
 
-    <p:commandButton  icon="fa fa-file-excel-o" ajax="false" value="Exportar" rendered="#{conceptBean.concept.modeled}">
-        <p:dataExporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,crossMapsDirectosTable,crossMapsIndirectosTable,refsetsTable" type="xls" fileName="concepto" />
-        <!--pe:exporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,crossMapsDirectosTable,crossMapsInDirectosTable,refsetsTable" type="xlsx" fileName="concepto" /-->
-    </p:commandButton>
+    <p:splitButton value="Guardar" actionListener="#{conceptBean.saveConcept}" icon="fa fa-check"
+                   process="mainForm" update="growl, mainForm, @(.breadUpdate)"
+                   style="float: right; width: auto">
+        <p:menuitem actionListener="#{conceptBean.cancelConcept}" icon="fa fa-undo"
+                    value="Deshacer" process="mainForm"
+                    update="growl, mainForm">
+            <p:confirm header="Confirmar Acción"
+                       message="¿Desea deshacer los cambios realizados en esta sesión?"
+                       icon="ui-icon-alert"/>
+        </p:menuitem>
+        <p:menuitem actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"
+                    rendered="#{conceptBean.concept.persistent and not conceptBean.concept.modeled}"
+                    value="Eliminar" type="submit" process="mainForm"
+                    update="growl, mainForm">
+            <p:confirm header="Confirmar Acción" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
+        </p:menuitem>
+        <p:menuitem value="Trasladar" type="submit" process="mainForm"
+                    rendered="#{conceptBean.concept.persistent and conceptBean.concept.modeled and profilePermissionsBeans.modeler}"
+                    oncomplete="PF('dialogTC').show()" icon="fa fa-exchange" styleClass="ui-priority-primary" >
+        </p:menuitem>
+        <p:menuitem icon="fa fa-file-excel-o" ajax="false" value="Exportar" rendered="#{conceptBean.concept.modeled}">
+            <p:dataExporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,crossMapsDirectosTable,crossMapsIndirectosTable,refsetsTable" type="xls" fileName="concepto" />
+            <!--pe:exporter target="conceptBasicsTable,conceptDescriptionsTable,conceptAttributesTable,conceptRelationshipsTable,crossMapsDirectosTable,crossMapsInDirectosTable,refsetsTable" type="xlsx" fileName="concepto" /-->
+        </p:menuitem>
+        <p:separator />
+        <p:menuitem outcome="/views/browser/generalBrowser.xhtml?idCategory=#{conceptBean.category.id}"
+                    styleClass="cyan-btn"
+                    value="Volver" icon="fa fa-arrow-left"/>
+    </p:splitButton>
+
+    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
+                         icon="ui-icon-check"/>
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                         icon="ui-icon-close"/>
+    </p:confirmDialog>
+
+    <!-- Diálogo para buscar la categoría y aceptar -->
+    <p:dialog id="dialogTC" header="Trasladar concepto" widgetVar="dialogTC" global="true" showEffect="fade" hideEffect="fade">
+
+        <p:panel id="conceptTranslate" style="width: 100%; border: hidden;">
+            <h3 align="left">Trasladar Concepto a...</h3>
+            <h:panelGrid columns="3" columnClasses="ui-grid-col-6,ui-grid-col-4,ui-grid-col-2">
+
+                <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categoría propuesta"/>
+                <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.categoryId}" required="true" filter="true" filterMatchMode="startsWith">
+                    <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
+                                   itemLabel="#{category.name}"/>
+                </p:selectOneMenu>
+
+                <p:commandButton value="Trasladar" type="submit" process="mainForm"
+                                 actionListener="#{transferConceptBean.transferConcept(conceptBean.concept)}"
+                                 update="mainForm" icon="fa fa-exchange">
+
+                    <p:confirm header="Confirmar Acción" message="¿Desea realmente trasladar este concepto?"
+                               icon="ui-icon-alert"/>
+                </p:commandButton>
+            </h:panelGrid>
+        </p:panel>
+    </p:dialog>
+
+
 </composite:implementation>
 </html>

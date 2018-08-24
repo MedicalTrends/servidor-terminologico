@@ -17,8 +17,6 @@
 
     <p:commandButton value="Trasladar" type="submit" process="mainForm" rendered="#{conceptBean.concept.persistent and conceptBean.concept.modeled and profilePermissionsBeans.modeler}"
                      update="mainForm" oncomplete="PF('dialogTC').show()" icon="fa fa-exchange" styleClass="ui-priority-primary" >
-
-
     </p:commandButton>
 
 
@@ -45,28 +43,6 @@
             </h:panelGrid>
         </p:panel>
     </p:dialog>
-
-    <h:outputStylesheet id="_customCSS">
-
-        .ui-row-editor span.ui-icon.ui-icon-pencil {
-            width: 18px !important;
-            height: 18px !important;
-            margin-right: 10px !important;
-        }
-
-        .ui-row-editor span.ui-icon.ui-icon-check {
-            width: 18px !important;
-            height: 18px !important;
-            margin-right: 10px !important;
-        }
-
-        .ui-row-editor span.ui-icon.ui-icon-close {
-            width: 18px !important;
-            height: 18px !important;
-            margin-right: 10px !important;
-        }
-
-    </h:outputStylesheet>
 
 </composite:implementation>
 </html>

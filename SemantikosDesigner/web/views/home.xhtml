@@ -47,51 +47,44 @@
 
     <ui:define name="content">
 
-        <div class="ui-g-12">
-            <!-- Left Side -->
-            <div class="card card-w-title">
-                <h1>CATEGORÍAS</h1>
+        <div class="ui-g dashboard">
 
-                <div class="ui-g dashboard">
-
-                    <p:repeat value="#{mainMenuBean.categories}" var="category">
-                        <div class="ui-g-12 ui-md-4">
-                            <div class="card overview">
-                                <div class="overview-content clearfix">
-                                    <span class="overview-title">#{category.name}</span>
-                                    <span class="overview-badge">
-                                        <p:button icon="fa fa-list-alt fa-lg" styleClass="loader-trigger"
-                                                  outcome="/views/browser/generalBrowser.xhtml?idCategory=#{category.getId()}"/>
-                                    </span>
-                                    <span class="overview-detail">#{category.nameAbbreviated}</span>
-                                </div>
-                                <div class="overview-footer">
-                                    <p:graphicImage name="images/dashboard/sales.svg" library="ultima-layout" style="width: 100%" />
-                                </div>
+                <p:repeat value="#{mainMenuBean.categories}" var="category">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                        <div class="card overview">
+                            <div class="overview-content clearfix">
+                                <span class="overview-title">#{category.name}</span>
+                                <span class="overview-badge">
+                                    <p:button icon="fa fa-list-alt fa-lg" styleClass="loader-trigger"
+                                              outcome="/views/browser/generalBrowser.xhtml?idCategory=#{category.getId()}"/>
+                                </span>
+                                <span class="overview-detail" style="display: none">#{category.nameAbbreviated}</span>
+                            </div>
+                            <div class="overview-footer">
+                                <p:graphicImage name="images/dashboard/sales.svg" library="ultima-layout" style="width: 100%" />
                             </div>
                         </div>
-                    </p:repeat>
+                    </div>
+                </p:repeat>
 
-                    <p:dataGrid var="category" value="#{mainMenuBean.categories}" columns="4" layout="grid" rendered="false"
-                                paginator="false"
-                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                rowsPerPageTemplate="6,12,16"
-                                id="categories">
+                <p:dataGrid var="category" value="#{mainMenuBean.categories}" columns="4" layout="grid" rendered="false"
+                            paginator="false"
+                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            rowsPerPageTemplate="6,12,16"
+                            id="categories">
 
-                        <p:ajax event="page" oncomplete="loader();" />
+                    <p:ajax event="page" oncomplete="loader();" />
 
-                        <p:panel header="#{category.name}" style="text-align:center" styleClass="hoverful">
-                            <h:panelGrid columns="1" style="width:100%">
-                                <p:button icon="ui-icon-search" styleClass="AquaButton" rendered="false"
-                                          outcome="/views/browser/generalBrowser.xhtml?idCategory=#{category.getId()}"/>
-                                <p:button icon="fa fa-list-alt fa-lg" styleClass="loader-trigger"
-                                          outcome="/views/browser/generalBrowser.xhtml?idCategory=#{category.getId()}"/>
-                            </h:panelGrid>
-                        </p:panel>
+                    <p:panel header="#{category.name}" style="text-align:center" styleClass="hoverful">
+                        <h:panelGrid columns="1" style="width:100%">
+                            <p:button icon="ui-icon-search" styleClass="AquaButton" rendered="false"
+                                      outcome="/views/browser/generalBrowser.xhtml?idCategory=#{category.getId()}"/>
+                            <p:button icon="fa fa-list-alt fa-lg" styleClass="loader-trigger"
+                                      outcome="/views/browser/generalBrowser.xhtml?idCategory=#{category.getId()}"/>
+                        </h:panelGrid>
+                    </p:panel>
 
-                    </p:dataGrid>
-                </div>
-            </div>
+                </p:dataGrid>
 
             <div class="ui-g-12">
                 <!-- Left Side -->
@@ -99,7 +92,7 @@
                     <h1>OTROS</h1>
 
                     <p:panelGrid columns="4" layout="grid"
-                                paginator="false" id="otros">
+                                 paginator="false" id="otros">
 
                         <p:panel header="Descripciones" style="text-align:center">
                             <h:panelGrid columns="1" style="width:100%">
