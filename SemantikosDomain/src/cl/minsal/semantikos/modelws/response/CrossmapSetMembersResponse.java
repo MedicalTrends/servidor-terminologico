@@ -1,6 +1,8 @@
 package cl.minsal.semantikos.modelws.response;
 
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
+import cl.minsal.semantikos.model.crossmaps.cie10.Disease;
+import cl.minsal.semantikos.model.crossmaps.gmdn.GenericDeviceGroup;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
@@ -13,7 +15,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "respuestaObtenerCrossmapsDirectos", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "RespuestaObtenerCrossmapsDirectos", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class CrossmapSetMembersResponse implements Serializable{
+public class CrossmapSetMembersResponse implements Serializable {
 
     @XmlElement(name="conceptID")
     private String conceptId;
@@ -59,7 +61,12 @@ public class CrossmapSetMembersResponse implements Serializable{
         }
 
         for (CrossmapSetMember crossmapSetMember : crossmapSetMembers) {
-            this.crossmapSetMemberResponses.add(new CrossmapSetMemberResponse(crossmapSetMember));
+            if(crossmapSetMember instanceof Disease) {
+                this.crossmapSetMemberResponses.add(new DiseaseResponse(crossmapSetMember));
+            }
+            if(crossmapSetMember instanceof GenericDeviceGroup) {
+                this.crossmapSetMemberResponses.add(new GenericDeviceGroupResponse(crossmapSetMember));
+            }
         }
 
         this.quantity = crossmapSetMembers.size();

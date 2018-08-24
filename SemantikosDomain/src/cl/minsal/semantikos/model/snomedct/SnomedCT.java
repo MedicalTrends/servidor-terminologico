@@ -53,11 +53,6 @@ public class SnomedCT extends PersistentEntity implements TargetDefinition, Seri
     }
 
     @Override
-    public boolean isGMDNType() {
-        return false;
-    }
-
-    @Override
     public String getRepresentation() {
         return "ConceptID SNM ¦ Preferido SNM";
     }

@@ -2,15 +2,10 @@ package cl.minsal.semantikos.designer;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.CrossmapsManager;
-import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.crossmaps.Crossmap;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
-import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
+import cl.minsal.semantikos.model.crossmaps.*;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
@@ -57,13 +52,14 @@ public class CrossmapBean implements Serializable {
             return emptyList();
         }
 
+        List<CrossmapSetMember> someCrossmapSetMembers = null;
+
         FacesContext context = FacesContext.getCurrentInstance();
 
         CrossmapSet crossmapSet = (CrossmapSet) UIComponent.getCurrentComponent(context).getAttributes().get("crossmapSet");
 
-        List<CrossmapSetMember> someCrossmapSetMembers;
         if(typeSearch.equals("1")){
-            someCrossmapSetMembers= crossmapsManager.findByPatternCode1(crossmapSet,patron);
+            //someCrossmapSetMembers= crossmapsManager.findByPatternCode1(selectedCrossmapSet,patron);
         }else{
             someCrossmapSetMembers =crossmapsManager.findByPattern(crossmapSet, patron);
         }
@@ -71,14 +67,13 @@ public class CrossmapBean implements Serializable {
         return someCrossmapSetMembers;
     }
 
-    public void refreshCrossmapIndirect(ConceptSMTK conceptSMTK){
+    public void refreshCrossmapIndirect(ConceptSMTK conceptSMTK) {
         try {
-            indirectCrossmaps= crossmapsManager.getIndirectCrossmaps(conceptSMTK);
+            indirectCrossmaps = crossmapsManager.getIndirectCrossmaps(conceptSMTK);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     public String getPattern() {
         return pattern;
@@ -127,4 +122,5 @@ public class CrossmapBean implements Serializable {
     public void setTypeSearch(String typeSearch) {
         this.typeSearch = typeSearch;
     }
+
 }

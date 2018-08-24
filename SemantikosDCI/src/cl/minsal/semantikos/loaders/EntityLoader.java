@@ -2,9 +2,7 @@ package cl.minsal.semantikos.loaders;
 
 import cl.minsal.semantikos.model.LoadException;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -23,7 +21,13 @@ public class EntityLoader {
 
     BufferedReader reader;
 
-    String separator = ";";
+    FileWriter fw;
+
+    BufferedWriter writer;
+
+    public static String separator = ";";
+
+    private static String newline = System.getProperty("line.separator");
 
     public Path getPath() {
         return path;
@@ -53,7 +57,7 @@ public class EntityLoader {
             String line = reader.readLine();
 
             if(line == null) {
-                throw new LoadException(path, "", "Archivo sin cabecera!!", ERROR);
+                throw new LoadException(path, null, "Archivo sin cabecera!!", ERROR);
             }
 
         } catch (IOException e) {
@@ -77,6 +81,46 @@ public class EntityLoader {
 
         }
         return true;
+    }
+
+    public void initWriter(String path) throws LoadException {
+
+        try {
+            fw = new FileWriter(path);
+
+            writer = new BufferedWriter(fw);
+            writer.write("ID_CONCEPT;TIPO;MENSAJE");
+            writer.write(newline);
+            writer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void haltWriter() {
+        try {
+            writer.close();
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void log(LoadException ex) {
+        try {
+            if(ex.getMessage() != null) {
+                writer.write(ex.getIdConcept() + separator + ex.getType() + separator + ex.getDescription());
+            }
+            else {
+                writer.write(ex.getIdConcept() + separator + ex.getType() + separator + ex.getDescription());
+            }
+
+            writer.write(newline);
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

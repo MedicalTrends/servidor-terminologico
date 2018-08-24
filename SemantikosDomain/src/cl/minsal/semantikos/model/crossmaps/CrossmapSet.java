@@ -18,6 +18,10 @@ public class CrossmapSet extends PersistentEntity implements TargetDefinition, S
 
     private String name;
 
+    public static final String CIE10 = "CIE-10";
+
+    public static final String GMDN = "GMDN";
+
     /** Año de la versión */
     private int version;
 
@@ -38,7 +42,6 @@ public class CrossmapSet extends PersistentEntity implements TargetDefinition, S
 
     public boolean isState() {
         return state;
-
     }
 
     public void setState(boolean state) {
@@ -97,11 +100,6 @@ public class CrossmapSet extends PersistentEntity implements TargetDefinition, S
     }
 
     @Override
-    public boolean isGMDNType() {
-        return false;
-    }
-
-    @Override
     public String getRepresentation() {
         return toString();
     }
@@ -110,4 +108,27 @@ public class CrossmapSet extends PersistentEntity implements TargetDefinition, S
     public String toString() {
         return abbreviatedName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CrossmapSet that = (CrossmapSet) o;
+
+        if (getId() != that.getId()) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (abbreviatedName != null ? !abbreviatedName.equals(that.abbreviatedName) : that.abbreviatedName != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (abbreviatedName != null ? abbreviatedName.hashCode() : 0);
+        return result;
+    }
+
 }

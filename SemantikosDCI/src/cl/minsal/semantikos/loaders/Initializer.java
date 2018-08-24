@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.SMTKLoader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -76,8 +77,15 @@ public class Initializer extends EntityLoader {
              */
             String header = reader.readLine();
 
-            if(!assertHeader((List<String>) (Object) Arrays.asList(PCConceptLoader.pcConceptFields.keySet().toArray()),
-                    Arrays.asList(header.split(separator)))) {
+            List<String> cleanHeader = new ArrayList<>();
+
+            for (String s : header.split(";")) {
+                cleanHeader.add(s.replaceAll("\\p{C}", ""));
+            }
+
+            List<String> fields = (List<String>) (Object) Arrays.asList(PCConceptLoader.pcConceptFields.keySet().toArray());
+
+            if(!assertHeader(fields, cleanHeader)) {
                 throw new LoadException(smtkLoader.ISP_PATH, "", "El encabezado del archivo no es válido", ERROR);
             }
 

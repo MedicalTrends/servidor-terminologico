@@ -1,31 +1,16 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.model.gmdn.CollectiveTerm;
-import cl.minsal.semantikos.model.gmdn.DeviceCategory;
-import cl.minsal.semantikos.model.gmdn.DeviceType;
-import cl.minsal.semantikos.model.gmdn.GenericDeviceGroup;
-import cl.minsal.semantikos.model.snomedct.ConceptSCT;
-import cl.minsal.semantikos.model.snomedct.DescriptionSCT;
+import cl.minsal.semantikos.model.crossmaps.gmdn.CollectiveTerm;
+import cl.minsal.semantikos.model.crossmaps.gmdn.GenericDeviceGroup;
 
 import javax.ejb.Local;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Andrés Farías on 10/25/16.
  */
 @Local
-public interface GmdnDAO {
-
-
-    /**
-     * Este método es responsable de recuperar un concepto por su CONCEPT_ID.
-     *
-     * @param genericDeviceGroup El grupo genérico de dispositivo
-     *
-     * @return La lista de categorías
-     */
-    public List<DeviceCategory> getDeviceCategoriesByGenericDeviceGroup(GenericDeviceGroup genericDeviceGroup);
+public interface GMDNDAO {
 
     /**
      * Este método es responsable de buscar aquellos conceptos que posean un CONCEPT_ID que coincida con el
@@ -35,7 +20,29 @@ public interface GmdnDAO {
      *
      * @return La lista de conceptos que satisfacen el criterio de búsqueda.
      */
-    GenericDeviceGroup getGenericDeviceGroupByCode(long code);
+    GenericDeviceGroup getGenericDeviceGroupById(long code);
+
+    /**
+     * Este método es responsable de recuperar un CrossmapSetMember dada su terminología y un patrón de búsqueda
+     *
+     * @param pattern     El patrón de búsqueda
+     * @return Un CrossmapSetMember fresco.
+     */
+    public List<GenericDeviceGroup> findGenericDeviceGroupsByPattern(String pattern);
+
+    /**
+     * Este método es responsable de obtener la lista de todos los CrossmapSetMembers que pertenecen a un Crossmap Set.
+     *
+     * @return La lista de los miembros del crossmap set indicado.
+     */
+    List<GenericDeviceGroup> getGenericDeviceGroups();
+
+    /**
+     * Este método es responsable de obtener la lista de todos los CrossmapSetMembers que pertenecen a un Crossmap Set.
+     *
+     * @return La lista de los miembros del crossmap set indicado.
+     */
+    List<GenericDeviceGroup> getGenericDeviceGroupsPaginated(int page, int pageSize);
 
     /**
      * Este método es responsable de buscar aquellos conceptos que posean un CONCEPT_ID que coincida con el
@@ -87,9 +94,4 @@ public interface GmdnDAO {
      */
     List<CollectiveTerm> getParentLines(List<CollectiveTerm> collectiveTerms);
 
-    DeviceType getDeviceTypeById(long id);
-
-    List<DeviceType> findDeviceTypeByPattern(String pattern);
-
-    List<ConceptSCT> getMappingSnomedCT(GenericDeviceGroup genericDeviceGroup);
 }

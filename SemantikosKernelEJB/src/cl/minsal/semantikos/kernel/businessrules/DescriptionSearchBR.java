@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 @Singleton
 public class DescriptionSearchBR {
 
-    static final String[] STOP_WORDS = new String[]{"a","aquí","cuantos","esta","misma","nosotras","querer","tales",
+    static final String[] STOP_WORDS = new String[] {"a","aquí","cuantos","esta","misma","nosotras","querer","tales",
             "usted","acá","cada","cuán","estar","mismas","nosotros","qué","tan","ustedes","ahí","cierta","cuánto",
             "estas","mismo","nuestra","quien","tanta","varias","ajena","ciertas","cuántos","este","mismos","nuestras",
             "quienes","tantas","varios","ajenas","cierto","de","estos","mucha","nuestro","quienesquiera","tanto",
@@ -31,6 +31,9 @@ public class DescriptionSearchBR {
             "suyo","una ","aquello","cuántas","ese","mientras","no","porque","suyos","unas","aquellos","cuanto","esos",
             "mío","nos","que","tal","unos"};
 
+    static final String[] SPECIAL_CHARACTERS = new String[] {",","&","=","?","{","}","\\","(", ")","[","]","-",";","~",
+            "|", "$","!",">","*","%","_"};
+
     /**
      * Método de normalización del patrón de búsqueda, lleva las palabras a minúsculas,
      * le quita los signos de puntuación y ortográficos
@@ -38,7 +41,7 @@ public class DescriptionSearchBR {
      * @param pattern patrón de texto a normalizar
      * @return patrón normalizado
      */
-    public String standardizationPattern(String pattern) {
+    public String removeStopWords(String pattern) {
 
         String result = "";
 
@@ -50,12 +53,44 @@ public class DescriptionSearchBR {
             }
         }
 
-        result = Normalizer.normalize(result, Normalizer.Form.NFD);
-        result = result.toLowerCase();
-        result = result.replaceAll("[^\\p{ASCII}]", "");
-        result = result.replaceAll("\\p{Punct}+", "");
-
         return result;
+    }
+
+    /**
+     * Método de normalización del patrón de búsqueda, lleva las palabras a minúsculas,
+     * le quita los signos de puntuación y ortográficos
+     *
+     * @param pattern patrón de texto a normalizar
+     * @return patrón normalizado
+     */
+    public String escapeSpecialCharacters(String pattern) {
+
+        /*
+        List specialCharacters = Arrays.asList(SPECIAL_CHARACTERS);
+
+        for (Object specialCharacter : specialCharacters) {
+            if(pattern.contains(specialCharacter.toString())) {
+                pattern = pattern.replace(specialCharacter.toString(), "\\"+specialCharacter.toString());
+            }
+        }
+        */
+
+        pattern = Normalizer.normalize(pattern, Normalizer.Form.NFD);
+        //pattern = pattern.toLowerCase();
+        pattern = pattern.replaceAll("[^\\p{ASCII}]", "");
+
+        //pattern = pattern.replaceAll(" \\p{Punct}+ ", "");
+        pattern = pattern.replaceAll(" \\p{Punct} +", " ");
+
+        if(pattern.endsWith(" -")) {
+            pattern = pattern.substring(0, pattern.length()-1);
+        }
+
+        if(pattern.startsWith("-")) {
+            pattern = pattern.substring(1, pattern.length());
+        }
+
+        return pattern;
     }
 
     /**

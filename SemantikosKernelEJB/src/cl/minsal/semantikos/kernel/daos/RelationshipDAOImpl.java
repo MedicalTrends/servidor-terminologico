@@ -1,12 +1,9 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.CacheFactory;
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
-import cl.minsal.semantikos.model.gmdn.DeviceType;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 
@@ -28,7 +25,6 @@ import static java.sql.Types.VARCHAR;
  * @author Diego Soto / Gustavo Punucura
  */
 @Stateless
-@org.jboss.ejb3.annotation.Pool(value="heavy-load-pool")
 public class RelationshipDAOImpl implements RelationshipDAO {
 
     /** El logger para esta clase */
@@ -63,10 +59,10 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
             call.registerOutParameter (1, Types.NUMERIC);
 
-            if(relationship.getIdRelationship() != null) {
+            if(relationship.getIdRelationship()!=null) {
                 call.setString(2,relationship.getIdRelationship());
-            } else {
-               call.setNull(2, VARCHAR);
+            }else {
+                call.setNull(2,VARCHAR);
             }
             call.setLong(3, relationship.getSourceConcept().getId());
             call.setLong(4, idTarget);
@@ -492,7 +488,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         /* El target puede ser a un registro de una tabla auxiliar */
         if (relationshipDefinition.getTargetDefinition().isHelperTable()) {
             //target = helperTableManager.getRecord(idTarget);
-            target = targetDAO.getTargetByID(idTarget);
+            target = targetDAO.getTargetByID(relationshipDefinition.getTargetDefinition(), idTarget);
             //target = new HelperTableRow();
             /**
              * Se setea el id desde el fields para ser utilizado por el custom converter
@@ -505,28 +501,21 @@ public class RelationshipDAOImpl implements RelationshipDAO {
         /* El target puede ser un concepto SMTK */
         if (relationshipDefinition.getTargetDefinition().isSMTKType()) {
 
-            ConceptSMTK conceptByID = (ConceptSMTK) targetDAO.getTargetByID(idTarget);
+            ConceptSMTK conceptByID = (ConceptSMTK) targetDAO.getTargetByID(relationshipDefinition.getTargetDefinition(), idTarget);
             return new Relationship(id, conceptSMTK, conceptByID, relationshipDefinition, validityUntil, new ArrayList<RelationshipAttribute>());
         }
 
         /* El target puede ser un concepto Snomed CT */
         if (relationshipDefinition.getTargetDefinition().isSnomedCTType()) {
-            ConceptSCT conceptCSTByID = (ConceptSCT) targetDAO.getTargetByID(idTarget);
+            ConceptSCT conceptCSTByID = (ConceptSCT) targetDAO.getTargetByID(relationshipDefinition.getTargetDefinition(), idTarget);
             return new SnomedCTRelationship(id, conceptSMTK, conceptCSTByID, relationshipDefinition, new ArrayList<RelationshipAttribute>(), validityUntil);
         }
 
         /* Y sino, puede ser crossmap */
         if (relationshipDefinition.getTargetDefinition().isCrossMapType()) {
-            target = targetDAO.getTargetByID(idTarget);
+            target = targetDAO.getTargetByID(relationshipDefinition.getTargetDefinition(), idTarget);
             //CrossmapSetMember crossmapSetMemberById = crossmapDAO.getCrossmapSetMemberById(idTarget);
-            return new DirectCrossmap(id, conceptSMTK, (CrossmapSetMember)target, relationshipDefinition, validityUntil);
-        }
-
-                /* Y sino, puede ser crossmap */
-        if (relationshipDefinition.getTargetDefinition().isGMDNType()) {
-            target = targetDAO.getTargetByID(idTarget);
-            //CrossmapSetMember crossmapSetMemberById = crossmapDAO.getCrossmapSetMemberById(idTarget);
-            return new Relationship(id, conceptSMTK, (DeviceType) target, relationshipDefinition, validityUntil, new ArrayList<RelationshipAttribute>());
+            return new DirectCrossmap(id, conceptSMTK, (CrossmapSetMember) target, relationshipDefinition, validityUntil);
         }
 
         /* Sino, hay un nuevo tipo de target que no está siendo gestionado */

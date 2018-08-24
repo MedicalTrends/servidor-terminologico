@@ -5,7 +5,6 @@ import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.crossmaps.*;
-import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import org.slf4j.Logger;
@@ -14,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -211,34 +211,10 @@ public class Relationship extends PersistentEntity implements AuditableEntity, S
     public List<RelationshipAttribute> getAttributesByAttributeDefinition(RelationshipAttributeDefinition relationshipAttributeDefinition) {
         List<RelationshipAttribute> someAttributes = new ArrayList<>();
         for (RelationshipAttribute attribute : relationshipAttributes) {
-            if (attribute.getRelationAttributeDefinition().equals(relationshipAttributeDefinition) && attribute.getTarget() != null) {
+            if (attribute.getRelationAttributeDefinition().equals(relationshipAttributeDefinition)) {
                 someAttributes.add(attribute);
             }
         }
-        return someAttributes;
-    }
-
-    /**
-     * Este método es responsable de retornar todas las relaciones de este concepto que son de un cierto tipo de
-     * relación.
-     *
-     * @param value El tipo de relación al que pertenecen las relaciones a retornar.
-     *
-     * @return Una <code>java.util.List</code> de relaciones de tipo <code>relationshipAttribute</code>.
-     */
-    public List<RelationshipAttribute> getBasicAttributesLike(boolean value) {
-
-        List<RelationshipAttribute> someAttributes = new ArrayList<>();
-
-        for (RelationshipAttribute attribute : relationshipAttributes) {
-            if (attribute.getRelationAttributeDefinition().getTargetDefinition().isBasicType()) {
-                BasicTypeValue basicTypeValue = (BasicTypeValue) target;
-                if(basicTypeValue.getValue().equals(value)) {
-                    someAttributes.add(attribute);
-                }
-            }
-        }
-
         return someAttributes;
     }
 
@@ -279,6 +255,15 @@ public class Relationship extends PersistentEntity implements AuditableEntity, S
     public RelationshipAttribute getOrderAttribute() {
         for (RelationshipAttribute relationshipAttribute : getRelationshipAttributes()) {
             if (relationshipAttribute.getRelationAttributeDefinition().getName().equalsIgnoreCase("orden")) {
+                return relationshipAttribute;
+            }
+        }
+        return null;
+    }
+
+    public RelationshipAttribute getRelationshipTypeAttribute() {
+        for (RelationshipAttribute relationshipAttribute : getRelationshipAttributes()) {
+            if (relationshipAttribute.getRelationAttributeDefinition().getName().equalsIgnoreCase("tipo de relación")) {
                 return relationshipAttribute;
             }
         }
@@ -326,7 +311,7 @@ public class Relationship extends PersistentEntity implements AuditableEntity, S
         }
 
 
-         if (this.isPersistent() && crossmap.is(CrossMapType.DIRECT)){
+        if (this.isPersistent() && crossmap.is(CrossMapType.DIRECT)){
             return new DirectCrossmap(getId(), this.sourceConcept, (CrossmapSetMember) this.target, this.relationshipDefinition, this.validityUntil);
         }
 
@@ -343,7 +328,7 @@ public class Relationship extends PersistentEntity implements AuditableEntity, S
         /* Ahora comparamos con otra relacion */
         Relationship relationship = (Relationship) o;
 
-        /* Se comparan las relaciones excepto por su concepto destino */
+        /* Se comparan las relaciones excepto por su concepto origen */
         if (!equalsButConceptSource(relationship)) return false;
 
         /* Se compara el concepto origen */
@@ -380,6 +365,15 @@ public class Relationship extends PersistentEntity implements AuditableEntity, S
 
         /* 3. Se compara el target */
         return this.getTarget().equals(relationship.getTarget());
+
+    }
+
+    public String getDateCreationFormat() {
+        if(this.getCreationDate() != null) {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return format.format(this.getCreationDate());
+        }
+        return "";
 
     }
 

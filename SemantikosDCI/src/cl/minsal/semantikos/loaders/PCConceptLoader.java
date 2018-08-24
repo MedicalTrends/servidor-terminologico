@@ -16,8 +16,10 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.TargetDefinition;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.modelweb.Pair;
+import cl.minsal.semantikos.modelweb.RelationshipWeb;
 import cl.minsal.semantikos.util.StringUtils;
 
 import java.sql.Timestamp;
@@ -28,6 +30,7 @@ import java.util.*;
 
 import static cl.minsal.semantikos.model.LoadLog.ERROR;
 import static cl.minsal.semantikos.model.LoadLog.INFO;
+import static cl.minsal.semantikos.model.LoadLog.WARNING;
 
 /**
  * Created by root on 15-06-17.
@@ -45,9 +48,10 @@ public class PCConceptLoader extends EntityLoader {
     static
     {
         pcConceptFields = new LinkedHashMap<>();
-        pcConceptFields.put("conceptID", 0);
-        pcConceptFields.put("regNum", 1);
-        pcConceptFields.put("regAño", 2);
+        pcConceptFields.put("ConceptID", 0);
+        pcConceptFields.put("Term", 1);
+        pcConceptFields.put("RegNUM", 2);
+        pcConceptFields.put("RegAÑO", 3);
     }
 
     Map<String, Pair<ConceptSMTK, ConceptSMTK>> conceptSMTKMap = new HashMap<>();
@@ -65,7 +69,7 @@ public class PCConceptLoader extends EntityLoader {
         /*Recuperando datos Concepto*/
 
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
-        String conceptID = StringUtils.normalizeSpaces(tokens[pcConceptFields.get("conceptID")]).trim();
+        String conceptID = StringUtils.normalizeSpaces(tokens[pcConceptFields.get("ConceptID")]).trim();
 
         try {
 
@@ -73,101 +77,174 @@ public class PCConceptLoader extends EntityLoader {
             /*Recuperando datos Descripciones*/
 
             /*Recuperando descripcion preferida*/
+            String term = StringUtils.normalizeSpaces(tokens[pcConceptFields.get("Term")]).trim();
             HelperTable helperTable;
             RelationshipDefinition relationshipDefinition;
 
-            ConceptSMTK concept = conceptManager.getConceptByCONCEPT_ID(conceptID);
+            //ConceptSMTK concept = conceptManager.getConceptByCONCEPT_ID(conceptID);
 
-            if (concept != null) {
+            List<Description> descriptions = descriptionManager.searchDescriptionsPerfectMatch(term, Arrays.asList(new Category[]{category}), null);
 
-                if(!concept.getCategory().equals(category)) {
-                    throw new LoadException(path.toString(), conceptID, "Concepto " + concept.toString() + " No pertenece a categoría " + category.toString(), ERROR);
-                }
+            if(descriptions.isEmpty()) {
+                throw new LoadException(path.toString(), conceptID, "No existe un concepto de preferida '" + term + "'", ERROR);
+            }
 
-                concept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(concept));
+            ConceptSMTK concept = descriptions.get(0).getConceptSMTK();
 
-                //Se crea una copia idéntica del concepto original
-                ConceptSMTK _concept = new ConceptSMTK(concept.getId(), concept.getConceptID(), concept.getCategory(),
-                        concept.isToBeReviewed(), concept.isToBeConsulted(), concept.isModeled(),
-                        concept.isFullyDefined(), concept.isInherited(), concept.isPublished(),
-                        concept.getObservation(), concept.getTagSMTK());
+            if(!concept.getCategory().equals(category)) {
+                throw new LoadException(path.toString(), conceptID, "Concepto " + concept.toString() + " No pertenece a categoría " + category.toString(), ERROR);
+            }
 
-                _concept.setDescriptions(concept.getDescriptions());
-                _concept.setRelationships(concept.getRelationships());
+            concept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(concept));
 
-                /* Se agrega la relación faltante: ISP */
-                /*Recuperando registros ISP*/
-                relationshipDefinition = category.findRelationshipDefinitionsByName("ISP").get(0);
+            //Se crea una copia idéntica del concepto original
+            ConceptSMTK _concept = new ConceptSMTK(concept.getId(), concept.getConceptID(), concept.getCategory(),
+                    concept.isToBeReviewed(), concept.isToBeConsulted(), concept.isModeled(),
+                    concept.isFullyDefined(), concept.isInherited(), concept.isPublished(),
+                    concept.getObservation(), concept.getTagSMTK());
 
-                String regNum = tokens[pcConceptFields.get("RegNum")];
+            _concept.setDescriptions(concept.getDescriptions());
+            _concept.setRelationships(concept.getRelationships());
 
-                String regAno = tokens[pcConceptFields.get("RegAño")];
+            /* Se agrega la relación faltante: ISP */
+            /*Recuperando registros ISP*/
+            relationshipDefinition = category.findRelationshipDefinitionsByName("ISP").get(0);
 
-                String regnumRegano = regNum + "/" + regAno;
+            String regNum = tokens[pcConceptFields.get("RegNUM")];
 
-                ispRecord = null;
+            String regAno = tokens[pcConceptFields.get("RegAÑO")];
 
-                helperTable = (HelperTable) relationshipDefinition.getTargetDefinition();
+            String regnumRegano = regNum + "/" + regAno;
 
-                /**
-                 * Primero se busca un registro isp local
-                 */
-                for (HelperTableRow helperTableRecord : helperTableManager.searchRows(helperTable, regNum + "/" + regnumRegano)) {
-                    ispRecord = helperTableRecord;
-                    break;
-                }
+            ispRecord = null;
 
-                /**
-                 * Si no existe, se va a buscar a la página del registro isp
-                 */
-                if (ispRecord == null) {
+            helperTable = (HelperTable) relationshipDefinition.getTargetDefinition();
 
-                    ispRecord = new HelperTableRow(helperTable);
-                    int count = 1;
+            /**
+             * Primero se busca un registro isp local
+             */
+            for (HelperTableRow helperTableRecord : helperTableManager.searchRows(helperTable, regnumRegano)) {
+                ispRecord = helperTableRecord;
+                break;
+            }
 
-                    while (true) {
+            /**
+             * Si no existe, se va a buscar a la página del registro isp
+             */
+            if (ispRecord == null) {
 
-                        try {
-                            //SMTKLoader.logWarning(new LoadLog((count)+"° intento solicitud registro ISP para: "+regnumRegano, INFO));
-                            fetchedData = ispFetcher.getISPData(regnumRegano);
-                            count++;
-                            if (!fetchedData.isEmpty()) {
-                                //SMTKLoader.logWarning(new LoadLog("Registro ISP OK para: "+regnumRegano, INFO));
-                                break;
-                            }
-                            if (count == 2) {
-                                throw new LoadException(path.toString(), conceptID, "Registro ISP Falló para: " + regnumRegano, ERROR);
-                            }
-                        } catch (Exception e) {
-                            // handle exception
-                            SMTKLoader.logWarning(new LoadLog((count + 1) + "° intento solicitud registro ISP para: " + regnumRegano, INFO));
+                ispRecord = new HelperTableRow(helperTable);
+                int count = 1;
+
+                while (true) {
+
+                    try {
+                        //SMTKLoader.logWarning(new LoadLog((count)+"° intento solicitud registro ISP para: "+regnumRegano, INFO));
+                        fetchedData = ispFetcher.getISPData(regnumRegano);
+                        count++;
+                        if (!fetchedData.isEmpty()) {
+                            //SMTKLoader.logWarning(new LoadLog("Registro ISP OK para: "+regnumRegano, INFO));
+                            break;
                         }
+                        if (count == 2) {
+                            throw new LoadException(path.toString(), conceptID, "Registro ISP Falló para: " + regnumRegano, ERROR);
+                        }
+                    } catch (Exception e) {
+                        // handle exception
+                        SMTKLoader.logWarning(new LoadLog((count + 1) + "° intento solicitud registro ISP para: " + regnumRegano, INFO));
+                    }
+                }
+
+                if (!fetchedData.isEmpty()) {
+                    mapIspRecord(helperTable, ispRecord, fetchedData);
+                    helperTableManager.insertRow(ispRecord, user.getEmail());
+                    ispRecord = helperTableManager.searchRows(helperTable, regnumRegano).get(0);
+                    Relationship relationshipISP = new Relationship(concept, ispRecord, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
+
+                    for (Relationship rel : concept.getRelationshipsByRelationDefinition(category.findRelationshipDefinitionsByName(TargetDefinition.ISP).get(0))) {
+
+                        HelperTableRow relIspRecord = (HelperTableRow) rel.getTarget();
+
+                        String regnumBD = relIspRecord.getDescription().split("/")[0];
+                        String reganoBD = relIspRecord.getDescription().split("/")[1];
+
+                        // Si es el mismo regNum se modifica el destino de la relación
+                        if(regNum.equals(regnumBD) && !regAno.equals(reganoBD)) {
+                            log(new LoadException(path.toString(), conceptID, "Concepto '" + concept.toString() + " se modifica relación '" + rel + "' por '" + relationshipISP + "'", INFO, "A"));
+                            Relationship r = new RelationshipWeb(rel.getId(), rel, rel.getRelationshipAttributes());
+                            r.setTarget(ispRecord);
+                            concept.getRelationships().remove(rel);
+                            concept.getRelationships().add(r);
+                            break;
+                        }
+
+                        // Si es distinto regNum se agrega una nueva relación
+                        if(!regNum.equals(regnumBD) && !regAno.equals(reganoBD)) {
+                            log(new LoadException(path.toString(), conceptID, "Concepto '" + concept.toString() + " se agrega nueva relación '" + relationshipISP + "'", INFO, "N"));
+                            concept.addRelationship(relationshipISP);
+                            break;
+                        }
+
                     }
 
-                    if (!fetchedData.isEmpty()) {
-                        mapIspRecord(helperTable, ispRecord, fetchedData);
-                        helperTableManager.insertRow(ispRecord, user.getEmail());
-                        ispRecord = helperTableManager.searchRows(helperTable, regnumRegano).get(0);
-                        Relationship relationshipISP = new Relationship(concept, ispRecord, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
+                    // Si el concepto no tiene relaciones a ISP se agrega la relación
+                    if(!concept.getRelationships().contains(relationshipISP)) {
+                        log(new LoadException(path.toString(), conceptID, "Concepto '" + concept.toString() + " se agrega nueva relación '" + relationshipISP + "'", INFO, "N"));
                         concept.addRelationship(relationshipISP);
                     }
 
-                } else {
-                    /**
-                     * Si se encuentra, se verifica que no exista actualmente una relación con este destino
-                     */
-                    for (Relationship relationship : relationshipManager.findRelationshipsLike(relationshipDefinition, ispRecord)) {
-                        if (relationship.getRelationshipDefinition().isISP()) {
-                            throw new LoadException(path.toString(), conceptID, "Para agregar una relación a ISP, la dupla ProductoComercial-Regnum/RegAño deben ser únicos. Registro referenciado por concepto " + relationship.getSourceConcept().getDescriptionFavorite(), ERROR);
-                        }
-                        concept.addRelationship(relationship);
+                }
+
+            } else {
+                /**
+                 * Si se encuentra, se verifica que no exista actualmente una relación con este destino
+                 */
+                for (Relationship relationship : relationshipManager.findRelationshipsLike(relationshipDefinition, ispRecord)) {
+                    if (relationship.getRelationshipDefinition().isISP()) {
+                        throw new LoadException(path.toString(), conceptID, "Concepto '" + concept.toString() + " ya tiene una relación a ISP con el destino '" + ispRecord.getDescription() + "'", INFO, "M");
                     }
                 }
 
-                conceptSMTKMap.put(conceptID, new Pair<>(_concept, concept));
 
+                Relationship relationshipISP = new Relationship(concept, ispRecord, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
+
+                for (Relationship rel : concept.getRelationshipsByRelationDefinition(category.findRelationshipDefinitionsByName(TargetDefinition.ISP).get(0))) {
+
+                    HelperTableRow relIspRecord = (HelperTableRow) rel.getTarget();
+
+                    String regnumBD = relIspRecord.getDescription().split("/")[0];
+                    String reganoBD = relIspRecord.getDescription().split("/")[1];
+
+                    // Si es el mismo regNum se modifica el destino de la relación
+                    if(regNum.equals(regnumBD) && !regAno.equals(reganoBD)) {
+                        log(new LoadException(path.toString(), conceptID, "Concepto '" + concept.toString() + " se modifica relación '" + rel + "' por '" + relationshipISP + "'", INFO, "A"));
+                        Relationship r = new RelationshipWeb(rel.getId(), rel, rel.getRelationshipAttributes());
+                        r.setTarget(ispRecord);
+                        concept.getRelationships().remove(rel);
+                        concept.getRelationships().add(r);
+                        break;
+                    }
+
+                    // Si es distinto regNum se agrega una nueva relación
+                    if(!regNum.equals(regnumBD) && !regAno.equals(reganoBD)) {
+                        log(new LoadException(path.toString(), conceptID, "Concepto '" + concept.toString() + " se agrega nueva relación '" + relationshipISP + "'", INFO, "N"));
+                        concept.addRelationship(relationshipISP);
+                        break;
+                    }
+
+                }
+
+                // Si el concepto no tiene relaciones a ISP se agrega la relación
+                if(!concept.getRelationships().contains(relationshipISP)) {
+                    log(new LoadException(path.toString(), conceptID, "Concepto '" + concept.toString() + " se agrega nueva relación '" + relationshipISP + "'", INFO, "N"));
+                    concept.addRelationship(relationshipISP);
+                }
 
             }
+
+            conceptSMTKMap.put(conceptID, new Pair<>(_concept, concept));
+
+
         }
         catch (Exception e) {
             throw new LoadException(path.toString(), conceptID, "Error desconocido: "+e.toString(), ERROR);
@@ -213,6 +290,7 @@ public class PCConceptLoader extends EntityLoader {
         try {
 
             initReader(smtkLoader.ISP_PATH);
+            initWriter("Fármacos - Producto Comercial");
 
             String line;
 
@@ -223,6 +301,7 @@ public class PCConceptLoader extends EntityLoader {
                 }
                 catch (LoadException e) {
                     smtkLoader.logError(e);
+                    log(e);
                     e.printStackTrace();
                 }
             }
@@ -233,6 +312,7 @@ public class PCConceptLoader extends EntityLoader {
 
         } catch (Exception e) {
             smtkLoader.logError(new LoadException(path.toString(), "", e.getMessage(), ERROR));
+            log(new LoadException(path.toString(), "", e.getMessage(), ERROR));
             e.printStackTrace();
         } catch (LoadException e) {
             e.printStackTrace();
@@ -257,7 +337,8 @@ public class PCConceptLoader extends EntityLoader {
                 smtkLoader.incrementConceptsUpdated(1);
             }
             catch (Exception e) {
-                smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
+                smtkLoader.logError(new LoadException(path.toString(), pair.getKey().toString(), e.getMessage(), ERROR));
+                log(new LoadException(path.toString(), pair.getKey().toString(), e.getMessage(), ERROR));
                 e.printStackTrace();
             }
 

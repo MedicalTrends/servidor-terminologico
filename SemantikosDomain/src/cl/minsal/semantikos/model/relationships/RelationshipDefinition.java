@@ -78,7 +78,6 @@ public class RelationshipDefinition implements Serializable {
 
     private int idCategoryDes;
 
-
     private String order;
 
     public long getId() {
@@ -169,8 +168,6 @@ public class RelationshipDefinition implements Serializable {
         return "id: " + id + ". [" + name + "]";
     }
 
-
-
     public RelationshipAttributeDefinition getOrderAttributeDefinition() {
         for (RelationshipAttributeDefinition relationshipAttributeDefinition : getRelationshipAttributeDefinitions()) {
             if (relationshipAttributeDefinition.isOrderAttribute()) {
@@ -188,6 +185,16 @@ public class RelationshipDefinition implements Serializable {
         }
         return null;
     }
+
+    public RelationshipAttributeDefinition getPPAttributeDefinition() {
+        for (RelationshipAttributeDefinition relationshipAttributeDefinition : getRelationshipAttributeDefinitions()) {
+            if (relationshipAttributeDefinition.isUnidadPPAttribute()) {
+                return relationshipAttributeDefinition;
+            }
+        }
+        return null;
+    }
+
 
     public List<RelationshipAttributeDefinition> findRelationshipAttributeDefinitionsByName(String name) {
         List<RelationshipAttributeDefinition> someRelationshipAttributeDefinitions = new ArrayList<>();
@@ -217,22 +224,32 @@ public class RelationshipDefinition implements Serializable {
         return getMultiplicity().getLowerBoundary() > 0;
     }
 
+    public boolean isSubstance() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.SUSTANCIA);
+    }
+
+    public boolean isMB() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.MB);
+    }
+
+    public boolean isDB() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.DB);
+    }
+
     public boolean isISP() {
         return this.getName().equalsIgnoreCase(TargetDefinition.ISP);
     }
 
     public boolean isATC(){
-
         return this.getName().equalsIgnoreCase(TargetDefinition.ATC);
+    }
 
-        /*
-        if (!this.getTargetDefinition().isHelperTable()){
-            return false;
-        }
+    public boolean isGTIN(){
+        return this.getName().equalsIgnoreCase(TargetDefinition.GTINGS1);
+    }
 
-        HelperTable helperTable = (HelperTable) this.targetDefinition;
-        return helperTable.getId() == HelperTableSearchBR.HT_ATC_ID;
-        */
+    public boolean isDCI(){
+        return this.getName().equalsIgnoreCase(TargetDefinition.DCI);
     }
 
     public boolean isBioequivalente() {
@@ -247,19 +264,85 @@ public class RelationshipDefinition implements Serializable {
 
     public boolean isCondicionDeVenta() { return this.getName().equalsIgnoreCase(TargetDefinition.CONDICION_DE_VENTA); }
 
-    public boolean isPedible(){
+    public boolean isPedible() {
 
         return this.getName().equalsIgnoreCase(TargetDefinition.PEDIBLE);
     }
 
+    public boolean isFFA() { return this.getName().equalsIgnoreCase(TargetDefinition.FFA); }
+
+    public boolean isFFADisp() { return this.getName().equalsIgnoreCase(TargetDefinition.FFA_DISP); }
+
+    public boolean isMCCE() { return this.getName().equalsIgnoreCase(TargetDefinition.MCCE); }
+
     public boolean isMCSpecial() {
         return this.getName().equalsIgnoreCase(TargetDefinition.MC_SPECIAL);
+    }
+
+    public boolean isClasificacionDeRiesgo() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.CLASIFICACION_DE_RIESGO);
+    }
+
+    public boolean isDIPrimario() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.DI_PRIMARIO);
+    }
+
+    public boolean isCantidadPP() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.CANTIDAD_PP);
+    }
+
+    public boolean isCantidadVolumenTotal() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.CANTIDAD_VOLUMEN_TOTAL);
     }
 
     private final String SNOMEDCT="SNOMED CT";
 
     public boolean isSNOMEDCT(){
         return this.getName().equalsIgnoreCase(SNOMEDCT);
+    }
+
+    public boolean isCIE10() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.CIE10);
+    }
+
+    public boolean isGMDN() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.GMDN);
+    }
+
+    public boolean isAttributeSpecial() {
+
+        for (String s : name.split(" ")) {
+            if(s.equalsIgnoreCase("Especial")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isAttributeLaboratory() {
+
+        for (String s : name.split(" ")) {
+            if(s.equalsIgnoreCase("Laboratorio")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean hasAttributePP() {
+
+        for (RelationshipAttributeDefinition relationshipAttributeDefinition : relationshipAttributeDefinitions) {
+
+            for (String s : relationshipAttributeDefinition.getName().split(" ")) {
+                if(s.equalsIgnoreCase("PP")) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
 }

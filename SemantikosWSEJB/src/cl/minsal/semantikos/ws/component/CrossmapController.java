@@ -28,7 +28,7 @@ public class CrossmapController {
     private static final Logger logger = LoggerFactory.getLogger(CrossmapController.class);
 
     @EJB
-    private CrossmapsManagerImpl crossmapManager;
+    private CrossmapsManager crossmapManager;
 
     @EJB
     private DescriptionManager descriptionManager;

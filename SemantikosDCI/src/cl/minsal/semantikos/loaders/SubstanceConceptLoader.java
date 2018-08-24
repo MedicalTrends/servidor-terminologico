@@ -63,7 +63,7 @@ public class SubstanceConceptLoader extends EntityLoader {
         substanceConceptFields.put("RIESGO_TERATOGENICO", 15);
     }
 
-    Map<Long, Pair<ConceptSMTK, ConceptSMTK>> conceptSMTKMap = new HashMap<>();
+    Map<String, Pair<ConceptSMTK, ConceptSMTK>> conceptSMTKMap = new HashMap<>();
 
     Map<String, Description> descriptionMap = new HashMap<>();
 
@@ -75,7 +75,7 @@ public class SubstanceConceptLoader extends EntityLoader {
         /*Recuperando datos Concepto*/
 
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
-        long id = Long.parseLong(tokens[substanceConceptFields.get("CONCEPTO_ID")]);
+        String id = tokens[substanceConceptFields.get("CONCEPTO_ID")];
 
         try {
 
@@ -188,7 +188,7 @@ public class SubstanceConceptLoader extends EntityLoader {
                 smtkLoader.incrementConceptsUpdated(1);
             }
             catch (Exception e) {
-                smtkLoader.logError(new LoadException(path.toString(), (Long) pair.getKey(), e.getMessage(), ERROR));
+                smtkLoader.logError(new LoadException(path.toString(), pair.getKey().toString(), e.getMessage(), ERROR));
                 e.printStackTrace();
             }
 

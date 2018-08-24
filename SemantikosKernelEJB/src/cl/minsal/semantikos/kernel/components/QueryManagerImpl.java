@@ -11,9 +11,15 @@ import cl.minsal.semantikos.model.descriptions.NoValidDescription;
 import cl.minsal.semantikos.model.descriptions.PendingTerm;
 import cl.minsal.semantikos.model.queries.*;
 import cl.minsal.semantikos.model.relationships.*;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import org.jboss.ejb3.annotation.SecurityDomain;
 
+import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,10 +41,13 @@ public class QueryManagerImpl implements QueryManager {
     private CategoryManager categoryManager;
 
     @EJB
-    private RelationshipManagerImpl relationshipManager;
+    private RelationshipManager relationshipManager;
 
     @EJB
     private ConceptSearchBR conceptSearchBR;
+
+    @Resource
+    private SessionContext ctx;
 
     @Override
     public GeneralQuery getDefaultGeneralQuery(Category category) {
@@ -76,16 +85,14 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    public SnomedQuery getDefaultSnomedQuery() {
+        return new SnomedQuery();
+    }
+
+    @Override
     public List<ConceptSMTK> executeQuery(GeneralQuery query) {
 
         List<ConceptSMTK> conceptSMTKs = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
-
-        /*
-        if(conceptSMTKs.isEmpty()) {
-            query.setTruncateMatch(true);
-            conceptSMTKs = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
-        }
-        */
 
         boolean showRelatedConcepts = query.isShowRelatedConcepts();//getShowableRelatedConceptsValue(category);
         List<RelationshipDefinition> sourceSecondOrderShowableAttributes = query.getSourceSecondOrderShowableAttributes();//getSourceSecondOrderShowableAttributesByCategory(category);
@@ -94,11 +101,8 @@ public class QueryManagerImpl implements QueryManager {
 
             if(!query.getColumns().isEmpty()) {
 
-                //conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
-
                 conceptSMTK.setRelationships(queryDAO.getRelationshipsByColumns(conceptSMTK, query));
-
-                //query.getColumns().get(0).
+                //conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
 
                 // Adding second order columns, if this apply
 
@@ -112,7 +116,6 @@ public class QueryManagerImpl implements QueryManager {
 
                             ConceptSMTK targetConcept = (ConceptSMTK)firstOrderRelationship.getTarget();
 
-                            //for (Relationship secondOrderRelationship : relationshipManager.getRelationshipsBySourceConcept(targetConcept)) {
                             for (Relationship secondOrderRelationship : queryDAO.getRelationshipsBySecondOrderColumns(targetConcept, query)) {
 
                                 if(secondOrderAttributes.equals(secondOrderRelationship.getRelationshipDefinition())) {
@@ -178,7 +181,7 @@ public class QueryManagerImpl implements QueryManager {
             }
 
             // Si no se encontró una relación ES_UN_MAPEO, se agrega la primera relación a SNOMED_CT encontrada
-            if(!description.getConceptSMTK().isRelationshipsLoaded()){
+            if(!description.getConceptSMTK().isRelationshipsLoaded()) {
                 description.getConceptSMTK().setRelationships(Arrays.asList(otherThanFullyDefinitional));
             }
 
@@ -224,6 +227,8 @@ public class QueryManagerImpl implements QueryManager {
 
         //query.setQuery(conceptSearchBR.standardizationPattern(query.getQuery()));
 
+        //Principal principal = ctx.getCallerPrincipal();
+
         List<ConceptSMTK> concepts = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
 
         /*
@@ -235,6 +240,26 @@ public class QueryManagerImpl implements QueryManager {
 
         return concepts;
     }
+
+    @Override
+    public List<ConceptSCT> executeQuery(SnomedQuery query) {
+
+        //query.setQuery(conceptSearchBR.standardizationPattern(query.getQuery()));
+
+        //Principal principal = ctx.getCallerPrincipal();
+
+        List<ConceptSCT> concepts = (List<ConceptSCT>) (Object) queryDAO.executeQuery(query);
+
+        /*
+        if(concepts.isEmpty()) {
+            query.setTruncateMatch(true);
+            concepts = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
+        }
+        */
+
+        return concepts;
+    }
+
 
     @Override
     public int countQueryResults(Query query) {

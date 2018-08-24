@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.model.gmdn;
+package cl.minsal.semantikos.model.crossmaps.gmdn;
 
 import java.io.Serializable;
 import java.util.ArrayList;

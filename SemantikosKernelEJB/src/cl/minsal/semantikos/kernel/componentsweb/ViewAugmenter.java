@@ -8,6 +8,7 @@ import cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb;
 
 import javax.ejb.Local;
 import javax.ejb.Remote;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,7 +26,7 @@ public interface ViewAugmenter {
      */
     public RelationshipDefinitionWeb augmentRelationshipDefinition(Category category, RelationshipDefinition relationshipDefinition);
 
-    public ConceptSMTKWeb augmentConcept(Category category, ConceptSMTKWeb concept);
+    public ConceptSMTKWeb augmentConcept(ConceptSMTKWeb concept, List<RelationshipDefinitionWeb> relationshipDefinitionsWeb);
 
     public Map<Long, Relationship> augmentRelationships(Category category, Map<Long, Relationship> relationships);
 }

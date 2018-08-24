@@ -21,11 +21,37 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String PEDIBLE = "Pedible";
 
+    public static final String FFA = "FFA";
+
+    public static final String FFA_DISP = "FFA del Dispositivo";
+
+    public static final String MCCE = "Medicamento Clínico con Envase";
+
     public static final String SNOMED_CT = "SNOMED CT";
 
     public static final String SUSTANCIA = "Sustancia";
 
+    public static final String MB = "Medicamento Básico";
+
+    public static final String DB = "Dispositivo Básico";
+
     public static final String MC_SPECIAL = "Medicamento Clínico Especial";
+
+    public static final String GTINGS1 = "Número GTIN";
+
+    public static final String DCI = "Mapear a DCI";
+
+    public static final String CIE10 = "CIE-10";
+
+    public static final String GMDN = "GMDN";
+
+    public static final String CLASIFICACION_DE_RIESGO = "Clasificación de Riesgo";
+
+    public static final String DI_PRIMARIO = "DI Primario";
+
+    public static final String CANTIDAD_PP = "Cantidad partido por";
+
+    public static final String CANTIDAD_VOLUMEN_TOTAL = "Cantidad de Volumen Total";
 
     /**
      * Este metodo es responsable de determinar si el target type es de tipo básico es o no.
@@ -63,12 +89,6 @@ public interface TargetDefinition extends IPersistentEntity {
      */
     public boolean isCrossMapType();
 
-    /**
-     * Este método es responsable de determinar si el target type es de tipo GMDN o no.
-     *
-     * @return <code>true</code> si es de tipo GMDN y <code>false</code> si no.
-     */
-    public boolean isGMDNType();
 
     public String getRepresentation();
 

@@ -68,20 +68,20 @@ public class ConceptExportMBean extends UINamingContainer {
 
     public void loadConcept() {
 
-            conceptBasics = new ArrayList<ConceptBasic>();
+        conceptBasics = new ArrayList<ConceptBasic>();
 
-            conceptBasics.add(new ConceptBasic("Fecha Informe", getReportDate()));
-            conceptBasics.add(new ConceptBasic("ConceptID", conceptSMTK.getConceptID()));
-            conceptBasics.add(new ConceptBasic("Categoría", conceptSMTK.getCategory().toString()));
-            conceptBasics.add(new ConceptBasic("Estado", conceptSMTK.isModeled() ? "Modelado" : "Borrador"));
-            conceptBasics.add(new ConceptBasic("Fecha Creación", getCreationDate(auditAction)));
-            conceptBasics.add(new ConceptBasic("Fecha Publicación", getPublicationDate(auditAction)));
-            conceptBasics.add(new ConceptBasic("FSN", conceptSMTK.getDescriptionFSN().toString()));
-            conceptBasics.add(new ConceptBasic("Preferida", conceptSMTK.getDescriptionFavorite().toString()));
-            conceptBasics.add(new ConceptBasic("Tipo Creación", conceptSMTK.isFullyDefined() ? "Completamente Definido" : "Primitivo"));
-            conceptBasics.add(new ConceptBasic("Observación", conceptSMTK.getObservation()));
+        conceptBasics.add(new ConceptBasic("Fecha Informe", getReportDate()));
+        conceptBasics.add(new ConceptBasic("ConceptID", conceptSMTK.getConceptID()));
+        conceptBasics.add(new ConceptBasic("Categoría", conceptSMTK.getCategory().toString()));
+        conceptBasics.add(new ConceptBasic("Estado", conceptSMTK.isModeled() ? "Modelado" : "Borrador"));
+        conceptBasics.add(new ConceptBasic("Fecha Creación", getCreationDate(auditAction)));
+        conceptBasics.add(new ConceptBasic("Fecha Publicación", getPublicationDate(auditAction)));
+        conceptBasics.add(new ConceptBasic("FSN", conceptSMTK.getDescriptionFSN().toString()));
+        conceptBasics.add(new ConceptBasic("Preferida", conceptSMTK.getDescriptionFavorite().toString()));
+        conceptBasics.add(new ConceptBasic("Tipo Creación", conceptSMTK.isFullyDefined() ? "Completamente Definido" : "Primitivo"));
+        conceptBasics.add(new ConceptBasic("Observación", conceptSMTK.getObservation()));
 
-            crossMapsRelationships = new ArrayList<Relationship>();
+        crossMapsRelationships = new ArrayList<Relationship>();
 
     }
 
@@ -155,8 +155,7 @@ public class ConceptExportMBean extends UINamingContainer {
 
         for (Relationship relationship : conceptSMTK.getRelationships()) {
             if(!relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType() &&
-                !relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType() &&
-                    !relationship.getRelationshipDefinition().getTargetDefinition().isGMDNType() ) {
+                    !relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
                 smtkRelationships.add(relationship);
             }
         }
@@ -188,19 +187,6 @@ public class ConceptExportMBean extends UINamingContainer {
         }
 
         return smtkRelationships;
-    }
-
-    public List<Relationship> getGMDNRelationships() {
-
-        List<Relationship> gmdnRelationships = new ArrayList<Relationship>();
-
-        for (Relationship relationship : conceptSMTK.getRelationships()) {
-            if(relationship.getRelationshipDefinition().getTargetDefinition().isGMDNType()) {
-                gmdnRelationships.add(relationship);
-            }
-        }
-
-        return gmdnRelationships;
     }
 
     public List<Relationship> getCrossMapsRelationships() {

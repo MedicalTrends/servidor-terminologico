@@ -55,6 +55,10 @@ public class AccountActivation {
 
     private boolean passwordValid = false;
 
+    private Answer answerPlaceholder;
+
+    private User originalUser;
+
     private User user;
 
     //@EJB
@@ -76,6 +80,7 @@ public class AccountActivation {
         user = userManager.getUserByVerificationCode(key);
 
         if(user != null) {
+            originalUser = new User(user);
             return true;
         }
         else {
@@ -383,7 +388,7 @@ public class AccountActivation {
 
         try {
             user.setPassword(newPassword1);
-            userManager.activateAccount(user);
+            userManager.activateAccount(originalUser, user, user);
             accountActive = true;
         }
         catch (EJBException e) {

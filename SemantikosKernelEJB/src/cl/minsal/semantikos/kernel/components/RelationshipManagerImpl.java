@@ -1,9 +1,6 @@
 package cl.minsal.semantikos.kernel.components;
 
-import cl.minsal.semantikos.kernel.businessrules.ConceptCreationBR;
-import cl.minsal.semantikos.kernel.businessrules.RelationshipBindingBR;
-import cl.minsal.semantikos.kernel.businessrules.RelationshipEditionBR;
-import cl.minsal.semantikos.kernel.businessrules.RelationshipRemovalBR;
+import cl.minsal.semantikos.kernel.businessrules.*;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
@@ -40,7 +37,6 @@ import static java.lang.System.currentTimeMillis;
  * @author Andrés Farías.
  */
 @Stateless
-@LocalBean
 public class RelationshipManagerImpl implements RelationshipManager {
 
     /** El gestor de relaciones con la base de datos */
@@ -61,6 +57,9 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
     @EJB
     private RelationshipBindingBR relationshipBindingBR;
+
+    @EJB
+    private RelationshipCreationBR relationshipCreationBR;
 
     @EJB
     RelationshipWSDAO relationshipWSDAO;
@@ -108,7 +107,6 @@ public class RelationshipManagerImpl implements RelationshipManager {
      * @param user         El usuario que realiza la operación.
      */
     private void assurePersistence(ConceptSMTK concept, Relationship relationship, User user) throws Exception {
-
         if (!relationship.isPersistent()) {
 
             /* Se validan las reglas de negocio */

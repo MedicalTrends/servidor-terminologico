@@ -52,6 +52,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
         long idComposite;
         int order;
         long idTarget;
+        boolean isAutogenerate;
         Target defaultValue = null;
 
         try (Connection connection = dataSource.getConnection();
@@ -69,8 +70,9 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
                 order = rs.getInt(1);
                 idComposite = rs.getLong(2);
                 idTarget = rs.getLong(3);
+                isAutogenerate = rs.getBoolean(8);
                 if(idTarget!=0)
-                    defaultValue = targetDAO.getDefaultTargetByID(idTarget);
+                    defaultValue = targetDAO.getDefaultTargetByID(relationshipDefinition.getTargetDefinition(), idTarget);
             } else {
                 return ExtendedRelationshipDefinitionInfo.DEFAULT_CONFIGURATION;
             }
@@ -80,7 +82,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
             throw new EJBException(e);
         }
 
-        return new ExtendedRelationshipDefinitionInfo(idComposite, order, defaultValue);
+        return new ExtendedRelationshipDefinitionInfo(idComposite, order, isAutogenerate, defaultValue);
     }
 
     @Override
@@ -110,7 +112,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
                 idComposite = rs.getLong("id_composite");
                 idTarget = rs.getLong("id_default_target");
                 if(idTarget!=0)
-                    defaultValue = targetDAO.getDefaultTargetByID(idTarget);
+                    defaultValue = targetDAO.getDefaultTargetByID(relationshipAttributeDefinition.getTargetDefinition(), idTarget);
             } else {
                 return ExtendedRelationshipAttributeDefinitionInfo.DEFAULT_CONFIGURATION;
             }
@@ -125,7 +127,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
     }
 
     @Override
-    public ConceptSMTKWeb augmentConcept(Category category, ConceptSMTKWeb concept) {
+    public ConceptSMTKWeb augmentConcept(ConceptSMTKWeb concept) {
 
         //ConnectionBD connect = new ConnectionBD();
 
@@ -138,7 +140,7 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.setLong(2, category.getId());
+            call.setLong(2, concept.getCategory().getId());
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);

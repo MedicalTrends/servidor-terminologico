@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.components.PendingTermsManager;
+import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
@@ -45,6 +46,9 @@ public class QueryDAOImpl implements QueryDAO {
     ConceptManager conceptManager;
 
     @EJB
+    SnomedCTManager snomedCTManager;
+
+    @EJB
     DescriptionManager descriptionManager;
 
     @EJB
@@ -85,6 +89,8 @@ public class QueryDAOImpl implements QueryDAO {
             QUERY = "begin ? := stk.stk_pck_query.get_pending_term_by_pending_query(?,?,?,?,?,?,?); end;";
         if(  query instanceof  BrowserQuery )
             QUERY = "begin ? := stk.stk_pck_query.get_concept_by_browser_query(?,?,?,?,?,?,?,?); end;";
+        if(  query instanceof  SnomedQuery )
+            QUERY = "begin ? := stk.stk_pck_query.get_concept_sct_by_snomed_query(?,?,?,?,?,?); end;";
 
         try (Connection connection = dataSource.getConnection();
 
@@ -131,6 +137,10 @@ public class QueryDAOImpl implements QueryDAO {
                     ConceptSMTK recoveredConcept = conceptManager.getConceptByID( rs.getLong(1));
                     queryResult.add(recoveredConcept);
                 }
+                if(  query instanceof  SnomedQuery ) {
+                    ConceptSCT recoveredConcept = snomedCTManager.getConceptByID( rs.getLong(1));
+                    queryResult.add(recoveredConcept);
+                }
 
             }
             rs.close();
@@ -161,6 +171,8 @@ public class QueryDAOImpl implements QueryDAO {
             QUERY = "begin ? := stk.stk_pck_query.count_pending_term_by_pending_query(?,?,?,?,?,?,?); end;";
         if(  query instanceof  BrowserQuery )
             QUERY = "begin ? := stk.stk_pck_query.count_concept_by_browser_query(?,?,?,?,?,?,?,?); end;";
+        if(  query instanceof  SnomedQuery )
+            QUERY = "begin ? := stk.stk_pck_query.count_concept_sct_by_snomed_query(?,?,?,?,?,?); end;";
 
         try (Connection connection = dataSource.getConnection();
 
@@ -408,7 +420,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         try (Connection connection = dataSource.getConnection();
 
-            CallableStatement call = connection.prepareCall(sql)) {
+             CallableStatement call = connection.prepareCall(sql)) {
 
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, category.getId());
@@ -786,7 +798,7 @@ public class QueryDAOImpl implements QueryDAO {
         /* El target puede ser a un registro de una tabla auxiliar */
         if (relationshipDefinition.getTargetDefinition().isHelperTable()) {
             //target = helperTableManager.getRecord(idTarget);
-            target = targetDAO.getTargetByID(idTarget);
+            target = targetDAO.getTargetByID(relationshipDefinition.getTargetDefinition(), idTarget);
             //target = new HelperTableRow();
             /**
              * Se setea el id desde el fields para ser utilizado por el custom converter
@@ -799,19 +811,19 @@ public class QueryDAOImpl implements QueryDAO {
         /* El target puede ser un concepto SMTK */
         if (relationshipDefinition.getTargetDefinition().isSMTKType()) {
 
-            ConceptSMTK conceptByID = (ConceptSMTK) targetDAO.getTargetByID(idTarget);
+            ConceptSMTK conceptByID = (ConceptSMTK) targetDAO.getTargetByID(relationshipDefinition.getTargetDefinition(), idTarget);
             return new Relationship(id, conceptSMTK, conceptByID, relationshipDefinition, validityUntil, new ArrayList<RelationshipAttribute>());
         }
 
         /* El target puede ser un concepto Snomed CT */
         if (relationshipDefinition.getTargetDefinition().isSnomedCTType()) {
-            ConceptSCT conceptCSTByID = (ConceptSCT) targetDAO.getTargetByID(idTarget);
+            ConceptSCT conceptCSTByID = (ConceptSCT) targetDAO.getTargetByID(relationshipDefinition.getTargetDefinition(), idTarget);
             return new SnomedCTRelationship(id, conceptSMTK, conceptCSTByID, relationshipDefinition, new ArrayList<RelationshipAttribute>(), validityUntil);
         }
 
         /* Y sino, puede ser crossmap */
         if (relationshipDefinition.getTargetDefinition().isCrossMapType()) {
-            target = targetDAO.getTargetByID(idTarget);
+            target = targetDAO.getTargetByID(relationshipDefinition.getTargetDefinition(), idTarget);
             //CrossmapSetMember crossmapSetMemberById = crossmapDAO.getCrossmapSetMemberById(idTarget);
             return new DirectCrossmap(id, conceptSMTK, (CrossmapSetMember)target, relationshipDefinition, validityUntil);
         }

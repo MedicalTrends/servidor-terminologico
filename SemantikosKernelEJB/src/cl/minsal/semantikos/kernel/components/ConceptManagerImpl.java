@@ -5,6 +5,7 @@ import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.kernel.daos.ws.ConceptWSDAO;
+import cl.minsal.semantikos.kernel.daos.ws.RelationshipWSDAO;
 import cl.minsal.semantikos.kernel.util.ConceptUtils;
 import cl.minsal.semantikos.kernel.util.IDGenerator;
 import cl.minsal.semantikos.model.*;
@@ -23,7 +24,6 @@ import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.modelweb.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.security.krb5.internal.crypto.Des;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -67,16 +67,19 @@ public class ConceptManagerImpl implements ConceptManager {
     private RelationshipDAO relationshipDAO;
 
     @EJB
+    private RelationshipWSDAO relationshipWSDAO;
+
+    @EJB
     private TagManager tagManager;
 
     @EJB
     private DescriptionManager descriptionManager;
 
     @EJB
-    private RelationshipManagerImpl relationshipManager;
+    private RelationshipManager relationshipManager;
 
     @EJB
-    private CrossmapsManagerImpl crossmapsManager;
+    private CrossmapsManager crossmapsManager;
 
     @EJB
     private ConceptTransferBR conceptTransferBR;
@@ -105,6 +108,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         /* Se recupera el concepto base (sus atributos) sin sus relaciones ni descripciones */
         ConceptSMTK conceptSMTK = this.conceptDAO.getConceptByID(id);
+        //ConceptSMTK conceptSMTK = conceptWSDAO.getConceptByID(id);
 
         /* Se cargan las descripciones del concepto */
         //conceptSMTK.setDescriptions(descriptionDAO.getDescriptionsByConcept(conceptSMTK));
@@ -128,6 +132,7 @@ public class ConceptManagerImpl implements ConceptManager {
         /* En este momento se está listo para persistir el concepto (sus atributos básicos) */
         conceptDAO.persistConceptAttributes(conceptSMTK, user);
         conceptSMTK.setConceptID(IDGenerator.generator(String.valueOf(conceptSMTK.getId()),IDGenerator.TYPE_CONCEPT));
+        new ConceptCreationBR().br105DIN(conceptSMTK);
         conceptDAO.update(conceptSMTK);
 
         /* Y se persisten sus descripciones */
@@ -137,6 +142,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         /* Y sus relaciones */
         for (Relationship relationship : conceptSMTK.getRelationships()) {
+            //relationshipManager.bindRelationshipToConcept(conceptSMTK, relationship, user);
             relationshipManager.createRelationship(relationship);
             /* Se realizan las acciones asociadas a la asociación */
             relationshipBindingBR.postActions(relationship, user);
@@ -220,7 +226,7 @@ public class ConceptManagerImpl implements ConceptManager {
         }
 
         if(!change) {
-            throw new EJBException("No es posible actualizar una imagen de Concepto con una imagen idéntica!!");
+            throw new EJBException("No es posible actualizar un concepto con una instancia idéntica!!");
         }
     }
 
@@ -332,6 +338,7 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public List<Relationship> loadRelationships(ConceptSMTK concept) throws Exception {
         List<Relationship> relationships = relationshipDAO.getRelationshipsBySourceConcept(concept);
+        //List<Relationship> relationships = relationshipWSDAO.getRelationshipsBySourceConcept(concept);
         /* Se agregan las relaciones al componente */
         concept.setRelationships(relationships);
         /* Se agregan los crossmaps indirectos al componente */
@@ -439,11 +446,11 @@ public class ConceptManagerImpl implements ConceptManager {
         List<ConceptSMTK> results;
 
         results = conceptDAO.findPerfectMatch(patternStandard, PersistentEntity.getIdArray(categories),
-                                              PersistentEntity.getIdArray(refsets), modeled);
+                PersistentEntity.getIdArray(refsets), modeled);
 
         if (results.isEmpty()) {
             results = conceptDAO.findTruncateMatch(patternStandard, PersistentEntity.getIdArray(categories),
-                                            PersistentEntity.getIdArray(refsets), modeled);
+                    PersistentEntity.getIdArray(refsets), modeled);
         }
 
         new ConceptSearchBR().applyPostActions(results);

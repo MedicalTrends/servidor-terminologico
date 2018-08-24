@@ -1,10 +1,10 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.crossmaps.*;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import java.util.List;
 
@@ -84,6 +84,17 @@ public interface CrossmapsManager {
     public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSMTK conceptSMTK) throws Exception;
 
     /**
+     * Este método es responsable de recuperar los crossmaps indirectos de un concepto y actualizarle su lista de
+     * crossmaps. Si el <code>conceptSMTK</code> no es persistente, se recuperan los crossmaps asociados a su
+     * <code>CONCEPT_ID</code>.
+     ** todo: Este método es temporal. Se debe definir un modelo que tenga sentido para los mapeos entre snomed y otras terminologías
+     * @param conceptSCT El concepto cuyos Crossmaps se desea recuperar.
+     *
+     * @return La lista de Crossmaps asociados al concepto <code>conceptSMTK</code>.
+     */
+    public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSCT conceptSCT) throws Exception;
+
+    /**
      * Este método es responsable de recuperar un crossmapSetMember dado su
      * <code>conceptSMTK</code> no es persistente, se recuperan los crossmaps asociados a su <code>CONCEPT_ID</code>.
      *
@@ -91,14 +102,7 @@ public interface CrossmapsManager {
      *
      * @return La lista de CrossmapSetMembers asociados al concepto <code>conceptSMTK</code>.
      */
-    public CrossmapSetMember getCrossmapSetMemberById(long id);
-
-    /**
-     * Este método es repsonsable de recuperar los crossmapSetMembers de un crossmapSet dado por su nombre abreviado.
-     * @param crossmapSetAbbreviatedName El nombre abreviado del crossmapSet que se quiere recuperar.
-     * @return Una lista con los crossmapSetMembers del crossmapSet dado <code>crossmapSetAbbreviatedName</code>.
-     */
-    public List<CrossmapSetMember> getCrossmapSetByAbbreviatedName(String crossmapSetAbbreviatedName);
+    public CrossmapSetMember getCrossmapSetMemberById(CrossmapSet crossmapSet, long id);
 
     /**
      * Este método es repsonsable de recuperar los crossmapSetMembers de un crossmapSet dado por su nombre abreviado.
@@ -106,16 +110,6 @@ public interface CrossmapsManager {
      * @return Una lista con los crossmapSetMembers del crossmapSet dado <code>crossmapSetAbbreviatedName</code>.
      */
     public List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize);
-
-    /**
-     * Este método es responsable de establecer un crossmap directo hacia un término de otra terminología.
-     *
-     * @param conceptSMTK       El concepto SMTK.
-     * @param crossmapSetMember El término en la terminología externa.
-     *
-     * @return El crossmap creado.
-     */
-    public DirectCrossmap bind(ConceptSMTK conceptSMTK, CrossmapSetMember crossmapSetMember);
 
     /**
      * Este método busca registros en las terminologías externas términos que cumplan con el patrón.
@@ -126,15 +120,6 @@ public interface CrossmapsManager {
      * @return Una lista de registros
      */
     public List<CrossmapSetMember> findByPattern(CrossmapSet crossmapSet, String pattern);
-    /**
-     * Este método busca registros en las terminologías externas términos que cumplan con el código.
-     *
-     * @param crossmapSet La terminología donde se busca el código.
-     * @param code     El código de búsqueda.
-     *
-     * @return Una lista de registros
-     */
-    public List<CrossmapSetMember> findByPatternCode1(CrossmapSet crossmapSet, String code);
 
 
 }

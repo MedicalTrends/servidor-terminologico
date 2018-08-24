@@ -50,9 +50,9 @@ public class ConceptController {
     @EJB
     private ConceptManager conceptManager;
     @EJB
-    private RelationshipManagerImpl relationshipManager;
+    private RelationshipManager relationshipManager;
     @EJB
-    private DescriptionManagerImpl descriptionManager;
+    private DescriptionManager descriptionManager;
     @EJB
     private RefSetManager refSetManager;
     @EJB

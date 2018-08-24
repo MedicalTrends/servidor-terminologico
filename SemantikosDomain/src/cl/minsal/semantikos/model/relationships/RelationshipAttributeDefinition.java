@@ -21,7 +21,23 @@ public class RelationshipAttributeDefinition implements Serializable {
 
     private static final String ORDER_ATTRIBUTE = "orden";
 
+    //private static final String RELATIONSHIP_TYPE_ATTRIBUTE = "tipo de relación";
+
     private static final String RELATIONSHIP_TYPE_ATTRIBUTE = "tipo de relación";
+
+    private static final String UNIDAD_POTENCIA_ATTRIBUE = "unidad potencia";
+
+    private static final String CANTIDAD_PP_ATTRIBUE = "cantidad pp";
+
+    private static final String UNIDAD_PP_ATTRIBUE = "unidad pp";
+
+    private static final String UNIDAD_ATTRIBUE = "unidad";
+
+    private static final String UNIDAD_PACK_MULTI_ATTRIBUE = "unidad pack multi";
+
+    private static final String UNIDAD_VOLUMEN_TOTAL_ATTRIBUE = "unidad volumen total";
+
+    private static final String UNIDAD_VOLUMEN_ATTRIBUE = "unidad de volumen";
 
     private static final long GRUOUP_SCT = 29;
 
@@ -72,7 +88,37 @@ public class RelationshipAttributeDefinition implements Serializable {
         return this.getName().equalsIgnoreCase(RELATIONSHIP_TYPE_ATTRIBUTE);
     }
 
+    public boolean isUnidadPotenciaAttribute(){
+        return this.getName().equalsIgnoreCase(UNIDAD_POTENCIA_ATTRIBUE);
+    }
 
+    public boolean isCantidadPPAttribute(){
+        return this.getName().equalsIgnoreCase(CANTIDAD_PP_ATTRIBUE);
+    }
+
+    public boolean isUnidadPPAttribute(){
+        return this.getName().equalsIgnoreCase(UNIDAD_PP_ATTRIBUE);
+    }
+
+    public boolean isUnidadAttribute() {
+        return this.getName().equalsIgnoreCase(UNIDAD_ATTRIBUE);
+    }
+
+    public boolean isUnidadLike() {
+        return this.getName().toLowerCase().contains("unidad") && this.getName().toLowerCase().contains("medida");
+    }
+
+    public boolean isUnidadPackMultiAttribute(){
+        return this.getName().equalsIgnoreCase(UNIDAD_PACK_MULTI_ATTRIBUE);
+    }
+
+    public boolean isUnidadVolumenTotalAttribute(){
+        return this.getName().equalsIgnoreCase(UNIDAD_VOLUMEN_TOTAL_ATTRIBUE);
+    }
+
+    public boolean isUnidadVolumenAttribute(){
+        return this.getName().equalsIgnoreCase(UNIDAD_VOLUMEN_ATTRIBUE);
+    }
 
     public boolean isGroupSCT(){
         return this.id==GRUOUP_SCT;

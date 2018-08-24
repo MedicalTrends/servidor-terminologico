@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.DaoTools;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.relationships.*;
 import oracle.jdbc.OracleTypes;
 import oracle.sql.NUMBER;
@@ -57,14 +58,11 @@ public class TargetDAOImpl implements TargetDAO {
     @EJB
     CategoryDAO categoryDAO;
 
-    @EJB
-    GmdnDAO gmdnDAO;
-
     @Resource(lookup = "java:jboss/OracleDS")
     private DataSource dataSource;
 
     @Override
-    public Target getTargetByID(long idTarget) {
+    public Target getTargetByID(TargetDefinition targetDefinition, long idTarget) {
 
         Target target;
         //ConnectionBD connect = new ConnectionBD();
@@ -85,7 +83,7 @@ public class TargetDAOImpl implements TargetDAO {
             if (rs.next()) {
                 //String jsonResult = rs.getString(1);
                 //target = targetFactory.createTargetFromJSON(jsonResult);
-                target = createTargetFromResultSet(rs);
+                target = createTargetFromResultSet(targetDefinition, rs);
             } else {
                 String errorMsg = "Un error imposible acaba de ocurrir";
                 logger.error(errorMsg);
@@ -104,7 +102,7 @@ public class TargetDAOImpl implements TargetDAO {
     }
 
     @Override
-    public Target getDefaultTargetByID(long idTarget) {
+    public Target getDefaultTargetByID(TargetDefinition targetDefinition, long idTarget) {
 
         Target target;
         //ConnectionBD connect = new ConnectionBD();
@@ -123,7 +121,7 @@ public class TargetDAOImpl implements TargetDAO {
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
-                target = createTargetFromResultSet(rs);
+                target = createTargetFromResultSet(targetDefinition, rs);
             } else {
                 String errorMsg = "Un error imposible acaba de ocurrir";
                 logger.error(errorMsg);
@@ -154,11 +152,10 @@ public class TargetDAOImpl implements TargetDAO {
          *   7: ID terminologia externa (crossmap set)
          *   8: ID SCT
          *   9: Concept SMTK
-         *   10: ID GMDN
-         *   11: ID del tipo de Target.
+         *   10: ID del tipo de Target.
          */
 
-        String sql = "begin ? := stk.stk_pck_target.create_target(?,?,?,?,?,?,?,?,?,?,?); end;";
+        String sql = "begin ? := stk.stk_pck_target.create_target(?,?,?,?,?,?,?,?,?,?); end;";
 
         long idTarget;
 
@@ -173,37 +170,31 @@ public class TargetDAOImpl implements TargetDAO {
             /* Almacenar el tipo básico */
             if (targetDefinition.isBasicType()) {
                 setTargetCall((BasicTypeValue) target, (BasicTypeDefinition) targetDefinition, call);
-                call.setLong(12, BasicType.getIdTargetType());
+                call.setLong(11, BasicType.getIdTargetType());
             }
 
             /* Almacenar concepto SMTK */
             else if (targetDefinition.isSMTKType()) {
                 call.setLong(10, target.getId());
-                call.setLong(12, SMTK.getIdTargetType());
+                call.setLong(11, SMTK.getIdTargetType());
             }
 
             /* Almacenar registro Tabla auxiliar */
             else if (targetDefinition.isHelperTable()) {
                 call.setLong(7, target.getId());// Id de HelperTableRow
-                call.setLong(12, HelperTable.getIdTargetType());
+                call.setLong(11, HelperTable.getIdTargetType());
             }
 
             /* Almacenar concepto SCT */
             else if (targetDefinition.isSnomedCTType()) {
                 call.setLong(9, target.getId());
-                call.setLong(12, SnomedCT.getIdTargetType());
+                call.setLong(11, SnomedCT.getIdTargetType());
             }
 
             /* Almacenar registro crossmap (directo) */
             else if (targetDefinition.isCrossMapType()){
                 call.setLong(8, target.getId());
-                call.setLong(12, CrossMap.getIdTargetType());
-            }
-
-            /* Almacenar registro tipo dispositivo terminología GMDN */
-            else if (targetDefinition.isGMDNType()){
-                call.setLong(11, target.getId());
-                call.setLong(12, GMDN.getIdTargetType());
+                call.setLong(11, CrossMap.getIdTargetType());
             }
 
             call.execute();
@@ -281,7 +272,7 @@ public class TargetDAOImpl implements TargetDAO {
     public long update(Relationship relationship) {
         //ConnectionBD connect = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_target.update_target(?,?,?,?,?,?,?,?,?,?,?,?); end;";
+        String sql = "begin ? := stk.stk_pck_target.update_target(?,?,?,?,?,?,?,?,?,?,?); end;";
 
         long idTarget = relationshipDAO.getTargetByRelationship(relationship);
 
@@ -297,16 +288,13 @@ public class TargetDAOImpl implements TargetDAO {
                 BasicTypeDefinition basicTypeDefinition = (BasicTypeDefinition) relationship.getRelationshipDefinition().getTargetDefinition();
                 BasicTypeValue value = (BasicTypeValue) relationship.getTarget();
 
-
                 //TODO: FIX
                 if (value.isBoolean()) {
                     call.setBoolean(5, (Boolean) value.getValue());
                 }
-
                 if (value.isDate()) {
                     call.setTimestamp(3, (Timestamp) value.getValue());
                 }
-
                 if (value.isFloat()) {
                     call.setFloat(2, (Float) value.getValue());
                 }
@@ -322,28 +310,22 @@ public class TargetDAOImpl implements TargetDAO {
             /* Almacenar concepto SMTK */
             if (relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
                 call.setLong(10, relationship.getTarget().getId());
-                call.setLong(12, SMTK.getIdTargetType());
+                call.setLong(11, SMTK.getIdTargetType());
             }
 
             /* Almacenar registro Tabla auxiliar */
             else if (relationship.getRelationshipDefinition().getTargetDefinition().isHelperTable()) {
                 call.setLong(7, relationship.getTarget().getId()); //Id de HelperTableRow
-                call.setLong(12, HelperTable.getIdTargetType());
+                call.setLong(11, HelperTable.getIdTargetType());
             }
 
             /* Almacenar concepto SCT */
             else if (relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType()) {
-                call.setLong(9, relationship.getTarget().getId());
-                call.setLong(12, SnomedCT.getIdTargetType());
+                call.setLong(10, relationship.getTarget().getId());
+                call.setLong(11, SnomedCT.getIdTargetType());
             }
 
-            /* Almacenar Tipo de Dispositivo */
-            else if (relationship.getRelationshipDefinition().getTargetDefinition().isGMDNType()) {
-                call.setLong(11, relationship.getTarget().getId());
-                call.setLong(12, SnomedCT.getIdTargetType());
-            }
-
-            call.setLong(13, idTarget);
+            call.setLong(12, idTarget);
 
             call.execute();
 
@@ -366,7 +348,7 @@ public class TargetDAOImpl implements TargetDAO {
     public long update(RelationshipAttribute relationshipAttribute) {
         //ConnectionBD connect = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_target.update_target(?,?,?,?,?,?,?,?,?,?,?,?); end;";
+        String sql = "begin ? := stk.stk_pck_target.update_target(?,?,?,?,?,?,?,?,?,?,?); end;";
 
         long idTarget = relationshipAttributeDAO.getTargetByRelationshipAttribute(relationshipAttribute);
 
@@ -382,22 +364,25 @@ public class TargetDAOImpl implements TargetDAO {
                 BasicTypeDefinition basicTypeDefinition = (BasicTypeDefinition) relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition();
                 BasicTypeValue value = (BasicTypeValue) relationshipAttribute.getTarget();
 
-                if (value.isBoolean()) {
+                if (basicTypeDefinition.getType().equals(BasicTypeType.BOOLEAN_TYPE)) {
                     call.setBoolean(5, (Boolean) value.getValue());
                 }
 
-                if (value.isDate()) {
-                    call.setTimestamp(3, (Timestamp) value.getValue());
+                if (basicTypeDefinition.getType().equals(BasicTypeType.DATE_TYPE)) {
+                    java.util.Date d = (java.util.Date) value.getValue();
+                    call.setTimestamp(3, new Timestamp(d.getTime()));
                 }
 
-                if (value.isFloat()) {
-                    call.setFloat(2, (Float) value.getValue());
+                if (basicTypeDefinition.getType().equals(BasicTypeType.FLOAT_TYPE)) {
+                    call.setFloat(2, Float.parseFloat(value.getValue().toString()));
                 }
-                if (value.isInteger()) {
-                    call.setInt(6, (Integer) value.getValue());
+
+                if (basicTypeDefinition.getType().equals(BasicTypeType.INTEGER_TYPE)) {
+                    call.setInt(6, Integer.parseInt(value.getValue().toString()));
                 }
-                if (value.isString()) {
-                    call.setString(4, (String) value.getValue());
+
+                if (basicTypeDefinition.getType().equals(BasicTypeType.STRING_TYPE)) {
+                    call.setString(4, value.getValue().toString());
                 }
 
             }
@@ -405,23 +390,23 @@ public class TargetDAOImpl implements TargetDAO {
             /* Almacenar concepto SMTK */
             if (relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition().isSMTKType()) {
                 call.setLong(10, relationshipAttribute.getTarget().getId());
-                call.setLong(12, SMTK.getIdTargetType());
+                call.setLong(11, SMTK.getIdTargetType());
             }
 
             /* Almacenar registro Tabla auxiliar */
             else if (relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition().isHelperTable()) {
                 //helperTableDAO.updateAuxiliary(relationship.getId(), relationship.getTarget().getId());
                 call.setLong(7, relationshipAttribute.getTarget().getId()); //Id de HelperTableRow
-                call.setLong(12, HelperTable.getIdTargetType());
+                call.setLong(11, HelperTable.getIdTargetType());
             }
 
             /* Almacenar concepto SCT */
             else if (relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition().isSnomedCTType()) {
-                call.setLong(9, relationshipAttribute.getTarget().getId());
-                call.setLong(12, SnomedCT.getIdTargetType());
+                call.setLong(10, relationshipAttribute.getTarget().getId());
+                call.setLong(11, SnomedCT.getIdTargetType());
             }
 
-            call.setLong(13, idTarget);
+            call.setLong(12, idTarget);
 
             call.execute();
 
@@ -475,12 +460,11 @@ public class TargetDAOImpl implements TargetDAO {
         call.setNull(9, BIGINT);
         call.setNull(10, BIGINT);
         call.setNull(11, BIGINT);
-        call.setNull(12, BIGINT);
     }
 
     private void setDefaultValuesForUpdateTargetFunction(CallableStatement call) throws SQLException {
         setDefaultValuesForCreateTargetFunction(call);
-        call.setNull(13, BIGINT);
+        call.setNull(12, BIGINT);
     }
 
     /**
@@ -490,7 +474,7 @@ public class TargetDAOImpl implements TargetDAO {
      * @param rs Una expresión JSON de la forma {"id":1,"float_value":null,"date_value":null,"string_value":"strig","boolean_value":null,"int_value":null,"id_auxiliary":null,"id_extern":null,"id_concept_sct":null,"id_concept_stk":null,"id_target_type":null}
      * @return Una instancia fresca y completa
      */
-    public Target createTargetFromResultSet(ResultSet rs) {
+    public Target createTargetFromResultSet(TargetDefinition targetDefinition, ResultSet rs) {
 
         Target target = null;
 
@@ -499,19 +483,16 @@ public class TargetDAOImpl implements TargetDAO {
             long idExtern = rs.getLong("id_extern");
             long idConceptSct = rs.getLong("id_concept_sct");
             long idConceptStk = rs.getLong("id_concept_stk");
-            long idDeviceType = rs.getLong("id_device_type");
 
             /* Se evalúa caso a caso. Helper Tables: */
             if (idHelperTableRecord > 0) {
                 target = helperTableDAO.getRowById(idHelperTableRecord);
             } else if (idExtern > 0) {
-                target = crossmapsDAO.getCrossmapSetMemberById(idExtern);
+                target = crossmapsDAO.getCrossmapSetMemberById((CrossmapSet) targetDefinition, idExtern);
             } else if (idConceptSct > 0) {
                 target = snomedCTDAO.getConceptByID(idConceptSct);
             } else if (idConceptStk > 0) {
                 target = conceptDAO.getConceptByID(idConceptStk);
-            } else if (idDeviceType > 0) {
-                target = gmdnDAO.getDeviceTypeById(idDeviceType);
             }
             /* Ahora los tipos básicos */
             else {

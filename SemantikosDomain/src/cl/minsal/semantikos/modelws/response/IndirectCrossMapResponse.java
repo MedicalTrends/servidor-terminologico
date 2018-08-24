@@ -2,6 +2,7 @@ package cl.minsal.semantikos.modelws.response;
 
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
+import cl.minsal.semantikos.model.crossmaps.cie10.Disease;
 
 import javax.xml.bind.annotation.*;
 
@@ -75,7 +76,7 @@ public class IndirectCrossMapResponse implements Serializable {
         this.idCrossmapCategory = indirectCrossmap.getIdCrossmapCategory();
         //this.state = indirectCrossmap.isState();
 
-        CrossmapSetMember crossmapSetMember = (CrossmapSetMember)indirectCrossmap.getTarget();
+        Disease crossmapSetMember = (Disease) indirectCrossmap.getTarget();
 
         this.cod1CrossmapSetMembers = crossmapSetMember.getCode()!=null?crossmapSetMember.getCode():EMPTY_STRING;
         this.description = crossmapSetMember.getGloss();

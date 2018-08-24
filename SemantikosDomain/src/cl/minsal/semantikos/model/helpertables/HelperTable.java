@@ -63,15 +63,19 @@ public class HelperTable implements TargetDefinition, Serializable {
         return showableColumns;
     }
 
-    public List<HelperTableColumn> getForeignKeyColumns() {
+    public List<HelperTableColumn> getShowableColumnsButFK() {
 
-        List<HelperTableColumn> foreignKeyColumns = new ArrayList<>();
+        List<HelperTableColumn> showableColumns = new ArrayList<>();
 
         for (HelperTableColumn column: getColumns()) {
-            if(column.isForeignKey())
-                foreignKeyColumns.add(column);
+            if(column.isShowable() && !column.isForeignKey()) {
+                if(column.getName().toUpperCase().contains("VISIBLE")) {
+                    continue;
+                }
+                showableColumns.add(column);
+            }
         }
-        return foreignKeyColumns;
+        return showableColumns;
     }
 
     public void setColumns(List<HelperTableColumn> columns) {
@@ -122,11 +126,6 @@ public class HelperTable implements TargetDefinition, Serializable {
 
     @Override
     public boolean isCrossMapType() {
-        return false;
-    }
-
-    @Override
-    public boolean isGMDNType() {
         return false;
     }
 

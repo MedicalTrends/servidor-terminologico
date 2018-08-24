@@ -9,11 +9,22 @@ import java.text.SimpleDateFormat;
 public class LoadLog extends Throwable {
 
     Timestamp timestamp;
-    String message;
+    String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     String type;
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static final String ERROR = "ERROR";
+
+    public static final String WARNING = "WARNING";
 
     public String getType() {
         return type;
@@ -25,14 +36,14 @@ public class LoadLog extends Throwable {
 
     public static final String INFO = "INFO";
 
-    public LoadLog(String message, String type) {
+    public LoadLog(String description, String type) {
         this.timestamp = new Timestamp(System.currentTimeMillis());
-        this.message = message;
+        this.description = description;
         this.type = type;
     }
 
     @Override
     public String toString() {
-        return "["+format.format(timestamp)+"]"+type+": "+message;
+        return "["+format.format(timestamp)+"]"+type+": "+description;
     }
 }

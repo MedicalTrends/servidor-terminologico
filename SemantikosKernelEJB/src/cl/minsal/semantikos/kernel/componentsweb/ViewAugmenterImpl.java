@@ -48,6 +48,7 @@ public class ViewAugmenterImpl implements ViewAugmenter {
                 new RelationshipDefinitionWeb(relDef.getId(), relDef.getName(), relDef.getDescription(), relDef.getTargetDefinition(), relDef.getMultiplicity(), extendedRelationshipDefinitionInfo.getIdComposite(), extendedRelationshipDefinitionInfo.getOrder());
         relationshipDefinitionWeb.setRelationshipAttributeDefinitions(relDef.getRelationshipAttributeDefinitions());
         relationshipDefinitionWeb.setDefaultValue(extendedRelationshipDefinitionInfo.getDefaultValue());
+        relationshipDefinitionWeb.setAutogenerate(extendedRelationshipDefinitionInfo.isAutogenerate());
         List<RelationshipAttributeDefinitionWeb> attributeDefinitionWebs = new ArrayList<>();
 
         for (RelationshipAttributeDefinition relationshipAttributeDefinition : relDef.getRelationshipAttributeDefinitions()) {
@@ -63,16 +64,10 @@ public class ViewAugmenterImpl implements ViewAugmenter {
     }
 
     @Override
-    public ConceptSMTKWeb augmentConcept(Category category, ConceptSMTKWeb concept) {
-        ConceptSMTKWeb conceptSMTKWeb = semantikosWebDAO.augmentConcept(category, concept);
+    public ConceptSMTKWeb augmentConcept(ConceptSMTKWeb concept, List<RelationshipDefinitionWeb> relationshipDefinitionsWeb) {
+        ConceptSMTKWeb conceptSMTKWeb = semantikosWebDAO.augmentConcept(concept);
 
-        for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
-
-            if(!relationshipDefinitiosnWeb.containsKey(relationshipDefinition.getId())) {
-                relationshipDefinitiosnWeb.put(relationshipDefinition.getId(), augmentRelationshipDefinition(category, relationshipDefinition));
-            }
-
-            RelationshipDefinitionWeb relationshipDefinitionWeb = relationshipDefinitiosnWeb.get(relationshipDefinition.getId());
+        for (RelationshipDefinitionWeb relationshipDefinitionWeb : relationshipDefinitionsWeb) {
 
             if (!concept.isPersistent() && relationshipDefinitionWeb.hasDefaultValue()) {
                 concept.initRelationship(relationshipDefinitionWeb);

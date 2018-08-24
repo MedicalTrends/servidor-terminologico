@@ -117,7 +117,7 @@ public class RelationshipAttributeDAOImpl implements RelationshipAttributeDAO {
 
     private RelationshipAttribute createRelationshipAttributeFromResultSet(ResultSet rs, Relationship relationship) throws SQLException {
 
-        Target target = targetDAO.getTargetByID(rs.getLong("id_destiny"));
+        Target target = targetDAO.getTargetByID(relationship.getRelationshipDefinition().getTargetDefinition(), rs.getLong("id_destiny"));
         //Relationship relationship = relationshipDAO.getRelationshipByID(rs.getLong("id_relationship"));
 
         //RelationshipAttributeDefinition relationshipAttributeDefinition = relationshipDefinitionDAO.getRelationshipAttributeDefinitionBy(rs.getLong("id_relation_attribute_definition")) ;

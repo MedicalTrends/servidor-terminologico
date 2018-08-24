@@ -1,13 +1,10 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
-import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
-import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
-import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -27,35 +24,8 @@ public interface CrossmapsDAO {
      */
     public DirectCrossmap create(DirectCrossmap directCrossmap, User user);
 
-    /**
-     * Este método es responsable de recuperar un CrossMap Directo desde la base de datos.
-     *
-     * @param id El identificador único en la base de datos.
-     * @return Un CrossMap Directo fresco creado a partir de la base de datos.
-     */
-    public DirectCrossmap getDirectCrossmapById(long id);
 
-    public DirectCrossmap bindConceptSMTKToCrossmapSetMember(ConceptSMTK conceptSMTK, CrossmapSetMember
-            crossmapSetMember);
-
-    public CrossmapSet getCrossmapSetByID(long id);
-
-    /**
-     * Este método es responsable de recuperar un CrossmapSetMember por su ID de la base de datos.
-     *
-     * @param idCrossmapSetMember El ID del crossmapSet que se desea recuperar.
-     * @return Un CrossmapSetMember fresco.
-     */
-    public CrossmapSetMember getCrossmapSetMemberById(long idCrossmapSetMember);
-
-    /**
-     * Este método es responsable de recuperar todas las relaciones que van desde un concepto Snomed CT hacia registros
-     * en otras terminologías (CrossmapSetMembers).
-     *
-     * @param conceptSCT El concepto Snomed CT del cual salen las referencias a términos en otras terminologías.
-     * @return Una lista de terminos de terminologías externas asociadas al concepto Snomed <code>conceptSCT</code>.
-     */
-    List<CrossmapSetMember> getRelatedCrossMapSetMembers(ConceptSCT conceptSCT);
+    public CrossmapSetMember getCrossmapSetMemberById(CrossmapSet crossmapSet, long idCrossmapSetMember);
 
     /**
      * Este método es responsable de recuperar un CrossmapSetMember dada su terminología y un patrón de búsqueda
@@ -64,18 +34,9 @@ public interface CrossmapsDAO {
      * @param pattern     El patrón de búsqueda
      * @return Un CrossmapSetMember fresco.
      */
-    public List<CrossmapSetMember> findCrossmapSetMemberBy(CrossmapSet crossmapSet, String pattern);
+    public List<CrossmapSetMember> findCrossmapSetMemberByPattern(CrossmapSet crossmapSet, String pattern);
 
-
-    /**
-     * Este método es responsable de recuperar un CrossmapSetMember dada su terminología y un patrón de búsqueda
-     *
-     * @param crossmapSet La terminología
-     * @param cod     El código de búsqueda
-     *
-     * @return Un CrossmapSetMember fresco.
-     */
-    public List<CrossmapSetMember> findCrossmapSetMemberByCod1(CrossmapSet crossmapSet, String cod);
+    public CrossmapSet getCrossmapSetByID(long id);
 
     /**
      * Este método es responsable de recuperar todas las terminologías válidas existentes en el sistema
@@ -95,12 +56,21 @@ public interface CrossmapsDAO {
     public List<IndirectCrossmap> getCrossmapsBySCT(SnomedCTRelationship snomedCTRelationship, ConceptSMTK sourceConcept);
 
     /**
+     * Este método es responsable de recuperar los crossmaps (como relaciones indirectas) ya pobladas con todos sus
+     * campos, a partir del concepto SCT.
+     * todo: Este método es temporal. Se debe definir un modelo que tenga sentido para los mapeos entre snomed y otras terminologías
+     * @param conceptSCT El concepto base.
+     * @return Una lista de todos los crossmaps que van a través del concepto SnomedCT.
+     */
+    public List<IndirectCrossmap> getCrossmapsBySCT(ConceptSCT conceptSCT);
+
+    /**
      * Este método es responsable de obtener la lista de todos los CrossmapSetMembers que pertenecen a un Crossmap Set.
      *
-     * @param crossmapSetAbbreviatedName El nombre abreviado del crossmap Set cuyos miembros se quieren recuperar.
+     * @param crossmapSet El nombre abreviado del crossmap Set cuyos miembros se quieren recuperar.
      * @return La lista de los miembros del crossmap set indicado.
      */
-    List<CrossmapSetMember> getCrossmapSetMemberByAbbreviatedName(String crossmapSetAbbreviatedName);
+    List<CrossmapSetMember> getCrossmapSetMembers(CrossmapSet crossmapSet);
 
     /**
      * Este método es responsable de obtener la lista de todos los CrossmapSetMembers que pertenecen a un Crossmap Set.
@@ -108,5 +78,5 @@ public interface CrossmapsDAO {
      * @param crossmapSet El crossmap Set cuyos miembros se quieren recuperar.
      * @return La lista de los miembros del crossmap set indicado.
      */
-    List<CrossmapSetMember> getCrossmapSetMemberByCrossmapSet(CrossmapSet crossmapSet, int page, int pageSize);
+    List<CrossmapSetMember> getCrossmapSetMembersPaginated(CrossmapSet crossmapSet, int page, int pageSize);
 }

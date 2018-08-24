@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
@@ -13,13 +14,6 @@ import java.util.List;
 public interface InstitutionDAO {
 
     /**
-     * Método encargado de obtener una institución por ID
-     * @param id
-     * @return
-     */
-    public Institution getInstitutionBy(long id);
-
-    /**
      * Método encargado de obtener las instituciones asociadas a un usuario
      * @param user
      * @return
@@ -28,11 +22,21 @@ public interface InstitutionDAO {
 
     public Institution getInstitutionById(long id);
 
+    public Institution getInstitutionByCode(long code);
+
     /**
      * Método encargado de obtener una lista con todas las instituciones
      * @return Lista de instituciones
      */
     public List<Institution> getAllInstitution();
+
+    public void createInstitution(Institution institution);
+
+    public void updateInstitution(Institution institution);
+
+    public void bindInstitutionToUser(User user, Institution institution);
+
+    public void unbindInstitutionFromUser(User user, Institution institution);
 
 
 }

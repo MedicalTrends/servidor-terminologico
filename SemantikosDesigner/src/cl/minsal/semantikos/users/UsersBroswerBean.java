@@ -2,8 +2,11 @@ package cl.minsal.semantikos.users;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.UserManager;
+import cl.minsal.semantikos.model.audit.ConceptAuditAction;
+import cl.minsal.semantikos.model.audit.InstitutionAuditAction;
 import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
+import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +18,8 @@ import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
+
+import static cl.minsal.semantikos.model.audit.AuditActionType.*;
 
 /**
  * Created by BluePrints Developer on 14-07-2016.
@@ -33,11 +38,13 @@ public class UsersBroswerBean {
 
     List<User> allUsers;
 
-    List<Profile> allProfiles;
+    List<User> filteredUsers;
 
     //Inicializacion del Bean
     @PostConstruct
-    protected void initialize() throws ParseException {
+    protected void initialize() {
+        RequestContext reqCtx = RequestContext.getCurrentInstance();
+        reqCtx.execute("PF('usersTable').filter();");
     }
 
     public void newUser() {
@@ -48,7 +55,7 @@ public class UsersBroswerBean {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
 
         try {
-            eContext.redirect(eContext.getRequestContextPath() + "/views/users/userEdit.xhtml");
+            eContext.redirect(eContext.getRequestContextPath() + "/views/users/userEdit.xhtml?idUser=0");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,14 +80,18 @@ public class UsersBroswerBean {
         return allUsers;
     }
 
+    public List<User> getFilteredUsers() {
+        return filteredUsers;
+    }
+
+    public void setFilteredUsers(List<User> filteredUsers) {
+        this.filteredUsers = filteredUsers;
+    }
+
 
     public Profile getProfileById(long profileId){
         return userManager.getProfileById(profileId);
 
-    }
-
-    public void unlockUser(){
-        userManager.unlockUser(selectedUser.getUsername());
     }
 
 

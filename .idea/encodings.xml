@@ -6,7 +6,7 @@
     <file url="file://$PROJECT_DIR$/SemantikosCentralEAR" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosClientesWS/ClienteJava" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosDCI" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/SemantikosDCI/resources/datafiles.drugs.isp/isp.csv.txt" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/SemantikosDCI/resources/datafiles/drugs/substance/isp.txt" charset="UTF-16" />
     <file url="file://$PROJECT_DIR$/SemantikosDesigner" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosDomain" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosKernelEJB" charset="UTF-8" />

@@ -1,12 +1,8 @@
 package cl.minsal.semantikos.model.crossmaps;
 
-import cl.minsal.semantikos.model.categories.Category;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -62,6 +58,10 @@ public class CrossmapSetFactory implements Serializable {
         for (CrossmapSet crossmapSet : crossmapSets) {
             this.crossmapSetById.put(crossmapSet.getId(), crossmapSet);
         }
+    }
+
+    public List<CrossmapSet> getCrossmapSets() {
+        return crossmapSets;
     }
 
 }

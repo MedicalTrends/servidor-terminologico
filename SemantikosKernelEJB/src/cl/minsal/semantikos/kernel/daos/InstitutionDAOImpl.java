@@ -2,19 +2,20 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.kernel.util.DaoTools;
+import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,37 +32,10 @@ public class InstitutionDAOImpl implements InstitutionDAO {
     private DataSource dataSource;
 
     @Override
-    public Institution getInstitutionBy(long id) {
-
-        //ConnectionBD connect = new ConnectionBD();
-
-        String sql = "begin ? := stk.stk_pck_institution.get_institution_by_id(?); end;";
-
-        Institution institution= new Institution();
-        try (Connection connection = dataSource.getConnection();
-             CallableStatement call = connection.prepareCall(sql)) {
-
-            call.registerOutParameter (1, OracleTypes.CURSOR);
-            call.setLong(2, id);
-            call.execute();
-
-            ResultSet rs = (ResultSet) call.getObject(1);
-
-            while (rs.next()) {
-                institution = createInstitutionFromResultSet(rs);
-            }
-        } catch (SQLException e) {
-            logger.error("Error al al obtener los RefSets ", e);
-        }
-
-        return institution;
-    }
-
-    @Override
     public List<Institution> getInstitutionBy(User user) {
         //ConnectionBD connect = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_institution.get_institution_by_user(?); end;";
+        String sql = "begin ? := stk.stk_pck_institution.get_institutions_by_user(?); end;";
 
         List<Institution> institutions= new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
@@ -107,10 +81,34 @@ public class InstitutionDAOImpl implements InstitutionDAO {
     }
 
     @Override
+    public Institution getInstitutionByCode(long id) {
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_institution.get_institution_by_code(?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, id);
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            if (rs.next()) {
+                return createInstitutionFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            logger.error("Error al al obtener los RefSets ", e);
+        }
+
+        return null;
+    }
+
+    @Override
     public List<Institution> getAllInstitution() {
         //ConnectionBD connect = new ConnectionBD();
 
-        String sql = "begin ? := stk.stk_pck_institution.get_all_institution; end;";
+        String sql = "begin ? := stk.stk_pck_institution.get_all_institutions; end;";
 
         List<Institution> institutions= new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
@@ -130,11 +128,115 @@ public class InstitutionDAOImpl implements InstitutionDAO {
         return institutions;
     }
 
+    public void createInstitution(Institution institution) {
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_institution.create_institution(?,?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, Types.NUMERIC);
+            call.setString(2, institution.getName());
+            call.setLong(3, institution.getCode());
+
+            call.execute();
+
+            //ResultSet rs = call.getResultSet();
+
+            if (call.getLong(1) > 0) {
+                institution.setId(call.getLong(1));
+            } else {
+                String errorMsg = "El establecimiento no fué creado. Esta es una situación imposible. Contactar a Desarrollo";
+                logger.error(errorMsg);
+                throw new IllegalArgumentException(errorMsg);
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al crear el establecimiento en la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+    }
+
+    @Override
+    public void updateInstitution(Institution institution) {
+
+        String sql = "begin ? := stk.stk_pck_institution.update_institution(?,?,?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, Types.INTEGER);
+            call.setString(2, institution.getName());
+            call.setTimestamp(3, institution.getValidityUntil());
+            call.setLong(4, institution.getId());
+
+            call.execute();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al actualizar establecimiento de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+    }
+
+    public void bindInstitutionToUser(User user, Institution institution) {
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_institution.bind_institution_to_user(?,?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, Types.INTEGER);
+            call.setLong(2, user.getId());
+            call.setLong(3,  institution.getId());
+
+            call.execute();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al enlazar establecimiento a usuario de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+    }
+
+    public void unbindInstitutionFromUser(User user, Institution institution) {
+
+        //ConnectionBD connect = new ConnectionBD();
+
+        String sql = "begin ? := stk.stk_pck_institution.unbind_institution_from_user(?,?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, Types.INTEGER);
+            call.setLong(2, user.getId());
+            call.setLong(3,  institution.getId());
+
+            call.execute();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al desenlazar establecimiento de usuario de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+    }
+
     private Institution createInstitutionFromResultSet(ResultSet resultSet) {
         Institution institution = new Institution();
         try {
             institution.setId(resultSet.getLong("id"));
             institution.setName(resultSet.getString("name"));
+            institution.setCode(DaoTools.getLong(resultSet, "code"));
+            institution.setValidityUntil(resultSet.getTimestamp("validity_until"));
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -2,15 +2,15 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.AuditDAO;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.audit.AuditActionType;
-import cl.minsal.semantikos.model.audit.ConceptAuditAction;
-import cl.minsal.semantikos.model.audit.RefSetAuditAction;
+import cl.minsal.semantikos.model.audit.*;
 import cl.minsal.semantikos.kernel.businessrules.HistoryRecordBL;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.users.Institution;
+import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.EJB;
@@ -240,6 +240,145 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    public void recordUserCreation(User user, User _user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_CREATION, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserUpgrade(User user, User _user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_ATTRIBUTE_CHANGE, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserProfileBinding(User user, Profile profile, User _user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_PROFILE_BINDING, now(), _user, profile);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserProfileUnbinding(User user, Profile profile, User _user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_PROFILE_UNBINDING, now(), _user, profile);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserInstitutionBinding(User user, Institution institution, User _user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_INSTITUTION_BINDING, now(), _user, institution);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserInstitutionUnbinding(User user, Institution institution, User _user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_INSTITUTION_UNBINDING, now(), _user, institution);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserActivation(User user, User _user) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_ACTIVATION, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserPasswordChange(User user, User _user) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_PASSWORD_CHANGE, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserPasswordRecover(User user, User _user) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_PASSWORD_RECOVER, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserLocking(User user, User _user) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_LOCKING, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserUnlocking(User user, User _user) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_UNLOCKING, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserDelete(User user, User _user) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_DELETE, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordUserAccountReset(User user, User _user) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        UserAuditAction userAuditAction = new UserAuditAction(user, USER_ACCOUNT_RESET, now(), _user, user);
+
+        auditDAO.recordAuditAction(userAuditAction);
+    }
+
+    @Override
+    public void recordInstitutionCreation(Institution institution, User user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        InstitutionAuditAction institutionAuditAction = new InstitutionAuditAction(institution, INSTITUTION_CREATION, now(), user, institution);
+        institutionAuditAction.setDetail("Establecimiento: {código: " + institution.getCode() + ", nombre: " + institution.getName() + "}");
+
+        auditDAO.recordAuditAction(institutionAuditAction);
+    }
+
+    @Override
+    public void recordInstitutionDelete(Institution institution, User user, String cause) {
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        InstitutionAuditAction institutionAuditAction = new InstitutionAuditAction(institution, INSTITUTION_DELETE, now(), user, institution);
+        institutionAuditAction.setDetail("Motivo eliminación: "+cause);
+
+        auditDAO.recordAuditAction(institutionAuditAction);
+    }
+
+    @Override
+    public void recordInstitutiuonUpgrade(Institution institution, User user) {
+
+        /* Se crea el registro de historial, para poder validar Reglas de Negocio */
+        InstitutionAuditAction institutionAuditAction = new InstitutionAuditAction(institution, INSTITUTION_ATTRIBUTE_CHANGE, now(), user, institution);
+        institutionAuditAction.setDetail("Establecimiento: {código: " + institution.getCode() + ", nombre: " + institution.getName() + "}");
+
+        auditDAO.recordAuditAction(institutionAuditAction);
+    }
+
+    @Override
     public List<AuditActionType> getAllAuditActionTypes() {
         return Arrays.asList(AuditActionType.values());
     }
@@ -247,6 +386,16 @@ public class AuditManagerImpl implements AuditManager {
     @Override
     public List<ConceptAuditAction> getConceptAuditActions(ConceptSMTK conceptSMTK, boolean changes) {
         return auditDAO.getConceptAuditActions(conceptSMTK, changes);
+    }
+
+    @Override
+    public List<UserAuditAction> getUserAuditActions(User user) {
+        return auditDAO.getUserAuditActions(user);
+    }
+
+    @Override
+    public List<InstitutionAuditAction> getInstitutionAuditActions(Institution institution) {
+        return auditDAO.getInstitutionAuditActions(institution);
     }
 
     @Override

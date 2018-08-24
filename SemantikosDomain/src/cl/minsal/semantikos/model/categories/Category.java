@@ -131,6 +131,43 @@ public class Category extends PersistentEntity implements TargetDefinition, Audi
         return someRelationshipDefinitions;
     }
 
+    public boolean hasAttributeSpecial() {
+
+        for (RelationshipDefinition relationshipDefinition : relationshipDefinitions) {
+
+            for (String s : relationshipDefinition.getName().split(" ")) {
+                if(s.equalsIgnoreCase("Especial")) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isCommercial() {
+
+        for (String s : getName().split(" ")) {
+            if(s.equalsIgnoreCase("Comercial")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isOnlyCommercial() {
+        return getName().endsWith("Comercial");
+    }
+
+    public boolean isDeviceDomain() {
+        return getName().contains("Dispositivo");
+    }
+
+    public boolean isMC() {
+        return getName().equalsIgnoreCase("Fármacos - Medicamento Clínico");
+    }
+
     @Override
     public String toString() {
         return this.name;
@@ -167,11 +204,6 @@ public class Category extends PersistentEntity implements TargetDefinition, Audi
 
     @Override
     public boolean isCrossMapType() {
-        return false;
-    }
-
-    @Override
-    public boolean isGMDNType() {
         return false;
     }
 

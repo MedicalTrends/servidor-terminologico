@@ -6,11 +6,7 @@ import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
-import cl.minsal.semantikos.model.gmdn.DeviceType;
-import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
-import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.tags.Tag;
 
 
@@ -216,6 +212,26 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
     }
 
     /**
+     * Este método es responsable de retornar todas las relaciones válidas de este concepto y que son de un cierto tipo
+     * de
+     * relación.
+     *
+     * @param targetDefinition El tipo de destino de relación al que pertenecen las relaciones a retornar.
+     *
+     * @return Una <code>java.util.List</code> de relaciones de tipo <code>relationshipDefinition</code>.
+     */
+    public List<RelationshipWeb> getValidRelationshipsWebByTargetDefinition(TargetDefinition targetDefinition) {
+        List<RelationshipWeb> someRelationships = new ArrayList<RelationshipWeb>();
+        for (RelationshipWeb relationship : relationshipsWeb) {
+            if (relationship.getRelationshipDefinition().getTargetDefinition().equals(targetDefinition) && relationship.isValid()) {
+                someRelationships.add(relationship);
+            }
+        }
+        Collections.sort(someRelationships);
+        return someRelationships;
+    }
+
+    /**
      * Este método es responsable de retornar todas las relaciones válidas persistidas de este concepto
      *
      * @return Una <code>java.util.List</code> de relaciones persistidas
@@ -241,10 +257,24 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
      *
      * @param relationship La relación que es agregada.
      */
-    public void addRelationshipWeb(RelationshipWeb relationship) {
+    public void addRelationshipWeb(RelationshipWeb relationship) throws BusinessRuleException {
+        if(relationship.getTarget() == null || relationship.getTarget().toString().isEmpty() || relationship.getTarget().getRepresentation().equals("null")) {
+            throw new BusinessRuleException("Error", "Debe ingresar un valor para la definición '" + relationship.getRelationshipDefinition().getName());
+        }
+
+        if(getRelationships().contains(relationship)) {
+            throw new BusinessRuleException("Error", "No se puede agregar dos veces la misma relación en la definición " + relationship.getRelationshipDefinition().getName());
+        }
+        for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
+            if(relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition().isHelperTable()) {
+                if(relationshipAttribute.getTarget().getId() == PersistentEntity.NON_PERSISTED_ID ||
+                        relationshipAttribute.getTarget().getId() == 0) {
+                    throw new BusinessRuleException("Error", "Valor para el atributo de relación '" + relationshipAttribute.getRelationAttributeDefinition().getName() + "' no válido");
+                }
+            }
+        }
         this.addRelationship(relationship);
         this.relationshipsWeb.add(relationship);
-        autogenerate(relationship, true);
     }
 
     /**
@@ -304,7 +334,6 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
     public void removeRelationshipWeb(Relationship relationship) throws Exception {
         this.getRelationships().remove(relationship);
         this.relationshipsWeb.remove(relationship);
-        autogenerate(relationship, false);
     }
 
 
@@ -338,8 +367,8 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
     }
 
     /** Este método es responsable de obtener las descripciones que han sido modificadas respecto al concepto original
-    * @param: Un <code>cl.minsal.semantikos.model.ConceptSMTKWeb</code> con la imagen original del concepto
-    * @return Una <code>java.util.List</code> de <code>cl.minsal.semantikos.util.Pair</code> de descripciones modificadas
+     * @param: Un <code>cl.minsal.semantikos.model.ConceptSMTKWeb</code> con la imagen original del concepto
+     * @return Una <code>java.util.List</code> de <code>cl.minsal.semantikos.util.Pair</code> de descripciones modificadas
      */
     public List<Pair<DescriptionWeb, DescriptionWeb>> getModifiedDescriptionsWeb(ConceptSMTKWeb _concept) {
 
@@ -374,8 +403,8 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
     }
 
     /** Este método es responsable de obtener las relaciones que han sido removidas del concepto original
-    *  @param: Un <code>cl.minsal.semantikos.model.ConceptSMTKWeb</code> con la imagen original del concepto
-    *  @return Una <code>java.util.List</code> de relaciones removidas
+     *  @param: Un <code>cl.minsal.semantikos.model.ConceptSMTKWeb</code> con la imagen original del concepto
+     *  @return Una <code>java.util.List</code> de relaciones removidas
      */
     public List<RelationshipWeb> getRemovedRelationshipsWeb(ConceptSMTKWeb _concept){
 
@@ -530,40 +559,32 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
         return null;
     }
 
-    public boolean isMultiplicitySatisfied(RelationshipDefinition relationshipDefinition){
+    public boolean isMultiplicitySatisfied(RelationshipDefinition relationshipDefinition) {
         for (RelationshipWeb relationshipWeb : getValidRelationshipsWebByRelationDefinition(relationshipDefinition)) {
-            if(relationshipDefinition.getTargetDefinition().isSMTKType()){
-                if(relationshipWeb.getTarget()==null)
+            if(relationshipDefinition.getTargetDefinition().isSMTKType()) {
+                if(relationshipWeb.getTarget()==null) {
                     return false;
+                }
             }
-            if(relationshipDefinition.getTargetDefinition().isBasicType()){
+            if(relationshipDefinition.getTargetDefinition().isBasicType()) {
                 BasicTypeValue basicTypeValue = (BasicTypeValue)relationshipWeb.getTarget();
-                if(basicTypeValue.getValue()==null)
+
+                if(basicTypeValue.getValue()==null) {
                     return false;
-                if(basicTypeValue.getValue().equals(""))
+                }
+
+                if(basicTypeValue.getValue().equals("")) {
                     return false;
+                }
             }
             for (RelationshipAttributeDefinition relationshipAttributeDefinition: relationshipDefinition.getRelationshipAttributeDefinitions()) {
-                if(relationshipWeb.getAttributesByAttributeDefinition(relationshipAttributeDefinition).size()<relationshipAttributeDefinition.getMultiplicity().getLowerBoundary()) return false;
+                if(relationshipWeb.getAttributesByAttributeDefinition(relationshipAttributeDefinition).size()<relationshipAttributeDefinition.getMultiplicity().getLowerBoundary()) {
+                    return false;
+                }
             }
 
         }
 
         return this.getValidRelationshipsWebByRelationDefinition(relationshipDefinition).size()>=relationshipDefinition.getMultiplicity().getLowerBoundary();
     }
-
-    public void autogenerate(Relationship relationship, boolean flag) {
-        String pattern = "";
-        if(relationship.getRelationshipDefinition().getTargetDefinition().isGMDNType() && !this.isModeled()) {
-
-            DeviceType deviceType = (DeviceType)relationship.getTarget();
-
-            if(flag) {
-                pattern = deviceType.getTradeName();
-            }
-            relationship.getSourceConcept().getDescriptionFavorite().setTerm(pattern);
-            relationship.getSourceConcept().getDescriptionFSN().setTerm(pattern);
-        }
-    }
-
 }

@@ -172,11 +172,6 @@ public class BasicTypeDefinition<T extends Comparable> extends PersistentEntity 
     }
 
     @Override
-    public boolean isGMDNType() {
-        return false;
-    }
-
-    @Override
     public String toString() {
         return name;
     }

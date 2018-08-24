@@ -11,6 +11,7 @@ import java.util.List;
  * Created by BluePrints Developer on 09-01-2017.
  */
 public interface HelperTablesManager {
+
     HelperTable getById(long id);
 
     List<HelperTable> findAll();
