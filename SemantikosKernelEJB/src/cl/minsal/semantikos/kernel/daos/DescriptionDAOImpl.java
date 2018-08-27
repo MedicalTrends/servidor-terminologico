@@ -546,7 +546,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             rs.close();
 
         } catch (SQLException e) {
-            String errorMsg = "Error al recuperar descripciones de la BDD.";
+            String errorMsg = "Error al recuperar descripciones de la BDD con patrón '" + term +"'";
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }

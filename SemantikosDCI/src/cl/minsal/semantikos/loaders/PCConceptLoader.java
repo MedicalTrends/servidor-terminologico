@@ -27,6 +27,8 @@ import java.text.Collator;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static cl.minsal.semantikos.model.LoadLog.ERROR;
 import static cl.minsal.semantikos.model.LoadLog.INFO;
@@ -43,6 +45,8 @@ public class PCConceptLoader extends EntityLoader {
     SnomedCTManager snomedCTManager = (SnomedCTManager) ServiceLocator.getInstance().getService(SnomedCTManager.class);
     HelperTablesManager helperTableManager = (HelperTablesManager) ServiceLocator.getInstance().getService(HelperTablesManager.class);
     ISPFetcher ispFetcher = (ISPFetcher) ServiceLocator.getInstance().getService(ISPFetcher.class);
+
+    private static final Logger logger = java.util.logging.Logger.getLogger(PCConceptLoader.class.getName() );
 
     public static final Map<String, Integer> pcConceptFields;
     static
@@ -110,9 +114,9 @@ public class PCConceptLoader extends EntityLoader {
             /*Recuperando registros ISP*/
             relationshipDefinition = category.findRelationshipDefinitionsByName("ISP").get(0);
 
-            String regNum = tokens[pcConceptFields.get("RegNUM")];
+            String regNum = tokens[pcConceptFields.get("RegNUM")].replaceAll("\\p{C}", "");
 
-            String regAno = tokens[pcConceptFields.get("RegAÑO")];
+            String regAno = tokens[pcConceptFields.get("RegAÑO")].replaceAll("\\p{C}", "");
 
             String regnumRegano = regNum + "/" + regAno;
 
@@ -173,6 +177,7 @@ public class PCConceptLoader extends EntityLoader {
                             log(new LoadException(path.toString(), conceptID, "Concepto '" + concept.toString() + " se modifica relación '" + rel + "' por '" + relationshipISP + "'", INFO, "A"));
                             Relationship r = new RelationshipWeb(rel.getId(), rel, rel.getRelationshipAttributes());
                             r.setTarget(ispRecord);
+                            r.setCreationDate(rel.getCreationDate());
                             concept.getRelationships().remove(rel);
                             concept.getRelationships().add(r);
                             break;
@@ -200,8 +205,9 @@ public class PCConceptLoader extends EntityLoader {
                  * Si se encuentra, se verifica que no exista actualmente una relación con este destino
                  */
                 for (Relationship relationship : relationshipManager.findRelationshipsLike(relationshipDefinition, ispRecord)) {
+
                     if (relationship.getRelationshipDefinition().isISP()) {
-                        throw new LoadException(path.toString(), conceptID, "Concepto '" + concept.toString() + " ya tiene una relación a ISP con el destino '" + ispRecord.getDescription() + "'", INFO, "M");
+                        throw new LoadException(path.toString(), conceptID, "Concepto '" + relationship.getSourceConcept().toString() + " ya tiene una relación a ISP con el destino '" + ispRecord.getDescription() + "'", WARNING, "M");
                     }
                 }
 
@@ -219,6 +225,7 @@ public class PCConceptLoader extends EntityLoader {
                     if(regNum.equals(regnumBD) && !regAno.equals(reganoBD)) {
                         log(new LoadException(path.toString(), conceptID, "Concepto '" + concept.toString() + " se modifica relación '" + rel + "' por '" + relationshipISP + "'", INFO, "A"));
                         Relationship r = new RelationshipWeb(rel.getId(), rel, rel.getRelationshipAttributes());
+                        r.setCreationDate(rel.getCreationDate());
                         r.setTarget(ispRecord);
                         concept.getRelationships().remove(rel);
                         concept.getRelationships().add(r);
@@ -302,7 +309,8 @@ public class PCConceptLoader extends EntityLoader {
                 catch (LoadException e) {
                     smtkLoader.logError(e);
                     log(e);
-                    e.printStackTrace();
+                    logger.log(Level.SEVERE, e.getDescription());
+                    //e.printStackTrace();
                 }
             }
 
@@ -311,11 +319,13 @@ public class PCConceptLoader extends EntityLoader {
             smtkLoader.logTick();
 
         } catch (Exception e) {
-            smtkLoader.logError(new LoadException(path.toString(), "", e.getMessage(), ERROR));
-            log(new LoadException(path.toString(), "", e.getMessage(), ERROR));
-            e.printStackTrace();
+            //smtkLoader.logError(new LoadException(path.toString(), "", e.getMessage(), ERROR));
+            logger.log(Level.SEVERE, e.getMessage());
+            //logger.log(Level.SEVERE, e.getMessage());
+            //e.printStackTrace();
         } catch (LoadException e) {
-            e.printStackTrace();
+            log(new LoadException(path.toString(), "", e.getMessage(), ERROR));
+            //e.printStackTrace();
         }
     }
 
@@ -337,9 +347,10 @@ public class PCConceptLoader extends EntityLoader {
                 smtkLoader.incrementConceptsUpdated(1);
             }
             catch (Exception e) {
-                smtkLoader.logError(new LoadException(path.toString(), pair.getKey().toString(), e.getMessage(), ERROR));
+                //smtkLoader.logError(new LoadException(path.toString(), pair.getKey().toString(), e.getMessage(), ERROR));
                 log(new LoadException(path.toString(), pair.getKey().toString(), e.getMessage(), ERROR));
-                e.printStackTrace();
+                logger.log(Level.SEVERE, e.getMessage());
+                //e.printStackTrace();
             }
 
             it.remove(); // avoids a ConcurrentModificationException

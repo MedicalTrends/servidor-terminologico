@@ -112,7 +112,7 @@
                             <mainClass>cl.minsal.semantikos.main.Main</mainClass>
                         </manifest>
                     </archive>
-                    <finalName>SemantikosDCI</finalName>
+                    <finalName>SemantikosISP</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>
