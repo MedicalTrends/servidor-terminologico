@@ -90,6 +90,8 @@ public class DescriptionSearchBR {
             pattern = pattern.substring(1, pattern.length());
         }
 
+        pattern = pattern.replaceAll("([(,),\\[,\\],{,}])\\1+","$1");
+
         return pattern;
     }
 

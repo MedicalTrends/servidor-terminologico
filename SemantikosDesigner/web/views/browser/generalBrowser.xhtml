@@ -52,26 +52,24 @@
 
                         </div>
 
-                        <div class="ui-fluid">
+                        <div class="ui-fluid ui-g">
 
-                            <div class="ui-g">
+                            <div class="ui-g-12">
 
-                                <p:menubar style="margin-top: 10px; margin-bottom: 10px; background: #F2F2F2" styleClass="browser-options">
+                                <p:commandButton value="Crear Nuevo" icon="fa fa-plus" style="width: auto; float: right"
+                                            type="submit" process="browserForm" styleClass="loader-trigger"
+                                            actionListener="#{generalBrowserBean.createConcept}"
+                                            rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">
+                                </p:commandButton>
 
-                                    <p:menuitem value="Crear Nuevo" icon="fa fa-plus" style="border-left: 1px solid rgb(189, 189, 189)"
-                                                type="submit" process="browserForm" styleClass="loader-trigger"
-                                                actionListener="#{generalBrowserBean.createConcept}"
-                                                rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">
-                                    </p:menuitem>
+                                <p:commandButton value="Exportar" ajax="false" icon="fa fa-file-excel-o" style="width: auto; float: right">
+                                    <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
+                                </p:commandButton>
 
-                                    <p:menuitem value="Exportar" ajax="false" icon="fa fa-file-excel-o" style="border-left: 1px solid rgb(189, 189, 189)">
-                                        <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
-                                    </p:menuitem>
-
-                                    <p:menuitem value="Filtrar" icon="fa fa-filter" onclick="listenOnClick();" style="border-left: 1px solid rgb(189, 189, 189)">
-                                    </p:menuitem>
-
-                                </p:menubar>
+                                <p:selectBooleanButton value="#{generalBrowserBean.showSettings}" onLabel="Filtrar" style="width: auto; float: right"
+                                                       styleClass="filter-btn" id="filter-btn" onchange="listenOnClick();"
+                                                       offLabel="Filtrar" onIcon="fa fa-filter" offIcon="fa fa-filter">
+                                </p:selectBooleanButton>
 
                             </div>
 

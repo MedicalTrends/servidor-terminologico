@@ -49,23 +49,27 @@
 
         <div class="ui-g dashboard">
 
-                <p:repeat value="#{mainMenuBean.categories}" var="category">
-                    <div class="ui-g-12 ui-md-6 ui-lg-4">
-                        <div class="card overview">
-                            <div class="overview-content clearfix">
-                                <span class="overview-title">#{category.name}</span>
-                                <span class="overview-badge">
+        <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <!-- Left Side -->
+            <div class="card card-w-title">
+                <h1>CATEGORÍAS</h1>
+
+                <ul class="activity-list">
+                    <p:repeat value="#{mainMenuBean.categories}" var="category" >
+                        <li>
+                            <div class="ui-g">
+                                <div class="ui-g-10">
+                                    <span style="font-weight:bold">#{category.name}</span>
+                                    <p style="display: none">#{category.name}</p>
+                                </div>
+                                <div class="ui-g-2" style="text-align:right">
                                     <p:button icon="fa fa-list-alt fa-lg" styleClass="loader-trigger"
                                               outcome="/views/browser/generalBrowser.xhtml?idCategory=#{category.getId()}"/>
-                                </span>
-                                <span class="overview-detail" style="display: none">#{category.nameAbbreviated}</span>
+                                </div>
                             </div>
-                            <div class="overview-footer">
-                                <p:graphicImage name="images/dashboard/sales.svg" library="ultima-layout" style="width: 100%" />
-                            </div>
-                        </div>
-                    </div>
-                </p:repeat>
+                        </li>
+                    </p:repeat>
+                </ul>
 
                 <p:dataGrid var="category" value="#{mainMenuBean.categories}" columns="4" layout="grid" rendered="false"
                             paginator="false"
@@ -86,12 +90,64 @@
 
                 </p:dataGrid>
 
-            <div class="ui-g-12">
+            </div>
+
+            </div>
+
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
                 <!-- Left Side -->
+
                 <div class="card card-w-title">
                     <h1>OTROS</h1>
 
-                    <p:panelGrid columns="4" layout="grid"
+                    <ul class="activity-list">
+                        <li>
+                            <div class="ui-g">
+                                <div class="ui-g-10">
+                                    <span style="font-weight:bold">Descripciones</span>
+                                </div>
+                                <div class="ui-g-2" style="text-align:right">
+                                    <p:button icon="fa fa-edit fa-lg" style="background: #E91E63" styleClass="loader-trigger"
+                                              outcome="/views/browser/descriptionBrowser.xhtml"/>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ui-g">
+                                <div class="ui-g-10">
+                                    <span style="font-weight:bold">Fármacos</span>
+                                </div>
+                                <div class="ui-g-2" style="text-align:right">
+                                    <p:button icon="fa fa-medkit fa-lg" style="background: #E91E63" styleClass="loader-trigger"
+                                              outcome="/views/browser/drugsBrowser.xhtml"/>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ui-g">
+                                <div class="ui-g-10">
+                                    <span style="font-weight:bold">Pendientes</span>
+                                </div>
+                                <div class="ui-g-2" style="text-align:right">
+                                    <p:button icon="fa fa-exclamation-triangle fa-lg" style="background: #E91E63" styleClass="loader-trigger"
+                                              outcome="/views/browser/pendingBrowser.xhtml"/>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ui-g">
+                                <div class="ui-g-10">
+                                    <span style="font-weight:bold">No Válidos</span>
+                                </div>
+                                <div class="ui-g-2" style="text-align:right">
+                                    <p:button icon="fa fa-ban fa-lg" style="background: #E91E63" styleClass="loader-trigger"
+                                              outcome="/views/browser/noValidBrowser.xhtml"/>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <p:panelGrid columns="4" layout="grid" rendered="false"
                                  paginator="false" id="otros">
 
                         <p:panel header="Descripciones" style="text-align:center">
@@ -124,14 +180,69 @@
 
                     </p:panelGrid>
                 </div>
-            </div>
 
-            <div class="ui-g-12">
-                <!-- Left Side -->
                 <div class="card card-w-title">
                     <h1>ADMINISTRADORES</h1>
 
-                    <p:panelGrid columns="4" layout="grid"
+                    <ul class="activity-list">
+                        <li>
+                            <div class="ui-g">
+                                <div class="ui-g-10">
+                                    <span style="font-weight:bold">Usuarios</span>
+                                </div>
+                                <div class="ui-g-2" style="text-align:right">
+                                    <p:button icon="ui-icon ui-icon-people" styleClass="loader-trigger amber-btn"
+                                              outcome="/views/users/users.xhtml"/>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ui-g">
+                                <div class="ui-g-10">
+                                    <span style="font-weight:bold">Establecimientos</span>
+                                </div>
+                                <div class="ui-g-2" style="text-align:right">
+                                    <p:button icon="fa fa-bank fa-lg" styleClass="loader-trigger amber-btn"
+                                              outcome="/views/institutions/institutions.xhtml"/>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ui-g">
+                                <div class="ui-g-10">
+                                    <span style="font-weight:bold">RefSets</span>
+                                </div>
+                                <div class="ui-g-2" style="text-align:right">
+                                    <p:button icon="fa fa-dropbox fa-lg" styleClass="loader-trigger amber-btn"
+                                              outcome="/views/refsets/admin_refsets.xhtml"/>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ui-g">
+                                <div class="ui-g-10">
+                                    <span style="font-weight:bold">Tablas Auxiliares</span>
+                                </div>
+                                <div class="ui-g-2" style="text-align:right">
+                                    <p:button icon="fa fa-columns fa-lgh" styleClass="loader-trigger amber-btn"
+                                              outcome="/views/helpertables/helpertables.xhtml"/>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ui-g">
+                                <div class="ui-g-10">
+                                    <span style="font-weight:bold">Extracción Fármacos</span>
+                                </div>
+                                <div class="ui-g-2" style="text-align:right">
+                                    <p:button icon="fa fa-file-excel-o fa-lg" styleClass="loader-trigger amber-btn"
+                                              outcome="/views/concepts/extractor.xhtml"/>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <p:panelGrid columns="4" layout="grid" rendered="false"
                                  paginator="false" id="managers">
 
                         <p:panel header="Usuarios" style="text-align:center">
@@ -171,6 +282,11 @@
 
                     </p:panelGrid>
                 </div>
+
+            </div>
+
+            <div class="ui-g-12">
+                <!-- Left Side -->
             </div>
 
         </div>
