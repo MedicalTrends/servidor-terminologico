@@ -45,9 +45,11 @@ public abstract class BaseLoader {
 
     static BufferedWriter writer;
 
-    public static String separator = ";";
+    protected static String separator = ";";
 
-    private static String newline = System.getProperty("line.separator");
+    protected static String newline = System.getProperty("line.separator");
+
+    protected static String attrSeparator = "\\|";
 
     protected ConceptSMTKWeb oldConcept;
 
@@ -71,7 +73,7 @@ public abstract class BaseLoader {
     private static final String ENV = "master/";
     //private static final String ENV = "test/";
 
-    public static final String dataFile = ROOT + ENV + "TFC.txt";
+    public static final String dataFile = ROOT + ENV + "TFC_1.1.txt";
 
     public BaseLoader(User user) {
         this.user = user;
@@ -138,6 +140,7 @@ public abstract class BaseLoader {
         }
     }
 
+    //header es el archivo
     public void assertHeader(List<String> fields, List<String> header) throws LoadException {
         for (String field : fields) {
             if(!header.contains(field)) {
@@ -323,7 +326,7 @@ public abstract class BaseLoader {
                 /*Recuperando Sinónimos*/
                 String synonyms = tokens[fields.get("SINONIMO")];
 
-                if (!synonyms.isEmpty()) {
+                if (!StringUtils.isEmpty(synonyms)) {
 
                     String[] synonymsTokens = synonyms.split("•");
 
@@ -403,6 +406,10 @@ public abstract class BaseLoader {
                         String msg = "Se agrega relación '" + relationship.toString() + "'";
                         log(new LoadException(dataFile, conceptID, msg, INFO, type));
                         newConcept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
+                    }
+                    else {
+                        String msg = "Relación '" + relationship.toString() + "' se mantiene";
+                        log(new LoadException(dataFile, conceptID, msg, INFO, type));
                     }
                 }
                 break;
@@ -510,7 +517,7 @@ public abstract class BaseLoader {
             try {
                 String msg = "Persistiendo Concepto '" + conceptID + "'";
                 log(new LoadException(dataFile, conceptID, msg, INFO, "N"));
-                conceptManager.persist((ConceptSMTK)pair.getValue(), smtkLoader.getUser());
+                conceptManager.persist((ConceptSMTK) pair.getValue(), smtkLoader.getUser());
                 smtkLoader.incrementConceptsProcessed(1);
             }
             catch (Exception e) {

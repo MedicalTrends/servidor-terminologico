@@ -36,11 +36,11 @@ public class SubstanceLoader extends BaseLoader {
 
     static
     {
-        fields = new HashMap<String, Integer>();
+        fields = new LinkedHashMap<>();
         fields.put("CONCEPTO_ID", 0);
         fields.put("DESCRIPCION", 1);
-        fields.put("TIPO", 2);
-        fields.put("DESC_ABREVIADA", 3);
+        fields.put("DESC_ABREVIADA", 2);
+        fields.put("TIPO", 3);
         fields.put("SENSIBLE_MAYUSCULA", 4);
         fields.put("CREAC_NOMBRE", 5);
         fields.put("ESTADO", 6);
@@ -55,6 +55,8 @@ public class SubstanceLoader extends BaseLoader {
         fields.put("GRUPOS_JERARQUICOS", 15);
         fields.put("RIESGO_TERATOGENICO", 16);
     }
+
+    static int LENGHT = fields.size();
 
     public SubstanceLoader(Category category, User user) {
         super(category, user);
@@ -82,6 +84,10 @@ public class SubstanceLoader extends BaseLoader {
             String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
 
             init(type, category, term);
+
+            if(type.equals("M")) {
+                return;
+            }
 
             RelationshipDefinition relationshipDefinition;
 

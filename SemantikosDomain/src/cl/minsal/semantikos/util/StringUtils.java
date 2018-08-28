@@ -196,7 +196,7 @@ public class StringUtils {
 
     public static boolean isEmpty(String term) {
         term = term.replaceAll("\\s+", " ");
-        return (term.equals("0") || term.isEmpty());
+        return (term.equals("0") || term.isEmpty() || term.equals("NA"));
     }
 
 }

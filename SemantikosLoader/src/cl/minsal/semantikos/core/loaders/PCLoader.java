@@ -45,8 +45,8 @@ public class PCLoader extends BaseLoader {
     {
         fields.put("CONCEPTO_ID", OFFSET + 0);
         fields.put("DESCRIPCION", OFFSET + 1);
-        fields.put("TIPO", OFFSET + 2);
-        fields.put("DESC_ABREVIADA", OFFSET + 3);
+        fields.put("DESC_ABREVIADA", OFFSET + 2);
+        fields.put("TIPO", OFFSET + 3);
         fields.put("ESTADO", OFFSET + 4);
         fields.put("SENSIBLE_MAYUSCULA", OFFSET + 5);
         fields.put("CREAC_NOMBRE", OFFSET + 6);
@@ -67,6 +67,8 @@ public class PCLoader extends BaseLoader {
         fields.put("PRODUCTO_ISP", OFFSET + 21);
         fields.put("BIOEQUIVALENTES", OFFSET + 22);
     }
+
+    static int LENGHT = fields.size();
 
     public PCLoader(User user) {
         super(user);
@@ -101,6 +103,10 @@ public class PCLoader extends BaseLoader {
             String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
 
             init(type, category, term);
+
+            if(type.equals("M")) {
+                return;
+            }
 
             /*Recuperando datos Relaciones*/
             String idConceptSCTName = tokens[fields.get("SCT_ID")];

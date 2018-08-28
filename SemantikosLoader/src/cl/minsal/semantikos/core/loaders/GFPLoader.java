@@ -41,8 +41,8 @@ public class GFPLoader extends BaseLoader {
     {
         fields.put("CONCEPTO_ID", OFFSET + 0);
         fields.put("DESCRIPCION", OFFSET + 1);
-        fields.put("TIPO", OFFSET + 2);
-        fields.put("DESC_ABREVIADA", OFFSET + 3);
+        fields.put("DESC_ABREVIADA", OFFSET + 2);
+        fields.put("TIPO", OFFSET + 3);
         fields.put("SENSIBLE_MAYUSCULA", OFFSET + 4);
         fields.put("CREAC_NOMBRE", OFFSET + 5);
         fields.put("ESTADO", OFFSET + 6);
@@ -54,6 +54,8 @@ public class GFPLoader extends BaseLoader {
         fields.put("SCT_TERMINO", OFFSET + 12);
         fields.put("GRUPOS_JERARQUICOS", OFFSET + 13);
     }
+
+    static int LENGHT = fields.size();
 
     public GFPLoader(User user) {
         super(user);
@@ -83,6 +85,10 @@ public class GFPLoader extends BaseLoader {
             String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
 
             init(type, category, term);
+
+            if(type.equals("M")) {
+                return;
+            }
 
             RelationshipDefinition relationshipDefinition;
 

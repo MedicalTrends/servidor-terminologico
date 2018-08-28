@@ -38,8 +38,8 @@ public class PCCELoader extends BaseLoader {
     {
         fields.put("CONCEPTO_ID", OFFSET + 0);
         fields.put("DESCRIPCION", OFFSET + 1);
-        fields.put("TIPO", OFFSET + 2);
-        fields.put("DESC_ABREVIADA", OFFSET + 3);
+        fields.put("DESC_ABREVIADA", OFFSET + 2);
+        fields.put("TIPO", OFFSET + 3);
         fields.put("ESTADO", OFFSET + 4);
         fields.put("SENSIBLE_MAYUSCULA", OFFSET + 5);
         fields.put("CREAC_NOMBRE", OFFSET + 6);
@@ -58,6 +58,8 @@ public class PCCELoader extends BaseLoader {
         fields.put("EXISTE_EN_GS1_DESC", OFFSET + 19);
         fields.put("GTIN_GS1", OFFSET + 20);
     }
+
+    static int LENGHT = fields.size();
 
     public PCCELoader(User user) {
 
@@ -87,6 +89,10 @@ public class PCCELoader extends BaseLoader {
             String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
 
             init(type, category, term);
+
+            if(type.equals("M")) {
+                return;
+            }
 
             /*Recuperando datos Relaciones*/
             String idConceptSCTName = tokens[fields.get("SCT_ID")];

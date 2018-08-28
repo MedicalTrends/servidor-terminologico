@@ -60,6 +60,8 @@ public class MCCELoader extends BaseLoader {
         fields.put("PACK_MULTI_UNIDAD_DESC", OFFSET + 21);
     }
 
+    static int LENGHT = fields.size();
+
     public MCCELoader(Category category, User user) {
         super(category, user);
 
@@ -87,6 +89,10 @@ public class MCCELoader extends BaseLoader {
             String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
 
             init(type, category, term);
+
+            if(type.equals("M")) {
+                return;
+            }
 
             /*Recuperando datos Relaciones*/
             String idConceptSCTName = tokens[fields.get("SCT_ID")];

@@ -48,10 +48,51 @@ public class Checker extends BaseLoader {
 
             List<String> cleanHeader = new ArrayList<>();
             List<String> fields = (List<String>) (Object) Arrays.asList(loader.fields.keySet().toArray());
+            int start = 0, end = 0;
+
+            //Se calculan los offsets
+            if(loader instanceof SubstanceLoader) {
+                start = 0;
+                end = start + SubstanceLoader.LENGHT;
+            }
+            if(loader instanceof MBLoader) {
+                start = SubstanceLoader.LENGHT;
+                end = start + MBLoader.LENGHT;
+            }
+            if(loader instanceof MCLoader) {
+                start = SubstanceLoader.LENGHT + MBLoader.LENGHT;
+                end = start + loader.fields.size();
+            }
+            if(loader instanceof MCCELoader) {
+                start = SubstanceLoader.LENGHT + MBLoader.LENGHT + MCLoader.LENGHT;
+                end = start + loader.fields.size();
+            }
+            if(loader instanceof MCCELoader) {
+                start = SubstanceLoader.LENGHT + MBLoader.LENGHT + MCLoader.LENGHT;
+                end = start + loader.fields.size();
+            }
+            if(loader instanceof GFPLoader) {
+                start = SubstanceLoader.LENGHT + MBLoader.LENGHT + MCLoader.LENGHT + MCCELoader.LENGHT;
+                end = start + loader.fields.size();
+            }
+            if(loader instanceof FPLoader) {
+                start = SubstanceLoader.LENGHT + MBLoader.LENGHT + MCLoader.LENGHT + MCCELoader.LENGHT + GFPLoader.LENGHT;
+                end = start + loader.fields.size();
+            }
+            if(loader instanceof PCLoader) {
+                start = SubstanceLoader.LENGHT + MBLoader.LENGHT + MCLoader.LENGHT + MCCELoader.LENGHT + GFPLoader.LENGHT + FPLoader.LENGHT;
+                end = start + loader.fields.size();
+            }
+            if(loader instanceof PCCELoader) {
+                start = SubstanceLoader.LENGHT + MBLoader.LENGHT + MCLoader.LENGHT + MCCELoader.LENGHT + GFPLoader.LENGHT + FPLoader.LENGHT + PCLoader.LENGHT;
+                end = start + loader.fields.size();
+            }
+
+            String[] headerFields = header.split(";");
 
             //Se remueven añadidos a los nombres de los campos para evitar inconsistencias
-            for (String field : header.split(";")) {
-                cleanHeader.add(field.split(" ")[0]);
+            for(int i = start; i < end; ++i) {
+                cleanHeader.add(headerFields[i].split(" ")[0]);
             }
 
             try {

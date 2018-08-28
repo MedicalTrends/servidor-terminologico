@@ -41,8 +41,8 @@ public class FPLoader extends BaseLoader {
     {
         fields.put("CONCEPTO_ID", OFFSET + 0);
         fields.put("DESCRIPCION", OFFSET + 1);
-        fields.put("TIPO", OFFSET + 2);
-        fields.put("DESC_ABREVIADA", OFFSET + 3);
+        fields.put("DESC_ABREVIADA", OFFSET + 2);
+        fields.put("TIPO", OFFSET + 3);
         fields.put("ESTADO", OFFSET + 4);
         fields.put("SENSIBLE_MAYUSCULA", OFFSET + 5);
         fields.put("CREAC_NOMBRE", OFFSET + 6);
@@ -55,6 +55,8 @@ public class FPLoader extends BaseLoader {
         fields.put("GRUPO_FAMILIA_PRODUCTO_DESC", OFFSET + 13);
         fields.put("GRUPO_FAMILIA_GENERICA_DESC", OFFSET + 14);
     }
+
+    static int LENGHT = fields.size();
 
     public FPLoader(User user) {
         super(user);
@@ -84,6 +86,10 @@ public class FPLoader extends BaseLoader {
             String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
 
             init(type, category, term);
+
+            if(type.equals("M")) {
+                return;
+            }
 
             RelationshipDefinition relationshipDefinition;
 

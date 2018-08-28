@@ -491,17 +491,15 @@ public class SMTKLoader extends SwingWorker<Void, String> {
 
             SubstanceLoader substanceLoader = new SubstanceLoader(category, user);
 
+            checker.checkDataFile(this, substanceLoader);
+            //substanceLoader.processConcepts(this);
+
             category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Básico");
 
-            //MBLoader mbLoader = new MBLoader(category, user);
+            MBLoader mbLoader = new MBLoader(category, user);
 
-            checker.checkDataFile(this, substanceLoader);
-            substanceLoader.processConcepts(this);
-
-            /*
             checker.checkDataFile(this, mbLoader);
             mbLoader.processConcepts(this);
-            */
 
             //JOptionPane.showMessageDialog(null, "Carga de conceptos finalizada!");
             logger.info("Carga de conceptos finalizada!");

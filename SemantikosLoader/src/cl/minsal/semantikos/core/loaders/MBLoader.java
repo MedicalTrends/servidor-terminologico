@@ -35,13 +35,12 @@ public class MBLoader extends BaseLoader {
 
     static int OFFSET = SubstanceLoader.fields.size();
 
-    static
-    {
-        fields = new HashMap<String, Integer>();
+    static {
+        fields = new LinkedHashMap<>();
         fields.put("CONCEPTO_ID", OFFSET + 0);
         fields.put("DESCRIPCION", OFFSET + 1);
-        fields.put("TIPO", OFFSET + 2);
-        fields.put("DESC_ABREVIADA", OFFSET + 3);
+        fields.put("DESC_ABREVIADA", OFFSET + 2);
+        fields.put("TIPO", OFFSET + 3);
         fields.put("ESTADO", OFFSET + 4);
         fields.put("SENSIBLE_MAYUSCULA", OFFSET + 5);
         fields.put("CREAC_NOMBRE", OFFSET + 6);
@@ -51,8 +50,11 @@ public class MBLoader extends BaseLoader {
         fields.put("SCT_TERMINO", OFFSET + 10);
         fields.put("SINONIMO", OFFSET + 11);
         fields.put("GRUPOS_JERARQUICOS", OFFSET + 12);
-        fields.put("SUSTANCIAS", OFFSET + 13);
+        fields.put("ORDEN", OFFSET + 13);
+        fields.put("SUSTANCIAS", OFFSET + 14);
     }
+
+    static int LENGHT = fields.size();
 
     public MBLoader(Category category, User user) {
         super(category, user);
@@ -80,6 +82,10 @@ public class MBLoader extends BaseLoader {
             String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
 
             init(type, category, term);
+
+            if(type.equals("M")) {
+                return;
+            }
 
             /*Recuperando datos Relaciones*/
             String idConceptSCTName = tokens[fields.get("SCT_ID")];
@@ -146,7 +152,7 @@ public class MBLoader extends BaseLoader {
             /*Recuperando Sustancias*/
             String substances = tokens[fields.get("SUSTANCIAS")];
 
-            String[] substancesTokens = substances.split("•");
+            String[] substancesTokens = substances.split(newline);
 
             for (String substanceToken : substancesTokens) {
 
@@ -154,7 +160,7 @@ public class MBLoader extends BaseLoader {
                     continue;
                 }
 
-                String[] substanceTokens = substanceToken.split("¦");
+                String[] substanceTokens = substanceToken.split(attrSeparator);
 
                 String termFavourite = StringUtils.normalizeSpaces(substanceTokens[1]).trim();
 
