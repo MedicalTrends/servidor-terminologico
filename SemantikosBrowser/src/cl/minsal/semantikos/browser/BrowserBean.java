@@ -606,4 +606,12 @@ public class BrowserBean implements Serializable {
         this.guestPreferences = guestPreferences;
     }
 
+    public boolean isPerformSearch() {
+        return performSearch;
+    }
+
+    public void setPerformSearch(boolean performSearch) {
+        this.performSearch = performSearch;
+    }
+
 }

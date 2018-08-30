@@ -24,7 +24,7 @@
                     <p:menuitem value="#{concept.selectedConcept.conceptID}" url="#" />
                 </p:breadCrumb>
 
-                <p:breadCrumb id="top-menu2" model="#{browserBean.navegation}"/>
+                <p:breadCrumb id="top-menu2" rendered="false" model="#{browserBean.navegation}"/>
 
                 <h:form id="conceptForm">
 
@@ -501,13 +501,6 @@
             </div>
 
         </div>
-
-        <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
-            <p:outputPanel styleClass="conceptDetail" style="width: 500px;">
-
-            </p:outputPanel>
-        </p:overlayPanel>
-
 
     </ui:define>
 

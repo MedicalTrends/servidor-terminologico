@@ -101,7 +101,7 @@
                                         <p:selectOneRadio value="#{browserBean.browserQuery.asc}" layout="responsive" columns="1">
                                             <f:selectItem itemLabel="Asc" itemValue="asc" />
                                             <f:selectItem itemLabel="Desc" itemValue="desc" />
-                                            <p:ajax event="change"
+                                            <p:ajax event="change" listener="#{browserBean.setPerformSearch(true)}"
                                                     update="@(.browserFilters),@(.conceptTable)"
                                                     process="@this"/>
                                         </p:selectOneRadio>
