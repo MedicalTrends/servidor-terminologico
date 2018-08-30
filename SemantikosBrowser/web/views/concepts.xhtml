@@ -16,7 +16,7 @@
 
             <div class="ui-g-12 ui-md-12 ui-lg-12" style="max-width: 1200px">
 
-                <p:breadCrumb id="top-menu">
+                <p:breadCrumb id="top-menu" rendered="false">
                     <p:menuitem value="Inicio" url="/" />
                     <p:menuitem value="Conceptos" url="#" />
                 </p:breadCrumb>
@@ -25,96 +25,105 @@
 
                     <div class="card card-w-title">
 
-                        <p:outputPanel>
+                        <div class="ui-fluid">
 
-                            <div class="ui-fluid">
+                            <div class="ui-g">
 
-                                <div class="ui-g">
+                                <!--p:panelGrid columns="3" columnClasses="ui-grid-col-6,ui-grid-col-3,ui-grid-col-3" layout="grid"
+                                             styleClass="ui-panelgrid-blank form-group"-->
 
-                                    <!--p:panelGrid columns="3" columnClasses="ui-grid-col-6,ui-grid-col-3,ui-grid-col-3" layout="grid"
-                                                 styleClass="ui-panelgrid-blank form-group"-->
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                    <div class="ui-inputgroup">
 
-                                        <div class="ui-inputgroup">
+                                        <p:outputPanel styleClass="search" style="width: 100%">
 
-                                            <p:outputPanel styleClass="search" style="width: 100%">
+                                            <p:autoComplete minQueryLength="3"
+                                                            id="search"
+                                                            emptyMessage="No se encontraron conceptos"
+                                                            forceSelection="false"
+                                                            size="5"
+                                                            completeMethod="#{browserBean.searchSuggestedDescriptions}"
+                                                            placeholder="Buscar..."
+                                                            converter="DescriptionConverter"
+                                                            var="description"
+                                                            value="#{browserBean.descriptionSelected}"
+                                                            itemLabel="#{description.getRepresentation()}"
+                                                            itemValue="#{description}">
 
-                                                <p:autoComplete minQueryLength="3"
-                                                                id="search"
-                                                                emptyMessage="No se encontraron conceptos"
-                                                                forceSelection="false"
-                                                                size="5"
-                                                                completeMethod="#{browserBean.searchSuggestedDescriptions}"
-                                                                placeholder="Buscar..."
-                                                                converter="DescriptionConverter"
-                                                                var="description"
-                                                                value="#{browserBean.descriptionSelected}"
-                                                                itemLabel="#{description.getRepresentation()}"
-                                                                itemValue="#{description}">
+                                                <p:outputPanel rendered="false">
 
-                                                    <p:outputPanel rendered="false">
-
-                                                        <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
-                                                            <h:outputText value="#{description.term}" />
-                                                        </p:column>
-
-                                                    </p:outputPanel>
-
-                                                    <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px">
-                                                        <h:outputText value="#{description.term}" style="font-weight: bold;" />
+                                                    <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
+                                                        <h:outputText value="#{description.term}" />
                                                     </p:column>
 
-                                                    <p:column style="width: 90%; float: left; ; border: 0px; padding: 0px 10px">
-                                                        <h:outputText value="#{description.conceptSMTK.category.name}" style="font-size: small;" />
-                                                    </p:column>
-
-                                                    <p:column style="width: 90%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 10px">
-                                                        <h:outputText value="#{description.descriptionType.name}" style="font-size: small;" />
-                                                    </p:column>
-
-                                                    <p:ajax event="itemSelect"
-                                                                listener="#{browserBean.test()}"
-                                                                update="@(.conceptPanel),@(.search)"
-                                                                process="@this"/>
-
-                                                </p:autoComplete>
-
-                                                <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
-                                                    <i class="fa fa-search fa-lg" />
                                                 </p:outputPanel>
 
-                                                <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
-                                                    <p:commandLink process="@this" style="color: #aaa;"
-                                                                   update="@(.search)" oncomplete="listenSearchOnClickEvent();"
-                                                                   action="#{browserBean.setDescriptionSelected(null)}">
-                                                        <i class="fa fa-close fa-lg" />
-                                                    </p:commandLink>
-                                                </p:outputPanel>
+                                                <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px">
+                                                    <h:outputText value="#{description.term}" style="font-weight: bold;" />
+                                                </p:column>
 
+                                                <p:column style="width: 90%; float: left; ; border: 0px; padding: 0px 10px">
+                                                    <h:outputText value="#{description.conceptSMTK.category.name}" style="font-size: small;" />
+                                                </p:column>
+
+                                                <p:column style="width: 90%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 10px">
+                                                    <h:outputText value="#{description.descriptionType.name}" style="font-size: small;" />
+                                                </p:column>
+
+                                                <p:ajax event="itemSelect"
+                                                        listener="#{browserBean.test()}"
+                                                        update="@(.conceptPanel),@(.search)"
+                                                        process="@this"/>
+
+                                            </p:autoComplete>
+
+                                            <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
+                                                <i class="fa fa-search fa-lg" />
                                             </p:outputPanel>
 
-                                            <p:commandButton styleClass="search-button-tiny" icon="fa fa-search" style="bottom: 7px" />
+                                            <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
+                                                <p:commandLink process="@this" style="color: #aaa;"
+                                                               update="@(.search)" oncomplete="listenSearchOnClickEvent();"
+                                                               action="#{browserBean.setDescriptionSelected(null)}">
+                                                    <i class="fa fa-close fa-lg" />
+                                                </p:commandLink>
+                                            </p:outputPanel>
 
-                                        </div>
+                                        </p:outputPanel>
 
-                                        <p:menubar style="margin-top: 10px; background: #F2F2F2" styleClass="browser-options">
-                                            <p:menuitem value="Exportar" ajax="false" icon="fa fa-file-excel-o" style="border-left: 1px solid rgb(189, 189, 189)">
-                                                <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
-                                            </p:menuitem>
-
-                                            <p:menuitem value="Filtrar" icon="fa fa-filter" onclick="listenOnClick();" style="border-left: 1px solid rgb(189, 189, 189)">
-                                            </p:menuitem>
-                                        </p:menubar>
-
+                                        <p:commandButton styleClass="search-button-tiny" icon="fa fa-search" style="bottom: 7px" />
 
                                     </div>
 
-                                    <!--/p:panelGrid-->
+                                </div>
+
+                                <div class="ui-g-0 ui-md-6 ui-lg-8"></div>
+
+                                <div class="ui-g-12 ui-md-3 ui-lg-2">
+
+                                    <p:commandButton value="Exportar" icon="fa fa-file-excel-o" ajax="false">
+                                        <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
+                                    </p:commandButton>
 
                                 </div>
 
+                                <div class="ui-g-12 ui-md-3 ui-lg-2">
+
+                                    <p:selectBooleanButton value="#{browserBean.showFilters}" onLabel="Filtrar"
+                                                           offLabel="Filtrar" onIcon="fa fa-filter" offIcon="fa fa-filter">
+                                        <p:ajax update="browserForm" />
+                                    </p:selectBooleanButton>
+
+                                </div>
+
+                                <!--/p:panelGrid-->
+
                             </div>
+
+                        </div>
+
+                        <p:outputPanel>
 
                             <p:panel id="filters" rendered="#{browserBean.showFilters}" styleClass="filtros">
 
@@ -305,13 +314,6 @@
             </div>
 
         </div>
-
-
-        <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
-            <p:outputPanel styleClass="conceptDetail" style="width: 500px;">
-
-            </p:outputPanel>
-        </p:overlayPanel>
 
         <script type="text/javascript">
 
