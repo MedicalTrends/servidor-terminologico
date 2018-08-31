@@ -38,7 +38,8 @@ public class TimeOutSessionBean {
     }
 
     public int getTimeOut() {
-        return (1000 * (timeOut-1));
+        //return (1000 * (timeOut-1));
+        return timeOut;
     }
 
 }
