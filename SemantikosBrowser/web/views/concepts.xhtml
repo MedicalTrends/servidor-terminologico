@@ -110,10 +110,8 @@
 
                                 <div class="ui-g-12 ui-md-3 ui-lg-2">
 
-                                    <p:selectBooleanButton value="#{browserBean.showFilters}" onLabel="Filtrar"
-                                                           offLabel="Filtrar" onIcon="fa fa-filter" offIcon="fa fa-filter">
-                                        <p:ajax update="browserForm" />
-                                    </p:selectBooleanButton>
+                                    <p:commandButton value="Filtrar" onclick="listenOnClick();" icon="fa fa-filter">
+                                    </p:commandButton>
 
                                 </div>
 
@@ -140,7 +138,7 @@
                                         <p:selectCheckboxMenu id="menu2"
                                                               converter="omnifaces.SelectItemsConverter"
                                                               value="#{browserBean.browserQuery.categories}"
-                                                              label="Seleccione..." style="width: 95%"
+                                                              label="Seleccione..."
                                                               filter="true" filterMatchMode="startsWith">
                                             <f:selectItems value="#{browserBean.categories}" var="category"
                                                            itemLabel="#{category.name}" itemValue="#{category}"/>

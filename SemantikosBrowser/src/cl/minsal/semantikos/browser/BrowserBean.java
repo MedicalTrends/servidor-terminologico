@@ -174,12 +174,14 @@ public class BrowserBean implements Serializable {
         menu.addElement(item1);
 
         //Snomed
+        /*
         DefaultMenuItem item2 = new DefaultMenuItem("Snomed-CT");
         item2.setUrl("/views/snomed/concepts");
         item2.setIcon("fa fa-arrow-left");
         item2.setId("rm_snomed");
 
         menu.addElement(item2);
+        */
 
 
         //Últimos visitados
@@ -324,7 +326,7 @@ public class BrowserBean implements Serializable {
     public void refreshLastVisitedMenu() {
 
         for (MenuElement menuElement : getMenu().getElements()) {
-            if (menuElement.getId().equals("3")) {
+            if (menuElement.getId().equals("2")) {
                 DefaultSubMenu conceptSubmenu = (DefaultSubMenu) menuElement;
                 conceptSubmenu.getElements().clear();
                 for (Object o : Arrays.asList(getCircularFifoQueue().toArray())) {

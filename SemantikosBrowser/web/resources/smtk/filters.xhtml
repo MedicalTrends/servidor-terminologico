@@ -26,10 +26,14 @@
                     <h:form>
 
                         <h:form>
-                            <p:fieldset legend="Filtrar" style="margin-left: 0.5em; margin-right: 0.5em"
-                                        styleClass="filterStatus">
 
-                                <div class="ui-g ui-fluid">
+                            <p:tabView>
+
+                            <p:tab title="Filtrar" style="margin-left: 0.5em; margin-right: 0.5em">
+
+                                <p:outputPanel styleClass="filterStatus">
+
+                                    <div class="ui-g ui-fluid">
                                     <div class="ui-g-12">
                                         <span>Categorías</span>
                                     </div>
@@ -42,9 +46,20 @@
                                             <f:selectItems value="#{browserBean.categories}" var="category"
                                                            itemLabel="#{category.name}" itemValue="#{category}"/>
                                             <p:ajax event="toggleSelect" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
-                                            <p:ajax update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
+                                            <p:ajax event="change" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
                                         </p:selectCheckboxMenu>
                                     </div>
+                                    <p:repeat value="#{browserBean.browserQuery.categories}" var="category">
+                                        <div class="ui-g-12">
+                                    <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
+                                        <p:commandLink actionListener="#{browserBean.browserQuery.categories.remove(category)}"
+                                                       update="@(.conceptTable),@(.filterStatus)" style="float: right">
+                                            <i class="ui-icon ui-icon-close" />
+                                        </p:commandLink>
+                                        <span class="ui-autocomplete-token-label" style="font-size: small;">#{category.name}</span>
+                                    </span>
+                                        </div>
+                                    </p:repeat>
                                     <div class="ui-g-12">
                                         <span>Etiquetas</span>
                                     </div>
@@ -63,21 +78,24 @@
                                                            itemLabel="#{tag.name}" itemValue="#{tag}"/>
                                         </p:selectCheckboxMenu>
                                     </div>
-
-                                    <p:repeat value="#{browserBean.browserQuery.categories}" var="category">
+                                    <p:repeat value="#{browserBean.browserQuery.tags}" var="tag">
                                         <div class="ui-g-12">
-                                        <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
-                                            <p:commandLink actionListener="#{browserBean.browserQuery.categories.remove(category)}"
-                                                           update="@(.conceptTable),@(.filterStatus)" style="float: right">
-                                                <i class="ui-icon ui-icon-close" />
-                                            </p:commandLink>
-                                            <span class="ui-autocomplete-token-label" style="font-size: small;">#{category.name}</span>
-                                        </span>
+                                    <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
+                                        <p:commandLink actionListener="#{browserBean.browserQuery.tags.remove(tag)}"
+                                                       update="@(.conceptTable),@(.filterStatus)" style="float: right">
+                                            <i class="ui-icon ui-icon-close" />
+                                        </p:commandLink>
+                                        <span class="ui-autocomplete-token-label" style="font-size: small;">#{tag.name}</span>
+                                    </span>
                                         </div>
                                     </p:repeat>
+
                                 </div>
-                            </p:fieldset>
-                            <p:fieldset legend="Ordenar" style="margin-left: 0.5em; margin-right: 0.5em"
+
+                                </p:outputPanel>
+                            </p:tab>
+
+                            <p:tab title="Ordenar" style="margin-left: 0.5em; margin-right: 0.5em"
                                         rendered="#{request.requestURI.contains('concepts')}">
 
                                 <div class="ui-g ui-fluid">
@@ -107,7 +125,9 @@
                                         </p:selectOneRadio>
                                     </div>
                                 </div>
-                            </p:fieldset>
+                            </p:tab>
+
+                            </p:tabView>
 
                         </h:form>
 
