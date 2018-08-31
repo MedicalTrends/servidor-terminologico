@@ -2,11 +2,11 @@
 
 @font-face {
   font-family: "rio";
-  src:url("#{resource['primefaces-rio:fonts/rio.eot']}");
-  src:url("#{resource['primefaces-rio:fonts/rio.eot']}#iefix") format("embedded-opentype"),
-    url("#{resource['primefaces-rio:fonts/rio.woff']}") format("woff"),
-    url("#{resource['primefaces-rio:fonts/rio.ttf']}") format("truetype"),
-    url("#{resource['primefaces-rio:fonts/rio.svg']}#rio") format("svg");
+  src:url("#{resource['rio-layout:fonts/rio.eot']}");
+  src:url("#{resource['rio-layout:fonts/rio.eot']}#iefix") format("embedded-opentype"),
+    url("#{resource['rio-layout:fonts/rio.woff']}") format("woff"),
+    url("#{resource['rio-layout:fonts/rio.ttf']}") format("truetype"),
+    url("#{resource['rio-layout:fonts/rio.svg']}#rio") format("svg");
   font-weight: normal;
   font-style: normal;
 
