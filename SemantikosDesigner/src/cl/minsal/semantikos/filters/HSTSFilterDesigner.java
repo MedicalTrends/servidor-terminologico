@@ -19,6 +19,8 @@ public class HSTSFilterDesigner implements Filter {
             resp.setHeader("Strict-Transport-Security", "max-age=31622400; includeSubDomains");
         //}
 
+        resp.addHeader("x-frame-options", "deny");
+
         chain.doFilter(req, resp);
     }
 

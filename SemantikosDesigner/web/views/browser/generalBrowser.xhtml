@@ -36,11 +36,12 @@
 
                                     <p:outputPanel styleClass="search" style="width: 100%">
 
-                                        <p:inputText value="#{generalBrowserBean.generalQuery.query}" placeholder="Buscar..." style="width: 100%">
-                                            <p:ajax event="keyup" update="@(.browserTable)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" />
+                                        <p:inputText value="#{generalBrowserBean.generalQuery.query}" placeholder="Buscar..." style="width: 100%"
+                                                     onkeyup="return (this.value.length >= 3 || this.value.length ==0)">
+                                            <p:ajax event="keyup" delay="100" update="@(.browserTable)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" />
                                         </p:inputText>
 
-                                        <p:outputPanel rendered="#{generalBrowserBean.generalQuery.query eq null}">
+                                        <p:outputPanel rendered="#{generalBrowserBean.generalQuery.query.isEmpty()}">
                                             <i class="fa fa-search fa-lg" />
                                         </p:outputPanel>
 
@@ -54,23 +55,27 @@
 
                         <div class="ui-fluid ui-g">
 
-                            <div class="ui-g-12">
+                            <div class="ui-g-0 ui-md-0 ui-g-6" style="padding: 0px"></div>
 
-                                <p:commandButton value="Crear Nuevo" icon="fa fa-plus" style="width: auto; float: right"
-                                            type="submit" process="browserForm" styleClass="loader-trigger"
-                                            actionListener="#{generalBrowserBean.createConcept}"
-                                            rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">
-                                </p:commandButton>
-
-                                <p:commandButton value="Exportar" ajax="false" icon="fa fa-file-excel-o" style="width: auto; float: right">
-                                    <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
-                                </p:commandButton>
-
-                                <p:selectBooleanButton value="#{generalBrowserBean.showSettings}" onLabel="Filtrar" style="width: auto; float: right"
+                            <div class="ui-g-12 ui-md-2 ui-lg-2">
+                                <p:selectBooleanButton value="#{generalBrowserBean.showSettings}" onLabel="Filtrar"
                                                        styleClass="filter-btn" id="filter-btn" onchange="listenOnClick();"
                                                        offLabel="Filtrar" onIcon="fa fa-filter" offIcon="fa fa-filter">
                                 </p:selectBooleanButton>
+                            </div>
 
+                            <div class="ui-g-12 ui-md-2 ui-lg-2">
+                                <p:commandButton value="Exportar" ajax="false" icon="fa fa-file-excel-o">
+                                    <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
+                                </p:commandButton>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-2 ui-lg-2">
+                                <p:commandButton value="Crear Nuevo" icon="fa fa-plus"
+                                                 type="submit" process="browserForm" styleClass="loader-trigger"
+                                                 actionListener="#{generalBrowserBean.createConcept}"
+                                                 rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">
+                                </p:commandButton>
                             </div>
 
                         </div>

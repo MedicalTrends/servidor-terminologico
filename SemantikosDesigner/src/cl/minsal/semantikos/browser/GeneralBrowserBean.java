@@ -148,6 +148,13 @@ public class GeneralBrowserBean implements Serializable {
         }
 
         /**
+         * Si el patrón de consulta tiene menos de 3 caracteres retornar inmediatamente
+         */
+        if(generalQuery.getQuery().length() > 0 && generalQuery.getQuery().length() < 3) {
+            return;
+        }
+
+        /**
          * Ejecutar la consulta
          */
         concepts = new LazyDataModel<ConceptSMTK>() {

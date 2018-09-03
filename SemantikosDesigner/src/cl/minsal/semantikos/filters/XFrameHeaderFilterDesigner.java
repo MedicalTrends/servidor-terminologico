@@ -15,7 +15,7 @@ public class XFrameHeaderFilterDesigner implements Filter {
     }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        ((HttpServletResponse) resp).addHeader("x-frame-options", "deny");
+        //((HttpServletResponse) resp).addHeader("x-frame-options", "deny");
         chain.doFilter(req, resp);
     }
 
