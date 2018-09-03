@@ -28,4 +28,9 @@
         <view-id value="/views/concept-snomed.xhtml" />
     </url-mapping>
 
+    <url-mapping id="error">
+        <pattern value="/views/error" />
+        <view-id value="/views/errors/error.xhtml" />
+    </url-mapping>
+
 </pretty-config>
