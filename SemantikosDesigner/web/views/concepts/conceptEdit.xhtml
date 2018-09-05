@@ -239,7 +239,63 @@
 
                         <br/>
 
-                        <smtk:actionButtons />
+                        <div class="ui-fluid ui-g">
+
+                            <div class="ui-g-12 ui-md-3 ui-lg-1" style="padding: 1px">
+                                <p:button outcome="/views/browser/generalBrowser.xhtml?idCategory=#{conceptBean.category.id}"
+                                          styleClass="cyan-btn"
+                                          value="Volver" icon="fa fa-arrow-left"/>
+                            </div>
+
+                            <p:outputPanel class="ui-g-0 ui-md-0 ui-lg-#{not conceptBean.concept.persistent?'9':conceptBean.concept.modeled?'7':'4'}"
+                                           style="padding: 0px" />
+
+                            <div class="ui-g-12 ui-md-3 ui-lg-1" style="padding: 1px">
+
+                                <p:commandButton actionListener="#{conceptBean.saveConcept}" icon="fa fa-check"
+                                                 value="Guardar" style="padding: 1px"
+                                                 update="growl, mainForm, @(.breadUpdate)">
+                                </p:commandButton>
+
+                            </div>
+
+                            <p:outputPanel rendered="#{conceptBean.concept.persistent and not conceptBean.concept.modeled}"
+                                           styleClass="ui-g-12 ui-md-3 ui-lg-1" style="padding: 1px">
+
+                                <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"
+                                                 value="Eliminar" type="submit" process="mainForm" style="padding: 1px"
+                                                 update="growl, mainForm">
+                                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
+                                </p:commandButton>
+
+                            </p:outputPanel>
+
+                            <p:outputPanel rendered="#{conceptBean.concept.modeled}" styleClass="ui-g-12 ui-md-3 ui-lg-1" style="padding: 1px">
+
+                                <!-- Botón para Trasladar el concepto modelado -->
+                                <smtk:trasnferConcept conceptSMTK="#{conceptBean.concept}"/>
+
+                            </p:outputPanel>
+
+                            <div class="ui-g-12 ui-md-3 ui-lg-1" style="padding: 1px">
+
+                                <p:commandButton actionListener="#{conceptBean.cancelConcept}" icon="fa fa-undo"
+                                                 value="Deshacer" type="submit" process="mainForm"
+                                                 update="growl, mainForm">
+                                    <p:confirm header="Confirmar Acción"
+                                               message="¿Desea deshacer los cambios realizados en esta sesión?"
+                                               icon="ui-icon-alert"/>
+                                </p:commandButton>
+
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3 ui-lg-1" style="padding: 1px">
+                                <smtk:export-xls rendered="#{conceptBean.concept.modeled}" />
+                            </div>
+
+                        </div>
+
+                        <smtk:actionButtons rendered="false" />
 
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                             <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
@@ -320,30 +376,6 @@
                             <p:column width="200" styleClass="FontBold Fs13">#{cell.column.description}</p:column>
                             <p:column width="400">#{cell}</p:column>
                         </p:dataTable>
-                    </p:dialog>
-
-                    <!-- Diálogo para buscar la categoría y aceptar -->
-                    <p:dialog id="dialogTC" header="Trasladar concepto" widgetVar="dialogTC" global="true" showEffect="fade" hideEffect="fade">
-
-                        <p:panel id="conceptTranslate" style="width: 100%; border: hidden;">
-                            <h3 align="left">Trasladar Concepto a...</h3>
-                            <h:panelGrid columns="3" columnClasses="ui-grid-col-6,ui-grid-col-4,ui-grid-col-2">
-
-                                <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categoría propuesta"/>
-                                <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.categoryId}" required="true" filter="true" filterMatchMode="startsWith">
-                                    <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
-                                                   itemLabel="#{category.name}"/>
-                                </p:selectOneMenu>
-
-                                <p:commandButton value="Trasladar" type="submit" process="mainForm"
-                                                 actionListener="#{transferConceptBean.transferConcept(conceptBean.concept)}"
-                                                 update="mainForm" icon="fa fa-exchange">
-
-                                    <p:confirm header="Confirmar Acción" message="¿Desea realmente trasladar este concepto?"
-                                               icon="ui-icon-alert"/>
-                                </p:commandButton>
-                            </h:panelGrid>
-                        </p:panel>
                     </p:dialog>
 
                 </p:outputPanel>
