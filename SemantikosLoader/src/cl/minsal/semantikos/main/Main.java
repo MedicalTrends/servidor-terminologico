@@ -12,7 +12,7 @@ public class Main {
         SMTKLoader smtkLoader = new SMTKLoader();
 
         try {
-            smtkLoader.processMaster();
+            smtkLoader.process();
         } catch (Exception e) {
             e.printStackTrace();
         }
