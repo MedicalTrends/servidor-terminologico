@@ -185,10 +185,12 @@ public class SMTKLoader {
             PCConceptLoader pcConceptLoader = new PCConceptLoader();
 
             initializer.checkSubstanceDataFiles(this);
-            //substanceConceptLoader.processConcepts(this);
+            substanceConceptLoader.processConcepts(this);
 
+            /*
             initializer.checkISPDataFiles(this);
             pcConceptLoader.processConcepts(this);
+            */
 
             logger.info("Proceso finalizado!");
         } catch (LoadException e1) {
