@@ -5,6 +5,7 @@
 }
 */
 
+
 .search {
     position: relative;
     color: #aaa;
@@ -23,8 +24,8 @@
     position: absolute;
     top: 7px;
     left: 10px;
-    /*cursor: pointer;*/
 }
+
 
 .fa-lg {
     line-height: .5em !important;
