@@ -184,11 +184,13 @@ public class PCConceptLoader extends EntityLoader {
                         }
 
                         // Si es distinto regNum se agrega una nueva relación
+                        /*
                         if(!regNum.equals(regnumBD) && !regAno.equals(reganoBD)) {
                             log(new LoadException(path.toString(), conceptID, "Concepto '" + concept.toString() + " se agrega nueva relación '" + relationshipISP + "'", INFO, "N"));
                             concept.addRelationship(relationshipISP);
                             break;
                         }
+                        */
 
                     }
 
@@ -233,11 +235,13 @@ public class PCConceptLoader extends EntityLoader {
                     }
 
                     // Si es distinto regNum se agrega una nueva relación
+                    /*
                     if(!regNum.equals(regnumBD) && !regAno.equals(reganoBD)) {
                         log(new LoadException(path.toString(), conceptID, "Concepto '" + concept.toString() + " se agrega nueva relación '" + relationshipISP + "'", INFO, "N"));
                         concept.addRelationship(relationshipISP);
                         break;
                     }
+                    */
 
                 }
 
