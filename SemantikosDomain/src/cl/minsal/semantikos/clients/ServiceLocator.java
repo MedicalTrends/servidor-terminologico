@@ -9,6 +9,9 @@ import org.jboss.ejb.client.EJBClientConfiguration;
 import org.jboss.ejb.client.EJBClientContext;
 import org.jboss.ejb.client.PropertiesBasedEJBClientConfiguration;
 import org.jboss.ejb.client.remoting.ConfigBasedEJBClientContextSelector;
+import org.jboss.security.ClientLoginModule;
+import org.jboss.security.auth.spi.DatabaseServerLoginModule;
+import org.jboss.security.auth.spi.UsersRolesLoginModule;
 
 import javax.naming.*;
 import javax.security.auth.login.Configuration;
@@ -90,7 +93,6 @@ public class ServiceLocator {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-
         this.servicesByName = new ConcurrentHashMap<>();
     }
 
@@ -184,6 +186,7 @@ public class ServiceLocator {
         * will be called during the login process.
         */
         loginContext = new LoginContext(Configuration.getConfiguration().getClass().getName(), handler);
+
        /*
         * Do the login
         */

@@ -70,7 +70,6 @@
     <orderEntry type="library" name="Maven: org.jboss.xnio:xnio-api:3.0.16.GA-redhat-1" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.xnio:xnio-nio:3.0.16.GA-redhat-1" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.as:jboss-as-build-config:7.5.17.Final-redhat-4" level="project" />
-    <orderEntry type="library" name="Maven: jboss:jbosssx-client:4.2.2.GA" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec:1.0.0.Final" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.5.1" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />

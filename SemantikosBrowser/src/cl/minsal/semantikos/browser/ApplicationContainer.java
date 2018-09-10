@@ -21,7 +21,7 @@ import java.util.List;
  * Created by diego on 26/06/2016.
  */
 
-@ManagedBean(eager = true)
+@ManagedBean(eager = false)
 @ApplicationScoped
 public class ApplicationContainer implements Serializable {
 
