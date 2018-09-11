@@ -231,10 +231,11 @@
 }
 
 .value {
-    font-style: italic !important;
+    /*font-style: italic !important;*/
 }
 
 .label {
+    font-weight: bold;
     /*color: #3F51B5 !important;*/
 }
 
