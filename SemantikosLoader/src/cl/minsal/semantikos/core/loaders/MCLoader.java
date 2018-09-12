@@ -32,7 +32,7 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
  */
 public class MCLoader extends BaseLoader {
 
-    static int OFFSET = SubstanceLoader.fields.size() + MBLoader.fields.size();
+    static int OFFSET = SubstanceLoader.LENGHT + MBLoader.LENGHT;
 
     static
     {
@@ -80,7 +80,7 @@ public class MCLoader extends BaseLoader {
 
     public void loadConceptFromFileLine(String line) throws LoadException {
 
-        String[] tokens = line.split(separator,-1);
+        tokens = line.split(separator,-1);
 
         /*Recuperando datos Concepto*/
 
@@ -176,7 +176,7 @@ public class MCLoader extends BaseLoader {
 
             String substances = tokens[fields.get("MC_SUST")];
 
-            String[] substancesTokens = substances.split("•");
+            String[] substancesTokens = substances.split(relSeparator);
 
             for (String substanceToken : substancesTokens) {
 
@@ -184,10 +184,10 @@ public class MCLoader extends BaseLoader {
                     continue;
                 }
 
-                String[] substanceTokens = substanceToken.split("¦");
+                String[] substanceTokens = substanceToken.split(attrSeparator);
 
                 // Obteniendo Sustancia
-                String termFavourite = StringUtils.normalizeSpaces(substanceTokens[0]).trim();
+                String termFavourite = StringUtils.normalizeSpaces(substanceTokens[1]).trim();
 
                 List<Description> substanceList = descriptionManager.searchDescriptionsPerfectMatch(termFavourite, Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia")}), null);
 
@@ -202,7 +202,7 @@ public class MCLoader extends BaseLoader {
                 Relationship relationshipSubstance = new Relationship(newConcept, substanceList.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
 
                 // Obteniendo Orden
-                BasicTypeValue order = new BasicTypeValue(Integer.parseInt(substanceTokens[3].trim()));
+                BasicTypeValue order = new BasicTypeValue(Integer.parseInt(substanceTokens[6].trim()));
 
                 /**Para esta definición, se obtiente el atributo orden**/
                 for (RelationshipAttributeDefinition attDef1 : relationshipDefinition.getRelationshipAttributeDefinitions()) {
@@ -213,79 +213,39 @@ public class MCLoader extends BaseLoader {
                     }
                 }
 
-                // Obteniendo Cantidad y Unidad Potencia
-                if(!StringUtils.isEmpty(substanceTokens[1].trim())) {
-
-                    String[] potenciaTokens = substanceTokens[1].trim().split(" ");
-
+                //Obteniendo Cantidad Potencia
+                if(!StringUtils.isEmpty(substanceTokens[2].trim())) {
                     BasicTypeValue cantidadPotencia;
-                    int unitIndex = 1;
-
-                    // Cantidad
-                    try {
-                        cantidadPotencia = new BasicTypeValue(Float.parseFloat(potenciaTokens[0].trim().replace(",",".")));
-                    }
-                    catch (NumberFormatException e) {
-                        cantidadPotencia = new BasicTypeValue(1.0);
-                        unitIndex = 0;
-                    }
-
+                    cantidadPotencia = new BasicTypeValue(Float.parseFloat(substanceTokens[2].trim().replace(",",".")));
                     attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Cantidad Potencia").get(0);
-
                     ra = new RelationshipAttribute(attDef, relationshipSubstance, cantidadPotencia);
                     relationshipSubstance.getRelationshipAttributes().add(ra);
 
-                    //Unidad
+                    //Unidad Potencia
                     attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Unidad Potencia").get(0);
-
                     helperTable = (HelperTable) attDef.getTargetDefinition();
-
                     List<String> columnNames = new ArrayList<>();
-
                     columnNames.add("DESCRIPCION ABREVIADA");
-
-                    List<HelperTableRow> unidadPotencia = helperTableManager.searchRows(helperTable, potenciaTokens[unitIndex].trim(), columnNames);
-
+                    List<HelperTableRow> unidadPotencia = helperTableManager.searchRows(helperTable, substanceTokens[3].trim(), columnNames);
                     ra = new RelationshipAttribute(attDef, relationshipSubstance, unidadPotencia.get(0));
                     relationshipSubstance.getRelationshipAttributes().add(ra);
-
                 }
 
-                // Obteniendo PP
-                if(!StringUtils.isEmpty(substanceTokens[2].trim())) {
-
-                    String[] partidoPorTokens = substanceTokens[2].trim().split(" ");
-
-                    BasicTypeValue cantidadPartidoPor;
-
-                    int unitIndex = 1;
-
-                    // Cantidad
-                    try {
-                        cantidadPartidoPor = new BasicTypeValue(Float.parseFloat(partidoPorTokens[0].trim().replace(",",".")));
-                    }
-                    catch (NumberFormatException e) {
-                        cantidadPartidoPor = new BasicTypeValue(1.0);
-                        unitIndex = 0;
-                    }
-
+                //Obteniendo Cantidad PP
+                if(!StringUtils.isEmpty(substanceTokens[4].trim())) {
+                    BasicTypeValue cantidadPP;
+                    cantidadPP = new BasicTypeValue(Float.parseFloat(substanceTokens[4].trim().replace(",",".")));
                     attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Cantidad PP").get(0);
-
-                    ra = new RelationshipAttribute(attDef, relationshipSubstance, cantidadPartidoPor);
+                    ra = new RelationshipAttribute(attDef, relationshipSubstance, cantidadPP);
                     relationshipSubstance.getRelationshipAttributes().add(ra);
 
-                    //Unidad
+                    //Unidad Potencia
                     attDef = relationshipDefinition.findRelationshipAttributeDefinitionsByName("Unidad PP").get(0);
-
                     helperTable = (HelperTable) attDef.getTargetDefinition();
-
                     List<String> columnNames = new ArrayList<>();
-
                     columnNames.add("DESCRIPCION ABREVIADA");
-
-                    List<HelperTableRow> unidadPartidoPor = helperTableManager.searchRows(helperTable, partidoPorTokens[unitIndex].trim(), columnNames);
-
-                    ra = new RelationshipAttribute(attDef, relationshipSubstance, unidadPartidoPor.get(0));
+                    List<HelperTableRow> unidadPP = helperTableManager.searchRows(helperTable, substanceTokens[5].trim(), columnNames);
+                    ra = new RelationshipAttribute(attDef, relationshipSubstance, unidadPP.get(0));
                     relationshipSubstance.getRelationshipAttributes().add(ra);
                 }
 

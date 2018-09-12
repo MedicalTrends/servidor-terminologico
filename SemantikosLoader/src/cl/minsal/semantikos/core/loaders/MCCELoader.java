@@ -32,14 +32,15 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
  */
 public class MCCELoader extends BaseLoader {
 
-    static int OFFSET = SubstanceLoader.fields.size() + MBLoader.fields.size() + MCLoader.fields.size();
+    static int OFFSET = SubstanceLoader.LENGHT + MBLoader.LENGHT + MCLoader.LENGHT;
 
     static
     {
+        fields = new LinkedHashMap<>();
         fields.put("CONCEPTO_ID", OFFSET + 0);
         fields.put("DESCRIPCION", OFFSET + 1);
-        fields.put("TIPO", OFFSET + 2);
-        fields.put("DESC_ABREVIADA", OFFSET + 3);
+        fields.put("DESC_ABREVIADA", OFFSET + 2);
+        fields.put("TIPO", OFFSET + 3);
         fields.put("ESTADO", OFFSET + 4);
         fields.put("SENSIBLE_MAYUSCULA", OFFSET + 5);
         fields.put("CREAC_NOMBRE", OFFSET + 6);
@@ -64,13 +65,12 @@ public class MCCELoader extends BaseLoader {
 
     public MCCELoader(Category category, User user) {
         super(category, user);
-
         nonUpdateableDefinitions.add(category.findRelationshipDefinitionsByName("Medicamento Clínico").get(0));
     }
 
     public void loadConceptFromFileLine(String line) throws LoadException {
 
-        String[] tokens = line.split(separator,-1);
+        tokens = line.split(separator,-1);
 
         /*Recuperando datos Concepto*/
 

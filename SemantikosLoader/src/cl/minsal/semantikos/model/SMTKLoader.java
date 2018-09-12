@@ -506,7 +506,29 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             MCLoader mcLoader = new MCLoader(category, user);
 
             checker.checkDataFile(this, mcLoader);
-            mcLoader.processConcepts(this);
+            //mcLoader.processConcepts(this);
+
+            category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico con Envase");
+
+            MCCELoader mcceLoader = new MCCELoader(category, user);
+
+            checker.checkDataFile(this, mcceLoader);
+            //mcceLoader.processConcepts(this);
+
+            category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Grupo de Familia de Producto");
+
+            GFPLoader gfpLoader = new GFPLoader(category, user);
+
+            checker.checkDataFile(this, gfpLoader);
+            //gfpLoader.processConcepts(this);
+
+            category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Familia de Productos");
+
+            FPLoader fpLoader = new FPLoader(category, user);
+
+            checker.checkDataFile(this, fpLoader);
+            fpLoader.processConcepts(this);
+
 
             //JOptionPane.showMessageDialog(null, "Carga de conceptos finalizada!");
             logger.info("Carga de conceptos finalizada!");

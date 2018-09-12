@@ -35,10 +35,11 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
  */
 public class FPLoader extends BaseLoader {
 
-    static int OFFSET = SubstanceLoader.fields.size() + MBLoader.fields.size() + MCLoader.fields.size() + MCCELoader.fields.size() + GFPLoader.fields.size();
+    static int OFFSET = SubstanceLoader.LENGHT + MBLoader.LENGHT + MCLoader.LENGHT + MCCELoader.LENGHT + GFPLoader.LENGHT;
 
     static
     {
+        fields = new LinkedHashMap<>();
         fields.put("CONCEPTO_ID", OFFSET + 0);
         fields.put("DESCRIPCION", OFFSET + 1);
         fields.put("DESC_ABREVIADA", OFFSET + 2);
@@ -52,27 +53,30 @@ public class FPLoader extends BaseLoader {
         fields.put("SCT_TERMINO", OFFSET + 10);
         fields.put("SINONIMO", OFFSET + 11);
         fields.put("GRUPOS_JERARQUICOS", OFFSET + 12);
-        fields.put("GRUPO_FAMILIA_PRODUCTO_DESC", OFFSET + 13);
-        fields.put("GRUPO_FAMILIA_GENERICA_DESC", OFFSET + 14);
+        fields.put("GRUPO_FAMILIA_PRODUCTO_FK", OFFSET + 13);
+        fields.put("GRUPO_FAMILIA_PRODUCTO_DESC", OFFSET + 14);
+        fields.put("GRUPO_FAMILIA_GENERICA_DESC", OFFSET + 15);
     }
 
     static int LENGHT = fields.size();
 
-    public FPLoader(User user) {
-        super(user);
-
-        Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Familia de Productos");
-        nonUpdateableDefinitions.add(category.findRelationshipDefinitionsByName(TargetDefinition.SUSTANCIA).get(0));
+    public FPLoader(Category category, User user) {
+        super(category, user);
     }
 
     public void loadConceptFromFileLine(String line) throws LoadException {
 
-        String[] tokens = line.split(separator,-1);
+        tokens = line.split(separator,-1);
 
         /*Recuperando datos Concepto*/
 
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
         String id = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
+
+        // Si esta linea no contiene un concepto retornar inmediatamente
+        if(StringUtils.isEmpty(id)) {
+            return;
+        }
 
         try {
 
@@ -163,7 +167,7 @@ public class FPLoader extends BaseLoader {
 
             if(!genericFamilyName.isEmpty()) {
 
-                basicTypeValue = new BasicTypeValue(genericFamilyName.trim().equals("Si"));
+                basicTypeValue = new BasicTypeValue(genericFamilyName.trim().equalsIgnoreCase("Si"));
                 relationshipDefinition = category.findRelationshipDefinitionsByName("Familia Genérica").get(0);
 
                 Relationship relationshipSaleCondition = new Relationship(newConcept, basicTypeValue, relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));

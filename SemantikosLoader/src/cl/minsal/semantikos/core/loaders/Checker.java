@@ -67,10 +67,6 @@ public class Checker extends BaseLoader {
                 start = SubstanceLoader.LENGHT + MBLoader.LENGHT + MCLoader.LENGHT;
                 end = start + loader.fields.size();
             }
-            if(loader instanceof MCCELoader) {
-                start = SubstanceLoader.LENGHT + MBLoader.LENGHT + MCLoader.LENGHT;
-                end = start + loader.fields.size();
-            }
             if(loader instanceof GFPLoader) {
                 start = SubstanceLoader.LENGHT + MBLoader.LENGHT + MCLoader.LENGHT + MCCELoader.LENGHT;
                 end = start + loader.fields.size();

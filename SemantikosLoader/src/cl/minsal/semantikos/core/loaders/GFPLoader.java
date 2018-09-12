@@ -35,10 +35,11 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
  */
 public class GFPLoader extends BaseLoader {
 
-    static int OFFSET = SubstanceLoader.fields.size() + MBLoader.fields.size() + MCLoader.fields.size() + MCCELoader.fields.size();
+    static int OFFSET = SubstanceLoader.LENGHT + MBLoader.LENGHT + MCLoader.LENGHT + MCCELoader.LENGHT;
 
     static
     {
+        fields = new LinkedHashMap<>();
         fields.put("CONCEPTO_ID", OFFSET + 0);
         fields.put("DESCRIPCION", OFFSET + 1);
         fields.put("DESC_ABREVIADA", OFFSET + 2);
@@ -57,26 +58,28 @@ public class GFPLoader extends BaseLoader {
 
     static int LENGHT = fields.size();
 
-    public GFPLoader(User user) {
-        super(user);
-
-        Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Grupo Familia de Producto");
-        nonUpdateableDefinitions.add(category.findRelationshipDefinitionsByName(TargetDefinition.SUSTANCIA).get(0));
+    public GFPLoader(Category category, User user) {
+        super(category, user);
     }
 
     public void loadConceptFromFileLine(String line) throws LoadException {
 
-        String[] tokens = line.split(separator,-1);
+        tokens = line.split(separator,-1);
 
         /*Recuperando datos Concepto*/
 
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
         String id = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
 
+        // Si esta linea no contiene un concepto retornar inmediatamente
+        if(StringUtils.isEmpty(id)) {
+            return;
+        }
+
         try {
 
             /*Estableciendo categoría*/
-            Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Grupo Familia de Producto");
+            Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Grupo de Familia de Producto");
 
             /*Recuperando tipo*/
             String type = tokens[fields.get("TIPO")];

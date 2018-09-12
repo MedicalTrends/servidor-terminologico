@@ -51,13 +51,15 @@ public abstract class BaseLoader {
 
     protected static String attrSeparator = "\\|";
 
+    protected static String relSeparator = "·";
+
     protected ConceptSMTKWeb oldConcept;
 
     protected ConceptSMTKWeb newConcept;
 
-    protected Map<String, ConceptSMTK> conceptsForPersist = new HashMap<>();
+    protected Map<String, ConceptSMTK> conceptsForPersist = new LinkedHashMap<>();
 
-    protected Map<String, Pair<ConceptSMTKWeb, ConceptSMTKWeb>> conceptsForUpdate = new HashMap<>();
+    protected Map<String, Pair<ConceptSMTKWeb, ConceptSMTKWeb>> conceptsForUpdate = new LinkedHashMap<>();
 
     protected String[] tokens;
 
@@ -245,6 +247,11 @@ public abstract class BaseLoader {
                 /*Si es una actualización*/
                 //verifyGeneralMARules(type);
 
+                // Si ya se procesó este concepto retornar inmediatamente
+                if(conceptsForUpdate.containsKey(conceptID)) {
+                    return;
+                }
+
                 String msg = "Cargando actualización concepto '" + conceptID + "'";
                 log(new LoadException(dataFile, conceptID, msg, LoadException.INFO, type));
 
@@ -266,6 +273,11 @@ public abstract class BaseLoader {
                 }
                 break;
             case "N":
+                // Si ya se procesó este concepto retornar inmediatamente
+                if(conceptsForPersist.containsKey(conceptID)) {
+                    return;
+                }
+
                 msg = "Creando nuevo concepto '" + conceptID + "'";
                 log(new LoadException(dataFile, conceptID, msg, LoadException.INFO, type));
 
@@ -372,6 +384,10 @@ public abstract class BaseLoader {
             case "M": // Si es de tipo mantención no se hace nada
                 break;
             case "A": // Si es de tipo actualización
+                // Si ya se procesó este concepto retornar inmediatamente
+                if(conceptsForUpdate.containsKey(conceptID)) {
+                    return;
+                }
                 // Si la multiplicidad es 1
                 if(relationship.getRelationshipDefinition().getMultiplicity().isSimple()) {
                     // Si existen relaciones para esta definición
@@ -414,16 +430,32 @@ public abstract class BaseLoader {
                 }
                 break;
             case "N": // Si es de tipo creación
-                if(!newConcept.getValidRelationshipsWebByRelationDefinition(relationship.getRelationshipDefinition()).isEmpty()) {
-                    // Si ya existe una relacion para esta definicion lanzar excepción
-                    String message = "Ya existe una relación para la definición: '" + relationship.getRelationshipDefinition().getName() + "'";
-                    throw new LoadException(dataFile, conceptID, message, ERROR, type);
+                // Si ya se procesó este concepto retornar inmediatamente
+                if(conceptsForPersist.containsKey(conceptID)) {
+                    return;
                 }
-                // Agregar la relación
-                String msg = "Se agrega relación '" + relationship.toString() + "'";
-                log(new LoadException(dataFile, conceptID, msg, INFO, type));
-                newConcept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
-                break;
+                // Si la multiplicidad es 1
+                if(relationship.getRelationshipDefinition().getMultiplicity().isSimple()) {
+                    if(!newConcept.getValidRelationshipsWebByRelationDefinition(relationship.getRelationshipDefinition()).isEmpty()) {
+                        // Si ya existe una relacion para esta definicion lanzar excepción
+                        String message = "Ya existe una relación para la definición: '" + relationship.getRelationshipDefinition().getName() + "'";
+                        throw new LoadException(dataFile, conceptID, message, ERROR, type);
+                    }
+                    else {
+                        // Agregar la relación
+                        String msg = "Se agrega relación '" + relationship.toString() + "'";
+                        log(new LoadException(dataFile, conceptID, msg, INFO, type));
+                        newConcept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
+                    }
+                }
+                // Si la multiplicidad es N
+                else {
+                    // Agregar la relación
+                    String msg = "Se agrega relación '" + relationship.toString() + "'";
+                    log(new LoadException(dataFile, conceptID, msg, INFO, type));
+                    newConcept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
+                    break;
+                }
         }
     }
 
@@ -443,11 +475,19 @@ public abstract class BaseLoader {
             case "M": // Si es de tipo mantención no se hace nada
                 break;
             case "A": // Si es de tipo actualización
+                // Si ya se procesó este concepto retornar inmediatamente
+                if(conceptsForUpdate.containsKey(conceptID)) {
+                    return;
+                }
                 String msg = "Carga Actualización Concepto '" + conceptID + "' OK";
                 log(new LoadException(dataFile, conceptID, msg, LoadException.INFO, type));
                 conceptsForUpdate.put(conceptID, new Pair<>(oldConcept, newConcept));
                 break;
             case "N": // Si es de tipo creación
+                // Si ya se procesó este concepto retornar inmediatamente
+                if(conceptsForPersist.containsKey(conceptID)) {
+                    return;
+                }
                 msg = "Carga Nuevo Concepto '" + conceptID + "' OK";
                 log(new LoadException(dataFile, conceptID, msg, LoadException.INFO, type));
                 conceptsForPersist.put(conceptID, newConcept);
@@ -503,7 +543,6 @@ public abstract class BaseLoader {
     public void persistAllConcepts(SMTKLoader smtkLoader) {
 
         smtkLoader.printInfo(new LoadLog("Persisitiendo Conceptos " + category, INFO));
-        String conceptID = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
         String type = StringUtils.normalizeSpaces(tokens[fields.get("TIPO")]).trim();
 
         smtkLoader.setConceptsProcessed(0);
@@ -513,11 +552,13 @@ public abstract class BaseLoader {
         while (it.hasNext()) {
 
             Map.Entry pair = (Map.Entry) it.next();
+            String conceptID = pair.getKey().toString();
 
             try {
-                String msg = "Persistiendo Concepto '" + conceptID + "'";
+                ConceptSMTK conceptSMTK = (ConceptSMTK) pair.getValue();
+                String msg = "Persistiendo Concepto '" + conceptSMTK.toString() + "'";
                 log(new LoadException(dataFile, conceptID, msg, INFO, "N"));
-                conceptManager.persist((ConceptSMTK) pair.getValue(), smtkLoader.getUser());
+                conceptManager.persist(conceptSMTK, smtkLoader.getUser());
                 smtkLoader.incrementConceptsProcessed(1);
             }
             catch (Exception e) {
@@ -535,12 +576,12 @@ public abstract class BaseLoader {
         while (it.hasNext()) {
 
             Map.Entry pair = (Map.Entry) it.next();
+            String conceptID = pair.getKey().toString();
 
             try {
-                String msg = "Actualizando Concepto '" + conceptID + "'";
-                log(new LoadException(dataFile, conceptID, msg, INFO, "A"));
-
                 Pair<ConceptSMTK, ConceptSMTK> concepts = (Pair<ConceptSMTK, ConceptSMTK>)pair.getValue();
+                String msg = "Actualizando Concepto '" + concepts.getFirst().toString() + "'";
+                log(new LoadException(dataFile, conceptID, msg, INFO, "A"));
 
                 conceptManager.update(concepts.getFirst(), concepts.getSecond(), smtkLoader.getUser());
 

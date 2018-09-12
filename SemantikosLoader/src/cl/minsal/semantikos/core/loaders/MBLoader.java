@@ -33,7 +33,7 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
  */
 public class MBLoader extends BaseLoader {
 
-    static int OFFSET = SubstanceLoader.fields.size();
+    static int OFFSET = SubstanceLoader.LENGHT;
 
     static {
         fields = new LinkedHashMap<>();
@@ -152,7 +152,7 @@ public class MBLoader extends BaseLoader {
             /*Recuperando Sustancias*/
             String substances = tokens[fields.get("SUSTANCIAS")];
 
-            String[] substancesTokens = substances.split(newline);
+            String[] substancesTokens = substances.split(relSeparator);
 
             for (String substanceToken : substancesTokens) {
 
