@@ -62,11 +62,11 @@ public class PCLoader extends BaseLoader {
         fields.put("LABORATORIO_DESC", OFFSET + 15);
         fields.put("FORM_FARM_EXT_DESC", OFFSET + 16);
         fields.put("SABOR_DESC", OFFSET + 17);
-        fields.put("FAMILIA_PRODUCTO_COD", OFFSET + 18);
-        fields.put("FAMILIA_PRODUCTO_DESC", OFFSET + 19);
-        fields.put("COMERCIALIZADO_CHILE_DESC", OFFSET + 20);
-        fields.put("PRODUCTO_ISP", OFFSET + 21);
-        fields.put("BIOEQUIVALENTES", OFFSET + 22);
+        //fields.put("FAMILIA_PRODUCTO_COD", OFFSET + 18);
+        fields.put("FAMILIA_PRODUCTO_DESC", OFFSET + 18);
+        fields.put("COMERCIALIZADO_CHILE_DESC", OFFSET + 19);
+        fields.put("PRODUCTO_ISP", OFFSET + 20);
+        fields.put("BIOEQUIVALENTES", OFFSET + 21);
     }
 
     static int LENGHT = fields.size();
@@ -89,6 +89,11 @@ public class PCLoader extends BaseLoader {
 
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
         String id = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
+
+        // Si esta linea no contiene un concepto retornar inmediatamente
+        if(StringUtils.isEmpty(id)) {
+            return;
+        }
 
         try {
 
@@ -181,7 +186,7 @@ public class PCLoader extends BaseLoader {
 
             /*Recuperando Medicamento Clínico*/
 
-            String mcName = tokens[fields.get("MEDICAMENTO_CLINICO")].replace("•","");
+            String mcName = tokens[fields.get("MEDICAMENTO_CLINICO_DESC")].replace("•","");
 
             if(!StringUtils.isEmpty(mcName)) {
 
@@ -365,6 +370,7 @@ public class PCLoader extends BaseLoader {
                             throw new LoadException(path.toString(), id, "Para agregar una relación a ISP, la dupla ProductoComercial-Regnum/RegAño deben ser únicos. Registro referenciado por concepto " + relationship.getSourceConcept().getDescriptionFavorite(), ERROR);
                         }
                         addRelationship(relationship, type);
+                        break;
                     }
                 }
             }

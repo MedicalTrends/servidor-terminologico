@@ -32,10 +32,11 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
  */
 public class PCCELoader extends BaseLoader {
 
-    static int OFFSET = SubstanceLoader.fields.size() + MBLoader.fields.size() + MCLoader.fields.size() + MCCELoader.fields.size() + GFPLoader.fields.size() + FPLoader.fields.size() + PCCELoader.fields.size();
+    static int OFFSET = SubstanceLoader.LENGHT + MBLoader.LENGHT + MCLoader.LENGHT + MCCELoader.LENGHT + GFPLoader.LENGHT + FPLoader.LENGHT + PCLoader.LENGHT;
 
     static
     {
+        fields = new LinkedHashMap<>();
         fields.put("CONCEPTO_ID", OFFSET + 0);
         fields.put("DESCRIPCION", OFFSET + 1);
         fields.put("DESC_ABREVIADA", OFFSET + 2);
@@ -61,11 +62,9 @@ public class PCCELoader extends BaseLoader {
 
     static int LENGHT = fields.size();
 
-    public PCCELoader(User user) {
+    public PCCELoader(Category category, User user) {
 
-        super(user);
-
-        Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Producto Comercial con Envase");
+        super(category, user);
 
         nonUpdateableDefinitions.add(category.findRelationshipDefinitionsByName("Producto Comercial").get(0));
         nonUpdateableDefinitions.add(category.findRelationshipDefinitionsByName("Medicamento Clínico con Envase").get(0));
@@ -73,12 +72,17 @@ public class PCCELoader extends BaseLoader {
 
     public void loadConceptFromFileLine(String line) throws LoadException {
 
-        String[] tokens = line.split(separator,-1);
+        tokens = line.split(separator,-1);
 
         /*Recuperando datos Concepto*/
 
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
         String id = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
+
+        // Si esta linea no contiene un concepto retornar inmediatamente
+        if(StringUtils.isEmpty(id)) {
+            return;
+        }
 
         try {
 

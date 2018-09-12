@@ -13,6 +13,7 @@ public class Main {
 
         try {
             smtkLoader.processMaster();
+            //smtkLoader.process();
         } catch (Exception e) {
             e.printStackTrace();
         }
