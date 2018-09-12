@@ -88,7 +88,7 @@ public class EntityLoader {
         try {
             fw = new FileWriter(path);
 
-            writer = new BufferedWriter(fw);
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "UTF-8"));
             writer.write("ID_CONCEPT;TIPO;MENSAJE");
             writer.write(newline);
             writer.flush();
