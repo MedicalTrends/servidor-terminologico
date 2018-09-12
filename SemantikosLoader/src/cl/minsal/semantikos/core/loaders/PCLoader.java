@@ -39,10 +39,11 @@ public class PCLoader extends BaseLoader {
 
     ISPFetcher ispFetcher = (ISPFetcher) ServiceLocator.getInstance().getService(ISPFetcher.class);
 
-    static int OFFSET = SubstanceLoader.fields.size() + MBLoader.fields.size() + MCLoader.fields.size() + MCCELoader.fields.size() + GFPLoader.fields.size() + FPLoader.fields.size();
+    static int OFFSET = SubstanceLoader.LENGHT + MBLoader.LENGHT + MCLoader.LENGHT + MCCELoader.LENGHT + GFPLoader.LENGHT + FPLoader.LENGHT;
 
     static
     {
+        fields = new LinkedHashMap<>();
         fields.put("CONCEPTO_ID", OFFSET + 0);
         fields.put("DESCRIPCION", OFFSET + 1);
         fields.put("DESC_ABREVIADA", OFFSET + 2);
@@ -70,10 +71,8 @@ public class PCLoader extends BaseLoader {
 
     static int LENGHT = fields.size();
 
-    public PCLoader(User user) {
-        super(user);
-
-        Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Producto Comercial");
+    public PCLoader(Category category, User user) {
+        super(category, user);
         nonUpdateableDefinitions.add(category.findRelationshipDefinitionsByName("Medicamento Clínico").get(0));
         nonUpdateableDefinitions.add(category.findRelationshipDefinitionsByName("Laboratorio Comercial").get(0));
     }
@@ -84,7 +83,7 @@ public class PCLoader extends BaseLoader {
 
     public void loadConceptFromFileLine(String line) throws LoadException {
 
-        String[] tokens = line.split(separator,-1);
+        tokens = line.split(separator,-1);
 
         /*Recuperando datos Concepto*/
 
@@ -295,7 +294,7 @@ public class PCLoader extends BaseLoader {
 
             String ispNames = tokens[fields.get("PRODUCTO_ISP")];
 
-            String[] ispTokens = ispNames.split("•");
+            String[] ispTokens = ispNames.split(relSeparator);
 
             for (String ispToken : ispTokens) {
 
