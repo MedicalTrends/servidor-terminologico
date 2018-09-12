@@ -35,7 +35,7 @@ public interface TargetDefinition extends IPersistentEntity {
 
     public static final String DB = "Dispositivo Básico";
 
-    public static final String MC_SPECIAL = "Medicamento Clínico Especial";
+    public static final String MC_SPECIAL = "Medicamento clínico especial";
 
     public static final String GTINGS1 = "Número GTIN";
 

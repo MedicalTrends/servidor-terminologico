@@ -50,8 +50,8 @@ public class MBLoader extends BaseLoader {
         fields.put("SCT_TERMINO", OFFSET + 10);
         fields.put("SINONIMO", OFFSET + 11);
         fields.put("GRUPOS_JERARQUICOS", OFFSET + 12);
-        fields.put("ORDEN", OFFSET + 13);
-        fields.put("SUSTANCIAS", OFFSET + 14);
+        //fields.put("ORDEN", OFFSET + 13);
+        fields.put("SUSTANCIAS", OFFSET + 13);
     }
 
     static int LENGHT = fields.size();

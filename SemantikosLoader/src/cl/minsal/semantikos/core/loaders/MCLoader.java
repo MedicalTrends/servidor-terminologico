@@ -36,6 +36,7 @@ public class MCLoader extends BaseLoader {
 
     static
     {
+        fields = new LinkedHashMap<>();
         fields.put("CONCEPTO_ID", OFFSET + 0);
         fields.put("DESCRIPCION", OFFSET + 1);
         fields.put("DESC_ABREVIADA", OFFSET + 2);
@@ -69,27 +70,13 @@ public class MCLoader extends BaseLoader {
 
     static int LENGHT = fields.size();
 
-    public static final Map<String, Integer> admViasFields;
-    static
-    {
-        admViasFields = new HashMap<String, Integer>();
-        admViasFields.put("FK_CCTNU_CONCEPTO_ID", 0);
-        admViasFields.put("CCTNU_CONCEPTO_ID", 1);
-        admViasFields.put("CCTVA_DESCRIPCION_USUARIO", 2);
-        admViasFields.put("CRTNU_ORDEN", 3);
-        admViasFields.put("ESTADO", 4);
-    }
-
-    public MCLoader(User user) {
-        super(user);
-
-        Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico");
+    public MCLoader(Category category, User user) {
+        super(category, user);
         nonUpdateableDefinitions.add(category.findRelationshipDefinitionsByName(TargetDefinition.MC_SPECIAL).get(0));
         nonUpdateableDefinitions.add(category.findRelationshipDefinitionsByName(TargetDefinition.SUSTANCIA).get(0));
         nonUpdateableDefinitions.add(category.findRelationshipDefinitionsByName(TargetDefinition.CANTIDAD_VOLUMEN_TOTAL).get(0));
         nonUpdateableDefinitions.add(category.findRelationshipDefinitionsByName(TargetDefinition.FFA).get(0));
     }
-
 
     public void loadConceptFromFileLine(String line) throws LoadException {
 
