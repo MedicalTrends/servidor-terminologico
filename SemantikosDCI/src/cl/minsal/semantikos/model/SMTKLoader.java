@@ -191,7 +191,7 @@ public class SMTKLoader {
             */
 
             initializer.checkISPDataFiles(this);
-            pcConceptLoaderFix.processConcepts(this);
+            pcConceptLoader.processConcepts(this);
 
             logger.info("Proceso finalizado!");
         } catch (LoadException e1) {
