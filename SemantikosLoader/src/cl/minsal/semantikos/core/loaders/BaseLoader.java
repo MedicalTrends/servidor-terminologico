@@ -157,8 +157,8 @@ public abstract class BaseLoader {
 
         try {
             fw = new FileWriter(path);
-
-            writer = new BufferedWriter(fw);
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "UTF-8"));
+            //writer = new BufferedWriter(fw);
             writer.write("CONCEPTO_ID;TIPO;STATUS;MENSAJE");
             writer.write(newline);
             writer.flush();
