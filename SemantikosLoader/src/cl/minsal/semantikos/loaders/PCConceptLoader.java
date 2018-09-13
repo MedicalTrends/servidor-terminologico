@@ -129,7 +129,7 @@ public class PCConceptLoader extends EntityLoader {
             }
 
             /*Recuperando descripcion FSN*/
-            term = descriptionFavourite.getTerm()+" ("+tagSMTK.getName()+")";
+            term = descriptionFavourite.getTerm() + " ("+tagSMTK.getName()+")";
             descriptionType = DescriptionType.FSN;
 
             Description descriptionFSN = new Description(conceptSMTK, term, descriptionType);
