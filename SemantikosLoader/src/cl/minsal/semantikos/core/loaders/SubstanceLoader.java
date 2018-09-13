@@ -155,6 +155,26 @@ public class SubstanceLoader extends BaseLoader {
 
             addRelationship(relationshipMarketed, type);
 
+            /* Obteniendo DCI */
+            String dciName = tokens[fields.get("DCI_TERMINO")];
+
+            if(!StringUtils.isEmpty(dciName)) {
+
+                relationshipDefinition = category.findRelationshipDefinitionsByName("Mapear a DCI").get(0);
+
+                HelperTable helperTable = (HelperTable) relationshipDefinition.getTargetDefinition();
+
+                List<HelperTableRow> dci = helperTableManager.searchRows(helperTable, dciName);
+
+                if(dci.isEmpty()) {
+                    throw new LoadException(path.toString(), id, "No existe un dci con glosa: "+dciName, ERROR);
+                }
+
+                Relationship relationshipDCI = new Relationship(newConcept, dci.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
+
+                addRelationship(relationshipDCI, type);
+            }
+
             addConcept(type);
         }
         catch (Exception e) {

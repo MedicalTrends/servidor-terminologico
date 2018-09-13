@@ -167,7 +167,7 @@
                             <Premain-Class>cl.minsal.semantikos.utils.ObjectSizeFetcher</Premain-Class>
                         </manifestEntries-->
                     </archive>
-                    <finalName>SemantikosLoader</finalName>
+                    <finalName>SemantikosTFC</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>

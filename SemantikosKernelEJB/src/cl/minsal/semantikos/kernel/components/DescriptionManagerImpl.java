@@ -310,7 +310,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
     @Override
     public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
-        term = descriptionSearchBR.escapeSpecialCharacters(term);
+        // NO SE DEBE NORMALIZAR EL PATRÓN PUESTO QUE ES UNA BÚSQUEDA PLANA!! (SIN ÍNDICE DE TEXTO)
+        //term = descriptionSearchBR.escapeSpecialCharacters(term);
         List<Description> descriptions = descriptionDAO.searchDescriptionsByTerm(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));

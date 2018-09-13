@@ -209,28 +209,29 @@ public abstract class BaseLoader {
 
     public void verifyGeneralMARules(String type) throws LoadException {
 
+
         String conceptID = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
+        String msg = "Verificando Concepto '" + conceptID + "'";
+        log(new LoadException(dataFile, conceptID, msg, INFO, type));
 
         try {
             ConceptSMTK conceptSMTK = conceptManager.getConceptByCONCEPT_ID(conceptID);
 
-            String msg = "Verificando Concepto '" + conceptSMTK.toString() + "'";
-            log(new LoadException(dataFile, conceptID, msg, LoadException.INFO));
-
             /*Recuperando descripcion preferida*/
             String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
 
-            if(conceptSMTK.getDescriptionFavorite().getTerm().equals(term)) {
-                String message = "La descripción '" + term + "' no coincide con la descripción preferida '" + conceptSMTK.getDescriptionFavorite().getTerm() + "'";
-                throw new LoadException(dataFile, conceptID, message, ERROR, type);
+            if(!conceptSMTK.getDescriptionFavorite().getTerm().equals(term)) {
+                String message = "Concepto: '" + conceptSMTK + "' La descripción suministrada: '" + term + "' no coincide con la descripción preferida";
+                log(new LoadException(dataFile, conceptID, message, ERROR, type));
+                return;
             }
         }
         catch (EJBException e) {
-            throw new LoadException(dataFile, conceptID, e.getMessage(), ERROR, type);
+            log(new LoadException(dataFile, conceptID, e.getMessage(), ERROR, type));
         }
 
-        String msg = "Concepto '" + conceptID + "' OK";
-        log(new LoadException(dataFile, conceptID, msg, LoadException.INFO));
+        msg = "Concepto '" + conceptID + "' OK";
+        log(new LoadException(dataFile, conceptID, msg, INFO, type));
     }
 
     public void init(String type, Category category, String term) throws LoadException {
@@ -241,7 +242,7 @@ public abstract class BaseLoader {
         switch (type) {
             case "M":
                 //...solo Verificar concepto y salir
-                //verifyGeneralMARules(type);
+                verifyGeneralMARules(type);
                 break;
             case "A":
                 /*Si es una actualización*/

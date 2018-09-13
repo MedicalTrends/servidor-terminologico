@@ -492,49 +492,49 @@ public class SMTKLoader extends SwingWorker<Void, String> {
             SubstanceLoader substanceLoader = new SubstanceLoader(category, user);
 
             checker.checkDataFile(this, substanceLoader);
-            //substanceLoader.processConcepts(this);
+            substanceLoader.processConcepts(this);
 
             category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Básico");
 
             MBLoader mbLoader = new MBLoader(category, user);
 
             checker.checkDataFile(this, mbLoader);
-            //mbLoader.processConcepts(this);
+            mbLoader.processConcepts(this);
 
             category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico");
 
             MCLoader mcLoader = new MCLoader(category, user);
 
             checker.checkDataFile(this, mcLoader);
-            //mcLoader.processConcepts(this);
+            mcLoader.processConcepts(this);
 
             category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico con Envase");
 
             MCCELoader mcceLoader = new MCCELoader(category, user);
 
             checker.checkDataFile(this, mcceLoader);
-            //mcceLoader.processConcepts(this);
+            mcceLoader.processConcepts(this);
 
             category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Grupo de Familia de Producto");
 
             GFPLoader gfpLoader = new GFPLoader(category, user);
 
             checker.checkDataFile(this, gfpLoader);
-            //gfpLoader.processConcepts(this);
+            gfpLoader.processConcepts(this);
 
             category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Familia de Productos");
 
             FPLoader fpLoader = new FPLoader(category, user);
 
             checker.checkDataFile(this, fpLoader);
-            //fpLoader.processConcepts(this);
+            fpLoader.processConcepts(this);
 
             category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Producto Comercial");
 
             PCLoader pcLoader = new PCLoader(category, user);
 
             checker.checkDataFile(this, pcLoader);
-            //pcLoader.processConcepts(this);
+            pcLoader.processConcepts(this);
 
             category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Producto Comercial con Envase");
 
