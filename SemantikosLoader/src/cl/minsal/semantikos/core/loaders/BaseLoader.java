@@ -209,7 +209,6 @@ public abstract class BaseLoader {
 
     public void verifyGeneralMARules(String type) throws LoadException {
 
-
         String conceptID = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
         String msg = "Verificando Concepto '" + conceptID + "'";
         log(new LoadException(dataFile, conceptID, msg, INFO, type));
@@ -228,6 +227,7 @@ public abstract class BaseLoader {
         }
         catch (EJBException e) {
             log(new LoadException(dataFile, conceptID, e.getMessage(), ERROR, type));
+            return;
         }
 
         msg = "Concepto '" + conceptID + "' OK";
