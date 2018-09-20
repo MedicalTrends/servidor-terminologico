@@ -49,19 +49,19 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/jboss/jbosssx-client -->
-        <!--dependency>
+        <dependency>
             <groupId>jboss</groupId>
             <artifactId>jbosssx-client</artifactId>
             <version>4.2.2.GA</version>
-        </dependency-->
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/jboss/jbosssx -->
-        <dependency>
+        <!--dependency>
             <groupId>jboss</groupId>
             <artifactId>jbosssx</artifactId>
             <version>3.2.3</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency-->
 
         <!-- https://mvnrepository.com/artifact/org.jboss.as/jboss-as-security -->
         <!--dependency>

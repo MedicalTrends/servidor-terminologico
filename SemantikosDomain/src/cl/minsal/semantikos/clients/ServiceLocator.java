@@ -10,8 +10,6 @@ import org.jboss.ejb.client.EJBClientContext;
 import org.jboss.ejb.client.PropertiesBasedEJBClientConfiguration;
 import org.jboss.ejb.client.remoting.ConfigBasedEJBClientContextSelector;
 import org.jboss.security.ClientLoginModule;
-import org.jboss.security.auth.spi.DatabaseServerLoginModule;
-import org.jboss.security.auth.spi.UsersRolesLoginModule;
 
 import javax.naming.*;
 import javax.security.auth.login.Configuration;
@@ -77,8 +75,8 @@ public class ServiceLocator {
 
         props = new Properties();
         props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-        props.put("remote.connection.default.username", "user@admin.cl");
-        props.put("remote.connection.default.password", "1234567z");
+        //props.put("remote.connection.default.username", "user@admin.cl");
+        //props.put("remote.connection.default.password", "1234567z");
         //props.put("jboss.naming.client.ejb.context", "true");
         //props.setProperty("org.jboss.ejb.client.scoped.context", "true");
         props.put("jboss.naming.client.ejb.context", "true");
