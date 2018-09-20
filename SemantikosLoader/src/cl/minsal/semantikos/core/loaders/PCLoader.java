@@ -30,6 +30,7 @@ import java.util.*;
 
 import static cl.minsal.semantikos.model.LoadLog.ERROR;
 import static cl.minsal.semantikos.model.LoadLog.INFO;
+import static cl.minsal.semantikos.model.LoadLog.WARNING;
 import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN;
 
 /**
@@ -90,6 +91,9 @@ public class PCLoader extends BaseLoader {
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
         String id = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
 
+        /*Recuperando tipo*/
+        String type = tokens[fields.get("TIPO")];
+
         // Si esta linea no contiene un concepto retornar inmediatamente
         if(StringUtils.isEmpty(id)) {
             return;
@@ -99,9 +103,6 @@ public class PCLoader extends BaseLoader {
 
             /*Estableciendo categoría*/
             Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Producto Comercial");
-
-            /*Recuperando tipo*/
-            String type = tokens[fields.get("TIPO")];
 
             /*Recuperando descripcion preferida*/
             String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
@@ -127,7 +128,7 @@ public class PCLoader extends BaseLoader {
             ConceptSCT conceptSCT = snomedCTManager.getConceptByID(idConceptSCT);
 
             if(conceptSCT == null) {
-                throw new LoadException(path.toString(), id, "Relación referencia a concepto SCT inexistente", ERROR);
+                throw new LoadException(path.toString(), id, "Relación referencia a concepto SCT inexistente", ERROR, type);
             }
 
             /**Se obtiene la definición de relacion SNOMED CT**/
@@ -148,7 +149,7 @@ public class PCLoader extends BaseLoader {
                     List<HelperTableRow> relationshipTypes = helperTableManager.searchRows(helperTable, relationshipType);
 
                     if (relationshipTypes.size() == 0) {
-                        throw new LoadException(path.toString(), id, "No existe un tipo de relación de nombre: "+relationshipType, ERROR);
+                        throw new LoadException(path.toString(), id, "No existe un tipo de relación de nombre: "+relationshipType, ERROR, type);
                     }
 
                     ra = new RelationshipAttribute(attDef1, relationshipSnomed, relationshipTypes.get(0));
@@ -195,11 +196,11 @@ public class PCLoader extends BaseLoader {
                 List<Description> mc = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mcName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico")}), null);
 
                 if(mc.isEmpty()) {
-                    throw new LoadException(path.toString(), id, "No existe un MC con preferida: "+mcName, ERROR);
+                    throw new LoadException(path.toString(), id, "No existe un MC con preferida: "+mcName, ERROR, type);
                 }
 
                 if(!mc.get(0).getConceptSMTK().isModeled()) {
-                    throw new LoadException(path.toString(), id, "EL MC: "+mcName+" no está modelado, se descarta este MC", ERROR);
+                    throw new LoadException(path.toString(), id, "EL MC: "+mcName+" no está modelado, se descarta este MC", ERROR, type);
                 }
 
                 Relationship relationshipMC = new Relationship(newConcept, mc.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
@@ -219,11 +220,11 @@ public class PCLoader extends BaseLoader {
 
                 if(fp.isEmpty()) {
                     //SMTKLoader.logError(new LoadException(path.toString(), id, "No existe una FP con preferida: "+gfpName, ERROR));
-                    throw new LoadException(path.toString(), id, "No existe una FP con preferida: "+gfpName, ERROR);
+                    throw new LoadException(path.toString(), id, "No existe una FP con preferida: "+gfpName, ERROR, type);
                 }
 
                 if(!fp.get(0).getConceptSMTK().isModeled()) {
-                    throw new LoadException(path.toString(), id, "La FP: "+gfpName+" no está modelado, se descarta este MC", ERROR);
+                    throw new LoadException(path.toString(), id, "La FP: "+gfpName+" no está modelado, se descarta este MC", ERROR, type);
                 }
 
                 Relationship relationshipFP = new Relationship(newConcept, fp.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
@@ -243,7 +244,7 @@ public class PCLoader extends BaseLoader {
                 List<HelperTableRow> flavour = helperTableManager.searchRows(helperTable, flavourName);
 
                 if(flavour.isEmpty()) {
-                    throw new LoadException(path.toString(), id, "No existe un sabor con glosa: "+flavourName, ERROR);
+                    throw new LoadException(path.toString(), id, "No existe un sabor con glosa: "+flavourName, ERROR, type);
                 }
 
                 Relationship relationshipFlavour = new Relationship(newConcept, flavour.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
@@ -264,7 +265,7 @@ public class PCLoader extends BaseLoader {
                 List<HelperTableRow> commercialLab = helperTableManager.searchRows(helperTable, commercialLabName);
 
                 if(commercialLab.isEmpty()) {
-                    throw new LoadException(path.toString(), id, "No existe un laboratorio comercial con glosa: "+commercialLabName, ERROR);
+                    throw new LoadException(path.toString(), id, "No existe un laboratorio comercial con glosa: "+commercialLabName, ERROR, type);
                 }
 
                 Relationship relationshipCommercialLab = new Relationship(newConcept, commercialLab.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
@@ -285,7 +286,7 @@ public class PCLoader extends BaseLoader {
                 List<HelperTableRow> ffe = helperTableManager.searchRows(helperTable, ffeName);
 
                 if(ffe.isEmpty()) {
-                    throw new LoadException(path.toString(), id, "No existe una FFE con glosa: "+ffeName, ERROR);
+                    throw new LoadException(path.toString(), id, "No existe una FFE con glosa: "+ffeName, ERROR, type);
                 }
 
                 Relationship relationshipFFE = new Relationship(newConcept, ffe.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
@@ -344,7 +345,8 @@ public class PCLoader extends BaseLoader {
                             }
                             if(count==2) {
                                 SMTKLoader.logWarning(new LoadLog("Registro ISP Falló para: "+regnumRegano, INFO));
-                                break;
+                                log(new LoadException(path.toString(), id, "Registro ISP Falló para: '" + regnumRegano + "'", WARNING, type));
+                                //break;
                             }
                         } catch (Exception e) {
                             // handle exception
@@ -367,7 +369,7 @@ public class PCLoader extends BaseLoader {
                      */
                     for (Relationship relationship : relationshipManager.findRelationshipsLike(relationshipDefinition,ispRecord)) {
                         if(relationship.getRelationshipDefinition().isISP()) {
-                            throw new LoadException(path.toString(), id, "Para agregar una relación a ISP, la dupla ProductoComercial-Regnum/RegAño deben ser únicos. Registro referenciado por concepto " + relationship.getSourceConcept().getDescriptionFavorite(), ERROR);
+                            throw new LoadException(path.toString(), id, "Para agregar una relación a ISP, el par ProductoComercial-Regnum/RegAño deben ser únicos. Registro referenciado por concepto " + relationship.getSourceConcept().getDescriptionFavorite(), ERROR, type);
                         }
                         addRelationship(relationship, type);
                         break;
@@ -379,7 +381,7 @@ public class PCLoader extends BaseLoader {
 
         }
         catch (Exception e) {
-            throw new LoadException(path.toString(), id, "Error desconocido: "+e.toString(), ERROR);
+            throw new LoadException(path.toString(), id, "Error desconocido: "+e.toString(), ERROR, type);
         }
 
     }

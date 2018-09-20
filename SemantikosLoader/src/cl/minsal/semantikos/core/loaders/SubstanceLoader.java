@@ -72,13 +72,18 @@ public class SubstanceLoader extends BaseLoader {
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
         String id = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
 
+        /*Recuperando tipo*/
+        String type = tokens[fields.get("TIPO")];
+
+        // Si esta linea no contiene un concepto retornar inmediatamente
+        if(StringUtils.isEmpty(id)) {
+            return;
+        }
+
         try {
 
             /*Estableciendo categoría*/
             Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia");
-
-            /*Recuperando tipo*/
-            String type = tokens[fields.get("TIPO")];
 
             /*Recuperando descripcion preferida*/
             String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
@@ -108,7 +113,7 @@ public class SubstanceLoader extends BaseLoader {
                 ConceptSCT conceptSCT = snomedCTManager.getConceptByID(idConceptSCT);
 
                 if (conceptSCT == null) {
-                    throw new LoadException(path.toString(), id, "Relación referencia a concepto SCT inexistente", ERROR);
+                    throw new LoadException(path.toString(), id, "Relación referencia a concepto SCT inexistente", ERROR, type);
                 }
 
                 /**Se obtiene la definición de relacion SNOMED CT**/
@@ -127,7 +132,7 @@ public class SubstanceLoader extends BaseLoader {
                         RelationshipAttribute ra;
 
                         if (relationshipTypes.size() == 0) {
-                            throw new LoadException(path.toString(), id, "No existe un tipo de relación de nombre: " + relationshipType, ERROR);
+                            throw new LoadException(path.toString(), id, "No existe un tipo de relación de nombre: " + relationshipType, ERROR, type);
                         }
 
                         ra = new RelationshipAttribute(attDef, relationshipSnomed, relationshipTypes.get(0));
@@ -167,7 +172,7 @@ public class SubstanceLoader extends BaseLoader {
                 List<HelperTableRow> dci = helperTableManager.searchRows(helperTable, dciName);
 
                 if(dci.isEmpty()) {
-                    throw new LoadException(path.toString(), id, "No existe un dci con glosa: "+dciName, ERROR);
+                    throw new LoadException(path.toString(), id, "No existe un dci con glosa: "+dciName, ERROR, type);
                 }
 
                 Relationship relationshipDCI = new Relationship(newConcept, dci.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
@@ -178,7 +183,7 @@ public class SubstanceLoader extends BaseLoader {
             addConcept(type);
         }
         catch (Exception e) {
-            throw new LoadException(path.toString(), id, e.toString(), ERROR);
+            throw new LoadException(path.toString(), id, e.toString(), ERROR, type);
         }
     }
 

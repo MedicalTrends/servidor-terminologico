@@ -25,6 +25,8 @@ public class LoadLog extends Throwable {
 
     public static final String INFO = "INFO";
 
+    public static final String WARNING = "WARNING";
+
     public String getMessage() {
         return message;
     }

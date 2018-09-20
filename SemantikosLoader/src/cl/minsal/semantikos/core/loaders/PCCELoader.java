@@ -79,15 +79,15 @@ public class PCCELoader extends BaseLoader {
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
         String id = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
 
+        /*Recuperando tipo*/
+        String type = tokens[fields.get("TIPO")];
+
         // Si esta linea no contiene un concepto retornar inmediatamente
         if(StringUtils.isEmpty(id)) {
             return;
         }
 
         try {
-
-            /*Recuperando tipo*/
-            String type = tokens[fields.get("TIPO")];
 
             /*Recuperando descripcion preferida*/
             String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
@@ -113,7 +113,7 @@ public class PCCELoader extends BaseLoader {
             ConceptSCT conceptSCT = snomedCTManager.getConceptByID(idConceptSCT);
 
             if(conceptSCT == null) {
-                throw new LoadException(path.toString(), id, "Relación referencia a concepto SCT inexistente", ERROR);
+                throw new LoadException(path.toString(), id, "Relación referencia a concepto SCT inexistente", ERROR, type);
             }
 
             /**Se obtiene la definición de relacion SNOMED CT**/
@@ -134,7 +134,7 @@ public class PCCELoader extends BaseLoader {
                     List<HelperTableRow> relationshipTypes = helperTableManager.searchRows(helperTable, relationshipType);
 
                     if (relationshipTypes.size() == 0) {
-                        throw new LoadException(path.toString(), id, "No existe un tipo de relación de nombre: "+relationshipType, ERROR);
+                        throw new LoadException(path.toString(), id, "No existe un tipo de relación de nombre: "+relationshipType, ERROR, type);
                     }
 
                     ra = new RelationshipAttribute(attDef1, relationshipSnomed, relationshipTypes.get(0));
@@ -173,11 +173,11 @@ public class PCCELoader extends BaseLoader {
                 List<Description> pc = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(pcName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Producto Comercial")}), null);
 
                 if(pc.isEmpty()) {
-                    throw new LoadException(path.toString(), id, "No existe un PC con preferida: "+pcName, ERROR);
+                    throw new LoadException(path.toString(), id, "No existe un PC con preferida: "+pcName, ERROR, type);
                 }
 
                 if(!pc.get(0).getConceptSMTK().isModeled()) {
-                    throw new LoadException(path.toString(), id, "EL PC: "+pcName+" no está modelado, se descarta este MC", ERROR);
+                    throw new LoadException(path.toString(), id, "EL PC: "+pcName+" no está modelado, se descarta este MC", ERROR, type);
                 }
 
                 Relationship relationshipPC = new Relationship(newConcept, pc.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
@@ -196,11 +196,11 @@ public class PCCELoader extends BaseLoader {
                 List<Description> mcce = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mcceName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico con Envase")}), null);
 
                 if(mcce.isEmpty()) {
-                    throw new LoadException(path.toString(), id, "No existe un MCCE con preferida: "+pcName, ERROR);
+                    throw new LoadException(path.toString(), id, "No existe un MCCE con preferida: " + pcName, ERROR, type);
                 }
 
                 if(!mcce.get(0).getConceptSMTK().isModeled()) {
-                    throw new LoadException(path.toString(), id, "EL MCCE: "+pcName+" no está modelado, se descarta este MC", ERROR);
+                    throw new LoadException(path.toString(), id, "EL MCCE: " + pcName + " no está modelado, se descarta este MC", ERROR, type);
                 }
 
                 Relationship relationshipMCCE = new Relationship(newConcept, mcce.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
@@ -220,7 +220,7 @@ public class PCCELoader extends BaseLoader {
             addConcept(type);
         }
         catch (Exception e) {
-            throw new LoadException(path.toString(), id, "Error desconocido: "+e.toString(), ERROR);
+            throw new LoadException(path.toString(), id, "Error desconocido: "+e.toString(), ERROR, type);
         }
 
     }

@@ -50,7 +50,7 @@ public class Checker extends BaseLoader {
             List<String> fields = (List<String>) (Object) Arrays.asList(loader.fields.keySet().toArray());
             int start = 0, end = 0;
 
-            //Se calculan los offsets
+            //Se calculan los offsets de acuerdo a la categoría
             if(loader instanceof SubstanceLoader) {
                 start = 0;
                 end = start + SubstanceLoader.LENGHT;
@@ -116,5 +116,16 @@ public class Checker extends BaseLoader {
     @Override
     public void loadConceptFromFileLine(String line) throws LoadException {
 
+    }
+
+    //header es el archivo
+    public void assertHeader(List<String> fields, List<String> header) throws LoadException {
+        for (String field : fields) {
+            if(!header.contains(field)) {
+                String msg = "El encabezado no contiene el campo '" + field + "'";
+                LoadException ex = new LoadException(dataFile, "", msg, ERROR);
+                throw ex;
+            }
+        }
     }
 }

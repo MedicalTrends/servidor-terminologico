@@ -70,13 +70,18 @@ public class MBLoader extends BaseLoader {
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
         String id = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
 
+        /*Recuperando tipo*/
+        String type = tokens[fields.get("TIPO")];
+
+        // Si esta linea no contiene un concepto retornar inmediatamente
+        if(StringUtils.isEmpty(id)) {
+            return;
+        }
+
         try {
 
             /*Estableciendo categoría*/
             Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Básico");
-
-            /*Recuperando tipo*/
-            String type = tokens[fields.get("TIPO")];
 
             /*Recuperando descripcion preferida*/
             String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
@@ -102,7 +107,7 @@ public class MBLoader extends BaseLoader {
             ConceptSCT conceptSCT = snomedCTManager.getConceptByID(idConceptSCT);
 
             if(conceptSCT == null) {
-                throw new LoadException(path.toString(), id, "Relación referencia a concepto SCT inexistente", ERROR);
+                throw new LoadException(path.toString(), id, "Relación referencia a concepto SCT inexistente", ERROR, type);
             }
 
             /**Se obtiene la definición de relacion SNOMED CT**/
@@ -121,7 +126,7 @@ public class MBLoader extends BaseLoader {
                     RelationshipAttribute ra;
 
                     if (relationshipTypes.size() == 0) {
-                        throw new LoadException(path.toString(), id, "No existe un tipo de relación de nombre: " + relationshipType, ERROR);
+                        throw new LoadException(path.toString(), id, "No existe un tipo de relación de nombre: " + relationshipType, ERROR, type);
                     }
 
                     ra = new RelationshipAttribute(attDef, relationshipSnomed, relationshipTypes.get(0));
@@ -167,11 +172,11 @@ public class MBLoader extends BaseLoader {
                 List<Description> substanceList = descriptionManager.searchDescriptionsPerfectMatch(termFavourite, Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia")}), null);
 
                 if(substanceList.isEmpty()) {
-                    throw new LoadException(path.toString(), id, "No existe una sustancia con preferida: " + termFavourite, ERROR);
+                    throw new LoadException(path.toString(), id, "No existe una sustancia con preferida: " + termFavourite, ERROR, type);
                 }
 
                 if(!substanceList.get(0).getConceptSMTK().isModeled()) {
-                    throw new LoadException(path.toString(), id, "La sustancia: " + termFavourite + " no está modelada, se descarta este MB", ERROR);
+                    throw new LoadException(path.toString(), id, "La sustancia: " + termFavourite + " no está modelada, se descarta este MB", ERROR, type);
                 }
 
                 Relationship relationshipSubstance = new Relationship(newConcept, substanceList.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
@@ -194,7 +199,7 @@ public class MBLoader extends BaseLoader {
             addConcept(type);
         }
         catch (Exception e) {
-            throw new LoadException(path.toString(), id, "Error desconocido: " + e.toString(), ERROR);
+            throw new LoadException(path.toString(), id, "Error desconocido: " + e.toString(), ERROR, type);
         }
 
     }

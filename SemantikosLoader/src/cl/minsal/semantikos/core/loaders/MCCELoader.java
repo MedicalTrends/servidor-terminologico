@@ -77,13 +77,18 @@ public class MCCELoader extends BaseLoader {
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
         String id = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
 
+        /*Recuperando tipo*/
+        String type = tokens[fields.get("TIPO")];
+
+        // Si esta linea no contiene un concepto retornar inmediatamente
+        if(StringUtils.isEmpty(id)) {
+            return;
+        }
+
         try {
 
             /*Estableciendo categoría*/
             Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico con Envase");
-
-            /*Recuperando tipo*/
-            String type = tokens[fields.get("TIPO")];
 
             /*Recuperando descripcion preferida*/
             String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
@@ -109,7 +114,7 @@ public class MCCELoader extends BaseLoader {
             ConceptSCT conceptSCT = snomedCTManager.getConceptByID(idConceptSCT);
 
             if(conceptSCT == null) {
-                throw new LoadException(path.toString(), id, "Relación referencia a concepto SCT inexistente", ERROR);
+                throw new LoadException(path.toString(), id, "Relación referencia a concepto SCT inexistente", ERROR, type);
             }
 
             /**Se obtiene la definición de relacion SNOMED CT**/
@@ -130,7 +135,7 @@ public class MCCELoader extends BaseLoader {
                     List<HelperTableRow> relationshipTypes = helperTableManager.searchRows(helperTable, relationshipType);
 
                     if (relationshipTypes.size() == 0) {
-                        throw new LoadException(path.toString(), id, "No existe un tipo de relación de nombre: " + relationshipType, ERROR);
+                        throw new LoadException(path.toString(), id, "No existe un tipo de relación de nombre: " + relationshipType, ERROR, type);
                     }
 
                     ra = new RelationshipAttribute(attDef1, relationshipSnomed, relationshipTypes.get(0));
@@ -170,11 +175,11 @@ public class MCCELoader extends BaseLoader {
                 List<Description> mc = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mcName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico")}), null);
 
                 if(mc.isEmpty()) {
-                    throw new LoadException(path.toString(), id, "No existe un MC con preferida: "+mcName, ERROR);
+                    throw new LoadException(path.toString(), id, "No existe un MC con preferida: "+mcName, ERROR, type);
                 }
 
                 if(!mc.get(0).getConceptSMTK().isModeled()) {
-                    throw new LoadException(path.toString(), id, "EL MC: "+mcName+" no está modelado, se descarta este MC", ERROR);
+                    throw new LoadException(path.toString(), id, "EL MC: "+mcName+" no está modelado, se descarta este MC", ERROR, type);
                 }
 
                 Relationship relationshipMC = new Relationship(newConcept, mc.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
@@ -195,7 +200,7 @@ public class MCCELoader extends BaseLoader {
                 List<HelperTableRow> prescriptionState = helperTableManager.searchRows(helperTable, mcceTypeName);
 
                 if(prescriptionState.isEmpty()) {
-                    throw new LoadException(path.toString(), id, "No existe un Tipo de MCCE con glosa: "+mcceTypeName, ERROR);
+                    throw new LoadException(path.toString(), id, "No existe un Tipo de MCCE con glosa: "+mcceTypeName, ERROR, type);
                 }
 
                 Relationship relationshipSaleCondition = new Relationship(newConcept, prescriptionState.get(0), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
@@ -275,7 +280,7 @@ public class MCCELoader extends BaseLoader {
                 String volumeUnitName = tokens[fields.get("VOLUMEN_TOTAL_UNIDAD_DESC")];
 
                 if(volumeUnitName.isEmpty()) {
-                    throw new LoadException(path.toString(), id, "No se ha especificado una unidad para esta cantidad de volumen total: "+volumeName, ERROR);
+                    throw new LoadException(path.toString(), id, "No se ha especificado una unidad para esta cantidad de volumen total: "+volumeName, ERROR, type);
                 }
 
                 helperTable = (HelperTable) attDef.getTargetDefinition();
@@ -292,7 +297,7 @@ public class MCCELoader extends BaseLoader {
 
         }
         catch (Exception e) {
-            throw new LoadException(path.toString(), id, "Error desconocido: "+e.toString(), ERROR);
+            throw new LoadException(path.toString(), id, "Error desconocido: "+e.toString(), ERROR, type);
         }
 
     }

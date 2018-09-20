@@ -73,6 +73,9 @@ public class FPLoader extends BaseLoader {
         /*Se recuperan los datos relevantes. El resto serán calculados por el componente de negocio*/
         String id = StringUtils.normalizeSpaces(tokens[fields.get("CONCEPTO_ID")]).trim();
 
+        /*Recuperando tipo*/
+        String type = tokens[fields.get("TIPO")];
+
         // Si esta linea no contiene un concepto retornar inmediatamente
         if(StringUtils.isEmpty(id)) {
             return;
@@ -82,9 +85,6 @@ public class FPLoader extends BaseLoader {
 
             /*Estableciendo categoría*/
             Category category = CategoryFactory.getInstance().findCategoryByName("Fármacos - Familia de Productos");
-
-            /*Recuperando tipo*/
-            String type = tokens[fields.get("TIPO")];
 
             /*Recuperando descripcion preferida*/
             String term = StringUtils.normalizeSpaces(tokens[fields.get("DESCRIPCION")]).trim();
@@ -114,7 +114,7 @@ public class FPLoader extends BaseLoader {
                 ConceptSCT conceptSCT = snomedCTManager.getConceptByID(idConceptSCT);
 
                 if (conceptSCT == null) {
-                    throw new LoadException(path.toString(), id, "Relación referencia a concepto SCT inexistente", ERROR);
+                    throw new LoadException(path.toString(), id, "Relación referencia a concepto SCT inexistente", ERROR, type);
                 }
 
                 /**Se obtiene la definición de relacion SNOMED CT**/
@@ -133,7 +133,7 @@ public class FPLoader extends BaseLoader {
                         RelationshipAttribute ra;
 
                         if (relationshipTypes.size() == 0) {
-                            throw new LoadException(path.toString(), id, "No existe un tipo de relación de nombre: " + relationshipType, ERROR);
+                            throw new LoadException(path.toString(), id, "No existe un tipo de relación de nombre: " + relationshipType, ERROR, type);
                         }
 
                         ra = new RelationshipAttribute(attDef, relationshipSnomed, relationshipTypes.get(0));
@@ -186,12 +186,12 @@ public class FPLoader extends BaseLoader {
                 List<Description> gfp = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(gfpName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Grupo de Familia de Producto")}), null);
 
                 if(gfp.isEmpty()) {
-                    SMTKLoader.logError(new LoadException(path.toString(), id, "No existe un GFP con preferida: "+gfpName, ERROR));
+                    SMTKLoader.logError(new LoadException(path.toString(), id, "No existe un GFP con preferida: "+gfpName, ERROR, type));
                     //throw new LoadException(path.toString(), id, "No existe un GFP con preferida: "+gfpName, ERROR);
                 }
                 else {
                     if(!gfp.get(0).getConceptSMTK().isModeled()) {
-                        throw new LoadException(path.toString(), id, "EL GFP: "+gfpName+" no está modelado, se descarta esta FP", ERROR);
+                        throw new LoadException(path.toString(), id, "EL GFP: "+gfpName+" no está modelado, se descarta esta FP", ERROR, type);
                     }
 
                     Relationship relationshipGFP = new Relationship(newConcept, gfp.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));
@@ -203,7 +203,7 @@ public class FPLoader extends BaseLoader {
 
         }
         catch (Exception e) {
-            throw new LoadException(path.toString(), id, "Error desconocido: "+e.toString(), ERROR);
+            throw new LoadException(path.toString(), id, "Error desconocido: "+e.toString(), ERROR, type);
         }
     }
 

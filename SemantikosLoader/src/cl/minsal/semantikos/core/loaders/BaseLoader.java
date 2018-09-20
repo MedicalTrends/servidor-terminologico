@@ -61,6 +61,8 @@ public abstract class BaseLoader {
 
     protected Map<String, Pair<ConceptSMTKWeb, ConceptSMTKWeb>> conceptsForUpdate = new LinkedHashMap<>();
 
+    protected Map<String, ConceptSMTK> conceptsWithErrors = new LinkedHashMap<>();
+
     protected String[] tokens;
 
     public static Map<String, Integer> fields = new HashMap<>();
@@ -142,17 +144,6 @@ public abstract class BaseLoader {
         }
     }
 
-    //header es el archivo
-    public void assertHeader(List<String> fields, List<String> header) throws LoadException {
-        for (String field : fields) {
-            if(!header.contains(field)) {
-                String msg = "El encabezado no contiene el campo '" + field + "'";
-                LoadException ex = new LoadException(dataFile, "", msg, ERROR);
-                throw ex;
-            }
-        }
-    }
-
     public void initWriter(String path) throws LoadException {
 
         try {
@@ -177,7 +168,12 @@ public abstract class BaseLoader {
         }
     }
 
-    public static void log(LoadException ex) {
+    public void log(LoadException ex) {
+
+        // Si ya se ha procesado este concepto retornar inmediatamente
+        if(conceptsWithErrors.containsKey(ex.getIdConcept())) {
+            return;
+        }
 
         try {
             if(ex.getMessage() != null) {
@@ -195,6 +191,7 @@ public abstract class BaseLoader {
             switch (ex.getType()) {
                 case LoadException.ERROR:
                     level = Level.SEVERE;
+                    conceptsWithErrors.put(ex.getIdConcept(), newConcept);
                     break;
                 case LoadException.INFO:
                     level = Level.INFO;
