@@ -32,9 +32,25 @@
 
                             <div class="ui-g">
 
-                                <div class="ui-g-12 ui-md-12 ui-lg-12">
-
+                                <div class="ui-g-12 ui-md-9 ui-lg-10">
                                     <h1 class="first-heading" style="font-weight: 400; color: #212121">#{generalBrowserBean.category.name}</h1>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-3 ui-lg-2">
+                                    <p:commandButton icon="fa fa-plus" style="float: right;"
+                                                     type="submit" process="browserForm" styleClass="loader-trigger"
+                                                     actionListener="#{generalBrowserBean.createConcept}"
+                                                     rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">
+                                    </p:commandButton>
+                                    <p:commandButton icon="fa fa-filter" styleClass="filter-btn" id="filter-btn"
+                                                     onclick="listenOnClick();" style="float: right;">
+                                    </p:commandButton>
+                                    <p:commandButton ajax="false" icon="fa fa-file-excel-o" style="float: right;">
+                                        <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
+                                    </p:commandButton>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
 
                                     <p:separator styleClass="heading-separator" style="visibility: hidden"/>
 
@@ -53,33 +69,6 @@
 
                                 </div>
 
-                            </div>
-
-                        </div>
-
-                        <div class="ui-fluid ui-g">
-
-                            <div class="ui-g-0 ui-md-0 ui-g-6" style="padding: 0px"></div>
-
-                            <div class="ui-g-12 ui-md-2 ui-lg-2">
-                                <p:selectBooleanButton value="#{generalBrowserBean.showSettings}" onLabel="Filtrar"
-                                                       styleClass="filter-btn" id="filter-btn" onchange="listenOnClick();"
-                                                       offLabel="Filtrar" onIcon="fa fa-filter" offIcon="fa fa-filter">
-                                </p:selectBooleanButton>
-                            </div>
-
-                            <div class="ui-g-12 ui-md-2 ui-lg-2">
-                                <p:commandButton value="Exportar" ajax="false" icon="fa fa-file-excel-o">
-                                    <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
-                                </p:commandButton>
-                            </div>
-
-                            <div class="ui-g-12 ui-md-2 ui-lg-2">
-                                <p:commandButton value="Crear Nuevo" icon="fa fa-plus"
-                                                 type="submit" process="browserForm" styleClass="loader-trigger"
-                                                 actionListener="#{generalBrowserBean.createConcept}"
-                                                 rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">
-                                </p:commandButton>
                             </div>
 
                         </div>

@@ -175,6 +175,8 @@ public class BrowserSCTBean implements Serializable {
      */
     public void executeQuery() {
 
+        guestPreferences.setTheme("teal");
+
         init = currentTimeMillis();
 
         /**

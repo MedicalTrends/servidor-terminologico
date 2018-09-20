@@ -19,7 +19,12 @@
             <div class="nano-content right-panel-scroll-content">
 
                 <div class="layout-rightpanel-header">
-                    <div class="weather-day">Filtros</div>
+                    <div class="weather-day" style="float: left">Filtros</div>
+                    <p:commandLink oncomplete="listenOnClick();"
+                                   style="float: right; color: white">
+                        <i class="fa fa-lg fa-close"/>
+                    </p:commandLink>
+
                 </div>
 
                 <div class="layout-rightpanel-content" style="padding: 0px">
@@ -199,20 +204,7 @@
 
                         </p:tabView>
 
-                        <div class="ui-fluid">
-
-                            <div class="ui-g">
-                                <div class="ui-g-12 ui-md-12 ui-lg-12">
-                                    <p:commandButton value="Cerrar" oncomplete="listenOnClick();"
-                                                     actionListener="#{generalBrowserBean.setShowSettings(false)}"
-                                                     update="@(.filter-btn)"/>
-                                </div>
-                            </div>
-
-                        </div>
-
                     </h:form>
-
 
                 </div>
             </div>

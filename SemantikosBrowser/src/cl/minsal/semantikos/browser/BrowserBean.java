@@ -136,6 +136,8 @@ public class BrowserBean implements Serializable {
 
     private CircularFifoQueue<Target> circularFifoQueue;
 
+    private boolean snomedCT;
+
     @PostConstruct
     protected void initialize() {
 
@@ -148,6 +150,8 @@ public class BrowserBean implements Serializable {
         //ServiceLocator.getInstance().closeContext();
         tags = tagManager.getAllTags();
         categories = categoryManager.getCategories();
+
+        setSnomedCT(false);
 
         initMenu();
 
@@ -414,6 +418,18 @@ public class BrowserBean implements Serializable {
         }
     }
 
+    public void redirectSnomedCT() throws IOException {
+
+        ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+
+        if(snomedCT) {
+            eContext.redirect(eContext.getRequestContextPath() + "/views/snomed/concepts");
+        }
+        else {
+            eContext.redirect(eContext.getRequestContextPath() + "/views/concepts");
+        }
+    }
+
     public void invalidate() throws IOException {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -614,6 +630,14 @@ public class BrowserBean implements Serializable {
 
     public void setPerformSearch(boolean performSearch) {
         this.performSearch = performSearch;
+    }
+
+    public boolean isSnomedCT() {
+        return snomedCT;
+    }
+
+    public void setSnomedCT(boolean snomedCT) {
+        this.snomedCT = snomedCT;
     }
 
 }

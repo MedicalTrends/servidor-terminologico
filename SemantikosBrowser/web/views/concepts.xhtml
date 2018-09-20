@@ -34,9 +34,9 @@
 
                                 <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                                    <div class="ui-inputgroup">
+                                    <p:outputPanel styleClass="ui-inputgroup search-2">
 
-                                        <p:outputPanel styleClass="search" style="width: 100%">
+                                        <h:panelGroup styleClass="md-inputfield">
 
                                             <p:autoComplete minQueryLength="3"
                                                             id="search"
@@ -73,32 +73,47 @@
 
                                                 <p:ajax event="itemSelect"
                                                         listener="#{browserBean.test()}"
-                                                        update="@(.conceptPanel),@(.search)"
+                                                        update="@(.conceptPanel),@(.search-2)"
                                                         process="@this"/>
 
                                             </p:autoComplete>
 
-                                            <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
-                                                <i class="fa fa-search fa-lg" />
-                                            </p:outputPanel>
+                                            <p:commandLink styleClass="search-button-tiny" icon="fa fa-search" style="color: #3F51B5"
+                                                           rendered="#{browserBean.descriptionSelected eq null}">
+                                                <i class="fa fa-lg fa-search"/>
+                                            </p:commandLink>
 
                                             <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
                                                 <p:commandLink process="@this" style="color: #aaa;"
-                                                               update="@(.search)" oncomplete="listenSearchOnClickEvent();"
+                                                               update="@(.search-2)" oncomplete="listenSearchOnClickEvent();"
                                                                action="#{browserBean.setDescriptionSelected(null)}">
                                                     <i class="fa fa-close fa-lg" />
                                                 </p:commandLink>
                                             </p:outputPanel>
 
-                                        </p:outputPanel>
+                                            <p:commandLink style="color: #3F51B5" onclick="listenOnClick();" rendered="false">
+                                                <i class="fa fa-lg fa-filter"/>
+                                            </p:commandLink>
 
-                                        <p:commandButton styleClass="search-button-tiny" icon="fa fa-search" style="bottom: 8px; width: 2.4em" />
+                                        </h:panelGroup>
 
-                                    </div>
+                                    </p:outputPanel>
 
                                 </div>
 
-                                <div class="ui-g-0 ui-md-6 ui-lg-8" style="padding-left: 0px; padding-right: 0px"></div>
+                                <div class="ui-g-12 ui-md-3 ui-lg-2">
+
+                                    <p:selectBooleanCheckbox style="width: 100%"
+                                                             value="#{browserBean.snomedCT}"
+                                                             itemLabel="Snomed-CT">
+                                        <p:ajax event="change"
+                                                listener="#{browserBean.redirectSnomedCT()}"
+                                                process="@this" />
+                                    </p:selectBooleanCheckbox>
+
+                                </div>
+
+                                <div class="ui-g-0 ui-md-3 ui-lg-6" style="padding-left: 0px; padding-right: 0px"></div>
 
                                 <div class="ui-g-12 ui-md-3 ui-lg-2">
 
