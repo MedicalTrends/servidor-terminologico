@@ -132,6 +132,7 @@ public class ConceptManagerImpl implements ConceptManager {
         /* En este momento se está listo para persistir el concepto (sus atributos básicos) */
         conceptDAO.persistConceptAttributes(conceptSMTK, user);
         conceptSMTK.setConceptID(IDGenerator.generator(String.valueOf(conceptSMTK.getId()),IDGenerator.TYPE_CONCEPT));
+        //conceptSMTK.setConceptID(generateConceptId(conceptSMTK));
         new ConceptCreationBR().br105DIN(conceptSMTK);
         conceptDAO.update(conceptSMTK);
 
@@ -320,8 +321,11 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public String generateConceptId(long id) {
-        return IDGenerator.generator(String.valueOf(id),IDGenerator.TYPE_CONCEPT);
+    public String generateConceptId(ConceptSMTK concept) {
+        /*Se debe definir una semilla completamente dependiente del negocio (la pk no es dependiente del negocio!!)*/
+        String seed = String.valueOf(concept.getId());
+        //String seed = String.valueOf(concept.getCategory().getName().concat(concept.getDescriptionFavorite().getTerm()).hashCode());
+        return IDGenerator.generator(seed,IDGenerator.TYPE_CONCEPT);
     }
 
     @Override

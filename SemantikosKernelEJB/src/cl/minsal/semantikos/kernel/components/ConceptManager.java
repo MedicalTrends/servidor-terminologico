@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.users.User;
 import org.jboss.ejb3.annotation.SecurityDomain;
@@ -133,7 +134,7 @@ public interface ConceptManager {
      *
      * @return retorna un String con el Concept ID generado
      */
-    public String generateConceptId(long id);
+    public String generateConceptId(ConceptSMTK conceptSMTK);
 
     /**
      * Este método es responsable de recuperar todas las descripciones (vigentes) del concepto.

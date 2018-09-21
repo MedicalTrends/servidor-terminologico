@@ -130,7 +130,7 @@ public interface ConceptManager {
      *
      * @return retorna un String con el Concept ID generado
      */
-    public String generateConceptId(long id);
+    public String generateConceptId(ConceptSMTK conceptSMTK);
 
     /**
      * Este método es responsable de recuperar todas las descripciones (vigentes) del concepto.
