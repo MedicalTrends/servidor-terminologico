@@ -196,11 +196,11 @@ public class PCCELoader extends BaseLoader {
                 List<Description> mcce = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mcceName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico con Envase")}), null);
 
                 if(mcce.isEmpty()) {
-                    throw new LoadException(path.toString(), id, "No existe un MCCE con preferida: " + pcName, ERROR, type);
+                    throw new LoadException(path.toString(), id, "No existe un MCCE con preferida: " + mcce, ERROR, type);
                 }
 
                 if(!mcce.get(0).getConceptSMTK().isModeled()) {
-                    throw new LoadException(path.toString(), id, "EL MCCE: " + pcName + " no está modelado, se descarta este MC", ERROR, type);
+                    throw new LoadException(path.toString(), id, "EL MCCE: " + mcce + " no está modelado, se descarta este MCCE", ERROR, type);
                 }
 
                 Relationship relationshipMCCE = new Relationship(newConcept, mcce.get(0).getConceptSMTK(), relationshipDefinition, new ArrayList<RelationshipAttribute>(), new Timestamp(System.currentTimeMillis()));

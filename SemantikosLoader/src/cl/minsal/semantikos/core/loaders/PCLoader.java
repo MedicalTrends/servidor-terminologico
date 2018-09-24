@@ -333,7 +333,7 @@ public class PCLoader extends BaseLoader {
                     ispRecord = new HelperTableRow(helperTable);
                     int count = 1;
 
-                    while(true) {
+                    while(count < 3) {
 
                         try {
                             //SMTKLoader.logWarning(new LoadLog((count)+"° intento solicitud registro ISP para: "+regnumRegano, INFO));
@@ -346,7 +346,7 @@ public class PCLoader extends BaseLoader {
                             if(count==2) {
                                 SMTKLoader.logWarning(new LoadLog("Registro ISP Falló para: "+regnumRegano, INFO));
                                 log(new LoadException(path.toString(), id, "Registro ISP Falló para: '" + regnumRegano + "'", WARNING, type));
-                                //break;
+                                break;
                             }
                         } catch (Exception e) {
                             // handle exception

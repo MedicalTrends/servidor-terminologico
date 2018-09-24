@@ -65,7 +65,7 @@ public class DescriptionSearchBR {
      */
     public String escapeSpecialCharacters(String pattern) {
 
-        /*
+
         List specialCharacters = Arrays.asList(SPECIAL_CHARACTERS);
 
         for (Object specialCharacter : specialCharacters) {
@@ -73,7 +73,6 @@ public class DescriptionSearchBR {
                 pattern = pattern.replace(specialCharacter.toString(), "\\"+specialCharacter.toString());
             }
         }
-        */
 
         pattern = Normalizer.normalize(pattern, Normalizer.Form.NFD);
         //pattern = pattern.toLowerCase();
@@ -90,7 +89,7 @@ public class DescriptionSearchBR {
             pattern = pattern.substring(1, pattern.length());
         }
 
-        pattern = pattern.replaceAll("([(,),\\[,\\],{,}])\\1+","$1");
+        //pattern = pattern.replaceAll("([(,),\\[,\\],{,}])\\1+","$1");
 
         return pattern;
     }
