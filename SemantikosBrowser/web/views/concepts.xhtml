@@ -101,33 +101,12 @@
 
                                 </div>
 
-                                <div class="ui-g-12 ui-md-3 ui-lg-2">
-
-                                    <p:selectBooleanCheckbox style="width: 100%"
-                                                             value="#{browserBean.snomedCT}"
-                                                             itemLabel="Snomed-CT">
-                                        <p:ajax event="change"
-                                                listener="#{browserBean.redirectSnomedCT()}"
-                                                process="@this" />
-                                    </p:selectBooleanCheckbox>
-
-                                </div>
-
-                                <div class="ui-g-0 ui-md-3 ui-lg-6" style="padding-left: 0px; padding-right: 0px"></div>
-
-                                <div class="ui-g-12 ui-md-3 ui-lg-2">
-
-                                    <p:commandButton value="Exportar" icon="fa fa-file-excel-o" ajax="false">
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                    <p:commandButton icon="fa fa-file-excel-o" ajax="false" style="float: right">
                                         <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
                                     </p:commandButton>
-
-                                </div>
-
-                                <div class="ui-g-12 ui-md-3 ui-lg-2">
-
-                                    <p:commandButton value="Filtrar" onclick="listenOnClick();" icon="fa fa-filter">
+                                    <p:commandButton onclick="listenOnClick();" icon="fa fa-filter" style="float: right">
                                     </p:commandButton>
-
                                 </div>
 
                                 <!--/p:panelGrid-->

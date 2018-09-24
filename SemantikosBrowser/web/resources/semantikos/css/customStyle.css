@@ -203,10 +203,10 @@
 }
 
 .ui-button.ui-button-icon-only.search-button-tiny {
-    border-radius: 10%;
-    width: 100%;
+    /*border-radius: 10% !important;*/
+    /*width: 2.4em !important;*/
     /*height: 100%;*/
-    height: 34px !important;
+    /*height: 27px !important;*/
 }
 
 .ui-fluid .ui-inputtext[size], .ui-fluid .ui-inputfield[size] {

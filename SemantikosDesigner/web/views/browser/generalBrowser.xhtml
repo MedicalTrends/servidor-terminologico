@@ -32,11 +32,8 @@
 
                             <div class="ui-g">
 
-                                <div class="ui-g-12 ui-md-9 ui-lg-10">
-                                    <h1 class="first-heading" style="font-weight: 400; color: #212121">#{generalBrowserBean.category.name}</h1>
-                                </div>
-
-                                <div class="ui-g-12 ui-md-3 ui-lg-2">
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                    <h1 class="first-heading" style="font-weight: 400; color: #212121; float: left">#{generalBrowserBean.category.name}</h1>
                                     <p:commandButton icon="fa fa-plus" style="float: right;"
                                                      type="submit" process="browserForm" styleClass="loader-trigger"
                                                      actionListener="#{generalBrowserBean.createConcept}"
@@ -51,8 +48,11 @@
                                 </div>
 
                                 <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                    <p:separator styleClass="heading-separator"/>
+                                </div>
 
-                                    <p:separator styleClass="heading-separator" style="visibility: hidden"/>
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
+
 
                                     <p:outputPanel styleClass="search" style="width: 100%">
 
