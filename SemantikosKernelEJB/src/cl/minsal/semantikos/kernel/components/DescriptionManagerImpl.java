@@ -310,7 +310,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     @Override
     public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
-        // NO SE DEBE NORMALIZAR EL PATRÓN PUESTO QUE ES UNA BÚSQUEDA PLANA!! (SIN ÍNDICE DE TEXTO)
+        // NO SE DEBE NORMALIZAR EL PATRÓN YA QUE ES UNA BÚSQUEDA PLANA!! (SIN ÍNDICE DE TEXTO)
         //term = descriptionSearchBR.escapeSpecialCharacters(term);
         List<Description> descriptions = descriptionDAO.searchDescriptionsByTerm(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
@@ -397,20 +397,25 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
             int offSet = SUGGESTTION_SIZE - descriptions.size();
 
-            descriptions.addAll(descriptionDAO.searchDescriptionsTruncateMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets), 0, offSet));
+            List<Description> otherDescriptions = descriptionDAO.searchDescriptionsTruncateMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets), 0, offSet);
+
+            for (Description otherDescription : otherDescriptions) {
+                if(!descriptions.contains(otherDescription)) {
+                    descriptions.add(otherDescription);
+                }
+            }
 
             if (descriptions.size() < SUGGESTTION_SIZE) {
 
                 offSet = SUGGESTTION_SIZE - descriptions.size();
 
-                List<Description> otherDescriptions = descriptionDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.removeStopWords(term), PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets), 0, offSet);
+                otherDescriptions = descriptionDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.removeStopWords(term), PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets), 0, offSet);
 
                 for (Description otherDescription : otherDescriptions) {
                     if(!descriptions.contains(otherDescription)) {
                         descriptions.add(otherDescription);
                     }
                 }
-
             }
         }
 

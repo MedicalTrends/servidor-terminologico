@@ -65,7 +65,6 @@ public class DescriptionSearchBR {
      */
     public String escapeSpecialCharacters(String pattern) {
 
-
         List specialCharacters = Arrays.asList(SPECIAL_CHARACTERS);
 
         for (Object specialCharacter : specialCharacters) {

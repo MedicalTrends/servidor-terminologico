@@ -77,7 +77,7 @@ public abstract class BaseLoader {
     private static final String ENV = "master/";
     //private static final String ENV = "test/";
 
-    public static final String dataFile = ROOT + ENV + "TFC_1.4.txt";
+    public static String dataFile = ROOT + ENV + "TFC_1.5.txt";
 
     public BaseLoader(User user) {
         this.user = user;
@@ -117,7 +117,8 @@ public abstract class BaseLoader {
         this.path = Paths.get(path);
         try {
             //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
-            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(path)));
+            //reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(path)));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF-8"));
 
             // 1a Línea contiene la categoría, saltar a la siguiente línea
             reader.readLine();
@@ -601,6 +602,14 @@ public abstract class BaseLoader {
         smtkLoader.setProcessed(0);
         loadAllConcepts(smtkLoader);
         persistAllConcepts(smtkLoader);
+    }
+
+    public static String getDataFile() {
+        return dataFile;
+    }
+
+    public static void setDataFile(String dataFile) {
+        BaseLoader.dataFile = dataFile;
     }
 
 }
