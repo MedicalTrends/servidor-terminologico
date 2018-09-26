@@ -7,9 +7,27 @@ import cl.minsal.semantikos.model.SMTKLoader;
  */
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         SMTKLoader smtkLoader = new SMTKLoader();
+
+        if(args.length < 2) {
+            throw new Exception("Debe especificar archivo de entrada");
+        }
+
+        if(args.length > 2) {
+            throw new Exception("Debe especificar solo un parametro");
+        }
+
+        // Capturar parametros de PARAMILS
+        for (int i = 0; i < args.length; ++i) {
+            if (args[i].equals("-file")) {
+                smtkLoader.setIspPath(args[++i].toString());
+            }
+            else {
+                throw new Exception("Parametro no valido. Especifique un parametro valido");
+            }
+        }
 
         try {
             smtkLoader.process();

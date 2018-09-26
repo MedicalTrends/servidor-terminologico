@@ -51,6 +51,7 @@ public class EntityLoader {
         try {
             //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
             reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(path)));
+
             /**
              * Descartar header
              */

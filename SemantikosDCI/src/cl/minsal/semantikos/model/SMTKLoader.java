@@ -42,7 +42,7 @@ public class SMTKLoader {
     /*Datafiles Sustancias*/
     public static final String SUBSTANCE_PATH= ROOT+ENV_DRUGS+SUBSTANCE+"01_Sustancias.Base.txt";
 
-    public static final String ISP_PATH= ROOT+ENV_DRUGS+SUBSTANCE+"isp.txt";
+    public static String ISP_PATH= ROOT+ENV_DRUGS+SUBSTANCE+"isp.txt";
 
     private CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
     private TagSMTKManager tagSMTKManager = (TagSMTKManager) ServiceLocator.getInstance().getService(TagSMTKManager.class);
@@ -67,6 +67,14 @@ public class SMTKLoader {
     private int total = 0;
     private int processed = 0;
     private int updated = 0;
+
+    public static String getIspPath() {
+        return ISP_PATH;
+    }
+
+    public static void setIspPath(String ispPath) {
+        ISP_PATH = ispPath;
+    }
 
     public int getUpdated() {
         return updated;
