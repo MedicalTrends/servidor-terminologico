@@ -203,7 +203,7 @@ public class SMTKLoader {
 
             logger.info("Proceso finalizado!");
         } catch (LoadException e1) {
-            JOptionPane.showMessageDialog(null, e1.getMessage());
+            //JOptionPane.showMessageDialog(null, e1.getMessage());
             e1.printStackTrace();
         } catch (IOException e1) {
             e1.printStackTrace();

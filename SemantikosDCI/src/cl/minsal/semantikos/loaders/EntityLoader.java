@@ -50,8 +50,8 @@ public class EntityLoader {
         this.path = Paths.get(path);
         try {
             //reader = Files.newBufferedReader(this.path, Charset.defaultCharset());
-            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(path)));
-
+            //reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(path)));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF-8"));
             /**
              * Descartar header
              */

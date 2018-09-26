@@ -16,7 +16,7 @@ public class Main {
         }
 
         if(args.length > 2) {
-            throw new Exception("Debe especificar solo un parametro");
+            throw new Exception("Debe especificar solo un parametro. Si ha especificado solo un parametro, asegurese de que no contenga espacios");
         }
 
         // Capturar parametros de PARAMILS
