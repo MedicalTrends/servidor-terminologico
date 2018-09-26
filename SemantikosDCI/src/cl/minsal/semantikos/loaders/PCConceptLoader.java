@@ -22,6 +22,8 @@ import cl.minsal.semantikos.modelweb.Pair;
 import cl.minsal.semantikos.modelweb.RelationshipWeb;
 import cl.minsal.semantikos.util.StringUtils;
 
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.sql.Timestamp;
 import java.text.Collator;
 import java.text.ParseException;
@@ -301,7 +303,7 @@ public class PCConceptLoader extends EntityLoader {
         try {
 
             initReader(smtkLoader.ISP_PATH);
-            initWriter("Fármacos - Producto Comercial");
+            initWriter("ISP.csv");
 
             String line;
 
