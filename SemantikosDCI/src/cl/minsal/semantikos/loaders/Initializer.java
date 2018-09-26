@@ -25,6 +25,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 public class Initializer extends EntityLoader {
 
+    private static final String UTF_8 = "UTF-8";
+
     public void checkSubstanceDataFiles(SMTKLoader smtkLoader) throws LoadException, IOException {
 
         try {
@@ -105,8 +107,13 @@ public class Initializer extends EntityLoader {
 
             List<String> fields = (List<String>) (Object) Arrays.asList(PCConceptLoader.pcConceptFields.keySet().toArray());
 
-            if(!assertHeader(fields, cleanHeader)) {
-                throw new LoadException(smtkLoader.ISP_PATH, "", "El encabezado del archivo no es válido", ERROR);
+            // ASSERT HEADER
+            for (String field : cleanHeader) {
+                if(!fields.contains(field)) {
+                    String msg = "El encabezado no contiene el campo '" + field + "'. Lista ordenada de campos: " + fields.toString();
+                    LoadException ex = new LoadException(smtkLoader.ISP_PATH, "", msg, ERROR);
+                    throw ex;
+                }
             }
 
             while (reader.readLine() != null) lines++;
@@ -123,7 +130,6 @@ public class Initializer extends EntityLoader {
             throw e;
         }
     }
-
 
     String getFileExtension(String fileName) {
 
