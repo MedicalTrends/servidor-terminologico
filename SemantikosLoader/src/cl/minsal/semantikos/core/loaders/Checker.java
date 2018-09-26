@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.SMTKLoader;
 import cl.minsal.semantikos.model.users.User;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
@@ -32,7 +33,8 @@ public class Checker extends BaseLoader {
 
             smtkLoader.printInfo(new LoadLog("Comprobando estructura DataFiles '" + loader.category.getName() + "'", INFO));
 
-            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(loader.dataFile)));
+            //reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(loader.dataFile)));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(loader.dataFile), "UTF-8"));
 
             int lines = 1;
 

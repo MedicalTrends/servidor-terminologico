@@ -10,11 +10,11 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        if(args.length == 0) {
+        if(args.length < 2) {
             throw new Exception("Debe especificar archivo de entrada");
         }
 
-        if(args.length > 1) {
+        if(args.length > 2) {
             throw new Exception("Debe especificar solo un parametro");
         }
 
