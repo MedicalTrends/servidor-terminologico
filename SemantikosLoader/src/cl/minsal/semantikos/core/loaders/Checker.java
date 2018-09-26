@@ -19,6 +19,7 @@ import java.util.List;
 import static cl.minsal.semantikos.model.LoadLog.ERROR;
 import static cl.minsal.semantikos.model.LoadLog.INFO;
 import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Created by root on 12-06-17.
@@ -34,6 +35,20 @@ public class Checker extends BaseLoader {
         try {
 
             smtkLoader.printInfo(new LoadLog("Comprobando DataFiles '" + loader.category.getName() + "'", INFO));
+
+            if(!Arrays.asList(new String[]{"txt","csv"}).contains(getFileExtension(loader.dataFile))) {
+                throw new LoadException(loader.dataFile, "", "Extension de archivo no valida. Extensiones soportadas: '.csv' y '.txt'", ERROR);
+            }
+
+            String encoding = detectEncoding(loader.dataFile);
+
+            if(encoding.equals(EMPTY_STRING)) {
+                throw new LoadException(loader.dataFile, "", "Ninguna codificacion detectada. La codificacion del archivo debe ser 'UTF-8'", ERROR);
+            }
+
+            if(!encoding.equals(UTF_8)) {
+                throw new LoadException(loader.dataFile, "", "Codificacion detectada: " + encoding +". La codificacion del archivo debe ser 'UTF-8'", ERROR);
+            }
 
             //reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(loader.dataFile)));
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(loader.dataFile), "UTF-8"));
