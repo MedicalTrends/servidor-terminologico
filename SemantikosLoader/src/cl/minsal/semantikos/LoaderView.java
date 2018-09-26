@@ -8,7 +8,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.SMTKLoader;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.utils.ObjectSizeFetcher;
-import org.ehcache.sizeof.SizeOf;
+//import org.ehcache.sizeof.SizeOf;
 
 import javax.swing.*;
 import java.awt.*;
