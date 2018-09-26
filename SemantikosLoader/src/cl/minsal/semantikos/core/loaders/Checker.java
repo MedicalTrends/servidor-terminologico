@@ -26,6 +26,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 public class Checker extends BaseLoader {
 
+    private static final String UTF_8 = "UTF-8";
+
     public Checker(User user) {
         super(user);
     }
@@ -141,7 +143,7 @@ public class Checker extends BaseLoader {
     public void assertHeader(List<String> fields, List<String> header) throws LoadException {
         for (String field : fields) {
             if(!header.contains(field)) {
-                String msg = "El encabezado no contiene el campo '" + field + "'";
+                String msg = "El encabezado del archivo no contiene el campo '" + field + "'. Lista ordenada de campos: " + fields.toString();
                 LoadException ex = new LoadException(dataFile, "", msg, ERROR);
                 throw ex;
             }

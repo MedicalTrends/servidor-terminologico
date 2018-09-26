@@ -27,11 +27,11 @@
             <type>jar</type>
         </dependency>
 
-        <dependency>
+        <!--dependency>
             <groupId>net.bull.javamelody</groupId>
             <artifactId>javamelody-core</artifactId>
             <version>1.59.0</version>
-        </dependency>
+        </dependency-->
 
         <dependency>
             <groupId>com.intellij</groupId>
@@ -64,26 +64,6 @@
                 </exclusion>
             </exclusions>
         </dependency-->
-
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>3.14</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/net.sf.supercsv/super-csv -->
-        <dependency>
-            <groupId>net.sf.supercsv</groupId>
-            <artifactId>super-csv</artifactId>
-            <version>2.4.0</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.ehcache/sizeof -->
-        <dependency>
-            <groupId>org.ehcache</groupId>
-            <artifactId>sizeof</artifactId>
-            <version>0.3.0</version>
-        </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.googlecode.juniversalchardet/juniversalchardet -->
         <dependency>
