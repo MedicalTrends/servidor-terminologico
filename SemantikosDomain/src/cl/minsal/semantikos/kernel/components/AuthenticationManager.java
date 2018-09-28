@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.users.User;
 
 import javax.naming.AuthenticationException;
 import javax.xml.ws.handler.MessageContext;
+import java.security.Principal;
 
 /**
  * @author Andrés Farías
@@ -13,6 +14,8 @@ import javax.xml.ws.handler.MessageContext;
 public interface AuthenticationManager {
 
     public static final int MAX_FAILED_ANSWER_ATTEMPTS = 2;
+
+    public Principal login();
 
     public boolean authenticate(String email, String password) throws AuthenticationException;
 

@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.users.User;
 import javax.ejb.Remote;
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 /**
  * @author Andrés Farías
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 public interface AuthenticationManager {
 
     public static final int MAX_FAILED_ANSWER_ATTEMPTS = 2;
+
+    public Principal login();
 
     public boolean authenticate(String email, String password, HttpServletRequest request) throws AuthenticationException;
 

@@ -9,12 +9,17 @@ import org.jboss.ejb3.annotation.SecurityDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.annotation.security.DeclareRoles;
+import javax.ejb.EJBContext;
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.InvocationContext;
 import javax.naming.AuthenticationException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.security.Principal;
 import java.util.Date;
 
 import javax.annotation.security.PermitAll;
@@ -46,7 +51,31 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
     @EJB
     private AuthDAO authDAO;
 
+    @Resource
+    private EJBContext context;
+
     long MAX_DURATION = MILLISECONDS.convert(5, MINUTES);
+
+    @AroundInvoke
+    protected Object webMethodWrapper(InvocationContext ctx) throws Exception {
+
+        try {
+            return ctx.proceed();
+        }
+        catch (Exception e) {
+            logger.error("El web service ha arrojado el siguiente error: " + e.getMessage(), e);
+        }
+        finally {
+        }
+
+        return null;
+    }
+
+    @Override
+    @PermitAll
+    public Principal login() {
+        return context.getCallerPrincipal();
+    }
 
     @PermitAll
     public boolean authenticate(String email, String password, HttpServletRequest request) throws AuthenticationException {

@@ -2,11 +2,13 @@ package cl.minsal.semantikos.clients; /**
  * Created by root on 15-05-17.
  */
 
+import cl.minsal.semantikos.kernel.components.AuthenticationManager;
 import org.jboss.ejb.client.ContextSelector;
 import org.jboss.ejb.client.EJBClientConfiguration;
 import org.jboss.ejb.client.EJBClientContext;
 import org.jboss.ejb.client.PropertiesBasedEJBClientConfiguration;
 import org.jboss.ejb.client.remoting.ConfigBasedEJBClientContextSelector;
+import org.jboss.security.SecurityAssociation;
 
 import javax.naming.*;
 import javax.security.auth.login.Configuration;
@@ -14,6 +16,7 @@ import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 
 import java.lang.reflect.Type;
+import java.security.Principal;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -110,6 +113,8 @@ public class ServiceLocator {
      */
     public Object getService(Type type) {
 
+        Principal principal = SecurityAssociation.getPrincipal();
+
         if (!servicesByName.containsKey(getServiceName(type))) {
             try {
                 lookupRemoteStatelessEJB(type);
@@ -139,14 +144,6 @@ public class ServiceLocator {
 
     public static void login(String userName, String password) throws LoginException {
 
-        /*
-        MyCallbackHandler handler = new MyCallbackHandler(userName, password);
-
-        loginContext = new LoginContext(Configuration.getConfiguration().getClass().getName(), handler);
-        loginContext.login();
-        */
-
-        //Properties p = new Properties();
         props = new Properties();
         props.put("endpoint.name", "client-endpoint");
         props.put("remote.connections", "default");
@@ -166,6 +163,9 @@ public class ServiceLocator {
 
         try {
             context = new InitialContext(props);
+            AuthenticationManager authenticationManager = (AuthenticationManager) getInstance().getService(AuthenticationManager.class);
+            Principal principal = authenticationManager.login();
+            SecurityAssociation.setPrincipal(principal);
         } catch (NamingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

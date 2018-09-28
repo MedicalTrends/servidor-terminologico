@@ -76,7 +76,6 @@ public class SearchService {
      * //@param ctx Contexto de invocacion
      * @throws Exception
      */
-
     @AroundInvoke
     protected Object webMethodWrapper(InvocationContext ctx) throws Exception {
 
