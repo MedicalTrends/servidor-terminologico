@@ -122,9 +122,15 @@ public class AuthenticationBean {
 
 
         } catch (IOException e) {
+            ServiceLocator.logout();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error intentando redirigir usuario a página de Inicio.", e.getMessage()));
             logger.error("Error intentando redirigir usuario a página de inicio {}", Constants.HOME_PAGE , e);
         } catch (LoginException e) {
+            ServiceLocator.logout();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al Ingresar!", e.getMessage()));
+            logger.error("Error trying to login", e);
+        } catch (Exception e) {
+            ServiceLocator.logout();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al Ingresar!", e.getMessage()));
             logger.error("Error trying to login", e);
         }
@@ -139,6 +145,7 @@ public class AuthenticationBean {
 
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
         context.getSessionMap().remove(AUTH_KEY);
+        ServiceLocator.logout();
 
         email = null;
         password = null;

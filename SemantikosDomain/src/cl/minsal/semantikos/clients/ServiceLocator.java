@@ -2,14 +2,11 @@ package cl.minsal.semantikos.clients; /**
  * Created by root on 15-05-17.
  */
 
-import cl.minsal.semantikos.kernel.components.AuthenticationManager;
-import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import org.jboss.ejb.client.ContextSelector;
 import org.jboss.ejb.client.EJBClientConfiguration;
 import org.jboss.ejb.client.EJBClientContext;
 import org.jboss.ejb.client.PropertiesBasedEJBClientConfiguration;
 import org.jboss.ejb.client.remoting.ConfigBasedEJBClientContextSelector;
-import org.jboss.security.ClientLoginModule;
 
 import javax.naming.*;
 import javax.security.auth.login.Configuration;
@@ -29,7 +26,7 @@ public class ServiceLocator {
     private static Properties props;
 
     /** Mapa de interfaces por su nombre. */
-    private Map<String, Object> servicesByName;
+    private static Map<String, Object> servicesByName;
 
     private static String APP_NAME = "SemantikosCentral/";
     private static String MODULE_NAME = "SemantikosKernelEJB/";
@@ -72,25 +69,6 @@ public class ServiceLocator {
     private ServiceLocator() {
 
         Configuration.setConfiguration(new DefaultJaasConfiguration());
-
-        props = new Properties();
-        props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-        //props.put("remote.connection.default.username", "user@admin.cl");
-        //props.put("remote.connection.default.password", "1234567z");
-        //props.put("jboss.naming.client.ejb.context", "true");
-        //props.setProperty("org.jboss.ejb.client.scoped.context", "true");
-        props.put("jboss.naming.client.ejb.context", "true");
-
-        try {
-            context = new InitialContext(props);
-            //context = new InitialContext(properties);
-            //Autenticar usuario guest para la posterior invocacion de componentes durante despliegue
-            //AuthenticationManager authManager = (AuthenticationManager) getService(AuthenticationManager.class);
-            //login("user@admin.cl", "1234567z");
-        } catch (NamingException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
         this.servicesByName = new ConcurrentHashMap<>();
     }
 
@@ -160,40 +138,49 @@ public class ServiceLocator {
     }
 
     public static void login(String userName, String password) throws LoginException {
+
         /*
-       * During the login process(i.e. when the login() method on the LoginContext is called),
-       * the control will be transferred to a CallbackHandler. The CallbackHandler will be
-       * responsible for populating the Callback object with the username and password, which
-       * will be later on used by the login process
-       *
-       * The "MyCallbackHandler" is your own class and you can give any name to it. MyCallbackHandler
-       * expects the username and password to be passed through its constructor, but this is NOT
-       * mandatory when you are writing your own callback handler.
-       *
-       *
-       */
         MyCallbackHandler handler = new MyCallbackHandler(userName, password);
 
-       /*
-        * Create a login context. Here, as the first parameter, you will specify which
-        * configuration(mentioned in the "authFile" above) will be used. Here we are specifying
-        * "someXYZLogin" as the configuration to be used. Note: This has to match the configuration
-        * specified in the someFilename.someExtension authFile above.
-        * The login context expects a CallbackHandler as the second parameter. Here we are specifying
-        * the instance of MyCallbackHandler created earlier. The "handle()" method of this handler
-        * will be called during the login process.
-        */
         loginContext = new LoginContext(Configuration.getConfiguration().getClass().getName(), handler);
-
-       /*
-        * Do the login
-        */
         loginContext.login();
+        */
 
-        //props.put(InitialContext.SECURITY_PRINCIPAL, "user@admin.cl");
-        //props.put(InitialContext.SECURITY_CREDENTIALS, "1234567z");
+        //Properties p = new Properties();
+        props = new Properties();
+        props.put("endpoint.name", "client-endpoint");
+        props.put("remote.connections", "default");
+        props.put("remote.connection.default.port", "4447");  // the default remoting port, replace if necessary
+        props.put("remote.connection.default.host", "192.168.0.194");  // the host, replace if necessary
+        props.put("remote.connectionprovider.create.options.org.xnio.Options.SSL_ENABLED", "false"); // the server defaults to SSL_ENABLED=false
+        props.put("remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOANONYMOUS", "false");
+        props.put("remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOPLAINTEXT", "false");
+        props.put("remote.connection.default.connect.options.org.xnio.Options.SASL_DISALLOWED_MECHANISMS", "false");
+        props.put("remote.connection.default.connect.options.org.jboss.remoting3.RemotingOptions.HEARTBEAT_INTERVAL", "60000");
+        props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+        props.put("org.jboss.ejb.client.scoped.context", "true"); // enable scoping here
 
-        System.out.println("Successfully logged in user: " + userName);
+        //these 2 lines below are not necessary, if security-realm is removed from remoting-connector
+        props.put("remote.connection.default.username", userName);
+        props.put("remote.connection.default.password", password);
+
+        try {
+            context = new InitialContext(props);
+        } catch (NamingException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void logout() {
+
+        try {
+            context.close();
+            servicesByName.clear();
+        } catch (NamingException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
 }

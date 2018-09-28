@@ -13,10 +13,10 @@ public class DefaultJaasConfiguration extends Configuration {
         Map options = new HashMap();
         AppConfigurationEntry[] entries =
                 {
-                        new AppConfigurationEntry(
+                        /*new AppConfigurationEntry(
                                 "org.jboss.security.auth.spi.DatabaseServerLoginModule",
                                 AppConfigurationEntry.LoginModuleControlFlag.REQUIRED,
-                                options),
+                                options),*/
                         new AppConfigurationEntry(
                                 "org.jboss.security.ClientLoginModule",
                                 AppConfigurationEntry.LoginModuleControlFlag.REQUIRED,

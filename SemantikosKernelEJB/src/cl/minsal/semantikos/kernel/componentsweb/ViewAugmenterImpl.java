@@ -8,12 +8,16 @@ import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
+import cl.minsal.semantikos.model.users.Roles;
 import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
 import cl.minsal.semantikos.modelweb.RelationshipAttributeDefinitionWeb;
 import cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb;
+import org.jboss.ejb3.annotation.SecurityDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.ArrayList;
@@ -27,6 +31,8 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
  * @author Andrés Farías on 10/5/16.
  */
 @Stateless
+@SecurityDomain("SemantikosDomain")
+@DeclareRoles({Roles.ADMINISTRATOR_ROLE, Roles.DESIGNER_ROLE, Roles.MODELER_ROLE, Roles.WS_CONSUMER_ROLE, Roles.REFSET_ADMIN_ROLE, Roles.QUERY_ROLE})
 public class ViewAugmenterImpl implements ViewAugmenter {
 
     @EJB
@@ -41,6 +47,7 @@ public class ViewAugmenterImpl implements ViewAugmenter {
     private Map<Long, RelationshipDefinitionWeb> relationshipDefinitiosnWeb = new HashMap<>();
 
     @Override
+    @PermitAll
     public RelationshipDefinitionWeb augmentRelationshipDefinition(Category category, RelationshipDefinition relDef) {
 
         ExtendedRelationshipDefinitionInfo extendedRelationshipDefinitionInfo = semantikosWebDAO.getCompositeOf(category, relDef);
@@ -64,6 +71,7 @@ public class ViewAugmenterImpl implements ViewAugmenter {
     }
 
     @Override
+    @PermitAll
     public ConceptSMTKWeb augmentConcept(ConceptSMTKWeb concept, List<RelationshipDefinitionWeb> relationshipDefinitionsWeb) {
         ConceptSMTKWeb conceptSMTKWeb = semantikosWebDAO.augmentConcept(concept);
 
@@ -79,6 +87,7 @@ public class ViewAugmenterImpl implements ViewAugmenter {
     }
 
     @Override
+    @PermitAll
     public Map<Long, Relationship> augmentRelationships(Category category, Map<Long, Relationship> relationshipPlaceholders) {
 
         for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
