@@ -298,7 +298,7 @@ public class PCConceptLoader extends EntityLoader {
 
     public void loadAllConcepts(SMTKLoader smtkLoader) {
 
-        smtkLoader.logInfo(new LoadLog("Comprobando Conceptos Fármacos - Sustancia", INFO));
+        smtkLoader.logInfo(new LoadLog("Comprobando Conceptos Fármacos - Producto Comercial", INFO));
 
         try {
 
