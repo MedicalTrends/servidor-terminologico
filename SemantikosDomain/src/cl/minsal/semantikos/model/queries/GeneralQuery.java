@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
+
 /**
  * Created by BluePrints Developer on 21-09-2016.
  */
@@ -529,11 +531,13 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
         this.user = null;
         this.creationDateSince = null;
         this.creationDateTo = null;
+        this.setOrder(1);
+        this.setAsc("asc");
         for (QueryFilter filter : filters) {
             filter.getTargets().clear();
         }
         //this.filters = new ArrayList<>();
-        super.setQuery(null);;
+        super.setQuery(EMPTY_STRING);
         super.setTruncateMatch(false);
     }
 
