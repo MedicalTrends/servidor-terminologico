@@ -3,7 +3,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk">
 
     <h:head>
         <f:facet name="first">
@@ -34,9 +35,10 @@
             <h:outputStylesheet name="semantikos/css/customStyle.css"/>
         </f:facet>
         
-        <div class="layout-wrapper menu-layout-overlay">
+        <div class="layout-wrapper menu-layout-static">
             <ui:include src="./topbar.xhtml" />
             <ui:include src="./rightpanel.xhtml" />
+            <smtk:filters rendered="#{request.requestURI.contains('concepts.')}"  />
             <ui:include src="./menu.xhtml" />
             
             <div class="layout-main">

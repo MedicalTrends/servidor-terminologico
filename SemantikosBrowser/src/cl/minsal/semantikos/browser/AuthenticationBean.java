@@ -98,7 +98,7 @@ public class AuthenticationBean {
         loggedUser = null;
 
         try {
-            context.redirect(context.getRequestContextPath() + "/" +Constants.VIEWS_FOLDER+ "/" + Constants.LOGIN_PAGE );
+            context.redirect(context.getRequestContextPath() + "/" + Constants.VIEWS_FOLDER+ "/" + Constants.LOGIN_PAGE );
         } catch (IOException e) {
             logger.error("Error en logout", e);
         }

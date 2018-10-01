@@ -93,6 +93,7 @@ PrimeFaces.widget.Ultima = PrimeFaces.widget.BaseWidget.extend({
         });
         
         this.topbarMenuButton.off('click.topbarButton').on('click.topbarButton', function(e) {
+
             $this.topbarMenuClick = true;
             $this.topbarItems.find('ul').removeClass('fadeInDown fadeOutUp');
             $this.closeOverlayMenu();
@@ -303,11 +304,13 @@ PrimeFaces.widget.Ultima = PrimeFaces.widget.BaseWidget.extend({
                 $this.deactivateItems($this.menu.children('.active-menuitem'), false);
                 $this.profileMenu.css('display', 'none');
             }
-            
+
+            /* El comportamiento de los filtros es: Ocultar solo cuando se indique explicitamente
             if(!$this.rightPanelClick && !$this.rightPanelButtonClick && $this.rightPanel.hasClass('layout-rightpanel-active')) {
                 $this.rightPanel.removeClass('layout-rightpanel-active');
                 $this.rightPanelButton.removeClass('rightpanel-btn-active');
             }
+            */
             
             if(!$this.topbarMenuClick && !$this.topbarLinkClick) {
                 $this.topbarItems.removeClass('topbar-items-visible');

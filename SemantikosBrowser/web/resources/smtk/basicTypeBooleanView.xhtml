@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.basictypes.BasicTypeDefinition" />
+    <composite:attribute name="concept" type="cl.minsal.semantikos.model.ConceptSMTK" />
+</composite:interface>
+<composite:implementation>
+
+
+    <!-- Multiplicidad 1 + relacion existente + con atributos -->
+
+    <p:outputPanel
+            id="basicTypeSimpleWithAttributes"
+            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}"
+            widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
+
+        <p:repeat  value="#{cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                   offset="0"
+                   size="#{cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size()}"
+                   step="1"
+                   var="relationship"
+                   varStatus="var">
+
+            <div class="ui-g ui-fluid">
+
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
+
+                    <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}:" styleClass="label"/>
+
+                </div>
+
+                <div class="ui-g-12 ui-md-8 ui-lg-2">
+
+                    <h:outputText value="#{relationship.target.value?'Sí':'No'}" styleClass="value"/>
+
+                </div>
+
+                <!-- Atributos de relación -->
+                <smtk:attributes concept="#{cc.attrs.concept}"
+                                 relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                 relationship="#{relationship}"
+                />
+
+            </div>
+
+        </p:repeat>
+    </p:outputPanel>
+
+    <script type="text/javascript">
+
+    </script>
+
+    <h:outputStylesheet id="customCSS">
+        .ui-selectonemenu .ui-selectonemenu-label {
+            overflow: visible;
+        }
+
+
+    </h:outputStylesheet>
+
+
+</composite:implementation>
+</html>

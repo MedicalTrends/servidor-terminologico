@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.browser;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
+import cl.minsal.semantikos.components.GuestPreferences;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.CrossmapsManager;
 import cl.minsal.semantikos.kernel.components.RefSetManager;
@@ -13,11 +14,13 @@ import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
+import org.primefaces.model.menu.DefaultMenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -53,20 +56,16 @@ public class ConceptBean implements Serializable {
 
     List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
 
-    public String getConceptID() {
-        return conceptID;
-    }
+    @ManagedProperty(value = "#{guestPreferences}")
+    GuestPreferences guestPreferences;
 
-    public void setConceptID(String conceptID) {
-        this.conceptID = conceptID;
-        selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
-        selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
-    }
+    @ManagedProperty(value = "#{browserBean}")
+    BrowserBean browserBean;
 
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() {
-
+        guestPreferences.setTheme("indigo");
     }
 
     public RelationshipManager getRelationshipManager() {
@@ -237,6 +236,73 @@ public class ConceptBean implements Serializable {
     public String getDateCreationFormat(Timestamp timestamp) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(timestamp);
+    }
+
+    public String getConceptID() {
+        return conceptID;
+    }
+
+    public void setConceptID(String conceptID) {
+        this.conceptID = conceptID;
+        selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
+        selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
+
+        updateMainMenu();
+        updateNavigationMenu();
+    }
+
+    public void updateMainMenu() {
+        if(!browserBean.getCircularFifoQueue().contains(selectedConcept)) {
+            browserBean.getCircularFifoQueue().add(selectedConcept);
+        }
+
+        browserBean.refreshLastVisitedMenu();
+    }
+
+    public void updateNavigationMenu() {
+        DefaultMenuItem item = new DefaultMenuItem(selectedConcept.getConceptID());
+        item.setUrl("/views/concept/"+selectedConcept.getConceptID());
+        /*
+        boolean flag = false;
+
+        Iterator<MenuElement> it = browserBean.getNavegation().getElements().iterator();
+
+        while (it.hasNext()) {
+            MenuElement element = it.next();
+            DefaultMenuItem defaultMenuItem = (DefaultMenuItem) element;
+            if(defaultMenuItem.getValue().equals(selectedConcept.getDescriptionFSN())) {
+                flag = true;
+            }
+            if(flag) {
+                it.remove();
+            }
+        }
+        browserBean.getNavegation().addElement(item);
+        */
+
+        if(browserBean.getNavegation().getElements().size() > 2) {
+            browserBean.getNavegation().getElements().set(2, item);
+        }
+        else {
+            browserBean.getNavegation().addElement(item);
+        }
+
+    }
+
+    public GuestPreferences getGuestPreferences() {
+        return guestPreferences;
+    }
+
+    public void setGuestPreferences(GuestPreferences guestPreferences) {
+        this.guestPreferences = guestPreferences;
+    }
+
+    public BrowserBean getBrowserBean() {
+        return browserBean;
+    }
+
+    public void setBrowserBean(BrowserBean browserBean) {
+        this.browserBean = browserBean;
     }
 
 }

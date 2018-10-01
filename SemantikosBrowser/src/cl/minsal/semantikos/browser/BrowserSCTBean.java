@@ -1,23 +1,23 @@
 package cl.minsal.semantikos.browser;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
-import cl.minsal.semantikos.kernel.components.*;
-import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.categories.Category;
-import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.components.GuestPreferences;
+import cl.minsal.semantikos.kernel.components.QueryManager;
+import cl.minsal.semantikos.kernel.components.SnomedCTManager;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
-import cl.minsal.semantikos.model.queries.BrowserQuery;
 import cl.minsal.semantikos.model.queries.SnomedQuery;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.snomedct.DescriptionSCT;
-import cl.minsal.semantikos.model.tags.Tag;
-import cl.minsal.semantikos.view.components.GuestPreferences;
+import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.data.PageEvent;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,9 +101,52 @@ public class BrowserSCTBean implements Serializable {
     //@EJB
     private SnomedCTManager snomedCTManager = (SnomedCTManager) ServiceLocator.getInstance().getService(SnomedCTManager.class);
 
+    private transient MenuModel menu;
+
+    private CircularFifoQueue circularFifoQueue;
+
     @PostConstruct
     protected void initialize() {
         guestPreferences.setTheme("teal");
+    }
+
+    public void initMenu() {
+
+        menu = new DefaultMenuModel();
+
+        //Inicio
+        DefaultMenuItem item0 = new DefaultMenuItem("Inicio");
+        item0.setUrl("/views/home.xhtml");
+        item0.setIcon("fa fa-home");
+        item0.setId("rm_home");
+
+        menu.addElement(item0);
+
+        //Volver
+        DefaultMenuItem item1 = new DefaultMenuItem("Conceptos");
+        item1.setUrl("/views/snomed/concepts");
+        item1.setIcon("fa fa-search");
+        item1.setId("rm_volver");
+
+        menu.addElement(item1);
+
+        //Snomed
+        DefaultMenuItem item2 = new DefaultMenuItem("Semantikos");
+        item2.setUrl("/views/concepts");
+        item2.setIcon("fa fa-arrow-left");
+        item2.setId("rm_snomed");
+
+        menu.addElement(item2);
+
+        //Últimos visitados
+        DefaultSubMenu conceptSubmenu = new DefaultSubMenu("Recientes");
+        conceptSubmenu.setIcon("fa fa-list");
+        conceptSubmenu.setId("rm_concepts");
+        conceptSubmenu.setExpanded(true);
+
+        menu.addElement(conceptSubmenu);
+
+        circularFifoQueue = new CircularFifoQueue(5);
     }
 
     public int getResults() {
@@ -126,6 +169,8 @@ public class BrowserSCTBean implements Serializable {
      * Este método es el responsable de ejecutar la consulta
      */
     public void executeQuery() {
+
+        guestPreferences.setTheme("teal");
 
         init = currentTimeMillis();
 
@@ -376,5 +421,21 @@ public class BrowserSCTBean implements Serializable {
 
     public void setGuestPreferences(GuestPreferences guestPreferences) {
         this.guestPreferences = guestPreferences;
+    }
+
+    public MenuModel getMenu() {
+        return menu;
+    }
+
+    public void setMenu(MenuModel menu) {
+        this.menu = menu;
+    }
+
+    public CircularFifoQueue getCircularFifoQueue() {
+        return circularFifoQueue;
+    }
+
+    public void setCircularFifoQueue(CircularFifoQueue circularFifoQueue) {
+        this.circularFifoQueue = circularFifoQueue;
     }
 }

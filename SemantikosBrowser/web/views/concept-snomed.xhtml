@@ -14,12 +14,12 @@
 
         <div class="ui-g">
 
-            <div class="ui-g-0 ui-md-0 ui-lg-2"></div>
+            <div class="ui-g-0 ui-md-0 ui-lg-0"></div>
 
-            <div class="ui-g-12 ui-md-12 ui-lg-8">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
 
                 <p:breadCrumb id="top-menu">
-                    <p:menuitem value="Inicio" url="/views/home.xhtml" />
+                    <p:menuitem value="Inicio" url="/" />
                     <p:menuitem value="Snomed" url="/views/concepts-snomed.xhtml" />
                     <p:menuitem value="Conceptos" url="/views/concepts-snomed.xhtml" />
                     <p:menuitem value="#{conceptSCT.selectedConcept.id}" url="#" />
@@ -29,47 +29,78 @@
 
                 <div class="card card-w-title">
 
-                    <h1>#{conceptSCT.selectedConcept.descriptionFavouriteSynonymous}</h1>
+                    <h1 class="first-heading">#{conceptSCT.selectedConcept.descriptionFSN}</h1>
 
-                        <div class="ui-g ui-fluid">
+                    <p:separator styleClass="heading-separator"/>
 
-                            <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="ConceptID" style="font-weight: bold" />
-                            </div>
-
-                            <div class="ui-g-12 ui-md-8 ui-lg-4">
-                                <p:inputText value="#{conceptSCT.selectedConcept.idSnomedCT}" readonly="true"/>
-                            </div>
+                    <div class="ui-g ui-fluid" style="margin-bottom: 20px">
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <p:outputPanel/>
-                            </div>
-
-                            <div class="ui-g-12 ui-md-8 ui-lg-4">
-                                <p:outputPanel/>
-                            </div>
-
-                            <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="FSN" style="font-weight: bold" />
+                                <h:outputText value="ConceptID" styleClass="label" />
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                <p:inputTextarea rows="1" value="#{conceptSCT.selectedConcept.descriptionFSN}" readonly="true"/>
+                                <h:outputText value="#{conceptSCT.selectedConcept.idSnomedCT}" styleClass="value"/>
                             </div>
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="Preferida" style="font-weight: bold" />
+                                <h:outputText value="FSN" styleClass="label" />
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                <p:inputTextarea rows="1" value="#{conceptSCT.selectedConcept.descriptionFavouriteSynonymous}" readonly="true"/>
+                                <h:outputText value="#{conceptSCT.selectedConcept.descriptionFSN}" styleClass="value"/>
+                                <p:outputLabel rendered="#{conceptSCT.selectedConcept.descriptionFSN.favourite}">
+                                    <i class="ui-icon ui-icon-star" style="font-size: small; color: #FFC107"/>
+                                </p:outputLabel>
                             </div>
+
+                            <p:repeat value="#{conceptSCT.otherDescriptions}" var="otherDescription">
+                                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                    <h:outputText value="#{otherDescription.descriptionType.name}" styleClass="label" />
+                                </div>
+                                <div class="ui-g-12 ui-md-8 ui-lg-10">
+                                    <h:outputText value="#{otherDescription.term}" styleClass="value" />
+                                    <p:outputLabel rendered="#{otherDescription.favourite}">
+                                        <i class="ui-icon ui-icon-star" style="font-size: small; color: #FFC107"/>
+                                    </p:outputLabel>
+                                </div>
+                            </p:repeat>
 
                         </div>
 
+                    <h2 class="second-heading">Relaciones</h2>
+
+                    <p:separator styleClass="heading-separator"/>
+
+                    <div class="ui-g ui-fluid">
+
+                        <p:repeat value="#{conceptSCT.getRelationshipDefinitions()}" var="relationshipDefinition">
+
+                            <p:fieldset legend="#{relationshipDefinition.getDescriptionFSN()}" style="width: 100%"
+                            rendered="#{ not empty conceptSCT.getRelationshipsByRelationshipDefinition(relationshipDefinition)}">
+
+                                <p:repeat value="#{conceptSCT.getRelationshipsByRelationshipDefinition(relationshipDefinition)}"
+                                          var="rel">
+
+                                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+
+                                        <p:link value="#{rel.destinationConcept.getRepresentation()}" outcome="/views/concept-snomed">
+                                            <f:param name="conceptID" value="#{rel.destinationConcept.idSnomedCT}" />
+                                        </p:link>
+
+                                    </div>
+
+                                </p:repeat>
+
+                            </p:fieldset>
+
+                        </p:repeat>
+
+                    </div>
+
                 </div>
 
-                <p:tabView>
+                <p:tabView rendered="false">
                     <p:tab title="Otras Descripciones" rendered="#{not empty conceptSCT.getOtherDescriptions()}">
                         <p:dataTable id="otherDescriptions"
                                      rows="5"
@@ -126,7 +157,7 @@
 
             </div>
 
-            <div class="ui-g-0 ui-md-0 ui-lg-2"></div>
+            <div class="ui-g-0 ui-md-0 ui-lg-0"></div>
 
         </div>
 

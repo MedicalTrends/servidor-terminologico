@@ -11,45 +11,17 @@
             <div class="nano">
                 <div class="nano-content menu-scroll-content">
                     <ui:fragment rendered="#{guestPreferences.profileMode == 'inline' and guestPreferences.menuLayout != 'menu-layout-static menu-layout-horizontal'}">
-                        <div class="profile">
-                            <div class="profile-image"></div>
-                            <a id="profile-options" href="#">
-                                <span class="profile-name">Jane Williams</span>
-                                <i class="material-icons">&#xE313;</i>
-                            </a>
-                        </div>
-                    
-                        <ul id="profile-menu" class="ultima-menu">
-                            <li role="menuitem">
-                                <a href="#" class="ripplelink">
-                                    <i class="material-icons">&#xE7FD;</i>
-                                    <span>Profile</span>
-                                </a>
-                            </li>
-                            <li role="menuitem">
-                                <a href="#" class="ripplelink">
-                                    <i class="material-icons">&#xE32A;</i>
-                                    <span>Privacy</span>
-                                </a>
-                            </li>
-                            <li role="menuitem">
-                                <a href="#" class="ripplelink">
-                                    <i class="material-icons">&#xE8B9;</i>
-                                    <span>Settings</span>
-                                </a>
-                            </li>
-                            <li role="menuitem">
-                                <a href="#" class="ripplelink">
-                                    <i class="material-icons">&#xE8AC;</i>
-                                    <span>Logout</span>
-                                </a>
-                            </li>
-                        </ul>
+
                     </ui:fragment>
-                    
-                    <pu:menu widgetVar="me">
-                        <p:menuitem id="um_dashboard" value="Dashboard" icon="&#xE871;" outcome="/dashboard" rendered="false"/>
-                        <p:submenu id="themes" label="Themes" icon="&#xE40A;">
+
+                    <pu:menu widgetVar="me" model="#{browserBean.menu}" rendered="#{true}"/>
+
+                    <pu:menu widgetVar="me" model="#{browserSCTBean.menu}" rendered="#{false}"/>
+
+                    <pu:menu widgetVar="me" style="margin-top: 14px" rendered="false">
+                        <p:menuitem id="um_dashboard" value="Inicio" icon="fa fa-home" outcome="/views/home" />
+                        <p:menuitem id="um_back" value="Volver" icon="fa fa-arrow-left" outcome="/views/concepts" rendered="#{request.requestURI.contains('concept.')}" />
+                        <p:submenu id="themes" label="Themes" icon="&#xE40A;" rendered="false">
                             <f:attribute name="badge" value="5" />
                             <p:menuitem id="theme1" value="Indigo - Pink" icon="&#xE3AE;" actionListener="#{guestPreferences.setTheme('indigo')}" ajax="false" />
                             <p:menuitem id="theme2" value="Brown - Green" icon="&#xE3AE;" actionListener="#{guestPreferences.setTheme('brown')}" ajax="false" />
@@ -64,7 +36,7 @@
                             <p:menuitem id="theme11" value="Cyan - Amber" icon="&#xE3AE;" actionListener="#{guestPreferences.setTheme('cyan')}" ajax="false" />
                             <p:menuitem id="theme12" value="Grey - Deep Orange" icon="&#xE3AE;" actionListener="#{guestPreferences.setTheme('grey')}" ajax="false" />
                         </p:submenu>
-                        <p:submenu id="um_customization" label="Customization" icon="&#xE8B8;" styleClass="amber-badge">
+                        <p:submenu id="um_customization" label="Customization" icon="&#xE8B8;" styleClass="amber-badge" rendered="false">
                             <f:attribute name="badge" value="10" />
                             <p:menuitem id="custom1" value="Compact Size" icon="&#xE061;" actionListener="#{guestPreferences.setCompact(true)}" ajax="false"/>
                             <p:menuitem id="custom2" value="Material Size" icon="&#xE062;" actionListener="#{guestPreferences.setCompact(false)}" ajax="false"/>
@@ -77,31 +49,7 @@
                             <p:menuitem id="custom9" value="Inline Profile" icon="&#xE0BA;" actionListener="#{guestPreferences.setProfileMode('inline')}" ajax="false" />
                             <p:menuitem id="custom10" value="Top Profile" icon="&#xE55A;" actionListener="#{guestPreferences.setProfileMode('overlay')}" ajax="false"/>
                         </p:submenu>
-                         <p:submenu id="um_orientation" label="Orientation" icon="&#xE237;">
-                            <p:menuitem id="um_ltr" value="LTR" icon="&#xE236;" actionListener="#{guestPreferences.setOrientationRTL(false)}" ajax="false" />
-                            <p:menuitem id="um_rtl" value="RTL" icon="&#xE237;" actionListener="#{guestPreferences.setOrientationRTL(true)}" ajax="false" />
-                        </p:submenu>
-                        <p:submenu id="um_components" label="Components" icon="&#xE896;" rendered="false">
-                            <p:menuitem id="um_sample" value="Sample Page" icon="&#xE30B;" outcome="/sample" />
-                            <p:menuitem id="um_forms" value="Forms" icon="&#xE890;" outcome="/forms" />
-                            <p:menuitem id="um_data" value="Data" icon="&#xE3EC;" outcome="/data" />
-                            <p:menuitem id="um_panels" value="Panels" icon="&#xE14F;" outcome="/panel" />
-                            <p:menuitem id="um_overlays" value="Overlays" icon="&#xE14D;" outcome="/overlay" />
-                            <p:menuitem id="um_menus" value="Menus" icon="&#xE5D2;" outcome="/menu" />
-                            <p:menuitem id="um_messages" value="Messages" icon="&#xE0C9;" outcome="/messages" />
-                            <p:menuitem id="um_charts" value="Charts" icon="&#xE24B;" outcome="/charts" />
-                            <p:menuitem id="um_file" value="File" icon="&#xE226;" outcome="/file" />
-                            <p:menuitem id="um_misc" value="Misc" icon="&#xE332;" outcome="/misc" />
-                        </p:submenu>
-                        <p:submenu id="um_default" label="Template Pages" icon="&#xE884;" rendered="false">
-                            <p:menuitem id="um_db_landing" value="Landing" icon="&#xE904;" outcome="/landing"/>
-                            <p:menuitem id="um_empty" value="Empty Page" icon="&#xE88B;" outcome="/empty" />
-                            <p:menuitem id="um_login" value="Login Page" icon="&#xE8E8;" outcome="/login" />
-                            <p:menuitem id="um_error" value="Error Page" icon="&#xE000;" outcome="/error" />
-                            <p:menuitem id="um_404" value="404 Page" icon="&#xE001;" outcome="/404" />
-                            <p:menuitem id="um_access" value="Access Denied Page" icon="&#xE32A;" outcome="/access" />
-                        </p:submenu>
-                        <p:submenu id="um_hierarchy" label="Menu Hierarchy" icon="&#xE5D2;">
+                        <p:submenu id="um_hierarchy" label="Menu Hierarchy" icon="&#xE5D2;" rendered="false">
                             <p:submenu id="um_sm1" label="Submenu 1" icon="&#xE8D2;">
                                 <p:submenu id="um_sm11" label="Submenu 1.1" icon="&#xE8D2;">
                                     <p:menuitem id="um_lnk111" value="Link 1.1.1" icon="&#xE8D2;" url="#" />
@@ -125,6 +73,7 @@
                         <p:menuitem id="um_utils" value="Utils" icon="&#xE869;" outcome="/utils" rendered="false"/>
                         <p:menuitem id="um_doc" value="Documentation" icon="&#xE880;" outcome="/docs" rendered="false"/>
                     </pu:menu>
+
                 </div>
             </div>
         </div>

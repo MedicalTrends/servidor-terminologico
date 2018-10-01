@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.view.components;
+package cl.minsal.semantikos.components;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;

@@ -29,9 +29,11 @@
         <f:event type="preRenderView" listener="#{browserBean.executeQuery}" />
     </f:metadata>
 
-    <div class="layout-main" style="padding: 95px 15px 15px">
+    <div class="layout-main" style="padding: 15px 15px 15px">
 
         <div class="ui-g">
+
+            <div class="ui-g-0 ui-md-0 ui-lg-12" style="padding-top: 159px" id="div-top"></div>
 
             <div class="ui-g-0 ui-md-2 ui-lg-4"></div>
 
@@ -45,68 +47,58 @@
                         <div class="ui-g ui-fluid">
 
                             <div class="ui-g-12" style="text-align: center">
-                                <p:graphicImage name="images/logo-indigo.png" library="semantikos" style="width:250px; padding-top: 109px" />
+                                <p:graphicImage name="images/logo-indigo.png" library="semantikos" style="width:250px;" />
                             </div>
 
-                            <!--div class="ui-g-12" style="text-align: center">
-                                <p:imageSwitch effect="scrollLeft" speed="10000" slideshowSpeed="1000" rendered="false">
-                                    <ui:repeat var="data" value="#{browserBean.images}">
-                                        <p:graphicImage name="images/#{data}" library="semantikos" id="image" style="width:200px"  />
-                                    </ui:repeat>
-                                </p:imageSwitch>
-                            </div-->
+                            <div class="ui-g-12" style="padding-top: 30px; padding-bottom: 30px">
 
-                            <div class="ui-g-10" style="padding-top: 30px; padding-bottom: 30px">
-                                <p:outputPanel styleClass="search">
-                                    <p:autoComplete id="search"
-                                                    widgetVar="search_input"
-                                                    styleClass="search-input"
-                                                    autoHighlight="true"
-                                                    minQueryLength="3"
-                                                    emptyMessage="No se encontraron conceptos"
-                                                    forceSelection="false"
-                                                    scrollHeight="200" size="5"
-                                                    completeMethod="#{browserBean.searchSuggestedDescriptions}"
-                                                    placeholder="Buscar..."
-                                                    converter="DescriptionConverter"
-                                                    var="description"
-                                                    value="#{browserBean.descriptionSelected}"
-                                                    itemLabel="#{description.getRepresentation()}"
-                                                    itemValue="#{description}">
+                                <div class="ui-inputgroup">
 
-                                        <p:outputPanel>
+                                    <h:panelGroup styleClass="md-inputfield">
 
-                                            <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
+                                        <p:autoComplete id="search"
+                                                        widgetVar="search_input"
+                                                        styleClass="search-input"
+                                                        autoHighlight="true"
+                                                        minQueryLength="3"
+                                                        emptyMessage="No se encontraron conceptos"
+                                                        forceSelection="false"
+                                                        size="5"
+                                                        completeMethod="#{browserBean.searchSuggestedDescriptions}"
+                                                        placeholder="Buscar..."
+                                                        converter="DescriptionConverter"
+                                                        var="description"
+                                                        value="#{browserBean.descriptionSelected}"
+                                                        itemLabel="#{description}"
+                                                        itemValue="#{description}">
+
+                                            <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px">
                                                 <h:outputText value="#{description.term}" />
                                             </p:column>
 
-                                        </p:outputPanel>
+                                            <p:column style="width: 90%; float: left; ; border: 0px; padding: 0px 10px; margin-bottom: 12px">
+                                                <h:outputText value="#{description.conceptSMTK.category.name}" style="font-size: small;" />
+                                            </p:column>
 
-                                        <p:ajax event="itemSelect"
-                                                listener="#{browserBean.test()}"
-                                                update="@(.conceptPanel),@(.search)"
-                                                process="@this"/>
+                                            <p:column style="width: 90%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 12px" rendered="false">
+                                                <h:outputText value="#{description.descriptionType.name}" style="font-size: small" />
+                                            </p:column>
 
-                                    </p:autoComplete>
+                                            <p:ajax event="itemSelect"
+                                                    listener="#{browserBean.test()}"
+                                                    update="@(.conceptPanel),@(.search)"
+                                                    process="@this"/>
 
-                                    <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
-                                        <i class="fa fa-search fa-lg"  />
-                                    </p:outputPanel>
+                                        </p:autoComplete>
 
-                                    <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
-                                        <p:commandLink process="@this" style="color: #aaa;"
-                                                       update="@(.search)"
-                                                       action="#{browserBean.setDescriptionSelected(null)}">
-                                            <i class="fa fa-close fa-lg"  />
-                                        </p:commandLink>
-                                    </p:outputPanel>
-                                </p:outputPanel>
-                            </div>
+                                        <p:link id="search_button4" styleClass="search-button-tiny" outcome="/views/concepts" style="color: #3F51B5">
+                                            <i class="fa fa-lg fa-search"/>
+                                        </p:link>
 
-                            <div class="ui-g-2" style="padding-top: 30px; padding-bottom: 30px">
-                                <p:commandButton id="search_button2" styleClass="search-button-tiny" icon="fa fa-search"
-                                                 actionListener="#{browserBean.redirect()}" rendered="false"/>
-                                <p:button id="search_button3" styleClass="search-button-tiny" icon="fa fa-search" outcome="/views/concepts"/>
+                                    </h:panelGroup>
+
+                                </div>
+
                             </div>
 
                             <div class="ui-g-0 ui-md-3 ui-lg-4" style="padding: 0em"></div>
@@ -124,6 +116,8 @@
 
                 </div>
             </div>
+
+            <div class="ui-g-0 ui-md-2 ui-lg-4"></div>
 
             <div class="ui-g-0 ui-md-2 ui-lg-4"></div>
 

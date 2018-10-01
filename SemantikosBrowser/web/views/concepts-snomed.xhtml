@@ -14,12 +14,10 @@
 
         <div class="ui-g">
 
-            <div class="ui-g-0 ui-md-0 ui-lg-2"></div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12" style="max-width: 1200px">
 
-            <div class="ui-g-12 ui-md-12 ui-lg-8">
-
-                <p:breadCrumb id="top-menu">
-                    <p:menuitem value="Inicio" url="/views/home.xhtml" />
+                <p:breadCrumb id="top-menu" rendered="false">
+                    <p:menuitem value="Inicio" url="/" />
                     <p:menuitem value="Snomed" url="#" />
                     <p:menuitem value="Conceptos" url="#" />
                 </p:breadCrumb>
@@ -39,54 +37,65 @@
 
                                     <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                                        <div class="ui-inputgroup">
+                                        <p:outputPanel styleClass="ui-inputgroup search-2">
 
-                                            <p:outputPanel styleClass="search" style="width: 100%">
+                                            <h:panelGroup styleClass="md-inputfield">
 
-                                            <p:autoComplete minQueryLength="3"
-                                                            id="search"
-                                                            emptyMessage="No se encontraron conceptos"
-                                                            forceSelection="false"
-                                                            scrollHeight="200" size="5"
-                                                            completeMethod="#{browserSCTBean.searchSuggestedDescriptions}"
-                                                            placeholder="Buscar..."
-                                                            converter="DescriptionSCTConverter"
-                                                            var="description"
-                                                            value="#{browserSCTBean.descriptionSelected}"
-                                                            itemLabel="#{description.getRepresentation()}"
-                                                            itemValue="#{description}">
+                                                <p:autoComplete minQueryLength="3"
+                                                                id="search"
+                                                                emptyMessage="No se encontraron conceptos"
+                                                                forceSelection="false"
+                                                                size="5"
+                                                                completeMethod="#{browserSCTBean.searchSuggestedDescriptions}"
+                                                                placeholder="Buscar..."
+                                                                converter="DescriptionSCTConverter"
+                                                                var="description"
+                                                                value="#{browserSCTBean.descriptionSelected}"
+                                                                itemLabel="#{description.getRepresentation()}"
+                                                                itemValue="#{description}">
 
-                                                <p:outputPanel>
+                                                    <p:outputPanel rendered="false">
 
-                                                    <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
-                                                        <h:outputText value="#{description.term}" />
+                                                        <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
+                                                            <h:outputText value="#{description.term}" />
+                                                        </p:column>
+
+                                                    </p:outputPanel>
+
+                                                    <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px">
+                                                        <h:outputText value="#{description.term}" style="font-weight: bold;" />
+                                                        <p:outputLabel rendered="#{description.favourite}">
+                                                            <i class="ui-icon ui-icon-star" style="font-size: small; color: #FFC107"/>
+                                                        </p:outputLabel>
                                                     </p:column>
 
+                                                    <p:column style="width: 90%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 10px">
+                                                        <h:outputText value="#{description.descriptionType.name}" style="font-size: small;" />
+                                                    </p:column>
+
+                                                    <p:ajax event="itemSelect"
+                                                                listener="#{browserSCTBean.test()}"
+                                                                update="@(.conceptPanel),@(.search-2)"
+                                                                process="@this"/>
+
+                                                </p:autoComplete>
+
+                                                <p:commandLink styleClass="search-button-tiny" icon="fa fa-search" style="color: #009688"
+                                                               rendered="#{browserSCTBean.descriptionSelected eq null}">
+                                                    <i class="fa fa-lg fa-search"/>
+                                                </p:commandLink>
+
+                                                <p:outputPanel rendered="#{browserSCTBean.descriptionSelected != null}">
+                                                    <p:commandLink process="@this" style="color: #aaa;"
+                                                                   update="@(.search)" oncomplete="listenSearchOnClickEvent();"
+                                                                   action="#{browserSCTBean.setDescriptionSelected(null)}">
+                                                        <i class="fa fa-close fa-lg"  />
+                                                    </p:commandLink>
                                                 </p:outputPanel>
 
-                                                <p:ajax event="itemSelect"
-                                                            listener="#{browserSCTBean.test()}"
-                                                            update="@(.conceptPanel),@(.search)"
-                                                            process="@this"/>
+                                            </h:panelGroup>
 
-                                            </p:autoComplete>
-
-                                            <p:outputPanel rendered="#{browserSCTBean.descriptionSelected eq null}">
-                                                <i class="fa fa-search fa-lg"  />
-                                            </p:outputPanel>
-
-                                            <p:outputPanel rendered="#{browserSCTBean.descriptionSelected != null}">
-                                                <p:commandLink process="@this" style="color: #aaa;"
-                                                               update="@(.search)" oncomplete="listenSearchOnClickEvent();"
-                                                               action="#{browserSCTBean.setDescriptionSelected(null)}">
-                                                    <i class="fa fa-close fa-lg"  />
-                                                </p:commandLink>
-                                            </p:outputPanel>
                                         </p:outputPanel>
-
-                                            <p:commandButton styleClass="search-button-tiny" icon="fa fa-search" />
-
-                                        </div>
 
                                     </div>
 
@@ -96,7 +105,21 @@
 
                                 <div class="ui-g">
 
-                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <div class="ui-g-12 ui-md-3 ui-lg-2">
+
+                                        <p:selectBooleanCheckbox style="width: 100%"
+                                                                 value="#{browserBean.snomedCT}"
+                                                                 itemLabel="Snomed-CT">
+                                            <p:ajax event="change"
+                                                    listener="#{browserBean.redirectSnomedCT()}"
+                                                    process="@this" />
+                                        </p:selectBooleanCheckbox>
+
+                                    </div>
+
+                                    <div class="ui-g-0 ui-md-6 ui-lg-8" style="padding-left: 0px; padding-right: 0px"></div>
+
+                                    <div class="ui-g-12 ui-md-3 ui-lg-2">
 
                                         <p:commandButton value="Exportar" icon="fa fa-file-excel-o" ajax="false">
                                             <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
@@ -160,23 +183,6 @@
                                 </div>
 
                             </p:panel>
-
-                            <br/>
-
-                            <div class="ui-g">
-
-                                <div class="ui-g-12 ui-md-12 ui-lg-12">
-                                    <p:outputPanel styleClass="search">
-                                        <p:outputLabel id="summary" style="font-size: 14px; color: #545454;"
-                                                       rendered="#{not empty browserSCTBean.concepts}"
-                                                       value="Página #{browserSCTBean.page} de #{browserSCTBean.results} resultados (#{browserSCTBean.seconds} segundos)"/>
-                                        <p:remoteCommand name="onload" update="summary"
-                                                         autoRun="true" />
-                                    </p:outputPanel>
-
-                                </div>
-
-                            </div>
 
                         </p:outputPanel>
 
@@ -256,8 +262,6 @@
                 </div>
 
             </div>
-
-            <div class="ui-g-0 ui-md-0 ui-lg-2"></div>
 
         </div>
 

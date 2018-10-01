@@ -26,16 +26,18 @@ public class AuthFilterBrowser implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        ((HttpServletResponse) response).setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-        ((HttpServletResponse) response).setHeader("Pragma", "no-cache"); // HTTP 1.0.
-        ((HttpServletResponse) response).setHeader("Expires", "0");
+        if(!req.getContextPath().equals("/designer")) {
 
-        if(req.getSession().isNew()) {
-            req.getSession().invalidate();
-        }
+            if(req.getSession().isNew()) {
+                req.getSession().invalidate();
+            }
 
-        if((req.getRequestURI().equals("/views/home.xhtml") || req.getRequestURI().equals("/")) && req.getParameterMap().isEmpty()) {
-            req.getSession().invalidate();
+            if((req.getRequestURI().equals("/views/home.xhtml") || req.getRequestURI().equals("/")) && req.getParameterMap().isEmpty()) {
+                ((HttpServletResponse) response).setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+                ((HttpServletResponse) response).setHeader("Pragma", "no-cache"); // HTTP 1.0.
+                ((HttpServletResponse) response).setHeader("Expires", "0");
+                req.getSession().invalidate();
+            }
         }
 
         chain.doFilter(request, response);

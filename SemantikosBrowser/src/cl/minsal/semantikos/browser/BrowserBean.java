@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.browser;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
+import cl.minsal.semantikos.components.GuestPreferences;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
 import cl.minsal.semantikos.model.ConceptSMTK;
@@ -8,18 +9,22 @@ import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.queries.BrowserQuery;
+import cl.minsal.semantikos.model.relationships.Target;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.tags.Tag;
-import org.omnifaces.util.Ajax;
+import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.data.PageEvent;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.primefaces.model.menu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -28,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -98,6 +104,9 @@ public class BrowserBean implements Serializable {
 
     private int page = 1;
 
+    @ManagedProperty(value = "#{guestPreferences}")
+    GuestPreferences guestPreferences;
+
     //@EJB
     private QueryManager queryManager = (QueryManager) ServiceLocator.getInstance().getService(QueryManager.class);
 
@@ -119,10 +128,18 @@ public class BrowserBean implements Serializable {
     //@EJB
     private TimeOutWeb timeOutWeb = (TimeOutWeb) ServiceLocator.getInstance().getService(TimeOutWeb.class);
 
-    private List<String> images = new ArrayList();
+    private transient MenuModel menu;
+
+    private transient MenuModel navegation;
+
+    private CircularFifoQueue<Target> circularFifoQueue;
+
+    private boolean snomedCT;
 
     @PostConstruct
     protected void initialize() {
+
+        guestPreferences.setTheme("indigo");
 
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -131,10 +148,53 @@ public class BrowserBean implements Serializable {
         //ServiceLocator.getInstance().closeContext();
         tags = tagManager.getAllTags();
         categories = categoryManager.getCategories();
-        images.add("image-1.jpg");
-        images.add("image-1.jpg");
-        //images.add("image-3.jpg");
-        //images.add("image-2.jpg");
+
+        setSnomedCT(false);
+
+        initMenu();
+
+    }
+
+    public void initMenu() {
+
+        menu = new DefaultMenuModel();
+
+        //Inicio
+        DefaultMenuItem item0 = new DefaultMenuItem("Inicio");
+        item0.setUrl("/");
+        item0.setIcon("fa fa-home");
+        item0.setId("rm_home");
+
+        menu.addElement(item0);
+
+        //Conceptos
+        DefaultMenuItem item1 = new DefaultMenuItem("Conceptos");
+        item1.setUrl("/views/concepts.xhtml");
+        item1.setIcon("fa fa-search");
+        item1.setId("rm_volver");
+
+        menu.addElement(item1);
+
+        //Snomed
+        /*
+        DefaultMenuItem item2 = new DefaultMenuItem("Snomed-CT");
+        item2.setUrl("/views/snomed/concepts");
+        item2.setIcon("fa fa-arrow-left");
+        item2.setId("rm_snomed");
+
+        menu.addElement(item2);
+        */
+
+
+        //Últimos visitados
+        DefaultSubMenu conceptSubmenu = new DefaultSubMenu("Recientes");
+        conceptSubmenu.setIcon("fa fa-list");
+        conceptSubmenu.setId("rm_concepts");
+        conceptSubmenu.setExpanded(true);
+
+        menu.addElement(conceptSubmenu);
+
+        circularFifoQueue = new CircularFifoQueue<Target>(5);
     }
 
     public int getResults() {
@@ -157,6 +217,10 @@ public class BrowserBean implements Serializable {
      * Este método es el responsable de ejecutar la consulta
      */
     public void executeQuery() {
+
+        resetNavigation();
+
+        resetTheme();
 
         init = currentTimeMillis();
 
@@ -205,14 +269,16 @@ public class BrowserBean implements Serializable {
                 isFilterChanged = false;
 
                 browserQuery.setPageSize(pageSize);
-                browserQuery.setOrder(new Integer(sortField==null?"1":sortField));
+                //browserQuery.setOrder(new Integer(sortField==null?"0":sortField));
 
+                /*
                 if(sortOrder.name().substring(0,3).toLowerCase().equals("asc")) {
                     browserQuery.setAsc(sortOrder.name().substring(0, 3).toLowerCase());
                 }
                 else {
                     browserQuery.setAsc(sortOrder.name().substring(0, 4).toLowerCase());
                 }
+                */
 
                 List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(browserQuery);
 
@@ -234,7 +300,74 @@ public class BrowserBean implements Serializable {
 
         };
 
+    }
 
+    public void resetNavigation() {
+
+        navegation = new DefaultMenuModel();
+
+        //Inicio
+        DefaultMenuItem item0 = new DefaultMenuItem("Inicio");
+        item0.setUrl("/views/home.xhtml");
+        item0.setId("rm_home");
+
+        navegation.addElement(item0);
+
+        //Volver
+        DefaultMenuItem item1 = new DefaultMenuItem("Conceptos");
+        item1.setUrl("/views/concepts.xhtml");
+        item1.setId("rm_volver");
+
+        navegation.addElement(item1);
+    }
+
+    public void resetTheme() {
+        getGuestPreferences().setTheme("indigo");
+    }
+
+    public void refreshLastVisitedMenu() {
+
+        for (MenuElement menuElement : getMenu().getElements()) {
+            if (menuElement.getId().equals("2")) {
+                DefaultSubMenu conceptSubmenu = (DefaultSubMenu) menuElement;
+                conceptSubmenu.getElements().clear();
+                for (Object o : Arrays.asList(getCircularFifoQueue().toArray())) {
+                    enqueque((Target) o, conceptSubmenu);
+                }
+            }
+        }
+    }
+
+    public void enqueque(Target target, DefaultSubMenu subMenu) {
+
+        if(target instanceof ConceptSMTK) {
+            enqueueConcept((ConceptSMTK) target, subMenu);
+        }
+        if(target instanceof ConceptSCT) {
+            enqueueConceptSCT((ConceptSCT) target, subMenu);
+        }
+    }
+
+    public void enqueueConcept(ConceptSMTK conceptSMTK, DefaultSubMenu subMenu) {
+        DefaultMenuItem item = new DefaultMenuItem(conceptSMTK.getDescriptionFSN());
+        item.setUrl("/views/concept/"+conceptSMTK.getConceptID());
+        //item.setIcon("fa fa-list-alt");
+        item.setStyleClass("loader-trigger");
+        item.setId("rm_"+conceptSMTK.getConceptID());
+        if(!subMenu.getElements().contains(item)) {
+            subMenu.addElement(item);
+        }
+    }
+
+    public void enqueueConceptSCT(ConceptSCT conceptSCT, DefaultSubMenu subMenu) {
+        DefaultMenuItem item = new DefaultMenuItem(conceptSCT.getDescriptionFSN());
+        item.setUrl("/views/snomed/concept/"+conceptSCT.getId());
+        //item.setIcon("fa fa-list-alt");
+        item.setStyleClass("loader-trigger");
+        item.setId("rm_"+conceptSCT.getId());
+        if(!subMenu.getElements().contains(item)) {
+            subMenu.addElement(item);
+        }
     }
 
     public List<Description> searchSuggestedDescriptions(String term) {
@@ -279,6 +412,18 @@ public class BrowserBean implements Serializable {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
         if(browserQuery.getQuery() != null && browserQuery.getQuery().length() >= 3) {
             performSearch = true;
+            eContext.redirect(eContext.getRequestContextPath() + "/views/concepts");
+        }
+    }
+
+    public void redirectSnomedCT() throws IOException {
+
+        ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+
+        if(snomedCT) {
+            eContext.redirect(eContext.getRequestContextPath() + "/views/snomed/concepts");
+        }
+        else {
             eContext.redirect(eContext.getRequestContextPath() + "/views/concepts");
         }
     }
@@ -437,14 +582,6 @@ public class BrowserBean implements Serializable {
         this.descriptionSelected = descriptionSelected;
     }
 
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
-
     public int getPage() {
         return page;
     }
@@ -452,4 +589,53 @@ public class BrowserBean implements Serializable {
     public void setPage(int page) {
         this.page = page;
     }
+
+    public CircularFifoQueue getCircularFifoQueue() {
+        return circularFifoQueue;
+    }
+
+    public void setCircularFifoQueue(CircularFifoQueue circularFifoQueue) {
+        this.circularFifoQueue = circularFifoQueue;
+    }
+
+    public MenuModel getMenu() {
+        return menu;
+    }
+
+    public void setMenu(MenuModel menu) {
+        this.menu = menu;
+    }
+
+    public MenuModel getNavegation() {
+        return navegation;
+    }
+
+    public void setNavegation(MenuModel navegation) {
+        this.navegation = navegation;
+    }
+
+    public GuestPreferences getGuestPreferences() {
+        return guestPreferences;
+    }
+
+    public void setGuestPreferences(GuestPreferences guestPreferences) {
+        this.guestPreferences = guestPreferences;
+    }
+
+    public boolean isPerformSearch() {
+        return performSearch;
+    }
+
+    public void setPerformSearch(boolean performSearch) {
+        this.performSearch = performSearch;
+    }
+
+    public boolean isSnomedCT() {
+        return snomedCT;
+    }
+
+    public void setSnomedCT(boolean snomedCT) {
+        this.snomedCT = snomedCT;
+    }
+
 }

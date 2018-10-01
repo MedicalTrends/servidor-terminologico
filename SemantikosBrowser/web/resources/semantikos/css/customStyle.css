@@ -5,6 +5,7 @@
 }
 */
 
+
 .search {
     position: relative;
     color: #aaa;
@@ -15,16 +16,16 @@
 
 .search .fa-search {
     position: absolute;
-    top: 9px;
+    top: 7px;
     left: 10px;
 }
 
 .search .fa.fa-close.fa-lg {
     position: absolute;
-    top: 9px;
+    top: 7px;
     left: 10px;
-    /*cursor: pointer;*/
 }
+
 
 .fa-lg {
     line-height: .5em !important;
@@ -171,22 +172,25 @@
 }
 /* */
 
+
 .ui-inputfield {
-    padding: 6px !important;
+    padding: 4px !important;
 }
 
 .ui-inputfield.ui-state-focus {
-    padding: 6px !important;
+    padding: 4px !important;
 }
 
 .myCustomLinkStyle:link {
     color: #1a0dab;
     font-size: 18px;
 }
+
 .myCustomLinkStyle:visited {
     color: #6717ab !important;
     font-size: 18px !important;
 }
+
 .myCustomLinkStyle:hover {
     color: #1a0dab !important;
     font-size: 18px !important;
@@ -199,14 +203,52 @@
 }
 
 .ui-button.ui-button-icon-only.search-button-tiny {
-    border-radius: 10%;
-    width: 100%;
+    border-radius: 10% !important;
+    /*width: 2.4em !important;*/
     /*height: 100%;*/
-    height: 34px !important;
+    /*height: 27px !important;*/
 }
 
 .ui-fluid .ui-inputtext[size], .ui-fluid .ui-inputfield[size] {
     width: inherit !important;
+}
+
+.first-heading {
+    font-size: 1.8em !important;
+    margin: 10px !important;
+    line-height: 24px !important;
+}
+
+.second-heading {
+    margin: 10px !important;
+}
+
+.heading-separator {
+    border-top: 0px solid rgb(219, 219, 219) !important;
+    border-bottom: 1px solid darkgrey !important;
+    margin: 10px !important;
+    margin-bottom: 1.5em !important;
+}
+
+.value {
+    /*font-style: italic !important;*/
+}
+
+.label {
+    font-weight: bold;
+    /*color: #3F51B5 !important;*/
+}
+
+.browser-options .ui-menuitem {
+    float: right !important;
+}
+
+.layout-rightpanel .layout-rightpanel-header {
+    height: 50px !important;
+}
+
+.layout-rightpanel .layout-rightpanel-header {
+    background: #283593 none repeat scroll 0% 0% !important;
 }
 
 /*

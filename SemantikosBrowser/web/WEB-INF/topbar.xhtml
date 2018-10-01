@@ -12,26 +12,26 @@
         </div>
         
         <div class="topbar-right">
-            <a id="menu-button" href="#" style="display: none">
+            <a id="menu-button" href="#">
                 <i/>
             </a>
-            
-            <a id="topbar-menu-button" href="#">
+
+            <a id="topbar-menu-button" href="#" style="display: none">
                 <i class="material-icons">&#xE5D4;</i>
             </a>
-            
-            <a href="#" class="rightpanel-btn">
+
+            <a href="#" class="rightpanel-btn" style="display: none">
                 <i class="material-icons">&#xE5D2;</i>
             </a>
-            
+
             <ul class="topbar-items fadeInDown animated" style="display: none">
                 <ui:fragment rendered="#{guestPreferences.profileMode == 'overlay'||guestPreferences.menuLayout == 'menu-layout-static menu-layout-horizontal'}">
                     <li class="profile-item">
-                        <a href="#">                            
+                        <a href="#">
                             <div class="profile-image"></div>
                             <span class="topbar-item-name">Jane Williams</span>
                         </a>
-                        
+
                         <ul class="ultima-menu animated">
                             <li role="menuitem">
                                 <a href="#">
@@ -170,7 +170,7 @@
                         <label>Search</label>
                         <i class="topbar-icon material-icons">&#xE8B6;</i>
                     </h:panelGroup>
-                    
+
                 </li>
             </ul>
         </div>
