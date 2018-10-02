@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.businessrules.ConceptSearchBR;
+import cl.minsal.semantikos.kernel.businessrules.DescriptionSearchBR;
 import cl.minsal.semantikos.kernel.daos.QueryDAO;
 import cl.minsal.semantikos.kernel.factories.QueryFactory;
 import cl.minsal.semantikos.model.*;
@@ -45,6 +46,9 @@ public class QueryManagerImpl implements QueryManager {
 
     @EJB
     private ConceptSearchBR conceptSearchBR;
+
+    @EJB
+    private DescriptionSearchBR descriptionSearchBR;
 
     @Resource
     private SessionContext ctx;
@@ -229,6 +233,8 @@ public class QueryManagerImpl implements QueryManager {
 
         //Principal principal = ctx.getCallerPrincipal();
 
+        query.setQuery(descriptionSearchBR.escapeSpecialCharacters(query.getQuery()));
+
         List<ConceptSMTK> concepts = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
 
         /*
@@ -263,7 +269,8 @@ public class QueryManagerImpl implements QueryManager {
 
     @Override
     public int countQueryResults(Query query) {
-        int quantity = (int)queryDAO.countByQuery(query);
+        query.setQuery(descriptionSearchBR.escapeSpecialCharacters(query.getQuery()));
+        int quantity = (int) queryDAO.countByQuery(query);
         query.setTruncateMatch(false);
         return quantity;
     }

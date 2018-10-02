@@ -26,6 +26,13 @@
     left: 10px;
 }
 
+.search .loader {
+    position: absolute !important;
+    top: -6px !important;
+    left: 4px !important;
+    width: 30px !important;
+}
+
 
 .fa-lg {
     line-height: .5em !important;
@@ -236,7 +243,7 @@
 
 .label {
     font-weight: bold;
-    /*color: #3F51B5 !important;*/
+    color: #545454 !important;
 }
 
 .browser-options .ui-menuitem {

@@ -76,19 +76,25 @@
                                                         update="@(.conceptPanel),@(.search)"
                                                         process="@this"/>
 
+                                                <p:ajax event="query"
+                                                        onstart="initLoader()"
+                                                        oncomplete="haltLoader()"/>
+
                                             </p:autoComplete>
 
                                             <p:outputPanel rendered="#{browserBean.descriptionSelected eq null}">
                                                 <i class="fa fa-search fa-lg" />
                                             </p:outputPanel>
 
-                                            <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
-                                                <p:commandLink process="@this" style="color: #aaa;"
-                                                               update="@(.search)" oncomplete="listenSearchOnClickEvent();"
-                                                               action="#{browserBean.setDescriptionSelected(null)}">
-                                                    <i class="fa fa-close fa-lg" />
-                                                </p:commandLink>
-                                            </p:outputPanel>
+                                            <p:commandLink process="@this" style="color: #aaa; line-height: 24px"
+                                                           rendered="#{browserBean.descriptionSelected != null}"
+                                                           update="@(.search)" oncomplete="listenSearchOnClickEvent();"
+                                                           action="#{browserBean.setDescriptionSelected(null)}">
+                                                <i class="fa fa-close fa-lg" />
+                                            </p:commandLink>
+
+                                            <p:graphicImage library="semantikos" name="images/loader-pink.gif"
+                                                            styleClass="loader" style="display: none" />
 
                                         </p:outputPanel>
 
@@ -357,6 +363,16 @@
 
             function listenOnClick() {
                 $('.rightpanel-btn').trigger('click');
+            }
+
+            function initLoader() {
+                //$('.loader').css("display","inline");
+                //$('.search .fa').hide();
+            }
+
+            function haltLoader() {
+                //$('.loader').css("display","none");
+                //$('.search .fa').show();
             }
 
         </script>
