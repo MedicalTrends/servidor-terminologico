@@ -8,6 +8,7 @@ import cl.minsal.semantikos.kernel.components.InstitutionManager;
 import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
 import cl.minsal.semantikos.model.users.User;
+import org.jboss.security.SecurityAssociation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +26,7 @@ import javax.naming.NamingException;
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.security.Principal;
 import java.text.ParseException;
 
 /**
@@ -93,7 +95,9 @@ public class AuthenticationBean {
                 return;
             }
 
-            ServiceLocator.login(email, password);
+            Principal principal = ServiceLocator.login(email, password);
+
+            SecurityAssociation.setPrincipal(principal);
 
             //@EJB(name = "AuthenticationManagerEJB")
             AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);

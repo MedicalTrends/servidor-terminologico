@@ -34,7 +34,7 @@ public class ServiceLocator {
     private static String APP_NAME = "SemantikosCentral/";
     private static String MODULE_NAME = "SemantikosKernelEJB/";
 
-    private void lookupRemoteStatelessEJB(Type type) throws NamingException {
+    private static Object lookupRemoteStatelessEJB(Type type) throws NamingException {
 
         //final String version =  getClass().getPackage().getImplementationVersion();
         // The app name is the application name of the deployed EJBs. This is typically the ear name
@@ -60,7 +60,9 @@ public class ServiceLocator {
 
         Object remoteEjb = context.lookup(jndiname);
 
-        this.servicesByName.put(getServiceName(type), remoteEjb);
+        servicesByName.put(getServiceName(type), remoteEjb);
+
+        return remoteEjb;
     }
 
 
@@ -122,15 +124,16 @@ public class ServiceLocator {
                 e.printStackTrace();
             }
         }
+
         return this.servicesByName.get(getServiceName(type));
     }
 
-    private String getServiceName(Type type) {
+    private static String getServiceName(Type type) {
         String[] tokens = type.toString().split(" ")[1].split("\\.");
         return tokens[tokens.length-1]+"Impl";
     }
 
-    private String getViewClassName(Type type) {
+    private static String getViewClassName(Type type) {
         return type.toString().split(" ")[1];
     }
 
@@ -142,7 +145,7 @@ public class ServiceLocator {
         }
     }
 
-    public static void login(String userName, String password) throws LoginException {
+    public static Principal login(String userName, String password) throws LoginException {
 
         props = new Properties();
         props.put("endpoint.name", "client-endpoint");
@@ -163,9 +166,9 @@ public class ServiceLocator {
 
         try {
             context = new InitialContext(props);
-            AuthenticationManager authenticationManager = (AuthenticationManager) getInstance().getService(AuthenticationManager.class);
-            Principal principal = authenticationManager.login();
-            SecurityAssociation.setPrincipal(principal);
+            AuthenticationManager authenticationManager = (AuthenticationManager) lookupRemoteStatelessEJB(AuthenticationManager.class);
+
+            return authenticationManager.login();
         } catch (NamingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
