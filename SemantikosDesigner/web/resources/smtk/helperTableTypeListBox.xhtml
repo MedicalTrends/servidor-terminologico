@@ -112,7 +112,7 @@
 
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
-                                <p:inputTextarea disabled="true" id="findHTRecords2_" value="#{relationship.target.cells[1].stringValue}" rendered="#{cc.attrs.relationshipDefinition.ATC}"  />
+                                <p:inputTextarea disabled="true" id="findHTRecords2_" value="#{relationship.target.cells[1].stringValue}" rendered="#{cc.attrs.relationshipDefinition.ATC}" />
                                 <p:commandLink process="@this"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id}), @(.conceptHeader)"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">

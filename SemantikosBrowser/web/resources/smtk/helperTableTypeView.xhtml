@@ -32,13 +32,14 @@
 
                     <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}:" styleClass="label" />
+                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}:" styleClass="label" />
 
                     </div>
 
                     <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                        <h:outputText readonly="true" id="findHTRecords7" value="#{relationship.target.description}" styleClass="value" />
+                        <h:outputText readonly="true" id="findHTRecords7" value="#{relationship.target.description}" styleClass="value" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
+                        <h:outputText readonly="true" id="findHTRecords2_" value="#{relationship.target.cells[1].stringValue}" styleClass="value" rendered="#{cc.attrs.relationshipDefinition.ATC}" />
 
                     </div>
 

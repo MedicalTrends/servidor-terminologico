@@ -129,7 +129,6 @@ public class GeneralBrowserBean implements Serializable {
             return;
         }
 
-
         /**
          * Si el objeto de consulta no está inicializado, inicializarlo
          */
