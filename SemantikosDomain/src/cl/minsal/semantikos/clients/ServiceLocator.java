@@ -147,6 +147,35 @@ public class ServiceLocator {
 
     public static Principal login(String userName, String password) throws LoginException {
 
+        /*
+       * During the login process(i.e. when the login() method on the LoginContext is called),
+       * the control will be transferred to a CallbackHandler. The CallbackHandler will be
+       * responsible for populating the Callback object with the username and password, which
+       * will be later on used by the login process
+       *
+       * The "MyCallbackHandler" is your own class and you can give any name to it. MyCallbackHandler
+       * expects the username and password to be passed through its constructor, but this is NOT
+       * mandatory when you are writing your own callback handler.
+       *
+       *
+       */
+        MyCallbackHandler handler = new MyCallbackHandler(userName, password);
+
+       /*
+        * Create a login context. Here, as the first parameter, you will specify which
+        * configuration(mentioned in the "authFile" above) will be used. Here we are specifying
+        * "someXYZLogin" as the configuration to be used. Note: This has to match the configuration
+        * specified in the someFilename.someExtension authFile above.
+        * The login context expects a CallbackHandler as the second parameter. Here we are specifying
+        * the instance of MyCallbackHandler created earlier. The "handle()" method of this handler
+        * will be called during the login process.
+        */
+        loginContext = new LoginContext(Configuration.getConfiguration().getClass().getName(), handler);
+       /*
+        * Do the login
+        */
+        loginContext.login();
+
         props = new Properties();
         props.put("endpoint.name", "client-endpoint");
         props.put("remote.connections", "default");
@@ -163,6 +192,12 @@ public class ServiceLocator {
         //these 2 lines below are not necessary, if security-realm is removed from remoting-connector
         props.put("remote.connection.default.username", userName);
         props.put("remote.connection.default.password", password);
+
+        //these 2 lines below are not necessary, if security-realm is removed from remoting-connector
+        //props.put("Context.SECURITY_PRINCIPAL", userName);
+        //props.put("Context.SECURITY_CREDENTIALS", password);
+
+        props.put("Context.SECURITY_PROTOCOL", "org.jboss.security.ClientLoginModule");
 
         try {
             context = new InitialContext(props);

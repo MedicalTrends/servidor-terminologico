@@ -97,8 +97,6 @@ public class AuthenticationBean {
 
             Principal principal = ServiceLocator.login(email, password);
 
-            SecurityAssociation.setPrincipal(principal);
-
             //@EJB(name = "AuthenticationManagerEJB")
             AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
 

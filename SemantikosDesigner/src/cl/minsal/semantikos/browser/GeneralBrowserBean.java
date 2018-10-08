@@ -15,6 +15,7 @@ import cl.minsal.semantikos.model.queries.QueryFilterAttribute;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.users.User;
+import org.jboss.security.SecurityAssociation;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.LazyDataModel;
