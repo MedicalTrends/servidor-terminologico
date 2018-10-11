@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>SemantikosLoader</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
     <packaging>jar</packaging>
 
     <parent>
         <groupId>cl.minsal.semantikos</groupId>
         <artifactId>Semantikos</artifactId>
-        <version>1.4</version>
+        <version>1.5</version>
     </parent>
 
     <properties>
@@ -23,7 +23,7 @@
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosDomain</artifactId>
-            <version>1.4</version>
+            <version>1.5</version>
             <type>jar</type>
         </dependency>
 

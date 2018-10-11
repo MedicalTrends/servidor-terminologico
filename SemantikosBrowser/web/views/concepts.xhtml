@@ -59,7 +59,7 @@
 
                                                 </p:outputPanel>
 
-                                                <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px">
+                                                <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px" styleClass="context">
                                                     <h:outputText value="#{description.term}" style="font-weight: normal;" />
                                                 </p:column>
 
@@ -74,11 +74,12 @@
                                                 <p:ajax event="itemSelect"
                                                         listener="#{browserBean.test()}"
                                                         update="@(.conceptPanel),@(.search)"
+                                                        oncomplete="mark();"
                                                         process="@this"/>
 
                                                 <p:ajax event="query"
                                                         onstart="initLoader()"
-                                                        oncomplete="haltLoader()"/>
+                                                        oncomplete="haltLoader(); mark();"/>
 
                                             </p:autoComplete>
 
@@ -198,7 +199,7 @@
                                      paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
-                            <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop();" update="@(.search)" />
+                            <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop(); mark();" update="@(.search)" />
 
                             <p:column headerText="Termino Preferido">
                                 <div class="ui-g dashboard">
@@ -206,7 +207,7 @@
                                         <div class="card overview">
                                             <div class="overview-content clearfix">
                                                     <span class="overview-title">
-                                                        <p:link outcome="/views/concept" value="#{conceptSMTK.descriptionFavorite.term}" styleClass="myCustomLinkStyle" >
+                                                        <p:link outcome="/views/concept" value="#{conceptSMTK.descriptionFavorite.term}" styleClass="myCustomLinkStyle context" >
                                                             <f:param name="conceptID" value="#{conceptSMTK.conceptID}" />
                                                         </p:link>
                                                     </span>
@@ -313,6 +314,7 @@
                 $.removeCookie('myCookie');
                 listenPageOnClickEvent();
                 listenSearchOnClickEvent();
+                mark();
             });
 
             function scrollTop() {
@@ -375,8 +377,31 @@
                 //$('.search .fa').show();
             }
 
-        </script>
+            function mark() {
 
+                // Read the keyword
+                var keyword =  $('input[id$=search_input]').val();
+
+                // Determine selected options
+                var options = {};
+                $("input[name='opt[]']").each(function() {
+                    options[$(this).val()] = $(this).is(":checked");
+                });
+
+                // Remove previous marked elements and mark
+                // the new keyword inside the context
+                $(".context").unmark({
+                    done: function() {
+                        $(".context").mark(keyword, options);
+                    }
+                });
+
+                $("input[name='keyword']").on("input", mark);
+                $("input[type='checkbox']").on("change", mark);
+
+            }
+
+        </script>
 
     </ui:define>
 

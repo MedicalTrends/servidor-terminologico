@@ -16,6 +16,8 @@
     <title>Semantikos</title>
     <h:outputScript name="js/ripple.js" library="ultima-layout" />
     <h:outputScript name="js/layout.js" library="ultima-layout" />
+    <h:outputScript name="js/mark.js" library="semantikos" />
+    <h:outputScript name="js/jquery.mark.js" library="semantikos" />
 </h:head>
 
 <!--h:body styleClass="login-body"-->
@@ -72,7 +74,7 @@
                                                         itemLabel="#{description}"
                                                         itemValue="#{description}">
 
-                                            <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px">
+                                            <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px" styleClass="context">
                                                 <h:outputText value="#{description.term}" />
                                             </p:column>
 
@@ -88,6 +90,9 @@
                                                     listener="#{browserBean.test()}"
                                                     update="@(.conceptPanel),@(.search)"
                                                     process="@this"/>
+
+                                            <p:ajax event="query"
+                                                    oncomplete="mark();"/>
 
                                         </p:autoComplete>
 
@@ -166,6 +171,8 @@
 
         $('.search-button-tiny').prop('onclick',"");
 
+        $('input[id$=search_input]').focus();
+
         $('input[id$=search_input]').on('input', function() {
             if($('input[id$=search_hinput]').val().length >= 3) {
                 $('.search-button-tiny').prop('onclick',"window.open('"+redirect+"','_self')");
@@ -194,6 +201,31 @@
                 return false;
             }
         });
+
+        function mark() {
+
+            // Read the keyword
+            var keyword =  $('input[id$=search_input]').val();
+
+            // Determine selected options
+            var options = {};
+            $("input[name='opt[]']").each(function() {
+                options[$(this).val()] = $(this).is(":checked");
+            });
+
+            // Remove previous marked elements and mark
+            // the new keyword inside the context
+            $(".context").unmark({
+                done: function() {
+                    $(".context").mark(keyword, options);
+                }
+            });
+
+            $("input[name='keyword']").on("input", mark);
+            $("input[type='checkbox']").on("change", mark);
+
+        }
+
     </script>
 </h:body>
 

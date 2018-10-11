@@ -133,16 +133,7 @@ public interface DescriptionManager {
      *
      * @return Una lista con descripciones que hacen perfect match.
      */
-    public List<Description> searchDescriptionsPerfectMatch(String term, List<Category> categories, List<RefSet> refSets);
-
-    /**
-     * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
-     * parámetro en cada una de las categorías y refsets indicadas.
-     *
-     * @return Una lista con descripciones que hacen perfect match.
-     */
-    public List<Description> searchDescriptionsPerfectMatchInParallel(String term, List<Category> categories, List<RefSet> refSets)
-            throws InterruptedException, ExecutionException;
+    public List<Description> searchDescriptionsPerfectMatch(String term, List<Category> categories, List<RefSet> refSets, List<DescriptionType> descriptionTypes);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
@@ -150,7 +141,7 @@ public interface DescriptionManager {
      *
      * @return Una lista con descripciones que hacen truncate match.
      */
-    public List<Description> searchDescriptionsTruncateMatch(String term, List<Category> categories, List<RefSet> refSets);
+    public List<Description> searchDescriptionsTruncateMatch(String term, List<Category> categories, List<RefSet> refSets, List<DescriptionType> descriptionTypes);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
@@ -158,7 +149,7 @@ public interface DescriptionManager {
      *
      * @return Una lista con descripciones que hacen truncate match.
      */
-    public List<Description> searchDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets);
+    public List<Description> searchDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets, List<DescriptionType> descriptionTypes);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
@@ -166,7 +157,7 @@ public interface DescriptionManager {
      *
      * @return Una lista con descripciones que hacen truncate match.
      */
-    public int countDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets);
+    public int countDescriptionsSuggested(String term, List<Category> categories, List<RefSet> refSets, List<DescriptionType> descriptionTypes);
 
     /**
      * Este método es responsable de hacer que una descripción sea no válida en el sistema.

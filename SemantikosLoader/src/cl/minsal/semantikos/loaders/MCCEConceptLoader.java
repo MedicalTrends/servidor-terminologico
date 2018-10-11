@@ -258,7 +258,7 @@ public class MCCEConceptLoader extends EntityLoader {
 
                 relationshipDefinition = category.findRelationshipDefinitionsByName("Medicamento Clínico").get(0);
 
-                List<Description> mc = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mcName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico")}), null);
+                List<Description> mc = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mcName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico")}), null, null);
 
                 if(mc.isEmpty()) {
                     throw new LoadException(path.toString(), id, "No existe un MC con preferida: "+mcName, ERROR);

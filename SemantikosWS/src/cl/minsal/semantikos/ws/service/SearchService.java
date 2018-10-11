@@ -531,5 +531,21 @@ public class SearchService {
         }
     }
 
+    // REQ-WS-006.2
+    @WebResult(name = "respuestaSugerenciasDeDescripciones")
+    @WebMethod(operationName = "sugerenciasDeDescripcionesv2")
+    public SuggestedDescriptionsResponse sugerenciasDeDescripcionesv2(
+            @XmlElement(required = true, namespace = "http://service.ws.semantikos.minsal.cl/")
+            @WebParam(name = "peticionSugerenciasDeDescripcionesv2")
+                    DescriptionsSuggestionsRequest2 request
+    ) throws IllegalInputFault, NotFoundFault {
+        try {
+            return this.conceptController.searchSuggestedDescriptions2(request);
+        }
+        catch (Exception e) {
+            throw new NotFoundFault(e.getMessage());
+        }
+        //return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames());
+    }
 
 }

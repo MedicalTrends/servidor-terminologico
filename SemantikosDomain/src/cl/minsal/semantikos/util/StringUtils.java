@@ -13,6 +13,8 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
+
 /**
  * Created by root on 11-07-16.
  *
@@ -197,6 +199,10 @@ public class StringUtils {
     public static boolean isEmpty(String term) {
         term = term.replaceAll("\\s+", " ");
         return (term.equals("0") || term.isEmpty() || term.equals("NA"));
+    }
+
+    public static boolean isEmpty(List<String> list) {
+        return list == null || list.isEmpty() || (list.size() == 1 && list.contains(EMPTY_STRING));
     }
 
 }

@@ -5,22 +5,18 @@ import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
-import cl.minsal.semantikos.model.descriptions.Description;
-import cl.minsal.semantikos.model.descriptions.NoValidDescription;
-import cl.minsal.semantikos.model.descriptions.PendingTerm;
+import cl.minsal.semantikos.model.descriptions.*;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
-import cl.minsal.semantikos.modelws.request.ConceptIDByGTINRequest;
-import cl.minsal.semantikos.modelws.request.DescriptionIDorConceptIDRequest;
-import cl.minsal.semantikos.modelws.request.GTINByConceptIDRequest;
-import cl.minsal.semantikos.modelws.request.NewTermRequest;
+import cl.minsal.semantikos.modelws.request.*;
 import cl.minsal.semantikos.modelws.response.*;
 import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
 import cl.minsal.semantikos.modelws.fault.NotFoundFault;
+import cl.minsal.semantikos.util.StringUtils;
 import cl.minsal.semantikos.ws.mapping.BioequivalentMapper;
 import cl.minsal.semantikos.ws.mapping.ConceptMapper;
 import cl.minsal.semantikos.ws.mapping.ISPRegisterMapper;
@@ -253,10 +249,10 @@ public class ConceptController {
         List<NoValidDescriptionResponse> noValidDescriptions = new ArrayList<>();
         List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
 
-        List<Description> descriptions = descriptionManager.searchDescriptionsPerfectMatch(term, categories, refSets);
+        List<Description> descriptions = descriptionManager.searchDescriptionsPerfectMatch(term, categories, refSets, null);
 
         if(!categoriesNames.contains("Concepto Especial")) {
-            descriptions.addAll(descriptionManager.searchDescriptionsPerfectMatch(term, Arrays.asList(CategoryFactory.SPECIAL_CONCEPT), null));
+            descriptions.addAll(descriptionManager.searchDescriptionsPerfectMatch(term, Arrays.asList(CategoryFactory.SPECIAL_CONCEPT), null, null));
         }
 
         //List<Description> descriptions = this.descriptionManager.searchDescriptionsPerfectMatchInParallel(term, categories, refSets);
@@ -332,10 +328,10 @@ public class ConceptController {
         List<NoValidDescriptionResponse> noValidDescriptions = new ArrayList<>();
         List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
 
-        List<Description> descriptions = descriptionManager.searchDescriptionsTruncateMatch(term, categories, refSets);
+        List<Description> descriptions = descriptionManager.searchDescriptionsTruncateMatch(term, categories, refSets, null);
 
         if(!categoriesNames.contains("Concepto Especial")) {
-            descriptions.addAll(descriptionManager.searchDescriptionsTruncateMatch(term, Arrays.asList(CategoryFactory.SPECIAL_CONCEPT), null));
+            descriptions.addAll(descriptionManager.searchDescriptionsTruncateMatch(term, Arrays.asList(CategoryFactory.SPECIAL_CONCEPT), null, null));
         }
 
         //logger.debug("ws-req-001. descripciones encontradas: " + descriptions);
@@ -399,10 +395,8 @@ public class ConceptController {
 
         List<SuggestedDescriptionResponse> suggestedDescriptions = new ArrayList<>();
 
-        //List<Description> descriptions = this.descriptionManager.searchDescriptionsTruncateMatch(term, categories, EMPTY_LIST);
-
-        List<Description> descriptions = this.descriptionManager.searchDescriptionsSuggested(term, categories, null);
-        int count = this.descriptionManager.countDescriptionsSuggested(term, categories, null);
+        List<Description> descriptions = this.descriptionManager.searchDescriptionsSuggested(term, categories, null, null);
+        int count = this.descriptionManager.countDescriptionsSuggested(term, categories, null, null);
 
         //logger.debug("ws-req-006. descripciones encontradas: " + descriptions);
 
@@ -422,6 +416,60 @@ public class ConceptController {
         }
 
         res.setPattern(term);
+        res.setSuggestedDescriptionResponses(suggestedDescriptions);
+        res.setQuantity(count);
+
+        return res;
+    }
+
+    /**
+     * REQ-WS-004
+     * Este método es responsable de buscar un concepto segun una de sus descripciones que coincidan por truncate match
+     * con el <em>TERM</em> dado en los REFSETS y Categorias indicadas.
+     *
+     * @return Conceptos buscados segun especificaciones de REQ-WS-001.
+     * @throws NotFoundFault Si uno de los nombres de Categorias o REFSETS no existe.
+     */
+    public SuggestedDescriptionsResponse searchSuggestedDescriptions2(
+            DescriptionsSuggestionsRequest2 request2
+    ) throws Exception {
+
+        SuggestedDescriptionsResponse res = new SuggestedDescriptionsResponse();
+
+        List<Category> categories = this.categoryController.findCategories(request2.getCategoryNames());
+        List<RefSet> refSets = this.refSetController.findRefsets(request2.getRefSetNames());
+        List<DescriptionType> descriptionTypes = new ArrayList<>();
+
+        if(!StringUtils.isEmpty(request2.getDescriptionTypeNames())) {
+            descriptionTypes = DescriptionTypeFactory.getInstance().getDescritptionTypesByNames(request2.getDescriptionTypeNames());
+        }
+
+        if(refSets.isEmpty()) {
+            refSets = null;
+        }
+
+        if(descriptionTypes.isEmpty()) {
+            descriptionTypes = null;
+        }
+
+        List<SuggestedDescriptionResponse> suggestedDescriptions = new ArrayList<>();
+
+        List<Description> descriptions = this.descriptionManager.searchDescriptionsSuggested(request2.getTerm(), categories, refSets, descriptionTypes);
+        int count = this.descriptionManager.countDescriptionsSuggested(request2.getTerm(), categories, refSets, descriptionTypes);
+
+        int cont = 0;
+
+        for (Description description : descriptions) {
+
+            if(cont==5) {
+                break;
+            }
+            suggestedDescriptions.add(new SuggestedDescriptionResponse(description));
+
+            cont++;
+        }
+
+        res.setPattern(request2.getTerm());
         res.setSuggestedDescriptionResponses(suggestedDescriptions);
         res.setQuantity(count);
 

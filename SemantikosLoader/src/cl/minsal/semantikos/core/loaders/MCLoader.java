@@ -194,7 +194,7 @@ public class MCLoader extends BaseLoader {
                 // Obteniendo Sustancia
                 String termFavourite = StringUtils.normalizeSpaces(substanceTokens[1]).trim();
 
-                List<Description> substanceList = descriptionManager.searchDescriptionsPerfectMatch(termFavourite, Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia")}), null);
+                List<Description> substanceList = descriptionManager.searchDescriptionsPerfectMatch(termFavourite, Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia")}), null, null);
 
                 if(substanceList.isEmpty()) {
                     throw new LoadException(path.toString(), id, "No existe una sustancia con preferida: "+termFavourite, ERROR, type);
@@ -298,7 +298,7 @@ public class MCLoader extends BaseLoader {
 
                 relationshipDefinition = category.findRelationshipDefinitionsByName("Medicamento Básico").get(0);
 
-                List<Description> mb = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mbName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Básico")}), null);
+                List<Description> mb = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mbName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Básico")}), null, null);
 
                 if(mb.isEmpty()) {
                     throw new LoadException(path.toString(), id, "No existe un MB con preferida: "+mbName, ERROR, type);

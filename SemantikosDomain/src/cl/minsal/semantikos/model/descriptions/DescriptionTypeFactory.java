@@ -1,10 +1,9 @@
 package cl.minsal.semantikos.model.descriptions;
 
+import cl.minsal.semantikos.util.StringUtils;
+
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
@@ -122,6 +121,20 @@ public class DescriptionTypeFactory implements Serializable {
         throw new IllegalArgumentException("DescriptionType con ID=" + idDescriptionType + " no existe.");
     }
 
+    public List<DescriptionType> getDescritptionTypesByNames(List<String> names) throws Exception {
+
+        List<DescriptionType> descriptionTypes = new ArrayList<>();
+
+        for (String name : names) {
+            if(!descriptionTypesByName.containsKey(name)) {
+                throw new Exception("Tipo descripción no encontrado: " + name);
+            }
+            descriptionTypes.add(descriptionTypesByName.get(name));
+        }
+
+        return descriptionTypes;
+    }
+
     public List<DescriptionType> getDescriptionTypesButFSNandFavorite() {
 
         List<DescriptionType> otherDescriptionTypes = new ArrayList<DescriptionType>();
@@ -150,4 +163,6 @@ public class DescriptionTypeFactory implements Serializable {
 
         return otherDescriptionTypes;
     }
+
+
 }

@@ -1,11 +1,13 @@
 package cl.minsal.semantikos.model.descriptions;
 
+import cl.minsal.semantikos.model.PersistentEntity;
+
 import java.io.Serializable;
 
 /**
  * @author Diego Soto.
  */
-public class DescriptionType implements Serializable {
+public class DescriptionType extends PersistentEntity implements Serializable {
 
     /** Descripción tipo General */
     public static final DescriptionType FSN = new DescriptionType(1, "FSN", "Descripción de tipo Full Specified Name");

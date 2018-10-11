@@ -376,7 +376,7 @@ public class BrowserBean implements Serializable {
         List<Description> suggestedDescriptions = new ArrayList<>();
         DescriptionTypeFactory.DUMMY_DESCRIPTION.setTerm(EMPTY_STRING);
         suggestedDescriptions.add(DescriptionTypeFactory.DUMMY_DESCRIPTION);
-        suggestedDescriptions.addAll(descriptionManager.searchDescriptionsSuggested(term, categories, null));
+        suggestedDescriptions.addAll(descriptionManager.searchDescriptionsSuggested(term, categories, null, null));
         return suggestedDescriptions;
     }
 

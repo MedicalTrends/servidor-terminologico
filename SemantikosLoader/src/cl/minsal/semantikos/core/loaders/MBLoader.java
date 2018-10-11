@@ -169,7 +169,7 @@ public class MBLoader extends BaseLoader {
 
                 String termFavourite = StringUtils.normalizeSpaces(substanceTokens[1]).trim();
 
-                List<Description> substanceList = descriptionManager.searchDescriptionsPerfectMatch(termFavourite, Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia")}), null);
+                List<Description> substanceList = descriptionManager.searchDescriptionsPerfectMatch(termFavourite, Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Sustancia")}), null, null);
 
                 if(substanceList.isEmpty()) {
                     throw new LoadException(path.toString(), id, "No existe una sustancia con preferida: " + termFavourite, ERROR, type);

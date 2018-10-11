@@ -170,7 +170,7 @@ public class PCCELoader extends BaseLoader {
 
                 relationshipDefinition = category.findRelationshipDefinitionsByName("Producto Comercial").get(0);
 
-                List<Description> pc = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(pcName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Producto Comercial")}), null);
+                List<Description> pc = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(pcName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Producto Comercial")}), null, null);
 
                 if(pc.isEmpty()) {
                     throw new LoadException(path.toString(), id, "No existe un PC con preferida: "+pcName, ERROR, type);
@@ -193,7 +193,7 @@ public class PCCELoader extends BaseLoader {
 
                 relationshipDefinition = category.findRelationshipDefinitionsByName("Medicamento Clínico con Envase").get(0);
 
-                List<Description> mcce = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mcceName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico con Envase")}), null);
+                List<Description> mcce = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(mcceName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Medicamento Clínico con Envase")}), null, null);
 
                 if(mcce.isEmpty()) {
                     throw new LoadException(path.toString(), id, "No existe un MCCE con preferida: " + mcce, ERROR, type);

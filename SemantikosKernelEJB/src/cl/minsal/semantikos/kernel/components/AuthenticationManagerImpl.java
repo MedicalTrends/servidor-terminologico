@@ -186,9 +186,6 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
         return this.getUser(email);
     }
 
-
-
-
     //@RolesAllowed("Administrador")
     @PermitAll()
     public void setUserPassword(String username, String password) throws PasswordChangeException {

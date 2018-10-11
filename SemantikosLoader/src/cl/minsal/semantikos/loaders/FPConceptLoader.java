@@ -249,7 +249,7 @@ public class FPConceptLoader extends EntityLoader {
 
                 relationshipDefinition = category.findRelationshipDefinitionsByName("Grupo de Familia de Producto").get(0);
 
-                List<Description> gfp = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(gfpName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Grupo de Familia de Producto")}), null);
+                List<Description> gfp = descriptionManager.searchDescriptionsPerfectMatch(StringUtils.normalizeSpaces(gfpName).trim(), Arrays.asList(new Category[]{CategoryFactory.getInstance().findCategoryByName("Fármacos - Grupo de Familia de Producto")}), null, null);
 
                 if(gfp.isEmpty()) {
                     SMTKLoader.logError(new LoadException(path.toString(), id, "No existe un GFP con preferida: "+gfpName, ERROR));

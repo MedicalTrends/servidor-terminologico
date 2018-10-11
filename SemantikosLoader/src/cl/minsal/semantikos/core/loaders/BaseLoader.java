@@ -255,7 +255,7 @@ public abstract class BaseLoader {
                 log(new LoadException(dataFile, conceptID, msg, LoadException.INFO, type));
 
                 //Se buscan descripciones con glosa suministrada
-                List<Description> descriptions = descriptionManager.searchDescriptionsPerfectMatch(term, Arrays.asList(new Category[]{category}), null);
+                List<Description> descriptions = descriptionManager.searchDescriptionsPerfectMatch(term, Arrays.asList(new Category[]{category}), null, null);
 
                 if(!descriptions.isEmpty()) {
                     ConceptSMTK conceptSMTK = descriptions.get(0).getConceptSMTK();

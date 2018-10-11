@@ -25,7 +25,7 @@
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
                      id="tableRelationship3"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
-                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
+                     draggableRows="false"
                      style="margin: 0px;" reflow="true"
                      value="#{concept.selectedConcept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      var="rel">
@@ -39,9 +39,11 @@
             </p:column>
 
             <p:column headerText="Concepto">
-                <p:link outcome="/views/concept" value="#{rel.target.descriptionFSN} - #{rel.target.id}" styleClass="value" >
-                    <f:param name="conceptID" value="#{rel.target.conceptID}" />
-                </p:link>
+                <p:outputPanel>
+                    <p:link outcome="/views/concept" value="#{rel.target.descriptionFSN} - #{rel.target.id}" styleClass="value" >
+                        <f:param name="conceptID" value="#{rel.target.conceptID}" />
+                    </p:link>
+                </p:outputPanel>
             </p:column>
 
             <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
@@ -72,28 +74,29 @@
                                        var="relationship"
                                        varStatus="var">
 
-                                <div class="ui-fluid">
+                    <div class="ui-fluid">
 
-                                    <div class="ui-g">
+                        <div class="ui-g">
 
-                                        <div class="ui-g-12 ui-md-4 ui-lg-2">
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}:" styleClass="label"/>
+                                <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}:" styleClass="label"/>
 
-                                        </div>
+                            </div>
 
-                                        <div class="ui-g-12 ui-md-8 ui-lg-10">
+                            <div class="ui-g-12 ui-md-8 ui-lg-10">
 
-                                            <p:link outcome="/views/concept" value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" styleClass="value" >
-                                                <f:param name="conceptID" value="#{relationship.target.conceptID}" />
-                                            </p:link>
+                                <p:link outcome="/views/concept" value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" styleClass="value" >
+                                    <f:param name="conceptID" value="#{relationship.target.conceptID}" />
+                                </p:link>
 
-                                        </div>
+                            </div>
 
-                                    </div>
-                                </div>
+                        </div>
 
-                            </ui:repeat>
+                    </div>
+
+                </ui:repeat>
 
 
             </p:outputPanel>

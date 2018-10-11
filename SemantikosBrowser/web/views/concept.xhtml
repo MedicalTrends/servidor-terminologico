@@ -155,7 +155,9 @@
                                     <h:outputText value="#{attributeDefinition.name}" />
                                 </f:facet>
                                 <p:repeat value="#{relationship.getAttributesByAttributeDefinition(attributeDefinition)}" var="attribute">
-                                    <p:outputLabel value="#{attribute.target}"/>
+                                    <p:outputPanel>
+                                        <p:outputLabel value="#{attribute.target}"/>
+                                    </p:outputPanel>
                                 </p:repeat>
                             </p:columns>
 
@@ -163,13 +165,17 @@
                                 <p:link value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="/views/concept-snomed" rendered="false">
                                     <f:param name="conceptID" value="#{relationship.target.idSnomedCT}" />
                                 </p:link>
-                                <p:outputLabel value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="/views/concept-snomed" rendered="true"/>
+                                <p:outputPanel>
+                                    <p:outputLabel value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="/views/concept-snomed" rendered="true"/>
+                                </p:outputPanel>
                                 <h:dataTable value="#{relationship.target.getDescriptionSynonymous()}" var="description" rendered="false">
                                     <h:column>
                                         <h:outputText value="#{description.descriptionType.name}" style="font-weight: bold"/>
                                     </h:column>
                                     <h:column>
-                                        <h:outputText value="#{description.term}"/>
+                                        <p:outputPanel>
+                                            <h:outputText value="#{description.term}"/>
+                                        </p:outputPanel>
                                     </h:column>
                                 </h:dataTable>
                             </p:column>
@@ -195,21 +201,29 @@
                                          reflow="true">
 
                                 <p:column headerText="Terminología">
-                                    <h:outputText value="#{crossmap.target.crossmapSet.name}"/>
+                                    <p:outputPanel>
+                                        <h:outputText value="#{crossmap.target.crossmapSet.name}"/>
+                                    </p:outputPanel>
                                 </p:column>
 
                                 <p:column headerText="Cod-1 Crossmapset Member">
-                                    <h:outputText value="#{crossmap.target.code1}" rendered="#{crossmap.relationshipDefinition.CIE10}"/>
-                                    <h:outputText value="#{crossmap.target.code}" rendered="#{crossmap.relationshipDefinition.GMDN}"/>
+                                    <p:outputPanel>
+                                        <h:outputText value="#{crossmap.target.code1}" rendered="#{crossmap.relationshipDefinition.CIE10}"/>
+                                        <h:outputText value="#{crossmap.target.code}" rendered="#{crossmap.relationshipDefinition.GMDN}"/>
+                                    </p:outputPanel>
                                 </p:column>
 
                                 <p:column headerText="Descripción">
-                                    <h:outputText value="#{crossmap.target.gloss}" rendered="#{crossmap.relationshipDefinition.CIE10}" />
-                                    <h:outputText value="#{crossmap.target.termName}" rendered="#{crossmap.relationshipDefinition.GMDN}" />
+                                    <p:outputPanel>
+                                        <h:outputText value="#{crossmap.target.gloss}" rendered="#{crossmap.relationshipDefinition.CIE10}" />
+                                        <h:outputText value="#{crossmap.target.termName}" rendered="#{crossmap.relationshipDefinition.GMDN}" />
+                                    </p:outputPanel>
                                 </p:column>
 
                                 <p:column headerText="Fecha Creación">
-                                    <h:outputText value="#{concept.getDateCreationFormat(crossmap.creationDate)}"/>
+                                    <p:outputPanel>
+                                        <h:outputText value="#{concept.getDateCreationFormat(crossmap.creationDate)}"/>
+                                    </p:outputPanel>
                                 </p:column>
 
                             </p:dataTable>
@@ -226,22 +240,34 @@
                                          reflow="true">
 
                                 <p:column headerText="Terminología">
-                                    <h:outputText value="#{crossmap.target.crossmapSet.name}"/>
+                                    <p:outputPanel>
+                                        <h:outputText value="#{crossmap.target.crossmapSet.name}"/>
+                                    </p:outputPanel>
                                 </p:column>
                                 <p:column headerText="Cod-1 Crossmapset Member">
-                                    <h:outputText value="#{crossmap.target.code}"/>
+                                    <p:outputPanel>
+                                        <h:outputText value="#{crossmap.target.code}"/>
+                                    </p:outputPanel>
                                 </p:column>
                                 <p:column headerText="Descripción">
-                                    <h:outputText value="#{crossmap.target.gloss}"/>
+                                    <p:outputPanel>
+                                        <h:outputText value="#{crossmap.target.gloss}"/>
+                                    </p:outputPanel>
                                 </p:column>
                                 <p:column headerText="MapRule">
-                                    <h:outputText value="#{crossmap.mapRule}"/>
+                                    <p:outputPanel>
+                                        <h:outputText value="#{crossmap.mapRule}"/>
+                                    </p:outputPanel>
                                 </p:column>
                                 <p:column headerText="MapAdvice">
-                                    <h:outputText value="#{crossmap.mapAdvice}"/>
+                                    <p:outputPanel>
+                                        <h:outputText value="#{crossmap.mapAdvice}"/>
+                                    </p:outputPanel>
                                 </p:column>
                                 <p:column headerText="Origen">
-                                    <h:outputText value=""/>
+                                    <p:outputPanel>
+                                        <h:outputText value=""/>
+                                    </p:outputPanel>
                                 </p:column>
 
                             </p:dataTable>

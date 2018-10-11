@@ -12,55 +12,36 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
         <meta name="apple-mobile-web-app-capable" content="yes" />
     </f:facet>
-    <title>Se ha producido un error</title>
-    <ui:insert name="head" />
+    <title>Semantikos</title>
+    <h:outputScript name="js/ripple.js" library="ultima-layout" />
 </h:head>
 
-<h:body styleClass="loginbodyred">
+<h:body styleClass="exception-body error-page">
 
-    <div class="Wid90 DispBlock MarAuto MarTopPerc10 TexAlCenter">
-        <div class="Wid80 MarAuto WidAutoOnMobile">
-            <div class="EmptyBox30"></div>
-            <div class="Card ShadowEffect">
-                <div class="EmptyBox40"></div>
-                <i class="icon-comments Fs100 Red"></i>
-                <div class="Wid100 OvHidden Fs30 Red">Se produjo un Error</div>
-                <div class="Wid100 OvHidden Fs20 BoldGray">Por Favor, contacte al administrador.</div>
-                <div class="EmptyBox20"></div>
-                <div class="Separator"></div>
-                <div class="EmptyBox10"></div>
-                <div class="Wid100"><p:button value="Volver al inicio" icon="fa fa-dashboard" styleClass="RedButton Wid60 Fs18 White RaisedButton" href="../home.xhtml"/></div>
-                <div class="EmptyBox20"></div>
-
-
-
-            </div>
-            <div class="EmptyBox20"></div>
-
-            <div class="Card ShadowEffect">
-                <p:fieldset collapsed="true" toggleable="true" legend="Detalle del error">
-
-                    <div  class="Wid100 TexAlLeft">
-                        Message: #{pfExceptionHandler.message} <br/>
-                        StackTrace: <h:outputText value="#{pfExceptionHandler.formattedStackTrace}" escape="false" /> <br />
-
-                    </div>
-                </p:fieldset>
-            </div>
-
-            <div class="EmptyBox20"></div>
-            <div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular WhiteBlue">
-                <i class="fa fa-copyright"></i>  PrimeFaces RIO Theme And Layout <br/> All rights reserved.
-            </div>
-        </div>
+    <div class="exception-type">
+        <p:graphicImage name="images/error.svg" library="ultima-layout" />
     </div>
 
-    <h:outputStylesheet name="css/core-layout.css" library="rio-layout" />
-    <h:outputStylesheet name="css/animate.css" library="rio-layout" />
-    <h:outputStylesheet name="css/rio-font.css" library="rio-layout" />
-    <h:outputStylesheet name="css/ripple-effect.css" library="rio-layout" />
-    <h:outputStylesheet name="css/font-awesome.css" library="rio-layout" />
-    <h:outputStylesheet name="css/rio-layout.css" library="rio-layout" />
+    <div class="card exception-panel">
+        <i class="material-icons">&#xE000;</i>
+        <h1>Ha Ocurrido una Excepción</h1>
+        <div class="exception-detail">
+            #{pfExceptionHandler.message} <br/>
+            <p:spacer/>
+            <p:commandButton value="StackTrace" type="button" onclick="PF('dlg1').show();" style="margin-top: 20px" />
+            <br />
+        </div>
+        <p:button outcome="/views/home.xhtml" value="Inicio" icon="fa fa-arrow-left" styleClass="secondary"/>
+    </div>
+
+    <p:dialog header="StackTrace" widgetVar="dlg1" minHeight="40" style="width:100%;height: 500px;">
+        <p:scrollPanel style="width:100%;height:500px" scrollMode="native">
+            <p:outputLabel value="#{pfExceptionHandler.formattedStackTrace}" escape="false" readonly="true" />
+        </p:scrollPanel>
+    </p:dialog>
+
+    <h:outputStylesheet name="css/ripple.css" library="ultima-layout" />
+    <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" />
 </h:body>
 
 </html>

@@ -69,15 +69,7 @@ public interface DescriptionDAO {
      *
      * @return
      */
-    List<Description> searchDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets, int page, int pageSize);
-
-    /**
-     * Este método es responsable de buscar y retornar todas las descripciones que hagan perfect match con el término
-     * dado como parámetro en cada una de las categorías y refsets indicadas.
-     *
-     * @return
-     */
-    Future<List<Description>> searchDescriptionsPerfectMatchAsync(String term, Long[] categories, Long[] refsets, int page, int pageSize);
+    List<Description> searchDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets, Long[] descriptionTypes, int page, int pageSize);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que hagan truncate match con el término
@@ -85,7 +77,7 @@ public interface DescriptionDAO {
      *
      * @return
      */
-    List<Description> searchDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets, int page, int pageSize);
+    List<Description> searchDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets, Long[] descriptionTypes, int page, int pageSize);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que hagan perfect match con el término
@@ -93,7 +85,7 @@ public interface DescriptionDAO {
      *
      * @return
      */
-    int countDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets);
+    int countDescriptionsPerfectMatch(String term, Long[] categories, Long[] refsets, Long[] descriptionTypes);
 
     /**
      * Este método es responsable de buscar y retornar todas las descripciones que hagan truncate match con el término
@@ -101,7 +93,7 @@ public interface DescriptionDAO {
      *
      * @return
      */
-    int countDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets);
+    int countDescriptionsTruncateMatch(String term, Long[] categories, Long[] refsets, Long[] descriptionTypes);
 
     /**
      * Este método es responsable de persistir una descripción en la BDD. Luego de ser persistida, la descripción es
