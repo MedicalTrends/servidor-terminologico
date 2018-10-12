@@ -1,15 +1,13 @@
 package cl.minsal.semantikos.util;
 
+import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -202,7 +200,17 @@ public class StringUtils {
     }
 
     public static boolean isEmpty(List<String> list) {
-        return list == null || list.isEmpty() || (list.size() == 1 && list.contains(EMPTY_STRING));
+
+        Iterator<String> it = list.iterator();
+
+        while (it.hasNext()) {
+            String s = it.next();
+            if(s.trim().isEmpty()) {
+                it.remove();
+            }
+        }
+
+        return list == null || list.isEmpty();
     }
 
 }

@@ -447,6 +447,13 @@ public class ConceptController {
         if(refSets.isEmpty()) {
             refSets = null;
         }
+        else {
+            for (RefSet refSet : refSets) {
+                if(!refSet.isValid()) {
+                    throw new NotFoundFault("El refset: '"+ refSet +"' no está vigente");
+                }
+            }
+        }
 
         if(descriptionTypes.isEmpty()) {
             descriptionTypes = null;
