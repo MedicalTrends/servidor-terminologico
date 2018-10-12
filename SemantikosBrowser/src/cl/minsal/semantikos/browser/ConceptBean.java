@@ -243,6 +243,9 @@ public class ConceptBean implements Serializable {
     }
 
     public void setConceptID(String conceptID) {
+        if(conceptID.equals("RES_NOT_FOUND")) {
+            return;
+        }
         this.conceptID = conceptID;
         selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
         selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));

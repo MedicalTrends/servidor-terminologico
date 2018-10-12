@@ -137,7 +137,7 @@
         <url-pattern>/views/*</url-pattern>
     </filter-mapping>
 
-    <!--filter>
+    <filter>
         <filter-name>HSTSFilterBrowser</filter-name>
         <filter-class>cl.minsal.semantikos.filters.HSTSFilterBrowser</filter-class>
     </filter>
@@ -154,7 +154,7 @@
     <filter-mapping>
         <filter-name>x-frame-header</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping-->
+    </filter-mapping>
 
     <!-- Require HTTPS for everything except /img (favicon) and /css. -->
     <!--security-constraint>
