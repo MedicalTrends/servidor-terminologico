@@ -34,6 +34,8 @@ public class ServiceLocator {
     private static String APP_NAME = "SemantikosCentral/";
     private static String MODULE_NAME = "SemantikosKernelEJB/";
 
+    private static ThreadLocal<Principal> CURRENT = new ThreadLocal<Principal>();
+
     private static Object lookupRemoteStatelessEJB(Type type) throws NamingException {
 
         //final String version =  getClass().getPackage().getImplementationVersion();
@@ -116,6 +118,7 @@ public class ServiceLocator {
     public Object getService(Type type) {
 
         Principal principal = SecurityAssociation.getPrincipal();
+        principal = CURRENT.get();
 
         if (!servicesByName.containsKey(getServiceName(type))) {
             try {
@@ -202,8 +205,10 @@ public class ServiceLocator {
         try {
             context = new InitialContext(props);
             AuthenticationManager authenticationManager = (AuthenticationManager) lookupRemoteStatelessEJB(AuthenticationManager.class);
+            Principal principal = authenticationManager.login();
+            CURRENT.set(principal);
 
-            return authenticationManager.login();
+            return principal;
         } catch (NamingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
