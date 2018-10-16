@@ -10,6 +10,7 @@ import org.jboss.ejb.client.PropertiesBasedEJBClientConfiguration;
 import org.jboss.ejb.client.remoting.ConfigBasedEJBClientContextSelector;
 import org.jboss.security.SecurityAssociation;
 
+import javax.ejb.SessionContext;
 import javax.naming.*;
 import javax.security.auth.login.Configuration;
 import javax.security.auth.login.LoginContext;
@@ -37,6 +38,7 @@ public class ServiceLocator {
     private static ThreadLocal<Principal> CURRENT = new ThreadLocal<Principal>();
 
     private static Object lookupRemoteStatelessEJB(Type type) throws NamingException {
+
 
         //final String version =  getClass().getPackage().getImplementationVersion();
         // The app name is the application name of the deployed EJBs. This is typically the ear name
