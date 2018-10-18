@@ -30,7 +30,7 @@
         <f:event type="preRenderView" listener="#{browserBean.executeQuery}" />
     </f:metadata>
 
-    <div class="layout-main" style="padding: 15px 15px 15px">
+    <div class="layout-main" style="padding: 5px 5px 5px">
 
         <div class="ui-g">
 
@@ -38,7 +38,7 @@
 
             <div class="ui-g-0 ui-md-2 ui-lg-4"></div>
 
-            <div class="ui-g-12 ui-md-8 ui-lg-4">
+            <div class="ui-g-12 ui-md-8 ui-lg-4" style="padding-left: 0px; padding-right: 0px">
 
                 <!--div class="card card-w-title"-->
                 <div class="">
@@ -47,7 +47,7 @@
 
                         <div class="ui-g ui-fluid">
 
-                            <div class="ui-g-12" style="text-align: center">
+                            <div class="ui-g-12 hideable" style="text-align: center">
                                 <p:graphicImage name="images/logo-indigo.png" library="semantikos" style="width:250px;" />
                             </div>
 
@@ -73,15 +73,15 @@
                                                         itemLabel="#{description}"
                                                         itemValue="#{description}">
 
-                                            <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px" styleClass="context">
+                                            <p:column style="width: 94%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px" styleClass="context">
                                                 <h:outputText value="#{description.term}" />
                                             </p:column>
 
-                                            <p:column style="width: 90%; float: left; ; border: 0px; padding: 0px 10px; margin-bottom: 12px">
+                                            <p:column style="width: 94%; float: left; ; border: 0px; padding: 0px 10px; margin-bottom: 12px">
                                                 <h:outputText value="#{description.conceptSMTK.category.name}" style="font-size: small;" />
                                             </p:column>
 
-                                            <p:column style="width: 90%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 12px" rendered="false">
+                                            <p:column style="width: 94%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 12px" rendered="false">
                                                 <h:outputText value="#{description.descriptionType.name}" style="font-size: small" />
                                             </p:column>
 
@@ -146,8 +146,8 @@
         </f:facet>
     </p:ajaxStatus>
 
-    <div class="login-footer">
-        <div class="card clearfix">
+    <div class="login-footer hideable" style="bottom: 2px">
+        <div class="card clearfix" style="margin-bottom: 0px">
             <span class="footer-text-left">
                 <span>
                     <i class="fa fa-copyright" style="color: #5f666c" /><h:outputText value="2016" style="color: #5f666c" /><a href="" style="color: #5f666c">Ministerio de Salud</a>
@@ -167,6 +167,22 @@
         var ctx = "";
 
         var redirect = ctx + '/views/concepts';
+
+        var offSet = 0;
+
+        var x = window.matchMedia("(max-width: 700px)")
+        myFunction(x) // Call listener function at run time
+        x.addListener(myFunction) // Attach listener function on state changes
+
+        function myFunction(x) {
+            if (x.matches) { // If media query matches
+                offSet = ($('input[id$=search_hinput]').first().offset().top) - 60;
+            } else {
+                offSet = 0;
+            }
+        }
+
+        listenSearchOnFocusEvent();
 
         $('.search-button-tiny').prop('onclick',"");
 
@@ -223,6 +239,30 @@
             $("input[name='keyword']").on("input", mark);
             $("input[type='checkbox']").on("change", mark);
 
+        }
+
+
+        /*
+        $('input[id$=search_input]').on("focus", function () {
+            $(".hideable").hide();
+        });
+
+        $('input[id$=search_input]').on("blur", function () {
+            $(".hideable").show();
+        });
+        */
+
+        function listenSearchOnFocusEvent() {
+            $('input[id$=search_input]').on("focus", function () {
+                $('html, body').animate({
+                    scrollTop: offSet
+                }, 0);
+            });
+            $('input[id$=search_input]').on("blur", function () {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 0);
+            });
         }
 
     </script>

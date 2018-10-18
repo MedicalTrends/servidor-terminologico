@@ -74,7 +74,8 @@
                                                 <p:ajax event="itemSelect"
                                                         listener="#{browserBean.test()}"
                                                         update="@(.conceptPanel),@(.search)"
-                                                        oncomplete="mark();"
+                                                        onsuccess="focus();"
+                                                        oncomplete="mark();scrollTop();"
                                                         process="@this"/>
 
                                                 <p:ajax event="query"
@@ -89,7 +90,8 @@
 
                                             <p:commandLink process="@this" style="color: #aaa; line-height: 24px"
                                                            rendered="#{browserBean.descriptionSelected != null}"
-                                                           update="@(.search)" oncomplete="listenSearchOnClickEvent();"
+                                                           update="@(.search)"
+                                                           oncomplete="listenSearchOnClickEvent();listenSearchOnFocusEvent();focus2();"
                                                            action="#{browserBean.setDescriptionSelected(null)}">
                                                 <i class="fa fa-close fa-lg" />
                                             </p:commandLink>
@@ -307,6 +309,20 @@
 
         <script type="text/javascript">
 
+            var offSet = 0;
+
+            var x = window.matchMedia("(max-width: 700px)")
+            myFunction(x) // Call listener function at run time
+            x.addListener(myFunction) // Attach listener function on state changes
+
+            function myFunction(x) {
+                if (x.matches) { // If media query matches
+                    offSet = ($('#browserForm').first().offset().top) - 60;
+                } else {
+                    offSet = 0;
+                }
+            }
+
             $(function() {
                 // Set window scroll position if cookie is set.
                 window.scroll(0, $.cookie('myCookie'));
@@ -314,6 +330,7 @@
                 $.removeCookie('myCookie');
                 listenPageOnClickEvent();
                 listenSearchOnClickEvent();
+                listenSearchOnFocusEvent();
                 mark();
             });
 
@@ -367,6 +384,19 @@
                 $('.rightpanel-btn').trigger('click');
             }
 
+            function listenSearchOnFocusEvent() {
+                $('input[id$=search_input]').on("focus", function () {
+                    $('html, body').animate({
+                        scrollTop: offSet
+                    }, 0);
+                });
+                $('input[id$=search_input]').on("blur", function () {
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 0);
+                });
+            }
+
             function initLoader() {
                 //$('.loader').css("display","inline");
                 //$('.search .fa').hide();
@@ -401,6 +431,13 @@
 
             }
 
+            function focus() {
+                $('.context').first().focus();
+            }
+
+            function focus2() {
+                $('input[id$=search_input]').focus();
+            }
 
         </script>
 

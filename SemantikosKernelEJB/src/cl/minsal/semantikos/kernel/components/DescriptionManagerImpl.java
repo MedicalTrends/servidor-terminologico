@@ -324,7 +324,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         //long init = currentTimeMillis();
         term = descriptionSearchBR.escapeSpecialCharacters(term);
 
-        if(term.isEmpty()) {
+        if(term.trim().isEmpty()) {
             return EMPTY_LIST;
         }
 
@@ -337,7 +337,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         //List<Description> descriptions = descriptionWSDAO.searchDescriptionsTruncateMatch(descriptionSearchBR.truncatePattern(term), PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets),0,100);
         term = descriptionSearchBR.escapeSpecialCharacters(term);
 
-        if(term.isEmpty()) {
+        if(term.trim().isEmpty()) {
             return EMPTY_LIST;
         }
 
@@ -357,7 +357,11 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
         List<Description> descriptions; //= descriptionDAO.searchDescriptionsSuggested(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets));
         //logger.info("searchDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
-        //logger.info("searchDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        //logger.info("searchDescriptionsSuggested(" + term + ",// " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+
+        if(term.trim().isEmpty()) {
+            return EMPTY_LIST;
+        }
 
         term = descriptionSearchBR.escapeSpecialCharacters(term);
 
@@ -403,7 +407,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         //logger.info("countDescriptionsSuggested(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
 
         if (count != 0) {
-            return (int)count;
+            return (int) count;
         } else {
             return descriptionDAO.countDescriptionsTruncateMatch(term, PersistentEntity.getIdArray(categories), PersistentEntity.getIdArray(refSets), PersistentEntity.getIdArray(descriptionTypes));
         }

@@ -5,7 +5,6 @@
 }
 */
 
-
 .search {
     position: relative;
     color: #aaa;
@@ -257,6 +256,12 @@
 .layout-rightpanel .layout-rightpanel-header {
     background: #283593 none repeat scroll 0% 0% !important;
 }
+
+/*
+.logo {
+    image-rendering: -webkit-optimize-contrast !important;
+}
+*/
 
 /*
 .ui-paginator .ui-paginator-pages {
