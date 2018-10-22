@@ -17,7 +17,7 @@ public interface AuthenticationManager {
 
     public static final int MAX_FAILED_ANSWER_ATTEMPTS = 2;
 
-    public Principal login();
+    public User login();
 
     public boolean authenticate(String email, String password, HttpServletRequest request) throws AuthenticationException;
 

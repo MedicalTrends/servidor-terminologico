@@ -73,8 +73,9 @@ public class AuthenticationManagerImpl implements AuthenticationManager{
 
     @Override
     @PermitAll
-    public Principal login() {
-        return context.getCallerPrincipal();
+    public User login() {
+        Principal principal = context.getCallerPrincipal();
+        return authDAO.getUserByEmail(principal.getName());
     }
 
     @PermitAll

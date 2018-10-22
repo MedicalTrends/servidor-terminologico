@@ -48,7 +48,7 @@ public class AuthFilterDesigner implements Filter {
         /* Perdió la sesión o está tratando de conectarse sin haberse logueado */
             else if (!isLoggedIn(req)) {
                 logger.debug("Intento de acceso sin sesión: " + req);
-                res.sendRedirect(req.getContextPath() + Constants.VIEWS_FOLDER + Constants.LOGIN_PAGE);
+                //res.sendRedirect(req.getContextPath() + Constants.VIEWS_FOLDER + Constants.LOGIN_PAGE);
             }
 
         /* No tiene permiso para acceder a la pagina solicitada */
@@ -60,7 +60,7 @@ public class AuthFilterDesigner implements Filter {
         /* Otros casos que nunca deberían darse */
             else {
                 logger.debug("Un caso que nunca debiera darse: " + req);
-                res.sendRedirect(req.getContextPath() + Constants.VIEWS_FOLDER + Constants.LOGIN_PAGE);
+                //res.sendRedirect(req.getContextPath() + Constants.VIEWS_FOLDER + Constants.LOGIN_PAGE);
             }
 
         }

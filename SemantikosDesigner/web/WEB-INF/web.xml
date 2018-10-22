@@ -46,7 +46,7 @@
     </context-param>
 
     <!--register for a CAPTCHA key-->
-    <context-param>
+    <!--context-param>
         <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
         <param-value>6LcI2FMUAAAAAMTZ3wjxHHf-tqgDOa55VrGCRq3Z</param-value>
     </context-param>
@@ -54,10 +54,10 @@
     <context-param>
         <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
         <param-value>6LcI2FMUAAAAAJjeN45UnzgCmokD5S1A8jaVpRrc</param-value>
-    </context-param>
+    </context-param-->
 
     <!-- melody -->
-    <filter>
+    <!--filter>
         <filter-name>javamelody</filter-name>
         <filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
         <async-supported>true</async-supported>
@@ -67,29 +67,13 @@
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>ASYNC</dispatcher>
-    </filter-mapping>
-    <listener>
+    </filter-mapping-->
+
+    <!--listener>
         <listener-class>net.bull.javamelody.SessionListener</listener-class>
-    </listener>
+    </listener-->
 
-    <filter>
-        <filter-name>AuthFilterDesigner</filter-name>
-        <filter-class>cl.minsal.semantikos.filters.AuthFilterDesigner</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>AuthFilterDesigner</filter-name>
-        <url-pattern>/views/*</url-pattern>
-    </filter-mapping>
 
-    <filter>
-        <filter-name>HSTSFilterDesigner</filter-name>
-        <filter-class>cl.minsal.semantikos.filters.HSTSFilterDesigner</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>HSTSFilterDesigner</filter-name>
-        <url-pattern>/views/*</url-pattern>
-    </filter-mapping>
 
     <!--filter>
         <filter-name>x-frame-header</filter-name>
@@ -129,36 +113,47 @@
     </security-constraint-->
 
     <security-constraint>
-        <web-resource-collection>
+        <!--web-resource-collection>
             <web-resource-name>All pages</web-resource-name>
             <description>Protects all resources</description>
             <url-pattern>*.xhtml</url-pattern>
+        </web-resource-collection-->
+        <web-resource-collection>
+            <web-resource-name>Admin</web-resource-name>
+            <url-pattern>/views/home.xhtml</url-pattern>
         </web-resource-collection>
+        <auth-constraint>
+            <role-name>Administrador</role-name>
+            <role-name>Diseñador</role-name>
+            <role-name>Modelador</role-name>
+            <role-name>Consumidor WS</role-name>
+        </auth-constraint>
     </security-constraint>
 
+    <security-role>
+        <role-name>Administrador</role-name>
+    </security-role>
+
+    <security-role>
+        <role-name>Diseñador</role-name>
+    </security-role>
+
+    <security-role>
+        <role-name>Modelador</role-name>
+    </security-role>
+
+    <security-role>
+        <role-name>Consumidor WS</role-name>
+    </security-role>
+
     <welcome-file-list>
-        <welcome-file>views/login.xhtml</welcome-file>
+        <welcome-file>views/home.xhtml</welcome-file>
     </welcome-file-list>
 
-    <error-page>
+    <!--error-page>
         <error-code>403</error-code>
         <location>/views/errors/error.xhtml</location>
-    </error-page>
-
-    <error-page>
-        <error-code>404</error-code>
-        <location>/views/errors/404.xhtml</location>
-    </error-page>
-
-    <error-page>
-        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/views/login.xhtml</location>
-    </error-page>
-
-    <error-page>
-        <exception-type>java.lang.Throwable</exception-type>
-        <location>/views/errors/error.xhtml</location>
-    </error-page>
+    </error-page-->
 
     <mime-mapping>
         <extension>eot</extension>
@@ -184,5 +179,13 @@
         <extension>ico</extension>
         <mime-type>image/x-icon</mime-type>
     </mime-mapping>
+
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/views/login.xhtml</form-login-page>
+            <form-error-page>/views/errors/error.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
 
 </web-app>

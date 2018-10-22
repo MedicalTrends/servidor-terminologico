@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.util.StringUtils;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Objects;
 /**
  * @author Francisco Mendez
  */
-public class User extends PersistentEntity implements Serializable, AuditableEntity {
+public class User extends PersistentEntity implements Serializable, AuditableEntity, Principal {
 
     private static User dummyUser = new User(NON_PERSISTED_ID, "dummy", "Usuario de Prueba", true);
 
@@ -422,7 +423,7 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
     @Override
     public String toString() {
         //return String.format("ExampleEntity[%d, %s]", idDescriptionType, glosa);
-        return getUsername();
+        return getEmail();
     }
 
     /**

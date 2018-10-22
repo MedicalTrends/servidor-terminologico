@@ -22,7 +22,7 @@
 
     <div class="card login-panel ui-fluid ui-shadow-3">
 
-        <h:form id="loginform">
+        <h:form id="loginform" prependId="false" onsubmit="action='j_security_check';">
 
         <p:messages id="login-form-messages" showDetail="true" autoUpdate="true" closable="false" rendered="false"  />
         <p:growl id="login-form-messages-2" showDetail="true" showSummary="true"  />
@@ -32,22 +32,25 @@
             </div>
             <div class="ui-g-12">
                 <h:panelGroup styleClass="md-inputfield">
-                    <p:inputText value="#{authenticationBean.email}" styleClass="#{authenticationBean.emailError}"/>
+                    <p:inputText value="#{authenticationBean.email}" styleClass="#{authenticationBean.emailError}"
+                                 id="j_username" name="j_username"/>
                     <label>Email</label>
                 </h:panelGroup>
             </div>
             <div class="ui-g-12">
                 <h:panelGroup styleClass="md-inputfield">
-                    <p:password value="#{authenticationBean.password}" styleClass="#{authenticationBean.passwordError}" autocomplete="off"/>
+                    <p:password value="#{authenticationBean.password}" styleClass="#{authenticationBean.passwordError}" autocomplete="off"
+                                id="j_password" name="j_password"/>
                     <label>Password</label>
                 </h:panelGroup>
             </div>
             <div id="div_captcha" class="ui-g-12" style="padding: 0;">
-                <p:captcha id="captcha" label="Captcha" language="es"/>
+                <p:captcha id="captcha" label="Captcha" language="es" rendered="false"/>
             </div>
             <div class="ui-g-12">
-                <p:commandButton update="loginform" value="Ingresar" icon="ui-icon-person" actionListener="#{authenticationBean.login}"
+                <p:commandButton icon="ui-icon-person" id="submit" value="Login" ajax="false"
                                  oncomplete="changeCapthaSize();listenOnClick();hideLoader();" styleClass="loader-trigger" />
+
                 <p:button outcome="/views/users/forgotPassword.xhtml" value="Olvido de Clave" icon="ui-icon-help" styleClass="secondary"/>
             </div>
         </div>

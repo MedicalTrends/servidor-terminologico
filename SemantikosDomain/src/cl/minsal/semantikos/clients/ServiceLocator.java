@@ -3,6 +3,7 @@ package cl.minsal.semantikos.clients; /**
  */
 
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
+import cl.minsal.semantikos.model.users.User;
 import org.jboss.ejb.client.ContextSelector;
 import org.jboss.ejb.client.EJBClientConfiguration;
 import org.jboss.ejb.client.EJBClientContext;
@@ -32,12 +33,14 @@ public class ServiceLocator {
     /** Mapa de interfaces por su nombre. */
     private static Map<String, Object> servicesByName;
 
+    private static Map<Principal, Context> contextMap;
+
+    private static Map<Principal, Map<String, Object>> serviceMap;
+
     private static String APP_NAME = "SemantikosCentral/";
     private static String MODULE_NAME = "SemantikosKernelEJB/";
 
-    private static ThreadLocal<Principal> CURRENT = new ThreadLocal<Principal>();
-
-    private static Object lookupRemoteStatelessEJB(Type type) throws NamingException {
+    public static Object lookupRemoteStatelessEJB(Type type) throws NamingException {
 
 
         //final String version =  getClass().getPackage().getImplementationVersion();
@@ -79,6 +82,8 @@ public class ServiceLocator {
 
         Configuration.setConfiguration(new DefaultJaasConfiguration());
         this.servicesByName = new ConcurrentHashMap<>();
+        this.contextMap = new ConcurrentHashMap<>();
+        this.serviceMap = new ConcurrentHashMap<>();
     }
 
 
@@ -120,7 +125,6 @@ public class ServiceLocator {
     public Object getService(Type type) {
 
         Principal principal = SecurityAssociation.getPrincipal();
-        principal = CURRENT.get();
 
         if (!servicesByName.containsKey(getServiceName(type))) {
             try {
@@ -206,11 +210,14 @@ public class ServiceLocator {
 
         try {
             context = new InitialContext(props);
-            AuthenticationManager authenticationManager = (AuthenticationManager) lookupRemoteStatelessEJB(AuthenticationManager.class);
-            Principal principal = authenticationManager.login();
-            CURRENT.set(principal);
+
+            Object object = loginContext.getSubject().getPrincipals().toArray()[0];
+            Principal principal = (Principal) object;
+
+            contextMap.put(principal, context);
 
             return principal;
+
         } catch (NamingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
