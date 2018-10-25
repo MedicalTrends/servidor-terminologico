@@ -152,7 +152,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         u.setUsername(rs.getString(2));
         u.setPasswordHash(rs.getString(3));
         u.setPasswordSalt(rs.getString(4));
-        u.setName(rs.getString(5));
+        u.setFirstName(rs.getString(5));
         u.setLastName(rs.getString(6));
         u.setSecondLastName(rs.getString(7));
         u.setEmail(rs.getString(8));

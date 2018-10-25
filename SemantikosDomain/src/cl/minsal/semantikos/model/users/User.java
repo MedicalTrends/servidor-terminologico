@@ -20,7 +20,7 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
     private static User dummyUser = new User(NON_PERSISTED_ID, "dummy", "Usuario de Prueba", true);
 
     private String username;
-    private String name;
+    private String firstName;
     private String lastName;
     private String secondLastName;
     private String email;
@@ -63,16 +63,16 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
     public User() {
     }
 
-    private User(String username, String name, boolean locked) {
+    private User(String username, String firstName, boolean locked) {
         this.username = username;
-        this.name = name;
+        this.firstName = firstName;
         this.locked = locked;
     }
 
-    private User(long id, String username, String name, boolean locked) {
+    private User(long id, String username, String firstName, boolean locked) {
         super(id);
         this.username = username;
-        this.name = name;
+        this.firstName = firstName;
         this.locked = locked;
     }
 
@@ -81,19 +81,19 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
      *
      * @param id   Identificador único del Usuario.
      * @param username Nombre de Usuario
-     * @param name     Nombre del Usuario
+     * @param firstName Nombre del Usuario
      * @param password Contraseña
      * @param locked   Bloqueado?
      */
-    public User(long id, String username, String name, String password, boolean locked) {
-        this(id, username, name, locked);
+    public User(long id, String username, String firstName, String password, boolean locked) {
+        this(id, username, firstName, locked);
         this.setPassword(password);
     }
 
     public User(User user) {
         super(user.getId());
         setUsername(user.getUsername());
-        setName(user.getName());
+        setFirstName(user.getFirstName());
         setLastName(user.getLastName());
         setSecondLastName(user.getSecondLastName());
         setEmail(user.getEmail());
@@ -138,13 +138,14 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
         this.username = username;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
+
 
     public String getEmail() {
         return email;
@@ -184,7 +185,7 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
     }
 
     public String getFullName() {
-        return name +
+        return firstName +
                 ((lastName != null) ? " " + lastName : "") +
                 ((secondLastName != null) ? " " + secondLastName : "");
     }
@@ -379,7 +380,7 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
         if (!this.email.equals(user.email)) return false;
 
         //return (str1 == null ? str2 == null : str1.equals(str2));
-        return Objects.equals(this.name, user.name)
+        return Objects.equals(this.firstName, user.firstName)
                 && Objects.equals(this.lastName, user.lastName)
                 && Objects.equals(this.secondLastName, user.secondLastName)
                 && Objects.equals(this.appointment, user.appointment)
@@ -391,6 +392,11 @@ public class User extends PersistentEntity implements Serializable, AuditableEnt
         return (String.valueOf(this.getId()) != null)
                 ? (this.getClass().hashCode() + String.valueOf(this.getId()).hashCode())
                 : super.hashCode();
+    }
+
+    @Override
+    public String getName() {
+        return email;
     }
 
     public String getVerificationCode() {

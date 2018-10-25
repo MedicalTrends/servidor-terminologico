@@ -31,12 +31,16 @@ public class UserFactory implements Serializable {
     /** Mapa de tagSMTK por su nombre. */
     private static ConcurrentHashMap<Long, User> usersById;
 
+    /** Mapa de tagSMTK por su email. */
+    private static ConcurrentHashMap<String, User> usersByEmail;
+
     /**
      * Constructor privado para el Singleton del Factory.
      */
     private UserFactory() {
         this.users = new ArrayList<>();
         this.usersById = new ConcurrentHashMap<>();
+        this.usersByEmail = new ConcurrentHashMap<>();
     }
 
     public static UserFactory getInstance() {
@@ -52,6 +56,20 @@ public class UserFactory implements Serializable {
 
         if (usersById.containsKey(id)) {
             return this.usersById.get(id);
+        }
+
+        return null;
+    }
+
+    /**
+     * Este método es responsable de retornar el tipo de descripción llamado FSN.
+     *
+     * @return Retorna una instancia de FSN.
+     */
+    public User findUserByEmail(String email) {
+
+        if (usersByEmail.containsKey(email)) {
+            return this.usersByEmail.get(email);
         }
 
         return null;
@@ -74,6 +92,7 @@ public class UserFactory implements Serializable {
         this.usersById.clear();
         for (User user : users) {
             this.usersById.put(user.getId(), user);
+            this.usersByEmail.put(user.getEmail(), user);
         }
     }
 
@@ -81,11 +100,13 @@ public class UserFactory implements Serializable {
         if(!users.contains(user)) {
             users.add(user);
             usersById.put(user.getId(), user);
+            usersByEmail.put(user.getEmail(), user);
         }
         else {
             users.remove(user);
             users.add(user);
             usersById.put(user.getId(), user);
+            usersByEmail.put(user.getEmail(), user);
         }
     }
 

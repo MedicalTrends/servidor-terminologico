@@ -106,8 +106,6 @@ public class AuthenticationBean {
             HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
             request.getSession().setMaxInactiveInterval(timeOutWeb.getTimeOut());
 
-
-
             //authenticationManager.authenticate(email,password,request);
             //authenticationManager.authenticate(email,password);
 

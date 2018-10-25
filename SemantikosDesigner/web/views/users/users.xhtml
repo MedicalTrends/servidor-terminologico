@@ -56,8 +56,9 @@
                             <h:outputText value="#{user.documentNumber}" />
                         </p:column>
 
-                        <p:column headerText="Nombre" filterBy="#{user.name} #{user.lastName} #{user.secondLastName}" filterMatchMode="contains" sortBy="#{user.name} #{user.lastName} #{user.secondLastName}">
-                            <h:outputText value="#{user.name} #{user.lastName} #{user.secondLastName}" />
+                        <p:column headerText="Nombre" filterBy="#{user.firstName} #{user.lastName} #{user.secondLastName}" filterMatchMode="contains"
+                                  sortBy="#{user.firstName} #{user.lastName} #{user.secondLastName}">
+                            <h:outputText value="#{user.firstName} #{user.lastName} #{user.secondLastName}" />
                         </p:column>
 
                         <p:column headerText="Acceso" filterBy="#{user.locked}" filterMatchMode="exact" sortBy="#{user.locked}">
@@ -110,7 +111,7 @@
                                 </f:facet>
 
                                 <h:outputText value="Nombre" style="font-weight: bold"/>
-                                <h:outputText value="#{usersBrowser.selectedUser.name}"/>
+                                <h:outputText value="#{usersBrowser.selectedUser.firstName}"/>
 
                                 <h:outputText value="Apellido Paterno" style="font-weight: bold"/>
                                 <h:outputText value="#{usersBrowser.selectedUser.lastName}"/>

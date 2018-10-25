@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.jaas;
 
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.model.users.Profile;
@@ -61,8 +62,7 @@ public class CustomEJBLoginModule implements LoginModule {
         try {
             handler.handle(callbacks);
             String name = ((NameCallback) callbacks[0]).getName();
-            String password = String.valueOf(((PasswordCallback) callbacks[1])
-                    .getPassword());
+            String password = String.valueOf(((PasswordCallback) callbacks[1]).getPassword());
 
             props = new Properties();
             props.put("endpoint.name", "client-endpoint");
@@ -130,6 +130,9 @@ public class CustomEJBLoginModule implements LoginModule {
             }
         }
 
+        //Registrar contexto en ServiceLocator para usuario autenticado
+        ServiceLocator.getInstance().registerContext(userPrincipal.getEmail(), context);
+
         return true;
     }
 
@@ -142,6 +145,10 @@ public class CustomEJBLoginModule implements LoginModule {
     public boolean logout() throws LoginException {
         subject.getPrincipals().remove(userPrincipal);
         subject.getPrincipals().remove(rolePrincipal);
+
+        //Desregistrar contexto de ServiceLocator
+        ServiceLocator.getInstance().unregisterContext(userPrincipal.getEmail());
+
         return true;
     }
 

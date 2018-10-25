@@ -81,6 +81,8 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.xnio:xnio-nio:3.0.16.GA-redhat-1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.as:jboss-as-build-config:7.5.17.Final-redhat-4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: jboss:jbosssx-client:4.2.2.GA" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.github.sagerman4:jaas-threadlocal-filter:1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:3.1.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.axis:axis:1.4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.commons:commons-collections4:4.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: commons-codec:commons-codec:1.2" level="project" />

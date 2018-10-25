@@ -3,6 +3,7 @@ package cl.minsal.semantikos.filters;
 import cl.minsal.semantikos.Constants;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.users.AuthenticationBean;
+import org.apache.catalina.realm.GenericPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +11,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Principal;
 
 import static cl.minsal.semantikos.users.AuthenticationBean.AUTH_KEY;
 
@@ -36,6 +38,10 @@ public class AuthFilterDesigner implements Filter {
 
         if(req.getContextPath().equals("/designer")) {
 
+            Principal userPrincipal = req.getUserPrincipal();
+            GenericPrincipal genericPrincipal = (GenericPrincipal) userPrincipal;
+
+
             if (isUnauthorizedPage(req) || hasPermission(req)) {
                 if(isUnauthorizedPage(req)) {
                     res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -49,6 +55,7 @@ public class AuthFilterDesigner implements Filter {
             else if (!isLoggedIn(req)) {
                 logger.debug("Intento de acceso sin sesión: " + req);
                 //res.sendRedirect(req.getContextPath() + Constants.VIEWS_FOLDER + Constants.LOGIN_PAGE);
+                chain.doFilter(request, response);
             }
 
         /* No tiene permiso para acceder a la pagina solicitada */

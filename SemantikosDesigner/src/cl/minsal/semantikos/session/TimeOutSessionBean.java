@@ -11,6 +11,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -28,7 +30,11 @@ public class TimeOutSessionBean {
 
     @PostConstruct
     public void init() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        request.getSession().setMaxInactiveInterval(timeOutWeb.getTimeOut());
         timeOut=timeOutWeb.getTimeOut();
+
     }
 
     public void redirectSession() throws IOException {
@@ -38,7 +44,22 @@ public class TimeOutSessionBean {
     }
 
     public int getTimeOut() {
-        return (1000 * (timeOut-1));
+        //return (1000 * (timeOut-1));
+        return timeOut;
+    }
+
+    public void logout() throws IOException {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+        // Invalidate current HTTP session.
+        // Will call JAAS LoginModule logout() method
+        request.getSession().invalidate();
+
+        // Redirect the user to the secure web page.
+        // Since the user is now logged out the
+        // authentication form will be shown
+        response.sendRedirect(request.getContextPath() + "/views/home");
     }
 
 }

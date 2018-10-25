@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-    <Realm className="org.apache.catalina.realm.JAASRealm" appName="SemantikosLogin"
-           userClassNames="cl.minsal.semantikos.users.User"
-           roleClassNames="cl.minsal.semantikos.users.Profile" />
+    <Realm className="org.apache.catalina.realm.JAASRealm"
+           appName="SemantikosLogin"
+           userClassNames="cl.minsal.semantikos.model.users.User"
+           roleClassNames="cl.minsal.semantikos.model.users.Profile" />
 </Context>

@@ -45,6 +45,7 @@ public class Profile extends PersistentEntity implements Serializable, Auditable
         setPermissions(profile.getPermissions());
     }
 
+    @Override
     public String getName() {
         return name;
     }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
 		  http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-           version="3.1">
+         version="3.1">
 
     <context-param>
         <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
@@ -73,17 +73,23 @@
         <listener-class>net.bull.javamelody.SessionListener</listener-class>
     </listener-->
 
-
-
     <!--filter>
-        <filter-name>x-frame-header</filter-name>
-        <filter-class>cl.minsal.semantikos.filters.XFrameHeaderFilter</filter-class>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>cl.minsal.semantikos.filters.AuthFilterDesigner</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>x-frame-header</filter-name>
-        <url-pattern>/*</url-pattern>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/views/*</url-pattern>
     </filter-mapping-->
 
+    <filter>
+        <filter-name>JaasThreadlocalFilter</filter-name>
+        <filter-class>com.github.sagerman4.auth.JaasLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>JaasThreadlocalFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
 
     <filter>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
@@ -124,9 +130,6 @@
         </web-resource-collection>
         <auth-constraint>
             <role-name>Administrador</role-name>
-            <role-name>Diseñador</role-name>
-            <role-name>Modelador</role-name>
-            <role-name>Consumidor WS</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -153,7 +156,22 @@
     <!--error-page>
         <error-code>403</error-code>
         <location>/views/errors/error.xhtml</location>
+    </error-page>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/views/errors/404.xhtml</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/views/login.xhtml</location>
     </error-page-->
+
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/views/errors/error.xhtml</location>
+    </error-page>
 
     <mime-mapping>
         <extension>eot</extension>

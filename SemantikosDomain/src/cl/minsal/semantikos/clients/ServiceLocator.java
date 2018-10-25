@@ -4,6 +4,8 @@ package cl.minsal.semantikos.clients; /**
 
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
 import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.model.users.UserFactory;
+import com.github.sagerman4.auth.AuthContext;
 import org.jboss.ejb.client.ContextSelector;
 import org.jboss.ejb.client.EJBClientConfiguration;
 import org.jboss.ejb.client.EJBClientContext;
@@ -26,22 +28,17 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ServiceLocator {
 
     private static final ServiceLocator instance = new ServiceLocator();
-    private static Context context;
     private static LoginContext loginContext;
     private static Properties props;
 
-    /** Mapa de interfaces por su nombre. */
-    private static Map<String, Object> servicesByName;
+    private static Map<String, Context> contextMap;
 
-    private static Map<Principal, Context> contextMap;
-
-    private static Map<Principal, Map<String, Object>> serviceMap;
+    private static Map<String, Map<String, Object>> serviceMap;
 
     private static String APP_NAME = "SemantikosCentral/";
     private static String MODULE_NAME = "SemantikosKernelEJB/";
 
     public static Object lookupRemoteStatelessEJB(Type type) throws NamingException {
-
 
         //final String version =  getClass().getPackage().getImplementationVersion();
         // The app name is the application name of the deployed EJBs. This is typically the ear name
@@ -65,9 +62,8 @@ public class ServiceLocator {
         String jndiname = "ejb:" + appName + moduleName + beanName + "!" + viewClassName;
         //String jndiname = appName + moduleName + beanName + "!" + viewClassName;
 
-        Object remoteEjb = context.lookup(jndiname);
-
-        servicesByName.put(getServiceName(type), remoteEjb);
+        final String userId = AuthContext.getAuthState().getUserId();
+        Object remoteEjb = contextMap.get(userId).lookup(jndiname);
 
         return remoteEjb;
     }
@@ -81,7 +77,6 @@ public class ServiceLocator {
     private ServiceLocator() {
 
         Configuration.setConfiguration(new DefaultJaasConfiguration());
-        this.servicesByName = new ConcurrentHashMap<>();
         this.contextMap = new ConcurrentHashMap<>();
         this.serviceMap = new ConcurrentHashMap<>();
     }
@@ -124,17 +119,22 @@ public class ServiceLocator {
      */
     public Object getService(Type type) {
 
-        Principal principal = SecurityAssociation.getPrincipal();
+        final String userId = AuthContext.getAuthState().getUserId();
 
-        if (!servicesByName.containsKey(getServiceName(type))) {
-            try {
-                lookupRemoteStatelessEJB(type);
-            } catch (NamingException e) {
-                e.printStackTrace();
+        //Primero se busca el mapa de servicios para este usuario
+        Map<String, Object> servicesByName = serviceMap.get(userId);
+
+        try {
+            // Si no existe el servicio especifico se hace un lookup
+            if (!servicesByName.containsKey(getServiceName(type))) {
+                servicesByName.put(getServiceName(type), lookupRemoteStatelessEJB(type));
             }
         }
+        catch (NamingException e) {
+            e.printStackTrace();
+        }
 
-        return this.servicesByName.get(getServiceName(type));
+        return servicesByName.get(getServiceName(type));
     }
 
     private static String getServiceName(Type type) {
@@ -144,14 +144,6 @@ public class ServiceLocator {
 
     private static String getViewClassName(Type type) {
         return type.toString().split(" ")[1];
-    }
-
-    public void closeContext() {
-        try {
-            context.close();
-        } catch (NamingException e) {
-            e.printStackTrace();
-        }
     }
 
     public static Principal login(String userName, String password) throws LoginException {
@@ -208,16 +200,24 @@ public class ServiceLocator {
 
         props.put("Context.SECURITY_PROTOCOL", "org.jboss.security.ClientLoginModule");
 
+        Object object = loginContext.getSubject().getPrincipals().toArray()[0];
+        Principal principal = (Principal) object;
+        return principal;
+
+    }
+
+    public void registerContext(String userId, Context context) {
+        contextMap.put(userId, context);
+        serviceMap.put(userId, new ConcurrentHashMap<String, Object>());
+    }
+
+    public void unregisterContext(String userId) {
+
         try {
-            context = new InitialContext(props);
-
-            Object object = loginContext.getSubject().getPrincipals().toArray()[0];
-            Principal principal = (Principal) object;
-
-            contextMap.put(principal, context);
-
-            return principal;
-
+            contextMap.get(userId).close();
+            serviceMap.get(userId).clear();
+            serviceMap.remove(userId);
+            contextMap.remove(userId);
         } catch (NamingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -226,9 +226,11 @@ public class ServiceLocator {
 
     public static void logout() {
 
+        final String userId = AuthContext.getAuthState().getUserId();
+
         try {
-            context.close();
-            servicesByName.clear();
+            contextMap.get(userId).close();
+            serviceMap.get(userId).clear();
         } catch (NamingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

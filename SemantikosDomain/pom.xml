@@ -134,6 +134,13 @@
             <version>2.9.1</version>
         </dependency>
 
+        <!--Para agregar al principal al thread actual del request-->
+        <dependency>
+            <groupId>com.github.sagerman4</groupId>
+            <artifactId>jaas-threadlocal-filter</artifactId>
+            <version>1.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

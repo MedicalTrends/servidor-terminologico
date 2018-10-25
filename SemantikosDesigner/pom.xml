@@ -141,6 +141,15 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-catalina</artifactId>
+            <version>7.0.81</version>
+            <scope>provided</scope>
+        </dependency>
+
+
         <!-- Implementación JSF provista por EAP -->
         <!--dependency>
             <groupId>javax.faces</groupId>
