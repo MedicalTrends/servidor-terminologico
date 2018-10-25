@@ -326,11 +326,12 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 }
 
 .value {
-    font-style: italic !important;
+    /*font-style: italic !important;*/
 }
 
 .label {
-    /*color: #3F51B5 !important;*/
+    font-weight: bold;
+    color: #545454 !important;
 }
 
 .browser-options .ui-menuitem {
