@@ -59,7 +59,7 @@ public class TimeOutSessionBean {
         // Redirect the user to the secure web page.
         // Since the user is now logged out the
         // authentication form will be shown
-        response.sendRedirect(request.getContextPath() + "/views/home");
+        response.sendRedirect(request.getContextPath() + "/views/home.xhtml");
     }
 
 }

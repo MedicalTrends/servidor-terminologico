@@ -103,25 +103,32 @@ public class GeneralBrowserBean implements Serializable {
     private transient AuthenticationBean authenticationBean;
 
     //@EJB
-    QueryManager queryManager = (QueryManager) ServiceLocator.getInstance().getService(QueryManager.class);
+    QueryManager queryManager;
 
     //@EJB
-    TagManager tagManager = (TagManager) ServiceLocator.getInstance().getService(TagManager.class);
+    TagManager tagManager;
 
     //@EJB
-    HelperTablesManager helperTablesManager = (HelperTablesManager) ServiceLocator.getInstance().getService(HelperTablesManager.class);
+    HelperTablesManager helperTablesManager;
 
     //@EJB
-    UserManager userManager = (UserManager) ServiceLocator.getInstance().getService(UserManager.class);
+    UserManager userManager;
 
     //@EJB
-    CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
+    CategoryManager categoryManager;
 
     //@EJB
-    ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
+    ConceptManager conceptManager;
 
     @PostConstruct
     public void init() {
+        queryManager = (QueryManager) ServiceLocator.getInstance().getService(QueryManager.class);
+        tagManager = (TagManager) ServiceLocator.getInstance().getService(TagManager.class);
+        helperTablesManager = (HelperTablesManager) ServiceLocator.getInstance().getService(HelperTablesManager.class);
+        userManager = (UserManager) ServiceLocator.getInstance().getService(UserManager.class);
+        categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
+        conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
+
         tags = tagManager.getAllTags();
         users = userManager.getAllUsers();
         generalQuery = null;
@@ -138,7 +145,6 @@ public class GeneralBrowserBean implements Serializable {
         if(category == null) {
             return;
         }
-
 
         /**
          * Si el objeto de consulta no está inicializado, inicializarlo

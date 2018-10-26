@@ -56,50 +56,6 @@
         <param-value>6LcI2FMUAAAAAJjeN45UnzgCmokD5S1A8jaVpRrc</param-value>
     </context-param-->
 
-    <!-- melody -->
-    <!--filter>
-        <filter-name>javamelody</filter-name>
-        <filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
-        <async-supported>true</async-supported>
-    </filter>
-    <filter-mapping>
-        <filter-name>javamelody</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>ASYNC</dispatcher>
-    </filter-mapping-->
-
-    <!--listener>
-        <listener-class>net.bull.javamelody.SessionListener</listener-class>
-    </listener-->
-
-    <!--filter>
-        <filter-name>AuthenticationFilter</filter-name>
-        <filter-class>cl.minsal.semantikos.filters.AuthFilterDesigner</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>AuthenticationFilter</filter-name>
-        <url-pattern>/views/*</url-pattern>
-    </filter-mapping-->
-
-    <filter>
-        <filter-name>JaasThreadlocalFilter</filter-name>
-        <filter-class>com.github.sagerman4.auth.JaasLoginFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>JaasThreadlocalFilter</filter-name>
-        <url-pattern>*</url-pattern>
-    </filter-mapping>
-
-    <filter>
-        <filter-name>PrimeFaces FileUpload Filter</filter-name>
-        <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>PrimeFaces FileUpload Filter</filter-name>
-        <servlet-name>Faces Servlet</servlet-name>
-    </filter-mapping>
-
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -110,11 +66,27 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
+    <filter>
+        <filter-name>JaasThreadlocalFilter</filter-name>
+        <filter-class>com.github.sagerman4.auth.JaasLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>JaasThreadlocalFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
 
     <!--security-constraint>
         <web-resource-collection>
             <web-resource-name>Permit all</web-resource-name>
             <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+    </security-constraint-->
+
+    <!--security-constraint>
+        <web-resource-collection>
+            <web-resource-name>All pages</web-resource-name>
+            <description>Protects all resources</description>
+            <url-pattern>*.xhtml</url-pattern>
         </web-resource-collection>
     </security-constraint-->
 
@@ -127,10 +99,24 @@
         <web-resource-collection>
             <web-resource-name>Admin</web-resource-name>
             <url-pattern>/views/home.xhtml</url-pattern>
+            <url-pattern>/views/logout.xhtml</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>Administrador</role-name>
         </auth-constraint>
+    </security-constraint>
+
+    <security-constraint><!--Exclude css and images here -->
+        <web-resource-collection>
+            <web-resource-name>Exclude from Security</web-resource-name>
+            <url-pattern>/resources/semantikos/css/*</url-pattern><!-- No security for images -->
+            <url-pattern>/resources/semantikos/images/*</url-pattern><!-- No security for images -->
+            <url-pattern>/resources/semantikos/js/*</url-pattern><!-- No security for images -->
+            <url-pattern>/resources/ultima-layout/css/*</url-pattern><!-- No security for images -->
+            <url-pattern>/resources/ultima-layout/fonts/*</url-pattern><!-- No security for images -->
+            <url-pattern>/resources/ultima-layout/images/*</url-pattern><!-- No security for images -->
+            <url-pattern>/resources/ultima-layout/js/*</url-pattern><!-- No security for images -->
+        </web-resource-collection>
     </security-constraint>
 
     <security-role>

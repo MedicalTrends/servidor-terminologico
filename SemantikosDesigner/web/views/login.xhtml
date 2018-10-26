@@ -48,7 +48,7 @@
                 <p:captcha id="captcha" label="Captcha" language="es" rendered="false"/>
             </div>
             <div class="ui-g-12">
-                <p:commandButton icon="ui-icon-person" id="submit" value="Login" ajax="false" actionListener="#{authenticationBean.login}"
+                <p:commandButton icon="ui-icon-person" id="submit" value="Login" ajax="false"
                                  oncomplete="changeCapthaSize();listenOnClick();hideLoader();" styleClass="loader-trigger" />
 
                 <p:button outcome="/views/users/forgotPassword.xhtml" value="Olvido de Clave" icon="ui-icon-help" styleClass="secondary"/>

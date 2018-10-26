@@ -38,10 +38,6 @@ public class AuthFilterDesigner implements Filter {
 
         if(req.getContextPath().equals("/designer")) {
 
-            Principal userPrincipal = req.getUserPrincipal();
-            GenericPrincipal genericPrincipal = (GenericPrincipal) userPrincipal;
-
-
             if (isUnauthorizedPage(req) || hasPermission(req)) {
                 if(isUnauthorizedPage(req)) {
                     res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
