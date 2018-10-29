@@ -59,8 +59,8 @@
 
                                                 </p:outputPanel>
 
-                                                <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px">
-                                                    <h:outputText value="#{description.term}" style="font-weight: bold;" />
+                                                <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px" styleClass="context">
+                                                    <h:outputText value="#{description.term}" style="font-weight: normal;" />
                                                 </p:column>
 
                                                 <p:column style="width: 90%; float: left; ; border: 0px; padding: 0px 10px; margin-bottom: 12px">
@@ -74,7 +74,13 @@
                                                 <p:ajax event="itemSelect"
                                                         listener="#{browserBean.test()}"
                                                         update="@(.conceptPanel),@(.search)"
+                                                        onsuccess="focus();"
+                                                        oncomplete="mark();scrollTop();"
                                                         process="@this"/>
+
+                                                <p:ajax event="query"
+                                                        onstart="initLoader()"
+                                                        oncomplete="haltLoader(); mark();"/>
 
                                             </p:autoComplete>
 
@@ -82,13 +88,16 @@
                                                 <i class="fa fa-search fa-lg" />
                                             </p:outputPanel>
 
-                                            <p:outputPanel rendered="#{browserBean.descriptionSelected != null}">
-                                                <p:commandLink process="@this" style="color: #aaa;"
-                                                               update="@(.search)" oncomplete="listenSearchOnClickEvent();"
-                                                               action="#{browserBean.setDescriptionSelected(null)}">
-                                                    <i class="fa fa-close fa-lg" />
-                                                </p:commandLink>
-                                            </p:outputPanel>
+                                            <p:commandLink process="@this" style="color: #aaa; line-height: 24px"
+                                                           rendered="#{browserBean.descriptionSelected != null}"
+                                                           update="@(.search)"
+                                                           oncomplete="listenSearchOnClickEvent();listenSearchOnFocusEvent();focus2();"
+                                                           action="#{browserBean.setDescriptionSelected(null)}">
+                                                <i class="fa fa-close fa-lg" />
+                                            </p:commandLink>
+
+                                            <p:graphicImage library="semantikos" name="images/loader-pink.gif"
+                                                            styleClass="loader" style="display: none" />
 
                                         </p:outputPanel>
 
@@ -192,7 +201,7 @@
                                      paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
-                            <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop();" update="@(.search)" />
+                            <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop(); mark();" update="@(.search)" />
 
                             <p:column headerText="Termino Preferido">
                                 <div class="ui-g dashboard">
@@ -200,7 +209,7 @@
                                         <div class="card overview">
                                             <div class="overview-content clearfix">
                                                     <span class="overview-title">
-                                                        <p:link outcome="/views/concept" value="#{conceptSMTK.descriptionFavorite.term}" styleClass="myCustomLinkStyle" >
+                                                        <p:link outcome="/views/concept" value="#{conceptSMTK.descriptionFavorite.term}" styleClass="myCustomLinkStyle context" >
                                                             <f:param name="conceptID" value="#{conceptSMTK.conceptID}" />
                                                         </p:link>
                                                     </span>
@@ -300,6 +309,20 @@
 
         <script type="text/javascript">
 
+            var offSet = 0;
+
+            var x = window.matchMedia("(max-width: 700px)")
+            myFunction(x) // Call listener function at run time
+            x.addListener(myFunction) // Attach listener function on state changes
+
+            function myFunction(x) {
+                if (x.matches) { // If media query matches
+                    offSet = ($('#browserForm').first().offset().top) - 60;
+                } else {
+                    offSet = 0;
+                }
+            }
+
             $(function() {
                 // Set window scroll position if cookie is set.
                 window.scroll(0, $.cookie('myCookie'));
@@ -307,6 +330,8 @@
                 $.removeCookie('myCookie');
                 listenPageOnClickEvent();
                 listenSearchOnClickEvent();
+                listenSearchOnFocusEvent();
+                mark();
             });
 
             function scrollTop() {
@@ -359,8 +384,62 @@
                 $('.rightpanel-btn').trigger('click');
             }
 
-        </script>
+            function listenSearchOnFocusEvent() {
+                $('input[id$=search_input]').on("focus", function () {
+                    $('html, body').animate({
+                        scrollTop: offSet
+                    }, 0);
+                });
+                $('input[id$=search_input]').on("blur", function () {
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 0);
+                });
+            }
 
+            function initLoader() {
+                //$('.loader').css("display","inline");
+                //$('.search .fa').hide();
+            }
+
+            function haltLoader() {
+                //$('.loader').css("display","none");
+                //$('.search .fa').show();
+            }
+
+            function mark() {
+
+                // Read the keyword
+                var keyword =  $('input[id$=search_input]').val();
+
+                // Determine selected options
+                var options = {};
+                $("input[name='opt[]']").each(function() {
+                    options[$(this).val()] = $(this).is(":checked");
+                });
+
+                // Remove previous marked elements and mark
+                // the new keyword inside the context
+                $(".context").unmark({
+                    done: function() {
+                        $(".context").mark(keyword, options);
+                    }
+                });
+
+                $("input[name='keyword']").on("input", mark);
+                $("input[type='checkbox']").on("change", mark);
+
+            }
+
+            function focus() {
+                $('.context').first().focus();
+            }
+
+            function focus2() {
+                $('input[id$=search_input]').focus();
+            }
+
+        </script>
 
     </ui:define>
 

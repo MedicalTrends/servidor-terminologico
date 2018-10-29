@@ -46,7 +46,7 @@
                                              filterMatchMode="contains"
                                              converter="omnifaces.SelectItemsConverter">
 
-                                <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..." noSelectionOption="true" itemDisabled="true"/>
+                                <f:selectItem itemLabel="Seleccionar..." noSelectionOption="true" itemDisabled="true"/>
 
                                 <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition)}"
                                                var="record"
@@ -147,10 +147,9 @@
                                              value="#{conceptBean.selectedHelperTableRecord}"
                                              var="r"
                                              filter="true"
-
                                              converter="omnifaces.SelectItemsConverter">
 
-                                <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..." noSelectionOption="true" itemDisabled="true"/>
+                                <f:selectItem itemLabel="Seleccionar..." noSelectionOption="true" itemDisabled="true"/>
                                 <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition)}"
                                                var="record"
                                                itemLabel="#{record.description}"
@@ -255,7 +254,7 @@
                                                  filter="true"
                                                  converter="omnifaces.SelectItemsConverter">
 
-                                    <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
+                                    <f:selectItem itemLabel="Seleccionar..."  noSelectionOption="true" itemDisabled="true"/>
                                     <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition)}"
                                                    var="record" itemDisabled="#{record.description.contains('Seleccionar...')}"
                                                    itemLabel="#{record.description}"
@@ -385,7 +384,7 @@
                                              filter="true"
                                              converter="helperTableRecordConverter">
 
-                                <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
+                                <f:selectItem itemLabel="Seleccionar..."  noSelectionOption="true" itemDisabled="true"/>
                                 <f:selectItems value="#{helperTableBean.getValidTableRowsRD(cc.attrs.targetDefinition,cc.attrs.relationshipDefinition.id)}"
                                                var="record"
                                                itemLabel="#{record.description}"
