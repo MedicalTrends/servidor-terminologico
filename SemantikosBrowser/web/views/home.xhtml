@@ -73,15 +73,19 @@
                                                         itemLabel="#{description}"
                                                         itemValue="#{description}">
 
-                                            <p:column style="width: 94%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px" styleClass="context">
+                                            <p:column style="width: 20px; border: 0px; padding: 0px 10px; margin-top: 6px; text-align: center">
+                                                <i class="fa fa-search fa-lg" style="opacity: 0.5"/>
+                                            </p:column>
+
+                                            <p:column style="width: 90%; float: left; border: 0px; padding: 0px 0px; margin-top: 6px" styleClass="context">
                                                 <h:outputText value="#{description.term}" />
                                             </p:column>
 
-                                            <p:column style="width: 94%; float: left; ; border: 0px; padding: 0px 10px; margin-bottom: 12px">
+                                            <p:column style="width: 90%; float: left; ; border: 0px; padding: 0px 0px; margin-bottom: 6px">
                                                 <h:outputText value="#{description.conceptSMTK.category.name}" style="font-size: small;" />
                                             </p:column>
 
-                                            <p:column style="width: 94%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 12px" rendered="false">
+                                            <p:column style="width: 90%; float: left; ; border: 0px;  padding: 0px 0px; margin-bottom: 6px" rendered="false">
                                                 <h:outputText value="#{description.descriptionType.name}" style="font-size: small" />
                                             </p:column>
 
@@ -150,7 +154,7 @@
         <div class="card clearfix" style="margin-bottom: 0px">
             <span class="footer-text-left">
                 <span>
-                    <i class="fa fa-copyright" style="color: #5f666c" /><h:outputText value="2016" style="color: #5f666c" /><a href="" style="color: #5f666c">Ministerio de Salud</a>
+                    <i class="fa fa-copyright" style="color: #5f666c" /><h:outputText value="2016 " style="color: #5f666c" /><a href="" style="color: #5f666c">Ministerio de Salud</a>
                 </span>
                 <br/>
                 <span style="color: #5f666c">Version: <h:outputText value="${bpversion['version']} ${bpversion['build.date']}" />
