@@ -137,17 +137,16 @@
                                     <p:outputPanel styleClass="answers">
                                         <p:outputPanel rendered="#{ question.selected and empty accountActivation.user.getAnswersByQuestion(question) }">
                                             <p:inputText value="#{accountActivation.answerPlaceholder.answer}" autocomplete="off">
-                                                <p:ajax process="@(.answers)"
+                                                <p:ajax process="@this"
                                                         update="@(.questions)" event="blur"
                                                         listener="#{accountActivation.addOrChangeAnswer(question, accountActivation.answerPlaceholder)}" />
                                             </p:inputText>
                                         </p:outputPanel>
-                                        <p:outputPanel rendered="#{ question.selected and not empty accountActivation.user.getAnswersByQuestion(question) }"
-                                                       styleClass="answers">
+                                        <p:outputPanel rendered="#{ question.selected and not empty accountActivation.user.getAnswersByQuestion(question) }">
                                             <p:repeat value="#{accountActivation.user.getAnswersByQuestion(question)}" var="answer">
                                                 <p:outputPanel styleClass="search">
                                                     <p:inputText value="#{answer.answer}" autocomplete="off" readonly="true"/>
-                                                    <p:commandLink process="@(.answers)"
+                                                    <p:commandLink process="@this"
                                                                    update="@(.questions)"
                                                                    action="#{accountActivation.user.answers.remove(answer)}">
                                                         <i class="fa fa-close fa-lg" />

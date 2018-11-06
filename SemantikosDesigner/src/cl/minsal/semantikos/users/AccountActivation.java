@@ -446,8 +446,8 @@ public class AccountActivation {
     }
 
     public void refreshUserFactory() {
-        UserFactory.getInstance().setUsersById(userManager.getUserFactory().getUsersById());
-        authenticationBean.refreshLoggedUser(user);
+        //UserFactory.getInstance().setUsersById(userManager.getUserFactory().getUsersById());
+        UserFactory.getInstance().refresh(user);
     }
 
     public AuthenticationBean getAuthenticationBean() {
