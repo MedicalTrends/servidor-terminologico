@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
+
 /**
  * Created by root on 27-04-17.
  */
@@ -135,5 +137,12 @@ public class Query implements IQuery, Serializable {
                 break;
             }
         }
+    }
+
+    public void resetQuery() {
+        setOrder(1);
+        setAsc("asc");
+        setQuery(EMPTY_STRING);
+        setTruncateMatch(false);
     }
 }

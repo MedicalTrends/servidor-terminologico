@@ -64,7 +64,7 @@ public class QueryManagerImpl implements QueryManager {
     public DescriptionQuery getDefaultDescriptionQuery() {
 
         DescriptionQuery query = new DescriptionQuery();
-
+        query.resetQuery();
         return query;
     }
 
@@ -72,14 +72,14 @@ public class QueryManagerImpl implements QueryManager {
     public NoValidQuery getDefaultNoValidQuery() {
 
         NoValidQuery noValidQuery = new NoValidQuery();
-
+        noValidQuery.resetQuery();
         return noValidQuery;
     }
 
     @Override
     public PendingQuery getDefaultPendingQuery() {
         PendingQuery pendingQuery = new PendingQuery();
-
+        pendingQuery.resetQuery();
         return pendingQuery;
     }
 

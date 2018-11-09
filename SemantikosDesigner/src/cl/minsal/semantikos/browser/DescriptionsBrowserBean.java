@@ -102,8 +102,9 @@ public class DescriptionsBrowserBean implements Serializable {
         /**
          * Si el objeto de consulta no está inicializado, inicializarlo
          */
-        if(descriptionQuery == null)
+        if(descriptionQuery == null) {
             descriptionQuery = queryManager.getDefaultDescriptionQuery();
+        }
 
         /**
          * Ejecutar la consulta
