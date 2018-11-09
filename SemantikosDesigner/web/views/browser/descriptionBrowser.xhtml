@@ -5,14 +5,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
-                template="/WEB-INF/template/template.xhtml">
-
-    <ui:define name="header">
-        <p:breadCrumb>
-            <p:menuitem value="Inicio" url="/views/home.xhtml" />
-            <p:menuitem value="Descripciones" url="#"  />
-        </p:breadCrumb>
-    </ui:define>
+                template="/WEB-INF/template.xhtml">
 
     <ui:define name="content">
 
@@ -20,108 +13,208 @@
             <f:event type="preRenderView" listener="#{descriptionsBrowserBean.executeQuery}" />
         </f:metadata>
 
-        <div class="Container100">
+                <h:form id="browserForm">
 
-            <div class="ContainerIndent">
-                <div class="Card ShadowEffect  ">
-                    <div class="Container100">
-                        <div class="ContainerIndent">
+                    <p:breadCrumb>
+                        <p:menuitem value="Inicio" url="/views/home.xhtml" />
+                        <p:menuitem value="Descripciones" url="#"  />
+                    </p:breadCrumb>
 
-                            <h:form id="browserForm">
+                    <div class="card card-w-title">
 
-                                        <p:dataTable id="descriptionTable"
-                                                     styleClass="browserTable"
-                                                     value="#{descriptionsBrowserBean.descriptions}"
-                                                     var="description"
-                                                     rows="30"
-                                                     sortBy="#{1}"
-                                                     paginator="true" lazy="true" dynamic="true" reflow="true"
-                                                     paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                                     emptyMessage="No se han encontrado descripciones con los criterios utilizados">
+                    <h1 class="first-heading">
+                        Descripciones
+                    </h1>
 
-                                            <p:growl id="growl" showDetail="true" showSummary="true"/>
+                    <p:separator styleClass="heading-separator" style="margin-bottom: 0px"/>
 
-                                            <p:column headerText="Categoría" sortBy="#{1}">
-                                                <h:outputText value="#{description.conceptSMTK.category.name}"/>
-                                            </p:column>
+                    <p:outputPanel id="filters" legend="Filtros" styleClass="filtros">
 
-                                            <p:column headerText="Término Preferido" sortBy="#{2}">
-                                                <h:outputText value="#{description.term}"/>
-                                            </p:column>
+                        <div class="ui-fluid">
 
-                                            <p:column headerText="Tipo" style="width: 10%">
-                                                <h:outputText value="#{description.descriptionType.name}"/>
-                                            </p:column>
+                                <div class="ui-g">
 
-                                            <p:column headerText="STK_ID" style="width: 10%">
-                                                <h:outputText value="#{description.conceptSMTK.conceptID}"/>
-                                            </p:column>
+                                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                                            <p:column headerText="SCT_ID" style="width: 10%">
-                                                <p:outputPanel>
-                                                    <smtk:sctTypeCell relationshipDefinition="#{description.conceptSMTK.relationships.get(0).relationshipDefinition}"
-                                                                       concept="#{description.conceptSMTK}"
-                                                                       rendered="#{description.conceptSMTK.relationships.get(0).relationshipDefinition.targetDefinition.snomedCTType}"
-                                                    />
-                                                </p:outputPanel>
-                                            </p:column>
+                                        <p:outputLabel value="Patrón" />
 
-                                            <p:column headerText="FSN_DSC">
-                                                <h:outputText value="#{description.conceptSMTK.descriptionFSN.term}"/>
-                                            </p:column>
+                                    </div>
 
-                                            <p:column headerText="RefSet" priority="6">
-                                                <p:repeat
-                                                        offset="0"
-                                                        size="#{descriptionsBrowserBean.refSetManager.getRefsetsBy(description.conceptSMTK).size()}"
-                                                        step="1"
-                                                        varStatus="var"
-                                                        value="#{descriptionsBrowserBean.refSetManager.getRefsetsBy(description.conceptSMTK)}"
-                                                        var="refset">
+                                    <div class="ui-g-12 ui-md-8 ui-lg-10">
 
-                                                    <h:outputText rendered="#{var.index>0}" value=", " />
-                                                    <h:outputText value="#{refset}" />
+                                        <p:outputPanel styleClass="search">
+                                            <p:inputText value="#{descriptionsBrowserBean.descriptionQuery.query}" placeholder="Buscar..." onkeyup="return (this.value.length >= 3 || this.value.length ==0)">
+                                                <p:ajax event="keyup" delay="500" update="@(.browserTable)" process="@this" listener="#{descriptionsBrowserBean.setFilterChanged(true)}" />
+                                            </p:inputText>
+                                            <i class="fa fa-search fa-lg" />
+                                        </p:outputPanel>
 
-                                                </p:repeat>
-                                            </p:column>
+                                    </div>
 
-                                            <p:column headerText="Acciones" exportable="false" style="width: 10%; text-align: center">
+                                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                                                <div style="text-align: center;">
+                                        <p:outputLabel value="Categorías" />
 
-                                                    <p:link outcome="/views/concept/conceptEdit" title="Consultar" style="padding: 5px">
-                                                        <i class="fa fa-eye fa-lg"/>
-                                                        <f:param name="editMode" value="#{false}" />
-                                                        <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
-                                                    </p:link>
+                                    </div>
 
-                                                    <p:link outcome="/views/concept/conceptEdit" title="Editar" style="padding: 5px" rendered="#{profilePermissionsBeans.modeler}">
-                                                        <i class="fa fa-edit fa-lg"/>
-                                                        <f:param name="editMode" value="#{true}" />
-                                                        <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
-                                                    </p:link>
+                                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                                                </div>
+                                        <p:selectCheckboxMenu id="categories"
+                                                              value="#{descriptionsBrowserBean.descriptionQuery.categories}"
+                                                              converter="omnifaces.SelectItemsConverter"
+                                                              label="Categorías..."
+                                                              filter="true"
+                                                              filterMatchMode="startsWith">
 
-                                            </p:column>
+                                            <p:ajax event="change" listener="#{descriptionsBrowserBean.setFilterChanged(true)}"
+                                                    update="@(.browserTable),@(.filterStatus)"
+                                                    process="@this" />
 
-                                        </p:dataTable>
+                                            <f:selectItems value="#{descriptionsBrowserBean.categories}" var="category"
+                                                           itemLabel="#{category.name}" itemValue="#{category}"/>
 
+                                        </p:selectCheckboxMenu>
 
-                                </h:form>
+                                    </div>
 
-                        </div>
+                                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+
+                                        <p:outputLabel value="Tipo Descripción" />
+
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-8 ui-lg-4">
+
+                                        <p:selectCheckboxMenu id="descriptionTypes"
+                                                              value="#{descriptionsBrowserBean.descriptionQuery.descriptionTypes}"
+                                                              scrollHeight="200"
+                                                              converter="omnifaces.SelectItemsConverter"
+                                                              label="Tipos...">
+
+                                            <p:ajax event="change" listener="#{descriptionsBrowserBean.setFilterChanged(true)}"
+                                                    update="@(.browserTable),@(.filterStatus)"
+                                                    process="@this" />
+
+                                            <f:selectItems value="#{descriptionsBrowserBean.descriptionTypes}" var="descriptionType"
+                                                           itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
+
+                                        </p:selectCheckboxMenu>
+
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+
+                                        <p:outputLabel value="RefSets" />
+
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-8 ui-lg-4">
+
+                                        <p:selectCheckboxMenu id="refsets"
+                                                              value="#{descriptionsBrowserBean.descriptionQuery.refSets}"
+                                                              converter="omnifaces.SelectItemsConverter"
+                                                              scrollHeight="200"
+                                                              label="Seleccione...">
+
+                                            <p:ajax event="change" listener="#{descriptionsBrowserBean.setFilterChanged(true)}"
+                                                    update="@(.browserTable),@(.filterStatus)"
+                                                    process="@this" />
+
+                                            <f:selectItems value="#{descriptionsBrowserBean.refSets}" var="refSet"
+                                                           itemLabel="#{refSet.name}" itemValue="#{refSet}"/>
+
+                                        </p:selectCheckboxMenu>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                    </p:outputPanel>
+
                     </div>
-                </div>
-            </div>
-        </div>
 
-    </ui:define>
+                    <p:dataTable id="descriptionTable"
+                                 styleClass="browserTable"
+                                 value="#{descriptionsBrowserBean.descriptions}"
+                                 var="description"
+                                 rows="30"
+                                 sortBy="#{1}"
+                                 paginator="true" lazy="true" dynamic="true" reflow="true"
+                                 paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                 emptyMessage="No se han encontrado descripciones con los criterios utilizados">
 
-    <ui:define name="nav">
-        <h:form>
-            <smtk:descriptionBrowserFilter descriptionQuery="#{descriptionsBrowserBean.descriptionQuery}" />
-        </h:form>
+                        <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+                        <p:column headerText="Categoría" sortBy="#{1}">
+                            <h:outputText value="#{description.conceptSMTK.category.name}"/>
+                        </p:column>
+
+                        <p:column headerText="Término Preferido" sortBy="#{2}">
+                            <h:outputText value="#{description.term}"/>
+                        </p:column>
+
+                        <p:column headerText="Tipo" style="width: 10%">
+                            <h:outputText value="#{description.descriptionType.name}"/>
+                        </p:column>
+
+                        <p:column headerText="STK_ID" style="width: 10%">
+                            <h:outputText value="#{description.conceptSMTK.conceptID}"/>
+                        </p:column>
+
+                        <p:column headerText="SCT_ID" style="width: 10%">
+                            <p:outputPanel>
+                                <smtk:sctTypeCell relationshipDefinition="#{description.conceptSMTK.relationships.get(0).relationshipDefinition}"
+                                                  concept="#{description.conceptSMTK}"
+                                                  rendered="#{description.conceptSMTK.relationships.get(0).relationshipDefinition.targetDefinition.snomedCTType}"
+                                />
+                            </p:outputPanel>
+                        </p:column>
+
+                        <p:column headerText="FSN_DSC">
+                            <h:outputText value="#{description.conceptSMTK.descriptionFSN.term}"/>
+                        </p:column>
+
+                        <p:column headerText="RefSet" priority="6">
+                            <p:repeat
+                                    offset="0"
+                                    size="#{descriptionsBrowserBean.refSetManager.getRefsetsBy(description.conceptSMTK).size()}"
+                                    step="1"
+                                    varStatus="var"
+                                    value="#{descriptionsBrowserBean.refSetManager.getRefsetsBy(description.conceptSMTK)}"
+                                    var="refset">
+
+                                <h:outputText rendered="#{var.index>0}" value=", " />
+                                <h:outputText value="#{refset}" />
+
+                            </p:repeat>
+                        </p:column>
+
+                        <p:column headerText="Acciones" exportable="false" style="width: 10%; text-align: center">
+
+                            <div style="text-align: center;">
+
+
+
+                                <p:button outcome="/views/concepts/conceptView" title="Consultar" style="padding: 5px"
+                                icon="fa fa-eye fa-lg">
+                                    <f:param name="conceptID" value="#{description.conceptSMTK.conceptID}" />
+                                </p:button>
+
+                                <p:button outcome="/views/concepts/conceptEdit" title="Editar" style="padding: 5px"
+                                          rendered="#{profilePermissionsBeans.modeler}" icon="fa fa-edit fa-lg">
+                                    <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
+                                </p:button>
+
+                            </div>
+
+                        </p:column>
+
+                    </p:dataTable>
+
+                </h:form>
+
     </ui:define>
 
 </ui:composition>

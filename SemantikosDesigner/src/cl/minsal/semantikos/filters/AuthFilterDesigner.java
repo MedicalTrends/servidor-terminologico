@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static cl.minsal.semantikos.users.AuthenticationBean.AUTH_KEY;
+
 
 /**
  * @author Francisco Mendez on 19-05-2016.
@@ -24,10 +26,6 @@ public class AuthFilterDesigner implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        ((HttpServletResponse) response).setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-        ((HttpServletResponse) response).setHeader("Pragma", "no-cache"); // HTTP 1.0.
-        ((HttpServletResponse) response).setHeader("Expires", "0");
-
         /* Inició sesión e intenta volver atrás */
         /*
         if(isLoggedIn(req) && req.getRequestURI().contains(Constants.LOGIN_PAGE)) {
@@ -36,41 +34,46 @@ public class AuthFilterDesigner implements Filter {
         }
         */
 
-        if (req.getRequestURI().contains(Constants.LOGIN_PAGE) || req.getRequestURI().contains(Constants.ERRORS_FOLDER) ||
-            req.getRequestURI().contains(Constants.ACCOUNT_ACTIVATION_PAGE) || req.getRequestURI().contains(Constants.FORGOT_PASS_PAGE) ||
-            hasPermission(req)) {
-            /*
-            if(req.getRequestURI().contains(Constants.LOGIN_PAGE) || req.getRequestURI().contains(Constants.ACCOUNT_ACTIVATION_PAGE) ||
-                req.getRequestURI().contains(Constants.FORGOT_PASSWORD_PAGE)) {
-                ((HttpServletResponse) response).setHeader(CACHE_CONTROL, "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-                //((HttpServletResponse) response).addHeader(HEADER, "no-cache"); // HTTP 1.0.
-                ((HttpServletResponse) response).addHeader(EXPIRES, "0"); // Proxies.
+        if(req.getContextPath().equals("/designer")) {
+
+            if (isUnauthorizedPage(req) || hasPermission(req)) {
+                if(isUnauthorizedPage(req)) {
+                    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+                    res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+                    res.setDateHeader("Expires", 0);
+                }
+                logger.debug("Request válido, se deja continuar: " + req);
+                chain.doFilter(request, response);
             }
-            */
-            logger.debug("Request válido, se deja continuar: " + req);
-            chain.doFilter(request, response);
-        }
         /* Perdió la sesión o está tratando de conectarse sin haberse logueado */
-        else if (!isLoggedIn(req)) {
-            logger.debug("Intento de acceso sin sesión: " + req);
-            res.sendRedirect(req.getContextPath() + "/" + Constants.VIEWS_FOLDER + "/" + Constants.LOGIN_PAGE + "?viewExpired=true&originalURI=" + req.getRequestURI());
-        }
+            else if (!isLoggedIn(req)) {
+                logger.debug("Intento de acceso sin sesión: " + req);
+                res.sendRedirect(req.getContextPath() + Constants.VIEWS_FOLDER + Constants.LOGIN_PAGE);
+            }
 
         /* No tiene permiso para acceder a la pagina solicitada */
-        else if (!hasPermission(req)) {
-            logger.debug("Intento de acceso sin sesión: " + req);
-            res.sendRedirect(req.getContextPath() + "/" + Constants.VIEWS_FOLDER + "/" + Constants.ERRORS_FOLDER + "/" + Constants.AUTH_ERROR_PAGE);
-        }
+            else if (!hasPermission(req)) {
+                logger.debug("Intento de acceso sin sesión: " + req);
+                res.sendRedirect(req.getContextPath() + Constants.VIEWS_FOLDER + Constants.ERRORS_FOLDER + Constants.AUTH_ERROR_PAGE);
+            }
 
         /* Otros casos que nunca deberían darse */
-        else {
-            logger.debug("Un caso que nunca debiera darse: " + req);
-            res.sendRedirect(req.getContextPath() + "/" + Constants.VIEWS_FOLDER + "/" + Constants.LOGIN_PAGE);
+            else {
+                logger.debug("Un caso que nunca debiera darse: " + req);
+                res.sendRedirect(req.getContextPath() + Constants.VIEWS_FOLDER + Constants.LOGIN_PAGE);
+            }
+
         }
+
+    }
+
+    private boolean isUnauthorizedPage(HttpServletRequest req) {
+        return req.getRequestURI().contains(Constants.LOGIN_PAGE) || req.getRequestURI().contains(Constants.ERRORS_FOLDER) ||
+                req.getRequestURI().contains(Constants.ACCOUNT_ACTIVATION_PAGE) || req.getRequestURI().contains(Constants.FORGOT_PASS_PAGE);
     }
 
     private boolean isLoggedIn(HttpServletRequest req) {
-        return req.getSession().getAttribute(AuthenticationBean.AUTH_KEY) != null;
+        return req.getSession().getAttribute(AUTH_KEY) != null;
     }
 
     private boolean hasPermission(HttpServletRequest req) {

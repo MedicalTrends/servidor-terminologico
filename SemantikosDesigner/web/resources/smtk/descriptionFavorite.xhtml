@@ -15,53 +15,58 @@
 </composite:interface>
 
 <composite:implementation>
-    <div class="ui-fluid">
 
-        <div class="Container ContainerIndentBottom">
+    <p:fieldset legend="Preferida" styleClass="favourite">
 
-            <div class="Container20 White Responsive" >
-                <div class="ContainerIndent">
-                    <p:outputLabel for="favorite" styleClass="#{cc.attrs.description.uiValid?'':'ui-state-error'}">
-                        <span class="">
-                            Preferida *
-                        </span>
-                    </p:outputLabel>
-                </div>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                <p:outputLabel value="DescriptionID" />
             </div>
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
+                <p:inputText value="DESCID" rendered="#{not cc.attrs.description.persistent}" readonly="true" />
+                <p:inputText value="#{cc.attrs.description.descriptionId}" readonly="true" rendered="#{cc.attrs.description.persistent}" />
+            </div>
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                <p:outputLabel value="Sensibilidad" />
+            </div>
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
+                <p:selectOneRadio id="customRadio2" value="#{cc.attrs.description.caseSensitive}" layout="responsive" columns="2"
+                                  rendered="#{not cc.attrs.description.conceptSMTK.modeled}">
+                    <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
+                    <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
+                    <p:ajax/>
+                </p:selectOneRadio>
 
-            <div class="Container30 White Responsive">
-                <div class="ContainerIndentRight">
-                    <p:inputTextarea id="favorite"
-                                 styleClass="terms #{cc.attrs.description.uiValid?'':'ui-state-error'}"
+                <p:inputText id="caseSensitive"
+                             value="#{cc.attrs.description.caseSensitive?'Sensible':'Insensible'}"
+                             readonly="true"
+                             rendered="#{cc.attrs.description.conceptSMTK.modeled}"
+                             filter="true" filterMatchMode="startsWith"
+                             autoWidth="false">
+                </p:inputText>
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                <p:outputLabel value="Término *" />
+            </div>
+            <div class="ui-g-12 ui-md-8 ui-lg-10">
+
+                <p:inputTextarea id="favorite"
+                                 styleClass="terms"
                                  name="description"
                                  rows="1"
                                  value="#{cc.attrs.description.term}"
-                                 disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
+                                 readonly="#{cc.attrs.description.conceptSMTK.modeled}"
                                  autocomplete="off">
-                        <p:ajax event="keyup" update="@(.FSN)" listener="#{descriptionBeans.updateFSNFromFavourite(cc.attrs.description)}" process="@this" />
-                    </p:inputTextarea>
-                </div>
-            </div>
+                    <p:ajax event="keyup" update="@(.FSN)" listener="#{descriptionBeans.updateFSNFromFavourite(cc.attrs.description)}" process="@this" />
+                </p:inputTextarea>
 
-            <div class="Container20 White Responsive">
-                <div class="ContainerIndentRight">
-                    <p:inputText value="DESCID " rendered="#{not cc.attrs.description.persistent}" disabled="true" />
-                    <p:inputText value="DESCID: #{cc.attrs.description.descriptionId}" disabled="true" rendered="#{cc.attrs.description.persistent}" />
-                </div>
-            </div>
-
-
-            <div class="Container30 White Responsive">
-                <div class="ContainerIndentRight">
-                    <p:selectOneRadio id="customRadio2" value="#{cc.attrs.description.caseSensitive}" layout="grid" columns="2" style="padding-top: 0.5em"
-                                      disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}">
-                        <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
-                        <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
-                        <p:ajax/>
-                    </p:selectOneRadio>
-                </div>
             </div>
         </div>
-    </div>
+
+    </p:fieldset>
+
 </composite:implementation>
 </html>

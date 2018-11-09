@@ -21,6 +21,7 @@ import cl.minsal.semantikos.model.users.UserFactory;
 import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
 import cl.minsal.semantikos.modelweb.RelationshipAttributeDefinitionWeb;
 import cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb;
+import cl.minsal.semantikos.session.ProfilePermissionsBeans;
 import org.primefaces.event.MenuActionEvent;
 import org.primefaces.model.menu.*;
 import org.slf4j.Logger;
@@ -54,6 +55,8 @@ public class MainMenuBean implements Serializable {
     static final Logger logger = LoggerFactory.getLogger(MainMenuBean.class);
 
     private List<Category> categories;
+
+    private transient MenuModel mainMenuModel;
 
     private transient MenuModel categoryMenuModel;
 
@@ -100,32 +103,6 @@ public class MainMenuBean implements Serializable {
 
         UserFactory.getInstance().setUsersById(userFactory.getUsersById());
 
-        institutionFactory = institutionManager.getInstitutionFactory();
-
-        InstitutionFactory.getInstance().setInstitutions(institutionFactory.getInstitutions());
-
-        categoryMenuModel = new DefaultMenuModel();
-
-        //First submenu
-        DefaultSubMenu categorySubmenu = new DefaultSubMenu("Categorías");
-        categorySubmenu.setIcon("fa fa-list-alt");
-        categorySubmenu.setId("rm_categories");
-
-        for (Category category : categories) {
-            DefaultMenuItem item = new DefaultMenuItem(category.getName());
-            item.setUrl("/views/browser/generalBrowser.xhtml?idCategory="+category.getId());
-            //item.setUrl("#");
-            item.setIcon("fa fa-list-alt");
-            item.setId("rm_"+category.getName());
-            //item.setCommand("#{mainMenuBean.redirect}");
-            //item.setParam("idCategory",category.getId());
-            //item.setAjax(true);
-            item.setUpdate("mainContent");
-            categorySubmenu.addElement(item);
-        }
-
-        categoryMenuModel.addElement(categorySubmenu);
-
     }
 
     public TagSMTKFactory getTagSMTKFactory() {
@@ -158,6 +135,10 @@ public class MainMenuBean implements Serializable {
 
     public MenuModel getCategoryMenuModel() {
         return categoryMenuModel;
+    }
+
+    public MenuModel getMainMenuModel() {
+        return mainMenuModel;
     }
 
 }

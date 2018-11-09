@@ -21,9 +21,11 @@
 
     <ui:repeat var="column" value="#{helperTableBean.getRelatedColumns(cc.attrs.relationshipDefinition.targetDefinition)}">
 
-        <div class="Container20 White Responsive">
+        <div class="ui-g-12 ui-md-4 ui-lg-2">
+            <p:outputLabel value="#{cc.attrs.relationshipAttributeDefinition.name}"/>
+        </div>
 
-        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+        <div class="ui-g-12 ui-md-8 ui-lg-4">
 
             <p:outputPanel rendered="#{ cc.attrs.relationshipDefinition.multiplicity.collection and not cc.attrs.relationshipAttributeDefinition.multiplicity.collection }" styleClass="search">
 
@@ -31,11 +33,11 @@
                                  forceSelection="true"
                                  value="#{conceptBean.selectedHelperTableRecord}"
                                  var="r"
-                                 autoWidth="false"
+                                 autoWidth="true"
                                  filter="true"
                                  converter="omnifaces.SelectItemsConverter">
 
-                    <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..." itemValue="#{null}"
+                    <f:selectItem itemLabel="Seleccionar..." itemValue="#{null}"
                                   noSelectionOption="true"
                                   itemDisabled="true"/>
 
@@ -63,8 +65,6 @@
             </p:outputPanel>
 
         </div>
-
-    </div>
 
     </ui:repeat>
 

@@ -5,6 +5,7 @@ import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.kernel.componentsweb.ViewAugmenter;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
@@ -29,6 +30,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN_MAPEO_DE;
+import static java.util.Collections.EMPTY_LIST;
 
 /**
  * Created by des01c7 on 14-10-16.
@@ -63,6 +65,9 @@ public class CategoryBean {
     }
 
     public List<RelationshipDefinitionWeb> getRelationshipDefinitionsByCategory(Category category) {
+        if(category == null) {
+            return EMPTY_LIST;
+        }
         return relationshipDefinitionsWeb.get(category.getId());
     }
 
@@ -76,6 +81,10 @@ public class CategoryBean {
     }
 
     public List<RelationshipDefinitionWeb> getCrossmapTypeDefinitionsByCategory(Category category) {
+
+        if(category == null) {
+            return EMPTY_LIST;
+        }
 
         List<RelationshipDefinitionWeb> relationshipDefinitions = new ArrayList();
 
@@ -95,6 +104,10 @@ public class CategoryBean {
      */
     public List<RelationshipDefinitionWeb> getSMTKDefinitionsByCategory(Category category) {
 
+        if(category == null) {
+            return EMPTY_LIST;
+        }
+
         List<RelationshipDefinitionWeb> smtkRelationshipDefinitions = new ArrayList<>();
 
         for (RelationshipDefinitionWeb relationshipDefinition : getRelationshipDefinitionsByCategory(category)) {
@@ -106,6 +119,10 @@ public class CategoryBean {
     }
 
     public List<RelationshipDefinitionWeb> getSnomedDefinitionsByCategory(Category category) {
+
+        if(category == null) {
+            return EMPTY_LIST;
+        }
 
         List<RelationshipDefinitionWeb> snomedRelationshipDefinitions = new ArrayList<>();
 
@@ -168,6 +185,24 @@ public class CategoryBean {
             }
         }
         //return relationshipPlaceholders;
+    }
+
+    public List<RelationshipDefinitionWeb> getNotEmptySMTKDefinitionsByCategory(ConceptSMTK conceptSMTK) {
+
+        if(conceptSMTK == null) {
+            return EMPTY_LIST;
+        }
+
+        List<RelationshipDefinitionWeb> smtkRelationshipDefinitions = new ArrayList<>();
+
+        for (RelationshipDefinitionWeb relationshipDefinition : getRelationshipDefinitionsByCategory(conceptSMTK.getCategory())) {
+            if(!relationshipDefinition.getTargetDefinition().isSnomedCTType() && !relationshipDefinition.getTargetDefinition().isCrossMapType()) {
+                if(!conceptSMTK.getValidRelationshipsByRelationDefinition(relationshipDefinition).isEmpty()) {
+                    smtkRelationshipDefinitions.add(relationshipDefinition);
+                }
+            }
+        }
+        return smtkRelationshipDefinitions;
     }
 
 }

@@ -27,20 +27,16 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"  value="#{cc.attrs.relationshipDefinition.name} " for="findConceptSMTK"/>
                             <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" value="#{cc.attrs.relationshipDefinition.name} *" for="findConceptSMTK"/>
 
-                        </div>
                     </div>
 
-                    <div class="Container30 White Responsive">
-
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:outputPanel styleClass="search">
 
@@ -53,7 +49,6 @@
                                                 var="concept"
                                                 value="#{conceptBean.conceptSelected}"
                                                 itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
-                                                disabled="#{not cc.attrs.concept.editable}"
                                                 rendered="#{conceptBean.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size()==0}">
 
                                     <!-- Parámetros del validador -->
@@ -77,7 +72,6 @@
                                 <i class="fa fa-search fa-lg"  />
                             </p:outputPanel>
 
-                        </div>
                     </div>
                 </div>
             </div>
@@ -92,24 +86,20 @@
 
                 <div class="ui-fluid">
 
-                    <div class="Container">
+                    <div class="ui-g">
 
-                        <div class="Container20 White Responsive">
-                            <div class="ContainerIndent">
+                        <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                                 <p:outputLabel rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
                                                value="#{cc.attrs.relationshipDefinition.name}: " for="itemSelected"/>
                                 <p:outputLabel rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}"
                                                value="#{cc.attrs.relationshipDefinition.name} *" for="itemSelected"/>
-                            </div>
                         </div>
 
-                        <div class="Container30 White Responsive">
-
-                            <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                        <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                                 <p:outputPanel styleClass="search">
-                                    <p:inputText disabled="true" id="itemSelected" value="#{relationship.target.descriptionFSN.term}" />
+                                    <p:inputText readonly="true" id="itemSelected" value="#{relationship.target.descriptionFSN.term}" />
 
                                     <p:commandLink process="@this"
                                                    update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
@@ -120,21 +110,17 @@
                                     </p:commandLink>
                                 </p:outputPanel>
 
-                            </div>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-4 ui-lg-2">
+
+                            <h:outputText value="Concept ID"/>
 
                         </div>
 
-                        <div class="Container20 Responsive">
-                            <div class="ContainerIndent">
-                                <h:outputText value="Concept ID"/>
-                            </div>
-                        </div>
+                        <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                        <div class="Container30 White Responsive">
-
-                            <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-                                <p:inputText value="#{relationship.target.conceptID}" disabled="true" />
-                            </div>
+                            <p:inputText value="#{relationship.target.conceptID}" readonly="true" />
 
                         </div>
                     </div>

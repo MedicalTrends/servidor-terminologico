@@ -23,10 +23,10 @@
             value="#{cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}"
             var="relationship">
 
-        <h:outputText rendered="#{var.index>0 and not cc.attrs.relationshipDefinition.u_asist}" value=", " />
+        <h:outputText rendered="#{var.index>0 and not cc.attrs.relationshipDefinition.u_asist}" value=", " style="font-size: small; color:#545454;" />
         <h:outputText rendered="#{var.index>0 and cc.attrs.relationshipDefinition.u_asist}" value="&#13;"
                       escape="false" style="white-space:pre-line;" />
-        <h:outputText value="#{relationship.target.description}" />
+        <h:outputText value="#{relationship.target.description}" style="font-size: small; color:#545454;" />
 
     </p:repeat>
 

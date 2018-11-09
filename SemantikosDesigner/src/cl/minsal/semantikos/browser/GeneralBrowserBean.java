@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.browser;
 
+import cl.minsal.semantikos.Constants;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.users.AuthenticationBean;
 
@@ -14,6 +15,7 @@ import cl.minsal.semantikos.model.queries.QueryFilterAttribute;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.users.User;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -81,6 +83,13 @@ public class GeneralBrowserBean implements Serializable {
      */
     private boolean isFilterChanged;
 
+    /**
+     * Indica si cambió la categoría. Se utiliza para resetear el estado del lazyDataModel
+     */
+    private boolean isCategoryChanged = false;
+
+
+    private boolean showSettings;
 
     // Placeholders para los targets de los filtros, dados como elementos seleccionables
     private BasicTypeValue basicTypeValue = new BasicTypeValue(null);
@@ -129,11 +138,20 @@ public class GeneralBrowserBean implements Serializable {
             return;
         }
 
+
         /**
          * Si el objeto de consulta no está inicializado, inicializarlo
          */
         if(generalQuery == null) {
             generalQuery = queryManager.getDefaultGeneralQuery(category);
+            isCategoryChanged = true;
+        }
+
+        /**
+         * Si el patrón de consulta tiene menos de 3 caracteres retornar inmediatamente
+         */
+        if(generalQuery.getQuery().length() > 0 && generalQuery.getQuery().length() < 3) {
+            return;
         }
 
         /**
@@ -145,6 +163,13 @@ public class GeneralBrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
 
+                if(isCategoryChanged) {
+                    first = 0;
+                    RequestContext reqCtx = RequestContext.getCurrentInstance();
+                    reqCtx.execute("PF('conceptTable').getPaginator().setPage(0)");
+                    isCategoryChanged = false;
+                }
+
                 if(isFilterChanged) {
                     generalQuery.setPageNumber(0);
                 }
@@ -155,14 +180,16 @@ public class GeneralBrowserBean implements Serializable {
                 isFilterChanged = false;
 
                 generalQuery.setPageSize(pageSize);
-                generalQuery.setOrder(new Integer(sortField));
+                //generalQuery.setOrder(new Integer(sortField));
 
+                /*
                 if(sortOrder.name().substring(0,3).toLowerCase().equals("asc")) {
                     generalQuery.setAsc(sortOrder.name().substring(0,3).toLowerCase());
                 }
                 else {
                     generalQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
                 }
+                */
 
                 List<ConceptSMTK> conceptSMTKs = null;
 
@@ -402,7 +429,11 @@ public class GeneralBrowserBean implements Serializable {
         if(generalQuery.getQuery() != null && concepts.getRowCount()==0) {
             query = generalQuery.getQuery();
         }
-        eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + idCategory +"&idConcept=0&favoriteDescription=" + query);
+        if(query == null || query.isEmpty()) {
+            query = "*";
+        }
+
+        eContext.redirect(eContext.getRequestContextPath() + Constants.VIEWS_FOLDER + "/concepts/new/" + idCategory + "/0/" + query);
     }
 
     public void onRowToggle(ToggleEvent event) {
@@ -418,6 +449,14 @@ public class GeneralBrowserBean implements Serializable {
 
     public void setFilterChanged(boolean filterChanged) {
         isFilterChanged = filterChanged;
+    }
+
+    public boolean isShowSettings() {
+        return showSettings;
+    }
+
+    public void setShowSettings(boolean showSettings) {
+        this.showSettings = showSettings;
     }
 
 }

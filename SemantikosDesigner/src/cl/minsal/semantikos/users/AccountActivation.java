@@ -9,6 +9,7 @@ import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.model.users.Answer;
 import cl.minsal.semantikos.model.users.Question;
 import cl.minsal.semantikos.model.users.User;
+import cl.minsal.semantikos.model.users.UserFactory;
 import cl.minsal.semantikos.util.StringUtils;
 import org.primefaces.context.RequestContext;
 
@@ -17,6 +18,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -67,10 +69,15 @@ public class AccountActivation {
     //@EJB
     AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
 
+    @ManagedProperty(value = "#{authenticationBean}")
+    private AuthenticationBean authenticationBean;
+
     @PostConstruct
     public void init() {
 
         key = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("key");
+        answerPlaceholder = new Answer();
+
         questionList = userManager.getAllQuestions();
         valid = check(key); // And auto-login if valid?
     }
@@ -86,7 +93,7 @@ public class AccountActivation {
         else {
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             try {
-                context.redirect(context.getRequestContextPath() + "/" + Constants.VIEWS_FOLDER+ "/" + Constants.LOGIN_PAGE );
+                context.redirect(context.getRequestContextPath() + Constants.VIEWS_FOLDER + Constants.LOGIN_PAGE );
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -190,14 +197,31 @@ public class AccountActivation {
         this.user = user;
     }
 
+    public Answer getAnswerPlaceholder() {
+        return answerPlaceholder;
+    }
+
+    public void setAnswerPlaceholder(Answer answerPlaceholder) {
+        this.answerPlaceholder = answerPlaceholder;
+    }
+
     public void updateAnswers(Question question) {
 
+        if(question.isSelected()) {
+            //user.getAnswers().add(new Answer(question));
+        }
+        else {
+            user.getAnswers().removeAll(user.getAnswersByQuestion(question));
+        }
+
+        /*
         if(user.getAnswersByQuestion(question).isEmpty()) {
             user.getAnswers().add(new Answer(question));
         }
         else {
             user.getAnswers().removeAll(user.getAnswersByQuestion(question));
         }
+        */
     }
 
     public boolean isAccountActive() {
@@ -389,12 +413,57 @@ public class AccountActivation {
         try {
             user.setPassword(newPassword1);
             userManager.activateAccount(originalUser, user, user);
+            refreshUserFactory();
             accountActive = true;
         }
         catch (EJBException e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
         }
 
+    }
+
+    public void addOrChangeAnswer(Question question, Answer answer) {
+
+        if(answer == null || answer.getAnswer().trim().isEmpty()) {
+            return;
+        }
+
+        answer.setQuestion(question);
+
+        // Se busca la respuesta
+        List<Answer> answers = user.getAnswersByQuestion(question);
+
+        if(!answers.isEmpty()) {
+            for (Answer answer1 : answers) {
+                user.getAnswers().remove(answer1);
+            }
+        }
+
+        user.getAnswers().add(answer);
+
+        // Se resetean los placeholder para los target de las relaciones
+        answerPlaceholder = new Answer();
+    }
+
+    public void refreshUserFactory() {
+        //UserFactory.getInstance().setUsersById(userManager.getUserFactory().getUsersById());
+        UserFactory.getInstance().refresh(user);
+    }
+
+    public AuthenticationBean getAuthenticationBean() {
+        return authenticationBean;
+    }
+
+    public void setAuthenticationBean(AuthenticationBean authenticationBean) {
+        this.authenticationBean = authenticationBean;
+    }
+
+    public User getOriginalUser() {
+        return originalUser;
+    }
+
+    public void setOriginalUser(User originalUser) {
+        this.originalUser = originalUser;
     }
 
 }

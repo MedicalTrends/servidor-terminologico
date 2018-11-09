@@ -16,9 +16,8 @@
         <exception-handler-factory>org.primefaces.application.exceptionhandler.PrimeExceptionHandlerFactory</exception-handler-factory>
     </factory>
 
-
     <!-- para  menu de layout rio -->
-    <component>
+    <!--component>
         <component-type>org.primefaces.component.RioMenu</component-type>
         <component-class>org.primefaces.rio.component.menu.RioMenu</component-class>
     </component>
@@ -28,6 +27,6 @@
             <renderer-type>org.primefaces.component.RioMenuRenderer</renderer-type>
             <renderer-class>org.primefaces.rio.component.menu.RioMenuRenderer</renderer-class>
         </renderer>
-    </render-kit>
+    </render-kit!-->
 
 </faces-config>

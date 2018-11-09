@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<composite:interface>
+    <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb"/>
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.categories.Category"/>
+    <composite:attribute name="concept" type="cl.minsal.semantikos.model.ConceptSMTK" />
+</composite:interface>
+
+<composite:implementation>
+
+    <p:fieldset id="multiplicityN_with_attributes" legend="#{cc.attrs.relationshipDefinition.name}"
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}">
+
+
+        <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
+                     id="tableRelationship3"
+                     styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
+                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
+                     style="margin: 0px;" reflow="true"
+                     value="#{conceptView.selectedConcept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     var="rel">
+
+            <p:column headerText="ConceptID" rendered="false">
+                <h:outputText value="#{rel.target.conceptID}"/>
+            </p:column>
+
+            <p:column headerText="Descripción" rendered="false">
+                <h:outputText value="#{rel.target.descriptionFavorite.term}"/>
+            </p:column>
+
+            <p:column headerText="Concepto">
+                <p:link outcome="/views/concepts/conceptView" value="#{rel.target.descriptionFSN} - #{rel.target.id}" styleClass="value" >
+                    <f:param name="conceptID" value="#{rel.target.conceptID}" />
+                </p:link>
+            </p:column>
+
+            <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
+                       var="attribute"
+                       columnIndexVar="colIndex">
+                <f:facet name="header">
+                    <h:outputText value="#{attribute.name}" />
+                </f:facet>
+                <p:outputPanel rendered="#{not empty rel.getAttributesByAttributeDefinition(attribute)}">
+                    <smtk:basicTypeAttributeCellView attribute="#{attribute}" relationship="#{rel}" rendered="#{attribute.targetDefinition.basicType}" />
+                    <smtk:helperTableTypeAttributeCellView attribute="#{attribute}" relationship="#{rel}" rendered="#{attribute.targetDefinition.helperTable}" />
+                    <smtk:smtkTypeAttributeCellView attribute="#{attribute}" relationship="#{rel}" rendered="#{attribute.targetDefinition.SMTKType}" />
+                </p:outputPanel>
+            </p:columns>
+
+        </p:dataTable>
+
+    </p:fieldset>
+
+    <p:outputPanel id="multiplicityOne"
+             styleClass="concept"
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}">
+
+            <p:outputPanel id="panel_autocomplete" style="width: 100%">
+
+
+                <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                                       var="relationship"
+                                       varStatus="var">
+
+                                <div class="ui-fluid">
+
+                                    <div class="ui-g">
+
+                                        <div class="ui-g-12 ui-md-4 ui-lg-2">
+
+                                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}:" styleClass="label"/>
+
+                                        </div>
+
+                                        <div class="ui-g-12 ui-md-8 ui-lg-10">
+
+                                            <p:link outcome="/views/concepts/conceptView" value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" styleClass="value" >
+                                                <f:param name="conceptID" value="#{relationship.target.conceptID}" />
+                                            </p:link>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <smtk:compositeAditional relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                                         concept="#{relationship.target}"
+                                                         rendered="false" />
+
+                            </ui:repeat>
+
+
+            </p:outputPanel>
+
+    </p:outputPanel>
+
+
+</composite:implementation>
+</html>

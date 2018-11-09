@@ -18,9 +18,11 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container#{cc.attrs.targetDefinition.type.typeName eq 'boolean'?'10':'20'} White Responsive" style="text-align: center">
+    <div class="ui-g-12 ui-md-4 ui-lg-2">
+        <p:outputLabel value="#{cc.attrs.relationshipAttributeDefinition.name}"/>
+    </div>
 
-        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
             <p:outputPanel rendered="#{cc.attrs.relationshipAttributeDefinition.multiplicity.simple and empty cc.attrs.relationship.getAttributesByAttributeDefinition(cc.attrs.relationshipAttributeDefinition)}">
 
@@ -35,7 +37,7 @@
                              converter="numberPaddingConverter"
                              minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                              maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
-                             disabled="#{not cc.attrs.concept.editable or cc.attrs.relationship eq null }"
+                             disabled="#{ cc.attrs.relationship eq null }"
                              rendered="#{cc.attrs.targetDefinition.type.typeName=='string' and not cc.attrs.targetDefinition.discreteDomain}"
                              styleClass="relationships"
                              autocomplete="off">
@@ -65,7 +67,7 @@
                                  converter="numberPaddingConverter"
                                  minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                  maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
-                                 disabled="#{not cc.attrs.concept.editable or cc.attrs.relationship eq null }"
+                                 disabled="#{ cc.attrs.relationship eq null }"
                                  rendered="#{cc.attrs.targetDefinition.type.typeName=='string' and not cc.attrs.targetDefinition.discreteDomain}"
                                  styleClass="relationships"
                                  autocomplete="off">
@@ -101,7 +103,7 @@
                                          value="#{conceptBean.basicTypeValue.value}"
                                          itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}"
                                          style="padding-top: 0.6em; padding-bottom: 0.6em"
-                                         disabled="#{not cc.attrs.concept.editable or cc.attrs.relationship eq null }"
+                                         disabled="#{ cc.attrs.relationship eq null }"
                                          rendered="#{cc.attrs.targetDefinition.type.typeName=='boolean'}">
                     <p:ajax event="change"
                             listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}"
@@ -169,7 +171,7 @@
                     <p:ajax event="dateSelect" listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}" />
                 </p:calendar>
             </p:outputPanel>
-        </div>
+
     </div>
 
     <h:outputStylesheet id="customCSS">

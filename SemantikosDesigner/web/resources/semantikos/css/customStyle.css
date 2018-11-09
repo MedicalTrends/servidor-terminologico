@@ -114,7 +114,6 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 .search {
     position: relative;
-    color: #aaa;
     font-size: 16px;
 }
 
@@ -128,13 +127,14 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 .search .fa-search {
     position: absolute;
-    top: 10px;
+    top: 0px;
     left: 10px;
+    color: #aaa;
 }
 
 .search .fa.fa-close.fa-lg {
     position: absolute;
-    top: 10px;
+    top: 0px;
     left: 10px;
 }
 
@@ -197,6 +197,10 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     display: none;
 }
 
+.drugsTable th.nodes {
+    display: none;
+}
+
 .ui-autocomplete-query {
     background: yellow;
 }
@@ -211,13 +215,140 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 }
 
 .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon-closethick {
-    background-image: url("#{resource['primefaces-rio/images/delete-white.svg']}");;
+    background-image: url("#{resource['primefaces-rio/images/delete-white.svg']}");
 }
 
+/*
 .ui-datatable table tbody .ui-state-highlight.ui-row-editing > td {
     color: #108bd5;
 }
+*/
 
 .ui-fluid .ui-inputtext[size], .ui-fluid .ui-inputfield[size] {
     width: inherit !important;
+}
+
+#conceptPanel table thead {
+    display: none !important;
+}
+
+/*
+#browserTable_paginator_top {
+    display: none !important;
+}
+*/
+
+#conceptPanel .ui-datatable tbody tr.ui-datatable-even {
+    background-color: transparent !important;
+}
+
+#conceptPanel .ui-datatable tbody tr td {
+    border: transparent !important;
+}
+
+#conceptPanel .ui-widget-header {
+    border: transparent !important;
+}
+
+#browserTable_paginator_top {
+    display: none !important;
+}
+
+.layout-rightpanel .layout-rightpanel-header {
+    height: 50px !important;
+}
+
+.dashboard .overview .overview-footer {
+    position: relative;
+    border-top: 1px solid #DBDBDB;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.layout-rightpanel .layout-rightpanel-header {
+    background: #283593 none repeat scroll 0% 0% !important;
+}
+
+.logo {
+    image-rendering:-webkit-optimize-contrast !important;
+}
+
+.ui-button.ui-button-icon-only.search-button-tiny {
+    border-radius: 10%;
+    width: 100%;
+    /*height: 100%;*/
+    height: 34px !important;
+}
+
+.ui-inputfield.search {
+    padding: 6px !important;
+}
+
+.ui-inputfield.search.ui-state-focus {
+    padding: 6px !important;
+}
+
+.myCustomLinkStyle:link {
+    color: #1a0dab;
+    font-size: 18px;
+}
+
+.myCustomLinkStyle:visited {
+    color: #6717ab !important;
+    font-size: 18px !important;
+}
+
+.myCustomLinkStyle:hover {
+    color: #1a0dab !important;
+    font-size: 18px !important;
+    text-decoration: underline !important;
+}
+
+.nano {
+    height: 90% !important;
+}
+
+.hoverful:hover {
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.first-heading {
+    font-size: 1.8em !important;
+    margin: 10px !important;
+    line-height: 24px !important;
+}
+
+.second-heading {
+    margin: 10px !important;
+}
+
+.heading-separator {
+    border-top: 0px solid rgb(219, 219, 219) !important;
+    border-bottom: 1px solid darkgrey !important;
+    margin: 10px !important;
+    margin-bottom: 1.5em !important;
+}
+
+.heading-separator-alt {
+    border-top: 0px solid rgb(219, 219, 219) !important;
+    border-bottom: 1px solid darkgrey !important;
+    margin: 10px !important;
+    margin-bottom: 0em !important;
+}
+
+.value {
+    /*font-style: italic !important;*/
+}
+
+.label {
+    font-weight: bold;
+    color: #545454 !important;
+}
+
+.browser-options .ui-menuitem {
+    float: right !important;
+}
+
+.layout-main {
+    max-width: 1200px;
 }

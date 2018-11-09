@@ -26,19 +26,17 @@
 
         <div class="ui-fluid">
 
-            <div class="Container">
+            <div class="ui-g">
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                         <p:outputLabel for="basicTypeValue11" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
                                        value="#{cc.attrs.relationshipDefinition.name}"/>
                         <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
-                    </div>
+
                 </div>
 
-                <div class="Container30 White Responsive">
-                    <div class="ContainerIndent">
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                         <p:calendar id="basicTypeValue11"
                                     value="#{conceptBean.basicTypeValue.value}"
@@ -46,7 +44,6 @@
                                     showOn="button"
                                     mindate="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                     maxdate="#{cc.attrs.targetDefinition.interval.upperBoundary}"
-                                    disabled="#{not cc.attrs.concept.editable}"
                                     rendered="#{cc.attrs.targetDefinition.type.typeName=='date' and not cc.attrs.targetDefinition.discreteDomain}"
                                     styleClass="relationships">
                             <f:attribute name="concept" value="#{cc.attrs.concept}"  />
@@ -56,7 +53,7 @@
                             <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id})"/>
                         </p:calendar>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -77,36 +74,29 @@
                    var="relationship"
                    varStatus="var">
 
-            <div class="ui-fluid">
+            <div class="ui-g ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+                    <p:outputLabel for="basicTypeValue" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                    <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
-                            <p:outputLabel for="basicTypeValue" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
-                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                </div>
 
-                        </div>
-                    </div>
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                    <div class="Container30 White Responsive">
-                        <div class="ContainerIndent">
+                    <p:outputPanel styleClass="search">
+                        <p:inputText readonly="true" id="basicTypeValue" value="#{relationship.target.value}">
+                            <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                        </p:inputText>
+                        <p:commandLink process="@this"
+                                       rendered="#{not cc.attrs.relationshipDefinition.MCSpecial and not conceptBean.concept.isModeled()}"
+                                       update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                       action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                            <i class="fa fa-close fa-lg"  />
+                        </p:commandLink>
+                    </p:outputPanel>
 
-                            <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target.value}">
-                                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
-                                </p:inputText>
-                                <p:commandLink process="@this"
-                                               rendered="#{not cc.attrs.relationshipDefinition.MCSpecial and not conceptBean.concept.isModeled()}"
-                                               update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                                               action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
-                                    <i class="fa fa-close fa-lg"  />
-                                </p:commandLink>
-                            </p:outputPanel>
-
-                        </div>
-                    </div>
                 </div>
             </div>
         </p:repeat>
@@ -120,22 +110,17 @@
                           and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
 
-        <div class="ui-fluid">
+        <div class="ui-g ui-fluid">
 
-            <div class="Container">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+                    <p:outputLabel for="basicTypeValue19"
+                                   value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"/>
+                    <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
-                        <p:outputLabel for="basicTypeValue19"
-                                       value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"/>
-                        <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+            </div>
 
-                    </div>
-                </div>
-
-                <div class="Container30 White Responsive">
-                    <div class="ContainerIndent">
+            <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                         <p:calendar id="basicTypeValue19"
                                     value="#{conceptBean.basicTypeValue.value}"
@@ -143,18 +128,18 @@
                                     showOn="button"
                                     mindate="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                     maxdate="#{cc.attrs.targetDefinition.interval.upperBoundary}"
-                                    disabled="#{not cc.attrs.concept.editable}"
                                     rendered="#{cc.attrs.targetDefinition.type.typeName=='date' and not cc.attrs.targetDefinition.discreteDomain}">
                             <f:attribute name="concept" value="#{cc.attrs.concept}"  />
                             <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
                             <p:ajax event="dateSelect" listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"/>
                         </p:calendar>
-                    </div>
-                </div>
-                <!-- Atributos de relación -->
-                <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
+
             </div>
+
+            <!-- Atributos de relación -->
+            <smtk:attributes concept="#{cc.attrs.concept}" relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
+
         </div>
     </p:panel>
 
@@ -172,37 +157,34 @@
                    var="relationship"
                    varStatus="var">
 
-            <div class="ui-fluid">
+            <div class="ui-g ui-fluid">
 
-                <div class="Container">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
-                            <p:outputLabel for="basicTypeValue2" value="#{cc.attrs.relationshipDefinition.name}"/>
-                            <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
-                        </div>
-                    </div>
-
-                    <div class="Container30 White Responsive">
-                        <div class="ContainerIndent">
-                            <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" />
-                                <p:commandLink process="@this"
-                                               update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                               action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
-                                    <i class="fa fa-close fa-lg"  />
-                                </p:commandLink>
-                            </p:outputPanel>
-                        </div>
-                    </div>
-
-                    <!-- Atributos de relación -->
-                    <smtk:attributes concept="#{cc.attrs.concept}"
-                                     relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                     relationship="#{relationship}"
-                    />
+                        <p:outputLabel for="basicTypeValue2" value="#{cc.attrs.relationshipDefinition.name}"/>
+                        <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
                 </div>
+
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
+
+                        <p:outputPanel styleClass="search">
+                            <p:inputText readonly="true" id="basicTypeValue2" value="#{relationship.target}" />
+                            <p:commandLink process="@this"
+                                           update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                                           action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                                <i class="fa fa-close fa-lg"  />
+                            </p:commandLink>
+                        </p:outputPanel>
+
+                </div>
+
+                <!-- Atributos de relación -->
+                <smtk:attributes concept="#{cc.attrs.concept}"
+                                 relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                 relationship="#{relationship}"
+                />
+
             </div>
         </p:repeat>
     </p:panel>

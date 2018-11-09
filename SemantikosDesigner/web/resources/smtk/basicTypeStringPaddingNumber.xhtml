@@ -136,7 +136,6 @@
                                      autocomplete="off"
                                      minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                      maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
-                                     disabled="#{not cc.attrs.concept.editable}"
                                      rendered="#{cc.attrs.targetDefinition.type.typeName=='string' and not cc.attrs.targetDefinition.discreteDomain}">
                             <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)" />
@@ -211,7 +210,7 @@
             </p:outputPanel>
         </f:facet>
 
-        <p:outputPanel rendered="#{cc.attrs.concept.editable}" style="width:100%" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}">
+        <p:outputPanel style="width:100%" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}">
 
             <div class="ui-fluid">
 
@@ -269,12 +268,11 @@
                 <h:outputText value="#{relationship.target.value}" />
             </p:column>
 
-            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
+            <p:column title="Eliminar" style="text-align: center;">
                 <p:commandButton
                         icon="fa fa-trash"
                         title="Eliminar"
                         update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.relationships_#{cc.attrs.relationshipDefinition.id})"
-                        style="float: right"
                         process="@this"
                         immediate="true"
                         actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"

@@ -13,23 +13,23 @@
     <composite:attribute name="date" type="java.util.Date"/>
     <composite:attribute name="dateSince" type="java.lang.Boolean"/>
     <composite:attribute name="name" type="java.lang.String"/>
+    <composite:attribute name="rightpanel" type="java.lang.Boolean"/>
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container100">
-
-        <div class="ContainerIndent BoldGray FontBold">
-
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <span>
             <h:outputText value="#{cc.attrs.name}" />
+        </span>
+    </div>
 
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
             <p:calendar id="creationDateSince" style="margin-right:10px; width: 90%"
                         value="#{cc.attrs.date}"
                         var="value" pattern="dd/MM/yyyy"
                         placeholder="#{cc.attrs.dateSince? 'Desde...' : 'Hasta...'}">
                 <p:ajax event="dateSelect" update="@(.browserTable)" />
             </p:calendar>
-
-        </div>
     </div>
 
     <h:outputStylesheet id="customCSS">

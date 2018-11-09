@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/template.xhtml">
+
+    <ui:define name="content">
+        <p:panel id="findConcept">
+            <h:form>
+                <div class="ui-g">
+
+                   <p:dataTable var="history"
+                   value="#{historyConcept.auditAction}" tableStyle="font-size: 12px;" style="font-size: 12px;" >
+                       <p:column headerText="Tipo de cambio">
+                           <h:outputText value="#{history.auditActionType.name}"></h:outputText>
+                       </p:column>
+                       <p:column headerText="Usuario">
+                           <h:outputText value="#{history.user.name}"></h:outputText>
+                       </p:column>
+                       <p:column headerText="Fecha">
+                           <h:outputText value="#{history.actionDate}"></h:outputText>
+                       </p:column>
+                   </p:dataTable>
+                </div>
+            </h:form>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

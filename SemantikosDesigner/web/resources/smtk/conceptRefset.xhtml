@@ -17,8 +17,8 @@
 
     <p:panel id="otherDescriptionsPanel" styleClass="otherDescriptionsPanel" widgetVar="panel">
 
-        <p:dataTable id="conceptLinkToRefset" emptyMessage="No se han agregado conceptos al RefSets" reflow="true" style="width: 900px"
-                     value="#{cc.attrs.refset.concepts}" var="conceptSMTK" styleClass="conceptBindRefset" scrollable="#{cc.attrs.scroll}" scrollHeight="150" >
+        <p:dataTable id="conceptLinkToRefset" emptyMessage="No se han agregado conceptos al RefSets" reflow="true"
+                     value="#{cc.attrs.refset.concepts}" var="conceptSMTK" styleClass="conceptBindRefset">
 
             <p:column headerText="ID">
                 <h:outputText value="#{conceptSMTK.conceptID}"/>
@@ -42,7 +42,7 @@
                                      update="@(.conceptBindRefset)"
                                      disabled="#{not cc.attrs.refset.valid}">
                         <p:confirm header="Confirmación"
-                                   message="¿Está seguro de eliminar este concepto del RefSet?"></p:confirm>
+                                   message="¿Está seguro de eliminar este concepto del RefSet?"/>
                     </p:commandButton>
                 </div>
 

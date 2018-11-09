@@ -18,9 +18,11 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container#{cc.attrs.targetDefinition.type.typeName eq 'boolean'?'10':'20'} White Responsive" style="text-align: center">
+    <div class="ui-g-12 ui-md-4 ui-lg-2">
+        <p:outputLabel value="#{cc.attrs.relationshipAttributeDefinition.name}"/>
+    </div>
 
-        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
             <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.getAttributesByAttributeDefinition(cc.attrs.relationshipAttributeDefinition)}">
 
@@ -29,7 +31,6 @@
                                  var="value1"
                                  converter="omnifaces.SelectItemsConverter"
                                  rendered="#{cc.attrs.targetDefinition.discreteDomain}"
-                                 disabled="#{not cc.attrs.concept.editable }"
                                  styleClass="relationships">
                     <p:ajax event="itemSelect"
                             listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}"
@@ -47,7 +48,7 @@
                 <p:selectBooleanCheckbox id="basicTypeValue16"
                                          value="#{conceptBean.basicTypeValue.value}"
                                          itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}"
-                                         disabled="#{not cc.attrs.concept.editable or cc.attrs.relationship eq null }"
+                                         disabled="#{ cc.attrs.relationship eq null }"
                                          style="padding-top: 0.6em"
                                          rendered="#{cc.attrs.targetDefinition.type.typeName=='boolean'}">
                     <p:ajax event="change"
@@ -59,7 +60,7 @@
                                value="#{conceptBean.basicTypeValue.value}"
                                var="value"
                                autocomplete="off"
-                               disabled="#{not cc.attrs.concept.editable or cc.attrs.relationship eq null }"
+                               disabled="#{cc.attrs.relationship eq null }"
                                placeholder="#{cc.attrs.relationshipAttributeDefinition.name}"
                                minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
@@ -80,7 +81,7 @@
                                value="#{conceptBean.basicTypeValue.value}"
                                var="value"
                                autocomplete="off"
-                               disabled="#{not cc.attrs.concept.editable or cc.attrs.relationship eq null }"
+                               disabled="#{ cc.attrs.relationship eq null }"
                                placeholder="#{cc.attrs.relationshipAttributeDefinition.name}"
                                minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
@@ -101,7 +102,7 @@
                              value="#{conceptBean.basicTypeValue.value}"
                              var="value"
                              autocomplete="off"
-                             disabled="#{not cc.attrs.concept.editable or cc.attrs.relationship eq null }"
+                             disabled="#{ cc.attrs.relationship eq null }"
                              placeholder="#{cc.attrs.relationshipAttributeDefinition.name}"
                              minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                              maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
@@ -115,7 +116,7 @@
                 <p:calendar id="basicTypeValue5"
                             value="#{conceptBean.basicTypeValue.value}"
                             var="value"
-                            disabled="#{not cc.attrs.concept.editable or cc.attrs.relationship eq null }"
+                            disabled="#{ cc.attrs.relationship eq null }"
                             placeholder="#{cc.attrs.relationshipAttributeDefinition.name}"
                             showOn="button"
                             locale="es_ES" pattern="dd/MM/yyyy"
@@ -148,7 +149,6 @@
                                      var="value1"
                                      converter="omnifaces.SelectItemsConverter"
                                      rendered="#{cc.attrs.targetDefinition.discreteDomain}"
-                                     disabled="#{not cc.attrs.concept.editable }"
                                      styleClass="relationships">
                         <p:ajax event="itemSelect"
                                 listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, relationshipAttribute.target)}"
@@ -166,7 +166,7 @@
                     <p:selectBooleanCheckbox id="basicTypeValue26"
                                              value="#{relationshipAttribute.target.value}"
                                              itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}"
-                                             disabled="#{not cc.attrs.concept.editable or cc.attrs.relationship eq null }"
+                                             disabled="#{ cc.attrs.relationship eq null }"
                                              style="padding-top: 0.6em"
                                              rendered="#{cc.attrs.targetDefinition.type.typeName=='boolean'}">
                         <p:ajax event="change"
@@ -178,7 +178,7 @@
                                    value="#{relationshipAttribute.target.value}"
                                    var="value"
                                    autocomplete="off"
-                                   disabled="#{not cc.attrs.concept.editable or cc.attrs.relationship eq null }"
+                                   disabled="#{ cc.attrs.relationship eq null }"
                                    placeholder="#{cc.attrs.relationshipAttributeDefinition.name}"
                                    minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                    maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
@@ -199,7 +199,7 @@
                                    value="#{relationshipAttribute.target.value}"
                                    var="value"
                                    autocomplete="off"
-                                   disabled="#{not cc.attrs.concept.editable or cc.attrs.relationship eq null }"
+                                   disabled="#{ cc.attrs.relationship eq null }"
                                    placeholder="#{cc.attrs.relationshipAttributeDefinition.name}"
                                    minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                    maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
@@ -220,7 +220,7 @@
                                  value="#{relationshipAttribute.target.value}"
                                  var="value"
                                  autocomplete="off"
-                                 disabled="#{not cc.attrs.concept.editable or cc.attrs.relationship eq null }"
+                                 disabled="#{ cc.attrs.relationship eq null }"
                                  placeholder="#{cc.attrs.relationshipAttributeDefinition.name}"
                                  minValue="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                  maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
@@ -234,7 +234,7 @@
                     <p:calendar id="basicTypeValue25"
                                 value="#{relationshipAttribute.target.value}"
                                 var="value"
-                                disabled="#{not cc.attrs.concept.editable or cc.attrs.relationship eq null }"
+                                disabled="#{ cc.attrs.relationship eq null }"
                                 placeholder="#{cc.attrs.relationshipAttributeDefinition.name}"
                                 showOn="button"
                                 locale="es_ES" pattern="dd/MM/yyyy"
@@ -278,7 +278,6 @@
                                          value="#{conceptBean.basicTypeValue.value}"
                                          itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}"
                                          style="padding-top: 0.6em; padding-bottom: 0.6em"
-                                         disabled="#{not cc.attrs.concept.editable }"
                                          rendered="#{cc.attrs.targetDefinition.type.typeName=='boolean'}">
                     <p:ajax event="change"
                             listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}"
@@ -346,7 +345,7 @@
                     <p:ajax event="dateSelect" listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}" />
                 </p:calendar>
             </p:outputPanel>
-        </div>
+
     </div>
 
     <h:outputStylesheet id="customCSS">

@@ -20,60 +20,73 @@
 
         <p:growl id="msgRefSet" showDetail="true" showSummary="true"/>
 
-        <p:panel rendered="#{conceptBean.editable and profilePermissionsBeans.modeler}">
-            <div class="ui-g">
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <p:outputPanel rendered="#{profilePermissionsBeans.modeler}">
 
-                    <p:selectOneMenu id="institution" value="#{refsetsBean.institutionSelected}"
-                                     converter="omnifaces.SelectItemsConverter" panelStyle="width:300px;"
-                                     effect="fade" var="i" style="width:80%" filter="true"
-                                     filterMatchMode="startsWith">
-                        <f:selectItem itemLabel="Seleccione la institución" itemDisabled="true"/>
-                        <f:selectItems value="#{authenticationBean.loggedUser.institutions}" var="institution"
-                                       itemLabel="#{institution.name}" itemValue="#{institution}"/>
-                        <p:column>
-                            <h:outputText value="#{i.name}"/>
-                        </p:column>
-                        <p:ajax event="itemSelect" listener="#{refsetsBean.reloadRefsetByInstitution}" update="@(.refsetInstitution)" />
-                    </p:selectOneMenu>
+            <div class="ui-fluid">
+
+                <div class="ui-g">
+
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                        <p:outputLabel value="Establecimiento" />
+                    </div>
+
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
+
+                        <p:selectOneMenu id="institution" value="#{refsetsBean.institutionSelected}"
+                                         converter="omnifaces.SelectItemsConverter" panelStyle="width:300px;"
+                                         effect="fade" var="i" style="width:80%" filter="true"
+                                         filterMatchMode="startsWith">
+                            <f:selectItem itemLabel="Seleccione la institución" itemDisabled="true"/>
+                            <f:selectItems value="#{authenticationBean.loggedUser.institutions}" var="institution"
+                                           itemLabel="#{institution.name}" itemValue="#{institution}"/>
+                            <p:column>
+                                <h:outputText value="#{i.name}"/>
+                            </p:column>
+                            <p:ajax event="itemSelect" listener="#{refsetsBean.reloadRefsetByInstitution}" update="@(.refsetInstitution)" />
+                        </p:selectOneMenu>
+
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                        <p:outputLabel value="RefSet" />
+                    </div>
+
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
+
+                        <p:selectOneMenu id="parentTag" value="#{refsetsBean.refSetSelect}"
+                                         converter="omnifaces.SelectItemsConverter" panelStyle="width:300px;"
+                                         effect="fade" var="r" style="width:80%" filter="true"
+                                         filterMatchMode="startsWith"
+                                         styleClass="refsetInstitution">
+
+                            <f:selectItem itemLabel="Seleccione el refset" itemDisabled="true"/>
+                            <f:selectItems value="#{refsetsBean.refSetListInstitution}" var="refset"
+                                           itemLabel="#{refset.name}" itemValue="#{refset}" itemDisabled="#{!refset.valid}"/>
+                            <p:column>
+                                <h:outputText value="#{r.name}"/>
+                            </p:column>
+
+                        </p:selectOneMenu>
+
+                    </div>
 
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g">
 
-                    <p:selectOneMenu id="parentTag" value="#{refsetsBean.refSetSelect}"
-                                     converter="omnifaces.SelectItemsConverter" panelStyle="width:300px;"
-                                     effect="fade" var="r" style="width:80%" filter="true"
-                                     filterMatchMode="startsWith"
-                    styleClass="refsetInstitution">
-
-                        <f:selectItem itemLabel="Seleccione el refset" itemDisabled="true"/>
-                        <f:selectItems value="#{refsetsBean.refSetListInstitution}" var="refset"
-                                       itemLabel="#{refset.name}" itemValue="#{refset}" itemDisabled="#{!refset.valid}"/>
-                        <p:column>
-                            <h:outputText value="#{r.name}"/>
-                        </p:column>
-
-                    </p:selectOneMenu>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+                        <p:commandButton value="Agregar al RefSet" style="width: auto; float: right"
+                                         actionListener="#{refsetsBean.addConcept(refsetsBean.refSetSelect,conceptBean.concept)}"
+                                         update="@(.refsetClass)"/>
+                    </div>
 
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-3">
-                    <p:commandButton value="Agregar al RefSet"
-                                     actionListener="#{refsetsBean.addConcept(refsetsBean.refSetSelect,conceptBean.concept)}"
-                                     update="@(.refsetClass)"/>
-                </div>
+
             </div>
-        </p:panel>
-
-        <f:facet name="#{(not conceptBean.editable)? 'footer':null}">
-            <p:outputPanel rendered="#{empty refsetsBean.conceptRefSetList}">
-                <i class="fa fa-info-circle fa-lg" style="padding-right:10px" />
-                <h:outputText value="El concepto no tiene Refsets asociados" />
-            </p:outputPanel>
-        </f:facet>
+        </p:outputPanel>
 
         <p:dataTable var="refset" value="#{refsetsBean.conceptRefSetList}"
-                     rendered="#{cc.attrs.editable or not empty refsetsBean.conceptRefSetList}">
+                     rendered="#{true}">
             <p:column headerText="ID RefSet">
                 <h:outputText value="#{refset.id}"/>
             </p:column>
@@ -86,13 +99,15 @@
             <p:column headerText="Fecha ingreso">
                 <h:outputText value="#{refsetsBean.refsetHistoryConcept.get(refset.id).getActionDateFormat()}"/>
             </p:column>
-            <p:column rendered="#{conceptBean.editable}">
-                <p:commandButton title="Eliminar RefSet" icon="fa fa-trash"
-                                 actionListener="#{refsetsBean.removeConcept(refset,conceptBean.concept)}"
-                                 update="@(.refsetClass)">
-                    <p:confirm header="Confirmación"
-                               message="¿Está seguro de eliminar este concepto del RefSet?"></p:confirm>
-                </p:commandButton>
+            <p:column>
+                <div style="text-align: center">
+                    <p:commandButton title="Eliminar RefSet" icon="fa fa-trash"
+                                     actionListener="#{refsetsBean.removeConcept(refset,conceptBean.concept)}"
+                                     update="@(.refsetClass)">
+                        <p:confirm header="Confirmación"
+                                   message="¿Está seguro de eliminar este concepto del RefSet?"/>
+                    </p:commandButton>
+                </div>
             </p:column>
         </p:dataTable>
 

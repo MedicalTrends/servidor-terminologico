@@ -14,15 +14,18 @@
     <composite:attribute name="relationshipAttributeDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition" />
     <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.helpertables.HelperTable" />
     <composite:attribute name="targets" type="java.util.List"/>
+    <composite:attribute name="rightpanel" type="java.lang.Boolean"/>
 </composite:interface>
 <composite:implementation>
 
 
-    <div class="Container100">
-        <div class="ContainerIndent BoldGray FontBold">
-
+    <div class="ui-g-12 ui-md-12 ui-lg-12}">
+        <span>
             <h:outputText value="#{cc.attrs.relationshipAttributeDefinition.name}" />
+        </span>
+    </div>
 
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
             <p:selectOneMenu id="findHTRecords1" scrollHeight="200"
                              forceSelection="true"
                              autoWidth="false"
@@ -75,7 +78,6 @@
             </p:outputPanel>
 
         </div>
-    </div>
 
 </composite:implementation>
 </html>

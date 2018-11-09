@@ -24,20 +24,18 @@
 
         <div class="ui-fluid">
 
-            <div class="Container">
+            <div class="ui-g">
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
+
                         <p:outputLabel for="findHTRecords1" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                         <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
-                    </div>
+
                 </div>
 
-                <div class="Container30 White Responsive">
+                <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
-
-                        <p:outputPanel styleClass="search" rendered="#{cc.attrs.concept.editable}">
+                        <p:outputPanel styleClass="search">
 
                             <p:selectOneMenu id="findHTRecords1" scrollHeight="200"
                                              forceSelection="true"
@@ -74,10 +72,7 @@
                             </p:selectOneMenu>
 
                         </p:outputPanel>
-                        <p:outputPanel styleClass="search" rendered="#{not cc.attrs.concept.editable}">
-                            <p:inputText disabled="true" id="findHTRecords" value="#{relationship.target.fields['description']}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
-                        </p:outputPanel>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -95,24 +90,20 @@
 
             <div class="ui-fluid">
 
-                <div class="Container ContainerIndent">
+                <div class="ui-g">
 
-                    <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
 
                             <p:outputLabel for="findHTRecords2" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
                             <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
 
-                        </div>
                     </div>
 
-                    <div class="Container30 White Responsive">
-
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                             <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
-                                <p:inputTextarea disabled="true" id="findHTRecords2_" value="#{relationship.target.cells[1].stringValue}" rendered="#{cc.attrs.relationshipDefinition.ATC}"  />
+                                <p:inputText readonly="true" id="findHTRecords2" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
+                                <p:inputTextarea readonly="true" id="findHTRecords2_" value="#{relationship.target.cells[1].stringValue}" rendered="#{cc.attrs.relationshipDefinition.ATC}"  />
                                 <p:commandLink process="@this"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
@@ -120,34 +111,28 @@
                                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?" icon="ui-icon-alert"/>
                                 </p:commandLink>
                             </p:outputPanel>
-                        </div>
+
                     </div>
 
                     <ui:repeat value="#{relationship.relationshipDefinition.targetDefinition.columns}"
                                var="column"
                                varStatus="var">
 
-                        <div class="Container20 White Responsive">
-                            <div class="ContainerIndent">
+                        <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                                <p:outputLabel value="#{column.description}" />
+                            <p:outputLabel value="#{column.description}" />
 
-                            </div>
                         </div>
 
-                        <div class="Container30 White Responsive">
+                        <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                            <div class="ContainerIndent">
+                            <ui:repeat value="#{relationship.target.getCellsByColumn(column)}"
+                                       var="cell"
+                                       varStatus="var">
 
-                                <ui:repeat value="#{relationship.target.getCellsByColumn(column)}"
-                                           var="cell"
-                                           varStatus="var">
+                                <p:inputText readonly="true" value="#{cell}" />
 
-                                    <p:outputLabel value="#{cell}" />
-
-                                </ui:repeat>
-
-                            </div>
+                            </ui:repeat>
 
                         </div>
 

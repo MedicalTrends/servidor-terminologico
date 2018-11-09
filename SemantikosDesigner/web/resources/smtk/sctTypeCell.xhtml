@@ -14,6 +14,7 @@
     <composite:attribute name="concept" type="cl.minsal.semantikos.model.ConceptSMTK" />
 </composite:interface>
 <composite:implementation>
+
     <p:repeat
             offset="0"
             size="#{cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size()}"

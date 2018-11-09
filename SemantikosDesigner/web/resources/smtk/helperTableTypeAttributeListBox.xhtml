@@ -20,13 +20,17 @@
 <composite:implementation>
 
 
-    <div class="Container20 White Responsive">
+    <div class="ui-g-12 ui-md-4 ui-lg-2">
+        <p:outputLabel value="#{cc.attrs.relationshipAttributeDefinition.name}"/>
+    </div>
 
-        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
             <p:outputPanel id="helperTableTypeAttributeNew"
                            rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes }"
                            styleClass="search">
+
+                <p:focus context="helperTableTypeAttributeNew" rendered="#{cc.attrs.relationship != null}" />
 
                 <p:selectOneMenu id="helperTableTypeAttributeSimple" scrollHeight="200"
                                  forceSelection="true"
@@ -37,7 +41,7 @@
                                  filter="true"
                                  converter="omnifaces.SelectItemsConverter">
 
-                    <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
+                    <f:selectItem itemLabel="Seleccionar..."  noSelectionOption="true" itemDisabled="true"/>
                     <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition,cc.attrs.relationshipAttributeDefinition)}"
                                    var="record"
                                    itemLabel="#{record.description}"
@@ -73,7 +77,7 @@
 
                     <p:outputPanel styleClass="search">
 
-                        <p:inputText disabled="true" id="helperTableRecord" value="#{relationshipAttribute.target.description}" />
+                        <p:inputText readonly="true" id="helperTableRecord" value="#{relationshipAttribute.target.description}" />
                         <p:commandLink process="@this"
                                        update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                        action="#{conceptBean.removeRelationshipAttribute(cc.attrs.relationship,relationshipAttribute)}">
@@ -99,7 +103,7 @@
                                  filter="true"
                                  converter="omnifaces.SelectItemsConverter">
 
-                    <f:selectItem itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}..." value="#{null}" itemValue="#{ null }"  noSelectionOption="true" itemDisabled="true"/>
+                    <f:selectItem itemLabel="Seleccionar..." value="#{null}" itemValue="#{ null }"  noSelectionOption="true" itemDisabled="true"/>
                     <f:selectItems value="#{helperTableBean.getValidTableRows(cc.attrs.targetDefinition,cc.attrs.relationshipAttributeDefinition)}"
                                    var="record"
                                    itemLabel="#{record.description}"
@@ -120,8 +124,6 @@
                 </p:selectOneMenu>
 
             </p:outputPanel>
-
-        </div>
 
     </div>
 
