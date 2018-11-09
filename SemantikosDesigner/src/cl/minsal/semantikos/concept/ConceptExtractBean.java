@@ -334,6 +334,6 @@ public class ConceptExtractBean implements Serializable {
 
     public void refreshPage() throws IOException {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-        eContext.redirect(eContext.getRequestContextPath() + "/views/concept/extractor.xhtml");
+        eContext.redirect(eContext.getRequestContextPath() + "/views/concepts/extractor.xhtml");
     }
 }

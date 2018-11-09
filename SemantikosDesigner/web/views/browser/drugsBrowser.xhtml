@@ -10,110 +10,116 @@
 
     <ui:define name="content">
 
-        <div class="ui-g dashboard">
-            <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <h:form id="browserForm">
 
-                <h:form id="browserForm">
+            <p:breadCrumb>
+                <p:menuitem value="Inicio" url="/views/home.xhtml" />
+                <p:menuitem value="Fármacos" url="#" />
+            </p:breadCrumb>
 
-                    <p:breadCrumb>
-                        <p:menuitem value="Inicio" url="/views/home.xhtml" />
-                        <p:menuitem value="Fármacos" url="#" />
-                    </p:breadCrumb>
+            <div class="card card-w-title">
 
-                    <p:panel id="filters" styleClass="filtros drugsFinder">
+            <h1 class="first-heading">
+                Fármacos
+            </h1>
 
-                        <div class="ui-fluid">
+            <p:separator styleClass="heading-separator" style="margin-bottom: 0px"/>
 
-                            <div class="ui-g">
+            <p:outputPanel id="filters" styleClass="filtros drugsFinder">
 
-                                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                <div class="ui-fluid">
 
-                                    <p:outputLabel value="Patrón" />
+                    <div class="ui-g">
 
-                                </div>
+                        <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                                <div class="ui-g-12 ui-md-8 ui-lg-10">
-
-                                    <p:outputPanel rendered="#{drugsBrowserBean.conceptSelected eq null}" styleClass="search">
-                                        <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
-                                                        placeholder="Buscar fármaco..."
-                                                        forceSelection="true"
-                                                        id="findConceptSMTK" scrollHeight="200" size="5"
-                                                        completeMethod="#{drugsBrowserBean.getConceptSearchInput}"
-                                                        converter="conceptConverter"
-                                                        var="concept"
-                                                        value="#{drugsBrowserBean.conceptSelected}"
-                                                        itemLabel="#{concept.descriptionFavorite.term}"
-                                                        itemValue="#{concept}">
-
-                                            <p:column>
-                                                <h:outputText value="#{concept.descriptionFavorite.id}"/>
-                                            </p:column>
-
-                                            <p:column>
-                                                <h:outputText value="#{concept.descriptionFavorite.term}"/>
-                                            </p:column>
-
-                                            <p:column>
-                                                <h:outputText value="#{concept.category.name}"/>
-                                            </p:column>
-
-                                            <p:ajax event="itemSelect" async="false" listener="#{drugsBrowserBean.setConceptSelected(concept)}"
-                                                    update=":browserForm,@(.drugsFinder)" process="@this" oncomplete="indentTreeElements();" />
-
-                                        </p:autoComplete>
-                                        <i class="fa fa-search fa-lg"  />
-                                    </p:outputPanel>
-
-                                    <p:outputPanel rendered="#{drugsBrowserBean.conceptSelected != null}" styleClass="search">
-                                        <p:inputText disabled="true" id="itemSelected" value="#{drugsBrowserBean.conceptSelected.descriptionFavorite}" />
-                                        <p:commandLink
-                                                process="@this"
-                                                update="@(.drugsFinder)"
-                                                action="#{drugsBrowserBean.resetConceptSelected}">
-                                            <i class="fa fa-close fa-lg"  />
-                                        </p:commandLink>
-                                    </p:outputPanel>
-
-                                </div>
-
-                            </div>
+                            <p:outputLabel value="Patrón" />
 
                         </div>
 
-                    </p:panel>
+                        <div class="ui-g-12 ui-md-8 ui-lg-10">
 
-                    <p:treeTable id="treeDocs" value="#{drugsBrowserBean.root}" var="concept" paginator="false" rows="10">
+                            <p:outputPanel rendered="#{drugsBrowserBean.conceptSelected eq null}" styleClass="search">
+                                <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
+                                                placeholder="Buscar fármaco..."
+                                                forceSelection="true"
+                                                id="findConceptSMTK" scrollHeight="200" size="5"
+                                                completeMethod="#{drugsBrowserBean.getConceptSearchInput}"
+                                                converter="conceptConverter"
+                                                var="concept"
+                                                value="#{drugsBrowserBean.conceptSelected}"
+                                                itemLabel="#{concept.descriptionFavorite.term}"
+                                                itemValue="#{concept}">
 
-                        <p:ajax event="expand" oncomplete="indentTreeElements();" />
+                                    <p:column>
+                                        <h:outputText value="#{concept.descriptionFavorite.id}"/>
+                                    </p:column>
 
-                        <p:column headerText="Término"
-                                  styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''} nodes"
-                                  style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px">
-                            <p:link outcome="/views/concepts/conceptView" value="#{concept.descriptionFavorite.term} ">
-                                <f:param name="conceptID" value="#{concept.conceptID}" />
-                            </p:link>
-                            <br/>
-                            <h:outputText value="#{concept.conceptID}" style="font-size: small; color: #006621" styleClass="more-info" />
-                            <br/>
-                            <h:outputText value="#{concept.category.name}" style="font-size: small; color:#545454;" styleClass="more-info" />
-                        </p:column>
+                                    <p:column>
+                                        <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                    </p:column>
 
-                        <p:column headerText="ConceptID" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}"
-                                  style="width: 90%; float: left; ; border: 0px; padding: 0px 10px;" rendered="false">
-                            <h:outputText value="#{concept.conceptID}" style="font-size: small; color: #006621" />
-                        </p:column>
+                                    <p:column>
+                                        <h:outputText value="#{concept.category.name}"/>
+                                    </p:column>
 
-                        <p:column headerText="Categoría" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}"
-                                  style="width: 90%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 12px" rendered="false">
-                            <h:outputText value="#{concept.category.name}" style="font-size: small; color:#545454;" />
-                        </p:column>
+                                    <p:ajax event="itemSelect" async="false" listener="#{drugsBrowserBean.setConceptSelected(concept)}"
+                                            update=":browserForm,@(.drugsFinder)" process="@this" oncomplete="indentTreeElements();" />
 
-                    </p:treeTable>
-                </h:form>
+                                </p:autoComplete>
+                                <i class="fa fa-search fa-lg"  />
+                            </p:outputPanel>
+
+                            <p:outputPanel rendered="#{drugsBrowserBean.conceptSelected != null}" styleClass="search">
+                                <p:inputText disabled="true" id="itemSelected" value="#{drugsBrowserBean.conceptSelected.descriptionFavorite}" />
+                                <p:commandLink
+                                        process="@this"
+                                        update="@(.drugsFinder)"
+                                        action="#{drugsBrowserBean.resetConceptSelected}">
+                                    <i class="fa fa-close fa-lg"  />
+                                </p:commandLink>
+                            </p:outputPanel>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </p:outputPanel>
 
             </div>
-        </div>
+
+            <p:treeTable id="treeDocs" value="#{drugsBrowserBean.root}" var="concept" paginator="false" rows="10"
+                         styleClass="drugsTable">
+
+                <p:ajax event="expand" oncomplete="indentTreeElements();" />
+
+                <p:column headerText="Término"
+                          styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''} nodes"
+                          style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px">
+                    <p:link outcome="/views/concepts/conceptView" value="#{concept.descriptionFavorite.term} ">
+                        <f:param name="conceptID" value="#{concept.conceptID}" />
+                    </p:link>
+                    <br/>
+                    <h:outputText value="#{concept.conceptID}" style="font-size: small; color: #006621" styleClass="more-info" />
+                    <br/>
+                    <h:outputText value="#{concept.category.name}" style="font-size: small; color:#545454;" styleClass="more-info" />
+                </p:column>
+
+                <p:column headerText="ConceptID" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}"
+                          style="width: 90%; float: left; ; border: 0px; padding: 0px 10px;" rendered="false">
+                    <h:outputText value="#{concept.conceptID}" style="font-size: small; color: #006621" />
+                </p:column>
+
+                <p:column headerText="Categoría" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}"
+                          style="width: 90%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 12px" rendered="false">
+                    <h:outputText value="#{concept.category.name}" style="font-size: small; color:#545454;" />
+                </p:column>
+
+            </p:treeTable>
+        </h:form>
+
 
         <script type="text/javascript">
 

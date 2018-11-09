@@ -115,8 +115,8 @@
     </url-mapping>
 
     <url-mapping id="concepts-extract">
-        <pattern value="/views/extract" />
-        <view-id value="/views/concept/extractor.xhtml" />
+        <pattern value="/views/extraction" />
+        <view-id value="/views/concepts/extractor.xhtml" />
     </url-mapping>
 
 </pretty-config>

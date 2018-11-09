@@ -26,55 +26,26 @@
                         <p:menuitem value="#{generalBrowserBean.category.name}" url="#" styleClass="loader-trigger" />
                     </p:breadCrumb>
 
-                    <p:panel id="filters" styleClass="filtros browserFilters">
+                    <div class="card card-w-title">
+                        <h1 class="first-heading" style="font-weight: 400; color: #212121;">#{generalBrowserBean.category.name}</h1>
+                        <p:separator styleClass="heading-separator-alt"/>
 
-                        <div class="ui-fluid">
-
-                            <div class="ui-g">
-
-                                <div class="ui-g-12 ui-md-12 ui-lg-12">
-                                    <h1 class="first-heading" style="font-weight: 400; color: #212121; float: left">#{generalBrowserBean.category.name}</h1>
-                                    <p:commandButton icon="fa fa-plus" style="float: right;"
-                                                     type="submit" process="browserForm" styleClass="loader-trigger"
-                                                     actionListener="#{generalBrowserBean.createConcept}"
-                                                     rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">
-                                    </p:commandButton>
-                                    <p:commandButton icon="fa fa-filter" styleClass="filter-btn" id="filter-btn"
-                                                     onclick="listenOnClick();" style="float: right;">
-                                    </p:commandButton>
-                                    <p:commandButton ajax="false" icon="fa fa-file-excel-o" style="float: right;">
-                                        <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
-                                    </p:commandButton>
-                                </div>
-
-                                <div class="ui-g-12 ui-md-12 ui-lg-12" style="display: none">
-                                    <p:separator styleClass="heading-separator"/>
-                                </div>
-
-                                <div class="ui-g-12 ui-md-12 ui-lg-12">
-
-                                    <p:outputPanel styleClass="search" style="width: 100%">
-
-                                        <p:inputText value="#{generalBrowserBean.generalQuery.query}" placeholder="Buscar..." style="width: 100%"
-                                                     onkeyup="return (this.value.length >= 3 || this.value.length ==0)">
-                                            <p:ajax event="keyup" delay="100" update="@(.browserTable)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" />
-                                        </p:inputText>
-
-                                        <p:outputPanel rendered="#{generalBrowserBean.generalQuery.query.isEmpty()}">
-                                            <i class="fa fa-search fa-lg" />
-                                        </p:outputPanel>
-
-                                    </p:outputPanel>
-
-                                </div>
-
+                        <div class="ui-fluid ui-g">
+                            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                <p:commandButton icon="fa fa-plus" style="float: right;"
+                                                 type="submit" process="browserForm" styleClass="loader-trigger"
+                                                 actionListener="#{generalBrowserBean.createConcept}"
+                                                 rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">
+                                </p:commandButton>
+                                <p:commandButton icon="fa fa-filter" styleClass="filter-btn" id="filter-btn"
+                                                 onclick="listenOnClick();" style="float: right;">
+                                </p:commandButton>
+                                <p:commandButton ajax="false" icon="fa fa-file-excel-o" style="float: right;">
+                                    <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
+                                </p:commandButton>
                             </div>
-
                         </div>
-
-                    </p:panel>
-
-                    <br/>
+                    </div>
 
                     <p:outputPanel id="conceptPanel" styleClass="conceptPanel">
 

@@ -15,7 +15,6 @@
 
     </ui:define>
 
-
     <ui:define name="content">
 
         <h:form id="extractorForm">
@@ -32,27 +31,31 @@
                 <div class="ui-g">
 
                     <div class="ui-g-12 ui-md-6 ui-lg-6">
+
                         <div class="card card-w-title">
-                        <h2 class="CardTopic"><i class="icon-timelapse Fs20 Fleft MarRight10" /> SELECCIÓN CATEGORÍAS</h2>
 
-                        <div class="SeparatorFull"></div>
+                        <h1 class="first-heading">
+                            Extracción Fármacos
+                        </h1>
 
-                            <p:selectManyCheckbox id="categories"
-                                                  converter="omnifaces.SelectItemsConverter"
-                                                  value="#{conceptExtractBean.selectedCategories}"
-                                                  layout="responsive"
-                                                  columns="1">
+                        <p:separator styleClass="heading-separator" style="margin-bottom: 0px"/>
 
-                                <f:selectItems value="#{conceptExtractBean.categoryList}" var="category"
-                                               itemLabel="#{category.name}" itemValue="#{category}"/>
+                        <p:selectManyCheckbox id="categories"
+                                              converter="omnifaces.SelectItemsConverter"
+                                              value="#{conceptExtractBean.selectedCategories}"
+                                              layout="responsive"
+                                              columns="1">
 
-                                <p:ajax event="change" update="process-actions"  />
+                            <f:selectItems value="#{conceptExtractBean.categoryList}" var="category"
+                                           itemLabel="#{category.name}" itemValue="#{category}"/>
 
-                            </p:selectManyCheckbox>
+                            <p:ajax event="change" update="process-actions"  />
 
-                        <div class="SeparatorFull"></div>
+                        </p:selectManyCheckbox>
 
-                            <div class="ui-g">
+                        <div class="ui-g">
+
+                            <div class="ui-g-12 ui-md-12 ui-lg-12">
 
                                 <p:outputPanel id="process-actions" style="width: 100%">
 
@@ -71,15 +74,23 @@
 
                             </div>
 
-                            <p:poll interval="1" update="process-state, process-actions" widgetVar="poll" autoStart="false" async="true"
-                                    process="@this" stop="#{conceptExtractBean.finished()}" />
+                        </div>
+
+                        <p:poll interval="1" update="process-state, process-actions" widgetVar="poll" autoStart="false" async="true"
+                                process="@this" stop="#{conceptExtractBean.finished()}" />
 
                         </div>
                     </div>
 
                     <div class="ui-g-12 ui-md-6 ui-lg-6">
                         <div class="card card-w-title">
-                            <h2 class="CardTopic"><i class="icon-timelapse Fs20 Fleft MarRight10"/> PROGRESO EXTRACCIÓN</h2>
+
+                            <h1 class="first-heading">
+                                Estado Extracción
+                            </h1>
+
+                            <p:separator styleClass="heading-separator" style="margin-bottom: 0px"/>
+
                             <p:outputPanel id="process-state">
                                 <ce:forEach items="#{conceptExtractBean.selectedCategories}" var="cat">
                                     <p:dataTable var="concept" id="cat_#{cat.id}" value="#{conceptExtractBean.concepts.get(cat.id)}"
@@ -150,8 +161,8 @@
 
                                     <div class="SeparatorFull"></div>
 
-                                    <div class="Wid100">
-                                        <div id="process-status-div" class="ContainerIndent Fs16 BoldGray">
+                                    <div class="ui-g">
+                                        <div id="process-status-div" class="ui-g-12 ui-md-12 ui-lg-12">
                                             <p:outputPanel rendered="#{ true }">#{cat.name} <span style="float: right">% #{conceptExtractBean.getCurrentProgress(cat.id)}</span></p:outputPanel>
                                             <p:commandButton icon="fa fa-file-excel-o" rendered="#{conceptExtractBean.flags.get(cat.id)}" id="ctg_#{cat.id}"
                                                              styleClass="Fright GreenButton excel" ajax="false" style="display: none">

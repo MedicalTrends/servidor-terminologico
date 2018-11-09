@@ -40,7 +40,24 @@
                                 <div class="ui-g ui-fluid">
 
                                 <div class="ui-g-12">
-                                    <span>Categorías</span>
+                                    <span>Patrón</span>
+                                </div>
+                                <div class="ui-g-12">
+                                    <p:outputPanel styleClass="search2" style="width: 100%">
+
+                                        <p:inputText value="#{generalBrowserBean.generalQuery.query}" placeholder="Buscar..." style="width: 100%"
+                                                     onkeyup="return (this.value.length >= 3 || this.value.length ==0)">
+                                            <p:ajax event="keyup" delay="100" update="@(.browserTable)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" />
+                                        </p:inputText>
+
+                                        <p:outputPanel rendered="false">
+                                            <i class="fa fa-search fa-lg" />
+                                        </p:outputPanel>
+
+                                    </p:outputPanel>
+                                </div>
+                                <div class="ui-g-12">
+                                    <span>Estado</span>
                                 </div>
                                 <div class="ui-g-12">
                                     <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeReviewed}" autoWidth="false" style="width: 100%">

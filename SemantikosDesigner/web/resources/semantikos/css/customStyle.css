@@ -197,6 +197,10 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     display: none;
 }
 
+.drugsTable th.nodes {
+    display: none;
+}
+
 .ui-autocomplete-query {
     background: yellow;
 }
@@ -325,6 +329,13 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     margin-bottom: 1.5em !important;
 }
 
+.heading-separator-alt {
+    border-top: 0px solid rgb(219, 219, 219) !important;
+    border-bottom: 1px solid darkgrey !important;
+    margin: 10px !important;
+    margin-bottom: 0em !important;
+}
+
 .value {
     /*font-style: italic !important;*/
 }
@@ -336,4 +347,8 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 .browser-options .ui-menuitem {
     float: right !important;
+}
+
+.layout-main {
+    max-width: 1200px;
 }

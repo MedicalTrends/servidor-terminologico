@@ -29,18 +29,27 @@
 
                 <p:breadCrumb styleClass="breadUpdate">
                     <p:menuitem value="Inicio" url="/views/home.xhtml" />
-                    <p:menuitem value="Administración de Usuarios" url="/views/users/users.xhtml" />
+                    <p:menuitem value="Usuarios" url="/views/users/users.xhtml" />
                     <p:menuitem value="#{users.selectedUser.email} (#{users.selectedUser.valid?'Vigente':'No Vigente'}) [#{users.selectedUser.locked?'Bloqueado':'Desbloqueado'}]" url="#"
                                 rendered="#{users.selectedUser.persistent}" />
                     <p:menuitem value="Nuevo Usuario" url="#"
                                 rendered="#{not users.selectedUser.persistent}"/>
                 </p:breadCrumb>
 
-                <br/>
-
                 <div class="card card-w-title">
 
-                    <h1><p:outputLabel value="#{users.selectedUser.persistent?users.selectedUser.email:'NUEVO USUARIO'}"/></h1>
+                    <h1 class="first-heading">
+                        <p:outputLabel
+                                value="#{users.selectedUser.persistent?users.selectedUser.name.concat(' ').concat(users.selectedUser.lastName) :'Nuevo Usuario'}"/>
+                        <p:outputLabel rendered="#{users.selectedUser.persistent and users.selectedUser.valid}" style="color: #4CAF50; float: right;">
+                            <i class="ui-icon ui-icon-beenhere" style="font-size: x-large"/>
+                        </p:outputLabel>
+                        <p:outputLabel rendered="#{users.selectedUser.persistent and not users.selectedUser.valid}" style="color: #F44336; float: right;">
+                            <i class="ui-icon ui-icon-block" style="font-size: x-large"/>
+                        </p:outputLabel>
+                    </h1>
+
+                    <p:separator styleClass="heading-separator"/>
 
                     <p:growl id="globalMessage" showDetail="true" showSummary="true" life="10000" autoUpdate="true" />
 
@@ -52,15 +61,17 @@
 
                             <p:outputLabel for="input-user-document-type" value="Tipo documento" styleClass="Wid20" />
 
-                            <p:selectOneRadio id="input-user-document-type" value="#{users.selectedUser.documentRut}" layout="grid" columns="2"
+                            <p:selectOneRadio id="input-user-document-type" value="#{users.selectedUser.documentRut}"
+                                              layout="responsive" columns="2" style="width: 100%"
                                               disabled="#{ not users.selectedUser.valid or users.selectedUser.persistent}">
-                                <f:selectItem itemValue="#{true}" itemLabel="Cédula de identidad" />
+                                <f:selectItem itemValue="#{true}" itemLabel="Cédula identidad" />
                                 <f:selectItem itemValue="#{false}" itemLabel="Pasaporte"/>
                             </p:selectOneRadio>
 
-                            <p:outputPanel />
+                            <p:outputLabel for="input-user-document-type" value="Status" styleClass="Wid20" />
 
-                            <p:outputPanel />
+                            <p:inputText id="input-user-status" value="#{users.selectedUser.locked?'Bloqueado':'Desbloqueado'}" styleClass="#{users.documentNumberError} Wid90"
+                                         readonly="true"/>
 
                             <p:outputLabel for="input-user-rut2" value="N° Documento *" styleClass="#{users.documentNumberError} Wid20 Label" />
 
@@ -111,7 +122,7 @@
 
                 </div>
 
-                <p:tabView>
+                <p:tabView scrollable="true">
 
                     <!-- Otras descripciones -->
                     <p:tab title="Perfiles">
@@ -123,6 +134,7 @@
                             <f:facet name="targetCaption">Asignados</f:facet>
                             <p:ajax event="transfer" listener="#{users.setSelectedUserProfileModel(profile)}" update="pickList1" />
                         </p:pickList>
+                        <br/>
                     </p:tab>
 
                     <!-- Otras descripciones -->
@@ -134,6 +146,7 @@
                             <f:facet name="sourceCaption">Disponibles</f:facet>
                             <f:facet name="targetCaption">Asignados</f:facet>
                         </p:pickList>
+                        <br/>
                     </p:tab>
 
                     <!-- Otras descripciones -->

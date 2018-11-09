@@ -21,7 +21,7 @@
 
                     <p:breadCrumb>
                         <p:menuitem value="Inicio" url="/views/home.xhtml" />
-                        <p:menuitem value="Administración Tablas" url="/views/helpertables/helpertables.xhtml" />
+                        <p:menuitem value="Tablas Auxiliares" url="/views/helpertables/helpertables.xhtml" />
                         <p:menuitem value="#{helperTableEditBean.helperTableSelected.name}" url="#"/>
                     </p:breadCrumb>
 
@@ -34,7 +34,15 @@
 
                     <p:growl id="messages" showDetail="true" autoUpdate="true" escape="false"/>
 
-                    <br/>
+                    <div class="card card-w-title">
+
+                        <h1 class="first-heading">
+                            <p:outputLabel value="#{helperTableEditBean.helperTableSelected.name}"/>
+                        </h1>
+
+                        <p:separator styleClass="heading-separator-alt" style="margin-bottom: 0px"/>
+
+                    </div>
 
                     <p:outputPanel styleClass="edit-data-panel">
 
@@ -185,10 +193,6 @@
                                   height="400" rowKey="#{row.id}" showRowHeaders="true"
                                   resizableCols="true" resizableRows="false"
                                   sortBy="#{row.id}" sortOrder="ascending">
-
-                            <f:facet name="header">
-                                <h:outputText value="#{helperTableEditBean.helperTableSelected.description}" style="color: white" />
-                            </f:facet>
 
                             <f:facet name="footer">
                                 <h:outputText id="footer" value="#{helperTableEditBean.helperTableSelected.rows.size()} Records" style="color: white" />

@@ -362,7 +362,7 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
      * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de las
      * tablas auxiliares de los conceptos filtrados
      */
-    public Long[] getSecondOrderHelperTableValues(){
+    public Long[] getSecondOrderHelperTableValues() {
 
         List<Long> helperTableValues = new ArrayList<>();
 
@@ -416,7 +416,7 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
      * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de las
      * tablas auxiliares de los conceptos filtrados
      */
-    public Long[] getAttributeHelperTableValues(){
+    public Long[] getAttributeHelperTableValues() {
 
         List<Long> helperTableValues = new ArrayList<>();
 
@@ -443,7 +443,7 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
      * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de los
      * registros de tablas auxiliares filtrados
      */
-    public Long[] getAttributeHelperTableRecordValues(){
+    public Long[] getAttributeHelperTableRecordValues() {
 
         List<Long> helperTableRecordValues = new ArrayList<>();
 
@@ -470,7 +470,7 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
      * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids tipos
      * básicos filtrados en el objeto de consulta del navegador de categorías
      */
-    public Long[] getBasicTypeDefinitionValues(){
+    public Long[] getBasicTypeDefinitionValues() {
 
         List<Long> basicTypeDefinitionValues = new ArrayList<>();
 
@@ -493,7 +493,7 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
      * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de los
      * tipos básicos filtrados
      */
-    public String[] getBasicTypeValues(){
+    public String[] getBasicTypeValues() {
 
         List<String> basicTypeValues = new ArrayList<>();
 

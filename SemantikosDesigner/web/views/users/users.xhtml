@@ -19,15 +19,22 @@
 
                     <p:growl id="globalMessage" showDetail="true" autoUpdate="true" showSummary="true"/>
 
-                    <div class="ui-fluid">
+                    <div class="card card-w-title">
 
-                        <div class="ui-g">
+                        <h1 class="first-heading">
+                            Usuarios
+                        </h1>
+
+                        <p:separator styleClass="heading-separator-alt" style="margin-bottom: 0px"/>
+
+                        <div class="ui-fluid ui-g">
 
                             <div class="ui-g-12 ui-md-12 ui-lg-12">
 
                                 <p:commandButton actionListener="#{usersBrowser.newUser()}" icon="fa fa-plus" type="submit" process="form"
-                                                 value="Crear Nuevo" style="width: auto; float: right">
+                                                 style="float: right">
                                 </p:commandButton>
+
                             </div>
 
                         </div>

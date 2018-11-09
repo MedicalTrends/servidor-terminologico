@@ -23,18 +23,24 @@
 
                     <p:breadCrumb styleClass="breadUpdate">
                         <p:menuitem value="Inicio" url="/views/home.xhtml" />
-                        <p:menuitem value="Administración de Establecimientos" url="/views/institutions/institutions.xhtml" />
-                        <p:menuitem value="#{institutions.selectedInstitution.name} (#{institutions.selectedInstitution.validityUntil==null?'Vigente':'No Vigente'})" url="#"
-                                    rendered="#{institutions.selectedInstitution.persistent}" />
-                        <p:menuitem value="Nuevo Establecimiento" url="#"
-                                    rendered="#{not institutions.selectedInstitution.persistent}"/>
+                        <p:menuitem value="Establecimientos" url="/views/institutions/institutions.xhtml" />
+                        <p:menuitem value="#{institutions.selectedInstitution.name}" url="#" rendered="#{institutions.selectedInstitution.persistent}" />
+                        <p:menuitem value="Nuevo Establecimiento" url="#" rendered="#{not institutions.selectedInstitution.persistent}"/>
                     </p:breadCrumb>
-
-                    <br/>
 
                     <div class="card card-w-title">
 
-                        <h1>DATOS DEL ESTABLECIMIENTO</h1>
+                        <h1 class="first-heading">
+                            <p:outputLabel value="#{institutions.selectedInstitution.persistent?institutions.selectedInstitution.name :'Nuevo Establecimiento'}"/>
+                            <p:outputLabel rendered="#{institutions.selectedInstitution.persistent and institutions.selectedInstitution.validityUntil==null}" style="color: #4CAF50; float: right;">
+                                <i class="ui-icon ui-icon-beenhere" style="font-size: x-large"/>
+                            </p:outputLabel>
+                            <p:outputLabel rendered="#{institutions.selectedInstitution.persistent and institutions.selectedInstitution.validityUntil!=null}" style="color: #F44336; float: right;">
+                                <i class="ui-icon ui-icon-block" style="font-size: x-large"/>
+                            </p:outputLabel>
+                        </h1>
+
+                        <p:separator styleClass="heading-separator"/>
 
                         <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank">
 
@@ -57,40 +63,46 @@
 
                         <p:spacer/>
 
+                    </div>
+
+                    <div>
+
                         <p:tabView>
 
                             <p:tab title="Historial">
 
                                 <p:dataTable  rowIndexVar="rowIndex" id="historyDateTable" var="history"
-                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                                  value="#{institutions.auditAction}" paginator="true" rows="5">
+                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                              value="#{institutions.auditAction}" paginator="true" rows="5">
 
-                                        <f:facet name="{Exporters}">
-                                            <p:commandButton icon="fa fa-file-excel-o" styleClass="ui-priority-primary" ajax="false" value="Exportar">
-                                                <p:dataExporter type="xls" target="historyDateTable" fileName="history" />
-                                            </p:commandButton>
-                                        </f:facet>
+                                    <f:facet name="{Exporters}">
+                                        <p:commandButton icon="fa fa-file-excel-o" styleClass="ui-priority-primary" ajax="false" value="Exportar">
+                                            <p:dataExporter type="xls" target="historyDateTable" fileName="history" />
+                                        </p:commandButton>
+                                    </f:facet>
 
-                                        <p:column headerText="Fecha">
-                                            <h:outputText value="#{history.actionDateFormat}"/>
-                                        </p:column>
-                                        <p:column headerText="Tipo de cambio">
-                                            <h:outputText value="#{history.auditActionType.name}"/>
-                                        </p:column>
-                                        <p:column headerText="Detalle">
-                                            <h:outputText value="#{history.detailAuditAction()}"/>
-                                        </p:column>
-                                        <p:column headerText="Usuario">
-                                            <h:outputText value="#{history.user.email}"/>
-                                        </p:column>
+                                    <p:column headerText="Fecha">
+                                        <h:outputText value="#{history.actionDateFormat}"/>
+                                    </p:column>
+                                    <p:column headerText="Tipo de cambio">
+                                        <h:outputText value="#{history.auditActionType.name}"/>
+                                    </p:column>
+                                    <p:column headerText="Detalle">
+                                        <h:outputText value="#{history.detailAuditAction()}"/>
+                                    </p:column>
+                                    <p:column headerText="Usuario">
+                                        <h:outputText value="#{history.user.email}"/>
+                                    </p:column>
 
-                                    </p:dataTable>
+                                </p:dataTable>
 
                             </p:tab>
 
                         </p:tabView>
 
                     </div>
+
+                    <br/>
 
                     <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{institutions.saveInstitution}" style="width: auto; float: right"
                                      disabled="#{ institutions.selectedInstitution.validityUntil != null }" update="mainForm, @(.breadUpdate)" />

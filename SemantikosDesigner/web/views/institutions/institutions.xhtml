@@ -8,26 +8,29 @@
 
     <ui:define name="content">
 
-        <div class="ui-g dashboard">
-            <div class="ui-g-12 ui-md-12 ui-lg-12">
-
                 <h:form id="form">
 
                     <p:breadCrumb>
                         <p:menuitem value="Inicio" url="/views/home.xhtml" />
-                        <p:menuitem value="Administración Establecimientos" url="#" />
+                        <p:menuitem value="Establecimientos" url="#" />
                     </p:breadCrumb>
 
                     <p:growl id="globalMessage" showDetail="true" autoUpdate="true" showSummary="true"/>
 
-                    <div class="ui-fluid">
+                    <div class="card card-w-title">
 
-                        <div class="ui-g">
+                        <h1 class="first-heading">
+                            Establecimientos
+                        </h1>
+
+                        <p:separator styleClass="heading-separator-alt" style="margin-bottom: 0px"/>
+
+                        <div class="ui-fluid ui-g">
 
                             <div class="ui-g-12 ui-md-12 ui-lg-12">
 
                                 <p:commandButton actionListener="#{institutionsBrowser.newInstitution()}" icon="fa fa-plus" type="submit" process="form"
-                                                 style="width: auto; float: right" value="Crear Nuevo">
+                                                 style="float: right">
                                 </p:commandButton>
 
                             </div>
@@ -105,7 +108,6 @@
                         </p:column>
 
                     </p:dataTable>
-
 
                     <p:dialog height="300" width="500" header="Detalles del Establecimiento" widgetVar="institutionDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="true" responsive="true">
 
@@ -189,8 +191,6 @@
 
                 </h:form>
 
-            </div>
-        </div>
 
     </ui:define>
 

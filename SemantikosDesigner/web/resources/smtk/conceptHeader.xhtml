@@ -50,7 +50,7 @@
             <p:selectOneRadio value="#{conceptBean.fullyDefined}" layout="responsive" columns="2" style="width: 100%"
                               disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept)}">
                 <f:selectItem itemValue="#{false}" itemLabel="Primitivo" />
-                <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>
+                <f:selectItem itemValue="#{true}" itemLabel="Completamente Def."/>
                 <p:ajax event="change" listener="#{conceptBean.changeFullyDefined(conceptBean.concept)}" process="@this" update="@(.conceptHeader)" />
             </p:selectOneRadio>
         </div>

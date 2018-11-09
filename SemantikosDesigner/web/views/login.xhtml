@@ -43,7 +43,7 @@
                 </h:panelGroup>
             </div>
             <div id="div_captcha" class="ui-g-12" style="padding: 0;">
-                <p:captcha id="captcha" label="Captcha" language="es"/>
+                <p:captcha id="captcha" label="Captcha" language="es" rendered="false"/>
             </div>
             <div class="ui-g-12">
                 <p:commandButton update="loginform" value="Ingresar" icon="ui-icon-person" actionListener="#{authenticationBean.login}"

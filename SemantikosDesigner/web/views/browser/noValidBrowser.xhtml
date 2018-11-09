@@ -14,211 +14,212 @@
             <f:event type="preRenderView" listener="#{noValidBrowserBean.executeQuery}" />
         </f:metadata>
 
-        <div class="ui-g dashboard">
-            <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <h:form id="browserForm">
 
-                <h:form id="browserForm">
+            <p:breadCrumb>
+                <p:menuitem value="Inicio" url="/views/home.xhtml"  />
+                <p:menuitem value="No Válidos" url="#" />
+            </p:breadCrumb>
 
-                    <p:breadCrumb>
-                        <p:menuitem value="Inicio" url="/views/home.xhtml"  />
-                        <p:menuitem value="No Válidos" url="#" />
-                    </p:breadCrumb>
+            <div class="card card-w-title">
 
-                    <p:panel id="filters" styleClass="filtros">
+            <h1 class="first-heading">
+                No Válidos
+            </h1>
 
-                        <div class="ui-fluid">
+            <p:separator styleClass="heading-separator" style="margin-bottom: 0px"/>
 
-                            <div class="ui-g">
+            <p:outputPanel id="filters" styleClass="filtros">
 
-                                <div class="ui-g-12 ui-md-8 ui-lg-12">
+                <div class="ui-fluid">
 
-                                    <p:outputPanel styleClass="search">
-                                        <p:inputText value="#{noValidBrowserBean.noValidQuery.query}" placeholder="Buscar..." onkeyup="return (this.value.length >= 3 || this.value.length ==0)">
-                                            <p:ajax event="keyup" delay="500" update="@(.browserTable)" listener="#{noValidBrowserBean.setFilterChanged(true)}" process="@this" />
-                                        </p:inputText>
-                                        <i class="fa fa-search fa-lg" />
-                                    </p:outputPanel>
+                    <div class="ui-g">
 
-                                </div>
+                        <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                            </div>
+                            <p:outputLabel value="Patrón" />
 
                         </div>
 
-                        <p:fieldset legend="Filtros">
+                        <div class="ui-g-12 ui-md-8 ui-lg-10">
 
-                        <div class="ui-fluid">
-
-                            <div class="ui-g">
-
-                                <div class="ui-g-12 ui-md-4 ui-lg-2">
-
-                                    <p:outputLabel value="Tipo Descripción" />
-
-                                </div>
-
-                                <div class="ui-g-12 ui-md-8 ui-lg-4">
-
-                                    <p:selectCheckboxMenu id="descriptionTypes"
-                                                          value="#{noValidBrowserBean.noValidQuery.descriptionTypes}"
-                                                          converter="omnifaces.SelectItemsConverter"
-                                                          label="Seleccione...">
-
-                                        <p:ajax event="change" listener="#{noValidBrowserBean.setFilterChanged(true)}"
-                                                update="@(.browserTable),@(.filterStatus)"
-                                                process="@this" />
-
-                                        <f:selectItems value="#{noValidBrowserBean.descriptionTypes}" var="descriptionType"
-                                                       itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
-
-                                    </p:selectCheckboxMenu>
-
-                                </div>
-
-                                <div class="ui-g-12 ui-md-4 ui-lg-2">
-
-                                    <p:outputLabel value="Razón de No Válido" />
-
-                                </div>
-
-                                <div class="ui-g-12 ui-md-8 ui-lg-4">
-
-                                    <p:selectCheckboxMenu id="observationTypes"
-                                                          value="#{noValidBrowserBean.noValidQuery.observationNoValids}"
-                                                          scrollHeight="200"
-                                                          converter="omnifaces.SelectItemsConverter"
-                                                          label="Seleccione...">
-
-                                        <p:ajax event="change" listener="#{noValidBrowserBean.setFilterChanged(true)}"
-                                                update="@(.browserTable),@(.filterStatus)"
-                                                process="@this" />
-
-                                        <f:selectItems value="#{noValidBrowserBean.observationTypes}" var="observationType"
-                                                       itemLabel="#{observationType.description}" itemValue="#{observationType}"/>
-
-                                    </p:selectCheckboxMenu>
-
-                                </div>
-
-                            </div>
+                            <p:outputPanel styleClass="search">
+                                <p:inputText value="#{noValidBrowserBean.noValidQuery.query}" placeholder="Buscar..." onkeyup="return (this.value.length >= 3 || this.value.length ==0)">
+                                    <p:ajax event="keyup" delay="500" update="@(.browserTable)" listener="#{noValidBrowserBean.setFilterChanged(true)}" process="@this" />
+                                </p:inputText>
+                                <i class="fa fa-search fa-lg" />
+                            </p:outputPanel>
 
                         </div>
 
-                        </p:fieldset>
+                        <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                    </p:panel>
+                            <p:outputLabel value="Tipo Descripción" />
 
-                    <p:dataTable id="noValidTable"
-                                 styleClass="browserTable"
-                                 value="#{noValidBrowserBean.noValidDescriptions}"
-                                 var="noValidDescription"
-                                 rows="30"
-                                 sortBy="#{1}"
-                                 paginator="true" lazy="true" dynamic="true"
-                                 paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                 emptyMessage="No se han encontrado descripciones con los criterios utilizados"
-                                 selection="#{noValidBrowserBean.noValidDescriptionsSelected}">
+                        </div>
 
-                        <p:growl id="growl" showDetail="true" showSummary="true"/>
+                        <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                        <p:ajax event="rowSelect" update="@(.globalActions)" />
-                        <p:ajax event="rowUnselect" update="@(.globalActions)" />
-                        <p:ajax event="rowSelectCheckbox" update="@(.globalActions)" />
-                        <p:ajax event="rowUnselectCheckbox" update="@(.globalActions)" />
-                        <p:ajax event="toggleSelect" update="@(.globalActions)" />
+                            <p:selectCheckboxMenu id="descriptionTypes"
+                                                  value="#{noValidBrowserBean.noValidQuery.descriptionTypes}"
+                                                  converter="omnifaces.SelectItemsConverter"
+                                                  label="Seleccione...">
 
-                        <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+                                <p:ajax event="change" listener="#{noValidBrowserBean.setFilterChanged(true)}"
+                                        update="@(.browserTable),@(.filterStatus)"
+                                        process="@this" />
 
-                        <p:column headerText="ID" sortBy="#{1}">
-                            <h:outputText value="#{noValidDescription.noValidDescription.descriptionId}"/>
-                        </p:column>
+                                <f:selectItems value="#{noValidBrowserBean.descriptionTypes}" var="descriptionType"
+                                               itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
 
-                        <p:column headerText="Término" sortBy="#{2}">
-                            <h:outputText value="#{noValidDescription.noValidDescription.term}"/>
-                        </p:column>
+                            </p:selectCheckboxMenu>
 
-                        <p:column headerText="Tipo" style="width: 10%">
-                            <h:outputText value="#{noValidDescription.noValidDescription.descriptionType.name}"/>
-                        </p:column>
+                        </div>
 
-                        <p:column headerText="Sensibilidad" style="width: 10%">
-                            <h:outputText value="#{noValidDescription.noValidDescription.caseSensitive?'Sensible':'Insensible'}"/>
-                        </p:column>
+                        <div class="ui-g-12 ui-md-4 ui-lg-2">
 
-                        <p:column headerText="Razón de No Válido">
-                            <h:outputText value="#{noValidDescription.observationNoValid.description}"/>
-                        </p:column>
+                            <p:outputLabel value="Razón de No Válido" />
 
-                        <p:column headerText="Conceptos Sugeridos">
-                            <p:commandLink update="@(.suggestedConceptsDetail),@(.browserTable)" oncomplete="PF('carOP').show('#{component.clientId}')" icon="ui-icon-search"
-                                           rendered="#{not empty noValidDescription.suggestedConcepts}">
-                                <h:outputText value="#{noValidDescription.suggestedConcepts.size()}" />
-                                <f:setPropertyActionListener value="#{noValidDescription}" target="#{noValidBrowserBean.noValidDescriptionSelected}" />
-                            </p:commandLink>
-                        </p:column>
+                        </div>
 
-                        <p:column headerText="Usos">
-                            <h:outputText value="#{noValidDescription.noValidDescription.uses}"/>
-                        </p:column>
+                        <div class="ui-g-12 ui-md-8 ui-lg-4">
 
-                        <p:column exportable="false" style="width: 10%; text-align: center">
-                            <f:facet name="header">
-                                <p:outputPanel styleClass="globalActions">
-                                    <p:outputPanel rendered="#{not empty noValidBrowserBean.noValidDescriptionsSelected}">
-                                        <p:commandLink title="Trasladar seleccionados a concepto" update="@(.pending-description)" oncomplete="PF('dialogTDP').show()" style="padding: 5px">
-                                            <i class="fa fa-external-link fa-lg"/>
-                                            <f:setPropertyActionListener value="#{noValidDescription}"
-                                                                         target="#{noValidBrowserBean.noValidDescriptionSelected}"/>
-                                            <f:setPropertyActionListener value=""
-                                                                         target="#{noValidBrowserBean.conceptSelected}"/>
-                                            <f:setPropertyActionListener value=""
-                                                                         target="#{findConceptBean.categorySelected}"/>
-                                        </p:commandLink>
-                                    </p:outputPanel>
-                                    <p:outputPanel rendered="#{ empty noValidBrowserBean.noValidDescriptionsSelected}">
-                                        <h:outputText value="Acciones" />
-                                    </p:outputPanel>
-                                </p:outputPanel>
-                            </f:facet>
-                            <div style="text-align: center;">
+                            <p:selectCheckboxMenu id="observationTypes"
+                                                  value="#{noValidBrowserBean.noValidQuery.observationNoValids}"
+                                                  scrollHeight="200"
+                                                  converter="omnifaces.SelectItemsConverter"
+                                                  label="Seleccione...">
 
-                                <p:commandButton oncomplete="PF('dialogTDP').show()" title="Trasladar a concepto" style="padding: 5px" process="@this"
-                                               update="@(.browserTable),@(.dialogTDP)" rendered="#{profilePermissionsBeans.modeler}"
-                                                icon="fa fa-external-link fa-lg">
-                                    <f:setPropertyActionListener value="#{noValidDescription}" target="#{noValidBrowserBean.noValidDescriptionSelected}"/>
-                                    <f:setPropertyActionListener value="" target="#{noValidBrowserBean.conceptSelected}"/>
-                                    <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
-                                </p:commandButton>
+                                <p:ajax event="change" listener="#{noValidBrowserBean.setFilterChanged(true)}"
+                                        update="@(.browserTable),@(.filterStatus)"
+                                        process="@this" />
 
-                                <p:button outcome="/views/concepts/conceptView" title="Consultar" style="padding: 5px"
-                                            icon="fa fa-eye fa-lg">
-                                    <f:param name="conceptID" value="#{noValidDescription.noValidDescription.conceptSMTK.conceptID}" />
-                                </p:button>
+                                <f:selectItems value="#{noValidBrowserBean.observationTypes}" var="observationType"
+                                               itemLabel="#{observationType.description}" itemValue="#{observationType}"/>
 
-                            </div>
-                        </p:column>
+                            </p:selectCheckboxMenu>
 
-                    </p:dataTable>
+                        </div>
 
-                    <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
-                        <p:outputPanel id="descriptionSelected" styleClass="suggestedConceptsDetail" style="width: 300px;">
-                            <p:dataTable value="#{noValidBrowserBean.noValidDescriptionSelected.suggestedConcepts}" var="concept" width="100%">
-                                <p:column headerText="ConceptID">
-                                    <h:outputText value="#{concept.conceptID}" />
-                                </p:column>
-                                <p:column headerText="Término">
-                                    <h:outputText value="#{concept.descriptionFavorite}" />
-                                </p:column>
-                                <p:column headerText="Consultar">
-                                    <p:link outcome="/views/concepts/conceptView" value="#{concept.descriptionFavorite.term} ">
-                                        <f:param name="conceptID" value="#{concept.conceptID}" />
-                                    </p:link>
-                                </p:column>
-                            </p:dataTable>
+                    </div>
+
+                </div>
+
+            </p:outputPanel>
+
+            </div>
+
+            <p:dataTable id="noValidTable"
+                         styleClass="browserTable"
+                         value="#{noValidBrowserBean.noValidDescriptions}"
+                         var="noValidDescription"
+                         rows="30"
+                         sortBy="#{1}"
+                         paginator="true" lazy="true" dynamic="true"
+                         paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         emptyMessage="No se han encontrado descripciones con los criterios utilizados"
+                         selection="#{noValidBrowserBean.noValidDescriptionsSelected}">
+
+                <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+                <p:ajax event="rowSelect" update="@(.globalActions)" />
+                <p:ajax event="rowUnselect" update="@(.globalActions)" />
+                <p:ajax event="rowSelectCheckbox" update="@(.globalActions)" />
+                <p:ajax event="rowUnselectCheckbox" update="@(.globalActions)" />
+                <p:ajax event="toggleSelect" update="@(.globalActions)" />
+
+                <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+
+                <p:column headerText="ID" sortBy="#{1}">
+                    <h:outputText value="#{noValidDescription.noValidDescription.descriptionId}"/>
+                </p:column>
+
+                <p:column headerText="Término" sortBy="#{2}">
+                    <h:outputText value="#{noValidDescription.noValidDescription.term}"/>
+                </p:column>
+
+                <p:column headerText="Tipo" style="width: 10%">
+                    <h:outputText value="#{noValidDescription.noValidDescription.descriptionType.name}"/>
+                </p:column>
+
+                <p:column headerText="Sensibilidad" style="width: 10%">
+                    <h:outputText value="#{noValidDescription.noValidDescription.caseSensitive?'Sensible':'Insensible'}"/>
+                </p:column>
+
+                <p:column headerText="Razón de No Válido">
+                    <h:outputText value="#{noValidDescription.observationNoValid.description}"/>
+                </p:column>
+
+                <p:column headerText="Conceptos Sugeridos">
+                    <p:commandLink update="@(.suggestedConceptsDetail),@(.browserTable)" oncomplete="PF('carOP').show('#{component.clientId}')" icon="ui-icon-search"
+                                   rendered="#{not empty noValidDescription.suggestedConcepts}">
+                        <h:outputText value="#{noValidDescription.suggestedConcepts.size()}" />
+                        <f:setPropertyActionListener value="#{noValidDescription}" target="#{noValidBrowserBean.noValidDescriptionSelected}" />
+                    </p:commandLink>
+                </p:column>
+
+                <p:column headerText="Usos">
+                    <h:outputText value="#{noValidDescription.noValidDescription.uses}"/>
+                </p:column>
+
+                <p:column exportable="false" style="width: 10%; text-align: center">
+                    <f:facet name="header">
+                        <p:outputPanel styleClass="globalActions">
+                            <p:outputPanel rendered="#{not empty noValidBrowserBean.noValidDescriptionsSelected}">
+                                <p:commandLink title="Trasladar seleccionados a concepto" update="@(.pending-description)" oncomplete="PF('dialogTDP').show()" style="padding: 5px">
+                                    <i class="fa fa-external-link fa-lg"/>
+                                    <f:setPropertyActionListener value="#{noValidDescription}"
+                                                                 target="#{noValidBrowserBean.noValidDescriptionSelected}"/>
+                                    <f:setPropertyActionListener value=""
+                                                                 target="#{noValidBrowserBean.conceptSelected}"/>
+                                    <f:setPropertyActionListener value=""
+                                                                 target="#{findConceptBean.categorySelected}"/>
+                                </p:commandLink>
+                            </p:outputPanel>
+                            <p:outputPanel rendered="#{ empty noValidBrowserBean.noValidDescriptionsSelected}">
+                                <h:outputText value="Acciones" />
+                            </p:outputPanel>
                         </p:outputPanel>
-                    </p:overlayPanel>
+                    </f:facet>
+                    <div style="text-align: center;">
 
-                </h:form>
+                        <p:commandButton oncomplete="PF('dialogTDP').show()" title="Trasladar a concepto" style="padding: 5px" process="@this"
+                                       update="@(.browserTable),@(.dialogTDP)" rendered="#{profilePermissionsBeans.modeler}"
+                                        icon="fa fa-external-link fa-lg">
+                            <f:setPropertyActionListener value="#{noValidDescription}" target="#{noValidBrowserBean.noValidDescriptionSelected}"/>
+                            <f:setPropertyActionListener value="" target="#{noValidBrowserBean.conceptSelected}"/>
+                            <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
+                        </p:commandButton>
+
+                        <p:button outcome="/views/concepts/conceptView" title="Consultar" style="padding: 5px"
+                                    icon="fa fa-eye fa-lg">
+                            <f:param name="conceptID" value="#{noValidDescription.noValidDescription.conceptSMTK.conceptID}" />
+                        </p:button>
+
+                    </div>
+                </p:column>
+
+            </p:dataTable>
+
+            <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
+                <p:outputPanel id="descriptionSelected" styleClass="suggestedConceptsDetail" style="width: 300px;">
+                    <p:dataTable value="#{noValidBrowserBean.noValidDescriptionSelected.suggestedConcepts}" var="concept" width="100%">
+                        <p:column headerText="ConceptID">
+                            <h:outputText value="#{concept.conceptID}" />
+                        </p:column>
+                        <p:column headerText="Término">
+                            <h:outputText value="#{concept.descriptionFavorite}" />
+                        </p:column>
+                        <p:column headerText="Consultar">
+                            <p:link outcome="/views/concepts/conceptView" value="#{concept.descriptionFavorite.term} ">
+                                <f:param name="conceptID" value="#{concept.conceptID}" />
+                            </p:link>
+                        </p:column>
+                    </p:dataTable>
+                </p:outputPanel>
+            </p:overlayPanel>
+
+        </h:form>
 
                 <!-- Trasladar descripciones a conceptos -->
                 <p:dialog id="dialogTDP" header="Trasladar descripcion" widgetVar="dialogTDP" global="true" styleClass="dialogTDP"
@@ -325,8 +326,6 @@
                     </h:form>
                 </p:dialog>
 
-            </div>
-        </div>
 
     </ui:define>
 
