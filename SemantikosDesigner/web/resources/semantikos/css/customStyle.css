@@ -201,6 +201,14 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     display: none;
 }
 
+.categoriesTable #treeDocs_head {
+    display: none;
+}
+
+.categoriesTable tr {
+    height: 70px;
+}
+
 .ui-autocomplete-query {
     background: yellow;
 }

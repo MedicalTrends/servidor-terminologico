@@ -88,6 +88,8 @@
                 $.Toast.hideToast();
             });
 
+            $('body').on('mousedown', '.ui-autocomplete-panel', function(event) { event.stopImmediatePropagation();});
+
             /*
             if (navigator.userAgent.search("Chrome")) {
                 $('.logo').css('image-rendering', '-webkit-optimize-contrast');

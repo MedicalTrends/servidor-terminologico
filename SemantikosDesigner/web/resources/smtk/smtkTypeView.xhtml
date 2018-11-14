@@ -25,7 +25,6 @@
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
                      id="tableRelationship3"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
-                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
                      style="margin: 0px;" reflow="true"
                      value="#{conceptView.selectedConcept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      var="rel">

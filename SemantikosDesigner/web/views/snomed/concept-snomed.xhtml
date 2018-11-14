@@ -10,6 +10,7 @@
 
         <f:metadata>
             <f:viewParam name="conceptID" value="#{conceptSCT.conceptID}" />
+            <f:viewParam name="conceptSMTKID" value="#{conceptSCT.conceptSMTKID}" />
         </f:metadata>
 
         <div class="ui-g">
@@ -21,7 +22,6 @@
                 <p:breadCrumb id="top-menu">
                     <p:menuitem value="Inicio" url="/views/home.xhtml" />
                     <p:menuitem value="Snomed" url="/views/concepts-snomed.xhtml" />
-                    <p:menuitem value="Conceptos" url="/views/concepts-snomed.xhtml" />
                     <p:menuitem value="#{conceptSCT.selectedConcept.id}" url="#" />
                 </p:breadCrumb>
 
@@ -76,12 +76,12 @@
 
                         <p:repeat value="#{conceptSCT.selectedConcept.getRelationships()}" var="relationship">
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <p:link value="#{relationship.typeConcept.getRepresentation()}" outcome="/views/concept-snomed">
+                                <p:link value="#{relationship.typeConcept.getRepresentation()}" outcome="/views/snomed/concept-snomed">
                                     <f:param name="conceptID" value="#{relationship.typeConcept.idSnomedCT}" />
                                 </p:link>
                             </div>
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                <p:link value="#{relationship.destinationConcept.getRepresentation()}" outcome="/views/concept-snomed">
+                                <p:link value="#{relationship.destinationConcept.getRepresentation()}" outcome="/views/snomed/concept-snomed">
                                     <f:param name="conceptID" value="#{relationship.destinationConcept.idSnomedCT}" />
                                 </p:link>
                             </div>
@@ -122,12 +122,12 @@
                                      reflow="true">
 
                             <p:column headerText="Tipo Relación" style="font-weight: bold">
-                                <p:link value="#{relationship.typeConcept.getRepresentation()}" outcome="/views/concept-snomed">
+                                <p:link value="#{relationship.typeConcept.getRepresentation()}" outcome="/views/snomed/concept-snomed">
                                     <f:param name="conceptID" value="#{relationship.typeConcept.idSnomedCT}" />
                                 </p:link>
                             </p:column>
                             <p:column headerText="Destino">
-                                <p:link value="#{relationship.destinationConcept.getRepresentation()}" outcome="/views/concept-snomed">
+                                <p:link value="#{relationship.destinationConcept.getRepresentation()}" outcome="/views/snomed/concept-snomed">
                                     <f:param name="conceptID" value="#{relationship.destinationConcept.idSnomedCT}" />
                                 </p:link>
                             </p:column>
@@ -139,7 +139,12 @@
                 <div class="ui-g ui-fluid">
 
                     <div class="ui-g-12 ui-md-4 ui-lg-2">
-                        <p:button outcome="concepts-snomed" value="Volver" styleClass="blue-grey-btn ui-priority-primary" icon="fa fa-arrow-left"/>
+                        <p:button outcome="concept-snomed" value="Volver" styleClass="blue-grey-btn ui-priority-primary" icon="fa fa-arrow-left"
+                        rendered="false"/>
+
+                        <p:button outcome="/views/concepts/conceptView" icon="fa fa-arrow-left">
+                            <f:param name="conceptID" value="#{conceptSCT.conceptSMTKID}" />
+                        </p:button>
                     </div>
 
                 </div>

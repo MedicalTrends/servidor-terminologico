@@ -49,6 +49,11 @@
         <view-id value="/views/concepts/conceptView.xhtml" />
     </url-mapping>
 
+    <url-mapping id="view-concept">
+        <pattern value="/views/snomed/#{conceptID}/#{conceptSMTKID}" />
+        <view-id value="/views/snomed/concept-snomed.xhtml" />
+    </url-mapping>
+
     <url-mapping id="users">
         <pattern value="/views/users" />
         <view-id value="/views/users/users.xhtml" />

@@ -138,6 +138,8 @@ public class AuthenticationBean {
             //redirigir a pagina de inicio
             eContext.redirect(eContext.getRequestContextPath() + Constants.VIEWS_FOLDER + Constants.HOME_PAGE);
 
+            initMenu();
+
             logger.info("Usuario [{}] ha iniciado sesión.", email);
 
 

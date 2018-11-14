@@ -160,10 +160,10 @@
                             </p:columns>
 
                             <p:column headerText="Concepto Snomed">
-                                <p:link value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="/views/concepts/concept-snomed" rendered="true">
+                                <p:link value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="/views/snomed/concept-snomed" rendered="true">
                                     <f:param name="conceptID" value="#{relationship.target.idSnomedCT}" />
+                                    <f:param name="conceptSMTKID" value="#{conceptView.conceptID}" />
                                 </p:link>
-                                <p:outputLabel value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="/views/concepts/concept-snomed" rendered="false"/>
                                 <h:dataTable value="#{relationship.target.getDescriptionSynonymous()}" var="description" rendered="false">
                                     <h:column>
                                         <h:outputText value="#{description.descriptionType.name}" style="font-weight: bold"/>
@@ -362,10 +362,9 @@
                             </p:columns>
 
                             <p:column headerText="Concepto Snomed">
-                                <p:link value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="/views/concepts/concept-snomed" rendered="false">
+                                <p:link value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="/views/snomed/concept-snomed" rendered="true">
                                     <f:param name="conceptID" value="#{relationship.target.idSnomedCT}" />
                                 </p:link>
-                                <p:outputLabel value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="/views/concepts/concept-snomed"/>
                                 <h:dataTable value="#{relationship.target.getDescriptionSynonymous()}" var="description" rendered="false">
                                     <h:column>
                                         <h:outputText value="#{description.descriptionType.name}" style="font-weight: bold"/>

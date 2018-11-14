@@ -49,15 +49,48 @@
 
         <div class="ui-g dashboard">
 
-        <p:outputPanel rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}">
+        <h:form style="width: 100%">
 
-            <div class="ui-g-12 ui-md-12 ui-lg-6">
+        <p:outputPanel rendered="#{profilePermissionsBeans.designer or profilePermissionsBeans.modeler}"
+                       styleClass="ui-g-12 ui-md-12 ui-lg-6">
+
                 <!-- Left Side -->
                 <div class="card card-w-title">
                     <h1>CATEGORÍAS</h1>
 
+                    <p:separator styleClass="heading-separator" style="margin: 0px"/>
+
+                    <div class="ui-fluid ui-g">
+                        <div class="ui-g-12 ui-md-12 ui-lg-6">
+                            <p:outputPanel styleClass="search">
+                                <p:inputText placeholder="Buscar..." value="#{mainMenuBean.name}"
+                                             style="margin-bottom: 1em">
+                                    <p:ajax event="keyup" update="@(.categories)" process="@this"/>
+                                </p:inputText>
+                                <i class="fa fa-search fa-lg"  />
+                            </p:outputPanel>
+                        </div>
+                    </div>
+
+                    <p:treeTable id="treeDocs" value="#{mainMenuBean.root}" var="category" paginator="false" rows="10"
+                                 styleClass="categoriesTable" rendered="false">
+
+                        <p:column headerText="Término">
+                            <p:outputLabel style="font-weight:bold;" rendered="#{not category.isPersistent()}">#{category.name}</p:outputLabel>
+                            <p:link style="font-weight:bold;" outcome="/views/browser/generalBrowser.xhtml?idCategory=#{category.getId()}"
+                                    rendered="#{category.isPersistent()}">#{category.name}</p:link>
+                        </p:column>
+
+                        <p:column headerText="Acción" style="width: 10%;" rendered="false">
+                            <p:button icon="fa fa-list-alt fa-lg" styleClass="loader-trigger" rendered="#{category.isPersistent()}"
+                                      outcome="/views/browser/generalBrowser.xhtml?idCategory=#{category.getId()}"/>
+                        </p:column>
+
+                    </p:treeTable>
+
+                    <p:outputPanel rendered="true" styleClass="categories">
                     <ul class="activity-list">
-                        <p:repeat value="#{mainMenuBean.categories}" var="category">
+                        <p:repeat value="#{mainMenuBean.getCategoriesByName()}" var="category">
                             <li class="hoverful">
                                 <div class="ui-g">
                                     <div class="ui-g-10">
@@ -72,6 +105,7 @@
                             </li>
                         </p:repeat>
                     </ul>
+                    </p:outputPanel>
 
                     <p:dataGrid var="category" value="#{mainMenuBean.categories}" columns="4" layout="grid" rendered="false"
                                 paginator="false"
@@ -93,8 +127,6 @@
                     </p:dataGrid>
 
                 </div>
-
-            </div>
 
         </p:outputPanel>
 
@@ -296,6 +328,8 @@
             <div class="ui-g-12">
                 <!-- Left Side -->
             </div>
+
+            </h:form>
 
         </div>
 

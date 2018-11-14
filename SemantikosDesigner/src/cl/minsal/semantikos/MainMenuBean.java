@@ -4,6 +4,7 @@ import cl.minsal.semantikos.category.CategoryBean;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.kernel.componentsweb.ViewAugmenter;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
@@ -23,6 +24,8 @@ import cl.minsal.semantikos.modelweb.RelationshipAttributeDefinitionWeb;
 import cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb;
 import cl.minsal.semantikos.session.ProfilePermissionsBeans;
 import org.primefaces.event.MenuActionEvent;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 import org.primefaces.model.menu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +59,8 @@ public class MainMenuBean implements Serializable {
 
     private List<Category> categories;
 
+    private String name;
+
     private transient MenuModel mainMenuModel;
 
     private transient MenuModel categoryMenuModel;
@@ -85,10 +90,16 @@ public class MainMenuBean implements Serializable {
 
     private InstitutionFactory institutionFactory;
 
+    private transient TreeNode root;
+
     @PostConstruct
     public void init() {
 
         categories =  categoryManager.getCategories();
+
+        root = new DefaultTreeNode(new Category(-1, "Dispositivo", "Dispositivo", false, "black", TagSMTKFactory.getInstance().findTagSMTKByName("objeto físico")));
+
+        mapConcepts(categories, root, true);
 
         tagSMTKFactory = tagSMTKManager.getTagSMTKFactory();
 
@@ -103,6 +114,59 @@ public class MainMenuBean implements Serializable {
 
         UserFactory.getInstance().setUsersById(userFactory.getUsersById());
 
+    }
+
+    public TreeNode mapConcepts(List<Category> categories, TreeNode treeNode, boolean expanded) {
+
+        Category devicesCategory = new Category(-1, "Dispositivo", "Dispositivo", false, "black", TagSMTKFactory.getInstance().findTagSMTKByName("objeto físico"));
+
+        TreeNode devicesTreeNode = null;
+
+        boolean flagDevices = false;
+
+        Category drugsCategory = new Category(-1, "Fármacos", "Fármacos", false, "black", TagSMTKFactory.getInstance().findTagSMTKByName("producto"));
+
+        TreeNode drugsTreeNode = null;
+
+        boolean flagDrugs = false;
+
+        for (Category category : categories) {
+
+            TreeNode childTreeNode = new DefaultTreeNode(category, treeNode);
+
+            if(category.getName().contains("Dispositivo")) {
+
+                if(!flagDevices) {
+                    devicesTreeNode = new DefaultTreeNode(devicesCategory, treeNode);
+                    flagDevices = true;
+                }
+
+                devicesTreeNode.getChildren().add(childTreeNode);
+            }
+            else if(category.getName().contains("Fármacos")) {
+
+                if(!flagDrugs) {
+                    drugsTreeNode = new DefaultTreeNode(drugsCategory, treeNode);
+                    flagDrugs = true;
+                }
+
+                drugsTreeNode.getChildren().add(childTreeNode);
+            }
+            else {
+                treeNode.getChildren().add(childTreeNode);
+            }
+
+        }
+
+        return root;
+    }
+
+    public TreeNode getRoot() {
+        return root;
+    }
+
+    public void setRoot(TreeNode root) {
+        this.root = root;
     }
 
     public TagSMTKFactory getTagSMTKFactory() {
@@ -139,6 +203,31 @@ public class MainMenuBean implements Serializable {
 
     public MenuModel getMainMenuModel() {
         return mainMenuModel;
+    }
+
+    public List<Category> getCategoriesByName() {
+
+        List<Category> categoriesByName = new ArrayList<>();
+
+        if(name == null || name.isEmpty()) {
+            return categories;
+        }
+
+        for (Category category : categories) {
+            if(category.getName().toLowerCase().contains(name.toLowerCase())) {
+                categoriesByName.add(category);
+            }
+        }
+
+        return  categoriesByName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

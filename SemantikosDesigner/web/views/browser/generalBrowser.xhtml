@@ -32,15 +32,15 @@
 
                         <div class="ui-fluid ui-g">
                             <div class="ui-g-12 ui-md-12 ui-lg-12">
-                                <p:commandButton icon="fa fa-plus" style="float: right;"
+                                <p:commandButton icon="fa fa-plus" style="float: right;" title="Crear"
                                                  type="submit" process="browserForm" styleClass="loader-trigger"
                                                  actionListener="#{generalBrowserBean.createConcept}"
                                                  rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">
                                 </p:commandButton>
-                                <p:commandButton icon="fa fa-filter" styleClass="filter-btn" id="filter-btn"
+                                <p:commandButton icon="fa fa-filter" styleClass="filter-btn" id="filter-btn" title="Filtrar"
                                                  onclick="listenOnClick();" style="float: right;">
                                 </p:commandButton>
-                                <p:commandButton ajax="false" icon="fa fa-file-excel-o" style="float: right;">
+                                <p:commandButton ajax="false" icon="fa fa-file-excel-o" style="float: right;" title="Exportar">
                                     <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
                                 </p:commandButton>
                             </div>

@@ -23,83 +23,6 @@
 
         <p:outputPanel style="width:100%">
 
-            <div class="ui-fluid">
-
-                <p:fieldset legend="Crear Etiqueta" >
-
-                    <div class="ui-g">
-                        <div class="ui-g-12 ui-md-4 ui-lg-2">
-                            <h:outputLabel value="Nombre"/>
-                        </div>
-                        <div class="ui-g-12 ui-md-8 ui-lg-4">
-                            <p:inputText value="#{tagBean.tagCreate.name}" label="Name" autocomplete="off"/>
-                        </div>
-                        <div class="ui-g-12 ui-md-4 ui-lg-2">
-                            <h:outputText value="Color Fondo"/>
-                        </div>
-                        <div class="ui-g-12 ui-md-8 ui-lg-1">
-                            <p:colorPicker value="#{tagBean.tagCreate.colorBackground}"/>
-                        </div>
-                        <div class="ui-g-12 ui-md-4 ui-lg-2">
-                            <h:outputText value="Color Texto"/>
-                        </div>
-                        <div class="ui-g-12 ui-md-8 ui-lg-1">
-                            <p:colorPicker value="#{tagBean.tagCreate.colorLetter}" />
-                        </div>
-                    </div>
-
-                    <p:outputPanel id="createParent">
-
-                        <div class="ui-g">
-                            <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="Anidar Etiqueta"/>
-                            </div>
-                            <div class="ui-g-12 ui-md-8 ui-lg-4">
-                                <p:selectOneMenu id="parentTag" value="#{tagBean.parentTagSelect}"
-                                                 rendered="#{tagBean.parentTagSelect == null}"
-                                                 converter="tagConverter"
-                                                 effect="fade" var="t" filter="true"
-                                                 filterMatchMode="startsWith" disabled="#{tagBean.tagCreate.parentTag!=null}">
-                                    <p:ajax event="itemSelect" listener="#{tagBean.addTagParent}"
-                                            update="createParent"/>
-                                    <f:selectItem itemLabel="Buscar" itemDisabled="true"/>
-                                    <f:selectItems value="#{tagBean.tagListToConcept}" var="tag"
-                                                   itemLabel="#{tag.name}" itemValue="#{tag}"/>
-                                    <p:column>
-                                        <h:outputText value="#{t.name}"/>
-                                    </p:column>
-                                </p:selectOneMenu>
-
-                                <p:outputPanel styleClass="search" rendered="#{tagBean.tagCreate.parentTag!=null}">
-                                    <p:inputText readonly="true" id="itemSelected" value="#{tagBean.parentTagSelect.name}" />
-
-                                    <p:commandLink process="@this"
-                                                   update="createParent"
-                                                   actionListener="#{tagBean.removeTagParent}">
-                                        <i class="fa fa-close fa-lg"  />
-                                    </p:commandLink>
-                                </p:outputPanel>
-                            </div>
-
-                        </div>
-
-                    </p:outputPanel>
-
-                    <div class="ui-g">
-                        <div class="ui-g-12 ui-md-12 ui-lg-12">
-                            <p:commandButton value="Crear" actionListener="#{tagBean.createTagToConcept}"
-                                             style="width: auto; float: right"
-                                             update="tags">
-                            </p:commandButton>
-                        </div>
-                    </div>
-
-                </p:fieldset>
-            </div>
-
-
-            <p:fieldset legend="Agregar Etiqueta existente">
-
                 <div class="ui-g">
 
                     <div class="ui-g-12 ui-md-4 ui-lg-2">
@@ -107,19 +30,24 @@
                     </div>
 
                     <div class="ui-g-12 ui-md-8 ui-lg-4">
-                        <p:selectOneMenu id="tagToConcept" value="#{tagBean.tagSelected}"
-                                         converter="tagConverter"
-                                         effect="fade" var="t" filter="true"
-                                         filterMatchMode="startsWith">
-                            <p:ajax event="itemSelect"/>
-                            <f:selectItem itemLabel="Seleccione una etiqueta" itemDisabled="true"/>
-                            <f:selectItems value="#{tagBean.tagListToConcept}" var="tag"
-                                           itemLabel="#{tag.name}" itemValue="#{tag}"
-                                           itemDisabled="#{tagBean.containTagToConcept(tag)}"/>
-                            <p:column>
-                                <h:outputText value="#{t.name}"/>
-                            </p:column>
-                        </p:selectOneMenu>
+                        <div class="ui-inputgroup">
+                            <p:selectOneMenu id="tagToConcept" value="#{tagBean.tagSelected}"
+                                             converter="tagConverter"
+                                             effect="fade" var="t" filter="true"
+                                             filterMatchMode="startsWith">
+                                <p:ajax event="itemSelect"/>
+                                <f:selectItem itemLabel="Seleccione una etiqueta" itemDisabled="true"/>
+                                <f:selectItems value="#{tagBean.tagListToConcept}" var="tag"
+                                               itemLabel="#{tag.name}" itemValue="#{tag}"
+                                               itemDisabled="#{tagBean.containTagToConcept(tag)}"/>
+                                <p:column>
+                                    <h:outputText value="#{t.name}"/>
+                                </p:column>
+                            </p:selectOneMenu>
+                            <p:commandButton icon="fa fa-plus" process="@this" oncomplete="PF('dialogNewTag').show()"
+                                             style="border-radius: 20%; width: 2.4em; margin-left: 10px"
+                                             update=":#{cc.clientId}:dataTableTag,:#{cc.clientId}:tagToConcept,:#{cc.clientId}:panelNewTag"/>
+                        </div>
                     </div>
 
                 </div>
@@ -131,9 +59,6 @@
                         </p:commandButton>
                     </div>
                 </div>
-            </p:fieldset>
-
-
 
         </p:outputPanel>
 
@@ -180,15 +105,15 @@
                     <div class="ui-g-12 ui-md-6 ui-lg-2">
                         <h:outputText value="Nombre: "/>
                     </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-6">
+                    <div class="ui-g-12 ui-md-6 ui-lg-10">
                         <p:inputText value="#{tagBean.tagEdit.name}" autocomplete="off"/>
                     </div>
                 </div>
                 <div class="ui-g">
                     <div class="ui-g-12 ui-md-6 ui-lg-2">
-                        <h:outputText value="Color fondo:"></h:outputText>
+                        <h:outputText value="Color fondo:"/>
                     </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-6">
+                    <div class="ui-g-12 ui-md-6 ui-lg-10">
                         <p:colorPicker value="#{tagBean.tagEdit.colorBackground}"/>
                     </div>
                 </div>
@@ -196,7 +121,7 @@
                     <div class="ui-g-12 ui-md-6 ui-lg-2">
                         <h:outputText value="Color letra: "/>
                     </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-6">
+                    <div class="ui-g-12 ui-md-6 ui-lg-10">
                         <p:colorPicker value="#{tagBean.tagEdit.colorLetter}"/>
                     </div>
                 </div>
@@ -212,6 +137,86 @@
                 </div>
 
             </p:panel>
+        </p:dialog>
+
+        <p:dialog id="dialogNewTag" header="Crear etiqueta" widgetVar="dialogNewTag" global="true"
+                  showEffect="fade" hideEffect="fade">
+
+            <p:panel id="panelNewTag">
+
+            <div class="ui-fluid">
+
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                        <h:outputLabel value="Nombre"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-8 ui-lg-10">
+                        <p:inputText value="#{tagBean.tagCreate.name}" label="Name" autocomplete="off"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                        <h:outputText value="Color Fondo"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-8 ui-lg-10">
+                        <p:colorPicker value="#{tagBean.tagCreate.colorBackground}"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                        <h:outputText value="Color Texto"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-8 ui-lg-10">
+                        <p:colorPicker value="#{tagBean.tagCreate.colorLetter}" />
+                    </div>
+                </div>
+
+                <p:outputPanel id="createParent">
+
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-4 ui-lg-2">
+                            <h:outputText value="Anidar Etiqueta"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-8 ui-lg-4">
+                            <p:selectOneMenu id="parentTag" value="#{tagBean.parentTagSelect}"
+                                             rendered="#{tagBean.parentTagSelect == null}"
+                                             converter="tagConverter"
+                                             effect="fade" var="t" filter="true"
+                                             filterMatchMode="startsWith" disabled="#{tagBean.tagCreate.parentTag!=null}">
+                                <p:ajax event="itemSelect" listener="#{tagBean.addTagParent}"
+                                        update="createParent"/>
+                                <f:selectItem itemLabel="Buscar" itemDisabled="true"/>
+                                <f:selectItems value="#{tagBean.tagListToConcept}" var="tag"
+                                               itemLabel="#{tag.name}" itemValue="#{tag}"/>
+                                <p:column>
+                                    <h:outputText value="#{t.name}"/>
+                                </p:column>
+                            </p:selectOneMenu>
+
+                            <p:outputPanel styleClass="search" rendered="#{tagBean.tagCreate.parentTag!=null}">
+                                <p:inputText readonly="true" id="itemSelected" value="#{tagBean.parentTagSelect.name}" />
+
+                                <p:commandLink process="@this"
+                                               update="createParent"
+                                               actionListener="#{tagBean.removeTagParent}">
+                                    <i class="fa fa-close fa-lg"  />
+                                </p:commandLink>
+                            </p:outputPanel>
+                        </div>
+
+                    </div>
+
+                </p:outputPanel>
+
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+                        <p:commandButton value="Crear" actionListener="#{tagBean.createTagToConcept}"
+                                         style="width: auto; float: right"
+                                         update="tags">
+                        </p:commandButton>
+                    </div>
+                </div>
+
+        </div>
+
+            </p:panel>
+
         </p:dialog>
 
     </p:panel>
