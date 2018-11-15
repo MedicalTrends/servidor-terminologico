@@ -227,7 +227,7 @@
                             <!-- Historial -->
                             <p:tab title="Historial" rendered="#{conceptBean.concept.modeled}">
                                 <h:panelGrid columns="1" styleClass="ui-panelgrid-blank otherDescriptions">
-                                    <smtk:history/>
+                                    <smtk:history auditAction="#{conceptBean.auditAction}"/>
                                 </h:panelGrid>
                             </p:tab>
 
@@ -274,14 +274,14 @@
 
                         <smtk:actionButtons rendered="false" />
 
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
-                                             icon="ui-icon-check"/>
-                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
-                                             icon="ui-icon-close"/>
-                        </p:confirmDialog>
-
                     </h:form>
+
+                    <p:confirmDialog id="confirm" global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
+                                         icon="ui-icon-check"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                                         icon="ui-icon-close"/>
+                    </p:confirmDialog>
 
                     <p:messages id="msg" showDetail="true" showSummary="true">
                         <p:effect type="pulsate" event="load" delay="0">

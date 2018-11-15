@@ -30,7 +30,28 @@
 
                 <div class="card card-w-title">
 
-                    <h1 class="first-heading">#{conceptView.selectedConcept.descriptionFavorite}</h1>
+                    <h1 class="first-heading">
+
+                        <p:outputLabel value="#{conceptView.selectedConcept.descriptionFavorite}"/>
+                        <p:repeat
+                                offset="0"
+                                size="#{conceptView.selectedConcept.tags.size()}"
+                                step="1"
+                                varStatus="var"
+                                value="#{conceptView.selectedConcept.tags}"
+                                var="tag">
+                            <i class="fa fa-tags" style="font-size: small"/>
+                            <h:outputText value=" #{tag}" style="font-size: small; background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+                            <h:outputText value=" " style="font-size: small; color: #545454"/>
+
+                        </p:repeat>
+
+                        <p:commandLink style="float: right" oncomplete="PF('dialogHistory').show()" process="@this"
+                                       update="panelHistory">
+                            <i class="fa fa-history"/>
+                        </p:commandLink>
+
+                    </h1>
 
                     <p:separator styleClass="heading-separator"/>
 
@@ -252,240 +273,6 @@
 
                 </div>
 
-                <p:tabView rendered="false">
-                    <p:tab title="Otras Descripciones" rendered="#{not empty conceptView.getOtherDescriptions()}">
-                        <p:dataTable id="otherDescriptions"
-                                     paginator="false"
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                     var="description"
-                                     value="#{conceptView.getOtherDescriptions()}"
-                                     editable="true"
-                                     reflow="true">
-
-                            <p:column headerText="Tipo Descripción" style="font-weight: bold">
-                                #{description.descriptionType.name}
-                            </p:column>
-                            <p:column headerText="Término">
-                                #{description.term}
-                            </p:column>
-                        </p:dataTable>
-                    </p:tab>
-
-                    <p:tab title="Atributos" rendered="#{not empty conceptView.getSMTKRelationships()}">
-
-                        <h:dataTable style="width: 100%;"
-                                     value="#{categoryBean.getNotEmptySMTKDefinitionsByCategory(conceptView.selectedConcept)}"
-                                     var="relationshipDefinition">
-
-                            <h:column>
-
-                                <p:outputPanel
-                                        id="panelRelationshipDefiniton"
-                                        styleClass="panel_#{relationshipDefinition.id}"
-                                        rendered="#{not relationshipDefinition.targetDefinition.crossMapType}">
-
-                                    <p:growl id="growlAttributes" showDetail="true" showSummary="true"/>
-
-                                    <smtk:smtkTypeView
-                                            rendered="#{relationshipDefinition.targetDefinition.SMTKType}"
-                                            targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                            relationshipDefinition="#{relationshipDefinition}"
-                                            concept="#{conceptView.selectedConcept}"/>
-
-                                    <smtk:helperTableTypeView
-                                            rendered="#{relationshipDefinition.targetDefinition.helperTable}"
-                                            relationshipDefinition="#{relationshipDefinition}"
-                                            targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                            concept="#{conceptView.selectedConcept}"/>
-
-                                    <smtk:basicTypeView
-                                            targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                            relationshipDefinition="#{relationshipDefinition}"
-                                            concept="#{conceptView.selectedConcept}"
-                                            rendered="#{relationshipDefinition.targetDefinition.basicType}"/>
-
-
-                                </p:outputPanel>
-
-                            </h:column>
-
-                        </h:dataTable>
-
-                        <p:dataTable id="smtkAttributes"
-                                     paginator="false" rendered="false"
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                     var="relationship"
-                                     value="#{conceptView.getSMTKRelationships()}"
-                                     reflow="true">
-
-                            <p:column headerText="Atributo">
-                                <h:outputText value="#{relationship.relationshipDefinition.name}"/>
-                            </p:column>
-                            <p:column headerText="Valor">
-                                <h:outputText value="#{relationship.target}" rendered="#{relationship.relationshipDefinition.targetDefinition.basicType}" />
-                                <h:outputText value="#{relationship.target}"
-                                              rendered="#{relationship.relationshipDefinition.targetDefinition.helperTable and not relationship.relationshipDefinition.ATC}" />
-                                <h:outputText value="#{relationship.target.getCellByColumnName('codigo atc')} #{relationship.target.getCellByColumnName('descripcion completa')}"
-                                              rendered="#{relationship.relationshipDefinition.targetDefinition.helperTable and relationship.relationshipDefinition.ATC}" />
-                                <p:link value="#{relationship.target.descriptionFavorite} - #{relationship.target.conceptID}" rendered="#{relationship.relationshipDefinition.targetDefinition.SMTKType}">
-                                    <f:param name="conceptID" value="#{relationship.target.conceptID}" />
-                                </p:link>
-                                <h:dataTable value="#{relationship.relationshipAttributes}" var="attribute" rendered="#{not empty relationship.relationshipAttributes}">
-                                    <h:column style="font-weight: bold">
-                                        #{attribute.relationAttributeDefinition.name}
-                                    </h:column>
-                                    <h:column>
-                                        #{attribute.target}
-                                    </h:column>
-                                </h:dataTable>
-                            </p:column>
-                        </p:dataTable>
-                    </p:tab>
-
-                    <p:tab title="SNOMED-CT" rendered="#{not empty conceptView.getSnomedCTRelationships()}">
-                        <p:dataTable id="snomedAttributes"
-                                     paginator="false"
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                     var="relationship"
-                                     value="#{conceptView.getSnomedCTRelationships()}"
-                                     reflow="true">
-
-                            <p:columns value="#{conceptView.selectedConcept.category.findRelationshipDefinitionsById(101).get(0).relationshipAttributeDefinitions}"
-                                       var="attributeDefinition"
-                                       columnIndexVar="colIndex">
-                                <f:facet name="header">
-                                    <h:outputText value="#{attributeDefinition.name}" />
-                                </f:facet>
-                                <p:repeat value="#{relationship.getAttributesByAttributeDefinition(attributeDefinition)}" var="attribute">
-                                    <p:outputLabel value="#{attribute.target}"/>
-                                </p:repeat>
-                            </p:columns>
-
-                            <p:column headerText="Concepto Snomed">
-                                <p:link value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" outcome="/views/snomed/concept-snomed" rendered="true">
-                                    <f:param name="conceptID" value="#{relationship.target.idSnomedCT}" />
-                                </p:link>
-                                <h:dataTable value="#{relationship.target.getDescriptionSynonymous()}" var="description" rendered="false">
-                                    <h:column>
-                                        <h:outputText value="#{description.descriptionType.name}" style="font-weight: bold"/>
-                                    </h:column>
-                                    <h:column>
-                                        <h:outputText value="#{description.term}"/>
-                                    </h:column>
-                                </h:dataTable>
-                            </p:column>
-                        </p:dataTable>
-                    </p:tab>
-
-                    <p:tab title="Crossmaps"
-                           rendered="#{not empty conceptView.getDirectCrossmapsRelationships() or not empty conceptView.getIndirectCrossmapsRelationships()}">
-
-                        <p:fieldset legend="Crossmaps Directos" rendered="#{ not empty conceptView.getDirectCrossmapsRelationships() }">
-
-                            <p:dataTable id="directCrossmaps"
-                                         paginator="false"
-                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                         var="crossmap"
-                                         value="#{conceptView.getDirectCrossmapsRelationships()}"
-                                         reflow="true">
-
-                                <p:column headerText="Terminología">
-                                    <h:outputText value="#{crossmap.target.crossmapSet.name}"/>
-                                </p:column>
-
-                                <p:column headerText="Cod-1 Crossmapset Member">
-                                    <h:outputText value="#{crossmap.target.code1}" rendered="#{crossmap.relationshipDefinition.CIE10}"/>
-                                    <h:outputText value="#{crossmap.target.code}" rendered="#{crossmap.relationshipDefinition.GMDN}"/>
-                                </p:column>
-
-                                <p:column headerText="Descripción">
-                                    <h:outputText value="#{crossmap.target.gloss}" rendered="#{crossmap.relationshipDefinition.CIE10}" />
-                                    <h:outputText value="#{crossmap.target.termName}" rendered="#{crossmap.relationshipDefinition.GMDN}" />
-                                </p:column>
-
-                                <p:column headerText="Fecha Creación">
-                                    <h:outputText value="#{conceptView.getDateCreationFormat(crossmap.creationDate)}"/>
-                                </p:column>
-
-                            </p:dataTable>
-
-                        </p:fieldset>
-
-                        <p:fieldset legend="Crossmaps Indirectos" rendered="#{ not empty conceptView.getIndirectCrossmapsRelationships() }">
-
-                            <p:dataTable id="indirectCrossmaps"
-                                         paginator="false"
-                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                         var="crossmap"
-                                         value="#{conceptView.getIndirectCrossmapsRelationships()}"
-                                         reflow="true">
-
-                                <p:column headerText="Terminología">
-                                    <h:outputText value="#{crossmap.target.crossmapSet.name}"/>
-                                </p:column>
-                                <p:column headerText="Cod-1 Crossmapset Member">
-                                    <h:outputText value="#{crossmap.target.code}"/>
-                                </p:column>
-                                <p:column headerText="Descripción">
-                                    <h:outputText value="#{crossmap.target.gloss}"/>
-                                </p:column>
-                                <p:column headerText="MapRule">
-                                    <h:outputText value="#{crossmap.mapRule}"/>
-                                </p:column>
-                                <p:column headerText="MapAdvice">
-                                    <h:outputText value="#{crossmap.mapAdvice}"/>
-                                </p:column>
-                                <p:column headerText="Origen">
-                                    <h:outputText value=""/>
-                                </p:column>
-
-                            </p:dataTable>
-
-                        </p:fieldset>
-
-                    </p:tab>
-
-                    <p:tab title="RefSets" rendered="#{not empty conceptView.conceptRefSetList}">
-                        <p:dataTable id="refSets"
-                                     paginator="false"
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                     var="refSet"
-                                     value="#{conceptView.conceptRefSetList}"
-                                     reflow="true">
-
-                            <p:column headerText="Nombre" style="font-weight: bold">
-                                #{refSet.name}
-                            </p:column>
-                            <p:column headerText="Establecimiento">
-                                #{refSet.institution.name}
-                            </p:column>
-                        </p:dataTable>
-                    </p:tab>
-
-                    <p:tab title="Etiquetas" rendered="#{not empty conceptView.selectedConcept.tags}">
-                        <p:dataTable id="tags"
-                                     paginator="false"
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {CustomPreviousPageLink} {PageLinks} {CustomNextPageLink} {LastPageLink}"
-                                     var="tag"
-                                     value="#{conceptView.selectedConcept.tags}"
-                                     reflow="true">
-
-                            <f:facet name="{CustomPreviousPageLink}">
-                                Anterior
-                            </f:facet>
-
-                            <f:facet name="{CustomNextPageLink}">
-                                Siguiente
-                            </f:facet>
-
-                            <p:column>
-                                <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" />
-                            </p:column>
-
-                        </p:dataTable>
-                    </p:tab>
-
-                </p:tabView>
 
                 <div class="ui-g ui-fluid">
 
@@ -501,6 +288,14 @@
                     </div>
 
                 </div>
+
+                <p:dialog id="dialogHistory" header="Historial" widgetVar="dialogHistory" global="true"
+                          contentStyle="overflow: visible"
+                          showEffect="fade" hideEffect="fade">
+                    <p:outputPanel id="panelHistory">
+                        <smtk:history auditAction="#{conceptView.auditAction}"/>
+                    </p:outputPanel>
+                </p:dialog>
 
                 </h:form>
 

@@ -25,19 +25,24 @@
     <!-- Diálogo para buscar la categoría y aceptar -->
     <p:dialog id="dialogTC" header="Trasladar concepto" widgetVar="dialogTC" global="true" showEffect="fade" hideEffect="fade">
 
-        <p:panel id="conceptTranslate" style="width: 100%; border: hidden;">
+        <p:panel id="conceptTranslate" style="width: 100%; border: hidden;" styleClass="conceptTranslate">
+
+            <p:growl id="growl" showDetail="true" showSummary="true"/>
+
             <h3 align="left">Trasladar Concepto a...</h3>
             <h:panelGrid columns="3" columnClasses="ui-grid-col-6,ui-grid-col-4,ui-grid-col-2">
 
                 <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categoría propuesta"/>
-                <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.categoryId}" required="true" filter="true" filterMatchMode="startsWith">
-                    <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
+                <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.targetCategory}" required="true" filter="true" filterMatchMode="startsWith"
+                    converter="CategoryConverter">
+                    <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category}"
                                    itemLabel="#{category.name}"/>
+                    <p:ajax event="itemSelect" update="@(.conceptTranslate)"/>
                 </p:selectOneMenu>
 
-                <p:commandButton value="Trasladar" type="submit" process="mainForm"
+                <p:commandButton value="Trasladar" type="submit" process="@this"
                                  actionListener="#{transferConceptBean.transferConcept(cc.attrs.conceptSMTK)}"
-                                 update="mainForm" icon="fa fa-exchange">
+                                 update="@(.conceptTranslate)" icon="fa fa-exchange">
 
                     <p:confirm header="Confirmar Acción" message="¿Desea realmente trasladar este concepto?"
                                icon="ui-icon-alert"/>

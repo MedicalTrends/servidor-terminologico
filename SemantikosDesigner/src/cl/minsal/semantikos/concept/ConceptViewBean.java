@@ -1,11 +1,9 @@
 package cl.minsal.semantikos.concept;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
-import cl.minsal.semantikos.kernel.components.ConceptManager;
-import cl.minsal.semantikos.kernel.components.CrossmapsManager;
-import cl.minsal.semantikos.kernel.components.RefSetManager;
-import cl.minsal.semantikos.kernel.components.RelationshipManager;
+import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
@@ -47,11 +45,25 @@ public class ConceptViewBean implements Serializable {
     //@EJB
     CrossmapsManager crossmapsManager = (CrossmapsManager) ServiceLocator.getInstance().getService(CrossmapsManager.class);
 
+    //@EJB
+    AuditManager auditManager = (AuditManager) ServiceLocator.getInstance().getService(AuditManager.class);
+
+
     ConceptSMTK selectedConcept;
+
+    private List<ConceptAuditAction> auditAction;
 
     String conceptID;
 
     List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
+
+    public List<ConceptAuditAction> getAuditAction() {
+        return auditAction;
+    }
+
+    public void setAuditAction(List<ConceptAuditAction> auditAction) {
+        this.auditAction = auditAction;
+    }
 
     public String getConceptID() {
         return conceptID;
@@ -61,6 +73,7 @@ public class ConceptViewBean implements Serializable {
         this.conceptID = conceptID;
         selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
         selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
+        auditAction = auditManager.getConceptAuditActions(selectedConcept, true);
     }
 
     //Inicializacion del Bean

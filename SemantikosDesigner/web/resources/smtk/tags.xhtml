@@ -30,7 +30,6 @@
                     </div>
 
                     <div class="ui-g-12 ui-md-8 ui-lg-4">
-                        <div class="ui-inputgroup">
                             <p:selectOneMenu id="tagToConcept" value="#{tagBean.tagSelected}"
                                              converter="tagConverter"
                                              effect="fade" var="t" filter="true"
@@ -44,10 +43,10 @@
                                     <h:outputText value="#{t.name}"/>
                                 </p:column>
                             </p:selectOneMenu>
-                            <p:commandButton icon="fa fa-plus" process="@this" oncomplete="PF('dialogNewTag').show()"
-                                             style="border-radius: 20%; width: 2.4em; margin-left: 10px"
-                                             update=":#{cc.clientId}:dataTableTag,:#{cc.clientId}:tagToConcept,:#{cc.clientId}:panelNewTag"/>
-                        </div>
+                            <p:commandLink icon="fa fa-plus" process="@this" oncomplete="PF('dialogNewTag').show()"
+                                           value="Crear Nuevo"
+                                           style="float: right"
+                                           update=":#{cc.clientId}:dataTableTag,:#{cc.clientId}:tagToConcept,:#{cc.clientId}:panelNewTag"/>
                     </div>
 
                 </div>
@@ -101,6 +100,7 @@
 
 
             <p:panel id="panelEditTag">
+
                 <div class="ui-g">
                     <div class="ui-g-12 ui-md-6 ui-lg-2">
                         <h:outputText value="Nombre: "/>
@@ -109,22 +109,25 @@
                         <p:inputText value="#{tagBean.tagEdit.name}" autocomplete="off"/>
                     </div>
                 </div>
+
                 <div class="ui-g">
                     <div class="ui-g-12 ui-md-6 ui-lg-2">
                         <h:outputText value="Color fondo:"/>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-10">
-                        <p:colorPicker value="#{tagBean.tagEdit.colorBackground}"/>
+                        <p:colorPicker value="#{tagBean.tagEdit.colorBackground}" mode="inline"/>
                     </div>
                 </div>
+
                 <div class="ui-g">
                     <div class="ui-g-12 ui-md-6 ui-lg-2">
                         <h:outputText value="Color letra: "/>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-10">
-                        <p:colorPicker value="#{tagBean.tagEdit.colorLetter}"/>
+                        <p:colorPicker value="#{tagBean.tagEdit.colorLetter}" mode="inline"/>
                     </div>
                 </div>
+
                 <div style="text-align: center">
                     <p:commandButton value="Editar etiqueta" actionListener="#{tagBean.updateTag}" update="tags"
                                      oncomplete="PF('dialogEditTag').hide()"/>
@@ -140,6 +143,7 @@
         </p:dialog>
 
         <p:dialog id="dialogNewTag" header="Crear etiqueta" widgetVar="dialogNewTag" global="true"
+                  contentStyle="overflow: visible"
                   showEffect="fade" hideEffect="fade">
 
             <p:panel id="panelNewTag">
@@ -157,13 +161,13 @@
                         <h:outputText value="Color Fondo"/>
                     </div>
                     <div class="ui-g-12 ui-md-8 ui-lg-10">
-                        <p:colorPicker value="#{tagBean.tagCreate.colorBackground}"/>
+                        <p:colorPicker value="#{tagBean.tagCreate.colorBackground}" mode="inline"/>
                     </div>
                     <div class="ui-g-12 ui-md-4 ui-lg-2">
                         <h:outputText value="Color Texto"/>
                     </div>
-                    <div class="ui-g-12 ui-md-8 ui-lg-10">
-                        <p:colorPicker value="#{tagBean.tagCreate.colorLetter}" />
+                    <div class="ui-g-12 ui-md-8 ui-lg-10" >
+                        <p:colorPicker value="#{tagBean.tagCreate.colorLetter}" mode="inline" />
                     </div>
                 </div>
 

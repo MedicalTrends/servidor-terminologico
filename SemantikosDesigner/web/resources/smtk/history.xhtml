@@ -11,7 +11,7 @@
       xmlns:c="http://java.sun.com/jsp/jstl/core" >
 
 <composite:interface>
-
+    <composite:attribute name="auditAction" type="java.util.List"/>
 </composite:interface>
 
 <composite:implementation>
@@ -19,9 +19,10 @@
     <p:panel id="historyConcept" styleClass="historyClass" >
         <p:dataTable  rowIndexVar="rowIndex" id="historyDateTable" var="history"
                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                     value="#{conceptBean.auditAction}" paginator="true" rows="10">
+                     value="#{cc.attrs.auditAction}" paginator="true" rows="10">
             <f:facet name="{Exporters}">
-                <p:commandButton icon="fa fa-file-excel-o" styleClass="ui-priority-primary" ajax="false" value="Exportar">
+                <p:commandButton icon="fa fa-file-excel-o" styleClass="ui-priority-primary" ajax="false" value="Exportar"
+                                 style="width: auto">
                     <p:dataExporter type="xls" target="historyDateTable" fileName="history" />
                 </p:commandButton>
             </f:facet>
@@ -47,16 +48,16 @@
             </p:column>
 
             <p:column headerText="Fecha">
-                <h:outputText value="#{history.actionDateFormat}"></h:outputText>
+                <h:outputText value="#{history.actionDateFormat}"/>
             </p:column>
             <p:column headerText="Tipo de cambio">
-                <h:outputText value="#{history.auditActionType.name}"></h:outputText>
+                <h:outputText value="#{history.auditActionType.name}"/>
             </p:column>
             <p:column headerText="Detalle">
-                <h:outputText value="#{history.detailAuditAction()}"></h:outputText>
+                <h:outputText value="#{history.detailAuditAction()}"/>
             </p:column>
             <p:column headerText="Usuario">
-                <h:outputText value="#{history.user.name}"></h:outputText>
+                <h:outputText value="#{history.user.name}"/>
             </p:column>
 
 

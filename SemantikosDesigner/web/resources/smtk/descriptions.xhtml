@@ -299,7 +299,7 @@
                                               disabled="#{conceptBean.conceptSMTKTranslateDes!=null}">
 
                             <f:selectItems value="#{findConceptBean.categoryList}" var="category"
-                                           itemLabel="#{category.name}" itemValue="#{category.id}"/>
+                                           itemLabel="#{category.name}" itemValue="#{category}"/>
                             <p:ajax event="toggleSelect"
                                     listener="#{findConceptBean.getConceptSearchInputAndCategories}"
                                     update="inputFindConcept"/>
@@ -348,7 +348,7 @@
         </p:panel>
 
         <div style="text-align: center;">
-            <p:commandButton update="createEdit" icon="fa fa-exchange" value="Trasladar"
+            <p:commandButton update="@(.otherDescriptionsPanel)" icon="fa fa-exchange" value="Trasladar" oncomplete="PF('dialogTDC').hide()"
                              actionListener="#{descriptionBeans.traslateDescription}">
             </p:commandButton>
         </div>

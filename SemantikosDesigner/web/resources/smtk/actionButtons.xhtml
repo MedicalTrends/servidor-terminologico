@@ -222,8 +222,8 @@
             <h:panelGrid columns="3" columnClasses="ui-grid-col-6,ui-grid-col-4,ui-grid-col-2">
 
                 <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categoría propuesta"/>
-                <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.categoryId}" required="true" filter="true" filterMatchMode="startsWith">
-                    <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
+                <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.targetCategory}" converter="CategoryConverter" required="true" filter="true" filterMatchMode="startsWith">
+                    <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category}"
                                    itemLabel="#{category.name}"/>
                 </p:selectOneMenu>
 

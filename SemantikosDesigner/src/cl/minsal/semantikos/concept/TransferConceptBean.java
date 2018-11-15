@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.concept;
 
+import cl.minsal.semantikos.Constants;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
@@ -30,7 +31,7 @@ public class TransferConceptBean {
     private static final Logger logger = LoggerFactory.getLogger(TransferConceptBean.class);
 
     /** El ID de la categoría destino */
-    private long categoryId;
+    private Category targetCategory;
 
     @ManagedProperty(value = "#{conceptBean}")
     private ConceptBean conceptBean;
@@ -62,29 +63,30 @@ public class TransferConceptBean {
         this.messageBean = messageBean;
     }
 
-    public long getCategoryId() {
-        return categoryId;
+    public Category getTargetCategory() {
+        return targetCategory;
     }
 
-    public void setCategoryId(long categoryId) {
-        this.categoryId = categoryId;
+    public void setTargetCategory(Category targetCategory) {
+        this.targetCategory = targetCategory;
     }
 
     public void transferConcept(ConceptSMTK conceptSMTK) {
-        Category categoryById = categoryManager.getCategoryById(categoryId);
+        //Category categoryById = categoryManager.getCategoryById(categoryId);
         try{
             for (Description description : conceptSMTK.getDescriptions()) {
 
-                ConceptSMTK aConcept = categoryManager.categoryContains(categoryById, description.getTerm());
+                ConceptSMTK aConcept = categoryManager.categoryContains(targetCategory, description.getTerm());
 
                 if(aConcept != null){
                     messageBean.messageError("La descripción: "+description+" ya existe en la categoría. Descripción perteneciente a concepto: "+aConcept);
                     return;
                 }
             }
-            conceptManager.transferConcept(conceptSMTK, categoryById, conceptBean.user);
+            conceptManager.transferConcept(conceptSMTK, targetCategory, conceptBean.user);
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categoryId + "&idConcept=" + conceptSMTK.getId());
+            //eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categoryId + "&idConcept=" + conceptSMTK.getId());
+            eContext.redirect(eContext.getRequestContextPath() + Constants.VIEWS_FOLDER + "/concepts/edit/" + conceptSMTK.getId());
 
         }catch (EJBException e){
             messageBean.messageError(e.getMessage());
