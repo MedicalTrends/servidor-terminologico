@@ -112,7 +112,7 @@ public class MainMenuBean implements Serializable {
 
         DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypeFactory.getDescriptionTypes());
 
-        UserFactory.getInstance().setUsersById(userFactory.getUsersById());
+        UserFactory.getInstance().setUsers(userFactory.getUsers());
 
     }
 

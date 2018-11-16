@@ -17,6 +17,7 @@ import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.users.User;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.ToggleEvent;
+import org.primefaces.event.data.PageEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.slf4j.Logger;
@@ -90,6 +91,10 @@ public class GeneralBrowserBean implements Serializable {
 
 
     private boolean showSettings;
+
+    private int results;
+
+    private int page = 1;
 
     // Placeholders para los targets de los filtros, dados como elementos seleccionables
     private BasicTypeValue basicTypeValue = new BasicTypeValue(null);
@@ -201,6 +206,8 @@ public class GeneralBrowserBean implements Serializable {
                 }
 
                 this.setRowCount(queryManager.countQueryResults(generalQuery));
+
+                results = this.getRowCount();
 
                 return conceptSMTKs;
             }
@@ -443,6 +450,13 @@ public class GeneralBrowserBean implements Serializable {
 
     }
 
+    public void updatePage(PageEvent event) {
+        int pageindex = event.getPage();
+        page = pageindex + 1;
+        //RequestContext reqCtx = RequestContext.getCurrentInstance();
+        //reqCtx.execute("PF('conceptTableExcel').getPaginator().setPage("+pageindex+")");
+    }
+
     public boolean isFilterChanged() {
         return isFilterChanged;
     }
@@ -457,6 +471,22 @@ public class GeneralBrowserBean implements Serializable {
 
     public void setShowSettings(boolean showSettings) {
         this.showSettings = showSettings;
+    }
+
+    public int getResults() {
+        return results;
+    }
+
+    public void setResults(int results) {
+        this.results = results;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
     }
 
 }

@@ -57,7 +57,7 @@
                                     </p:outputPanel>
                                 </div>
                                 <div class="ui-g-12">
-                                    <span>Estado</span>
+                                    <span>Revisar</span>
                                 </div>
                                 <div class="ui-g-12">
                                     <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeReviewed}" autoWidth="false" style="width: 100%">
@@ -92,25 +92,43 @@
                                 <div class="ui-g-12">
                                     <span>Etiquetas</span>
                                 </div>
+
                                 <div class="ui-g-12">
 
-                                <p:selectCheckboxMenu id="tags"
-                                                      value="#{cc.attrs.generalQuery.tags}"
-                                                      converter="omnifaces.SelectItemsConverter"
-                                                      label="Seleccione..."
-                                                      autoWidth="false"
-                                                      style="width: 100%"
-                                                      filter="true"
-                                                      filterMatchMode="startsWith">
-                                    <p:ajax event="change"
-                                            listener="#{generalBrowserBean.setFilterChanged(true)}"
-                                            update="@(.browserTable),@(.filterStatus)"
-                                            process="@this" />
+                                    <p:outputPanel styleClass="filterStatus">
 
-                                    <f:selectItems value="#{generalBrowserBean.tags}" var="tag"
-                                                   itemLabel="#{tag.name}" itemValue="#{tag}"/>
-                                </p:selectCheckboxMenu>
-                            </div>
+                                        <p:selectCheckboxMenu id="tags"
+                                                              value="#{cc.attrs.generalQuery.tags}"
+                                                              converter="omnifaces.SelectItemsConverter"
+                                                              label="Seleccione..."
+                                                              autoWidth="false"
+                                                              style="width: 100%"
+                                                              filter="true"
+                                                              filterMatchMode="startsWith">
+                                            <p:ajax event="change"
+                                                    listener="#{generalBrowserBean.setFilterChanged(true)}"
+                                                    update="@(.browserTable),@(.filterStatus)"
+                                                    process="@this" />
+
+                                            <f:selectItems value="#{generalBrowserBean.tags}" var="tag"
+                                                           itemLabel="#{tag.name}" itemValue="#{tag}"/>
+                                        </p:selectCheckboxMenu>
+
+                                        <p:repeat value="#{cc.attrs.generalQuery.tags}" var="tag">
+                                            <div class="ui-g-12">
+                                                <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
+                                                    <p:commandLink actionListener="#{cc.attrs.generalQuery.tags.remove(tag)}"
+                                                                   update="@(.browserTable),@(.filterStatus)" style="float: right">
+                                                        <i class="ui-icon ui-icon-close" />
+                                                    </p:commandLink>
+                                                    <span class="ui-autocomplete-token-label" style="font-size: small;">#{tag.name}</span>
+                                                </span>
+                                            </div>
+                                        </p:repeat>
+
+                                    </p:outputPanel>
+
+                                </div>
 
                                 <p:repeat
                                         offset="0"

@@ -144,9 +144,9 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
     }
 
     public void setUser(User user) {
-        if(user != null) {
+        //if(user != null) {
             this.user = user;
-        }
+        //}
     }
 
     public boolean isCustomFilterable() {

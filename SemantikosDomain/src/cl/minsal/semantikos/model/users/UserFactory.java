@@ -20,14 +20,6 @@ public class UserFactory implements Serializable {
     /** La lista de tagSMTK */
     private List<User> users;
 
-    public ConcurrentHashMap<Long, User> getUsersById() {
-        return usersById;
-    }
-
-    public void setUsersById(ConcurrentHashMap<Long, User> usersById) {
-        this.usersById = usersById;
-    }
-
     /** Mapa de tagSMTK por su nombre. */
     private static ConcurrentHashMap<Long, User> usersById;
 
@@ -39,8 +31,12 @@ public class UserFactory implements Serializable {
         this.usersById = new ConcurrentHashMap<>();
     }
 
-    public static UserFactory getInstance() {
+    public static synchronized UserFactory getInstance() {
         return instance;
+    }
+
+    public ConcurrentHashMap<Long, User> getUsersById() {
+        return usersById;
     }
 
     /**
@@ -75,6 +71,10 @@ public class UserFactory implements Serializable {
         for (User user : users) {
             this.usersById.put(user.getId(), user);
         }
+    }
+
+    public void setUsersById(ConcurrentHashMap<Long, User> usersById) {
+        this.usersById = usersById;
     }
 
     public void refresh(User user) {

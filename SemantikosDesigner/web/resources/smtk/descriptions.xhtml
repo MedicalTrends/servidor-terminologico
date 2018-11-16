@@ -578,13 +578,11 @@
                 </div>
             </div>
             <div style="text-align: center;">
-                <p:commandButton oncomplete="PF('dialogEditDescription').hide()" icon="fa fa-remove" value="Cancelar">
-                </p:commandButton>
+                <p:commandButton oncomplete="PF('dialogEditDescription').hide()" icon="fa fa-remove" style="float: right" />
                 <p:commandButton oncomplete="PF('dialogEditDescription').hide()"
                                  update="@(.otherDescriptions),@(.conceptHeader)" icon="fa fa-exchange"
-                                 value="Guardar Cambios"
-                                 actionListener="#{descriptionBeans.descriptionEditRow(descriptionBeans.descriptionEdit)}">
-                </p:commandButton>
+                                 style="float: right"
+                                 actionListener="#{descriptionBeans.descriptionEditRow(descriptionBeans.descriptionEdit)}"/>
             </div>
         </p:panel>
     </p:dialog>

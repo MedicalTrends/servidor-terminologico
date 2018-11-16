@@ -23,13 +23,13 @@
     </div>
 
     <div class="ui-g-12 ui-md-#{cc.attrs.rightpanel?'12':'8'} ui-lg-#{cc.attrs.rightpanel?'12':'4'}">
-            <p:selectOneMenu value="#{cc.attrs.user}" converter="userConverter"
+            <p:selectOneMenu value="#{cc.attrs.user}" converter="userConverter" styleClass="user"
                              autoWidth="false">
                 <f:selectItem itemLabel="Usuario..." itemValue="#{null}"/>
                 <f:selectItems value="#{generalBrowserBean.users}" var="user"
                                itemLabel="#{user.email}" itemValue="#{user}"/>
 
-                <p:ajax event="itemSelect" process="@this" update="@(.browserTable)" />
+                <p:ajax event="itemSelect" process="@this" update="@(.browserTable),@(.user)" />
             </p:selectOneMenu>
     </div>
 

@@ -25,7 +25,7 @@
 
     <div class="ui-g-12 ui-md-12 ui-lg-12">
             <p:calendar id="creationDateSince" style="margin-right:10px; width: 90%"
-                        value="#{cc.attrs.date}"
+                        value="#{cc.attrs.date}" showOn="button"
                         var="value" pattern="dd/MM/yyyy"
                         placeholder="#{cc.attrs.dateSince? 'Desde...' : 'Hasta...'}">
                 <p:ajax event="dateSelect" update="@(.browserTable)" />

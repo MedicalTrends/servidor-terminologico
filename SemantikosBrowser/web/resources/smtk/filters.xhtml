@@ -51,13 +51,13 @@
                                     </div>
                                     <p:repeat value="#{browserBean.browserQuery.categories}" var="category">
                                         <div class="ui-g-12">
-                                    <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
-                                        <p:commandLink actionListener="#{browserBean.browserQuery.categories.remove(category)}"
-                                                       update="@(.conceptTable),@(.filterStatus)" style="float: right">
-                                            <i class="ui-icon ui-icon-close" />
-                                        </p:commandLink>
-                                        <span class="ui-autocomplete-token-label" style="font-size: small;">#{category.name}</span>
-                                    </span>
+                                            <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
+                                                <p:commandLink actionListener="#{browserBean.browserQuery.categories.remove(category)}"
+                                                               update="@(.conceptTable),@(.filterStatus)" style="float: right">
+                                                    <i class="ui-icon ui-icon-close" />
+                                                </p:commandLink>
+                                                <span class="ui-autocomplete-token-label" style="font-size: small;">#{category.name}</span>
+                                            </span>
                                         </div>
                                     </p:repeat>
                                     <div class="ui-g-12">
