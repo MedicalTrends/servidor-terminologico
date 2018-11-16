@@ -122,7 +122,7 @@
                 </div>
             </p:column>
 
-            <p:column headerText="Estado">
+            <p:column headerText="Estado" rendered="false">
                 <div style="text-align: center;">
                     <h:outputText value="Borrador" rendered="#{!description.modeled}"/>
                     <h:outputText value="Modelado" rendered="#{description.modeled}"/>
@@ -150,7 +150,10 @@
 
             <p:column headerText="Fecha Creación">
                 <div style="text-align: center;">
-                    <h:outputText value="#{description.getDateCreationFormat()}"/>
+                    <p:commandLink update="@(.descriptionDetail)" oncomplete="PF('descriptionDetail').show('#{component.clientId}')">
+                        <h:outputText value="#{description.getDateCreationFormat()}"/>
+                        <f:setPropertyActionListener value="#{description}" target="#{descriptionBeans.descriptionEdit}" />
+                    </p:commandLink>
                 </div>
             </p:column>
 
@@ -171,7 +174,7 @@
                 </div>
             </p:column>
 
-            <p:column headerText="Usuario Creador">
+            <p:column headerText="Usuario Creador" rendered="false">
                 <div style="text-align: center;">
                     <h:outputText value="#{description.creatorUser.name}"/>
                 </div>
@@ -348,7 +351,8 @@
         </p:panel>
 
         <div style="text-align: center;">
-            <p:commandButton update="@(.otherDescriptionsPanel)" icon="fa fa-exchange" value="Trasladar" oncomplete="PF('dialogTDC').hide()"
+            <p:commandButton update="@(.otherDescriptionsPanel)" icon="fa fa-exchange" oncomplete="PF('dialogTDC').hide()"
+                             style="float: right"
                              actionListener="#{descriptionBeans.traslateDescription}">
             </p:commandButton>
         </div>
@@ -586,6 +590,19 @@
             </div>
         </p:panel>
     </p:dialog>
+
+    <p:overlayPanel widgetVar="descriptionDetail" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
+        <p:outputPanel id="descriptionSelected" styleClass="descriptionDetail" style="width: 300px;">
+            <div class="ui-fluid ui-g">
+                <div class="ui-g-6 ui-md-6 ui-lg-6">
+                    <p:outputLabel styleClass="label" value="Usuario creador" />
+                </div>
+                <div class="ui-g-6 ui-md-6 ui-lg-6">
+                    <p:outputLabel value="#{descriptionBeans.descriptionEdit.creatorUser.email}" />
+                </div>
+            </div>
+        </p:outputPanel>
+    </p:overlayPanel>
 
 </composite:implementation>
 </html>

@@ -72,25 +72,9 @@
                         </div>
                     </div>
 
-                    <p:treeTable id="treeDocs" value="#{mainMenuBean.root}" var="category" paginator="false" rows="10"
-                                 styleClass="categoriesTable" rendered="false">
-
-                        <p:column headerText="Término">
-                            <p:outputLabel style="font-weight:bold;" rendered="#{not category.isPersistent()}">#{category.name}</p:outputLabel>
-                            <p:link style="font-weight:bold;" outcome="/views/browser/generalBrowser.xhtml?idCategory=#{category.getId()}"
-                                    rendered="#{category.isPersistent()}">#{category.name}</p:link>
-                        </p:column>
-
-                        <p:column headerText="Acción" style="width: 10%;" rendered="false">
-                            <p:button icon="fa fa-list-alt fa-lg" styleClass="loader-trigger" rendered="#{category.isPersistent()}"
-                                      outcome="/views/browser/generalBrowser.xhtml?idCategory=#{category.getId()}"/>
-                        </p:column>
-
-                    </p:treeTable>
-
                     <p:outputPanel rendered="true" styleClass="categories">
                     <ul class="activity-list">
-                        <p:repeat value="#{mainMenuBean.getCategoriesByName()}" var="category">
+                        <p:repeat value="#{authenticationBean.getCategoriesByName()}" var="category">
                             <li class="hoverful">
                                 <div class="ui-g">
                                     <div class="ui-g-10">

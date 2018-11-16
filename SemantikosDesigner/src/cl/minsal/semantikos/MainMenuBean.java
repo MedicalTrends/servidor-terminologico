@@ -90,16 +90,10 @@ public class MainMenuBean implements Serializable {
 
     private InstitutionFactory institutionFactory;
 
-    private transient TreeNode root;
-
     @PostConstruct
     public void init() {
 
         categories =  categoryManager.getCategories();
-
-        root = new DefaultTreeNode(new Category(-1, "Dispositivo", "Dispositivo", false, "black", TagSMTKFactory.getInstance().findTagSMTKByName("objeto físico")));
-
-        mapConcepts(categories, root, true);
 
         tagSMTKFactory = tagSMTKManager.getTagSMTKFactory();
 
@@ -116,58 +110,7 @@ public class MainMenuBean implements Serializable {
 
     }
 
-    public TreeNode mapConcepts(List<Category> categories, TreeNode treeNode, boolean expanded) {
 
-        Category devicesCategory = new Category(-1, "Dispositivo", "Dispositivo", false, "black", TagSMTKFactory.getInstance().findTagSMTKByName("objeto físico"));
-
-        TreeNode devicesTreeNode = null;
-
-        boolean flagDevices = false;
-
-        Category drugsCategory = new Category(-1, "Fármacos", "Fármacos", false, "black", TagSMTKFactory.getInstance().findTagSMTKByName("producto"));
-
-        TreeNode drugsTreeNode = null;
-
-        boolean flagDrugs = false;
-
-        for (Category category : categories) {
-
-            TreeNode childTreeNode = new DefaultTreeNode(category, treeNode);
-
-            if(category.getName().contains("Dispositivo")) {
-
-                if(!flagDevices) {
-                    devicesTreeNode = new DefaultTreeNode(devicesCategory, treeNode);
-                    flagDevices = true;
-                }
-
-                devicesTreeNode.getChildren().add(childTreeNode);
-            }
-            else if(category.getName().contains("Fármacos")) {
-
-                if(!flagDrugs) {
-                    drugsTreeNode = new DefaultTreeNode(drugsCategory, treeNode);
-                    flagDrugs = true;
-                }
-
-                drugsTreeNode.getChildren().add(childTreeNode);
-            }
-            else {
-                treeNode.getChildren().add(childTreeNode);
-            }
-
-        }
-
-        return root;
-    }
-
-    public TreeNode getRoot() {
-        return root;
-    }
-
-    public void setRoot(TreeNode root) {
-        this.root = root;
-    }
 
     public TagSMTKFactory getTagSMTKFactory() {
         return tagSMTKFactory;

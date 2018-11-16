@@ -35,8 +35,9 @@
 
                                 <p:outputPanel styleClass="search" style="width: 100%">
 
-                                    <p:inputText value="#{generalBrowserBean.generalQuery.query}" placeholder="Buscar..." style="width: 100%">
-                                        <p:ajax event="keyup" update="@(.browserTable)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" />
+                                    <p:inputText value="#{generalBrowserBean.generalQuery.query}" placeholder="Buscar..." style="width: 100%"
+                                                 onkeyup="return (this.value.length >= 3 || this.value.length ==0)">
+                                        <p:ajax event="keyup" update="@(.browserTable),@(.search)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" />
                                     </p:inputText>
 
                                     <i class="fa fa-search fa-lg" />
