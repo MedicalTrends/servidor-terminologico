@@ -52,6 +52,8 @@ public class HelperTableEditBean implements Serializable {
 
     HelperTable helperTableSelected;
 
+    HelperTableRow helperTableRowPlaceHolder;
+
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
 
@@ -90,6 +92,13 @@ public class HelperTableEditBean implements Serializable {
     public void getHelperTable(long idHelperTable) {
         helperTableSelected = manager.getById(idHelperTable);
         helperTableSelected.setRows(manager.getTableRows(helperTableSelected.getId()));
+        helperTableRowPlaceHolder = new HelperTableRow(helperTableSelected);
+
+        for (HelperTableColumn column : helperTableSelected.getColumns()) {
+            HelperTableData helperTableData = new HelperTableData();
+            helperTableData.setColumn(column);
+            helperTableRowPlaceHolder.getCells().add(helperTableData);
+        }
     }
 
     public AuthenticationBean getAuthenticationBean() {
@@ -164,6 +173,14 @@ public class HelperTableEditBean implements Serializable {
     }
 
     private HelperTableRow rowSelected;
+
+    public HelperTableRow getHelperTableRowPlaceHolder() {
+        return helperTableRowPlaceHolder;
+    }
+
+    public void setHelperTableRowPlaceHolder(HelperTableRow helperTableRowPlaceHolder) {
+        this.helperTableRowPlaceHolder = helperTableRowPlaceHolder;
+    }
 
     public void onRowEdit(RowEditEvent event) {
         HelperTableRow row = (HelperTableRow) event.getObject();

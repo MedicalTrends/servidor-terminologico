@@ -129,6 +129,12 @@ public class ConceptSCTBean {
     }
 
     public void setConceptSMTKID(String conceptSMTKID) {
-        this.conceptSMTKID = conceptSMTKID;
+        try {
+            Long.parseLong(conceptSMTKID);
+            this.conceptSMTKID = conceptSMTKID;
+        }
+        catch (NumberFormatException e) {
+            logger.warn(e.getMessage());
+        }
     }
 }

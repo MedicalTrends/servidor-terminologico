@@ -37,7 +37,7 @@
 
                                     <p:inputText value="#{generalBrowserBean.generalQuery.query}" placeholder="Buscar..." style="width: 100%"
                                                  onkeyup="return (this.value.length >= 3 || this.value.length ==0)">
-                                        <p:ajax event="keyup" update="@(.browserTable),@(.search)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" />
+                                        <p:ajax event="keyup" update="@(.browserTable),@(.search)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" delay="500" />
                                     </p:inputText>
 
                                     <i class="fa fa-search fa-lg" />
@@ -55,7 +55,7 @@
                                 <p:commandButton icon="fa fa-filter" styleClass="filter-btn" id="filter-btn" title="Filtrar"
                                                  onclick="listenOnClick();" style="float: right;">
                                 </p:commandButton>
-                                <p:commandButton ajax="false" icon="fa fa-file-excel-o" style="float: right;" title="Exportar">
+                                <p:commandButton ajax="false" icon="fa fa-file-excel-o" style="float: right;" title="Exportar" rendered="false">
                                     <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
                                 </p:commandButton>
                             </div>
@@ -121,7 +121,8 @@
                                                         <f:param name="idConcept" value="#{concept.id}" />
                                                     </p:button>
 
-                                                    <p:commandButton rendered="#{concept.modeled}" icon="fa fa-exchange fa-lg" oncomplete="PF('dialogTC2-browser').show()" update="@(.conceptTranslate)" title="Trasladar" style="padding: 5px">
+                                                    <p:commandButton rendered="#{concept.modeled}" icon="fa fa-exchange fa-lg" oncomplete="PF('dialogTC2-browser').show()"
+                                                                     update="@(.browserTable),@(.conceptTranslate)" title="Trasladar" style="padding: 5px">
                                                         <f:setPropertyActionListener value="#{concept}" target="#{transferConceptBean.conceptSMTKSelected}" />
                                                     </p:commandButton>
 
@@ -214,21 +215,37 @@
 
                         <p:panel id="conceptTranslate" styleClass="conceptTranslate" style="width: 100%; border: hidden;">
                             <h3>Trasladar Concepto a...</h3>
-                            <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
-                                <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categoría propuesta"/>
-                                <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.targetCategory}" converter="CategoryConverter" required="true">
-                                    <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category}"
-                                                   itemLabel="#{category.name}"/>
-                                </p:selectOneMenu>
+                            <div class="ui-fluid ui-g">
 
-                                <p:inputText value="id concepto: #{transferConceptBean.conceptSMTKSelected.id}" disabled="true" />
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categoría propuesta"/>
+                                </div>
 
-                                <p:commandButton value="Trasladar" actionListener="#{transferConceptBean.transferConcept(transferConceptBean.conceptSMTKSelected)}"
-                                                 icon="fa fa-exchange" styleClass="ui-priority-primary" update="msgTransfer" >
-                                    <p:confirm header="Confirmación" message="¿Desea realmente trasladar este concepto?"
-                                               icon="ui-icon-alert"/>
-                                </p:commandButton>
-                            </h:panelGrid>
+                                <div class="ui-g-12 ui-md-6 ui-lg-10">
+                                    <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.targetCategory}" converter="CategoryConverter" required="true">
+                                        <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category}"
+                                                       itemLabel="#{category.name}"/>
+                                    </p:selectOneMenu>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:outputLabel value="Concepto:" />
+                                </div>
+
+                                <div class="ui-g-12 ui-md-6 ui-lg-10">
+                                    <p:outputLabel value="#{transferConceptBean.conceptSMTKSelected.descriptionFavorite} - #{transferConceptBean.conceptSMTKSelected.conceptID}"/>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                    <p:commandButton value="Trasladar" actionListener="#{transferConceptBean.transferConcept(transferConceptBean.conceptSMTKSelected)}"
+                                                     style="float: right; width: auto"
+                                                     icon="fa fa-exchange" styleClass="ui-priority-primary" update="msgTransfer" >
+                                        <p:confirm header="Confirmación" message="¿Desea realmente trasladar este concepto?"
+                                                   icon="ui-icon-alert"/>
+                                    </p:commandButton>
+                                </div>
+
+                            </div>
                         </p:panel>
                     </p:dialog>
 

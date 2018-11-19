@@ -361,40 +361,38 @@
 
 
     <p:dialog id="dialogTDNV" header="Trasladar Descripción a No Válido" widgetVar="dialogTDNV" global="true" visible="#{descriptionBeans.error != ''}"
-              showEffect="fade" hideEffect="fade" width="780px" height="500px">
-
+              showEffect="fade" hideEffect="fade">
 
         <p:panel id="conceptTranslateNotValid" style="width: 100%; border: hidden;">
 
-            <div class="ui-g">
+            <div class="ui-fluid ui-g">
                 <div class="ui-g-12 ui-md-6 ui-lg-6">
 
                     <p:panel style="width: 100%;">
 
                         <h3>Descripción a trasladar</h3>
-                        <div class="ui-g">
-                            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                                DESCID:
-                            </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-10">
+
+                        <br/>
+
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            DESCID:
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-10">
                                 <h:outputText value="#{conceptBean.descriptionToTranslate.descriptionId}"/>
-                            </div>
                         </div>
-                        <div class="ui-g">
-                            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                                Tipo:
-                            </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-10">
-                                <h:outputText value="#{conceptBean.descriptionToTranslate.descriptionType.name}"/>
-                            </div>
+
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            Tipo:
                         </div>
-                        <div class="ui-g">
-                            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                                Término:
-                            </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-10">
-                                <h:outputText value="#{conceptBean.descriptionToTranslate.term}"/>
-                            </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-10">
+                            <h:outputText value="#{conceptBean.descriptionToTranslate.descriptionType.name}"/>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            Término:
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-10">
+                            <h:outputText value="#{conceptBean.descriptionToTranslate.term}"/>
                         </div>
 
                     </p:panel>
@@ -404,30 +402,27 @@
                     <p:panel style="width: 100%;">
                         <h3>Destino</h3>
 
-                        <div class="ui-g">
-                            <div class="ui-g-12 ui-md-6 ui-lg-3">
-                                <h:outputText value="Concept ID:"/>
-                            </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-9">
-                                <h:outputText value="#{conceptBean.conceptSMTKNotValid.conceptID}"/>
-                            </div>
+                        <br/>
+
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <h:outputText value="Concept ID:"/>
                         </div>
-                        <div class="ui-g">
-                            <div class="ui-g-12 ui-md-6 ui-lg-3">
-                                <h:outputText value="Descripción:"/>
-                            </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-9">
-                                <h:outputText value="#{conceptBean.conceptSMTKNotValid.descriptionFavorite.term}"/>
-                            </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-9">
+                            <h:outputText value="#{conceptBean.conceptSMTKNotValid.conceptID}"/>
                         </div>
 
-                        <div class="ui-g">
-                            <div class="ui-g-12 ui-md-6 ui-lg-3">
-                                <h:outputText value="Categoría:"/>
-                            </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-9">
-                                <h:outputText value="#{conceptBean.conceptSMTKNotValid.category.name}"/>
-                            </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <h:outputText value="Descripción:"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-9">
+                            <h:outputText value="#{conceptBean.conceptSMTKNotValid.descriptionFavorite.term}"/>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <h:outputText value="Categoría:"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-9">
+                            <h:outputText value="#{conceptBean.conceptSMTKNotValid.category.name}"/>
                         </div>
 
                     </p:panel>
@@ -435,16 +430,14 @@
             </div>
 
             <p:panel style="width: 100%;" styleClass="observationNoValid">
-                <div class="ui-fluid">
 
-                    <div class="Container">
-                        <div class="Container20 Responsive">
-                            <div class="ContainerIndent">
-                                <h:outputText value="Razón de No Válido: "/>
-                            </div>
+                <div class="ui-fluid ui-g">
+
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <h:outputText value="Razón de No Válido: "/>
                         </div>
 
-                        <div class="Container60 Responsive">
+                        <div class="ui-g-12 ui-md-6 ui-lg-10">
                             <p:selectOneMenu value="#{conceptBean.observationNoValid}"
                                              autoWidth="false"
                                              styleClass="#{descriptionBeans.error}"
@@ -458,19 +451,18 @@
                             </p:selectOneMenu>
                         </div>
 
-                        <div class="Container20 Responsive">
-                            <p:commandButton rendered="#{conceptBean.observationNoValid!=null}"
+                        <div class="ui-g-12 ui-md-12 ui-lg-12">
+                            <p:commandButton rendered="#{conceptBean.observationNoValid!=null}" style="width: auto; float: right"
                                              title="Quitar observacion" icon="fa fa-remove" value="Quitar"
                                              update="@(.observationNoValid)">
                                 <f:setPropertyActionListener value="" target="#{conceptBean.observationNoValid}"/>
                             </p:commandButton>
                         </div>
 
-                    </div>
                 </div>
             </p:panel>
 
-            <div class="ui-g">
+            <div class="ui -fluid ui-g">
                 <div class="ui-g-12 ui-md-6 ui-lg-12">
                     <p:panel style="width: 100%;" styleClass="suggestedConcepts">
                         <h3>Conceptos sugeridos:</h3>
@@ -518,7 +510,7 @@
         </p:panel>
 
         <div style="text-align: center;">
-            <p:commandButton update="createEdit" icon="fa fa-exchange" value="Trasladar a no valido"
+            <p:commandButton update="createEdit" icon="fa fa-exchange" value="Trasladar a no valido" style="float: right; width: auto"
                              actionListener="#{descriptionBeans.traslateDescriptionNotValid}">
             </p:commandButton>
         </div>

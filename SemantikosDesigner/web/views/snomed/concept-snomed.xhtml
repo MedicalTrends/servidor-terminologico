@@ -78,11 +78,13 @@
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
                                 <p:link value="#{relationship.typeConcept.getRepresentation()}" outcome="/views/snomed/concept-snomed">
                                     <f:param name="conceptID" value="#{relationship.typeConcept.idSnomedCT}" />
+                                    <f:param name="conceptSMTKID" value="#{conceptSCT.conceptSMTKID}" />
                                 </p:link>
                             </div>
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
                                 <p:link value="#{relationship.destinationConcept.getRepresentation()}" outcome="/views/snomed/concept-snomed">
                                     <f:param name="conceptID" value="#{relationship.destinationConcept.idSnomedCT}" />
+                                    <f:param name="conceptSMTKID" value="#{conceptSCT.conceptSMTKID}" />
                                 </p:link>
                             </div>
                         </p:repeat>
@@ -124,11 +126,13 @@
                             <p:column headerText="Tipo Relación" style="font-weight: bold">
                                 <p:link value="#{relationship.typeConcept.getRepresentation()}" outcome="/views/snomed/concept-snomed">
                                     <f:param name="conceptID" value="#{relationship.typeConcept.idSnomedCT}" />
+                                    <f:param name="conceptSMTKID" value="#{conceptSCT.conceptSMTKID}" />
                                 </p:link>
                             </p:column>
                             <p:column headerText="Destino">
                                 <p:link value="#{relationship.destinationConcept.getRepresentation()}" outcome="/views/snomed/concept-snomed">
                                     <f:param name="conceptID" value="#{relationship.destinationConcept.idSnomedCT}" />
+                                    <f:param name="conceptSMTKID" value="#{conceptSCT.conceptSMTKID}" />
                                 </p:link>
                             </p:column>
                         </p:dataTable>

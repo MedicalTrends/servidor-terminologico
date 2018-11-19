@@ -111,18 +111,12 @@ public class SCTTypeBean implements Serializable {
             return emptyList();
         }
 
-        /* La búsqueda empieza aquí */
-        if(searchOption.equals("term")) {
-            concepts = cstManager.findConceptsByPattern(patron, relationshipGroup, 0, pageSize);
+        try {
+            Long.parseLong(patron);
+            concepts = cstManager.findConceptsByConceptID(new Long(patron), relationshipGroup);
         }
-        else{
-            try {
-                concepts = cstManager.findConceptsByConceptID(new Long(patron), relationshipGroup);
-            }
-            catch (NumberFormatException e) {
-                return null;
-            }
-
+        catch(NumberFormatException e) {
+            concepts = cstManager.findConceptsByPattern(patron, relationshipGroup, 0, pageSize);
         }
 
         //Ajax.update("mainForm:j_idt109:j_idt2294:0:j_idt2296:findConceptSCT_panel");

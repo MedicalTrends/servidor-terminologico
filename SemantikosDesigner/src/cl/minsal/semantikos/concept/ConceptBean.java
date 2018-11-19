@@ -500,6 +500,9 @@ public class ConceptBean implements Serializable {
             relationshipBindingBR.brSCT001(concept, relationship);
 
             if(relationshipDefinition.isSNOMEDCT()) {
+                if(sctTypeBean.getRelationshipGroup() == null) {
+                    throw new Exception("Debe ingresar un valor para el atributo grupo");
+                }
                 BasicTypeValue<Integer> targetGroup = new BasicTypeValue<Integer>(sctTypeBean.getRelationshipGroup());
                 relationship.getRelationshipAttributes().add(new RelationshipAttribute( relationshipDefinition.getGroupAttributeDefinition(),relationship,targetGroup));
                 //Collections.reverse(relationship.getRelationshipAttributes());

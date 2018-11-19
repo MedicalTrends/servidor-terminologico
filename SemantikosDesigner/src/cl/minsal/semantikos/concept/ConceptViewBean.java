@@ -55,6 +55,8 @@ public class ConceptViewBean implements Serializable {
 
     String conceptID;
 
+    private boolean showMore = false;
+
     List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
 
     public List<ConceptAuditAction> getAuditAction() {
@@ -70,10 +72,16 @@ public class ConceptViewBean implements Serializable {
     }
 
     public void setConceptID(String conceptID) {
-        this.conceptID = conceptID;
-        selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
-        selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
-        auditAction = auditManager.getConceptAuditActions(selectedConcept, true);
+        try {
+            Long.parseLong(conceptID);
+            this.conceptID = conceptID;
+            selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
+            selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
+            auditAction = auditManager.getConceptAuditActions(selectedConcept, true);
+        }
+        catch (NumberFormatException e) {
+            logger.warn(e.getMessage());
+        }
     }
 
     //Inicializacion del Bean
@@ -250,6 +258,14 @@ public class ConceptViewBean implements Serializable {
     public String getDateCreationFormat(Timestamp timestamp) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(timestamp);
+    }
+
+    public boolean isShowMore() {
+        return showMore;
+    }
+
+    public void setShowMore(boolean showMore) {
+        this.showMore = showMore;
     }
 
 }

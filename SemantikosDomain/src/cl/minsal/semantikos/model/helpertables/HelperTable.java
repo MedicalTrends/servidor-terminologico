@@ -78,6 +78,19 @@ public class HelperTable implements TargetDefinition, Serializable {
         return showableColumns;
     }
 
+    public List<HelperTableColumn> getColumnsButSTK() {
+
+        List<HelperTableColumn> columns = new ArrayList<>();
+
+        for (HelperTableColumn column: getColumns()) {
+            if(!column.getName().equals("CONCEPTO_STK") && !column.getName().equals("CONCEPTO STK")) {
+                columns.add(column);
+            }
+        }
+
+        return columns;
+    }
+
     public void setColumns(List<HelperTableColumn> columns) {
         this.columns = columns;
     }

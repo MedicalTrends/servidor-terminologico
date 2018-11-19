@@ -341,7 +341,7 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     border-top: 0px solid rgb(219, 219, 219) !important;
     border-bottom: 1px solid darkgrey !important;
     margin: 10px !important;
-    margin-bottom: 1em !important;
+    margin-bottom: .5em !important;
 }
 
 .value {
@@ -358,5 +358,9 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 }
 
 .layout-main {
+    max-width: 1200px;
+}
+
+.ui-dialog {
     max-width: 1200px;
 }

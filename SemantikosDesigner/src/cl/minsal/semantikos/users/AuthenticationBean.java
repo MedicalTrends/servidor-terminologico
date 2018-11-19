@@ -33,6 +33,7 @@ import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static cl.minsal.semantikos.model.users.ProfileFactory.*;
@@ -56,6 +57,8 @@ public class AuthenticationBean {
     private String passwordError = "";
 
     private User loggedUser;
+
+    private String name;
 
     //@EJB(name = "AuthenticationManagerEJB")
     AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
@@ -236,6 +239,14 @@ public class AuthenticationBean {
         this.passwordError = passwordError;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void initMenu() {
 
         categories =  categoryManager.getCategories();
@@ -383,6 +394,23 @@ public class AuthenticationBean {
 
     public void setMainMenuModel(MenuModel mainMenuModel) {
         this.mainMenuModel = mainMenuModel;
+    }
+
+    public List<Category> getCategoriesByName() {
+
+        List<Category> categoriesByName = new ArrayList<>();
+
+        if(name == null || name.isEmpty()) {
+            return categories;
+        }
+
+        for (Category category : categories) {
+            if(category.getName().toLowerCase().contains(name.toLowerCase())) {
+                categoriesByName.add(category);
+            }
+        }
+
+        return  categoriesByName;
     }
 
 }
