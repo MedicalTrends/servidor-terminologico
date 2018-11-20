@@ -250,7 +250,6 @@ public class HelperTableEditBean implements Serializable {
         newRow.setValid(false);
         newRow.setHelperTableId(table.getId());
 
-
         newRow.setCells(new ArrayList<HelperTableData>());
         for (HelperTableColumn column : table.getColumns()) {
             HelperTableData data = createCell(column, newRow);
@@ -269,7 +268,6 @@ public class HelperTableEditBean implements Serializable {
 
         return data;
     }
-
 
     public List<HelperTableRow> getValidTableRows(HelperTable table) {
         return getReferencedTableRows(table.getId());
@@ -457,7 +455,7 @@ public class HelperTableEditBean implements Serializable {
         if(someRow!=null){
             helperTable.getRows().add(someRow);
         }
-        if(id==0){
+        if(id==0) {
             chargeRow(helperTable);
         }
 
@@ -572,6 +570,15 @@ public class HelperTableEditBean implements Serializable {
         }
         sheet.commitUpdates();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Actualización exitosa", Integer.toString(rowUpdates) + " registros actualizados"));
+    }
+
+    public void addNewRow() {
+        manager.insertRow(helperTableRowPlaceHolder, authenticationBean.getLoggedUser().getEmail());
+        helperTableRowPlaceHolder.setCreationDate(new Timestamp(System.currentTimeMillis()));
+        helperTableRowPlaceHolder.setCreationUsername(authenticationBean.getLoggedUser().getEmail());
+        helperTableRowPlaceHolder.setLastEditDate(new Timestamp(System.currentTimeMillis()));
+        helperTableRowPlaceHolder.setLastEditUsername(authenticationBean.getLoggedUser().getEmail());
+        helperTableSelected.getRows().add(helperTableRowPlaceHolder);
     }
 
 }

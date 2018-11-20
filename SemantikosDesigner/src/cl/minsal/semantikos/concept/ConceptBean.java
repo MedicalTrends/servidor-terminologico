@@ -535,12 +535,19 @@ public class ConceptBean implements Serializable {
             }
 
             for (RelationshipAttributeDefinition attributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
-                if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) || changeIndirectMultiplicity(relationship, relationshipDefinition, attributeDefinition)) {
+                if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition))) {
                     messageBean.messageError("Información incompleta para agregar " + relationshipDefinition.getName());
                     categoryBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
                     resetPlaceHolders();
                     return;
                 }
+            }
+
+            if(!autogenerateBean.checkDynamicMultiplicity(relationship)) {
+                messageBean.messageError("Información incompleta para agregar " + relationshipDefinition.getName());
+                categoryBean.augmentRelationshipPlaceholders(category, concept, relationshipPlaceholders);
+                resetPlaceHolders();
+                return;
             }
 
             // Se setea la definición pasada por parámetro, para rescatar posibles modificaciones a nivel de vista
@@ -1136,7 +1143,7 @@ public class ConceptBean implements Serializable {
     }
 
     public void setPendingTerms(boolean pendingTerms) {
-        if(pendingTerms){
+        if(pendingTerms) {
             for (PendingTerm pendingTerm : pendingBrowserBean.getTermsSelected()) {
                 concept.addDescriptionWeb(new DescriptionWeb(pendingTerm.getRelatedDescription()));
             }

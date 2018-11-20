@@ -446,4 +446,42 @@ public class AutogenerateBean {
 
     }
 
+    public boolean checkDynamicMultiplicity(Relationship relationship) {
+
+        int potencia = 0;
+        int pp = 0;
+
+        // Chequear consistencia bidireccional entre cantidad potencia y unidad potencia
+        for (RelationshipAttribute firstAttribute : relationship.getRelationshipAttributes()) {
+            // Si existe cantidad potencia --> debe existir unidad potencia
+            if(firstAttribute.getRelationAttributeDefinition().isCantidadPotenciaAttribute()) {
+                potencia++;
+            }
+            if(firstAttribute.getRelationAttributeDefinition().isUnidadPotenciaAttribute()) {
+                potencia--;
+            }
+        }
+        // Si no está balanceado, levantar excepción
+        if(potencia != 0) {
+            return false;
+        }
+
+        // Chequear consistencia bidireccional entre cantidad pp y unidad pp
+        for (RelationshipAttribute firstAttribute : relationship.getRelationshipAttributes()) {
+            // Si existe cantidad potencia --> debe existir unidad potencia
+            if(firstAttribute.getRelationAttributeDefinition().isCantidadPPAttribute()) {
+                pp++;
+            }
+            if(firstAttribute.getRelationAttributeDefinition().isUnidadPPAttribute()) {
+                pp--;
+            }
+        }
+        // Si no está balanceado, levantar excepción
+        if(pp != 0) {
+            return false;
+        }
+
+        return true;
+    }
+
 }

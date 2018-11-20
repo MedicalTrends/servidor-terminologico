@@ -83,7 +83,7 @@ public class FindConcept implements Serializable{
                     return null;
                 }
 
-                findConcepts=conceptManager.findConcepts(pattern,selectedCategories.isEmpty()?null:selectedCategories,null,true);
+                findConcepts=conceptManager.findConcepts(pattern,selectedCategories,null,true);
                 return findConcepts;
             }
         }
@@ -203,8 +203,6 @@ public class FindConcept implements Serializable{
     }
 
     public void setSelectedCategories(List<Category> selectedCategories) {
-        if(selectedCategories != null) {
-            this.selectedCategories = selectedCategories;
-        }
+        this.selectedCategories = selectedCategories;
     }
 }

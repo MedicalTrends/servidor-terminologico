@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.browser;
 
+import cl.minsal.semantikos.Constants;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.users.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.*;
@@ -290,7 +291,8 @@ public class PendingBrowserBean implements Serializable {
 
         if(!termsSelected.isEmpty()){
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categorySelected.getId() +"&idConcept=0&favoriteDescription=&pendingTerms=true");
+            //eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categorySelected.getId() +"&idConcept=0&favoriteDescription=&pendingTerms=true");
+            eContext.redirect(eContext.getRequestContextPath() + Constants.VIEWS_FOLDER + "/concepts/new/" + categorySelected.getId() + "/0/*/true");
 
         }else{
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se han seleccionado términos"));

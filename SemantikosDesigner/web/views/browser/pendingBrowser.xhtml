@@ -29,7 +29,7 @@
 
             <p:separator styleClass="heading-separator" style="margin-bottom: 0px"/>
 
-            <p:outputPanel id="filters" styleClass="filtros">
+            <p:outputPanel id="filters" styleClass="filtros filterStatus">
 
                 <div class="ui-fluid">
 
@@ -78,6 +78,21 @@
 
                         </div>
 
+                        <div class="ui-g-0 ui-md-4 ui-lg-6"></div>
+
+                        <p:repeat value="#{pendingBrowserBean.pendingQuery.categories}" var="category">
+                            <div class="ui-g-12 ui-md-4 ui-lg-2" style="padding-bottom: 0px">
+                                            <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
+                                                <p:commandLink actionListener="#{pendingBrowserBean.pendingQuery.categories.remove(category)}"
+                                                               update="@(.browserTable),@(.filterStatus)" style="float: right">
+                                                    <i class="ui-icon ui-icon-close" />
+                                                </p:commandLink>
+                                                <span class="ui-autocomplete-token-label" style="font-size: small;">#{category.name}</span>
+                                            </span>
+                            </div>
+                        </p:repeat>
+
+
                     </div>
 
                 </div>
@@ -105,7 +120,7 @@
                 <p:ajax event="rowUnselectCheckbox" update="@(.globalActions)" />
                 <p:ajax event="toggleSelect" update="@(.globalActions)" />
 
-                <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+                <p:column selectionMode="multiple" style="text-align:center" />
 
                 <p:column headerText="Categoría" sortBy="#{1}" >
                     <h:outputText value="#{pendingTerm.category.name}"/>
@@ -115,11 +130,11 @@
                     <h:outputText value="#{pendingTerm.term}"/>
                 </p:column>
 
-                <p:column headerText="DESCID" style="width: 10%" sortBy="#{3}">
+                <p:column headerText="DESCID" sortBy="#{3}">
                     <h:outputText value="#{pendingTerm.relatedDescription.descriptionId}"/>
                 </p:column>
 
-                <p:column headerText="Usos" style="width: 10%" sortBy="#{4}">
+                <p:column headerText="Usos" sortBy="#{4}">
                     <h:outputText value="#{pendingTerm.relatedDescription.uses}"/>
                 </p:column>
 
@@ -131,7 +146,7 @@
                     <h:outputText value="#{pendingTerm.observation}"/>
                 </p:column>
 
-                <p:column style="width: 10%">
+                <p:column>
                     <f:facet name="header">
                         <p:outputPanel styleClass="globalActions">
                             <p:outputPanel rendered="#{not empty pendingBrowserBean.termsSelected}">
@@ -184,17 +199,21 @@
                     <p:outputPanel rendered="#{pendingBrowserBean.termSelected != null and empty pendingBrowserBean.termsSelected}">
 
                         <h3>Descripción a trasladar</h3>
-                        <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
+                        <div class="ui-fluid ui-g">
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                <p:outputLabel id="transLabel" for="descidTrans" value="DESCID"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-8 ui-lg-4">
+                                <h:outputText id="descidTrans" value="#{pendingBrowserBean.termSelected.relatedDescription.descriptionId}"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                <p:outputLabel id="transLabelTerm" for="descidTransTerm" value="Termino"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-8 ui-lg-4">
+                                <h:outputText id="descidTransTerm" value="#{pendingBrowserBean.termSelected.relatedDescription.term}"/>
+                            </div>
 
-                            <p:outputLabel id="transLabel" for="descidTrans" value="DESCID"/>
-                            <h:outputText id="descidTrans"
-                                          value="#{pendingBrowserBean.termSelected.relatedDescription.descriptionId}"/>
-
-                            <p:outputLabel id="transLabelTerm" for="descidTransTerm" value="Termino"/>
-                            <h:outputText id="descidTransTerm"
-                                          value="#{pendingBrowserBean.termSelected.relatedDescription.term}"/>
-
-                        </h:panelGrid>
+                        </div>
 
                     </p:outputPanel>
 
@@ -214,47 +233,61 @@
 
                     <h3>Concepto Destino</h3>
 
-                    <div class="ui-fluid">
+                    <p:outputPanel styleClass="selectConcept">
 
-                        <p:panelGrid columns="3"  style="width: 100%" styleClass="ui-panelgrid-blank"
-                                     columnClasses="ui-grid-col-3,ui-grid-col-6,ui-grid-col-3" >
+                        <div class="ui-fluid ui-g">
 
-                            <p:autoComplete id="inputFindConcept" scrollHeight="200" size="5"
-                                            style="width: 300px;margin: 10px;"
-                                            inputStyle="width: 300px;margin: 10px;"
-                                            converter="conceptConverter" var="concept"
-                                            value="#{pendingBrowserBean.conceptSelected}"
-                                            completeMethod="#{findConceptBean.getConceptSearchInputAndCategories}"
-                                            itemLabel="#{concept.descriptionFavorite.term}"
-                                            itemValue="#{concept}"
-                                            emptyMessage="No se encontraron conceptos relacionados"
-                                            placeholder="Buscar concepto por término"
-                                            disabled="#{conceptBean.conceptSMTKTranslateDes!=null}">
-                                <p:ajax event="itemSelect" update="@(.pending-description)" />
+                            <div class="ui-g-12 ui-md-6 ui-lg-6">
 
-                            </p:autoComplete>
+                                <p:outputPanel styleClass="search">
 
-                            <p:selectOneMenu  value="#{findConceptBean.categorySelected}"
-                                              converter="omnifaces.SelectItemsConverter" panelStyle="width:180px"
-                                              effect="fade" var="c" style="width:160px" filter="true"
-                                              filterMatchMode="startsWith"
-                                              disabled="#{pendingBrowserBean.conceptSelected!=null}">
-                                <p:ajax event="itemSelect" />
-                                <f:selectItem itemLabel="Seleccione una categoría" itemDisabled="true"/>
-                                <f:selectItems value="#{findConceptBean.categoryList}" var="category"
-                                               itemLabel="#{category.name}" itemValue="#{category}"/>
-                                <p:column>
-                                    <h:outputText value="#{c.name}"/>
-                                </p:column>
-                            </p:selectOneMenu>
+                                    <p:autoComplete id="inputFindConcept" scrollHeight="200" size="5"
+                                                    converter="conceptConverter" var="concept"
+                                                    value="#{pendingBrowserBean.conceptSelected}"
+                                                    completeMethod="#{findConceptBean.getConceptSearchInputAndCategories}"
+                                                    itemLabel="#{concept.descriptionFavorite.term}"
+                                                    itemValue="#{concept}"
+                                                    emptyMessage="No se encontraron conceptos relacionados"
+                                                    placeholder="Buscar concepto por término"
+                                                    disabled="#{conceptBean.conceptSMTKTranslateDes!=null}">
+                                        <p:ajax event="itemSelect" update="@(.pending-description)" />
 
-                            <p:commandButton value="Limpiar selección" update="@(.pending-description)">
-                                <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
-                                <f:setPropertyActionListener value="" target="#{pendingBrowserBean.conceptSelected}"/>
-                            </p:commandButton>
+                                    </p:autoComplete>
 
-                        </p:panelGrid>
+                                    <i class="fa fa-search fa-lg" />
+
+                                </p:outputPanel>
+
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6 ui-lg-6">
+
+                                <p:selectOneMenu  value="#{findConceptBean.categorySelected}"
+                                                  converter="omnifaces.SelectItemsConverter"
+                                                  effect="fade" var="c" filter="true"
+                                                  filterMatchMode="startsWith"
+                                                  disabled="#{pendingBrowserBean.conceptSelected!=null}">
+                                    <p:ajax event="itemSelect" update="@(.selectConcept)" />
+                                    <f:selectItem itemLabel="Seleccione una categoría" itemDisabled="true"/>
+                                    <f:selectItems value="#{findConceptBean.categoryList}" var="category"
+                                                   itemLabel="#{category.name}" itemValue="#{category}"/>
+                                    <p:column>
+                                        <h:outputText value="#{c.name}"/>
+                                    </p:column>
+                                </p:selectOneMenu>
+
+                                <p:commandLink value="Limpiar selección" update="@(.pending-description)" style="float: right; padding-top: 0.5em"
+                                               rendered="#{findConceptBean.categorySelected != null}">
+                                    <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
+                                    <f:setPropertyActionListener value="" target="#{findConceptBean.selectedCategories}"/>
+                                    <f:setPropertyActionListener value="" target="#{pendingBrowserBean.conceptSelected}"/>
+                                </p:commandLink>
+
+                            </div>
+
                     </div>
+
+                    </p:outputPanel>
 
                     <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="6">
 
@@ -413,8 +446,14 @@
 
                         </h:panelGrid>
                     </div>
-                    <p:commandButton value="Crear concepto" actionListener="#{pendingBrowserBean.createNewConcept}"
-                                     update="@(.create-concept),@(.browserTable)" />
+
+                    <div class="ui-fluid ui-g">
+                        <div class="ui-g-12 ui-md-12 ui-lg-12">
+                            <p:commandButton value="Crear concepto" style="float: right; width: auto"
+                                             actionListener="#{pendingBrowserBean.createNewConcept}"
+                                             update="@(.create-concept),@(.browserTable)" />
+                        </div>
+                    </div>
 
                 </p:panel>
             </p:dialog>

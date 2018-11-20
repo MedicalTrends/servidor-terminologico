@@ -11,6 +11,7 @@ import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.refsets.RefSet;
+import org.primefaces.event.data.PageEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.slf4j.Logger;
@@ -82,6 +83,10 @@ public class DescriptionsBrowserBean implements Serializable {
      */
     private boolean isFilterChanged;
 
+    private int results;
+
+    private int page = 1;
+
 
     @ManagedProperty(value = "#{authenticationBean}")
     private transient AuthenticationBean authenticationBean;
@@ -143,6 +148,8 @@ public class DescriptionsBrowserBean implements Serializable {
 
                 this.setRowCount(queryManager.countQueryResults(descriptionQuery));
 
+                results = this.getRowCount();
+
                 return descriptions;
             }
 
@@ -203,6 +210,22 @@ public class DescriptionsBrowserBean implements Serializable {
         this.authenticationBean = authenticationBean;
     }
 
+    public int getResults() {
+        return results;
+    }
+
+    public void setResults(int results) {
+        this.results = results;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
     public RefSetManager getRefSetManager() {
         return refSetManager;
     }
@@ -225,6 +248,13 @@ public class DescriptionsBrowserBean implements Serializable {
 
     public void setFilterChanged(boolean filterChanged) {
         isFilterChanged = filterChanged;
+    }
+
+    public void updatePage(PageEvent event) {
+        int pageindex = event.getPage();
+        page = pageindex + 1;
+        //RequestContext reqCtx = RequestContext.getCurrentInstance();
+        //reqCtx.execute("PF('conceptTableExcel').getPaginator().setPage("+pageindex+")");
     }
 }
 

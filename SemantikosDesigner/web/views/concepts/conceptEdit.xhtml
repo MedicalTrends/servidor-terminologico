@@ -245,7 +245,7 @@
                                           icon="fa fa-arrow-left"/>
 
                                 <p:button outcome="/views/concepts/conceptView"
-                                          style="float: right"
+                                          style="float: right" rendered="#{conceptBean.concept.persistent}"
                                           icon="fa fa-eye">
                                     <f:param name="conceptID" value="#{conceptBean.concept.conceptID}" />
                                 </p:button>
@@ -259,7 +259,7 @@
                                                  type="submit" process="mainForm"
                                                  style="float: right"
                                                  update="growl, mainForm">
-                                    <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?" icon="ui-icon-alert"/>
+                                    <p:confirm header="Confirmar Acción" message="¿Desea deshacer los cambios?" icon="ui-icon-alert"/>
                                 </p:commandButton>
 
                                 <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"

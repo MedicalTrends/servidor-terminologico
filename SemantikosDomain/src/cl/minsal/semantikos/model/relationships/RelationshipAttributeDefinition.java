@@ -25,6 +25,8 @@ public class RelationshipAttributeDefinition implements Serializable {
 
     private static final String RELATIONSHIP_TYPE_ATTRIBUTE = "tipo de relación";
 
+    private static final String CANTIDAD_POTENCIA_ATTRIBUE = "cantidad potencia";
+
     private static final String UNIDAD_POTENCIA_ATTRIBUE = "unidad potencia";
 
     private static final String CANTIDAD_PP_ATTRIBUE = "cantidad pp";
@@ -86,6 +88,10 @@ public class RelationshipAttributeDefinition implements Serializable {
 
     public boolean isRelationshipTypeAttribute(){
         return this.getName().equalsIgnoreCase(RELATIONSHIP_TYPE_ATTRIBUTE);
+    }
+
+    public boolean isCantidadPotenciaAttribute(){
+        return this.getName().equalsIgnoreCase(CANTIDAD_POTENCIA_ATTRIBUE);
     }
 
     public boolean isUnidadPotenciaAttribute(){

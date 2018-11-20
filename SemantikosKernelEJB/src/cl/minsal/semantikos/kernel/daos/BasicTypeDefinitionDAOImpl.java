@@ -228,8 +228,8 @@ public class BasicTypeDefinitionDAOImpl implements BasicTypeDefinitionDAO {
                 case FLOAT_TYPE:
                     Float lowerBound2 = DaoTools.getFloat(rs,"lower_bound_float_value");
                     Float upperBound2 = DaoTools.getFloat(rs,"upper_bound_float_value");
-                    interval.setLowerBoundary(lowerBound2==null?Float.MIN_VALUE:lowerBound2);
-                    interval.setUpperBoundary(upperBound2==null?Float.MAX_VALUE:upperBound2);
+                    interval.setLowerBoundary(lowerBound2==null?Integer.MIN_VALUE:lowerBound2);
+                    interval.setUpperBoundary(upperBound2==null?Integer.MAX_VALUE:upperBound2);
                     return interval;
 
                 case DATE_TYPE:

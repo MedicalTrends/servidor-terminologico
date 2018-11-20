@@ -28,19 +28,13 @@
 
                     <p:separator styleClass="heading-separator" style="margin-bottom: 0px"/>
 
-                    <p:outputPanel id="filters" legend="Filtros" styleClass="filtros">
+                    <p:outputPanel id="filters" legend="Filtros" styleClass="filtros filterStatus">
 
                         <div class="ui-fluid">
 
                                 <div class="ui-g">
 
-                                    <div class="ui-g-12 ui-md-4 ui-lg-2">
-
-                                        <p:outputLabel value="Patrón" />
-
-                                    </div>
-
-                                    <div class="ui-g-12 ui-md-8 ui-lg-10">
+                                    <div class="ui-g-12 ui-md-12 ui-lg-12">
 
                                         <p:outputPanel styleClass="search">
                                             <p:inputText value="#{descriptionsBrowserBean.descriptionQuery.query}" placeholder="Buscar..." onkeyup="return (this.value.length >= 3 || this.value.length ==0)">
@@ -127,6 +121,51 @@
 
                                     </div>
 
+                                    <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding-bottom: 0px">
+                                        <p:outputPanel styleClass="search2">
+                                            <p:outputLabel id="summary" style="font-size: small;"
+                                                           value="Página #{descriptionsBrowserBean.page} de #{descriptionsBrowserBean.results} términos"/>
+                                            <p:remoteCommand name="onload" update="summary"
+                                                             autoRun="true" />
+                                        </p:outputPanel>
+                                    </div>
+
+                                    <p:repeat value="#{descriptionsBrowserBean.descriptionQuery.categories}" var="category">
+                                        <div class="ui-g-12 ui-md-4 ui-lg-2" style="padding-bottom: 0px">
+                                            <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
+                                                <p:commandLink actionListener="#{descriptionsBrowserBean.descriptionQuery.categories.remove(category)}"
+                                                               update="@(.browserTable),@(.filterStatus)" style="float: right">
+                                                    <i class="ui-icon ui-icon-close" />
+                                                </p:commandLink>
+                                                <span class="ui-autocomplete-token-label" style="font-size: small;">#{category.name}</span>
+                                            </span>
+                                        </div>
+                                    </p:repeat>
+
+                                    <p:repeat value="#{descriptionsBrowserBean.descriptionQuery.descriptionTypes}" var="descriptionType">
+                                        <div class="ui-g-12 ui-md-4 ui-lg-2" style="padding-bottom: 0px">
+                                            <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
+                                                <p:commandLink actionListener="#{descriptionsBrowserBean.descriptionQuery.descriptionTypes.remove(descriptionType)}"
+                                                               update="@(.browserTable),@(.filterStatus)" style="float: right">
+                                                    <i class="ui-icon ui-icon-close" />
+                                                </p:commandLink>
+                                                <span class="ui-autocomplete-token-label" style="font-size: small;">#{descriptionType.name}</span>
+                                            </span>
+                                        </div>
+                                    </p:repeat>
+
+                                    <p:repeat value="#{descriptionsBrowserBean.descriptionQuery.refSets}" var="refSet">
+                                        <div class="ui-g-12 ui-md-4 ui-lg-2" style="padding-bottom: 0px">
+                                            <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
+                                                <p:commandLink actionListener="#{descriptionsBrowserBean.descriptionQuery.refSets.remove(refSet)}"
+                                                               update="@(.browserTable),@(.filterStatus)" style="float: right">
+                                                    <i class="ui-icon ui-icon-close" />
+                                                </p:commandLink>
+                                                <span class="ui-autocomplete-token-label" style="font-size: small;">#{refSet.name}</span>
+                                            </span>
+                                        </div>
+                                    </p:repeat>
+
                                 </div>
 
                             </div>
@@ -144,6 +183,8 @@
                                  paginator="true" lazy="true" dynamic="true" reflow="true"
                                  paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                  emptyMessage="No se han encontrado descripciones con los criterios utilizados">
+
+                        <p:ajax event="page" listener="#{descriptionsBrowserBean.updatePage}" oncomplete="" update="@(.search2)" />
 
                         <p:growl id="growl" showDetail="true" showSummary="true"/>
 

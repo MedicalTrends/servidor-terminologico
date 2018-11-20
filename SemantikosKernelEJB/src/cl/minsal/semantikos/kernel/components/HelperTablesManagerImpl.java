@@ -92,7 +92,6 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
     @Override
     public HelperTableRow insertRow(HelperTableRow newRow,String username) {
 
-
         newRow.setCreationDate(new Timestamp(System.currentTimeMillis()));
         newRow.setCreationUsername(username);
         newRow.setLastEditDate(new Timestamp(System.currentTimeMillis()));

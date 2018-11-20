@@ -65,7 +65,7 @@
                             <p:outputPanel styleClass="search">
                                 <p:inputText placeholder="Buscar..." value="#{authenticationBean.name}"
                                              style="margin-bottom: 1em">
-                                    <p:ajax event="keyup" update="@(.categories)" process="@this"/>
+                                    <p:ajax event="keyup" update="@(.categories)" process="@this" oncomplete="loader();"/>
                                 </p:inputText>
                                 <i class="fa fa-search fa-lg"  />
                             </p:outputPanel>
@@ -205,7 +205,7 @@
 
                 <p:outputPanel rendered="#{profilePermissionsBeans.admin or profilePermissionsBeans.refSetAdmin}">
                 <div class="card card-w-title">
-                    <h1>ADMINISTRADORES</h1>
+                    <h1>ADMINISTRACIÓN</h1>
 
                     <ul class="activity-list">
                         <li>

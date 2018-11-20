@@ -37,7 +37,7 @@
 
                                     <p:inputText value="#{generalBrowserBean.generalQuery.query}" placeholder="Buscar..." style="width: 100%"
                                                  onkeyup="return (this.value.length >= 3 || this.value.length ==0)">
-                                        <p:ajax event="keyup" update="@(.browserTable),@(.search)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" delay="500" />
+                                        <p:ajax event="keyup" update="@(.browserTable),@(.search2)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" delay="500" />
                                     </p:inputText>
 
                                     <i class="fa fa-search fa-lg" />
@@ -60,7 +60,7 @@
                                 </p:commandButton>
                             </div>
                             <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding-bottom: 0px">
-                                <p:outputPanel styleClass="search">
+                                <p:outputPanel styleClass="search2">
                                     <p:outputLabel id="summary" style="font-size: small; padding-left: 0.3em"
                                                    value="Página #{generalBrowserBean.page} de #{generalBrowserBean.results} conceptos"/>
                                     <p:remoteCommand name="onload" update="summary"
@@ -87,7 +87,7 @@
 
                             <p:ajax event="rowToggle" listener="#{generalBrowserBean.onRowToggle}" />
 
-                            <p:ajax event="page" listener="#{generalBrowserBean.updatePage}" oncomplete="scrollTop();" update="@(.search)" />
+                            <p:ajax event="page" listener="#{generalBrowserBean.updatePage}" oncomplete="scrollTop();" update="@(.search2)" />
 
                             <p:column headerText="Término Preferido">
                                 <div class="ui-g dashboard">

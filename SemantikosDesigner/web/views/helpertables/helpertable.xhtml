@@ -62,7 +62,7 @@
                     <p:outputPanel styleClass="edit-data-panel">
 
                         <pe:sheet id="sheet" widgetVar="sheetWidget" value="#{helperTableEditBean.helperTableSelected.rows}"
-                                  var="row"
+                                  var="row" styleClass="sheet"
                                   height="400" rowKey="#{row.id}" showRowHeaders="true"
                                   resizableCols="true" resizableRows="false"
                                   sortBy="#{row.id}" sortOrder="ascending">
@@ -199,78 +199,80 @@
             </div>
         </div>
 
-        </h:form>
+            <p:dialog id="dialogNewRow" header="Nuevo registro" widgetVar="dialogNewRow" global="true"
+                      showEffect="fade" hideEffect="fade">
 
-        <p:dialog id="dialogNewRow" header="Nuevo registro" widgetVar="dialogNewRow" global="true"
-                  showEffect="fade" hideEffect="fade">
+                <p:outputPanel id="panelNewRow" styleClass="panelNewRow" style="width: 100%;">
 
-            <p:outputPanel id="panelNewRow" styleClass="panelNewRow" style="width: 100%;">
+                    <div class="ui-fluid">
 
-                <div class="ui-fluid">
-
-                    <div class="ui-g">
-                        <div class="ui-g-12 ui-md-6 ui-lg-2">
-                            Descripción:
-                        </div>
-                        <div class="ui-g-12 ui-md-6 ui-lg-10">
-                            <p:inputText value="#{helperTableEditBean.helperTableRowPlaceHolder.description}"/>
-                        </div>
-                        <p:repeat value="#{helperTableEditBean.helperTableSelected.getColumnsButSTK()}" var="column">
+                        <div class="ui-g">
                             <div class="ui-g-12 ui-md-6 ui-lg-2">
-                                <h:outputText value="#{column.description}:"/>
+                                Descripción:
                             </div>
                             <div class="ui-g-12 ui-md-6 ui-lg-10">
-                                <ui:repeat value="#{helperTableEditBean.helperTableRowPlaceHolder.getCellsByColumn(column)}" var="cell">
-                                    <p:inputText value="#{cell.stringValue}" rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1 }"/>
-
-                                    <p:selectOneMenu value="#{cell.booleanValue}" autoWidth="false"
-                                                     style="width: 70%"
-                                                     rendered="#{!column.foreignKey and column.helperTableDataTypeId == 2}">
-                                        <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
-                                        <f:selectItem itemLabel="false" itemValue="false"/>
-                                        <f:selectItem itemLabel="true" itemValue="true"/>
-                                    </p:selectOneMenu>
-
-                                    <p:inputNumber value="#{cell.intValue}" thousandSeparator=""
-                                                   rendered="#{!column.foreignKey and column.helperTableDataTypeId == 3 }"
-                                                   decimalPlaces="0"/>
-
-                                    <p:inputNumber value="#{cell.floatValue}"
-                                                   rendered="#{!column.foreignKey and column.helperTableDataTypeId == 4}"/>
-
-                                    <p:calendar value="#{cell.dateValue}"
-                                                rendered="#{!column.foreignKey and column.helperTableDataTypeId == 5}"
-                                                locale="es" navigator="true" pattern="dd-MM-yyyy"
-                                                mask="true"/>
-
-                                    <p:outputPanel rendered="#{column.foreignKey}">
-                                        <p:selectOneMenu value="#{cell.foreignKeyValue}"
-                                                         rendered="#{column.foreignKey }">
-                                            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
-                                            <f:selectItems
-                                                    value="#{helperTableEditBean.getReferencedTableRows(column.foreignKeyHelperTableId)}"
-                                                    var="fkTableRow" itemValue="#{fkTableRow.id}"
-                                                    itemLabel="#{fkTableRow.description}">
-                                            </f:selectItems>
-                                        </p:selectOneMenu>
-                                    </p:outputPanel>
-                                </ui:repeat>
+                                <p:inputText value="#{helperTableEditBean.helperTableRowPlaceHolder.description}"/>
                             </div>
+                            <p:repeat value="#{helperTableEditBean.helperTableSelected.getColumnsButSTK()}" var="column">
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <h:outputText value="#{column.description}:"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-10">
+                                    <ui:repeat value="#{helperTableEditBean.helperTableRowPlaceHolder.getCellsByColumn(column)}" var="cell">
+                                        <p:inputText value="#{cell.stringValue}" rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1 }"/>
 
-                        </p:repeat>
-                    </div>
+                                        <p:selectOneMenu value="#{cell.booleanValue}" autoWidth="false"
+                                                         style="width: 70%"
+                                                         rendered="#{!column.foreignKey and column.helperTableDataTypeId == 2}">
+                                            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                            <f:selectItem itemLabel="false" itemValue="false"/>
+                                            <f:selectItem itemLabel="true" itemValue="true"/>
+                                        </p:selectOneMenu>
 
-                    <div class="ui-g">
-                        <div class="ui-g-12 ui-md-12 ui-lg-12">
-                            <p:commandButton oncomplete="PF('dialogEditDescription').hide()" icon="fa fa-plus"
-                                             style="float: right" />
+                                        <p:inputNumber value="#{cell.intValue}" thousandSeparator=""
+                                                       rendered="#{!column.foreignKey and column.helperTableDataTypeId == 3 }"
+                                                       decimalPlaces="0"/>
+
+                                        <p:inputNumber value="#{cell.floatValue}"
+                                                       rendered="#{!column.foreignKey and column.helperTableDataTypeId == 4}"/>
+
+                                        <p:calendar value="#{cell.dateValue}"
+                                                    rendered="#{!column.foreignKey and column.helperTableDataTypeId == 5}"
+                                                    locale="es" navigator="true" pattern="dd-MM-yyyy"
+                                                    mask="true"/>
+
+                                        <p:outputPanel rendered="#{column.foreignKey}">
+                                            <p:selectOneMenu value="#{cell.foreignKeyValue}"
+                                                             rendered="#{column.foreignKey }">
+                                                <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                                <f:selectItems
+                                                        value="#{helperTableEditBean.getReferencedTableRows(column.foreignKeyHelperTableId)}"
+                                                        var="fkTableRow" itemValue="#{fkTableRow.id}"
+                                                        itemLabel="#{fkTableRow.description}">
+                                                </f:selectItems>
+                                            </p:selectOneMenu>
+                                        </p:outputPanel>
+                                    </ui:repeat>
+                                </div>
+
+                            </p:repeat>
                         </div>
+
+                        <div class="ui-g">
+                            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                <p:commandButton oncomplete="PF('dialogNewRow').hide()" value="Guardar"
+                                                 style="float: right; width: auto" update="@(.sheet)"
+                                                 process="@(.panelNewRow)"
+                                                 actionListener="#{helperTableEditBean.addNewRow()}" />
+                            </div>
+                        </div>
+
                     </div>
 
-                </div>
+                </p:outputPanel>
+            </p:dialog>
 
-            </p:outputPanel>
-        </p:dialog>
+        </h:form>
 
         <script type="text/javascript">
 

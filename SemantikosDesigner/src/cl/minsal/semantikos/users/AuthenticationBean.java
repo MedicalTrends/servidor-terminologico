@@ -164,6 +164,7 @@ public class AuthenticationBean {
 
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
         context.getSessionMap().remove(AUTH_KEY);
+        context.invalidateSession();
 
         email = null;
         password = null;
