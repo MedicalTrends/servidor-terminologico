@@ -35,9 +35,9 @@
 
                     </div>
 
-                        <p:dataTable rows="30" paginator="true" id="helperTablesTable" sortBy="#{helperTable.id}"
-                                 value="#{helperTableBean.administrableTables}" var="helperTable" widgetVar="helperTablesTable"
-                                 rowIndexVar="rowIndex1" style="margin-top: 20px">
+                    <p:dataTable rows="30" paginator="true" id="helperTablesTable" sortBy="#{helperTable.id}"
+                             value="#{helperTableBean.administrableTables}" var="helperTable" widgetVar="helperTablesTable"
+                             rowIndexVar="rowIndex1" style="margin-top: 20px">
 
                         <p:column headerText="ID" filterBy="#{helperTable.id}" filterMatchMode="contains" sortBy="#{helperTable.id}">
                             <h:outputText value="#{helperTable.id}"/>

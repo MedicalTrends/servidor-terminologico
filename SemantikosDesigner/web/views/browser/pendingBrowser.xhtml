@@ -82,16 +82,15 @@
 
                         <p:repeat value="#{pendingBrowserBean.pendingQuery.categories}" var="category">
                             <div class="ui-g-12 ui-md-4 ui-lg-2" style="padding-bottom: 0px">
-                                            <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
-                                                <p:commandLink actionListener="#{pendingBrowserBean.pendingQuery.categories.remove(category)}"
-                                                               update="@(.browserTable),@(.filterStatus)" style="float: right">
-                                                    <i class="ui-icon ui-icon-close" />
-                                                </p:commandLink>
-                                                <span class="ui-autocomplete-token-label" style="font-size: small;">#{category.name}</span>
-                                            </span>
+                                <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
+                                    <p:commandLink actionListener="#{pendingBrowserBean.pendingQuery.categories.remove(category)}"
+                                                   update="@(.browserTable),@(.filterStatus)" style="float: right">
+                                        <i class="ui-icon ui-icon-close" />
+                                    </p:commandLink>
+                                    <span class="ui-autocomplete-token-label" style="font-size: small;">#{category.name}</span>
+                                </span>
                             </div>
                         </p:repeat>
-
 
                     </div>
 
@@ -266,7 +265,7 @@
                                                   converter="omnifaces.SelectItemsConverter"
                                                   effect="fade" var="c" filter="true"
                                                   filterMatchMode="startsWith"
-                                                  disabled="#{pendingBrowserBean.conceptSelected!=null}">
+                                                  disabled="#{pendingBrowserBean.conceptSelected != null}">
                                     <p:ajax event="itemSelect" update="@(.selectConcept)" />
                                     <f:selectItem itemLabel="Seleccione una categoría" itemDisabled="true"/>
                                     <f:selectItems value="#{findConceptBean.categoryList}" var="category"

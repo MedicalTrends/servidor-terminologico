@@ -54,6 +54,8 @@ public class HelperTableEditBean implements Serializable {
 
     HelperTableRow helperTableRowPlaceHolder;
 
+    HelperTableRow helperTableRowSelected = null;
+
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
 
@@ -561,7 +563,7 @@ public class HelperTableEditBean implements Serializable {
                 continue;
             }
             try {
-                manager.updateRow(helperTableRow, user.getUsername());
+                manager.updateRow(helperTableRow, user.getEmail());
             } catch (RowInUseException e) {
                 e.printStackTrace();
             }
@@ -570,6 +572,18 @@ public class HelperTableEditBean implements Serializable {
         }
         sheet.commitUpdates();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Actualización exitosa", Integer.toString(rowUpdates) + " registros actualizados"));
+    }
+
+    public HelperTableRow getHelperTableRowSelected() {
+        return helperTableRowSelected;
+    }
+
+    public void rowSelectEvent(final SheetEvent event) {
+        final Sheet sheet = event.getSheet();
+        final int row = sheet.getSelectedRow();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Row Selected", String.format("Row %d selected.", row)));
+        HelperTableRow helperTableRow = (HelperTableRow) UIComponent.getCurrentComponent(context).getAttributes().get("row");
     }
 
     public void addNewRow() {

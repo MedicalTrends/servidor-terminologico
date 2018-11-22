@@ -129,7 +129,6 @@ public class ConceptExportMBean extends UINamingContainer {
     }
 
     public void setConceptSMTK(ConceptSMTK conceptSMTK) {
-
         this.conceptSMTK = conceptSMTK;
         auditAction = auditManager.getConceptAuditActions(conceptSMTK, true);
     }

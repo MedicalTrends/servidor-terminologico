@@ -13,6 +13,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 
+import static cl.minsal.semantikos.users.AuthenticationBean.AUTH_KEY;
+
 /**
  * Created by des01c7 on 15-12-16.
  */
@@ -33,6 +35,8 @@ public class TimeOutSessionBean {
 
     public void redirectSession() throws IOException {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+        eContext.getSessionMap().remove(AUTH_KEY);
+        eContext.invalidateSession();
         eContext.redirect(eContext.getRequestContextPath());
         return;
     }

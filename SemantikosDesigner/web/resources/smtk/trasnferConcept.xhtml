@@ -30,24 +30,27 @@
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
             <h3 align="left">Trasladar Concepto a...</h3>
-            <h:panelGrid columns="3" columnClasses="ui-grid-col-6,ui-grid-col-4,ui-grid-col-2">
-
-                <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categoría propuesta"/>
-                <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.targetCategory}" required="true" filter="true" filterMatchMode="startsWith"
-                    converter="CategoryConverter">
-                    <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category}"
-                                   itemLabel="#{category.name}"/>
-                    <p:ajax event="itemSelect" update="@(.conceptTranslate)"/>
-                </p:selectOneMenu>
-
-                <p:commandButton value="Trasladar" type="submit" process="@this"
-                                 actionListener="#{transferConceptBean.transferConcept(cc.attrs.conceptSMTK)}"
-                                 update="@(.conceptTranslate)" icon="fa fa-exchange">
-
-                    <p:confirm header="Confirmar Acción" message="¿Desea realmente trasladar este concepto?"
-                               icon="ui-icon-alert"/>
-                </p:commandButton>
-            </h:panelGrid>
+            <div class="ui-fluid ui-g">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categoría propuesta"/>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-8">
+                    <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.targetCategory}" required="true" filter="true" filterMatchMode="startsWith"
+                        converter="CategoryConverter">
+                        <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category}"
+                                       itemLabel="#{category.name}"/>
+                        <p:ajax event="itemSelect" update="@(.conceptTranslate)"/>
+                    </p:selectOneMenu>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:commandButton value="Trasladar" type="submit" process="@this" style="float: right; width: auto"
+                                     actionListener="#{transferConceptBean.transferConcept(cc.attrs.conceptSMTK)}"
+                                     update="@(.conceptTranslate)">
+                        <p:confirm header="Confirmar Acción" message="¿Desea realmente trasladar este concepto?"
+                                   icon="ui-icon-alert"/>
+                    </p:commandButton>
+                </div>
+            </div>
         </p:panel>
     </p:dialog>
 

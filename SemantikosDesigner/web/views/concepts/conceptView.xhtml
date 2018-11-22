@@ -19,7 +19,7 @@
 
                 <p:breadCrumb id="top-menu">
                     <p:menuitem value="Inicio" url="/views/home.xhtml" />
-                    <p:menuitem value="#{conceptView.selectedConcept.category.name}" url="/views/browser/generalBrowser.xhtml?idCategory=#{conceptView.selectedConcept.category.id}" />
+                    <p:menuitem value="#{conceptView.selectedConcept.category.name}" url="/views/browser/generalBrowser.xhtml?idCategory=#{conceptView.selectedConcept.category.id}" styleClass="loader-trigger" />
                     <p:menuitem value="#{conceptView.selectedConcept.conceptID}" url="#"
                                 rendered="#{conceptView.selectedConcept.persistent}" />
                     <p:menuitem value="*" url="#"
@@ -33,6 +33,12 @@
                     <h1 class="first-heading">
 
                         <p:outputLabel value="#{conceptView.selectedConcept.descriptionFavorite}"/>
+                        <p:outputLabel rendered="#{not conceptView.selectedConcept.modeled}">
+                            <i class="fa fa-edit" title="Borrador" style="color: #5C5C5C" />
+                        </p:outputLabel>
+                        <p:outputLabel rendered="#{conceptView.selectedConcept.modeled}">
+                            <i class="ui-icon ui-icon-public" title="Modelado" style="color: #5C5C5C" />
+                        </p:outputLabel>
                         <p:repeat
                                 offset="0"
                                 size="#{conceptView.selectedConcept.tags.size()}"
@@ -40,7 +46,7 @@
                                 varStatus="var"
                                 value="#{conceptView.selectedConcept.tags}"
                                 var="tag">
-                            <i class="fa fa-tags" style="font-size: small"/>
+                            <i class="fa fa-tags" style="font-size: small; color: #5C5C5C"/>
                             <h:outputText value=" #{tag}" style="font-size: small; background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
                             <h:outputText value=" " style="font-size: small; color: #545454"/>
 
@@ -276,9 +282,13 @@
 
                             <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                                <p:commandButton style="float: right" process="@this" icon="fa fa-ellipsis-h"
-                                               update="@(.more)" actionListener="#{conceptView.setShowMore(true)}">
-                                </p:commandButton>
+                                <p:selectBooleanButton style="float: right"
+                                                       onIcon="fa fa-ellipsis-h"
+                                                       offIcon="fa fa-ellipsis-h"
+                                                       onLabel="" offLabel=""
+                                                       value="#{conceptView.showMore}">
+                                    <p:ajax update="@(.more)" process="@this" />
+                                </p:selectBooleanButton>
 
                             </div>
 
@@ -349,18 +359,18 @@
 
                 </div>
 
-
                 <div class="ui-g ui-fluid">
 
                     <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding: 0px">
                         <p:button outcome="/views/browser/generalBrowser.xhtml?idCategory=#{conceptView.selectedConcept.category.id}"
-                                  style="float: right"
+                                  style="float: left" styleClass="loader-trigger"
                                   icon="fa fa-arrow-left"/>
                         <p:button outcome="/views/concepts/conceptEdit"
-                                  style="float: right"
+                                  style="float: right" styleClass="loader-trigger"
                                   icon="fa fa-pencil">
                             <f:param name="idConcept" value="#{conceptView.selectedConcept.id}" />
                         </p:button>
+                        <smtk:export-xls rendered="#{conceptView.selectedConcept.modeled}" />
                     </div>
 
                 </div>

@@ -15,9 +15,8 @@
 </composite:interface>
 <composite:implementation>
 
-    <p:panel header="Crossmaps Indirecto" toggleable="true"  toggleSpeed="500"
-             collapsed="true"
-             styleClass="crossmapindirect">
+    <p:fieldset legend="Crossmaps Indirecto"
+                styleClass="crossmapindirect">
 
         <f:facet name="#{(not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition))? 'footer':null}">
             <p:outputPanel>
@@ -47,7 +46,8 @@
                 <h:outputText value=""/>
             </p:column>
         </p:dataTable>
-    </p:panel>
+
+    </p:fieldset>
 
 </composite:implementation>
 </html>

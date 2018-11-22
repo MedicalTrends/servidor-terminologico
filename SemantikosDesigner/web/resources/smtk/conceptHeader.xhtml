@@ -19,7 +19,15 @@
     <!-- Indicadores -->
     <div class="card card-w-title">
 
-    <h1 class="first-heading">#{cc.attrs.concept.persistent?cc.attrs.concept.descriptionFavorite:'Nuevo Concepto Borrador'}</h1>
+    <h1 class="first-heading">
+        <p:outputLabel value="#{cc.attrs.concept.persistent?cc.attrs.concept.descriptionFavorite:'Nuevo Concepto Borrador'}"/>
+        <p:outputLabel rendered="#{not cc.attrs.concept.modeled}">
+            <i class="fa fa-edit" title="Borrador" style="color: #5C5C5C" />
+        </p:outputLabel>
+        <p:outputLabel rendered="#{cc.attrs.concept.modeled}">
+            <i class="ui-icon ui-icon-public" title="Modelado" style="color: #5C5C5C" />
+        </p:outputLabel>
+    </h1>
 
     <p:separator styleClass="heading-separator"/>
 

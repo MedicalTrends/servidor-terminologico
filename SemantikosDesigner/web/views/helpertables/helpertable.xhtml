@@ -43,6 +43,8 @@
 
                         <p:separator styleClass="heading-separator-alt" style="margin-bottom: 0px"/>
 
+                        <p:outputPanel styleClass="buttons">
+
                         <div class="ui-fluid ui-g">
 
                             <div class="ui-g-12 ui-md-12 ui-lg-12">
@@ -53,9 +55,17 @@
                                                  oncomplete="PF('dialogNewRow').show()">
                                 </p:commandButton>
 
+                                <p:commandButton process="@this"
+                                                 rendered="#{helperTableEditBean.helperTableRowSelected != null}"
+                                                 style="float: right" icon="fa fa-trash"
+                                                 update="@(.sheet)">
+                                </p:commandButton>
+
                             </div>
 
                         </div>
+
+                        </p:outputPanel>
 
                     </div>
 
@@ -72,6 +82,10 @@
                             </f:facet>
 
                             <p:ajax event="change" listener="#{helperTableEditBean.cellChangeEvent}" />
+
+                            <p:ajax event="rowSelect" listener="#{helperTableEditBean.rowSelectEvent}" process="@(.sheet)" >
+                                <f:attribute name="row" value="#{row.id}" />
+                            </p:ajax>
 
                             <pe:sheetcolumn headerText="CREACIÓN"
                                             value="#{row.creationDate}"

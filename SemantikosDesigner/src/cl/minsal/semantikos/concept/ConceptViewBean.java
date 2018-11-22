@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -48,6 +49,8 @@ public class ConceptViewBean implements Serializable {
     //@EJB
     AuditManager auditManager = (AuditManager) ServiceLocator.getInstance().getService(AuditManager.class);
 
+    @ManagedProperty(value = "#{conceptExport}")
+    private ConceptExportMBean conceptBeanExport;
 
     ConceptSMTK selectedConcept;
 
@@ -78,6 +81,8 @@ public class ConceptViewBean implements Serializable {
             selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
             selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
             auditAction = auditManager.getConceptAuditActions(selectedConcept, true);
+            conceptBeanExport.setConceptSMTK(selectedConcept);
+            conceptBeanExport.loadConcept();
         }
         catch (NumberFormatException e) {
             logger.warn(e.getMessage());
@@ -266,6 +271,14 @@ public class ConceptViewBean implements Serializable {
 
     public void setShowMore(boolean showMore) {
         this.showMore = showMore;
+    }
+
+    public ConceptExportMBean getConceptBeanExport() {
+        return conceptBeanExport;
+    }
+
+    public void setConceptBeanExport(ConceptExportMBean conceptBeanExport) {
+        this.conceptBeanExport = conceptBeanExport;
     }
 
 }

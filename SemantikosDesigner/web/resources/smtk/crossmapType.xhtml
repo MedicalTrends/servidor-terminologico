@@ -16,6 +16,9 @@
 </composite:interface>
 <composite:implementation>
 
+
+    <p:fieldset legend="Crossmaps Directos">
+
     <p:panel id="crossmapTypeSimpleNew"
              widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
              rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}">
@@ -304,6 +307,8 @@
                 </p:commandButton>
             </p:column>
         </p:dataTable>
+
+    </p:fieldset>
 
     </p:fieldset>
 

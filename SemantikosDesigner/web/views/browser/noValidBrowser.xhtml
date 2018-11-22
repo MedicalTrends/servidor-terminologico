@@ -29,7 +29,7 @@
 
             <p:separator styleClass="heading-separator" style="margin-bottom: 0px"/>
 
-            <p:outputPanel id="filters" styleClass="filtros">
+            <p:outputPanel id="filters" styleClass="filtros filterStatus">
 
                 <div class="ui-fluid">
 
@@ -100,6 +100,30 @@
                             </p:selectCheckboxMenu>
 
                         </div>
+
+                        <p:repeat value="#{noValidBrowserBean.noValidQuery.descriptionTypes}" var="descriptionType">
+                            <div class="ui-g-12 ui-md-4 ui-lg-2" style="padding-bottom: 0px">
+                                <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
+                                    <p:commandLink actionListener="#{noValidBrowserBean.noValidQuery.descriptionTypes.remove(descriptionType)}"
+                                                   update="@(.browserTable),@(.filterStatus)" style="float: right">
+                                        <i class="ui-icon ui-icon-close" />
+                                    </p:commandLink>
+                                    <span class="ui-autocomplete-token-label" style="font-size: small;">#{descriptionType.name}</span>
+                                </span>
+                            </div>
+                        </p:repeat>
+
+                        <p:repeat value="#{noValidBrowserBean.noValidQuery.observationNoValids}" var="observationNoValid">
+                            <div class="ui-g-12 ui-md-4 ui-lg-2" style="padding-bottom: 0px">
+                                <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
+                                    <p:commandLink actionListener="#{noValidBrowserBean.noValidQuery.observationNoValids.remove(observationNoValid)}"
+                                                   update="@(.browserTable),@(.filterStatus)" style="float: right">
+                                        <i class="ui-icon ui-icon-close" />
+                                    </p:commandLink>
+                                    <span class="ui-autocomplete-token-label" style="font-size: small;">#{observationNoValid.description}</span>
+                                </span>
+                            </div>
+                        </p:repeat>
 
                     </div>
 

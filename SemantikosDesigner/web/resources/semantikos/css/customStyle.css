@@ -364,3 +364,15 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 .ui-dialog {
     max-width: 1200px;
 }
+
+.handsontable th, .handsontable td {
+    line-height: 20px !important;
+}
+
+.sheet .ui-sortable-column-icon.ui-icon.ui-icon.ui-icon-carat-2-n-s.ui-icon-triangle-1-s {
+    color: black !important;
+}
+
+.sheet .ui-sortable-column-icon.ui-icon.ui-icon.ui-icon-carat-2-n-s.ui-icon-triangle-1-n {
+    color: black !important;
+}

@@ -201,7 +201,7 @@
                                    title="Eliminar Descripción"
                                    update="@(.otherDescriptions)"
                                    style="padding: 5px" icon="fa fa-trash fa-lg"
-                                   disabled="#{conceptBean.concept.modeled}">
+                                   rendered="#{ not conceptBean.concept.modeled}">
                         <p:confirm header="Confirmation" message="¿Desea eliminar esta descripción?"
                                    icon="ui-icon-alert"/>
                     </p:commandButton>
@@ -313,9 +313,7 @@
                     </div>
                 </div>
 
-
                 <h3>Concepto de destino</h3>
-
 
                 <div class="ui-g">
                     <div class="ui-g-12 ui-md-6 ui-lg-2">
@@ -351,8 +349,8 @@
         </p:panel>
 
         <div style="text-align: center;">
-            <p:commandButton update="@(.otherDescriptionsPanel)" icon="fa fa-exchange" oncomplete="PF('dialogTDC').hide()"
-                             style="float: right"
+            <p:commandButton update="@(.otherDescriptionsPanel)" oncomplete="PF('dialogTDC').hide()"
+                             style="float: right" value="Trasladar"
                              actionListener="#{descriptionBeans.traslateDescription}">
             </p:commandButton>
         </div>

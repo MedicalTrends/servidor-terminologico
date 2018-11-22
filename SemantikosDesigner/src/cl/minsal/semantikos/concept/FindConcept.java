@@ -42,7 +42,7 @@ public class FindConcept implements Serializable{
 
     private Category categorySelected;
 
-    private List<Category> selectedCategories = new ArrayList<>();
+    private List<Category> selectedCategories;
 
     private String pattern;
 
@@ -187,6 +187,9 @@ public class FindConcept implements Serializable{
         this.categorySelected = categorySelected;
         if(categorySelected != null) {
             this.selectedCategories = singletonList(categorySelected);
+        }
+        else {
+            this.selectedCategories = null;
         }
     }
 
